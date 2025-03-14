@@ -10,8 +10,10 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
+import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 
 export type LoanMaterialModalProps = {
   isOpen: boolean
@@ -42,6 +44,27 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
     "small",
     "xx-small",
   ])
+  const { mutate } = usePostV1UserLoansIdentifier()
+  const isbns = getIsbnsFromManifestation(manifestation)
+  const [isHandlingLoan, setIsHandlingLoan] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  const handleLoanMaterial = () => {
+    setIsHandlingLoan(true)
+    mutate(
+      { identifier: isbns[0] },
+      {
+        onSuccess: res => {
+          setIsHandlingLoan(false)
+          setIsOpen(false)
+        },
+        onError: err => {
+          setError(err as Error)
+          setIsHandlingLoan(false)
+        },
+      }
+    )
+  }
+
   return (
     <ResponsiveDialog
       open={isOpen}
@@ -66,14 +89,27 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
         />
       </div>
       <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
-        Er du sikker på at du vil låne denne{" "}
-        {getManifestationMaterialTypeSpecific(manifestation) || "material"}?
+        {!error &&
+          `Er du sikker på at du vil låne denne ${getManifestationMaterialTypeSpecific(manifestation) || "material"}?`}
+        {error && "Vi kunne desværre ikke låne materialet. Prøv igen senere."}
       </p>
       <div className="flex flex-row items-center justify-center gap-6">
-        <Button theme={"primary"} size={"lg"}>
-          Ja
+        <Button
+          theme={"primary"}
+          size={"lg"}
+          onClick={handleLoanMaterial}
+          disabled={isHandlingLoan}>
+          {!isHandlingLoan && "Ja"}
+          {isHandlingLoan && "Låner..."}
         </Button>
-        <Button size={"lg"}>Nej</Button>
+        <Button
+          size={"lg"}
+          onClick={() => {
+            setIsOpen(prev => !prev)
+          }}
+          disabled={isHandlingLoan}>
+          Nej
+        </Button>
       </div>
     </ResponsiveDialog>
   )
