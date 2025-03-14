@@ -7,6 +7,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import Icon from "@/components/shared/icon/Icon"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -104,7 +105,13 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
           onClick={handleLoanMaterial}
           disabled={isHandlingLoan}>
           {!isHandlingLoan && "Ja"}
-          {isHandlingLoan && "Låner..."}
+          {isHandlingLoan && (
+            <Icon
+              name="go-spinner"
+              ariaLabel="Indlæser"
+              className="animate-spin-reverse h-[24px] w-[24px]"
+            />
+          )}
         </Button>
         <Button
           size={"lg"}
