@@ -7,14 +7,20 @@
  * Handles fetching and storage of a library token.
  */
 
+use Drupal\dpl_library_token\LibraryTokenHandler;
+use Drupal\dpl_login\Adgangsplatformen\Config;
+use Drupal\drupal_typed\DrupalTyped;
+
 /**
  * Implements hook_cron.
- *
- * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function dpl_library_token_cron(): void {
-
-  /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
-  $handler = Drupal::service('dpl_library_token.handler');
-  $handler->refreshTokenUsingConfig();
+  $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
+  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
+  $handler->retrieveAndStoreToken(
+    $config->getAgencyId(),
+    $config->getClientId(),
+    $config->getClientSecret(),
+    $config->getTokenEndpoint()
+  );
 }
