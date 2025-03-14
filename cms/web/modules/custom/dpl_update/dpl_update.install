@@ -465,3 +465,10 @@ function dpl_update_update_10040(): string {
 function dpl_update_update_10041(): string {
   return _dpl_update_install_modules(['http_cache_control']);
 }
+
+/**
+ * Uninstall JSNLog module.
+ */
+function dpl_update_update_10042(): string {
+  return _dpl_update_uninstall_modules(['jsnlog']);
+}
