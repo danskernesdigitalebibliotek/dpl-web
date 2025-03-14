@@ -61,7 +61,7 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpointUrl): ?NodeInterface {
+  public function importNode(string $uuid, string $endpointUrl, bool $keepUpdated = TRUE): ?NodeInterface {
     $this->setEndpoint($endpointUrl);
 
     try {
@@ -98,7 +98,11 @@ class BnfImporter {
         ]);
       }
 
-      $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported);
+      // Setting the correct state, depending on whether the editor has chosen
+      // to "claim" this content or not. If it is claimed, we do not want it
+      // to be automatically updated in the future.
+      $state = ($keepUpdated) ? BnfStateEnum::Imported : BnfStateEnum::LocallyClaimed;
+      $node->set(BnfStateEnum::FIELD_NAME, $state);
 
       $node->save();
     }
@@ -153,7 +157,7 @@ class BnfImporter {
       $this->logger->error('Error querying new content: @message', ['@message' => $e->getMessage()]);
     }
 
-    // "nothing new" repsponse both when there aren't, and in case of error.
+    // "nothing new" response both when there aren't, and in case of error.
     return [
       'uuids' => [],
       'youngest' => $since,

@@ -3,7 +3,7 @@
 namespace Drupal\bnf;
 
 /**
- * BNF states, adding meta data to entities and their BNF history.
+ * BNF states, adding metadata to entities and their BNF history.
  */
 enum BnfStateEnum: int {
 
@@ -13,7 +13,6 @@ enum BnfStateEnum: int {
   case Imported = 1;
 
   case Exported = 2;
-
 
   // The content has been imported from a third party source (such as BNF), but
   // the local editor has decided to "claim"/"own" the content - meaning no

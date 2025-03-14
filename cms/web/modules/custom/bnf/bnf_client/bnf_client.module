@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Hook\JobSchedulerHooks;
 use Drupal\bnf_client\Hook\SubscriptionHooks;
@@ -91,13 +92,37 @@ function bnf_client_form_alter(array &$form, FormStateInterface $form_state, str
   // Let's hide the publishing button when BNF is checked, as the value will
   // be ignored and the node will be published regardless.
   $form['status']['#states']['invisible'] =
-    [':input[name="bnf"]' => ['checked' => TRUE]];
+    [':input[name="bnf_export"]' => ['checked' => TRUE]];
 
-  $form['bnf'] = [
+  // Getting the BNF state, if it exists.
+  $state = BnfStateEnum::None;
+
+  if ($node->hasField(BnfStateEnum::FIELD_NAME) && !$node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
+    /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $state_field */
+    $state_field = $node->get(BnfStateEnum::FIELD_NAME);
+    $states = $state_field->enums();
+    $state = reset($states);
+  }
+
+  if (in_array($state, [BnfStateEnum::Imported, BnfStateEnum::LocallyClaimed])) {
+    $form['bnf_keep_updated'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Keep updated with Delingstjenesten', [], ['context' => 'BNF']),
+      '#description' => t('Keep this content, which originates from Delingstjenesten, up to date when a new version is available. This will overwrite any custom changes you may have made.', [], ['context' => 'BNF']),
+      '#default_value' => ($state == BnfStateEnum::Imported),
+    ];
+  }
+
+  $exportable = ($state == BnfStateEnum::None);
+
+  $form['bnf_export'] = [
     '#type' => 'checkbox',
-    '#title' => t('Publish and submit to BNF'),
-    '#description' => t('Please make sure that all content and media as part of this article is OK to be used by other libraries.'),
+    '#title' => t('Publish and submit to BNF', [], ['context' => 'BNF']),
     '#default_value' => FALSE,
+    '#disabled' => !$exportable,
+    '#description' => $exportable ?
+    t('Please make sure that all content and media as part of this article is OK to be used by other libraries.', [], ['context' => 'BNF']) :
+    t('This content cannot be sent to BNF, as it has either been exported or imported already.', [], ['context' => 'BNF']),
   ];
 }
 
@@ -105,17 +130,28 @@ function bnf_client_form_alter(array &$form, FormStateInterface $form_state, str
  * A custom form submit handler, that publishes node, and "exports" to BNF.
  */
 function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_state): void {
+  /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
+  $form_object = $form_state->getFormObject();
 
-  if (empty($form_state->getValue('bnf'))) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $form_object->getEntity();
+
+  $bnf_keep_updated = $form_state->getValue('bnf_keep_updated');
+
+  // If the content has been imported, the editor can choose if they want to
+  // keep it up-to-date with the BNF server.
+  // See more info in BnfStateEnum.
+  if (!is_null($bnf_keep_updated)) {
+    $state = ($bnf_keep_updated) ? BnfStateEnum::Imported : BnfStateEnum::LocallyClaimed;
+    $node->set(BnfStateEnum::FIELD_NAME, $state);
+    $node->save();
+  }
+
+  if (empty($form_state->getValue('bnf_export'))) {
     return;
   }
 
   try {
-    /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
-    $form_object = $form_state->getFormObject();
-
-    /** @var \Drupal\node\NodeInterface $node */
-    $node = $form_object->getEntity();
     $node->setPublished();
     $node->save();
   }

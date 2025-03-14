@@ -105,6 +105,13 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
       '#disabled' => TRUE,
     ];
 
+    $form['bnf_keep_updated'] = [
+      '#title' => $this->t('Keep updated with Delingstjenesten', [], ['context' => 'BNF']),
+      '#type' => 'checkbox',
+      '#description' => $this->t('Keep this content, which originates from Delingstjenesten, up to date when a new version is available. This will overwrite any custom changes you may have made. <strong>You can always change your mind directly on the content.</strong>', [], ['context' => 'BNF']),
+      '#default_value' => TRUE,
+    ];
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Import content'),
@@ -126,10 +133,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $uuid = $form_state->get('uuid');
+    $keepUpdated = !empty($form_state->getValue('bnf_keep_updated'));
     $bnfServer = $form_state->get('bnfServer');
 
     try {
-      $node = $this->bnfImporter->importNode($uuid, $bnfServer);
+      $node = $this->bnfImporter->importNode($uuid, $bnfServer, $keepUpdated);
 
       if (!($node instanceof NodeInterface)) {
         throw new \Exception('Importer did not return a node instance.');
@@ -137,6 +145,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
 
       $node->setUnpublished();
       $node->save();
+
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {
