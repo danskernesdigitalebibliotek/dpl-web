@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const regexDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}[\.0-9]*$/
+import { regexDate } from "@/app/pubhub/helper"
 
 export const orderItemSchema = z.object({
   retailerordernumber: z.string(),
