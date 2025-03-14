@@ -138,7 +138,7 @@ class LibraryTokenHandler {
 
       $this->logger->log(LogLevel::INFO, 'New token was fetched.');
     }
-    catch (\Exception $e) {
+    catch (\Throwable $e) {
       $variables = [
         '@message' => 'Could not retrieve library token',
         '@error_message' => $e->getMessage(),
