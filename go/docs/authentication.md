@@ -45,6 +45,9 @@ Pubhub API or the Publizon adapter when requesting Publizon data.
 
 ### Login via Unilogin
 
+The login flow is mainly controlled vi the [openid-client](https://www.npmjs.com/package/openid-client) package. It is a tool to ease the setup of the Oauth 2 flows.
+The decision behind the choice of tools for the login handling is described in the XXX ADR.
+
 ```mermaid
 sequenceDiagram
     actor Patron
