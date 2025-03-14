@@ -3,6 +3,7 @@ import * as client from "openid-client"
 import type { IntrospectionResponse } from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
+import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
   destroySession,
@@ -78,8 +79,9 @@ export async function GET(request: NextRequest) {
     // Set token info.
     setUniloginTokensOnSession(session, tokenSet)
 
+    const institutionId = getInstitutionId(introspect.institution_ids)
     // Check if user is authorized to log.
-    const isAuthorized = await isUniloginUserAuthorizedToLogIn(introspect)
+    const isAuthorized = await isUniloginUserAuthorizedToLogIn(institutionId)
     if (!isAuthorized) {
       // Make sure that the user is logged out remotely first. And destroy session.
       await logoutUniloginSSO(session)
@@ -91,12 +93,15 @@ export async function GET(request: NextRequest) {
     }
 
     // Set user info.
+    // TODO: After Publizon allows DDF test users to loan, we can remove thie if statement.
     session.userInfo = {
       sub: userinfo.sub,
       uniid: introspect.uniid,
-      institution_ids: introspect.institution_ids,
+      // TODO: Rename this into institutionIds
+      institution_ids:
+        institutionId === "A04441" ? ["101047"] : getInstitutionIds(introspect.institution_ids),
     }
-
+    101047
     await session.save()
   } catch (error) {
     console.error(error)

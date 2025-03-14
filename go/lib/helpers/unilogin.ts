@@ -19,3 +19,11 @@ export const getLibraryMunicipalityId = () => {
   }
   return municipalityId
 }
+
+export const getInstitutionIds = (text: string) =>
+  text.replace(/\[([^\]]*)\]/g, "$1").split(",") ?? []
+
+export const getInstitutionId = (text: string) => {
+  const ids = getInstitutionIds(text)
+  return ids.length ? ids[0] : null
+}

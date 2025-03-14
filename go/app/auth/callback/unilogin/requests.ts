@@ -3,7 +3,7 @@ import { createClientAsync } from "@/lib/soap/unilogin/wsiinst-v5/generated/ws"
 
 import schemas from "./schemas"
 
-export const getInstitution = async (institutionId: string) => {
+export const getInstitutionRequest = async (institutionId: string) => {
   const client = await createClientAsync("./lib/soap/unilogin/wsiinst-v5/wsdl/ws.wsdl", {
     forceSoap12Headers: true,
   })
