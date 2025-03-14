@@ -76,6 +76,23 @@ sequenceDiagram
     Go-->>Go: Redirects the Patron to the user profile page
 ```
 
+#### Building the Unilogin authorization url
+
+In order to follow the Oauth2 standard and the Unilogin [STIL specification](https://viden.stil.dk/display/OFFSKOLELOGIN/Implementering+af+tjeneste)
+an authorization url is constructed with the help of the openid-client tool.
+
+A PKCE code verifier is generated (the `GO_SESSION_SECRET` is used as salt).
+
+The code verifier is stored in the session for future validation of the
+authenticity of the request from Unilogin coming back from the external login form.
+
+And the code verifier is also used in order to create the code challenge needed
+as an url parameter for the authorization url.
+
+#### Unilogin login authorization check
+
+bla bla unilogin authorization check
+
 ### Login via Adgangsplatformen
 
 ```mermaid
