@@ -1,4 +1,5 @@
-import React from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import React, { useState } from "react"
 
 import {
   getManifestationMaterialTypeIcon,
@@ -22,6 +23,7 @@ export type LoanMaterialModalProps = {
 }
 
 const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialModalProps) => {
+  const queryClient = useQueryClient()
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
       type: "pid",
@@ -54,6 +56,8 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
       { identifier: isbns[0] },
       {
         onSuccess: res => {
+          // Refetch data to update the UI for WorkPageButtons
+          queryClient.invalidateQueries({ queryKey: ["/v1/user/loans"] })
           setIsHandlingLoan(false)
           setIsOpen(false)
         },
