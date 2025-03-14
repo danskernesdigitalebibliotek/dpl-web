@@ -13,7 +13,7 @@ The Go session is maintained by using the [iron-session](https://www.npmjs.com/p
 tool.
 The session data is stored in a cookie encrypted and is only readable server side.
 The session architecture was decided upon as a part of developing the Unilogin
-login flow which is documented in the XXX ADR.
+login flow which is documented in an [ADR](https://adr.github.io/) in the docs/architecture section.
 The go session cookie is used for patrons logging in with either Unilogin or
 Adgangsplatformen and has two major attributes:
 
@@ -46,7 +46,7 @@ Pubhub API or the Publizon adapter when requesting Publizon data.
 ### Login via Unilogin
 
 The login flow is mainly controlled vi the [openid-client](https://www.npmjs.com/package/openid-client) package. It is a tool to ease the setup of the Oauth 2 flows.
-The decision behind the choice of tools for the login handling is described in the XXX ADR.
+The decision behind the choice of tools for the login handling is described in an [ADR](https://adr.github.io/) in the docs/architecture section.
 
 ```mermaid
 sequenceDiagram
@@ -91,7 +91,11 @@ as an url parameter for the authorization url.
 
 #### Unilogin login authorization check
 
-bla bla unilogin authorization check
+As a part of the Unilogin flow when coming back form a successful login we check
+if the municipality id (`kommunenr`) of the first institution in the userinfo
+matches the one that is configured to the site (`UNILOGIN_MUNICIPALITY_ID`).
+If the id's are identical the user is allowed to login in otherwise a logout is
+forced both in the SSO and locally.
 
 ### Login via Adgangsplatformen
 
