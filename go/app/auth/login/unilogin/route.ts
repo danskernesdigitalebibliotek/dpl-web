@@ -1,13 +1,13 @@
 import * as client from "openid-client"
 
-import goConfig from "@/lib/config/goConfig"
+import { getEnv } from "@/lib/config/env"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
 
 export async function GET() {
   const session = await getSession()
   const config = await getUniloginClientConfig()
-  const appUrl = goConfig("app.url")
+  const appUrl = getEnv("APP_URL")
 
   if (!config) {
     return Response.redirect(String(appUrl))

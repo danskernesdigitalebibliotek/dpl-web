@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 import { z } from "zod"
 
-import goConfig from "@/lib/config/goConfig"
+import { getEnv } from "@/lib/config/env"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession, setUniloginTokensOnSession } from "@/lib/session/session"
 import { TUniloginTokenSet } from "@/lib/types/session"
@@ -19,7 +19,7 @@ const sessionTokenSchema = z.object({
 export async function GET(request: NextRequest) {
   const requestHeaders = await headers()
 
-  const appUrl = String(goConfig("app.url"))
+  const appUrl = getEnv("APP_URL")
   const config = await getUniloginClientConfig()
   // TODO: Fix refresh token flow with new openid-client.
 

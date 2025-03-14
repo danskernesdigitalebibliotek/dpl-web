@@ -196,7 +196,7 @@ export const destroySessionAndRedirectToFrontPage = async (session: IronSession<
 }
 
 export const redirectToFrontPageAndReloadSession = async () => {
-  const appUrl = new URL(String(goConfig("app.url")))
+  const appUrl = new URL(getEnv("APP_URL"))
 
   return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
 }

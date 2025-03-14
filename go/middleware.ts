@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextFetchEvent, NextRequest } from "next/server"
 
 import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
-import goConfig from "./lib/config/goConfig"
+import { getEnv } from "./lib/config/env"
 import {
   accessTokenIsExpired,
   accessTokenShouldBeRefreshed,
@@ -58,9 +58,10 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   }
 
   if (accessTokenShouldBeRefreshed(session, "unilogin")) {
-    const currentPath = new URL(request.nextUrl.pathname, goConfig("app.url")).toString()
-    const url = goConfig("app.url")
-    return NextResponse.redirect(`${url}/auth/token/refresh?redirect=${currentPath}`, {
+    const appUrl = getEnv("APP_URL")
+
+    const currentPath = new URL(request.nextUrl.pathname, appUrl.toString())
+    return NextResponse.redirect(`${appUrl}/auth/token/refresh?redirect=${currentPath}`, {
       headers: response.headers,
     })
   }
