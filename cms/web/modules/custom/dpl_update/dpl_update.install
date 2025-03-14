@@ -118,7 +118,6 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10037();
   $messages[] = dpl_update_update_10039();
   $messages[] = dpl_update_update_10040();
-  $messages[] = dpl_update_update_10042();
 
   return implode('\r\n', $messages);
 }
@@ -468,12 +467,19 @@ function dpl_update_update_10041(): string {
 }
 
 /**
+ * Uninstall JSNLog module.
+ */
+function dpl_update_update_10042(): string {
+  return _dpl_update_uninstall_modules(['jsnlog']);
+}
+
+/**
  * Configure "system.performance".
  *
  * Set "system.performance" aggregate css and js files and remove it from config
  * ignore list.
  */
-function dpl_update_update_10042(): string {
+function dpl_update_update_10043(): string {
 
   // Set "system.performance" to aggregate css and js files.
   $config = \Drupal::configFactory()->getEditable('system.performance');

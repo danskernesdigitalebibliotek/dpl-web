@@ -1,0 +1,17 @@
+<div class="rich-text mt-24">
+  <h1>{{ 'BNF cannot send you to your library'|trans({}, {"context": "BNF"}) }}</h1>
+  <p>
+    {{ 'It would appear that you have not logged in to BNF through your origin library.'|trans({}, {"context": "BNF"}) }}
+  </p>
+  <p>
+    {{ 'To import this content, you can either:'|trans({}, {"context": "BNF"}) }}
+  </p>
+  <ul>
+    <li>{{ 'Go back to your library site, and choose "log in to BNF", and try again'|trans({}, {"context": "BNF"}) }}</li>
+    <li>{{ 'Or:'|trans({}, {"context": "BNF"}) }}</li>
+    <li>
+      {{ 'Go back to your library site, and press import at:'|trans({}, {"context": "BNF"}) }}
+      <br><strong><em>/admin/bnf/import/{{ uuid }}</em></strong>
+    </li>
+  </ul>
+</div>

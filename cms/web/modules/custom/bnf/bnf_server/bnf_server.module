@@ -1,7 +1,23 @@
 <?php
 
+use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_server\Controller\LoginController;
+use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_build().
+ *
+ * Setting the allowed importable content types as contextual filter.
+ */
+function bnf_server_views_pre_build(ViewExecutable $view): void {
+  if ($view->id() === 'importable_content') {
+    $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+    $view->setArguments([implode('+', $allowed_cts)]);
+  }
+}
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -11,22 +27,34 @@ use Drupal\node\Entity\Node;
  */
 function bnf_server_preprocess_page(array &$variables): void {
   $node = $variables['node'] ?? NULL;
-  $cookies = \Drupal::request()->cookies;
-  $url = $cookies->get(LoginController::COOKIE_CALLBACK_URL);
-  $name = $cookies->get(LoginController::COOKIE_SITE_NAME);
-  $allowed_cts = ['article'];
+  $session = \Drupal::request()->getSession();
 
-  if (!$url || !($node instanceof Node) || !in_array($node->bundle(), $allowed_cts)) {
+  $url = $session->get(LoginController::CALLBACK_URL_KEY);
+  $name = $session->get(LoginController::SITE_NAME_KEY);
+  $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+  if (!$url || !($node instanceof Node)) {
     return;
   }
 
-  $variables['page']['content']['import_link'] = [
-    '#theme' => 'bnf_server_import_link',
-    '#label' => $node->label(),
-    '#name' => $name ?? t('my site', [], ['context' => 'BNF']),
-    '#url' => "$url/admin/bnf/import/{$node->uuid()}",
-    '#cache' => ['max-age' => 0],
-  ];
+  if ($name) {
+    $variables['page']['content']['logged_notifier'] = [
+      '#theme' => 'bnf_server_logged_notifier',
+      '#name' => $name,
+      '#url' => Url::fromRoute('view.importable_content.page'),
+      '#cache' => ['max-age' => 0],
+    ];
+  }
+
+  if (in_array($node->bundle(), $allowed_cts)) {
+    $variables['page']['content']['import_link'] = [
+      '#theme' => 'bnf_server_import_link',
+      '#label' => $node->label(),
+      '#name' => $name ?? t('my site', [], ['context' => 'BNF']),
+      '#url' => Url::fromRoute('bnf_server.import_redirect', ['uuid' => $node->uuid()]),
+      '#cache' => ['max-age' => 0],
+    ];
+  }
 }
 
 /**
@@ -39,6 +67,17 @@ function bnf_server_theme(): array {
         'url' => NULL,
         'name' => NULL,
         'label' => NULL,
+      ],
+    ],
+    'bnf_server_missing_callback' => [
+      'variables' => [
+        'uuid' => NULL,
+      ],
+    ],
+    'bnf_server_logged_notifier' => [
+      'variables' => [
+        'url' => NULL,
+        'name' => NULL,
       ],
     ],
   ];
