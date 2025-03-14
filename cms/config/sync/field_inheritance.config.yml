@@ -1,4 +1,4 @@
 _core:
   default_config_hash: 6pu-bqSEHFbUWhCoPxMom5frvldpqvdyoODAVKiIF6k
-included_entities: 'file,node,eventinstance,taxonomy_term'
-included_bundles: 'file:file,eventinstance:default,taxonomy_term:tags'
+included_entities: eventinstance
+included_bundles: 'eventinstance:default'
