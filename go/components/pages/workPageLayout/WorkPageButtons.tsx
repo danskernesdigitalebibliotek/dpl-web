@@ -71,14 +71,16 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
       )}
       {isManifestationAudioBook(selectedManifestation) && (
         <>
-          <Button
-            ariaLabel="Prøv lydbog"
-            size={"lg"}
-            disabled={!!!identifier}
-            className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
-            onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
-            Prøv lydbog
-          </Button>
+          {!isLoaned && (
+            <Button
+              ariaLabel="Prøv lydbog"
+              size={"lg"}
+              disabled={!!!identifier}
+              className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
+              onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
+              Prøv lydbog
+            </Button>
+          )}
           <Button
             ariaLabel={isLoaned ? "Læs lydbog" : "Lån lydbog"}
             size={"lg"}
@@ -92,14 +94,16 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
       )}
       {isManifestationPodcast(selectedManifestation) && (
         <>
-          <Button
-            ariaLabel="Prøv podcast"
-            size={"lg"}
-            disabled={!!!identifier}
-            className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
-            onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
-            Prøv podcast
-          </Button>
+          {!isLoaned && (
+            <Button
+              ariaLabel="Prøv podcast"
+              size={"lg"}
+              disabled={!!!identifier}
+              className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
+              onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
+              Prøv podcast
+            </Button>
+          )}
           <Button
             ariaLabel={isLoaned ? "Læs podcast" : "Hør podcast"}
             size={"lg"}
