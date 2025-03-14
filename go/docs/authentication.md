@@ -66,7 +66,7 @@ sequenceDiagram
     Unilogin Login->>Go: After successful login the patron is redirected to the unilogin callback route (/auth/callback/unilogin)
     Unilogin WS-->>Go: Go requests access token, refresh token and expire timestamps and validates the expected response
     Note over Unilogin WS: Introspection data contains uniid and institution_ids of the user
-    Unilogin WS-->>Go: Go requests and validates [introspection data](https://www.rfc-editor.org/rfc/rfc7662.html#section-2) from the access token
+    Unilogin WS-->>Go: Go requests and validates introspection data from the access token
     Note over Unilogin WS: Userinfo data contains the sub that in this case is a GUID
     Unilogin WS-->>Go: Go requests and validates user info
     Note over Go: See chapter: "Unilogin login authorization check"
@@ -146,5 +146,5 @@ flowchart TD
 
     DestroySession --> RedirectToFrontpage[Redirect to frontpage]
 
-    SessionExist ---->|No| RedirectToFrontpage
+    SessionExist -->|No| RedirectToFrontpage
 ```
