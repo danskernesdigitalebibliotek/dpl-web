@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-13 11:31+0100\n"
-"PO-Revision-Date: 2025-03-13 11:31+0100\n"
+"POT-Creation-Date: 2025-03-14 14:48+0100\n"
+"PO-Revision-Date: 2025-03-14 14:48+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -739,7 +739,7 @@ msgstr "For eksempel <em>https://bibliotekernesnationaleformidling.dk/</em>."
 
 msgctxt "Validation"
 msgid "IsHttps"
-msgstr ""
+msgstr "IsHttps"
 
 msgctxt "BNF"
 msgid "my site"
@@ -1367,7 +1367,7 @@ msgstr "Lån"
 
 msgctxt "Loan list"
 msgid "Due date digital @date"
-msgstr "Udløbsdato @date"
+msgstr "Udløber automatisk @date"
 
 msgctxt "Loan list"
 msgid "Due date physical @date"
@@ -1769,7 +1769,7 @@ msgid "The WorkID value"
 msgstr ""
 
 msgid "The material type (e.g., bog, e-bog)."
-msgstr ""
+msgstr "Materialetype (fx bog, film, lydbog)"
 
 msgid "List of DPL-Go Unilogin configuration."
 msgstr ""
@@ -2031,24 +2031,26 @@ msgid "Add @type"
 msgstr "Tilføj @type"
 
 msgid "Add @type video via URL"
-msgstr ""
+msgstr "Tilføj @type video via URL"
 
 msgid ""
 "VideoTool URL example: https://media.videotool.dk?"
 "vn=557_2023103014511477700668916683"
 msgstr ""
+"VideoTool URL eksempel: https://media.videotool.dk?"
+"vn=557_2023103014511477700668916683"
 
 msgid "Add"
 msgstr "Tilføj"
 
 msgid "The given URL does not match the VideoTool URL pattern."
-msgstr ""
+msgstr "URL'en matcher ikke VideoTool URL mønsteret."
 
 msgid "VideoTool URL"
-msgstr ""
+msgstr "VideoTool URL"
 
 msgid "VideoTool embed"
-msgstr ""
+msgstr "VideoTool indlejring"
 
 msgid "Name"
 msgstr "Name"
@@ -3890,7 +3892,7 @@ msgstr "Luk pop-up med detaljevisning af materiale"
 
 msgctxt "Global"
 msgid "Expires"
-msgstr "Udløber"
+msgstr "Udløber automatisk"
 
 msgctxt "Global"
 msgid "View material"
@@ -4654,7 +4656,7 @@ msgid "Handling the search pages."
 msgstr "Handling the search pages."
 
 msgid "DPL Go"
-msgstr ""
+msgstr "DPL GO"
 
 msgid "Module used for handling go specific functionality."
 msgstr ""
@@ -13748,7 +13750,7 @@ msgid "Web page or blog URL"
 msgstr "Web side eller blog URL"
 
 msgid "Preferred email address"
-msgstr ""
+msgstr "Foretrukket e-mailadresse"
 
 msgid "Email verified"
 msgstr "Email verificeret"
@@ -13790,7 +13792,7 @@ msgid "Client secret"
 msgstr "Klienthemmelighed"
 
 msgid "Allowed domains"
-msgstr ""
+msgstr "Tilladte domæner"
 
 msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
 msgstr ""
@@ -13912,7 +13914,7 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 msgid "Generic OAuth 2.0"
-msgstr ""
+msgstr "Generic OAuth 2.0"
 
 msgid "OpenID Connect clients"
 msgstr ""
@@ -14374,7 +14376,7 @@ msgstr ""
 "for arrangementinstanser."
 
 msgid "Automatically delete orphaned eventinstances."
-msgstr ""
+msgstr "Automatisk slet forældreløse event instanser."
 
 msgid "Event Creation"
 msgstr "Arrangør"

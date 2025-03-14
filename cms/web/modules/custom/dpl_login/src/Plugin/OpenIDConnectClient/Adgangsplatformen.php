@@ -179,8 +179,15 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state): void {
     parent::submitConfigurationForm($form, $form_state);
+    $agencyId = $form_state->getValue('agency_id');
+    $clientId = $form_state->getValue('client_id');
+    $clientSecret = $form_state->getValue('client_secret');
+    $tokenEndpoint = $form_state->getValue('token_endpoint');
 
-    $this->libraryTokenHandler->retrieveAndStoreToken(TRUE);
+    $token = $this->libraryTokenHandler->fetchToken($agencyId, $clientId, $clientSecret, $tokenEndpoint);
+    if ($token) {
+      $this->libraryTokenHandler->setToken($token);
+    }
   }
 
   /**
