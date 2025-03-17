@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-17 09:53+0100\n"
-"PO-Revision-Date: 2025-03-17 09:53+0100\n"
+"POT-Creation-Date: 2025-03-17 10:07+0100\n"
+"PO-Revision-Date: 2025-03-17 10:07+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7471,43 +7471,9 @@ msgstr "Issue-kø"
 msgid "to report problems."
 msgstr "til at reportere problemer."
 
-msgid "Save settings"
-msgstr "Gem indstillinger"
-
 msgctxt "Entity type group"
 msgid "Content"
 msgstr "Indhold"
-
-msgid "Save and continue"
-msgstr "Gem og fortsæt"
-
-msgid "Save field settings"
-msgstr "Gem feltindstillinger"
-
-msgid "Update settings"
-msgstr "Opdatér indstillinger"
-
-msgid "Saved %name configuration"
-msgstr "Gemt %name konfiguration"
-
-msgid "Multiple test entity entities match this reference;"
-msgstr "Flere testenhedsenheder matcher denne reference;"
-
-msgid ""
-"Many test entity entities are called %value. Specify the one you want by "
-"appending the id in parentheses"
-msgstr ""
-"Mange testenheder kaldes %value. Specificer den, du ønsker, ved at tilføje "
-"id'et i parentes"
-
-msgid "There are no test entity entities matching \"%value\"."
-msgstr "Der er ingen testenheder, der matcher \"%value\"."
-
-msgid "Preview"
-msgstr "Preview"
-
-msgid "@type %title has been created."
-msgstr "@type %title oprettet."
 
 msgid "The referenced entity (%type: %id) does not exist."
 msgstr "Den refererede entity (%type: %id) eksisterer ikke."
@@ -8485,6 +8451,9 @@ msgid ""
 "A unique machine-readable name containing letters, numbers, and underscores."
 msgstr "Et unikt systemnavn som indeholder bogstaver, tal og understregninger."
 
+msgid "Save and continue"
+msgstr "Gem og fortsæt"
+
 msgid "Create group"
 msgstr "Opret gruppe"
 
@@ -9067,6 +9036,9 @@ msgid ""
 msgstr ""
 "Angiv fokus for dette billede i formen \"leftoffset,topoffset\" hvor "
 "forskydningerne er i procent. Eksempel: 25,75"
+
+msgid "Preview"
+msgstr "Preview"
 
 msgid ""
 "Focal Point allows you to specify the portion of an image that is most "
