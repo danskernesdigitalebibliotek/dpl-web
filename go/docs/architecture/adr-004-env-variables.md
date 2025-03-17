@@ -26,7 +26,8 @@ Example:
 ```typescript
 function getEnvs() {
   return {
-    NEW_ENV: process.env.NEW_ENV,
+    NEW_ENV: process.env.NEXT_PUBLIC_NEW_ENV,
+    SOME_API_KEY: process.env.SOME_API_KEY,
   }
 }
 ```
@@ -37,23 +38,23 @@ const EnvSchema = z.object({
 })
 ```
 
-or
+and
 
 ```typescript
 const EnvServerSchema = z.object({
-  NEW_ENV: z.string().optional(), // use optinal if the variable can be omitted - like in cases where we override fetched config
+  SOME_API_KEY: z.string().optional(), // use optinal if the variable can be omitted - like in cases where we override fetched config
 })
 ```
 
 Then use it in your code like this:
 
 ```typescript
-const newEnv = getEnv("NEW_ENV")
+const apiKey = getServerEnv("SOME_API_KEY")
 
-console.log(newEnv)
+const result = await fetchDataFromExternalAPI(apiKey)
 ```
 
-or
+and
 
 ```typescript
 console.log(getEnv("NEW_ENV"))
