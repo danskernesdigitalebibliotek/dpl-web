@@ -15,23 +15,29 @@ export const getDplCmsUniloginConfig = async () => {
   const clientId = getServerEnv("UNILOGIN_CLIENT_ID")
   const clientSecret = getServerEnv("UNILOGIN_CLIENT_SECRET")
 
-  // If all env vars are present, return them directly without fetching config
-  if (wellknownUrl && clientId && clientSecret) {
-    return {
-      wellknownUrl,
-      clientId,
-      clientSecret,
-      apiData: null,
-    }
+  const configEnv = {
+    wellknownUrl,
+    clientId,
+    clientSecret,
   }
 
-  // Only fetch config if we're missing some env vars
-  const config = await queryDplCmsConfig()
+  let configAPI = {}
+  try {
+    const config = await queryDplCmsConfig()
+    if (config?.unilogin) {
+      configAPI = {
+        wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,
+        clientId: config.unilogin.unilogin_api_client_id ?? null,
+        clientSecret: config.unilogin.unilogin_api_client_secret ?? null,
+        apiData: config.unilogin.unilogin_api_url ?? null,
+      }
+    }
+  } catch {
+    // catch silently
+  }
 
   return {
-    wellknownUrl: config?.unilogin?.unilogin_api_wellknown_url ?? null,
-    clientId: config?.unilogin?.unilogin_api_client_id ?? null,
-    clientSecret: config?.unilogin?.unilogin_api_client_secret ?? null,
-    apiData: config?.unilogin ?? null,
+    ...configAPI,
+    ...configEnv,
   }
 }
