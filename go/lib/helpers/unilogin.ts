@@ -10,8 +10,4 @@ export const getUniloginWsCredentials = () => {
   }
 }
 
-export const getLibraryMunicipalityId = () => {
-  const municipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
-
-  return municipalityId
-}
+export const getLibraryMunicipalityId = () => getServerEnv("UNILOGIN_MUNICIPALITY_ID")
