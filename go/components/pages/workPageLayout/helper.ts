@@ -55,6 +55,11 @@ const isManifestationOfMaterialType = (
   return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
 }
 
+export const isManifestationBook = (manifestation: ManifestationWorkPageFragment) => {
+  if (!manifestation) return false
+  return isManifestationOfMaterialType(manifestation, "BOOKS")
+}
+
 export const isManifestationEbook = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, "EBOOKS")
@@ -96,6 +101,9 @@ export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCod
   const code = materialType
   if (goConfig("materialtypes.categories").reading.includes(code)) {
     return "book"
+  }
+  if (goConfig("materialtypes.categories").ebook.includes(code)) {
+    return "ebook"
   }
   if (goConfig("materialtypes.categories").listening.includes(code)) {
     return "headphones"

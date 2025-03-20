@@ -5,6 +5,7 @@ export type TMaterialTypeCategories = {
   listening: GeneralMaterialTypeCodeEnum[]
   gaming: GeneralMaterialTypeCodeEnum[]
   video: GeneralMaterialTypeCodeEnum[]
+  ebook: GeneralMaterialTypeCodeEnum[]
   podcast: GeneralMaterialTypeCodeEnum[]
 }
 
@@ -46,10 +47,11 @@ const materialTypes = {
   } as { [key in GeneralMaterialTypeCodeEnum]: string },
 
   "materialtypes.categories": {
-    reading: ["ARTICLES", "BOOKS", "COMICS", "EBOOKS", "IMAGE_MATERIALS", "NEWSPAPER_JOURNALS"],
+    reading: ["ARTICLES", "BOOKS", "COMICS", "IMAGE_MATERIALS", "NEWSPAPER_JOURNALS"],
     listening: ["AUDIO_BOOKS", "MUSIC", "SHEET_MUSIC"],
     gaming: ["BOARD_GAMES", "COMPUTER_GAMES"],
     video: ["FILMS", "TV_SERIES"],
+    ebook: ["EBOOKS"],
     podcast: ["PODCASTS"],
   },
 }

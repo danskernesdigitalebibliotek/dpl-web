@@ -1,11 +1,10 @@
 import React from "react"
 
+import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
 
-import Icon from "../icon/Icon"
-
 export type MaterialTypeIconWrapperProps = {
-  iconName: "book" | "headphones" | "controller" | "video" | "podcast"
+  iconName: "ebook" | "book" | "headphones" | "controller" | "video" | "podcast"
   costFree?: boolean
   className?: string
 }
