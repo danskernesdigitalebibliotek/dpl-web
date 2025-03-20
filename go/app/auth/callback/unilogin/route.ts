@@ -101,7 +101,6 @@ export async function GET(request: NextRequest) {
       institution_ids:
         institutionId === "A04441" ? ["101047"] : getInstitutionIds(introspect.institution_ids),
     }
-    101047
     await session.save()
   } catch (error) {
     console.error(error)
