@@ -1,7 +1,5 @@
-import { getInstitutionId, getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
-
-import { getInstitutionRequest } from "./requests"
-import { TIntrospectionResponse } from "./types"
+import { getInstitutionRequest } from "@/app/auth/callback/unilogin/requests"
+import { getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
 
 export const isUniloginUserAuthorizedToLogIn = async (institutionId: string | null) => {
   if (!institutionId) {

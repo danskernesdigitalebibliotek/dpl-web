@@ -56,7 +56,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
     mutate(
       { identifier: isbns[0] },
       {
-        onSuccess: res => {
+        onSuccess: () => {
           // Refetch data to update the UI for WorkPageButtons
           queryClient.invalidateQueries({ queryKey: ["/v1/user/loans"] })
           setIsHandlingLoan(false)
