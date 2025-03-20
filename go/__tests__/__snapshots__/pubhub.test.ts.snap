@@ -2,6 +2,10 @@
 
 exports[`Pubhub local API > Returns same output from local & external GET /v1/user/loans 1`] = `
 {
+  "libraryData": {
+    "maxAmountPerMonth": 3,
+    "maxConcurrentAudiobookLoansPerBorrower": 0,
+  },
   "loans": [
     {
       "libraryBook": {
@@ -13,6 +17,8 @@ exports[`Pubhub local API > Returns same output from local & external GET /v1/us
     },
   ],
   "userData": {
+    "audiobookLoansRemaining": 0,
+    "ebookLoansRemaining": 2,
     "totalAudioLoans": 0,
     "totalEbookLoans": 1,
     "totalLoans": 1,
