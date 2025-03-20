@@ -7,7 +7,7 @@ import { getLastValueFromUrl, transformTimeToUtcString } from "@/app/pubhub/help
 import { createLoanRequest } from "./(lib)/requests"
 import { createLoanSchema } from "./(lib)/schemas"
 
-async function postLibraryLoan(request: NextRequest, context: { userInfo: TUserInfo }) {
+async function createdigitalLoan(request: NextRequest, context: { userInfo: TUserInfo }) {
   const createLoan = createLoanSchema.transform(loanData => {
     const response = loanData.response
     return {
@@ -29,6 +29,6 @@ async function postLibraryLoan(request: NextRequest, context: { userInfo: TUserI
 
 // @todo Fix ts problem about context here.
 // @ts-ignore
-export const POST = withAuth(postLibraryLoan)
+export const POST = withAuth(createdigitalLoan)
 
 export const dynamic = "force-dynamic"
