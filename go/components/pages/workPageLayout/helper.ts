@@ -11,6 +11,7 @@ import {
   WorkFullWorkPageFragment,
   WorkMaterialTypesFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 export const getWorkMaterialTypes = (
   materialTypes: Work["materialTypes"]
@@ -143,4 +144,30 @@ export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
 export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
   const materialType = getManifestationMaterialType(manifestation)
   return getIconNameFromMaterialType(materialType.code) || "book"
+}
+
+export const canUserLoanMoreEMaterials = (
+  dataLoans: LoanListResult | null | undefined,
+  manifestation: ManifestationWorkPageFragment
+) => {
+  if (
+    !dataLoans?.userData?.audiobookLoansRemaining ||
+    !dataLoans?.userData?.ebookLoansRemaining ||
+    !manifestation
+  ) {
+    return false
+  }
+  const materialType = getManifestationMaterialType(manifestation)
+  if (materialType.code === "AUDIO_BOOKS") {
+    return dataLoans.userData.audiobookLoansRemaining > 0
+  }
+  if (materialType.code === "EBOOKS") {
+    return dataLoans.userData.ebookLoansRemaining > 0
+  }
+  // Podcasts are always loanable
+  if (materialType.code === "PODCASTS") {
+    return true
+  }
+  // Default to false
+  return false
 }
