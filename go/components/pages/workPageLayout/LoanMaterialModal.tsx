@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import React, { useState } from "react"
 
 import {
+  canUserLoanMoreEMaterials,
   getManifestationMaterialTypeIcon,
   getManifestationMaterialTypeSpecific,
 } from "@/components/pages/workPageLayout/helper"
@@ -15,6 +16,7 @@ import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 
 export type LoanMaterialModalProps = {
@@ -47,6 +49,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
     "small",
     "xx-small",
   ])
+  const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const { mutate } = usePostV1UserLoansIdentifier()
   const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
@@ -93,33 +96,65 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
           className="bg-background absolute -bottom-6 h-10 w-10"
         />
       </div>
+
+      {/* Description */}
       <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
-        {!error &&
-          `Er du sikker på at du vil låne denne ${getManifestationMaterialTypeSpecific(manifestation) || "material"}?`}
+        {isLoadingLoans && (
+          <div className="bg-background-skeleton h-[26px] w-[500px] animate-pulse rounded-full" />
+        )}
+        {!canUserLoanMoreEMaterials(dataLoans, manifestation) && (
+          <>
+            Du kan desværre ikke låne flere{" "}
+            <span className="font-bold">
+              {`"${getManifestationMaterialTypeSpecific(manifestation)}er"`}
+            </span>{" "}
+            i denne måned.
+          </>
+        )}
         {error && "Vi kunne desværre ikke låne materialet. Prøv igen senere."}
+        {isErrorLoans &&
+          "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."}
+        {!error &&
+          !isLoadingLoans &&
+          canUserLoanMoreEMaterials(dataLoans, manifestation) &&
+          `Er du sikker på at du vil låne denne ${getManifestationMaterialTypeSpecific(manifestation) || "material"}?`}
       </p>
+
       <div className="flex flex-row items-center justify-center gap-6">
+        {/* Only show "approve loan" button if user can still loan more materials */}
+        {canUserLoanMoreEMaterials(dataLoans, manifestation) && !error && !isErrorLoans && (
+          <Button
+            theme={"primary"}
+            size={"lg"}
+            onClick={handleLoanMaterial}
+            disabled={isHandlingLoan || isLoadingLoans}>
+            {!isHandlingLoan && "Ja"}
+            {isHandlingLoan ||
+              (isLoadingLoans && (
+                <Icon
+                  name="go-spinner"
+                  ariaLabel="Indlæser"
+                  className="animate-spin-reverse h-[24px] w-[24px]"
+                />
+              ))}
+          </Button>
+        )}
         <Button
-          theme={"primary"}
           size={"lg"}
-          onClick={handleLoanMaterial}
-          disabled={isHandlingLoan}>
-          {!isHandlingLoan && "Ja"}
-          {isHandlingLoan && (
+          onClick={() => {
+            setIsOpen(prev => !prev)
+          }}
+          disabled={isHandlingLoan || isLoadingLoans}>
+          {!canUserLoanMoreEMaterials(dataLoans, manifestation) || error || isErrorLoans
+            ? "Luk"
+            : "Nej"}
+          {isLoadingLoans && (
             <Icon
               name="go-spinner"
               ariaLabel="Indlæser"
               className="animate-spin-reverse h-[24px] w-[24px]"
             />
           )}
-        </Button>
-        <Button
-          size={"lg"}
-          onClick={() => {
-            setIsOpen(prev => !prev)
-          }}
-          disabled={isHandlingLoan}>
-          Nej
         </Button>
       </div>
     </ResponsiveDialog>
