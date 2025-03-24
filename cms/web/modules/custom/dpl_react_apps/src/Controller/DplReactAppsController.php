@@ -445,7 +445,7 @@ class DplReactAppsController extends ControllerBase {
       'publizon-error-status-invalid-phone-number-text' => $this->t('Invalid phone number', [], ['context' => 'Work Page']),
       'publizon-error-status-library-server-not-responding-text' => $this->t("The library's server is not responding – try logging in again later.", [], ['context' => 'Work Page']),
       'publizon-error-status-monthly-loan-limit-reached-text' => $this->t('Your library has reached the limit for the number of loans this month', [], ['context' => 'Work Page']),
-      'publizon-error-status-no-access-because-not-resident-text' => $this->t('You do not have access to eReolen from this library as you are not registered as a resident in the municipality. Contact the library.', [], ['context' => 'Work Page']),
+      'publizon-error-status-no-access-because-not-resident-text' => $this->t('You do not have access to digital materials from this library as you are not registered as a resident in the municipality. Contact the library.', [], ['context' => 'Work Page']),
       'publizon-error-status-no-country-found-with-given-country-code-text' => $this->t('No country could be found with the given country code', [], ['context' => 'Work Page']),
       'publizon-error-status-number-of-simultaneous-blue-loans-exceeded-text' => $this->t('The number of simultaneous loans of blue titles has been exceeded', [], ['context' => 'Work Page']),
       'publizon-error-status-number-of-simultaneous-loans-exceeded-text' => $this->t('The number of simultaneous loans has been exceeded', [], ['context' => 'Work Page']),
