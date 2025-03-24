@@ -30,8 +30,6 @@ and
 The overall authorization behavior of the Go application is controlled by these
 parameters.
 
-TODO: explain the session fecthing/hook/route thingy
-
 ## Go session type cookie
 
 Because we need a different behavior of the application depending of the session
@@ -45,7 +43,7 @@ Pubhub API or the Publizon adapter when requesting Publizon data.
 
 ### Login via Unilogin
 
-The login flow is mainly controlled vi the [openid-client](https://www.npmjs.com/package/openid-client)
+The login flow is mainly controlled via the [openid-client](https://www.npmjs.com/package/openid-client)
 package. It is a tool to ease the setup of the Oauth 2 flows.
 The decision behind the choice of tools for the login handling is described in an
 [ADR](https://adr.github.io/) in the docs/architecture section.
@@ -113,7 +111,7 @@ sequenceDiagram
     CMS-->>Go: Go fetches the login url from the CMS
     Patron->>Go: Clicks Adgangsplatformen login button
     Go->>CMS: Go redirects patron to /login at the CMS
-    Note over Adgangsplatformen: NB: The Adgangsplagtformen Oauth flow<br />is described in the dpl-cms documenation
+    Note over Adgangsplatformen: NB: The Adgangsplatformen Oauth flow<br />is described in the dpl-cms documentation
     CMS->>Adgangsplatformen: Patron is sent to login form at Adgangsplatformen
     Adgangsplatformen->>CMS: After successful login the patron is redirected to the CMS
     Note over CMS,CMS: The Go specific route<br />(dpl_go.post_adgangsplatformen_login) in the CMS<br />is specified via the current_path url parameter
