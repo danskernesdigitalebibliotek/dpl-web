@@ -1,18 +1,9 @@
-// TODO: Test that the local adapter's output is the same as the adapter's output
-// We need two users with the same one loan
-// Mock soap service output
-// Copy output from the adapter and use it as assertion that our local adapter returns the same data
-// We can use vitest snapshot of our local adapter's response for this
-import { IronSession } from "iron-session"
 import { testApiHandler } from "next-test-api-route-handler"
 import { describe, expect, it } from "vitest"
 
 import { getV1UserLoansSoapData } from "@/__tests__/mocks/pubhub"
-import * as xyz from "@/app/pubhub/v1/user/loans/(lib)/requests"
 import * as apiEndpoint from "@/app/pubhub/v1/user/loans/route"
-import { withSessionType } from "@/lib/rest/publizon/helper"
 import * as sessionFunctions from "@/lib/session/session"
-import { TSessionData } from "@/lib/session/session"
 import * as clientFunctions from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist/client"
 
 describe("Pubhub local API", () => {
