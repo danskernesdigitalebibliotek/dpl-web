@@ -1,3 +1,4 @@
+import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 
@@ -16,12 +17,12 @@ export const fetcher = async <ResponseType>({
   signal?: AbortSignal
 }) => {
   const authHeaders = {
-    Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
+    Authorization: `Bearer ${getEnv("LIBRARY_TOKEN")}`,
   } as object
 
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${goConfig("routes.pubhub")}`,
+    baseUrl: `${getEnv("APP_URL")}/${goConfig("routes.pubhub")}`,
     url,
     params,
   })

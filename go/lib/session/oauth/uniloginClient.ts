@@ -1,10 +1,10 @@
 import * as client from "openid-client"
 
 import { getDplCmsUniloginConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
-import goConfig from "@/lib/config/goConfig"
+import { getEnv } from "@/lib/config/env"
 
 export const uniloginClientSettings = {
-  post_login_route: `${goConfig("app.url")}/user/profile`,
+  post_login_route: `${getEnv("APP_URL")}/user/profile`,
 }
 
 export async function getUniloginClientConfig() {

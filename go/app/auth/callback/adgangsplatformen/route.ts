@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 
+import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
 import { getSession, saveAdgangsplatformenSession } from "@/lib/session/session"
 
@@ -11,13 +12,13 @@ export async function GET() {
   if (userTokenData) {
     const session = await getSession()
     await saveAdgangsplatformenSession(session, userTokenData)
-    return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
+    return NextResponse.redirect(`${getEnv("APP_URL")})}/user/profile`)
   }
 
   // We could not retrieve the user token.
   // So we redirect to the login failed page  without setting the session.
   console.error("Could not retrieve Adgangsplatformen user token.")
-  return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
+  return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed")}`)
 }
 
 export const dynamic = "force-dynamic"
