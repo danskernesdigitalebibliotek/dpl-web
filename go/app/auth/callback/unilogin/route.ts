@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 import type { IntrospectionResponse } from "openid-client"
 
+import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
@@ -25,7 +26,7 @@ export interface TIntrospectionResponse extends IntrospectionResponse {
 export async function GET(request: NextRequest) {
   const session = await getSession()
   const config = await getUniloginClientConfig()
-  const appUrl = String(goConfig("app.url"))
+  const appUrl = getEnv("APP_URL")
   const sessionOptions = await getSessionOptions()
 
   if (!config || !sessionOptions) {
@@ -88,7 +89,7 @@ export async function GET(request: NextRequest) {
       await destroySession(session)
       // Redirect user to login not authorized page.
       return NextResponse.redirect(
-        `${goConfig("app.url")}/${goConfig("routes.login-not-authorized")}`
+        `${getEnv("APP_URL")}/${goConfig("routes.login-not-authorized")}`
       )
     }
 
@@ -107,10 +108,10 @@ export async function GET(request: NextRequest) {
     // Make sure that the user is logged out remotely first. And destroy session.
     await logoutUniloginSSO(session)
     await destroySession(session)
-    return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
+    return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed")}`)
   }
 
-  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
+  return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
 }
 
 export const dynamic = "force-dynamic"

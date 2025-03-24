@@ -3,24 +3,19 @@ import { IronSession, getIronSession } from "iron-session"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
+import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
 export const getSessionOptions = async () => {
-  const sessionSecret = process.env.GO_SESSION_SECRET ?? null
-
-  if (!sessionSecret) {
-    console.error("Missing Go session secret")
-    return null
-  }
+  const sessionSecret = getServerEnv("GO_SESSION_SECRET")
 
   return {
     password: sessionSecret,
     cookieName: "go-session",
     cookieOptions: {
       // secure only works in `https` environments
-      // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`
-      secure: process.env.NODE_ENV === "production",
+      secure: getEnv("NODE_ENV") === "production",
     },
     // TODO: Decide on the session ttl.
     ttl: 60 * 60 * 24 * 7, // 1 week
@@ -213,7 +208,7 @@ export const destroySessionAndRedirectToFrontPage = async (session: IronSession<
 }
 
 export const redirectToFrontPageAndReloadSession = async () => {
-  const appUrl = new URL(String(goConfig("app.url")))
+  const appUrl = new URL(getEnv("APP_URL"))
 
   return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
 }

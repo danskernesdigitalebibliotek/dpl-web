@@ -1,10 +1,8 @@
-export const getUniloginWsCredentials = () => {
-  const username = process.env.UNLILOGIN_SERVICES_WS_USER ?? ""
-  const password = process.env.UNLILOGIN_SERVICES_WS_PASSWORD ?? ""
+import { getServerEnv } from "../config/env"
 
-  if (!username || !password) {
-    throw new Error("Missing Unilogin WS credentials")
-  }
+export const getUniloginWsCredentials = () => {
+  const username = getServerEnv("UNLILOGIN_SERVICES_WS_USER")
+  const password = getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD")
 
   return {
     username,
@@ -12,13 +10,7 @@ export const getUniloginWsCredentials = () => {
   }
 }
 
-export const getLibraryMunicipalityId = () => {
-  const municipalityId = process.env.UNILOGIN_MUNICIPALITY_ID ?? ""
-  if (!municipalityId) {
-    throw new Error("Missing Unilogin WS credentials")
-  }
-  return municipalityId
-}
+export const getLibraryMunicipalityId = () => getServerEnv("UNILOGIN_MUNICIPALITY_ID")
 
 export const getInstitutionIds = (text: string) =>
   text.replace(/\[([^\]]*)\]/g, "$1").split(",") ?? []

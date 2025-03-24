@@ -1,7 +1,7 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 import { loadEnvConfig } from "@next/env"
 
-import goConfig from "./lib/config/goConfig"
+import { getEnv } from "./lib/config/env"
 
 loadEnvConfig(process.cwd())
 
@@ -12,9 +12,9 @@ const config: CodegenConfig = {
       documents: "**/*.dpl-cms.graphql",
       // TODO: Make this configurable
       schema: {
-        [`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS}`]: {
+        [getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")]: {
           headers: {
-            Authorization: `Basic ${process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS}`,
+            Authorization: `Basic ${getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")}`,
           },
         },
       },
@@ -49,9 +49,9 @@ const config: CodegenConfig = {
       documents: "**/*.fbi.graphql",
       schema: [
         {
-          [String(goConfig("service.fbi.graphql.endpoint"))]: {
+          [getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")]: {
             headers: {
-              Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
+              Authorization: `Bearer ${getEnv("LIBRARY_TOKEN")}`,
             },
           },
         },

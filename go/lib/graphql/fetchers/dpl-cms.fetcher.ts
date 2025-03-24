@@ -1,3 +1,5 @@
+import { getEnv } from "@/lib/config/env"
+
 import AccessForbiddenError from "./AccessForbiddenError"
 
 const getHeaders = (headers: RequestInit["headers"] | undefined) => {
@@ -8,7 +10,7 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
   if (headers && headers.hasOwnProperty("Cookie")) {
     return { ...contentTypeHeader, ...headers }
   }
-  const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
+  const dplCmsGraphqlBasicToken = getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")
 
   return {
     ...contentTypeHeader,
@@ -22,8 +24,8 @@ export function fetcher<TData, TVariables>(
   variables?: TVariables,
   options?: RequestInit & { next?: NextFetchRequestConfig }
 ) {
-  const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
-  const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
+  const dplCmsGraphqlEndpoint = getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")
+  const dplCmsGraphqlBasicToken = getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")
 
   // Check if the environment variables are set
   if (!dplCmsGraphqlEndpoint) {
