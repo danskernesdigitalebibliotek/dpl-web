@@ -84,7 +84,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             <Button
               ariaLabel="Prøv lydbog"
               size={"lg"}
-              disabled={!!!identifier}
+              disabled={!Boolean(identifier)}
               className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
               onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
               Prøv lydbog
@@ -107,7 +107,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             <Button
               ariaLabel="Prøv podcast"
               size={"lg"}
-              disabled={!!!identifier}
+              disabled={!Boolean(identifier)}
               className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
               onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
               Prøv podcast
