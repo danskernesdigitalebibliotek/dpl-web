@@ -2,10 +2,10 @@ import React from "react"
 
 import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
-import { materialTypeIconNamesType } from "@/lib/types/icons"
+import { MaterialTypeIconNamesType, QuestionMarkIconType } from "@/lib/types/icons"
 
 export type MaterialTypeIconWrapperProps = {
-  iconName: materialTypeIconNamesType
+  iconName: MaterialTypeIconNamesType | QuestionMarkIconType
   costFree?: boolean
   className?: string
 }
