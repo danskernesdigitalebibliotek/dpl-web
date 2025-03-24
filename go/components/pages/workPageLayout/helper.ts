@@ -27,7 +27,7 @@ export const getManifestationMaterialType = (
 
 export const getManifestationMaterialTypeSpecific = (
   manifestation: ManifestationWorkPageFragment
-): "e-bog" | "lydbog" | "podcast" | undefined => {
+): "e-bog" | "lydbog" | "podcast" | null => {
   if (isManifestationEbook(manifestation)) {
     return "e-bog"
   }
@@ -37,7 +37,7 @@ export const getManifestationMaterialTypeSpecific = (
   if (isManifestationPodcast(manifestation)) {
     return "podcast"
   }
-  return undefined
+  return null
 }
 
 export const getManifestationByMaterialType = (
