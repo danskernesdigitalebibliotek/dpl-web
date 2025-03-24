@@ -14,6 +14,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
     const orderListResponse = orderListData.response
     const orderItem = orderListResponse.data.orderitem
     const orderItems = isOrderItem(orderItem) ? [orderItem] : orderItem
+    const libraryData = orderListResponse.status.LibraryExtension
     return {
       loans: orderItems.map(orderItem => {
         return {
@@ -25,10 +26,18 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
           },
         }
       }),
+      libraryData: {
+        maxAmountPerMonth: Number(libraryData.maxloanpertime),
+        maxConcurrentAudiobookLoansPerBorrower: Number(libraryData.maxloanpertimesound),
+      },
       userData: {
-        totalLoans: Number(orderListResponse.status.LibraryExtension.usertotalloans),
-        totalEbookLoans: Number(orderListResponse.status.LibraryExtension.usertotalebookloans),
-        totalAudioLoans: Number(orderListResponse.status.LibraryExtension.usertotalsoundloans),
+        totalLoans: Number(libraryData.usertotalloans),
+        totalEbookLoans: Number(libraryData.usertotalebookloans),
+        totalAudioLoans: Number(libraryData.usertotalsoundloans),
+        ebookLoansRemaining: Number(libraryData.userebookloansremain),
+        // There is no direct data field from the SOAP service that gives the remaining amount of audiobooks
+        audiobookLoansRemaining:
+          Number(libraryData.maxloanpertimesound) - Number(libraryData.usertotalsoundloans),
       },
     }
   })

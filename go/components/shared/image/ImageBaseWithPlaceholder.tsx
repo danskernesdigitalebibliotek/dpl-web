@@ -1,6 +1,6 @@
 import React from "react"
 
-import goConfig from "@/lib/config/goConfig"
+import { getEnv } from "@/lib/config/env"
 
 import ImageBase, { TImageBaseProps } from "./ImageBase"
 
@@ -12,9 +12,7 @@ export default async function ImageBaseWithPlaceholder(props: TImageWrapperProps
   if (!src) return null
 
   // Get base64 image
-  const response = await fetch(
-    `${goConfig("app.url")}/api/getBase64?url=${encodeURIComponent(src)}`
-  )
+  const response = await fetch(`${getEnv("APP_URL")}/api/getBase64?url=${encodeURIComponent(src)}`)
   const { data } = await response.json()
   const base64 = data?.base64
 

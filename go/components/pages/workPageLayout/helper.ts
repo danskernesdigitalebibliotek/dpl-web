@@ -1,7 +1,9 @@
 import { head, uniqBy } from "lodash"
 
+import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import goConfig from "@/lib/config/goConfig"
 import {
+  GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
   Manifestation,
   ManifestationWorkPageFragment,
@@ -9,6 +11,7 @@ import {
   WorkFullWorkPageFragment,
   WorkMaterialTypesFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 export const getWorkMaterialTypes = (
   materialTypes: Work["materialTypes"]
@@ -18,8 +21,23 @@ export const getWorkMaterialTypes = (
 
 export const getManifestationMaterialType = (
   manifestation: ManifestationWorkPageFragment
-): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"]["display"] => {
-  return manifestation.materialTypes[0].materialTypeGeneral.display
+): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"] => {
+  return manifestation.materialTypes[0].materialTypeGeneral
+}
+
+export const getManifestationMaterialTypeSpecific = (
+  manifestation: ManifestationWorkPageFragment
+): "e-bog" | "lydbog" | "podcast" | null => {
+  if (isManifestationEbook(manifestation)) {
+    return "e-bog"
+  }
+  if (isManifestationAudioBook(manifestation)) {
+    return "lydbog"
+  }
+  if (isManifestationPodcast(manifestation)) {
+    return "podcast"
+  }
+  return null
 }
 
 export const getManifestationByMaterialType = (
@@ -36,6 +54,11 @@ const isManifestationOfMaterialType = (
   materialType: GeneralMaterialTypeCodeEnum
 ) => {
   return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
+}
+
+export const isManifestationBook = (manifestation: ManifestationWorkPageFragment) => {
+  if (!manifestation) return false
+  return isManifestationOfMaterialType(manifestation, "BOOKS")
 }
 
 export const isManifestationEbook = (manifestation: ManifestationWorkPageFragment) => {
@@ -80,6 +103,9 @@ export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCod
   if (goConfig("materialtypes.categories").reading.includes(code)) {
     return "book"
   }
+  if (goConfig("materialtypes.categories").ebook.includes(code)) {
+    return "ebook"
+  }
   if (goConfig("materialtypes.categories").listening.includes(code)) {
     return "headphones"
   }
@@ -92,4 +118,58 @@ export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCod
   if (goConfig("materialtypes.categories").podcast.includes(code)) {
     return "podcast"
   }
+}
+
+export const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMaterialType[]) => {
+  return workMaterialTypes.map(materialType => {
+    return {
+      code: materialType.code,
+      display: translateMaterialTypesStringForRender(
+        materialType.code as GeneralMaterialTypeCodeEnum
+      ),
+    }
+  }) as SlideSelectOption[]
+}
+
+export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
+  return options.sort((a, b) => {
+    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
+    return (
+      goConfig("materialtypes.sortpriority").indexOf(a.code) -
+      goConfig("materialtypes.sortpriority").indexOf(b.code)
+    )
+  })
+}
+
+export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
+  const materialType = getManifestationMaterialType(manifestation)
+  // If we couldn't find the right material type, we show the icon for "question-mark"
+  // Note that this has to be the same as the name of the icon in the icon library.
+  return getIconNameFromMaterialType(materialType.code) || "question-mark"
+}
+
+export const canUserLoanMoreEMaterials = (
+  dataLoans: LoanListResult | null | undefined,
+  manifestation: ManifestationWorkPageFragment
+) => {
+  if (
+    !dataLoans?.userData?.audiobookLoansRemaining ||
+    !dataLoans?.userData?.ebookLoansRemaining ||
+    !manifestation
+  ) {
+    return false
+  }
+  const materialType = getManifestationMaterialType(manifestation)
+  if (materialType.code === "AUDIO_BOOKS") {
+    return dataLoans.userData.audiobookLoansRemaining > 0
+  }
+  if (materialType.code === "EBOOKS") {
+    return dataLoans.userData.ebookLoansRemaining > 0
+  }
+  // Podcasts are always loanable
+  if (materialType.code === "PODCASTS") {
+    return true
+  }
+  // Default to false
+  return false
 }

@@ -1,0 +1,4 @@
+
+/** CreateLoanResult */
+export interface CreateLoanResult {
+}

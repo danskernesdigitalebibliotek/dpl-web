@@ -4,12 +4,12 @@
 
 We have several places where configuration come from:
 
-- Environment variables
 - Configuration from external API's
 - Static local configuration
 
 We wanted a unified way of handling configuration that addresses those (and
-possibly future) configuration sources.
+possibly future) configuration sources. This does not include environment
+variables - they by their own helper functions from `env.ts`.
 The reasons why is listed in the "Consequences" section of this document.
 
 ## Decision
@@ -29,25 +29,13 @@ const search = {
 ...
 ```
 
-...or a function:
-
-```typescript
-{
-  "service.fbi.graphql.endpoint": () => {
-    if (process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI) {
-      return process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI
-    }
-  },
-}
-```
-
 ...or even a asynchronous function:
 
 ```typescript
 {
   "service.unilogin.api.url": async () => {
-    if (process.env.UNILOGIN_API_URL) {
-      return process.env.UNILOGIN_API_URL
+    if (getEnv("UNILOGIN_API_URL")) {
+      return getEnv("UNILOGIN_API_URL")
     }
 
     const config = await getDplCmsUniloginConfig()

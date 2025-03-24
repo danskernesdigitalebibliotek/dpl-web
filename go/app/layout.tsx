@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="da">
-      <body className={`${GTFlexa.variable} antialiased`}>
+      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
         <Theme>
           <ReactQueryProvider>

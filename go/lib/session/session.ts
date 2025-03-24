@@ -3,24 +3,19 @@ import { IronSession, getIronSession } from "iron-session"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
+import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
 export const getSessionOptions = async () => {
-  const sessionSecret = process.env.GO_SESSION_SECRET ?? null
-
-  if (!sessionSecret) {
-    console.error("Missing Go session secret")
-    return null
-  }
+  const sessionSecret = getServerEnv("GO_SESSION_SECRET")
 
   return {
     password: sessionSecret,
     cookieName: "go-session",
     cookieOptions: {
       // secure only works in `https` environments
-      // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`
-      secure: process.env.NODE_ENV === "production",
+      secure: getEnv("NODE_ENV") === "production",
     },
     // TODO: Decide on the session ttl.
     ttl: 60 * 60 * 24 * 7, // 1 week
@@ -38,7 +33,7 @@ export interface TSessionData {
   userInfo?: {
     sub: string
     uniid: string
-    institution_ids: string
+    institution_ids: string[]
   }
   adgangsplatformenUserToken?: string
   type: TSessionType
@@ -103,7 +98,8 @@ export const setUniloginTokensOnSession = async (
   // Since we have a limitation in how big cookies can be,
   // we will have to store the user id in a separate cookie.
   const cookieStore = await cookies()
-  cookieStore.set(goConfig("auth.id-token"), tokenSet.id_token)
+  cookieStore.set(goConfig("auth.cookie-name.id-token"), tokenSet.id_token)
+  cookieStore.set(goConfig("auth.cookie-names.session-type"), "unilogin")
 }
 
 type TAdgangsplatformenUserToken = {
@@ -119,6 +115,8 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   session.expires = add(new Date(), {
     seconds: token.expire,
   })
+  const cookieStore = await cookies()
+  cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgansplatformen")
 }
 
 export const saveAdgangsplatformenSession = async (
@@ -174,9 +172,21 @@ export const accessTokenIsExpired = (session: IronSession<TSessionData>) => {
 }
 
 export const getUniloginIdToken = async () =>
-  (await cookies()).get(goConfig("auth.id-token"))?.value
+  (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
 
-export const deleteUniloginIdToken = async () => (await cookies()).delete(goConfig("auth.id-token"))
+export const getSessionTypeToken = async () =>
+  (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
+
+const deleteGoSessionCookies = async () => {
+  const cookieStore = await cookies()
+  const allCookies = cookieStore.getAll()
+
+  allCookies.map(async cookie => {
+    if (cookie.name.startsWith("go-session:")) {
+      ;(await cookies()).delete(cookie.name)
+    }
+  })
+}
 
 export const getDplCmsSessionCookie = async () => {
   const cookieStore = await cookies()
@@ -187,12 +197,9 @@ export const getDplCmsSessionCookie = async () => {
 }
 
 export const destroySession = async (session: IronSession<TSessionData>) => {
-  // Destroy session and id token.
+  // Destroy session and additional go-session cookies.
   session.destroy()
-  const id_token = await getUniloginIdToken()
-  if (id_token) {
-    await deleteUniloginIdToken()
-  }
+  await deleteGoSessionCookies()
 }
 
 export const destroySessionAndRedirectToFrontPage = async (session: IronSession<TSessionData>) => {
@@ -201,7 +208,7 @@ export const destroySessionAndRedirectToFrontPage = async (session: IronSession<
 }
 
 export const redirectToFrontPageAndReloadSession = async () => {
-  const appUrl = new URL(String(goConfig("app.url")))
+  const appUrl = new URL(getEnv("APP_URL"))
 
   return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
 }

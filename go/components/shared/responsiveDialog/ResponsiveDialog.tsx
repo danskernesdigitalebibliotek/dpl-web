@@ -3,6 +3,7 @@ import React from "react"
 
 import {
   Dialog,
+  DialogBody,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -24,7 +25,7 @@ function ResponsiveDialog({
   onOpenChange,
 }: {
   title: string
-  description: string
+  description?: string
   children: React.ReactNode
   open: boolean
   onOpenChange: () => void
@@ -38,9 +39,10 @@ function ResponsiveDialog({
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{title}</DialogTitle>
-              <DialogDescription>{description}</DialogDescription>
+              {description && <DialogDescription>{description}</DialogDescription>}
+              <hr className="go-divider mt-5 mb-10" />
             </DialogHeader>
-            {children}
+            <DialogBody>{children}</DialogBody>
           </DialogContent>
         </Dialog>
       )}
@@ -50,7 +52,7 @@ function ResponsiveDialog({
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>{title}</DrawerTitle>
-              <DrawerDescription>{description}</DrawerDescription>
+              {description && <DrawerDescription>{description}</DrawerDescription>}
             </DrawerHeader>
             {children}
           </DrawerContent>
