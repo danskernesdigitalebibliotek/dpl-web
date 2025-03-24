@@ -22,7 +22,7 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       `z-dialog data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-      data-[state=open]:fade-in-0 fixed inset-0 bg-black/80`,
+      data-[state=open]:fade-in-0 bg-foreground/50 fixed inset-0`,
       className
     )}
     {...props}
@@ -39,24 +39,21 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        `z-dialog gap-grid-edge bg-background p-grid-edge data-[state=open]:animate-in
-        data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
-        data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
-        data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]
-        data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%]
-        left-[50%] m-auto grid w-[calc(100%-var(--grid-edge)*2)] max-w-[600px] translate-x-[-50%]
-        translate-y-[-50%] rounded-md shadow-lg duration-200 lg:gap-6 lg:p-6`,
+        `z-dialog gap-grid-edge bg-background p-grid-edge data-[state=closed]:animate-out
+        data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-30 data-[state=open]:animate-in
+        data-[state=open]:fade-in-0 data-[state=open]:zoom-in-0 fixed top-[50%] left-[50%] m-auto grid
+        max-h-[95vh] w-[calc(100%-var(--grid-edge)*2)] max-w-[1000px] translate-x-[-50%] translate-y-[-50%]
+        overflow-y-scroll rounded-md shadow-lg duration-200 lg:gap-6 lg:px-6 lg:py-10`,
         className
       )}
       {...props}>
       {children}
       <DialogPrimitive.Close
-        className="right-grid-edge top-grid-edge ring-offset-background focus:ring-ring data-[state=open]:bg-accent
-          data-[state=open]:text-muted-foreground absolute rounded-sm opacity-70 transition-opacity
-          hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none
-          lg:top-6 lg:right-6">
-        <Cross2Icon className="h-4 w-4" />
-        <span className="sr-only">Close</span>
+        className="right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-accent
+          data-[state=open]:text-muted-foreground focus-visible absolute rounded-full transition-opacity
+          hover:cursor-pointer disabled:pointer-events-none lg:top-6 lg:right-6">
+        <Cross2Icon className="h-8 w-8" />
+        <span className="sr-only">Luk</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
@@ -67,6 +64,17 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
   <div className={cn("flex flex-col space-y-1.5 text-center", className)} {...props} />
 )
 DialogHeader.displayName = "DialogHeader"
+
+const DialogBody = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+  const [display, setDisplay] = React.useState(false)
+  setTimeout(() => {
+    setDisplay(true)
+  }, 300)
+  if (display) {
+    return <div className={cn("animate-content-grow space-y-4", className)} {...props} />
+  }
+}
+DialogBody.displayName = "DialogBody"
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
@@ -80,7 +88,7 @@ const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title ref={ref} className={cn("text-typo-heading-5", className)} {...props} />
+  <DialogPrimitive.Title ref={ref} className={cn("text-typo-heading-3", className)} {...props} />
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
@@ -90,7 +98,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-typo-caption text-muted-foreground", className)}
+    className={cn("text-typo-body-lg text-muted-foreground", className)}
     {...props}
   />
 ))
@@ -104,6 +112,7 @@ export {
   DialogClose,
   DialogContent,
   DialogHeader,
+  DialogBody,
   DialogFooter,
   DialogTitle,
   DialogDescription,

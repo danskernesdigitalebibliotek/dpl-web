@@ -202,6 +202,8 @@
   --transition-duration-dark-mode: var(--dark-mode-transition);
 
   --animate-wiggle: wiggle 900ms linear 1;
+  --animate-content-grow: content-grow 300ms ease-in-out 1;
+  --animate-spin-reverse: spin-reverse 900ms ease-in-out infinite;
 
   --spacing-navigation-top-height: var(--navigation-top-height);
   --spacing-navigation-height: var(--navigation-height);
@@ -255,5 +257,25 @@
     60% {
       transform: rotate(-8deg);
     }
+  }
+
+  @keyframes content-grow {
+    0% {
+      max-height: 0vh;
+      overflow: hidden;
+    }
+    100% {
+      max-height: 100vh;
+      overflow: visible;
+    }
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const regexDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}[\.0-9]*$/
+import { regexDate } from "@/app/pubhub/helper"
 
 export const orderItemSchema = z.object({
   retailerordernumber: z.string(),
@@ -17,6 +17,10 @@ export const libraryUserOrderListSchema = z.object({
   response: z.object({
     status: z.object({
       LibraryExtension: z.object({
+        maxloanpertime: z.string().regex(/^[0-9]+$/),
+        maxloanpertimesound: z.string().regex(/^[0-9]+$/),
+        // userebookloansremain can in some cases be a negative number
+        userebookloansremain: z.string().regex(/^[-–]?[0-9]+$/),
         usertotalloans: z.string().regex(/^[0-9]+$/),
         usertotalebookloans: z.string().regex(/^[0-9]+$/),
         usertotalsoundloans: z.string().regex(/^[0-9]+$/),

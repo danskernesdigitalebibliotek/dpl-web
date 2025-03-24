@@ -109,7 +109,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
 export const SearchFiltersColumnSkeleton = () => {
   return (
     <div className="space-y-grid-gap-half">
-      <div className="bg-background-skeleton -mb-1 h-4 w-20 animate-pulse rounded-full"></div>
+      <div className="bg-background-skeleton mb-2.5 h-4 w-20 animate-pulse rounded-full"></div>
       <div className="space-y-1">
         <div className="bg-background-skeleton h-7 w-10 animate-pulse rounded-full"></div>
         <div className="bg-background-skeleton h-7 w-20 animate-pulse rounded-full"></div>

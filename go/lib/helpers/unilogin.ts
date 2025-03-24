@@ -11,3 +11,11 @@ export const getUniloginWsCredentials = () => {
 }
 
 export const getLibraryMunicipalityId = () => getServerEnv("UNILOGIN_MUNICIPALITY_ID")
+
+export const getInstitutionIds = (text: string) =>
+  text.replace(/\[([^\]]*)\]/g, "$1").split(",") ?? []
+
+export const getInstitutionId = (text: string) => {
+  const ids = getInstitutionIds(text)
+  return ids.length ? ids[0] : null
+}

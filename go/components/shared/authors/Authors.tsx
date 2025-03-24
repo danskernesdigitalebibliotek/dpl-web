@@ -29,7 +29,7 @@ const Authors = ({ creators }: AuthorsProps) => {
                       routeParams: { search: "search" },
                       queryParams: { q: creator },
                     })}
-                    className="animate-text-underline">
+                    className="animate-text-underline focus-visible focus-visible:rounded-sm">
                     {creator}
                   </Link>
                 </span>

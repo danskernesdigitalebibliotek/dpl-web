@@ -8,15 +8,14 @@ import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
   getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
-  translateMaterialTypesStringForRender,
+  slideSelectOptionsFromMaterialTypes,
+  sortSlideSelectOptions,
 } from "@/components/pages/workPageLayout/helper"
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import goConfig from "@/lib/config/goConfig"
 import {
-  GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
   Work,
@@ -32,17 +31,6 @@ import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/g
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
   selectedManifestation: ManifestationWorkPageFragment
-}
-
-const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMaterialType[]) => {
-  return workMaterialTypes.map(materialType => {
-    return {
-      code: materialType.code,
-      display: translateMaterialTypesStringForRender(
-        materialType.code as GeneralMaterialTypeCodeEnum
-      ),
-    }
-  }) as SlideSelectOption[]
 }
 
 const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
@@ -92,13 +80,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   const slideSelectOptions = workMaterialTypesWithDisplayName
 
   // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
-  const sortedSlideSelectOptions = slideSelectOptions.sort((a, b) => {
-    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
-    return (
-      goConfig("materialtypes.sortpriority").indexOf(a.code) -
-      goConfig("materialtypes.sortpriority").indexOf(b.code)
-    )
-  })
+  const sortedSlideSelectOptions = sortSlideSelectOptions(slideSelectOptions)
 
   const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]
     .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
