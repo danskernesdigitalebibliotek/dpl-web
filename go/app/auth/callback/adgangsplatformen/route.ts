@@ -12,7 +12,7 @@ export async function GET() {
   if (userTokenData) {
     const session = await getSession()
     await saveAdgangsplatformenSession(session, userTokenData)
-    return NextResponse.redirect(`${getEnv("APP_URL")})}/user/profile`)
+    return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
   }
 
   // We could not retrieve the user token.
