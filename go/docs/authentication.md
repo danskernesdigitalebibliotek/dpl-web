@@ -171,3 +171,46 @@ flowchart TD
 
     SessionExist -->|No| RedirectToFrontpage
 ```
+
+## Token handling
+
+### Token types
+
+We have four different token types:
+
+- Access token
+- Refresh token
+- Id token
+- Library token
+
+#### Access token
+
+Access tokens exist in both Unilogin and Adgangsplatformen session.
+The Unilogin access token is only used to get user information as a part
+of the login process but apart from that is is not used in the rest of the application.
+
+The Adgangsplatformen access token is a part of the `go-session` iron-session cookie.
+Whenever a fetch is fired and service requested needs an Adgangsplatformen access
+token as bearer token, the access token is fetched from the internal
+`/auth/session` route.
+
+#### Refresh token
+
+Is used as a part of the Unilogin session. When access token is expired
+the refresh token is used to issue a new access token.
+
+#### Id token
+
+Is used when a user logs out of an active Unilogin session to terminate the
+remote SSO session.
+See the `handleUniloginLogout()` function.
+
+#### Library token
+
+The documentation of the library token does not really belong here since it is
+not a part of the session or authentication process.
+But since we document all the token here it is worth mentioning.
+
+The library token is fetched regularly in the middleware and set as a cookie.
+Whenever it expired a new library token is fetched and the cookie is updated.
+As mentioned before it is a separate system and not coupled to the session handling.
