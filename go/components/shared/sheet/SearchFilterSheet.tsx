@@ -32,7 +32,7 @@ function SearchFilterSheet(props: { open: boolean; facets: SearchFacetFragment[]
         <SheetHeader>
           <SheetTitle className="mb-space-y text-typo-heading-3">Filtre</SheetTitle>
         </SheetHeader>
-        <SheetDescription>
+        <SheetDescription asChild>
           <div className="-mx-grid-edge lg:-mx-8">
             <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
               {facets.map(facet => {

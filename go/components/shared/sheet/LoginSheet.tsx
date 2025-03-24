@@ -20,7 +20,7 @@ function LoginSheet({ open }: { open: boolean }) {
         <SheetHeader className="mb-8">
           <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>
         </SheetHeader>
-        <SheetDescription>
+        <SheetDescription asChild>
           <div className="flex h-full flex-col justify-center space-y-8">
             <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
               <div className="text-typo-heading-4 text-foreground mb-4 text-center">
