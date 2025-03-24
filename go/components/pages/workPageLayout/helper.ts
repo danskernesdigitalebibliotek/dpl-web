@@ -143,7 +143,9 @@ export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
 
 export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
   const materialType = getManifestationMaterialType(manifestation)
-  return getIconNameFromMaterialType(materialType.code) || "book"
+  // If we couldn't find the right material type, we show the icon for "question-mark"
+  // Note that this has to be the same as the name of the icon in the icon library.
+  return getIconNameFromMaterialType(materialType.code) || "question-mark"
 }
 
 export const canUserLoanMoreEMaterials = (
