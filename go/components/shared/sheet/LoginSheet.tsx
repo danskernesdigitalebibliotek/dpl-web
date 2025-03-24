@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation"
 import React from "react"
 
 import useGetDplCmsLoginUrls from "@/lib/config/dpl-cms/useGetDplCmsLoginUrls"
-import { useSheetStore } from "@/store/sheet.store"
+import { sheetStore } from "@/store/sheet.store"
 
 import { Button } from "../button/Button"
 import Icon from "../icon/Icon"
@@ -11,10 +11,11 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 function LoginSheet({ open }: { open: boolean }) {
   const { adgangsplatformen: adgangsplatformenLoginUrl } = useGetDplCmsLoginUrls()
   const router = useRouter()
-  const sheetStore = useSheetStore()
+
+  const { closeSheet } = sheetStore.trigger
 
   return (
-    <Sheet open={open} onOpenChange={(open: boolean) => (open ? null : sheetStore.closeSheet())}>
+    <Sheet open={open} onOpenChange={(open: boolean) => (open ? null : closeSheet())}>
       <SheetContent className="grid grid-rows-[min-content_1fr]">
         <SheetHeader className="mb-8">
           <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>

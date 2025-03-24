@@ -4,7 +4,7 @@ import React from "react"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-import { useSheetStore } from "@/store/sheet.store"
+import { sheetStore } from "@/store/sheet.store"
 
 import {
   Accordion,
@@ -23,10 +23,11 @@ function SearchFilterSheet(props: { open: boolean; facets: SearchFacetFragment[]
   const searchParams = useSearchParams()
   const actor = useSearchMachineActor()
   const toggleFilter = createToggleFilterCallback(actor)
-  const sheetStore = useSheetStore()
+
+  const { closeSheet } = sheetStore.trigger
 
   return (
-    <Sheet open={open} onOpenChange={(open: boolean) => (open ? null : sheetStore.closeSheet())}>
+    <Sheet open={open} onOpenChange={(open: boolean) => (open ? null : closeSheet())}>
       <SheetContent>
         <SheetHeader>
           <SheetTitle className="mb-space-y text-typo-heading-3">Filtre</SheetTitle>
@@ -43,7 +44,7 @@ function SearchFilterSheet(props: { open: boolean; facets: SearchFacetFragment[]
                       {facet.values.map((value, index) => (
                         <BadgeButton
                           onClick={() => {
-                            sheetStore.closeSheet()
+                            closeSheet()
                             toggleFilter({ name: facet.name, value: value.term })
                           }}
                           isActive={!!searchParams.getAll(facet.name).includes(value.term)}

@@ -44,6 +44,7 @@
     "@types/lodash": "^4.17.12",
     "@uidotdev/usehooks": "^2.4.1",
     "@xstate/react": "^5.0.0",
+    "@xstate/store": "^3.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cookies-next": "^5.1.0",
@@ -73,8 +74,7 @@
     "vaul": "^1.1.2",
     "wsdl-tsclient": "^1.7.1",
     "xstate": "^5.18.2",
-    "zod": "^3.23.8",
-    "zustand": "^5.0.0-rc.2"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@0no-co/graphqlsp": "^1.12.16",

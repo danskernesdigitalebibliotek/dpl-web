@@ -6,16 +6,17 @@ import React from "react"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import useSession from "@/hooks/useSession"
-import { useSheetStore } from "@/store/sheet.store"
+import { sheetStore } from "@/store/sheet.store"
 
 function ProfileButton() {
   const { session } = useSession()
   const router = useRouter()
-  const sheetStore = useSheetStore()
+
+  const { openSheet } = sheetStore.trigger
 
   const handleOnClick = () => {
     if (!session || !session.isLoggedIn) {
-      sheetStore.openSheet({
+      openSheet({
         sheetType: "LoginSheet",
       })
     } else {

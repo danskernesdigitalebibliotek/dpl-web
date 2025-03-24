@@ -7,7 +7,7 @@ import { createToggleFilterCallback } from "@/components/shared/searchFilters/he
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-import { useSheetStore } from "@/store/sheet.store"
+import { sheetStore } from "@/store/sheet.store"
 
 import { Button } from "../button/Button"
 
@@ -20,7 +20,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
   const actor = useSearchMachineActor()
   const toggleFilter = createToggleFilterCallback(actor)
 
-  const sheetStore = useSheetStore()
+  const { openSheet } = sheetStore.trigger
 
   return (
     <div className="space-y-grid-gap">
@@ -50,7 +50,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
       <Button
         aria-label="Vis filtreringsmuligheder"
         onClick={() =>
-          sheetStore.openSheet({
+          openSheet({
             sheetType: "SearchFilterSheet",
             props: { facets: facets },
           })
