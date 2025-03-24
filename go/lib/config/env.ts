@@ -40,7 +40,7 @@ const EnvSchema = z.object({
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
   UNILOGIN_API_URL: z.string().refine(validateUrl),
-  GO_SESSION_SECRET: z.string().length(32),
+  GO_SESSION_SECRET: z.string().min(32),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string(),
