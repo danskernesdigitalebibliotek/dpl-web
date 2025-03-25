@@ -12,7 +12,6 @@
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
-use Drupal\dpl_library_agency\GeneralSettings;
 use function Safe\json_encode;
 
 /**
@@ -259,7 +258,6 @@ function dpl_react_apps_texts(): array {
     'reservation-details-change' => t('Apply changes', [], ['context' => 'Global']),
     'reservation-details-date-of-reservation-title' => t('Date of reservation', [], ['context' => 'Global']),
     'reservation-details-digital-material-expires-title' => t('Borrow before', [], ['context' => 'Global']),
-    'reservation-details-digital-reservation-go-to-ereolen' => t('Go to eReolen', [], ['context' => 'Global']),
     'reservation-details-expires' => t('Your reservation expires @date!', [], ['context' => 'Global']),
     'reservation-details-expires-title' => t('Pickup deadline', [], ['context' => 'Global']),
     'reservation-details-no-interest-after-title' => t('Not interested after', [], ['context' => 'Global']),
@@ -397,9 +395,6 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
     ),
     'dashboard' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_dashboard.list')->toString()
-    ),
-    'ereolen-homepage' => dpl_react_apps_format_app_url(
-      GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
     'view-fees-and-compensation-rates' =>
     $fees_settings->getViewFeesAndCompensationRatesUrl(),

@@ -87,7 +87,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Url.
-      'ereolen-my-page-url' => dpl_react_apps_format_app_url($general_settings->get('ereolen_my_page_url'), GeneralSettings::EREOLEN_MY_PAGE_URL),
       'pause-reservation-info-url' => dpl_react_apps_format_app_url($general_settings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
 
       // Config.

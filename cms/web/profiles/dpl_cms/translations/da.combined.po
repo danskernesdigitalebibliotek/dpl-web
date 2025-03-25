@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-11 22:12+0100\n"
-"PO-Revision-Date: 2025-03-11 22:12+0100\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-11 22:13+0100\n"
-"PO-Revision-Date: 2025-03-11 22:13+0100\n"
+"POT-Creation-Date: 2025-03-25 22:31+0100\n"
+"PO-Revision-Date: 2025-03-25 22:31+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -751,7 +739,7 @@ msgstr "For eksempel <em>https://bibliotekernesnationaleformidling.dk/</em>."
 
 msgctxt "Validation"
 msgid "IsHttps"
-msgstr ""
+msgstr "IsHttps"
 
 msgctxt "BNF"
 msgid "my site"
@@ -1174,10 +1162,6 @@ msgstr ""
 "https://)"
 
 msgctxt "Patron page settings form"
-msgid "Ereolen always available"
-msgstr "eReolens titler som altid er tilgængelige"
-
-msgctxt "Patron page settings form"
 msgid "Pincode length (min)"
 msgstr "Pinkodelængde (minimumslængde)"
 
@@ -1249,8 +1233,8 @@ msgid ""
 msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
 
 msgctxt "Patron page"
-msgid "DIGITAL LOANS (EREOLEN)"
-msgstr "DIGITALE LÅN (eREOLEN)"
+msgid "DIGITAL LOANS"
+msgstr ""
 
 msgctxt "Patron page"
 msgid "Click here, to see titles always eligible to be loaned"
@@ -1379,7 +1363,7 @@ msgstr "Lån"
 
 msgctxt "Loan list"
 msgid "Due date digital @date"
-msgstr "Udløbsdato @date"
+msgstr "Udløber automatisk @date"
 
 msgctxt "Loan list"
 msgid "Due date physical @date"
@@ -1616,22 +1600,6 @@ msgid "Allow removing ready reservations"
 msgstr "Tillad sletning af opfyldte reserveringer"
 
 msgctxt "Library Agency Configuration"
-msgid "Ereolen my page link"
-msgstr "Link til Min side på eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "My page in ereolen"
-msgstr "Min side på eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "Ereolen home link"
-msgstr "Link til eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "Home page in ereolen"
-msgstr "eReolen startside"
-
-msgctxt "Library Agency Configuration"
 msgid "Pause reservation link"
 msgstr "Link til side om reserveringspause"
 
@@ -1781,7 +1749,7 @@ msgid "The WorkID value"
 msgstr ""
 
 msgid "The material type (e.g., bog, e-bog)."
-msgstr ""
+msgstr "Materialetype (fx bog, film, lydbog)"
 
 msgid "List of DPL-Go Unilogin configuration."
 msgstr ""
@@ -2043,24 +2011,26 @@ msgid "Add @type"
 msgstr "Tilføj @type"
 
 msgid "Add @type video via URL"
-msgstr ""
+msgstr "Tilføj @type video via URL"
 
 msgid ""
 "VideoTool URL example: https://media.videotool.dk?"
 "vn=557_2023103014511477700668916683"
 msgstr ""
+"VideoTool URL eksempel: https://media.videotool.dk?"
+"vn=557_2023103014511477700668916683"
 
 msgid "Add"
 msgstr "Tilføj"
 
 msgid "The given URL does not match the VideoTool URL pattern."
-msgstr ""
+msgstr "URL'en matcher ikke VideoTool URL mønsteret."
 
 msgid "VideoTool URL"
-msgstr ""
+msgstr "VideoTool URL"
 
 msgid "VideoTool embed"
-msgstr ""
+msgstr "VideoTool indlejring"
 
 msgid "Name"
 msgstr "Name"
@@ -3349,11 +3319,9 @@ msgstr "Dit bibliotek har nået grænsen for antal udlån i denne måned"
 
 msgctxt "Work Page"
 msgid ""
-"You do not have access to eReolen from this library as you are not "
+"You do not have access to digital materials from this library as you are not "
 "registered as a resident in the municipality. Contact the library."
 msgstr ""
-"Du har ikke adgang til eReolen fra dette bibliotek, da du ikke er "
-"registreret som bosiddende i Kommunen. Kontakt biblioteket"
 
 msgctxt "Work Page"
 msgid "No country could be found with the given country code"
@@ -3790,7 +3758,7 @@ msgstr "Se vores takster"
 
 msgctxt "Global"
 msgid "Expires @date"
-msgstr "Udløber @date"
+msgstr "Udløber automatisk @date"
 
 msgctxt "Global"
 msgid "Close renew loans modal"
@@ -3902,7 +3870,7 @@ msgstr "Luk pop-up med detaljevisning af materiale"
 
 msgctxt "Global"
 msgid "Expires"
-msgstr "Udløber"
+msgstr "Udløber automatisk"
 
 msgctxt "Global"
 msgid "View material"
@@ -4310,10 +4278,6 @@ msgid "Borrow before"
 msgstr "Lån før"
 
 msgctxt "Global"
-msgid "Go to eReolen"
-msgstr "Gå til eReolen"
-
-msgctxt "Global"
 msgid "Your reservation expires @date!"
 msgstr "Din reservering udløber @date!"
 
@@ -4666,7 +4630,7 @@ msgid "Handling the search pages."
 msgstr "Handling the search pages."
 
 msgid "DPL Go"
-msgstr ""
+msgstr "DPL GO"
 
 msgid "Module used for handling go specific functionality."
 msgstr ""
@@ -7481,43 +7445,9 @@ msgstr "Issue-kø"
 msgid "to report problems."
 msgstr "til at reportere problemer."
 
-msgid "Save settings"
-msgstr "Gem indstillinger"
-
 msgctxt "Entity type group"
 msgid "Content"
 msgstr "Indhold"
-
-msgid "Save and continue"
-msgstr "Gem og fortsæt"
-
-msgid "Save field settings"
-msgstr "Gem feltindstillinger"
-
-msgid "Update settings"
-msgstr "Opdatér indstillinger"
-
-msgid "Saved %name configuration"
-msgstr "Gemt %name konfiguration"
-
-msgid "Multiple test entity entities match this reference;"
-msgstr "Flere testenhedsenheder matcher denne reference;"
-
-msgid ""
-"Many test entity entities are called %value. Specify the one you want by "
-"appending the id in parentheses"
-msgstr ""
-"Mange testenheder kaldes %value. Specificer den, du ønsker, ved at tilføje "
-"id'et i parentes"
-
-msgid "There are no test entity entities matching \"%value\"."
-msgstr "Der er ingen testenheder, der matcher \"%value\"."
-
-msgid "Preview"
-msgstr "Preview"
-
-msgid "@type %title has been created."
-msgstr "@type %title oprettet."
 
 msgid "The referenced entity (%type: %id) does not exist."
 msgstr "Den refererede entity (%type: %id) eksisterer ikke."
@@ -8495,6 +8425,9 @@ msgid ""
 "A unique machine-readable name containing letters, numbers, and underscores."
 msgstr "Et unikt systemnavn som indeholder bogstaver, tal og understregninger."
 
+msgid "Save and continue"
+msgstr "Gem og fortsæt"
+
 msgid "Create group"
 msgstr "Opret gruppe"
 
@@ -9077,6 +9010,9 @@ msgid ""
 msgstr ""
 "Angiv fokus for dette billede i formen \"leftoffset,topoffset\" hvor "
 "forskydningerne er i procent. Eksempel: 25,75"
+
+msgid "Preview"
+msgstr "Preview"
 
 msgid ""
 "Focal Point allows you to specify the portion of an image that is most "
@@ -13760,7 +13696,7 @@ msgid "Web page or blog URL"
 msgstr "Web side eller blog URL"
 
 msgid "Preferred email address"
-msgstr ""
+msgstr "Foretrukket e-mailadresse"
 
 msgid "Email verified"
 msgstr "Email verificeret"
@@ -13802,7 +13738,7 @@ msgid "Client secret"
 msgstr "Klienthemmelighed"
 
 msgid "Allowed domains"
-msgstr ""
+msgstr "Tilladte domæner"
 
 msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
 msgstr ""
@@ -13924,7 +13860,7 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 msgid "Generic OAuth 2.0"
-msgstr ""
+msgstr "Generic OAuth 2.0"
 
 msgid "OpenID Connect clients"
 msgstr ""
@@ -14386,7 +14322,7 @@ msgstr ""
 "for arrangementinstanser."
 
 msgid "Automatically delete orphaned eventinstances."
-msgstr ""
+msgstr "Automatisk slet forældreløse event instanser."
 
 msgid "Event Creation"
 msgstr "Arrangør"

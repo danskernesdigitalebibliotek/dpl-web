@@ -9,7 +9,6 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplPatronPageSettings extends DplReactConfigBase {
   const DELETE_PATRON_URL = '';
-  const ALWAYS_AVAILABLE_EREOLEN = '';
   const PINCODE_LENGTH_MAX = 4;
   const PINCODE_LENGTH_MIN = 4;
 
