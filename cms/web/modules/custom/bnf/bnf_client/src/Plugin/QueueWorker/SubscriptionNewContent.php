@@ -84,7 +84,7 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
   #[\Override]
   public function processItem($data): void {
     /** @var ?\Drupal\bnf_client\Entity\Subscription $subscription */
-    $subscription = $this->storage->load($data['uuid']);
+    $subscription = $this->storage->load($data['id']);
 
     if (!$subscription) {
       // Subscription deleted. Carry on.

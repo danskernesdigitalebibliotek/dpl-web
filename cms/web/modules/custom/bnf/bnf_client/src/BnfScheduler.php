@@ -31,7 +31,7 @@ class BnfScheduler {
     $queue = $this->queueFactory->get('bnf_client_new_content');
 
     foreach ($subscriptions as $subscription) {
-      $queue->createItem(['uuid' => $subscription->getSubscriptionUuid()]);
+      $queue->createItem(['id' => $subscription->id()]);
     }
   }
 
