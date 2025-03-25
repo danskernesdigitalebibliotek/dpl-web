@@ -104,9 +104,9 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
         )}
         {!canUserLoanMoreEMaterials(dataLoans, manifestation) && (
           <>
-            Du kan desværre ikke låne flere{" "}
+            Du kan desværre ikke låne flere titler af typen{" "}
             <span className="font-bold">
-              {`"${getManifestationMaterialTypeSpecific(manifestation)}er"`}
+              {`"${getManifestationMaterialTypeSpecific(manifestation)}"`}
             </span>{" "}
             i denne måned.
           </>
@@ -117,7 +117,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
         {!error &&
           !isLoadingLoans &&
           canUserLoanMoreEMaterials(dataLoans, manifestation) &&
-          `Er du sikker på at du vil låne denne ${getManifestationMaterialTypeSpecific(manifestation) || "material"}?`}
+          `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
       </p>
 
       <div className="flex flex-row items-center justify-center gap-6">
