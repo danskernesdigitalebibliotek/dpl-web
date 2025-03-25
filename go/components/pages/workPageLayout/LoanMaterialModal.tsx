@@ -129,14 +129,13 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan || isLoadingLoans}>
             {!isHandlingLoan && "Ja"}
-            {isHandlingLoan ||
-              (isLoadingLoans && (
-                <Icon
-                  name="go-spinner"
-                  ariaLabel="Indlæser"
-                  className="animate-spin-reverse h-[24px] w-[24px]"
-                />
-              ))}
+            {(isHandlingLoan || isLoadingLoans) && (
+              <Icon
+                name="go-spinner"
+                ariaLabel="Indlæser"
+                className="animate-spin-reverse h-[24px] w-[24px]"
+              />
+            )}
           </Button>
         )}
         <Button
