@@ -45,9 +45,9 @@ if (getenv('MARIADB_DATABASE_OVERRIDE')) {
     'username' => getenv('MARIADB_USERNAME_OVERRIDE'),
     'password' => getenv('MARIADB_PASSWORD_OVERRIDE'),
     'host' => getenv('MARIADB_HOST_OVERRIDE'),
-    'port' => getenv('MARIADB_PORT_OVERRIDE'),
     // These settings intentionally have defaults. It is not likely that they
     // will be defined when overriding the database.
+    'port' => getenv('MARIADB_PORT_OVERRIDE') ?: 3306,
     'charset' => getenv('MARIADB_CHARSET_OVERRIDE') ?: 'utf8mb4',
     'collation' => getenv('MARIADB_COLLATION_OVERRIDE') ?: 'utf8mb4_general_ci',
     'prefix' => '',
