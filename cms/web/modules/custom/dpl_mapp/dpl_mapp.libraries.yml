@@ -10,4 +10,5 @@ dpl_mapp:
     js/dpl_mapp.js: {}
   dependencies:
     - dpl_mapp/mapp_tag_integration
+    - core/drupal
     - core/once
