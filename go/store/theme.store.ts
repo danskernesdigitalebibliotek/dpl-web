@@ -7,13 +7,14 @@ type TContext = {
 }
 
 const savedSnapshot = localStorage.getItem("theme.store")
-const initialSnapshot = savedSnapshot
-  ? JSON.parse(savedSnapshot)
-  : {
-      context: {
-        theme: "light",
-      } as TContext,
-    }
+const initialSnapshot =
+  typeof window !== "undefined" && savedSnapshot
+    ? JSON.parse(savedSnapshot)
+    : {
+        context: {
+          theme: "light",
+        } as TContext,
+      }
 
 const themeStore = createStore({
   context: initialSnapshot.context as TContext,
