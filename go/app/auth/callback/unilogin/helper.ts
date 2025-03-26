@@ -1,7 +1,15 @@
 import { getInstitutionRequest } from "@/app/auth/callback/unilogin/requests"
 import { getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
 
-export const isUniloginUserAuthorizedToLogIn = async (institutionId: string | null) => {
+export const isUniloginUserAuthorizedToLogIn = async (
+  institutionId: string | null,
+  claims: { has_license: string }
+) => {
+  // If the user do not have a license through STIL we do not allow access
+  if (claims?.has_license === "false") {
+    return false
+  }
+
   if (!institutionId) {
     return false
   }
