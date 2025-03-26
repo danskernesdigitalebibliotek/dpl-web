@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server"
-import type { NextFetchEvent, NextRequest } from "next/server"
+import type { NextRequest } from "next/server"
 
-import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
 import { getEnv } from "./lib/config/env"
 import {
-  accessTokenIsExpired,
+  libraryTokenExist,
+  loadLibraryToken,
+  loadUserToken,
+  setLibraryTokenCookie,
+} from "./lib/helpers/tokens"
+import {
   accessTokenShouldBeRefreshed,
   destroySession,
   getDplCmsSessionCookie,
@@ -12,7 +16,7 @@ import {
   saveAdgangsplatformenSession,
 } from "./lib/session/session"
 
-export async function middleware(request: NextRequest, event: NextFetchEvent) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const response = NextResponse.next()
 
@@ -64,6 +68,17 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     return NextResponse.redirect(`${appUrl}/auth/token/refresh?redirect=${currentPath}`, {
       headers: response.headers,
     })
+  }
+
+  const libraryTokenIsPersisted = await libraryTokenExist()
+  if (!libraryTokenIsPersisted) {
+    const token = await loadLibraryToken()
+    const timestamp = token?.expire.timestamp
+    const expires = timestamp ? new Date(timestamp * 1000) : false
+
+    if (token && expires) {
+      setLibraryTokenCookie(token.token, expires)
+    }
   }
 
   return response
