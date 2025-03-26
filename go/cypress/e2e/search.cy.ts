@@ -4,6 +4,8 @@ import SearchWithPaginationFactory from "../factories/searchWithPagination"
 
 describe("Search Result Tests", () => {
   beforeEach(() => {
+    // Ignore fetch errors from DPL CMS
+    cy.expectError("Failed to fetch data from DPL CMS")
     // Intercept search request
     cy.interceptGraphql({
       operationName: "searchWithPagination",

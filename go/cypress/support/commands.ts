@@ -9,6 +9,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       dataCy(value: CyKey): Chainable<JQuery<HTMLElement>>
+      expectError(errorMessage: string): void
       interceptGraphql(prams: InterceptGraphqlParams): void
       interceptCovers(prams: InterceptCoversParams): void
     }
@@ -17,6 +18,20 @@ declare global {
 
 Cypress.Commands.add("dataCy", selector => {
   return cy.get(`[data-cy="${selector}"]`)
+})
+
+/**
+ * expectError is used to ignore specific uncaught exceptions during test execution
+ *
+ * @param {string} errorMessage The error message text to ignore
+ */
+Cypress.Commands.add("expectError", (errorMessage: string) => {
+  cy.on("uncaught:exception", err => {
+    if (err.message.includes(errorMessage)) {
+      return false
+    }
+    return true
+  })
 })
 
 /**
