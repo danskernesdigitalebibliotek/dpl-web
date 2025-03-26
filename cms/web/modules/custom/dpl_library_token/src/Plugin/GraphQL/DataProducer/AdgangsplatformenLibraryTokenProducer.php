@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_library_token\Plugin\GraphQL\DataProducer;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
@@ -52,15 +53,33 @@ class AdgangsplatformenLibraryTokenProducer extends DataProducerPluginBase imple
   }
 
   /**
+   *
+   */
+  protected function formatExpireDate(int $expire) {
+    $expireInterval = \DateInterval::createFromDateString(sprintf('%d seconds', $expire));
+    $expireDateTime = (new \DateTime("now"))->add($expireInterval);
+    $dateTime = DrupalDateTime::createFromDateTime($expireDateTime);
+
+    return [
+      'timestamp' => $dateTime->getTimestamp(),
+      'timezone' => $dateTime->getTimezone()->getName(),
+      'offset' => $dateTime->format('P'),
+      'time' => $dateTime->format(\DateTime::RFC3339),
+    ];
+  }
+
+  /**
    * Resolves the library access token.
    *
-   * @return mixed[]
    *   The library access token.
    */
-  public function resolve(): array | null {
-    return [
-      "token" => $this->libraryTokenHandler->getToken(),
-    ];
+  public function resolve(): object | null {
+    $token = $this->libraryTokenHandler->getToken();
+    return $token ? (object) [
+      'token' => $token->token,
+      'expire' => $this->formatExpireDate($token->expire),
+    ] : NULL;
+
   }
 
 }
