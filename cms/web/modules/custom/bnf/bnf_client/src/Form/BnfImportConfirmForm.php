@@ -13,6 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -46,9 +47,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     protected LoggerInterface $logger,
     ConfigFactoryInterface $configFactory,
     EntityTypeManagerInterface $entityTypeManager,
+    TranslationInterface $stringTranslation,
   ) {
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
     $this->nodeStorage = $entityTypeManager->getStorage('node');
+    $this->setStringTranslation($stringTranslation);
   }
 
   /**
@@ -87,7 +90,10 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     catch (\Exception $e) {
       $importable = FALSE;
 
-      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
+      $this->logger->error(
+        'Could not get node title for @uuid from BNF. @message',
+        ['@message' => $e->getMessage(), '@uuid' => $uuid]
+      );
       $this->messenger->addError($this->t('Cannot import this node from BNF.', [], ['context' => 'BNF']));
     }
 

@@ -4,10 +4,12 @@ namespace Drupal\bnf_client\Form;
 
 use Drupal\bnf_client\BnfScheduler;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\queue_ui\QueueUIBatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -15,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class BnfSyncForm implements FormInterface, ContainerInjectionInterface {
 
+  use DependencySerializationTrait;
   use StringTranslationTrait;
 
   /**
@@ -22,6 +25,7 @@ class BnfSyncForm implements FormInterface, ContainerInjectionInterface {
    */
   public function __construct(
     protected BnfScheduler $scheduler,
+    protected QueueUIBatchInterface $queueBatch,
     TranslationInterface $stringTranslation,
   ) {
     $this->setStringTranslation($stringTranslation);
@@ -33,6 +37,7 @@ class BnfSyncForm implements FormInterface, ContainerInjectionInterface {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get(BnfScheduler::class),
+      $container->get('queue_ui.batch'),
       $container->get('string_translation'),
     );
   }
@@ -77,6 +82,8 @@ class BnfSyncForm implements FormInterface, ContainerInjectionInterface {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->scheduler->queueAllSubscriptionsUpdate();
     $this->scheduler->queueAllNodesUpdate();
+
+    $this->queueBatch->batch(['bnf_client_new_content', 'bnf_client_node_update']);
   }
 
 }
