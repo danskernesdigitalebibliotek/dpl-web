@@ -85,6 +85,18 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     },
     [] as typeof manifestationsWithPublizonData
   )
+
+  // filter out manifestations that not digital except physical books
+  const filteredManifestationsByAccessType = filteredManifestations.filter(manifestation => {
+    if (manifestation.manifestation.materialTypes[0].materialTypeGeneral.code === "BOOKS") {
+      return true
+    }
+
+    return manifestation.manifestation.accessTypes[0].code !== "PHYSICAL"
+  })
+
+  console.log("filteredManifestations", filteredManifestations)
+
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     "default",
@@ -103,12 +115,12 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     return materialType?.materialTypeGeneral?.code === "PODCASTS"
   })
 
-  const isSomeManifestationTypeCostFree = filteredManifestations.some(
+  const isSomeManifestationTypeCostFree = filteredManifestationsByAccessType.some(
     manifestation => manifestation.publizonData?.costFree
   )
 
   // sort manifestations by materialTypeSortPriority
-  const sortedManifestations = filteredManifestations.sort((a, b) => {
+  const sortedManifestations = filteredManifestationsByAccessType.sort((a, b) => {
     return (
       goConfig("materialtypes.sortpriority").indexOf(
         a.manifestation.materialTypes[0].materialTypeGeneral.code

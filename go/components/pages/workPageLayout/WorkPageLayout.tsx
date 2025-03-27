@@ -33,27 +33,39 @@ function WorkPageLayout({ workId }: { workId: string }) {
   const work = data.work as WorkFullWorkPageFragment
   const manifestations = work.manifestations.all
 
+  // filter out manifestations that not digital except physical books
+  const filteredManifestationsByAccessType = manifestations.filter(manifestation => {
+    if (manifestation.materialTypes[0].materialTypeGeneral.code === "BOOKS") {
+      return true
+    }
+
+    return manifestation.accessTypes[0].code !== "PHYSICAL"
+  })
+
   useEffect(() => {
     const searchParamsMaterialType = searchParams.get("type")
 
     // filter out manifestations that don't match the search params material type
-    const filteredManifestations = manifestations.filter(manifestation => {
+    const filteredManifestations = filteredManifestationsByAccessType.filter(manifestation => {
       return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
     })
 
     if (!filteredManifestations.length) return notFound()
 
     // get the manifestation that has the newest edition
-    const latestManifestationEdition = filteredManifestations.reduce((latest, current) => {
-      const latestEdition = latest.edition?.publicationYear?.year || 0
-      const currentEdition = current.edition?.publicationYear?.year || 0
+    const latestManifestationEdition = filteredManifestationsByAccessType.reduce(
+      (latest, current) => {
+        const latestEdition = latest.edition?.publicationYear?.year || 0
+        const currentEdition = current.edition?.publicationYear?.year || 0
 
-      return latestEdition > currentEdition ? latest : current
-    }, filteredManifestations[0])
+        return latestEdition > currentEdition ? latest : current
+      },
+      filteredManifestations[0]
+    )
 
     // set the selected manifestation in the state
     setSelectedManifestation(latestManifestationEdition)
-  }, [manifestations, searchParams])
+  }, [filteredManifestationsByAccessType, searchParams])
 
   if (isLoading && !data) {
     return (
@@ -71,7 +83,11 @@ function WorkPageLayout({ workId }: { workId: string }) {
     <div className="content-container my-grid-gap-2 lg:my-grid-gap-half flex-row flex-wrap">
       {selectedManifestation && (
         <>
-          <WorkPageHeader work={work} selectedManifestation={selectedManifestation} />
+          <WorkPageHeader
+            manifestations={filteredManifestationsByAccessType}
+            work={work}
+            selectedManifestation={selectedManifestation}
+          />
           <InfoBox work={data.work} selectedManifestation={selectedManifestation} />
           <InfoBoxDetails selectedManifestation={selectedManifestation} />
         </>

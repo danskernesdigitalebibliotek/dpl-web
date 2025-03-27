@@ -8,6 +8,7 @@ function getEnvs() {
     GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
     GRAPHQL_BASIC_TOKEN_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS,
     GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI,
+    PUBHUB_BASE_URL: process.env.NEXT_PUBLIC_PUBHUB_BASE_URL,
     LIBRARY_TOKEN: process.env.NEXT_PUBLIC_LIBRARY_TOKEN,
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NODE_ENV: process.env.NODE_ENV,
@@ -33,6 +34,7 @@ const EnvSchema = z.object({
   GRAPHQL_BASIC_TOKEN_DPL_CMS: z.string(),
   GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl),
   LIBRARY_TOKEN: z.string(),
+  PUBHUB_BASE_URL: z.string().refine(validateUrl),
   APP_URL: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
 })

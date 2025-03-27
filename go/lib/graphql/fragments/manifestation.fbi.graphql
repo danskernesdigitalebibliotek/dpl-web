@@ -13,6 +13,10 @@ fragment ManifestationIdentifiers on Manifestation {
 }
 
 fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
   access {
     __typename
     ... on AccessUrl {
@@ -106,6 +110,7 @@ fragment ManifestationMaterialTypes on Manifestation {
 # Bigger chunks for specific pages (built from above fragments) ----------------
 
 fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationAccess
   ...ManifestationMaterialTypes
   ...ManifestationIdentifiers
   ...ManifestationCover

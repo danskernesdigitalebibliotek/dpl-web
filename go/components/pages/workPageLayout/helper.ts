@@ -16,7 +16,9 @@ import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 export const getWorkMaterialTypes = (
   materialTypes: Work["materialTypes"]
 ): Manifestation["materialTypes"][0]["materialTypeGeneral"][] => {
-  return materialTypes.map(materialType => materialType.materialTypeGeneral)
+  // filter out duplicates
+  const uniqueMaterialTypes = uniqBy(materialTypes, "materialTypeGeneral.code")
+  return uniqueMaterialTypes.map(materialType => materialType.materialTypeGeneral)
 }
 
 export const getManifestationMaterialType = (

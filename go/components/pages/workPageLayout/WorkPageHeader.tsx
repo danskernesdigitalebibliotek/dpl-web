@@ -1,13 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { uniqBy } from "lodash"
 import { useRouter } from "next/navigation"
 import React from "react"
 
 import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
   getManifestationLanguageIsoCode,
-  getWorkMaterialTypes,
   slideSelectOptionsFromMaterialTypes,
   sortSlideSelectOptions,
 } from "@/components/pages/workPageLayout/helper"
@@ -18,7 +18,6 @@ import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/
 import {
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
-  Work,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
@@ -31,17 +30,22 @@ import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/g
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
   selectedManifestation: ManifestationWorkPageFragment
+  manifestations: ManifestationWorkPageFragment[]
 }
 
-const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
+const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
   const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
-  const workMaterialTypes = getWorkMaterialTypes(
-    (work?.materialTypes as Work["materialTypes"]) || []
-  )
-  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(workMaterialTypes)
+
+  // get the material types from the manifestations
+  const materialTypes = manifestations.map(manifestation => {
+    return manifestation.materialTypes[0].materialTypeGeneral
+  })
+
+  const uniqueMaterialType = uniqBy(materialTypes, "materialTypeGeneral.code")
+  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(uniqueMaterialType)
 
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
