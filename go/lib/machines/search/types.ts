@@ -8,6 +8,8 @@ import {
 
 export type TFilters = Omit<SearchFiltersInput, "status">
 
+export type TChildrenOrAdultsOption = "til børn" | "til voksne"
+
 export type TContext = {
   facetLimit: number
   searchOffset: number
