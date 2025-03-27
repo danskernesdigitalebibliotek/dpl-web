@@ -94,7 +94,7 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
     ]);
 
     try {
-      $this->importer->importNode($uuid, $callbackUrl, $node_type);
+      $this->importer->importNode($uuid, $callbackUrl, $node_type, TRUE);
 
       $result->status = ImportStatus::Success;
       $result->message = 'Node created successfully.';

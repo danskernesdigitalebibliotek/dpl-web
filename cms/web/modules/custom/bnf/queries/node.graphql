@@ -1,8 +1,12 @@
 query GetNode($id: ID!) {
+  info {
+    name
+  }
   node(id: $id) {
     ... on NodeInterface {
       id,
-      title
+      title,
+      url
     }
     ... on NodeArticle {
       subtitle
@@ -24,6 +28,9 @@ query GetNode($id: ID!) {
       publicationDate {
         timestamp
         timezone
+      }
+      canonicalUrl {
+        url
       }
       paragraphs {
         ... on ParagraphTextBody {

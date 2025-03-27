@@ -26,6 +26,7 @@ type AddressCountry {
 
 type AdgangsplatformenLibraryToken {
   token: String
+  expire: DateTime
 }
 
 type AdgangsplatformenTokens {
@@ -454,6 +455,7 @@ type NodeArticle implements NodeInterface {
 
   """Titel"""
   title: String!
+  url: String!
 }
 
 """
@@ -517,6 +519,7 @@ type NodeGoArticle implements NodeInterface {
 
   """Titel"""
   title: String!
+  url: String!
 }
 
 """
@@ -574,6 +577,7 @@ type NodeGoCategory implements NodeInterface {
 
   """Titel"""
   title: String!
+  url: String!
 }
 
 """
@@ -613,6 +617,7 @@ type NodeGoPage implements NodeInterface {
 
   """Titel"""
   title: String!
+  url: String!
 }
 
 """Entity type node."""
@@ -643,6 +648,7 @@ interface NodeInterface {
 
   """Titel"""
   title: String!
+  url: String!
 }
 
 """Entity type node."""
