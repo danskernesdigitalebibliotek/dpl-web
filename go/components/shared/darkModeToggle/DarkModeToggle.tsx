@@ -1,13 +1,15 @@
 "use client"
 
+import { useSelector } from "@xstate/react"
 import React from "react"
 
 import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
-import { useThemeStore } from "@/store/theme.store"
+import { themeStore } from "@/store/theme.store"
 
 function DarkModeToggle() {
-  const { theme, toggleTheme } = useThemeStore()
+  const { toggleTheme } = themeStore.trigger
+  const theme = useSelector(themeStore, state => state.context.theme)
 
   return (
     <button
