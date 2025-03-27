@@ -11,6 +11,12 @@ bnf_client.import_content:
   route_name: bnf_client.import_form
   weight: 10
 
+bnf_client.import:
+  title: 'Refresh subscriptions'
+  parent: system.admin_content
+  route_name: bnf_client.sync_form
+  weight: 12
+
 bnf_client.login:
   title: 'Login to BNF'
   parent: system.admin_content
