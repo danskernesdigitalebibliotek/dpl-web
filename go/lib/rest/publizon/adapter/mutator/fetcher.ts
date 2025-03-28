@@ -1,4 +1,5 @@
 import { getEnv } from "@/lib/config/env"
+import goConfig from "@/lib/config/goConfig"
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 
 export const fetcher = async <ResponseType>({
@@ -15,13 +16,9 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeaders = {
-    Authorization: `Bearer ${getEnv("LIBRARY_TOKEN")}`,
-  } as object
-
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: "https://pubhub-openplatform.test.dbc.dk",
+    baseUrl: `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/pubhub-adapter`,
     url,
     params,
   })
@@ -31,7 +28,6 @@ export const fetcher = async <ResponseType>({
       method,
       headers: {
         ...headers,
-        ...authHeaders,
       },
       body,
     })
