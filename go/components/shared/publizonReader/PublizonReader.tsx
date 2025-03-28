@@ -9,13 +9,13 @@ import { readerAssets } from "./helper"
 // Define mutually exclusive types for identifier and orderId
 type ReaderType =
   | {
-      type: "demo"
+      type: "preview"
       identifier: string
       orderId?: never
       onBackCallback: () => void
     }
   | {
-      type: "rent"
+      type: "loan"
       identifier?: never
       orderId: string
       onBackCallback: () => void
@@ -38,7 +38,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
     }
   }, [onBackCallback])
 
-  if (type === "rent") {
+  if (type === "loan") {
     return (
       <div>
         <p>orderId: {orderId}</p>
@@ -55,7 +55,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
     )
   }
 
-  if (type === "demo") {
+  if (type === "preview") {
     return (
       <div
         id="pubhub-reader"

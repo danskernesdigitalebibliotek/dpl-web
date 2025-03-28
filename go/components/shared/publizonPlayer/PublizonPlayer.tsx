@@ -9,12 +9,12 @@ import { assets } from "./helper"
 // Define mutually exclusive types for identifier and orderId
 type ReaderType =
   | {
-      type: "demo"
+      type: "preview"
       identifier: string
       orderId?: never
     }
   | {
-      type: "rent"
+      type: "loan"
       orderId: string
       identifier?: never
     }
@@ -28,7 +28,7 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
     }
   }, [])
 
-  if (type === "rent") {
+  if (type === "loan") {
     return (
       <iframe
         title="Publizon Player"
@@ -39,7 +39,7 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
     )
   }
 
-  if (type === "demo") {
+  if (type === "preview") {
     return (
       <iframe
         title="Publizon Player"

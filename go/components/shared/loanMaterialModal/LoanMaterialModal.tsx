@@ -18,14 +18,16 @@ import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/co
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
+import { modalStore } from "@/store/modal.store"
 
-export type LoanMaterialModalProps = {
-  isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+const LoanMaterialModal = ({
+  open,
+  manifestation,
+}: {
+  open: boolean
   manifestation: ManifestationWorkPageFragment
-}
-
-const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialModalProps) => {
+  costFree: boolean
+}) => {
   const queryClient = useQueryClient()
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
@@ -54,6 +56,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
   const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [error, setError] = useState<Error | null>(null)
+  const { closeModal } = modalStore.trigger
   const handleLoanMaterial = () => {
     setIsHandlingLoan(true)
     mutate(
@@ -63,7 +66,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
           // Refetch data to update the UI for WorkPageButtons
           queryClient.invalidateQueries({ queryKey: ["/v1/user/loans"] })
           setIsHandlingLoan(false)
-          setIsOpen(false)
+          closeModal()
         },
         onError: err => {
           setError(err as Error)
@@ -75,10 +78,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
 
   return (
     <ResponsiveDialog
-      open={isOpen}
-      onOpenChange={() => {
-        setIsOpen(prev => !prev)
-      }}
+      open={open}
       title={`Lån ${getManifestationMaterialTypeSpecific(manifestation) || "materialet"}`}>
       <div className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center justify-center lg:aspect-4/5">
         {isLoadingCovers && (
@@ -142,10 +142,8 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
         )}
         <Button
           size={"lg"}
-          onClick={() => {
-            setIsOpen(prev => !prev)
-          }}
-          disabled={isHandlingLoan || isLoadingLoans}>
+          disabled={isHandlingLoan || isLoadingLoans}
+          onClick={() => closeModal()}>
           {!canUserLoanMoreEMaterials(dataLoans, manifestation) || error || isErrorLoans
             ? "Luk"
             : "Nej"}
