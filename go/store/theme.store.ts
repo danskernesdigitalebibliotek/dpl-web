@@ -1,3 +1,5 @@
+"use client"
+
 import { createStore } from "@xstate/store"
 
 type TThemeTypes = "light" | "dark"

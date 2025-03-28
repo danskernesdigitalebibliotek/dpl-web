@@ -57,6 +57,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
             props: { facets: facets },
           })
         }
+        data-cy={cyKeys["filters-button"]}
         className="text-typo-link flex flex-row items-center gap-1">
         <Icon name="adjust" className="h-[40px]" />
         VIS FILTRE
