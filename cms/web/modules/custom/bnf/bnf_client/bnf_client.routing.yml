@@ -15,6 +15,14 @@ bnf_client.import_confirm_form:
   requirements:
     _permission: 'bnf import nodes'
 
+bnf_client.subscription_form:
+  path: '/admin/bnf/subscribe/{uuid}'
+  defaults:
+    _form: '\Drupal\bnf_client\Form\BnfSubscriptionForm'
+    _title: 'Toggle BNF subscription'
+  requirements:
+    _permission: 'bnf manage subscriptions'
+
 bnf_client.server_redirect:
   path: '/admin/bnf/login'
   defaults:

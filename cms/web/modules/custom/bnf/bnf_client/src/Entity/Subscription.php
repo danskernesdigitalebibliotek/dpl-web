@@ -56,7 +56,7 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setRequired(TRUE);
 
     // Using an 'uuid' would seem obvious, but the UUID field generates a new
-    // UUID as default value, so to avoid actidentially generating an UUID, we
+    // UUID as default value, so to avoid accidentally generating an UUID, we
     // use 'string' instead.
     $fields['subscription_uuid'] = BaseFieldDefinition::create('string')
       ->setLabel('Subscription UUID')

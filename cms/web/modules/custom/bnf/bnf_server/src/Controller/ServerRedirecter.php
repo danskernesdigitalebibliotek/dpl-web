@@ -26,11 +26,33 @@ class ServerRedirecter extends ControllerBase {
     if (empty($url)) {
       return [
         '#theme' => 'bnf_server_missing_callback',
-        '#uuid' => $uuid,
+        '#node_uuid' => $uuid,
       ];
     }
 
     return new TrustedRedirectResponse("$url/admin/bnf/import/{$uuid}");
+  }
+
+  /**
+   * Redirecting to the subcribe-to-term URL of the client site.
+   *
+   * @return \Drupal\Core\Routing\TrustedRedirectResponse|array<mixed>
+   *   A redirect, or a notice page.
+   */
+  public function subscribe(string $uuid, Request $request): TrustedRedirectResponse|array {
+    $session = $request->getSession();
+    $url = $session->get(LoginController::CALLBACK_URL_KEY);
+    $label = $request->query->get('label');
+
+    // If we have no URL to redirect to, we'll display a notice template,
+    // prompting the user to log in.
+    if (empty($url)) {
+      return [
+        '#theme' => 'bnf_server_missing_callback',
+      ];
+    }
+
+    return new TrustedRedirectResponse("$url/admin/bnf/subscribe/{$uuid}?label={$label}");
   }
 
 }

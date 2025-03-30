@@ -105,9 +105,9 @@ class SubscriptionCommands extends DrushCommands {
     foreach ($subscriptions as $subscription) {
       $rows[] = [
         'uuid' => $subscription->uuid->value,
-        'subscription_uuid' => $subscription->subscription_uuid->value,
+        'subscription_uuid' => $subscription->getSubscriptionUuid(),
         'created' => $subscription->created->value,
-        'last' => $subscription->last->value,
+        'last' => $subscription->getLast(),
       ];
     }
 
