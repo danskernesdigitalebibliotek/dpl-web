@@ -8,6 +8,7 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Entity for BNF subscriptions.
@@ -48,6 +49,46 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
    */
   #[\Override]
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
+
+    /**
+     * Helper function for creating the term fields.
+     *
+     * We want this as a helper, as it is quite a mouthful of settings, and we
+     * need to do it for both tags and categories.
+     *
+     * PHPStan does not support inner functions, but we need it as this is
+     * a static method.
+     * @phpstan-ignore-next-line inner-functions
+     */
+    function getTermFieldDefinition(string $vid): BaseFieldDefinition {
+      return BaseFieldDefinition::create('entity_reference')
+        ->setLabel(ucfirst($vid))
+        ->setDescription("The $vid, to be added to content created with this subscription.")
+        ->setSetting('target_type', 'taxonomy_term')
+        ->setSetting('handler', 'default')
+        ->setSetting('handler_settings', [
+          'target_bundles' => [$vid => $vid],
+        ])
+        ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+        ->setDisplayOptions('form', [
+          'type' => 'entity_reference_autocomplete',
+          'weight' => 10,
+          'settings' => [
+            'match_operator' => 'CONTAINS',
+            'size' => 60,
+            'autocomplete_type' => $vid,
+            'placeholder' => '',
+          ],
+        ])
+        ->setDisplayOptions('view', [
+          'label' => 'above',
+          'type' => 'entity_reference_label',
+          'weight' => 10,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
+    }
+
     $fields = [];
 
     $fields['uuid'] = BaseFieldDefinition::create('uuid')
@@ -63,6 +104,13 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setDescription('The UUID subscribed to.')
       ->setRequired(TRUE);
 
+    // PHPStan does not understand inner functions.
+    // @phpstan-ignore-next-line function.undefined
+    $fields['tags'] = getTermFieldDefinition('tags');
+    // PHPStan does not understand inner functions.
+    // @phpstan-ignore-next-line function.undefined
+    $fields['categories'] = getTermFieldDefinition('categories');
+
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel('Created')
       ->setDescription('The timestamp the subscription was made.');
@@ -72,6 +120,85 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setDescription('The timestamp of the last synced content.');
 
     return $fields;
+  }
+
+  /**
+   * Helper function for getting terms.
+   *
+   * @return \Drupal\taxonomy\Entity\Term[]
+   *   An array of taxonomy term entities.
+   */
+  private function getTerms(string $vid): array {
+    $terms = [];
+    foreach ($this->get($vid)->referencedEntities() as $term) {
+      if ($term instanceof Term) {
+        $terms[] = $term;
+      }
+    }
+    return $terms;
+  }
+
+  /**
+   * Helper function for setting terms.
+   *
+   * @param string $vid
+   *   The name of the vocabulary of the terms being set.
+   * @param \Drupal\taxonomy\Entity\Term[]|int[] $terms
+   *   An array of taxonomy term entities, or term IDs.
+   */
+  private function setTerms(string $vid, array $terms): void {
+    $target_ids = [];
+    foreach ($terms as $term) {
+      if ($term instanceof Term) {
+        $target_ids[] = ['target_id' => $term->id()];
+      }
+
+      if (is_int($term)) {
+        $target_ids[] = ['target_id' => $term];
+      }
+    }
+
+    $this->set($vid, $target_ids);
+  }
+
+  /**
+   * Get referenced tags.
+   *
+   * @return \Drupal\taxonomy\Entity\Term[]
+   *   An array of taxonomy term entities.
+   */
+  public function getTags(): array {
+    return $this->getTerms('tags');
+  }
+
+  /**
+   * Set tags.
+   *
+   * @param \Drupal\taxonomy\Entity\Term[] $tags
+   *   An array of taxonomy term entities.
+   */
+  public function setTags(array $tags): void {
+    $this->setTerms('tags', $tags);
+  }
+
+  /**
+   * Get referenced categories.
+   *
+   * @return \Drupal\taxonomy\Entity\Term[]
+   *   An array of taxonomy term entities.
+   */
+  public function getCategories(): array {
+    return $this->getTerms('categories');
+  }
+
+  /**
+   * Set categories.
+   *
+   * @param \Drupal\taxonomy\Entity\Term[] $categories
+   *   An array of taxonomy term entities.
+   */
+  public function setCategories(array $categories): void {
+    $this->setTerms('categories', $categories);
   }
 
   /**

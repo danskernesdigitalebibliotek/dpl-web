@@ -14,7 +14,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
- * Update node content.
+ * Update (or create) node content.
  *
  * @QueueWorker(
  *   id = "bnf_client_node_update",
@@ -67,7 +67,25 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
   #[\Override]
   public function processItem($data): void {
     try {
-      $this->importer->importNode($data['uuid'], $this->baseUrl . 'graphql');
+      $node = $this->importer->importNode($data['uuid'], $this->baseUrl . 'graphql');
+
+      if ($node->hasField('field_categories') && !empty($data['categories'])) {
+        $category_values = array_map(function ($term) {
+          return ['target_id' => $term->id()];
+        }, $data['categories']);
+
+        $node->set('field_categories', $category_values);
+      }
+
+      if ($node->hasField('field_tags') && !empty($data['tags'])) {
+        $tag_values = array_map(function ($term) {
+          return ['target_id' => $term->id()];
+        }, $data['tags']);
+
+        $node->set('field_tags', $tag_values);
+      }
+
+      $node->save();
     }
     catch (\Throwable $e) {
       $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);

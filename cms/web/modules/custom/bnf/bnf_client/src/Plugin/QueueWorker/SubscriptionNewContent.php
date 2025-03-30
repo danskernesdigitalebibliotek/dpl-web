@@ -98,7 +98,11 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
     );
 
     foreach ($newContent['uuids'] as $uuid) {
-      $this->nodeQueue->createItem(['uuid' => $uuid]);
+      $this->nodeQueue->createItem([
+        'uuid' => $uuid,
+        'categories' => $subscription->getCategories(),
+        'tags' => $subscription->getTags(),
+      ]);
     }
 
     if ($subscription->getLast() !== $newContent['youngest']) {

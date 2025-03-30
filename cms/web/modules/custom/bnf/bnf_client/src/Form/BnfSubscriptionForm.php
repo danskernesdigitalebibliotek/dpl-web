@@ -32,6 +32,11 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
   protected EntityStorageInterface $subscriptionStorage;
 
   /**
+   * The subscription storage.
+   */
+  protected EntityStorageInterface $termStorage;
+
+  /**
    * {@inheritDoc}
    */
   public function __construct(
@@ -44,6 +49,7 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
     EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->subscriptionStorage = $entityTypeManager->getStorage('bnf_subscription');
+    $this->termStorage = $entityTypeManager->getStorage('taxonomy_term');
   }
 
   /**
@@ -106,6 +112,9 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
 
     ];
 
+    $form['categories'] = $this->getTermFormElement('categories');
+    $form['tags'] = $this->getTermFormElement('tags');
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#submit' => ['::createSubscription'],
@@ -113,6 +122,42 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
     ];
 
     return $form;
+  }
+
+  /**
+   * Building a term-reference form element.
+   *
+   * @return mixed[]
+   *   A form element, to be used in $form.
+   */
+  private function getTermFormElement(string $vid): array {
+    $options = [];
+
+    $terms = $this->termStorage->loadByProperties(['vid' => $vid]);
+
+    foreach ($terms as $term) {
+      $options[$term->id()] = $term->label();
+    }
+
+    return [
+      '#title' => $this->t('Map content to @vocabulary', ['@vocabulary' => $vid], ['context' => 'BNF']),
+      '#description' => $this->t('When content is added through this subscription, these terms will be automatically added. <strong>If the content only supports a single term, only the first will be added.</strong>', [], ['context' => 'BNF']),
+      "#type" => "select2",
+      "#options" => $options,
+      "#multiple" => TRUE,
+      "#target_type" => "taxonomy_term",
+      "#selection_handler" => "default:taxonomy_term",
+      "#selection_settings" => [
+        "match_operator" => "CONTAINS",
+        "match_limit" => 10,
+        "sort" => [
+          "field" => "name",
+        ],
+        "target_bundles" => [
+          $vid => $vid,
+        ],
+      ],
+    ];
   }
 
   /**
@@ -187,6 +232,16 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
 
       if ($form_state->getValue('only_new_content')) {
         $subscription->setLast(time());
+      }
+
+      if (!empty($form_state->getValue('categories'))) {
+        $category_ids = array_column($form_state->getValue('categories'), 'target_id');
+        $subscription->setCategories($category_ids);
+      }
+
+      if (!empty($form_state->getValue('tags'))) {
+        $tag_ids = array_column($form_state->getValue('tags'), 'target_id');
+        $subscription->setTags($tag_ids);
       }
 
       $subscription->save();

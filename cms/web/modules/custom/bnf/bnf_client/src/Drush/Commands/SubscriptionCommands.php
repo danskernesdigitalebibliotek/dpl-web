@@ -93,6 +93,8 @@ class SubscriptionCommands extends DrushCommands {
   #[FieldLabels(labels: [
     'uuid' => 'UUID',
     'subscription_uuid' => 'Subscription UUID',
+    'categories' => 'Categories for content',
+    'tags' => 'Tags for content',
     'created' => 'Created',
     'last' => 'Last update',
   ])]
@@ -106,6 +108,8 @@ class SubscriptionCommands extends DrushCommands {
       $rows[] = [
         'uuid' => $subscription->uuid->value,
         'subscription_uuid' => $subscription->getSubscriptionUuid(),
+        'tags' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getTags())),
+        'categories' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getCategories())),
         'created' => $subscription->created->value,
         'last' => $subscription->getLast(),
       ];

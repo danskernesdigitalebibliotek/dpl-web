@@ -30,7 +30,11 @@ class SubscriptionHooks {
     Assert::isInstanceOf($entity, Subscription::class);
 
     if (!$entity->noCheck) {
-      $this->queueManager->get('bnf_client_new_content')->createItem(['uuid' => $entity->id()]);
+      $this->queueManager->get('bnf_client_new_content')->createItem([
+        'uuid' => $entity->id(),
+        'categories' => $entity->getCategories(),
+        'tags' => $entity->getTags(),
+      ]);
     }
   }
 
