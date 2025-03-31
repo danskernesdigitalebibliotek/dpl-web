@@ -520,3 +520,15 @@ function dpl_update_update_10043(): string {
 
   return 'Removed old ereolen config keys from dpl_library_agency.settings and dpl_patron_page.settings.';
 }
+
+/**
+ * Unignore system.performance configuration.
+ */
+function dpl_update_update_10044(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'system.performance',
+    // We need to unignore this as well as it is handled on the same config
+    // form as system.performance.
+    'http_cache_control.settings',
+  ]);
+}
