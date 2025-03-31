@@ -123,7 +123,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
               Prøv lydbog
             </Button>
             <Button
-              ariaLabel={isLoaned ? "Lyt" : "Lån lydbog"}
+              ariaLabel="Lån lydbog"
               size={"lg"}
               className="w-full lg:max-w-80 lg:min-w-72"
               theme={"primary"}
@@ -135,14 +135,14 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
                   props: { manifestation: selectedManifestation },
                 })
               }>
-              {isLoaned ? "Lyt" : "Lån lydbog"}
+              Lån lydbog
             </Button>
           </>
         )}
 
         {isLoaned && (
           <Button
-            ariaLabel="Lyt"
+            ariaLabel="Lyt til lydbog"
             size={"lg"}
             className="w-full lg:max-w-80 lg:min-w-72"
             onClick={() =>
@@ -151,7 +151,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
                 props: { manifestation: selectedManifestation, orderId: loan?.orderId },
               })
             }>
-            Lyt
+            Lyt til lydbog
           </Button>
         )}
       </>
@@ -193,7 +193,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
         )}
         {isLoaned && (
           <Button
-            ariaLabel="Lyt"
+            ariaLabel="Lyt til podcast"
             size={"lg"}
             className="w-full lg:max-w-80 lg:min-w-72"
             onClick={() =>
@@ -202,7 +202,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
                 props: { manifestation: selectedManifestation, orderId: loan?.orderId },
               })
             }>
-            Lyt
+            Lyt til podcast
           </Button>
         )}
       </>
