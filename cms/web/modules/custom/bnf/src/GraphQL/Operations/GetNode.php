@@ -63,6 +63,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     ... on MediaImage {
                       id
                       name
+                      byline
                       mediaImage {
                         __typename
                         title
@@ -148,6 +149,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     ... on MediaImage {
                       id
                       name
+                      byline
                       mediaImage {
                         __typename
                         title
@@ -198,6 +200,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     ... on MediaImage {
                       id
                       name
+                      byline
                       mediaImage {
                         __typename
                         title
@@ -260,14 +263,15 @@ class GetNode extends \Spawnia\Sailor\Operation
                   goImage {
                     __typename
                     ... on MediaImage {
+                      id
                       name
+                      byline
                       mediaImage {
                         __typename
                         title
                         url
                         alt
                       }
-                      id
                     }
                   }
                   goLinkParagraph {
