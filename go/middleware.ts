@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
+import { getEnv } from "./lib/config/env"
 import {
   getLibraryTokenCookieValue,
   loadLibraryToken,
@@ -16,7 +17,7 @@ import {
 } from "./lib/session/session"
 
 export async function middleware(request: NextRequest) {
-  // const { pathname } = request.nextUrl
+  const { pathname } = request.nextUrl
 
   const requestHeaders = new Headers(request.headers)
 
@@ -63,15 +64,14 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // TODO fix unilogin refresh
-  // if (accessTokenShouldBeRefreshed(session, "unilogin")) {
-  //   const appUrl = getEnv("APP_URL")
+  if (accessTokenShouldBeRefreshed(session, "unilogin")) {
+    const appUrl = getEnv("APP_URL")
 
-  //   const currentPath = new URL(pathname, appUrl.toString())
-  //   return NextResponse.redirect(`${appUrl}/auth/token/refresh?redirect=${currentPath}`, {
-  //     headers: response.headers,
-  //   })
-  // }
+    const currentPath = new URL(pathname, appUrl.toString())
+    return NextResponse.redirect(`${appUrl}/auth/token/refresh?redirect=${currentPath}`, {
+      headers: response.headers,
+    })
+  }
 
   const libraryTokenCookieValue = await getLibraryTokenCookieValue()
   if (!libraryTokenCookieValue) {

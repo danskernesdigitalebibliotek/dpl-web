@@ -40,11 +40,11 @@ export async function GET(request: NextRequest) {
   try {
     // TODO: Consider if we want to handle different types of sessions than unilogin.
     const tokens = sessionTokenSchema.parse(session)
-    const newTokens = client.refreshTokenGrant(
+    const newTokens = (await client.refreshTokenGrant(
       config,
       tokens.refresh_token
-    ) as unknown as TUniloginTokenSet
-    setUniloginTokensOnSession(session, newTokens)
+    )) as unknown as TUniloginTokenSet
+    await setUniloginTokensOnSession(session, newTokens)
     await session.save()
   } catch (error) {
     // TODO: maybe distinguish between ZodError and other errors?
