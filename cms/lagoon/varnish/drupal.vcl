@@ -319,6 +319,20 @@ sub vcl_backend_response {
     return (deliver);
   }
 
+  # Retry caching of empty files to prevent empty aggregation files.
+  # If files are still empty after trying 3 times, we set a 503 status code
+  # and uncacheable to the response to prevent caching of the empty file.
+  if ((beresp.http.Content-Length ~ "0") && bereq.url ~ "(?i)\.(css|js)(\.gz)?(\?.*)?$") {
+    set beresp.http.X-NUM-RETRIES = bereq.retries;
+    if (bereq.retries < 2) {
+      return (retry);
+    } else {
+      set beresp.status = 503;
+      set beresp.uncacheable = true;
+      return (deliver);
+    }
+  }
+
   # Don't allow static files to set cookies.
   if (bereq.url ~ "(?i)\.(css|js|jpg|jpeg|gif|ico|png|tiff|tif|img|tga|wmf|swf|html|htm|woff|woff2|mp4|ttf|eot|svg)(\?.*)?$") {
     unset beresp.http.set-cookie;
