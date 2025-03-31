@@ -472,21 +472,3 @@ function dpl_update_update_10041(): string {
 function dpl_update_update_10042(): string {
   return _dpl_update_uninstall_modules(['jsnlog']);
 }
-
-/**
- * Make sure to remove "system.performance" from config ignore list.
- */
-function dpl_update_update_10043(): string {
-  $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore.settings');
-  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
-
-  // Remove "system.performance" from config ignore list.
-  if (($key = array_search('system.performance', $ignored_configs)) !== FALSE) {
-    unset($ignored_configs[$key]);
-    $config_ignore_settings->set('ignored_config_entities', $ignored_configs)->save();
-    return "Removed 'system.performance' from ignored_config_entities.";
-  }
-  else {
-    return "Config 'system.performance' not found in ignored_config_entities.";
-  }
-}
