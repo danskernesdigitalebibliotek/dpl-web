@@ -33,11 +33,7 @@ class FbsBranchRepository implements BranchRepositoryInterface {
   public function getBranches(): array {
     // Use an empty token if we don't have one. This may cause the API to throw
     // an exception, but that is acceptable.
-    if (!$token = $this->tokenHandler->getToken()) {
-      return [];
-    }
-
-    $api = $this->apiFactory->getAgencyApi($token->token ?? '');
+    $api = $this->apiFactory->getAgencyApi($this->tokenHandler->getToken()?->token ?? '');
     return array_map(function (AgencyBranch $branch) {
       return new Branch($branch->getBranchId(), $branch->getTitle());
     }, $api->getBranches());
