@@ -69,6 +69,7 @@ const eslintConfig = [
       "@typescript-eslint/lines-between-class-members": "off",
       "@typescript-eslint/no-throw-literal": "off",
       "@typescript-eslint/ban-ts-comment": "off",
+      "cypress/unsafe-to-chain-command": "off",
 
       "react-hooks/exhaustive-deps": ["warn"],
     },
