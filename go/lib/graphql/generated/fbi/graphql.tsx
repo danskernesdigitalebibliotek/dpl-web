@@ -96,6 +96,23 @@ export type CatalogueCodes = {
   otherCatalogues: Array<Scalars['String']['output']>;
 };
 
+export type CataloguedPublicationStatus = {
+  __typename?: 'CataloguedPublicationStatus';
+  /** The code representing the catalogued publication status. */
+  code: CataloguedPublicationStatusEnum;
+  /** The display text corresponding to the publication status code. */
+  display: Scalars['String']['output'];
+};
+
+/** Represents the publication status of a catalogued manifestation. */
+export type CataloguedPublicationStatusEnum =
+  /** New title */
+  | 'NT'
+  /** New edition */
+  | 'NU'
+  /** New print run */
+  | 'OP';
+
 export type ChildOrAdult = {
   __typename?: 'ChildOrAdult';
   code: ChildOrAdultCodeEnum;
@@ -211,6 +228,8 @@ export type ComplexSearchFiltersInput = {
 
 export type ComplexSearchIndex = {
   __typename?: 'ComplexSearchIndex';
+  /** Aliases for this index */
+  aliases?: Maybe<Array<Scalars['String']['output']>>;
   /** Can be used for faceting */
   facet: Scalars['Boolean']['output'];
   /** The name of a Complex Search index */
@@ -759,6 +778,8 @@ export type Manifestation = {
   audience?: Maybe<Audience>;
   /** CatalogueCodes divided in codes from the national bibliography and other codes */
   catalogueCodes: CatalogueCodes;
+  /** The publication status of a catalogued manifestation. */
+  cataloguedPublicationStatus?: Maybe<CataloguedPublicationStatus>;
   /** Classification codes for this manifestation from any classification system */
   classifications: Array<Classification>;
   /** Contributors to the manifestation, actors, illustrators etc */
