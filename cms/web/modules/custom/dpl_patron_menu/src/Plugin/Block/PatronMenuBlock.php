@@ -161,7 +161,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
         )->toString()
       ),
       "menu-sign-up-url" => $patronRegSettings->getPatronRegistrationPageUrl(),
-      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
       'user-profile-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
 

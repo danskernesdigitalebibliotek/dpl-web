@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-14 14:48+0100\n"
-"PO-Revision-Date: 2025-03-14 14:48+0100\n"
+"POT-Creation-Date: 2025-03-31 11:11+0200\n"
+"PO-Revision-Date: 2025-03-31 11:11+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1162,10 +1162,6 @@ msgstr ""
 "https://)"
 
 msgctxt "Patron page settings form"
-msgid "Ereolen always available"
-msgstr "eReolens titler som altid er tilgængelige"
-
-msgctxt "Patron page settings form"
 msgid "Pincode length (min)"
 msgstr "Pinkodelængde (minimumslængde)"
 
@@ -1237,8 +1233,8 @@ msgid ""
 msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
 
 msgctxt "Patron page"
-msgid "DIGITAL LOANS (EREOLEN)"
-msgstr "DIGITALE LÅN (eREOLEN)"
+msgid "DIGITAL LOANS"
+msgstr ""
 
 msgctxt "Patron page"
 msgid "Click here, to see titles always eligible to be loaned"
@@ -1602,22 +1598,6 @@ msgstr "Indstil standard interesseperiode for reserveringer"
 msgctxt "Library Agency Configuration"
 msgid "Allow removing ready reservations"
 msgstr "Tillad sletning af opfyldte reserveringer"
-
-msgctxt "Library Agency Configuration"
-msgid "Ereolen my page link"
-msgstr "Link til Min side på eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "My page in ereolen"
-msgstr "Min side på eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "Ereolen home link"
-msgstr "Link til eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "Home page in ereolen"
-msgstr "eReolen startside"
 
 msgctxt "Library Agency Configuration"
 msgid "Pause reservation link"
@@ -3339,11 +3319,9 @@ msgstr "Dit bibliotek har nået grænsen for antal udlån i denne måned"
 
 msgctxt "Work Page"
 msgid ""
-"You do not have access to eReolen from this library as you are not "
+"You do not have access to digital materials from this library as you are not "
 "registered as a resident in the municipality. Contact the library."
 msgstr ""
-"Du har ikke adgang til eReolen fra dette bibliotek, da du ikke er "
-"registreret som bosiddende i Kommunen. Kontakt biblioteket"
 
 msgctxt "Work Page"
 msgid "No country could be found with the given country code"
@@ -3780,7 +3758,7 @@ msgstr "Se vores takster"
 
 msgctxt "Global"
 msgid "Expires @date"
-msgstr "Udløber @date"
+msgstr "Udløber automatisk @date"
 
 msgctxt "Global"
 msgid "Close renew loans modal"
@@ -4298,10 +4276,6 @@ msgstr "Reserveringsdato"
 msgctxt "Global"
 msgid "Borrow before"
 msgstr "Lån før"
-
-msgctxt "Global"
-msgid "Go to eReolen"
-msgstr "Gå til eReolen"
 
 msgctxt "Global"
 msgid "Your reservation expires @date!"
@@ -7471,43 +7445,9 @@ msgstr "Issue-kø"
 msgid "to report problems."
 msgstr "til at reportere problemer."
 
-msgid "Save settings"
-msgstr "Gem indstillinger"
-
 msgctxt "Entity type group"
 msgid "Content"
 msgstr "Indhold"
-
-msgid "Save and continue"
-msgstr "Gem og fortsæt"
-
-msgid "Save field settings"
-msgstr "Gem feltindstillinger"
-
-msgid "Update settings"
-msgstr "Opdatér indstillinger"
-
-msgid "Saved %name configuration"
-msgstr "Gemt %name konfiguration"
-
-msgid "Multiple test entity entities match this reference;"
-msgstr "Flere testenhedsenheder matcher denne reference;"
-
-msgid ""
-"Many test entity entities are called %value. Specify the one you want by "
-"appending the id in parentheses"
-msgstr ""
-"Mange testenheder kaldes %value. Specificer den, du ønsker, ved at tilføje "
-"id'et i parentes"
-
-msgid "There are no test entity entities matching \"%value\"."
-msgstr "Der er ingen testenheder, der matcher \"%value\"."
-
-msgid "Preview"
-msgstr "Preview"
-
-msgid "@type %title has been created."
-msgstr "@type %title oprettet."
 
 msgid "The referenced entity (%type: %id) does not exist."
 msgstr "Den refererede entity (%type: %id) eksisterer ikke."
@@ -8485,6 +8425,9 @@ msgid ""
 "A unique machine-readable name containing letters, numbers, and underscores."
 msgstr "Et unikt systemnavn som indeholder bogstaver, tal og understregninger."
 
+msgid "Save and continue"
+msgstr "Gem og fortsæt"
+
 msgid "Create group"
 msgstr "Opret gruppe"
 
@@ -9067,6 +9010,9 @@ msgid ""
 msgstr ""
 "Angiv fokus for dette billede i formen \"leftoffset,topoffset\" hvor "
 "forskydningerne er i procent. Eksempel: 25,75"
+
+msgid "Preview"
+msgstr "Preview"
 
 msgid ""
 "Focal Point allows you to specify the portion of an image that is most "
