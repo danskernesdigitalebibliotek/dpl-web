@@ -16,6 +16,7 @@ import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 import { modalStore } from "@/store/modal.store"
@@ -26,7 +27,6 @@ const LoanMaterialModal = ({
 }: {
   open: boolean
   manifestation: ManifestationWorkPageFragment
-  costFree: boolean
 }) => {
   const queryClient = useQueryClient()
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
@@ -76,6 +76,17 @@ const LoanMaterialModal = ({
     )
   }
 
+  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
+    query: {
+      // Publizon / useGetV1ProductsIdentifier is responsible for online
+      // materials. It requires an ISBN to do lookups.
+      enabled: isbns.length > 0,
+    },
+  })
+
+  const isLoanPossible =
+    publizonData?.product?.costFree || canUserLoanMoreEMaterials(dataLoans, manifestation)
+
   return (
     <ResponsiveDialog
       open={open}
@@ -103,7 +114,7 @@ const LoanMaterialModal = ({
       )}
       {!isLoadingLoans && (
         <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
-          {!canUserLoanMoreEMaterials(dataLoans, manifestation) && (
+          {!isLoanPossible && (
             <>
               Du kan desværre ikke låne flere titler af typen{" "}
               <span className="font-bold">
@@ -117,14 +128,14 @@ const LoanMaterialModal = ({
             "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."}
           {!error &&
             !isLoadingLoans &&
-            canUserLoanMoreEMaterials(dataLoans, manifestation) &&
+            isLoanPossible &&
             `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
         </p>
       )}
 
       <div className="flex flex-row items-center justify-center gap-6">
         {/* Only show "approve loan" button if user can still loan more materials */}
-        {canUserLoanMoreEMaterials(dataLoans, manifestation) && !error && !isErrorLoans && (
+        {isLoanPossible && !error && !isErrorLoans && (
           <Button
             theme={"primary"}
             size={"lg"}
@@ -144,9 +155,7 @@ const LoanMaterialModal = ({
           size={"lg"}
           disabled={isHandlingLoan || isLoadingLoans}
           onClick={() => closeModal()}>
-          {!canUserLoanMoreEMaterials(dataLoans, manifestation) || error || isErrorLoans
-            ? "Luk"
-            : "Nej"}
+          {!isLoanPossible || error || isErrorLoans ? "Luk" : "Nej"}
           {isLoadingLoans && (
             <Icon
               name="go-spinner"

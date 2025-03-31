@@ -88,6 +88,8 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   const isSelectedManifestationPodcast =
     selectedManifestationMaterialTypeCode === "PODCASTS" || false
 
+  const isSelectedManifestationCostFree = !!publizonData?.product?.costFree
+
   return (
     <>
       <motion.div
@@ -118,7 +120,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           )}
         </div>
         <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">
-          {!!publizonData?.product?.costFree || isSelectedManifestationPodcast ? (
+          {isSelectedManifestationCostFree || isSelectedManifestationPodcast ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>

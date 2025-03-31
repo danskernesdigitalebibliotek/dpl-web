@@ -9,11 +9,13 @@ import {
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import { modalStore } from "@/store/modal.store"
+import { sheetStore } from "@/store/sheet.store"
 
 export type WorkPageButtonsProps = {
   workId: string
@@ -31,6 +33,9 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
   }, [dataLoans?.loans, identifier])
   const isLoaned = !!loan
   const { openModal } = modalStore.trigger
+  const { session } = useSession()
+  const isLoggedIn = session?.isLoggedIn || false
+  const { openSheet } = sheetStore.trigger
 
   if (isLoadingLoans) {
     return (
@@ -79,12 +84,20 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             className="w-full lg:max-w-80 lg:min-w-72"
             theme={"primary"}
             disabled={isLoanButtonDisabled}
-            onClick={() =>
-              openModal({
-                modalType: "LoanMaterialModal",
-                props: { manifestation: selectedManifestation },
-              })
-            }>
+            onClick={() => {
+              if (isLoggedIn) {
+                openModal({
+                  modalType: "LoanMaterialModal",
+                  props: {
+                    manifestation: selectedManifestation,
+                  },
+                })
+              } else {
+                openSheet({
+                  sheetType: "LoginSheet",
+                })
+              }
+            }}>
             Lån e-bog
           </Button>
         </>
@@ -104,7 +117,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
       )
   }
 
-  if (isManifestationAudioBook(selectedManifestation))
+  if (isManifestationAudioBook(selectedManifestation)) {
     return (
       <>
         {!isLoaned && (
@@ -128,13 +141,20 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
               className="w-full lg:max-w-80 lg:min-w-72"
               theme={"primary"}
               disabled={isLoanButtonDisabled}
-              onClick={() =>
-                !isLoaned &&
-                openModal({
-                  modalType: "LoanMaterialModal",
-                  props: { manifestation: selectedManifestation },
-                })
-              }>
+              onClick={() => {
+                if (isLoggedIn) {
+                  openModal({
+                    modalType: "LoanMaterialModal",
+                    props: {
+                      manifestation: selectedManifestation,
+                    },
+                  })
+                } else {
+                  openSheet({
+                    sheetType: "LoginSheet",
+                  })
+                }
+              }}>
               Lån lydbog
             </Button>
           </>
@@ -156,6 +176,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
         )}
       </>
     )
+  }
 
   if (isManifestationPodcast(selectedManifestation)) {
     return (
@@ -180,13 +201,18 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
               size={"lg"}
               className="w-full lg:max-w-80 lg:min-w-72"
               disabled={isLoanButtonDisabled}
-              onClick={() =>
-                !isLoaned &&
-                openModal({
-                  modalType: "LoanMaterialModal",
-                  props: { manifestation: selectedManifestation },
-                })
-              }>
+              onClick={() => {
+                if (isLoggedIn) {
+                  openModal({
+                    modalType: "LoanMaterialModal",
+                    props: { manifestation: selectedManifestation },
+                  })
+                } else {
+                  openSheet({
+                    sheetType: "LoginSheet",
+                  })
+                }
+              }}>
               Lån podcast
             </Button>
           </>
