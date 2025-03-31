@@ -3,7 +3,7 @@ import { Factory } from "fishery"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 import { audioBookManifestationFactory, eBookManifestationFactory } from "./manifestations"
-import { audioBookFactory, eBookFactory } from "./materials"
+import { materialTypeAudioBookFactory, materialTypeEbookFactory } from "./materials"
 
 export type Work = WorkTeaserSearchPageFragment
 
@@ -18,7 +18,7 @@ export const AudioBookFactory = Factory.define<Work>(({ sequence }) => ({
       __typename: "Person",
     },
   ],
-  materialTypes: [eBookFactory.build(), audioBookFactory.build()],
+  materialTypes: [materialTypeEbookFactory.build(), materialTypeAudioBookFactory.build()],
   manifestations: {
     all: [eBookManifestationFactory.build(), audioBookManifestationFactory.build()],
     bestRepresentation: audioBookManifestationFactory.build(),
@@ -40,7 +40,7 @@ export const EBookFactory = Factory.define<Work>(({ sequence }) => ({
       __typename: "Person",
     },
   ],
-  materialTypes: [eBookFactory.build(), audioBookFactory.build()],
+  materialTypes: [materialTypeEbookFactory.build(), materialTypeAudioBookFactory.build()],
   manifestations: {
     all: [eBookManifestationFactory.build()],
     bestRepresentation: eBookManifestationFactory.build(),

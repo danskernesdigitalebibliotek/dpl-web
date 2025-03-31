@@ -1,6 +1,6 @@
 import { Factory } from "fishery"
 
-import { audioBookFactory, eBookFactory } from "./materials"
+import { materialTypeAudioBookFactory, materialTypeEbookFactory } from "./materials"
 import { Work } from "./works"
 
 type Manifestation = Work["manifestations"]["all"][0]
@@ -21,7 +21,7 @@ export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
       value: "9788711917145",
     },
   ],
-  materialTypes: [eBookFactory.build()],
+  materialTypes: [materialTypeEbookFactory.build()],
 }))
 
 export const audioBookManifestationFactory = Factory.define<Manifestation>(() => ({
@@ -40,7 +40,7 @@ export const audioBookManifestationFactory = Factory.define<Manifestation>(() =>
       value: "9788726204353",
     },
   ],
-  materialTypes: [audioBookFactory.build()],
+  materialTypes: [materialTypeAudioBookFactory.build()],
 }))
 
 export const manifestationContributorFactory = Factory.define<Manifestation["contributors"][0]>(
