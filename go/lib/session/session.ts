@@ -116,9 +116,7 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   const { cookies } = await import("next/headers")
 
   session.adgangsplatformenUserToken = token.token
-  session.expires = add(new Date(), {
-    seconds: token.expire,
-  })
+  session.expires = new Date(token.expire * 1000)
   const cookieStore = await cookies()
   cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgansplatformen")
 }
