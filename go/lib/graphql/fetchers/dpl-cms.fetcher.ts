@@ -24,7 +24,6 @@ export function fetcher<TData, TVariables>(
   variables?: TVariables,
   options?: RequestInit & { next?: NextFetchRequestConfig }
 ) {
-  // console.log("DPL CMS FETCHING")
   const dplCmsGraphqlEndpoint = getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")
   const dplCmsGraphqlBasicToken = getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")
 
@@ -37,7 +36,6 @@ export function fetcher<TData, TVariables>(
   }
   const { next, headers } = options || {}
 
-  // console.log("GET HEADERS IN DPL CMS FETCHER", getHeaders(headers))
   return async (): Promise<TData> => {
     const res = await fetch(dplCmsGraphqlEndpoint, {
       method: "POST",

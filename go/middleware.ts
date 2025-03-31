@@ -76,7 +76,6 @@ export async function middleware(request: NextRequest) {
   const libraryTokenCookieValue = await getLibraryTokenCookieValue()
   if (!libraryTokenCookieValue) {
     const libraryToken = await loadLibraryToken()
-    // TODO: why is the loaded lib token undefined?
     const timestamp = libraryToken?.expire.timestamp
     const expires = timestamp ? new Date(timestamp * 1000) : false
 

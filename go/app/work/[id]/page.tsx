@@ -4,19 +4,7 @@ import React from "react"
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { getBearerTokenServerSide } from "@/lib/helpers/tokens"
-import { getSession } from "@/lib/session/session"
-
-const createServerQueryFn = async <TQuery, TVariables>(
-  fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TQuery>,
-  variables: TVariables,
-  options?: RequestInit["headers"]
-) => {
-  const session = await getSession()
-  const bearerToken = await getBearerTokenServerSide("fbi", session)
-
-  return fetcher(variables, { ...options, Authorization: `Bearer ${bearerToken}` })
-}
+import { createServerQueryFn } from "@/lib/helpers/tokens"
 
 async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params

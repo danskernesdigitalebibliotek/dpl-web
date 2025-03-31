@@ -12,7 +12,7 @@ import {
   useGetAdgangsplatformenLibraryTokenQuery,
   useGetAdgangsplatformenUserTokenQuery,
 } from "../graphql/generated/dpl-cms/graphql"
-import { TSessionData, getDplCmsSessionCookie } from "../session/session"
+import { TSessionData, getDplCmsSessionCookie, getSession } from "../session/session"
 import { TServiceType, getServiceSettings } from "./services"
 
 export const libraryTokenExist = async () => {
@@ -118,4 +118,15 @@ export const getBearerTokenServerSide = async (
   }
 
   return null
+}
+
+export const createServerQueryFn = async <TQuery, TVariables>(
+  fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TQuery>,
+  variables: TVariables,
+  options?: RequestInit["headers"]
+) => {
+  const session = await getSession()
+  const bearerToken = await getBearerTokenServerSide("fbi", session)
+
+  return fetcher(variables, { ...options, Authorization: `Bearer ${bearerToken}` })
 }
