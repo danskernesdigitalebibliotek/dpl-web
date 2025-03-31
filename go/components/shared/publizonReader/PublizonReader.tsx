@@ -40,24 +40,23 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
 
   if (type === "loan") {
     return (
-      <div>
-        <p>orderId: {orderId}</p>
-        <div
-          id="pubhub-reader"
-          order-id={orderId}
-          role="button"
-          tabIndex={0}
-          // eslint-disable-next-line no-script-url
-          close-href="javascript:window.onReaderBackCallback()"
-          aria-label="Go back"
-        />
-      </div>
+      <div
+        style={{ height: "100vh" }}
+        id="pubhub-reader"
+        order-id={orderId}
+        role="button"
+        tabIndex={0}
+        // eslint-disable-next-line no-script-url
+        close-href="javascript:window.onReaderBackCallback()"
+        aria-label="Go back"
+      />
     )
   }
 
   if (type === "preview") {
     return (
       <div
+        style={{ height: "100vh" }}
         id="pubhub-reader"
         // @ts-ignore
         identifier={identifier}
