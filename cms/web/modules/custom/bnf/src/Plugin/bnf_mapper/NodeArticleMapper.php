@@ -7,7 +7,6 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
-use Drupal\bnf\Plugin\BnfMapperPluginBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;

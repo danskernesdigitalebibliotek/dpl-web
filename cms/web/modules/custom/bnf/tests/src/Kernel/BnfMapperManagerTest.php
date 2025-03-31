@@ -58,7 +58,10 @@ class BnfMapperManagerTest extends KernelTestBase {
       '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
       'Bibliotekarerne anbefaler læsning til den mørke tid',
       [
-        ParagraphTextBody::make(Text::make('text', 'format')),
+        ParagraphTextBody::make(
+          '982e0d87-f6b8-4b84-8de8-c8c8bcfef999',
+          Text::make('This is the text', 'with_format')
+        ),
       ]
     );
 
@@ -69,8 +72,8 @@ class BnfMapperManagerTest extends KernelTestBase {
     $nodeProphecy->set('title', 'Bibliotekarerne anbefaler læsning til den mørke tid')->shouldHaveBeenCalled();
     $nodeProphecy->set('field_paragraphs', [$paragraphProphecy->reveal()])->shouldHaveBeenCalled();
     $paragraphProphecy->set('field_body', [
-      'value' => 'text',
-      'format' => 'format',
+      'value' => 'This is the text',
+      'format' => 'with_format',
     ])->shouldHaveBeenCalled();
   }
 

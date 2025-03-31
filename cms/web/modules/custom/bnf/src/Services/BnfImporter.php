@@ -25,6 +25,7 @@ class BnfImporter {
 
   const ALLOWED_CONTENT_TYPES = [
     'article',
+    'go_article',
   ];
 
   /**

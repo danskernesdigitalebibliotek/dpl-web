@@ -7,12 +7,45 @@ query GetNode($id: ID!) {
     ... on NodeArticle {
       paragraphs {
         ... on ParagraphTextBody {
+          id
           body {
             value
             format
           }
         }
+        ... on ParagraphLinks {
+          id
+          link {
+            title
+            url
+            internal
+          }
+        }
+        ... on ParagraphBanner {
+          id
+          bannerImage {
+            ... on MediaImage {
+              id
+              name
+              mediaImage {
+                title
+                url
+                alt
+              }
+            }
+          }
+          underlinedTitle {
+            value
+            format
+          }
+          bannerDescription
+          bannerLink {
+            title
+            url
+          }
+        }
         ... on ParagraphAccordion {
+          id
           accordionDescription {
             value
             format
@@ -20,6 +53,246 @@ query GetNode($id: ID!) {
           accordionTitle {
             value
             format
+          }
+        }
+        ... on ParagraphFiles {
+          id
+          files {
+            ... on MediaDocument {
+              id
+              name
+              mediaFile {
+                url
+                description
+                name
+              }
+            }
+          }
+        }
+        ... on ParagraphGoLink {
+          id
+          targetBlank
+          singleLink: link {
+            title
+            url
+            internal
+          }
+        }
+        ... on ParagraphHero {
+          id
+          heroCategories {
+            ... on TermCategories {
+              id
+              name
+            }
+          }
+          heroContentType
+          heroDescription {
+            value
+            format
+          }
+          heroDate {
+            timestamp
+            timezone
+            time
+          }
+          heroImage {
+            ... on MediaImage {
+              id
+              name
+              mediaImage {
+                title
+                url
+                alt
+              }
+            }
+          }
+          heroLink {
+            title
+            url
+            internal
+          }
+          heroTitle
+        }
+        ... on ParagraphMaterialGridAutomatic {
+          id
+          materialGridDescription
+          materialGridTitle
+          amountOfMaterials
+          cqlSearch {
+            value
+          }
+        }
+        ... on ParagraphMaterialGridLinkAutomatic {
+          id
+          materialGridDescription
+          materialGridLink
+          materialGridTitle
+          amountOfMaterials
+        }
+        ... on ParagraphMaterialGridManual {
+          id
+          materialGridDescription
+          materialGridTitle
+          materialGridWorkIds {
+            material_type
+            work_id
+          }
+        }
+        ... on ParagraphMedias {
+          id
+          medias {
+            ... on MediaImage {
+              id
+              name
+              mediaImage {
+                title
+                url
+                alt
+              }
+            }
+          }
+        }
+        ... on ParagraphRecommendation {
+          id
+          imagePositionRight
+          recommendationDescription
+          recommendationTitle {
+            value
+            format
+          }
+          recommendationWorkId {
+            material_type
+            work_id
+          }
+        }
+        ... on ParagraphSimpleLinks {
+          id
+          link {
+            title
+            url
+            internal
+          }
+        }
+        ... on ParagraphVideo {
+          id
+          embedVideoRequired: embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+        }
+      }
+    }
+    ... on NodeGoArticle {
+      id
+      paragraphs {
+        ... on ParagraphGoLinkbox {
+          id
+          goColor
+          goDescription
+          goImage {
+            ... on MediaImage {
+              name
+              mediaImage {
+                title
+                url
+                alt
+              }
+              id
+            }
+          }
+          goLinkParagraph {
+            ... on ParagraphGoLink {
+              id
+              link {
+                title
+                url
+                internal
+              }
+              ariaLabel
+              targetBlank
+            }
+          }
+          titleRequired: title
+        }
+        ... on ParagraphGoMaterialSliderAutomatic {
+          id
+          cqlSearch {
+            value
+          }
+          sliderAmountOfMaterials
+          title
+        }
+        ... on ParagraphGoMaterialSliderManual {
+          id
+          materialSliderWorkIds {
+            material_type
+            work_id
+          }
+          title
+        }
+        ... on ParagraphGoVideo {
+          id
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          titleRequired: title
+        }
+        ... on ParagraphGoVideoBundleAutomatic {
+          id
+          cqlSearch {
+            value
+          }
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          goVideoTitle
+          videoAmountOfMaterials
+        }
+        ... on ParagraphGoVideoBundleManual {
+          id
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          goVideoTitle
+          videoBundleWorkIds {
+            material_type
+            work_id
           }
         }
       }

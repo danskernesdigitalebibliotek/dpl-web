@@ -11,7 +11,7 @@ use Drupal\bnf\Plugin\bnf_mapper\ParagraphAccordionMapper;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
- * Tests the text_body paragraph mapper.
+ * Tests the accordion paragraph mapper.
  */
 class ParagraphAccordionMapperTest extends EntityMapperTestBase {
 
@@ -30,21 +30,22 @@ class ParagraphAccordionMapperTest extends EntityMapperTestBase {
   }
 
   /**
-   * Test text paragraph mapping.
+   * Test paragraph mapping.
    */
-  public function testParagraphTextBodyMapping(): void {
+  public function testParagraphAccordionMapping(): void {
     $this->storageProphecy->create([
       'type' => 'accordion',
     ])->willReturn($this->entityProphecy);
 
     $mapper = new ParagraphAccordionMapper([], '', [], $this->entityManagerProphecy->reveal());
 
-    $graphqlArticle = ParagraphAccordion::make(
+    $graphqlElement = ParagraphAccordion::make(
+      'accordion',
       TitleText::make('This is the title', 'format1'),
       DescriptionText::make('This is the description', 'format2'),
     );
 
-    $paragraph = $mapper->map($graphqlArticle);
+    $paragraph = $mapper->map($graphqlElement);
 
     $this->assertSame($paragraph, $this->entityProphecy->reveal());
 
@@ -53,10 +54,11 @@ class ParagraphAccordionMapperTest extends EntityMapperTestBase {
       'format' => 'format1',
     ])->shouldHaveBeenCalled();
 
-    $this->entityProphecy->set('field_accordion_description', [
-      'value' => 'This is the description',
-      'format' => 'format2',
-    ])->shouldHaveBeenCalled();
+    $this->entityProphecy->set('field_accordion_description',
+      [
+        'value' => 'This is the description',
+        'format' => 'format2',
+      ])->shouldHaveBeenCalled();
   }
 
 }

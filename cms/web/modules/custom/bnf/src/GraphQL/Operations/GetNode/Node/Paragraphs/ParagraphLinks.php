@@ -3,14 +3,26 @@
 namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
+ * @property string $id
+ * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Link\Link> $link
  * @property string $__typename
  */
 class ParagraphLinks extends \Spawnia\Sailor\ObjectLike
 {
-    public static function make(): self
+    /**
+     * @param string $id
+     * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Link\Link> $link
+     */
+    public static function make($id, $link): self
     {
         $instance = new self;
 
+        if ($id !== self::UNDEFINED) {
+            $instance->id = $id;
+        }
+        if ($link !== self::UNDEFINED) {
+            $instance->link = $link;
+        }
         $instance->__typename = 'ParagraphLinks';
 
         return $instance;
@@ -21,6 +33,8 @@ class ParagraphLinks extends \Spawnia\Sailor\ObjectLike
         static $converters;
 
         return $converters ??= [
+            'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
+            'link' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Link\Link))),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
