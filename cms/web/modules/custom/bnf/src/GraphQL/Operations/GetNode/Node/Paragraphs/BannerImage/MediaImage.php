@@ -7,6 +7,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage;
  * @property string $name
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage\Image $mediaImage
  * @property string $__typename
+ * @property string|null $byline
  */
 class MediaImage extends \Spawnia\Sailor\ObjectLike
 {
@@ -14,9 +15,14 @@ class MediaImage extends \Spawnia\Sailor\ObjectLike
      * @param string $id
      * @param string $name
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage\Image $mediaImage
+     * @param string|null $byline
      */
-    public static function make($id, $name, $mediaImage): self
-    {
+    public static function make(
+        $id,
+        $name,
+        $mediaImage,
+        $byline = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+    ): self {
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
@@ -29,6 +35,9 @@ class MediaImage extends \Spawnia\Sailor\ObjectLike
             $instance->mediaImage = $mediaImage;
         }
         $instance->__typename = 'MediaImage';
+        if ($byline !== self::UNDEFINED) {
+            $instance->byline = $byline;
+        }
 
         return $instance;
     }
@@ -42,6 +51,7 @@ class MediaImage extends \Spawnia\Sailor\ObjectLike
             'name' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'mediaImage' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage\Image),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'byline' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

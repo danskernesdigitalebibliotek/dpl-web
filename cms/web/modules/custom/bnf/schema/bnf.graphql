@@ -1620,7 +1620,7 @@ type ParagraphVideo implements ParagraphInterface {
   created: DateTime!
 
   """Indlejr video"""
-  embedVideo: MediaUnion
+  embedVideo: MediaUnion!
 
   """The paragraphs entity language code."""
   langcode: Language!

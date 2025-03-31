@@ -27,6 +27,7 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               id
               name
+              byline
               mediaImage {
                 title
                 url
@@ -100,6 +101,7 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               id
               name
+              byline
               mediaImage {
                 title
                 url
@@ -145,6 +147,7 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               id
               name
+              byline
               mediaImage {
                 title
                 url
@@ -200,13 +203,14 @@ query GetNode($id: ID!) {
           goDescription
           goImage {
             ... on MediaImage {
+              id
               name
+              byline
               mediaImage {
                 title
                 url
                 alt
               }
-              id
             }
           }
           goLinkParagraph {
