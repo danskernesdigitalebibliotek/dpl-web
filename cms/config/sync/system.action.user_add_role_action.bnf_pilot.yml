@@ -1,0 +1,14 @@
+uuid: cc884105-848a-478d-a969-44e14ad9a79f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.bnf_pilot
+  module:
+    - user
+id: user_add_role_action.bnf_pilot
+label: 'Add the BNF Pilot role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: bnf_pilot

@@ -532,3 +532,13 @@ function dpl_update_update_10044(): string {
     'http_cache_control.settings',
   ]);
 }
+
+/**
+ * Install BNF base module.
+ *
+ * Notice - this is ONLY the base module. The client and server modules get
+ * enabled seperately.
+ */
+function dpl_update_update_10045(): string {
+  return _dpl_update_install_modules(['bnf']);
+}
