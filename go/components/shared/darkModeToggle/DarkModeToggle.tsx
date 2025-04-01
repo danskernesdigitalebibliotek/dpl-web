@@ -30,6 +30,7 @@ function DarkModeToggle() {
           )}
           name="sun"
         />
+        <span className="sr-only">{theme}</span>
         <Icon
           className={cn(
             "absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all duration-500",
