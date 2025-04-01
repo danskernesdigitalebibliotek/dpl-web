@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { withAuth } from "@/app/pubhub/(lib)/helper"
 import { TUserInfo } from "@/app/pubhub/(lib)/types"
-import { getLastValueFromUrl, transformTimeToUtcString } from "@/app/pubhub/helper"
+import { transformTimeToUtcString } from "@/app/pubhub/helper"
 
 import { createLoanRequest } from "./(lib)/requests"
 import { createLoanSchema } from "./(lib)/schemas"
 
-async function createdigitalLoan(request: NextRequest, context: { userInfo: TUserInfo }) {
+async function createdigitalLoan(
+  request: NextRequest,
+  context: { userInfo: TUserInfo; params: { identifier: string } }
+) {
+  const { identifier } = context.params
   const createLoan = createLoanSchema.transform(loanData => {
     const response = loanData.response
     return {
@@ -19,7 +23,7 @@ async function createdigitalLoan(request: NextRequest, context: { userInfo: TUse
     }
   })
   try {
-    const responseData = await createLoanRequest(context.userInfo, getLastValueFromUrl(request.url))
+    const responseData = await createLoanRequest(context.userInfo, identifier)
     return NextResponse.json(createLoan.parse(responseData))
   } catch (error) {
     console.error(error)

@@ -5,6 +5,7 @@ import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
+import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -47,6 +48,7 @@ export default function RootLayout({
         <Theme>
           <ReactQueryProvider>
             <Header />
+            <DynamicSheet />
             <div className="min-h-screen-minus-navigation-height py-space-y flex h-full w-full flex-col">
               {children}
             </div>

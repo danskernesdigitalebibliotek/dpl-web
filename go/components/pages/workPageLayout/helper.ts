@@ -27,7 +27,7 @@ export const getManifestationMaterialType = (
 
 export const getManifestationMaterialTypeSpecific = (
   manifestation: ManifestationWorkPageFragment
-): "e-bog" | "lydbog" | "podcast" | undefined => {
+): "e-bog" | "lydbog" | "podcast" | null => {
   if (isManifestationEbook(manifestation)) {
     return "e-bog"
   }
@@ -37,7 +37,7 @@ export const getManifestationMaterialTypeSpecific = (
   if (isManifestationPodcast(manifestation)) {
     return "podcast"
   }
-  return undefined
+  return null
 }
 
 export const getManifestationByMaterialType = (
@@ -143,7 +143,9 @@ export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
 
 export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
   const materialType = getManifestationMaterialType(manifestation)
-  return getIconNameFromMaterialType(materialType.code) || "book"
+  // If we couldn't find the right material type, we show the icon for "question-mark"
+  // Note that this has to be the same as the name of the icon in the icon library.
+  return getIconNameFromMaterialType(materialType.code) || "question-mark"
 }
 
 export const canUserLoanMoreEMaterials = (

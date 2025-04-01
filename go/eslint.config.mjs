@@ -42,6 +42,15 @@ const eslintConfig = [
           allow: ["warn", "error", "info"],
         },
       ],
+      "no-restricted-properties": [
+        "error",
+        {
+          object: "process",
+          property: "env",
+          message:
+            "Do not use process.env directly. Use getEnv() or getServerEnv() from env.ts instead.",
+        },
+      ],
 
       "no-alert": "error",
       "no-script-url": "error",

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 import type { IntrospectionResponse } from "openid-client"
 
+import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
@@ -17,6 +18,29 @@ import { logoutUniloginSSO } from "../../logout/helpers"
 import { isUniloginUserAuthorizedToLogIn } from "./helper"
 import schemas from "./schemas"
 
+type TClaims = {
+  exp: number
+  iat: number
+  auth_time: number
+  jti: string
+  iss: string
+  aud: string
+  sub: string
+  typ: string
+  azp: string
+  session_state: string
+  at_hash: string
+  sid: string
+  spec_ver: string
+  has_license: string
+  broker_id: string
+  unilogin_loa: string
+  aktoer_gruppe: string
+  institution_ids: string
+  loa: string
+  uniid: string
+}
+
 export interface TIntrospectionResponse extends IntrospectionResponse {
   uniid: string
   institution_ids: string
@@ -25,7 +49,7 @@ export interface TIntrospectionResponse extends IntrospectionResponse {
 export async function GET(request: NextRequest) {
   const session = await getSession()
   const config = await getUniloginClientConfig()
-  const appUrl = String(goConfig("app.url"))
+  const appUrl = getEnv("APP_URL")
   const sessionOptions = await getSessionOptions()
 
   if (!config || !sessionOptions) {
@@ -66,7 +90,7 @@ export async function GET(request: NextRequest) {
     )) as TIntrospectionResponse
     const introspect = schemas.introspect.parse(introspectResponse)
 
-    const claims = tokenSetResponse.claims()!
+    const claims = tokenSetResponse.claims()! as TClaims
 
     // UserInfo Request
     const userInfoResponse = await client.fetchUserInfo(config, tokenSet.access_token, claims.sub)
@@ -81,14 +105,14 @@ export async function GET(request: NextRequest) {
 
     const institutionId = getInstitutionId(introspect.institution_ids)
     // Check if user is authorized to log.
-    const isAuthorized = await isUniloginUserAuthorizedToLogIn(institutionId)
+    const isAuthorized = await isUniloginUserAuthorizedToLogIn(institutionId, claims)
     if (!isAuthorized) {
       // Make sure that the user is logged out remotely first. And destroy session.
       await logoutUniloginSSO(session)
       await destroySession(session)
       // Redirect user to login not authorized page.
       return NextResponse.redirect(
-        `${goConfig("app.url")}/${goConfig("routes.login-not-authorized")}`
+        `${getEnv("APP_URL")}/${goConfig("routes.login-not-authorized")}`
       )
     }
 
@@ -107,10 +131,10 @@ export async function GET(request: NextRequest) {
     // Make sure that the user is logged out remotely first. And destroy session.
     await logoutUniloginSSO(session)
     await destroySession(session)
-    return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
+    return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed")}`)
   }
 
-  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
+  return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
 }
 
 export const dynamic = "force-dynamic"
