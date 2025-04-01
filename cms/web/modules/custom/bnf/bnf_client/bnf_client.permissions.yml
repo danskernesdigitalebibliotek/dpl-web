@@ -1,4 +1,0 @@
-bnf client export nodes:
-  title: 'Can export nodes to BNF'
-bnf client import nodes:
-  title: 'Can import nodes from BNF'

@@ -1,0 +1,14 @@
+uuid: 443d424c-43b1-410a-84a7-ba1a44baa071
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.bnf_pilot
+  module:
+    - user
+id: user_remove_role_action.bnf_pilot
+label: 'Remove the BNF Pilot role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: bnf_pilot

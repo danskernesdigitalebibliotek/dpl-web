@@ -27,6 +27,7 @@ dependencies:
   module:
     - administerusersbyrole
     - block
+    - bnf
     - config_perms
     - content_lock
     - cookieinformation
@@ -125,6 +126,7 @@ permissions:
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
+  - 'bnf import nodes'
   - 'break content lock'
   - 'cancel users by role'
   - 'change own username'

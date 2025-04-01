@@ -32,7 +32,7 @@ function bnf_client_form_alter(array &$form, FormStateInterface $form_state, str
 
   $current_user = \Drupal::currentUser();
 
-  if (!$current_user->hasPermission('bnf client export nodes')) {
+  if (!$current_user->hasPermission('bnf export nodes')) {
     return;
   }
 

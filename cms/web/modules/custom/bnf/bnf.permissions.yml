@@ -1,0 +1,7 @@
+---
+bnf export nodes:
+  title: 'Can export nodes to BNF'
+  description: 'Requires bnf_client module to be enabled to function'
+bnf import nodes:
+  title: 'Can import nodes from BNF'
+  description: 'Requires bnf_client module to be enabled to function'
