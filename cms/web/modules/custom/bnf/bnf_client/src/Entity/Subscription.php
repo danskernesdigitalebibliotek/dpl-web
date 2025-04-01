@@ -49,46 +49,6 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
    */
   #[\Override]
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
-
-    /**
-     * Helper function for creating the term fields.
-     *
-     * We want this as a helper, as it is quite a mouthful of settings, and we
-     * need to do it for both tags and categories.
-     *
-     * PHPStan does not support inner functions, but we need it as this is
-     * a static method.
-     * @phpstan-ignore-next-line inner-functions
-     */
-    function getTermFieldDefinition(string $vid): BaseFieldDefinition {
-      return BaseFieldDefinition::create('entity_reference')
-        ->setLabel(ucfirst($vid))
-        ->setDescription("The $vid, to be added to content created with this subscription.")
-        ->setSetting('target_type', 'taxonomy_term')
-        ->setSetting('handler', 'default')
-        ->setSetting('handler_settings', [
-          'target_bundles' => [$vid => $vid],
-        ])
-        ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-        ->setDisplayOptions('form', [
-          'type' => 'entity_reference_autocomplete',
-          'weight' => 10,
-          'settings' => [
-            'match_operator' => 'CONTAINS',
-            'size' => 60,
-            'autocomplete_type' => $vid,
-            'placeholder' => '',
-          ],
-        ])
-        ->setDisplayOptions('view', [
-          'label' => 'above',
-          'type' => 'entity_reference_label',
-          'weight' => 10,
-        ])
-        ->setDisplayConfigurable('form', TRUE)
-        ->setDisplayConfigurable('view', TRUE);
-    }
-
     $fields = [];
 
     $fields['uuid'] = BaseFieldDefinition::create('uuid')
@@ -104,12 +64,59 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setDescription('The UUID subscribed to.')
       ->setRequired(TRUE);
 
-    // PHPStan does not understand inner functions.
-    // @phpstan-ignore-next-line function.undefined
-    $fields['tags'] = getTermFieldDefinition('tags');
-    // PHPStan does not understand inner functions.
-    // @phpstan-ignore-next-line function.undefined
-    $fields['categories'] = getTermFieldDefinition('categories');
+    $fields['tags'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel('Tags')
+      ->setDescription("The tags, to be added to content created with this subscription.")
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['tags' => 'tags'],
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 10,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => 60,
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label',
+        'weight' => 10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['categories'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel('Categories')
+      ->setDescription("The categories, to be added to content created with this subscription.")
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['categories' => 'categories'],
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 10,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => 60,
+          'autocomplete_type' => 'categories',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label',
+        'weight' => 10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel('Created')
