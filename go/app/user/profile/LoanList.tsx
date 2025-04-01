@@ -1,37 +1,74 @@
 import React from "react"
 
-import { Button } from "@/components/shared/button/Button"
-import Icon from "@/components/shared/icon/Icon"
+import {
+  ManifestationSearchPageTeaserFragment,
+  WorkTeaserSearchPageFragment,
+  useComplexSearchForWorkTeaserQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
+import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
-import Loan from "./Loan"
+import LoanListSlider, { LoanListSliderSkeleton } from "./LoanListSlider"
 
-const LoanList = () => {
+export type LoanListProps = {
+  className?: string
+}
+
+const LoanList = ({ className }: LoanListProps) => {
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
+  const getIsbnsFromLoans = (loans: LoanListResult["loans"] | null | undefined) => {
+    return loans?.map(loan => loan.libraryBook?.identifier) || []
+  }
+  const { data: dataComplexSearch, isLoading: isLoadingComplexSearch } =
+    useComplexSearchForWorkTeaserQuery(
+      {
+        cql:
+          getIsbnsFromLoans(dataLoans?.loans)
+            .map(isbn => `term.isbn=${isbn}`)
+            .join(" OR ") || "",
+        offset: 0,
+        limit: 100,
+        filters: {},
+      },
+      { enabled: !!dataLoans?.loans }
+    )
+  // Create an array of works with the matching manifestation inside out of the LOAN ISBNS
+  // instead of ComplexSearch data so that we have exactly one manifestation per loan
+  const loanWorks: WorkTeaserSearchPageFragment[] | undefined = getIsbnsFromLoans(
+    dataLoans?.loans
+  ).reduce((isbnAcc, isbn) => {
+    // Find the work that contains the matching ISBN inside one of its manifestations
+    const loanWork = dataComplexSearch?.complexSearch.works.find(work => {
+      return work.manifestations.all.some(manifestation =>
+        manifestation.identifiers.some(identifier => identifier.value === isbn)
+      )
+    })
+    // Skip if no matching work is found
+    if (!loanWork) {
+      return isbnAcc
+    }
+    // Find the specific manifestation inside the found work
+    const loanManifestation: ManifestationSearchPageTeaserFragment | undefined =
+      loanWork.manifestations.all.find(manifestation =>
+        manifestation.identifiers.some(identifier => identifier.value === isbn)
+      )
+    // Skip if no matching manifestation is found
+    if (!loanManifestation) {
+      return isbnAcc
+    }
+    // Create a new work object with only the matching manifestation
+    const workWithSingleManifestation: WorkTeaserSearchPageFragment = {
+      ...loanWork,
+      manifestations: { all: [loanManifestation], bestRepresentation: loanManifestation },
+    }
+    return [...isbnAcc, workWithSingleManifestation]
+  }, [] as WorkTeaserSearchPageFragment[])
 
   return (
-    <div className="bg-background-overlay rounded-base col-span-full space-y-8 overflow-hidden py-10">
-      <div className="flex items-center justify-between px-10">
-        <h2 className="text-typo-heading-4">Bøger jeg har lånt (x)</h2>
-        <div className="flex flex-row justify-end gap-x-4">
-          <Button disabled={false} variant="icon" ariaLabel="Vis forrige værker">
-            <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-          </Button>
-          <Button disabled={false} variant="icon" ariaLabel="Vis næste værker">
-            <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="text-typo-body-lg">
-        {isLoadingLoans && <p>Loading...</p>}
-        {dataLoans?.loans &&
-          !isLoadingLoans &&
-          dataLoans.loans.map(loan => {
-            if (!loan.libraryBook?.identifier) return
-            return <Loan key={loan.libraryBook.identifier} isbn={loan.libraryBook.identifier} />
-          })}
-      </div>
+    <div className={cn("col-span-full", className)}>
+      {(isLoadingLoans || isLoadingComplexSearch) && <LoanListSliderSkeleton />}
+      {loanWorks && dataLoans && <LoanListSlider works={loanWorks} loanData={dataLoans} />}
     </div>
   )
 }
