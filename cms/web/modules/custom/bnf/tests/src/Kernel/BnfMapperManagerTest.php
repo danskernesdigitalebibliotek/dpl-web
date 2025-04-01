@@ -7,6 +7,7 @@ namespace Drupal\Tests\bnf\Kernel;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\PublicationDate\DateTime;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\KernelTests\KernelTestBase;
@@ -27,6 +28,7 @@ class BnfMapperManagerTest extends KernelTestBase {
     'user',
     // Needed for the bnf_state base field.
     'options',
+    'file',
   ];
 
   /**
@@ -57,6 +59,12 @@ class BnfMapperManagerTest extends KernelTestBase {
     $graphqlNode = NodeArticle::make(
       '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
       'Bibliotekarerne anbefaler læsning til den mørke tid',
+      DateTime::make(1735689661, 'UTC'),
+      'this is the subtitle',
+      TRUE,
+      'this is an author',
+      'this is a teaser text',
+      NULL,
       [
         ParagraphTextBody::make(
           '982e0d87-f6b8-4b84-8de8-c8c8bcfef999',
@@ -71,6 +79,7 @@ class BnfMapperManagerTest extends KernelTestBase {
     $this->assertSame($node, $nodeProphecy->reveal());
     $nodeProphecy->set('title', 'Bibliotekarerne anbefaler læsning til den mørke tid')->shouldHaveBeenCalled();
     $nodeProphecy->set('field_paragraphs', [$paragraphProphecy->reveal()])->shouldHaveBeenCalled();
+
     $paragraphProphecy->set('field_body', [
       'value' => 'This is the text',
       'format' => 'with_format',
