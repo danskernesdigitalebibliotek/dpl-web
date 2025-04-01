@@ -51,6 +51,14 @@ const eslintConfig = [
             "Do not use process.env directly. Use getEnv() or getServerEnv() from env.ts instead.",
         },
       ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            'JSXAttribute[name.name="data-cy"]:not([value.expression.object.name="cyKeys"])',
+          message: "data-cy attribute must use cyKeys object (e.g., data-cy={cyKeys['key']})",
+        },
+      ],
 
       "no-alert": "error",
       "no-script-url": "error",
