@@ -1,12 +1,11 @@
-query getAdgangsplatformenTokens {
+query getAdgangsplatformenLibraryToken {
   dplTokens {
     adgangsplatformen {
       library {
         token
-      }
-      user {
-        expire
-        token
+        expire {
+          timestamp
+        }
       }
     }
   }
