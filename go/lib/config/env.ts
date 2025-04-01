@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-properties */
 import { z } from "zod"
 
 function getEnvs() {

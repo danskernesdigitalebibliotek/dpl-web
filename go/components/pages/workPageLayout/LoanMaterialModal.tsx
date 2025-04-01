@@ -98,27 +98,29 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
       </div>
 
       {/* Description */}
-      <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
-        {isLoadingLoans && (
-          <div className="bg-background-skeleton h-[26px] w-[500px] animate-pulse rounded-full" />
-        )}
-        {!canUserLoanMoreEMaterials(dataLoans, manifestation) && (
-          <>
-            Du kan desværre ikke låne flere{" "}
-            <span className="font-bold">
-              {`"${getManifestationMaterialTypeSpecific(manifestation)}er"`}
-            </span>{" "}
-            i denne måned.
-          </>
-        )}
-        {error && "Vi kunne desværre ikke låne materialet. Prøv igen senere."}
-        {isErrorLoans &&
-          "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."}
-        {!error &&
-          !isLoadingLoans &&
-          canUserLoanMoreEMaterials(dataLoans, manifestation) &&
-          `Er du sikker på at du vil låne denne ${getManifestationMaterialTypeSpecific(manifestation) || "material"}?`}
-      </p>
+      {isLoadingLoans && (
+        <div className="bg-background-skeleton mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
+      )}
+      {!isLoadingLoans && (
+        <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
+          {!canUserLoanMoreEMaterials(dataLoans, manifestation) && (
+            <>
+              Du kan desværre ikke låne flere titler af typen{" "}
+              <span className="font-bold">
+                {`"${getManifestationMaterialTypeSpecific(manifestation)}"`}
+              </span>{" "}
+              i denne måned.
+            </>
+          )}
+          {error && "Vi kunne desværre ikke låne materialet. Prøv igen senere."}
+          {isErrorLoans &&
+            "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."}
+          {!error &&
+            !isLoadingLoans &&
+            canUserLoanMoreEMaterials(dataLoans, manifestation) &&
+            `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
+        </p>
+      )}
 
       <div className="flex flex-row items-center justify-center gap-6">
         {/* Only show "approve loan" button if user can still loan more materials */}
@@ -129,14 +131,13 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan || isLoadingLoans}>
             {!isHandlingLoan && "Ja"}
-            {isHandlingLoan ||
-              (isLoadingLoans && (
-                <Icon
-                  name="go-spinner"
-                  ariaLabel="Indlæser"
-                  className="animate-spin-reverse h-[24px] w-[24px]"
-                />
-              ))}
+            {(isHandlingLoan || isLoadingLoans) && (
+              <Icon
+                name="go-spinner"
+                ariaLabel="Indlæser"
+                className="animate-spin-reverse h-[24px] w-[24px]"
+              />
+            )}
           </Button>
         )}
         <Button

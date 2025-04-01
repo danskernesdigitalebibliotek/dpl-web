@@ -50,17 +50,17 @@ const SearchPageLayout = () => {
         <>
           {!isLoadingFacets && data.facets && data.facets.length > 0 ? (
             <div className="relative">
-              <div className="xl:hidden">
+              <div className="lg:hidden">
                 <SearchFiltersMobile facets={data.facets} />
               </div>
-              <div className="hidden xl:block">
+              <div className="hidden lg:block">
                 <SearchFiltersDesktop facets={data.facets} />
               </div>
             </div>
           ) : (
             <>
-              <div className="xl:hidden">{/* <SearchFiltersMobileSkeleton /> */}</div>
-              <div className="hidden xl:block">
+              <div className="lg:hidden">{/* <SearchFiltersMobileSkeleton /> */}</div>
+              <div className="hidden lg:block">
                 <SearchFiltersDesktopSkeleton />
               </div>
             </>

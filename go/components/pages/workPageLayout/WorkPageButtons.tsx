@@ -68,13 +68,13 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             </Button>
           )}
           <Button
-            ariaLabel={isLoaned ? "Læs e-bog" : "Lån e-bog"}
+            ariaLabel={isLoaned ? "Læs" : "Lån e-bog"}
             size={"lg"}
             className="w-full lg:max-w-80 lg:min-w-72"
             theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() => !isLoaned && setIsConfirmDialogOpen(!isConfirmDialogOpen)}>
-            {isLoaned ? "Læs e-bog" : "Lån e-bog"}
+            {isLoaned ? "Læs" : "Lån e-bog"}
           </Button>
         </>
       )}
@@ -91,13 +91,13 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             </Button>
           )}
           <Button
-            ariaLabel={isLoaned ? "Læs lydbog" : "Lån lydbog"}
+            ariaLabel={isLoaned ? "Lyt" : "Lån lydbog"}
             size={"lg"}
             className="w-full lg:max-w-80 lg:min-w-72"
             theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() => !isLoaned && setIsConfirmDialogOpen(!isConfirmDialogOpen)}>
-            {isLoaned ? "Læs lydbog" : "Lån lydbog"}
+            {isLoaned ? "Lyt" : "Lån lydbog"}
           </Button>
         </>
       )}
@@ -114,13 +114,13 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             </Button>
           )}
           <Button
-            ariaLabel={isLoaned ? "Læs podcast" : "Hør podcast"}
+            ariaLabel={isLoaned ? "Lyt" : "Lån podcast"}
             size={"lg"}
             className="w-full lg:max-w-80 lg:min-w-72"
             theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() => !isLoaned && setIsConfirmDialogOpen(!isConfirmDialogOpen)}>
-            {isLoaned ? "Læs podcast" : "Hør podcast"}
+            {isLoaned ? "Lyt" : "Lån podcast"}
           </Button>
         </>
       )}
