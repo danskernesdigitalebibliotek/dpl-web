@@ -1,3 +1,5 @@
+"use client"
+
 import { createStore } from "@xstate/store"
 
 type TThemeTypes = "light" | "dark"
@@ -7,7 +9,7 @@ type TContext = {
 }
 
 const initialSnapshot =
-  typeof window !== "undefined" && JSON.parse(localStorage.getItem("theme.store") || "")
+  typeof window !== "undefined" && JSON.parse(localStorage.getItem("theme.store") || "{}")
 
 const themeStore = createStore({
   context: initialSnapshot.context || ({ theme: "light" } as TContext),

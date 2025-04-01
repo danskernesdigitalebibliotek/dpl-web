@@ -1,9 +1,8 @@
-import React from "react"
+import React, { ButtonHTMLAttributes } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
-type BadgeButtonProps = {
-  onClick: () => void
+type BadgeButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isActive?: boolean
   classNames?: string
   children: React.ReactNode
@@ -20,6 +19,7 @@ const BadgeButton = ({
   ariaLabel,
   variant = "default",
   withAnimation = false,
+  ...restProps
 }: BadgeButtonProps) => {
   return (
     <button
@@ -32,7 +32,8 @@ const BadgeButton = ({
         isActive ? "bg-foreground text-background" : "",
         classNames
       )}
-      aria-label={ariaLabel}>
+      aria-label={ariaLabel}
+      {...restProps}>
       {children}
     </button>
   )
