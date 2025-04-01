@@ -1,0 +1,172 @@
+"use client"
+
+import { useWindowSize } from "@uidotdev/usehooks"
+import "keen-slider/keen-slider.min.css"
+import { useKeenSlider } from "keen-slider/react"
+import Link from "next/link"
+import React, { useEffect, useState } from "react"
+
+import LoanCard from "@/app/user/profile/LoanCard"
+import LoansDetails from "@/app/user/profile/LoansDetails"
+import { loanSliderOptions } from "@/app/user/profile/helper"
+import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
+import { Button } from "@/components/shared/button/Button"
+import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import Icon from "@/components/shared/icon/Icon"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
+import { displayCreators } from "@/lib/helpers/helper.creators"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+
+type LoanListSliderProps = {
+  works: WorkTeaserSearchPageFragment[]
+  loanData: LoanListResult
+}
+
+const LoanListSlider = ({ works, loanData }: LoanListSliderProps) => {
+  const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
+  const [reachedStart, setReachStart] = useState(true)
+  const [reachedEnd, setReachEnd] = useState(true)
+  const size = useWindowSize()
+  const updateSlidePosition = () => {
+    setReachStart(internalSlider.current?.track?.details?.rel === 0)
+    setReachEnd(
+      internalSlider.current?.track?.details?.maxIdx === internalSlider.current?.track?.details?.rel
+    )
+  }
+
+  useEffect(() => {
+    internalSlider.current?.on("slideChanged", () => {
+      updateSlidePosition()
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [internalSlider.current])
+
+  useEffect(() => {
+    updateSlidePosition()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [works])
+
+  // If window size or children amount changes, update the slider
+  useEffect(() => {
+    internalSlider.current?.update()
+  }, [size.width, internalSlider, works])
+  const onLeftClick = () => {
+    internalSlider.current?.prev()
+  }
+  const onRightClick = () => {
+    internalSlider.current?.next()
+  }
+
+  return (
+    <div className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden py-10">
+      <div className="col-span-full flex items-center justify-between px-10">
+        <h2 className="text-typo-heading-4">
+          E-materialer jeg har lånt ({loanData.loans?.length})
+        </h2>
+        <div className="flex flex-row justify-end gap-x-4">
+          <Button
+            disabled={reachedStart}
+            variant="icon"
+            ariaLabel="Vis forrige værker"
+            onClick={() => onLeftClick()}>
+            <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+          </Button>
+          <Button
+            disabled={reachedEnd}
+            variant="icon"
+            ariaLabel="Vis næste værker"
+            onClick={() => onRightClick()}>
+            <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+          </Button>
+        </div>
+      </div>
+      <div className="-mx-grid-edge px-grid-edge col-span-full">
+        <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
+          {works.map((work, index) => {
+            const loanManifestation = work.manifestations.all[0]
+            return (
+              <Link
+                key={loanManifestation.pid}
+                aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+                className={cn(
+                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base !overflow-visible
+                  focus:outline-offset-2`
+                )}
+                href={resolveUrl({
+                  routeParams: { work: "work", wid: work.workId },
+                  queryParams: {
+                    type: loanManifestation.materialTypes[0].materialTypeGeneral.code,
+                  },
+                })}>
+                <LoanCard
+                  manifestation={loanManifestation}
+                  title={work.titles.full[0]}
+                  className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
+                />
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+      <LoansDetails loanData={loanData} />
+    </div>
+  )
+}
+
+export const LoanListSliderSkeleton = () => {
+  return (
+    <div className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden py-10">
+      <div className="col-span-full flex items-center justify-between px-10">
+        {/* Headline */}
+        <div className="text-typo-heading-4 bg-background-skeleton h-[27px] w-xl animate-pulse rounded-sm" />
+        {/* Buttons */}
+        <div className="flex flex-row justify-end gap-x-4">
+          <div className="bg-background-skeleton h-10 w-10 animate-pulse rounded-full" />
+          <div className="bg-background-skeleton h-10 w-10 animate-pulse rounded-full" />
+        </div>
+      </div>
+      {/* Slider */}
+      <div className="-mx-grid-edge px-grid-edge col-span-full">
+        <div className={"keen-slider !overflow-visible"}>
+          <div className="relative flex aspect-5/7 h-full w-[550px]">
+            <div className="aspect-1/1 h-full w-full p-14">
+              <CoverPictureSkeleton className="rotate-5" />
+            </div>
+          </div>
+          <div className="relative flex aspect-5/7 h-full w-[550px]">
+            <div className="aspect-1/1 h-full w-full p-14">
+              <CoverPictureSkeleton className="mt-10 -rotate-5" />
+            </div>
+          </div>
+          <div className="relative flex aspect-5/7 h-full w-[550px]">
+            <div className="aspect-1/1 h-full w-full p-14">
+              <CoverPictureSkeleton className="rotate-5" />
+            </div>
+          </div>
+          <div className="relative flex aspect-5/7 h-full w-[550px]">
+            <div className="aspect-1/1 h-full w-full p-14">
+              <CoverPictureSkeleton className="mt-10 -rotate-5" />
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Loan details */}
+      <div
+        className="col-span-full mt-12 flex flex-row flex-wrap items-start justify-between gap-10 px-10 md:gap-0
+          lg:flex-nowrap lg:gap-0">
+        <div
+          className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm px-10 pt-6 pb-9
+            md:w-[49%]"
+        />
+        <div
+          className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm px-10 pt-6 pb-9
+            md:w-[49%]"
+        />
+      </div>
+    </div>
+  )
+}
+
+export default LoanListSlider
