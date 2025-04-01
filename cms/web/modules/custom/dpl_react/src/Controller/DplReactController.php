@@ -68,7 +68,7 @@ class DplReactController extends ControllerBase {
   public function user() {
     $content_lines = ['window.dplReact = window.dplReact || {};'];
 
-    if ($token_agency = $this->libraryTokenHandler->getToken()) {
+    if ($token_agency = $this->libraryTokenHandler->getToken()->token ?? FALSE) {
       $content_lines[] = sprintf('window.dplReact.setToken("library", "%s")', $token_agency);
     }
 
