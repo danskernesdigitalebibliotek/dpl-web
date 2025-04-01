@@ -51,7 +51,7 @@ type InterceptGraphqlParams = {
 Cypress.Commands.add(
   "interceptGraphql",
   ({ operationName, data, statusCode = 200 }: InterceptGraphqlParams) => {
-    cy.intercept("POST", "**/graphql", req => {
+    cy.intercept("POST", "**/ap-service/**", req => {
       if (hasOperationName(req, operationName)) {
         if (data) {
           req.reply({ body: { data }, statusCode })
