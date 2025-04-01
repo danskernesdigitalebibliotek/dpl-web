@@ -2099,6 +2099,6 @@ type WorkId {
   """The WorkID value"""
   work_id: String
 
-  """The material type (e.g., bog, e-bog)."""
+  """Materialetype (fx bog, film, lydbog)"""
   material_type: String
 }

@@ -7,8 +7,12 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
+use Drupal\bnf\Plugin\Traits\DateTimeTrait;
+use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\FileRepositoryInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -18,6 +22,8 @@ use Spawnia\Sailor\ObjectLike;
   id: NodeArticle::class,
 )]
 class NodeArticleMapper extends BnfMapperPluginBase {
+  use ImageTrait;
+  use DateTimeTrait;
 
   /**
    * Entity storage to create node in.
@@ -32,7 +38,9 @@ class NodeArticleMapper extends BnfMapperPluginBase {
     string $pluginId,
     array $pluginDefinition,
     protected BnfMapperManager $manager,
-    EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected FileSystemInterface $fileSystem,
+    protected FileRepositoryInterface $fileRepository,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
@@ -54,6 +62,12 @@ class NodeArticleMapper extends BnfMapperPluginBase {
     ]);
 
     $node->set('title', $object->title);
+    $node->set('field_subtitle', $object->subtitle);
+    $node->set('field_override_author', $object->overrideAuthor);
+    $node->set('field_show_override_author', $object->showOverrideAuthor);
+    $node->set('field_publication_date', $this->getDateTimeValue($object->publicationDate, FALSE));
+    $node->set('field_teaser_text', $object->teaserText);
+    $node->set('field_teaser_image', $this->getImageValue($object->teaserImage));
 
     if ($object->paragraphs) {
       $paragraphs = [];
