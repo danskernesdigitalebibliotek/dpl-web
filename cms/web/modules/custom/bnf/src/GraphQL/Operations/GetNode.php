@@ -59,7 +59,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                 __typename
                 timestamp
                 timezone
-                time
               }
               paragraphs {
                 __typename
@@ -166,7 +165,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                     __typename
                     timestamp
                     timezone
-                    time
                   }
                   heroImage {
                     __typename

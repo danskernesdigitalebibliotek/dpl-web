@@ -24,7 +24,6 @@ query GetNode($id: ID!) {
       publicationDate {
         timestamp
         timezone
-        time
       }
       paragraphs {
         ... on ParagraphTextBody {
@@ -116,7 +115,6 @@ query GetNode($id: ID!) {
           heroDate {
             timestamp
             timezone
-            time
           }
           heroImage {
             ... on MediaImage {
