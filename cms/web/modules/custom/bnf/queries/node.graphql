@@ -5,6 +5,26 @@ query GetNode($id: ID!) {
       title
     }
     ... on NodeArticle {
+      subtitle
+      showOverrideAuthor
+      overrideAuthor
+      teaserText
+      teaserImage {
+        ... on MediaImage {
+          id
+          name
+          byline
+          mediaImage {
+            alt
+            title
+            url
+          }
+        }
+      }
+      publicationDate {
+        timestamp
+        timezone
+      }
       paragraphs {
         ... on ParagraphTextBody {
           id
@@ -95,7 +115,6 @@ query GetNode($id: ID!) {
           heroDate {
             timestamp
             timezone
-            time
           }
           heroImage {
             ... on MediaImage {

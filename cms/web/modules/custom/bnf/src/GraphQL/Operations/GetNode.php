@@ -37,6 +37,29 @@ class GetNode extends \Spawnia\Sailor\Operation
               title
             }
             ... on NodeArticle {
+              subtitle
+              showOverrideAuthor
+              overrideAuthor
+              teaserText
+              teaserImage {
+                __typename
+                ... on MediaImage {
+                  id
+                  name
+                  byline
+                  mediaImage {
+                    __typename
+                    alt
+                    title
+                    url
+                  }
+                }
+              }
+              publicationDate {
+                __typename
+                timestamp
+                timezone
+              }
               paragraphs {
                 __typename
                 ... on ParagraphTextBody {
@@ -142,7 +165,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                     __typename
                     timestamp
                     timezone
-                    time
                   }
                   heroImage {
                     __typename

@@ -6,6 +6,8 @@ namespace Drupal\Tests\bnf\Unit\Mapper;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\FileRepositoryInterface;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -20,6 +22,20 @@ abstract class EntityMapperTestBase extends UnitTestCase {
    * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\Entity\EntityTypeManagerInterface>
    */
   protected ObjectProphecy $entityManagerProphecy;
+
+  /**
+   * FileSystemInterface prophecy.
+   *
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\File\FileSystemInterface>
+   */
+  protected ObjectProphecy $fileSystemProphecy;
+
+  /**
+   * FileRepositoryInterface prophecy.
+   *
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\file\FileRepositoryInterface>
+   */
+  protected ObjectProphecy $fileRepositoryProphecy;
 
   /**
    * EntityStorage prophecy.
@@ -44,6 +60,8 @@ abstract class EntityMapperTestBase extends UnitTestCase {
     $this->entityManagerProphecy = $this->prophesize(EntityTypeManagerInterface::class);
     $this->storageProphecy = $this->prophesize(EntityStorageInterface::class);
     $this->entityManagerProphecy->getStorage($this->getEntityName())->willReturn($this->storageProphecy);
+    $this->fileRepositoryProphecy = $this->prophesize(FileRepositoryInterface::class);
+    $this->fileSystemProphecy = $this->prophesize(FileSystemInterface::class);
     $this->entityProphecy = $this->prophesize($this->getEntityClass());
   }
 
