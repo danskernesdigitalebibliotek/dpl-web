@@ -25,6 +25,7 @@
   --z-index-drawer: 50;
   --z-index-sheet: 50;
   --z-index-slide-select: 10;
+  --z-index-floating-icon: 10;
 
   --aspect-*: initial;
   --aspect-1\/1: var(--aspect-1-1);
