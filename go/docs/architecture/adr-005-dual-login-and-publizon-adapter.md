@@ -9,7 +9,7 @@ Our application supports two different authentication mechanisms for users:
 
 Depending on which method is used, the session is established differently and includes a session token that is used to authorize requests to external services.
 
-A key integration in our system is the **Publizon Adapter** ([see documentation here](https://library-api.qa.pubhub.dk/index.html)), a service that acts as a middle layer between us and the **Publizon Pubhub** (a SOAP-based backend-to-backend system). [See documentation here.](https://libraryservices.pubhub.dk/v2_7/) This adapter provides endpoints we use to achieve various things, such as:
+A key integration in our system is the **Publizon Adapter** ([see documentation here](https://library-api.qa.pubhub.dk/index.html)), a service that acts as a middle layer between us and another Publizon API that only works server-side as a SOAP service. [See documentation here.](https://libraryservices.pubhub.dk/v2_7/) We found out that SOAP services are used in this server side API by reverse-engineering the [Ereolen GO](https://ereolengo.dk/) (current version of the app that our project will be replacing) functionality using Unilogin users. The adapter provides endpoints we use to achieve various things, and proxys requests further to the server side SOAP API. An example of Publizon adapter endpoints that we use in our app:
 
 - `GET /v1/user/loans` — check current user loans and quotas.
 - `GET /v1/products/:identifier` — determine whether a material is cost-free (thus not affecting quotas).
