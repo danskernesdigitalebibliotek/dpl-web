@@ -130,26 +130,22 @@ export const LoanListSliderSkeleton = () => {
       {/* Slider */}
       <div className="-mx-grid-edge px-grid-edge col-span-full">
         <div className={"keen-slider !overflow-visible"}>
-          <div className="relative flex aspect-5/7 h-full w-[550px]">
-            <div className="aspect-1/1 h-full w-full p-14">
-              <CoverPictureSkeleton className="rotate-5" />
-            </div>
-          </div>
-          <div className="relative flex aspect-5/7 h-full w-[550px]">
-            <div className="aspect-1/1 h-full w-full p-14">
-              <CoverPictureSkeleton className="mt-10 -rotate-5" />
-            </div>
-          </div>
-          <div className="relative flex aspect-5/7 h-full w-[550px]">
-            <div className="aspect-1/1 h-full w-full p-14">
-              <CoverPictureSkeleton className="rotate-5" />
-            </div>
-          </div>
-          <div className="relative flex aspect-5/7 h-full w-[550px]">
-            <div className="aspect-1/1 h-full w-full p-14">
-              <CoverPictureSkeleton className="mt-10 -rotate-5" />
-            </div>
-          </div>
+          {Array.from({ length: 4 }).map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="relative flex aspect-5/7 h-full max-w-[400px] min-w-[400px]">
+                <div className="aspect-1/1 h-full w-full p-14">
+                  <CoverPictureSkeleton
+                    className={cn({
+                      "rotate-5": index % 2 === 0,
+                      "mt-10 -rotate-5": index % 2 !== 0,
+                    })}
+                  />
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
       {/* Loan details */}
