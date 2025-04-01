@@ -14,6 +14,7 @@ use Drush\Attributes\Help;
 use Drush\Attributes\Usage;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
+use Safe\DateTime;
 
 /**
  * Commands for subscription management.
@@ -105,13 +106,21 @@ class SubscriptionCommands extends DrushCommands {
     $rows = [];
 
     foreach ($subscriptions as $subscription) {
+      $last_pulled_timestamp = $subscription->getLast();
+      $last_pulled = new DateTime("@$last_pulled_timestamp");
+      $last_pulled->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
+
+      $created_timestamp = $subscription->created->value;
+      $created = new DateTime("@$created_timestamp");
+      $created->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
+
       $rows[] = [
         'uuid' => $subscription->uuid->value,
         'subscription_uuid' => $subscription->getSubscriptionUuid(),
         'tags' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getTags())),
         'categories' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getCategories())),
-        'created' => $subscription->created->value,
-        'last' => $subscription->getLast(),
+        'created' => "{$created->format('Y-m-d H:i')}\r\n({$created_timestamp})",
+        'last' => "{$last_pulled->format('Y-m-d H:i')}\r\n({$last_pulled_timestamp})",
       ];
     }
 
