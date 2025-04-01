@@ -67,7 +67,7 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
   #[\Override]
   public function processItem($data): void {
     try {
-      $node = $this->importer->importNode($data['uuid'], $this->baseUrl . 'graphql');
+      $node = $this->importer->importNode($data['uuid'], $this->baseUrl . 'graphql', TRUE);
 
       if ($node->hasField('field_categories') && !empty($data['categories'])) {
         $category_values = array_map(function ($term) {

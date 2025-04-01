@@ -87,7 +87,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
     $this->entityProphecy->set('title', 'this is the title')->shouldHaveBeenCalled();
     $this->entityProphecy->set('field_subtitle', 'this is the subtitle')->shouldHaveBeenCalled();
     $this->entityProphecy->set('field_override_author', 'this is an author')->shouldHaveBeenCalled();
-    $this->entityProphecy->set('field_show_override_author', TRUE)->shouldHaveBeenCalled();
+    $this->entityProphecy->set('field_show_override_author', FALSE)->shouldHaveBeenCalled();
     $this->entityProphecy->set('field_publication_date', ["value" => "2025-01-01"])->shouldHaveBeenCalled();
     $this->entityProphecy->set('field_teaser_text', 'this is a teaser text')->shouldHaveBeenCalled();
   }

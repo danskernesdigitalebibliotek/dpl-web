@@ -9,6 +9,7 @@ use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\GraphQL\Operations\NewContent;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
@@ -37,6 +38,7 @@ class BnfImporter {
   public function __construct(
     protected LoggerInterface $logger,
     protected BnfMapperManager $mapperManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -59,7 +61,7 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpointUrl): NodeInterface {
+  public function importNode(string $uuid, string $endpointUrl, bool $published): NodeInterface {
     $this->setEndpoint($endpointUrl);
 
     try {
@@ -67,8 +69,28 @@ class BnfImporter {
 
       $nodeData = $response->data?->node;
 
+      // If no nodedata could be find, it is possible that we've been informed
+      // of a node being updated, that has been unpublished.
+      // If that's the case, we'll look up if this node already exists, and
+      // unpublish it locally.
       if (!$nodeData) {
-        throw new \RuntimeException('Could not fetch content.');
+        $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $uuid]);
+        $node = reset($nodes);
+
+        if (!($node instanceof NodeInterface)) {
+          throw new \RuntimeException("Tried to import non-existent node with UUID $uuid.");
+        }
+
+        $node->setUnpublished();
+        $node->save();
+
+        $this->logger->info('Unpublished existing @type node with BNF ID @uuid (@title)', [
+          '@uuid' => $uuid,
+          '@type' => $node->bundle(),
+          '@title' => $node->label(),
+        ]);
+
+        return $node;
       }
 
       $node = $this->mapperManager->map($nodeData);
@@ -87,8 +109,7 @@ class BnfImporter {
       }
 
       $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported);
-
-      $node->set('status', NodeInterface::NOT_PUBLISHED);
+      $node->set('status', $published);
 
       $node->save();
     }
@@ -122,7 +143,7 @@ class BnfImporter {
     $this->setEndpoint($endpointUrl);
 
     try {
-      $response = NewContent::execute($uuid, (new DateTimeImmutable('@' . $since))->format(\DateTimeInterface::RFC3339));
+      $response = NewContent::execute($uuid, (new DateTimeImmutable("@$since"))->format(\DateTimeInterface::RFC3339));
       $newContent = $response->errorFree()->data->newContent;
 
       if ($newContent->errors) {
