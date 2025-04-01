@@ -11,7 +11,7 @@ use Drupal\node\NodeInterface;
 /**
  * Implements hook_form_alter().
  *
- * Altering the node form, and adding an option to export the node to BNF.
+ * Altering the node edit form, and adding an option to export the node to BNF.
  * If checked, a custom form submit handler will take care of the rest.
  *
  * @see bnf_client_form_node_form_submit()
@@ -32,7 +32,7 @@ function bnf_client_form_alter(array &$form, FormStateInterface $form_state, str
 
   $current_user = \Drupal::currentUser();
 
-  if (!$current_user->hasPermission('bnf client export nodes')) {
+  if (!$current_user->hasPermission('bnf export nodes')) {
     return;
   }
 

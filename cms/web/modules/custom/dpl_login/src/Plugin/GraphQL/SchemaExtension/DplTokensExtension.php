@@ -26,7 +26,7 @@ class DplTokensExtension extends SdlSchemaExtensionPluginBase {
     $registry->addFieldResolver('Query', 'dplTokens', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('DplTokens', 'adgangsplatformen', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('AdgangsplatformenTokens', 'user',
-    $builder->produce('adgangsplatformen_user_token_producer')
+      $builder->produce('adgangsplatformen_user_token_producer')
     );
 
   }

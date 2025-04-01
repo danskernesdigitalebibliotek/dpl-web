@@ -45,6 +45,34 @@ function _dpl_update_uninstall_modules(array $modules): string {
 }
 
 /**
+ * Remove elements from the list of automatically ignored config entities.
+ *
+ * The elements have been added because an administrative user have updated the
+ * configuration. This may only be a temporary measure. Unignoring entities will
+ * bring them back to following the default of the project.
+ *
+ * @param string[] $entities
+ *   The names of the entities which should no longer be ignored.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_config_auto_unignore_entites(array $entities): string {
+  $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore_auto.settings');
+  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
+
+  $updated_ignored_configs = array_diff($ignored_configs, $entities);
+  $config_ignore_settings->set('ignored_config_entities', $updated_ignored_configs)->save();
+  $removed_ignored_entities_string = implode(', ', array_intersect($ignored_configs, $entities));
+  if ($removed_ignored_entities_string) {
+    return "Removed $removed_ignored_entities_string from config_ignore_auto.ignored_config_entities.";
+  }
+  else {
+    return "No entities removed from config_ignore_auto.ignored_config_entities.";
+  }
+}
+
+/**
  * Helper function, for adding translations.
  *
  * Generally speaking, this should be avoided, as it is DDF's responsibility
@@ -491,4 +519,26 @@ function dpl_update_update_10043(): string {
     ->save();
 
   return 'Removed old ereolen config keys from dpl_library_agency.settings and dpl_patron_page.settings.';
+}
+
+/**
+ * Unignore system.performance configuration.
+ */
+function dpl_update_update_10044(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'system.performance',
+    // We need to unignore this as well as it is handled on the same config
+    // form as system.performance.
+    'http_cache_control.settings',
+  ]);
+}
+
+/**
+ * Install BNF base module.
+ *
+ * Notice - this is ONLY the base module. The client and server modules get
+ * enabled seperately.
+ */
+function dpl_update_update_10045(): string {
+  return _dpl_update_install_modules(['bnf']);
 }

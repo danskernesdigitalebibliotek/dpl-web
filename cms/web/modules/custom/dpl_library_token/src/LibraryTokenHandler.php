@@ -92,15 +92,18 @@ class LibraryTokenHandler {
     $this->tokenCollection
       ->setWithExpire(
         self::LIBRARY_TOKEN_KEY,
-        $token->token,
+        (object) ['token' => $token->token, 'expire' => $token->expire],
         (int) round($token->expire / 2)
       );
   }
 
   /**
    * Get stored library token.
+   *
+   * @return object{'token': string, "expire": int}|null
+   *   The stored token or NULL if no token is stored.
    */
-  public function getToken(): ?string {
+  public function getToken(): ?object {
     return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
   }
 

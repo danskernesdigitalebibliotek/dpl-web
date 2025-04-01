@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\bnf\Plugin;
+namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\BnfMapperInterface;

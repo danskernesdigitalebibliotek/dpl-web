@@ -263,6 +263,9 @@ field_config:
         enabled: true
       field_underlined_title:
         enabled: true
+    files:
+      field_files:
+        enabled: true
     filtered_event_list:
       field_filter_branches:
         enabled: true
@@ -335,6 +338,24 @@ field_config:
         enabled: true
       field_video_bundle_work_ids:
         enabled: true
+    hero:
+      field_hero_categories:
+        enabled: true
+      field_hero_content_type:
+        enabled: true
+      field_hero_date:
+        enabled: true
+      field_hero_description:
+        enabled: true
+      field_hero_image:
+        enabled: true
+      field_hero_link:
+        enabled: true
+      field_hero_title:
+        enabled: true
+    links:
+      field_link:
+        enabled: true
     manual_event_list:
       field_events:
         enabled: true
@@ -342,6 +363,8 @@ field_config:
         enabled: true
     material_grid_automatic:
       field_amount_of_materials:
+        enabled: true
+      field_cql_search:
         enabled: true
       field_material_grid_description:
         enabled: true
@@ -360,6 +383,23 @@ field_config:
       field_material_grid_description:
         enabled: true
       field_material_grid_title:
+        enabled: true
+      field_material_grid_work_ids:
+        enabled: true
+    medias:
+      field_medias:
+        enabled: true
+    recommendation:
+      field_image_position_right:
+        enabled: true
+      field_recommendation_description:
+        enabled: true
+      field_recommendation_title:
+        enabled: true
+      field_recommendation_work_id:
+        enabled: true
+    simple_links:
+      field_link:
         enabled: true
     text_body:
       field_body:
