@@ -542,3 +542,24 @@ function dpl_update_update_10044(): string {
 function dpl_update_update_10045(): string {
   return _dpl_update_install_modules(['bnf']);
 }
+
+/**
+ * Half-ignore and un-auto-ignore core.extension.
+ */
+function dpl_update_update_10046(): string {
+  // Bring active version of `config_ignore.settings` in line with exported
+  // config right away. Might not be necessary if no modules are enabled before
+  // the next config import, but to be safe.
+  $config = \Drupal::configFactory()->getEditable('config_ignore.settings');
+  $ignored_config_entities = $config->get('ignored_config_entities') ?: [];
+
+  $import = $ignored_config_entities;
+  $import[] = 'core.extension';
+
+  $export = $ignored_config_entities;
+
+  $config->set('ignored_config_entities', ['import' => $import, 'export' => $export]);
+  $config->save();
+
+  return _dpl_update_config_auto_unignore_entites(['core.extension']);
+}
