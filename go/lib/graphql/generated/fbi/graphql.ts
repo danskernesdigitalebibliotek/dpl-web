@@ -2478,7 +2478,7 @@ export const useSearchWithPaginationQuery = <
       variables: SearchWithPaginationQueryVariables,
       options?: Omit<UseQueryOptions<SearchWithPaginationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchWithPaginationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<SearchWithPaginationQuery, TError, TData>(
       {
     queryKey: ['searchWithPagination', variables],
@@ -2496,7 +2496,7 @@ export const useSuspenseSearchWithPaginationQuery = <
       variables: SearchWithPaginationQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<SearchWithPaginationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<SearchWithPaginationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<SearchWithPaginationQuery, TError, TData>(
       {
     queryKey: ['searchWithPaginationSuspense', variables],
@@ -2527,7 +2527,7 @@ export const useSearchFacetsQuery = <
       variables: SearchFacetsQueryVariables,
       options?: Omit<UseQueryOptions<SearchFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchFacetsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<SearchFacetsQuery, TError, TData>(
       {
     queryKey: ['searchFacets', variables],
@@ -2545,7 +2545,7 @@ export const useSuspenseSearchFacetsQuery = <
       variables: SearchFacetsQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<SearchFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<SearchFacetsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<SearchFacetsQuery, TError, TData>(
       {
     queryKey: ['searchFacetsSuspense', variables],
@@ -2577,7 +2577,7 @@ export const useComplexSearchForWorkTeaserQuery = <
       variables: ComplexSearchForWorkTeaserQueryVariables,
       options?: Omit<UseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<ComplexSearchForWorkTeaserQuery, TError, TData>(
       {
     queryKey: ['complexSearchForWorkTeaser', variables],
@@ -2595,7 +2595,7 @@ export const useSuspenseComplexSearchForWorkTeaserQuery = <
       variables: ComplexSearchForWorkTeaserQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<ComplexSearchForWorkTeaserQuery, TError, TData>(
       {
     queryKey: ['complexSearchForWorkTeaserSuspense', variables],
@@ -2624,7 +2624,7 @@ export const useGetMaterialQuery = <
       variables: GetMaterialQueryVariables,
       options?: Omit<UseQueryOptions<GetMaterialQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMaterialQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetMaterialQuery, TError, TData>(
       {
     queryKey: ['getMaterial', variables],
@@ -2642,7 +2642,7 @@ export const useSuspenseGetMaterialQuery = <
       variables: GetMaterialQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetMaterialQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetMaterialQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetMaterialQuery, TError, TData>(
       {
     queryKey: ['getMaterialSuspense', variables],
@@ -2655,3 +2655,32 @@ useSuspenseGetMaterialQuery.getKey = (variables: GetMaterialQueryVariables) => [
 
 
 useGetMaterialQuery.fetcher = (variables: GetMaterialQueryVariables, options?: RequestInit['headers']) => fetchData<GetMaterialQuery, GetMaterialQueryVariables>(GetMaterialDocument, variables, options);
+
+export const operationNames = {
+  Query: {
+    searchWithPagination: 'searchWithPagination' as const,
+    searchFacets: 'searchFacets' as const,
+    getMaterial: 'getMaterial' as const
+  },
+  Fragment: {
+    SearchFacet: 'SearchFacet' as const,
+    ManifestationCover: 'ManifestationCover' as const,
+    ManifestationIdentifiers: 'ManifestationIdentifiers' as const,
+    ManifestationAccess: 'ManifestationAccess' as const,
+    ManifestationTitles: 'ManifestationTitles' as const,
+    ManifestationLanguages: 'ManifestationLanguages' as const,
+    ManifestationDescription: 'ManifestationDescription' as const,
+    ManifestationDetails: 'ManifestationDetails' as const,
+    ManifestationMaterialTypes: 'ManifestationMaterialTypes' as const,
+    ManifestationSearchPageTeaser: 'ManifestationSearchPageTeaser' as const,
+    ManifestationWorkPage: 'ManifestationWorkPage' as const,
+    WorkAccess: 'WorkAccess' as const,
+    WorkMaterialTypes: 'WorkMaterialTypes' as const,
+    WorkTitles: 'WorkTitles' as const,
+    WorkCreators: 'WorkCreators' as const,
+    WorkPublicationYear: 'WorkPublicationYear' as const,
+    WorkDescription: 'WorkDescription' as const,
+    WorkTeaserSearchPage: 'WorkTeaserSearchPage' as const,
+    WorkFullWorkPage: 'WorkFullWorkPage' as const
+  }
+}

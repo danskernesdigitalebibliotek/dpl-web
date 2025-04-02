@@ -1,4 +1,5 @@
 import { getEnv } from "@/lib/config/env"
+import goConfig from "@/lib/config/goConfig"
 
 import { getRestServiceUrlWithParams } from "../../../fetchers/helper"
 
@@ -15,18 +16,14 @@ export const fetcher = async <ResponseType>({
   signal?: AbortSignal
 }) => {
   const additionalHeaders = data?.headers === "object" ? (data?.headers as unknown as object) : {}
-  const authHeaders = {
-    Authorization: `Bearer ${getEnv("LIBRARY_TOKEN")}`,
-  } as object
 
   const headers = {
-    ...authHeaders,
     ...additionalHeaders,
   }
 
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: "https://cover.dandigbib.org",
+    baseUrl: `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/covers`,
     url,
     params,
   })

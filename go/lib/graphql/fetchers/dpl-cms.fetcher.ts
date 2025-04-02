@@ -37,24 +37,28 @@ export function fetcher<TData, TVariables>(
   const { next, headers } = options || {}
 
   return async (): Promise<TData> => {
-    const res = await fetch(dplCmsGraphqlEndpoint, {
-      method: "POST",
-      headers: getHeaders(headers),
-      body: JSON.stringify({ query, variables }),
-      next,
-    })
+    try {
+      const res = await fetch(dplCmsGraphqlEndpoint, {
+        method: "POST",
+        headers: getHeaders(headers),
+        body: JSON.stringify({ query, variables }),
+        next,
+      })
 
-    const json = await res.json()
+      const json = await res.json()
 
-    if (res.status !== 200) {
-      const { message } = json
-      if (res.status === 403) {
-        throw new AccessForbiddenError(message)
-      } else {
-        throw new Error(message)
+      if (res.status !== 200) {
+        const { message } = json
+        if (res.status === 403) {
+          throw new AccessForbiddenError(message)
+        } else {
+          throw new Error(message)
+        }
       }
-    }
 
-    return json.data
+      return json.data
+    } catch (error) {
+      throw new Error("Failed to fetch data from DPL CMS", { cause: error })
+    }
   }
 }

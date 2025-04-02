@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server"
-import type { NextFetchEvent, NextRequest } from "next/server"
+import type { NextRequest } from "next/server"
 
-import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
 import { getEnv } from "./lib/config/env"
 import {
-  accessTokenIsExpired,
+  getLibraryTokenCookieValue,
+  loadLibraryToken,
+  loadUserToken,
+  setLibraryTokenCookie,
+} from "./lib/helpers/tokens"
+import {
   accessTokenShouldBeRefreshed,
   destroySession,
   getDplCmsSessionCookie,
@@ -12,13 +16,16 @@ import {
   saveAdgangsplatformenSession,
 } from "./lib/session/session"
 
-export async function middleware(request: NextRequest, event: NextFetchEvent) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const response = NextResponse.next()
 
-  if (pathname.startsWith("/_next") || pathname.startsWith("/auth")) {
-    return response
-  }
+  const requestHeaders = new Headers(request.headers)
+
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
 
   const session = await getSession({ request, response })
 
@@ -60,11 +67,35 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   if (accessTokenShouldBeRefreshed(session, "unilogin")) {
     const appUrl = getEnv("APP_URL")
 
-    const currentPath = new URL(request.nextUrl.pathname, appUrl.toString())
+    const currentPath = new URL(pathname, appUrl.toString())
     return NextResponse.redirect(`${appUrl}/auth/token/refresh?redirect=${currentPath}`, {
       headers: response.headers,
     })
   }
 
+  const libraryTokenCookieValue = await getLibraryTokenCookieValue()
+  if (!libraryTokenCookieValue) {
+    const libraryToken = await loadLibraryToken()
+    const timestamp = libraryToken?.expire.timestamp
+    const expires = timestamp ? new Date(timestamp * 1000) : false
+
+    if (libraryToken && expires) {
+      setLibraryTokenCookie(libraryToken.token, expires)
+    }
+  }
+
   return response
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    "/((?!auth|_next|favicon.ico|favicon-*|sitemap.xml|robots.txt|site.webmanifest).*)",
+  ],
 }

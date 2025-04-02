@@ -1,6 +1,5 @@
 import { add, isPast, sub } from "date-fns"
 import { IronSession, getIronSession } from "iron-session"
-import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
@@ -56,6 +55,7 @@ export async function getSession(options?: {
   request: NextRequest
   response: NextResponse
 }): Promise<IronSession<TSessionData>> {
+  const { cookies } = await import("next/headers")
   const sessionOptions = await getSessionOptions()
   if (!sessionOptions) {
     return defaultSession as IronSession<TSessionData>
@@ -87,6 +87,8 @@ export const setUniloginTokensOnSession = async (
   session: IronSession<TSessionData>,
   tokenSet: TUniloginTokenSet
 ) => {
+  const { cookies } = await import("next/headers")
+
   session.access_token = tokenSet.access_token
   session.refresh_token = tokenSet.refresh_token
   session.expires = add(new Date(), {
@@ -111,10 +113,10 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   session: IronSession<TSessionData>,
   token: TAdgangsplatformenUserToken
 ) => {
+  const { cookies } = await import("next/headers")
+
   session.adgangsplatformenUserToken = token.token
-  session.expires = add(new Date(), {
-    seconds: token.expire,
-  })
+  session.expires = new Date(token.expire * 1000)
   const cookieStore = await cookies()
   cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgansplatformen")
 }
@@ -125,7 +127,7 @@ export const saveAdgangsplatformenSession = async (
 ) => {
   session.isLoggedIn = true
   session.type = "adgangsplatformen"
-  setAdgangsplatformenUserTokenOnSession(session, userToken)
+  await setAdgangsplatformenUserTokenOnSession(session, userToken)
   await session.save()
 }
 
@@ -171,13 +173,18 @@ export const accessTokenIsExpired = (session: IronSession<TSessionData>) => {
   return session.expires && isPast(session.expires)
 }
 
-export const getUniloginIdToken = async () =>
-  (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
+export const getUniloginIdToken = async () => {
+  const { cookies } = await import("next/headers")
+  return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
+}
 
-export const getSessionTypeToken = async () =>
-  (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
+export const getSessionTypeToken = async () => {
+  const { cookies } = await import("next/headers")
+  return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
+}
 
 const deleteGoSessionCookies = async () => {
+  const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
   const allCookies = cookieStore.getAll()
 
@@ -189,6 +196,7 @@ const deleteGoSessionCookies = async () => {
 }
 
 export const getDplCmsSessionCookie = async () => {
+  const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
   const allCookies = cookieStore.getAll()
 
