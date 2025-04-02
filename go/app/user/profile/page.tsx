@@ -1,7 +1,13 @@
-import ProfilePageLayout from "@/app/user/profile/ProfilePageLayout"
+import { Suspense } from "react"
+
+import ProfilePageLayout, { ProfilePageLayoutSkeleton } from "@/app/user/profile/ProfilePageLayout"
 
 const Page = () => {
-  return <ProfilePageLayout />
+  return (
+    <Suspense fallback={<ProfilePageLayoutSkeleton />}>
+      <ProfilePageLayout />
+    </Suspense>
+  )
 }
 
 export default Page
