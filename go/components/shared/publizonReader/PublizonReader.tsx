@@ -46,6 +46,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
         order-id={orderId}
         role="button"
         tabIndex={0}
+        // This is a workaround to make the close button work in the reader
         // eslint-disable-next-line no-script-url
         close-href="javascript:window.onReaderBackCallback()"
         aria-label="Go back"
@@ -58,8 +59,10 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
       <div
         style={{ height: "100vh" }}
         id="pubhub-reader"
+        // identifier is a reserved attribute and causes a warning in the ts therefore we ignore it
         // @ts-ignore
         identifier={identifier}
+        // This is a workaround to make the close button work in the reader
         // eslint-disable-next-line no-script-url
         close-href="javascript:window.onReaderBackCallback()"
         role="button"
