@@ -84,6 +84,7 @@ const LoanMaterialModal = ({
     },
   })
 
+  // Check if the user can loan more e-materials or if the material is cost-free (blue title or podcast)
   const isLoanPossible =
     publizonData?.product?.costFree || canUserLoanMoreEMaterials(dataLoans, manifestation)
 
