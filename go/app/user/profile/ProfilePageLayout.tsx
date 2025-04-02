@@ -1,9 +1,9 @@
 import React, { Suspense } from "react"
 
 import DebuggingSession from "@/app/user/profile/DebuggingSession"
-import LoanList from "@/app/user/profile/LoanList"
-import { LoanListSliderSkeleton } from "@/app/user/profile/LoanListSlider"
+import { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
 import LogoutButton from "@/app/user/profile/LogoutButton"
+import UserLoans from "@/app/user/profile/UserLoans"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
 
 const ProfilePageLayout = () => {
@@ -18,7 +18,7 @@ const ProfilePageLayout = () => {
           Username / User Name
         </p>
       </div>
-      <LoanList />
+      <UserLoans />
       <DebuggingSession />
     </div>
   )
@@ -37,7 +37,7 @@ export const ProfilePageLayoutSkeleton = () => {
         />
       </div>
       <div className="col-span-full">
-        <LoanListSliderSkeleton />
+        <LoanSliderSkeleton />
       </div>
     </div>
   )

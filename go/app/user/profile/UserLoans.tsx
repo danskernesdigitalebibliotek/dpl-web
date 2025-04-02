@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import LoanListSlider, { LoanListSliderSkeleton } from "@/app/user/profile/LoanListSlider"
+import LoanSlider, { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
@@ -12,11 +12,11 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
-export type LoanListProps = {
+export type UserLoansProps = {
   className?: string
 }
 
-const LoanList = ({ className }: LoanListProps) => {
+const UserLoans = ({ className }: UserLoansProps) => {
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
   const getIsbnsFromLoans = (loans: LoanListResult["loans"] | null | undefined) => {
     return loans?.map(loan => loan.libraryBook?.identifier) || []
@@ -68,10 +68,10 @@ const LoanList = ({ className }: LoanListProps) => {
 
   return (
     <div className={cn("col-span-full", className)}>
-      {(isLoadingLoans || isLoadingComplexSearch) && <LoanListSliderSkeleton />}
-      {loanWorks && dataLoans && <LoanListSlider works={loanWorks} loanData={dataLoans} />}
+      {(isLoadingLoans || isLoadingComplexSearch) && <LoanSliderSkeleton />}
+      {loanWorks && dataLoans && <LoanSlider works={loanWorks} loanData={dataLoans} />}
     </div>
   )
 }
 
-export default LoanList
+export default UserLoans

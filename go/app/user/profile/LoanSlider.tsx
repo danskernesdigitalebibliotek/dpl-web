@@ -7,7 +7,7 @@ import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
 import LoanCard from "@/app/user/profile/LoanCard"
-import LoansDetails from "@/app/user/profile/LoansDetails"
+import QuotasSection from "@/app/user/profile/QuotasSection"
 import { loanSliderOptions } from "@/app/user/profile/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
@@ -19,12 +19,12 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
-type LoanListSliderProps = {
+type LoanSliderProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
 }
 
-const LoanListSlider = ({ works, loanData }: LoanListSliderProps) => {
+const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
   const [reachedEnd, setReachEnd] = useState(true)
@@ -110,12 +110,12 @@ const LoanListSlider = ({ works, loanData }: LoanListSliderProps) => {
           })}
         </div>
       </div>
-      <LoansDetails loanData={loanData} />
+      <QuotasSection loanData={loanData} />
     </div>
   )
 }
 
-export const LoanListSliderSkeleton = () => {
+export const LoanSliderSkeleton = () => {
   return (
     <div className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden py-10">
       <div className="col-span-full flex items-center justify-between px-10">
@@ -165,4 +165,4 @@ export const LoanListSliderSkeleton = () => {
   )
 }
 
-export default LoanListSlider
+export default LoanSlider
