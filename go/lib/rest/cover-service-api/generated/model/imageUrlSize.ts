@@ -9,10 +9,10 @@ Authentication is done via OAuth2 against auth.dbc.dk. To obtain a valid token f
  * OpenAPI spec version: 2.0
  */
 
-export type ImageUrlSize = (typeof ImageUrlSize)[keyof typeof ImageUrlSize]
+export type ImageUrlSize = (typeof imageUrlSize)[keyof typeof imageUrlSize]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ImageUrlSize = {
+export const imageUrlSize = {
   default: "default",
   original: "original",
   "xx-small": "xx-small",

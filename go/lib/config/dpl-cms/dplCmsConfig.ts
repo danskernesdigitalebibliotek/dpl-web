@@ -1,6 +1,6 @@
 import { useGetDplCmsConfigurationQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-import { getServerEnv } from "../env"
+import { getEnv, getServerEnv } from "../env"
 
 const queryDplCmsConfig = async () => {
   const { goConfiguration } = await useGetDplCmsConfigurationQuery.fetcher(undefined, {
@@ -22,18 +22,15 @@ export const getDplCmsUniloginConfig = async () => {
   }
 
   let configAPI = {}
-  try {
-    const config = await queryDplCmsConfig()
-    if (config?.unilogin) {
-      configAPI = {
-        wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,
-        clientId: config.unilogin.unilogin_api_client_id ?? null,
-        clientSecret: config.unilogin.unilogin_api_client_secret ?? null,
-        apiData: config.unilogin.unilogin_api_url ?? null,
-      }
+  // If we are running in test mode, we don't want to query the DPL CMS config
+  const config = getEnv("TEST_MODE") ? null : await queryDplCmsConfig()
+  if (config?.unilogin) {
+    configAPI = {
+      wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,
+      clientId: config.unilogin.unilogin_api_client_id ?? null,
+      clientSecret: config.unilogin.unilogin_api_client_secret ?? null,
+      apiData: config.unilogin.unilogin_api_url ?? null,
     }
-  } catch {
-    // catch silently
   }
 
   return {
