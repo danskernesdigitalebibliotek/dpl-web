@@ -1,5 +1,6 @@
 import React from "react"
 
+import LoanListSlider, { LoanListSliderSkeleton } from "@/app/user/profile/LoanListSlider"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
@@ -8,8 +9,6 @@ import {
 import { cn } from "@/lib/helpers/helper.cn"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
-
-import LoanListSlider, { LoanListSliderSkeleton } from "./LoanListSlider"
 
 export type LoanListProps = {
   className?: string
