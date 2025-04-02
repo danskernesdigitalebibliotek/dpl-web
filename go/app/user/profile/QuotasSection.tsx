@@ -17,20 +17,14 @@ const LoansDetails = ({ loanData }: LoansDetailsProps) => {
           <div className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center gap-4 rounded-sm">
             <p className="text-typo-heading-3">
               {loanData.userData?.totalEbookLoans} af{" "}
-              {loanData.libraryData?.maxConcurrentEbookLoansPerBorrower ??
-                Number(loanData.libraryData?.maxAmountPerMonth) -
-                  Number(loanData.libraryData?.maxConcurrentAudiobookLoansPerBorrower) ??
-                "?"}
+              {loanData.libraryData?.maxConcurrentEbookLoansPerBorrower || 0}
             </p>
             <p className="text-typo-subtitle-sm opacity-50">E-bøger</p>
           </div>
           <div className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center gap-4 rounded-sm">
             <p className="text-typo-heading-3">
               {loanData.userData?.totalAudioLoans} af{" "}
-              {loanData.libraryData?.maxConcurrentAudiobookLoansPerBorrower ??
-                Number(loanData.libraryData?.maxAmountPerMonth) -
-                  Number(loanData.libraryData?.maxConcurrentEbookLoansPerBorrower) ??
-                "?"}
+              {loanData.libraryData?.maxConcurrentAudiobookLoansPerBorrower || 0}
             </p>
             <p className="text-typo-subtitle-sm opacity-50">Lydbøger</p>
           </div>
