@@ -1,8 +1,10 @@
 <?php
 
 use Drupal\collation_fixer\CollationFixer;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
@@ -256,4 +258,40 @@ function dpl_update_deploy_update_term_url_aliases(): string {
  */
 function dpl_update_update_screen_name_field_inheritance(): string {
   return _dpl_update_field_inheritance('event_screen_names');
+}
+
+/**
+ * Enable appropriate BNF module.
+ */
+function dpl_update_deploy_bnf(): string {
+  // We're enabling the BNF modules here instead of `core.extension`/update hook
+  // because neither module should be enabled across all sites.
+  $moduleHandler = DrupalTyped::service(ModuleHandlerInterface::class, ModuleHandlerInterface::class);
+
+  // Needed for the _dpl_update_install_modules() function.
+  $moduleHandler->loadInclude('dpl_update', 'install');
+
+  // We determine whether we should set up the client or server depending on the
+  // Lagoon environment. The variable is also configured in the docker compose
+  // setup.
+  $project = getenv('LAGOON_PROJECT');
+
+  if (in_array($project, ['bnf', 'dpl-bnf'])) {
+    return _dpl_update_install_modules(['bnf_server']);
+  }
+
+  $result = _dpl_update_install_modules(['bnf_client']);
+
+  // Set default server. Configuration of modules enabled in deploy hooks must
+  // be handled manually, as configuration import is run before deploy hooks, so
+  // having conventionally exported configuration for the module would cause the
+  // configuration import to fail as the module haven't been enabled yet. So we
+  // have ignored the client config, and set it here. This is overridden in the
+  // local setup and PR envs by drush later.
+  DrupalTyped::service(ConfigFactoryInterface::class, ConfigFactoryInterface::class)
+    ->getEditable('bnf_client.settings')
+    ->set('base_url', 'https://delingstjenesten.dk/')
+    ->save();
+
+  return $result;
 }

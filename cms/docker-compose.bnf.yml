@@ -13,7 +13,7 @@ x-environment:
   &default-environment
     # This is the only that differs from docker-compose.yml
     LAGOON_ROUTE: &default-url https://bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
-    LAGOON_PROJECT: 'dplcms'
+    LAGOON_PROJECT: 'bnf'
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: web

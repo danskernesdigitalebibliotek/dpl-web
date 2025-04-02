@@ -3,6 +3,7 @@ _core:
 mode: intermediate
 ignored_config_entities:
   import:
+    - bnf_client.settings
     - core.extension
     - dpl_dashboard.settings
     - dpl_event.settings
@@ -27,6 +28,7 @@ ignored_config_entities:
     - system.site
     - 'webform.webform.*'
   export:
+    - bnf_client.settings
     - dpl_dashboard.settings
     - dpl_event.settings
     - dpl_favorites_list.settings
