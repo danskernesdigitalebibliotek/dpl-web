@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 
 import LoanListSlider, { LoanListSliderSkeleton } from "@/app/user/profile/LoanListSlider"
