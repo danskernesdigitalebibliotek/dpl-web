@@ -55,17 +55,11 @@ tasks:
             drush cr
 
             if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
-              # Enable the server module on environments in the BNF project.
-              drush pm:enable -y bnf_server
+              # Make it a bit more obvious that this is the BNF site.
               drush config:set --yes system.site name "BNF test"
               drush config:set --yes novel.settings logo_title "BNF"
               drush config:set --yes novel.settings logo_place "test"
               drush config:set --yes novel.settings logo_img_enable "0"
-
-            elif [[ ${LAGOON_PR_TITLE,,} =~ ^bnf: ]]; then
-              # Or configure the client if there's a BNF environment.
-              drush --yes pm:enable bnf_client
-              drush config:set --yes bnf_client.settings base_url https://varnish.$LAGOON_ENVIRONMENT.dpl-bnf.dplplat01.dpl.reload.dk/
             fi
           fi
         service: cli
