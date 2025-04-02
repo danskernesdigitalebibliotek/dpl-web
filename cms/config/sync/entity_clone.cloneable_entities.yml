@@ -9,3 +9,4 @@ cloneable_entities:
   - simple_sitemap
   - key
   - key_config_override
+  - bnf_subscription
