@@ -287,7 +287,7 @@ function dpl_update_deploy_bnf(): string {
   // having conventionally exported configuration for the module would cause the
   // configuration import to fail as the module haven't been enabled yet. So we
   // have ignored the client config, and set it here. This is overridden in the
-  // local setup and PR envs by drush later.
+  // local setup and PR envs by the settings files.
   DrupalTyped::service(ConfigFactoryInterface::class, ConfigFactoryInterface::class)
     ->getEditable('bnf_client.settings')
     ->set('base_url', 'https://delingstjenesten.dk/')
