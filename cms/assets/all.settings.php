@@ -54,8 +54,9 @@ if (getenv('MARIADB_DATABASE_OVERRIDE')) {
   ];
 }
 
-// Exclude development modules from configuration export.
+// Exclude certain modules from configuration export.
 $settings['config_exclude_modules'] = [
+  // Development modules that is only enabled in development environment.
   'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',
@@ -68,6 +69,9 @@ $settings['config_exclude_modules'] = [
   'restui',
   'upgrade_status',
   'uuid_url',
+  // These are enabled as needed, so exclude them from export.
+  'bnf_client',
+  'bnf_server',
 ];
 
 // Defines where the sync folder of your configuration lives. In this case it's
