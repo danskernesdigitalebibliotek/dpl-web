@@ -65,22 +65,24 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         <h2 className="text-typo-heading-4">
           E-materialer jeg har lånt ({loanData.loans?.length})
         </h2>
-        <div className="flex flex-row justify-end gap-x-4">
-          <Button
-            disabled={reachedStart}
-            variant="icon"
-            ariaLabel="Vis forrige værker"
-            onClick={() => onLeftClick()}>
-            <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-          </Button>
-          <Button
-            disabled={reachedEnd}
-            variant="icon"
-            ariaLabel="Vis næste værker"
-            onClick={() => onRightClick()}>
-            <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-          </Button>
-        </div>
+        {!!loanData.loans?.length && (
+          <div className="flex flex-row justify-end gap-x-4">
+            <Button
+              disabled={reachedStart}
+              variant="icon"
+              ariaLabel="Vis forrige værker"
+              onClick={() => onLeftClick()}>
+              <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+            </Button>
+            <Button
+              disabled={reachedEnd}
+              variant="icon"
+              ariaLabel="Vis næste værker"
+              onClick={() => onRightClick()}>
+              <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+            </Button>
+          </div>
+        )}
       </div>
       <div className="-mx-grid-edge px-grid-edge col-span-full">
         <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
