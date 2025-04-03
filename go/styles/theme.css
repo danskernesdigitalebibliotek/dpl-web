@@ -25,6 +25,7 @@
   --z-index-drawer: 50;
   --z-index-sheet: 50;
   --z-index-slide-select: 10;
+  --z-index-floating-icon: 10;
 
   --aspect-*: initial;
   --aspect-1\/1: var(--aspect-1-1);
@@ -123,6 +124,9 @@
   --text-typo-caption--letter-spacing: var(--typo-caption-letter-spacing);
 
   --color-*: initial;
+  --color-black: var(--black);
+  --color-white: var(--white);
+
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
   --color-background-overlay-solid: var(--background-overlay-solid);

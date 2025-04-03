@@ -1,6 +1,6 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { notFound, useSearchParams } from "next/navigation"
 import React from "react"
 
 import Reader from "@/components/shared/publizonReader/PublizonReader"
@@ -8,20 +8,23 @@ import Reader from "@/components/shared/publizonReader/PublizonReader"
 function Page() {
   const searchParams = useSearchParams()
   const id = searchParams.get("id")
+  const orderId = searchParams.get("orderId")
 
   const handleBack = () => {
     window.history.back()
   }
 
-  // TODO: Do we want to do this if there is no id?
-  if (!id) {
-    return null
+  if (!id && !orderId) {
+    console.error("No id found in search params")
+    return notFound()
   }
 
   return (
     <div className="absolute inset-0 h-screen w-screen">
       <div className="bg-reader-grey absolute h-full w-full"></div>
-      <Reader onBackCallback={() => handleBack()} type="demo" identifier={id} />
+
+      {orderId && <Reader onBackCallback={() => handleBack()} type="loan" orderId={orderId} />}
+      {id && <Reader onBackCallback={() => handleBack()} type="preview" identifier={id} />}
     </div>
   )
 }

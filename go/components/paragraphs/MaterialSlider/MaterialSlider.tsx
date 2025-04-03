@@ -32,7 +32,6 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
 
   useEffect(() => {
     updateSlidePosition()
-
     internalSlider.current?.on("slideChanged", () => {
       updateSlidePosition()
     })

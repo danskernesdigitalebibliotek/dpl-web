@@ -53,6 +53,7 @@ export type AddressCountry = {
 
 export type AdgangsplatformenLibraryToken = {
   __typename?: 'AdgangsplatformenLibraryToken';
+  expire?: Maybe<DateTime>;
   token?: Maybe<Scalars['String']['output']>;
 };
 
@@ -713,6 +714,8 @@ export type ParagraphFiles = ParagraphInterface & {
   __typename?: 'ParagraphFiles';
   /** The time that the Paragraph was created. */
   created: DateTime;
+  /** Files */
+  files?: Maybe<Array<MediaUnion>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -957,6 +960,20 @@ export type ParagraphHero = ParagraphInterface & {
   __typename?: 'ParagraphHero';
   /** The time that the Paragraph was created. */
   created: DateTime;
+  /** Hero categories */
+  heroCategories?: Maybe<TermUnion>;
+  /** Hero content type */
+  heroContentType?: Maybe<Scalars['String']['output']>;
+  /** Hero date */
+  heroDate?: Maybe<DateTime>;
+  /** Hero description */
+  heroDescription?: Maybe<Text>;
+  /** Hero image */
+  heroImage?: Maybe<MediaUnion>;
+  /** Hero link */
+  heroLink?: Maybe<Link>;
+  /** Hero title */
+  heroTitle: Scalars['String']['output'];
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -999,6 +1016,8 @@ export type ParagraphLinks = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** Link */
+  link: Array<Link>;
   /** Published */
   status: Scalars['Boolean']['output'];
 };
@@ -1033,6 +1052,14 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
    * should be able to increment by 4.
    */
   amountOfMaterials: Scalars['Int']['output'];
+  /**
+   * This field is for inserting a CQL string based on a search. <br /><br />Please
+   * be aware, that it is necessary to copy the exact CQL string, including the
+   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
+   * generated, by performing a query through the advanced search, and copying the
+   * CQL string from there.
+   */
+  cqlSearch: CqlSearch;
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
@@ -1091,6 +1118,13 @@ export type ParagraphMaterialGridManual = ParagraphInterface & {
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /** The title for the material grid. Leave this blank if you do not want a title.  */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
+  /**
+   * The grid will only display materials in internvals of 4. <br /><br />Example
+   * work ID: work-of:870970-basis:136336282.<br /><br />If you need to link to a
+   * specific type, select it from the dropdown and the system will display that,
+   * if it is available.
+   */
+  materialGridWorkIds?: Maybe<Array<WorkId>>;
   /** Published */
   status: Scalars['Boolean']['output'];
 };
@@ -1104,6 +1138,8 @@ export type ParagraphMedias = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** Medias */
+  medias: Array<MediaUnion>;
   /** Published */
   status: Scalars['Boolean']['output'];
 };
@@ -1158,8 +1194,32 @@ export type ParagraphRecommendation = ParagraphInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
+  /**
+   * This determines whether the image should be positioned to the left or right.
+   * <br />If left untoggled (default behaviour) the image is positioned to the
+   * left, if toggled on, the image will be positioned to the right.
+   */
+  imagePositionRight?: Maybe<Scalars['Boolean']['output']>;
   /** The paragraphs entity language code. */
   langcode: Language;
+  /**
+   * This is the description for a recommendation. <br /><br />If you add a
+   * description, the title of the the material will not be automatically
+   */
+  recommendationDescription?: Maybe<Scalars['String']['output']>;
+  /**
+   * The title of the recommended material.<br /><br />If you add a title, the
+   * description for the material will not be automatically generated.
+   */
+  recommendationTitle?: Maybe<Text>;
+  /**
+   * This is the work ID used to retrieve the material information. Example:
+   * work-of:870970-basis:136336282.<br />Currently this is retrieved by performing
+   * a search for a material manually, and copying this value from the URL.<br />If
+   * you need to link to a specific type, select it from the dropdown and the
+   * system will display that, if it is available.
+   */
+  recommendationWorkId?: Maybe<WorkId>;
   /** Published */
   status: Scalars['Boolean']['output'];
 };
@@ -1173,6 +1233,8 @@ export type ParagraphSimpleLinks = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** Link */
+  link: Array<Link>;
   /** Published */
   status: Scalars['Boolean']['output'];
 };
@@ -1244,7 +1306,7 @@ export type ParagraphVideo = ParagraphInterface & {
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** Embed video */
-  embedVideo?: Maybe<MediaUnion>;
+  embedVideo: MediaUnion;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -1606,7 +1668,7 @@ export type UnsupportedType = {
 /** Et WorkID-felt. */
 export type WorkId = {
   __typename?: 'WorkId';
-  /** The material type (e.g., bog, e-bog). */
+  /** Materialetype (fx bog, film, lydbog) */
   material_type?: Maybe<Scalars['String']['output']>;
   /** The WorkID value */
   work_id?: Maybe<Scalars['String']['output']>;
@@ -1651,10 +1713,10 @@ export type GetPageByPathQueryVariables = Exact<{
 
 export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', value?: string | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
 
-export type GetAdgangsplatformenTokensQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAdgangsplatformenLibraryTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenTokensQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', library?: { __typename?: 'AdgangsplatformenLibraryToken', token?: string | null } | null, user?: { __typename?: 'AdgangsplatformenUserToken', expire?: number | null, token?: string | null } | null } | null } | null };
+export type GetAdgangsplatformenLibraryTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', library?: { __typename?: 'AdgangsplatformenLibraryToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
 
 export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2000,60 +2062,59 @@ useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) 
 
 useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
 
-export const GetAdgangsplatformenTokensDocument = `
-    query getAdgangsplatformenTokens {
+export const GetAdgangsplatformenLibraryTokenDocument = `
+    query getAdgangsplatformenLibraryToken {
   dplTokens {
     adgangsplatformen {
       library {
         token
-      }
-      user {
-        expire
-        token
+        expire {
+          timestamp
+        }
       }
     }
   }
 }
     `;
 
-export const useGetAdgangsplatformenTokensQuery = <
-      TData = GetAdgangsplatformenTokensQuery,
+export const useGetAdgangsplatformenLibraryTokenQuery = <
+      TData = GetAdgangsplatformenLibraryTokenQuery,
       TError = unknown
     >(
-      variables?: GetAdgangsplatformenTokensQueryVariables,
-      options?: Omit<UseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>['queryKey'] }
+      variables?: GetAdgangsplatformenLibraryTokenQueryVariables,
+      options?: Omit<UseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>['queryKey'] }
     ) => {
     
-    return useQuery<GetAdgangsplatformenTokensQuery, TError, TData>(
+    return useQuery<GetAdgangsplatformenLibraryTokenQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getAdgangsplatformenTokens'] : ['getAdgangsplatformenTokens', variables],
-    queryFn: fetcher<GetAdgangsplatformenTokensQuery, GetAdgangsplatformenTokensQueryVariables>(GetAdgangsplatformenTokensDocument, variables),
+    queryKey: variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables],
+    queryFn: fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables),
     ...options
   }
     )};
 
-useGetAdgangsplatformenTokensQuery.getKey = (variables?: GetAdgangsplatformenTokensQueryVariables) => variables === undefined ? ['getAdgangsplatformenTokens'] : ['getAdgangsplatformenTokens', variables];
+useGetAdgangsplatformenLibraryTokenQuery.getKey = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables];
 
-export const useSuspenseGetAdgangsplatformenTokensQuery = <
-      TData = GetAdgangsplatformenTokensQuery,
+export const useSuspenseGetAdgangsplatformenLibraryTokenQuery = <
+      TData = GetAdgangsplatformenLibraryTokenQuery,
       TError = unknown
     >(
-      variables?: GetAdgangsplatformenTokensQueryVariables,
-      options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>['queryKey'] }
+      variables?: GetAdgangsplatformenLibraryTokenQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>['queryKey'] }
     ) => {
     
-    return useSuspenseQuery<GetAdgangsplatformenTokensQuery, TError, TData>(
+    return useSuspenseQuery<GetAdgangsplatformenLibraryTokenQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getAdgangsplatformenTokensSuspense'] : ['getAdgangsplatformenTokensSuspense', variables],
-    queryFn: fetcher<GetAdgangsplatformenTokensQuery, GetAdgangsplatformenTokensQueryVariables>(GetAdgangsplatformenTokensDocument, variables),
+    queryKey: variables === undefined ? ['getAdgangsplatformenLibraryTokenSuspense'] : ['getAdgangsplatformenLibraryTokenSuspense', variables],
+    queryFn: fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetAdgangsplatformenTokensQuery.getKey = (variables?: GetAdgangsplatformenTokensQueryVariables) => variables === undefined ? ['getAdgangsplatformenTokensSuspense'] : ['getAdgangsplatformenTokensSuspense', variables];
+useSuspenseGetAdgangsplatformenLibraryTokenQuery.getKey = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenLibraryTokenSuspense'] : ['getAdgangsplatformenLibraryTokenSuspense', variables];
 
 
-useGetAdgangsplatformenTokensQuery.fetcher = (variables?: GetAdgangsplatformenTokensQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenTokensQuery, GetAdgangsplatformenTokensQueryVariables>(GetAdgangsplatformenTokensDocument, variables, options);
+useGetAdgangsplatformenLibraryTokenQuery.fetcher = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables, options);
 
 export const GetAdgangsplatformenUserTokenDocument = `
     query getAdgangsplatformenUserToken {
@@ -2204,3 +2265,27 @@ useSuspenseGetLogoutUrlsQuery.getKey = (variables?: GetLogoutUrlsQueryVariables)
 
 
 useGetLogoutUrlsQuery.fetcher = (variables?: GetLogoutUrlsQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetLogoutUrlsQuery, GetLogoutUrlsQueryVariables>(GetLogoutUrlsDocument, variables, options);
+
+export const operationNames = {
+  Query: {
+    getArticleByPath: 'getArticleByPath',
+    getDplCmsConfiguration: 'getDplCmsConfiguration',
+    getPageByPath: 'getPageByPath',
+    getAdgangsplatformenLibraryToken: 'getAdgangsplatformenLibraryToken',
+    getAdgangsplatformenUserToken: 'getAdgangsplatformenUserToken',
+    getLoginUrls: 'getLoginUrls',
+    getLogoutUrls: 'getLogoutUrls'
+  },
+  Fragment: {
+    imageFragment: 'imageFragment',
+    mediaVideotoolFragment: 'mediaVideotoolFragment',
+    goVideo: 'goVideo',
+    goVideoBundleAutomatic: 'goVideoBundleAutomatic',
+    goVideoBundleManual: 'goVideoBundleManual',
+    goMaterialSliderAutomatic: 'goMaterialSliderAutomatic',
+    goMaterialSliderManual: 'goMaterialSliderManual',
+    goLinkbox: 'goLinkbox',
+    goTextBody: 'goTextBody',
+    goImages: 'goImages'
+  }
+}

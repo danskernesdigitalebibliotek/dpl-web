@@ -1,6 +1,5 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import { notFound, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
@@ -17,21 +16,20 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 
 function WorkPageLayout({ workId }: { workId: string }) {
+  const { data, isLoading } = useGetMaterialQuery({
+    wid: workId,
+  })
+
   const [selectedManifestation, setSelectedManifestation] =
     useState<ManifestationWorkPageFragment>()
   const searchParams = useSearchParams()
-
-  const { data, isLoading } = useQuery({
-    queryKey: useGetMaterialQuery.getKey({ wid: workId }),
-    queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
-  })
 
   if (!data || !data.work) {
     notFound()
   }
 
-  const work = data.work as WorkFullWorkPageFragment
-  const manifestations = work.manifestations.all
+  const work = data?.work ? (data.work as WorkFullWorkPageFragment) : null
+  const manifestations = work?.manifestations.all as ManifestationWorkPageFragment[]
 
   // filter out manifestations that not digital except physical books
   const filteredManifestationsByAccessType = manifestations.filter(manifestation => {
@@ -49,8 +47,6 @@ function WorkPageLayout({ workId }: { workId: string }) {
     const filteredManifestations = filteredManifestationsByAccessType.filter(manifestation => {
       return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
     })
-
-    if (!filteredManifestations.length) return notFound()
 
     // get the manifestation that has the newest edition
     const latestManifestationEdition = filteredManifestationsByAccessType.reduce(
@@ -75,13 +71,13 @@ function WorkPageLayout({ workId }: { workId: string }) {
     )
   }
 
-  if (!data || !data.work) {
-    notFound()
+  if (!work) {
+    return notFound()
   }
 
   return (
     <div className="content-container my-grid-gap-2 lg:my-grid-gap-half flex-row flex-wrap">
-      {selectedManifestation && (
+      {work && selectedManifestation && (
         <>
           <WorkPageHeader
             manifestations={filteredManifestationsByAccessType}

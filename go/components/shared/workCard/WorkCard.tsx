@@ -9,6 +9,7 @@ import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { getAllWorkPids } from "@/components/shared/workCard/helper"
+import { cyKeys } from "@/cypress/support/constants"
 import goConfig from "@/lib/config/goConfig"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
@@ -36,7 +37,6 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
-
   // for each manifestation, get publizon data and add to array
   // TODO: in storybook, request don't work, so we need make a mock request using fishery
   const manifestationsWithPublizonData = useQueries({
@@ -57,7 +57,6 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       }))
     },
   })
-
   // if any of the manifestations are the same material type filter out based on newest edition
   // TODO: isolate this logic to a helper function and test it
   const filteredManifestations = manifestationsWithPublizonData.reduce(
@@ -95,8 +94,6 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     return manifestation.manifestation.accessTypes[0].code !== "PHYSICAL"
   })
 
-  console.log("filteredManifestations", filteredManifestations)
-
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     "default",
@@ -108,9 +105,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     "small",
     "xx-small",
   ])
-
   const lowResCover = getLowResCoverUrl(dataCovers)
-
   const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
     return materialType?.materialTypeGeneral?.code === "PODCASTS"
   })
@@ -118,7 +113,6 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   const isSomeManifestationTypeCostFree = filteredManifestationsByAccessType.some(
     manifestation => manifestation.publizonData?.costFree
   )
-
   // sort manifestations by materialTypeSortPriority
   const sortedManifestations = filteredManifestationsByAccessType.sort((a, b) => {
     return (
@@ -134,6 +128,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   return (
     <div
       key={work.workId}
+      data-cy={cyKeys["work-card"]}
       className={cn(
         `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col overflow-hidden
         px-[15%] pt-[15%]`,

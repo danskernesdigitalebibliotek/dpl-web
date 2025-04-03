@@ -9,13 +9,13 @@ import { readerAssets } from "./helper"
 // Define mutually exclusive types for identifier and orderId
 type ReaderType =
   | {
-      type: "demo"
+      type: "preview"
       identifier: string
       orderId?: never
       onBackCallback: () => void
     }
   | {
-      type: "rent"
+      type: "loan"
       identifier?: never
       orderId: string
       onBackCallback: () => void
@@ -38,29 +38,31 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
     }
   }, [onBackCallback])
 
-  if (type === "rent") {
+  if (type === "loan") {
     return (
-      <div>
-        <p>orderId: {orderId}</p>
-        <div
-          id="pubhub-reader"
-          order-id={orderId}
-          role="button"
-          tabIndex={0}
-          // eslint-disable-next-line no-script-url
-          close-href="javascript:window.onReaderBackCallback()"
-          aria-label="Go back"
-        />
-      </div>
+      <div
+        style={{ height: "100vh" }}
+        id="pubhub-reader"
+        order-id={orderId}
+        role="button"
+        tabIndex={0}
+        // This is a workaround to make the close button work in the reader
+        // eslint-disable-next-line no-script-url
+        close-href="javascript:window.onReaderBackCallback()"
+        aria-label="Go back"
+      />
     )
   }
 
-  if (type === "demo") {
+  if (type === "preview") {
     return (
       <div
+        style={{ height: "100vh" }}
         id="pubhub-reader"
+        // identifier is a reserved attribute and causes a warning in the ts therefore we ignore it
         // @ts-ignore
         identifier={identifier}
+        // This is a workaround to make the close button work in the reader
         // eslint-disable-next-line no-script-url
         close-href="javascript:window.onReaderBackCallback()"
         role="button"

@@ -12,6 +12,7 @@ function getEnvs() {
     LIBRARY_TOKEN: process.env.NEXT_PUBLIC_LIBRARY_TOKEN,
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NODE_ENV: process.env.NODE_ENV,
+    TEST_MODE: process.env.TEST_MODE,
 
     // Server-only env variables
     UNILOGIN_API_URL: process.env.UNILOGIN_API_URL,
@@ -37,6 +38,7 @@ const EnvSchema = z.object({
   PUBHUB_BASE_URL: z.string().refine(validateUrl),
   APP_URL: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
+  TEST_MODE: z.coerce.boolean().default(false),
 })
 
 // Environment variables only available in Nodejs.

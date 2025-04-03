@@ -1,13 +1,14 @@
 "use client"
 
+import { useSelector } from "@xstate/react"
 import React, { useEffect } from "react"
 
 import { useDarkMode, useLightMode } from "@/lib/helpers/helper.theme"
-import { useThemeStore } from "@/store/theme.store"
+import { themeStore } from "@/store/theme.store"
 
 //determines if the user has a set theme
 function useDetectColorScheme() {
-  const { theme } = useThemeStore()
+  const theme = useSelector(themeStore, state => state.context.theme)
 
   //local storage is used to override OS theme settings
   if (theme) {

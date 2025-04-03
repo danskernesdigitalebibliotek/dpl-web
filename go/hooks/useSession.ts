@@ -3,6 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
+import { loadSession } from "@/lib/session/fetchSession"
 import { TSessionData } from "@/lib/session/session"
 
 const fetchSession = async ({
@@ -13,9 +14,8 @@ const fetchSession = async ({
   setSessionHandler: (session: TSessionData | null) => void
 }) => {
   try {
-    const response = await fetch("/auth/session")
-    if (response.ok) {
-      const session = (await response.json()) as TSessionData
+    const session = await loadSession()
+    if (session) {
       setSessionHandler(session)
     }
   } finally {

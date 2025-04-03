@@ -2682,3 +2682,33 @@ useSuspenseGetMaterialQuery.getKey = (variables: GetMaterialQueryVariables) => [
 
 
 useGetMaterialQuery.fetcher = (variables: GetMaterialQueryVariables, options?: RequestInit['headers']) => fetchData<GetMaterialQuery, GetMaterialQueryVariables>(GetMaterialDocument, variables, options);
+
+export const operationNames = {
+  Query: {
+    searchWithPagination: 'searchWithPagination' as const,
+    searchFacets: 'searchFacets' as const,
+    complexSearchForWorkTeaser: 'complexSearchForWorkTeaser' as const,
+    getMaterial: 'getMaterial' as const
+  },
+  Fragment: {
+    SearchFacet: 'SearchFacet' as const,
+    ManifestationCover: 'ManifestationCover' as const,
+    ManifestationIdentifiers: 'ManifestationIdentifiers' as const,
+    ManifestationAccess: 'ManifestationAccess' as const,
+    ManifestationTitles: 'ManifestationTitles' as const,
+    ManifestationLanguages: 'ManifestationLanguages' as const,
+    ManifestationDescription: 'ManifestationDescription' as const,
+    ManifestationDetails: 'ManifestationDetails' as const,
+    ManifestationMaterialTypes: 'ManifestationMaterialTypes' as const,
+    ManifestationSearchPageTeaser: 'ManifestationSearchPageTeaser' as const,
+    ManifestationWorkPage: 'ManifestationWorkPage' as const,
+    WorkAccess: 'WorkAccess' as const,
+    WorkMaterialTypes: 'WorkMaterialTypes' as const,
+    WorkTitles: 'WorkTitles' as const,
+    WorkCreators: 'WorkCreators' as const,
+    WorkPublicationYear: 'WorkPublicationYear' as const,
+    WorkDescription: 'WorkDescription' as const,
+    WorkTeaserSearchPage: 'WorkTeaserSearchPage' as const,
+    WorkFullWorkPage: 'WorkFullWorkPage' as const
+  }
+}

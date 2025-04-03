@@ -38,6 +38,10 @@ type ResolveUrlOptions =
       queryParams?: QueryParams
     }
   | {
+      routeParams?: { work: "work"; ":wid": number | string; preview: "preview" }
+      queryParams?: QueryParams
+    }
+  | {
       routeParams?: { search: "search" }
       queryParams?: QueryParams
     }
