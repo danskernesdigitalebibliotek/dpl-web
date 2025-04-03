@@ -4,7 +4,6 @@ import { differenceInDays } from "date-fns"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
-import CoverPictureWithCaption from "@/components/shared/coverPicture/CoverPictureWithCaption"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import {
   ManifestationSearchPageTeaserFragment,
@@ -58,21 +57,24 @@ const LoanCard = ({ manifestation, title, className }: LoanCardProps) => {
   return (
     <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
       <div className="aspect-1/1 h-full w-full">
-        <CoverPictureWithCaption caption={`Udløber om ${daysUntil} dage`}>
-          <CoverPicture
-            lowResSrc={lowResCover || ""}
-            src={coverSrc?.[0] || ""}
-            alt={`${title} cover billede`}
-            withTilt={false}
-            className="select-none"
-          />
-          <MaterialTypeIconWrapper
-            iconName={getManifestationMaterialTypeIcon(
-              manifestation as ManifestationWorkPageFragment
-            )}
-            className="bg-background z-floating-icon relative mx-auto -mt-14 outline-1"
-          />
-        </CoverPictureWithCaption>
+        <div className="block h-full w-full space-y-3 px-[15%]">
+          <div className="relative h-[85%]">
+            <CoverPicture
+              lowResSrc={lowResCover || ""}
+              src={coverSrc?.[0] || ""}
+              alt={`${title} cover billede`}
+              withTilt={false}
+              className="select-none"
+            />
+            <MaterialTypeIconWrapper
+              iconName={getManifestationMaterialTypeIcon(
+                manifestation as ManifestationWorkPageFragment
+              )}
+              className="bg-background z-floating-icon relative mx-auto -mt-14 outline-1"
+            />
+          </div>
+          <p className="text-typo-subtitle-sm break-words opacity-50">{`Udløber om ${daysUntil} dage`}</p>
+        </div>
       </div>
     </div>
   )
