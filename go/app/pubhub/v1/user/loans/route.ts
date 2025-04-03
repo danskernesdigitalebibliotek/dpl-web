@@ -29,6 +29,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
       libraryData: {
         maxAmountPerMonth: Number(libraryData.maxloanpertime),
         maxConcurrentAudiobookLoansPerBorrower: Number(libraryData.maxloanpertimesound),
+        maxConcurrentEbookLoansPerBorrower: Number(libraryData.maxloanpertime),
       },
       userData: {
         totalLoans: Number(libraryData.usertotalloans),
