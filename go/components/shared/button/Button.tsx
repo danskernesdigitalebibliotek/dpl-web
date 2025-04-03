@@ -86,16 +86,18 @@ Button.displayName = "Button"
 
 type ButtonSkeletonProps = {
   size?: "sm" | "md" | "lg"
+  className?: string
 }
 
-const ButtonSkeleton = ({ size }: ButtonSkeletonProps) => {
+const ButtonSkeleton = ({ size, className }: ButtonSkeletonProps) => {
   return (
     <div
       className={cn(
         "mb-grid-gap-half bg-background-skeleton w-full animate-pulse rounded-full lg:max-w-80 lg:min-w-72",
         size === "sm" ? "h-[32px]" : "",
         size === "md" || !size ? "h-[40px]" : "",
-        size === "lg" ? "h-[48px]" : ""
+        size === "lg" ? "h-[48px]" : "",
+        className
       )}
     />
   )

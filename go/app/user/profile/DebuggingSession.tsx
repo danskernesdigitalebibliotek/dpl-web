@@ -1,6 +1,7 @@
 "use client"
 
 import useSession from "@/hooks/useSession"
+import withVisibility from "@/lib/helpers/visibility"
 
 const DebuggingSession = () => {
   const session = useSession()
@@ -15,4 +16,4 @@ const DebuggingSession = () => {
   )
 }
 
-export default DebuggingSession
+export default withVisibility(DebuggingSession)

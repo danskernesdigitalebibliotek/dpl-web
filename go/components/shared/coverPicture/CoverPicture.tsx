@@ -146,6 +146,10 @@ const CoverPictureTiltWrapper = ({
   )
 }
 
-export const CoverPictureSkeleton = () => {
-  return <div className="bg-background-skeleton h-full w-full animate-pulse rounded-md" />
+export const CoverPictureSkeleton = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn("bg-background-skeleton h-full w-full animate-pulse rounded-md", className)}
+    />
+  )
 }

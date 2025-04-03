@@ -37,7 +37,6 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
-
   // for each manifestation, get publizon data and add to array
   // TODO: in storybook, request don't work, so we need make a mock request using fishery
   const manifestationsWithPublizonData = useQueries({
@@ -58,7 +57,6 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       }))
     },
   })
-
   // if any of the manifestations are the same material type filter out based on newest edition
   // TODO: isolate this logic to a helper function and test it
   const filteredManifestations = manifestationsWithPublizonData.reduce(
@@ -97,17 +95,13 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     "small",
     "xx-small",
   ])
-
   const lowResCover = getLowResCoverUrl(dataCovers)
-
   const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
     return materialType?.materialTypeGeneral?.code === "PODCASTS"
   })
-
   const isSomeManifestationTypeCostFree = filteredManifestations.some(
     manifestation => manifestation.publizonData?.costFree
   )
-
   // sort manifestations by materialTypeSortPriority
   const sortedManifestations = filteredManifestations.sort((a, b) => {
     return (

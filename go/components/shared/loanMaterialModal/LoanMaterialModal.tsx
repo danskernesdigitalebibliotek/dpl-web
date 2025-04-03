@@ -105,7 +105,7 @@ const LoanMaterialModal = ({
         />
         <MaterialTypeIconWrapper
           iconName={getManifestationMaterialTypeIcon(manifestation)}
-          className="bg-background absolute -bottom-6 h-10 w-10"
+          className="bg-background absolute -bottom-6 h-10 w-10 outline-1"
         />
       </div>
 

@@ -5,6 +5,7 @@ exports[`Pubhub local API > Returns same output from local & external GET /v1/us
   "libraryData": {
     "maxAmountPerMonth": 3,
     "maxConcurrentAudiobookLoansPerBorrower": 0,
+    "maxConcurrentEbookLoansPerBorrower": 3,
   },
   "loans": [
     {
