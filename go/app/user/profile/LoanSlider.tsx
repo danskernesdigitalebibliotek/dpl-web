@@ -35,6 +35,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
       internalSlider.current?.track?.details?.maxIdx === internalSlider.current?.track?.details?.rel
     )
   }
+  const [isLoadingRedirect, setIsLoadingRedirect] = useState(false)
 
   useEffect(() => {
     internalSlider.current?.on("slideChanged", () => {
@@ -110,6 +111,47 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               </Link>
             )
           })}
+          {works.length < 2 && (
+            <div
+              className={cn("flex w-full flex-row gap-18 overflow-hidden pt-10 pb-3 pl-10", {
+                "pl-16": works.length === 0,
+              })}>
+              {Array.from({ length: 4 - works.length }).map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={cn(
+                      `border-foreground h-[300px] w-[250px] shrink-0 rounded-sm border-2 border-dashed opacity-10
+                      sm:h-[450px] sm:w-[280px] md:h-[350px] md:w-[250px] lg:block lg:h-[300px] lg:w-[200px] xl:block
+                      xl:h-[400px] xl:w-[280px]`,
+                      (works.length + index) % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5"
+                    )}
+                  />
+                )
+              })}
+              {works.length === 0 && (
+                <div className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center gap-5">
+                  <p className="text-typo-heading-3">Du har ingen lånte bøger</p>
+                  <Button
+                    size="lg"
+                    onClick={() => {
+                      setIsLoadingRedirect(true)
+                      window.location.href = "/"
+                    }}
+                    className="min-w-80">
+                    {!isLoadingRedirect && "Find din næste bog"}
+                    {isLoadingRedirect && (
+                      <Icon
+                        name="go-spinner"
+                        ariaLabel="Indlæser"
+                        className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
+                      />
+                    )}
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <QuotasSection loanData={loanData} />
