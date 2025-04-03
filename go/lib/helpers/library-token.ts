@@ -3,7 +3,6 @@
 import { cookies } from "next/headers"
 import { z } from "zod"
 
-import { getEnv } from "../config/env"
 import goConfig from "../config/goConfig"
 import getQueryClient from "../getQueryClient"
 import {
@@ -23,12 +22,6 @@ export const setLibraryTokenCookie = async (token: string, expires: Date) => {
 }
 
 export const loadLibraryToken = async () => {
-  // If we are in test mode, we can't load the library token
-  // TODO: Mock library token while testing
-  if (getEnv("TEST_MODE")) {
-    return null
-  }
-
   const queryClient = getQueryClient()
 
   try {
@@ -48,7 +41,7 @@ export const loadLibraryToken = async () => {
       .safeParse(data?.dplTokens?.adgangsplatformen?.library)
 
     if (validateLibraryToken.error) {
-      console.error(validateLibraryToken.error.flatten)
+      console.error(validateLibraryToken.error)
       return null
     }
     return validateLibraryToken.data
