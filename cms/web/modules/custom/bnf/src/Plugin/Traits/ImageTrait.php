@@ -42,10 +42,10 @@ trait ImageTrait {
       'bundle' => 'image',
       'name' => $file->getFilename(),
       'status' => TRUE,
-      'field_byline' => $image->byline,
+      'field_byline' => $image->byline ?? '',
       'field_media_image' => [
         'target_id' => $file->id(),
-        'alt' => $alt,
+        'alt' => $alt ?? '',
       ],
     ];
 
