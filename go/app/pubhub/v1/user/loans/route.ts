@@ -18,7 +18,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
     return {
       loans: orderItems.map(orderItem => {
         return {
-          orderId: orderItem.retailerordernumber,
+          orderId: orderItem.internalordernumber,
           orderDateUtc: transformTimeToUtcString(orderItem.orderdate),
           loanExpireDateUtc: transformTimeToUtcString(orderItem.loanexpiredate),
           libraryBook: {

@@ -16,16 +16,18 @@ import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
+import { modalStore } from "@/store/modal.store"
 
-export type LoanMaterialModalProps = {
-  isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+const LoanMaterialModal = ({
+  open,
+  manifestation,
+}: {
+  open: boolean
   manifestation: ManifestationWorkPageFragment
-}
-
-const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialModalProps) => {
+}) => {
   const queryClient = useQueryClient()
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
@@ -54,6 +56,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
   const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [error, setError] = useState<Error | null>(null)
+  const { closeModal } = modalStore.trigger
   const handleLoanMaterial = () => {
     setIsHandlingLoan(true)
     mutate(
@@ -63,7 +66,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
           // Refetch data to update the UI for WorkPageButtons
           queryClient.invalidateQueries({ queryKey: ["/v1/user/loans"] })
           setIsHandlingLoan(false)
-          setIsOpen(false)
+          closeModal()
         },
         onError: err => {
           setError(err as Error)
@@ -73,12 +76,21 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
     )
   }
 
+  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
+    query: {
+      // Publizon / useGetV1ProductsIdentifier is responsible for online
+      // materials. It requires an ISBN to do lookups.
+      enabled: isbns.length > 0,
+    },
+  })
+
+  // Check if the user can loan more e-materials or if the material is cost-free (blue title or podcast)
+  const isLoanPossible =
+    publizonData?.product?.costFree || canUserLoanMoreEMaterials(dataLoans, manifestation)
+
   return (
     <ResponsiveDialog
-      open={isOpen}
-      onOpenChange={() => {
-        setIsOpen(prev => !prev)
-      }}
+      open={open}
       title={`Lån ${getManifestationMaterialTypeSpecific(manifestation) || "materialet"}`}>
       <div className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center justify-center lg:aspect-4/5">
         {isLoadingCovers && (
@@ -103,7 +115,7 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
       )}
       {!isLoadingLoans && (
         <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
-          {!canUserLoanMoreEMaterials(dataLoans, manifestation) && (
+          {!isLoanPossible && (
             <>
               Du kan desværre ikke låne flere titler af typen{" "}
               <span className="font-bold">
@@ -117,14 +129,14 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
             "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."}
           {!error &&
             !isLoadingLoans &&
-            canUserLoanMoreEMaterials(dataLoans, manifestation) &&
+            isLoanPossible &&
             `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
         </p>
       )}
 
       <div className="flex flex-row items-center justify-center gap-6">
         {/* Only show "approve loan" button if user can still loan more materials */}
-        {canUserLoanMoreEMaterials(dataLoans, manifestation) && !error && !isErrorLoans && (
+        {isLoanPossible && !error && !isErrorLoans && (
           <Button
             theme={"primary"}
             size={"lg"}
@@ -142,13 +154,9 @@ const LoanMaterialModal = ({ isOpen, setIsOpen, manifestation }: LoanMaterialMod
         )}
         <Button
           size={"lg"}
-          onClick={() => {
-            setIsOpen(prev => !prev)
-          }}
-          disabled={isHandlingLoan || isLoadingLoans}>
-          {!canUserLoanMoreEMaterials(dataLoans, manifestation) || error || isErrorLoans
-            ? "Luk"
-            : "Nej"}
+          disabled={isHandlingLoan || isLoadingLoans}
+          onClick={() => closeModal()}>
+          {!isLoanPossible || error || isErrorLoans ? "Luk" : "Nej"}
           {isLoadingLoans && (
             <Icon
               name="go-spinner"
