@@ -24,9 +24,7 @@ third_party_settings:
     group_category_info:
       children:
         - field_category_menu_title
-        - field_category_menu_color
         - field_category_menu_image
-        - field_category_menu_sound
       label: 'Category Info'
       region: content
       parent_name: ''
@@ -65,14 +63,7 @@ mode: default
 content:
   field_category_menu_image:
     type: media_library_widget
-    weight: 29
-    region: content
-    settings:
-      media_types: {  }
-    third_party_settings: {  }
-  field_category_menu_sound:
-    type: media_library_widget
-    weight: 30
+    weight: 28
     region: content
     settings:
       media_types: {  }
@@ -84,12 +75,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_go_color:
-    type: options_select
-    weight: 31
-    region: content
-    settings: {  }
     third_party_settings: {  }
   field_paragraphs:
     type: paragraphs
@@ -130,7 +115,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 9
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -146,7 +131,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -172,12 +157,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 10
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
+  field_category_menu_sound: true
+  field_go_color: true
   langcode: true
   promote: true
   sticky: true
