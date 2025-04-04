@@ -2,6 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
+import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
 
 const buttonVariants = cva(
@@ -66,18 +67,29 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   ariaLabel?: string
+  isLoading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, ariaLabel, variant, theme, size, asChild = false, ...props }, ref) => {
+  ({ className, ariaLabel, variant, theme, size, asChild = false, isLoading, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, theme }), className)}
         ref={ref}
         {...props}
-        aria-label={ariaLabel || ""}
-      />
+        aria-label={ariaLabel || ""}>
+        <>
+          {!isLoading && <>{props.children}</>}
+          {isLoading && (
+            <Icon
+              name="go-spinner"
+              ariaLabel="Indlæser"
+              className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
+            />
+          )}
+        </>
+      </Comp>
     )
   }
 )

@@ -42,16 +42,16 @@ const LogoutButton = ({ className }: LogoutButtonProps) => {
 
   return (
     <>
-      <Button size={"sm"} onClick={handleClick} className={className} disabled={logoutWasClicked}>
-        <Icon className="mr-3 h-[20px] w-[20px]" name="lock" />
-        {!logoutWasClicked && <p>Log ud</p>}
-        {logoutWasClicked && (
-          <Icon
-            name="go-spinner"
-            ariaLabel="Indlæser"
-            className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
-          />
-        )}
+      <Button
+        size={"sm"}
+        onClick={handleClick}
+        className={className}
+        disabled={logoutWasClicked}
+        isLoading={logoutWasClicked}>
+        <>
+          <Icon className="mr-3 h-[20px] w-[20px]" name="lock" />
+          <p>Log ud</p>
+        </>
       </Button>
     </>
   )

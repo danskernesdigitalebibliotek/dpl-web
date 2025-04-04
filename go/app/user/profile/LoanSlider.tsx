@@ -66,7 +66,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         <h2 className="text-typo-heading-4">
           E-materialer jeg har lånt ({loanData.loans?.length})
         </h2>
-        {loanData.loans?.length && (
+        {!!loanData.loans?.length && (
           <div className="flex flex-row justify-end gap-x-4">
             <Button
               disabled={reachedStart}
@@ -140,15 +140,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                       setIsLoadingRedirect(true)
                       window.location.href = "/"
                     }}
+                    isLoading={isLoadingRedirect}
                     className="min-w-80">
-                    {!isLoadingRedirect && "Find din næste bog"}
-                    {isLoadingRedirect && (
-                      <Icon
-                        name="go-spinner"
-                        ariaLabel="Indlæser"
-                        className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
-                      />
-                    )}
+                    Find din næste bog
                   </Button>
                 </div>
               )}
