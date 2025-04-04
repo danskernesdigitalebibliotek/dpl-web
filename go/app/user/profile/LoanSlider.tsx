@@ -66,7 +66,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         <h2 className="text-typo-heading-4">
           E-materialer jeg har lånt ({loanData.loans?.length})
         </h2>
-        {!!loanData.loans?.length && (
+        {loanData.loans?.length && (
           <div className="flex flex-row justify-end gap-x-4">
             <Button
               disabled={reachedStart}
@@ -111,6 +111,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               </Link>
             )
           })}
+          {/* To avoid empty looking slider for one loan or no loans, we add visual indicators for more books. */}
           {works.length < 2 && (
             <div
               className={cn("flex w-full flex-row gap-18 overflow-hidden pt-10 pb-3 pl-10", {
@@ -129,6 +130,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   />
                 )
               })}
+              {/* If user doesn't have any loans - lead them to find their first material. */}
               {works.length === 0 && (
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center gap-5">
                   <p className="text-typo-heading-3">Du har ingen lånte bøger</p>
