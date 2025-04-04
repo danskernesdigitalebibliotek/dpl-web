@@ -21,7 +21,12 @@ use Drupal\taxonomy\Entity\Term;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
+ *      "form" = {
+ *        "add" = "Drupal\bnf_client\Form\BnfSubscriptionCreateForm",
+ *        "delete" = "Drupal\bnf_client\Form\BnfSubscriptionDeleteForm",
+ *      },
  *   },
+ *
  *   entity_keys = {
  *     "id" = "uuid",
  *   },
@@ -146,7 +151,7 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
-   * Helper function for setting terms.
+   * Set terms applied to content imported via this subscription.
    *
    * @param string $vid
    *   The name of the vocabulary of the terms being set.

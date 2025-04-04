@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * The user will have been redirected to this page, from Delingstjenesten.
  */
-class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface {
+class BnfSubscriptionCreateForm implements FormInterface, ContainerInjectionInterface {
 
   use AutowireTrait;
   use StringTranslationTrait;
@@ -66,6 +67,30 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
     $uuid = $this->routeMatch->getParameter('uuid');
     $label = $this->requestStack->getCurrentRequest()?->query->get('label');
     $form_state->set('uuid', $uuid);
+    $form_state->set('label', $label);
+    $form['#title'] = $this->t('Confirm creation of BNF subscription', [], ['context' => 'BNF']);
+
+    $existingSubscriptions = $this->subscriptionStorage->loadByProperties(['subscription_uuid' => $uuid]);
+    $isEditable = empty($existingSubscriptions);
+
+    if (!$isEditable) {
+      $form['warning'] = [
+        '#type' => 'container',
+        '#prefix' => '<div class="dpl-form-warning">',
+        '#markup' => $this->t(
+          'This subscription already exists. <a href="@url">Do you want to delete it?</a>',
+          [
+            '@url' => Url::fromRoute(
+              'bnf_client.subscription.delete_form',
+              ['uuid' => $uuid],
+              ['query' => ['label' => $label]]
+            )->toString(),
+          ],
+          ['context' => 'BNF']
+        ),
+        '#suffix' => '</div>',
+      ];
+    }
 
     $form['uuid'] = [
       '#title' => 'UUID',
@@ -81,44 +106,23 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
       '#disabled' => TRUE,
     ];
 
-    $existingSubscriptions = $this->subscriptionStorage->loadByProperties(['subscription_uuid' => $uuid]);
-
-    if (!empty($existingSubscriptions)) {
-      $form['#title'] = $this->t('Confirm deletion of BNF subscription', [], ['context' => 'BNF']);
-
-      $form['actions']['submit'] = [
-        '#type' => 'submit',
-        '#submit' => ['::deleteSubscription'],
-        '#value' => $this->t('Delete subscription (and keep imported content)', [], ['context' => 'BNF']),
-        '#attributes' => [
-          'class' => [
-            'button',
-            'button--primary',
-            'button--danger',
-          ],
-        ],
-      ];
-
-      return $form;
-    }
-
-    $form['#title'] = $this->t('Confirm creation of BNF subscription', [], ['context' => 'BNF']);
-
     $form['only_new_content'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Only import new content', [], ['context' => 'BNF']),
       '#description' => $this->t('If checked, only upcoming content related to this subscription will be imported', [], ['context' => 'BNF']),
       '#default_value' => TRUE,
-
+      '#disabled' => !$isEditable,
     ];
 
     $form['categories'] = $this->getTermFormElement('categories');
+    $form['categories']['#disabled'] = !$isEditable;
     $form['tags'] = $this->getTermFormElement('tags');
+    $form['tags']['#disabled'] = !$isEditable;
 
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#submit' => ['::createSubscription'],
-      '#value' => $this->t('Create subscription'),
+      '#disabled' => !$isEditable,
+      '#value' => $this->t('Create subscription', [], ['context' => 'BNF']),
     ];
 
     return $form;
@@ -163,54 +167,22 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
   /**
    * {@inheritDoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {}
-
-  /**
-   * {@inheritDoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state): void {}
-
-  /**
-   * Callback, used when subscription is being deleted.
-   *
-   * @param array<mixed> $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   */
-  public function deleteSubscription(array &$form, FormStateInterface $form_state): void {
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
     $uuid = $form_state->get('uuid');
     $existingSubscriptions = $this->subscriptionStorage->loadByProperties(['subscription_uuid' => $uuid]);
 
-    try {
-      $this->subscriptionStorage->delete($existingSubscriptions);
-
-      $this->logger->info('Deleted BNF subscription @uuid', ['@uuid' => $uuid]);
-      $this->messenger->addStatus($this->t(
-        'Subscription deleted. Content imported with from this subscription has NOT been deleted.',
-        [],
-        ['context' => 'BNF']
-      ));
-    }
-    catch (\Exception $e) {
-      $this->messenger->addError($this->t('Could not delete subscription.', [], ['context' => 'BNF']));
-
-      $this->logger->error(
-        'Deleting BNF subscription @uuid failed. @message',
-        ['@uuid' => $uuid, '@message' => $e->getMessage()]
+    if (!empty($existingSubscriptions)) {
+      $form_state->setErrorByName(
+        'uuid',
+        $this->t('Could not create subscription - this subscription already exists.', [], ['context' => 'BNF'])
       );
     }
   }
 
   /**
-   * Callback, used when subscription is being created.
-   *
-   * @param array<mixed> $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
+   * {@inheritDoc}
    */
-  public function createSubscription(array &$form, FormStateInterface $form_state): void {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $uuid = $form_state->get('uuid');
     $existingSubscriptions = $this->subscriptionStorage->loadByProperties([
       'subscription_uuid' => $uuid,
@@ -248,6 +220,8 @@ class BnfSubscriptionForm implements FormInterface, ContainerInjectionInterface 
 
       $this->logger->info('BNF subscription connection created to @uuid', ['@uuid' => $uuid]);
       $this->messenger->addStatus($this->t('Subscription created. Related content will automatically be created when available.', [], ['context' => 'BNF']));
+      $form_state->setRedirect('bnf_client.subscription.delete_form', ['uuid' => $uuid],
+        ['query' => ['label' => $form_state->get('label')]]);
 
     }
     catch (\Exception $e) {

@@ -15,11 +15,19 @@ bnf_client.import_confirm_form:
   requirements:
     _permission: 'bnf import nodes'
 
-bnf_client.subscription_form:
-  path: '/admin/bnf/subscribe/{uuid}'
+bnf_client.subscription.create_form:
+  path: '/admin/bnf/subscription/{uuid}/create'
   defaults:
-    _form: '\Drupal\bnf_client\Form\BnfSubscriptionForm'
-    _title: 'Toggle BNF subscription'
+    _form: '\Drupal\bnf_client\Form\BnfSubscriptionCreateForm'
+    _title_callback: 'Create BNF subscription'
+  requirements:
+    _permission: 'bnf manage subscriptions'
+
+bnf_client.subscription.delete_form:
+  path: '/admin/bnf/subscription/{uuid}/delete'
+  defaults:
+    _form: '\Drupal\bnf_client\Form\BnfSubscriptionDeleteForm'
+    _title_callback: 'Delete BNF subscription'
   requirements:
     _permission: 'bnf manage subscriptions'
 
