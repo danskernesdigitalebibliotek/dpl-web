@@ -153,13 +153,6 @@ describe("Middleware", () => {
   })
 
   it("can destroy an Adgangsplatformen session if it is active and a Drupal session does not exist", async () => {
-    // vi.spyOn(tokenFunctions, "loadLibraryToken").mockResolvedValueOnce(
-    //   await Promise.resolve({
-    //     token: "hi-I-am-a-library-token",
-    //     // Unix timestamp
-    //     expire: { timestamp: 999999999 },
-    //   })
-    // )
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValueOnce(
       Promise.resolve(sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed)
     )
