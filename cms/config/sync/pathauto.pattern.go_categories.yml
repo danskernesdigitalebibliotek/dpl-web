@@ -1,0 +1,22 @@
+uuid: e60d9ab4-5a58-4eaf-bced-db201c8dfd90
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: go_categories
+label: 'GO Categories'
+type: 'canonical_entities:node'
+pattern: '/kategori/[node:title]'
+selection_criteria:
+  83711c44-314c-4bc3-b32f-3784b07107a3:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 83711c44-314c-4bc3-b32f-3784b07107a3
+    context_mapping:
+      node: node
+    bundles:
+      go_category: go_category
+selection_logic: and
+weight: -5
+relationships: {  }
