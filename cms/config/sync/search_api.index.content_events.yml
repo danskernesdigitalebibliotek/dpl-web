@@ -86,6 +86,15 @@ field_settings:
     dependencies:
       config:
         - field.storage.eventseries.field_teaser_text
+  status:
+    label: 'Status (Aggregrated)'
+    property_path: aggregated_field
+    type: boolean
+    configuration:
+      type: union
+      fields:
+        - 'entity:eventseries/status'
+        - 'entity:node/status'
   tags:
     label: 'Tags (Aggregrated)'
     property_path: aggregated_field
@@ -159,6 +168,7 @@ tracker_settings:
     indexing_order: fifo
 options:
   cron_limit: 50
+  delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
 server: db_search
