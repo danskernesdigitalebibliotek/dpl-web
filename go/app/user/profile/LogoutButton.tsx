@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import useSession from "@/hooks/useSession"
+import { userIsAnonymous } from "@/lib/helpers/user"
 
 export const LogoutButtonSkeleton = () => (
   <div
@@ -27,7 +28,7 @@ const LogoutButton = ({ className }: LogoutButtonProps) => {
     return <LogoutButtonSkeleton />
   }
 
-  if (!session?.isLoggedIn) {
+  if (userIsAnonymous(session)) {
     return null
   }
 
