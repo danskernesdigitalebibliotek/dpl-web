@@ -140,9 +140,15 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                       setIsLoadingRedirect(true)
                       window.location.href = "/"
                     }}
-                    isLoading={isLoadingRedirect}
                     className="min-w-80">
-                    Find din næste bog
+                    {!isLoadingRedirect && "Find din næste bog"}
+                    {isLoadingRedirect && (
+                      <Icon
+                        name="go-spinner"
+                        ariaLabel="Indlæser"
+                        className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
+                      />
+                    )}
                   </Button>
                 </div>
               )}
