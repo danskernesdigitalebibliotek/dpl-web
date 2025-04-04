@@ -10,9 +10,11 @@ const ButtonWithLoadingStateHoc = <TProps extends Record<string, unknown>>(
   {
     className,
     size,
+    theme,
   }: {
     className?: string
-    size: "sm" | "lg"
+    size?: "sm" | "lg"
+    theme?: "primary" | "secondary"
   }
 ) => {
   return function WrappedComponent(props: TProps & { onClick?: () => void }) {
@@ -33,7 +35,7 @@ const ButtonWithLoadingStateHoc = <TProps extends Record<string, unknown>>(
 
     if (isLoading) {
       return (
-        <Button size={size} className={className} disabled>
+        <Button size={size} className={className} theme={theme} disabled>
           <Icon
             name="go-spinner"
             ariaLabel="Indlæser"
