@@ -15,6 +15,8 @@ import {
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
+import { filterManifestationsByEdition, filterManifestationsByMaterialType } from "./helper"
+
 function WorkPageLayout({ workId }: { workId: string }) {
   const { data, isLoading } = useGetMaterialQuery({
     wid: workId,
@@ -28,40 +30,27 @@ function WorkPageLayout({ workId }: { workId: string }) {
     notFound()
   }
 
-  const work = data?.work ? (data.work as WorkFullWorkPageFragment) : null
+  const work = data?.work as WorkFullWorkPageFragment
   const manifestations = work?.manifestations.all as ManifestationWorkPageFragment[]
 
-  // filter out manifestations that not digital except physical books
-  const filteredManifestationsByAccessType = manifestations.filter(manifestation => {
-    if (manifestation.materialTypes[0].materialTypeGeneral.code === "BOOKS") {
-      return true
-    }
-
-    return manifestation.accessTypes[0].code !== "PHYSICAL"
-  })
+  // Filter out manifestations that not digital except physical books
+  const filteredManifestationsByMaterialType = filterManifestationsByMaterialType(manifestations)
+  // If multiple manifestations has the same type find the latest edition
+  const filteredManifestationsByEdition = filterManifestationsByEdition(
+    filteredManifestationsByMaterialType
+  )
 
   useEffect(() => {
+    // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
-
-    // filter out manifestations that don't match the search params material type
-    const filteredManifestations = filteredManifestationsByAccessType.filter(manifestation => {
+    // Filter out manifestations that don't match the search params material type
+    const selectedManifestation = filteredManifestationsByEdition.find(manifestation => {
       return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
     })
 
-    // get the manifestation that has the newest edition
-    const latestManifestationEdition = filteredManifestationsByAccessType.reduce(
-      (latest, current) => {
-        const latestEdition = latest.edition?.publicationYear?.year || 0
-        const currentEdition = current.edition?.publicationYear?.year || 0
-
-        return latestEdition > currentEdition ? latest : current
-      },
-      filteredManifestations[0]
-    )
-
-    // set the selected manifestation in the state
-    setSelectedManifestation(latestManifestationEdition)
-  }, [filteredManifestationsByAccessType, searchParams])
+    // Set the selected manifestation in the state
+    setSelectedManifestation(selectedManifestation)
+  }, [filteredManifestationsByEdition, searchParams])
 
   if (isLoading && !data) {
     return (
@@ -80,7 +69,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
       {work && selectedManifestation && (
         <>
           <WorkPageHeader
-            manifestations={filteredManifestationsByAccessType}
+            manifestations={filteredManifestationsByEdition}
             work={work}
             selectedManifestation={selectedManifestation}
           />

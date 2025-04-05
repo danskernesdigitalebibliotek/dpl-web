@@ -36,7 +36,9 @@ type WorkPageHeaderProps = {
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
-  const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
+  const selectedManifestationIsbns = selectedManifestation
+    ? getIsbnsFromManifestation(selectedManifestation)
+    : []
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
 
@@ -45,8 +47,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     return manifestation.materialTypes[0].materialTypeGeneral
   })
 
-  const uniqueMaterialType = uniqBy(materialTypes, "materialTypeGeneral.code")
-  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(uniqueMaterialType)
+  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
 
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
@@ -60,13 +61,16 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     { query: { enabled: !!selectedManifestation?.pid } }
   )
 
-  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
-    },
-  })
+  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
+    selectedManifestationIsbns?.[0],
+    {
+      query: {
+        // Publizon / useGetV1ProductsIdentifier is responsible for online
+        // materials. It requires an ISBN to do lookups.
+        enabled: selectedManifestationIsbns.length > 0,
+      },
+    }
+  )
 
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(

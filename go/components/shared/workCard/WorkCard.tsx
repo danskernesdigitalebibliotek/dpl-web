@@ -52,7 +52,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     combine: results => {
       // combine manifestation data with publizon data
       return manifestations.map((manifestation, index) => ({
-        manifestation,
+        ...manifestation,
         publizonData: results[index].data?.product,
       }))
     },
@@ -63,19 +63,19 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     (acc, current) => {
       const existing = acc.find(
         item =>
-          item.manifestation.materialTypes[0].materialTypeGeneral.code ===
-          current.manifestation.materialTypes[0].materialTypeGeneral.code
+          item.materialTypes[0].materialTypeGeneral.code ===
+          current.materialTypes[0].materialTypeGeneral.code
       )
       if (!existing) {
         acc.push(current)
       } else {
-        const existingEdition = existing.manifestation.edition?.publicationYear?.year || 0
-        const currentEdition = current.manifestation.edition?.publicationYear?.year || 0
+        const existingEdition = existing.edition?.publicationYear?.year || 0
+        const currentEdition = current.edition?.publicationYear?.year || 0
         if (currentEdition > existingEdition) {
           acc = acc.filter(
             item =>
-              item.manifestation.materialTypes[0].materialTypeGeneral.code !==
-              current.manifestation.materialTypes[0].materialTypeGeneral.code
+              item.materialTypes[0].materialTypeGeneral.code !==
+              current.materialTypes[0].materialTypeGeneral.code
           )
           acc.push(current)
         }
@@ -87,11 +87,11 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
 
   // filter out manifestations that not digital except physical books
   const filteredManifestationsByAccessType = filteredManifestations.filter(manifestation => {
-    if (manifestation.manifestation.materialTypes[0].materialTypeGeneral.code === "BOOKS") {
+    if (manifestation.materialTypes[0].materialTypeGeneral.code === "BOOKS") {
       return true
     }
 
-    return manifestation.manifestation.accessTypes[0].code !== "PHYSICAL"
+    return manifestation.accessTypes[0].code !== "PHYSICAL"
   })
 
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
@@ -116,12 +116,8 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   // sort manifestations by materialTypeSortPriority
   const sortedManifestations = filteredManifestationsByAccessType.sort((a, b) => {
     return (
-      goConfig("materialtypes.sortpriority").indexOf(
-        a.manifestation.materialTypes[0].materialTypeGeneral.code
-      ) -
-      goConfig("materialtypes.sortpriority").indexOf(
-        b.manifestation.materialTypes[0].materialTypeGeneral.code
-      )
+      goConfig("materialtypes.sortpriority").indexOf(a.materialTypes[0].materialTypeGeneral.code) -
+      goConfig("materialtypes.sortpriority").indexOf(b.materialTypes[0].materialTypeGeneral.code)
     )
   })
 
@@ -157,14 +153,13 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
           {/* Loop through all manifestation types */}
           {sortedManifestations.map(manifestation => {
             // find material type general material type
-            const materialType =
-              manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
+            const materialType = manifestation.materialTypes[0].materialTypeGeneral.code
             const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
             const isCostFree = manifestation.publizonData?.costFree
             const isPodcast = materialType === "PODCASTS"
             return (
               <MaterialTypeIconWrapper
-                key={manifestation.manifestation.pid}
+                key={manifestation.pid}
                 costFree={isCostFree || isPodcast}
                 iconName={materialTypeIcon}
               />

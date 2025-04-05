@@ -1,30 +1,67 @@
-import { head, uniqBy } from "lodash"
+import { filter, head, uniqBy } from "lodash"
 
 import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import goConfig from "@/lib/config/goConfig"
 import {
   GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
-  Manifestation,
   ManifestationWorkPageFragment,
-  Work,
   WorkFullWorkPageFragment,
   WorkMaterialTypesFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
-export const getWorkMaterialTypes = (
-  materialTypes: Work["materialTypes"]
-): Manifestation["materialTypes"][0]["materialTypeGeneral"][] => {
-  // filter out duplicates
-  const uniqueMaterialTypes = uniqBy(materialTypes, "materialTypeGeneral.code")
-  return uniqueMaterialTypes.map(materialType => materialType.materialTypeGeneral)
-}
-
 export const getManifestationMaterialType = (
   manifestation: ManifestationWorkPageFragment
 ): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"] => {
   return manifestation.materialTypes[0].materialTypeGeneral
+}
+
+const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
+const allowedPhysicalMaterialTypes = ["BOOKS"]
+
+// Filter out manifestations that are not allowed material types
+export const filterManifestationsByMaterialType = (
+  manifestations: ManifestationWorkPageFragment[]
+) => {
+  return filter(manifestations, manifestation => {
+    // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
+    if (manifestation.accessTypes[0].code === "PHYSICAL") {
+      return allowedPhysicalMaterialTypes.includes(
+        manifestation.materialTypes[0].materialTypeGeneral.code
+      )
+    }
+
+    return manifestation.materialTypes.some(type =>
+      allowedMaterialTypes.includes(type.materialTypeGeneral.code)
+    )
+  })
+}
+
+// If multiple manifestations has the same materialtype find the latest edition
+export const filterManifestationsByEdition = (manifestations: ManifestationWorkPageFragment[]) => {
+  return manifestations.reduce((acc, current) => {
+    const existing = acc.find(
+      item =>
+        item.materialTypes[0].materialTypeGeneral.code ===
+        current.materialTypes[0].materialTypeGeneral.code
+    )
+    if (!existing) {
+      acc.push(current)
+    } else {
+      const existingEdition = existing.edition?.publicationYear?.year || 0
+      const currentEdition = current.edition?.publicationYear?.year || 0
+      if (currentEdition > existingEdition) {
+        acc = acc.filter(
+          item =>
+            item.materialTypes[0].materialTypeGeneral.code !==
+            current.materialTypes[0].materialTypeGeneral.code
+        )
+        acc.push(current)
+      }
+    }
+    return acc
+  }, [] as ManifestationWorkPageFragment[])
 }
 
 export const getManifestationMaterialTypeSpecific = (
