@@ -1,4 +1,8 @@
-import { getLibraryTokenCookieValue, loadLibraryToken, setLibraryTokenCookie } from "./tokens"
+import {
+  getLibraryTokenCookieValue,
+  loadLibraryToken,
+  setLibraryTokenCookie,
+} from "./library-token"
 
 export const ensureLibraryTokenExist = async () => {
   const libraryTokenCookieValue = await getLibraryTokenCookieValue()

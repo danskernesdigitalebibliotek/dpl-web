@@ -1,8 +1,6 @@
 import { add, isPast, sub } from "date-fns"
 import { IronSession, getIronSession } from "iron-session"
 import { NextRequest, NextResponse } from "next/server"
-import * as client from "openid-client"
-import { z } from "zod"
 
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
@@ -134,6 +132,22 @@ export const saveAdgangsplatformenSession = async (
   await session.save()
 }
 
+export const uniloginAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
+  const isAnonymous = userIsAnonymous(session)
+  if (userIsAnonymous(session) || session.type !== "unilogin") {
+    return false
+  }
+
+  const refreshIsPast = session.refresh_expires && isPast(session.refresh_expires)
+  // When the session was created we saved when the Unilogin system consider the refresh token to be expired.
+  // If we are past that time, we consider the access token to be expired.
+  if (session.refresh_expires && isPast(session.refresh_expires)) {
+    return true
+  }
+
+  return false
+}
+
 export const uniloginAccessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
   // If the session is not logged in, or it is not a unilogin session
   // we don't need to refresh the access token.
@@ -157,6 +171,19 @@ export const uniloginAccessTokenShouldBeRefreshed = (session: IronSession<TSessi
   }
 
   if (session.expires && isPast(bufferedExp.expires)) {
+    return true
+  }
+
+  return false
+}
+
+export const adgangsplatformenAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
+  if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
+    return false
+  }
+  // When the session was created we saved when we consider the access token to be expired.
+  // If we are past that time, we consider the access token to be expired.
+  if (session.expires && isPast(session.expires)) {
     return true
   }
 
@@ -232,32 +259,4 @@ export const redirectToFrontPageAndReloadSession = async () => {
   const appUrl = new URL(getEnv("APP_URL"))
 
   return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
-}
-
-export const refreshUniloginTokens = async (
-  session: IronSession<TSessionData>,
-  config: client.Configuration
-) => {
-  const sessionTokenSchema = z.object({
-    isLoggedIn: z.boolean(),
-    access_token: z.string(),
-    refresh_token: z.string(),
-  })
-
-  try {
-    // TODO: Consider if we want to handle different types of sessions than unilogin.
-    const tokens = sessionTokenSchema.parse(session)
-    const newTokens = (await client.refreshTokenGrant(
-      config,
-      tokens.refresh_token
-    )) as unknown as TUniloginTokenSet
-    await setUniloginTokensOnSession(session, newTokens)
-    await session.save()
-  } catch (error) {
-    // Session is corrupt so we need to destroy it.
-    session.destroy()
-
-    const isZodError = error instanceof z.ZodError
-    console.error(isZodError ? JSON.stringify(error.errors) : error)
-  }
 }

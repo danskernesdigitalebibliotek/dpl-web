@@ -1,32 +1,29 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-import { getEnv } from "./lib/config/env"
+import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
-import { loadUserToken } from "./lib/helpers/tokens"
 import { userIsAnonymous, userIsLoggedInAtDplCms } from "./lib/helpers/user"
+import { loadUserToken } from "./lib/helpers/user-token"
 import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
+  adgangsplatformenAccessTokenHasExpired,
   adgangsplatformenAccessTokenShouldBeRefreshed,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
-  refreshUniloginTokens,
   saveAdgangsplatformenSession,
+  uniloginAccessTokenHasExpired,
   uniloginAccessTokenShouldBeRefreshed,
 } from "./lib/session/session"
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
   const requestHeaders = new Headers(request.headers)
-
   const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   })
-
   // Make sure we have a library token cookie.
   await ensureLibraryTokenExist()
 
@@ -40,6 +37,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (adgangsplatformenAccessTokenHasExpired(session)) {
+    destroySession(session)
+    return response
+  }
+
   // If the session is not logged in we will try to see if we have an ongoing Adgangsplatformen Drupal session.
   // If we have an active Drupal session we will try to load the user token from dpl-cms.
   // OR:
@@ -49,24 +51,22 @@ export async function middleware(request: NextRequest) {
     (userIsAnonymous(session) && userIsLoggedInAtCms) ||
     adgangsplatformenAccessTokenShouldBeRefreshed(session)
   ) {
-    const appUrl = getEnv("APP_URL")
-    const currentPath = new URL(pathname, appUrl.toString())
-
     const tokenData = await loadUserToken()
     if (tokenData) {
       await saveAdgangsplatformenSession(session, tokenData)
-      return NextResponse.redirect(currentPath, { headers: requestHeaders })
+      return response
     }
   }
 
-  // @todo - Handle refresh_expires
+  if (uniloginAccessTokenHasExpired(session)) {
+    destroySession(session)
+  }
+
   if (uniloginAccessTokenShouldBeRefreshed(session)) {
     const config = await getUniloginClientConfig()
-    const appUrl = getEnv("APP_URL")
-    const currentPath = new URL(pathname, appUrl.toString())
     if (config) {
       refreshUniloginTokens(session, config)
-      return NextResponse.redirect(currentPath, { headers: requestHeaders })
+      return response
     }
   }
 

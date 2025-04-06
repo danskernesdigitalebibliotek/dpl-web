@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
 import { TServiceType, getServiceSettings } from "@/lib/helpers/services"
-import { getBearerTokenServerSide } from "@/lib/helpers/tokens"
 import { getSession } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }

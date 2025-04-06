@@ -1,13 +1,16 @@
 // I do not find it valuable to use time on typing all the mocked functions in the test.
 // So we'll ignore the types for the entire test file.
 // @ts-nocheck
-import { add } from "date-fns"
+import { add, sub } from "date-fns"
 import * as headersFunctions from "next/headers"
 import { NextRequest } from "next/server"
+import * as client from "openid-client"
 import { describe, it, vi } from "vitest"
 
 import goConfig from "@/lib/config/goConfig"
-import * as tokenFunctions from "@/lib/helpers/tokens"
+import * as bearerTokenFunctions from "@/lib/helpers/bearer-token"
+import * as libraryTokenFunctions from "@/lib/helpers/library-token"
+import * as userTokenFunctions from "@/lib/helpers/user-token"
 import * as uniloginClientConfigFunctions from "@/lib/session/oauth/uniloginClient"
 import * as sessionFunctions from "@/lib/session/session"
 import { middleware } from "@/middleware"
@@ -33,18 +36,18 @@ vi.mock("openid-client", () => ({
   discovery: vi.fn(),
 }))
 
-vi.mock("@lib/helpers/tokens", () => ({
-  loadUserToken: vi.fn(() =>
-    Promise.resolve({
-      token: "hi-I-am-a-dpl-cms-user-token",
-      expire: 363663636,
-    })
-  ),
+vi.mock("@lib/helpers/library-token", () => ({
   loadLibraryToken: vi.fn(),
+}))
+vi.mock("@lib/helpers/user-token", () => ({
+  loadUserToken: vi.fn(),
 }))
 
 vi.mock("@lib/session/fetchSession", () => ({
   getSession: vi.fn(),
+}))
+vi.mock("openid-client", () => ({
+  refreshTokenGrant: vi.fn(),
 }))
 
 vi.mock("@/lib/session/session", async importOriginal => {
@@ -66,7 +69,6 @@ vi.mock("@/lib/session/session", async importOriginal => {
     destroySession: vi.fn(),
     getDplCmsSessionCookie: vi.fn(),
     getSession: vi.fn(),
-    refreshUniloginTokens: vi.fn(),
     saveAdgangsplatformenSession: vi.fn(),
   }
 })
@@ -94,10 +96,19 @@ const getFakeSessions = () => {
     expires: add(new Date(), { seconds: 59 }),
   }
 
+  const adgangsPlatformenSessionThatIsTooOld = {
+    isLoggedIn: true,
+    type: "adgangsplatformen",
+    expires: sub(new Date(), { minutes: 1 }),
+    refresh_expires: sub(new Date(), { minutes: 1 }),
+  }
+
   return {
     adgangsPlatformenSessionThatShouldBeRefreshed,
     uniloginSessionThatShouldBeRefreshed,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
+    adgangsPlatformenSessionThatShouldBeRefreshed,
+    adgangsPlatformenSessionThatIsTooOld,
     anonymousSession: sessionFunctions.defaultSession,
   }
 }
@@ -115,7 +126,7 @@ describe("Middleware", () => {
   const sessions = getFakeSessions()
 
   it("can ensure that a library token is present if it is not already", async () => {
-    vi.spyOn(tokenFunctions, "loadLibraryToken").mockResolvedValueOnce(
+    vi.spyOn(libraryTokenFunctions, "loadLibraryToken").mockResolvedValueOnce(
       await Promise.resolve({
         token: "hi-I-am-a-library-token",
         // Unix timestamp
@@ -146,7 +157,7 @@ describe("Middleware", () => {
           })),
       })
     )
-    const setLibraryTokenCookieSpy = vi.spyOn(tokenFunctions, "setLibraryTokenCookie")
+    const setLibraryTokenCookieSpy = vi.spyOn(libraryTokenFunctions, "setLibraryTokenCookie")
 
     await middleware(new NextRequest("http://localhost"))
     expect(setLibraryTokenCookieSpy).toHaveBeenCalledTimes(1)
@@ -185,7 +196,7 @@ describe("Middleware", () => {
         get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-    vi.spyOn(tokenFunctions, "loadUserToken").mockResolvedValue(
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
         token: "hi-I-am-a-dpl-cms-user-token",
         expire: 363663636,
@@ -212,7 +223,7 @@ describe("Middleware", () => {
         get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-    vi.spyOn(tokenFunctions, "loadUserToken").mockResolvedValue(
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
         token: "hi-I-am-a-dpl-cms-user-token",
         expire: 363663636,
@@ -239,7 +250,7 @@ describe("Middleware", () => {
         get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-    vi.spyOn(tokenFunctions, "loadUserToken").mockResolvedValue(
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
         token: "hi-I-am-a-dpl-cms-user-token",
         expire: 363663636,
@@ -251,7 +262,9 @@ describe("Middleware", () => {
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
   })
 
-  it("can refresh an Unilogin session if it is expired", async () => {
+  // @todo: Test for Unilogin with expired refresh token.
+
+  it("can refresh a Unilogin session if it is expired", async () => {
     vi.spyOn(uniloginClientConfigFunctions, "getUniloginClientConfig").mockResolvedValue(
       Promise.resolve({
         wellknownUrl: "https://unilogin.example.com",
@@ -264,7 +277,7 @@ describe("Middleware", () => {
     )
 
     const refreshUniloginTokensSpy = vi
-      .spyOn(sessionFunctions, "refreshUniloginTokens")
+      .spyOn(bearerTokenFunctions, "refreshUniloginTokens")
       .mockResolvedValue(Promise.resolve())
 
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
@@ -273,7 +286,7 @@ describe("Middleware", () => {
         get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-    vi.spyOn(tokenFunctions, "loadUserToken").mockResolvedValue(
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
         token: "hi-I-am-a-dpl-cms-user-token",
         expire: 363663636,
@@ -285,9 +298,95 @@ describe("Middleware", () => {
     expect(refreshUniloginTokensSpy).toHaveResolvedTimes(1)
   })
 
-  // it("can destroy an Unilogin session if the access token lifetime has run out", async () => {
-  // })
+  it("can destroy a Unilogin session if the refresh requests fails", async () => {
+    // Note: The refresh endpoint is typically failing because the refresh lifespan has run out.
+    // But it can also fail for abritraty reasons - eg. server down.
+    vi.unmock("@/lib/session/session")
+    vi.doMock("@/lib/session/session", async importOriginal => {
+      const actual = await importOriginal()
+      return {
+        ...actual,
+        destroySession: vi.fn(),
+        getSession: vi.fn(),
+      }
+    })
 
-  // it("can destroy an Adgangsplatformen session if the access token lifetime has run out", async () => {
-  // })
+    vi.spyOn(uniloginClientConfigFunctions, "getUniloginClientConfig").mockResolvedValue(
+      Promise.resolve({
+        wellknownUrl: "https://unilogin.example.com",
+        clientId: "client-id",
+      })
+    )
+
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve({ ...sessions.uniloginSessionThatShouldBeRefreshed, destroy: vi.fn() })
+    )
+
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
+      })
+    )
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
+      await Promise.resolve({
+        token: "hi-I-am-a-dpl-cms-user-token",
+        expire: 363663636,
+      })
+    )
+    const refreshTokenGrantSpy = vi
+      .spyOn(client, "refreshTokenGrant")
+      .mockRejectedValue(new Error("Refresh token expired"))
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    try {
+      await middleware(new NextRequest("http://localhost"))
+    } catch (e) {
+      expect(e).toEqual("Refresh token expired")
+    }
+    expect(refreshTokenGrantSpy).toHaveBeenCalledTimes(1)
+    expect(destroySessionSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it("can destroy an Adgangsplatformen session if the access token lifetime has run out", async () => {
+    // vi.spyOn(uniloginClientConfigFunctions, "getUniloginClientConfig").mockResolvedValue(
+    //   Promise.resolve({
+    //     wellknownUrl: "https://unilogin.example.com",
+    //     clientId: "client-id",
+    //   })
+    // )
+    vi.spyOn(sessionFunctions, "getDplCmsSessionCookie").mockResolvedValue(
+      Promise.resolve({
+        name: "SSESSccaeb066c444b6dbb954590b1a54d7c4",
+        value: "some-drupal-session-cookie-value",
+      })
+    )
+
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessions.adgangsPlatformenSessionThatIsTooOld)
+    )
+
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
+      })
+    )
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
+      await Promise.resolve({
+        token: "hi-I-am-a-dpl-cms-user-token",
+        expire: 363663636,
+      })
+    )
+
+    await middleware(new NextRequest("http://localhost"))
+
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
 })
