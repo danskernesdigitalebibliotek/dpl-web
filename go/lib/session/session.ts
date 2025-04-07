@@ -133,12 +133,10 @@ export const saveAdgangsplatformenSession = async (
 }
 
 export const uniloginAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
-  const isAnonymous = userIsAnonymous(session)
   if (userIsAnonymous(session) || session.type !== "unilogin") {
     return false
   }
 
-  const refreshIsPast = session.refresh_expires && isPast(session.refresh_expires)
   // When the session was created we saved when the Unilogin system consider the refresh token to be expired.
   // If we are past that time, we consider the access token to be expired.
   if (session.refresh_expires && isPast(session.refresh_expires)) {
