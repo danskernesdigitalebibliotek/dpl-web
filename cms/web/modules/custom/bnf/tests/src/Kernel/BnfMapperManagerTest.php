@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\bnf\Kernel;
 
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\CanonicalUrl\Link as CanonicalLink;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
@@ -59,12 +60,14 @@ class BnfMapperManagerTest extends KernelTestBase {
     $graphqlNode = NodeArticle::make(
       '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
       'Bibliotekarerne anbefaler læsning til den mørke tid',
+      '/anbefalinger-til-mork-tid',
       DateTime::make(1735689661, 'UTC'),
       'this is the subtitle',
       TRUE,
       'this is an author',
       'this is a teaser text',
       NULL,
+      CanonicalLink::make('https://example.dk'),
       [
         ParagraphTextBody::make(
           '982e0d87-f6b8-4b84-8de8-c8c8bcfef999',
@@ -78,6 +81,9 @@ class BnfMapperManagerTest extends KernelTestBase {
 
     $this->assertSame($node, $nodeProphecy->reveal());
     $nodeProphecy->set('title', 'Bibliotekarerne anbefaler læsning til den mørke tid')->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_canonical_url', [
+      'uri' => 'https://example.dk',
+    ])->shouldHaveBeenCalled();
     $nodeProphecy->set('field_paragraphs', [$paragraphProphecy->reveal()])->shouldHaveBeenCalled();
 
     $paragraphProphecy->set('field_body', [

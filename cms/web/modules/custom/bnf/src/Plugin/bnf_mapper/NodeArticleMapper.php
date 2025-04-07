@@ -69,6 +69,12 @@ class NodeArticleMapper extends BnfMapperPluginBase {
     $node->set('field_teaser_text', $object->teaserText);
     $node->set('field_teaser_image', $this->getImageValue($object->teaserImage));
 
+    if ($object->canonicalUrl) {
+      $node->set('field_canonical_url', [
+        'uri' => $object->canonicalUrl->url,
+      ]);
+    }
+
     if ($object->paragraphs) {
       $paragraphs = [];
 

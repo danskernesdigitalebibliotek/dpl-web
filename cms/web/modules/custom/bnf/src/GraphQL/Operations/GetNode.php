@@ -30,11 +30,16 @@ class GetNode extends \Spawnia\Sailor\Operation
     {
         return /* @lang GraphQL */ 'query GetNode($id: ID!) {
           __typename
+          info {
+            __typename
+            name
+          }
           node(id: $id) {
             __typename
             ... on NodeInterface {
               id
               title
+              url
             }
             ... on NodeArticle {
               subtitle
@@ -59,6 +64,10 @@ class GetNode extends \Spawnia\Sailor\Operation
                 __typename
                 timestamp
                 timezone
+              }
+              canonicalUrl {
+                __typename
+                url
               }
               paragraphs {
                 __typename
