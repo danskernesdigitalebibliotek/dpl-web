@@ -1,22 +1,22 @@
-uuid: e60d9ab4-5a58-4eaf-bced-db201c8dfd90
+uuid: 270f3bbf-4476-40be-8755-418866ded1b3
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: go_categories
-label: 'GO Categories'
+id: go_pages
+label: 'GO Pages'
 type: 'canonical_entities:node'
-pattern: '/go/kategori/[node:title]'
+pattern: '/go/[node:title]'
 selection_criteria:
-  54b01021-3f3f-4389-be12-f9c6f4ec56b7:
+  831ba7d8-1188-4d01-969f-99a1bd84ef44:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 54b01021-3f3f-4389-be12-f9c6f4ec56b7
+    uuid: 831ba7d8-1188-4d01-969f-99a1bd84ef44
     context_mapping:
       node: node
     bundles:
-      go_category: go_category
+      go_page: go_page
 selection_logic: and
 weight: -5
 relationships: {  }

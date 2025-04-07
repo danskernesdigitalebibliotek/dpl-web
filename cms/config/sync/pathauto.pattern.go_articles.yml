@@ -7,12 +7,12 @@ dependencies:
 id: go_articles
 label: 'GO Articles'
 type: 'canonical_entities:node'
-pattern: '/artikel/[node:title]'
+pattern: '/go/artikel/[node:title]'
 selection_criteria:
-  ae79b54a-b5dd-4ca5-b327-01942d70bb17:
+  8d601911-e53a-41d4-8fe0-6adab4633551:
     id: 'entity_bundle:node'
     negate: false
-    uuid: ae79b54a-b5dd-4ca5-b327-01942d70bb17
+    uuid: 8d601911-e53a-41d4-8fe0-6adab4633551
     context_mapping:
       node: node
     bundles:
