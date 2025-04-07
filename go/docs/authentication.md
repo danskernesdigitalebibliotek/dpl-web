@@ -106,9 +106,9 @@ sequenceDiagram
     participant CMS
     participant CMS Graphql API
     participant Adgangsplatformen
-    Patron->>Go: Patron opens the Login sheet
     Note over CMS: The login url contains the route to the login route in the CMS<br/>and a url parameter (current_path which is an internal CMS url) is attached.<br /> current_path instructs the CMS where to go  after the external SSO login
     CMS-->>Go: Go fetches the login url from the CMS
+    Patron->>Go: Patron opens the Login sheet
     Patron->>Go: Clicks Adgangsplatformen login button
     Go->>CMS: Go redirects patron to /login at the CMS
     Note over Adgangsplatformen: NB: The Adgangsplatformen Oauth flow<br />is described in the dpl-cms documentation
