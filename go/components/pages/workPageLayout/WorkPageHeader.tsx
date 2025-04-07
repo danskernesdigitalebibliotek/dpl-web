@@ -1,10 +1,7 @@
-"use client"
-
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import React from "react"
 
-import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
   getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
@@ -15,6 +12,7 @@ import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
+import useSession from "@/hooks/useSession"
 import {
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
@@ -27,6 +25,9 @@ import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+
+import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
+import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
@@ -88,6 +89,11 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   const isSelectedManifestationPodcast =
     selectedManifestationMaterialTypeCode === "PODCASTS" || false
 
+  const isSelectedManifestationCostFree = !!publizonData?.product?.costFree
+
+  const { session } = useSession()
+  const isLoggedIn = session?.isLoggedIn || false
+
   return (
     <>
       <motion.div
@@ -118,7 +124,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           )}
         </div>
         <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">
-          {!!publizonData?.product?.costFree || isSelectedManifestationPodcast ? (
+          {isSelectedManifestationCostFree || isSelectedManifestationPodcast ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
@@ -131,7 +137,17 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
         <div className="mt-grid-gap-3 col-span-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
-          <WorkPageButtons workId={work.workId} selectedManifestation={selectedManifestation} />
+          {isLoggedIn ? (
+            <WorkPageButtonsLoggedIn
+              workId={work.workId}
+              selectedManifestation={selectedManifestation}
+            />
+          ) : (
+            <WorkPageButtonsLoggedOut
+              workId={work.workId}
+              selectedManifestation={selectedManifestation}
+            />
+          )}
         </div>
       </motion.div>
     </>

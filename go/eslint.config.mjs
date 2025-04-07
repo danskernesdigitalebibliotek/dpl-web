@@ -51,6 +51,14 @@ const eslintConfig = [
             "Do not use process.env directly. Use getEnv() or getServerEnv() from env.ts instead.",
         },
       ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            'JSXAttribute[name.name="data-cy"]:not([value.expression.object.name="cyKeys"])',
+          message: "data-cy attribute must use cyKeys object (e.g., data-cy={cyKeys['key']})",
+        },
+      ],
 
       "no-alert": "error",
       "no-script-url": "error",
@@ -69,6 +77,7 @@ const eslintConfig = [
       "@typescript-eslint/lines-between-class-members": "off",
       "@typescript-eslint/no-throw-literal": "off",
       "@typescript-eslint/ban-ts-comment": "off",
+      "cypress/unsafe-to-chain-command": "off",
 
       "react-hooks/exhaustive-deps": ["warn"],
     },

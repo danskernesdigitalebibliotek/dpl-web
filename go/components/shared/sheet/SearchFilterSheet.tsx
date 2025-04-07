@@ -1,6 +1,7 @@
 import { useSearchParams } from "next/navigation"
 import React from "react"
 
+import { cyKeys } from "@/cypress/support/constants"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
@@ -49,7 +50,8 @@ function SearchFilterSheet(props: { open: boolean; facets: SearchFacetFragment[]
                           }}
                           isActive={!!searchParams.getAll(facet.name).includes(value.term)}
                           key={index}
-                          ariaLabel={value.term}>
+                          ariaLabel={value.term}
+                          data-cy={cyKeys["filter-button"]}>
                           {value.term}
                         </BadgeButton>
                       ))}

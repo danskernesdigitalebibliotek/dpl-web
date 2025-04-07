@@ -3,7 +3,7 @@ import { z } from "zod"
 import { regexDate } from "@/app/pubhub/helper"
 
 export const orderItemSchema = z.object({
-  retailerordernumber: z.string(),
+  internalordernumber: z.string(),
   orderdate: z.string().regex(regexDate),
   loanexpiredate: z.string().regex(regexDate),
   book: z.object({

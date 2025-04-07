@@ -27,6 +27,11 @@ const nextConfig = {
         hostname: env.NEXT_PUBLIC_DPL_CMS_HOSTNAME || "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (config, options) => {

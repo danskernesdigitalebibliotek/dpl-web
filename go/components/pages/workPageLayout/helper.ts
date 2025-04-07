@@ -152,18 +152,17 @@ export const canUserLoanMoreEMaterials = (
   dataLoans: LoanListResult | null | undefined,
   manifestation: ManifestationWorkPageFragment
 ) => {
-  if (
-    !dataLoans?.userData?.audiobookLoansRemaining ||
-    !dataLoans?.userData?.ebookLoansRemaining ||
-    !manifestation
-  ) {
+  if (!manifestation) {
     return false
   }
+
   const materialType = getManifestationMaterialType(manifestation)
   if (materialType.code === "AUDIO_BOOKS") {
+    if (!dataLoans?.userData?.audiobookLoansRemaining) return false
     return dataLoans.userData.audiobookLoansRemaining > 0
   }
   if (materialType.code === "EBOOKS") {
+    if (!dataLoans?.userData?.ebookLoansRemaining) return false
     return dataLoans.userData.ebookLoansRemaining > 0
   }
   // Podcasts are always loanable

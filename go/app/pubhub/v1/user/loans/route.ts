@@ -18,7 +18,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
     return {
       loans: orderItems.map(orderItem => {
         return {
-          orderId: orderItem.retailerordernumber,
+          orderId: orderItem.internalordernumber,
           orderDateUtc: transformTimeToUtcString(orderItem.orderdate),
           loanExpireDateUtc: transformTimeToUtcString(orderItem.loanexpiredate),
           libraryBook: {
@@ -29,6 +29,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
       libraryData: {
         maxAmountPerMonth: Number(libraryData.maxloanpertime),
         maxConcurrentAudiobookLoansPerBorrower: Number(libraryData.maxloanpertimesound),
+        maxConcurrentEbookLoansPerBorrower: Number(libraryData.maxloanpertime),
       },
       userData: {
         totalLoans: Number(libraryData.usertotalloans),
