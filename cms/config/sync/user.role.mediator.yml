@@ -18,6 +18,7 @@ dependencies:
     - taxonomy.vocabulary.tags
   module:
     - administerusersbyrole
+    - bnf
     - content_lock
     - dpl_admin
     - entity_clone
@@ -53,6 +54,7 @@ permissions:
   - 'add eventseries entity'
   - 'administer entity field inheritance'
   - 'administer redirects'
+  - 'bnf import nodes'
   - 'break content lock'
   - 'change own username'
   - 'clone eventinstance entity'
