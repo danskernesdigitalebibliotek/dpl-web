@@ -1,5 +1,6 @@
 extend interface NodeInterface {
   url: String!
+  bundle: String!
 }
 
 # Ideally, we wouldn't want to manually create each content type here, but
@@ -9,16 +10,20 @@ extend interface NodeInterface {
 # "Interface field NodeInterface.xxx expected but NodeZZZ does not provide it.
 extend type NodeArticle {
   url: String!
+  bundle: String!
 }
 
 extend type NodeGoArticle {
   url: String!
+  bundle: String!
 }
 
 extend type NodeGoCategory {
   url: String!
+  bundle: String!
 }
 
 extend type NodeGoPage {
   url: String!
+  bundle: String!
 }

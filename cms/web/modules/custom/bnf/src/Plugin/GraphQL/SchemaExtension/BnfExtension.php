@@ -33,6 +33,11 @@ class BnfExtension extends SdlSchemaExtensionPluginBase {
         ->map('url', $builder->fromParent())
     ));
 
+    $registry->addFieldResolver('NodeInterface', 'bundle', $builder->compose(
+      $builder->produce('entity_bundle')
+        ->map('entity', $builder->fromParent())
+    ));
+
   }
 
 }
