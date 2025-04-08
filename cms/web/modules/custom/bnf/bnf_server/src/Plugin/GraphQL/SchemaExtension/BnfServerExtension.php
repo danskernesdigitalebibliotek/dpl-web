@@ -2,6 +2,7 @@
 
 namespace Drupal\bnf_server\Plugin\GraphQL\SchemaExtension;
 
+use Drupal\bnf_server\GraphQL\ImportResponse;
 use Drupal\bnf_server\GraphQL\NewContentResponse;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
@@ -45,6 +46,11 @@ class BnfServerExtension extends SdlSchemaExtensionPluginBase {
       return $response->getViolations();
     }));
 
+    // You'd think that getting a PHP enum into a GraphQL enum would be pretty
+    // automatic, but apparently not.
+    $registry->addFieldResolver('ImportResponse', 'status', $builder->callback(
+      fn (ImportResponse $response) => $response->status->value
+    ));
   }
 
 }
