@@ -61,7 +61,7 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpointUrl, bool $published): NodeInterface {
+  public function importNode(string $uuid, string $endpointUrl): NodeInterface {
     $this->setEndpoint($endpointUrl);
 
     try {
@@ -69,28 +69,8 @@ class BnfImporter {
 
       $nodeData = $response->data?->node;
 
-      // If no nodedata could be find, it is possible that we've been informed
-      // of a node being updated, that has been unpublished.
-      // If that's the case, we'll look up if this node already exists, and
-      // unpublish it locally.
       if (!$nodeData) {
-        $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $uuid]);
-        $node = reset($nodes);
-
-        if (!($node instanceof NodeInterface)) {
-          throw new \RuntimeException("Tried to import non-existent node with UUID $uuid.");
-        }
-
-        $node->setUnpublished();
-        $node->save();
-
-        $this->logger->info('Unpublished existing @type node with BNF ID @uuid (@title)', [
-          '@uuid' => $uuid,
-          '@type' => $node->bundle(),
-          '@title' => $node->label(),
-        ]);
-
-        return $node;
+        throw new \RuntimeException('Could not fetch content.');
       }
 
       $node = $this->mapperManager->map($nodeData);
@@ -109,7 +89,7 @@ class BnfImporter {
       }
 
       $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported);
-      $node->set('status', $published);
+      $node->set('status', $nodeData->status);
 
       $node->save();
     }

@@ -128,7 +128,9 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $bnfServer = $form_state->get('bnfServer');
 
     try {
-      $node = $this->bnfImporter->importNode($uuid, $bnfServer, FALSE);
+      $node = $this->bnfImporter->importNode($uuid, $bnfServer);
+      $node->setUnpublished();
+      $node->save();
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {

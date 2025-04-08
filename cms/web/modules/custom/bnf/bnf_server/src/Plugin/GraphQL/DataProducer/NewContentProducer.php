@@ -85,10 +85,7 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
         ->condition('field_tags.entity:taxonomy_term.uuid', $termUuid)
     );
 
-    // We avoid the access check, as we want to also be able to find unpublished
-    // NIDs. This also means it's important that we only expose UUIDs here,
-    // and no actual content.
-    $nids = $query->accessCheck(FALSE)->execute();
+    $nids = $query->accessCheck()->execute();
 
     /** @var \Drupal\node\Entity\Node[] $nodes */
     $nodes = $this->nodeStorage->loadMultiple(array_keys($nids));
