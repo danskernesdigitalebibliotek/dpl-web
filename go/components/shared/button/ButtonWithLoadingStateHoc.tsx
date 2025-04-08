@@ -18,15 +18,14 @@ const ButtonWithLoadingStateHoc = <TProps extends Record<string, unknown>>(
   }
 ) => {
   return function WrappedComponent(props: TProps & { onClick?: () => void }) {
-    const [buttonWasClicked, setbuttonWasClicked] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const { onClick } = props
 
     const handleClick = () => {
-      if (buttonWasClicked) {
+      if (isLoading) {
         return
       }
-      setbuttonWasClicked(true)
+
       setIsLoading(true)
       if (onClick) {
         onClick()
