@@ -6,7 +6,12 @@ use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
-use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
+use Drupal\bnf\GraphQL\Operations\GetNodeMetaData;
+use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeArticle as NodeArticleMetaData;
+use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeGoArticle as NodeGoArticleMetaData;
+use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeGoCategory as NodeGoCategoryMetaData;
+use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeGoPage as NodeGoPageMetaData;
+use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodePage as NodePageMetaData;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -37,12 +42,12 @@ class BnfImporter {
   ) {}
 
   /**
-   * Get node title from BNF.
+   * Get node meta data from BNF.
    */
-  public function getNodeTitle(string $uuid, string $endpointUrl): string {
+  public function getNodeMetaData(string $uuid, string $endpointUrl): NodeArticleMetaData|NodePageMetaData|NodeGoArticleMetaData|NodeGoCategoryMetaData|NodeGoPageMetaData {
     $endpointConfig = new SailorEndpointConfig(MangleUrl::server($endpointUrl));
-    Configuration::setEndpointFor(GetNodeTitle::class, $endpointConfig);
-    $response = GetNodeTitle::execute($uuid);
+    Configuration::setEndpointFor(GetNodeMetaData::class, $endpointConfig);
+    $response = GetNodeMetaData::execute($uuid);
 
     $nodeData = $response->data?->node;
 
@@ -50,7 +55,7 @@ class BnfImporter {
       throw new \RuntimeException('Could not fetch content.');
     }
 
-    return $nodeData->title;
+    return $nodeData;
   }
 
   /**

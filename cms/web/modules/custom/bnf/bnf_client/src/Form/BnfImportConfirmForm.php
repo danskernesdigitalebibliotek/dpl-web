@@ -82,7 +82,8 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $importable = TRUE;
 
     try {
-      $title = $this->bnfImporter->getNodeTitle($uuid, $bnfServer);
+      $nodeData = $this->bnfImporter->getNodeMetaData($uuid, $bnfServer);
+      $title = $nodeData->title;
     }
     catch (\Exception $e) {
       $importable = FALSE;
