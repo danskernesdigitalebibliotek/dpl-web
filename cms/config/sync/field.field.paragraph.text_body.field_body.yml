@@ -14,7 +14,7 @@ entity_type: paragraph
 bundle: text_body
 label: Body
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
