@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNodeMetaData;
+namespace Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 
-class GetNodeMetaDataResult extends \Spawnia\Sailor\Result
+class GetNodeTitleResult extends \Spawnia\Sailor\Result
 {
-    public ?GetNodeMetaData $data = null;
+    public ?GetNodeTitle $data = null;
 
     protected function setData(\stdClass $data): void
     {
-        $this->data = GetNodeMetaData::fromStdClass($data);
+        $this->data = GetNodeTitle::fromStdClass($data);
     }
 
     /**
@@ -16,7 +16,7 @@ class GetNodeMetaDataResult extends \Spawnia\Sailor\Result
      *
      * @return static
      */
-    public static function fromData(GetNodeMetaData $data): self
+    public static function fromData(GetNodeTitle $data): self
     {
         $instance = new static;
         $instance->data = $data;
@@ -24,9 +24,9 @@ class GetNodeMetaDataResult extends \Spawnia\Sailor\Result
         return $instance;
     }
 
-    public function errorFree(): GetNodeMetaDataErrorFreeResult
+    public function errorFree(): GetNodeTitleErrorFreeResult
     {
-        return GetNodeMetaDataErrorFreeResult::fromResult($this);
+        return GetNodeTitleErrorFreeResult::fromResult($this);
     }
 
     public static function endpoint(): string

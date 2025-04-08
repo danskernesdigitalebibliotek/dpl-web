@@ -6,12 +6,7 @@ use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
-use Drupal\bnf\GraphQL\Operations\GetNodeMetaData;
-use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeArticle as NodeArticleMetaData;
-use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeGoArticle as NodeGoArticleMetaData;
-use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeGoCategory as NodeGoCategoryMetaData;
-use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodeGoPage as NodeGoPageMetaData;
-use Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node\NodePage as NodePageMetaData;
+use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -46,12 +41,12 @@ class BnfImporter {
   ) {}
 
   /**
-   * Get node meta data from BNF.
+   * Get node title from BNF.
    */
-  public function getNodeMetaData(string $uuid, string $endpointUrl): NodeArticleMetaData|NodePageMetaData|NodeGoArticleMetaData|NodeGoCategoryMetaData|NodeGoPageMetaData {
+  public function getNodeTitle(string $uuid, string $endpointUrl): string {
     $endpointConfig = new SailorEndpointConfig(MangleUrl::server($endpointUrl));
-    Configuration::setEndpointFor(GetNodeMetaData::class, $endpointConfig);
-    $response = GetNodeMetaData::execute($uuid);
+    Configuration::setEndpointFor(GetNodeTitle::class, $endpointConfig);
+    $response = GetNodeTitle::execute($uuid);
 
     $nodeData = $response->data?->node;
 
@@ -59,17 +54,13 @@ class BnfImporter {
       throw new \RuntimeException('Could not fetch content.');
     }
 
-    return $nodeData;
+    return $nodeData->title;
   }
 
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $nodeType, string $endpointUrl): NodeInterface {
-    if (!in_array($nodeType, self::ALLOWED_CONTENT_TYPES)) {
-      throw new \InvalidArgumentException('The requested content type is not allowed.');
-    }
-
+  public function importNode(string $uuid, string $endpointUrl): NodeInterface {
     $nodeStorage = $this->entityTypeManager->getStorage('node');
 
     $existingNodes =
@@ -77,8 +68,8 @@ class BnfImporter {
 
     if (!empty($existingNodes)) {
       $this->logger->error(
-        'Cannot import @type @uuid from @url - Node already exists.',
-        ['@type' => $nodeType, '@uuid' => $uuid, '@url' => $endpointUrl]
+        'Cannot import @uuid from @url - Node already exists.',
+        ['@uuid' => $uuid, '@url' => $endpointUrl]
       );
 
       throw new AlreadyExistsException('Cannot import node - already exists.');

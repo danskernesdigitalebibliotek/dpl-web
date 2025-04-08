@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNodeMetaData;
+namespace Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 
-class GetNodeMetaDataErrorFreeResult extends \Spawnia\Sailor\ErrorFreeResult
+class GetNodeTitleErrorFreeResult extends \Spawnia\Sailor\ErrorFreeResult
 {
-    public GetNodeMetaData $data;
+    public GetNodeTitle $data;
 
     public static function endpoint(): string
     {

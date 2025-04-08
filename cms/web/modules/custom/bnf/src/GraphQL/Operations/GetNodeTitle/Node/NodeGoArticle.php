@@ -1,21 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNodeMetaData\Node;
+namespace Drupal\bnf\GraphQL\Operations\GetNodeTitle\Node;
 
 /**
  * @property string $id
  * @property string $title
- * @property string $bundle
  * @property string $__typename
  */
-class NodeGoCategory extends \Spawnia\Sailor\ObjectLike
+class NodeGoArticle extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
      * @param string $title
-     * @param string $bundle
      */
-    public static function make($id, $title, $bundle): self
+    public static function make($id, $title): self
     {
         $instance = new self;
 
@@ -25,10 +23,7 @@ class NodeGoCategory extends \Spawnia\Sailor\ObjectLike
         if ($title !== self::UNDEFINED) {
             $instance->title = $title;
         }
-        if ($bundle !== self::UNDEFINED) {
-            $instance->bundle = $bundle;
-        }
-        $instance->__typename = 'NodeGoCategory';
+        $instance->__typename = 'NodeGoArticle';
 
         return $instance;
     }
@@ -40,7 +35,6 @@ class NodeGoCategory extends \Spawnia\Sailor\ObjectLike
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
             'title' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'bundle' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }

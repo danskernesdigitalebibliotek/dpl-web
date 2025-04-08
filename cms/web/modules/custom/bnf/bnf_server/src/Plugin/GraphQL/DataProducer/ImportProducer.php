@@ -16,8 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * This class processes the `import` mutation, which is part of the
  * GraphQL schema. It accepts a unique identifier (UUID) for the content to be
- * imported, the machine name of the content type and a callback URL for
- * querying the external system for node data.
+ * imported and a callback URL for querying the external system for node data.
  *
  * @DataProducer(
  *   id = "import_producer",
@@ -29,9 +28,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   consumes = {
  *     "uuid" = @ContextDefinition("string",
  *       label = "UUID"
- *     ),
- *     "contentType" = @ContextDefinition("string",
- *       label = "Drupal Content Type"
  *     ),
  *     "callbackUrl" = @ContextDefinition("string",
  *       label = "Callback URL"
@@ -81,31 +77,27 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
    * @param string $uuid
    *   The unique identifier of the content to import. This UUID is used to
    *   locate the content in the external system.
-   * @param string $contentType
-   *   The machine name of the Drupal content type.
    * @param string $callbackUrl
    *   The external GraphQL endpoint URL to pull node data from.
    */
-  public function resolve(string $uuid, string $contentType, string $callbackUrl): ImportResponse {
+  public function resolve(string $uuid, string $callbackUrl): ImportResponse {
     $result = new ImportResponse();
 
-    $this->logger->info('Received request to import @type content with UUID @uuid from @url', [
+    $this->logger->info('Received request to import content with UUID @uuid from @url', [
       '@uuid' => $uuid,
-      '@type' => $contentType,
       '@url' => $callbackUrl,
     ]);
 
     try {
-      $this->importer->importNode($uuid, $contentType, $callbackUrl);
+      $this->importer->importNode($uuid, $callbackUrl);
 
       $result->status = ImportStatus::Success;
       $result->message = 'Node created successfully.';
     }
     catch (\Exception $e) {
       if (!$e instanceof AlreadyExistsException) {
-        $this->logger->warning('Could not load node of type @node_type with UUID @uuid at @callbackUrl. @message', [
+        $this->logger->warning('Could not load node with UUID @uuid at @callbackUrl. @message', [
           '@uuid' => $uuid,
-          '@node_type' => $contentType,
           '@callbackUrl' => $callbackUrl,
           '@message' => $e->getMessage(),
         ]);

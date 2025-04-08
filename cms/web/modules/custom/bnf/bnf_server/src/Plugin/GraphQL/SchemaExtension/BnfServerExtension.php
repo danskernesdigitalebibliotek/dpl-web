@@ -31,7 +31,6 @@ class BnfServerExtension extends SdlSchemaExtensionPluginBase {
     $registry->addFieldResolver('Mutation', 'import',
     $builder->produce('import_producer')
       ->map('uuid', $builder->fromArgument('uuid'))
-      ->map('contentType', $builder->fromArgument('contentType'))
       ->map('callbackUrl', $builder->fromArgument('callbackUrl'))
     );
 

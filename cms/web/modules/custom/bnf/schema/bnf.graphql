@@ -375,7 +375,7 @@ type MediaVideotool implements MediaInterface {
 type Mutation {
   """Placeholder for mutation extension."""
   _: Boolean!
-  import(uuid: String!, contentType: String!, callbackUrl: String!): ImportResponse!
+  import(uuid: String!, callbackUrl: String!): ImportResponse!
 }
 
 type NewContentResponse {

@@ -1,9 +1,8 @@
-query GetNodeMetaData($id: ID!) {
+query GetNodeTitle($id: ID!) {
   node(id: $id) {
     ... on NodeInterface {
       id,
-      title,
-      bundle
+      title
     }
   }
 }

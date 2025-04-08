@@ -3,14 +3,14 @@
 namespace Drupal\bnf\GraphQL\Operations;
 
 /**
- * @extends \Spawnia\Sailor\Operation<\Drupal\bnf\GraphQL\Operations\GetNodeMetaData\GetNodeMetaDataResult>
+ * @extends \Spawnia\Sailor\Operation<\Drupal\bnf\GraphQL\Operations\GetNodeTitle\GetNodeTitleResult>
  */
-class GetNodeMetaData extends \Spawnia\Sailor\Operation
+class GetNodeTitle extends \Spawnia\Sailor\Operation
 {
     /**
      * @param int|string $id
      */
-    public static function execute($id): GetNodeMetaData\GetNodeMetaDataResult
+    public static function execute($id): GetNodeTitle\GetNodeTitleResult
     {
         return self::executeOperation(
             $id,
@@ -28,14 +28,13 @@ class GetNodeMetaData extends \Spawnia\Sailor\Operation
 
     public static function document(): string
     {
-        return /* @lang GraphQL */ 'query GetNodeMetaData($id: ID!) {
+        return /* @lang GraphQL */ 'query GetNodeTitle($id: ID!) {
           __typename
           node(id: $id) {
             __typename
             ... on NodeInterface {
               id
               title
-              bundle
             }
           }
         }';

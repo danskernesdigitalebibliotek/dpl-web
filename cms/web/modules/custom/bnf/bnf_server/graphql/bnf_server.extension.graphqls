@@ -1,5 +1,5 @@
 extend type Mutation {
-  import(uuid: String!, contentType: String!, callbackUrl: String!): ImportResponse!
+  import(uuid: String!, callbackUrl: String!): ImportResponse!
 }
 
 extend type Query {
