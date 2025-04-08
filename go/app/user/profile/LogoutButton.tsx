@@ -1,9 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
+import ButtonWithLoadingStateHoc from "@/components/shared/button/ButtonWithLoadingStateHoc"
 import Icon from "@/components/shared/icon/Icon"
 import useSession from "@/hooks/useSession"
 
@@ -14,46 +14,34 @@ export const LogoutButtonSkeleton = () => (
   />
 )
 
-export type LogoutButtonProps = {
-  className?: string
+type LogoutButtonProps = {
+  onClick?: () => void
 }
+const className = "ml-auto lg:order-2 min-w-40"
+const size = "sm"
 
-const LogoutButton = ({ className }: LogoutButtonProps) => {
-  const [logoutWasClicked, setLogoutWasClicked] = useState(false)
-  const { session, isLoading } = useSession()
+const LogoutButton = ({ onClick }: LogoutButtonProps) => {
+  const { isLoading: sessionIsLoading } = useSession()
   const router = useRouter()
 
-  if (isLoading) {
+  if (sessionIsLoading) {
     return <LogoutButtonSkeleton />
   }
 
-  if (!session?.isLoggedIn) {
-    return null
-  }
-
   const handleClick = () => {
-    // In order to prevent double click.
-    if (logoutWasClicked) {
-      return
+    if (onClick) {
+      onClick()
     }
-    setLogoutWasClicked(true)
     router.push("/auth/logout")
   }
 
   return (
     <>
-      <Button size={"sm"} onClick={handleClick} className={className} disabled={logoutWasClicked}>
+      <Button size={size} onClick={handleClick} className={className}>
         <Icon className="mr-3 h-[20px] w-[20px]" name="lock" />
-        {!logoutWasClicked && <p>Log ud</p>}
-        {logoutWasClicked && (
-          <Icon
-            name="go-spinner"
-            ariaLabel="Indlæser"
-            className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
-          />
-        )}
+        <p>Log ud</p>
       </Button>
     </>
   )
 }
-export default LogoutButton
+export default ButtonWithLoadingStateHoc(LogoutButton, { className, size })
