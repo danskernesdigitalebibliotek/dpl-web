@@ -27,6 +27,11 @@ async function proxyRequest(
   { params }: TContext,
   body?: string
 ) {
+  const proxiedHeaders: Record<string, string> = {}
+  request.headers.forEach((value, key) => {
+    proxiedHeaders[key] = value
+  })
+
   const { slug } = await params
   const serviceType = slug.shift() as TServiceType
   const baseUrl = getServiceSettings(serviceType)?.url ?? null
@@ -43,8 +48,7 @@ async function proxyRequest(
     const result = await fetch(serviceUrl, {
       method,
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        ...proxiedHeaders,
         ...(authHeader ? { Authorization: authHeader } : {}),
       },
       body,
