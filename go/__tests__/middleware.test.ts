@@ -83,6 +83,15 @@ const getFakeSessions = () => {
     refresh_token: "refresh",
     id_token: "id",
   }
+  const uniloginSessionWithExpiredRefreshToken = {
+    isLoggedIn: true,
+    type: "unilogin",
+    expires: sub(new Date(), { minute: 2 }),
+    refresh_expires: sub(new Date(), { minute: 1 }),
+    access_token: "access_token",
+    refresh_token: "refresh",
+    id_token: "id",
+  }
 
   const adgangsplatformenSessionThatDoesNotNeedToBeRefreshed = {
     isLoggedIn: true,
@@ -106,6 +115,7 @@ const getFakeSessions = () => {
   return {
     adgangsPlatformenSessionThatShouldBeRefreshed,
     uniloginSessionThatShouldBeRefreshed,
+    uniloginSessionWithExpiredRefreshToken,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
     adgangsPlatformenSessionThatShouldBeRefreshed,
     adgangsPlatformenSessionThatIsTooOld,
@@ -298,7 +308,7 @@ describe("Middleware", () => {
 
   // @todo Would be nice to have this test as well.
   // Ran intro problems with that it only fails when it is running together with the other tests.
-  it.skip("can destroy a Unilogin session if the refresh requests fails", async () => {
+  it("can destroy a Unilogin session if the refresh time is overdue", async () => {
     // Note: The refresh endpoint is typically failing because the refresh lifespan has run out.
     // But it can also fail for abritraty reasons - eg. server down.
     vi.unmock("@/lib/session/session")
@@ -319,7 +329,7 @@ describe("Middleware", () => {
     )
 
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve({ ...sessions.uniloginSessionThatShouldBeRefreshed, destroy: vi.fn() })
+      Promise.resolve({ ...sessions.uniloginSessionWithExpiredRefreshToken, destroy: vi.fn() })
     )
 
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
@@ -328,25 +338,12 @@ describe("Middleware", () => {
         get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
-      await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
-      })
-    )
-    const refreshTokenGrantSpy = vi
-      .spyOn(client, "refreshTokenGrant")
-      .mockRejectedValue(new Error("Refresh token expired"))
     const destroySessionSpy = vi
       .spyOn(sessionFunctions, "destroySession")
       .mockResolvedValue(Promise.resolve())
 
-    try {
-      await middleware(new NextRequest("http://localhost"))
-    } catch (e) {
-      expect(e).toEqual("Refresh token expired")
-    }
-    expect(refreshTokenGrantSpy).toHaveBeenCalledTimes(1)
+    await middleware(new NextRequest("http://localhost"))
+
     expect(destroySessionSpy).toHaveBeenCalledTimes(1)
   })
 
