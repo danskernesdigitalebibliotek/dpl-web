@@ -60,6 +60,7 @@ export async function middleware(request: NextRequest) {
 
   if (uniloginAccessTokenHasExpired(session)) {
     destroySession(session)
+    return response
   }
 
   if (uniloginAccessTokenShouldBeRefreshed(session)) {
