@@ -30,6 +30,10 @@ class BnfImporter {
 
   const ALLOWED_CONTENT_TYPES = [
     'article',
+    'page',
+    'go_article',
+    'go_category',
+    'go_page',
   ];
 
   /**
@@ -100,7 +104,7 @@ class BnfImporter {
 
       // If no canonical URL is set explicitly, we'll set the path of
       // the original library.
-      if ($node->get('field_canonical_url')->isEmpty()) {
+      if ($node->hasField('field_canonical_url') && $node->get('field_canonical_url')->isEmpty()) {
         $node->set('field_canonical_url', [
           'uri' => $nodeData->url,
         ]);

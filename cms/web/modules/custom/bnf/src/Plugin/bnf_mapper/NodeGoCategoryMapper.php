@@ -6,9 +6,10 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoCategory;
 use Drupal\bnf\Plugin\Traits\DateTimeTrait;
 use Drupal\bnf\Plugin\Traits\ImageTrait;
+use Drupal\bnf\Plugin\Traits\SoundTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
@@ -16,14 +17,15 @@ use Drupal\file\FileRepositoryInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
- * Maps article nodes.
+ * Maps GO category nodes.
  */
 #[BnfMapper(
-  id: NodeArticle::class,
+  id: NodeGoCategory::class,
 )]
-class NodeArticleMapper extends BnfMapperPluginBase {
+class NodeGoCategoryMapper extends BnfMapperPluginBase {
   use ImageTrait;
   use DateTimeTrait;
+  use SoundTrait;
 
   /**
    * Entity storage to create node in.
@@ -51,25 +53,25 @@ class NodeArticleMapper extends BnfMapperPluginBase {
    * {@inheritdoc}
    */
   public function map(ObjectLike $object): mixed {
-    if (!$object instanceof NodeArticle) {
+    if (!$object instanceof NodeGoCategory) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
     /** @var \Drupal\node\Entity\Node $node */
     $node = $this->nodeStorage->create([
-      'type' => 'article',
+      'type' => 'go_category',
       'uuid' => $object->id,
     ]);
 
     $node->set('title', $object->title);
-    $node->set('field_subtitle', $object->subtitle);
-    $node->set('field_override_author', $object->overrideAuthor);
-    $node->set('field_show_override_author', $object->showOverrideAuthor);
     $node->set('field_publication_date', $this->getDateTimeValue($object->publicationDate, FALSE));
-    $node->set('field_teaser_text', $object->teaserText);
-    $node->set('field_teaser_image', $this->getImageValue($object->teaserImage));
+    $node->set('field_go_color', $object->goColor);
+    $node->set('field_category_menu_image', $this->getImageValue($object->categoryMenuImage));
+    $node->set('field_category_menu_sound', $this->getSoundValue($object->categoryMenuSound));
+    $node->set('field_category_menu_title', $object->categoryMenuTitle);
 
-    if (isset($object->canonicalUrl)) {
+    // The canonical URL field does not exist yet, but will eventually.
+    if (isset($object->canonicalUrl) && $node->hasField('field_canonical_url')) {
       $node->set('field_canonical_url', [
         'uri' => $object->canonicalUrl->url,
       ]);

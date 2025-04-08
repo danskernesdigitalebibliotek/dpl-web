@@ -56,8 +56,8 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
     );
 
     $graphqlArticle = NodeArticle::make(
-      id: '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
-      title: 'Bibliotekarerne anbefaler læsning til den mørke tid',
+      id: '123',
+      title: 'this is the title',
       url: '/anbefalinger-til-mork-tid',
       status: TRUE,
       changed: ChangedDateTime::make(timestamp: 1735689661, timezone: 'UTC'),
