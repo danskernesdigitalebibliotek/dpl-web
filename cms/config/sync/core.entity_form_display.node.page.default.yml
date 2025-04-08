@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.page.field_paragraphs
     - field.field.node.page.field_publication_date
     - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
     - field.field.node.page.field_teaser_image
     - field.field.node.page.field_teaser_text
     - node.type.page
@@ -33,7 +34,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 13
+      weight: 14
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -49,12 +50,29 @@ third_party_settings:
       label: 'Author & Date'
       region: content
       parent_name: ''
-      weight: 12
+      weight: 13
       format_type: details_sidebar
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_tagging:
+      children:
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 15
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         open: true
         description: ''
         required_fields: true
@@ -144,6 +162,16 @@ content:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 8
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
     weight: 10
@@ -163,7 +191,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 14
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -175,6 +203,11 @@ content:
     third_party_settings: {  }
   scheduler_settings:
     weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -195,12 +228,12 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 15
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }

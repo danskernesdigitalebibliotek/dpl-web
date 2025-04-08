@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.page.field_paragraphs
     - field.field.node.page.field_publication_date
     - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
     - field.field.node.page.field_teaser_image
     - field.field.node.page.field_teaser_text
     - node.type.page
@@ -45,6 +46,14 @@ content:
       format_type: medium
     third_party_settings: {  }
     weight: 113
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 111
     region: content
   field_teaser_image:
     type: entity_reference_label

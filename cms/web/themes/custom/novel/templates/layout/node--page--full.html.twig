@@ -6,6 +6,7 @@
       <h1 class="article-header__title">{{ title }}</h1>
 
       {{ content.field_subtitle }}
+
     </header>
   {% else %}
     {# We want the title to still be available for SEO/Accessibility. #}
@@ -13,4 +14,9 @@
   {% endif %}
 
   {{ content.field_paragraphs }}
+  {% if (content.field_tags.0) %}
+    <div class="page__tags">
+      {{ content.field_tags }}
+    </div>
+  {% endif %}
 </article>
