@@ -375,7 +375,7 @@ type MediaVideotool implements MediaInterface {
 type Mutation {
   """Placeholder for mutation extension."""
   _: Boolean!
-  import(uuid: String!, callbackUrl: String!): ImportResponse!
+  import(uuid: String!, contentType: String!, callbackUrl: String!): ImportResponse!
 }
 
 type NewContentResponse {
@@ -456,6 +456,7 @@ type NodeArticle implements NodeInterface {
   """Titel"""
   title: String!
   url: String!
+  bundle: String!
 }
 
 """
@@ -520,6 +521,7 @@ type NodeGoArticle implements NodeInterface {
   """Titel"""
   title: String!
   url: String!
+  bundle: String!
 }
 
 """
@@ -578,6 +580,7 @@ type NodeGoCategory implements NodeInterface {
   """Titel"""
   title: String!
   url: String!
+  bundle: String!
 }
 
 """
@@ -618,6 +621,7 @@ type NodeGoPage implements NodeInterface {
   """Titel"""
   title: String!
   url: String!
+  bundle: String!
 }
 
 """Entity type node."""
@@ -649,6 +653,7 @@ interface NodeInterface {
   """Titel"""
   title: String!
   url: String!
+  bundle: String!
 }
 
 """Entity type node."""

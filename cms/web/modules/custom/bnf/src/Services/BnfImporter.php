@@ -61,7 +61,7 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpointUrl, string $nodeType = 'article'): NodeInterface {
+  public function importNode(string $uuid, string $nodeType, string $endpointUrl): NodeInterface {
     if (!in_array($nodeType, self::ALLOWED_CONTENT_TYPES)) {
       throw new \InvalidArgumentException('The requested content type is not allowed.');
     }

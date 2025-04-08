@@ -84,6 +84,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     try {
       $nodeData = $this->bnfImporter->getNodeMetaData($uuid, $bnfServer);
       $title = $nodeData->title;
+      $form_state->set('contentType', $nodeData->bundle);
     }
     catch (\Exception $e) {
       $importable = FALSE;
@@ -127,10 +128,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $uuid = $form_state->get('uuid');
+    $contentType = $form_state->get('contentType');
     $bnfServer = $form_state->get('bnfServer');
 
     try {
-      $node = $this->bnfImporter->importNode($uuid, $bnfServer);
+      $node = $this->bnfImporter->importNode($uuid, $contentType, $bnfServer);
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {

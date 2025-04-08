@@ -58,13 +58,14 @@ class BnfExporter {
 
     /** @var string $uuid */
     $uuid = $node->uuid();
+    $contentType = $node->bundle();
 
     try {
       $bnfServer = $this->baseUrl . 'graphql';
 
       $endpointConfig = new SailorEndpointConfig(MangleUrl::server($bnfServer));
       Configuration::setEndpointFor(Import::class, $endpointConfig);
-      $result = Import::execute($uuid, $callbackUrl)->errorFree();
+      $result = Import::execute($uuid, $contentType, $callbackUrl)->errorFree();
 
     }
     catch (\Exception $e) {
