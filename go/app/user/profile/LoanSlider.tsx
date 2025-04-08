@@ -19,6 +19,8 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
+import FindBookButton from "./FindBookButton"
+
 type LoanSliderProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
@@ -35,7 +37,6 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
       internalSlider.current?.track?.details?.maxIdx === internalSlider.current?.track?.details?.rel
     )
   }
-  const [isLoadingRedirect, setIsLoadingRedirect] = useState(false)
 
   useEffect(() => {
     internalSlider.current?.on("slideChanged", () => {
@@ -134,22 +135,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               {works.length === 0 && (
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center gap-5">
                   <p className="text-typo-heading-3">Du har ingen lånte bøger</p>
-                  <Button
-                    size="lg"
-                    onClick={() => {
-                      setIsLoadingRedirect(true)
-                      window.location.href = "/"
-                    }}
-                    className="min-w-80">
-                    {!isLoadingRedirect && "Find din næste bog"}
-                    {isLoadingRedirect && (
-                      <Icon
-                        name="go-spinner"
-                        ariaLabel="Indlæser"
-                        className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
-                      />
-                    )}
-                  </Button>
+                  <FindBookButton />
                 </div>
               )}
             </div>

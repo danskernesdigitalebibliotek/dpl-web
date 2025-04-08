@@ -12,7 +12,7 @@ const ProfilePageLayout = () => {
       <div className="col-span-full flex flex-row flex-wrap">
         <h1 className="text-typo-subtitle-sm mb-5 lg:w-full">Profile</h1>
         <Suspense fallback={<ButtonSkeleton size="sm" />}>
-          <LogoutButton className="ml-auto justify-end lg:order-2" />
+          <LogoutButton />
         </Suspense>
         <p className="text-typo-heading-2 mt-6 w-full pb-5 lg:order-1 lg:mt-0 lg:w-auto lg:max-w-[80%]">
           Username / User Name
