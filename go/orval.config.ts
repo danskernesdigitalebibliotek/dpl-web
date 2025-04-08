@@ -57,4 +57,35 @@ export default defineConfig({
   },
   publizonAdapter: publizonConfig("adapter"),
   publizonLocalAdapter: publizonConfig("local-adapter"),
+  fbs: {
+    output: {
+      mode: "split",
+      target: "lib/rest/fbs/generated/fbs.ts",
+      schemas: "lib/rest/fbs/generated/model",
+      client: "react-query",
+      override: {
+        mutator: {
+          path: "lib/rest/fbs/mutator/fetcher.ts",
+          name: "fetcher",
+        },
+        query: {
+          useQuery: true,
+        },
+        operations: {
+          // The reason why we add this here is to be able to use "enabled" option in the
+          // getPatronInformationByPatronIdV2 query. This lets us call it conditionally.
+          getPatronInformationByPatronIdV2: {
+            requestOptions: false,
+          },
+        },
+      },
+      prettier: true,
+    },
+    input: {
+      target: "lib/rest/fbs/fbs-adapter.yaml",
+      converterOptions: {
+        indent: 2,
+      },
+    },
+  },
 })
