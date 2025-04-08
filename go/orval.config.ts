@@ -57,7 +57,7 @@ export default defineConfig({
   },
   publizonAdapter: publizonConfig("adapter"),
   publizonLocalAdapter: publizonConfig("local-adapter"),
-  fbsAdapter: {
+  fbs: {
     output: {
       mode: "split",
       target: "lib/rest/fbs/generated/fbs.ts",
@@ -82,7 +82,7 @@ export default defineConfig({
       prettier: true,
     },
     input: {
-      target: "src/core/fbs/fbs-adapter.yaml",
+      target: "lib/rest/fbs/fbs-adapter.yaml",
       converterOptions: {
         indent: 2,
       },
