@@ -21,15 +21,11 @@ const className = "ml-auto lg:order-2 min-w-40"
 const size = "sm"
 
 const LogoutButton = ({ onClick }: LogoutButtonProps) => {
-  const { session, isLoading: sessionIsLoading } = useSession()
+  const { isLoading: sessionIsLoading } = useSession()
   const router = useRouter()
 
   if (sessionIsLoading) {
     return <LogoutButtonSkeleton />
-  }
-
-  if (!session?.isLoggedIn) {
-    return null
   }
 
   const handleClick = () => {
