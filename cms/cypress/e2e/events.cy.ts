@@ -1,5 +1,6 @@
 import * as dayjs from 'dayjs';
 import 'cypress-if';
+import { typeInCkEditor } from '../helpers/helper-ckeditor';
 
 const events = {
   singleEvent: {
@@ -32,6 +33,8 @@ describe('Events', () => {
       // We have to use force when using Select2.
       force: true,
     });
+    typeInCkEditor('Hello, world!');
+
     setDate('Start date', events.singleEvent.start);
     setDate('End date', events.singleEvent.end);
     cy.clickSaveButton();
