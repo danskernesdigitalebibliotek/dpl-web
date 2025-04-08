@@ -40,9 +40,13 @@ class ParagraphAccordionMapperTest extends EntityMapperTestBase {
     $mapper = new ParagraphAccordionMapper([], '', [], $this->entityManagerProphecy->reveal());
 
     $graphqlElement = ParagraphAccordion::make(
-      'accordion',
-      TitleText::make('This is the title', 'format1'),
-      DescriptionText::make('This is the description', 'format2'),
+      id: 'accordion',
+      accordionTitle: TitleText::make(
+        format: 'format1',
+        value: 'This is the title'
+      ),
+      accordionDescription: DescriptionText::make(
+        format: 'format2', value: 'This is the description'),
     );
 
     $paragraph = $mapper->map($graphqlElement);

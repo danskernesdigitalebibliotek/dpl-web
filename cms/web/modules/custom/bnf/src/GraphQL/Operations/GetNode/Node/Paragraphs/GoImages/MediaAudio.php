@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroCategories;
+namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages;
 
 /**
  * @property string $__typename
  */
-class TermScreenName extends \Spawnia\Sailor\ObjectLike
+class MediaAudio extends \Spawnia\Sailor\ObjectLike
 {
     public static function make(): self
     {
         $instance = new self;
 
-        $instance->__typename = 'TermScreenName';
+        $instance->__typename = 'MediaAudio';
 
         return $instance;
     }

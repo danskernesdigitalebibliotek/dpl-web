@@ -32,7 +32,7 @@ class ParagraphGoVideoMapper extends BnfMapperParagraphPluginBase {
 
     return $this->paragraphStorage->create([
       'type' => 'video',
-      'field_go_video_title' => $object->titleRequired,
+      'field_go_video_title' => $object->title,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
     ]);
 

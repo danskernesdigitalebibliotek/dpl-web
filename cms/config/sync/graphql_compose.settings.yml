@@ -33,84 +33,122 @@ entity_config:
       query_load_enabled: true
       routes_enabled: true
     page:
-      enabled: false
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
   paragraph:
     accordion:
       enabled: true
+      query_load_enabled: true
     banner:
       enabled: true
+      query_load_enabled: true
     breadcrumb_children:
       enabled: true
+      query_load_enabled: true
     campaign_rule:
       enabled: true
+      query_load_enabled: true
     card_grid_automatic:
       enabled: true
+      query_load_enabled: true
     card_grid_manual:
       enabled: true
+      query_load_enabled: true
     content_slider:
       enabled: true
+      query_load_enabled: true
     content_slider_automatic:
       enabled: true
+      query_load_enabled: true
     event_ticket_category:
       enabled: true
+      query_load_enabled: true
     files:
       enabled: true
+      query_load_enabled: true
     filtered_event_list:
       enabled: true
+      query_load_enabled: true
     go_images:
       enabled: true
+      query_load_enabled: true
     go_link:
       enabled: true
+      query_load_enabled: true
     go_linkbox:
       enabled: true
+      query_load_enabled: true
     go_material_slider_automatic:
       enabled: true
+      query_load_enabled: true
     go_material_slider_manual:
       enabled: true
+      query_load_enabled: true
     go_text_body:
       enabled: true
+      query_load_enabled: true
     go_video:
       enabled: true
+      query_load_enabled: true
     go_video_bundle_automatic:
       enabled: true
+      query_load_enabled: true
     go_video_bundle_manual:
       enabled: true
+      query_load_enabled: true
     hero:
       enabled: true
+      query_load_enabled: true
     language_selector:
       enabled: true
+      query_load_enabled: true
     links:
       enabled: true
+      query_load_enabled: true
     manual_event_list:
       enabled: true
+      query_load_enabled: true
     material_grid_automatic:
       enabled: true
+      query_load_enabled: true
     material_grid_link_automatic:
       enabled: true
+      query_load_enabled: true
     material_grid_manual:
       enabled: true
+      query_load_enabled: true
     medias:
       enabled: true
+      query_load_enabled: true
     nav_grid_manual:
       enabled: true
+      query_load_enabled: true
     nav_spots_manual:
       enabled: true
+      query_load_enabled: true
     opening_hours:
       enabled: true
     recommendation:
       enabled: true
+      query_load_enabled: true
     simple_links:
       enabled: true
+      query_load_enabled: true
     text_body:
       enabled: true
+      query_load_enabled: true
     user_registration_item:
       enabled: true
+      query_load_enabled: true
     user_registration_linklist:
       enabled: true
     user_registration_section:
       enabled: true
+      query_load_enabled: true
     video:
       enabled: true
+      query_load_enabled: true
     webform:
       enabled: true
   taxonomy_term:
@@ -204,6 +242,27 @@ field_config:
         enabled: true
       field_publication_date:
         enabled: true
+    page:
+      field_branch:
+        enabled: true
+      field_breadcrumb_parent:
+        enabled: true
+      field_canonical_url:
+        enabled: true
+      field_display_titles:
+        enabled: true
+      field_hero_title:
+        enabled: true
+      field_paragraphs:
+        enabled: true
+      field_publication_date:
+        enabled: true
+      field_subtitle:
+        enabled: true
+      field_teaser_image:
+        enabled: true
+      field_teaser_text:
+        enabled: true
   paragraph:
     accordion:
       field_accordion_description:
@@ -218,6 +277,16 @@ field_config:
       field_banner_link:
         enabled: true
       field_underlined_title:
+        enabled: true
+    breadcrumb_children:
+      field_breadcrumb_target:
+        enabled: true
+      field_show_subtitles:
+        enabled: true
+    campaign_rule:
+      field_campaign_rule_facet:
+        enabled: true
+      field_campaign_rule_term:
         enabled: true
     card_grid_automatic:
       field_filter_branches:
@@ -263,10 +332,15 @@ field_config:
         enabled: true
       field_underlined_title:
         enabled: true
+    event_ticket_category:
+      field_ticket_category_name:
+        enabled: true
     files:
       field_files:
         enabled: true
     filtered_event_list:
+      field_amount_of_events:
+        enabled: true
       field_filter_branches:
         enabled: true
       field_filter_categories:
@@ -353,6 +427,9 @@ field_config:
         enabled: true
       field_hero_title:
         enabled: true
+    language_selector:
+      field_language_icon:
+        enabled: true
     links:
       field_link:
         enabled: true
@@ -386,8 +463,15 @@ field_config:
         enabled: true
       field_material_grid_work_ids:
         enabled: true
+      field_work_id:
+        enabled: true
     medias:
       field_medias:
+        enabled: true
+    nav_grid_manual:
+      field_content_references:
+        enabled: true
+      field_show_subtitles:
         enabled: true
     recommendation:
       field_image_position_right:
@@ -403,6 +487,19 @@ field_config:
         enabled: true
     text_body:
       field_body:
+        enabled: true
+    user_registration_item:
+      field_anchor:
+        enabled: true
+      field_body:
+        enabled: true
+      field_display_in_navigation:
+        enabled: true
+      field_link_target:
+        enabled: true
+      field_navigation_title:
+        enabled: true
+      field_registration_link:
         enabled: true
     video:
       field_embed_video:

@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroCategories;
+namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\CategoryMenuSound;
 
 /**
  * @property string $__typename
  */
-class TermTags extends \Spawnia\Sailor\ObjectLike
+class MediaVideotool extends \Spawnia\Sailor\ObjectLike
 {
     public static function make(): self
     {
         $instance = new self;
 
-        $instance->__typename = 'TermTags';
+        $instance->__typename = 'MediaVideotool';
 
         return $instance;
     }
@@ -32,6 +32,6 @@ class TermTags extends \Spawnia\Sailor\ObjectLike
 
     public static function config(): string
     {
-        return \Safe\realpath(__DIR__ . '/../../../../../../../../../../../sailor.php');
+        return \Safe\realpath(__DIR__ . '/../../../../../../../../../../sailor.php');
     }
 }

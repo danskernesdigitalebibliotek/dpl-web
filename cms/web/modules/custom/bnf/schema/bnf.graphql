@@ -656,8 +656,90 @@ interface NodeInterface {
   bundle: String!
 }
 
+"""
+Sider kan anvendes til en bred vifte af indhold af mere eller mindre blivende
+karakter. En side kan være simpel og indeholde tekst om fx. låneregler, men
+kan også være en strukturerende enhed, hvis formål er at udstille andre sider
+i en sektion med henblik på formidling eller navigation.
+"""
+type NodePage implements NodeInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """Bibliotek"""
+  branch: NodeUnion
+
+  """
+  Hvis du vil gøre denne side til en strukturerende side, skal du gemme siden
+  først og  <a href="/admin/structure/taxonomy/manage/breadcrumb_structure/add"
+  target="_blank">tilføje den som en reference i strukturtræet.
+  """
+  breadcrumbParent: TermUnion
+
+  """
+  Please provide a canonical URL if this content has been duplicated from other
+  websites. This helps signal to search engines that the preferred source of
+  this content is the specified canonical URL, preventing potential duplicate
+  content issues and ensuring proper attribution to the original source.
+  """
+  canonicalUrl: Link
+
+  """Tidspunktet hvor indholdselementet sidst blev redigeret."""
+  changed: DateTime!
+
+  """The date and time that the content was created."""
+  created: DateTime!
+
+  """
+  Som standard vises titel og manchettekst ikke på indholdstypen sider.  Hvis
+  du vil have dem vist, kan du slå det til her.
+  """
+  displayTitles: Boolean
+
+  """
+  Titlen, der er vist øverst på siden.<br /><br /> <strong>Hvis den er tom, bliver standardsiden brugt i stedet.</strong>.
+  """
+  heroTitle: String
+
+  """Sprog"""
+  langcode: Language!
+
+  """Paragraphs"""
+  paragraphs: [ParagraphUnion!]
+
+  """Alternativ URL"""
+  path: String
+
+  """Forfremmet til forside"""
+  promote: Boolean!
+
+  """Udgivelsesdato"""
+  publicationDate: DateTime!
+
+  """Publiceret"""
+  status: Boolean!
+
+  """Klæbrig"""
+  sticky: Boolean!
+
+  """Manchet"""
+  subtitle: String
+
+  """
+  Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er
+  valgt et teaserbillede, vil teksten vises i stedet.
+  """
+  teaserImage: MediaUnion
+
+  """Teasertekst"""
+  teaserText: String
+
+  """Titel"""
+  title: String!
+}
+
 """Entity type node."""
-union NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage
+union NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 """Entity type paragraph."""
 type ParagraphAccordion implements ParagraphInterface {
@@ -716,11 +798,19 @@ type ParagraphBreadcrumbChildren implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
   id: ID!
 
+  """
+  Vælg en sideforælder i brødkrummestrukturen, hvis sidebørn skal vises. Kun ét niveau af sidebørn kan vises.
+  """
+  breadcrumbTarget: TermUnion
+
   """The time that the Paragraph was created."""
   created: DateTime!
 
   """The paragraphs entity language code."""
   langcode: Language!
+
+  """Vis undertekster"""
+  showSubtitles: Boolean
 
   """Publiceret"""
   status: Boolean!
@@ -730,6 +820,12 @@ type ParagraphBreadcrumbChildren implements ParagraphInterface {
 type ParagraphCampaignRule implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
   id: ID!
+
+  """Facet"""
+  campaignRuleFacet: String!
+
+  """Term"""
+  campaignRuleTerm: String!
 
   """The time that the Paragraph was created."""
   created: DateTime!
@@ -802,7 +898,7 @@ type ParagraphCardGridManual implements ParagraphInterface {
 }
 
 """Indhold"""
-union ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage
+union ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 """Entity type paragraph."""
 type ParagraphContentSlider implements ParagraphInterface {
@@ -865,7 +961,7 @@ type ParagraphContentSliderAutomatic implements ParagraphInterface {
 }
 
 """Indhold"""
-union ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage
+union ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 """En kombination af navn på billetkategori og pris på et arrangement. """
 type ParagraphEventTicketCategory implements ParagraphInterface {
@@ -880,6 +976,9 @@ type ParagraphEventTicketCategory implements ParagraphInterface {
 
   """Publiceret"""
   status: Boolean!
+
+  """Navn"""
+  ticketCategoryName: String!
 }
 
 """
@@ -908,6 +1007,9 @@ Denne paragraph viser en liste af arrangementer filtreret på kategori, tags og 
 type ParagraphFilteredEventList implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
   id: ID!
+
+  """Dette felt bruges ikke længere og vil blive slettet i fremtiden."""
+  amountOfEvents: Int
 
   """The time that the Paragraph was created."""
   created: DateTime!
@@ -1253,6 +1355,9 @@ type ParagraphLanguageSelector implements ParagraphInterface {
   """The paragraphs entity language code."""
   langcode: Language!
 
+  """Sprogikon"""
+  languageIcon: Image!
+
   """Publiceret"""
   status: Boolean!
 }
@@ -1418,6 +1523,11 @@ type ParagraphMaterialGridManual implements ParagraphInterface {
 
   """Publiceret"""
   status: Boolean!
+
+  """
+  Dette felt vil blive slettet i fremtiden. Brug venligst det andet VærkID felt.
+  """
+  workId: [WorkId!]
 }
 
 """Entity type paragraph."""
@@ -1443,15 +1553,24 @@ type ParagraphNavGridManual implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
   id: ID!
 
+  """Indhold"""
+  contentReferences: [ParagraphNavGridManualContentReferencesUnion!]
+
   """The time that the Paragraph was created."""
   created: DateTime!
 
   """The paragraphs entity language code."""
   langcode: Language!
 
+  """Vis manchettekster"""
+  showSubtitles: Boolean
+
   """Publiceret"""
   status: Boolean!
 }
+
+"""Indhold"""
+union ParagraphNavGridManualContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 """Entity type paragraph."""
 type ParagraphNavSpotsManual implements ParagraphInterface {
@@ -1554,7 +1673,7 @@ type ParagraphTextBody implements ParagraphInterface {
   id: ID!
 
   """Brødtekst"""
-  body: Text
+  body: Text!
 
   """The time that the Paragraph was created."""
   created: DateTime!
@@ -1576,11 +1695,35 @@ type ParagraphUserRegistrationItem implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
   id: ID!
 
+  """Anker"""
+  anchor: String
+
+  """Brødtekst"""
+  body: Text!
+
   """The time that the Paragraph was created."""
   created: DateTime!
 
+  """
+  Aktivér denne indstilling for at få vist en knap øverst på siden, så det er nemmere at navigere.
+  """
+  displayInNavigation: Boolean
+
   """The paragraphs entity language code."""
   langcode: Language!
+
+  """
+  Angiv hvordan et linket dokument skal åbne når en bruger klikker på linket.
+  """
+  linkTarget: String!
+
+  """
+  Hvis titelfeltet på navigationsknappen ikke udfyldes, vil den automatisk få titlen på denne Paragraph.
+  """
+  navigationTitle: String
+
+  """Registreringslink"""
+  registrationLink: Link
 
   """Publiceret"""
   status: Boolean!
@@ -1664,6 +1807,20 @@ type Query {
   goConfiguration: GoConfiguration
   dplTokens: DplTokens
 
+  """Load a Paragraph entity by id."""
+  paragraph(
+    """The id of the Paragraph to load."""
+    id: ID!
+
+    """Optionally set the response language. Eg en, ja, fr."""
+    langcode: String
+
+    """
+    Optionally set the revision of the entity. Eg current, latest, or an ID.
+    """
+    revision: ID
+  ): ParagraphUnion
+
   """Load a Node entity by id."""
   node(
     """The id of the Node to load."""
@@ -1712,7 +1869,7 @@ interface Route {
 }
 
 """A list of possible entities that can be returned by URL."""
-union RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage
+union RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 """Route outside of this website."""
 type RouteExternal implements Route {

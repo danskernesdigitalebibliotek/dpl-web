@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideoRequired;
+namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\TeaserImageRequired;
 
 /**
  * @property string $__typename
  */
-class MediaDocument extends \Spawnia\Sailor\ObjectLike
+class MediaVideo extends \Spawnia\Sailor\ObjectLike
 {
     public static function make(): self
     {
         $instance = new self;
 
-        $instance->__typename = 'MediaDocument';
+        $instance->__typename = 'MediaVideo';
 
         return $instance;
     }
@@ -32,6 +32,6 @@ class MediaDocument extends \Spawnia\Sailor\ObjectLike
 
     public static function config(): string
     {
-        return \Safe\realpath(__DIR__ . '/../../../../../../../../../../../sailor.php');
+        return \Safe\realpath(__DIR__ . '/../../../../../../../../../../sailor.php');
     }
 }

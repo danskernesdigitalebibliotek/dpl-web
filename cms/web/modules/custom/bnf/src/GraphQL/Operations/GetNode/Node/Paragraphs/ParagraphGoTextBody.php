@@ -3,14 +3,26 @@
 namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
+ * @property string $id
+ * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text $body
  * @property string $__typename
  */
 class ParagraphGoTextBody extends \Spawnia\Sailor\ObjectLike
 {
-    public static function make(): self
+    /**
+     * @param string $id
+     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text $body
+     */
+    public static function make($id, $body): self
     {
         $instance = new self;
 
+        if ($id !== self::UNDEFINED) {
+            $instance->id = $id;
+        }
+        if ($body !== self::UNDEFINED) {
+            $instance->body = $body;
+        }
         $instance->__typename = 'ParagraphGoTextBody';
 
         return $instance;
@@ -21,6 +33,8 @@ class ParagraphGoTextBody extends \Spawnia\Sailor\ObjectLike
         static $converters;
 
         return $converters ??= [
+            'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
+            'body' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }

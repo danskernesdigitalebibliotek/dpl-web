@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\SingleLink;
+namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\LinkRequired;
 
 /**
  * @property bool $internal
