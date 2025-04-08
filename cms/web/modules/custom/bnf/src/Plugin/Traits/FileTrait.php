@@ -92,7 +92,7 @@ trait FileTrait {
       'field_media_file' => [
         'target_id' => $file->id(),
         'display' => TRUE,
-        'description' => $document->mediaFile->description,
+        'description' => $document->mediaFile->description ?? '',
       ],
       'name' => $document->mediaFile->name,
     ];

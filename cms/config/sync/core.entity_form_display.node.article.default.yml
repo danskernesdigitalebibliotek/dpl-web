@@ -35,13 +35,14 @@ third_party_settings:
       label: 'Meta tags'
       region: content
       parent_name: ''
-      weight: 10
+      weight: 12
       format_type: details_sidebar
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
-        open: false
+        label_as_html: false
+        open: true
         description: ''
         required_fields: true
         weight: 0
@@ -52,7 +53,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 11
+      weight: 10
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -69,7 +70,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 12
+      weight: 11
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -88,7 +89,7 @@ third_party_settings:
       label: 'Author & Date'
       region: content
       parent_name: ''
-      weight: 9
+      weight: 8
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -235,6 +236,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  simple_sitemap:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     weight: 4
@@ -262,7 +268,7 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 8
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }

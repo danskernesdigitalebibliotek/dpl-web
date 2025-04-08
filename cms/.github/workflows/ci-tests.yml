@@ -288,6 +288,26 @@ jobs:
       - name: Ensure CMS API package code has not drifted
         run: git diff --ignore-space-at-eol --exit-code packages/cms-api/*
 
+  CheckGraphQlClient:
+    name: Check GraphQL client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Generate GraphQL client
+        run: task dev:bnf:generate-graphql
+      - name: Ensure GraphQL client code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/src/GraphQL/*
+
   CheckDrupalConfig:
     name: Check Drupal Config
     runs-on: ubuntu-latest

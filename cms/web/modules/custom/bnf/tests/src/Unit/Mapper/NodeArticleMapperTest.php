@@ -51,7 +51,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
     );
 
     $graphqlArticle = NodeArticle::make(
-      '123', 'this is the title', DateTime::make(1735689661, 'UTC'), 'this is the subtitle', TRUE, 'this is an author', 'this is a teaser text'
+      '123', 'this is the title', 'https://example.com', DateTime::make(1735689661, 'UTC'), 'this is the subtitle', TRUE, 'this is an author', 'this is a teaser text'
     );
 
     $node = $mapper->map($graphqlArticle);

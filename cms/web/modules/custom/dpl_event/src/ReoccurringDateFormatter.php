@@ -105,7 +105,7 @@ class ReoccurringDateFormatter {
     $query = $this->entityTypeManager->getStorage('eventinstance')->getQuery();
     $upcoming_ids = $query
       ->condition('eventseries_id', $event_series->id())
-      ->condition('date.value', $formatted, '>=')
+      ->condition('date.end_value', $formatted, '>=')
       ->accessCheck(TRUE)
       ->condition('status', TRUE)
       ->sort('date.value', 'ASC')

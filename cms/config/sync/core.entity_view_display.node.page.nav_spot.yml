@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.page.field_paragraphs
     - field.field.node.page.field_publication_date
     - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
     - field.field.node.page.field_teaser_image
     - field.field.node.page.field_teaser_text
     - node.type.page
@@ -32,7 +33,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: hero_wide
+      view_mode: nav_spot
       link: false
     third_party_settings: {  }
     weight: 2
@@ -57,5 +58,6 @@ hidden:
   field_hero_title: true
   field_paragraphs: true
   field_publication_date: true
+  field_tags: true
   langcode: true
   search_api_excerpt: true

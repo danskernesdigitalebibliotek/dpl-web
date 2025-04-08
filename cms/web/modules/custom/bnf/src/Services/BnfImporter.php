@@ -87,6 +87,19 @@ class BnfImporter {
       }
 
       $node = $this->mapperManager->map($nodeData);
+      $info = $response->data?->info;
+
+      if ($info?->name) {
+        $node->set('bnf_source_name', $info->name);
+      }
+
+      // If no canonical URL is set explicitly, we'll set the path of
+      // the original library.
+      if ($node->get('field_canonical_url')->isEmpty()) {
+        $node->set('field_canonical_url', [
+          'uri' => $nodeData->url,
+        ]);
+      }
 
       $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported);
 

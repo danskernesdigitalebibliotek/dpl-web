@@ -29,4 +29,8 @@ $config['config_ignore_auto.settings']['status'] = FALSE;
 // want dev environments to pair with the real BNF, so we just set it anyway.
 // And this goes for the BNF instance too, it should just ignore this
 // configuration.
-$config['bnf_client.settings']['base_url'] = preg_replace('{^https://}', 'https://bnf-', getenv('LAGOON_ROUTE'));
+$bnf_base_url = preg_replace('{^https://}', 'https://bnf-', getenv('LAGOON_ROUTE'));
+
+// The URL MUST end with a slash, as is required by the config form.
+$bnf_base_url = str_ends_with($bnf_base_url, '/') ? $bnf_base_url : "$bnf_base_url/";
+$config['bnf_client.settings']['base_url'] = $bnf_base_url;

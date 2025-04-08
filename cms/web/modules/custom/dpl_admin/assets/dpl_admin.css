@@ -136,7 +136,6 @@
   display: none;
 }
 
-
 /* Hiding the ability to place main menu items in levels. */
 .menu-edit-form[action="/admin/structure/menu/manage/main"] {
   .menu-link-content-form .form-item--menu-parent,
@@ -206,4 +205,11 @@ body:has(.eventseries-form--confirm) .form-actions {
   color: #d80404;
   font-weight: bold;
   max-width: 500px;
+}
+
+/**
+ Long URLs in the material grid automatic link field are breaking the layout.
+*/
+.paragraph-type--material-grid-link-automatic {
+  word-break: break-all;
 }
