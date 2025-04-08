@@ -11,11 +11,6 @@ import {
   useGetAdgangsplatformenLibraryTokenQuery,
 } from "../graphql/generated/dpl-cms/graphql"
 
-// export const libraryTokenExist = async () => {
-//   const cookieValue = await getLibraryTokenCookieValue()
-//   return Boolean(cookieValue ?? false)
-// }
-
 export const getLibraryTokenCookieValue = async () => {
   const cookieStore = await cookies()
   const cookie = cookieStore.get(goConfig("library-token.cookie-name"))
