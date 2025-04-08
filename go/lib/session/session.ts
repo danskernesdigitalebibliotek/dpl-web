@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
+import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
 export const getSessionOptions = async () => {
@@ -131,13 +132,24 @@ export const saveAdgangsplatformenSession = async (
   await session.save()
 }
 
-export const accessTokenShouldBeRefreshed = (
-  session: IronSession<TSessionData>,
-  sessionType: TSessionType
-) => {
-  // If the session is not logged in, or it is not of the specified type
+export const uniloginAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
+  if (userIsAnonymous(session) || session.type !== "unilogin") {
+    return false
+  }
+
+  // When the session was created we saved when the Unilogin system consider the refresh token to be expired.
+  // If we are past that time, we consider the access token to be expired.
+  if (session.refresh_expires && isPast(session.refresh_expires)) {
+    return true
+  }
+
+  return false
+}
+
+export const uniloginAccessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
+  // If the session is not logged in, or it is not a unilogin session
   // we don't need to refresh the access token.
-  if (!session.isLoggedIn || session.type !== sessionType || !session.refresh_token) {
+  if (userIsAnonymous(session) || session.type !== "unilogin" || !session.refresh_token) {
     return false
   }
 
@@ -156,21 +168,47 @@ export const accessTokenShouldBeRefreshed = (
     return true
   }
 
-  if (bufferedExp.expires && isPast(bufferedExp.expires)) {
+  if (session.expires && isPast(bufferedExp.expires)) {
     return true
   }
 
   return false
 }
 
-export const accessTokenIsExpired = (session: IronSession<TSessionData>) => {
-  // We need the timestamps to be set to consider the session expired.
-  // If they are not available, we consider the session expired.
-  if (!session.expires || !session.refresh_expires) {
+export const adgangsplatformenAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
+  if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
+    return false
+  }
+  // When the session was created we saved when we consider the access token to be expired.
+  // If we are past that time, we consider the access token to be expired.
+  if (session.expires && isPast(session.expires)) {
     return true
   }
 
-  return session.expires && isPast(session.expires)
+  return false
+}
+
+export const adgangsplatformenAccessTokenShouldBeRefreshed = (
+  session: IronSession<TSessionData>
+) => {
+  // If the session is not logged in, or it is not a adgangsplatformen session
+  // we don't need to refresh the access token.
+  if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
+    return false
+  }
+
+  const bufferedExp = { expires: new Date() }
+
+  // Create a buffer of 1 minute on expire times to make sure we don't run into any timing issues.
+  if (session.expires) {
+    bufferedExp.expires = sub(session.expires, { minutes: 1 })
+  }
+
+  if (session.expires && isPast(bufferedExp.expires)) {
+    return true
+  }
+
+  return false
 }
 
 export const getUniloginIdToken = async () => {
