@@ -14,7 +14,6 @@ function getEnvs() {
     TEST_MODE: process.env.TEST_MODE,
 
     // Server-only env variables
-    UNILOGIN_API_URL: process.env.UNILOGIN_API_URL,
     UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
     UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
     UNILOGIN_WELLKNOWN_URL: process.env.UNILOGIN_WELLKNOWN_URL,
@@ -42,7 +41,6 @@ const EnvSchema = z.object({
 // Environment variables only available in Nodejs.
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
-  UNILOGIN_API_URL: z.string().refine(validateUrl),
   GO_SESSION_SECRET: z.string().min(32),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
