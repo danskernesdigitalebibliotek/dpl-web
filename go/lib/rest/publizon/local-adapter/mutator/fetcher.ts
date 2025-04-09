@@ -16,10 +16,6 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeaders = {
-    Authorization: `Bearer ${getEnv("LIBRARY_TOKEN")}`,
-  } as object
-
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
     baseUrl: `${getEnv("APP_URL")}/${goConfig("routes.pubhub")}`,
@@ -32,7 +28,6 @@ export const fetcher = async <ResponseType>({
       method,
       headers: {
         ...headers,
-        ...authHeaders,
       },
       body,
     })
