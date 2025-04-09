@@ -4,27 +4,27 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\AccordionDescrip
 
 /**
  * @property string $__typename
- * @property string|null $value
  * @property string|null $format
+ * @property string|null $value
  */
 class Text extends \Spawnia\Sailor\ObjectLike
 {
     /**
-     * @param string|null $value
      * @param string|null $format
+     * @param string|null $value
      */
     public static function make(
-        $value = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $format = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $value = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
         $instance->__typename = 'Text';
-        if ($value !== self::UNDEFINED) {
-            $instance->value = $value;
-        }
         if ($format !== self::UNDEFINED) {
             $instance->format = $format;
+        }
+        if ($value !== self::UNDEFINED) {
+            $instance->value = $value;
         }
 
         return $instance;
@@ -36,8 +36,8 @@ class Text extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'value' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'format' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'value' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

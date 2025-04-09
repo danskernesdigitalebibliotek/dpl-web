@@ -5,7 +5,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 /**
  * @property string $id
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool $embedVideo
- * @property string $titleRequired
+ * @property string $title
  * @property string $__typename
  */
 class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
@@ -13,9 +13,9 @@ class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
     /**
      * @param string $id
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool $embedVideo
-     * @param string $titleRequired
+     * @param string $title
      */
-    public static function make($id, $embedVideo, $titleRequired): self
+    public static function make($id, $embedVideo, $title): self
     {
         $instance = new self;
 
@@ -25,8 +25,8 @@ class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
         if ($embedVideo !== self::UNDEFINED) {
             $instance->embedVideo = $embedVideo;
         }
-        if ($titleRequired !== self::UNDEFINED) {
-            $instance->titleRequired = $titleRequired;
+        if ($title !== self::UNDEFINED) {
+            $instance->title = $title;
         }
         $instance->__typename = 'ParagraphGoVideo';
 
@@ -46,7 +46,7 @@ class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
             'MediaVideo' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\EmbedVideo\\MediaVideo',
             'MediaVideotool' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\EmbedVideo\\MediaVideotool',
         ])),
-            'titleRequired' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'title' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }

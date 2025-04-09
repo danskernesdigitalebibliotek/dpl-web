@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.page.field_branch
     - field.field.node.page.field_breadcrumb_parent
+    - field.field.node.page.field_canonical_url
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
@@ -16,6 +17,7 @@ dependencies:
     - node.type.page
   module:
     - datetime
+    - link
     - user
 id: node.page.default
 targetEntityType: node
@@ -37,6 +39,18 @@ content:
       link: true
     third_party_settings: {  }
     weight: 110
+    region: content
+  field_canonical_url:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 114
     region: content
   field_publication_date:
     type: datetime_default

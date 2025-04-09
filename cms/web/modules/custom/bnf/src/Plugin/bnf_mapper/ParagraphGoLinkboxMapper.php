@@ -54,7 +54,7 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
       'type' => 'go_link',
       'field_aria_label' => $goLink->ariaLabel,
       'field_target_blank' => $goLink->targetBlank,
-      'field_go_link' => $goLink->link,
+      'field_go_link' => $this->getLinkValue($goLink->linkRequired),
     ]);
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $goLinkParagraph */
@@ -66,12 +66,12 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
       'field_go_color' => $object->goColor,
       'field_go_description' => $object->goDescription,
       'field_go_image' => $this->getImageValue($object->goImage),
-      'field_go_link' => [[
+      'field_go_link_paragraph' => [[
         'target_id' => $goLinkParagraph->id(),
         'target_revision_id' => $goLinkParagraph->getRevisionId(),
       ],
       ],
-      'field_title' => $object->titleRequired,
+      'field_title' => $object->title,
     ]);
 
   }

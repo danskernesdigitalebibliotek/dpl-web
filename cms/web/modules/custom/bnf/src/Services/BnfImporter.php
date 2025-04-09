@@ -25,6 +25,10 @@ class BnfImporter {
 
   const ALLOWED_CONTENT_TYPES = [
     'article',
+    'page',
+    'go_article',
+    'go_category',
+    'go_page',
   ];
 
   /**
@@ -56,11 +60,7 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpointUrl, string $nodeType = 'article'): NodeInterface {
-    if (!in_array($nodeType, self::ALLOWED_CONTENT_TYPES)) {
-      throw new \InvalidArgumentException('The requested content type is not allowed.');
-    }
-
+  public function importNode(string $uuid, string $endpointUrl): NodeInterface {
     $nodeStorage = $this->entityTypeManager->getStorage('node');
 
     $existingNodes =
@@ -68,8 +68,8 @@ class BnfImporter {
 
     if (!empty($existingNodes)) {
       $this->logger->error(
-        'Cannot import @type @uuid from @url - Node already exists.',
-        ['@type' => $nodeType, '@uuid' => $uuid, '@url' => $endpointUrl]
+        'Cannot import @uuid from @url - Node already exists.',
+        ['@uuid' => $uuid, '@url' => $endpointUrl]
       );
 
       throw new AlreadyExistsException('Cannot import node - already exists.');
@@ -95,7 +95,7 @@ class BnfImporter {
 
       // If no canonical URL is set explicitly, we'll set the path of
       // the original library.
-      if ($node->get('field_canonical_url')->isEmpty()) {
+      if ($node->hasField('field_canonical_url') && $node->get('field_canonical_url')->isEmpty()) {
         $node->set('field_canonical_url', [
           'uri' => $nodeData->url,
         ]);
