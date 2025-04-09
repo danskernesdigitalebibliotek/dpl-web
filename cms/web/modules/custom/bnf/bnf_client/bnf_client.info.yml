@@ -6,3 +6,4 @@ core_version_requirement: ^10
 configure: bnf_client.settings
 dependencies:
   - bnf:bnf
+  - drupal_typed:drupal_typed
