@@ -1,6 +1,6 @@
 import { defineConfig } from "cypress"
 
-import { e2eNodeEvents } from "./cypress/support/setupNodeEvents/index.js"
+import { e2eNodeEvents } from "./cypress/support/setupNodeEvents/index"
 
 export default defineConfig({
   e2e: {
