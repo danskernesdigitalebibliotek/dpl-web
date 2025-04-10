@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-04-09 15:29+0200\n"
-"PO-Revision-Date: 2025-04-09 15:29+0200\n"
+"POT-Creation-Date: 2025-04-10 11:45+0200\n"
+"PO-Revision-Date: 2025-04-10 11:45+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1772,14 +1772,6 @@ msgstr "The color value in #HEX format."
 
 msgid "The opacity value."
 msgstr "The opacity value."
-
-msgid "DPL Configuration."
-msgstr "DPL Configuration."
-
-msgid "DPL Configuration"
-msgstr ""
-"\n"
-"DPL Configuration"
 
 msgid "A CQL search string."
 msgstr "En CQL søgestreng."
@@ -4583,9 +4575,6 @@ msgstr "Opdater enkelte åbningstider"
 
 msgid "Allowed if bnf_server is enabled."
 msgstr ""
-
-msgid "DPL configuration schema extensions for GraphQL Compose."
-msgstr "DPL configuration schema extensions for GraphQL Compose."
 
 msgid "Generate proxy url"
 msgstr "Generate proxy URL / Generer proxy URL"
@@ -22786,6 +22775,18 @@ msgstr ""
 
 msgctxt "pathauto.pattern.category_term:label"
 msgid "Category term - embedded search"
+msgstr ""
+
+msgctxt "pathauto.pattern.go_articles:label"
+msgid "GO Articles"
+msgstr ""
+
+msgctxt "pathauto.pattern.go_categories:label"
+msgid "GO Categories"
+msgstr ""
+
+msgctxt "pathauto.pattern.go_pages:label"
+msgid "GO Pages"
 msgstr ""
 
 msgctxt "pathauto.pattern.tag_term:label"
