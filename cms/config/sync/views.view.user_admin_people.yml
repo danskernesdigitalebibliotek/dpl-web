@@ -898,6 +898,10 @@ display:
                   mediator: mediator
                   patron: patron
                   external_system: external_system
+                  bnf_graphql_client: bnf_graphql_client
+                  go_graphql_client: go_graphql_client
+                  go_editor: go_editor
+                  bnf_pilot: bnf_pilot
               2:
                 title: 'Has role'
                 operator: or
@@ -908,6 +912,10 @@ display:
                   mediator: mediator
                   patron: patron
                   external_system: external_system
+                  bnf_graphql_client: bnf_graphql_client
+                  go_graphql_client: go_graphql_client
+                  go_editor: go_editor
+                  bnf_pilot: bnf_pilot
           reduce_duplicates: false
         roles_target_id_2:
           id: roles_target_id_2
