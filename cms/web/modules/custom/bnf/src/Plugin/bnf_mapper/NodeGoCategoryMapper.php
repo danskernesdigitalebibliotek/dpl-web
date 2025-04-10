@@ -57,11 +57,19 @@ class NodeGoCategoryMapper extends BnfMapperPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\node\Entity\Node $node */
-    $node = $this->nodeStorage->create([
-      'type' => 'go_category',
-      'uuid' => $object->id,
-    ]);
+    /** @var \Drupal\node\Entity\Node[] $existing */
+    $existing = $this->nodeStorage->loadByProperties(['uuid' => $object->id]);
+
+    if ($existing) {
+      $node = reset($existing);
+    }
+    else {
+      /** @var \Drupal\node\Entity\Node $node */
+      $node = $this->nodeStorage->create([
+        'type' => 'go_category',
+        'uuid' => $object->id,
+      ]);
+    }
 
     $node->set('title', $object->title);
     $node->set('field_publication_date', $this->getDateTimeValue($object->publicationDate, FALSE));

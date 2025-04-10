@@ -55,11 +55,19 @@ class NodeGoArticleMapper extends BnfMapperPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\node\Entity\Node $node */
-    $node = $this->nodeStorage->create([
-      'type' => 'go_article',
-      'uuid' => $object->id,
-    ]);
+    /** @var \Drupal\node\Entity\Node[] $existing */
+    $existing = $this->nodeStorage->loadByProperties(['uuid' => $object->id]);
+
+    if ($existing) {
+      $node = reset($existing);
+    }
+    else {
+      /** @var \Drupal\node\Entity\Node $node */
+      $node = $this->nodeStorage->create([
+        'type' => 'go_article',
+        'uuid' => $object->id,
+      ]);
+    }
 
     $node->set('title', $object->title);
     $node->set('field_go_article_image', $this->getImageValue($object->goArticleImage));
