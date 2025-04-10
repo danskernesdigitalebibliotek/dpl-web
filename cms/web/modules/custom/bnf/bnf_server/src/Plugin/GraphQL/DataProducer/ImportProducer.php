@@ -7,6 +7,7 @@ use Drupal\bnf_server\GraphQL\ImportResponse;
 use Drupal\bnf_server\GraphQL\ImportStatus;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
+use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -88,10 +89,16 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
     ]);
 
     try {
-      $this->importer->importNode($uuid, $callbackUrl);
+      $node = $this->importer->importNode($uuid, $callbackUrl);
 
-      $result->status = ImportStatus::Success;
-      $result->message = 'Node created successfully.';
+      if ($node instanceof NodeInterface) {
+        $result->status = ImportStatus::Success;
+        $result->message = 'Node created successfully.';
+      }
+      else {
+        $result->status = ImportStatus::Skipped;
+        $result->message = 'Import of unknown, unpublished content skipped.';
+      }
     }
     catch (\Exception $e) {
       $result->status = ImportStatus::Failure;

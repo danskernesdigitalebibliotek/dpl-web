@@ -10,6 +10,7 @@ use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -68,6 +69,10 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
   public function processItem($data): void {
     try {
       $node = $this->importer->importNode($data['uuid'], $this->baseUrl . 'graphql');
+
+      if (!($node instanceof NodeInterface)) {
+        return;
+      }
 
       if ($node->hasField('field_categories') && !empty($data['categories'])) {
         $category_values = array_map(function ($term) {

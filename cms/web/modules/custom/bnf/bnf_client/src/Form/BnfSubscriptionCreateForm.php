@@ -82,8 +82,7 @@ class BnfSubscriptionCreateForm implements FormInterface, ContainerInjectionInte
           [
             '@url' => Url::fromRoute(
               'bnf_client.subscription.delete_form',
-              ['uuid' => $uuid],
-              ['query' => ['label' => $label]]
+              ['uuid' => $uuid, 'label' => $label]
             )->toString(),
           ],
           ['context' => 'BNF']

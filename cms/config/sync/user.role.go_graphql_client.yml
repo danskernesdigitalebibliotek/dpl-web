@@ -4,9 +4,13 @@ status: true
 dependencies:
   module:
     - graphql
+    - paragraphs
+    - view_unpublished
 id: go_graphql_client
 label: 'GO GraphQL Client'
 weight: 10
 is_admin: null
 permissions:
   - 'execute graphql_compose_server arbitrary graphql requests'
+  - 'view any unpublished content'
+  - 'view unpublished paragraphs'

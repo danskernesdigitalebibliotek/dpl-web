@@ -5,14 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoPage;
-use Drupal\bnf\Plugin\Traits\DateTimeTrait;
-use Drupal\bnf\Plugin\Traits\ImageTrait;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\file\FileRepositoryInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -21,31 +14,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: NodeGoPage::class,
 )]
-class NodeGoPageMapper extends BnfMapperPluginBase {
-  use ImageTrait;
-  use DateTimeTrait;
-
-  /**
-   * Entity storage to create node in.
-   */
-  protected EntityStorageInterface $nodeStorage;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(
-    array $configuration,
-    string $pluginId,
-    array $pluginDefinition,
-    protected BnfMapperManager $manager,
-    protected EntityTypeManagerInterface $entityTypeManager,
-    protected FileSystemInterface $fileSystem,
-    protected FileRepositoryInterface $fileRepository,
-  ) {
-    parent::__construct($configuration, $pluginId, $pluginDefinition);
-
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
-  }
+class NodeGoPageMapper extends BnfMapperNodePluginBase {
 
   /**
    * {@inheritdoc}
@@ -55,21 +24,8 @@ class NodeGoPageMapper extends BnfMapperPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\node\Entity\Node[] $existing */
-    $existing = $this->nodeStorage->loadByProperties(['uuid' => $object->id]);
+    $node = $this->getNode($object, 'go_page');
 
-    if ($existing) {
-      $node = reset($existing);
-    }
-    else {
-      /** @var \Drupal\node\Entity\Node $node */
-      $node = $this->nodeStorage->create([
-        'type' => 'go_page',
-        'uuid' => $object->id,
-      ]);
-    }
-
-    $node->set('title', $object->title);
     $node->set('field_publication_date', $this->getDateTimeValue($object->publicationDate, FALSE));
 
     // The canonical URL field does not exist yet, but will eventually.

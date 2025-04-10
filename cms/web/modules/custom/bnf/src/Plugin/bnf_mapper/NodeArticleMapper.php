@@ -5,14 +5,8 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
-use Drupal\bnf\Plugin\Traits\DateTimeTrait;
-use Drupal\bnf\Plugin\Traits\ImageTrait;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\file\FileRepositoryInterface;
+use Drupal\node\NodeInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -21,55 +15,18 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: NodeArticle::class,
 )]
-class NodeArticleMapper extends BnfMapperPluginBase {
-  use ImageTrait;
-  use DateTimeTrait;
-
-  /**
-   * Entity storage to create node in.
-   */
-  protected EntityStorageInterface $nodeStorage;
+class NodeArticleMapper extends BnfMapperNodePluginBase {
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(
-    array $configuration,
-    string $pluginId,
-    array $pluginDefinition,
-    protected BnfMapperManager $manager,
-    protected EntityTypeManagerInterface $entityTypeManager,
-    protected FileSystemInterface $fileSystem,
-    protected FileRepositoryInterface $fileRepository,
-  ) {
-    parent::__construct($configuration, $pluginId, $pluginDefinition);
-
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function map(ObjectLike $object): mixed {
+  public function map(ObjectLike $object): NodeInterface {
     if (!$object instanceof NodeArticle) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\node\Entity\Node[] $existing */
-    $existing = $this->nodeStorage->loadByProperties(['uuid' => $object->id]);
+    $node = $this->getNode($object, 'article');
 
-    if ($existing) {
-      $node = reset($existing);
-    }
-    else {
-      /** @var \Drupal\node\Entity\Node $node */
-      $node = $this->nodeStorage->create([
-        'type' => 'article',
-        'uuid' => $object->id,
-      ]);
-    }
-
-    $node->set('title', $object->title);
     $node->set('field_subtitle', $object->subtitle);
     $node->set('field_override_author', $object->overrideAuthor);
     $node->set('field_show_override_author', $object->showOverrideAuthor);
