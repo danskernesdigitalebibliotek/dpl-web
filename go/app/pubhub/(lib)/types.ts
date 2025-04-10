@@ -1,5 +1,5 @@
 import { z } from "zod"
 
-import { userInfoSchema } from "./schemas"
+import { uniLoginUserInfoSchema } from "./schemas"
 
-export type TUserInfo = z.infer<typeof userInfoSchema>
+export type TUserInfo = z.infer<typeof uniLoginUserInfoSchema>

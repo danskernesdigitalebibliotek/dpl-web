@@ -11,7 +11,7 @@ export const fetcher = async <ResponseType>({
 }: {
   url: string
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD"
-  headers?: object
+  headers?: HeadersInit
   params?: unknown
   data?: BodyType<unknown>
   signal?: AbortSignal
