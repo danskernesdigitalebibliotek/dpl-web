@@ -66,7 +66,7 @@ class BnfSubscriptionDeleteForm implements FormInterface, ContainerInjectionInte
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $uuid = $this->routeMatch->getParameter('uuid');
-    $label = $this->requestStack->getCurrentRequest()?->query->get('label');
+    $label = $this->routeMatch->getParameter('label');
     $form_state->set('uuid', $uuid);
     $form['#title'] = $this->t('Confirm deletion of BNF subscription', [], ['context' => 'BNF']);
 
@@ -82,8 +82,7 @@ class BnfSubscriptionDeleteForm implements FormInterface, ContainerInjectionInte
           [
             '@url' => Url::fromRoute(
               'bnf_client.subscription.create_form',
-              ['uuid' => $uuid],
-              ['query' => ['label' => $label]]
+              ['uuid' => $uuid, 'label' => $label],
             )->toString(),
           ],
           ['context' => 'BNF']

@@ -39,10 +39,9 @@ class ServerRedirecter extends ControllerBase {
    * @return \Drupal\Core\Routing\TrustedRedirectResponse|array<mixed>
    *   A redirect, or a notice page.
    */
-  public function subscribe(string $uuid, Request $request): TrustedRedirectResponse|array {
+  public function subscribe(string $uuid, string $label, Request $request): TrustedRedirectResponse|array {
     $session = $request->getSession();
     $url = $session->get(LoginController::CALLBACK_URL_KEY);
-    $label = $request->query->get('label');
 
     // If we have no URL to redirect to, we'll display a notice template,
     // prompting the user to log in.
@@ -52,7 +51,7 @@ class ServerRedirecter extends ControllerBase {
       ];
     }
 
-    return new TrustedRedirectResponse("$url/admin/bnf/subscription/{$uuid}/create?label={$label}");
+    return new TrustedRedirectResponse("$url/admin/bnf/subscription/$uuid/$label/create");
   }
 
 }

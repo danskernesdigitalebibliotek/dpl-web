@@ -65,7 +65,7 @@ class BnfSubscriptionCreateForm implements FormInterface, ContainerInjectionInte
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $uuid = $this->routeMatch->getParameter('uuid');
-    $label = $this->requestStack->getCurrentRequest()?->query->get('label');
+    $label = $this->routeMatch->getParameter('label');
     $form_state->set('uuid', $uuid);
     $form_state->set('label', $label);
     $form['#title'] = $this->t('Confirm creation of BNF subscription', [], ['context' => 'BNF']);
@@ -218,10 +218,11 @@ class BnfSubscriptionCreateForm implements FormInterface, ContainerInjectionInte
 
       $subscription->save();
 
+      $label = $form_state->get('label');
+
       $this->logger->info('BNF subscription connection created to @uuid', ['@uuid' => $uuid]);
       $this->messenger->addStatus($this->t('Subscription created. Related content will automatically be created when available.', [], ['context' => 'BNF']));
-      $form_state->setRedirect('bnf_client.subscription.delete_form', ['uuid' => $uuid],
-        ['query' => ['label' => $form_state->get('label')]]);
+      $form_state->setRedirect('bnf_client.subscription.delete_form', ['uuid' => $uuid, 'label' => $label]);
 
     }
     catch (\Exception $e) {

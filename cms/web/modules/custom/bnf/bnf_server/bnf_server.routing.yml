@@ -16,7 +16,7 @@ bnf_server.import_redirect:
   options:
     no_cache: true
 bnf_server.subscribe_redirect:
-  path: '/bnf/subscribe/{uuid}'
+  path: '/bnf/subscribe/{uuid}/{label}'
   defaults:
     _controller: '\Drupal\bnf_server\Controller\ServerRedirecter::subscribe'
   requirements:

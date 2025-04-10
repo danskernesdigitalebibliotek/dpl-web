@@ -81,8 +81,7 @@ function bnf_server_preprocess_page(array &$variables): void {
       ),
       '#url' => Url::fromRoute(
         'bnf_server.subscribe_redirect',
-        ['uuid' => $term->uuid()],
-        ['query' => ['label' => $term->getName()]]
+        ['uuid' => $term->uuid(), 'label' => $term->getName()],
       ),
     ];
 
