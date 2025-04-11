@@ -288,8 +288,8 @@ jobs:
       - name: Ensure CMS API package code has not drifted
         run: git diff --ignore-space-at-eol --exit-code packages/cms-api/*
 
-  CheckGraphQlClient:
-    name: Check GraphQL client
+  CheckGraphQlSchema:
+    name: Check GraphQL specification
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -305,8 +305,10 @@ jobs:
         run: task dev:bnf:enable
       - name: Setup site
         run: task ci:reset
-      - name: Generate GraphQL client
+      - name: Extract GraphQL schema and generate client
         run: task dev:bnf:generate-graphql
+      - name: Ensure GraphQL schema has not drifted
+        run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/schema/bnf.graphql
       - name: Ensure GraphQL client code has not drifted
         run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/src/GraphQL/*
 
