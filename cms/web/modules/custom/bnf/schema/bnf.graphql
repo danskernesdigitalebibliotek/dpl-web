@@ -39,6 +39,24 @@ type AdgangsplatformenUserToken {
   expire: Int
 }
 
+"""Input for filter exposed with operator "between"."""
+input BetweenFloatInput {
+  """The minimum value of the range."""
+  min: Float
+
+  """The maximum value of the range."""
+  max: Float
+}
+
+"""Input for filter exposed with operator "between"."""
+input BetweenStringInput {
+  """The minimum value of the range."""
+  min: String
+
+  """The maximum value of the range."""
+  max: String
+}
+
 """En CQL søgestreng."""
 type CQLSearch {
   """CQL søgestrengen."""
@@ -80,11 +98,6 @@ type DateTime {
   time: Time!
 }
 
-"""DPL Configuration."""
-type DplConfiguration {
-  unilogin: UniloginConfiguration
-}
-
 type DplTokens {
   adgangsplatformen: AdgangsplatformenTokens
 }
@@ -108,6 +121,33 @@ type File {
 
   """The description of the file."""
   description: String
+}
+
+"""Result for view go_categories display go_categories."""
+type GoCategoriesResult implements View {
+  """The ID of the view."""
+  id: ID!
+
+  """The machine name of the view."""
+  view: String!
+
+  """The machine name of the display."""
+  display: String!
+
+  """The language code of the view."""
+  langcode: String
+
+  """The human friendly label of the view."""
+  label: String
+
+  """Viewets beskrivelse."""
+  description: String
+
+  """Information about the page in the view."""
+  pageInfo: ViewPageInfo!
+
+  """The results of the view."""
+  results: [NodeUnion!]!
 }
 
 type GoConfiguration {
@@ -1830,9 +1870,6 @@ type Query {
     revision: ID
   ): NodeUnion
 
-  """DPL Configuration"""
-  dplConfiguration: DplConfiguration
-
   """Schema information."""
   info: SchemaInformation!
 
@@ -1852,6 +1889,12 @@ type Query {
     """
     langcode: String
   ): RouteUnion
+
+  """Query for view go_categories display go_categories."""
+  goCategories(
+    """The page number to display."""
+    page: Int = 0
+  ): GoCategoriesResult
 }
 
 """Routes represent incoming requests that resolve to content."""
@@ -2254,6 +2297,104 @@ scalar UntypedStructuredData
 
 """A string that will have a value of format ±hh:mm"""
 scalar UtcOffset
+
+"""Views represent collections of curated data from the CMS."""
+interface View {
+  """The ID of the view."""
+  id: ID!
+
+  """The machine name of the view."""
+  view: String!
+
+  """The machine name of the display."""
+  display: String!
+
+  """The language code of the view."""
+  langcode: String
+
+  """The human friendly label of the view."""
+  label: String
+
+  """Viewets beskrivelse."""
+  description: String
+
+  """Information about the page in the view."""
+  pageInfo: ViewPageInfo!
+}
+
+"""An exposed filter option for the view."""
+type ViewFilter {
+  """The filter identifier."""
+  id: ID!
+
+  """The filter plugin type."""
+  plugin: String!
+
+  """The filter element type."""
+  type: String!
+
+  """The filter operator."""
+  operator: String!
+
+  """The filter element label."""
+  label: String
+
+  """The filter element description."""
+  description: String
+
+  """Whether the filter is required."""
+  required: Boolean!
+
+  """Whether the filter allows multiple values."""
+  multiple: Boolean!
+
+  """The value for the filter. Could be an array for multiple values."""
+  value: UntypedStructuredData
+
+  """The filter element options if any are defined."""
+  options: UntypedStructuredData
+
+  """The filter element attributes."""
+  attributes: UntypedStructuredData!
+}
+
+"""Information about the page in a view."""
+type ViewPageInfo {
+  """Any result offset being used."""
+  offset: Int!
+
+  """The current page being returned."""
+  page: Int!
+
+  """How many results per page."""
+  pageSize: Int!
+
+  """How many results total."""
+  total: Int!
+}
+
+"""A reference to an embedded view"""
+type ViewReference {
+  """The machine name of the view."""
+  view: String!
+
+  """The machine name of the display."""
+  display: String!
+
+  """The contextual filter values used."""
+  contextualFilter: [String!]
+
+  """How many results per page."""
+  pageSize: Int
+
+  """
+  The name of the query used to fetch the data, if the view is a GraphQL display.
+  """
+  query: String
+}
+
+"""All available view result types."""
+union ViewResultUnion = GoCategoriesResult
 
 scalar Violation
 
