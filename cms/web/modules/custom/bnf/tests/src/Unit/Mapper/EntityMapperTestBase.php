@@ -10,6 +10,7 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
+use Psr\Log\LoggerInterface;
 
 /**
  * Base class for testing mappers that produce entities.
@@ -51,6 +52,14 @@ abstract class EntityMapperTestBase extends UnitTestCase {
    */
   protected ObjectProphecy $entityProphecy;
 
+
+  /**
+   * Logger prophecy.
+   *
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Psr\Log\LoggerInterface>
+   */
+  protected ObjectProphecy $loggerProphecy;
+
   /**
    * Setup for each test.
    */
@@ -62,6 +71,7 @@ abstract class EntityMapperTestBase extends UnitTestCase {
     $this->entityManagerProphecy->getStorage($this->getEntityName())->willReturn($this->storageProphecy);
     $this->fileRepositoryProphecy = $this->prophesize(FileRepositoryInterface::class);
     $this->fileSystemProphecy = $this->prophesize(FileSystemInterface::class);
+    $this->loggerProphecy = $this->prophesize(LoggerInterface::class);
     $this->entityProphecy = $this->prophesize($this->getEntityClass());
   }
 

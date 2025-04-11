@@ -43,6 +43,8 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
+    #[Autowire(service: 'logger.channel.bnf')]
+    protected LoggerInterface $logger,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
@@ -98,7 +100,12 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
     $objectParagraphs = $object->paragraphs ?? [];
 
     foreach ($objectParagraphs as $paragraph) {
+      try {
         $paragraphs[] = $this->manager->map($paragraph);
+      }
+      catch (\Exception $e) {
+        $this->logger->error('Unable to map paragraph of type - skipping: ' . $e->getMessage());
+      }
     }
 
     return $paragraphs;

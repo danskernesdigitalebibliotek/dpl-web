@@ -57,6 +57,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
       $this->entityManagerProphecy->reveal(),
       $this->fileSystemProphecy->reveal(),
       $this->fileRepositoryProphecy->reveal(),
+      $this->loggerProphecy->reveal(),
     );
 
     $graphqlArticle = NodeArticle::make(
