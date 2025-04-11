@@ -10,6 +10,7 @@ function WorkPageButton({
   onClick,
   asChild = false,
   children,
+  theme,
 }: ButtonProps) {
   return (
     <Button
@@ -18,7 +19,8 @@ function WorkPageButton({
       asChild={asChild}
       ariaLabel={ariaLabel}
       disabled={disabled}
-      onClick={onClick}>
+      onClick={onClick}
+      theme={theme ?? "secondary"}>
       {children}
     </Button>
   )
