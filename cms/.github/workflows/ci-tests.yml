@@ -301,6 +301,8 @@ jobs:
         uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enable BNF for site
+        run: task dev:bnf:enable
       - name: Setup site
         run: task ci:reset
       - name: Generate GraphQL client
