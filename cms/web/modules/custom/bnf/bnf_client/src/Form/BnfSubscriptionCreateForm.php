@@ -3,6 +3,7 @@
 namespace Drupal\bnf_client\Form;
 
 use Drupal\bnf\Services\BnfImporter;
+use Drupal\Component\Datetime\Time;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -45,6 +46,8 @@ class BnfSubscriptionCreateForm implements FormInterface, ContainerInjectionInte
     protected RequestStack $requestStack,
     protected MessengerInterface $messenger,
     protected BnfImporter $bnfImporter,
+    #[Autowire(service: 'datetime.time')]
+    protected Time $time,
     #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
     EntityTypeManagerInterface $entityTypeManager,
@@ -202,7 +205,7 @@ class BnfSubscriptionCreateForm implements FormInterface, ContainerInjectionInte
       ]);
 
       if ($form_state->getValue('only_new_content')) {
-        $subscription->setLast(time());
+        $subscription->setLast($this->time->getCurrentTime());
       }
 
       if (!empty($form_state->getValue('categories'))) {
