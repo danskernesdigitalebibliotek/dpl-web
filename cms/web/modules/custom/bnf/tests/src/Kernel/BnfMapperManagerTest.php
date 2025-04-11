@@ -15,6 +15,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
@@ -48,10 +49,17 @@ class BnfMapperManagerTest extends KernelTestBase {
 
     $entityManagerProphecy->getStorage('node')->willReturn($nodeStorageProphecy);
     $entityManagerProphecy->getStorage('paragraph')->willReturn($paragraphStorageProphecy);
+
+    $nodeStorageProphecy->loadByProperties([
+      'uuid' => '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
+    ])->willReturn([$nodeProphecy]);
+
     $nodeStorageProphecy->create([
       'type' => 'article',
       'uuid' => '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
     ])->willReturn($nodeProphecy);
+
+    $nodeProphecy->hasField('field_canonical_url')->willReturn(TRUE);
 
     $paragraphStorageProphecy->create([
       'type' => 'text_body',
@@ -93,6 +101,13 @@ class BnfMapperManagerTest extends KernelTestBase {
       'uri' => 'https://example.dk',
     ])->shouldHaveBeenCalled();
     $nodeProphecy->set('field_paragraphs', [$paragraphProphecy->reveal()])->shouldHaveBeenCalled();
+    $nodeProphecy->set('status', NodeInterface::PUBLISHED)->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_publication_date', ["value" => "2025-01-01"])->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_subtitle', 'this is the subtitle')->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_override_author', 'this is an author')->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_show_override_author', TRUE)->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_teaser_text', 'this is a teaser text')->shouldHaveBeenCalled();
+    $nodeProphecy->set('field_teaser_image', [])->shouldHaveBeenCalled();
 
     $paragraphProphecy->set('field_body', [
       'value' => 'This is the text',
