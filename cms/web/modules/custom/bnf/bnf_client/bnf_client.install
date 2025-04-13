@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for the bnf module.
  */
 
+use Drupal\bnf_client\Entity\Subscription;
+
 /**
  * Implements hook_install().
  */
@@ -27,4 +29,23 @@ function bnf_client_update_10101(): void {
 function bnf_client_update_10102(): void {
   // Rebuild scheduler info so it notices our new periodic job.
   job_scheduler_rebuild_all();
+}
+
+/**
+ * Install bnf_subscription fields 'last', 'categories', 'tags'.
+ */
+function bnf_client_update_10103(): string {
+  $fields = Subscription::getBaseFields();
+
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach ($fields as $key => $field) {
+    if (!in_array($key, ['last', 'categories', 'tags'])) {
+      continue;
+    }
+
+    $definition_manager->installFieldStorageDefinition($key, 'bnf_subscription', 'bnf_subscription', $field);
+  }
+
+  return 'bnf_subscription.last, bnf_subscription.categories, bnf_subscription.tags installed.';
 }
