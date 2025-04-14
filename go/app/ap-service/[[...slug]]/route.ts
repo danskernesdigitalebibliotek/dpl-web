@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
 import { TServiceType, getServiceSettings } from "@/lib/helpers/services"
-import { getBearerTokenServerSide } from "@/lib/helpers/tokens"
 import { getSession } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
@@ -27,6 +27,11 @@ async function proxyRequest(
   { params }: TContext,
   body?: string
 ) {
+  const proxiedHeaders: Record<string, string> = {}
+  request.headers.forEach((value, key) => {
+    proxiedHeaders[key] = value
+  })
+
   const { slug } = await params
   const serviceType = slug.shift() as TServiceType
   const baseUrl = getServiceSettings(serviceType)?.url ?? null
@@ -43,8 +48,7 @@ async function proxyRequest(
     const result = await fetch(serviceUrl, {
       method,
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        ...proxiedHeaders,
         ...(authHeader ? { Authorization: authHeader } : {}),
       },
       body,

@@ -4,7 +4,7 @@ import React from "react"
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { createServerQueryFn } from "@/lib/helpers/tokens"
+import { createServerQueryFn } from "@/lib/helpers/bearer-token"
 
 async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params

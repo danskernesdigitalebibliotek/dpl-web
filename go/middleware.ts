@@ -1,86 +1,73 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-import { getEnv } from "./lib/config/env"
+import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
+import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
+import { userIsAnonymous, userIsLoggedInAtDplCms } from "./lib/helpers/user"
+import { loadUserToken } from "./lib/helpers/user-token"
+import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
-  getLibraryTokenCookieValue,
-  loadLibraryToken,
-  loadUserToken,
-  setLibraryTokenCookie,
-} from "./lib/helpers/tokens"
-import {
-  accessTokenShouldBeRefreshed,
+  adgangsplatformenAccessTokenHasExpired,
+  adgangsplatformenAccessTokenShouldBeRefreshed,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
   saveAdgangsplatformenSession,
+  uniloginAccessTokenHasExpired,
+  uniloginAccessTokenShouldBeRefreshed,
 } from "./lib/session/session"
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
   const requestHeaders = new Headers(request.headers)
-
   const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   })
+  // Make sure we have a library token cookie.
+  await ensureLibraryTokenExist()
 
   const session = await getSession({ request, response })
 
-  // Apparently the timespan is too short for the session to be expired.
-  // The result is that the session is destroyed too soon.
-  // @todo: Investigate how to increase the timespan for the session.
-  // If the session is expired then destroy it.
-  // if (accessTokenIsExpired(session)) {
-  //   destroySession(session)
-  // }
-
-  // If the session is not logged in we will try to see
-  // if we have an ongoing Adgangsplatformen Drupal session.
-  // If we have an active Drupal session we will try to load the user token from dpl-cms.
-  if (!session.isLoggedIn) {
-    const tokenData = await loadUserToken()
-    if (tokenData) {
-      await saveAdgangsplatformenSession(session, tokenData)
-    }
-  }
-
   // Destroy the session if we have an active session but no dpl cms session cookie.
-  if (session.isLoggedIn && session.type === "adgangsplatformen") {
+  if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
     const sessionCookie = await getDplCmsSessionCookie()
     if (!sessionCookie) {
       destroySession(session)
     }
   }
 
+  if (adgangsplatformenAccessTokenHasExpired(session)) {
+    destroySession(session)
+    return response
+  }
+
+  // If the session is not logged in we will try to see if we have an ongoing Adgangsplatformen Drupal session.
+  // If we have an active Drupal session we will try to load the user token from dpl-cms.
+  // OR:
   // If the Adgangsplatformen user token is about to expire we will reload it from dpl-cms.
-  // TODO: Investigate if we have a better way to handle this. Eg. force the dpl-cms to refresh the token.
-  if (accessTokenShouldBeRefreshed(session, "adgangsplatformen")) {
+  const userIsLoggedInAtCms = await userIsLoggedInAtDplCms()
+  if (
+    (userIsAnonymous(session) && userIsLoggedInAtCms) ||
+    adgangsplatformenAccessTokenShouldBeRefreshed(session)
+  ) {
     const tokenData = await loadUserToken()
     if (tokenData) {
       await saveAdgangsplatformenSession(session, tokenData)
+      return response
     }
   }
 
-  if (accessTokenShouldBeRefreshed(session, "unilogin")) {
-    const appUrl = getEnv("APP_URL")
-
-    const currentPath = new URL(pathname, appUrl.toString())
-    return NextResponse.redirect(`${appUrl}/auth/token/refresh?redirect=${currentPath}`, {
-      headers: response.headers,
-    })
+  if (uniloginAccessTokenHasExpired(session)) {
+    destroySession(session)
+    return response
   }
 
-  const libraryTokenCookieValue = await getLibraryTokenCookieValue()
-  if (!libraryTokenCookieValue) {
-    const libraryToken = await loadLibraryToken()
-    const timestamp = libraryToken?.expire.timestamp
-    const expires = timestamp ? new Date(timestamp * 1000) : false
-
-    if (libraryToken && expires) {
-      setLibraryTokenCookie(libraryToken.token, expires)
+  if (uniloginAccessTokenShouldBeRefreshed(session)) {
+    const config = await getUniloginClientConfig()
+    if (config) {
+      refreshUniloginTokens(session, config)
+      return response
     }
   }
 
