@@ -64,6 +64,7 @@ services:
       # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-bnfvarnish.${DEV_TLD:-docker}
       VIRTUAL_PORT: 8080
+      SERVICE_NAME: bnfvarnish
 
   bnfcli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
