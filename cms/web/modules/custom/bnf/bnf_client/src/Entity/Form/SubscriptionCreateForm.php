@@ -82,6 +82,13 @@ class SubscriptionCreateForm extends ContentEntityForm {
 
     $form = parent::form($form, $form_state);
 
+    $form['only_new_content'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Only import new content', [], ['context' => 'BNF']),
+      '#description' => $this->t('If checked, only upcoming content related to this subscription will be imported', [], ['context' => 'BNF']),
+      '#default_value' => TRUE,
+    ];
+
     $label = $this->routeMatch->getParameter('label');
     $form['label']['widget'][0]['value']['#default_value'] = $label;
 
@@ -111,12 +118,18 @@ class SubscriptionCreateForm extends ContentEntityForm {
 
     $this->entity->subscription_uuid->value = $form_state->get('uuid');
 
+    if ($form_state->getValue('only_new_content')) {
+      $this->entity->setLast($this->time->getCurrentTime());
+    }
+
     $this->messenger()->addMessage(
       $this->t('Created subscription', [], ['context' => 'BNF'])
     );
 
+    $status = $this->entity->save();
+
     $form_state->setRedirect('entity.bnf_subscription.collection');
-    return SAVED_NEW;
+    return $status;
   }
 
 }
