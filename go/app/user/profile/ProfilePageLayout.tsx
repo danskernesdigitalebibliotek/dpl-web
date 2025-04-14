@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation"
 import React, { Suspense } from "react"
 
-import DebuggingSession from "@/app/user/profile/DebuggingSession"
 import { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
 import LogoutButton from "@/app/user/profile/LogoutButton"
 import UserLoans from "@/app/user/profile/UserLoans"
@@ -32,7 +31,6 @@ const ProfilePageLayout = async () => {
       <Suspense fallback={<LoanSliderSkeleton />}>
         <UserLoans />
       </Suspense>
-      <DebuggingSession />
     </div>
   )
 }
