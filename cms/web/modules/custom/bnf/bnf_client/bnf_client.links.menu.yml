@@ -1,4 +1,10 @@
 ---
+bnf_client.subscriptions:
+  title: 'Manage BNF subscriptions'
+  parent: system.admin_content
+  route_name: entity.bnf_subscription.collection
+  weight: 10
+
 bnf_client.import_content:
   title: 'Import BNF content'
   parent: system.admin_content

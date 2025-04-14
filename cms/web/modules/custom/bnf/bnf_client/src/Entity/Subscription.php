@@ -26,6 +26,7 @@ use Drupal\taxonomy\Entity\Term;
  *      "delete-form" = "/admin/bnf/subscriptions/{bnf_subscription}/delete",
  *    },
  *   handlers = {
+ *     "list_builder" = "Drupal\bnf_client\SubscriptionListBuilder",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "route_provider" = {
