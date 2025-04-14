@@ -49,3 +49,21 @@ function bnf_client_update_10103(): string {
 
   return 'bnf_subscription.last, bnf_subscription.categories, bnf_subscription.tags installed.';
 }
+
+/**
+ * Install bnf_subscription field 'label'.
+ */
+function bnf_client_update_10104(): string {
+  $fields = Subscription::getBaseFields();
+
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $field = $fields['label'] ?? NULL;
+
+  if (!empty($field)) {
+    $definition_manager->installFieldStorageDefinition('label', 'bnf_subscription', 'bnf_subscription', $field);
+    return 'Field bnf_subscription.label installed.';
+  }
+
+  return 'Could not install field bnf_subscription.label.';
+}

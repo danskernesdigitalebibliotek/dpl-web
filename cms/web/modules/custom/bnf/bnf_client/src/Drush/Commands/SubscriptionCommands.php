@@ -48,9 +48,10 @@ class SubscriptionCommands extends DrushCommands {
     name: 'drush bnf:subscription:create 8f647000-cb67-40d0-b942-3f7fbf899c88',
     description: 'Subscribe to 8f647000-cb67-40d0-b942-3f7fbf899c88.'
   )]
-  public function createSubscription(string $uuid = ''): void {
+  public function createSubscription(string $uuid = '', string $label = ''): void {
     $this->storage->create([
       'subscription_uuid' => $uuid,
+      'label' => $label,
     ])
       ->save();
   }
@@ -94,6 +95,7 @@ class SubscriptionCommands extends DrushCommands {
   #[FieldLabels(labels: [
     'uuid' => 'UUID',
     'subscription_uuid' => 'Subscription UUID',
+    'label' => 'Label',
     'categories' => 'Categories for content',
     'tags' => 'Tags for content',
     'created' => 'Created',
@@ -116,6 +118,7 @@ class SubscriptionCommands extends DrushCommands {
 
       $rows[] = [
         'uuid' => $subscription->uuid->value,
+        'label' => $subscription->label->value,
         'subscription_uuid' => $subscription->getSubscriptionUuid(),
         'tags' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getTags())),
         'categories' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getCategories())),

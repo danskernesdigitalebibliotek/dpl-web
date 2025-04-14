@@ -29,6 +29,7 @@ use Drupal\taxonomy\Entity\Term;
  *
  *   entity_keys = {
  *     "id" = "uuid",
+ *     "label" = "label",
  *   },
  * )
  */
@@ -72,6 +73,16 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setLabel('Subscription UUID')
       ->setDescription('The UUID subscribed to.')
       ->setRequired(TRUE);
+
+    $fields['label'] = BaseFieldDefinition::create('string')
+      ->setLabel('Label')
+      ->setDescription('The name of this subscription - defaults to the original label.')
+      ->setRequired(FALSE)
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => 10,
+      ]);
+    ;
 
     $fields['tags'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel('Tags')
