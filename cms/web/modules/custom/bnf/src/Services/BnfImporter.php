@@ -103,8 +103,6 @@ class BnfImporter {
 
       $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported);
 
-      $node->set('status', NodeInterface::NOT_PUBLISHED);
-
       $node->save();
     }
     catch (\Throwable $e) {
