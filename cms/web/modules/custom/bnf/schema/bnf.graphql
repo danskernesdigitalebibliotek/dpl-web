@@ -777,6 +777,7 @@ type NodePage implements NodeInterface {
 
   """Title"""
   title: String!
+  url: String!
 }
 
 """Entity type node."""
