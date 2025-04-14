@@ -91,7 +91,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       return true
     }
 
-    return manifestation.accessTypes[0].code !== "PHYSICAL"
+    return manifestation.accessTypes?.[0].code !== "PHYSICAL"
   })
 
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]

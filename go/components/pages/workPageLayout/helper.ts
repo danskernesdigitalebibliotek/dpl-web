@@ -25,6 +25,10 @@ export const filterManifestationsByMaterialType = (
   manifestations: ManifestationWorkPageFragment[]
 ) => {
   return filter(manifestations, manifestation => {
+    // if (!manifestation.accessTypes?.length) {
+    //   return false
+    // }
+
     // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
     if (manifestation.accessTypes[0].code === "PHYSICAL") {
       return allowedPhysicalMaterialTypes.includes(
