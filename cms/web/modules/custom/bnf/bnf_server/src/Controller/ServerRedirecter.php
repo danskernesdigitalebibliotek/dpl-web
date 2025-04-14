@@ -51,7 +51,7 @@ class ServerRedirecter extends ControllerBase {
       ];
     }
 
-    return new TrustedRedirectResponse("$url/admin/bnf/subscription/$uuid/$label/create");
+    return new TrustedRedirectResponse("$url/admin/bnf/subscriptions/$uuid/$label/create");
   }
 
 }

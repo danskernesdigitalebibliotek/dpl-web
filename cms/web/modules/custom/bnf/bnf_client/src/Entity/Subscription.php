@@ -18,12 +18,24 @@ use Drupal\taxonomy\Entity\Term;
  *   label = @Translation("Subscription"),
  *   plural_label = @Translation("Subscriptions"),
  *   base_table = "bnf_subscription",
+ *   admin_permission = "bnf manage subscriptions",
+ *   links = {
+ *      "collection" = "/admin/bnf/subscriptions",
+ *      "add-form" = "/admin/bnf/subscriptions/{uuid}/{label}/create",
+ *      "edit-form" = "/admin/bnf/subscriptions/{bnf_subscription}/edit",
+ *      "delete-form" = "/admin/bnf/subscriptions/{bnf_subscription}/delete",
+ *    },
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *      "form" = {
- *        "add" = "Drupal\bnf_client\Form\BnfSubscriptionCreateForm",
- *        "delete" = "Drupal\bnf_client\Form\BnfSubscriptionDeleteForm",
+ *     "route_provider" = {
+ *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
+ *     },
+ *     "form" = {
+ *        "default" = "Drupal\bnf_client\Entity\Form\SubscriptionCreateForm",
+ *        "add" = "Drupal\bnf_client\Entity\Form\SubscriptionCreateForm",
+ *        "edit" = "Drupal\Core\Entity\ContentEntityForm",
+ *        "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *      },
  *   },
  *
