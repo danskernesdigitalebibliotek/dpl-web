@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { TServiceType, getApServiceSettings } from "@/lib/helpers/ap-service"
 import { getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
-import { TServiceType, getServiceSettings } from "@/lib/helpers/services"
 import { getSession } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
@@ -34,7 +34,7 @@ async function proxyRequest(
 
   const { slug } = await params
   const serviceType = slug.shift() as TServiceType
-  const baseUrl = getServiceSettings(serviceType)?.url ?? null
+  const baseUrl = getApServiceSettings(serviceType)?.url ?? null
   if (!baseUrl) {
     return new Response("Not found", { status: 404 })
   }
@@ -49,7 +49,7 @@ async function proxyRequest(
       method,
       headers: {
         ...proxiedHeaders,
-        ...(authHeader ? { Authorization: authHeader } : {}),
+        ...(authHeader ? { authorization: authHeader } : {}),
       },
       body,
     })
