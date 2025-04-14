@@ -6,6 +6,7 @@ import { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
 import LogoutButton from "@/app/user/profile/LogoutButton"
 import UserLoans from "@/app/user/profile/UserLoans"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
+import { userIsAnonymous } from "@/lib/helpers/user"
 import { getSession } from "@/lib/session/session"
 
 import Username, { UsernameSkeleton } from "./Username"
@@ -13,7 +14,7 @@ import Username, { UsernameSkeleton } from "./Username"
 const ProfilePageLayout = async () => {
   const session = await getSession()
 
-  if (!session.isLoggedIn) {
+  if (userIsAnonymous(session)) {
     redirect("/")
   }
 
