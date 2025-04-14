@@ -1,5 +1,4 @@
-import { getEnv } from "@/lib/config/env"
-import goConfig from "@/lib/config/goConfig"
+import { getAPServiceFetcherAuthheader, getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 import { getRestServiceUrlWithParams } from "../../../fetchers/helper"
 
@@ -15,15 +14,12 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const additionalHeaders = data?.headers === "object" ? (data?.headers as unknown as object) : {}
-
-  const headers = {
-    ...additionalHeaders,
-  }
-
+  const authHeader = await getAPServiceFetcherAuthheader("covers")
+  const headers = data?.headers === "object" ? (data?.headers as unknown as object) : {}
+  const baseUrl = getAPServiceFetcherBaseUrl("covers")
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/covers`,
+    baseUrl,
     url,
     params,
   })
@@ -31,7 +27,10 @@ export const fetcher = async <ResponseType>({
   try {
     const response = await fetch(serviceUrl, {
       method,
-      headers,
+      headers: {
+        ...(authHeader ? { authorization: authHeader } : {}),
+        ...headers,
+      },
       body,
     })
 

@@ -1,5 +1,4 @@
-import { getEnv } from "@/lib/config/env"
-import goConfig from "@/lib/config/goConfig"
+import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 export const fetchData = <TData, TVariables>(
   query: string,
@@ -7,20 +6,18 @@ export const fetchData = <TData, TVariables>(
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
   return async () => {
-    const res = await fetch(
-      `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/fbi`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...options,
-        },
-        body: JSON.stringify({
-          query,
-          variables,
-        }),
-      }
-    )
+    const url = getAPServiceFetcherBaseUrl("fbi")
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...options,
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    })
     const json = await res.json()
 
     if (json.errors) {
