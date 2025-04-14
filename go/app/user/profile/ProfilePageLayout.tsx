@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation"
 import React, { Suspense } from "react"
 
 import DebuggingSession from "@/app/user/profile/DebuggingSession"
@@ -5,10 +6,17 @@ import { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
 import LogoutButton from "@/app/user/profile/LogoutButton"
 import UserLoans from "@/app/user/profile/UserLoans"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
+import { getSession } from "@/lib/session/session"
 
 import Username, { UsernameSkeleton } from "./Username"
 
-const ProfilePageLayout = () => {
+const ProfilePageLayout = async () => {
+  const session = await getSession()
+
+  if (!session.isLoggedIn) {
+    redirect("/")
+  }
+
   return (
     <div className="content-container grid-go -mt-space-y w-full space-y-3">
       <div className="col-span-full flex flex-row flex-wrap">

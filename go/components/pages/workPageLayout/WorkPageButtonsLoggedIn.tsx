@@ -71,6 +71,7 @@ const WorkPageButtonsLoggedIn = ({
           </WorkPageButton>
           <WorkPageButton
             ariaLabel="Lån e-bog"
+            theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() => {
               openModal({
@@ -88,7 +89,7 @@ const WorkPageButtonsLoggedIn = ({
     if (isLoaned) {
       return (
         <WorkPageButtons>
-          <WorkPageButton ariaLabel="Læs e-bog" asChild>
+          <WorkPageButton ariaLabel="Læs e-bog" theme={"primary"} asChild>
             <SmartLink linkType="external" href={loanUrl}>
               Læs e-bog
             </SmartLink>
@@ -115,6 +116,7 @@ const WorkPageButtonsLoggedIn = ({
           </WorkPageButton>
           <WorkPageButton
             ariaLabel="Lån lydbog"
+            theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() => {
               openModal({
@@ -134,6 +136,7 @@ const WorkPageButtonsLoggedIn = ({
         <WorkPageButtons>
           <WorkPageButton
             ariaLabel="Lyt til lydbog"
+            theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() =>
               openModal({
@@ -165,6 +168,7 @@ const WorkPageButtonsLoggedIn = ({
           </WorkPageButton>
           <WorkPageButton
             ariaLabel="Lån podcast"
+            theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() => {
               openModal({
@@ -181,6 +185,7 @@ const WorkPageButtonsLoggedIn = ({
         <WorkPageButtons>
           <WorkPageButton
             ariaLabel="Lyt til podcast"
+            theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() =>
               openModal({
