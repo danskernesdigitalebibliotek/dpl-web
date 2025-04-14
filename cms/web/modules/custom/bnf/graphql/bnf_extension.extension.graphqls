@@ -11,6 +11,10 @@ extend type NodeArticle {
   url: String!
 }
 
+extend type NodePage {
+  url: String!
+}
+
 extend type NodeGoArticle {
   url: String!
 }
