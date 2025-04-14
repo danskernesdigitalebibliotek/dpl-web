@@ -68,7 +68,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
         url: 'https://example.dk'
       ),
       overrideAuthor: 'this is an author',
-      showOverrideAuthor: TRUE,
+      showOverrideAuthor: FALSE,
       subtitle: 'this is the subtitle',
       teaserImage: NULL,
       teaserText: 'this is a teaser text',
