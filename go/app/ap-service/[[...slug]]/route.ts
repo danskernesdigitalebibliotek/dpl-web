@@ -26,7 +26,12 @@ async function proxyRequest(
   body?: string
 ) {
   const proxiedHeaders: Record<string, string> = {}
+  // No need to send along the cookies.
+  const headersToIgnore = ["cookie"]
   request.headers.forEach((value, key) => {
+    if (headersToIgnore.includes(key.toLowerCase())) {
+      return
+    }
     proxiedHeaders[key] = value
   })
 
