@@ -8,6 +8,12 @@
  * settings.lagoon.php that contains Lagoon-specific settings.
  */
 
+// Override the configured varnish hostname so Drupal will purge the right
+// instance. The hex numbers is the ID of the configured purgers, these should
+// follow the ones in the exported configuration.
+$config['varnish_purger.settings.30cd45a1b1']['hostname'] = 'bnfvarnish';
+$config['varnish_purger.settings.65fc931232']['hostname'] = 'bnfvarnish';
+
 /**
  * Load services definition file.
  */
