@@ -29,7 +29,7 @@ export const getAPServiceFetcherBaseUrl = (serviceType: TServiceType) => {
     return serviceUrl
   }
 
-  return `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/fbi`
+  return `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/${serviceType}`
 }
 
 export const getAPServiceFetcherAuthheader = async (serviceType: TServiceType) => {
