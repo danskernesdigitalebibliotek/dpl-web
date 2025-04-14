@@ -27,6 +27,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "Digital",
+            },
+          ],
+          access: [],
           materialTypes: [
             {
               materialTypeGeneral: {
@@ -75,6 +82,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        accessTypes: [
+          {
+            code: "ONLINE",
+            display: "Digital",
+          },
+        ],
+        access: [],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -149,6 +163,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "Digital",
+            },
+          ],
+          access: [],
           materialTypes: [
             {
               materialTypeGeneral: {
@@ -197,6 +218,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        accessTypes: [
+          {
+            code: "ONLINE",
+            display: "Digital",
+          },
+        ],
+        access: [],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -271,6 +299,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "Digital",
+            },
+          ],
+          access: [],
           materialTypes: [
             {
               materialTypeGeneral: {
@@ -319,6 +354,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        accessTypes: [
+          {
+            code: "ONLINE",
+            display: "Digital",
+          },
+        ],
+        access: [],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -393,6 +435,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "Digital",
+            },
+          ],
+          access: [],
           materialTypes: [
             {
               materialTypeGeneral: {
@@ -441,6 +490,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        accessTypes: [
+          {
+            code: "ONLINE",
+            display: "Digital",
+          },
+        ],
+        access: [],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -515,6 +571,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "Digital",
+            },
+          ],
+          access: [],
           materialTypes: [
             {
               materialTypeGeneral: {
@@ -563,6 +626,13 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        accessTypes: [
+          {
+            code: "ONLINE",
+            display: "Digital",
+          },
+        ],
+        access: [],
         materialTypes: [
           {
             materialTypeGeneral: {

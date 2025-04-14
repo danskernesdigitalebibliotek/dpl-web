@@ -1,5 +1,4 @@
 import { motion } from "framer-motion"
-import { uniqBy } from "lodash"
 import { useRouter } from "next/navigation"
 import React from "react"
 

@@ -7,6 +7,8 @@ type Manifestation = Work["manifestations"]["all"][0]
 
 export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
   pid: "1",
+  accessTypes: [],
+  access: [],
   genreAndForm: ["myter", "billedbøger"],
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],
@@ -26,6 +28,8 @@ export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
 
 export const audioBookManifestationFactory = Factory.define<Manifestation>(() => ({
   pid: "2",
+  accessTypes: [],
+  access: [],
   genreAndForm: ["myter", "billedbøger"],
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],

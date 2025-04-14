@@ -2,6 +2,7 @@ import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graph
 
 const manifestationMock = {
   pid: "870970-basis:51579623",
+  accessTypes: [],
   identifiers: [
     {
       type: "PUBLIZON",
