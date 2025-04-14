@@ -8,8 +8,8 @@ import { getLibraryUserOrderListRequest } from "./(lib)/requests"
 import { libraryUserOrderListSchema } from "./(lib)/schemas"
 import { isOrderItem } from "./(lib)/types"
 
-async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TUserInfo }) {
-  const { userInfo } = context
+async function getLibraryUserOrder(request: NextRequest, context: { uniLoginUserInfo: TUserInfo }) {
+  const { uniLoginUserInfo } = context
   const libraryUserOrderList = libraryUserOrderListSchema.transform(orderListData => {
     const orderListResponse = orderListData.response
     const orderItem = orderListResponse.data.orderitem
@@ -44,7 +44,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
   })
 
   try {
-    const responseData = await getLibraryUserOrderListRequest(userInfo)
+    const responseData = await getLibraryUserOrderListRequest(uniLoginUserInfo)
     return NextResponse.json(libraryUserOrderList.parse(responseData))
   } catch (error) {
     console.error(error)

@@ -9,7 +9,7 @@ import { createLoanSchema } from "./(lib)/schemas"
 
 async function createdigitalLoan(
   request: NextRequest,
-  context: { userInfo: TUserInfo; params: { identifier: string } }
+  context: { uniLoginUserInfo: TUserInfo; params: { identifier: string } }
 ) {
   const { identifier } = context.params
   const createLoan = createLoanSchema.transform(loanData => {
@@ -23,7 +23,7 @@ async function createdigitalLoan(
     }
   })
   try {
-    const responseData = await createLoanRequest(context.userInfo, identifier)
+    const responseData = await createLoanRequest(context.uniLoginUserInfo, identifier)
     return NextResponse.json(createLoan.parse(responseData))
   } catch (error) {
     console.error(error)

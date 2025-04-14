@@ -8,13 +8,12 @@ function getEnvs() {
     GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
     GRAPHQL_BASIC_TOKEN_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS,
     GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI,
-    LIBRARY_TOKEN: process.env.NEXT_PUBLIC_LIBRARY_TOKEN,
+    CODEGEN_LIBRARY_TOKEN: process.env.CODEGEN_LIBRARY_TOKEN,
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NODE_ENV: process.env.NODE_ENV,
     TEST_MODE: process.env.TEST_MODE,
 
     // Server-only env variables
-    UNILOGIN_API_URL: process.env.UNILOGIN_API_URL,
     UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
     UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
     UNILOGIN_WELLKNOWN_URL: process.env.UNILOGIN_WELLKNOWN_URL,
@@ -33,7 +32,7 @@ const EnvSchema = z.object({
   GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
   GRAPHQL_BASIC_TOKEN_DPL_CMS: z.string(),
   GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl),
-  LIBRARY_TOKEN: z.string(),
+  CODEGEN_LIBRARY_TOKEN: z.string().optional(),
   APP_URL: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
   TEST_MODE: z.coerce.boolean().default(false),
@@ -42,7 +41,6 @@ const EnvSchema = z.object({
 // Environment variables only available in Nodejs.
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
-  UNILOGIN_API_URL: z.string().refine(validateUrl),
   GO_SESSION_SECRET: z.string().min(32),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),

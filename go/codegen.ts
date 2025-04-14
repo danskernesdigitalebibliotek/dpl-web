@@ -57,7 +57,7 @@ const config: CodegenConfig = {
         {
           [getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")]: {
             headers: {
-              Authorization: `Bearer ${getEnv("LIBRARY_TOKEN")}`,
+              Authorization: `Bearer ${getEnv("CODEGEN_LIBRARY_TOKEN")}`,
             },
           },
         },

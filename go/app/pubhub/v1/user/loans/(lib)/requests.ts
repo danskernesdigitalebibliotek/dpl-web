@@ -4,13 +4,13 @@ import { createClientAsync } from "@/lib/soap/publizon/v2_7/generated/getlibrary
 
 import { TLibraryUserOrderList } from "./types"
 
-export const getLibraryUserOrderListRequest = async (userInfo: TUserInfo) => {
+export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo) => {
   const client = await createClientAsync(
     "./lib/soap/publizon/v2_7/wsdl/getlibraryuserorderlist.wsdl"
   )
   const [response] = await client.GetLibraryUserOrderListAsync({
     ...getPublizonServiceParameters(),
-    cardnumber: userInfo.uniid,
+    cardnumber: uniLoginUserInfo.uniid,
   })
   return response.GetLibraryUserOrderListResult as TLibraryUserOrderList
 }

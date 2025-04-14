@@ -3,7 +3,7 @@ import { z } from "zod"
 
 import { getSession } from "@/lib/session/session"
 
-import { userInfoSchema } from "./schemas"
+import { uniLoginUserInfoSchema } from "./schemas"
 
 type Handler = <TContext>(req: NextRequest, context?: TContext) => Promise<Response>
 
@@ -17,10 +17,10 @@ export function withAuth(handler: Handler): Handler {
         isLoggedIn: z.literal(true),
         type: z.literal("unilogin"),
       }).parse(session)
-      const userInfo = userInfoSchema.parse(session?.userInfo)
+      const uniLoginUserInfo = uniLoginUserInfoSchema.parse(session?.uniLoginUserInfo)
 
       // If authenticated, call the original handler
-      return handler(req, { ...context, userInfo })
+      return handler(req, { ...context, uniLoginUserInfo })
     } catch (error) {
       console.error(error)
       return new Response("Not Authorized", { status: 401 })

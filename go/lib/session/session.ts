@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
+import { loadPatronServerSide } from "../helpers/fbs"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
@@ -30,10 +31,14 @@ export interface TSessionData {
   expires?: Date
   refresh_expires?: Date
   code_verifier?: string
-  userInfo?: {
+  uniLoginUserInfo?: {
     sub: string
     uniid: string
     institution_ids: string[]
+  }
+  user?: {
+    name?: string
+    username?: string
   }
   adgangsplatformenUserToken?: string
   type: TSessionType
@@ -47,7 +52,8 @@ export const defaultSession: TSessionData = {
   expires: undefined,
   refresh_expires: undefined,
   code_verifier: undefined,
-  userInfo: undefined,
+  uniLoginUserInfo: undefined,
+  user: undefined,
   adgangsplatformenUserToken: undefined,
   type: "anonymous",
 }
@@ -129,6 +135,16 @@ export const saveAdgangsplatformenSession = async (
   session.isLoggedIn = true
   session.type = "adgangsplatformen"
   await setAdgangsplatformenUserTokenOnSession(session, userToken)
+  // Get name of user/patron from Adgangsplatformen.
+  const patronInfo = await loadPatronServerSide(userToken.token)
+  if (patronInfo?.patron?.name) {
+    session.user = {
+      name: patronInfo.patron.name,
+      // Adgangsplatformen does not return a username.
+      username: undefined,
+    }
+  }
+
   await session.save()
 }
 

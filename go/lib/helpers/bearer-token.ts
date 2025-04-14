@@ -11,19 +11,18 @@ import {
   setUniloginTokensOnSession,
 } from "../session/session"
 import { TUniloginTokenSet } from "../types/session"
+import { TServiceType, getApServiceSettings } from "./ap-service"
 import { getLibraryTokenCookieValue } from "./library-token"
-import { TServiceType, getServiceSettings } from "./services"
 
-export const getBearerTokenServerSide = async (
-  serviceType: TServiceType,
-  session?: IronSession<TSessionData>
-) => {
-  const useLibraryToken = getServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
+export const getBearerTokenServerSide = async (serviceType: TServiceType) => {
+  const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
   const libraryToken = await getLibraryTokenCookieValue()
-  const userToken = session?.adgangsplatformenUserToken
   if (useLibraryToken && libraryToken) {
     return libraryToken
   }
+
+  const session = await getSession()
+  const userToken = session?.adgangsplatformenUserToken
 
   if (userToken) {
     return userToken
@@ -41,10 +40,9 @@ export const createServerQueryFn = async <TQuery, TVariables>(
   variables: TVariables,
   options?: RequestInit["headers"]
 ) => {
-  const session = await getSession()
-  const bearerToken = await getBearerTokenServerSide("fbi", session)
+  const bearerToken = await getBearerTokenServerSide("fbi")
 
-  return fetcher(variables, { ...options, Authorization: `Bearer ${bearerToken}` })
+  return fetcher(variables, { ...options, authorization: `Bearer ${bearerToken}` })
 }
 
 export const refreshUniloginTokens = async (

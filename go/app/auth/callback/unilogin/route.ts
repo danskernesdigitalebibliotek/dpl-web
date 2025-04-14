@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
 
     // UserInfo Request
     const userInfoResponse = await client.fetchUserInfo(config, tokenSet.access_token, claims.sub)
-    const userinfo = schemas.userInfo.parse(userInfoResponse)
+    const userinfo = schemas.uniLoginUserInfo.parse(userInfoResponse)
 
     // Set basic session info.
     session.isLoggedIn = true
@@ -118,13 +118,19 @@ export async function GET(request: NextRequest) {
 
     // Set user info.
     // TODO: After Publizon allows DDF test users to loan, we can remove thie if statement.
-    session.userInfo = {
+    session.uniLoginUserInfo = {
       sub: userinfo.sub,
       uniid: introspect.uniid,
       // TODO: Rename this into institutionIds
       institution_ids:
         institutionId === "A04441" ? ["101047"] : getInstitutionIds(introspect.institution_ids),
     }
+    session.user = {
+      // Unilogin does not provide a name, so we set it to undefined.
+      name: undefined,
+      username: introspect.uniid,
+    }
+
     await session.save()
   } catch (error) {
     console.error(error)
