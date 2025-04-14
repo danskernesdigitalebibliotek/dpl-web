@@ -57,6 +57,7 @@ if (getenv('MARIADB_DATABASE_OVERRIDE')) {
 // Exclude certain modules from configuration export.
 $settings['config_exclude_modules'] = [
   // Development modules that is only enabled in development environment.
+  'bnf_example_content',
   'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',

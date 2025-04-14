@@ -1,0 +1,83 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 5b747546-8f54-41bb-87b6-0a87c1a1ea32
+  bundle: article
+  default_langcode: da
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Eksempel indhold'
+  created:
+    -
+      value: 1744185350
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  bnf_state:
+    -
+      value: 0
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Eksempel indhold | BNF'
+  path:
+    -
+      alias: /articles/eksempel-indhold
+      langcode: und
+      pathauto: 1
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: e8836eab-29b1-4cfd-8c2c-ab7f8a13cb08
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1744185350
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Her er et stykke indhold der kan deles til et bibliotek.</p>'
+              format: basic
+  field_publication_date:
+    -
+      value: '2025-04-09'
+  field_show_override_author:
+    -
+      value: false
+  field_subtitle:
+    -
+      value: 'Til deling.'
