@@ -48,6 +48,7 @@ const WorkPageButtonsLoggedOut = ({
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={"Lån e-bog"}
+          theme={"primary"}
           disabled={!identifier}
           onClick={() => {
             openSheet({
@@ -76,6 +77,7 @@ const WorkPageButtonsLoggedOut = ({
         </WorkPageButton>
         <WorkPageButton
           ariaLabel="Lån lydbog"
+          theme={"primary"}
           disabled={!identifier}
           onClick={() => {
             openSheet({
@@ -104,6 +106,7 @@ const WorkPageButtonsLoggedOut = ({
         </WorkPageButton>
         <WorkPageButton
           ariaLabel="Lån podcast"
+          theme={"primary"}
           disabled={!identifier}
           onClick={() => {
             openSheet({
