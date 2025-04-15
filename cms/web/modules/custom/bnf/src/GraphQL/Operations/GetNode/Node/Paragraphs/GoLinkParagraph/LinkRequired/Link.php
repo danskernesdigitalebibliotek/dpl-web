@@ -7,6 +7,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\
  * @property string $__typename
  * @property string|null $title
  * @property string|null $url
+ * @property string|null $id
  */
 class Link extends \Spawnia\Sailor\ObjectLike
 {
@@ -14,11 +15,13 @@ class Link extends \Spawnia\Sailor\ObjectLike
      * @param bool $internal
      * @param string|null $title
      * @param string|null $url
+     * @param string|null $id
      */
     public static function make(
         $internal,
         $title = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $url = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $id = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
@@ -31,6 +34,9 @@ class Link extends \Spawnia\Sailor\ObjectLike
         }
         if ($url !== self::UNDEFINED) {
             $instance->url = $url;
+        }
+        if ($id !== self::UNDEFINED) {
+            $instance->id = $id;
         }
 
         return $instance;
@@ -46,6 +52,7 @@ class Link extends \Spawnia\Sailor\ObjectLike
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'title' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'url' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'id' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

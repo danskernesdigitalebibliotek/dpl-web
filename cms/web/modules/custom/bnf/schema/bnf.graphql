@@ -239,6 +239,7 @@ type Link {
 
   """Whether the link is internal to this website."""
   internal: Boolean!
+  id: String
 }
 
 """Entity type media."""
@@ -1853,20 +1854,6 @@ type Query {
   goConfiguration: GoConfiguration
   dplTokens: DplTokens
 
-  """Load a Paragraph entity by id."""
-  paragraph(
-    """The id of the Paragraph to load."""
-    id: ID!
-
-    """Optionally set the response language. Eg en, ja, fr."""
-    langcode: String
-
-    """
-    Optionally set the revision of the entity. Eg current, latest, or an ID.
-    """
-    revision: ID
-  ): ParagraphUnion
-
   """Load a Node entity by id."""
   node(
     """The id of the Node to load."""
@@ -1880,6 +1867,20 @@ type Query {
     """
     revision: ID
   ): NodeUnion
+
+  """Load a Paragraph entity by id."""
+  paragraph(
+    """The id of the Paragraph to load."""
+    id: ID!
+
+    """Optionally set the response language. Eg en, ja, fr."""
+    langcode: String
+
+    """
+    Optionally set the revision of the entity. Eg current, latest, or an ID.
+    """
+    revision: ID
+  ): ParagraphUnion
 
   """Schema information."""
   info: SchemaInformation!
