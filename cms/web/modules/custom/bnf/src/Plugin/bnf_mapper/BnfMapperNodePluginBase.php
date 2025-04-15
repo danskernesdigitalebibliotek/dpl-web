@@ -17,6 +17,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\node\NodeInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Base class for BNF mapper node plugins.
@@ -41,6 +43,8 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
+    #[Autowire(service: 'logger.channel.bnf')]
+    protected LoggerInterface $logger,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
@@ -49,6 +53,9 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
 
   /**
    * Getting the existing node, or creating it from scratch.
+   *
+   * This also adds the fields to the node, that all node types uses - such
+   * as title and status.
    */
   public function getNode(NodeArticle|NodePage|NodeGoArticle|NodeGoCategory|NodeGoPage $object, string $bundle): NodeInterface {
     /** @var \Drupal\node\Entity\Node[] $existing */
@@ -68,7 +75,42 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
     $node->set('title', $object->title);
     $node->set('status', $object->status ? NodeInterface::PUBLISHED : NodeInterface::NOT_PUBLISHED);
 
+    $node->set('field_paragraphs', $this->getParagraphs($object));
+    $node->set('field_publication_date', $this->getDateTimeValue($object->publicationDate, FALSE));
+
+    // Not all node types have canonicalUrls, but we're planning to add them
+    // eventually.
+    if (isset($object->canonicalUrl) && $node->hasField('field_canonical_url')) {
+      $node->set('field_canonical_url', [
+        'uri' => $object->canonicalUrl->url,
+      ]);
+    }
+
     return $node;
+  }
+
+  /**
+   * Runs paragraph mappers if they exist, and sets them on the node.
+   *
+   * @return mixed[]
+   *   An array of paragrahs, processed by the respective mappers.
+   *   NOTICE: Unsupported paragraphs are skipped.
+   */
+  private function getParagraphs(NodeArticle|NodePage|NodeGoArticle|NodeGoCategory|NodeGoPage $object): array {
+    $paragraphs = [];
+    $objectParagraphs = $object->paragraphs ?? [];
+
+    foreach ($objectParagraphs as $paragraph) {
+      try {
+        $paragraphs[] = $this->manager->map($paragraph);
+      }
+      catch (\Exception $e) {
+        $this->logger->error('Unable to map paragraph of type - skipping: ' . $e->getMessage());
+      }
+    }
+
+    return $paragraphs;
+
   }
 
 }

@@ -26,25 +26,6 @@ class NodeGoPageMapper extends BnfMapperNodePluginBase {
 
     $node = $this->getNode($object, 'go_page');
 
-    $node->set('field_publication_date', $this->getDateTimeValue($object->publicationDate, FALSE));
-
-    // The canonical URL field does not exist yet, but will eventually.
-    if (isset($object->canonicalUrl) && $node->hasField('field_canonical_url')) {
-      $node->set('field_canonical_url', [
-        'uri' => $object->canonicalUrl->url,
-      ]);
-    }
-
-    if ($object->paragraphs) {
-      $paragraphs = [];
-
-      foreach ($object->paragraphs as $paragraph) {
-        $paragraphs[] = $this->manager->map($paragraph);
-      }
-
-      $node->set('field_paragraphs', $paragraphs);
-    }
-
     return $node;
   }
 

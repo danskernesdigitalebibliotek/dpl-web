@@ -1,7 +1,9 @@
 uuid: f3a20524-e4c0-45ec-9407-32b0fcbdd7e5
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - linkit
 name: Basic
 format: basic
 weight: 0
@@ -15,3 +17,10 @@ filters:
       allowed_html: '<br> <p> <h2> <h3> <strong> <em> <blockquote> <a href target="_blank" data-entity-type data-entity-uuid data-entity-substitution> <ul> <ol reversed start> <li> <table> <tr> <td rowspan colspan> <th rowspan colspan> <thead> <tbody> <tfoot> <caption>'
       filter_html_help: true
       filter_html_nofollow: false
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: 0
+    settings:
+      title: true

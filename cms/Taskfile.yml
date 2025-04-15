@@ -199,7 +199,7 @@ tasks:
       # Install site.
       - task dev:cli -- ./dev-scripts/install-site.sh {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       # Possibly install the BNF site.
-      - task dev:bnfcli -- ./dev-scripts/install-site.sh --no-content {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      - task dev:bnfcli -- ./dev-scripts/install-site.sh --bnf-content {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       - task dev:bnfcli -- drush --yes config:set system.site name BNF
       # Show a one-time login to the local site(s).
       - task dev:cli -- drush user-login

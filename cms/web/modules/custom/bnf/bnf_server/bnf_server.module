@@ -37,12 +37,13 @@ function bnf_server_preprocess_page(array &$variables): void {
     return;
   }
 
+  $variables['#cache']['contexts'][] = 'bnf_library_session';
+
   if ($site_name) {
     $variables['page']['content']['logged_notifier'] = [
       '#theme' => 'bnf_server_logged_notifier',
       '#name' => $site_name,
       '#url' => Url::fromRoute('view.importable_content.page'),
-      '#cache' => ['max-age' => 0],
     ];
   }
 
@@ -51,6 +52,7 @@ function bnf_server_preprocess_page(array &$variables): void {
   $term = \Drupal::routeMatch()->getParameter('taxonomy_term');
 
   if ($route_name === 'entity.node.canonical' && ($node instanceof Node)) {
+
     $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
 
     if (in_array($node->bundle(), $allowed_cts)) {
@@ -73,7 +75,6 @@ function bnf_server_preprocess_page(array &$variables): void {
 
     $variables['page']['content']['import_link'] = [
       '#theme' => 'bnf_server_import_link',
-      '#cache' => ['max-age' => 0],
       '#label' => t(
         'Toggle subscription of "@content_title" on @site_name',
         ['@content_title' => $term->getName(), '@site_name' => $site_name],
