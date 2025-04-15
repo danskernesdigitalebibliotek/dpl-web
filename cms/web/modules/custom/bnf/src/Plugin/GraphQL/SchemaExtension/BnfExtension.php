@@ -18,9 +18,7 @@ use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
 class BnfExtension extends SdlSchemaExtensionPluginBase {
 
   /**
-   * Adding the URL to the content, as part of the NodeInterface.
-   *
-   * Notice that this is linked together with bnf_extension.extension.graphqls.
+   * {@inheritdoc}
    */
   public function registerResolvers(ResolverRegistryInterface $registry): void {
     $builder = new ResolverBuilder();
@@ -38,6 +36,9 @@ class BnfExtension extends SdlSchemaExtensionPluginBase {
         ->map('entity', $builder->fromParent())
     ));
 
+    $registry->addFieldResolver('Link', 'id', $builder->produce('linked_content_uuid_producer')
+      ->map('link', $builder->fromParent())
+    );
   }
 
 }
