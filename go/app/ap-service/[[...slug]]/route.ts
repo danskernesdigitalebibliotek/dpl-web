@@ -49,6 +49,7 @@ async function proxyRequest(
   const authHeader = await getAuthHeader(request, serviceType)
 
   try {
+    // Keep this for debugging purposes. TODO: Remove this when not needed.
     // eslint-disable-next-line no-console
     console.log({ authHeader })
     // eslint-disable-next-line no-console
