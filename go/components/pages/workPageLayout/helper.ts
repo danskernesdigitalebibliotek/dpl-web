@@ -20,15 +20,12 @@ export const getManifestationMaterialType = (
 const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
 const allowedPhysicalMaterialTypes = ["BOOKS"]
 
-// Filter out manifestations that are not allowed material types
+// TODO: write unit tests for this function
+// Exclude manifestations with material types that are not allowed
 export const filterManifestationsByMaterialType = (
   manifestations: ManifestationWorkPageFragment[]
 ) => {
   return filter(manifestations, manifestation => {
-    // if (!manifestation.accessTypes?.length) {
-    //   return false
-    // }
-
     // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
     if (manifestation.accessTypes[0].code === "PHYSICAL") {
       return allowedPhysicalMaterialTypes.includes(
@@ -42,7 +39,8 @@ export const filterManifestationsByMaterialType = (
   })
 }
 
-// If multiple manifestations has the same materialtype find the latest edition
+// TODO: write unit tests for this function
+// If multiple manifestations share the same material type, keep only the latest edition
 export const filterManifestationsByEdition = (manifestations: ManifestationWorkPageFragment[]) => {
   return manifestations.reduce((acc, current) => {
     const existing = acc.find(
@@ -66,6 +64,18 @@ export const filterManifestationsByEdition = (manifestations: ManifestationWorkP
     }
     return acc
   }, [] as ManifestationWorkPageFragment[])
+}
+
+// Sort manifestations by materialTypeSortPriority
+export const sortManifestationsBySortPriority = (
+  manifestations: ManifestationWorkPageFragment[]
+): ManifestationWorkPageFragment[] => {
+  const sortPriority = goConfig("materialtypes.sortpriority")
+  return manifestations.sort((manifestationA, manifestationB) => {
+    const priorityA = sortPriority.indexOf(manifestationA.materialTypes[0].materialTypeGeneral.code)
+    const priorityB = sortPriority.indexOf(manifestationB.materialTypes[0].materialTypeGeneral.code)
+    return priorityA - priorityB
+  })
 }
 
 export const getManifestationMaterialTypeSpecific = (
@@ -172,16 +182,6 @@ export const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMa
       ),
     }
   }) as SlideSelectOption[]
-}
-
-export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
-  return options.sort((a, b) => {
-    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
-    return (
-      goConfig("materialtypes.sortpriority").indexOf(a.code) -
-      goConfig("materialtypes.sortpriority").indexOf(b.code)
-    )
-  })
 }
 
 export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {

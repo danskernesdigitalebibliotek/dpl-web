@@ -33,24 +33,22 @@ function WorkPageLayout({ workId }: { workId: string }) {
   const work = data?.work as WorkFullWorkPageFragment
   const manifestations = work?.manifestations.all as ManifestationWorkPageFragment[]
 
-  // Filter out manifestations that not digital except physical books
-  const filteredManifestationsByMaterialType = filterManifestationsByMaterialType(manifestations)
-  // If multiple manifestations has the same type find the latest edition
-  const filteredManifestationsByEdition = filterManifestationsByEdition(
-    filteredManifestationsByMaterialType
+  // Filter manifestations
+  const filteredManifestations = filterManifestationsByEdition(
+    filterManifestationsByMaterialType(manifestations)
   )
 
   useEffect(() => {
     // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
     // Filter out manifestations that don't match the search params material type
-    const selectedManifestation = filteredManifestationsByEdition.find(manifestation => {
+    const selectedManifestation = filteredManifestations.find(manifestation => {
       return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
     })
 
     // Set the selected manifestation in the state
     setSelectedManifestation(selectedManifestation)
-  }, [filteredManifestationsByEdition, searchParams])
+  }, [filteredManifestations, searchParams])
 
   if (isLoading && !data) {
     return (
@@ -69,7 +67,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
       {work && selectedManifestation && (
         <>
           <WorkPageHeader
-            manifestations={filteredManifestationsByEdition}
+            manifestations={filteredManifestations}
             work={work}
             selectedManifestation={selectedManifestation}
           />
