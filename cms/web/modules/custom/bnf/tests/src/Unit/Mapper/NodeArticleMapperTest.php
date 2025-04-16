@@ -101,6 +101,13 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
 
     // Testing that the mapper sets 'The library' as a fallback.
     $this->entityProphecy->set('field_override_author', 'Biblioteket')->shouldHaveBeenCalled();
+
+    // Testing that the mapper still respects an overriden author.
+    $graphqlArticle->overrideAuthor = 'A custom author';
+    $node = $mapper->map($graphqlArticle);
+    $this->assertSame($node, $this->entityProphecy->reveal());
+    $this->entityProphecy->set('field_override_author', 'A custom author')->shouldHaveBeenCalled();
+
   }
 
 }
