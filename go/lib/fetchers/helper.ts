@@ -31,10 +31,10 @@ export const buildParams = (data: FetchParams) => {
 
 export const createAuthHeader = (
   token: RequestOptions["bearerToken"]
-): { Authorization: `Bearer ${string}` } | Record<string, never> =>
+): { authorization: `Bearer ${string}` } | Record<string, never> =>
   token
     ? {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       }
     : {}
 

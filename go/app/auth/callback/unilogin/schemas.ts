@@ -13,7 +13,7 @@ const schemas = {
     uniid: z.string(),
     institution_ids: z.string(),
   }),
-  userInfo: z.object({
+  uniLoginUserInfo: z.object({
     sub: z.string(),
   }),
   institution: z.object({

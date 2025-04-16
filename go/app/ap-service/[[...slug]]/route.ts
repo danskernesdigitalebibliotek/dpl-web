@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { TServiceType, getApServiceUrl } from "@/lib/helpers/ap-service"
 import { getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
-import { TServiceType, getServiceSettings } from "@/lib/helpers/services"
-import { getSession } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
 
@@ -13,8 +12,7 @@ const getAuthHeader = async (request: NextRequest, serviceType: TServiceType) =>
     return authHeader
   }
   // Otherwise, get the bearer token from the session or library token cookie.
-  const session = await getSession()
-  const bearerToken = await getBearerTokenServerSide(serviceType, session)
+  const bearerToken = await getBearerTokenServerSide(serviceType)
   if (bearerToken) {
     return `Bearer ${bearerToken}`
   }
@@ -28,13 +26,19 @@ async function proxyRequest(
   body?: string
 ) {
   const proxiedHeaders: Record<string, string> = {}
+  // No need to send along the cookies.
+  const headersToIgnore = ["cookie"]
   request.headers.forEach((value, key) => {
+    if (headersToIgnore.includes(key.toLowerCase())) {
+      return
+    }
     proxiedHeaders[key] = value
   })
 
   const { slug } = await params
   const serviceType = slug.shift() as TServiceType
-  const baseUrl = getServiceSettings(serviceType)?.url ?? null
+  const baseUrl = getApServiceUrl(serviceType)
+
   if (!baseUrl) {
     return new Response("Not found", { status: 404 })
   }
@@ -48,8 +52,8 @@ async function proxyRequest(
     const result = await fetch(serviceUrl, {
       method,
       headers: {
+        ...(authHeader ? { authorization: authHeader } : {}),
         ...proxiedHeaders,
-        ...(authHeader ? { Authorization: authHeader } : {}),
       },
       body,
     })

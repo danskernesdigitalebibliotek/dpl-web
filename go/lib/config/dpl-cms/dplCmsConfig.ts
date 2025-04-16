@@ -29,7 +29,6 @@ export const getDplCmsUniloginConfig = async () => {
       wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,
       clientId: config.unilogin.unilogin_api_client_id ?? null,
       clientSecret: config.unilogin.unilogin_api_client_secret ?? null,
-      apiData: config.unilogin.unilogin_api_url ?? null,
     }
   }
 
