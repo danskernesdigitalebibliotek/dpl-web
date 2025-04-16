@@ -3,12 +3,12 @@ import "./commands"
 
 beforeEach(() => {
   // Mock the library token request
-  cy.task("mockApiResponse", {
+  cy.mockServerGraphQLQuery({
     operationName: "getAdgangsplatformenLibraryToken",
     data: GetAdgangsplatformenLibraryToken.build(),
   })
 })
 
 afterEach(() => {
-  cy.task("resetApiMocks")
+  cy.resetServerMocks()
 })

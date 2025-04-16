@@ -1,43 +1,55 @@
-import { type Mockttp, getLocal } from "mockttp"
+import { HttpResponse, graphql, http } from "msw"
+import { setupServer } from "msw/node"
+
+import {
+  MockGraphQLMutationParams,
+  MockGraphQLQueryParams,
+  MockRestResponseParams,
+} from "../commands"
 
 class MockApiServer {
-  private readonly server: Mockttp
-  private readonly port: number
+  private readonly server
 
   constructor() {
-    this.server = getLocal()
-    this.port = 9000 // Make sure this matches the port in your custom API_URL env url
+    this.server = setupServer()
   }
 
   reset() {
-    this.server.reset()
+    this.server.resetHandlers()
   }
 
   start() {
-    this.server.start(this.port)
-    this.server
-      .forPost("/graphql")
-      .thenReply(200, "Mock API server is up")
-      .then(() => {
-        console.info(`\n Mock API server running on http://localhost:${this.port}\n`)
-      })
+    this.server.listen({ onUnhandledRequest: "warn" })
+    console.info(`\n MSW Node server is running and intercepting requests\n`)
   }
 
   stop() {
-    this.server.stop().then(() => {
-      console.info(`Mock API server stopped`)
+    this.server.close()
+    console.info(`MSW Node server stopped`)
+  }
+
+  mockGraphQLQuery({ operationName, data }: MockGraphQLQueryParams) {
+    const handler = graphql.query(operationName, () => {
+      return HttpResponse.json({ data })
     })
+
+    this.server.use(handler)
   }
 
-  mockResponse({ operationName, data }: { operationName: string; data: object }) {
-    this.server.forAnyRequest().withJsonBodyIncluding({ operationName }).thenJson(200, { data })
+  mockGraphQLMutation({ operationName, data }: MockGraphQLMutationParams) {
+    const handler = graphql.mutation(operationName, () => {
+      return HttpResponse.json({ data })
+    })
+
+    this.server.use(handler)
   }
 
-  mockErrorResponse({ operationName, message }: { operationName: string; message: string }) {
-    this.server
-      .forAnyRequest()
-      .withJsonBodyIncluding({ operationName })
-      .thenJson(500, { error: message })
+  mockRestResponse({ method, url, data }: MockRestResponseParams) {
+    const handler = http[method](url, () => {
+      return HttpResponse.json(data)
+    })
+
+    this.server.use(handler)
   }
 }
 

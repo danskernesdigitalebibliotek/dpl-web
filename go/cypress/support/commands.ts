@@ -30,6 +30,22 @@ type InterceptCoversParams = {
   statusCode?: number
 }
 
+export type MockGraphQLQueryParams = {
+  operationName: string
+  data: object
+}
+
+export type MockGraphQLMutationParams = {
+  operationName: string
+  data: object
+}
+
+export type MockRestResponseParams = {
+  method: "get" | "post" | "put" | "delete" | "patch"
+  url: string
+  data: object
+}
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -60,6 +76,33 @@ declare global {
        * @example cy.interceptCovers({ covers: coverService.build() })
        */
       interceptCovers(params: InterceptCoversParams): void
+
+      /**
+       * Mocks a server-side GraphQL query using MSW
+       * @param params - The parameters for mocking the GraphQL query
+       * @example cy.mockServerGraphQLQuery({ operationName: "GetUser", data: { user: { id: 1, name: "Test User" } } })
+       */
+      mockServerGraphQLQuery(params: MockGraphQLQueryParams): void
+
+      /**
+       * Mocks a server-side GraphQL mutation using MSW
+       * @param params - The parameters for mocking the GraphQL mutation
+       * @example cy.mockServerGraphQLMutation({ operationName: "UpdateUser", data: { success: true } })
+       */
+      mockServerGraphQLMutation(params: MockGraphQLMutationParams): void
+
+      /**
+       * Mocks a server-side REST API endpoint using MSW
+       * @param params - The parameters for mocking the REST API endpoint
+       * @example cy.mockServerRest({ method: "get", url: "/api/users", data: { users: [] } })
+       */
+      mockServerRest(params: MockRestResponseParams): void
+
+      /**
+       * Resets all server-side MSW mocks
+       * @example cy.resetServerMocks()
+       */
+      resetServerMocks(): void
     }
   }
 }
@@ -100,4 +143,33 @@ Cypress.Commands.add("interceptCovers", ({ covers, statusCode = 200 }: Intercept
       req.reply({ statusCode })
     }
   }).as(`Cover Service`)
+})
+
+/**
+ * Server-side GraphQL query mocking with MSW
+ */
+Cypress.Commands.add("mockServerGraphQLQuery", props => {
+  cy.task("mockGraphQLQuery", props)
+})
+
+/**
+ * Server-side GraphQL mutation mocking with MSW
+ */
+Cypress.Commands.add("mockServerGraphQLMutation", props => {
+  cy.task("mockGraphQLMutation", props)
+})
+
+/**
+ * Server-side REST API mocking with MSW
+ */
+Cypress.Commands.add("mockServerRest", props => {
+  cy.task("mockRestResponse", props)
+})
+
+/**
+ * Reset all server-side MSW mocks
+ * Should not be neccessary to use this command, as MSW will automatically reset mocks before each test
+ */
+Cypress.Commands.add("resetServerMocks", () => {
+  cy.task("resetApiMocks")
 })

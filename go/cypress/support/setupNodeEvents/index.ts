@@ -1,3 +1,8 @@
+import {
+  MockGraphQLMutationParams,
+  MockGraphQLQueryParams,
+  MockRestResponseParams,
+} from "../commands"
 import MockApiServer from "./mockApiServer"
 
 export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = on => {
@@ -11,15 +16,30 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = on => {
     mockApiServer.stop()
   })
 
+  function log(requestType: string, operationName: string) {
+    console.info(`\x1b[32m${requestType}:`, `\x1b[34m${operationName}`)
+  }
+
   on("task", {
-    mockApiResponse({ operationName, data }) {
-      mockApiServer.mockResponse({ operationName, data })
-      return null // important to return null from Cypress node event tasks to signal they're complete; see Cypress docs.
+    mockGraphQLQuery({ operationName, data }: MockGraphQLQueryParams) {
+      log("Mocking GraphQL query", operationName)
+
+      mockApiServer.mockGraphQLQuery({ operationName, data })
+      return null // Return null to indicate that the task has been completed
     },
 
-    mockApiErrorResponse({ operationName, message }) {
-      mockApiServer.mockErrorResponse({ operationName, message })
-      return null
+    mockGraphQLMutation({ operationName, data }: MockGraphQLMutationParams) {
+      log("Mocking GraphQL mutation", operationName)
+
+      mockApiServer.mockGraphQLMutation({ operationName, data })
+      return null // Return null to indicate that the task has been completed
+    },
+
+    mockRestResponse({ method, url, data }: MockRestResponseParams) {
+      log("Mocking REST response", `${method} ${url}`)
+
+      mockApiServer.mockRestResponse({ method, url, data })
+      return null // Return null to indicate that the task has been completed
     },
 
     resetApiMocks() {
