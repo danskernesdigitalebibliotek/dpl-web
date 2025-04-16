@@ -43,6 +43,11 @@ const search = {
       filter: "materialTypesGeneral",
       translation: "Type",
     },
+    // Keep this for testing purposes
+    // MATERIALTYPESSPECIFIC: {
+    //   filter: "materialTypesSpecific",
+    //   translation: "Type",
+    // },
     MAINLANGUAGES: {
       filter: "mainLanguages",
       translation: "Sprog",

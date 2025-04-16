@@ -49,6 +49,17 @@ async function proxyRequest(
   const authHeader = await getAuthHeader(request, serviceType)
 
   try {
+    // eslint-disable-next-line no-console
+    console.log({ authHeader })
+    // eslint-disable-next-line no-console
+    console.log({ proxiedHeaders })
+    // eslint-disable-next-line no-console
+    console.log({ serviceUrl })
+    // eslint-disable-next-line no-console
+    console.log({ method })
+    // eslint-disable-next-line no-console
+    console.log({ body })
+
     const result = await fetch(serviceUrl, {
       method,
       headers: {

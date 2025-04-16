@@ -13,6 +13,15 @@ import { TChildrenOrAdultsOption, TFilters } from "./types"
 
 const childrenOrAdultsFilter = {
   childrenOrAdults: ["til børn"] as TChildrenOrAdultsOption[],
+  materialTypesSpecific: [
+    "bog",
+    "e-bog",
+    "lydbog (online)",
+    "billedbog (online)",
+    "graphic novel (online)",
+    "tegneserie (online)",
+    "podcast",
+  ],
 }
 
 export const performSearch = fromPromise(
