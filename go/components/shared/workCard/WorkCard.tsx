@@ -3,15 +3,22 @@
 import { useQueries } from "@tanstack/react-query"
 import React from "react"
 
-import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import {
+  filterManifestationsByEdition,
+  filterManifestationsByMaterialType,
+  getIconNameFromMaterialType,
+  sortManifestationsBySortPriority,
+} from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { getAllWorkPids } from "@/components/shared/workCard/helper"
 import { cyKeys } from "@/cypress/support/constants"
-import goConfig from "@/lib/config/goConfig"
-import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ManifestationWorkPageFragment,
+  WorkTeaserSearchPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -28,7 +35,7 @@ export type WorkCardProps = {
 }
 
 const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
-  const manifestations = work.manifestations.all
+  const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
   const bestRepresentation = work.manifestations.bestRepresentation
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
@@ -37,10 +44,19 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
-  // for each manifestation, get publizon data and add to array
+
+  // Filter and manifestations
+  const filteredManifestations = filterManifestationsByMaterialType(
+    filterManifestationsByEdition(manifestations)
+  )
+
+  // Sort manifestations
+  const sortedManifestations = sortManifestationsBySortPriority(filteredManifestations)
+
   // TODO: in storybook, request don't work, so we need make a mock request using fishery
+  // For each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
-    queries: manifestations.map(manifestation => {
+    queries: sortedManifestations.map(manifestation => {
       const isbn =
         manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
 
@@ -51,39 +67,13 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     }),
     combine: results => {
       // combine manifestation data with publizon data
-      return manifestations.map((manifestation, index) => ({
-        manifestation,
+      return sortedManifestations.map((manifestation, index) => ({
+        ...manifestation,
         publizonData: results[index].data?.product,
       }))
     },
   })
-  // if any of the manifestations are the same material type filter out based on newest edition
-  // TODO: isolate this logic to a helper function and test it
-  const filteredManifestations = manifestationsWithPublizonData.reduce(
-    (acc, current) => {
-      const existing = acc.find(
-        item =>
-          item.manifestation.materialTypes[0].materialTypeGeneral.code ===
-          current.manifestation.materialTypes[0].materialTypeGeneral.code
-      )
-      if (!existing) {
-        acc.push(current)
-      } else {
-        const existingEdition = existing.manifestation.edition?.publicationYear?.year || 0
-        const currentEdition = current.manifestation.edition?.publicationYear?.year || 0
-        if (currentEdition > existingEdition) {
-          acc = acc.filter(
-            item =>
-              item.manifestation.materialTypes[0].materialTypeGeneral.code !==
-              current.manifestation.materialTypes[0].materialTypeGeneral.code
-          )
-          acc.push(current)
-        }
-      }
-      return acc
-    },
-    [] as typeof manifestationsWithPublizonData
-  )
+
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     "default",
@@ -99,20 +89,10 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
     return materialType?.materialTypeGeneral?.code === "PODCASTS"
   })
-  const isSomeManifestationTypeCostFree = filteredManifestations.some(
+
+  const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
     manifestation => manifestation.publizonData?.costFree
   )
-  // sort manifestations by materialTypeSortPriority
-  const sortedManifestations = filteredManifestations.sort((a, b) => {
-    return (
-      goConfig("materialtypes.sortpriority").indexOf(
-        a.manifestation.materialTypes[0].materialTypeGeneral.code
-      ) -
-      goConfig("materialtypes.sortpriority").indexOf(
-        b.manifestation.materialTypes[0].materialTypeGeneral.code
-      )
-    )
-  })
 
   return (
     <div
@@ -144,16 +124,15 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
         <div className="flex w-full flex-row justify-center gap-2">
           {/* Loop through all manifestation types */}
-          {sortedManifestations.map(manifestation => {
+          {manifestationsWithPublizonData.map(manifestation => {
             // find material type general material type
-            const materialType =
-              manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
+            const materialType = manifestation.materialTypes[0].materialTypeGeneral.code
             const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
             const isCostFree = manifestation.publizonData?.costFree
             const isPodcast = materialType === "PODCASTS"
             return (
               <MaterialTypeIconWrapper
-                key={manifestation.manifestation.pid}
+                key={manifestation.pid}
                 costFree={isCostFree || isPodcast}
                 iconName={materialTypeIcon}
               />

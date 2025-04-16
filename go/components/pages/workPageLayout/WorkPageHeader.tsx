@@ -4,9 +4,8 @@ import React from "react"
 
 import {
   getManifestationLanguageIsoCode,
-  getWorkMaterialTypes,
   slideSelectOptionsFromMaterialTypes,
-  sortSlideSelectOptions,
+  sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
@@ -16,7 +15,6 @@ import useSession from "@/hooks/useSession"
 import {
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
-  Work,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
@@ -32,17 +30,25 @@ import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
   selectedManifestation: ManifestationWorkPageFragment
+  manifestations: ManifestationWorkPageFragment[]
 }
 
-const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
+const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
-  const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
+  const selectedManifestationIsbns = selectedManifestation
+    ? getIsbnsFromManifestation(selectedManifestation)
+    : []
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
-  const workMaterialTypes = getWorkMaterialTypes(
-    (work?.materialTypes as Work["materialTypes"]) || []
-  )
-  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(workMaterialTypes)
+
+  const sortedManifestations = sortManifestationsBySortPriority(manifestations)
+
+  // get the material types from the manifestations
+  const materialTypes = sortedManifestations.map(manifestation => {
+    return manifestation.materialTypes[0].materialTypeGeneral
+  })
+
+  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
 
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
@@ -56,13 +62,16 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
     { query: { enabled: !!selectedManifestation?.pid } }
   )
 
-  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
-    },
-  })
+  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
+    selectedManifestationIsbns?.[0],
+    {
+      query: {
+        // Publizon / useGetV1ProductsIdentifier is responsible for online
+        // materials. It requires an ISBN to do lookups.
+        enabled: selectedManifestationIsbns.length > 0,
+      },
+    }
+  )
 
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(
@@ -79,9 +88,6 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   }
 
   const slideSelectOptions = workMaterialTypesWithDisplayName
-
-  // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
-  const sortedSlideSelectOptions = sortSlideSelectOptions(slideSelectOptions)
 
   const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]
     .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
@@ -116,7 +122,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           {slideSelectOptions && (
             <div className="flex w-full justify-center pt-12">
               <SlideSelect
-                options={sortedSlideSelectOptions}
+                options={slideSelectOptions}
                 selected={selectedManifestationMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />

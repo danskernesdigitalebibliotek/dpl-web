@@ -54,6 +54,7 @@ const workMock = {
             },
           },
         ],
+        accessTypes: [],
         access: [
           {
             __typename: "Ereol",
@@ -136,6 +137,7 @@ const workMock = {
             },
           },
         ],
+        accessTypes: [],
         access: [
           {
             __typename: "Ereol",
@@ -221,6 +223,7 @@ const workMock = {
           },
         },
       ],
+      accessTypes: [],
       access: [
         {
           __typename: "Ereol",
