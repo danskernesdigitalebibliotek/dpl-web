@@ -69,7 +69,9 @@ const UserLoans = ({ className }: UserLoansProps) => {
   return (
     <div className={cn("col-span-full", className)}>
       {(isLoadingLoans || isLoadingComplexSearch) && <LoanSliderSkeleton />}
-      {loanWorks && dataLoans && <LoanSlider works={loanWorks} loanData={dataLoans} />}
+      {!isLoadingLoans && !isLoadingComplexSearch && loanWorks && dataLoans && (
+        <LoanSlider works={loanWorks} loanData={dataLoans} />
+      )}
     </div>
   )
 }

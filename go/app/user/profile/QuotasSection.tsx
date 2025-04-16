@@ -1,12 +1,19 @@
 import React from "react"
 
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+import useGetV1LibraryProfile from "@/lib/rest/publizon/useGetV1LibraryProfile"
 
 export type LoansDetailsProps = {
   loanData: LoanListResult
 }
 
 const LoansDetails = ({ loanData }: LoansDetailsProps) => {
+  const { data, isLoading } = useGetV1LibraryProfile()
+
+  if (isLoading) {
+    return <QuotasSectionSkeleton />
+  }
+
   return (
     <div
       className="col-span-full mt-0 flex flex-row flex-wrap items-start justify-between gap-10 px-10 md:gap-0
@@ -19,14 +26,14 @@ const LoansDetails = ({ loanData }: LoansDetailsProps) => {
           <div className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center gap-4 rounded-sm">
             <p className="text-typo-heading-3">
               {loanData.userData?.totalEbookLoans} af{" "}
-              {loanData.libraryData?.maxConcurrentEbookLoansPerBorrower || 0}
+              {data?.maxConcurrentEbookLoansPerBorrower || 0}
             </p>
             <p className="text-typo-subtitle-sm opacity-50">E-bøger</p>
           </div>
           <div className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center gap-4 rounded-sm">
             <p className="text-typo-heading-3">
               {loanData.userData?.totalAudioLoans} af{" "}
-              {loanData.libraryData?.maxConcurrentAudiobookLoansPerBorrower || 0}
+              {data?.maxConcurrentAudioLoansPerBorrower || 0}
             </p>
             <p className="text-typo-subtitle-sm opacity-50">Lydbøger</p>
           </div>
@@ -45,6 +52,23 @@ const LoansDetails = ({ loanData }: LoansDetailsProps) => {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+export const QuotasSectionSkeleton = () => {
+  return (
+    <div
+      className="col-span-full mt-12 flex flex-row flex-wrap items-start justify-between gap-10 px-10 md:gap-0
+        lg:flex-nowrap lg:gap-0">
+      <div
+        className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm px-10 pt-6 pb-9
+          md:w-[49%]"
+      />
+      <div
+        className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm px-10 pt-6 pb-9
+          md:w-[49%]"
+      />
     </div>
   )
 }

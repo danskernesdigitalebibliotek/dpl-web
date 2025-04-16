@@ -9,7 +9,7 @@ import {
   WorkFullWorkPageFragment,
   WorkMaterialTypesFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
-import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+import { LibraryProfile, LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 export const getManifestationMaterialType = (
   manifestation: ManifestationWorkPageFragment
@@ -20,15 +20,12 @@ export const getManifestationMaterialType = (
 const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
 const allowedPhysicalMaterialTypes = ["BOOKS"]
 
-// Filter out manifestations that are not allowed material types
+// TODO: write unit tests for this function
+// Exclude manifestations with material types that are not allowed
 export const filterManifestationsByMaterialType = (
   manifestations: ManifestationWorkPageFragment[]
 ) => {
   return filter(manifestations, manifestation => {
-    // if (!manifestation.accessTypes?.length) {
-    //   return false
-    // }
-
     // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
     if (manifestation.accessTypes[0].code === "PHYSICAL") {
       return allowedPhysicalMaterialTypes.includes(
@@ -42,7 +39,8 @@ export const filterManifestationsByMaterialType = (
   })
 }
 
-// If multiple manifestations has the same materialtype find the latest edition
+// TODO: write unit tests for this function
+// If multiple manifestations share the same material type, keep only the latest edition
 export const filterManifestationsByEdition = (manifestations: ManifestationWorkPageFragment[]) => {
   return manifestations.reduce((acc, current) => {
     const existing = acc.find(
@@ -66,6 +64,18 @@ export const filterManifestationsByEdition = (manifestations: ManifestationWorkP
     }
     return acc
   }, [] as ManifestationWorkPageFragment[])
+}
+
+// Sort manifestations by materialTypeSortPriority
+export const sortManifestationsBySortPriority = (
+  manifestations: ManifestationWorkPageFragment[]
+): ManifestationWorkPageFragment[] => {
+  const sortPriority = goConfig("materialtypes.sortpriority")
+  return manifestations.sort((manifestationA, manifestationB) => {
+    const priorityA = sortPriority.indexOf(manifestationA.materialTypes[0].materialTypeGeneral.code)
+    const priorityB = sortPriority.indexOf(manifestationB.materialTypes[0].materialTypeGeneral.code)
+    return priorityA - priorityB
+  })
 }
 
 export const getManifestationMaterialTypeSpecific = (
@@ -174,16 +184,6 @@ export const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMa
   }) as SlideSelectOption[]
 }
 
-export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
-  return options.sort((a, b) => {
-    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
-    return (
-      goConfig("materialtypes.sortpriority").indexOf(a.code) -
-      goConfig("materialtypes.sortpriority").indexOf(b.code)
-    )
-  })
-}
-
 export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
   const materialType = getManifestationMaterialType(manifestation)
   // If we couldn't find the right material type, we show the icon for "question-mark"
@@ -191,8 +191,9 @@ export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWor
   return getIconNameFromMaterialType(materialType.code) || "question-mark"
 }
 
-export const canUserLoanMoreEMaterials = (
+export const canUserLoanMoreMaterials = (
   dataLoans: LoanListResult | null | undefined,
+  dataLibraryProfile: LibraryProfile | null | undefined,
   manifestation: ManifestationWorkPageFragment
 ) => {
   if (!manifestation) {
@@ -201,12 +202,26 @@ export const canUserLoanMoreEMaterials = (
 
   const materialType = getManifestationMaterialType(manifestation)
   if (materialType.code === "AUDIO_BOOKS") {
-    if (!dataLoans?.userData?.audiobookLoansRemaining) return false
-    return dataLoans.userData.audiobookLoansRemaining > 0
+    if (
+      dataLibraryProfile?.maxConcurrentAudioLoansPerBorrower &&
+      dataLoans?.userData?.totalAudioLoans &&
+      dataLibraryProfile.maxConcurrentAudioLoansPerBorrower > dataLoans.userData.totalAudioLoans
+    ) {
+      return true
+    } else {
+      return false
+    }
   }
   if (materialType.code === "EBOOKS") {
-    if (!dataLoans?.userData?.ebookLoansRemaining) return false
-    return dataLoans.userData.ebookLoansRemaining > 0
+    if (
+      dataLibraryProfile?.maxConcurrentEbookLoansPerBorrower &&
+      dataLoans?.userData?.totalEbookLoans &&
+      dataLibraryProfile.maxConcurrentEbookLoansPerBorrower > dataLoans.userData.totalEbookLoans
+    ) {
+      return true
+    } else {
+      return false
+    }
   }
   // Podcasts are always loanable
   if (materialType.code === "PODCASTS") {

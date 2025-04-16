@@ -5,7 +5,7 @@ import React from "react"
 import {
   getManifestationLanguageIsoCode,
   slideSelectOptionsFromMaterialTypes,
-  sortSlideSelectOptions,
+  sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
@@ -41,8 +41,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
 
+  const sortedManifestations = sortManifestationsBySortPriority(manifestations)
+
   // get the material types from the manifestations
-  const materialTypes = manifestations.map(manifestation => {
+  const materialTypes = sortedManifestations.map(manifestation => {
     return manifestation.materialTypes[0].materialTypeGeneral
   })
 
@@ -87,9 +89,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const slideSelectOptions = workMaterialTypesWithDisplayName
 
-  // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
-  const sortedSlideSelectOptions = sortSlideSelectOptions(slideSelectOptions)
-
   const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]
     .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
 
@@ -123,7 +122,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           {slideSelectOptions && (
             <div className="flex w-full justify-center pt-12">
               <SlideSelect
-                options={sortedSlideSelectOptions}
+                options={slideSelectOptions}
                 selected={selectedManifestationMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
