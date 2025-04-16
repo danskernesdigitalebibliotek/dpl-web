@@ -11,7 +11,7 @@ import {
   WorkFullWorkPageFragment,
   WorkMaterialTypesFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
-import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+import { LibraryProfile, LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 export const getWorkMaterialTypes = (
   materialTypes: Work["materialTypes"]
@@ -148,8 +148,9 @@ export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWor
   return getIconNameFromMaterialType(materialType.code) || "question-mark"
 }
 
-export const canUserLoanMoreEMaterials = (
+export const canUserLoanMoreMaterials = (
   dataLoans: LoanListResult | null | undefined,
+  dataLibraryProfile: LibraryProfile | null | undefined,
   manifestation: ManifestationWorkPageFragment
 ) => {
   if (!manifestation) {
@@ -158,12 +159,26 @@ export const canUserLoanMoreEMaterials = (
 
   const materialType = getManifestationMaterialType(manifestation)
   if (materialType.code === "AUDIO_BOOKS") {
-    if (!dataLoans?.userData?.audiobookLoansRemaining) return false
-    return dataLoans.userData.audiobookLoansRemaining > 0
+    if (
+      dataLibraryProfile?.maxConcurrentAudioLoansPerBorrower &&
+      dataLoans?.userData?.totalAudioLoans &&
+      dataLibraryProfile.maxConcurrentAudioLoansPerBorrower > dataLoans.userData.totalAudioLoans
+    ) {
+      return true
+    } else {
+      return false
+    }
   }
   if (materialType.code === "EBOOKS") {
-    if (!dataLoans?.userData?.ebookLoansRemaining) return false
-    return dataLoans.userData.ebookLoansRemaining > 0
+    if (
+      dataLibraryProfile?.maxConcurrentEbookLoansPerBorrower &&
+      dataLoans?.userData?.totalEbookLoans &&
+      dataLibraryProfile.maxConcurrentEbookLoansPerBorrower > dataLoans.userData.totalEbookLoans
+    ) {
+      return true
+    } else {
+      return false
+    }
   }
   // Podcasts are always loanable
   if (materialType.code === "PODCASTS") {
