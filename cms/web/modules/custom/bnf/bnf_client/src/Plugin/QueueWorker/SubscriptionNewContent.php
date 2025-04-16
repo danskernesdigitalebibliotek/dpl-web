@@ -100,6 +100,7 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
     foreach ($newContent['uuids'] as $uuid) {
       $this->nodeQueue->createItem([
         'uuid' => $uuid,
+        'subscription_id' => $subscription->id(),
         'categories' => $subscription->getCategories(),
         'tags' => $subscription->getTags(),
       ]);

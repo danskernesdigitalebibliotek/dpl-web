@@ -74,6 +74,20 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
         return;
       }
 
+      // Link the subscription to the node, for when we handle deleting of the
+      // subscription in the future.
+      if ($node->hasField('bnf_source_subscriptions')) {
+        $subscriptionIds = $node->get('bnf_source_subscriptions')->getValue();
+        $subscriptionIds = array_column($subscriptionIds, 'target_id');
+        $subscriptionIds[] = $data['subscription_id'];
+
+        // If for whatever reason a node is updated, we don't want to add
+        // the same subscription ID several times.
+        $subscriptionIds = array_unique($subscriptionIds);
+
+        $node->set('bnf_source_subscriptions', $subscriptionIds);
+      }
+
       if ($node->hasField('field_categories') && !empty($data['categories'])) {
         $category_values = array_map(function ($term) {
           return ['target_id' => $term->id()];

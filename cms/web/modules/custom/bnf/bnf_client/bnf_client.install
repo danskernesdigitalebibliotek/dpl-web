@@ -67,3 +67,22 @@ function bnf_client_update_10104(): string {
 
   return 'Could not install field bnf_subscription.label.';
 }
+
+/**
+ * Install node field 'bnf_source_subscriptions'.
+ */
+function bnf_client_update_10105(): string {
+  $fields = _bnf_client_node_field_definitions();
+
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $key = 'bnf_source_subscriptions';
+  $field = $fields[$key] ?? NULL;
+
+  if (!empty($field)) {
+    $definition_manager->installFieldStorageDefinition($key, 'node', 'node', $field);
+    return "Field node.$key installed.";
+  }
+
+  return "Could not install field node.$key.";
+}

@@ -5,11 +5,51 @@ use Drupal\bnf_client\Hook\JobSchedulerHooks;
 use Drupal\bnf_client\Hook\SubscriptionHooks;
 use Drupal\bnf_client\Services\BnfExporter;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
+
+/**
+ * Getting the field definitions for node. We need this as part of install.
+ *
+ * @return \Drupal\Core\Field\BaseFieldDefinition[]
+ *   The field definitions.
+ */
+function _bnf_client_node_field_definitions(): array {
+  $fields = [];
+
+  $fields['bnf_source_subscriptions'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('BNF source subscriptions', [], ['context' => 'BNF']))
+    ->setDescription(t('The subscriptions that this content originates from.', [], ['context' => 'BNF']))
+    ->setSetting('target_type', 'bnf_subscription')
+    ->setSetting('handler', 'default')
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+  return $fields;
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * Creating our custom programmatic fields.
+ *
+ * @return \Drupal\Core\Field\FieldDefinitionInterface[]
+ *   The field definitions.
+ */
+function bnf_client_entity_base_field_info(EntityTypeInterface $entity_type): array {
+  $fields = [];
+
+  // Create new fields for node bundle.
+  if ($entity_type->id() === 'node') {
+    $fields = _bnf_client_node_field_definitions();
+  }
+
+  return $fields;
+}
 
 /**
  * Implements hook_form_alter().
@@ -123,6 +163,14 @@ function bnf_client_bnf_subscription_insert(EntityInterface $entity): void {
 #[LegacyHook]
 function bnf_client_bnf_subscription_update(EntityInterface $entity): void {
   \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+#[LegacyHook]
+function bnf_client_bnf_subscription_delete(EntityInterface $entity): void {
+  \Drupal::service(SubscriptionHooks::class)->subscriptionDelete($entity);
 }
 
 /**
