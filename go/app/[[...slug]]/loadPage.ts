@@ -4,7 +4,7 @@ import { getContentQueryPath } from "@/lib/helpers/dpl-cms-content"
 
 const loadPage = async (contentPath: string) => {
   const queryClient = getQueryClient()
-  const path = getContentQueryPath(contentPath, "article")
+  const path = getContentQueryPath(contentPath, "page")
 
   const data = await queryClient.fetchQuery<GetPageByPathQuery>({
     queryKey: useGetPageByPathQuery.getKey({ path }),
