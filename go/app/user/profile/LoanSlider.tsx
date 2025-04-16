@@ -4,10 +4,10 @@ import { useWindowSize } from "@uidotdev/usehooks"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import Link from "next/link"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 
 import LoanCard from "@/app/user/profile/LoanCard"
-import QuotasSection from "@/app/user/profile/QuotasSection"
+import QuotasSection, { QuotasSectionSkeleton } from "@/app/user/profile/QuotasSection"
 import { loanSliderOptions } from "@/app/user/profile/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
@@ -142,7 +142,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
           )}
         </div>
       </div>
-      <QuotasSection loanData={loanData} />
+      <Suspense fallback={<QuotasSectionSkeleton />}>
+        <QuotasSection loanData={loanData} />
+      </Suspense>
     </div>
   )
 }
@@ -180,19 +182,8 @@ export const LoanSliderSkeleton = () => {
           })}
         </div>
       </div>
-      {/* Loan details */}
-      <div
-        className="col-span-full mt-12 flex flex-row flex-wrap items-start justify-between gap-10 px-10 md:gap-0
-          lg:flex-nowrap lg:gap-0">
-        <div
-          className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm px-10 pt-6 pb-9
-            md:w-[49%]"
-        />
-        <div
-          className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm px-10 pt-6 pb-9
-            md:w-[49%]"
-        />
-      </div>
+      {/* Quota section */}
+      <QuotasSectionSkeleton />
     </div>
   )
 }
