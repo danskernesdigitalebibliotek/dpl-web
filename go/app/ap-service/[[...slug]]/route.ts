@@ -1,3 +1,4 @@
+import fetchToCurl from "fetch-to-curl"
 import { NextRequest, NextResponse } from "next/server"
 
 import { TServiceType, getApServiceUrl } from "@/lib/helpers/ap-service"
@@ -44,6 +45,18 @@ async function proxyRequest(
   const authHeader = await getAuthHeader(request, serviceType)
 
   try {
+    console.log(
+      "CURL",
+      fetchToCurl(serviceUrl, {
+        method,
+        headers: {
+          ...(authHeader ? { authorization: authHeader } : {}),
+          ...proxiedHeaders,
+        },
+        body,
+      })
+    )
+
     const result = await fetch(serviceUrl, {
       method,
       headers: {
