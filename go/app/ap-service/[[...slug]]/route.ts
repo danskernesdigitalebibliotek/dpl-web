@@ -50,17 +50,11 @@ async function proxyRequest(
   const authHeader = await getAuthHeader(request, serviceType)
 
   try {
-    console.log(
-      "CURL",
-      fetchToCurl(serviceUrl, {
-        method,
-        headers: {
-          ...(authHeader ? { authorization: authHeader } : {}),
-          ...proxiedHeaders,
-        },
-        body,
-      })
-    )
+    console.log({ authHeader })
+    console.log({ proxiedHeaders })
+    console.log({ serviceUrl })
+    console.log({ method })
+    console.log({ body })
 
     const result = await fetch(serviceUrl, {
       method,
