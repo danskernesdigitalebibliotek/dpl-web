@@ -46,7 +46,7 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    if ($object->linkRequired->internal) {
+    if ($object->linkRequired->internal && is_string($object->linkRequired->id)) {
       // Recursion protection.
       if ($this->importContext->size() > 3) {
         return NULL;
@@ -70,13 +70,13 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
       $goLinkValue = $this->getLinkValue($object->linkRequired);
     }
 
+    /** @var \Drupal\paragraphs\Entity\Paragraph $goLink */
     $goLink = $this->paragraphStorage->create([
       'type' => 'go_link',
     ]);
     $goLink->set('field_aria_label', $object->ariaLabel);
     $goLink->set('field_target_blank', $object->targetBlank);
     $goLink->set('field_go_link', $goLinkValue);
-
 
     return $goLink;
   }

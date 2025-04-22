@@ -41,12 +41,13 @@ class LinkedContentUuidProducer extends DataProducerPluginBase implements Contai
   /**
    * Constructor.
    */
-  function __construct(
+  public function __construct(
     array $configuration,
     string $pluginId,
     mixed $pluginDefinition,
     EntityTypeManagerInterface $entityTypeManager,
-    protected AliasManagerInterface $aliasManager,) {
+    protected AliasManagerInterface $aliasManager,
+  ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
     $this->nodeStorage = $entityTypeManager->getStorage('node');

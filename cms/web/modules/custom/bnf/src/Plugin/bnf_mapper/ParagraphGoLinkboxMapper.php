@@ -51,6 +51,7 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
     /** @var null|\Drupal\paragraphs\Entity\Paragraph $goLinkParagraph */
     $goLinkParagraph = $this->mapper->map($object->goLinkParagraph);
 
+    /** @var \Drupal\paragraphs\Entity\Paragraph $linkbox */
     $linkbox = $this->paragraphStorage->create([
       'type' => 'go_linkbox',
       'field_go_color' => $object->goColor,

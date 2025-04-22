@@ -72,16 +72,15 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
       'type' => 'go_link',
     ])->willReturn($this->entityProphecy);
 
-
     $graphqlElement = ParagraphGoLink::make(
       id: 'paragraph-id',
       ariaLabel: 'aria-label',
-      targetBlank: false,
+      targetBlank: FALSE,
       linkRequired: Link::make(
-        internal: false,
+        internal: FALSE,
         title: 'DR.dk',
         url: 'https://dr.dk/',
-        id: null,
+        id: NULL,
       ),
     );
 
@@ -118,9 +117,9 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
     $graphqlElement = ParagraphGoLink::make(
       id: 'paragraph-id',
       ariaLabel: 'aria-label',
-      targetBlank: false,
+      targetBlank: FALSE,
       linkRequired: Link::make(
-        internal: true,
+        internal: TRUE,
         title: 'Link',
         url: '/someurl',
         id: 'content-uuid',
@@ -167,9 +166,9 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
     $graphqlElement = ParagraphGoLink::make(
       id: 'paragraph-id',
       ariaLabel: 'aria-label',
-      targetBlank: false,
+      targetBlank: FALSE,
       linkRequired: Link::make(
-        internal: true,
+        internal: TRUE,
         title: 'Link',
         url: '/someurl',
         id: 'content-uuid',
@@ -188,7 +187,6 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
       'title' => 'Link',
     ])->shouldHaveBeenCalled();
   }
-
 
   /**
    * Test recursion limit.
@@ -211,9 +209,9 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
     $graphqlElement = ParagraphGoLink::make(
       id: 'paragraph-id',
       ariaLabel: 'aria-label',
-      targetBlank: false,
+      targetBlank: FALSE,
       linkRequired: Link::make(
-        internal: true,
+        internal: TRUE,
         title: 'Link',
         url: '/someurl',
         id: 'content-uuid',
