@@ -8,6 +8,8 @@ use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\ParagraphGoLink;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
+use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf\Services\ImportContextStack;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
@@ -30,6 +32,8 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
     array $pluginDefinition,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected BnfMapperManager $mapper,
+    protected ImportContextStack $importContext,
+    protected BnfImporter $importer,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
   }
@@ -54,6 +58,9 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
 
       if ($existing) {
         $node = reset($existing);
+      }
+      else {
+        $node = $this->importer->importNode($object->linkRequired->id, $this->importContext->current());
       }
 
       $goLink->set('field_go_link', [

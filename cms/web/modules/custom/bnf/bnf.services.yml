@@ -7,6 +7,10 @@ services:
       $logger: '@logger.channel.bnf'
   Drupal\bnf\Services\BnfImporter: '@bnf.importer'
 
+  bnf.import_context_stack:
+    class: Drupal\bnf\Services\ImportContextStack
+  Drupal\bnf\Services\ImportContextStack: '@bnf.import_context_stack'
+
   plugin.manager.bnf_mapper:
     class: Drupal\bnf\BnfMapperManager
     parent: default_plugin_manager

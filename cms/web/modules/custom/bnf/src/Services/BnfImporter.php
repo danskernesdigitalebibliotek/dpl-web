@@ -7,6 +7,7 @@ use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\GraphQL\Operations\NewContent;
+use Drupal\bnf\ImportContext;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -39,6 +40,7 @@ class BnfImporter {
     protected LoggerInterface $logger,
     protected BnfMapperManager $mapperManager,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected ImportContextStack $importContext,
   ) {}
 
   /**
@@ -61,8 +63,14 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpointUrl, bool $keepUpdated = TRUE): ?NodeInterface {
-    $this->setEndpoint($endpointUrl);
+  public function importNode(string $uuid, string|ImportContext $importContext, bool $keepUpdated = TRUE): ?NodeInterface {
+    if (!$importContext instanceof ImportContext) {
+      $importContext = new ImportContext($importContext);
+    }
+
+    $this->setEndpoint($importContext->endpointUrl);
+
+    $this->importContext->push($importContext);
 
     try {
       $response = GetNode::execute($uuid);
@@ -113,6 +121,9 @@ class BnfImporter {
       );
 
       throw new \RuntimeException('Could not import content.');
+    }
+    finally {
+      $this->importContext->pop();
     }
 
     $this->logger->info('Created new @type node with BNF ID @uuid', [

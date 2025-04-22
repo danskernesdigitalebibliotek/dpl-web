@@ -48,17 +48,8 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\ParagraphGoLink $goLink */
-    $goLink = $object->goLinkParagraph;
-
-    $goLinkParagraph = $this->paragraphStorage->create([
-      'type' => 'go_link',
-      'field_aria_label' => $goLink->ariaLabel,
-      'field_target_blank' => $goLink->targetBlank,
-      'field_go_link' => $this->getLinkValue($goLink->linkRequired),
-    ]);
-
     /** @var \Drupal\paragraphs\Entity\Paragraph $goLinkParagraph */
+    $goLinkParagraph = $this->mapper->map($object->goLinkParagraph);
 
     return $this->paragraphStorage->create([
       'type' => 'go_linkbox',
