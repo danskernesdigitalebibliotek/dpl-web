@@ -59,17 +59,13 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $goLinkParagraph */
 
-    $goLinkParagraph->save();
-
     return $this->paragraphStorage->create([
       'type' => 'go_linkbox',
       'field_go_color' => $object->goColor,
       'field_go_description' => $object->goDescription,
       'field_go_image' => $this->getImageValue($object->goImage),
-      'field_go_link_paragraph' => [[
-        'target_id' => $goLinkParagraph->id(),
-        'target_revision_id' => $goLinkParagraph->getRevisionId(),
-      ],
+      'field_go_link_paragraph' => [
+        $goLinkParagraph,
       ],
       'field_title' => $object->title,
     ]);

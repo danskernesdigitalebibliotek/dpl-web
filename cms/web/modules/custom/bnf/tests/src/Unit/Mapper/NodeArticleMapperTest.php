@@ -9,6 +9,8 @@ use Drupal\bnf\GraphQL\Operations\GetNode\Node\CanonicalUrl\Link as CanonicalLin
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Changed\DateTime as ChangedDateTime;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Created\DateTime as CreatedDateTime;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\PublicationDate\DateTime as PublicationDateDateTime;
 use Drupal\bnf\Plugin\bnf_mapper\NodeArticleMapper;
 use Drupal\node\Entity\Node;
@@ -51,6 +53,21 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
 
     $manager = $this->prophesize(BnfMapperManager::class);
 
+    $bodyTextParagraph = ParagraphTextBody::make(
+      id: '982e0d87-f6b8-4b84-8de8-c8c8bcfef999',
+      body: Text::make(
+        format: 'with_format', value: 'This is the text')
+    );
+    $mappedBodyTextParagraph = [
+      'format' => 'with_format',
+      'value' => 'This is a test',
+    ];
+
+    $manager->mapAll([$bodyTextParagraph])
+      ->willReturn([
+        $mappedBodyTextParagraph,
+      ]);
+
     $mapper = new NodeArticleMapper(
       [],
       '',
@@ -80,6 +97,9 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
       showOverrideAuthor: FALSE,
       subtitle: 'this is the subtitle',
       teaserText: 'this is a teaser text',
+      paragraphs: [
+        $bodyTextParagraph,
+      ]
     );
 
     $node = $mapper->map($graphqlArticle);
@@ -92,7 +112,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
     $this->entityProphecy->set('field_teaser_text', 'this is a teaser text')->shouldHaveBeenCalled();
     $this->entityProphecy->set('field_teaser_image', [])->shouldHaveBeenCalled();
     $this->entityProphecy->set('field_canonical_url', ["uri" => "https://example.dk"])->shouldHaveBeenCalled();
-    $this->entityProphecy->set('field_paragraphs', [])->shouldHaveBeenCalled();
+    $this->entityProphecy->set('field_paragraphs', [$mappedBodyTextParagraph])->shouldHaveBeenCalled();
 
     // Testing that the mapper always sets this to true.
     $this->entityProphecy->set('field_show_override_author', TRUE)->shouldHaveBeenCalled();

@@ -64,4 +64,17 @@ class BnfMapperManager extends DefaultPluginManager {
     return $this->getMapper($object)->map($object);
   }
 
+  /**
+   * Map an array of GraphQL objects.
+   *
+   * @param \Spawnia\Sailor\ObjectLike[] $objects
+   *   GraphQL objecs.
+   *
+   * @return mixed[]
+   *   Mapped objects.
+   */
+  public function mapAll(array $objects): array {
+    return array_map(fn ($object) => $this->map($object), $objects);
+  }
+
 }
