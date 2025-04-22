@@ -14,9 +14,16 @@ use Drupal\Core\Cache\Cache;
  *   The page render array.
  */
 function dpl_mapp_page_attachments(array &$page): void {
-  // Disable tracking on admin pages. We interested in patron - not editor -
-  // behavior.
-  if (\Drupal::routeMatch()->getRouteObject()?->getOption('_admin_route')) {
+  $is_admin_route = \Drupal::service('router.admin_context')->isAdminRoute();
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $is_excluded_route = in_array($route_name, [
+    'dpl_react_apps.search_result',
+    'dpl_react_apps.work',
+  ]);
+
+  // Disable tracking on admin pages (we are only interested in patron behavior)
+  // and on specific routes (some pages should only track data from React apps)
+  if ($is_admin_route || $is_excluded_route) {
     return;
   }
 
