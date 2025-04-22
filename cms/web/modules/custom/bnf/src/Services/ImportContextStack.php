@@ -51,4 +51,11 @@ class ImportContextStack {
     return $context;
   }
 
+  /**
+   * Return the size of the stack.
+   */
+  public function size(): int {
+    return count($this->stack);
+  }
+
 }

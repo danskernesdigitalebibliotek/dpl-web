@@ -49,6 +49,7 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
     $manager = $this->prophesize(BnfMapperManager::class);
 
     $this->importContextStack = $this->prophesize(ImportContextStack::class);
+    $this->importContextStack->size()->willReturn(1);
 
     $this->importer = $this->prophesize(BnfImporter::class);
 
@@ -186,6 +187,42 @@ class ParagraphGoLinkMapperTest extends EntityMapperTestBase {
       'uri' => '/new-url',
       'title' => 'Link',
     ])->shouldHaveBeenCalled();
+  }
+
+
+  /**
+   * Test recursion limit.
+   */
+  public function testRecursionLimit(): void {
+    $this->storageProphecy->create([
+      'type' => 'go_link',
+    ])->willReturn($this->entityProphecy);
+
+    // No existing node.
+    $nodeStorage = $this->prophesize(EntityStorageInterface::class);
+    $nodeStorage->loadByProperties(['uuid' => 'content-uuid'])->willReturn([]);
+    $this->entityManagerProphecy->getStorage('node')->willReturn($nodeStorage);
+
+    $importConfig = new ImportContext('some endpoint');
+
+    $this->importContextStack->current()->willReturn($importConfig);
+    $this->importContextStack->size()->willReturn(5);
+
+    $graphqlElement = ParagraphGoLink::make(
+      id: 'paragraph-id',
+      ariaLabel: 'aria-label',
+      targetBlank: false,
+      linkRequired: Link::make(
+        internal: true,
+        title: 'Link',
+        url: '/someurl',
+        id: 'content-uuid',
+      ),
+    );
+
+    $paragraph = $this->mapper->map($graphqlElement);
+
+    $this->assertNull($paragraph);
   }
 
 }

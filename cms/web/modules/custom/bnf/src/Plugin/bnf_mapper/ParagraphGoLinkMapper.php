@@ -46,13 +46,11 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    $goLink = $this->paragraphStorage->create([
-      'type' => 'go_link',
-    ]);
-    $goLink->set('field_aria_label', $object->ariaLabel);
-    $goLink->set('field_target_blank', $object->targetBlank);
-
     if ($object->linkRequired->internal) {
+      // Recursion protection.
+      if ($this->importContext->size() > 3) {
+        return NULL;
+      }
       /** @var \Drupal\node\Entity\Node[] $existing */
       $existing = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $object->linkRequired->id]);
 
@@ -63,14 +61,22 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
         $node = $this->importer->importNode($object->linkRequired->id, $this->importContext->current());
       }
 
-      $goLink->set('field_go_link', [
+      $goLinkValue = [
         'uri' => $node->toUrl()->toString(),
         'title' => $object->linkRequired->title,
-      ]);
+      ];
     }
     else {
-      $goLink->set('field_go_link', $this->getLinkValue($object->linkRequired));
+      $goLinkValue = $this->getLinkValue($object->linkRequired);
     }
+
+    $goLink = $this->paragraphStorage->create([
+      'type' => 'go_link',
+    ]);
+    $goLink->set('field_aria_label', $object->ariaLabel);
+    $goLink->set('field_target_blank', $object->targetBlank);
+    $goLink->set('field_go_link', $goLinkValue);
+
 
     return $goLink;
   }
