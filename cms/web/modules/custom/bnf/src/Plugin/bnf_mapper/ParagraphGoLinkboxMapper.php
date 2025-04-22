@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoLinkbox;
-
 use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -35,6 +35,7 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
+    protected BnfMapperManager $mapper,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
   }
