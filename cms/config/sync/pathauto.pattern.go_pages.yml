@@ -1,0 +1,22 @@
+uuid: 270f3bbf-4476-40be-8755-418866ded1b3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: go_pages
+label: 'GO Pages'
+type: 'canonical_entities:node'
+pattern: '/go/[node:title]'
+selection_criteria:
+  831ba7d8-1188-4d01-969f-99a1bd84ef44:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 831ba7d8-1188-4d01-969f-99a1bd84ef44
+    context_mapping:
+      node: node
+    bundles:
+      go_page: go_page
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -8,6 +8,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property string|null $materialGridDescription
  * @property string|null $materialGridTitle
  * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MaterialGridWorkIds\WorkId>|null $materialGridWorkIds
+ * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\WorkId\WorkId>|null $workId
  */
 class ParagraphMaterialGridManual extends \Spawnia\Sailor\ObjectLike
 {
@@ -16,12 +17,14 @@ class ParagraphMaterialGridManual extends \Spawnia\Sailor\ObjectLike
      * @param string|null $materialGridDescription
      * @param string|null $materialGridTitle
      * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MaterialGridWorkIds\WorkId>|null $materialGridWorkIds
+     * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\WorkId\WorkId>|null $workId
      */
     public static function make(
         $id,
         $materialGridDescription = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridWorkIds = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $workId = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
@@ -38,12 +41,16 @@ class ParagraphMaterialGridManual extends \Spawnia\Sailor\ObjectLike
         if ($materialGridWorkIds !== self::UNDEFINED) {
             $instance->materialGridWorkIds = $materialGridWorkIds;
         }
+        if ($workId !== self::UNDEFINED) {
+            $instance->workId = $workId;
+        }
 
         return $instance;
     }
 
     protected function converters(): array
     {
+        /** @var array<string, \Spawnia\Sailor\Convert\TypeConverter>|null $converters */
         static $converters;
 
         return $converters ??= [
@@ -52,6 +59,7 @@ class ParagraphMaterialGridManual extends \Spawnia\Sailor\ObjectLike
             'materialGridDescription' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'materialGridTitle' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'materialGridWorkIds' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MaterialGridWorkIds\WorkId))),
+            'workId' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\WorkId\WorkId))),
         ];
     }
 

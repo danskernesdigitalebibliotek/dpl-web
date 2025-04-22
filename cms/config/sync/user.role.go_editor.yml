@@ -17,6 +17,7 @@ dependencies:
     - node.type.page
   module:
     - administerusersbyrole
+    - bnf
     - content_lock
     - dpl_admin
     - dpl_unilogin
@@ -27,6 +28,7 @@ dependencies:
     - media
     - node
     - paragraphs
+    - path
     - redirect
     - scheduler
     - system
@@ -47,6 +49,9 @@ permissions:
   - 'administer nodes'
   - 'administer redirects'
   - 'administer unilogin settings'
+  - 'administer url aliases'
+  - 'bnf export nodes'
+  - 'bnf import nodes'
   - 'break content lock'
   - 'change own username'
   - 'clone node entity'
@@ -57,6 +62,7 @@ permissions:
   - 'create go_page content'
   - 'create image media'
   - 'create media'
+  - 'create url aliases'
   - 'create video media'
   - 'delete all revisions'
   - 'delete any audio media'

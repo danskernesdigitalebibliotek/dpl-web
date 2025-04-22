@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c7c651ca5ce534faabdeae7990a1929",
+    "content-hash": "49e1f951043a2c46a3f80ee4ba4cbf27",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2025.15.0",
+            "version": "2025.17.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.15.0/dist-2025-15-0-28da89d2eaefe17cb1463d44186ed7758b0ee8a9.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.17.0/dist-2025-17-0-f1f64474cd985572604f6311fcfba9a66fb2bec1.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2025.15.0",
+            "version": "2025.17.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.15.0/dist-2025-15-0-e5c961a104b8274c9c05d589f4eb415947cd8969.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.17.0/dist-2025-17-0-683d3c1bf8400dacb4900b68fed9a99e268df33e.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -1819,26 +1819,29 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "31610dbb31faa98e6b5447b62340826f54fbc4e9"
+                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/31610dbb31faa98e6b5447b62340826f54fbc4e9",
-                "reference": "31610dbb31faa98e6b5447b62340826f54fbc4e9",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
+                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
+            "conflict": {
+                "phpunit/phpunit": "<=7.5 || >=13"
+            },
             "require-dev": {
-                "doctrine/coding-standard": "^9 || ^12",
-                "phpstan/phpstan": "1.4.10 || 2.0.3",
+                "doctrine/coding-standard": "^9 || ^12 || ^13",
+                "phpstan/phpstan": "1.4.10 || 2.1.11",
                 "phpstan/phpstan-phpunit": "^1.0 || ^2",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6 || ^10.5 || ^11.5 || ^12",
                 "psr/log": "^1 || ^2 || ^3"
             },
             "suggest": {
@@ -1858,9 +1861,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/1.1.4"
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.5"
             },
-            "time": "2024-12-07T21:18:45+00:00"
+            "time": "2025-04-07T20:06:18+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -4272,6 +4275,58 @@
             "homepage": "https://www.drupal.org/project/entity_reference_revisions",
             "support": {
                 "source": "https://git.drupalcode.org/project/entity_reference_revisions"
+            }
+        },
+        {
+            "name": "drupal/entityqueue",
+            "version": "1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/entityqueue.git",
+                "reference": "8.x-1.9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/entityqueue-8.x-1.9.zip",
+                "reference": "8.x-1.9",
+                "shasum": "96c62b4e8398e0bd82199c938da986b43e015666"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.9",
+                    "datestamp": "1733392707",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "amateescu",
+                    "homepage": "https://www.drupal.org/user/729614"
+                },
+                {
+                    "name": "jojonaloha",
+                    "homepage": "https://www.drupal.org/user/1579186"
+                },
+                {
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
+                }
+            ],
+            "description": "Allows users to collect entities in arbitrarily ordered lists.",
+            "homepage": "https://www.drupal.org/project/entityqueue",
+            "support": {
+                "source": "https://git.drupalcode.org/project/entityqueue"
             }
         },
         {
@@ -10737,16 +10792,16 @@
         },
         {
             "name": "nette/php-generator",
-            "version": "v4.1.7",
+            "version": "v4.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/php-generator.git",
-                "reference": "d201c9bc217e0969d1b678d286be49302972fb56"
+                "reference": "42806049a7774a2bd316c958f5dcf01c6b5c56fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/php-generator/zipball/d201c9bc217e0969d1b678d286be49302972fb56",
-                "reference": "d201c9bc217e0969d1b678d286be49302972fb56",
+                "url": "https://api.github.com/repos/nette/php-generator/zipball/42806049a7774a2bd316c958f5dcf01c6b5c56fa",
+                "reference": "42806049a7774a2bd316c958f5dcf01c6b5c56fa",
                 "shasum": ""
             },
             "require": {
@@ -10800,22 +10855,22 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/php-generator/issues",
-                "source": "https://github.com/nette/php-generator/tree/v4.1.7"
+                "source": "https://github.com/nette/php-generator/tree/v4.1.8"
             },
-            "time": "2024-11-29T01:41:18+00:00"
+            "time": "2025-03-31T00:29:29+00:00"
         },
         {
             "name": "nette/utils",
-            "version": "v4.0.5",
+            "version": "v4.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "736c567e257dbe0fcf6ce81b4d6dbe05c6899f96"
+                "reference": "ce708655043c7050eb050df361c5e313cf708309"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/736c567e257dbe0fcf6ce81b4d6dbe05c6899f96",
-                "reference": "736c567e257dbe0fcf6ce81b4d6dbe05c6899f96",
+                "url": "https://api.github.com/repos/nette/utils/zipball/ce708655043c7050eb050df361c5e313cf708309",
+                "reference": "ce708655043c7050eb050df361c5e313cf708309",
                 "shasum": ""
             },
             "require": {
@@ -10886,9 +10941,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v4.0.5"
+                "source": "https://github.com/nette/utils/tree/v4.0.6"
             },
-            "time": "2024-08-07T15:39:19+00:00"
+            "time": "2025-03-30T21:06:30+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -11455,16 +11510,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.6.1",
+            "version": "5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "e5e784149a09bd69d9a5e3b01c5cbd2e2bd653d8"
+                "reference": "92dde6a5919e34835c506ac8c523ef095a95ed62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/e5e784149a09bd69d9a5e3b01c5cbd2e2bd653d8",
-                "reference": "e5e784149a09bd69d9a5e3b01c5cbd2e2bd653d8",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/92dde6a5919e34835c506ac8c523ef095a95ed62",
+                "reference": "92dde6a5919e34835c506ac8c523ef095a95ed62",
                 "shasum": ""
             },
             "require": {
@@ -11513,9 +11568,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.1"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.2"
             },
-            "time": "2024-12-07T09:39:29+00:00"
+            "time": "2025-04-13T19:20:35+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -12477,26 +12532,26 @@
         },
         {
             "name": "spawnia/sailor",
-            "version": "v0.35.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spawnia/sailor.git",
-                "reference": "66306dd2a47659ef469b7f0bc800982607ebcb3d"
+                "reference": "cd4fb8679f82dc052afbe21c250f84ed5702168f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spawnia/sailor/zipball/66306dd2a47659ef469b7f0bc800982607ebcb3d",
-                "reference": "66306dd2a47659ef469b7f0bc800982607ebcb3d",
+                "url": "https://api.github.com/repos/spawnia/sailor/zipball/cd4fb8679f82dc052afbe21c250f84ed5702168f",
+                "reference": "cd4fb8679f82dc052afbe21c250f84ed5702168f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "nette/php-generator": "^3.6.7 || ^4",
+                "nette/php-generator": "^3.6.9 || ^4.1.7",
                 "php": "^7.4 || ^8",
                 "psr/http-client": "^1",
                 "symfony/console": "^5 || ^6 || ^7",
                 "symfony/var-exporter": "^5.3 || ^6 || ^7",
-                "thecodingmachine/safe": "^1 || ^2",
+                "thecodingmachine/safe": "^1 || ^2 || ^3",
                 "webonyx/graphql-php": "^14.11.3 || ^15"
             },
             "require-dev": {
@@ -12505,26 +12560,30 @@
                 "ergebnis/composer-normalize": "^2.13",
                 "friendsofphp/php-cs-fixer": "~3.63.0",
                 "guzzlehttp/guzzle": "^7",
-                "jangregor/phpstan-prophecy": "^1",
+                "jangregor/phpstan-prophecy": "^1 || ^2",
                 "mll-lab/php-cs-fixer-config": "^5",
                 "mockery/mockery": "^1.4",
+                "nesbot/carbon": "^2.73 || ^3",
                 "nyholm/psr7": "^1.4",
+                "ocramius/package-versions": "^1 || ^2",
                 "php-http/httplug": "^2",
                 "php-http/mock-client": "^1.4",
                 "phpstan/extension-installer": "^1",
-                "phpstan/phpstan": "^1",
-                "phpstan/phpstan-mockery": "^1",
-                "phpstan/phpstan-phpunit": "^1",
-                "phpstan/phpstan-strict-rules": "^1",
-                "phpunit/phpunit": "^9.5.2 || ^10 || ^11",
-                "spawnia/phpunit-assert-directory": "^2",
-                "symfony/var-dumper": "^5.2.3",
+                "phpstan/phpstan": "^1.12.19 || ^2",
+                "phpstan/phpstan-deprecation-rules": "^1 || ^2",
+                "phpstan/phpstan-mockery": "^1 || ^2",
+                "phpstan/phpstan-phpunit": "^1 || ^2",
+                "phpstan/phpstan-strict-rules": "^1 || ^2",
+                "phpunit/phpunit": "^9.6.22 || ^10.5.45 || ^11.5.10 || ^12.0.5",
+                "spawnia/phpunit-assert-directory": "^2.1",
+                "symfony/var-dumper": "^5.2.3 || ^6 || ^7",
                 "thecodingmachine/phpstan-safe-rule": "^1.1"
             },
             "suggest": {
                 "bensampo/laravel-enum": "Use with BenSampoEnumTypeConfig",
                 "guzzlehttp/guzzle": "Enables using the built-in default Client",
-                "mockery/mockery": "Used in Operation::mock()"
+                "mockery/mockery": "Used in Operation::mock()",
+                "nesbot/carbon": "Use with CarbonTypeConfig"
             },
             "bin": [
                 "sailor"
@@ -12557,7 +12616,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-08T11:25:49+00:00"
+            "time": "2025-04-07T08:53:45+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

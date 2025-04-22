@@ -12,7 +12,7 @@ use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
- * Mapping ParagraphGoVideo => video.
+ * Mapping ParagraphGoVideo => go_video.
  */
 #[BnfMapper(
   id: ParagraphGoVideo::class,
@@ -31,8 +31,8 @@ class ParagraphGoVideoMapper extends BnfMapperParagraphPluginBase {
     }
 
     return $this->paragraphStorage->create([
-      'type' => 'video',
-      'field_go_video_title' => $object->titleRequired,
+      'type' => 'go_video',
+      'field_go_video_title' => $object->title,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
     ]);
 

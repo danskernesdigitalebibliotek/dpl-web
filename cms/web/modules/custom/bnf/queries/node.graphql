@@ -4,15 +4,31 @@ query GetNode($id: ID!) {
   }
   node(id: $id) {
     ... on NodeInterface {
-      id,
-      title,
+      id
+      title
       url
+      status
     }
     ... on NodeArticle {
-      subtitle
-      showOverrideAuthor
+      canonicalUrl {
+        url
+      }
+      changed {
+        timestamp
+        timezone
+      }
+      created {
+        timestamp
+        timezone
+      }
       overrideAuthor
-      teaserText
+      publicationDate {
+        timestamp
+        timezone
+      }
+      showOverrideAuthor
+      status
+      subtitle
       teaserImage {
         ... on MediaImage {
           id
@@ -25,31 +41,24 @@ query GetNode($id: ID!) {
           }
         }
       }
-      publicationDate {
-        timestamp
-        timezone
-      }
-      canonicalUrl {
-        url
-      }
+      teaserText
+
+
       paragraphs {
-        ... on ParagraphTextBody {
+        ... on ParagraphAccordion {
           id
-          body {
-            value
+          accordionDescription {
             format
+            value
           }
-        }
-        ... on ParagraphLinks {
-          id
-          link {
-            title
-            url
-            internal
+          accordionTitle {
+            format
+            value
           }
         }
         ... on ParagraphBanner {
           id
+          bannerDescription
           bannerImage {
             ... on MediaImage {
               id
@@ -62,25 +71,14 @@ query GetNode($id: ID!) {
               }
             }
           }
-          underlinedTitle {
-            value
-            format
-          }
-          bannerDescription
           bannerLink {
+            internal
             title
             url
           }
-        }
-        ... on ParagraphAccordion {
-          id
-          accordionDescription {
-            value
+          underlinedTitle {
             format
-          }
-          accordionTitle {
             value
-            format
           }
         }
         ... on ParagraphFiles {
@@ -90,38 +88,23 @@ query GetNode($id: ID!) {
               id
               name
               mediaFile {
-                url
                 description
                 name
+                url
               }
             }
           }
         }
-        ... on ParagraphGoLink {
-          id
-          targetBlank
-          singleLink: link {
-            title
-            url
-            internal
-          }
-        }
         ... on ParagraphHero {
           id
-          heroCategories {
-            ... on TermCategories {
-              id
-              name
-            }
-          }
           heroContentType
-          heroDescription {
-            value
-            format
-          }
           heroDate {
             timestamp
             timezone
+          }
+          heroDescription {
+            format
+            value
           }
           heroImage {
             ... on MediaImage {
@@ -129,40 +112,52 @@ query GetNode($id: ID!) {
               name
               byline
               mediaImage {
+                alt
                 title
                 url
-                alt
               }
             }
           }
           heroLink {
+            internal
             title
             url
-            internal
           }
           heroTitle
         }
+        ... on ParagraphLinks {
+          id
+          link {
+            internal
+            title
+            url
+          }
+        }
         ... on ParagraphMaterialGridAutomatic {
           id
-          materialGridDescription
-          materialGridTitle
-          amountOfMaterials
           cqlSearch {
             value
           }
+          materialGridDescription
+          materialGridTitle
+          amountOfMaterials
         }
         ... on ParagraphMaterialGridLinkAutomatic {
           id
+          amountOfMaterials
           materialGridDescription
           materialGridLink
           materialGridTitle
-          amountOfMaterials
         }
         ... on ParagraphMaterialGridManual {
           id
           materialGridDescription
           materialGridTitle
           materialGridWorkIds {
+            material_type
+            work_id
+          }
+          workId {
             material_type
             work_id
           }
@@ -173,11 +168,10 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               id
               name
-              byline
               mediaImage {
+                alt
                 title
                 url
-                alt
               }
             }
           }
@@ -187,8 +181,8 @@ query GetNode($id: ID!) {
           imagePositionRight
           recommendationDescription
           recommendationTitle {
-            value
             format
+            value
           }
           recommendationWorkId {
             material_type
@@ -198,14 +192,21 @@ query GetNode($id: ID!) {
         ... on ParagraphSimpleLinks {
           id
           link {
+            internal
             title
             url
-            internal
+          }
+        }
+        ... on ParagraphTextBody {
+          id
+          body {
+            format
+            value
           }
         }
         ... on ParagraphVideo {
           id
-          embedVideoRequired: embedVideo {
+          embedVideo {
             ... on MediaVideo {
               id
               name
@@ -219,15 +220,59 @@ query GetNode($id: ID!) {
           }
         }
       }
+
+
     }
-    ... on NodeGoArticle {
-      id
-      paragraphs {
-        ... on ParagraphGoLinkbox {
+
+    ... on NodePage {
+      displayTitles
+      heroTitle
+      canonicalUrl {
+        url
+      }
+      changed {
+        timestamp
+        timezone
+      }
+      created {
+        timestamp
+        timezone
+      }
+      publicationDate {
+        timestamp
+        timezone
+      }
+      subtitle
+      teaserImage {
+        ... on MediaImage {
           id
-          goColor
-          goDescription
-          goImage {
+          name
+          byline
+          mediaImage {
+            alt
+            title
+            url
+          }
+        }
+      }
+      teaserText
+
+      paragraphs {
+        ... on ParagraphAccordion {
+          id
+          accordionDescription {
+            format
+            value
+          }
+          accordionTitle {
+            format
+            value
+          }
+        }
+        ... on ParagraphBanner {
+          id
+          bannerDescription
+          bannerImage {
             ... on MediaImage {
               id
               name
@@ -239,19 +284,255 @@ query GetNode($id: ID!) {
               }
             }
           }
+          bannerLink {
+            internal
+            title
+            url
+          }
+          underlinedTitle {
+            format
+            value
+          }
+        }
+        ... on ParagraphFiles {
+          id
+          files {
+            ... on MediaDocument {
+              id
+              name
+              mediaFile {
+                description
+                name
+                url
+              }
+            }
+          }
+        }
+        ... on ParagraphHero {
+          id
+          heroContentType
+          heroDate {
+            timestamp
+            timezone
+          }
+          heroDescription {
+            format
+            value
+          }
+          heroImage {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+          heroLink {
+            internal
+            title
+            url
+          }
+          heroTitle
+        }
+        ... on ParagraphLinks {
+          id
+          link {
+            internal
+            title
+            url
+          }
+        }
+        ... on ParagraphMaterialGridAutomatic {
+          id
+          cqlSearch {
+            value
+          }
+          materialGridDescription
+          materialGridTitle
+          amountOfMaterials
+        }
+        ... on ParagraphMaterialGridLinkAutomatic {
+          id
+          amountOfMaterials
+          materialGridDescription
+          materialGridLink
+          materialGridTitle
+        }
+        ... on ParagraphMaterialGridManual {
+          id
+          materialGridDescription
+          materialGridTitle
+          materialGridWorkIds {
+            material_type
+            work_id
+          }
+          workId {
+            material_type
+            work_id
+          }
+        }
+        ... on ParagraphMedias {
+          id
+          medias {
+            ... on MediaImage {
+              id
+              name
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+        }
+        ... on ParagraphRecommendation {
+          id
+          imagePositionRight
+          recommendationDescription
+          recommendationTitle {
+            format
+            value
+          }
+          recommendationWorkId {
+            material_type
+            work_id
+          }
+        }
+        ... on ParagraphSimpleLinks {
+          id
+          link {
+            internal
+            title
+            url
+          }
+        }
+        ... on ParagraphTextBody {
+          id
+          body {
+            format
+            value
+          }
+        }
+        ... on ParagraphVideo {
+          id
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+        }
+      }
+
+    }
+
+    ... on NodeGoArticle {
+      changed {
+        timestamp
+        timezone
+      }
+      created {
+        timestamp
+        timezone
+      }
+      overrideAuthor
+      publicationDate {
+        timestamp
+        timezone
+      }
+      showOverrideAuthor
+      subtitle
+      teaserImageRequired: teaserImage {
+        ... on MediaImage {
+          id
+          name
+          byline
+          mediaImage {
+            alt
+            title
+            url
+          }
+        }
+      }
+      teaserText
+      goArticleImage {
+        ... on MediaImage {
+          id
+          name
+          byline
+          mediaImage {
+            alt
+            title
+            url
+          }
+        }
+      }
+
+      paragraphs {
+        ... on ParagraphGoImages {
+          id
+          goImages {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+        }
+        ... on ParagraphGoLink {
+          id
+          linkRequired: link {
+            internal
+            title
+            url
+          }
+          targetBlank
+          ariaLabel
+        }
+        ... on ParagraphGoLinkbox {
+          id
+          title
+          goColor
+          goDescription
+          goImage {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
           goLinkParagraph {
             ... on ParagraphGoLink {
               id
-              link {
+              linkRequired: link {
+                internal
                 title
                 url
-                internal
               }
-              ariaLabel
               targetBlank
+              ariaLabel
             }
           }
-          titleRequired: title
         }
         ... on ParagraphGoMaterialSliderAutomatic {
           id
@@ -269,6 +550,13 @@ query GetNode($id: ID!) {
           }
           title
         }
+        ... on ParagraphGoTextBody {
+          id
+          body {
+            format
+            value
+          }
+        }
         ... on ParagraphGoVideo {
           id
           embedVideo {
@@ -283,7 +571,7 @@ query GetNode($id: ID!) {
               mediaVideotool
             }
           }
-          titleRequired: title
+          title
         }
         ... on ParagraphGoVideoBundleAutomatic {
           id
@@ -307,6 +595,167 @@ query GetNode($id: ID!) {
         }
         ... on ParagraphGoVideoBundleManual {
           id
+          goVideoTitle
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          videoBundleWorkIds {
+            material_type
+            work_id
+          }
+        }
+      }
+
+    }
+
+    ... on NodeGoCategory {
+      changed {
+        timestamp
+        timezone
+      }
+      created {
+        timestamp
+        timezone
+      }
+      publicationDate {
+        timestamp
+        timezone
+      }
+      categoryMenuImage {
+        ... on MediaImage {
+          id
+          name
+          byline
+          mediaImage {
+            alt
+            title
+            url
+          }
+        }
+      }
+      categoryMenuSound {
+        ... on MediaAudio {
+          id
+          name
+          mediaAudioFile {
+            description
+            name
+            url
+          }
+        }
+      }
+      categoryMenuTitle
+      goColor
+
+      paragraphs {
+        ... on ParagraphGoImages {
+          id
+          goImages {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+        }
+        ... on ParagraphGoLink {
+          id
+          linkRequired: link {
+            internal
+            title
+            url
+          }
+          targetBlank
+          ariaLabel
+        }
+        ... on ParagraphGoLinkbox {
+          id
+          title
+          goColor
+          goDescription
+          goImage {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+          goLinkParagraph {
+            ... on ParagraphGoLink {
+              id
+              linkRequired: link {
+                internal
+                title
+                url
+              }
+              targetBlank
+              ariaLabel
+            }
+          }
+        }
+        ... on ParagraphGoMaterialSliderAutomatic {
+          id
+          cqlSearch {
+            value
+          }
+          sliderAmountOfMaterials
+          title
+        }
+        ... on ParagraphGoMaterialSliderManual {
+          id
+          materialSliderWorkIds {
+            material_type
+            work_id
+          }
+          title
+        }
+        ... on ParagraphGoTextBody {
+          id
+          body {
+            format
+            value
+          }
+        }
+        ... on ParagraphGoVideo {
+          id
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          title
+        }
+        ... on ParagraphGoVideoBundleAutomatic {
+          id
+          cqlSearch {
+            value
+          }
           embedVideo {
             ... on MediaVideo {
               id
@@ -320,12 +769,174 @@ query GetNode($id: ID!) {
             }
           }
           goVideoTitle
+          videoAmountOfMaterials
+        }
+        ... on ParagraphGoVideoBundleManual {
+          id
+          goVideoTitle
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
           videoBundleWorkIds {
             material_type
             work_id
           }
         }
       }
+
+
+    }
+
+    ... on NodeGoPage {
+      changed {
+        timestamp
+        timezone
+      }
+      created {
+        timestamp
+        timezone
+      }
+      publicationDate {
+        timestamp
+        timezone
+      }
+
+      paragraphs {
+        ... on ParagraphGoImages {
+          id
+          goImages {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+        }
+        ... on ParagraphGoLinkbox {
+          id
+          title
+          goColor
+          goDescription
+          goImage {
+            ... on MediaImage {
+              id
+              name
+              byline
+              mediaImage {
+                alt
+                title
+                url
+              }
+            }
+          }
+          goLinkParagraph {
+            ... on ParagraphGoLink {
+              id
+              linkRequired: link {
+                internal
+                title
+                url
+              }
+              targetBlank
+              ariaLabel
+            }
+          }
+        }
+        ... on ParagraphGoMaterialSliderAutomatic {
+          id
+          cqlSearch {
+            value
+          }
+          sliderAmountOfMaterials
+          title
+        }
+        ... on ParagraphGoMaterialSliderManual {
+          id
+          materialSliderWorkIds {
+            material_type
+            work_id
+          }
+          title
+        }
+        ... on ParagraphGoTextBody {
+          id
+          body {
+            format
+            value
+          }
+        }
+        ... on ParagraphGoVideo {
+          id
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          title
+        }
+        ... on ParagraphGoVideoBundleAutomatic {
+          id
+          cqlSearch {
+            value
+          }
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          goVideoTitle
+          videoAmountOfMaterials
+        }
+        ... on ParagraphGoVideoBundleManual {
+          id
+          goVideoTitle
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+          }
+          videoBundleWorkIds {
+            material_type
+            work_id
+          }
+        }
+      }
+
     }
   }
 }

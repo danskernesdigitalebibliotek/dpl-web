@@ -7,7 +7,7 @@ SKIP_LANGUAGE_IMPORT=""
 while [[ "$#" -gt 0 ]]; do
   case $1 in
     --skip-language-import) SKIP_LANGUAGE_IMPORT="true" ;;
-    --no-content) SKIP_CONTENT="true" ;;
+    --bnf-content) BNF_CONTENT="true" ;;
     *) echo "Unknown parameter passed: $1"; exit 1 ;;
   esac
   shift
@@ -42,8 +42,10 @@ curl --silent --show-error --fail --output /dev/null http://varnish:8080/
 # Enable dev modules (see task dev:enable-dev-tools).
 MODULES=(devel field_ui purge_ui restui uuid_url views_ui dblog)
 
-if [[ $SKIP_CONTENT != "true" ]]; then
+if [[ $BNF_CONTENT != "true" ]]; then
   MODULES=("${MODULES[@]}" dpl_example_content)
+else
+  MODULES=("${MODULES[@]}" bnf_example_content)
 fi
 drush install -y "${MODULES[@]}"
 

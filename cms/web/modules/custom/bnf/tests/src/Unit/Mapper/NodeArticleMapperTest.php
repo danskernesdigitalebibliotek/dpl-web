@@ -5,8 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
 use Drupal\bnf\BnfMapperManager;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\CanonicalUrl\Link as CanonicalLink;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Changed\DateTime as ChangedDateTime;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Created\DateTime as CreatedDateTime;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\PublicationDate\DateTime;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\PublicationDate\DateTime as PublicationDateDateTime;
 use Drupal\bnf\Plugin\bnf_mapper\NodeArticleMapper;
 use Drupal\node\Entity\Node;
 
@@ -33,6 +38,10 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
    * Test article node mapping.
    */
   public function testNodeArticleMapping(): void {
+    $this->storageProphecy->loadByProperties([
+      'uuid' => '123',
+    ])->willReturn([$this->entityProphecy]);
+
     $this->storageProphecy->create([
       'type' => 'article',
       'uuid' => '123',
@@ -48,10 +57,32 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
       $this->entityManagerProphecy->reveal(),
       $this->fileSystemProphecy->reveal(),
       $this->fileRepositoryProphecy->reveal(),
+      $this->loggerProphecy->reveal(),
     );
 
     $graphqlArticle = NodeArticle::make(
-      '123', 'this is the title', 'https://example.com', DateTime::make(1735689661, 'UTC'), 'this is the subtitle', TRUE, 'this is an author', 'this is a teaser text'
+      id: '123',
+      title: 'this is the title',
+      url: '/anbefalinger-til-mork-tid',
+      status: TRUE,
+      changed: ChangedDateTime::make(timestamp: 1735689661, timezone: 'UTC'),
+      created: CreatedDateTime::make(timestamp: 1735689661, timezone: 'UTC'),
+      publicationDate: PublicationDateDateTime::make(timestamp: 1735689661, timezone: 'UTC'),
+      canonicalUrl: CanonicalLink::make(
+        url: 'https://example.dk'
+      ),
+      overrideAuthor: 'this is an author',
+      showOverrideAuthor: TRUE,
+      subtitle: 'this is the subtitle',
+      teaserImage: NULL,
+      teaserText: 'this is a teaser text',
+      paragraphs: [
+        ParagraphTextBody::make(
+          id: '982e0d87-f6b8-4b84-8de8-c8c8bcfef999',
+          body: Text::make(
+            format: 'with_format', value: 'This is the text')
+        ),
+      ]
     );
 
     $node = $mapper->map($graphqlArticle);

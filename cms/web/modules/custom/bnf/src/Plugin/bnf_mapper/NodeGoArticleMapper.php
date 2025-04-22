@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoArticle;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -17,27 +14,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: NodeGoArticle::class,
 )]
-class NodeGoArticleMapper extends BnfMapperPluginBase {
-
-  /**
-   * Entity storage to create node in.
-   */
-  protected EntityStorageInterface $nodeStorage;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(
-    array $configuration,
-    string $pluginId,
-    array $pluginDefinition,
-    protected BnfMapperManager $manager,
-    EntityTypeManagerInterface $entityTypeManager,
-  ) {
-    parent::__construct($configuration, $pluginId, $pluginDefinition);
-
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
-  }
+class NodeGoArticleMapper extends BnfMapperNodePluginBase {
 
   /**
    * {@inheritdoc}
@@ -47,23 +24,14 @@ class NodeGoArticleMapper extends BnfMapperPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\node\Entity\Node $node */
-    $node = $this->nodeStorage->create([
-      'type' => 'go_article',
-      'uuid' => $object->id,
-    ]);
+    $node = $this->getNode($object, 'go_article');
 
-    $node->set('title', $object->title);
-
-    if ($object->paragraphs) {
-      $paragraphs = [];
-
-      foreach ($object->paragraphs as $paragraph) {
-        $paragraphs[] = $this->manager->map($paragraph);
-      }
-
-      $node->set('field_paragraphs', $paragraphs);
-    }
+    $node->set('field_go_article_image', $this->getImageValue($object->goArticleImage));
+    $node->set('field_subtitle', $object->subtitle);
+    $node->set('field_override_author', $object->overrideAuthor);
+    $node->set('field_show_override_author', $object->showOverrideAuthor);
+    $node->set('field_teaser_text', $object->teaserText);
+    $node->set('field_teaser_image', $this->getImageValue($object->teaserImageRequired));
 
     return $node;
   }

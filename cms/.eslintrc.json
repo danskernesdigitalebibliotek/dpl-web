@@ -14,6 +14,7 @@
     "**/web/themes/custom/novel/assets/",
     "**/web/themes/contrib/",
     "**/web/modules/local/",
+    "**/web/modules/custom/bnf/bnf_example_content/content/",
     "**/web/modules/custom/dpl_example_content/content/",
     "**/web/modules/custom/dpl_static_content/content/"
   ]

@@ -4,8 +4,8 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
  * @property string $id
- * @property string $materialGridLink
  * @property int $amountOfMaterials
+ * @property string $materialGridLink
  * @property string $__typename
  * @property string|null $materialGridDescription
  * @property string|null $materialGridTitle
@@ -14,15 +14,15 @@ class ParagraphMaterialGridLinkAutomatic extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param string $materialGridLink
      * @param int $amountOfMaterials
+     * @param string $materialGridLink
      * @param string|null $materialGridDescription
      * @param string|null $materialGridTitle
      */
     public static function make(
         $id,
-        $materialGridLink,
         $amountOfMaterials,
+        $materialGridLink,
         $materialGridDescription = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
@@ -31,11 +31,11 @@ class ParagraphMaterialGridLinkAutomatic extends \Spawnia\Sailor\ObjectLike
         if ($id !== self::UNDEFINED) {
             $instance->id = $id;
         }
-        if ($materialGridLink !== self::UNDEFINED) {
-            $instance->materialGridLink = $materialGridLink;
-        }
         if ($amountOfMaterials !== self::UNDEFINED) {
             $instance->amountOfMaterials = $amountOfMaterials;
+        }
+        if ($materialGridLink !== self::UNDEFINED) {
+            $instance->materialGridLink = $materialGridLink;
         }
         $instance->__typename = 'ParagraphMaterialGridLinkAutomatic';
         if ($materialGridDescription !== self::UNDEFINED) {
@@ -50,12 +50,13 @@ class ParagraphMaterialGridLinkAutomatic extends \Spawnia\Sailor\ObjectLike
 
     protected function converters(): array
     {
+        /** @var array<string, \Spawnia\Sailor\Convert\TypeConverter>|null $converters */
         static $converters;
 
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
-            'materialGridLink' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'amountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
+            'materialGridLink' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'materialGridDescription' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'materialGridTitle' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),

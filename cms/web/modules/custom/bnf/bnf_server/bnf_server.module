@@ -30,12 +30,13 @@ function bnf_server_preprocess_page(array &$variables): void {
   $url = $session->get(LoginController::CALLBACK_URL_KEY);
   $name = $session->get(LoginController::SITE_NAME_KEY);
 
+  $variables['#cache']['contexts'][] = 'bnf_library_session';
+
   if ($name && !\Drupal::service('router.admin_context')->isAdminRoute()) {
     $variables['page']['content']['logged_notifier'] = [
       '#theme' => 'bnf_server_logged_notifier',
       '#name' => $name,
       '#url' => Url::fromRoute('view.importable_content.page'),
-      '#cache' => ['max-age' => 0],
     ];
   }
 
@@ -54,7 +55,6 @@ function bnf_server_preprocess_page(array &$variables): void {
       '#label' => $node->label(),
       '#name' => $name ?? t('my site', [], ['context' => 'BNF']),
       '#url' => Url::fromRoute('bnf_server.import_redirect', ['uuid' => $node->uuid()]),
-      '#cache' => ['max-age' => 0],
     ];
   }
 }

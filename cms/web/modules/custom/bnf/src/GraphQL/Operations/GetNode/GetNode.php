@@ -5,13 +5,13 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode;
 /**
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Info\SchemaInformation $info
  * @property string $__typename
- * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoCategory|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoPage|null $node
+ * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoCategory|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoPage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodePage|null $node
  */
 class GetNode extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Info\SchemaInformation $info
-     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoCategory|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoPage|null $node
+     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoArticle|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoCategory|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoPage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\NodePage|null $node
      */
     public static function make(
         $info,
@@ -32,6 +32,7 @@ class GetNode extends \Spawnia\Sailor\ObjectLike
 
     protected function converters(): array
     {
+        /** @var array<string, \Spawnia\Sailor\Convert\TypeConverter>|null $converters */
         static $converters;
 
         return $converters ??= [
@@ -42,6 +43,7 @@ class GetNode extends \Spawnia\Sailor\ObjectLike
             'NodeGoArticle' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\NodeGoArticle',
             'NodeGoCategory' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\NodeGoCategory',
             'NodeGoPage' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\NodeGoPage',
+            'NodePage' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\NodePage',
         ])),
         ];
     }

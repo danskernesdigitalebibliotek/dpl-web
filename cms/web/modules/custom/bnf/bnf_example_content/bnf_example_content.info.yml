@@ -1,0 +1,12 @@
+name: Example content for BNF
+type: module
+description: Provides example content for Delingstjenesten
+package: DPL
+core_version_requirement: ^9 || ^10
+dependencies:
+  - default_content:default_content
+  - drupal_typed:drupal_typed
+default_content:
+  node:
+    - a631dbb7-c6b2-4d99-a4b8-ca56a318140f
+    - 5b747546-8f54-41bb-87b6-0a87c1a1ea32

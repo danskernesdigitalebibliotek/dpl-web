@@ -39,8 +39,9 @@ class ParagraphTextBodyMapperTest extends EntityMapperTestBase {
     $mapper = new ParagraphTextBodyMapper([], '', [], $this->entityManagerProphecy->reveal());
 
     $graphqlElement = ParagraphTextBody::make(
-      'textBody',
-      Text::make('This is the text', 'with_format')
+      id: 'textBody',
+      body: Text::make(
+        format: 'with_format', value: 'This is the text')
     );
 
     $paragraph = $mapper->map($graphqlElement);

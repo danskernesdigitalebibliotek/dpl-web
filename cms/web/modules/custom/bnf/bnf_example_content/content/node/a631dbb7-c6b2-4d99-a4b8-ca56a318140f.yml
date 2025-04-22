@@ -1,0 +1,80 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: a631dbb7-c6b2-4d99-a4b8-ca56a318140f
+  bundle: page
+  default_langcode: da
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Delingstjenesten
+  created:
+    -
+      value: 1744183713
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  bnf_state:
+    -
+      value: 0
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Delingstjenesten | BNF'
+  path:
+    -
+      alias: /delingstjenesten
+      langcode: und
+      pathauto: 1
+  field_display_titles:
+    -
+      value: false
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 044feedc-01e6-49a8-8ebe-0c57d06c7d7b
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1744183713
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Dette er et Delingstjenesten udviklingsmiljø.</p>'
+              format: basic
+  field_publication_date:
+    -
+      value: '2025-04-09'

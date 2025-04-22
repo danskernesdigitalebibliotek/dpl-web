@@ -82,28 +82,22 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
    */
   public function resolve(string $uuid, string $callbackUrl): ImportResponse {
     $result = new ImportResponse();
-    // For now, we only support articles. In the future, this should be
-    // sent along as a parameter, as GraphQL exposes different queries
-    // for each node type (nodeArticle)
-    $node_type = 'article';
 
-    $this->logger->info('Received request to import @type content with UUID @uuid from @url', [
+    $this->logger->info('Received request to import content with UUID @uuid from @url', [
       '@uuid' => $uuid,
-      '@type' => $node_type,
       '@url' => $callbackUrl,
     ]);
 
     try {
-      $this->importer->importNode($uuid, $callbackUrl, $node_type);
+      $this->importer->importNode($uuid, $callbackUrl);
 
       $result->status = ImportStatus::Success;
       $result->message = 'Node created successfully.';
     }
     catch (\Exception $e) {
       if (!$e instanceof AlreadyExistsException) {
-        $this->logger->warning('Could not load node of type @node_type with UUID @uuid at @callbackUrl. @message', [
+        $this->logger->warning('Could not load node with UUID @uuid at @callbackUrl. @message', [
           '@uuid' => $uuid,
-          '@node_type' => $node_type,
           '@callbackUrl' => $callbackUrl,
           '@message' => $e->getMessage(),
         ]);
