@@ -28,6 +28,7 @@ export const libraryUserOrderListSchema = z.object({
     }),
     data: z.object({
       orderitem: orderItemSchema.or(z.array(orderItemSchema)),
+      friendlycardnumber: z.string().optional(),
     }),
   }),
 })
