@@ -57,21 +57,14 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   // For each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
     queries: sortedManifestations.map(manifestation => {
-      // if manifestation is not online, skip the request
-      if (manifestation.accessTypes[0].code !== "ONLINE") {
-        return {
-          queryKey: [],
-          queryFn: () => Promise.resolve({ data: null }),
-          enabled: false,
-        }
-      }
-
       const isbn =
         manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
 
       return {
         queryKey: getGetV1ProductsIdentifierAdapterQueryKey(isbn),
         queryFn: () => getV1ProductsIdentifierAdapter(isbn),
+        // if manifestation is not online, skip the request
+        enabled: manifestation.accessTypes[0].code === "ONLINE",
       }
     }),
     combine: results => {
