@@ -1,25 +1,20 @@
-"use client"
-
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import React from "react"
 
-import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
   getManifestationLanguageIsoCode,
-  getWorkMaterialTypes,
-  translateMaterialTypesStringForRender,
+  slideSelectOptionsFromMaterialTypes,
+  sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import goConfig from "@/lib/config/goConfig"
+import useSession from "@/hooks/useSession"
 import {
-  GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
-  Work,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
@@ -29,31 +24,31 @@ import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/co
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 
+import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
+import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
+
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
   selectedManifestation: ManifestationWorkPageFragment
+  manifestations: ManifestationWorkPageFragment[]
 }
 
-const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMaterialType[]) => {
-  return workMaterialTypes.map(materialType => {
-    return {
-      code: materialType.code,
-      display: translateMaterialTypesStringForRender(
-        materialType.code as GeneralMaterialTypeCodeEnum
-      ),
-    }
-  }) as SlideSelectOption[]
-}
-
-const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
+const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
-  const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
+  const selectedManifestationIsbns = selectedManifestation
+    ? getIsbnsFromManifestation(selectedManifestation)
+    : []
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
-  const workMaterialTypes = getWorkMaterialTypes(
-    (work?.materialTypes as Work["materialTypes"]) || []
-  )
-  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(workMaterialTypes)
+
+  const sortedManifestations = sortManifestationsBySortPriority(manifestations)
+
+  // get the material types from the manifestations
+  const materialTypes = sortedManifestations.map(manifestation => {
+    return manifestation.materialTypes[0].materialTypeGeneral
+  })
+
+  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
 
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
@@ -67,13 +62,16 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
     { query: { enabled: !!selectedManifestation?.pid } }
   )
 
-  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
-    },
-  })
+  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
+    selectedManifestationIsbns?.[0],
+    {
+      query: {
+        // Publizon / useGetV1ProductsIdentifier is responsible for online
+        // materials. It requires an ISBN to do lookups.
+        enabled: selectedManifestationIsbns.length > 0,
+      },
+    }
+  )
 
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(
@@ -91,20 +89,16 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
 
   const slideSelectOptions = workMaterialTypesWithDisplayName
 
-  // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
-  const sortedSlideSelectOptions = slideSelectOptions.sort((a, b) => {
-    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
-    return (
-      goConfig("materialtypes.sortpriority").indexOf(a.code) -
-      goConfig("materialtypes.sortpriority").indexOf(b.code)
-    )
-  })
-
   const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]
     .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
 
   const isSelectedManifestationPodcast =
     selectedManifestationMaterialTypeCode === "PODCASTS" || false
+
+  const isSelectedManifestationCostFree = !!publizonData?.product?.costFree
+
+  const { session } = useSession()
+  const isLoggedIn = session?.isLoggedIn || false
 
   return (
     <>
@@ -128,7 +122,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           {slideSelectOptions && (
             <div className="flex w-full justify-center pt-12">
               <SlideSelect
-                options={sortedSlideSelectOptions}
+                options={slideSelectOptions}
                 selected={selectedManifestationMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
@@ -136,7 +130,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           )}
         </div>
         <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">
-          {!!publizonData?.product?.costFree || isSelectedManifestationPodcast ? (
+          {isSelectedManifestationCostFree || isSelectedManifestationPodcast ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
@@ -149,7 +143,17 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
         <div className="mt-grid-gap-3 col-span-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
-          <WorkPageButtons workId={work.workId} selectedManifestation={selectedManifestation} />
+          {isLoggedIn ? (
+            <WorkPageButtonsLoggedIn
+              workId={work.workId}
+              selectedManifestation={selectedManifestation}
+            />
+          ) : (
+            <WorkPageButtonsLoggedOut
+              workId={work.workId}
+              selectedManifestation={selectedManifestation}
+            />
+          )}
         </div>
       </motion.div>
     </>

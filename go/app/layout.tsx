@@ -5,6 +5,8 @@ import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
+import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
+import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -42,11 +44,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="da">
-      <body className={`${GTFlexa.variable} antialiased`}>
+      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
         <Theme>
           <ReactQueryProvider>
             <Header />
+            <DynamicSheet />
+            <DynamicModal />
             <div className="min-h-screen-minus-navigation-height py-space-y flex h-full w-full flex-col">
               {children}
             </div>

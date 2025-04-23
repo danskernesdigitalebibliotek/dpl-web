@@ -1,19 +1,17 @@
-import app from "./app"
 import auth from "./auth"
-import materialTypes from "./materialTypes"
+import libraryToken from "./library-token"
+import materialTypes from "./material-types"
 import routes from "./routes"
 import search from "./search"
-import serviceFbi from "./service.fbi"
-import token from "./token"
+import services from "./services"
 
 export const resolvers = {
-  ...app,
   ...auth,
+  ...libraryToken,
   ...materialTypes,
   ...routes,
   ...search,
-  ...serviceFbi,
-  ...token,
+  ...services,
 }
 
 export type TResolvers = typeof resolvers

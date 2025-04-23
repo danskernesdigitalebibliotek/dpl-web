@@ -25,6 +25,7 @@
   --z-index-drawer: 50;
   --z-index-sheet: 50;
   --z-index-slide-select: 10;
+  --z-index-floating-icon: 10;
 
   --aspect-*: initial;
   --aspect-1\/1: var(--aspect-1-1);
@@ -123,6 +124,9 @@
   --text-typo-caption--letter-spacing: var(--typo-caption-letter-spacing);
 
   --color-*: initial;
+  --color-black: var(--black);
+  --color-white: var(--white);
+
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
   --color-background-overlay-solid: var(--background-overlay-solid);
@@ -202,6 +206,8 @@
   --transition-duration-dark-mode: var(--dark-mode-transition);
 
   --animate-wiggle: wiggle 900ms linear 1;
+  --animate-content-grow: content-grow 300ms ease-in-out 1;
+  --animate-spin-reverse: spin-reverse 900ms ease-in-out infinite;
 
   --spacing-navigation-top-height: var(--navigation-top-height);
   --spacing-navigation-height: var(--navigation-height);
@@ -255,5 +261,25 @@
     60% {
       transform: rotate(-8deg);
     }
+  }
+
+  @keyframes content-grow {
+    0% {
+      max-height: 0vh;
+      overflow: hidden;
+    }
+    100% {
+      max-height: 100vh;
+      overflow: visible;
+    }
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }

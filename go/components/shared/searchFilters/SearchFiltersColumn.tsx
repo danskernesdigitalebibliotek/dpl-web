@@ -20,6 +20,8 @@ type SearchFiltersColumnProps = {
   isLast: boolean
 }
 
+const allowedFacetValues = ["bøger", "podcasts", "e-bøger", "lydbøger"]
+
 const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const actor = useSearchMachineActor()
   const [isExpanded, setIsExpanded] = useState<boolean>(false)
@@ -29,6 +31,11 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const { selectedFilters } = useSearchDataAndLoadingStates()
   const toggleFilter = createToggleFilterCallback(actor)
   const facetData = actor.getSnapshot().context.facetData
+
+  // Filter out the facet values that are not allowed if the facet is materialTypesGeneral
+  if (facet.name === "materialTypesGeneral") {
+    facet.values = facet.values.filter(value => allowedFacetValues.includes(value.term))
+  }
 
   // We show the selected values first in the list
   if (selectedFilters) {
@@ -109,7 +116,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
 export const SearchFiltersColumnSkeleton = () => {
   return (
     <div className="space-y-grid-gap-half">
-      <div className="bg-background-skeleton -mb-1 h-4 w-20 animate-pulse rounded-full"></div>
+      <div className="bg-background-skeleton mb-2.5 h-4 w-20 animate-pulse rounded-full"></div>
       <div className="space-y-1">
         <div className="bg-background-skeleton h-7 w-10 animate-pulse rounded-full"></div>
         <div className="bg-background-skeleton h-7 w-20 animate-pulse rounded-full"></div>

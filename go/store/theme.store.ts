@@ -1,30 +1,29 @@
-import type {} from "@redux-devtools/extension"
-// required for devtools typing
-import { create } from "zustand"
-import { devtools, persist } from "zustand/middleware"
+"use client"
 
-import { themeVariants } from "@/lib/types/theme"
+import { createStore } from "@xstate/store"
 
-type themeState = {
-  theme: themeVariants
-  toggleTheme: () => void
+type TThemeTypes = "light" | "dark"
+
+type TContext = {
+  theme: TThemeTypes
 }
 
-const useThemeStore = create<themeState>()(
-  devtools(
-    persist(
-      set => ({
-        theme: "light",
-        toggleTheme: () =>
-          set(state => ({
-            theme: state.theme === "light" ? "dark" : "light",
-          })),
-      }),
-      {
-        name: "theme-storage",
-      }
-    )
-  )
-)
+const initialSnapshot =
+  typeof window !== "undefined" && JSON.parse(localStorage.getItem("theme.store") || "{}")
 
-export { useThemeStore }
+const themeStore = createStore({
+  context: initialSnapshot.context || ({ theme: "light" } as TContext),
+  on: {
+    toggleTheme: context => ({
+      ...context,
+      theme: (context.theme === "dark" ? "light" : "dark") as TThemeTypes,
+    }),
+  },
+})
+
+// Handle persistence via subscription - persist entire snapshot
+themeStore.subscribe(snapshot => {
+  localStorage.setItem("theme.store", JSON.stringify(snapshot))
+})
+
+export { themeStore }

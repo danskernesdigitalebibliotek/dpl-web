@@ -43,6 +43,11 @@ const search = {
       filter: "materialTypesGeneral",
       translation: "Type",
     },
+    // Keep this for debugging purposes. TODO: Remove this when not needed.
+    // MATERIALTYPESSPECIFIC: {
+    //   filter: "materialTypesSpecific",
+    //   translation: "Type",
+    // },
     MAINLANGUAGES: {
       filter: "mainLanguages",
       translation: "Sprog",

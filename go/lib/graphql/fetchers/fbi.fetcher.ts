@@ -1,4 +1,4 @@
-import goConfig from "@/lib/config/goConfig"
+import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 export const fetchData = <TData, TVariables>(
   query: string,
@@ -6,11 +6,11 @@ export const fetchData = <TData, TVariables>(
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
   return async () => {
-    const res = await fetch(`${goConfig("service.fbi.graphql.endpoint")}`, {
+    const url = getAPServiceFetcherBaseUrl("fbi")
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
         ...options,
       },
       body: JSON.stringify({
@@ -18,7 +18,6 @@ export const fetchData = <TData, TVariables>(
         variables,
       }),
     })
-
     const json = await res.json()
 
     if (json.errors) {

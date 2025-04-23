@@ -1,5 +1,5 @@
-import goConfig from "@/lib/config/goConfig"
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
+import { getAPServiceFetcherAuthheader, getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 export const fetcher = async <ResponseType>({
   url,
@@ -15,13 +15,11 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeaders = {
-    Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
-  } as object
-
+  const authHeader = await getAPServiceFetcherAuthheader("pubhub-adapter")
+  const baseUrl = getAPServiceFetcherBaseUrl("pubhub-adapter")
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: "https://pubhub-openplatform.test.dbc.dk",
+    baseUrl,
     url,
     params,
   })
@@ -30,15 +28,11 @@ export const fetcher = async <ResponseType>({
     const response = await fetch(serviceUrl, {
       method,
       headers: {
+        ...(authHeader ? { authorization: authHeader } : {}),
         ...headers,
-        ...authHeaders,
       },
       body,
     })
-
-    if (!response.ok) {
-      console.error(response.status, response.statusText, serviceUrl)
-    }
 
     try {
       return (await response.json()) as ResponseType

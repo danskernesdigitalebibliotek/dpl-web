@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pubhub local API > Returns same output from local & external GET /v1/user/loans 1`] = `
+{
+  "libraryData": {
+    "maxAmountPerMonth": 3,
+    "maxConcurrentAudiobookLoansPerBorrower": 0,
+    "maxConcurrentEbookLoansPerBorrower": 3,
+  },
+  "loans": [
+    {
+      "libraryBook": {
+        "identifier": "9788772144467",
+      },
+      "loanExpireDateUtc": "2025-04-10T14:28:57",
+      "orderDateUtc": "2025-03-11T13:30:04",
+      "orderId": "5f9dacba-1ad5-4275-b90f-eac84a53ccae",
+    },
+  ],
+  "userData": {
+    "audiobookLoansRemaining": 0,
+    "ebookLoansRemaining": 2,
+    "totalAudioLoans": 0,
+    "totalEbookLoans": 1,
+    "totalLoans": 1,
+  },
+}
+`;

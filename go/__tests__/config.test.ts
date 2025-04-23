@@ -12,11 +12,6 @@ describe("Config test suite", () => {
     expect(() => goConfig("unknown.thingy")).toThrowError(MissingConfigurationError)
   })
 
-  test("That the env variable NEXT_PUBLIC_APP_URL defines the current app url", async () => {
-    const appUrl = goConfig("app.url")
-    expect(appUrl).toBe("https://hellboy.the-movie.com")
-  })
-
   test("That the client hook returns configuration as expected", async () => {
     const { result } = renderHook(() => useGoConfig(["search.item.limit", "search.branch.ids"]))
 

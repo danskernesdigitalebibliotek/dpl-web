@@ -1,6 +1,5 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import { notFound, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
@@ -16,44 +15,40 @@ import {
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
+import { filterManifestationsByEdition, filterManifestationsByMaterialType } from "./helper"
+
 function WorkPageLayout({ workId }: { workId: string }) {
+  const { data, isLoading } = useGetMaterialQuery({
+    wid: workId,
+  })
+
   const [selectedManifestation, setSelectedManifestation] =
     useState<ManifestationWorkPageFragment>()
   const searchParams = useSearchParams()
-
-  const { data, isLoading } = useQuery({
-    queryKey: useGetMaterialQuery.getKey({ wid: workId }),
-    queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
-  })
 
   if (!data || !data.work) {
     notFound()
   }
 
-  const work = data.work as WorkFullWorkPageFragment
-  const manifestations = work.manifestations.all
+  const work = data?.work as WorkFullWorkPageFragment
+  const manifestations = work?.manifestations.all as ManifestationWorkPageFragment[]
+
+  // Filter manifestations
+  const filteredManifestations = filterManifestationsByEdition(
+    filterManifestationsByMaterialType(manifestations)
+  )
 
   useEffect(() => {
+    // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
-
-    // filter out manifestations that don't match the search params material type
-    const filteredManifestations = manifestations.filter(manifestation => {
+    // Filter out manifestations that don't match the search params material type
+    const selectedManifestation = filteredManifestations.find(manifestation => {
       return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
     })
 
-    if (!filteredManifestations.length) return notFound()
-
-    // get the manifestation that has the newest edition
-    const latestManifestationEdition = filteredManifestations.reduce((latest, current) => {
-      const latestEdition = latest.edition?.publicationYear?.year || 0
-      const currentEdition = current.edition?.publicationYear?.year || 0
-
-      return latestEdition > currentEdition ? latest : current
-    }, filteredManifestations[0])
-
-    // set the selected manifestation in the state
-    setSelectedManifestation(latestManifestationEdition)
-  }, [manifestations, searchParams])
+    // Set the selected manifestation in the state
+    setSelectedManifestation(selectedManifestation)
+  }, [filteredManifestations, searchParams])
 
   if (isLoading && !data) {
     return (
@@ -63,15 +58,19 @@ function WorkPageLayout({ workId }: { workId: string }) {
     )
   }
 
-  if (!data || !data.work) {
-    notFound()
+  if (!work) {
+    return notFound()
   }
 
   return (
     <div className="content-container my-grid-gap-2 lg:my-grid-gap-half flex-row flex-wrap">
-      {selectedManifestation && (
+      {work && selectedManifestation && (
         <>
-          <WorkPageHeader work={work} selectedManifestation={selectedManifestation} />
+          <WorkPageHeader
+            manifestations={filteredManifestations}
+            work={work}
+            selectedManifestation={selectedManifestation}
+          />
           <InfoBox work={data.work} selectedManifestation={selectedManifestation} />
           <InfoBoxDetails selectedManifestation={selectedManifestation} />
         </>

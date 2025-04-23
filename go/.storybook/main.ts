@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-properties */
 import type { StorybookConfig } from "@storybook/nextjs"
 
 const config: StorybookConfig = {
@@ -21,6 +22,7 @@ const config: StorybookConfig = {
       .reduce((state, nextKey) => ({ ...state, [nextKey]: process.env[nextKey] }), {}),
   }),
   staticDirs: ["../public"],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files
     // since we handle those with `@svgr/webpack`.

@@ -1,3 +1,4 @@
+import { fromUnixTime } from "date-fns"
 import React from "react"
 
 import ParagraphResolver from "@/components/paragraphs/ParagraphResolver"
@@ -20,8 +21,8 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
   }
 
   const mediaImage = goArticleImage?.mediaImage
-
-  const publicationDate = new Date(pageData.publicationDate.timestamp)
+  const dateString = fromUnixTime(parseInt(pageData.publicationDate.timestamp))
+  const publicationDate = new Date(dateString)
   const localeDateString = generalGoDateFormat(publicationDate)
 
   return (
@@ -45,7 +46,7 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
           </div>
         </ImageCaptionWrapper>
 
-        <p className="text-typo-subtitle-lg max-w-article-max-width col-span-full mx-auto">
+        <p className="max-w-article-max-width text-typo-subtitle-lg col-span-full mx-auto w-full">
           {pageData.subtitle}
         </p>
         <div className="col-span-full space-y-4">
