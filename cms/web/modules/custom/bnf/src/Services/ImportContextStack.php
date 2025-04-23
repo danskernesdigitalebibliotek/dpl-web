@@ -8,6 +8,12 @@ use Drupal\bnf\ImportContext;
 
 /**
  * Manages the current import context.
+ *
+ * When mapping a top level element, BnfImporter creates an ImportContext with
+ * the relevant context of the import. Mappers can get the current context from
+ * this service.
+ *
+ * This is implemented as a stack to allow for recursive importing.
  */
 class ImportContextStack {
 
