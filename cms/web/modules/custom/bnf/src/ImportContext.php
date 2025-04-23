@@ -13,7 +13,7 @@ class ImportContext {
    * Constructor.
    */
   public function __construct(
-    public string $endpointUrl,
+    public readonly string $endpointUrl,
   ) {}
 
 }
