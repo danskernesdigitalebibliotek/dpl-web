@@ -121,7 +121,6 @@
         "drupal/editor_advanced_link": "^2.2",
         "drupal/entity_clone_template": "^2.0",
         "drupal/entity_reference_revisions": "^1.11.0",
-        "drupal/entityqueue": "^1.9",
         "drupal/enum_field": "^1.0",
         "drupal/externalauth": "^2.0",
         "drupal/facets": "^2.0",
