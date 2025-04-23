@@ -23,13 +23,10 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
-import { Product, ProductResult } from "@/lib/rest/publizon/adapter/generated/model"
 import {
   getGetV1ProductsIdentifierAdapterQueryKey,
   getV1ProductsIdentifierAdapter,
 } from "@/lib/rest/publizon/adapter/generated/publizon"
-
-import MaterialTypeIcons from "./MaterialTypeIcons"
 
 export type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
