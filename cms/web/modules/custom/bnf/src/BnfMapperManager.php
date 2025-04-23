@@ -69,12 +69,23 @@ class BnfMapperManager extends DefaultPluginManager {
    *
    * @param \Spawnia\Sailor\ObjectLike[] $objects
    *   GraphQL objecs.
+   * @param bool $ignoreErrors
+   *   Whether to ignore errors mapping objects.
    *
    * @return mixed[]
    *   Mapped objects.
    */
-  public function mapAll(array $objects): array {
-    return array_map(fn ($object) => $this->map($object), $objects);
+  public function mapAll(array $objects, $ignoreErrors): array {
+    return array_map(function ($object) use ($ignoreErrors) {
+      try {
+        return $this->map($object);
+      }
+      catch (\Throwable $o_O) {
+        if (!$ignoreErrors) {
+          throw $o_O;
+        }
+      }
+    }, $objects);
   }
 
 }

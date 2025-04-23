@@ -63,7 +63,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
       'value' => 'This is a test',
     ];
 
-    $manager->mapAll([$bodyTextParagraph])
+    $manager->mapAll([$bodyTextParagraph], TRUE)
       ->willReturn([
         $mappedBodyTextParagraph,
       ]);
