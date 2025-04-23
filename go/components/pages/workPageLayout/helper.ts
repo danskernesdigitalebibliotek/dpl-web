@@ -33,9 +33,7 @@ export const filterManifestationsByMaterialType = (
       )
     }
 
-    return manifestation.materialTypes.some(type =>
-      allowedMaterialTypes.includes(type.materialTypeGeneral.code)
-    )
+    return allowedMaterialTypes.includes(manifestation.materialTypes[0].materialTypeGeneral.code)
   })
 }
 

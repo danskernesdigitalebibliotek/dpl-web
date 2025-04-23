@@ -11,17 +11,9 @@ import {
 
 import { TChildrenOrAdultsOption, TFilters } from "./types"
 
-const childrenOrAdultsFilter = {
+const filtersHardcoded = {
   childrenOrAdults: ["til børn"] as TChildrenOrAdultsOption[],
-  materialTypesSpecific: [
-    "bog",
-    "e-bog",
-    "lydbog (online)",
-    "billedbog (online)",
-    "graphic novel (online)",
-    "tegneserie (online)",
-    "podcast",
-  ],
+  materialTypesSpecific: ["bog", "e-bog", "lydbog (online)", "podcast"],
 }
 
 export const performSearch = fromPromise(
@@ -34,7 +26,7 @@ export const performSearch = fromPromise(
       q: { all: q },
       offset: offset,
       limit,
-      filters: { ...filters, ...childrenOrAdultsFilter },
+      filters: { ...filters, ...filtersHardcoded },
     }
 
     return queryClient.fetchQuery({
@@ -54,7 +46,7 @@ export const getFacets = fromPromise(
       q: { all: q },
       facets: getFacetMachineNames(),
       facetLimit,
-      filters: { ...filters, ...childrenOrAdultsFilter },
+      filters: { ...filters, ...filtersHardcoded },
     }
 
     return queryClient.fetchQuery({
