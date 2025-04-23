@@ -23,10 +23,13 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import { Product, ProductResult } from "@/lib/rest/publizon/adapter/generated/model"
 import {
   getGetV1ProductsIdentifierAdapterQueryKey,
   getV1ProductsIdentifierAdapter,
 } from "@/lib/rest/publizon/adapter/generated/publizon"
+
+import MaterialTypeIcons from "./MaterialTypeIcons"
 
 export type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
@@ -57,6 +60,15 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   // For each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
     queries: sortedManifestations.map(manifestation => {
+      // if manifestation is not online, skip the request
+      if (manifestation.accessTypes[0].code !== "ONLINE") {
+        return {
+          queryKey: [],
+          queryFn: () => Promise.resolve({ data: null }),
+          enabled: false,
+        }
+      }
+
       const isbn =
         manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
 
@@ -67,10 +79,18 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     }),
     combine: results => {
       // combine manifestation data with publizon data
-      return sortedManifestations.map((manifestation, index) => ({
-        ...manifestation,
-        publizonData: results[index].data?.product,
-      }))
+      return sortedManifestations.map((manifestation, index) => {
+        // if manifestation is not online, it doesn't have publizon data and falls back to null
+        const product =
+          results?.[index].data && "product" in results[index].data
+            ? results[index].data.product
+            : null
+
+        return {
+          ...manifestation,
+          publizonData: product,
+        }
+      })
     },
   })
 
@@ -130,6 +150,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
             const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
             const isCostFree = manifestation.publizonData?.costFree
             const isPodcast = materialType === "PODCASTS"
+
             return (
               <MaterialTypeIconWrapper
                 key={manifestation.pid}
