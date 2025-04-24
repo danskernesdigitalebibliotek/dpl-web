@@ -4,6 +4,7 @@ namespace Drupal\dpl_patron_reg\Controller;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\openid_connect\OpenIDConnectClaims;
@@ -16,12 +17,19 @@ use Symfony\Component\HttpFoundation\Request;
 class DplPatronRegController extends ControllerBase {
 
   /**
+   * OpenID connect client storage.
+   */
+  protected EntityStorageInterface $clientStorage;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(
     protected OpenIDConnectSession $session,
     protected OpenIDConnectClaims $claims,
-  ) {}
+  ) {
+    $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
+  }
 
   /**
    * Redirect callback that redirects to log in service.
@@ -39,8 +47,12 @@ class DplPatronRegController extends ControllerBase {
   public function authRedirect(Request $request, string $client_name): TrustedRedirectResponse {
     $this->session->saveDestination();
 
-    /** @var \Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
-    $client = $this->entityTypeManager()->getStorage('openid_connect_client')->loadByProperties(['id' => $client_name])[$client_name];
+    /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
+    $client = $this->clientStorage->load($client_name);
+
+    if (!$client) {
+      throw new \RuntimeException("No {$client_name} openid_connect client");
+    }
 
     $plugin = $client->getPlugin();
     $scopes = $this->claims->getScopes($plugin);
