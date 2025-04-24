@@ -86,7 +86,7 @@ const LoanCard = ({ manifestation, title, className }: LoanCardProps) => {
               costFree={isCostFree}
             />
           </div>
-          <p className="text-typo-subtitle-sm w-full text-center break-words opacity-50">{`Udløber om ${daysUntil} dage`}</p>
+          <p className="text-typo-subtitle-sm text-foreground/50 w-full text-center break-words">{`Udløber om ${daysUntil} dage`}</p>
           {isCostFree && (
             <div className="flex w-full justify-center">
               <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
