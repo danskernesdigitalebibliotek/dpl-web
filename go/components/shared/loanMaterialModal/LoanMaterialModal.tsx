@@ -116,7 +116,7 @@ const LoanMaterialModal = ({
 
       {/* Description */}
       {(isLoadingLibraryProfile || isLoadingLoans) && (
-        <div className="bg-background-skeleton mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
+        <div className="bg-background-skeleton mx-auto mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
       )}
       {!isLoadingLibraryProfile && !isLoadingLoans && (
         <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
