@@ -6,9 +6,6 @@ use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
-use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
-use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -23,12 +20,8 @@ class DplPatronRegController extends ControllerBase {
    * {@inheritdoc}
    */
   public function __construct(
-    protected UserTokensProviderInterface $userTokensProvider,
-    protected UserTokensProviderInterface $unregisteredUserTokensProvider,
     protected OpenIDConnectSession $session,
     protected OpenIDConnectClaims $claims,
-    protected BranchSettings $branchSettings,
-    protected BranchRepositoryInterface $branchRepository,
   ) {}
 
   /**
@@ -36,12 +29,8 @@ class DplPatronRegController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): DplPatronRegController|static {
     return new static(
-      $container->get('dpl_login.registered_user_tokens'),
-      $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('openid_connect.session'),
       $container->get('openid_connect.claims'),
-      $container->get('dpl_library_agency.branch_settings'),
-      $container->get('dpl_library_agency.branch.repository'),
     );
   }
 
