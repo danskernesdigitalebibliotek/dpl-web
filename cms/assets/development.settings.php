@@ -17,7 +17,7 @@ if ($project === 'dpl-cms') {
 
   // If this is a bnf pull-request, point the client to the corresponding
   // dpl-bnf PR environment.
-  if ($pr_title && preg_match('/^bnf: /', $pr_title)) {
+  if ($pr_title && preg_match('/^bnf: /i', $pr_title)) {
     $config['bnf_client.settings']['base_url'] = 'https://varnish.' .
       getenv('LAGOON_ENVIRONMENT') . '.dpl-bnf.dplplat01.dpl.reload.dk/';
   }
