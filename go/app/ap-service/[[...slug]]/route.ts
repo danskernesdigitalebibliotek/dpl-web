@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { TServiceType, getApServiceUrl } from "@/lib/helpers/ap-service"
-import { getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
+import { TServiceType, getApServiceSettings, getApServiceUrl } from "@/lib/helpers/ap-service"
+import { getSession } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
 
@@ -11,11 +11,25 @@ const getAuthHeader = async (request: NextRequest, serviceType: TServiceType) =>
   if (authHeader) {
     return authHeader
   }
-  // Otherwise, get the bearer token from the session or library token cookie.
-  const bearerToken = await getBearerTokenServerSide(serviceType)
-  if (bearerToken) {
-    return `Bearer ${bearerToken}`
+
+  // Otherwise, get the bearer token from the session.
+  const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
+  const session = await getSession()
+  const userToken = session?.adgangsplatformenUserToken
+  const libraryToken = session?.adgangsplatformenLibraryToken
+
+  if (useLibraryToken && libraryToken) {
+    return `Bearer ${libraryToken}`
   }
+
+  if (userToken) {
+    return `Bearer ${userToken}`
+  }
+
+  if (libraryToken) {
+    return `Bearer ${libraryToken}`
+  }
+
   return null
 }
 
@@ -32,11 +46,12 @@ async function proxyRequest(
     if (headersToIgnore.includes(key.toLowerCase())) {
       return
     }
+
     proxiedHeaders[key] = value
   })
 
   const { slug } = await params
-  const serviceType = slug.shift() as TServiceType
+  const serviceType = slug[0] as TServiceType
   const baseUrl = getApServiceUrl(serviceType)
 
   if (!baseUrl) {
@@ -44,7 +59,7 @@ async function proxyRequest(
   }
 
   const urlParams = request.nextUrl.search ?? ""
-  const url = [baseUrl, ...slug].join("/")
+  const url = [baseUrl, ...slug.slice(1)].join("/")
   const serviceUrl = `${url}${urlParams}`
   const authHeader = await getAuthHeader(request, serviceType)
 

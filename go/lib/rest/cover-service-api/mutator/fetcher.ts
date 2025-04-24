@@ -1,4 +1,4 @@
-import { getAPServiceFetcherAuthheader, getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
+import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 import { getRestServiceUrlWithParams } from "../../../fetchers/helper"
 
@@ -14,7 +14,6 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeader = await getAPServiceFetcherAuthheader("covers")
   const headers = data?.headers === "object" ? (data?.headers as unknown as object) : {}
   const baseUrl = getAPServiceFetcherBaseUrl("covers")
   const body = data ? JSON.stringify(data) : null
@@ -28,7 +27,6 @@ export const fetcher = async <ResponseType>({
     const response = await fetch(serviceUrl, {
       method,
       headers: {
-        ...(authHeader ? { authorization: authHeader } : {}),
         ...headers,
       },
       body,

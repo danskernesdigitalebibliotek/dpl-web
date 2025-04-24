@@ -1,5 +1,3 @@
-"use server"
-
 import { cookies } from "next/headers"
 import { z } from "zod"
 
@@ -10,12 +8,6 @@ import {
   GetAdgangsplatformenLibraryTokenQuery,
   useGetAdgangsplatformenLibraryTokenQuery,
 } from "../graphql/generated/dpl-cms/graphql"
-
-export const getLibraryTokenCookieValue = async () => {
-  const cookieStore = await cookies()
-  const cookie = cookieStore.get(goConfig("library-token.cookie-name"))
-  return cookie?.value
-}
 
 export const setLibraryTokenCookie = async (token: string, expires: Date) => {
   const cookieStore = await cookies()
