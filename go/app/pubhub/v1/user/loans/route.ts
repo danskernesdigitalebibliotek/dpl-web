@@ -39,6 +39,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { uniLoginUser
         // There is no direct data field from the SOAP service that gives the remaining amount of audiobooks
         audiobookLoansRemaining:
           Number(libraryData.maxloanpertimesound) - Number(libraryData.usertotalsoundloans),
+        friendlyCardNumber: orderListResponse.data.friendlycardnumber,
       },
     }
   })
