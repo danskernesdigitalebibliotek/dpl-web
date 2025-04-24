@@ -83,11 +83,9 @@ const LoanMaterialModal = ({
   }
 
   const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
-    },
+    // Publizon / useGetV1ProductsIdentifier is responsible for online
+    // materials. It requires an ISBN to do lookups.
+    enabled: isbns.length > 0,
   })
 
   // Check if the user can loan more e-materials or if the material is cost-free (blue title or podcast)
