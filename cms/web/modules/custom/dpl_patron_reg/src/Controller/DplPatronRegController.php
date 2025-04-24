@@ -5,7 +5,6 @@ namespace Drupal\dpl_patron_reg\Controller;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
@@ -37,10 +36,7 @@ class DplPatronRegController extends ControllerBase {
     protected BlockManagerInterface $blockManager,
     protected RendererInterface $renderer,
     protected DplReactConfigInterface $patronRegSettings,
-    protected EntityTypeManagerInterface $entity_type_manager,
-  ) {
-    $this->entityTypeManager = $entity_type_manager;
-  }
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -56,7 +52,6 @@ class DplPatronRegController extends ControllerBase {
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
       $container->get('dpl_patron_reg.settings'),
-      $container->get('entity_type.manager'),
     );
   }
 
@@ -77,7 +72,7 @@ class DplPatronRegController extends ControllerBase {
     $this->session->saveDestination();
 
     /** @var \Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
-    $client = $this->entityTypeManager->getStorage('openid_connect_client')->loadByProperties(['id' => $client_name])[$client_name];
+    $client = $this->entityTypeManager()->getStorage('openid_connect_client')->loadByProperties(['id' => $client_name])[$client_name];
 
     $plugin = $client->getPlugin();
     $scopes = $this->claims->getScopes($plugin);
