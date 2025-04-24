@@ -148,7 +148,7 @@ const LoanMaterialModal = ({
             size={"lg"}
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans}>
-            {!isHandlingLoan && "Ja"}
+            {!isHandlingLoan && !isLoadingLibraryProfile && !isLoadingLoans && "Ja"}
             {(isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans) && (
               <Icon
                 name="go-spinner"
@@ -162,7 +162,9 @@ const LoanMaterialModal = ({
           size={"lg"}
           disabled={isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans}
           onClick={() => closeModal()}>
-          {!isLoanPossible || error || isErrorLibraryProfile || isErrorLoans ? "Luk" : "Nej"}
+          {!isLoadingLibraryProfile &&
+            !isLoadingLoans &&
+            (!isLoanPossible || error || isErrorLibraryProfile || isErrorLoans ? "Nej" : "Luk")}
           {(isLoadingLibraryProfile || isLoadingLoans) && (
             <Icon
               name="go-spinner"
