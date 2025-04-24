@@ -66,7 +66,7 @@ const LoanCard = ({ manifestation, title, className }: LoanCardProps) => {
 
   return (
     <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
-      <div className="aspect-1/1 h-full w-full">
+      <div className="h-full w-full">
         <div className="block h-full w-full space-y-3 px-[15%]">
           <div className="relative h-[85%]">
             <CoverPicture
