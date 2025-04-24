@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
