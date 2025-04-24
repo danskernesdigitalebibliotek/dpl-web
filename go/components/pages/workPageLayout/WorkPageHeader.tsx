@@ -65,11 +65,9 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
     selectedManifestationIsbns?.[0],
     {
-      query: {
-        // Publizon / useGetV1ProductsIdentifier is responsible for online
-        // materials. It requires an ISBN to do lookups.
-        enabled: selectedManifestationIsbns.length > 0,
-      },
+      // Publizon / useGetV1ProductsIdentifier is responsible for online
+      // materials. It requires an ISBN to do lookups.
+      enabled: selectedManifestationIsbns.length > 0,
     }
   )
 
