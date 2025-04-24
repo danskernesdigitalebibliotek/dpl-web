@@ -45,6 +45,12 @@ class DplPatronRegController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   public function authRedirect(Request $request, string $client_name): TrustedRedirectResponse {
+    // If we're logged in, logout the current user, else openid_connect will
+    // throw an exception on return.
+    if ($this->currentUser()->isAuthenticated()) {
+      user_logout();
+    }
+
     $this->session->saveDestination();
 
     /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
