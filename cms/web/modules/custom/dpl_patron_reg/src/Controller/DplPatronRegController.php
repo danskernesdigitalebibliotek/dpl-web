@@ -3,20 +3,16 @@
 namespace Drupal\dpl_patron_reg\Controller;
 
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_login\UserTokensProviderInterface;
-use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Patron registration Controller.
@@ -33,9 +29,6 @@ class DplPatronRegController extends ControllerBase {
     protected OpenIDConnectClaims $claims,
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
-    protected BlockManagerInterface $blockManager,
-    protected RendererInterface $renderer,
-    protected DplReactConfigInterface $patronRegSettings,
   ) {}
 
   /**
@@ -49,9 +42,6 @@ class DplPatronRegController extends ControllerBase {
       $container->get('openid_connect.claims'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      $container->get('plugin.manager.block'),
-      $container->get('renderer'),
-      $container->get('dpl_patron_reg.settings'),
     );
   }
 
@@ -98,33 +88,6 @@ class DplPatronRegController extends ControllerBase {
 
     /** @var string $url */
     return new TrustedRedirectResponse($url);
-  }
-
-  /**
-   * Load the user registration create user react application.
-   *
-   * @return mixed[]
-   *   Render array with registration block.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
-   */
-  public function userRegistrationReactAppLoad(): array {
-    /** @var \Drupal\dpl_patron_reg\Plugin\Block\PatronRegistrationBlock $plugin_block */
-    $plugin_block = $this->blockManager->createInstance('dpl_patron_reg_block', []);
-
-    // @todo create service for access check.
-    // Some blocks might implement access check.
-    $access_result = $plugin_block->access($this->currentUser());
-    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
-      throw new AccessDeniedHttpException();
-    }
-
-    // Add the cache tags/contexts.
-    $render = $plugin_block->build();
-    $this->renderer->addCacheableDependency($render, $plugin_block);
-    $this->renderer->addCacheableDependency($render, $this->patronRegSettings);
-
-    return $render;
   }
 
 }
