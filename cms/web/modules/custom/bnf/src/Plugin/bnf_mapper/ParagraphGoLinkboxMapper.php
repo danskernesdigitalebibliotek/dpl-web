@@ -57,9 +57,6 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
       'field_go_color' => $object->goColor,
       'field_go_description' => $object->goDescription,
       'field_go_image' => $this->getImageValue($object->goImage),
-      'field_go_link_paragraph' => [
-        $goLinkParagraph,
-      ],
       'field_title' => $object->title,
     ]);
 
