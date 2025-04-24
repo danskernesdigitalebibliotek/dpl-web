@@ -3,7 +3,6 @@
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
@@ -12,7 +11,6 @@ use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,28 +30,7 @@ class DplLoginController extends ControllerBase {
     protected Config $config,
     protected OpenIDConnectClaims $claims,
     protected OpenIDConnectSessionInterface $session,
-    protected EntityTypeManagerInterface $entity_type_manager,
-  ) {
-    $this->entityTypeManager = $entity_type_manager;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The Drupal service container.
-   *
-   * @return static
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('dpl_login.user_tokens'),
-      $container->get('dpl_login.adgangsplatformen.config'),
-      $container->get('openid_connect.claims'),
-      $container->get('openid_connect.session'),
-      $container->get('entity_type.manager'),
-    );
-  }
+  ) {}
 
   /**
    * Logs out user externally and internally.
