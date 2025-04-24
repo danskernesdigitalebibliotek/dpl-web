@@ -63,7 +63,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       return {
         queryKey: getGetV1ProductsIdentifierAdapterQueryKey(isbn),
         queryFn: () => getV1ProductsIdentifierAdapter(isbn),
-        // if manifestation is not online, skip the request
+        // If the manifestation is not online, skip the request
         enabled: manifestation.accessTypes[0].code === "ONLINE",
       }
     }),
@@ -71,14 +71,9 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       // combine manifestation data with publizon data
       return sortedManifestations.map((manifestation, index) => {
         // if manifestation is not online, it doesn't have publizon data and falls back to null
-        const product =
-          results?.[index].data && "product" in results[index].data
-            ? results[index].data.product
-            : null
-
         return {
           ...manifestation,
-          publizonData: product,
+          publizonData: results[index].data?.product ?? null,
         }
       })
     },
