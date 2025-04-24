@@ -8,7 +8,6 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,16 +22,6 @@ class DplPatronRegController extends ControllerBase {
     protected OpenIDConnectSession $session,
     protected OpenIDConnectClaims $claims,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): DplPatronRegController|static {
-    return new static(
-      $container->get('openid_connect.session'),
-      $container->get('openid_connect.claims'),
-    );
-  }
 
   /**
    * Redirect callback that redirects to log in service.
