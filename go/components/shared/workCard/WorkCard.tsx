@@ -63,14 +63,19 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
       return {
         queryKey: getGetV1ProductsIdentifierAdapterQueryKey(isbn),
         queryFn: () => getV1ProductsIdentifierAdapter(isbn),
+        // If the manifestation is not online, skip the request
+        enabled: manifestation.accessTypes[0].code === "ONLINE",
       }
     }),
     combine: results => {
       // combine manifestation data with publizon data
-      return sortedManifestations.map((manifestation, index) => ({
-        ...manifestation,
-        publizonData: results[index].data?.product,
-      }))
+      return sortedManifestations.map((manifestation, index) => {
+        // if manifestation is not online, it doesn't have publizon data and falls back to null
+        return {
+          ...manifestation,
+          publizonData: results[index].data?.product ?? null,
+        }
+      })
     },
   })
 
@@ -130,6 +135,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
             const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
             const isCostFree = manifestation.publizonData?.costFree
             const isPodcast = materialType === "PODCASTS"
+
             return (
               <MaterialTypeIconWrapper
                 key={manifestation.pid}

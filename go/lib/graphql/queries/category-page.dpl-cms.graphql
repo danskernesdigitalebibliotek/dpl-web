@@ -1,0 +1,26 @@
+query getCategoryPageByPath($path: String!) {
+  route(path: $path) {
+    __typename
+    ... on RouteInternal {
+      url
+      entity {
+        ... on NodeGoCategory {
+          __typename
+          id
+          path
+          title
+          paragraphs {
+            ...goVideo
+            ...goVideoBundleAutomatic
+            ...goVideoBundleManual
+            ...goMaterialSliderAutomatic
+            ...goMaterialSliderManual
+            ...goLinkbox
+            ...goTextBody
+            ...goImages
+          }
+        }
+      }
+    }
+  }
+}
