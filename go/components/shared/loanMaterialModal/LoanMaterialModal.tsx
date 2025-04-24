@@ -2,9 +2,11 @@ import { useQueryClient } from "@tanstack/react-query"
 import React, { useState } from "react"
 
 import {
+  canUserLoanMoreCostFreeMaterials,
   canUserLoanMoreMaterials,
   getManifestationMaterialTypeIcon,
   getManifestationMaterialTypeSpecific,
+  isManifestationPodcast,
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
@@ -88,9 +90,10 @@ const LoanMaterialModal = ({
     enabled: isbns.length > 0,
   })
 
+  const isCostFree = publizonData?.product?.costFree || isManifestationPodcast(manifestation)
   // Check if the user can loan more e-materials or if the material is cost-free (blue title or podcast)
   const isLoanPossible =
-    publizonData?.product?.costFree ||
+    (isCostFree && canUserLoanMoreCostFreeMaterials(dataLoans)) ||
     canUserLoanMoreMaterials(dataLoans, dataLibraryProfile, manifestation)
 
   return (
