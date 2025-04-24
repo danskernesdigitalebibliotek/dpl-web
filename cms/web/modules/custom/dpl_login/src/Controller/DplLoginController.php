@@ -107,6 +107,21 @@ class DplLoginController extends ControllerBase {
    *   A redirect to the authorization endpoint.
    */
   public function login(Request $request): Response {
+    // Ideally the /login route shouldn't be available to logged in users, but
+    // seem to get a lot of unexplained "Already logged in" exceptions in the
+    // logs which means that people manage to go through login only to get an
+    // error because there's already a user logged in. So to use a softer
+    // approach, we just log them out of Drupal, if they're still logged into
+    // Adgangsplatformen they'll just get redirected right back and logged in
+    // again. We'll log the referrer to try and figure out how this happens.
+    if ($this->currentUser()->isAuthenticated()) {
+      $this->getLogger('dpl_login')->warning('Authenticated user hit /login, referrer: %referer', [
+        'referer' => $request->headers->get('referer') ?? "unknown",
+      ]);
+
+      user_logout();
+    }
+
     $this->session->saveOp('login');
     if ($current_path = (string) $request->query->get('current-path')) {
       $this->session->saveTargetLinkUri($current_path);
