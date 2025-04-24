@@ -65,7 +65,7 @@ class BnfImporter {
    */
   public function importNode(string $uuid, string|ImportContext $importContext, bool $keepUpdated = TRUE): ?NodeInterface {
     if (!$importContext instanceof ImportContext) {
-      $importContext = new ImportContext($importContext);
+      $importContext = new ImportContext(endpointUrl: $importContext);
     }
 
     $this->setEndpoint($importContext->endpointUrl);
