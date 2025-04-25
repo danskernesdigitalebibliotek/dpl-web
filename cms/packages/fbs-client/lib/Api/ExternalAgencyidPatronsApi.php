@@ -77,10 +77,13 @@ class ExternalAgencyidPatronsApi
         'createWithGuardian' => [
             'application/json',
         ],
-        'getPatronInformationByPatronIdV2' => [
+        'getPatronInformationByPatronIdV4' => [
             'application/json',
         ],
         'updateGuardian' => [
+            'application/json',
+        ],
+        'updateV4' => [
             'application/json',
         ],
         'updateV5' => [
@@ -755,36 +758,36 @@ class ExternalAgencyidPatronsApi
     }
 
     /**
-     * Operation getPatronInformationByPatronIdV2
+     * Operation getPatronInformationByPatronIdV4
      *
      * Returns the patron details
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV2'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV4'] to see the possible values for this operation
      *
      * @throws \DanskernesDigitaleBibliotek\FBS\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6
+     * @return \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8
      */
-    public function getPatronInformationByPatronIdV2(string $contentType = self::contentTypes['getPatronInformationByPatronIdV2'][0])
+    public function getPatronInformationByPatronIdV4(string $contentType = self::contentTypes['getPatronInformationByPatronIdV4'][0])
     {
-        list($response) = $this->getPatronInformationByPatronIdV2WithHttpInfo($contentType);
+        list($response) = $this->getPatronInformationByPatronIdV4WithHttpInfo($contentType);
         return $response;
     }
 
     /**
-     * Operation getPatronInformationByPatronIdV2WithHttpInfo
+     * Operation getPatronInformationByPatronIdV4WithHttpInfo
      *
      * Returns the patron details
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV2'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV4'] to see the possible values for this operation
      *
      * @throws \DanskernesDigitaleBibliotek\FBS\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPatronInformationByPatronIdV2WithHttpInfo(string $contentType = self::contentTypes['getPatronInformationByPatronIdV2'][0])
+    public function getPatronInformationByPatronIdV4WithHttpInfo(string $contentType = self::contentTypes['getPatronInformationByPatronIdV4'][0])
     {
-        $request = $this->getPatronInformationByPatronIdV2Request($contentType);
+        $request = $this->getPatronInformationByPatronIdV4Request($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -823,11 +826,11 @@ class ExternalAgencyidPatronsApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6' === '\SplFileObject') {
+                    if ('\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
-                        if ('\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6' !== 'string') {
+                        if ('\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8' !== 'string') {
                             try {
                                 $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
                             } catch (\JsonException $exception) {
@@ -845,13 +848,13 @@ class ExternalAgencyidPatronsApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6', []),
+                        ObjectSerializer::deserialize($content, '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6';
+            $returnType = '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -884,7 +887,7 @@ class ExternalAgencyidPatronsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6',
+                        '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -895,18 +898,18 @@ class ExternalAgencyidPatronsApi
     }
 
     /**
-     * Operation getPatronInformationByPatronIdV2Async
+     * Operation getPatronInformationByPatronIdV4Async
      *
      * Returns the patron details
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV2'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV4'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPatronInformationByPatronIdV2Async(string $contentType = self::contentTypes['getPatronInformationByPatronIdV2'][0])
+    public function getPatronInformationByPatronIdV4Async(string $contentType = self::contentTypes['getPatronInformationByPatronIdV4'][0])
     {
-        return $this->getPatronInformationByPatronIdV2AsyncWithHttpInfo($contentType)
+        return $this->getPatronInformationByPatronIdV4AsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -915,19 +918,19 @@ class ExternalAgencyidPatronsApi
     }
 
     /**
-     * Operation getPatronInformationByPatronIdV2AsyncWithHttpInfo
+     * Operation getPatronInformationByPatronIdV4AsyncWithHttpInfo
      *
      * Returns the patron details
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV2'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV4'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPatronInformationByPatronIdV2AsyncWithHttpInfo(string $contentType = self::contentTypes['getPatronInformationByPatronIdV2'][0])
+    public function getPatronInformationByPatronIdV4AsyncWithHttpInfo(string $contentType = self::contentTypes['getPatronInformationByPatronIdV4'][0])
     {
-        $returnType = '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6';
-        $request = $this->getPatronInformationByPatronIdV2Request($contentType);
+        $returnType = '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8';
+        $request = $this->getPatronInformationByPatronIdV4Request($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -966,18 +969,18 @@ class ExternalAgencyidPatronsApi
     }
 
     /**
-     * Create request for operation 'getPatronInformationByPatronIdV2'
+     * Create request for operation 'getPatronInformationByPatronIdV4'
      *
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV2'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPatronInformationByPatronIdV4'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPatronInformationByPatronIdV2Request(string $contentType = self::contentTypes['getPatronInformationByPatronIdV2'][0])
+    public function getPatronInformationByPatronIdV4Request(string $contentType = self::contentTypes['getPatronInformationByPatronIdV4'][0])
     {
 
 
-        $resourcePath = '/external/agencyid/patrons/patronid/v2';
+        $resourcePath = '/external/agencyid/patrons/patronid/v4';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1304,6 +1307,316 @@ class ExternalAgencyidPatronsApi
                 $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($update_guardian_request));
             } else {
                 $httpBody = $update_guardian_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateV4
+     *
+     * Update information about the patron.
+     *
+     * @param  \DanskernesDigitaleBibliotek\FBS\Model\UpdatePatronRequestV3 $update_patron updated information about the patron (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateV4'] to see the possible values for this operation
+     *
+     * @throws \DanskernesDigitaleBibliotek\FBS\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4
+     */
+    public function updateV4($update_patron, string $contentType = self::contentTypes['updateV4'][0])
+    {
+        list($response) = $this->updateV4WithHttpInfo($update_patron, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation updateV4WithHttpInfo
+     *
+     * Update information about the patron.
+     *
+     * @param  \DanskernesDigitaleBibliotek\FBS\Model\UpdatePatronRequestV3 $update_patron updated information about the patron (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateV4'] to see the possible values for this operation
+     *
+     * @throws \DanskernesDigitaleBibliotek\FBS\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateV4WithHttpInfo($update_patron, string $contentType = self::contentTypes['updateV4'][0])
+    {
+        $request = $this->updateV4Request($update_patron, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if ('\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4' !== 'string') {
+                            try {
+                                $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
+                            } catch (\JsonException $exception) {
+                                throw new ApiException(
+                                    sprintf(
+                                        'Error JSON decoding server response (%s)',
+                                        $request->getUri()
+                                    ),
+                                    $statusCode,
+                                    $response->getHeaders(),
+                                    $content
+                                 );
+                            }
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+                if ($returnType !== 'string') {
+                    try {
+                        $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
+                    } catch (\JsonException $exception) {
+                        throw new ApiException(
+                            sprintf(
+                                'Error JSON decoding server response (%s)',
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $content
+                        );
+                    }
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateV4Async
+     *
+     * Update information about the patron.
+     *
+     * @param  \DanskernesDigitaleBibliotek\FBS\Model\UpdatePatronRequestV3 $update_patron updated information about the patron (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateV4'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateV4Async($update_patron, string $contentType = self::contentTypes['updateV4'][0])
+    {
+        return $this->updateV4AsyncWithHttpInfo($update_patron, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateV4AsyncWithHttpInfo
+     *
+     * Update information about the patron.
+     *
+     * @param  \DanskernesDigitaleBibliotek\FBS\Model\UpdatePatronRequestV3 $update_patron updated information about the patron (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateV4'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateV4AsyncWithHttpInfo($update_patron, string $contentType = self::contentTypes['updateV4'][0])
+    {
+        $returnType = '\DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV4';
+        $request = $this->updateV4Request($update_patron, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateV4'
+     *
+     * @param  \DanskernesDigitaleBibliotek\FBS\Model\UpdatePatronRequestV3 $update_patron updated information about the patron (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateV4'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function updateV4Request($update_patron, string $contentType = self::contentTypes['updateV4'][0])
+    {
+
+        // verify the required parameter 'update_patron' is set
+        if ($update_patron === null || (is_array($update_patron) && count($update_patron) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $update_patron when calling updateV4'
+            );
+        }
+
+
+        $resourcePath = '/external/agencyid/patrons/patronid/v4';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['*/*', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($update_patron)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($update_patron));
+            } else {
+                $httpBody = $update_patron;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
