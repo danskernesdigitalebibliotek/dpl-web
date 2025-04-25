@@ -68,7 +68,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
       query: {
         // Publizon / useGetV1ProductsIdentifier is responsible for online
         // materials. It requires an ISBN to do lookups.
-        enabled: selectedManifestationIsbns.length > 0,
+        // If the manifestation is physical, we skip the request
+        enabled:
+          selectedManifestationIsbns.length > 0 &&
+          selectedManifestation.accessTypes[0].code === "ONLINE",
       },
     }
   )
