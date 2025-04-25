@@ -41,6 +41,7 @@ export interface TSessionData {
     username?: string
   }
   adgangsplatformenUserToken?: string
+  adgangsplatformenLibraryToken?: string
   type: TSessionType
 }
 
@@ -55,6 +56,7 @@ export const defaultSession: TSessionData = {
   uniLoginUserInfo: undefined,
   user: undefined,
   adgangsplatformenUserToken: undefined,
+  adgangsplatformenLibraryToken: undefined,
   type: "anonymous",
 }
 
@@ -69,8 +71,10 @@ export async function getSession(options?: {
   }
 
   try {
+    const cookieStore = await cookies()
+    const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
     const session = !options
-      ? await getIronSession<TSessionData>(await cookies(), sessionOptions)
+      ? await getIronSession<TSessionData>(cookieStore, sessionOptions)
       : await getIronSession<TSessionData>(options.request, options.response, sessionOptions)
 
     if (!session?.isLoggedIn) {
@@ -80,7 +84,12 @@ export async function getSession(options?: {
       // when coming back from Unilogin.
       return Object.assign(session, defaultSession, {
         ...(session.code_verifier ? { code_verifier: session.code_verifier } : {}),
+        ...(libraryToken ? { adgangsplatformenLibraryToken: libraryToken } : {}),
       }) as IronSession<TSessionData>
+    }
+
+    if (libraryToken) {
+      session.adgangsplatformenLibraryToken = libraryToken
     }
 
     return session
