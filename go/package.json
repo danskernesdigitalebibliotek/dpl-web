@@ -2,7 +2,6 @@
   "name": "go-frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "build-storybook": "storybook build",
     "build": "next build",
@@ -125,6 +124,7 @@
     "eslint-plugin-storybook": "^0.10.1",
     "fishery": "^2.2.2",
     "jsdom": "^25.0.1",
+    "msw": "^2.7.4",
     "next-test-api-route-handler": "^4.0.12",
     "node-mocks-http": "^1.16.1",
     "orval": "^7.2.0",
