@@ -8,7 +8,7 @@
  */
 
 use DanskernesDigitaleBibliotek\FBS\ApiException;
-use DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6;
+use DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8;
 use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Session\AccountInterface;
@@ -118,11 +118,11 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
 /**
  * Get patron information from FBS.
  */
-function _dpl_login_get_patron(AccessToken $token): AuthenticatedPatronV6 {
+function _dpl_login_get_patron(AccessToken $token): AuthenticatedPatronV8 {
   /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
   $api_factory = \Drupal::service('dpl_fbs.api_factory');
   $api = $api_factory->getPatronApi($token->token);
-  return $api->getPatronInformationByPatronIdV2();
+  return $api->getPatronInformationByPatronIdV4();
 }
 
 /**
