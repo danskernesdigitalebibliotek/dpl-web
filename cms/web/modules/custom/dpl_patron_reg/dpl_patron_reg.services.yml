@@ -2,3 +2,4 @@ services:
   dpl_patron_reg.settings:
     class: Drupal\dpl_patron_reg\DplPatronRegSettings
     arguments: ['@config.manager']
+  Drupal\dpl_patron_reg\DplPatronRegSettings: '@dpl_patron_reg.settings'

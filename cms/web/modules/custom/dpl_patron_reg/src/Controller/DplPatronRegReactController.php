@@ -7,7 +7,7 @@ namespace Drupal\dpl_patron_reg\Controller;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\dpl_react\DplReactConfigInterface;
+use Drupal\dpl_patron_reg\DplPatronRegSettings;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -21,7 +21,7 @@ class DplPatronRegReactController extends ControllerBase {
   public function __construct(
     protected BlockManagerInterface $blockManager,
     protected RendererInterface $renderer,
-    protected DplReactConfigInterface $patronRegSettings,
+    protected DplPatronRegSettings $patronRegSettings,
   ) {}
 
   /**

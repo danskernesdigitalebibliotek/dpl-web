@@ -8,7 +8,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\openid_connect\OpenIDConnectClaims;
-use Drupal\openid_connect\OpenIDConnectSession;
+use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,7 +25,7 @@ class DplPatronRegController extends ControllerBase {
    * {@inheritdoc}
    */
   public function __construct(
-    protected OpenIDConnectSession $session,
+    protected OpenIDConnectSessionInterface $session,
     protected OpenIDConnectClaims $claims,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
