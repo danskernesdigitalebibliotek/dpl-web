@@ -18,14 +18,20 @@ const getAuthHeader = async (request: NextRequest, serviceType: TServiceType) =>
   const userToken = session?.adgangsplatformenUserToken
   const libraryToken = session?.adgangsplatformenLibraryToken
 
+  // If the settings (apServiceSettings) indicate that we should always use the library token,
+  // we will use the library token if it exists.
+  // Eg. the cover service always uses the library token because it does not need the user context.
   if (useLibraryToken && libraryToken) {
     return `Bearer ${libraryToken}`
   }
 
+  // If we can load a user token we have an authenticated session,
+  // and the user token has precedence over the library token.
   if (userToken) {
     return `Bearer ${userToken}`
   }
 
+  // At last, if we have a library token (which we should always have) we will use that.
   if (libraryToken) {
     return `Bearer ${libraryToken}`
   }
