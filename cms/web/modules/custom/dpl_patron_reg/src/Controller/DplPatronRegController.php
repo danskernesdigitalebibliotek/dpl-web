@@ -2,9 +2,11 @@
 
 namespace Drupal\dpl_patron_reg\Controller;
 
+use Drupal\Component\HttpFoundation\SecuredRedirectResponse;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\openid_connect\OpenIDConnectClaims;
@@ -39,16 +41,21 @@ class DplPatronRegController extends ControllerBase {
    * @param string $client_name
    *   OpenID connect client name.
    *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   * @return \Drupal\Component\HttpFoundation\SecuredRedirectResponse
    *   Redirect response based on given client configuration.
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
-  public function authRedirect(Request $request, string $client_name): TrustedRedirectResponse {
+  public function authRedirect(Request $request, string $client_name): SecuredRedirectResponse {
     // If we're logged in, logout the current user, else openid_connect will
     // throw an exception on return.
     if ($this->currentUser()->isAuthenticated()) {
       user_logout();
+
+      // As we just nuked the session above, trying to save `current-path` in
+      // session isn't going to work, so redirect to ourselves to get a fresh
+      // session.
+      return new LocalRedirectResponse($request->getUri());
     }
 
     $this->session->saveDestination();

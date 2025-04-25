@@ -6,6 +6,7 @@ namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
@@ -120,6 +121,11 @@ class DplLoginController extends ControllerBase {
       ]);
 
       user_logout();
+
+      // As we just nuked the session above, trying to save `current-path` in
+      // session isn't going to work, so redirect to ourselves to get a fresh
+      // session.
+      return new LocalRedirectResponse($request->getUri());
     }
 
     $this->session->saveOp('login');
