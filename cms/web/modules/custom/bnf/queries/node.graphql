@@ -168,6 +168,7 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               id
               name
+              byline
               mediaImage {
                 alt
                 title
@@ -381,6 +382,7 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               id
               name
+              byline
               mediaImage {
                 alt
                 title
