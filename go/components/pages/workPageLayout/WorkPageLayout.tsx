@@ -26,7 +26,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     useState<ManifestationWorkPageFragment>()
   const searchParams = useSearchParams()
 
-  if (!data || !data.work) {
+  if (!isLoading && (!data || !data.work)) {
     notFound()
   }
 
@@ -58,7 +58,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     )
   }
 
-  if (!work) {
+  if (!isLoading && !work) {
     return notFound()
   }
 
@@ -71,7 +71,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
             work={work}
             selectedManifestation={selectedManifestation}
           />
-          <InfoBox work={data.work} selectedManifestation={selectedManifestation} />
+          <InfoBox work={work} selectedManifestation={selectedManifestation} />
           <InfoBoxDetails selectedManifestation={selectedManifestation} />
         </>
       )}

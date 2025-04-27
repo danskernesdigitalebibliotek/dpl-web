@@ -1,9 +1,11 @@
 "use server"
 
 import { IronSession } from "iron-session"
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import * as client from "openid-client"
 import { z } from "zod"
 
+import goConfig from "../config/goConfig"
 import {
   TSessionData,
   destroySession,
@@ -12,11 +14,13 @@ import {
 } from "../session/session"
 import { TUniloginTokenSet } from "../types/session"
 import { TServiceType, getApServiceSettings } from "./ap-service"
-import { getLibraryTokenCookieValue } from "./library-token"
 
-export const getBearerTokenServerSide = async (serviceType: TServiceType) => {
+export const getBearerTokenServerSide = async (
+  serviceType: TServiceType,
+  cookieStore: ReadonlyRequestCookies
+) => {
   const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
-  const libraryToken = await getLibraryTokenCookieValue()
+  const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
   if (useLibraryToken && libraryToken) {
     return libraryToken
   }
@@ -35,13 +39,18 @@ export const getBearerTokenServerSide = async (serviceType: TServiceType) => {
   return null
 }
 
-export const createServerQueryFn = async <TQuery, TVariables>(
-  fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TQuery>,
-  variables: TVariables,
+export const createServerQueryFn = async <TQuery, TVariables>({
+  fetcher,
+  variables,
+  options,
+  cookieStore,
+}: {
+  fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TQuery>
+  variables: TVariables
   options?: RequestInit["headers"]
-) => {
-  const bearerToken = await getBearerTokenServerSide("fbi")
-
+  cookieStore: ReadonlyRequestCookies
+}) => {
+  const bearerToken = await getBearerTokenServerSide("fbi", cookieStore)
   return fetcher(variables, { ...options, authorization: `Bearer ${bearerToken}` })
 }
 

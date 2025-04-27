@@ -24,8 +24,9 @@ export async function middleware(request: NextRequest) {
       headers: requestHeaders,
     },
   })
+
   // Make sure we have a library token cookie.
-  await ensureLibraryTokenExist()
+  await ensureLibraryTokenExist(request)
 
   const session = await getSession({ request, response })
 
@@ -67,7 +68,6 @@ export async function middleware(request: NextRequest) {
     const config = await getUniloginClientConfig()
     if (config) {
       refreshUniloginTokens(session, config)
-      return response
     }
   }
 
@@ -83,6 +83,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!auth|_next|favicon.ico|favicon-*|sitemap.xml|robots.txt|site.webmanifest).*)",
+    "/((?!auth|ap-service|_next|favicon.ico|favicon-*|sitemap.xml|robots.txt|site.webmanifest).*)",
   ],
 }

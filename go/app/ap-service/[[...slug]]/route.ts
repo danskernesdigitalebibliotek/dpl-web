@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { TServiceType, getApServiceUrl } from "@/lib/helpers/ap-service"
-import { getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
+import { TServiceType, getApServiceSettings, getApServiceUrl } from "@/lib/helpers/ap-service"
+import { getSession } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
 
@@ -11,11 +11,31 @@ const getAuthHeader = async (request: NextRequest, serviceType: TServiceType) =>
   if (authHeader) {
     return authHeader
   }
-  // Otherwise, get the bearer token from the session or library token cookie.
-  const bearerToken = await getBearerTokenServerSide(serviceType)
-  if (bearerToken) {
-    return `Bearer ${bearerToken}`
+
+  // Otherwise, get the bearer token from the session.
+  const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
+  const session = await getSession()
+  const userToken = session?.adgangsplatformenUserToken
+  const libraryToken = session?.adgangsplatformenLibraryToken
+
+  // If the settings (apServiceSettings) indicate that we should always use the library token,
+  // we will use the library token if it exists.
+  // Eg. the cover service always uses the library token because it does not need the user context.
+  if (useLibraryToken && libraryToken) {
+    return `Bearer ${libraryToken}`
   }
+
+  // If we can load a user token we have an authenticated session,
+  // and the user token has precedence over the library token.
+  if (userToken) {
+    return `Bearer ${userToken}`
+  }
+
+  // At last, if we have a library token (which we should always have) we will use that.
+  if (libraryToken) {
+    return `Bearer ${libraryToken}`
+  }
+
   return null
 }
 
@@ -32,11 +52,12 @@ async function proxyRequest(
     if (headersToIgnore.includes(key.toLowerCase())) {
       return
     }
+
     proxiedHeaders[key] = value
   })
 
   const { slug } = await params
-  const serviceType = slug.shift() as TServiceType
+  const serviceType = slug[0] as TServiceType
   const baseUrl = getApServiceUrl(serviceType)
 
   if (!baseUrl) {
@@ -44,7 +65,7 @@ async function proxyRequest(
   }
 
   const urlParams = request.nextUrl.search ?? ""
-  const url = [baseUrl, ...slug].join("/")
+  const url = [baseUrl, ...slug.slice(1)].join("/")
   const serviceUrl = `${url}${urlParams}`
   const authHeader = await getAuthHeader(request, serviceType)
 

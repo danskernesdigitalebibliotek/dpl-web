@@ -8,6 +8,7 @@ import { ButtonSkeleton } from "@/components/shared/button/Button"
 import { userIsAnonymous } from "@/lib/helpers/user"
 import { getSession } from "@/lib/session/session"
 
+import DebuggingSession from "./DebuggingSession"
 import SupportId, { SupportIdSkeleton } from "./SupportId"
 import Username, { UsernameSkeleton } from "./Username"
 
@@ -35,6 +36,7 @@ const ProfilePageLayout = async () => {
       <Suspense fallback={<LoanSliderSkeleton />}>
         <UserLoans />
       </Suspense>
+      <DebuggingSession hideInProduction />
     </div>
   )
 }
