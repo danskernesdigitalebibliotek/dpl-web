@@ -8,12 +8,7 @@ type UsernameProps = {
 }
 
 export const UsernameSkeleton = ({ className }: UsernameProps) => (
-  <div
-    className={cn(
-      "bg-background-skeleton mb-6 h-10 w-100 animate-pulse rounded-full pb-5",
-      className
-    )}
-  />
+  <div className={cn("bg-background-skeleton h-10 w-100 animate-pulse rounded-full", className)} />
 )
 
 const Username = ({ className }: UsernameProps) => {
@@ -32,7 +27,7 @@ const Username = ({ className }: UsernameProps) => {
   return (
     <p
       className={cn(
-        "text-typo-heading-2 mt-6 w-full pb-5 lg:order-1 lg:mt-0 lg:w-auto lg:max-w-[80%]",
+        "text-typo-heading-2 mt-6 w-full lg:order-1 lg:mt-0 lg:w-auto lg:max-w-[80%]",
         className
       )}>
       {name}
