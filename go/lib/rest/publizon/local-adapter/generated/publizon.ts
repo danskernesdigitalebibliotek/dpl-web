@@ -822,10 +822,9 @@ export const getGetV1ProductsIdentifierLocalAdapterQueryKey = (identifier: strin
     }
 
     
-export const getGetV1ProductsIdentifierLocalAdapterQueryOptions = <TData = Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError = ErrorType<unknown>>(identifier: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>>, }
-) => {
+export const getGetV1ProductsIdentifierLocalAdapterQueryOptions = <TData = Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError = ErrorType<unknown>>(identifier: string, queryOptions?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>>) => {
 
-const {query: queryOptions} = options ?? {};
+
 
   const queryKey =  queryOptions?.queryKey ?? getGetV1ProductsIdentifierLocalAdapterQueryKey(identifier);
 
@@ -845,43 +844,39 @@ export type GetV1ProductsIdentifierLocalAdapterQueryError = ErrorType<unknown>
 
 
 export function useGetV1ProductsIdentifierLocalAdapter<TData = Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError = ErrorType<unknown>>(
- identifier: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>> & Pick<
+ identifier: string, queryOptions: Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>,
           TError,
           TData
         > , 'initialData'
-      >, }
-
+      >
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetV1ProductsIdentifierLocalAdapter<TData = Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError = ErrorType<unknown>>(
- identifier: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>> & Pick<
+ identifier: string, queryOptions?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>,
           TError,
           TData
         > , 'initialData'
-      >, }
-
+      >
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey }
 export function useGetV1ProductsIdentifierLocalAdapter<TData = Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError = ErrorType<unknown>>(
- identifier: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>>, }
-
+ identifier: string, queryOptions?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>>
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey }
 /**
  * @summary Get a specific product.
  */
 
 export function useGetV1ProductsIdentifierLocalAdapter<TData = Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError = ErrorType<unknown>>(
- identifier: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>>, }
-
+ identifier: string, queryOptions?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getV1ProductsIdentifierLocalAdapter>>, TError, TData>>
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
-  const queryOptions = getGetV1ProductsIdentifierLocalAdapterQueryOptions(identifier,options)
+  const options = getGetV1ProductsIdentifierLocalAdapterQueryOptions(identifier,queryOptions)
 
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery(options) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = options.queryKey ;
 
   return query;
 }

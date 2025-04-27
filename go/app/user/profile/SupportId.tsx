@@ -19,11 +19,7 @@ const SupportId = ({ className }: SupportIdProps) => {
   }
 
   return (
-    <div
-      className={cn(
-        "text-typo-subtitle-sm text-foreground/50 col-span-full -mt-5 pb-5",
-        className
-      )}>
+    <div className={cn("text-typo-subtitle-sm text-foreground/50 col-span-full pb-5", className)}>
       {`Support ID: ${data.userData.friendlyCardNumber}`}
     </div>
   )
@@ -32,7 +28,7 @@ const SupportId = ({ className }: SupportIdProps) => {
 export const SupportIdSkeleton = ({ className }: SupportIdProps) => (
   <div
     className={cn(
-      "bg-background-skeleton -mt-5 mb-5 h-5 w-52 animate-pulse rounded-full pb-5",
+      "bg-background-skeleton mb-5 h-5 w-52 animate-pulse rounded-full pb-5",
       className
     )}
   />
