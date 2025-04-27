@@ -221,10 +221,28 @@ export const canUserLoanMoreMaterials = (
       return false
     }
   }
-  // Podcasts are always loanable
+  // Podcasts are always loanable, unless user has reached the limit of 30 costFree loans
   if (materialType.code === "PODCASTS") {
-    return true
+    return canUserLoanMoreCostFreeMaterials(dataLoans)
   }
   // Default to false
   return false
+}
+
+export const canUserLoanMoreCostFreeMaterials = (dataLoans: LoanListResult | undefined | null) => {
+  // If we can't determine the total costFree loans, we can't determine if the user can loan more
+  if (
+    dataLoans?.userData?.totalAudioLoans === undefined ||
+    dataLoans?.userData?.totalEbookLoans === undefined ||
+    dataLoans?.loans === undefined ||
+    dataLoans?.loans === null
+  ) {
+    return false
+  }
+  // Check if the user has reached a total of 30 costFree loans - if so, no more can be loaned
+  const costFreeLoans =
+    dataLoans.loans.length -
+    (dataLoans.userData.totalAudioLoans + dataLoans.userData.totalEbookLoans)
+
+  return costFreeLoans < 30
 }
