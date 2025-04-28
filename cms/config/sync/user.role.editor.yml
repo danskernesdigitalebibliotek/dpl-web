@@ -73,6 +73,7 @@ permissions:
   - 'administer menu'
   - 'administer nodes'
   - 'administer redirects'
+  - 'bnf export nodes'
   - 'bnf import nodes'
   - 'break content lock'
   - 'change own username'

@@ -54,6 +54,7 @@ permissions:
   - 'add eventseries entity'
   - 'administer entity field inheritance'
   - 'administer redirects'
+  - 'bnf export nodes'
   - 'bnf import nodes'
   - 'break content lock'
   - 'change own username'
