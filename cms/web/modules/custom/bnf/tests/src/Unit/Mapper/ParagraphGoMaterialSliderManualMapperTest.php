@@ -47,20 +47,7 @@ class ParagraphGoMaterialSliderManualMapperTest extends EntityMapperTestBase {
       ],
     ])->willReturn($this->entityProphecy)->shouldBeCalled();
 
-    $mapper = $this->getMockBuilder(ParagraphGoMaterialSliderManualMapper::class)
-      ->setConstructorArgs([
-        [],
-        '',
-        [],
-        $this->entityManagerProphecy->reveal(),
-      ])
-      ->onlyMethods(['getMaterialValue'])
-      ->getMock();
-
-    $mapper->method('getMaterialValue')->willReturnOnConsecutiveCalls(
-      ['value' => 'harry-potter-1', 'material_type' => 'book'],
-      ['value' => 'pride-and-prejudice', 'material_type' => 'book']
-    );
+    $mapper = new ParagraphGoMaterialSliderManualMapper([], '', [], $this->entityManagerProphecy->reveal());
 
     $graphqlElement = ParagraphGoMaterialSliderManual::make(
       id: 'slider_manual_1',

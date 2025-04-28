@@ -47,20 +47,7 @@ class ParagraphRecommendationMapperTest extends EntityMapperTestBase {
       ],
     ])->willReturn($this->entityProphecy)->shouldBeCalled();
 
-    $mapper = $this->getMockBuilder(ParagraphRecommendationMapper::class)
-      ->setConstructorArgs([
-        [],
-        '',
-        [],
-        $this->entityManagerProphecy->reveal(),
-      ])
-      ->onlyMethods(['getMaterialValue'])
-      ->getMock();
-
-    $mapper->method('getMaterialValue')->willReturn([
-      'value' => 'order-of-the-phoenix',
-      'material_type' => 'book',
-    ]);
+    $mapper = new ParagraphRecommendationMapper([], '', [], $this->entityManagerProphecy->reveal());
 
     $graphqlElement = ParagraphRecommendation::make(
       id: 'recommendation_1',

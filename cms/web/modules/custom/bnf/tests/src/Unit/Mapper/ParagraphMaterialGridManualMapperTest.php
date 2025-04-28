@@ -42,20 +42,7 @@ class ParagraphMaterialGridManualMapperTest extends EntityMapperTestBase {
       ],
     ])->willReturn($this->entityProphecy)->shouldBeCalled();
 
-    $mapper = $this->getMockBuilder(ParagraphMaterialGridManualMapper::class)
-      ->setConstructorArgs([
-        [],
-        '',
-        [],
-        $this->entityManagerProphecy->reveal(),
-      ])
-      ->onlyMethods(['getMaterialValue'])
-      ->getMock();
-
-    $mapper->method('getMaterialValue')->willReturnOnConsecutiveCalls(
-      ['value' => 'chamber-of-secrets', 'material_type' => 'book'],
-      ['value' => 'fantastic-beasts', 'material_type' => 'book']
-    );
+    $mapper = new ParagraphMaterialGridManualMapper([], '', [], $this->entityManagerProphecy->reveal());
 
     $graphqlElement = ParagraphMaterialGridManual::make(
       id: 'grid_manual_1',

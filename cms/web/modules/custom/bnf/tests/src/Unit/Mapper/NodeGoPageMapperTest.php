@@ -32,9 +32,9 @@ class NodeGoPageMapperTest extends EntityMapperTestBase {
   }
 
   /**
-   * Test article node mapping.
+   * Test go_page node mapping.
    */
-  public function testNodeArticleMapping(): void {
+  public function testGoPageMapping(): void {
     $this->storageProphecy->loadByProperties([
       'uuid' => '123',
     ])->willReturn([$this->entityProphecy]);
@@ -54,6 +54,7 @@ class NodeGoPageMapperTest extends EntityMapperTestBase {
       $this->entityManagerProphecy->reveal(),
       $this->fileSystemProphecy->reveal(),
       $this->fileRepositoryProphecy->reveal(),
+      $this->translationProphecy->reveal(),
       $this->loggerProphecy->reveal(),
     );
 
