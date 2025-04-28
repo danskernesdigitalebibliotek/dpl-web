@@ -126,6 +126,7 @@ permissions:
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
+  - 'bnf export nodes'
   - 'bnf import nodes'
   - 'break content lock'
   - 'cancel users by role'
