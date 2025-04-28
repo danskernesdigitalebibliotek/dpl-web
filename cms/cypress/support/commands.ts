@@ -204,7 +204,7 @@ const adgangsplatformenLoginOauthMappings = ({
   cy.createMapping({
     request: {
       method: 'GET',
-      urlPath: '/external/agencyid/patrons/patronid/v2',
+      urlPath: '/external/agencyid/patrons/patronid/v4',
       headers: {
         Authorization: {
           equalTo: `Bearer ${accessToken}`,
