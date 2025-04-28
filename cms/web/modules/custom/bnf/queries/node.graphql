@@ -131,6 +131,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
         }
         ... on ParagraphMaterialGridAutomatic {
@@ -345,6 +346,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
         }
         ... on ParagraphMaterialGridAutomatic {

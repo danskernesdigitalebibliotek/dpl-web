@@ -184,6 +184,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                 }
                 ... on ParagraphMaterialGridAutomatic {
@@ -425,6 +426,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                 }
                 ... on ParagraphMaterialGridAutomatic {
