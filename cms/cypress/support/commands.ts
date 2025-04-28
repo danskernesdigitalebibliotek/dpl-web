@@ -265,10 +265,11 @@ Cypress.Commands.add(
       userCPR,
       userGuid,
     });
+    // Patron creation
     cy.createMapping({
       request: {
         method: 'POST',
-        urlPattern: '.*/external/agencyid/patrons/v4',
+        urlPattern: '.*/external/agencyid/patrons/v9',
       },
       response: {
         jsonBody: {
