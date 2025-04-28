@@ -56,10 +56,12 @@ tasks:
 
             if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
               # Make it a bit more obvious that this is the BNF site.
-              drush config:set --yes system.site name "BNF test"
-              drush config:set --yes novel.settings logo_title "BNF"
+              drush config:set --yes system.site name "Delingstjenesten (test)"
+              drush config:set --yes novel.settings logo_title "Delingstjenesten"
               drush config:set --yes novel.settings logo_place "test"
               drush config:set --yes novel.settings logo_img_enable "0"
+              drush config:set --yes gin.settings logo.use_default "0"
+              drush config:set --yes gin.settings logo.path "themes/custom/novel/images/delingstjenesten.png"
             fi
           fi
         service: cli
