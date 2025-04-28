@@ -14,7 +14,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
- * Mapping ParagraphGoLinkbox => go_linkbox.
+ * Mapping ParagraphGoLink => go_link.
  */
 #[BnfMapper(
   id: ParagraphGoLink::class,
