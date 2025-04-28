@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\LinkRequired\Link as GoLink;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroLink\Link as HeroLink;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Link\Link as LinksLink;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\bnf\Services\BnfImporter;
@@ -37,7 +38,11 @@ abstract class BnfMapperImportedLinkFieldPluginBase extends BnfMapperPluginBase 
    * {@inheritdoc}
    */
   public function map(ObjectLike $object): mixed {
-    if (!in_array(get_class($object), [GoLink::class, LinksLink::class])) {
+    if (!in_array(get_class($object), [
+      GoLink::class,
+      HeroLink::class,
+      LinksLink::class,
+    ])) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
