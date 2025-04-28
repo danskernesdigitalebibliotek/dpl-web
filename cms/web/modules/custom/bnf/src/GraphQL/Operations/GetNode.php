@@ -119,6 +119,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                   underlinedTitle {
                     __typename
@@ -362,6 +363,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                   underlinedTitle {
                     __typename

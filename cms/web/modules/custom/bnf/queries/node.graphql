@@ -75,6 +75,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
           underlinedTitle {
             format
@@ -291,6 +292,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
           underlinedTitle {
             format
