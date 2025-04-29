@@ -204,7 +204,7 @@ const adgangsplatformenLoginOauthMappings = ({
   cy.createMapping({
     request: {
       method: 'GET',
-      urlPath: '/external/agencyid/patrons/patronid/v2',
+      urlPath: '/external/agencyid/patrons/patronid/v4',
       headers: {
         Authorization: {
           equalTo: `Bearer ${accessToken}`,
@@ -265,10 +265,11 @@ Cypress.Commands.add(
       userCPR,
       userGuid,
     });
+    // Patron creation
     cy.createMapping({
       request: {
         method: 'POST',
-        urlPattern: '.*/external/agencyid/patrons/v4',
+        urlPattern: '.*/external/agencyid/patrons/v9',
       },
       response: {
         jsonBody: {

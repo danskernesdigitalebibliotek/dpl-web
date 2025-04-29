@@ -99,6 +99,7 @@ permissions:
   - 'administer themes'
   - 'administer themes novel'
   - 'administer url proxy configuration'
+  - 'bnf export nodes'
   - 'bnf import nodes'
   - 'break content lock'
   - 'cancel users by role'

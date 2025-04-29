@@ -225,6 +225,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     ... on MediaImage {
                       id
                       name
+                      byline
                       mediaImage {
                         __typename
                         alt
@@ -465,6 +466,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     ... on MediaImage {
                       id
                       name
+                      byline
                       mediaImage {
                         __typename
                         alt

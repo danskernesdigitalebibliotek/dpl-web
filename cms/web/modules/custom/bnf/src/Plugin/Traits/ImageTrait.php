@@ -40,7 +40,7 @@ trait ImageTrait {
 
     $properties = [
       'bundle' => 'image',
-      'name' => $file->getFilename(),
+      'name' => $image->name ?? $file->getFilename(),
       'status' => TRUE,
       'field_byline' => $image->byline ?? '',
       'field_media_image' => [

@@ -12,9 +12,9 @@ lib/Model/*.*
 !lib/Model/AddressV2.php
 !lib/Model/AgencyBranch.php
 !lib/Model/BlockStatus.php
-!lib/Model/AuthenticatedPatronV6.php
+!lib/Model/AuthenticatedPatronV8.php
 !lib/Model/ModelInterface.php
-!lib/Model/PatronV5.php
+!lib/Model/PatronV7.php
 !lib/Model/Period.php
 # Ignore test files.
 # We do not intend to run tests for auto-generated code.

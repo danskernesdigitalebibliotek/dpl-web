@@ -314,13 +314,16 @@ tasks:
   dev:codegen:fbs:
     desc: Generate FBS client package from OpenAPI specification
     cmds:
+      # TODO: Change the source url back to the main branch once the changes
+      # here land.
       - cmd: |
           docker run --rm \
           -v ${PWD}:/local \
           openapitools/openapi-generator-cli:v7.1.0 generate \
-          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
+          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/8e9c265a92436a2ae5a627dad258966ab2f4c97c/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client \
-          -c /local/.openapi-generator/fbs.config.yaml
+          -c /local/.openapi-generator/fbs.config.yaml \
+          --skip-validate-spec
 
   dev:codegen:dpl-cms:
     desc: Generate CMS API package from OpenAPI specification
