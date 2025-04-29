@@ -1,13 +1,14 @@
 "use client"
 
 import { KeenSliderOptions, useKeenSlider } from "keen-slider/react"
-import { useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import ImageBase from "../image/ImageBase"
+import SmartLink from "../smartLink/SmartLink"
 import { TNodeGoCategory } from "./CategorySlider"
 
 export const sliderOptions: KeenSliderOptions = {
@@ -38,22 +39,19 @@ type TSliderProps = {
 
 function Slider({ categories, className }: TSliderProps) {
   const [sliderRef] = useKeenSlider(sliderOptions, [WheelControls])
-  const [categoryPath, setCategoryPath] = useState<string>("")
-  const router = useRouter()
+  const [currentPath, setCurrentPath] = useState<string>("")
   const [loaded, setLoaded] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
-    const path = window.location.pathname
-    setCategoryPath(path)
     setLoaded(true)
   }, [])
 
-  const handleOnClick = (path: string) => {
-    setCategoryPath(path)
-    router.push(path)
-  }
+  useEffect(() => {
+    setCurrentPath(pathname)
+  }, [pathname])
 
-  // get a random number between -6 and 6 hardcoded values
+  // Get a random number between -6 and 6 hardcoded values
   const getRandomRotateClass = () => {
     const rotations = [
       "has-checked:rotate-2",
@@ -87,9 +85,9 @@ function Slider({ categories, className }: TSliderProps) {
         {categories.map((category, index) => {
           return (
             <div className="keen-slider__slide !overflow-visible" key={category.id}>
-              <button
+              <SmartLink
                 aria-label={`Gå til kategori ${category.categoryMenuTitle}`}
-                onClick={() => handleOnClick(category.path || "")}
+                href={category.path || ""}
                 className={cn(
                   `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
                   transition-all duration-200 lg:p-[24px]`,
@@ -122,13 +120,13 @@ function Slider({ categories, className }: TSliderProps) {
                   <input
                     type="radio"
                     name="category"
-                    checked={categoryPath === category.path}
+                    checked={currentPath === category.path}
                     className="pointer-events-none appearance-none"
                     disabled
                   />
                 </div>
                 <p className="text-typo-subtitle-sm text-center">{category.categoryMenuTitle}</p>
-              </button>
+              </SmartLink>
             </div>
           )
         })}
