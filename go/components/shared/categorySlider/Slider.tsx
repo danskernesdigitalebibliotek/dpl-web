@@ -97,7 +97,8 @@ function Slider({ categories, className }: TSliderProps) {
                 href={category.path || ""}
                 className={cn(
                   `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
-                  transition-all duration-200 lg:p-[24px]`
+                  transition-all duration-200 lg:p-[24px]`,
+                  `${getRandomRotateClass()}`
                 )}>
                 <div
                   className={cn(
