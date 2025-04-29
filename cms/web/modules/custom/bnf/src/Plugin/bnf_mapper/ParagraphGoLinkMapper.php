@@ -8,8 +8,6 @@ use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\ParagraphGoLink;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
-use Drupal\bnf\Services\BnfImporter;
-use Drupal\bnf\Services\ImportContextStack;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
@@ -31,9 +29,7 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
     string $pluginId,
     array $pluginDefinition,
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected BnfMapperManager $mapper,
-    protected ImportContextStack $importContext,
-    protected BnfImporter $importer,
+    protected BnfMapperManager $manager,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
   }
@@ -46,7 +42,7 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    $goLinkValue = $this->mapper->map($object->linkRequired);
+    $goLinkValue = $this->manager->map($object->linkRequired);
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $goLink */
     $goLink = $this->paragraphStorage->create([
@@ -54,7 +50,9 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
     ]);
     $goLink->set('field_aria_label', $object->ariaLabel);
     $goLink->set('field_target_blank', $object->targetBlank);
-    $goLink->set('field_go_link', $goLinkValue);
+    if ($goLinkValue) {
+      $goLink->set('field_go_link', $goLinkValue);
+    }
 
     return $goLink;
   }
