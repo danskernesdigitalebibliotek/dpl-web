@@ -20,6 +20,7 @@ exports[`Pubhub local API > Returns same output from local & external GET /v1/us
   "userData": {
     "audiobookLoansRemaining": 0,
     "ebookLoansRemaining": 2,
+    "friendlyCardNumber": "T4EFB7",
     "totalAudioLoans": 0,
     "totalEbookLoans": 1,
     "totalLoans": 1,

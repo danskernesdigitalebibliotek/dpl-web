@@ -128,6 +128,12 @@ const fakeDrupalSessionRequestCookie = {
   value: "some-drupal-session-cookie-value",
 }
 
+const getNextRequestWithLibraryTokenCookie = () => {
+  const request = new NextRequest("http://localhost")
+  request.cookies.set(goConfig("library-token.cookie-name"), "hi-I-am-a-library-token")
+  return request
+}
+
 describe("Middleware", () => {
   afterEach(() => {
     vi.clearAllMocks()
@@ -136,6 +142,12 @@ describe("Middleware", () => {
   const sessions = getFakeSessions()
 
   it("can ensure that a library token is present if it is not already", async () => {
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
+      await Promise.resolve({
+        token: "hi-I-am-a-dpl-cms-user-token",
+        expire: 363663636,
+      })
+    )
     vi.spyOn(libraryTokenFunctions, "loadLibraryToken").mockResolvedValueOnce(
       await Promise.resolve({
         token: "hi-I-am-a-library-token",
@@ -156,7 +168,7 @@ describe("Middleware", () => {
     )
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
       Promise.resolve({
-        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        getAll: vi.fn(() => []),
         set: vi.fn(),
         get: vi
           .fn()
@@ -181,7 +193,7 @@ describe("Middleware", () => {
     const destroySessionSpy = vi
       .spyOn(sessionFunctions, "destroySession")
       .mockResolvedValue(Promise.resolve())
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
     expect(destroySessionSpy).toHaveResolvedTimes(1)
   })
 
@@ -213,7 +225,7 @@ describe("Middleware", () => {
       })
     )
 
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
   })
@@ -240,7 +252,7 @@ describe("Middleware", () => {
       })
     )
 
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
   })
@@ -267,7 +279,7 @@ describe("Middleware", () => {
       })
     )
 
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
   })
@@ -301,7 +313,7 @@ describe("Middleware", () => {
       })
     )
 
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(refreshUniloginTokensSpy).toHaveResolvedTimes(1)
   })
@@ -342,7 +354,7 @@ describe("Middleware", () => {
       .spyOn(sessionFunctions, "destroySession")
       .mockResolvedValue(Promise.resolve())
 
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(destroySessionSpy).toHaveBeenCalledTimes(1)
   })
@@ -376,7 +388,7 @@ describe("Middleware", () => {
       })
     )
 
-    await middleware(new NextRequest("http://localhost"))
+    await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(destroySessionSpy).toHaveResolvedTimes(1)
   })

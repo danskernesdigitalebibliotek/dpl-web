@@ -2,7 +2,11 @@
 
 import { differenceInDays } from "date-fns"
 
-import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import {
+  getManifestationMaterialTypeIcon,
+  isManifestationPodcast,
+} from "@/components/pages/workPageLayout/helper"
+import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import {
@@ -13,6 +17,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import useGetV1ProductsIdentifier from "@/lib/rest/publizon/useGetV1ProductsIdentifier"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 export type LoanCardProps = {
@@ -30,15 +35,16 @@ const LoanCard = ({ manifestation, title, className }: LoanCardProps) => {
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
+  const manifestationIsbn = manifestation.identifiers.find(
+    identifier => identifier.type === "ISBN"
+  )?.value
+  const { data: dataProducts } = useGetV1ProductsIdentifier(manifestationIsbn || "")
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(
     dataCovers,
     [manifestation.pid],
     ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
   )
-  const manifestationIsbn = manifestation.identifiers.find(
-    identifier => identifier.type === "ISBN"
-  )?.value
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
   const targetDate = new Date(loan?.loanExpireDateUtc || "")
   const today = new Date()
@@ -54,9 +60,13 @@ const LoanCard = ({ manifestation, title, className }: LoanCardProps) => {
     )
   }
 
+  const isCostFree =
+    dataProducts?.product?.costFree ||
+    isManifestationPodcast(manifestation as ManifestationWorkPageFragment)
+
   return (
     <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
-      <div className="aspect-1/1 h-full w-full">
+      <div className="h-full w-full">
         <div className="block h-full w-full space-y-3 px-[15%]">
           <div className="relative h-[85%]">
             <CoverPicture
@@ -70,10 +80,20 @@ const LoanCard = ({ manifestation, title, className }: LoanCardProps) => {
               iconName={getManifestationMaterialTypeIcon(
                 manifestation as ManifestationWorkPageFragment
               )}
-              className="bg-background z-floating-icon relative mx-auto -mt-14 outline-1"
+              className={cn("z-floating-icon relative mx-auto -mt-14 outline-1", {
+                "bg-background": !isCostFree,
+              })}
+              costFree={isCostFree}
             />
           </div>
-          <p className="text-typo-subtitle-sm break-words opacity-50">{`Udløber om ${daysUntil} dage`}</p>
+          <p className="text-typo-subtitle-sm text-foreground/50 w-full text-center break-words">{`Udløber om ${daysUntil} dage`}</p>
+          {isCostFree && (
+            <div className="flex w-full justify-center">
+              <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
+                BLÅ
+              </Badge>
+            </div>
+          )}
         </div>
       </div>
     </div>

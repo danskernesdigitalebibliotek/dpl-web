@@ -2,9 +2,11 @@ import { useQueryClient } from "@tanstack/react-query"
 import React, { useState } from "react"
 
 import {
+  canUserLoanMoreCostFreeMaterials,
   canUserLoanMoreMaterials,
   getManifestationMaterialTypeIcon,
   getManifestationMaterialTypeSpecific,
+  isManifestationPodcast,
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
@@ -83,16 +85,15 @@ const LoanMaterialModal = ({
   }
 
   const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
-    },
+    // Publizon / useGetV1ProductsIdentifier is responsible for online
+    // materials. It requires an ISBN to do lookups.
+    enabled: isbns.length > 0,
   })
 
+  const isCostFree = publizonData?.product?.costFree || isManifestationPodcast(manifestation)
   // Check if the user can loan more e-materials or if the material is cost-free (blue title or podcast)
   const isLoanPossible =
-    publizonData?.product?.costFree ||
+    (isCostFree && canUserLoanMoreCostFreeMaterials(dataLoans)) ||
     canUserLoanMoreMaterials(dataLoans, dataLibraryProfile, manifestation)
 
   return (
@@ -118,7 +119,7 @@ const LoanMaterialModal = ({
 
       {/* Description */}
       {(isLoadingLibraryProfile || isLoadingLoans) && (
-        <div className="bg-background-skeleton mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
+        <div className="bg-background-skeleton mx-auto mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
       )}
       {!isLoadingLibraryProfile && !isLoadingLoans && (
         <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
@@ -150,7 +151,7 @@ const LoanMaterialModal = ({
             size={"lg"}
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans}>
-            {!isHandlingLoan && "Ja"}
+            {!isHandlingLoan && !isLoadingLibraryProfile && !isLoadingLoans && "Ja"}
             {(isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans) && (
               <Icon
                 name="go-spinner"
@@ -164,7 +165,9 @@ const LoanMaterialModal = ({
           size={"lg"}
           disabled={isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans}
           onClick={() => closeModal()}>
-          {!isLoanPossible || error || isErrorLibraryProfile || isErrorLoans ? "Luk" : "Nej"}
+          {!isLoadingLibraryProfile &&
+            !isLoadingLoans &&
+            (!isLoanPossible || error || isErrorLibraryProfile || isErrorLoans ? "Nej" : "Luk")}
           {(isLoadingLibraryProfile || isLoadingLoans) && (
             <Icon
               name="go-spinner"

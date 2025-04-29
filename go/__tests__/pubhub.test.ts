@@ -6,8 +6,10 @@ import * as apiEndpoint from "@/app/pubhub/v1/user/loans/route"
 import * as sessionFunctions from "@/lib/session/session"
 import * as clientFunctions from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist/client"
 
+import { testSilently } from "./helpers"
+
 describe("Pubhub local API", () => {
-  it("Returns unauthorized for anonymous user at GET /v1/user/loans", async () => {
+  testSilently("Returns unauthorized for anonymous user at GET /v1/user/loans", async () => {
     await testApiHandler({
       // @ts-ignore
       appHandler: apiEndpoint,

@@ -16,7 +16,7 @@ const LoansDetails = ({ loanData }: LoansDetailsProps) => {
 
   return (
     <div
-      className="col-span-full mt-0 flex flex-row flex-wrap items-start justify-between gap-10 px-10 md:gap-0
+      className="col-span-full mt-10 flex flex-row flex-wrap items-start justify-between gap-10 px-10 md:gap-0
         lg:mt-12 lg:flex-nowrap lg:gap-0">
       <div
         className="bg-background duration-dark-mode col-span-6 w-full space-y-6 rounded-sm px-10 pt-6 pb-9

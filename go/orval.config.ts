@@ -16,6 +16,16 @@ const publizonConfig = (type: string): Options => ({
       query: {
         useQuery: true,
       },
+      operations: {
+        // The reason why we add this here is to be able to use "enabled" option in the
+        // query. This lets us call it conditionally.
+        getV1ProductsIdentifierLocalAdapter: {
+          requestOptions: false,
+        },
+        getV1ProductsIdentifierAdapter: {
+          requestOptions: false,
+        },
+      },
     },
     prettier: true,
   },

@@ -1,5 +1,5 @@
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
-import { getAPServiceFetcherAuthheader, getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
+import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 export const fetcher = async <ResponseType>({
   url,
@@ -15,7 +15,6 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeader = await getAPServiceFetcherAuthheader("pubhub-adapter")
   const baseUrl = getAPServiceFetcherBaseUrl("pubhub-adapter")
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
@@ -28,7 +27,6 @@ export const fetcher = async <ResponseType>({
     const response = await fetch(serviceUrl, {
       method,
       headers: {
-        ...(authHeader ? { authorization: authHeader } : {}),
         ...headers,
       },
       body,
