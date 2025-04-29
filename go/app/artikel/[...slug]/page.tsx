@@ -5,6 +5,7 @@ import loadArticle from "@/app/artikel/[...slug]/loadArticle"
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
+import CategorySliderTrigger from "@/components/shared/categorySliderTrigger/CategorySliderTrigger"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
@@ -29,7 +30,12 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   }
 
   const pageData = data.route.entity
-  return <ArticlePageLayout pageData={pageData as TArticlePageLayoutProps} />
+  return (
+    <>
+      <CategorySliderTrigger showCategorySlider={false} />
+      <ArticlePageLayout pageData={pageData as TArticlePageLayoutProps} />
+    </>
+  )
 }
 
 export default page

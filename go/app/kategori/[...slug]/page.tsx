@@ -3,6 +3,7 @@ import React from "react"
 
 import loadCategoryPage from "@/app/kategori/[...slug]/loadCategoryPage"
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
+import CategorySliderTrigger from "@/components/shared/categorySliderTrigger/CategorySliderTrigger"
 import { NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
@@ -28,7 +29,12 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   }
 
   const pageData = data.route.entity
-  return <CategoryPageLayout pageData={pageData as NodeGoCategory} />
+  return (
+    <>
+      <CategorySliderTrigger showCategorySlider={true} />
+      <CategoryPageLayout pageData={pageData as NodeGoCategory} />
+    </>
+  )
 }
 
 export default page

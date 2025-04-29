@@ -2,6 +2,7 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
 import React from "react"
 
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
+import CategorySliderTrigger from "@/components/shared/categorySliderTrigger/CategorySliderTrigger"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn } from "@/lib/helpers/bearer-token"
@@ -24,6 +25,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
   const dehydratedState = dehydrate(queryClient)
   return (
     <HydrationBoundary state={dehydratedState}>
+      <CategorySliderTrigger showCategorySlider={false} />
       <WorkPageLayout workId={decodedWid} />
     </HydrationBoundary>
   )

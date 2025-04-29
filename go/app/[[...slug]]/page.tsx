@@ -3,6 +3,7 @@ import React from "react"
 
 import loadPage from "@/app/[[...slug]]/loadPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
+import CategorySliderTrigger from "@/components/shared/categorySliderTrigger/CategorySliderTrigger"
 import goConfig from "@/lib/config/goConfig"
 import { GetPageByPathQuery, NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
 
@@ -37,7 +38,12 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   const pageData = data.route.entity
 
-  return <BasicPageLayout pageData={pageData as NodeGoPage} />
+  return (
+    <>
+      <CategorySliderTrigger showCategorySlider={true} />
+      <BasicPageLayout pageData={pageData as NodeGoPage} />
+    </>
+  )
 }
 
 export default page
