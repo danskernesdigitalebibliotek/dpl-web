@@ -44,6 +44,7 @@ function Slider({ categories, className }: TSliderProps) {
   const [currentPath, setCurrentPath] = useState<string>("")
   const [loaded, setLoaded] = useState(false)
   const pathname = usePathname()
+  const showCategorySlider = useSelector(categoryStore, state => state.context.showCategorySlider)
 
   useEffect(() => {
     setLoaded(true)
@@ -52,28 +53,6 @@ function Slider({ categories, className }: TSliderProps) {
   useEffect(() => {
     setCurrentPath(pathname)
   }, [pathname])
-
-  // Get a random number between -6 and 6 hardcoded values
-  const getRandomRotateClass = () => {
-    const rotations = [
-      "has-checked:rotate-2",
-      "has-checked:rotate-3",
-      "has-checked:rotate-4",
-      "has-checked:rotate-5",
-      "has-checked:rotate-6",
-      "has-checked:-rotate-2",
-      "has-checked:-rotate-3",
-      "has-checked:-rotate-4",
-      "has-checked:-rotate-5",
-      "has-checked:-rotate-6",
-    ]
-    const randomIndex = Math.floor(Math.random() * rotations.length)
-    return rotations[randomIndex]
-  }
-
-  const showCategorySlider = useSelector(categoryStore, state => state.context.showCategorySlider)
-
-  // If the category slider is not shown, return null
 
   return (
     <div
@@ -90,6 +69,22 @@ function Slider({ categories, className }: TSliderProps) {
           loaded && showCategorySlider ? "opacity-100" : "opacity-0"
         )}>
         {categories.map((category, index) => {
+          // Rotation effect options
+          const rotations = [
+            "has-checked:rotate-2",
+            "has-checked:rotate-3",
+            "has-checked:rotate-4",
+            "has-checked:rotate-5",
+            "has-checked:rotate-6",
+            "has-checked:-rotate-2",
+            "has-checked:-rotate-3",
+            "has-checked:-rotate-4",
+            "has-checked:-rotate-5",
+            "has-checked:-rotate-6",
+          ]
+
+          const randomIndex = Math.floor(Math.random() * rotations.length)
+
           return (
             <div className="keen-slider__slide !overflow-visible" key={category.id}>
               <SmartLink
@@ -98,7 +93,7 @@ function Slider({ categories, className }: TSliderProps) {
                 className={cn(
                   `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
                   transition-all duration-200 lg:p-[24px]`,
-                  `${getRandomRotateClass()}`
+                  currentPath === category.path ? `${rotations[randomIndex]}` : ""
                 )}>
                 <div
                   className={cn(
