@@ -1,6 +1,6 @@
 <?php
 /**
- * PatronV5
+ * PatronV7
  *
  * PHP version 7.4
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \DanskernesDigitaleBibliotek\FBS\ObjectSerializer;
 
 /**
- * PatronV5 Class Doc Comment
+ * PatronV7 Class Doc Comment
  *
  * @category Class
  * @package  DanskernesDigitaleBibliotek\FBS
@@ -40,7 +40,7 @@ use \DanskernesDigitaleBibliotek\FBS\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
+class PatronV7 implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'PatronV5';
+    protected static $openAPIModelName = 'PatronV7';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -57,12 +57,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
+        'tags' => 'string[]',
         'address' => '\DanskernesDigitaleBibliotek\FBS\Model\AddressV2',
         'allow_bookings' => 'bool',
         'birthday' => 'string',
         'block_status' => '\DanskernesDigitaleBibliotek\FBS\Model\BlockStatus[]',
         'default_interest_period' => 'int',
         'email_address' => 'string',
+        'guardian_visibility' => 'bool',
+        'interests' => '\DanskernesDigitaleBibliotek\FBS\Model\InterestV1[]',
         'name' => 'string',
         'notification_protocols' => 'string[]',
         'on_hold' => '\DanskernesDigitaleBibliotek\FBS\Model\Period',
@@ -85,12 +88,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'tags' => null,
         'address' => null,
         'allow_bookings' => null,
         'birthday' => null,
         'block_status' => null,
         'default_interest_period' => 'int32',
         'email_address' => null,
+        'guardian_visibility' => null,
+        'interests' => null,
         'name' => null,
         'notification_protocols' => null,
         'on_hold' => null,
@@ -111,12 +117,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'address' => false,
+        'tags' => false,
+		'address' => false,
 		'allow_bookings' => false,
 		'birthday' => false,
 		'block_status' => false,
 		'default_interest_period' => false,
 		'email_address' => false,
+		'guardian_visibility' => false,
+		'interests' => false,
 		'name' => false,
 		'notification_protocols' => false,
 		'on_hold' => false,
@@ -217,12 +226,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
+        'tags' => 'tags',
         'address' => 'address',
         'allow_bookings' => 'allowBookings',
         'birthday' => 'birthday',
         'block_status' => 'blockStatus',
         'default_interest_period' => 'defaultInterestPeriod',
         'email_address' => 'emailAddress',
+        'guardian_visibility' => 'guardianVisibility',
+        'interests' => 'interests',
         'name' => 'name',
         'notification_protocols' => 'notificationProtocols',
         'on_hold' => 'onHold',
@@ -243,12 +255,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
+        'tags' => 'setTags',
         'address' => 'setAddress',
         'allow_bookings' => 'setAllowBookings',
         'birthday' => 'setBirthday',
         'block_status' => 'setBlockStatus',
         'default_interest_period' => 'setDefaultInterestPeriod',
         'email_address' => 'setEmailAddress',
+        'guardian_visibility' => 'setGuardianVisibility',
+        'interests' => 'setInterests',
         'name' => 'setName',
         'notification_protocols' => 'setNotificationProtocols',
         'on_hold' => 'setOnHold',
@@ -269,12 +284,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
+        'tags' => 'getTags',
         'address' => 'getAddress',
         'allow_bookings' => 'getAllowBookings',
         'birthday' => 'getBirthday',
         'block_status' => 'getBlockStatus',
         'default_interest_period' => 'getDefaultInterestPeriod',
         'email_address' => 'getEmailAddress',
+        'guardian_visibility' => 'getGuardianVisibility',
+        'interests' => 'getInterests',
         'name' => 'getName',
         'notification_protocols' => 'getNotificationProtocols',
         'on_hold' => 'getOnHold',
@@ -346,12 +364,15 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('tags', $data ?? [], null);
         $this->setIfExists('address', $data ?? [], null);
         $this->setIfExists('allow_bookings', $data ?? [], null);
         $this->setIfExists('birthday', $data ?? [], null);
         $this->setIfExists('block_status', $data ?? [], null);
         $this->setIfExists('default_interest_period', $data ?? [], null);
         $this->setIfExists('email_address', $data ?? [], null);
+        $this->setIfExists('guardian_visibility', $data ?? [], null);
+        $this->setIfExists('interests', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('notification_protocols', $data ?? [], null);
         $this->setIfExists('on_hold', $data ?? [], null);
@@ -396,6 +417,9 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['default_interest_period'] === null) {
             $invalidProperties[] = "'default_interest_period' can't be null";
         }
+        if ($this->container['guardian_visibility'] === null) {
+            $invalidProperties[] = "'guardian_visibility' can't be null";
+        }
         if ($this->container['patron_id'] === null) {
             $invalidProperties[] = "'patron_id' can't be null";
         }
@@ -428,6 +452,33 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets tags
+     *
+     * @return string[]|null
+     */
+    public function getTags()
+    {
+        return $this->container['tags'];
+    }
+
+    /**
+     * Sets tags
+     *
+     * @param string[]|null $tags Tags associated with the patron. Can be used to e.g. give permissions to patron in external ressources.
+     *
+     * @return self
+     */
+    public function setTags($tags)
+    {
+        if (is_null($tags)) {
+            throw new \InvalidArgumentException('non-nullable tags cannot be null');
+        }
+        $this->container['tags'] = $tags;
+
+        return $this;
+    }
 
     /**
      * Gets address
@@ -587,6 +638,60 @@ class PatronV5 implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable email_address cannot be null');
         }
         $this->container['email_address'] = $email_address;
+
+        return $this;
+    }
+
+    /**
+     * Gets guardian_visibility
+     *
+     * @return bool
+     */
+    public function getGuardianVisibility()
+    {
+        return $this->container['guardian_visibility'];
+    }
+
+    /**
+     * Sets guardian_visibility
+     *
+     * @param bool $guardian_visibility guardian_visibility
+     *
+     * @return self
+     */
+    public function setGuardianVisibility($guardian_visibility)
+    {
+        if (is_null($guardian_visibility)) {
+            throw new \InvalidArgumentException('non-nullable guardian_visibility cannot be null');
+        }
+        $this->container['guardian_visibility'] = $guardian_visibility;
+
+        return $this;
+    }
+
+    /**
+     * Gets interests
+     *
+     * @return \DanskernesDigitaleBibliotek\FBS\Model\InterestV1[]|null
+     */
+    public function getInterests()
+    {
+        return $this->container['interests'];
+    }
+
+    /**
+     * Sets interests
+     *
+     * @param \DanskernesDigitaleBibliotek\FBS\Model\InterestV1[]|null $interests interests
+     *
+     * @return self
+     */
+    public function setInterests($interests)
+    {
+        if (is_null($interests)) {
+            throw new \InvalidArgumentException('non-nullable interests cannot be null');
+        }
+        $this->container['interests'] = $interests;
 
         return $this;
     }
