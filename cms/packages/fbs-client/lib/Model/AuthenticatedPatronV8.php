@@ -1,6 +1,6 @@
 <?php
 /**
- * AuthenticatedPatronV6
+ * AuthenticatedPatronV8
  *
  * PHP version 7.4
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \DanskernesDigitaleBibliotek\FBS\ObjectSerializer;
 
 /**
- * AuthenticatedPatronV6 Class Doc Comment
+ * AuthenticatedPatronV8 Class Doc Comment
  *
  * @category Class
  * @package  DanskernesDigitaleBibliotek\FBS
@@ -40,7 +40,7 @@ use \DanskernesDigitaleBibliotek\FBS\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class AuthenticatedPatronV6 implements ModelInterface, ArrayAccess, \JsonSerializable
+class AuthenticatedPatronV8 implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class AuthenticatedPatronV6 implements ModelInterface, ArrayAccess, \JsonSeriali
       *
       * @var string
       */
-    protected static $openAPIModelName = 'AuthenticatedPatronV6';
+    protected static $openAPIModelName = 'AuthenticatedPatronV8';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,7 +58,7 @@ class AuthenticatedPatronV6 implements ModelInterface, ArrayAccess, \JsonSeriali
       */
     protected static $openAPITypes = [
         'authenticate_status' => 'string',
-        'patron' => '\DanskernesDigitaleBibliotek\FBS\Model\PatronV5'
+        'patron' => '\DanskernesDigitaleBibliotek\FBS\Model\PatronV7'
     ];
 
     /**
@@ -365,7 +365,7 @@ class AuthenticatedPatronV6 implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets patron
      *
-     * @return \DanskernesDigitaleBibliotek\FBS\Model\PatronV5|null
+     * @return \DanskernesDigitaleBibliotek\FBS\Model\PatronV7|null
      */
     public function getPatron()
     {
@@ -375,7 +375,7 @@ class AuthenticatedPatronV6 implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets patron
      *
-     * @param \DanskernesDigitaleBibliotek\FBS\Model\PatronV5|null $patron patron
+     * @param \DanskernesDigitaleBibliotek\FBS\Model\PatronV7|null $patron patron
      *
      * @return self
      */
