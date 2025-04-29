@@ -2,9 +2,11 @@
 
 namespace Drupal\dpl_login\Plugin\GraphQL\DataProducer;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\UserTokens;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -55,7 +57,8 @@ class AdgangsplatformenUserTokenProducer extends DataProducerPluginBase implemen
   /**
    * Resolves the access token based on the token type.
    */
-  public function resolve(): AccessToken | null {
+  public function resolve(FieldContext $field_context): AccessToken | null {
+    $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
     return $this->userTokens->getCurrent();
   }
 
