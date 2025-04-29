@@ -95,8 +95,8 @@ function Slider({ categories, className }: TSliderProps) {
                 )}>
                 <div
                   className={cn(
-                    `bg-background-overlay relative aspect-1/1 overflow-hidden rounded-sm transition-all duration-300
-                    forced-colors:hidden`,
+                    `bg-background-overlay relative flex aspect-1/1 items-center justify-center overflow-hidden
+                    rounded-sm transition-all duration-300 forced-colors:hidden`,
                     // Add hover effect based on every category by fourth index
                     index % 4 === 0 &&
                       "group-hover:bg-content-1 group-focus:bg-content-1 group-has-checked:bg-content-1",
