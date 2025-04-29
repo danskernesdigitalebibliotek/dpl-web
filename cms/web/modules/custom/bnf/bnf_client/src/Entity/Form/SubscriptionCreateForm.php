@@ -85,7 +85,7 @@ class SubscriptionCreateForm extends ContentEntityForm {
     $form['only_new_content'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Only import new content', [], ['context' => 'BNF']),
-      '#description' => $this->t('If checked, only upcoming content related to this subscription will be imported', [], ['context' => 'BNF']),
+      '#description' => $this->t('If checked, only upcoming content related to this subscription will be imported.<br> "New content" is defined by content that has been saved, regardless of publishing date.', [], ['context' => 'BNF']),
       '#default_value' => TRUE,
     ];
 
