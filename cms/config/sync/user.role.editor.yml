@@ -25,6 +25,7 @@ dependencies:
     - taxonomy.vocabulary.webform_email_categories
   module:
     - administerusersbyrole
+    - bnf
     - content_lock
     - dpl_admin
     - dpl_footer
@@ -72,6 +73,8 @@ permissions:
   - 'administer menu'
   - 'administer nodes'
   - 'administer redirects'
+  - 'bnf export nodes'
+  - 'bnf import nodes'
   - 'break content lock'
   - 'change own username'
   - 'clone eventinstance entity'
