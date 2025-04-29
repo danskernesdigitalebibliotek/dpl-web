@@ -1,0 +1,29 @@
+query getCategories {
+  goCategories {
+    results {
+      ... on NodeGoCategory {
+        id
+        path
+        categoryMenuTitle
+        categoryMenuImage {
+          ... on MediaImage {
+            name
+            mediaImage {
+              url
+              alt
+              height
+              width
+              mime
+              size
+              title
+            }
+            byline
+          }
+        }
+        changed {
+          timestamp
+        }
+      }
+    }
+  }
+}

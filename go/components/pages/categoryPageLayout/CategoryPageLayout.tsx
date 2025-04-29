@@ -6,10 +6,6 @@ import { NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
 function CategoryPageLayout({ pageData }: { pageData: NodeGoCategory }) {
   const { paragraphs } = pageData
 
-  if (!paragraphs) {
-    return null
-  }
-
   return (
     <div className="gap-y-paragraph-spacing flex flex-col">
       <div className="content-container gap-y-paragraph-spacing grid-go">
@@ -17,9 +13,11 @@ function CategoryPageLayout({ pageData }: { pageData: NodeGoCategory }) {
           {pageData.title}
         </h1>
       </div>
-      <div className="gap-y-paragraph-spacing flex w-full flex-col">
-        <ParagraphResolver paragraphs={paragraphs} />
-      </div>
+      {paragraphs && (
+        <div className="gap-y-paragraph-spacing flex w-full flex-col">
+          <ParagraphResolver paragraphs={paragraphs} />
+        </div>
+      )}
     </div>
   )
 }
