@@ -19,6 +19,7 @@ class SubscriptionListBuilder extends EntityListBuilder {
    *   The row header, containing labels for each value.
    */
   public function buildHeader() {
+    // IMPORTANT - The order of this list must match the rows.
     $header['label'] = $this->t('Label', [], ['context' => 'BNF']);
     $header['categories'] = $this->t('Categories', [], ['context' => 'BNF']);
     $header['tags'] = $this->t('Tags', [], ['context' => 'BNF']);
@@ -50,12 +51,13 @@ class SubscriptionListBuilder extends EntityListBuilder {
     $created = new DateTime("@$created_timestamp");
     $created->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
 
+    // IMPORTANT - The order of this list must match the header.
     $row = [
       'label' => $entity->label->value,
-      'tags' => implode(', ', array_map(fn($term) => $term->getName(), $entity->getTags())),
       'categories' => implode(', ', array_map(fn($term) => $term->getName(), $entity->getCategories())),
+      'tags' => implode(', ', array_map(fn($term) => $term->getName(), $entity->getTags())),
       'created' => $created_timestamp ? $created->format('Y-m-d H:i') : NULL,
-      'last' => $last_pulled_timestamp ? $last_pulled->format('Y-m-d H:i') : NULL,
+      'last_updated' => $last_pulled_timestamp ? $last_pulled->format('Y-m-d H:i') : NULL,
     ];
 
     return $row + parent::buildRow($entity);

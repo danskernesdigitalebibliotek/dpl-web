@@ -97,33 +97,6 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ]);
     ;
 
-    $fields['tags'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel('Tags')
-      ->setDescription("The tags, to be added to content created with this subscription.")
-      ->setSetting('target_type', 'taxonomy_term')
-      ->setSetting('handler', 'default')
-      ->setSetting('handler_settings', [
-        'target_bundles' => ['tags' => 'tags'],
-      ])
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 10,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => 60,
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
-      ])
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'entity_reference_label',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
     $fields['categories'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel('Categories')
       ->setDescription("The categories, to be added to content created with this subscription.")
@@ -147,6 +120,33 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
         'label' => 'above',
         'type' => 'entity_reference_label',
         'weight' => 10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['tags'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel('Tags')
+      ->setDescription("The tags, to be added to content created with this subscription.")
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['tags' => 'tags'],
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 10,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => 60,
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label',
+        'weight' => 11,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
