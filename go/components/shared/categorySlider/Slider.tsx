@@ -40,10 +40,12 @@ function Slider({ categories, className }: TSliderProps) {
   const [sliderRef] = useKeenSlider(sliderOptions, [WheelControls])
   const [categoryPath, setCategoryPath] = useState<string>("")
   const router = useRouter()
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const path = window.location.pathname
     setCategoryPath(path)
+    setLoaded(true)
   }, [])
 
   const handleOnClick = (path: string) => {
@@ -76,7 +78,12 @@ function Slider({ categories, className }: TSliderProps) {
         lg:-mx-[48px] lg:px-[24px]`,
         className
       )}>
-      <div ref={sliderRef} className={cn("keen-slider relative z-10 w-full !overflow-visible")}>
+      <div
+        ref={sliderRef}
+        className={cn(
+          "keen-slider relative z-10 w-full !overflow-visible opacity-0 transition-all duration-300",
+          loaded && "opacity-100"
+        )}>
         {categories.map((category, index) => {
           return (
             <div className="keen-slider__slide !overflow-visible" key={category.id}>
