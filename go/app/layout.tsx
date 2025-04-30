@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
-import CategorySlider from "@/components/shared/categorySlider/CategorySlider"
+import CategorySlider, { TNodeGoCategory } from "@/components/shared/categorySlider/CategorySlider"
+import loadCategories from "@/components/shared/categorySlider/loadCategories"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
@@ -38,11 +40,14 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const data = await loadCategories()
+  const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
+
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
@@ -50,7 +55,9 @@ export default function RootLayout({
         <Theme>
           <ReactQueryProvider>
             <Header />
-            <CategorySlider />
+            <Suspense>
+              <CategorySlider categories={categories} />
+            </Suspense>
             <DynamicSheet />
             <DynamicModal />
             <div className="min-h-screen-minus-navigation-height py-space-y flex h-full w-full flex-col">
