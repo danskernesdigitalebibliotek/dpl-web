@@ -2,9 +2,8 @@ import { NextResponse } from "next/server"
 
 import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
+import { loadUserToken } from "@/lib/helpers/user-token"
 import { getSession, saveAdgangsplatformenSession } from "@/lib/session/session"
-
-import loadUserToken from "./loadUserToken"
 
 export async function GET() {
   const userTokenData = await loadUserToken()
