@@ -3,8 +3,8 @@
 namespace Drupal\dpl_login\Plugin\GraphQL\DataProducer;
 
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\UserTokens;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
@@ -55,11 +55,40 @@ class AdgangsplatformenUserTokenProducer extends DataProducerPluginBase implemen
   }
 
   /**
-   * Resolves the access token based on the token type.
+   * Transforms a unix date into Drupal GraphQL datetime.
+   *
+   * @param int $expire
+   *   The unix timestamp of the expiration date.
+   *
+   * @return mixed[]
+   *   The formatted date array.
    */
-  public function resolve(FieldContext $field_context): AccessToken | null {
+  protected function formatExpireDate(int $expire): array {
+    $dateTime = DrupalDateTime::createFromTimestamp($expire);
+    return [
+      'timestamp' => $dateTime->getTimestamp(),
+      'timezone' => $dateTime->getTimezone()->getName(),
+      'offset' => $dateTime->format('P'),
+      'time' => $dateTime->format(\DateTime::RFC3339),
+    ];
+  }
+
+  /**
+   * Resolves the access token based on the token type.
+   *
+   * @return mixed[] | null
+   *   Token and expiration date.
+   */
+  public function resolve(FieldContext $field_context): array | null {
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
-    return $this->userTokens->getCurrent();
+    if (!$token = $this->userTokens->getCurrent()) {
+      return NULL;
+    }
+
+    return [
+      'token' => $token->token,
+      'expire' => $this->formatExpireDate($token->expire),
+    ];
   }
 
 }

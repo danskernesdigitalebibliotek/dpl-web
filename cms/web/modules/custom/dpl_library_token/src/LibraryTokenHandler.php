@@ -2,11 +2,13 @@
 
 namespace Drupal\dpl_library_token;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LogLevel;
+use Safe\DateTime;
 
 /**
  * Library Token Handler Service.
@@ -89,18 +91,27 @@ class LibraryTokenHandler {
   public function setToken(LibraryToken $token): void {
     // Set token and expire time to half the given one.
     // In that way we are sure that the token is always valid.
+    $expire = $token->expiresIn / 2;
+
+    if (!$expireInterval = \DateInterval::createFromDateString(sprintf('%d seconds', $expire))) {
+      throw new \InvalidArgumentException('Invalid expire date.');
+    }
+
+    $expireDateTime = (new DateTime("now"))->add($expireInterval);
+    $dateTime = DrupalDateTime::createFromDateTime($expireDateTime);
+
     $this->tokenCollection
       ->setWithExpire(
         self::LIBRARY_TOKEN_KEY,
-        (object) ['token' => $token->token, 'expire' => $token->expire],
-        (int) round($token->expire / 2)
+        (object) ['token' => $token->token, 'expiresAt' => $dateTime->format(\DateTime::RFC3339)],
+        (int) round($expire)
       );
   }
 
   /**
    * Get stored library token.
    *
-   * @return object{'token': string, "expire": int}|null
+   * @return object{'token': string, "expiresAt": string}|null
    *   The stored token or NULL if no token is stored.
    */
   public function getToken(): ?object {

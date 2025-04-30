@@ -8,7 +8,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
-use Safe\DateTime;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -56,23 +55,16 @@ class AdgangsplatformenLibraryTokenProducer extends DataProducerPluginBase imple
   }
 
   /**
-   * Adds expire seconds to current time (now()).
+   * Transforms an RFC3339 formatted date string into Drupal GraphQL datetime.
    *
-   * And transforms the result into a Drupal graphql Datetime array.
-   *
-   * @param int $expire
-   *   The expire date in seconds.
+   * @param string $expire
+   *   The date the token expires in RFC3339 format.
    *
    * @return mixed[]
    *   The formatted date array.
    */
-  protected function formatExpireDate(int $expire): array {
-    if (!$expireInterval = \DateInterval::createFromDateString(sprintf('%d seconds', $expire))) {
-      throw new \InvalidArgumentException('Invalid expire date.');
-    }
-    $expireDateTime = (new DateTime("now"))->add($expireInterval);
-    $dateTime = DrupalDateTime::createFromDateTime($expireDateTime);
-
+  protected function formatExpireDate(string $expire): array {
+    $dateTime = new DrupalDateTime($expire);
     return [
       'timestamp' => $dateTime->getTimestamp(),
       'timezone' => $dateTime->getTimezone()->getName(),
@@ -92,7 +84,7 @@ class AdgangsplatformenLibraryTokenProducer extends DataProducerPluginBase imple
     $token = $this->libraryTokenHandler->getToken();
     return $token ? (object) [
       'token' => $token->token,
-      'expire' => $this->formatExpireDate($token->expire),
+      'expire' => $this->formatExpireDate($token->expiresAt),
     ] : NULL;
   }
 
