@@ -369,6 +369,7 @@ class DplReactAppsController extends ControllerBase {
           $this->t('We have @count copies of the material in stock', [], ['context' => 'Work Page']),
         ],
       ],
+      'material-grid-related-title-text' => $this->t('Other materials', [], ['context' => 'Work Page']),
       'missing-data-text' => $this->t('Missing data', [], ['context' => 'Work Page']),
       'modal-reservation-form-email-header-description-text' => $this->t('If you want to receive notifications by e-mail, you can enter or change the desired e-mail here.', [], ['context' => 'Work Page']),
       'modal-reservation-form-email-header-title-text' => $this->t('Change email', [], ['context' => 'Work Page']),
