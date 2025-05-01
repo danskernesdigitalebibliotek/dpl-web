@@ -3,11 +3,11 @@
 namespace Drupal\dpl_library_token\Plugin\GraphQL\DataProducer;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
+use Safe\DateTime;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -64,7 +64,8 @@ class AdgangsplatformenLibraryTokenProducer extends DataProducerPluginBase imple
    *   The formatted date array.
    */
   protected function formatExpireDate(string $expire): array {
-    $dateTime = new DrupalDateTime($expire);
+    $dateTime = new DateTime($expire);
+
     return [
       'timestamp' => $dateTime->getTimestamp(),
       'timezone' => $dateTime->getTimezone()->getName(),

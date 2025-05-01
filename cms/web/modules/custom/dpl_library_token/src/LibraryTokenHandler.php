@@ -2,7 +2,6 @@
 
 namespace Drupal\dpl_library_token;
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use GuzzleHttp\ClientInterface;
@@ -98,12 +97,11 @@ class LibraryTokenHandler {
     }
 
     $expireDateTime = (new DateTime("now"))->add($expireInterval);
-    $dateTime = DrupalDateTime::createFromDateTime($expireDateTime);
 
     $this->tokenCollection
       ->setWithExpire(
         self::LIBRARY_TOKEN_KEY,
-        (object) ['token' => $token->token, 'expiresAt' => $dateTime->format(\DateTime::RFC3339)],
+        (object) ['token' => $token->token, 'expiresAt' => $expireDateTime->format(\DateTime::RFC3339)],
         (int) round($expire)
       );
   }
