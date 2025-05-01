@@ -6,13 +6,18 @@ import { getSession } from "@/lib/session/session"
 import { uniLoginUserInfoSchema } from "./schemas"
 import { TUserInfo } from "./types"
 
-export type AuthContext = { uniLoginUserInfo: TUserInfo }
+export type AuthContextBase = { uniLoginUserInfo: TUserInfo }
 
-export type HandlerWithAuth = (req: NextRequest, context: AuthContext) => Promise<Response>
+export type HandlerWithAuth<TExtraContext = Record<string, unknown>> = (
+  req: NextRequest,
+  context: AuthContextBase & TExtraContext
+) => Promise<Response>
 
 // WithAuth middleware.
-export function withAuth(handler: HandlerWithAuth): (req: NextRequest) => Promise<Response> {
-  return async req => {
+export function withAuth<TExtraContext = Record<string, unknown>>(
+  handler: HandlerWithAuth<TExtraContext>
+): (req: NextRequest, context: TExtraContext) => Promise<Response> {
+  return async (req, extraContext: TExtraContext) => {
     const session = await getSession()
 
     try {
@@ -23,7 +28,7 @@ export function withAuth(handler: HandlerWithAuth): (req: NextRequest) => Promis
       const uniLoginUserInfo = uniLoginUserInfoSchema.parse(session?.uniLoginUserInfo)
 
       // If authenticated, call the original handler
-      return handler(req, { ...context, uniLoginUserInfo })
+      return handler(req, { ...extraContext, uniLoginUserInfo })
     } catch (error) {
       console.error(error)
       return new Response("Not Authorized", { status: 401 })

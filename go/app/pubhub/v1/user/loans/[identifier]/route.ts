@@ -31,8 +31,6 @@ async function createdigitalLoan(
   }
 }
 
-// @todo Fix ts problem about context here.
-// @ts-ignore
 export const POST = withAuth(createdigitalLoan)
 
 export const dynamic = "force-dynamic"
