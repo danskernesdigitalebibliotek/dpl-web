@@ -30,31 +30,44 @@ class GoSite {
   }
 
   /**
+   * Get the base URL for the CMS site.
+   */
+  public function getCmsBaseUrl(): string {
+    $mainRoute = $this->lagoonRouteResolver->getMainRoute();
+
+    if (!$mainRoute) {
+      throw new \RuntimeException('Could not determine the CMS domain.');
+    }
+
+    return $mainRoute;
+  }
+
+  /**
    * Get the base URL for the Go site.
    */
   public function getGoBaseUrl(): string {
     // If the GO_DOMAIN environment variable is set,
     // it will override anything else.
-    if ($goDomain = getenv('GO_DOMAIN') ?: NULL) {
+    $goDomain = getenv('GO_DOMAIN') ?: NULL;
+
+    if ($goDomain) {
       return $goDomain;
     }
 
-    if ($mainRoute = $this->lagoonRouteResolver->getMainRoute()) {
-      $urlParsed = parse_url($mainRoute);
+    $urlParsed = parse_url($this->getCmsBaseUrl());
 
-      // These two parts are required.
-      if (isset($urlParsed['scheme']) || isset($urlParsed['host'])) {
-        $host = $urlParsed['host'];
+    // These two parts are required.
+    if (isset($urlParsed['scheme']) || isset($urlParsed['host'])) {
+      $host = $urlParsed['host'];
 
-        if (str_starts_with($host, 'www.')) {
-          $host = str_replace('www.', 'www.go.', $host);
-        }
-        else {
-          $host = "go.{$host}";
-        }
-
-        $goDomain = sprintf('%s://%s%s', $urlParsed['scheme'], $host, $urlParsed['path'] ?? '');
+      if (str_starts_with($host, 'www.')) {
+        $host = str_replace('www.', 'www.go.', $host);
       }
+      else {
+        $host = "go.{$host}";
+      }
+
+      $goDomain = sprintf('%s://%s%s', $urlParsed['scheme'], $host, $urlParsed['path'] ?? '');
     }
 
     if (!$goDomain) {

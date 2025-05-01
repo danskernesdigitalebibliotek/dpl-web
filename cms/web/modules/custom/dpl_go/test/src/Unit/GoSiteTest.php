@@ -90,4 +90,13 @@ class GoSiteTest extends UnitTestCase {
     $this->assertFalse($this->goSite->isGoSite());
   }
 
+  /**
+   * Test that we can get the CMS URL too.
+   */
+  public function testGetCmsDomain(): void {
+    $this->routeResolver->getMainRoute()->willReturn('https://dpl.local');
+
+    $this->assertEquals('https://dpl.local', $this->goSite->getCmsBaseUrl());
+  }
+
 }
