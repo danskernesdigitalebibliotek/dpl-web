@@ -1,6 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   dpl_go.go_node_redirect:
     class: Drupal\dpl_go\EventSubscriber\GoNodeRedirect
-    arguments: ['@dpl_lagoon.host_resolver']
     tags:
       - { name: event_subscriber }
