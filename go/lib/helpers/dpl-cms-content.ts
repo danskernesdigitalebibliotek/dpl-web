@@ -2,7 +2,7 @@ type TDplCmsContentType = "article" | "page" | "category"
 
 export const getContentQueryPath = (path: string, type: TDplCmsContentType) => {
   const pathMap = {
-    article: `artikel/${path}`,
+    article: `go/artikel/${path}`,
     page: `go/${path}`,
     category: `go/kategori/${path}`,
   }
