@@ -32,7 +32,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "shadcn:add": "npx shadcn@canary add $MODULE",
-    "post-process-dpl-cms-graphql": "NODE_OPTIONS='--loader=ts-node/esm' ts-node ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
+    "post-process-dpl-cms-graphql": "tsx ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
   },
   "dependencies": {
     "@next/env": "15.0.3",
