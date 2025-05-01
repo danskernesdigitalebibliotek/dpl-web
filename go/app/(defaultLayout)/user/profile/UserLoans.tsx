@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import LoanSlider, { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
+import LoanSlider, { LoanSliderSkeleton } from "@/app/(defaultLayout)/user/profile/LoanSlider"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,

@@ -6,9 +6,11 @@ import { useKeenSlider } from "keen-slider/react"
 import Link from "next/link"
 import React, { Suspense, useEffect, useState } from "react"
 
-import LoanCard from "@/app/user/profile/LoanCard"
-import QuotasSection, { QuotasSectionSkeleton } from "@/app/user/profile/QuotasSection"
-import { loanSliderOptions } from "@/app/user/profile/helper"
+import LoanCard from "@/app/(defaultLayout)/user/profile/LoanCard"
+import QuotasSection, {
+  QuotasSectionSkeleton,
+} from "@/app/(defaultLayout)/user/profile/QuotasSection"
+import { loanSliderOptions } from "@/app/(defaultLayout)/user/profile/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"

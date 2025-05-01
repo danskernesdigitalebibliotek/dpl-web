@@ -1,4 +1,4 @@
-import { getInstitutionRequest } from "@/app/auth/callback/unilogin/requests"
+import { getInstitutionRequest } from "@/app/(server)/auth/callback/unilogin/requests"
 import { getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
 
 export const isUniloginUserAuthorizedToLogIn = async (

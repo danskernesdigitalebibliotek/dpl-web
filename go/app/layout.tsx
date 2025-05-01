@@ -45,9 +45,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const data = await loadCategories()
-  const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
-
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
@@ -55,14 +52,9 @@ export default async function RootLayout({
         <Theme>
           <ReactQueryProvider>
             <Header />
-            <Suspense>
-              <CategorySlider categories={categories} />
-            </Suspense>
             <DynamicSheet />
             <DynamicModal />
-            <div className="min-h-screen-minus-navigation-height py-space-y flex h-full w-full flex-col">
-              {children}
-            </div>
+            {children}
             <Footer />
           </ReactQueryProvider>
         </Theme>

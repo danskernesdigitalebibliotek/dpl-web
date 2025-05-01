@@ -1,6 +1,5 @@
 "use client"
 
-import { useSelector } from "@xstate/react"
 import { KeenSliderOptions, useKeenSlider } from "keen-slider/react"
 import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -8,7 +7,6 @@ import React, { useEffect, useState } from "react"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { MediaImage, NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { categoryStore } from "@/store/category.store"
 
 import ImageBase from "../image/ImageBase"
 import SmartLink from "../smartLink/SmartLink"
@@ -46,14 +44,13 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
   const [currentPath, setCurrentPath] = useState<string>("")
   const [loaded, setLoaded] = useState(false)
   const pathname = usePathname()
-  const showCategorySlider = useSelector(categoryStore, state => state.context.showCategorySlider)
 
   useEffect(() => {
     setLoaded(true)
   }, [])
 
   useEffect(() => {
-    setCurrentPath(pathname)
+    setCurrentPath(pathname.replace("/go/", "/"))
   }, [pathname])
 
   if (!categories) {
@@ -78,9 +75,8 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
           <div
             ref={sliderRef}
             className={cn(
-              "keen-slider relative z-10 w-full !overflow-visible opacity-0 transition-all duration-300",
-              showCategorySlider ? "h-auto" : "h-0",
-              loaded && showCategorySlider ? "opacity-100" : "opacity-0"
+              "keen-slider relative z-10 w-full !overflow-visible opacity-100 transition-all duration-300",
+              loaded ? "opacity-100" : "opacity-0"
             )}>
             {sortedCategories.map((category, index) => {
               // Rotation effect options
@@ -103,11 +99,13 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
                 <div className="keen-slider__slide !overflow-visible" key={category.id}>
                   <SmartLink
                     aria-label={`Gå til kategori ${category.categoryMenuTitle}`}
-                    href={category.path || ""}
+                    href={category.path?.replace("/go/", "/") || ""}
                     className={cn(
                       `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
                       transition-all duration-200 lg:p-[24px]`,
-                      currentPath === category.path ? `${rotations[randomIndex]}` : ""
+                      currentPath.replace("/go/", "/") === category.path?.replace("/go/", "/")
+                        ? `${rotations[randomIndex]}`
+                        : ""
                     )}>
                     <div
                       className={cn(
@@ -136,7 +134,9 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
                       <input
                         type="radio"
                         name="category"
-                        checked={currentPath === category.path}
+                        checked={
+                          currentPath.replace("/go/", "/") === category.path?.replace("/go/", "/")
+                        }
                         className="pointer-events-none appearance-none"
                         disabled
                       />

@@ -2,7 +2,6 @@ import Link from "next/link"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
-import CategorySliderTrigger from "@/components/shared/categorySliderTrigger/CategorySliderTrigger"
 
 const ErrorPageLayout = ({
   title,
@@ -16,20 +15,17 @@ const ErrorPageLayout = ({
   buttonLink: string
 }) => {
   return (
-    <>
-      <CategorySliderTrigger showCategorySlider={false} />
-      <div className="content-container grid-go w-full">
-        <div className="flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2 lg:my-grid-gap-half col-span-10">
-          <h2 className="text-typo-huge">{title}</h2>
-          <p className="text-typo-body-lg max-w-prose">{description}</p>
-          <Button ariaLabel={buttonText} asChild size={"lg"}>
-            <Link href={buttonLink} className="text-typo-body-lg">
-              {buttonText}
-            </Link>
-          </Button>
-        </div>
+    <div className="content-container grid-go w-full">
+      <div className="flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2 lg:my-grid-gap-half col-span-10">
+        <h2 className="text-typo-huge">{title}</h2>
+        <p className="text-typo-body-lg max-w-prose">{description}</p>
+        <Button ariaLabel={buttonText} asChild size={"lg"}>
+          <Link href={buttonLink} className="text-typo-body-lg">
+            {buttonText}
+          </Link>
+        </Button>
       </div>
-    </>
+    </div>
   )
 }
 

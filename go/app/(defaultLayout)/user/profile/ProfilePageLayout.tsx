@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation"
 import React, { Suspense } from "react"
 
-import { LoanSliderSkeleton } from "@/app/user/profile/LoanSlider"
-import LogoutButton from "@/app/user/profile/LogoutButton"
-import UserLoans from "@/app/user/profile/UserLoans"
+import { LoanSliderSkeleton } from "@/app/(defaultLayout)/user/profile/LoanSlider"
+import LogoutButton from "@/app/(defaultLayout)/user/profile/LogoutButton"
+import UserLoans from "@/app/(defaultLayout)/user/profile/UserLoans"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
 import { userIsAnonymous } from "@/lib/helpers/user"
 import { getSession } from "@/lib/session/session"
