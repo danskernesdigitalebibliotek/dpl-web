@@ -4,12 +4,15 @@ import { z } from "zod"
 import { getSession } from "@/lib/session/session"
 
 import { uniLoginUserInfoSchema } from "./schemas"
+import { TUserInfo } from "./types"
 
-type Handler = <TContext>(req: NextRequest, context?: TContext) => Promise<Response>
+export type AuthContext = { uniLoginUserInfo: TUserInfo }
+
+export type HandlerWithAuth = (req: NextRequest, context: AuthContext) => Promise<Response>
 
 // WithAuth middleware.
-export function withAuth(handler: Handler): Handler {
-  return async (req, context) => {
+export function withAuth(handler: HandlerWithAuth): (req: NextRequest) => Promise<Response> {
+  return async req => {
     const session = await getSession()
 
     try {
