@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\dpl_go\Unit;
 
+use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_go\GoSite;
 use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
 use Drupal\Tests\UnitTestCase;
@@ -23,12 +24,26 @@ class GoSiteTest extends UnitTestCase {
   protected ObjectProphecy $routeResolver;
 
   /**
+   * Current user mock.
+   *
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\Session\AccountInterface>
+   */
+  protected ObjectProphecy $currentUser;
+
+  /**
+   * Object under test.
+   */
+  protected GoSite $goSite;
+
+  /**
    * {@inheritdoc}
    */
   public function setUp(): void {
     parent::setUp();
 
     $this->routeResolver = $this->prophesize(LagoonRouteResolver::class);
+    $this->currentUser = $this->prophesize(AccountInterface::class);
+    $this->goSite = new GoSite($this->routeResolver->reveal(), $this->currentUser->reveal());
   }
 
   /**
@@ -42,11 +57,9 @@ class GoSiteTest extends UnitTestCase {
    * Test that GO_DOMAIN overrides.
    */
   public function testGoDomainOverrides(): void {
-    $goSite = new GoSite($this->routeResolver->reveal());
-
     putenv('GO_DOMAIN=https://gotest.local');
 
-    $this->assertEquals('https://gotest.local', $goSite->getGoBaseUrl());
+    $this->assertEquals('https://gotest.local', $this->goSite->getGoBaseUrl());
   }
 
   /**
@@ -55,9 +68,7 @@ class GoSiteTest extends UnitTestCase {
   public function testRegularGoDomain(): void {
     $this->routeResolver->getMainRoute()->willReturn('https://dpl.local');
 
-    $goSite = new GoSite($this->routeResolver->reveal());
-
-    $this->assertEquals('https://go.dpl.local', $goSite->getGoBaseUrl());
+    $this->assertEquals('https://go.dpl.local', $this->goSite->getGoBaseUrl());
   }
 
   /**
@@ -66,9 +77,17 @@ class GoSiteTest extends UnitTestCase {
   public function testWwwGoDomain(): void {
     $this->routeResolver->getMainRoute()->willReturn('https://www.dpl.local');
 
-    $goSite = new GoSite($this->routeResolver->reveal());
+    $this->assertEquals('https://www.go.dpl.local', $this->goSite->getGoBaseUrl());
+  }
 
-    $this->assertEquals('https://www.go.dpl.local', $goSite->getGoBaseUrl());
+  public function testGoSiteDetection(): void {
+    $this->currentUser->hasPermission('rewrite go urls')->willReturn(TRUE);
+
+    $this->assertTrue($this->goSite->isGoSite());
+
+    $this->currentUser->hasPermission('rewrite go urls')->willReturn(FALSE);
+
+    $this->assertFalse($this->goSite->isGoSite());
   }
 
 }

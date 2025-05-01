@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_go;
 
+use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
 use function Safe\parse_url;
 
@@ -12,7 +13,21 @@ use function Safe\parse_url;
  */
 class GoSite {
 
-  public function __construct(protected LagoonRouteResolver $lagoonRouteResolver) {}
+  public function __construct(
+    protected LagoonRouteResolver $lagoonRouteResolver,
+    protected AccountInterface $currentUser,
+  ) {}
+
+  /**
+   * Is the current request considered "the Go site".
+   *
+   * This is true when the current user is the Go GraphQL consumer user that the
+   * React front-end uses. Which is the only user given the "rewrite go urls"
+   * permission.
+   */
+  public function isGoSite(): bool {
+    return $this->currentUser->hasPermission('rewrite go urls');
+  }
 
   /**
    * Get the base URL for the Go site.
