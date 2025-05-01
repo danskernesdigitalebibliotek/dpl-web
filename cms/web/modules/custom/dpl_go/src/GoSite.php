@@ -27,9 +27,18 @@ class GoSite {
     if ($mainRoute = $this->lagoonRouteResolver->getMainRoute()) {
       $urlParsed = parse_url($mainRoute);
 
-      // These two parts are required
+      // These two parts are required.
       if (isset($urlParsed['scheme']) || isset($urlParsed['host'])) {
-        $goDomain = sprintf('%s://go.%s%s', $urlParsed['scheme'], $urlParsed['host'], $urlParsed['path'] ?? '');
+        $host = $urlParsed['host'];
+
+        if (str_starts_with($host, 'www.')) {
+          $host = str_replace('www.', 'www.go.', $host);
+        }
+        else {
+          $host = "go.{$host}";
+        }
+
+        $goDomain = sprintf('%s://%s%s', $urlParsed['scheme'], $host, $urlParsed['path'] ?? '');
       }
     }
 

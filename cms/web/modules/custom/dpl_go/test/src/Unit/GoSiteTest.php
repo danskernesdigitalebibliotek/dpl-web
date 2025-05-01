@@ -58,7 +58,17 @@ class GoSiteTest extends UnitTestCase {
     $goSite = new GoSite($this->routeResolver->reveal());
 
     $this->assertEquals('https://go.dpl.local', $goSite->getGoBaseUrl());
+  }
 
+  /**
+   * Test that for www.x.domain, the go domain is www.go.x.domain.
+   */
+  public function testWwwGoDomain(): void {
+    $this->routeResolver->getMainRoute()->willReturn('https://www.dpl.local');
+
+    $goSite = new GoSite($this->routeResolver->reveal());
+
+    $this->assertEquals('https://www.go.dpl.local', $goSite->getGoBaseUrl());
   }
 
 }
