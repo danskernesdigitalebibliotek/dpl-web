@@ -7,7 +7,7 @@ if (!pathToGeneratedFile) {
   throw new Error("Missing path to generated file!")
 }
 
-// Replace RequestInit['headers'] with RequestInit since
+// Replace RequestInit & { next?: NextFetchRequestConfig } with RequestInit since
 // we need to be able to inject next options in the fetcher:
 replaceInFile({
   files: pathToGeneratedFile,
