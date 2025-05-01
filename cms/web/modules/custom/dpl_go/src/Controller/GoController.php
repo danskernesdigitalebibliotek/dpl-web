@@ -5,7 +5,6 @@ namespace Drupal\dpl_go\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use function Safe\parse_url;
 
@@ -20,20 +19,6 @@ class GoController extends ControllerBase {
   public function __construct(
     protected LagoonRouteResolver $lagoonRouteResolver,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The Drupal service container.
-   *
-   * @return static
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('dpl_lagoon.host_resolver'),
-    );
-  }
 
   /**
    * Redirects back to the external Go app after successful login.
