@@ -6,3 +6,7 @@ services:
     class: Drupal\dpl_go\EventSubscriber\GoNodeRedirect
     tags:
       - { name: event_subscriber }
+
+  dpl_go.go_site:
+    class: Drupal\dpl_go\GoSite
+  Drupal\dpl_go\GoSite: '@dpl_go.go_site'
