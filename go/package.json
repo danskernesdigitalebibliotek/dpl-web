@@ -2,6 +2,7 @@
   "name": "go-frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build-storybook": "storybook build",
     "build": "next build",
