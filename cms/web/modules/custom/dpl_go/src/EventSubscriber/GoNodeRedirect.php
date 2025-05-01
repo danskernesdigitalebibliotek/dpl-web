@@ -3,7 +3,7 @@
 namespace Drupal\dpl_go\EventSubscriber;
 
 use Drupal\Core\Url;
-use Drupal\dpl_go\Controller\GoController;
+use Drupal\dpl_go\GoSite;
 use Drupal\node\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,12 +14,14 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  *
  * @package Drupal\dpl_go\EventSubscriber
  */
-class GoNodeRedirect extends GoController implements EventSubscriberInterface {
+class GoNodeRedirect implements EventSubscriberInterface {
+
+  public function __construct(protected GoSite $goSite) {}
 
   /**
    * {@inheritDoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       'kernel.request' => [
         ['redirectGoContent'],
@@ -45,7 +47,7 @@ class GoNodeRedirect extends GoController implements EventSubscriberInterface {
     if ($node instanceof NodeInterface && str_starts_with($node->bundle(), 'go_')) {
       $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString();
 
-      $response = new RedirectResponse($this->getGoDomain() . $url);
+      $response = new RedirectResponse($this->goSite->getGoBaseUrl() . $url);
       $event->setResponse($response);
     }
   }

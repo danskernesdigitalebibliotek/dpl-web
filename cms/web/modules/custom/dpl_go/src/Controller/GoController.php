@@ -4,9 +4,7 @@ namespace Drupal\dpl_go\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
-use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
-
-use function Safe\parse_url;
+use Drupal\dpl_go\GoSite;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -17,7 +15,7 @@ class GoController extends ControllerBase {
    * DdplReactAppsController constructor.
    */
   public function __construct(
-    protected LagoonRouteResolver $lagoonRouteResolver,
+    protected GoSite $goSite,
   ) {}
 
   /**
@@ -25,7 +23,7 @@ class GoController extends ControllerBase {
    */
   public function postAdgangsplatformenLoginRoute(): TrustedRedirectResponse {
     // @todo We should make it configurable which path to redirect to.
-    $externalGoUrl = sprintf('%s/auth/callback/adgangsplatformen', $this->getGoDomain());
+    $externalGoUrl = sprintf('%s/auth/callback/adgangsplatformen', $this->goSite->getGoBaseUrl());
     $response = new TrustedRedirectResponse($externalGoUrl);
 
     return $response;
@@ -36,34 +34,9 @@ class GoController extends ControllerBase {
    */
   public function postAdgangsplatformenLogoutRoute(): TrustedRedirectResponse {
     // @todo We should make it configurable which path to redirect to.
-    $response = new TrustedRedirectResponse($this->getGoDomain());
+    $response = new TrustedRedirectResponse($this->goSite->getGoBaseUrl());
 
     return $response;
-  }
-
-  /**
-   * Get the external Go domain.
-   */
-  protected function getGoDomain(): string {
-    // If the GO_DOMAIN environment variable is set,
-    // it will override anything else.
-    if ($goDomain = getenv('GO_DOMAIN') ?: NULL) {
-      return $goDomain;
-    }
-
-    if ($mainRoute = $this->lagoonRouteResolver->getMainRoute()) {
-      $urlParsed = parse_url($mainRoute);
-      if (!is_array($urlParsed)) {
-        throw new \RuntimeException('Could not determine the Go domain.');
-      }
-      $goDomain = sprintf('%s://go.%s%s', $urlParsed['scheme'], $urlParsed['host'], $urlParsed['path']);
-    }
-
-    if (!$goDomain) {
-      throw new \RuntimeException('Could not determine the Go domain.');
-    }
-
-    return $goDomain;
   }
 
 }
