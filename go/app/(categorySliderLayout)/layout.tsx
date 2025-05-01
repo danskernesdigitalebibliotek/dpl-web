@@ -1,5 +1,3 @@
-import type { Metadata } from "next"
-import localFont from "next/font/local"
 import { Suspense } from "react"
 
 import CategorySlider, { TNodeGoCategory } from "@/components/shared/categorySlider/CategorySlider"

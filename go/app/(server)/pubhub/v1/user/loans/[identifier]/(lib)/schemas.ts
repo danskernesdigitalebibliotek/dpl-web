@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { regexDate } from "@/app/pubhub/helper"
+import { regexDate } from "@/app/(server)/pubhub/helper"
 
 export const createLoanSchema = z.object({
   response: z.object({

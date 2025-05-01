@@ -1,13 +1,10 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
-import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
-import CategorySlider, { TNodeGoCategory } from "@/components/shared/categorySlider/CategorySlider"
-import loadCategories from "@/components/shared/categorySlider/loadCategories"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"

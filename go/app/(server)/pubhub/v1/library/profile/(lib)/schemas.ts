@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { regexNumber } from "@/app/pubhub/helper"
+import { regexNumber } from "@/app/(server)/pubhub/helper"
 
 export const getLibraryProfileSchema = z.object({
   response: z.object({

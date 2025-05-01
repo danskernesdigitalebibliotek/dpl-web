@@ -1,4 +1,3 @@
-import { cn } from "@/lib/helpers/helper.cn"
 import "@/styles/globals.css"
 
 export default async function DefaultLayout({

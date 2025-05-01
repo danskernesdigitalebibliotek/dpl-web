@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { withAuth } from "@/app/pubhub/(lib)/helper"
-import { TUserInfo } from "@/app/pubhub/(lib)/types"
+import { withAuth } from "@/app/(server)/pubhub/(lib)/helper"
+import { TUserInfo } from "@/app/(server)/pubhub/(lib)/types"
 
 import { getProductsRequest } from "./(lib)/requests"
 import { getProductsSchema } from "./(lib)/schemas"

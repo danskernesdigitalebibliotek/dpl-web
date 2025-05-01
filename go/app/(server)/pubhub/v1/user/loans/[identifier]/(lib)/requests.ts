@@ -1,5 +1,5 @@
-import { TUserInfo } from "@/app/pubhub/(lib)/types"
-import { TCreateLoan } from "@/app/pubhub/v1/user/loans/[identifier]/(lib)/types"
+import { TUserInfo } from "@/app/(server)/pubhub/(lib)/types"
+import { TCreateLoan } from "@/app/(server)/pubhub/v1/user/loans/[identifier]/(lib)/types"
 import { getPublizonServiceParameters } from "@/lib/helpers/publizon"
 import { createClientAsync as createClientAsyncCreateLoan } from "@/lib/soap/publizon/v2_7/generated/createloan"
 

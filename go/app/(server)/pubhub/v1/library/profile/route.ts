@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-import { withAuth } from "@/app/pubhub/(lib)/helper"
+import { withAuth } from "@/app/(server)/pubhub/(lib)/helper"
 
 import { getLibraryProfileRequest } from "./(lib)/requests"
 import { getLibraryProfileSchema } from "./(lib)/schemas"

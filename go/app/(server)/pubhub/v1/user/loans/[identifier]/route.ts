@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { withAuth } from "@/app/pubhub/(lib)/helper"
-import { TUserInfo } from "@/app/pubhub/(lib)/types"
-import { transformTimeToUtcString } from "@/app/pubhub/helper"
+import { withAuth } from "@/app/(server)/pubhub/(lib)/helper"
+import { TUserInfo } from "@/app/(server)/pubhub/(lib)/types"
+import { transformTimeToUtcString } from "@/app/(server)/pubhub/helper"
 
 import { createLoanRequest } from "./(lib)/requests"
 import { createLoanSchema } from "./(lib)/schemas"
