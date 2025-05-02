@@ -1,13 +1,9 @@
 "use client"
 
-import { Metadata } from "next"
 import { notFound, useSearchParams } from "next/navigation"
 import React from "react"
 
 import Reader from "@/components/shared/publizonReader/PublizonReader"
-import { setPageMetadata } from "@/lib/helpers/helper.metadata"
-
-export const metadata: Metadata = setPageMetadata("Materiale")
 
 function Page() {
   const searchParams = useSearchParams()
