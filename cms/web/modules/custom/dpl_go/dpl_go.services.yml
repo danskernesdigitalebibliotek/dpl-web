@@ -18,3 +18,8 @@ services:
       # Drupal\path_alias\PathProcessor\AliasPathProcessor so we get
       # the path before aliasing.
       - { name: path_processor_outbound, priority: 350 }
+
+  cache_context.dpl_is_go:
+    class: Drupal\dpl_go\Cache\Context\IsGoCacheContext
+    tags:
+      - { name: cache.context }

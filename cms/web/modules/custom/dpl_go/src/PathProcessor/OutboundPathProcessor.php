@@ -41,14 +41,14 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
    *   Linking options.
    * @param ?\Symfony\Component\HttpFoundation\Request $request
    *   The current request.
-   * @param ?\Drupal\Core\Render\BubbleableMetadata $bubbleable_metadata
+   * @param ?\Drupal\Core\Render\BubbleableMetadata $bubbleableMetadata
    *   Caching metadata.
    */
   public function processOutbound(
     $path,
     &$options = [],
     Request $request = NULL,
-    BubbleableMetadata $bubbleable_metadata = NULL,
+    BubbleableMetadata $bubbleableMetadata = NULL,
   ): string {
     $pathParts = explode('/', $path);
 
@@ -59,6 +59,12 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
       // interested in supporting "1337e0" or " 24  ".
       preg_match('/^\d+$/', $pathParts[2])
     ) {
+      // Tell caching that this link depends on wether we're on the go site or
+      // not.
+      if ($bubbleableMetadata) {
+        $bubbleableMetadata->addCacheContexts(['dpl_is_go']);
+      }
+
       $node = $this->nodeStorage->load($pathParts[2]);
 
       if ($node) {
