@@ -7,9 +7,16 @@ type GoLogoutUrls {
   adgangsplatformen: String
 }
 
-type GoConfiguration {
+type GoConfigurationPrivate {
   unilogin: UniloginConfiguration
+}
+
+type GoConfigurationPublic {
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
 }
 
+type GoConfiguration {
+  public: GoConfigurationPublic
+  private: GoConfigurationPrivate
+}
