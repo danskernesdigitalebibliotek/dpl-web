@@ -40,6 +40,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
       $builder->produce('go_adgangsplatformen_logout_url')
     );
 
+    $registry->addFieldResolver('GoConfiguration', 'libraryInfo', $builder->callback(fn () => TRUE));
+    $registry->addFieldResolver('GoLibraryInfo', 'libraryName',
+      $builder->produce('library_name')
+    );
   }
 
 }

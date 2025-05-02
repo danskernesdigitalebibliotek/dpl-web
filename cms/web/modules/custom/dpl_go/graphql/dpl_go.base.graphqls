@@ -1,4 +1,8 @@
 
+type GoLibraryInfo {
+  libraryName: String
+}
+
 type GoLoginUrls {
   adgangsplatformen: String
 }
@@ -9,6 +13,7 @@ type GoLogoutUrls {
 
 type GoConfiguration {
   unilogin: UniloginConfiguration
+  libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
 }
