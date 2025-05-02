@@ -15,6 +15,10 @@ import { getEnv } from "../config/env"
  * setPageMetadata("My Page", "This is a description of my page")
  */
 export const setPageMetadata = (title: string, description?: string) => {
+  if (!title) {
+    return {}
+  }
+
   return {
     title,
     description,
