@@ -80,12 +80,12 @@ Class | Method | HTTP request | Description
 *ExternalAgencyidCatalogApi* | [**getAvailabilityV3**](docs/Api/ExternalAgencyidCatalogApi.md#getavailabilityv3) | **GET** /external/agencyid/catalog/availability/v3 | Get availability of bibliographical records.
 *ExternalAgencyidCatalogApi* | [**getHoldingsLogisticsV1**](docs/Api/ExternalAgencyidCatalogApi.md#getholdingslogisticsv1) | **GET** /external/agencyid/catalog/holdingsLogistics/v1 | Get placement holdings for bibliographical records.
 *ExternalAgencyidPatronPatronidApi* | [**getFeesV2**](docs/Api/ExternalAgencyidPatronPatronidApi.md#getfeesv2) | **GET** /external/agencyid/patron/patronid/fees/v2 | List of fees in FBS for the patron with all available information about the fee.
-*ExternalAgencyidPatronsApi* | [**createV4**](docs/Api/ExternalAgencyidPatronsApi.md#createv4) | **POST** /external/agencyid/patrons/v4 | Create a new patron who is a person.
+*ExternalAgencyidPatronsApi* | [**createV9**](docs/Api/ExternalAgencyidPatronsApi.md#createv9) | **POST** /external/agencyid/patrons/v9 | Create a new patron who is a person.
 *ExternalAgencyidPatronsApi* | [**createWithGuardian**](docs/Api/ExternalAgencyidPatronsApi.md#createwithguardian) | **POST** /external/agencyid/patrons/withGuardian/v1 | Creates a person patron with a guardian (eg A financial responsible).
 *ExternalAgencyidPatronsApi* | [**getPatronInformationByPatronIdV4**](docs/Api/ExternalAgencyidPatronsApi.md#getpatroninformationbypatronidv4) | **GET** /external/agencyid/patrons/patronid/v4 | Returns the patron details
 *ExternalAgencyidPatronsApi* | [**updateGuardian**](docs/Api/ExternalAgencyidPatronsApi.md#updateguardian) | **PUT** /external/agencyid/patrons/withGuardian/v1 | Updates a person patron&#39;s guardian (eg A financial responsible).
 *ExternalAgencyidPatronsApi* | [**updateV4**](docs/Api/ExternalAgencyidPatronsApi.md#updatev4) | **PUT** /external/agencyid/patrons/patronid/v4 | Update information about the patron.
-*ExternalAgencyidPatronsApi* | [**updateV5**](docs/Api/ExternalAgencyidPatronsApi.md#updatev5) | **PUT** /external/agencyid/patrons/patronid/v5 | Update information about the patron.
+*ExternalAgencyidPatronsApi* | [**updateV8**](docs/Api/ExternalAgencyidPatronsApi.md#updatev8) | **PUT** /external/agencyid/patrons/patronid/v8 | Update information about the patron.
 *ExternalAgencyidPatronsPatronidLoansApi* | [**getLoansV2**](docs/Api/ExternalAgencyidPatronsPatronidLoansApi.md#getloansv2) | **GET** /external/agencyid/patrons/patronid/loans/v2 | Get list of current loans by the patron.
 *ExternalAgencyidPatronsPatronidLoansApi* | [**renewLoansV2**](docs/Api/ExternalAgencyidPatronsPatronidLoansApi.md#renewloansv2) | **POST** /external/agencyid/patrons/patronid/loans/renew/v2 | Renew loans.
 *ExternalV1AgencyidApi* | [**getBranches**](docs/Api/ExternalV1AgencyidApi.md#getbranches) | **GET** /external/v1/agencyid/branches | Get branches for an agency.
@@ -106,8 +106,8 @@ Class | Method | HTTP request | Description
 - [AgencyLocation](docs/Model/AgencyLocation.md)
 - [AgencySection](docs/Model/AgencySection.md)
 - [AgencySublocation](docs/Model/AgencySublocation.md)
+- [AuthenticatedPatronV10](docs/Model/AuthenticatedPatronV10.md)
 - [AuthenticatedPatronV4](docs/Model/AuthenticatedPatronV4.md)
-- [AuthenticatedPatronV6](docs/Model/AuthenticatedPatronV6.md)
 - [AuthenticatedPatronV8](docs/Model/AuthenticatedPatronV8.md)
 - [AvailabilityV3](docs/Model/AvailabilityV3.md)
 - [BlockStatus](docs/Model/BlockStatus.md)
@@ -115,10 +115,11 @@ Class | Method | HTTP request | Description
 - [Booking](docs/Model/Booking.md)
 - [BookingInfo](docs/Model/BookingInfo.md)
 - [CreateBooking](docs/Model/CreateBooking.md)
-- [CreatePatronRequestV3](docs/Model/CreatePatronRequestV3.md)
+- [CreatePatronRequestV7](docs/Model/CreatePatronRequestV7.md)
 - [CreateReservation](docs/Model/CreateReservation.md)
 - [CreateReservationBatch](docs/Model/CreateReservationBatch.md)
 - [CreateReservationBatchV2](docs/Model/CreateReservationBatchV2.md)
+- [CreateReservationV2](docs/Model/CreateReservationV2.md)
 - [EmailAddressV1](docs/Model/EmailAddressV1.md)
 - [EmailAddressV2](docs/Model/EmailAddressV2.md)
 - [FavoriteV1](docs/Model/FavoriteV1.md)
@@ -144,6 +145,10 @@ Class | Method | HTTP request | Description
 - [MaterialGroup](docs/Model/MaterialGroup.md)
 - [MaterialV3](docs/Model/MaterialV3.md)
 - [MaterialV4](docs/Model/MaterialV4.md)
+- [NewsletterGroupCategoryV1](docs/Model/NewsletterGroupCategoryV1.md)
+- [NewsletterGroupNameV1](docs/Model/NewsletterGroupNameV1.md)
+- [NewsletterTagV1](docs/Model/NewsletterTagV1.md)
+- [NewsletterV1](docs/Model/NewsletterV1.md)
 - [Patron](docs/Model/Patron.md)
 - [PatronGroup](docs/Model/PatronGroup.md)
 - [PatronSettings](docs/Model/PatronSettings.md)
@@ -161,6 +166,7 @@ Class | Method | HTTP request | Description
 - [PatronWithGuardianRequest](docs/Model/PatronWithGuardianRequest.md)
 - [Period](docs/Model/Period.md)
 - [Periodical](docs/Model/Periodical.md)
+- [PeriodicalInformation](docs/Model/PeriodicalInformation.md)
 - [PeriodicalReservation](docs/Model/PeriodicalReservation.md)
 - [PhoneNumberV1](docs/Model/PhoneNumberV1.md)
 - [PincodeChange](docs/Model/PincodeChange.md)
@@ -168,14 +174,19 @@ Class | Method | HTTP request | Description
 - [RenewedLoanV2](docs/Model/RenewedLoanV2.md)
 - [ReservationDetails](docs/Model/ReservationDetails.md)
 - [ReservationDetailsV2](docs/Model/ReservationDetailsV2.md)
+- [ReservationDetailsV3](docs/Model/ReservationDetailsV3.md)
+- [ReservationDetailsV4](docs/Model/ReservationDetailsV4.md)
 - [ReservationResponseV2](docs/Model/ReservationResponseV2.md)
 - [ReservationResult](docs/Model/ReservationResult.md)
 - [ReservationResultV2](docs/Model/ReservationResultV2.md)
+- [ReservationResultV3](docs/Model/ReservationResultV3.md)
+- [ReservationResultV4](docs/Model/ReservationResultV4.md)
 - [UpdateGuardianRequest](docs/Model/UpdateGuardianRequest.md)
 - [UpdatePatronRequestV3](docs/Model/UpdatePatronRequestV3.md)
-- [UpdatePatronRequestV4](docs/Model/UpdatePatronRequestV4.md)
+- [UpdatePatronRequestV6](docs/Model/UpdatePatronRequestV6.md)
 - [UpdateReservation](docs/Model/UpdateReservation.md)
 - [UpdateReservationBatch](docs/Model/UpdateReservationBatch.md)
+- [UpdateReservationV2](docs/Model/UpdateReservationV2.md)
 
 ## Authorization
 
