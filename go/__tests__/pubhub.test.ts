@@ -2,7 +2,7 @@ import { testApiHandler } from "next-test-api-route-handler"
 import { describe, expect, it } from "vitest"
 
 import { getV1UserLoansSoapData } from "@/__tests__/mocks/pubhub"
-import * as apiEndpoint from "@/app/(server)/pubhub/v1/user/loans/route"
+import * as apiEndpoint from "@/app/(routes)/pubhub/v1/user/loans/route"
 import * as sessionFunctions from "@/lib/session/session"
 import * as clientFunctions from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist/client"
 

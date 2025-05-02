@@ -1,6 +1,6 @@
 import ErrorPageLayout from "@/components/pages/errorPageLayout/ErrorPageLayout"
 
-import DefaultLayout from "./(defaultLayout)/layout"
+import DefaultLayout from "./(pages)/layout"
 
 export default function NotFound() {
   return (
