@@ -184,6 +184,7 @@ function novel_form_system_theme_settings_alter(array &$form, FormStateInterface
     '#title' => t('Title', [], ['context' => 'Novel settings']),
     '#default_value' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
     '#description' => t("Enter the text that will be shown as the logo on smaller screens.", [], ['context' => 'Novel settings']),
+    '#required' => TRUE,
   ];
   $form['logo']['settings']['logo_place'] = [
     '#type' => 'textfield',
