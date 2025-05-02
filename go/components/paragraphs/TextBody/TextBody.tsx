@@ -5,7 +5,7 @@ type TParagraphGoTextBodyProps = {
 }
 
 const TextBody = (props: TParagraphGoTextBodyProps) => {
-  const html = props.body.value || ""
+  const html = props.body.processed || ""
 
   if (!html) {
     return null
