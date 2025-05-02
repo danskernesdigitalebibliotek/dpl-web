@@ -50,7 +50,6 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
     Request $request = NULL,
     BubbleableMetadata $bubbleable_metadata = NULL,
   ): string {
-
     $pathParts = explode('/', $path);
 
     if (

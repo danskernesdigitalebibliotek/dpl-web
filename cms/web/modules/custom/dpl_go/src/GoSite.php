@@ -27,7 +27,11 @@ class GoSite {
    * permission.
    */
   public function isGoSite(): bool {
-    return $this->currentUser->hasPermission('rewrite go urls');
+    // User 1 gets all permissions, but then they'll get redirected to the Go
+    // site when they visit the site as the redirect to the front page that's
+    // implicit in `/` gets rewritten, so exclude them. Means that user 1 can't
+    // use the Go site, but they shouldn't be able to log into it anyway.
+    return $this->currentUser->hasPermission('rewrite go urls') && $this->currentUser->id() != 1;
   }
 
   /**
