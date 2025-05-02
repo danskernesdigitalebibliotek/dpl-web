@@ -3,22 +3,13 @@
 import { useQueries } from "@tanstack/react-query"
 import React from "react"
 
-import {
-  filterManifestationsByEdition,
-  filterManifestationsByMaterialType,
-  getIconNameFromMaterialType,
-  sortManifestationsBySortPriority,
-} from "@/components/pages/workPageLayout/helper"
+import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
-import { getAllWorkPids } from "@/components/shared/workCard/helper"
 import { cyKeys } from "@/cypress/support/constants"
-import {
-  ManifestationWorkPageFragment,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -28,15 +19,23 @@ import {
   getV1ProductsIdentifierAdapter,
 } from "@/lib/rest/publizon/adapter/generated/publizon"
 
-export type WorkCardProps = {
-  work: WorkTeaserSearchPageFragment
+export type TWorkCardProps = {
+  workId: string
+  title: string
+  manifestations: ManifestationWorkPageFragment[]
+  bestRepresentation: ManifestationWorkPageFragment
   className?: string
   isWithTilt?: boolean
 }
 
-const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
-  const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
-  const bestRepresentation = work.manifestations.bestRepresentation
+const WorkCard = ({
+  workId,
+  title,
+  manifestations,
+  bestRepresentation,
+  className,
+  isWithTilt = false,
+}: TWorkCardProps) => {
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
     identifiers: [bestRepresentation.pid],
@@ -45,18 +44,10 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     ],
   })
 
-  // Filter and manifestations
-  const filteredManifestations = filterManifestationsByMaterialType(
-    filterManifestationsByEdition(manifestations)
-  )
-
-  // Sort manifestations
-  const sortedManifestations = sortManifestationsBySortPriority(filteredManifestations)
-
   // TODO: in storybook, request don't work, so we need make a mock request using fishery
   // For each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
-    queries: sortedManifestations.map(manifestation => {
+    queries: manifestations.map(manifestation => {
       const isbn =
         manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
 
@@ -69,7 +60,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     }),
     combine: results => {
       // combine manifestation data with publizon data
-      return sortedManifestations.map((manifestation, index) => {
+      return manifestations.map((manifestation, index) => {
         // if manifestation is not online, it doesn't have publizon data and falls back to null
         return {
           ...manifestation,
@@ -79,7 +70,10 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     },
   })
 
-  const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
+  const allPids = [
+    bestRepresentation.pid,
+    ...manifestations.map(manifestation => manifestation.pid),
+  ]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     "default",
     "original",
@@ -91,9 +85,10 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     "xx-small",
   ])
   const lowResCover = getLowResCoverUrl(dataCovers)
-  const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
-    return materialType?.materialTypeGeneral?.code === "PODCASTS"
-  })
+
+  const isSomeMaterialTypePodcast = manifestationsWithPublizonData.some(
+    manifestation => manifestation.materialTypes[0].materialTypeGeneral.code === "PODCASTS"
+  )
 
   const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
     manifestation => manifestation.publizonData?.costFree
@@ -101,7 +96,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
 
   return (
     <div
-      key={work.workId}
+      key={workId}
       data-cy={cyKeys["work-card"]}
       className={cn(
         `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col overflow-hidden
@@ -119,7 +114,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
             <CoverPicture
               lowResSrc={lowResCover || ""}
               src={coverSrc?.[0] || ""}
-              alt={`${work.titles.full[0]} cover billede`}
+              alt={`${title} cover billede`}
               withTilt={isWithTilt}
               className="select-none"
             />

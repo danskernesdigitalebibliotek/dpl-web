@@ -5,9 +5,18 @@ import React from "react"
 
 import WorkCard, { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
-import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ManifestationWorkPageFragment,
+  WorkTeaserSearchPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+
+import {
+  filterManifestationsByEdition,
+  filterManifestationsByMaterialType,
+  sortManifestationsBySortPriority,
+} from "../workPageLayout/helper"
 
 type SearchResultProps = {
   works: WorkTeaserSearchPageFragment[]
@@ -17,7 +26,25 @@ const SearchResults = ({ works }: SearchResultProps) => {
   return (
     <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {works.map(work => {
-        const bestRepresentation = work.manifestations.bestRepresentation
+        const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
+        let bestRepresentation = work.manifestations
+          .bestRepresentation as ManifestationWorkPageFragment
+
+        // Filter and manifestations
+        const filteredManifestations = filterManifestationsByMaterialType(
+          filterManifestationsByEdition(manifestations)
+        )
+        // Sort manifestations
+        const sortedManifestations = sortManifestationsBySortPriority(filteredManifestations)
+        // check if bestRepresentation is located in the sortedManifestations
+        const isBestRepresentationInSortedManifestations = sortedManifestations.some(
+          manifestation => manifestation.pid === bestRepresentation.pid
+        )
+        // if not, set bestRepresentation to the first manifestation in sortedManifestations
+        if (!isBestRepresentationInSortedManifestations) {
+          bestRepresentation = sortedManifestations[0]
+        }
+
         return (
           <div key={work.workId} className="col-span-3 lg:col-span-4">
             <Link
@@ -28,7 +55,13 @@ const SearchResults = ({ works }: SearchResultProps) => {
                 queryParams: { type: bestRepresentation.materialTypes[0].materialTypeGeneral.code },
               })}>
               <WorkCardWithCaption title={work.titles.full[0]} creators={work.creators || []}>
-                <WorkCard work={work} isWithTilt />
+                <WorkCard
+                  workId={work.workId}
+                  title={work.titles.full[0]}
+                  bestRepresentation={bestRepresentation}
+                  manifestations={sortedManifestations}
+                  isWithTilt
+                />
               </WorkCardWithCaption>
             </Link>
           </div>
