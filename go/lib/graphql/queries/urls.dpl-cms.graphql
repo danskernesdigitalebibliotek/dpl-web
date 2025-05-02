@@ -1,15 +1,19 @@
 query getLoginUrls {
   goConfiguration {
-    loginUrls {
-      adgangsplatformen
+    public {
+      loginUrls {
+        adgangsplatformen
+      }
     }
   }
 }
 
 query getLogoutUrls {
   goConfiguration {
-    logoutUrls {
-      adgangsplatformen
+    public {
+      logoutUrls {
+        adgangsplatformen
+      }
     }
   }
 }

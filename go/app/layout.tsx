@@ -7,7 +7,8 @@ import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
-import ConfigContextProvider from "@/lib/providers/ConfigContextProvider"
+import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -38,16 +39,17 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const dplCmsConfig = await getDplCmsPublicConfig()
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
-        <ConfigContextProvider>
+        <DplCmsConfigContextProvider config={dplCmsConfig}>
           <Theme>
             <ReactQueryProvider>
               <Header />
@@ -59,7 +61,7 @@ export default function RootLayout({
               <Footer />
             </ReactQueryProvider>
           </Theme>
-        </ConfigContextProvider>
+        </DplCmsConfigContextProvider>
       </body>
     </html>
   )

@@ -1,16 +1,23 @@
-import { useGetDplCmsConfigurationQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { z } from "zod"
+
+import getQueryClient from "@/lib/getQueryClient"
+import {
+  GetDplCmsPublicConfigurationQuery,
+  useGetDplCmsPrivateConfigurationQuery,
+  useGetDplCmsPublicConfigurationQuery,
+} from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import { getEnv, getServerEnv } from "../env"
 
-const queryDplCmsConfig = async () => {
-  const { goConfiguration } = await useGetDplCmsConfigurationQuery.fetcher(undefined, {
+const queryDplCmsPrivateConfig = async () => {
+  const { goConfiguration } = await useGetDplCmsPrivateConfigurationQuery.fetcher(undefined, {
     next: { revalidate: 30 },
   })()
 
-  return goConfiguration ?? null
+  return goConfiguration?.private ?? null
 }
 
-export const getDplCmsUniloginConfig = async () => {
+export const getDplCmsPrivateUniloginConfig = async () => {
   const wellknownUrl = getServerEnv("UNILOGIN_WELLKNOWN_URL")
   const clientId = getServerEnv("UNILOGIN_CLIENT_ID")
   const clientSecret = getServerEnv("UNILOGIN_CLIENT_SECRET")
@@ -23,7 +30,7 @@ export const getDplCmsUniloginConfig = async () => {
 
   let configAPI = {}
   // If we are running in test mode, we don't want to query the DPL CMS config
-  const config = getEnv("TEST_MODE") ? null : await queryDplCmsConfig()
+  const config = getEnv("TEST_MODE") ? null : await queryDplCmsPrivateConfig()
   if (config?.unilogin) {
     configAPI = {
       wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,
@@ -36,4 +43,29 @@ export const getDplCmsUniloginConfig = async () => {
     ...configAPI,
     ...configEnv,
   }
+}
+
+const dplCmsPublicConfigSchema = z.object({
+  public: z.object({
+    loginUrls: z.object({
+      adgangsplatformen: z.string(),
+    }),
+    logoutUrls: z.object({
+      adgangsplatformen: z.string(),
+    }),
+  }),
+})
+
+export type TDplCmsPublicConfig = z.infer<typeof dplCmsPublicConfigSchema>["public"]
+
+export const getDplCmsPublicConfig = async () => {
+  const queryClient = getQueryClient()
+  const config = await queryClient.fetchQuery<GetDplCmsPublicConfigurationQuery>({
+    queryKey: useGetDplCmsPublicConfigurationQuery.getKey(),
+    queryFn: useGetDplCmsPublicConfigurationQuery.fetcher(),
+    initialData: {},
+    staleTime: 0,
+  })
+
+  return dplCmsPublicConfigSchema.safeParse(config.goConfiguration).data?.public ?? null
 }

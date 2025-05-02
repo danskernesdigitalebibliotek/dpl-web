@@ -1,10 +1,25 @@
-query getDplCmsConfiguration {
+query getDplCmsPrivateConfiguration {
   goConfiguration {
-    unilogin {
-      unilogin_api_client_id
-      unilogin_api_client_secret
-      unilogin_api_url
-      unilogin_api_wellknown_url
+    private {
+      unilogin {
+        unilogin_api_client_id
+        unilogin_api_client_secret
+        unilogin_api_url
+        unilogin_api_wellknown_url
+      }
+    }
+  }
+}
+
+query getDplCmsPublicConfiguration {
+  goConfiguration {
+    public {
+      loginUrls {
+        adgangsplatformen
+      }
+      logoutUrls {
+        adgangsplatformen
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { ConfigContext } from "@/lib/providers/ConfigContextProvider"
+import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 import { sheetStore } from "@/store/sheet.store"
 
 import Icon from "../icon/Icon"
@@ -8,7 +8,8 @@ import LoginButton from "./LoginButton"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "./Sheet"
 
 function LoginSheet({ open }: { open: boolean }) {
-  const settingsContext = useContext(ConfigContext)
+  const dplCmsConfig = useContext(DplCmsConfigContext)
+  const loginUrlAdgangsplatformen = dplCmsConfig?.loginUrls?.adgangsplatformen
   const { closeSheet } = sheetStore.trigger
 
   return (
@@ -38,7 +39,7 @@ function LoginSheet({ open }: { open: boolean }) {
                   Login via Biblotekernes fælles loginside
                 </div>
                 <div>
-                  <LoginButton url={settingsContext?.adgangsplatformenLoginUrl || ""} />
+                  {loginUrlAdgangsplatformen && <LoginButton url={loginUrlAdgangsplatformen} />}
                 </div>
               </div>
             </>
