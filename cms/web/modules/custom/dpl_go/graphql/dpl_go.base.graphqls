@@ -1,6 +1,6 @@
 
 type GoLibraryInfo {
-  libraryName: String
+  name: String
 }
 
 type GoLoginUrls {

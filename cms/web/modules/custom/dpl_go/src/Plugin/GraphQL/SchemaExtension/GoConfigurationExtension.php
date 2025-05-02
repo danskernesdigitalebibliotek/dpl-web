@@ -41,7 +41,7 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
     );
 
     $registry->addFieldResolver('GoConfiguration', 'libraryInfo', $builder->callback(fn () => TRUE));
-    $registry->addFieldResolver('GoLibraryInfo', 'libraryName',
+    $registry->addFieldResolver('GoLibraryInfo', 'name',
       $builder->produce('library_name')
     );
   }
