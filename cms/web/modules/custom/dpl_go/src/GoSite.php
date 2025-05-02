@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_go;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
 use function Safe\parse_url;
@@ -75,6 +76,13 @@ class GoSite {
     }
 
     return $goDomain;
+  }
+
+  /**
+   * Determine if the given node is a Go node.
+   */
+  public function isGoNode(EntityInterface $node): bool {
+    return str_starts_with($node->bundle(), 'go_');
   }
 
 }

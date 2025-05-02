@@ -10,3 +10,11 @@ services:
   dpl_go.go_site:
     class: Drupal\dpl_go\GoSite
   Drupal\dpl_go\GoSite: '@dpl_go.go_site'
+
+  dpl_go.path_processor_outbound:
+    class: Drupal\dpl_go\PathProcessor\OutboundPathProcessor
+    tags:
+      # We need higher priority than
+      # Drupal\path_alias\PathProcessor\AliasPathProcessor so we get
+      # the path before aliasing.
+      - { name: path_processor_outbound, priority: 350 }

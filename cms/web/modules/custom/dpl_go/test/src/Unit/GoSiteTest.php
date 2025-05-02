@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\dpl_go\Unit;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_go\GoSite;
 use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
@@ -80,6 +81,9 @@ class GoSiteTest extends UnitTestCase {
     $this->assertEquals('https://www.go.dpl.local', $this->goSite->getGoBaseUrl());
   }
 
+  /**
+   * Test isGoSite.
+   */
   public function testGoSiteDetection(): void {
     $this->currentUser->hasPermission('rewrite go urls')->willReturn(TRUE);
 
@@ -97,6 +101,19 @@ class GoSiteTest extends UnitTestCase {
     $this->routeResolver->getMainRoute()->willReturn('https://dpl.local');
 
     $this->assertEquals('https://dpl.local', $this->goSite->getCmsBaseUrl());
+  }
+
+  /**
+   * Test isGoNode.
+   */
+  public function testIsGoNode(): void {
+    $node = $this->prophesize(EntityInterface::class);
+
+    $node->bundle()->willReturn('page');
+    $this->assertFalse($this->goSite->isGoNode($node->reveal()));
+
+    $node->bundle()->willReturn('go_page');
+    $this->assertTrue($this->goSite->isGoNode($node->reveal()));
   }
 
 }
