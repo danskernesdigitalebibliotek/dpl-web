@@ -6,6 +6,11 @@ import { useKeenSlider } from "keen-slider/react"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
+import {
+  filterManifestationsByEdition,
+  filterManifestationsByMaterialType,
+  sortManifestationsBySortPriority,
+} from "@/components/pages/workPageLayout/helper"
 import { WheelControls, defaultSliderOptions } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
@@ -15,7 +20,10 @@ import {
   ParagraphGoMaterialSliderAutomatic,
   ParagraphGoMaterialSliderManual,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
-import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ComplexSearchForWorkTeaserQuery,
+  ManifestationWorkPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
@@ -85,27 +93,54 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
           <div className="my-paragraph-spacing">
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works &&
-                works.map(work => (
-                  <Link
-                    key={work.workId}
-                    aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
-                    className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"
-                    href={resolveUrl({
-                      routeParams: { work: "work", wid: work.workId },
-                      queryParams: {
-                        type: work.manifestations.bestRepresentation.materialTypes[0]
-                          .materialTypeGeneral.code,
-                      },
-                    })}>
-                    <WorkCardWithCaption title={work.titles.full[0]} creators={work.creators || []}>
-                      <WorkCard
-                        className="dark:bg-background-overlay !dark:bg-background"
-                        work={work}
-                        isWithTilt={true}
-                      />
-                    </WorkCardWithCaption>
-                  </Link>
-                ))}
+                works.map(work => {
+                  const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
+                  let bestRepresentation = work.manifestations
+                    .bestRepresentation as ManifestationWorkPageFragment
+
+                  // Filter and manifestations
+                  const filteredManifestations = filterManifestationsByMaterialType(
+                    filterManifestationsByEdition(manifestations)
+                  )
+                  // Sort manifestations
+                  const sortedManifestations =
+                    sortManifestationsBySortPriority(filteredManifestations)
+                  // check if bestRepresentation is located in the sortedManifestations
+                  const isBestRepresentationInSortedManifestations = sortedManifestations.some(
+                    manifestation => manifestation.pid === bestRepresentation.pid
+                  )
+                  // if not, set bestRepresentation to the first manifestation in sortedManifestations
+                  if (!isBestRepresentationInSortedManifestations) {
+                    bestRepresentation = sortedManifestations[0]
+                  }
+
+                  return (
+                    <Link
+                      key={work.workId}
+                      aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+                      className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"
+                      href={resolveUrl({
+                        routeParams: { work: "work", wid: work.workId },
+                        queryParams: {
+                          type: work.manifestations.bestRepresentation.materialTypes[0]
+                            .materialTypeGeneral.code,
+                        },
+                      })}>
+                      <WorkCardWithCaption
+                        title={work.titles.full[0]}
+                        creators={work.creators || []}>
+                        <WorkCard
+                          className="dark:bg-background-overlay !dark:bg-background"
+                          workId={work.workId}
+                          title={work.titles.full[0]}
+                          bestRepresentation={bestRepresentation}
+                          manifestations={sortedManifestations}
+                          isWithTilt={true}
+                        />
+                      </WorkCardWithCaption>
+                    </Link>
+                  )
+                })}
             </div>
           </div>
         </div>
