@@ -65,7 +65,7 @@ export type AdgangsplatformenTokens = {
 
 export type AdgangsplatformenUserToken = {
   __typename?: 'AdgangsplatformenUserToken';
-  expire?: Maybe<Scalars['Int']['output']>;
+  expire?: Maybe<DateTime>;
   token?: Maybe<Scalars['String']['output']>;
 };
 
@@ -237,9 +237,9 @@ export type MediaAudio = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
-  /** Audio file */
+  /** Lydfil */
   mediaAudioFile: File;
   /** Navn */
   name: Scalars['String']['output'];
@@ -258,7 +258,7 @@ export type MediaDocument = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Fil */
   mediaFile: File;
@@ -281,7 +281,7 @@ export type MediaImage = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /**
    * Du kan indstille et fokuspunkt ved at klikke på forhåndsvisningen af
@@ -307,7 +307,7 @@ export type MediaInterface = {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Navn */
   name: Scalars['String']['output'];
@@ -329,7 +329,7 @@ export type MediaVideo = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** URL til video */
   mediaOembedVideo: Scalars['String']['output'];
@@ -350,7 +350,7 @@ export type MediaVideotool = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** VideoTool URL */
   mediaVideotool: Scalars['String']['output'];
@@ -389,7 +389,7 @@ export type NodeArticle = NodeInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Overskriv forfatter */
   overrideAuthor?: Maybe<Scalars['String']['output']>;
@@ -399,7 +399,7 @@ export type NodeArticle = NodeInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
-  /** Publication date */
+  /** Udgivelsesdato */
   publicationDate: DateTime;
   /**
    * Som standard er forfatteren sat til den Drupal-bruger, der ejer indholdet.<br
@@ -426,20 +426,20 @@ export type NodeArticle = NodeInterface & {
   url: Scalars['String']['output'];
 };
 
-/** Use Go articles for news-worthy content, that does not get updated regularly. */
+/** Brug GO-artikler til nyhedsværdigt indhold, der ikke bliver opdateret regelmæssigt. */
 export type NodeGoArticle = NodeInterface & {
   __typename?: 'NodeGoArticle';
   /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
-  /** Image */
+  /** Billede */
   goArticleImage?: Maybe<MediaUnion>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
-  /** Override author */
+  /** Overskriv forfatter */
   overrideAuthor?: Maybe<Scalars['String']['output']>;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
@@ -447,7 +447,7 @@ export type NodeGoArticle = NodeInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
-  /** Publication date */
+  /** Publiceringsdato */
   publicationDate: DateTime;
   /**
    * By default, the author is set to the Drupal user that owns the content.<br
@@ -458,7 +458,7 @@ export type NodeGoArticle = NodeInterface & {
   status: Scalars['Boolean']['output'];
   /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
-  /** Subtitle */
+  /** Undertekst */
   subtitle?: Maybe<Scalars['String']['output']>;
   /**
    * The teaser fields are used for the card of display.<br />If no image has been
@@ -466,7 +466,7 @@ export type NodeGoArticle = NodeInterface & {
    * src="/themes/custom/novel/images/teaser-text-image.jpg" /><br /><br /><hr/>
    */
   teaserImage: MediaUnion;
-  /** Teaser text */
+  /** Teaser tekst */
   teaserText?: Maybe<Scalars['String']['output']>;
   /** Titel */
   title: Scalars['String']['output'];
@@ -493,7 +493,7 @@ export type NodeGoCategory = NodeInterface & {
   goColor?: Maybe<Scalars['String']['output']>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
@@ -501,7 +501,7 @@ export type NodeGoCategory = NodeInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
-  /** Publication date */
+  /** Publiceringsdato */
   publicationDate: DateTime;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -513,9 +513,8 @@ export type NodeGoCategory = NodeInterface & {
 };
 
 /**
- * GO pages will be used for various types of content, which does not belong to
- * either an article page or an category page. Some examples could be the
- * frontpage, info pages, etc.
+ * GO-sider bliver brugt til forskellige typer for indhold, som ikke tilhører
+ * hverken en artikel-side eller en kategori-side. Fx forsiden, informationssider
  */
 export type NodeGoPage = NodeInterface & {
   __typename?: 'NodeGoPage';
@@ -525,15 +524,15 @@ export type NodeGoPage = NodeInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
-  /** Paragraphs */
+  /** Paragraffer */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
   /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
-  /** Publication date */
+  /** Publikationsdato */
   publicationDate: DateTime;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -552,7 +551,7 @@ export type NodeInterface = {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
@@ -603,7 +602,7 @@ export type NodePage = NodeInterface & {
   heroTitle?: Maybe<Scalars['String']['output']>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
@@ -611,7 +610,7 @@ export type NodePage = NodeInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
-  /** Publication date */
+  /** Udgivelsesdato */
   publicationDate: DateTime;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -651,14 +650,14 @@ export type ParagraphAccordion = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** Banner's purpose is to link internally or externally and can be used with or without a background image. */
+/** Bannerets funktion er at linke til internt indhold, og kan bruges med eller uden baggrundsbillede. */
 export type ParagraphBanner = ParagraphInterface & {
   __typename?: 'ParagraphBanner';
-  /** Banner description */
+  /** Bannerbeskrivelse */
   bannerDescription?: Maybe<Scalars['String']['output']>;
-  /** Banner Image */
+  /** Bannerbillede */
   bannerImage?: Maybe<MediaUnion>;
-  /** Banner Link */
+  /** Bannerlink */
   bannerLink: Link;
   /** The time that the Paragraph was created. */
   created: DateTime;
@@ -668,7 +667,7 @@ export type ParagraphBanner = ParagraphInterface & {
   langcode: Language;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** Underlined title */
+  /** Understreget titel */
   underlinedTitle?: Maybe<Text>;
 };
 
@@ -683,7 +682,7 @@ export type ParagraphBreadcrumbChildren = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Show subtitles */
+  /** Vis undertekster */
   showSubtitles?: Maybe<Scalars['Boolean']['output']>;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -711,13 +710,13 @@ export type ParagraphCardGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphCardGridAutomatic';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** If nothing is selected, all will be chosen. */
+  /** Hvis der ikke vælges noget, vil ALT automatisk blive valgt. */
   filterBranches?: Maybe<Array<NodeUnion>>;
   /** Filter efter kategorier */
   filterCategories?: Maybe<Array<TermUnion>>;
-  /** Condition type */
+  /** Tilstandstype */
   filterCondType: Scalars['String']['output'];
-  /** If nothing is selected, all will be chosen. */
+  /** Hvis intet er valgt, vil alt blive valgt. */
   filterContentTypes?: Maybe<Array<Scalars['String']['output']>>;
   /** Filter efter tags */
   filterTags?: Maybe<Array<TermUnion>>;
@@ -725,7 +724,7 @@ export type ParagraphCardGridAutomatic = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** More link */
+  /** Flere links */
   moreLink?: Maybe<Link>;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -744,7 +743,7 @@ export type ParagraphCardGridManual = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** More link */
+  /** Flere links */
   moreLink?: Maybe<Link>;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -768,9 +767,9 @@ export type ParagraphContentSlider = ParagraphInterface & {
   langcode: Language;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** deprecated */
+  /** forældet */
   title?: Maybe<Scalars['String']['output']>;
-  /** Title */
+  /** Titel */
   underlinedTitle?: Maybe<Text>;
 };
 
@@ -779,15 +778,15 @@ export type ParagraphContentSliderAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphContentSliderAutomatic';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** If nothing is selected, all will be chosen. */
+  /** Hvis der ikke vælges noget, vil ALT automatisk blive valgt. */
   filterBranches?: Maybe<Array<NodeUnion>>;
-  /** Filter by categories */
+  /** Filtrer efter kategori */
   filterCategories?: Maybe<Array<TermUnion>>;
-  /** Condition type */
+  /** Tilstandstype */
   filterCondType: Scalars['String']['output'];
-  /** If nothing is selected, all will be chosen. */
+  /** Hvis intet er valgt, vil alt blive valgt. */
   filterContentTypes?: Maybe<Array<Scalars['String']['output']>>;
-  /** Filter by tags */
+  /** Filtrer efter tags */
   filterTags?: Maybe<Array<TermUnion>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -795,9 +794,9 @@ export type ParagraphContentSliderAutomatic = ParagraphInterface & {
   langcode: Language;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** deprecated */
+  /** Titel (forældet) */
   title?: Maybe<Scalars['String']['output']>;
-  /** Title */
+  /** Titel */
   underlinedTitle?: Maybe<Text>;
 };
 
@@ -837,19 +836,15 @@ export type ParagraphFiles = ParagraphInterface & {
 /** Denne paragraph viser en liste af arrangementer filtreret på kategori, tags og filialer. */
 export type ParagraphFilteredEventList = ParagraphInterface & {
   __typename?: 'ParagraphFilteredEventList';
-  /**
-   * Select the amount of events you want to display. <br /><br />If the amount
-   * displayed is less than what you put here, it is likely because there are not
-   * enough results based on your selected filters.
-   */
+  /** Dette felt bruges ikke længere og vil blive slettet i fremtiden. */
   amountOfEvents?: Maybe<Scalars['Int']['output']>;
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Tilføj enhver forgrening, du vil inkludere */
+  /** Hvis der ikke vælges noget, vil ALT automatisk blive valgt. */
   filterBranches?: Maybe<Array<NodeUnion>>;
   /** Tilføj en kategori, du vil inkludere */
   filterCategories?: Maybe<Array<TermUnion>>;
-  /** Condition type */
+  /** Tilstandstype */
   filterCondType: Scalars['String']['output'];
   /** Tilføj et tag, du vil inkludere */
   filterTags?: Maybe<Array<TermUnion>>;
@@ -858,9 +853,9 @@ export type ParagraphFilteredEventList = ParagraphInterface & {
   /** The paragraphs entity language code. */
   langcode: Language;
   /**
-   * Select the amount of events you want to display. <br /><br />If the amount
-   * displayed is less than what you put here, it is likely because there are not
-   * enough results based on your selected filters.
+   * Vælg antallet af arrangementer, du ønsker at vise. <br /><br />Hvis antallet
+   * vist er mindre end det, du har angivet her, skyldes det sandsynligvis, at der
+   * ikke er nok resultater baseret på dine valgte filtre.
    */
   maxItemAmount: Scalars['String']['output'];
   /** Publiceret */
@@ -874,7 +869,7 @@ export type ParagraphGoImages = ParagraphInterface & {
   __typename?: 'ParagraphGoImages';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Images */
+  /** Billeder */
   goImages: Array<MediaUnion>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -903,7 +898,7 @@ export type ParagraphGoLink = ParagraphInterface & {
   link: Link;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** Open link in a new window */
+  /** Åbn link i et nyt vindue */
   targetBlank?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -912,11 +907,11 @@ export type ParagraphGoLinkbox = ParagraphInterface & {
   __typename?: 'ParagraphGoLinkbox';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Color */
+  /** Farve */
   goColor?: Maybe<Scalars['String']['output']>;
-  /** Description */
+  /** Beskrivelse */
   goDescription: Scalars['String']['output'];
-  /** Image */
+  /** Billede */
   goImage?: Maybe<MediaUnion>;
   /** Link */
   goLinkParagraph: ParagraphUnion;
@@ -926,7 +921,7 @@ export type ParagraphGoLinkbox = ParagraphInterface & {
   langcode: Language;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** Title */
+  /** Titel */
   title: Scalars['String']['output'];
 };
 
@@ -934,11 +929,11 @@ export type ParagraphGoLinkbox = ParagraphInterface & {
 export type ParagraphGoMaterialSliderAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphGoMaterialSliderAutomatic';
   /**
-   * This field is for inserting a CQL string based on a search. <br /><br />Please
-   * be aware, that it is necessary to copy the exact CQL string, including the
-   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
-   * generated, by performing a query through the advanced search, and copying the
-   * CQL string from there.
+   * Dette felt er til at indsætte en CQL-søgestreng baseret på en søgning. <br
+   * /><br />Vær opmærksom på, at det er nødvendigt at kopiere den nøjagtige
+   * CQL-streng, inklusive citationstegn. dvs.: ( 'harry potter')<br /><br />En
+   * gyldig CQL-søgestreng kan genereres ved at udføre en forespørgsel gennem
+   * den avancerede søgning og kopiere CQL-strengen derfra.
    */
   cqlSearch: CqlSearch;
   /** The time that the Paragraph was created. */
@@ -947,11 +942,11 @@ export type ParagraphGoMaterialSliderAutomatic = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Amount of materials */
+  /** Antal materialer */
   sliderAmountOfMaterials: Scalars['Int']['output'];
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** Title */
+  /** Titel */
   title: Scalars['String']['output'];
 };
 
@@ -975,7 +970,7 @@ export type ParagraphGoMaterialSliderManual = ParagraphInterface & {
   materialSliderWorkIds: Array<WorkId>;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** Title */
+  /** Titel */
   title: Scalars['String']['output'];
 };
 
@@ -998,7 +993,7 @@ export type ParagraphGoTextBody = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** Enter the URL for the video you want to include. */
+/** Angiv URL-en for den video, der skal vises */
 export type ParagraphGoVideo = ParagraphInterface & {
   __typename?: 'ParagraphGoVideo';
   /** The time that the Paragraph was created. */
@@ -1011,29 +1006,29 @@ export type ParagraphGoVideo = ParagraphInterface & {
   langcode: Language;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** Title */
+  /** Titl */
   title: Scalars['String']['output'];
 };
 
 /**
- * This paragraph is used for displaying a VideoTool video and display a set of
- * related books. The related books is automatically chosen based on a CQL search
+ * Denne paragraph bruges til at vise en VideoTool-video og vise et sæt relaterede
+ * bøger. De relaterede bøger vælges automatisk baseret på en CQL-søgestreng.
  */
 export type ParagraphGoVideoBundleAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphGoVideoBundleAutomatic';
   /**
-   * This field is for inserting a CQL string based on a search. <br /><br />Please
-   * be aware, that it is necessary to copy the exact CQL string, including the
-   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
-   * generated, by performing a query through the advanced search, and copying the
-   * CQL string from there.
+   * Dette felt er til at indsætte en CQL-søgestreng baseret på en søgning. <br
+   * /><br />Vær opmærksom på, at det er nødvendigt at kopiere den nøjagtige
+   * CQL-streng, inklusive citationstegn. dvs.: ( 'harry potter')<br /><br />En
+   * gyldig CQL-søgestreng kan genereres ved at udføre en forespørgsel gennem
+   * den avancerede søgning og kopiere CQL-strengen derfra.
    */
   cqlSearch: CqlSearch;
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** Embed video */
   embedVideo: MediaUnion;
-  /** Title */
+  /** Titel */
   goVideoTitle: Scalars['String']['output'];
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -1041,13 +1036,13 @@ export type ParagraphGoVideoBundleAutomatic = ParagraphInterface & {
   langcode: Language;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
-  /** The amount of related materials that should be shown. */
+  /** Antal af ​​relaterede materialer, der skal vises. */
   videoAmountOfMaterials: Scalars['Int']['output'];
 };
 
 /**
- * This paragraph is used for displaying a VideoTool video and display a set of
- * related or recommended materials. The materials can be selected manually.
+ * Denne paragraph bruges til at vise en VideoTool-video og vise et sæt relaterede
+ * eller anbefalede materialer. Materialerne kan vælges manuelt.
  */
 export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   __typename?: 'ParagraphGoVideoBundleManual';
@@ -1055,7 +1050,7 @@ export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   created: DateTime;
   /** Embed video */
   embedVideo: MediaUnion;
-  /** Title */
+  /** Titel */
   goVideoTitle: Scalars['String']['output'];
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -1064,9 +1059,10 @@ export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   /** Publiceret */
   status: Scalars['Boolean']['output'];
   /**
-   * Here you can choose which materials to display. If you need to link to a
-   * specific type, select it from the dropdown and the system will display that,
-   * if it is available.<br />Example work ID: work-of:870970-basis:136336282
+   * Her kan du vælge, hvilke materialer der skal vises. Hvis du har brug for at
+   * linke til en bestemt type, skal du vælge den fra rullemenuen, og systemet vil
+   * vise det, hvis det er tilgængeligt.<br />Example work ID:
+   * work-of:870970-basis:136336282
    */
   videoBundleWorkIds?: Maybe<Array<WorkId>>;
 };
@@ -1157,7 +1153,10 @@ export type ParagraphManualEventList = ParagraphInterface & {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-/** En visning af fremhævede værker, baseret på en CQL søgestreng. */
+/**
+ * Please use the "Material grid link automatically" instead! This paragraph will be deprecated in the future.
+ * A grid representation of recommended materials, based on a CQL search string.
+ */
 export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridAutomatic';
   /**
@@ -1168,11 +1167,11 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
    */
   amountOfMaterials: Scalars['Int']['output'];
   /**
-   * This field is for inserting a CQL string based on a search. <br /><br />Please
-   * be aware, that it is necessary to copy the exact CQL string, including the
-   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
-   * generated, by performing a query through the advanced search, and copying the
-   * CQL string from there.
+   * Dette felt er til indsættelse af en CQL-streng baseret på en søgning. <br
+   * /><br />Vær opmærksom på, at det er nødvendigt at kopiere den nøjagtige
+   * CQL-streng, inklusive anførselstegnene. dvs: ('harry potter')<br /><br />En
+   * gyldig CQL-søgestreng kan genereres ved at udføre en forespørgsel gennem
+   * den avancerede søgning og kopiere CQL-strengen derfra.
    */
   cqlSearch: CqlSearch;
   /** The time that the Paragraph was created. */
@@ -1181,7 +1180,10 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
+  /**
+   * Dette er en valgfri beskrivelsestekst, der kan ledsage materiale grid'et. Lad
+   * feltet være tomt, hvis du ikke ønsker en beskrivelse.
+   */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /** Titel på materialekomponenten. Efterlad dette felt blankt, hvis du ikke vil give den en overskrift. */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
@@ -1208,13 +1210,12 @@ export type ParagraphMaterialGridLinkAutomatic = ParagraphInterface & {
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /**
-   * This field is for inserting a link string based on a search, e.g.:
-   * /><br />Please be aware that it is necessary to copy the exact link string.<br
-   * /><br />A valid link search string can be generated, by performing a query
-   * through the advanced search and copying the link string from there.
+   * Tilføj et link her, som er genereret ved hjælp af avanceret søgning -> CQL
+   * /><br />Bemærk at en søgning, der er foretaget vha feltsøgning under
+   * avanceret søgning, ikke virker. Der SKAL benyttes CQL.
    */
   materialGridLink: Scalars['String']['output'];
-  /** The title for the material grid. Leave this blank if you do not want a title.  */
+  /** Der vises ikke en titel, hvis denne er tom. */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -1229,15 +1230,18 @@ export type ParagraphMaterialGridManual = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
+  /**
+   * Dette er en valgfri beskrivelsestekst, der kan ledsage materiale grid'et. Lad
+   * feltet være tomt, hvis du ikke ønsker en beskrivelse.
+   */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /** Titel på materialekomponenten. Efterlad dette felt blankt, hvis du ikke vil give den en overskrift. */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
   /**
-   * The grid will only display materials in internvals of 4. <br /><br />Example
-   * work ID: work-of:870970-basis:136336282.<br /><br />If you need to link to a
-   * specific type, select it from the dropdown and the system will display that,
-   * if it is available.
+   * Gitteret vil kun vise materialer i intervaller af 4. <br /><br />Eksempel
+   * arbejds ID: work-of:870970-basis:136336282.<br /><br />Hvis du skal linke til
+   * en specifik type, vælg den fra dropdown-menuen og systemet vil vise den, hvis
+   * den er tilgængelig.
    */
   materialGridWorkIds?: Maybe<Array<WorkId>>;
   /** Publiceret */
@@ -1348,7 +1352,7 @@ export type ParagraphRecommendation = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** This is paragraph that will display links without icons.  */
+/** Denne paragraph viser links uden ikoner. */
 export type ParagraphSimpleLinks = ParagraphInterface & {
   __typename?: 'ParagraphSimpleLinks';
   /** The time that the Paragraph was created. */
@@ -1451,7 +1455,7 @@ export type ParagraphVideo = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** Paragraph brugt til indlejring af en webform. */
+/** Paragraph brugt til indlejring af en webformular. */
 export type ParagraphWebform = ParagraphInterface & {
   __typename?: 'ParagraphWebform';
   /** The time that the Paragraph was created. */
@@ -1540,7 +1544,6 @@ export type RouteInternal = Route & {
   entity?: Maybe<RouteEntityUnion>;
   /** Whether this route is internal or external. */
   internal: Scalars['Boolean']['output'];
-  isGoContent?: Maybe<Scalars['Boolean']['output']>;
   /** URL of this route. */
   url: Scalars['String']['output'];
 };
@@ -1614,7 +1617,7 @@ export type TermBreadcrumbStructure = TermInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Vis en automatisk liste med indhold, som refererer til dette brødkrumme element, på denne side. */
   showChildren?: Maybe<Scalars['Boolean']['output']>;
-  /** If this is checked, the children teasers will be expanded with possible subtitle descriptions. */
+  /** Sæt hak her, hvis børnebrødkrummen skal udfoldes med eventuelle undertitel */
   showChildrenSubtitles?: Maybe<Scalars['Boolean']['output']>;
   /** Publiceret */
   status: Scalars['Boolean']['output'];
@@ -1667,7 +1670,7 @@ export type TermInterface = {
   weight: Scalars['Int']['output'];
 };
 
-/** Kategorier af åbningstider, f.eks. "Åbent" eller "Telefontid" */
+/** This is for adding types of opening hours, e.g. "open" or "Telephone time" */
 export type TermOpeningHoursCategories = TermInterface & {
   __typename?: 'TermOpeningHoursCategories';
   /** Datoen hvor termen senest blev redigeret. */
@@ -1746,7 +1749,7 @@ export type TermWebformEmailCategories = TermInterface & {
   changed: DateTime;
   /** Beskrivelse */
   description: Text;
-  /** Add which email to send form submissions of this category to. */
+  /** Tilføj den e-mail, som henvendelser i denne kategori skal sendes til. */
   email: Scalars['Email']['output'];
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -1957,7 +1960,7 @@ export type GetAdgangsplatformenLibraryTokenQuery = { __typename?: 'Query', dplT
 export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', expire?: number | null, token?: string | null } | null } | null } | null };
+export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
 
 export type GetLoginUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2434,7 +2437,9 @@ export const GetAdgangsplatformenUserTokenDocument = `
   dplTokens {
     adgangsplatformen {
       user {
-        expire
+        expire {
+          timestamp
+        }
         token
       }
     }
