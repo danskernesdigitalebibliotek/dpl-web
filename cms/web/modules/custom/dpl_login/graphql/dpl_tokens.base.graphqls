@@ -1,6 +1,6 @@
 type AdgangsplatformenUserToken {
   token: String
-  expire: Int
+  expire: DateTime
 }
 
 type AdgangsplatformenTokens {
