@@ -65,7 +65,7 @@ export type AdgangsplatformenTokens = {
 
 export type AdgangsplatformenUserToken = {
   __typename?: 'AdgangsplatformenUserToken';
-  expire?: Maybe<Scalars['Int']['output']>;
+  expire?: Maybe<DateTime>;
   token?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1975,7 +1975,7 @@ export type GetAdgangsplatformenLibraryTokenQuery = { __typename?: 'Query', dplT
 export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', expire?: number | null, token?: string | null } | null } | null } | null };
+export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
 
 export type GetLoginUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2508,7 +2508,9 @@ export const GetAdgangsplatformenUserTokenDocument = `
   dplTokens {
     adgangsplatformen {
       user {
-        expire
+        expire {
+          timestamp
+        }
         token
       }
     }

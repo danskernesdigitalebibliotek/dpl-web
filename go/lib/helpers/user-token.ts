@@ -27,10 +27,13 @@ export const loadUserToken = async () => {
       initialData: {},
       staleTime: 0,
     })
+
     const validateUserToken = z
       .object({
         token: z.string(),
-        expire: z.number(),
+        expire: z.object({
+          timestamp: z.number(),
+        }),
       })
       .safeParse(data?.dplTokens?.adgangsplatformen?.user)
 
