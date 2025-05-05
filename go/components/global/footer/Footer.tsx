@@ -1,7 +1,6 @@
-import { Facebook, Instagram } from "lucide-react"
 import Link from "next/link"
 
-import Icon from "../../shared/icon/Icon"
+import Icon from "@/components/shared/icon/Icon"
 
 export default function Footer() {
   return (
@@ -10,10 +9,7 @@ export default function Footer() {
         <div className="flex flex-col flex-nowrap lg:flex-row lg:justify-between">
           <div className="col-span-full">
             <h2 className="text-typo-subtitle-lg col-span-full mb-4">Information</h2>
-            <p className="max-w-[600px]">
-              Bibliotekerne lorem ipsum consectetur, adipisci velit, sed quia non numquam eius modi
-              tempora incidunt ut labore.
-            </p>
+            <p className="max-w-[600px]">GO er børnenes digitale indgang til folkebiblioteket.</p>
             <ul className="mt-10 grid gap-y-4">
               <li>
                 <Link
@@ -54,28 +50,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <hr className="go-divider mt-5" />
-
-        <div className="mt-8 flex w-full flex-col items-center justify-between md:flex-row">
-          <div className="mb-4 flex items-center space-x-4 md:mb-0">
-            <Link href="#" className="text-gray-600 hover:text-gray-900">
-              <Facebook size={20} />
-              <span className="sr-only">Facebook</span>
-            </Link>
-            <Link href="#" className="text-gray-600 hover:text-gray-900">
-              <Instagram size={20} />
-              <span className="sr-only">Instagram</span>
-            </Link>
-          </div>
-          <div className="flex flex-wrap justify-center space-x-4 md:justify-end">
-            <Link href="#" className="animate-text-underline">
-              Behandling af persondata
-            </Link>
-            <Link href="#" className="animate-text-underline">
-              Tilgængelighed
-            </Link>
-          </div>
-        </div>
+        <hr className="go-divider mt-10" />
       </div>
     </footer>
   )
