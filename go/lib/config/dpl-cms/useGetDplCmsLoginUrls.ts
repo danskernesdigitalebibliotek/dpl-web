@@ -34,5 +34,5 @@ export default function useGetDplCmsLoginUrls() {
     fetchData()
   }, [config])
 
-  return { adgangsplatformen: config?.loginUrls?.adgangsplatformen ?? null }
+  return { adgangsplatformen: config?.public?.loginUrls?.adgangsplatformen ?? null }
 }
