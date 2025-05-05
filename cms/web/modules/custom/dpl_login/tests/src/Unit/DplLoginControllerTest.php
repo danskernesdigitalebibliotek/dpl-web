@@ -6,6 +6,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
@@ -22,6 +23,7 @@ use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
+use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\Tests\UnitTestCase;
 use phpmock\Mock;
@@ -100,17 +102,22 @@ class DplLoginControllerTest extends UnitTestCase {
 
     $openid_connect_session = $this->prophesize(OpenIDConnectSession::class);
     $entity_type_manager = $this->prophesize(EntityTypeManagerInterface::class);
+    $openid_connect_client_storage = $this->prophesize(EntityStorageInterface::class);
+    $entity_type_manager->getStorage('openid_connect_client')->willReturn($openid_connect_client_storage);
 
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
+    $container->setAlias(UserTokens::class, 'dpl_login.user_tokens');
     $container->set('dpl_login.unregistered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
     $container->set('config.manager', $config_manager->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
     $container->set('openid_connect.claims', $openid_connect_claims->reveal());
+    $container->setAlias(OpenIDConnectClaims::class, 'openid_connect.claims');
     $container->set('openid_connect.session', $openid_connect_session->reveal());
+    $container->setAlias(OpenIDConnectSessionInterface::class, 'openid_connect.session');
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
     $container->set('dpl_login.adgangsplatformen.client', $openid_connect_client->reveal());
     $container->set('entity_type.manager', $entity_type_manager->reveal());
@@ -123,6 +130,8 @@ class DplLoginControllerTest extends UnitTestCase {
    */
   public function testThatExceptionIsThrownIfLogoutEndpointIsMissing(): void {
     $container = \Drupal::getContainer();
+    $container->set('dpl_login.adgangsplatformen.config', new Config($container->get('config.manager')));
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
     $controller = DplLoginController::create($container);
     $this->expectException(MissingConfigurationException::class);
     $this->expectExceptionMessage('Adgangsplatformen plugin config variable logout_endpoint is missing');
@@ -183,6 +192,7 @@ class DplLoginControllerTest extends UnitTestCase {
 
     $container = \Drupal::getContainer();
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
     $container->set('dpl_login.registered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());

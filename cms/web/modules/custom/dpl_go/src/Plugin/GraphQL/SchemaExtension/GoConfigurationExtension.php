@@ -24,25 +24,26 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
   public function registerResolvers(ResolverRegistryInterface $registry): void {
     $builder = new ResolverBuilder();
     $registry->addFieldResolver('Query', 'goConfiguration', $builder->callback(fn () => TRUE));
-    $registry->addFieldResolver('GoConfiguration', 'adgangsplatformen', $builder->callback(fn () => TRUE));
+    $registry->addFieldResolver('GoConfiguration', 'public', $builder->callback(fn () => TRUE));
+    $registry->addFieldResolver('GoConfiguration', 'private', $builder->callback(fn () => TRUE));
 
-    $registry->addFieldResolver('GoConfiguration', 'unilogin',
-      $builder->produce('unilogin_info_producer')
-    );
-
-    $registry->addFieldResolver('GoConfiguration', 'loginUrls', $builder->callback(fn () => TRUE));
+    $registry->addFieldResolver('GoConfigurationPublic', 'loginUrls', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('GoLoginUrls', 'adgangsplatformen',
       $builder->produce('go_adgangsplatformen_login_url')
     );
 
-    $registry->addFieldResolver('GoConfiguration', 'logoutUrls', $builder->callback(fn () => TRUE));
+    $registry->addFieldResolver('GoConfigurationPublic', 'logoutUrls', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('GoLogoutUrls', 'adgangsplatformen',
       $builder->produce('go_adgangsplatformen_logout_url')
     );
 
-    $registry->addFieldResolver('GoConfiguration', 'libraryInfo', $builder->callback(fn () => TRUE));
+    $registry->addFieldResolver('GoConfigurationPublic', 'libraryInfo', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('GoLibraryInfo', 'name',
       $builder->produce('library_name')
+    );
+
+    $registry->addFieldResolver('GoConfigurationPrivate', 'unilogin',
+    $builder->produce('unilogin_info_producer')
     );
   }
 
