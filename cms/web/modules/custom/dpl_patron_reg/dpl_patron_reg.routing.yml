@@ -21,7 +21,7 @@ dpl_patron_reg.auth:
 dpl_patron_reg.create:
   path: '/user/registration/create'
   defaults:
-    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::userRegistrationReactAppLoad'
+    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegReactController::userRegistrationReactAppLoad'
   requirements:
     _permission: 'access content'
   options:

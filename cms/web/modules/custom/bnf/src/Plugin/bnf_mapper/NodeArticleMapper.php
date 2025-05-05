@@ -28,8 +28,7 @@ class NodeArticleMapper extends BnfMapperNodePluginBase {
     $node = $this->getNode($object, 'article');
 
     $node->set('field_subtitle', $object->subtitle);
-    $node->set('field_override_author', $object->overrideAuthor);
-    $node->set('field_show_override_author', $object->showOverrideAuthor);
+
     $node->set('field_teaser_text', $object->teaserText);
     $node->set('field_teaser_image', $this->getImageValue($object->teaserImage));
 

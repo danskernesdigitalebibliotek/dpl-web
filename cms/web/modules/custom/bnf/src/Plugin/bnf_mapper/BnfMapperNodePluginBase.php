@@ -15,6 +15,7 @@ use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
@@ -43,6 +44,7 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
+    protected TranslationInterface $translation,
     #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
   ) {
@@ -84,6 +86,17 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
       $node->set('field_canonical_url', [
         'uri' => $object->canonicalUrl->url,
       ]);
+    }
+
+    if ($node->hasField('field_show_override_author')) {
+      $node->set('field_show_override_author', TRUE);
+    }
+
+    if ($node->hasField('field_override_author')) {
+      $author_fallback = $this->translation->translate('The library', [], ['context' => 'BNF']);
+
+      $node->set('field_override_author', !empty($object->overrideAuthor) ?
+        $object->overrideAuthor : (string) $author_fallback);
     }
 
     return $node;
