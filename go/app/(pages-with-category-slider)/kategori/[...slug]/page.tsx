@@ -5,6 +5,8 @@ import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPa
 import { NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
+import loadCategoryPage from "./loadCategoryPage"
+
 async function getPage(slug: string[]) {
   const slugString = slug.join("/")
   return await loadCategoryPage(slugString)
@@ -18,9 +20,9 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 
     return setPageMetadata(title)
   }
-}
 
-import loadCategoryPage from "./loadCategoryPage"
+  return null
+}
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const data = await getPage((await props.params).slug)
