@@ -122,7 +122,9 @@ export const setUniloginTokensOnSession = async (
 
 type TAdgangsplatformenUserToken = {
   token: string
-  expire: number
+  expire: {
+    timestamp: number
+  }
 }
 
 export const setAdgangsplatformenUserTokenOnSession = async (
@@ -132,7 +134,7 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   const { cookies } = await import("next/headers")
 
   session.adgangsplatformenUserToken = token.token
-  session.expires = new Date(token.expire * 1000)
+  session.expires = new Date(token.expire.timestamp * 1000)
   const cookieStore = await cookies()
   cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgansplatformen")
 }

@@ -3,14 +3,28 @@ import React from "react"
 
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
 import { NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { setPageMetadata } from "@/lib/helpers/helper.metadata"
+
+async function getPage(slug: string[]) {
+  const slugString = slug.join("/")
+  return await loadCategoryPage(slugString)
+}
+
+export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {
+  const data = await getPage((await props.params).slug)
+
+  if (data.route?.__typename === "RouteInternal") {
+    const { title } = data.route.entity as NodeGoCategory
+
+    return setPageMetadata(title)
+  }
+}
 
 import loadCategoryPage from "./loadCategoryPage"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
-  const params = await props.params
-  const { slug } = params
-  const slugString = slug.join("/")
-  const data = await loadCategoryPage(slugString)
+  const data = await getPage((await props.params).slug)
+
   const routeType = data.route?.__typename
 
   if (routeType === "RouteRedirect") {

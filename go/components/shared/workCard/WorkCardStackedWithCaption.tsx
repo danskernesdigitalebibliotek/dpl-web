@@ -1,8 +1,16 @@
 import Link from "next/link"
 import React from "react"
 
+import {
+  filterManifestationsByEdition,
+  filterManifestationsByMaterialType,
+  sortManifestationsBySortPriority,
+} from "@/components/pages/workPageLayout/helper"
 import WorkCard, { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
-import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ManifestationWorkPageFragment,
+  WorkTeaserSearchPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -39,7 +47,25 @@ const WorkCardStackedWithCaption = ({
           )}></div>
       ))}
       {works.map((work, index) => {
-        const bestRepresentation = work.manifestations.bestRepresentation
+        const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
+        let bestRepresentation = work.manifestations
+          .bestRepresentation as ManifestationWorkPageFragment
+
+        // Filter and manifestations
+        const filteredManifestations = filterManifestationsByMaterialType(
+          filterManifestationsByEdition(manifestations)
+        )
+        // Sort manifestations
+        const sortedManifestations = sortManifestationsBySortPriority(filteredManifestations)
+        // check if bestRepresentation is located in the sortedManifestations
+        const isBestRepresentationInSortedManifestations = sortedManifestations.some(
+          manifestation => manifestation.pid === bestRepresentation.pid
+        )
+        // if not, set bestRepresentation to the first manifestation in sortedManifestations
+        if (!isBestRepresentationInSortedManifestations) {
+          bestRepresentation = sortedManifestations[0]
+        }
+
         const zIndex = materialOrder.indexOf(work.workId as WorkId)
         return (
           <Link
@@ -66,7 +92,10 @@ const WorkCardStackedWithCaption = ({
               )}>
               <WorkCard
                 className={cn("bg-background dark:bg-background-overlay-solid shadow-stacked-card")}
-                work={work}
+                workId={work.workId}
+                title={work.titles.full[0]}
+                bestRepresentation={bestRepresentation}
+                manifestations={sortedManifestations}
               />
             </WorkCardWithCaption>
           </Link>

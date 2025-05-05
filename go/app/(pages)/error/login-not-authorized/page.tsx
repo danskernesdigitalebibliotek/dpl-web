@@ -1,6 +1,10 @@
+import { Metadata } from "next"
 import React from "react"
 
 import ErrorPageLayout from "@/components/pages/errorPageLayout/ErrorPageLayout"
+import { setPageMetadata } from "@/lib/helpers/helper.metadata"
+
+export const metadata: Metadata = setPageMetadata("Ingen Unilogin adgang")
 
 const LoginNotAuthorized = () => (
   <ErrorPageLayout

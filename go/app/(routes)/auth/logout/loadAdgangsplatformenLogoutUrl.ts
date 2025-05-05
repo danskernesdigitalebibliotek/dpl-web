@@ -12,7 +12,7 @@ const loadAdgangsplatformenLogoutUrl = async () => {
       .object({
         adgangsplatformen: z.string(),
       })
-      .safeParse(goConfiguration?.logoutUrls)
+      .safeParse(goConfiguration?.public?.logoutUrls)
 
     if (validateLogoutUrl.error) {
       return null

@@ -7,19 +7,13 @@ import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
+import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
+import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
-export const metadata: Metadata = {
-  title: "Børnebiblioteket",
-  description: "GO er en digital platform, der giver børn adgang til bøger, lydbøger og e-bøger.",
-  icons: [
-    { rel: "icon", type: "image/png", url: "/favicon-96x96.png", sizes: "96x96" },
-    { rel: "shortcut icon", url: "/favicon.ico" },
-    { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
-  ],
-  manifest: "/site.webmanifest",
-}
+export const metadata: Metadata = setLayoutMetadata()
 
 // When adding or changing fonts, remember to update the imports in .storybook/preview.tsx
 const GTFlexa = localFont({
@@ -42,10 +36,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const dplCmsConfig = await getDplCmsPublicConfig()
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
+<<<<<<< HEAD
         <Theme>
           <ReactQueryProvider>
             <Header />
@@ -55,6 +51,21 @@ export default async function RootLayout({
             <Footer />
           </ReactQueryProvider>
         </Theme>
+=======
+        <DplCmsConfigContextProvider config={dplCmsConfig}>
+          <Theme>
+            <ReactQueryProvider>
+              <Header />
+              <DynamicSheet />
+              <DynamicModal />
+              <div className="min-h-screen-minus-navigation-height py-space-y flex h-full w-full flex-col">
+                {children}
+              </div>
+              <Footer />
+            </ReactQueryProvider>
+          </Theme>
+        </DplCmsConfigContextProvider>
+>>>>>>> main
       </body>
     </html>
   )

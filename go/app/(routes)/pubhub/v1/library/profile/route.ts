@@ -39,8 +39,6 @@ async function getLibraryProfile() {
   }
 }
 
-// @todo Fix ts problem about context here.
-// @ts-ignore
 export const GET = withAuth(getLibraryProfile)
 
 export const dynamic = "force-dynamic"
