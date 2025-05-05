@@ -5,98 +5,58 @@ import Icon from "../../shared/icon/Icon"
 
 export default function Footer() {
   return (
-    <footer className="bg-background-overlay py-12">
+    <footer className="bg-background-overlay text-typo-body-md py-12 text-center lg:text-left">
       <div className="content-container">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Åbningstider</h2>
-            <p className="mb-4">
+        <div className="flex flex-col flex-nowrap lg:flex-row lg:justify-between">
+          <div className="col-span-full">
+            <h2 className="text-typo-subtitle-lg col-span-full mb-4">Information</h2>
+            <p className="max-w-[600px]">
               Bibliotekerne lorem ipsum consectetur, adipisci velit, sed quia non numquam eius modi
               tempora incidunt ut labore.
             </p>
-            <Link href="#" className="underline">
-              Se bibliotekernes åbningstider
-            </Link>
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Om Bibliotekerne</h2>
-            <ul className="space-y-2">
-              {[
-                "Brug af bibliotekerne",
-                "Erstatninger og gebyrer",
-                "Opret bruger",
-                "Biblioteket - A til Å",
-                "Internetadgang",
-                "Print, scan og kopi",
-                "Booking af lokaler",
-                "Nyhedsbrev",
-              ].map(item => (
-                <li key={item}>
-                  <Link href="#" className="hover:underline">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+            <ul className="mt-10 grid gap-y-4">
+              <li>
+                <Link
+                  href="https://www.detdigitalefolkebibliotek.dk/ereolen-go"
+                  className="animate-text-underline">
+                  Info om GO
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support"
+                  className="animate-text-underline">
+                  Kontakt og support
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://ereolengo.dk/inspiration/til-skoler"
+                  className="animate-text-underline">
+                  Skoler og UNI-login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://ereolengo.dk/content/bliv-boganbefaler"
+                  className="animate-text-underline">
+                  Bliv boganbefaler
+                </Link>
+              </li>
             </ul>
           </div>
-
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Online tilbud</h2>
-            <ul className="mb-8 space-y-2">
-              {["Litteratursiden", "Bibliotek.dk", "eReolen", "Filmstriben"].map(item => (
-                <li key={item}>
-                  <Link href="#" className="hover:underline">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <h2 className="mb-4 text-xl font-semibold">Text</h2>
-            <ul className="space-y-2">
-              {[
-                "Lorem ipsum a la lorem ip",
-                "Bibliotekerne lorem",
-                "Labore ipsum",
-                "Adipisci velit le lorem",
-              ].map(item => (
-                <li key={item}>
-                  <Link href="#" className="hover:underline">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Kontakt</h2>
-            <p className="mb-4">
-              Lyngby-Taarbæk Bibliotekerne
-              <br />
-              Lyngby Hovedgade 28
-              <br />
-              2800 Kgs. Lyngby
+          <div className="mt-10 flex flex-col items-center justify-end">
+            <div className="bg-foreground mb-10 ml-0 flex flex-0 items-center rounded-full lg:ml-auto">
+              <Icon name="logo-with-outline" className="text-background h-auto w-52" />
+            </div>
+            <p className="text-typo-subtitle-lg ml-auto">
+              En del af Bibliotek og Borgerservice Nordfyns Kommune
             </p>
-            <p className="mb-4">
-              +45 45 97 37 00
-              <br />
-              Man - fre / Kl. 10-16
-            </p>
-            <Link href="mailto:info@ltk.dk" className="underline">
-              info@ltk.dk
-            </Link>
           </div>
         </div>
+        <hr className="go-divider mt-5" />
 
-        <div className="border-border mt-8 flex justify-between border-b pb-8">
-          <select className="rounded border px-2 py-1">
-            <option>DK</option>
-          </select>
-          <Icon className="h-[40px]" name="library-logo" />
-        </div>
-
-        <div className="mt-8 flex flex-col items-center justify-between md:flex-row">
+        <div className="mt-8 flex w-full flex-col items-center justify-between md:flex-row">
           <div className="mb-4 flex items-center space-x-4 md:mb-0">
             <Link href="#" className="text-gray-600 hover:text-gray-900">
               <Facebook size={20} />
@@ -108,16 +68,10 @@ export default function Footer() {
             </Link>
           </div>
           <div className="flex flex-wrap justify-center space-x-4 md:justify-end">
-            <Link href="#" className="hover:underline">
+            <Link href="#" className="animate-text-underline">
               Behandling af persondata
             </Link>
-            <Link href="#" className="hover:underline">
-              Servicedeklaration
-            </Link>
-            <Link href="#" className="hover:underline">
-              Relement
-            </Link>
-            <Link href="#" className="hover:underline">
+            <Link href="#" className="animate-text-underline">
               Tilgængelighed
             </Link>
           </div>
