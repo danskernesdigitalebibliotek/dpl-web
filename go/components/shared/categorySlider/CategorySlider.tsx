@@ -50,7 +50,7 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
   }, [])
 
   useEffect(() => {
-    setCurrentPath(pathname.replace("/go/", "/"))
+    setCurrentPath(pathname)
   }, [pathname])
 
   if (!categories) {
@@ -94,18 +94,17 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
               ]
 
               const randomIndex = Math.floor(Math.random() * rotations.length)
+              const isSelected = currentPath === category.path
 
               return (
                 <div className="keen-slider__slide !overflow-visible" key={category.id}>
                   <SmartLink
                     aria-label={`Gå til kategori ${category.categoryMenuTitle}`}
-                    href={category.path?.replace("/go/", "/") || ""}
+                    href={category.path || ""}
                     className={cn(
                       `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
                       transition-all duration-200 lg:p-[24px]`,
-                      currentPath.replace("/go/", "/") === category.path?.replace("/go/", "/")
-                        ? `${rotations[randomIndex]}`
-                        : ""
+                      isSelected ? `${rotations[randomIndex]}` : ""
                     )}>
                     <div
                       className={cn(
@@ -134,9 +133,7 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
                       <input
                         type="radio"
                         name="category"
-                        checked={
-                          currentPath.replace("/go/", "/") === category.path?.replace("/go/", "/")
-                        }
+                        checked={isSelected}
                         className="pointer-events-none appearance-none"
                         disabled
                       />
