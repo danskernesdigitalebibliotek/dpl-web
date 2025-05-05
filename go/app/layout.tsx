@@ -7,19 +7,11 @@ import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
+import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
-export const metadata: Metadata = {
-  title: "Børnebiblioteket",
-  description: "GO er en digital platform, der giver børn adgang til bøger, lydbøger og e-bøger.",
-  icons: [
-    { rel: "icon", type: "image/png", url: "/favicon-96x96.png", sizes: "96x96" },
-    { rel: "shortcut icon", url: "/favicon.ico" },
-    { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
-  ],
-  manifest: "/site.webmanifest",
-}
+export const metadata: Metadata = setLayoutMetadata()
 
 // When adding or changing fonts, remember to update the imports in .storybook/preview.tsx
 const GTFlexa = localFont({

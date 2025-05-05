@@ -1,4 +1,5 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
+import { Metadata } from "next"
 import { cookies } from "next/headers"
 import React from "react"
 
@@ -6,6 +7,9 @@ import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn } from "@/lib/helpers/bearer-token"
+import { setPageMetadata } from "@/lib/helpers/helper.metadata"
+
+export const metadata: Metadata = setPageMetadata("Materiale")
 
 async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params
