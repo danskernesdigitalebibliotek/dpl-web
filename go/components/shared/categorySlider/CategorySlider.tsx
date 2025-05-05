@@ -120,16 +120,19 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
                         index % 4 === 3 &&
                           "group-hover:bg-content-4 group-focus:bg-content-4 group-has-checked:bg-content-4"
                       )}>
-                      <ImageBase
-                        className="grayscale-100 transition-all duration-300 group-hover:grayscale-0 group-focus:grayscale-0
-                          group-has-checked:grayscale-0"
-                        sizes="10vw"
-                        imageSizing="intrinsic"
-                        src={category.categoryMenuImage.mediaImage.url || ""}
-                        width={category.categoryMenuImage.mediaImage?.width || 0}
-                        height={category.categoryMenuImage.mediaImage?.height || 0}
-                        alt={category.categoryMenuImage.mediaImage?.alt || ""}
-                      />
+                      {category.categoryMenuImage.mediaImage.url && (
+                        <ImageBase
+                          className="grayscale-100 transition-all duration-300 group-hover:grayscale-0 group-focus:grayscale-0
+                            group-has-checked:grayscale-0"
+                          sizes="10vw"
+                          imageSizing="intrinsic"
+                          src={category.categoryMenuImage.mediaImage.url}
+                          width={category.categoryMenuImage.mediaImage.width}
+                          height={category.categoryMenuImage.mediaImage.height}
+                          alt={category.categoryMenuImage.mediaImage?.alt || ""}
+                        />
+                      )}
+
                       <input
                         type="radio"
                         name="category"
