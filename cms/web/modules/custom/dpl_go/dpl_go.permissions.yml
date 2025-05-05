@@ -1,0 +1,3 @@
+rewrite go urls:
+  title: 'Get URLs rewritten for the Go frontend'
+  description: 'URLs is rewritten to be relative to the Go site, not the CMS site'

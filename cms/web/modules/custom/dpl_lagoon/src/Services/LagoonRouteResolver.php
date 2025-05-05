@@ -33,9 +33,17 @@ class LagoonRouteResolver {
    * Get the main Lagoon route.
    */
   public function getMainRoute(): string | null {
+    // The main route is given in its own variable.
+    $route = getenv('LAGOON_ROUTE');
+
+    if ($route) {
+      return $route;
+    }
+
+    // Else use the first in the list. It's likely not the primary (the list is
+    // alphabetized), but at least it's something.
     $routes = $this->getRoutes();
-    // We take for granted that the first route is the main route.
-    // Could be that we need to change this in the future.
+
     return $routes[0] ?? NULL;
   }
 
