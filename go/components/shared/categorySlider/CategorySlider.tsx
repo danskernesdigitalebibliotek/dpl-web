@@ -57,7 +57,7 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
     return null
   }
 
-  // Sort categories by timestamp
+  // Sort categories by timestamp TODO: data should be sorted from the backend
   const sortedCategories = categories.sort((a, b) => {
     const aTimestamp = new Date(a.changed.timestamp)
     const bTimestamp = new Date(b.changed.timestamp)
