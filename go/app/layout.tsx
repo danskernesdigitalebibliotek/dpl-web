@@ -41,17 +41,6 @@ export default async function RootLayout({
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
-<<<<<<< HEAD
-        <Theme>
-          <ReactQueryProvider>
-            <Header />
-            <DynamicSheet />
-            <DynamicModal />
-            {children}
-            <Footer />
-          </ReactQueryProvider>
-        </Theme>
-=======
         <DplCmsConfigContextProvider config={dplCmsConfig}>
           <Theme>
             <ReactQueryProvider>
@@ -65,7 +54,6 @@ export default async function RootLayout({
             </ReactQueryProvider>
           </Theme>
         </DplCmsConfigContextProvider>
->>>>>>> main
       </body>
     </html>
   )
