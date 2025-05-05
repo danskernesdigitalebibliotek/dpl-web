@@ -7,12 +7,12 @@ dependencies:
 id: go_pages
 label: 'GO Pages'
 type: 'canonical_entities:node'
-pattern: '/go/[node:title]'
+pattern: '/[node:title]'
 selection_criteria:
-  831ba7d8-1188-4d01-969f-99a1bd84ef44:
+  26fbbf98-3c06-47bc-9e85-21b82b1cf248:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 831ba7d8-1188-4d01-969f-99a1bd84ef44
+    uuid: 26fbbf98-3c06-47bc-9e85-21b82b1cf248
     context_mapping:
       node: node
     bundles:
