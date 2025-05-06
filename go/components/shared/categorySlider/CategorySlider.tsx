@@ -75,8 +75,8 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
           <div
             ref={sliderRef}
             className={cn(
-              "keen-slider relative z-10 w-full !overflow-visible opacity-100 transition-all duration-300",
-              loaded ? "opacity-100" : "opacity-0"
+              "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
+              loaded ? "m-0 opacity-100" : "-my-[24px] opacity-0 lg:-my-[48px]"
             )}>
             {sortedCategories.map((category, index) => {
               // Rotation effect options
