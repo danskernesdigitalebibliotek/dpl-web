@@ -2,7 +2,7 @@ import Link from "next/link"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
-import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
+import ImageBase from "@/components/shared/image/ImageBase"
 import {
   Image,
   ParagraphGoLink,
@@ -58,7 +58,7 @@ function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
                 color ? "m-grid-column-2 lg:m-grid-column" : ""
               )}>
               {goImage?.mediaImage.url && (
-                <ImageBaseWithPlaceholder
+                <ImageBase
                   className={cn("rounded-base")}
                   sizes="100vw"
                   imageSizing="fillParent"

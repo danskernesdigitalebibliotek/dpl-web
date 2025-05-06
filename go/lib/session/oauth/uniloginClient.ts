@@ -1,6 +1,6 @@
 import * as client from "openid-client"
 
-import { getDplCmsUniloginConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+import { getDplCmsPrivateUniloginConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { getEnv } from "@/lib/config/env"
 
 export const uniloginClientSettings = {
@@ -8,7 +8,7 @@ export const uniloginClientSettings = {
 }
 
 export async function getUniloginClientConfig() {
-  const { wellknownUrl, clientId, clientSecret } = await getDplCmsUniloginConfig()
+  const { wellknownUrl, clientId, clientSecret } = await getDplCmsPrivateUniloginConfig()
 
   let isMissingConfiguration = false
   // We need all of these to be able to continue.

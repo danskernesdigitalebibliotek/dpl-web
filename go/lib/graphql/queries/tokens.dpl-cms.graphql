@@ -15,7 +15,9 @@ query getAdgangsplatformenUserToken {
   dplTokens {
     adgangsplatformen {
       user {
-        expire
+        expire {
+          timestamp
+        }
         token
       }
     }
