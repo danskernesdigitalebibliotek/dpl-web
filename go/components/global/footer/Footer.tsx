@@ -8,13 +8,15 @@ export default function Footer() {
         <div className="grid-go grid">
           <div className="col-span-full lg:col-span-6">
             <h2 className="text-typo-subtitle-lg col-span-full mb-4">Information</h2>
-            <p className="max-w-[600px]">GO er børnenes digitale indgang til folkebiblioteket.</p>
-            <ul className="mt-10 grid gap-y-4">
+            <p className="text-typo-body-md max-w-[600px]">
+              GO er børnenes digitale indgang til folkebiblioteket.
+            </p>
+            <ul className="mt-10 space-y-5">
               <li>
                 <SmartLink
                   href="https://www.detdigitalefolkebibliotek.dk/ereolen-go"
                   linkType="external"
-                  className="animate-text-underline">
+                  className="animate-text-underline text-typo-body-md">
                   Info om GO
                 </SmartLink>
               </li>
@@ -22,7 +24,7 @@ export default function Footer() {
                 <SmartLink
                   href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support"
                   linkType="external"
-                  className="animate-text-underline">
+                  className="animate-text-underline text-typo-body-md">
                   Kontakt og support
                 </SmartLink>
               </li>
@@ -30,7 +32,7 @@ export default function Footer() {
                 <SmartLink
                   href="https://ereolengo.dk/inspiration/til-skoler"
                   linkType="external"
-                  className="animate-text-underline">
+                  className="animate-text-underline text-typo-body-md">
                   Skoler og UNI-login
                 </SmartLink>
               </li>
@@ -38,7 +40,7 @@ export default function Footer() {
                 <SmartLink
                   href="https://ereolengo.dk/content/bliv-boganbefaler"
                   linkType="external"
-                  className="animate-text-underline">
+                  className="animate-text-underline text-typo-body-md">
                   Bliv boganbefaler
                 </SmartLink>
               </li>
