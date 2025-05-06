@@ -6,8 +6,8 @@ export default function Footer() {
   return (
     <footer className="bg-background-overlay text-typo-body-md py-12 text-center lg:text-left">
       <div className="content-container">
-        <div className="flex flex-col flex-nowrap lg:flex-row lg:justify-between">
-          <div className="col-span-full">
+        <div className="grid-go grid">
+          <div className="col-span-full lg:col-span-6">
             <h2 className="text-typo-subtitle-lg col-span-full mb-4">Information</h2>
             <p className="max-w-[600px]">GO er børnenes digitale indgang til folkebiblioteket.</p>
             <ul className="mt-10 grid gap-y-4">
@@ -41,7 +41,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="mt-10 flex flex-col items-center justify-end">
+          <div className="col-span-full flex flex-col items-center justify-end lg:col-span-6">
             <div className="bg-foreground mb-10 ml-0 flex flex-0 items-center rounded-full lg:ml-auto">
               <Icon name="logo-with-outline" className="text-background h-auto w-52" />
             </div>
