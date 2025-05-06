@@ -44,11 +44,11 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="col-span-full flex flex-col items-center justify-end lg:col-span-6">
-            <div className="bg-foreground mb-10 ml-0 flex flex-0 items-center rounded-full lg:ml-auto">
-              <Icon name="logo-with-outline" className="text-background h-auto w-52" />
+          <div className="col-span-full mt-12 flex flex-col items-center justify-end lg:col-span-6">
+            <div className="bg-foreground mb-10 ml-0 flex flex-0 items-center rounded-full p-0.5 lg:ml-auto">
+              <Icon name="logo-with-outline" className="text-background h-auto w-36 lg:w-40" />
             </div>
-            <p className="text-typo-subtitle-lg ml-auto">
+            <p className="text-typo-subtitle-lg lg:text-right">
               En del af Bibliotek og Borgerservice Nordfyns Kommune
             </p>
           </div>
