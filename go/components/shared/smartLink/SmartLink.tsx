@@ -25,8 +25,9 @@ function SmartLink({
 
   // External link
   if (linkType === "external") {
+    const validHref = href.startsWith("http") ? href : `https://${href}`
     return (
-      <a className={className} href={href} target={target}>
+      <a className={className} href={validHref} target={target}>
         {children}
       </a>
     )
