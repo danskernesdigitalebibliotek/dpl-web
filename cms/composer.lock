@@ -6061,26 +6061,26 @@
         },
         {
             "name": "drupal/multiple_fields_remove_button",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/multiple_fields_remove_button.git",
-                "reference": "8.x-2.2"
+                "reference": "8.x-2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/multiple_fields_remove_button-8.x-2.2.zip",
-                "reference": "8.x-2.2",
-                "shasum": "c62d790c436b67c1316cbf2f289e6420e53d83e5"
+                "url": "https://ftp.drupal.org/files/projects/multiple_fields_remove_button-8.x-2.3.zip",
+                "reference": "8.x-2.3",
+                "shasum": "dfa2b1dc21b0b9cfa36d6d6779765a55336d5017"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10"
+                "drupal/core": "^9.2 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.2",
-                    "datestamp": "1676661177",
+                    "version": "8.x-2.3",
+                    "datestamp": "1746461722",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
