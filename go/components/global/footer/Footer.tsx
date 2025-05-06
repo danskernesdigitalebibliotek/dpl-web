@@ -1,6 +1,5 @@
-import Link from "next/link"
-
 import Icon from "@/components/shared/icon/Icon"
+import SmartLink from "@/components/shared/smartLink/SmartLink"
 
 export default function Footer() {
   return (
@@ -12,32 +11,36 @@ export default function Footer() {
             <p className="max-w-[600px]">GO er børnenes digitale indgang til folkebiblioteket.</p>
             <ul className="mt-10 grid gap-y-4">
               <li>
-                <Link
+                <SmartLink
                   href="https://www.detdigitalefolkebibliotek.dk/ereolen-go"
+                  linkType="external"
                   className="animate-text-underline">
                   Info om GO
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link
+                <SmartLink
                   href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support"
+                  linkType="external"
                   className="animate-text-underline">
                   Kontakt og support
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link
+                <SmartLink
                   href="https://ereolengo.dk/inspiration/til-skoler"
+                  linkType="external"
                   className="animate-text-underline">
                   Skoler og UNI-login
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link
+                <SmartLink
                   href="https://ereolengo.dk/content/bliv-boganbefaler"
+                  linkType="external"
                   className="animate-text-underline">
                   Bliv boganbefaler
-                </Link>
+                </SmartLink>
               </li>
             </ul>
           </div>
