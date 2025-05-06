@@ -41,7 +41,6 @@ export type TNodeGoCategory = {
 
 function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
   const [sliderRef] = useKeenSlider(sliderOptions, [WheelControls])
-  const [currentPath, setCurrentPath] = useState<string>("")
   const [loaded, setLoaded] = useState(false)
   const pathname = usePathname()
 
@@ -49,20 +48,9 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
     setLoaded(true)
   }, [])
 
-  useEffect(() => {
-    setCurrentPath(pathname)
-  }, [pathname])
-
   if (!categories) {
     return null
   }
-
-  // Sort categories by timestamp TODO: data should be sorted from the backend
-  const sortedCategories = categories.sort((a, b) => {
-    const aTimestamp = new Date(a.changed.timestamp)
-    const bTimestamp = new Date(b.changed.timestamp)
-    return bTimestamp.getTime() - aTimestamp.getTime()
-  })
 
   return (
     <div className="-my-[12px] overflow-hidden lg:-my-[20px]">
@@ -76,9 +64,9 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
             ref={sliderRef}
             className={cn(
               "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
-              loaded ? "m-0 opacity-100" : "-my-[24px] opacity-0 lg:-my-[48px]"
+              loaded ? "m-0 opacity-100" : "opacity-0"
             )}>
-            {sortedCategories.map((category, index) => {
+            {categories.map((category, index) => {
               // Rotation effect options
               const rotations = [
                 "has-checked:rotate-2",
@@ -94,7 +82,7 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
               ]
 
               const randomIndex = Math.floor(Math.random() * rotations.length)
-              const isSelected = currentPath === category.path
+              const isSelected = pathname === category.path
 
               return (
                 <div className="keen-slider__slide !overflow-visible" key={category.id}>
