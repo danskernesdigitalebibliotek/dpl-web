@@ -1,0 +1,155 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 5fc5a750-9c89-4417-8953-0a76ff227d45
+  bundle: go_category
+  default_langcode: da
+  depends:
+    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+    d219e4de-4984-487e-8e21-9f56c0a0335c: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Science fiction'
+  created:
+    -
+      value: 1746518087
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  bnf_state:
+    -
+      value: 0
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Science fiction | DPL CMS'
+  path:
+    -
+      alias: /kategori/science-fiction
+      langcode: und
+      pathauto: 1
+  field_category_menu_image:
+    -
+      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+  field_category_menu_title:
+    -
+      value: Sci-Fi
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 810c4657-cb5f-418b-bd4b-9949de999f53
+          bundle: go_video
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1746518120
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: 'Video - Nyeste trailer til Star Wars landet'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 68a1ddcb-dde8-4786-8703-132347c7c4e4
+          bundle: go_material_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1746518206
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'star wars'"
+          field_slider_amount_of_materials:
+            -
+              value: 8
+          field_title:
+            -
+              value: 'Material Slider Automatic - Anbefalede Star Wars titler'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d6d394c2-4d49-43ad-a0d2-0e183dca5e5c
+          bundle: go_material_slider_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1746518354
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_material_slider_work_ids:
+            -
+              value: 'work-of:870970-basis:51919165'
+              material_type: bog
+            -
+              value: 'work-of:870970-basis:29377545'
+              material_type: ''
+            -
+              value: 'work-of:870970-basis:50673103'
+              material_type: ''
+            -
+              value: 'work-of:870970-basis:50625656'
+              material_type: ''
+          field_title:
+            -
+              value: 'Material Slider Manuel - Bliv klogere på Star Wars universet'
+  field_publication_date:
+    -
+      value: '2025-05-06'
