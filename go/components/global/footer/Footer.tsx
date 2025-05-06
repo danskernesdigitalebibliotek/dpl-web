@@ -53,7 +53,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <hr className="go-divider mt-10" />
+        <hr className="mt-10" />
       </div>
     </footer>
   )
