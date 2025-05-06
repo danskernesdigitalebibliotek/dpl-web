@@ -53,6 +53,9 @@ const dplCmsPublicConfigSchema = z.object({
     logoutUrls: z.object({
       adgangsplatformen: z.string(),
     }),
+    libraryInfo: z.object({
+      name: z.string(),
+    }),
   }),
 })
 
