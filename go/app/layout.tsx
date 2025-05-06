@@ -47,9 +47,7 @@ export default async function RootLayout({
               <Header />
               <DynamicSheet />
               <DynamicModal />
-              <div className="min-h-screen-minus-navigation-height py-space-y flex h-full w-full flex-col">
-                {children}
-              </div>
+              {children}
               <Footer />
             </ReactQueryProvider>
           </Theme>
