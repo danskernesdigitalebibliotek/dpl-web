@@ -20,6 +20,9 @@ query getDplCmsPublicConfiguration {
       logoutUrls {
         adgangsplatformen
       }
+      libraryInfo {
+        name
+      }
     }
   }
 }
