@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_tags
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
     - node.type.go_article
@@ -28,25 +29,26 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 4
+    weight: 1
     region: content
   field_subtitle:
     type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 2
     region: content
 hidden:
   field_go_article_image: true
   field_override_author: true
   field_publication_date: true
   field_show_override_author: true
+  field_tags: true
   field_teaser_image: true
   field_teaser_text: true
   langcode: true

@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_tags
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
     - node.type.go_article
@@ -53,6 +54,23 @@ third_party_settings:
       region: content
       parent_name: ''
       weight: 10
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_tagging:
+      children:
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 11
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -135,6 +153,16 @@ content:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 9
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
     weight: 9
@@ -154,7 +182,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -176,7 +204,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 3
+    weight: 4
     region: content
     settings:
       display_label: true
@@ -206,7 +234,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 4
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }

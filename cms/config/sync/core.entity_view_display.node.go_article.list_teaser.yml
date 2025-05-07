@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_tags
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
     - node.type.go_article
@@ -26,7 +27,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
   field_show_override_author:
     type: boolean
@@ -36,14 +37,14 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 3
+    weight: 2
     region: content
   field_subtitle:
     type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
   field_teaser_image:
     type: entity_reference_entity_view
@@ -52,7 +53,7 @@ content:
       view_mode: list_teaser
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 4
     region: content
   field_teaser_text:
     type: string
@@ -60,16 +61,17 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 4
+    weight: 3
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 5
     region: content
 hidden:
   field_go_article_image: true
   field_paragraphs: true
   field_publication_date: true
+  field_tags: true
   langcode: true
   search_api_excerpt: true

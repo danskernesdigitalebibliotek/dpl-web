@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.go_category.field_go_color
     - field.field.node.go_category.field_paragraphs
     - field.field.node.go_category.field_publication_date
+    - field.field.node.go_category.field_tags
     - node.type.go_category
   module:
     - entity_reference_revisions
@@ -26,12 +27,12 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 4
+    weight: 0
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 1
     region: content
 hidden:
   field_category_menu_image: true
@@ -39,5 +40,6 @@ hidden:
   field_category_menu_title: true
   field_go_color: true
   field_publication_date: true
+  field_tags: true
   langcode: true
   search_api_excerpt: true
