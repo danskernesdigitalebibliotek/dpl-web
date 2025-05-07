@@ -90,4 +90,9 @@ describe("Front Page Tests", () => {
           .should("contain.text", "Dette er titlen på en lydbog")
       })
   })
+
+  it("Go to search page when submitting search", () => {
+    cy.dataCy("search-input").should("exist").focus().type("harry potter{enter}")
+    cy.url().should("include", "/search")
+  })
 })
