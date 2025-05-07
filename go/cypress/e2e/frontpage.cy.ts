@@ -28,7 +28,7 @@ describe("Front Page Tests", () => {
     cy.dataCy("go-logo").should("exist")
   })
 
-  it.only("Should navigate video bundle", () => {
+  it("Should navigate video bundle", () => {
     cy.dataCy("video-bundle")
       .first()
       .within(() => {
