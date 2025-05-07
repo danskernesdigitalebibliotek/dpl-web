@@ -80,6 +80,9 @@ export const getDplCmsPublicConfig = async () => {
       logoutUrls: {
         adgangsplatformen: null,
       },
+      libraryInfo: {
+        name: "",
+      },
     }
   }
 }
