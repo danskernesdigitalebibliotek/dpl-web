@@ -16,6 +16,7 @@ import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import WorkCard, { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
+import { cyKeys } from "@/cypress/support/constants"
 import {
   ParagraphGoMaterialSliderAutomatic,
   ParagraphGoMaterialSliderManual,
@@ -67,7 +68,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
   }
 
   return (
-    <div className="bg-background-overlay overflow-hidden">
+    <div className="bg-background-overlay overflow-hidden" data-cy={cyKeys["material-slider"]}>
       <div className="content-container grid-go">
         <div className="pt-paragraph-spacing col-span-full flex items-center justify-between">
           <h2 className="text-typo-heading-2">{title}</h2>
@@ -76,14 +77,16 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
               disabled={reachedStart}
               variant="icon"
               ariaLabel="Vis forrige værker"
-              onClick={() => onLeftClick()}>
+              onClick={() => onLeftClick()}
+              data-cy={cyKeys["material-slider-prev-button"]}>
               <Icon className="h-[24px] w-[24px]" name="arrow-left" />
             </Button>
             <Button
               disabled={reachedEnd}
               variant="icon"
               ariaLabel="Vis næste værker"
-              onClick={() => onRightClick()}>
+              onClick={() => onRightClick()}
+              data-cy={cyKeys["material-slider-next-button"]}>
               <Icon className="h-[24px] w-[24px]" name="arrow-right" />
             </Button>
           </div>

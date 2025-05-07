@@ -57,4 +57,37 @@ describe("Front Page Tests", () => {
           .should("contain.text", "Dette er titlen på en e-bog")
       })
   })
+
+  it("Should navigate materials in material slider", () => {
+    cy.dataCy("material-slider")
+      .first()
+      .within(() => {
+        // Verify that the material is visible
+        cy.dataCy("work-card-title")
+          .first()
+          .should("be.visible")
+          .should("contain.text", "Dette er titlen på en e-bog")
+
+        // Maximum number of materials to click through
+        const maxAttempts = 10
+
+        // Click the button up to 10 times
+        for (let i = 0; i < maxAttempts; i++) {
+          cy.dataCy("material-slider-next-button").then($button => {
+            if (!$button.prop("disabled")) {
+              cy.dataCy("material-slider-next-button").click({ force: true })
+            }
+          })
+        }
+
+        // Verify the button is finally disabled
+        cy.dataCy("material-slider-next-button").should("be.disabled")
+
+        // Verify that the last material is visible
+        cy.dataCy("work-card-title")
+          .last()
+          .should("be.visible")
+          .should("contain.text", "Dette er titlen på en lydbog")
+      })
+  })
 })
