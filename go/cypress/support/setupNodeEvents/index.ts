@@ -35,10 +35,10 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = on => {
       return null // Return null to indicate that the task has been completed
     },
 
-    mockRestResponse({ method, url, data }: MockRestResponseParams) {
-      log("Mocking REST response", `${method} ${url}`)
+    mockRestResponse({ method, path, data }: MockRestResponseParams) {
+      log("Mocking REST response", `${method} ${path}`)
 
-      mockApiServer.mockRestResponse({ method, url, data })
+      mockApiServer.mockRestResponse({ method, path, data })
       return null // Return null to indicate that the task has been completed
     },
 
