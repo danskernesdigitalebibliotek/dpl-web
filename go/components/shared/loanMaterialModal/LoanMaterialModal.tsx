@@ -154,7 +154,7 @@ const LoanMaterialModal = ({
 
           {errors.length > 0 && (
             <div className="flex">
-              <div className="bg-error-red-100 text-error-red-400 mx-auto flex items-center gap-4 rounded-md p-4">
+              <div className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex items-center gap-4 p-4">
                 <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
                 <p className="text-typo-link">{errors[0]}</p>
               </div>
