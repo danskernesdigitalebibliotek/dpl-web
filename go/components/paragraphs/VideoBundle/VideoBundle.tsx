@@ -61,7 +61,9 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 allow="autoplay; fullscreen"
               />
             </div>
-            <div className="grid-go mt-paragraph-spacing col-span-full items-center lg:col-span-3 lg:hidden">
+            <div
+              className="grid-go mt-paragraph-spacing col-span-full items-center lg:col-span-3 lg:hidden"
+              data-cy={cyKeys["video-bundle-slider"]}>
               <div className="col-span-1">
                 <Button
                   onClick={moveToPreviousMaterial}
@@ -90,7 +92,9 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 </Button>
               </div>
             </div>
-            <div className="col-span-full hidden flex-col items-center justify-center text-left lg:col-span-3 lg:flex">
+            <div
+              className="col-span-full hidden flex-col items-center justify-center text-left lg:col-span-3 lg:flex"
+              data-cy={cyKeys["video-bundle-slider"]}>
               <div className="pl-grid-gap-half flex w-full flex-col gap-y-8">
                 <div className="relative w-full">
                   <WorkCardStackedWithCaption
@@ -114,14 +118,16 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                       onClick={moveToPreviousMaterial}
                       variant="icon"
                       ariaLabel="Vis forrige værk"
-                      disabled={!works?.length}>
+                      disabled={!works?.length}
+                      data-cy={cyKeys["video-bundle-prev-button"]}>
                       <Icon className="h-[24px] w-[24px]" name="arrow-left" />
                     </Button>
                     <Button
                       onClick={moveToNextMaterial}
                       variant="icon"
                       ariaLabel="Vis næste værk"
-                      disabled={!works?.length}>
+                      disabled={!works?.length}
+                      data-cy={cyKeys["video-bundle-next-button"]}>
                       <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                     </Button>
                   </div>

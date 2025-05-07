@@ -3,6 +3,8 @@ import SearchWithPaginationFactory from "../factories/fbi/searchWithPagination"
 
 describe("Search Result Tests", () => {
   beforeEach(() => {
+    cy.setViewport("desktop")
+
     // Ignore fetch errors from DPL CMS
     cy.expectError("Failed to fetch data from DPL CMS")
     // Intercept search request
@@ -28,8 +30,10 @@ describe("Search Result Tests", () => {
   })
 
   it("Should have working facets", () => {
-    // Check if facets are displayed
-    cy.dataCy("filters-button").should("exist").click()
+    // Open facets drawer on mobile
+    cy.isViewport("mobile").then(
+      isMobile => isMobile && cy.dataCy("filters-button").should("exist").click()
+    )
 
     // Check if facets are displayed
     cy.dataCy("filter-button").should("have.length.above", 40)
@@ -44,7 +48,7 @@ describe("Search Result Tests", () => {
     cy.dataCy("filter-button").first().click()
 
     // Check if facet is selected
-    cy.dataCy("filter-button").should("have.length", 1)
+    cy.dataCy("filter-button").first().should("have.class", "bg-foreground")
 
     // Check that only one result is displayed
     cy.dataCy("work-card").should("have.length", 1)

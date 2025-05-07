@@ -9,7 +9,7 @@ type Params = {
 }
 
 export default Factory.define<ComplexSearchForWorkTeaserQuery, Params>(({ transientParams }) => {
-  const { hitcount = 10 } = transientParams
+  const { hitcount = 6 } = transientParams
 
   return {
     complexSearch: {

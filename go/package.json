@@ -30,7 +30,9 @@
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
+    "cypress:run": "cypress run --env viewport=mobile && cypress run --env viewport=desktop",
+    "cypress:run:mobile": "cypress run --env viewport=mobile",
+    "cypress:run:desktop": "cypress run --env viewport=desktop",
     "shadcn:add": "npx shadcn@canary add $MODULE",
     "post-process-dpl-cms-graphql": "tsx ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
   },

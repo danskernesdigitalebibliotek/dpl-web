@@ -32,35 +32,43 @@ describe("Front Page Tests", () => {
     cy.dataCy("video-bundle")
       .first()
       .within(() => {
-        // Verify that the first material is visible
-        cy.dataCy("work-card-title")
-          .first()
-          .should("be.visible")
-          .should("contain.text", "Dette er titlen på en e-bog")
-
-        // Click button to navigate to next material
-        cy.dataCy("video-bundle-next-button").click()
-
-        // Verify that the next material is visible
-        cy.dataCy("work-card-title")
-          .eq(1)
-          .should("be.visible")
-          .should("contain.text", "Dette er titlen på en lydbog")
-
-        // Click button to navigate to previous material
-        cy.dataCy("video-bundle-prev-button").click()
-
-        // Verify that the previous material is visible
-        cy.dataCy("work-card-title")
-          .first()
-          .should("be.visible")
-          .should("contain.text", "Dette er titlen på en e-bog")
+        cy.isViewport("mobile").then(isMobile => {
+          if (isMobile) {
+            cy.dataCy("video-bundle-slider").first().then(testMaterialNavigation)
+          } else {
+            cy.dataCy("video-bundle-slider").eq(1).then(testMaterialNavigation)
+          }
+        })
       })
   })
+
+  const testMaterialNavigation = (subject: JQuery<HTMLElement>) => {
+    cy.wrap(subject).within(() => {
+      cy.dataCy("work-card-title")
+        .first()
+        .should("be.visible")
+        .should("contain.text", "Dette er titlen på en e-bog")
+
+      cy.dataCy("video-bundle-next-button").click()
+
+      cy.dataCy("work-card-title")
+        .eq(1)
+        .should("be.visible")
+        .should("contain.text", "Dette er titlen på en lydbog")
+
+      cy.dataCy("video-bundle-prev-button").click()
+
+      cy.dataCy("work-card-title")
+        .first()
+        .should("be.visible")
+        .should("contain.text", "Dette er titlen på en e-bog")
+    })
+  }
 
   it("Should navigate materials in material slider", () => {
     cy.dataCy("material-slider")
       .first()
+      .should("be.visible")
       .within(() => {
         // Verify that the material is visible
         cy.dataCy("work-card-title")
@@ -71,17 +79,18 @@ describe("Front Page Tests", () => {
         // Maximum number of materials to click through
         const maxAttempts = 10
 
-        // Click the button up to 10 times
+        // Click the button up to 20 times
         for (let i = 0; i < maxAttempts; i++) {
-          cy.dataCy("material-slider-next-button").then($button => {
-            if (!$button.prop("disabled")) {
-              cy.dataCy("material-slider-next-button").click({ force: true })
-            }
-          })
+          cy.dataCy("material-slider-next-button")
+            .should("exist")
+            .then($button => {
+              if (!$button.prop("disabled")) {
+                cy.dataCy("material-slider-next-button").click({ force: true })
+              }
+            })
         }
-
         // Verify the button is finally disabled
-        cy.dataCy("material-slider-next-button").should("be.disabled")
+        cy.dataCy("material-slider-next-button").should("exist").should("be.disabled")
 
         // Verify that the last material is visible
         cy.dataCy("work-card-title")

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Cover } from "@/lib/rest/cover-service-api/generated/model"
 
-import { CyKey } from "./constants"
+import { CyKey, ViewportType, viewports } from "./constants"
 import { Operations, hasOperationName } from "./utils"
 
 type InterceptGraphqlParams = {
@@ -104,6 +104,18 @@ declare global {
        * @example cy.resetServerMocks()
        */
       resetServerMocks(): void
+
+      /**
+       * Checks if the current viewport is mobile
+       * @example cy.isViewport("mobile")
+       */
+      isViewport(viewport: ViewportType): Chainable<boolean>
+
+      /**
+       * Sets the viewport to a specific size
+       * @example cy.setViewport("mobile")
+       */
+      setViewport(viewport: ViewportType): void
     }
   }
 }
@@ -173,4 +185,14 @@ Cypress.Commands.add("mockServerRest", props => {
  */
 Cypress.Commands.add("resetServerMocks", () => {
   cy.task("resetApiMocks")
+})
+
+Cypress.Commands.add("isViewport", (viewport: ViewportType) => {
+  return cy.window().then(win => {
+    return win.innerWidth === viewports[viewport].width
+  })
+})
+
+Cypress.Commands.add("setViewport", (viewport: ViewportType) => {
+  cy.viewport(viewports[viewport].width, viewports[viewport].height)
 })
