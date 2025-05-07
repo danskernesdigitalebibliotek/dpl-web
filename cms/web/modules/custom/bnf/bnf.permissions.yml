@@ -5,3 +5,6 @@ bnf export nodes:
 bnf import nodes:
   title: 'Can import nodes from BNF'
   description: 'Requires bnf_client module to be enabled to function'
+bnf administer go tags:
+  title: 'Can see tags on GO content'
+  description: 'Requires bnf_client module to be enabled to function'
