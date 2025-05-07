@@ -1,6 +1,13 @@
 import withPlaiceholder from "@plaiceholder/next"
 import { env } from "process"
 
+function getImageHostname() {
+  if (env.NODE_ENV === "test") {
+    return "**"
+  }
+  return env.NEXT_PUBLIC_DPL_CMS_HOSTNAME?.replace(/^https?:\/\//, "") || ""
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -24,12 +31,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: env.NEXT_PUBLIC_DPL_CMS_HOSTNAME || "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "placehold.co",
+        hostname: getImageHostname(),
         pathname: "/**",
       },
     ],
