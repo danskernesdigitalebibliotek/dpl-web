@@ -182,6 +182,9 @@ class BnfMapperImportedLinkFieldPluginBaseTest extends UnitTestCase {
     $this->entityStorage->loadByProperties(['uuid' => $uuid])->willReturn([$nodeProphecy]);
   }
 
+  /**
+   * Prophesize a previously imported node.
+   */
   protected function prophesizeImportedNode(string $uuid, string $url): void {
     $nodeProphecy = $this->prophesizeNode($url);
 
@@ -192,6 +195,7 @@ class BnfMapperImportedLinkFieldPluginBaseTest extends UnitTestCase {
    * Prophesize a node.
    *
    * @return \Prophecy\Prophecy\ObjectProphecy<\Drupal\node\Entity\Node>
+   *   Node prophecy.
    */
   protected function prophesizeNode(string $url): ObjectProphecy {
     $urlProphecy = $this->prophesize(Url::class);
@@ -202,4 +206,5 @@ class BnfMapperImportedLinkFieldPluginBaseTest extends UnitTestCase {
 
     return $nodeProphecy;
   }
+
 }
