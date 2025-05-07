@@ -32,6 +32,11 @@ export const fetcher = async <ResponseType>({
       body,
     })
 
+    if (!response.ok) {
+      const data = await response.json()
+      throw Error(JSON.stringify(data))
+    }
+
     try {
       return (await response.json()) as ResponseType
     } catch (e) {

@@ -159,6 +159,21 @@
   --color-blue-title: var(--blue-title);
   --color-blue-title-dark: var(--blue-title-dark);
 
+  --color-error-red-100: var(--error-red-100);
+  --color-error-red-200: var(--error-red-200);
+  --color-error-red-300: var(--error-red-300);
+  --color-error-red-400: var(--error-red-400);
+
+  --color-success-green-100: var(--success-green-100);
+  --color-success-green-200: var(--success-green-200);
+  --color-success-green-300: var(--success-green-300);
+  --color-success-green-400: var(--success-green-400);
+
+  --color-warning-orange-100: var(--warning-orange-100);
+  --color-warning-orange-200: var(--warning-orange-200);
+  --color-warning-orange-300: var(--warning-orange-300);
+  --color-warning-orange-400: var(--warning-orange-400);
+
   /* shadcn variables start */
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);

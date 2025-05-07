@@ -14,6 +14,7 @@ import Icon from "@/components/shared/icon/Icon"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -23,6 +24,8 @@ import useGetV1LibraryProfile from "@/lib/rest/publizon/useGetV1LibraryProfile"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 import { modalStore } from "@/store/modal.store"
+
+import { publizonErrorMessageMap } from "./helper"
 
 const LoanMaterialModal = ({
   open,
@@ -63,7 +66,7 @@ const LoanMaterialModal = ({
   const { mutate } = usePostV1UserLoansIdentifier()
   const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
+  const [publizonError, setPublizonError] = useState<{ code: number; message: string } | null>(null)
   const { closeModal } = modalStore.trigger
   const handleLoanMaterial = () => {
     setIsHandlingLoan(true)
@@ -76,9 +79,13 @@ const LoanMaterialModal = ({
           setIsHandlingLoan(false)
           closeModal()
         },
-        onError: err => {
-          setError(err as Error)
-          setIsHandlingLoan(false)
+        onError: error => {
+          if (error instanceof Error) {
+            const errorData = JSON.parse(error.message)
+
+            setPublizonError(errorData)
+            setIsHandlingLoan(false)
+          }
         },
       }
     )
@@ -95,6 +102,21 @@ const LoanMaterialModal = ({
   const isLoanPossible =
     (isCostFree && canUserLoanMoreCostFreeMaterials(dataLoans)) ||
     canUserLoanMoreMaterials(dataLoans, dataLibraryProfile, manifestation)
+
+  const errors: string[] = []
+  if (!isLoanPossible) {
+    errors.push(
+      `Du kan desværre ikke låne flere titler af typen "${getManifestationMaterialTypeSpecific(manifestation)}" i denne måned.`
+    )
+  }
+  if (isErrorLoans || isErrorLibraryProfile) {
+    errors.push(
+      "Vi kunne desværre ikke bekræfte, om du kan låne materialet. Prøv venligst igen senere."
+    )
+  }
+  if (publizonError) {
+    errors.push(publizonErrorMessageMap[publizonError.code] || publizonError.message)
+  }
 
   return (
     <ResponsiveDialog
@@ -122,30 +144,28 @@ const LoanMaterialModal = ({
         <div className="bg-background-skeleton mx-auto mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
       )}
       {!isLoadingLibraryProfile && !isLoadingLoans && (
-        <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
-          {!isLoanPossible && (
-            <>
-              Du kan desværre ikke låne flere titler af typen{" "}
-              <span className="font-bold">
-                {`"${getManifestationMaterialTypeSpecific(manifestation)}"`}
-              </span>{" "}
-              i denne måned.
-            </>
+        <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
+          <p className="text-typo-subtitle-md text-center">
+            {!isLoadingLibraryProfile &&
+              !isLoadingLoans &&
+              isLoanPossible &&
+              `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
+          </p>
+
+          {errors.length > 0 && (
+            <div className="flex">
+              <div className="bg-error-red-100 text-error-red-400 mx-auto flex items-center gap-4 rounded-md p-4">
+                <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
+                <p className="text-typo-link">{errors[0]}</p>
+              </div>
+            </div>
           )}
-          {error && "Vi kunne desværre ikke låne materialet. Prøv igen senere."}
-          {(isErrorLibraryProfile || isErrorLoans) &&
-            "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."}
-          {!error &&
-            !isLoadingLibraryProfile &&
-            !isLoadingLoans &&
-            isLoanPossible &&
-            `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
-        </p>
+        </div>
       )}
 
       <div className="flex flex-row items-center justify-center gap-6">
         {/* Only show "approve loan" button if user can still loan more materials */}
-        {isLoanPossible && !error && !isErrorLibraryProfile && (
+        {isLoanPossible && !errors.length && !isErrorLibraryProfile && (
           <Button
             theme={"primary"}
             size={"lg"}
@@ -167,7 +187,9 @@ const LoanMaterialModal = ({
           onClick={() => closeModal()}>
           {!isLoadingLibraryProfile &&
             !isLoadingLoans &&
-            (!isLoanPossible || error || isErrorLibraryProfile || isErrorLoans ? "Nej" : "Luk")}
+            (!isLoanPossible || !errors.length || isErrorLibraryProfile || isErrorLoans
+              ? "Nej"
+              : "Luk")}
           {(isLoadingLibraryProfile || isLoadingLoans) && (
             <Icon
               name="go-spinner"
