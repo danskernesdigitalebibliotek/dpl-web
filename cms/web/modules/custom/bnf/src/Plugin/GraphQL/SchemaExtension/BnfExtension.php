@@ -36,9 +36,6 @@ class BnfExtension extends SdlSchemaExtensionPluginBase {
         ->map('entity', $builder->fromParent())
     ));
 
-    $registry->addFieldResolver('Link', 'id', $builder->produce('linked_content_uuid_producer')
-      ->map('link', $builder->fromParent())
-    );
   }
 
 }
