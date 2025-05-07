@@ -1,6 +1,6 @@
-import coverService from "../factories/coverService"
-import SearchFacetsFactory from "../factories/searchFacets"
-import SearchWithPaginationFactory from "../factories/searchWithPagination"
+import coverService from "../factories/covers/coverService"
+import SearchFacetsFactory from "../factories/fbi/searchFacets"
+import SearchWithPaginationFactory from "../factories/fbi/searchWithPagination"
 
 describe("Search Result Tests", () => {
   beforeEach(() => {

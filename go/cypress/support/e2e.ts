@@ -1,6 +1,6 @@
-import GetAdgangsplatformenLibraryToken from "../factories/getAdgangsplatformenLibraryToken"
-import GetDplCmsPrivateConfiguration from "../factories/getDplCmsPrivateConfiguration"
-import GetDplCmsPublicConfiguration from "../factories/getDplCmsPublicConfiguration"
+import GetAdgangsplatformenLibraryToken from "../factories/dpl-cms/getAdgangsplatformenLibraryToken"
+import GetDplCmsPrivateConfiguration from "../factories/dpl-cms/getDplCmsPrivateConfiguration"
+import GetDplCmsPublicConfiguration from "../factories/dpl-cms/getDplCmsPublicConfiguration"
 import "./commands"
 
 beforeEach(() => {
