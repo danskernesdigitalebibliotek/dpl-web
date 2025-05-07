@@ -139,7 +139,7 @@ const LoanMaterialModal = ({
             !isLoadingLibraryProfile &&
             !isLoadingLoans &&
             isLoanPossible &&
-            `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
+            `Er du sikker på, at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
         </p>
       )}
 
