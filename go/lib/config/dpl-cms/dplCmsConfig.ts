@@ -48,10 +48,10 @@ export const getDplCmsPrivateUniloginConfig = async () => {
 const dplCmsPublicConfigSchema = z.object({
   public: z.object({
     loginUrls: z.object({
-      adgangsplatformen: z.string(),
+      adgangsplatformen: z.string().nullable(),
     }),
     logoutUrls: z.object({
-      adgangsplatformen: z.string(),
+      adgangsplatformen: z.string().nullable(),
     }),
     libraryInfo: z.object({
       name: z.string(),
@@ -63,12 +63,23 @@ export type TDplCmsPublicConfig = z.infer<typeof dplCmsPublicConfigSchema>["publ
 
 export const getDplCmsPublicConfig = async () => {
   const queryClient = getQueryClient()
-  const config = await queryClient.fetchQuery<GetDplCmsPublicConfigurationQuery>({
-    queryKey: useGetDplCmsPublicConfigurationQuery.getKey(),
-    queryFn: useGetDplCmsPublicConfigurationQuery.fetcher(),
-    initialData: {},
-    staleTime: 0,
-  })
+  try {
+    const config = await queryClient.fetchQuery<GetDplCmsPublicConfigurationQuery>({
+      queryKey: useGetDplCmsPublicConfigurationQuery.getKey(),
+      queryFn: useGetDplCmsPublicConfigurationQuery.fetcher(),
+      initialData: {},
+      staleTime: 0,
+    })
 
-  return dplCmsPublicConfigSchema.safeParse(config.goConfiguration).data?.public ?? null
+    return dplCmsPublicConfigSchema.parse(config.goConfiguration).public
+  } catch {
+    return {
+      loginUrls: {
+        adgangsplatformen: null,
+      },
+      logoutUrls: {
+        adgangsplatformen: null,
+      },
+    }
+  }
 }
