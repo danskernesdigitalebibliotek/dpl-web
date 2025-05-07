@@ -234,6 +234,8 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-location-description-text' => $this->t('Add a comma separated list for multiple locations', [], ['context' => 'advanced search']),
       'advanced-search-filter-sublocation-text' => $this->t('sublocation', [], ['context' => 'advanced search']),
       'advanced-search-filter-sublocation-description-text' => $this->t('Add a comma separated list for multiple sublocations', [], ['context' => 'advanced search']),
+      'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
+      'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
