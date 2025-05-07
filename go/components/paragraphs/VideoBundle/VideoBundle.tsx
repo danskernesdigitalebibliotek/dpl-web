@@ -6,6 +6,7 @@ import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
 import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
+import { cyKeys } from "@/cypress/support/constants"
 import type {
   ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
   ParagraphGoVideoBundleManual as VideoBundleManualType,
@@ -45,7 +46,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
   }, [works])
 
   return (
-    <div className="bg-background-overlay">
+    <div className="bg-background-overlay" data-cy={cyKeys["video-bundle"]}>
       <div className="content-container">
         <div className="my-paragraph-spacing w-full text-center">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
@@ -66,7 +67,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                   onClick={moveToPreviousMaterial}
                   variant="icon"
                   ariaLabel="Vis forrige værk"
-                  disabled={!works}>
+                  disabled={!works}
+                  data-cy={cyKeys["video-bundle-prev-button"]}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-left" />
                 </Button>
               </div>
@@ -82,7 +84,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                   onClick={moveToNextMaterial}
                   variant="icon"
                   ariaLabel="Vis næste værk"
-                  disabled={!works}>
+                  disabled={!works}
+                  data-cy={cyKeys["video-bundle-next-button"]}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                 </Button>
               </div>
