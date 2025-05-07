@@ -1,4 +1,3 @@
-import coverService from "../factories/covers/coverService"
 import SearchFacetsFactory from "../factories/fbi/searchFacets"
 import SearchWithPaginationFactory from "../factories/fbi/searchWithPagination"
 
@@ -15,10 +14,6 @@ describe("Search Result Tests", () => {
     cy.interceptGraphql({
       operationName: "searchFacets",
       data: SearchFacetsFactory.build(),
-    })
-    // Intercept covers request
-    cy.interceptCovers({
-      covers: coverService.build(),
     })
 
     cy.visit("/search")

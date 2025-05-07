@@ -1,6 +1,27 @@
-// # Disable running this job on pull requests
-// # TODO: Enable this when the Cypress mock data is ready for the front page
-describe.skip("Front Page Tests", () => {
+import GetCategories from "../factories/dpl-cms/getCategories"
+import GoFrontpage from "../factories/dpl-cms/getPageByPathQuery/go-frontpage"
+import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
+
+describe("Front Page Tests", () => {
+  beforeEach(() => {
+    cy.mockServerGraphQLQuery({
+      operationName: "getPageByPath",
+      data: GoFrontpage.build(),
+    })
+
+    cy.mockServerGraphQLQuery({
+      operationName: "getCategories",
+      data: GetCategories.build(),
+    })
+
+    cy.interceptGraphql({
+      operationName: "complexSearchForWorkTeaser",
+      data: ComplexSearchForWorkTeaser.build(),
+    })
+
+    cy.visit("/")
+  })
+
   it("Should include a header and a footer", () => {
     cy.visit("/")
 
