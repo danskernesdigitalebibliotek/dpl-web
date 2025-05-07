@@ -7,12 +7,12 @@ dependencies:
 id: go_categories
 label: 'GO Categories'
 type: 'canonical_entities:node'
-pattern: '/go/kategori/[node:title]'
+pattern: '/kategori/[node:title]'
 selection_criteria:
-  54b01021-3f3f-4389-be12-f9c6f4ec56b7:
+  284730c1-4945-4da4-818f-bdd4907174ab:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 54b01021-3f3f-4389-be12-f9c6f4ec56b7
+    uuid: 284730c1-4945-4da4-818f-bdd4907174ab
     context_mapping:
       node: node
     bundles:

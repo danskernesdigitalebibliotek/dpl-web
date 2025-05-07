@@ -10,6 +10,8 @@
  */
 
 use Drupal\Core\Extension\ModuleInstallerInterface;
+use Drupal\dpl_library_token\LibraryTokenHandler;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
@@ -571,4 +573,38 @@ function dpl_update_update_10046(): string {
  */
 function dpl_update_update_10047(): string {
   return _dpl_update_install_modules(['graphql_compose_views']);
+}
+
+/**
+ * Force a new library token to be fetched because token signature has changed.
+ */
+function dpl_update_update_10048(): string {
+  $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
+  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
+  $oldToken = $handler->getToken();
+  $success_output = [];
+
+  if ($oldToken) {
+    $success_output[] = t('Old token that was not deleted: Token: @token, properties: @props', [
+      '@token' => $oldToken->token,
+      '@props' => implode(', ', array_keys((array) $oldToken)),
+    ]);
+  }
+
+  if (!$newToken = $handler->fetchToken(
+    $config->getAgencyId(),
+    $config->getClientId(),
+    $config->getClientSecret(),
+    $config->getTokenEndpoint()
+  )) {
+    return 'Failed to fetch new library token.';
+  }
+  $handler->setToken(token: $newToken);
+
+  $success_output[] = t('New token: Token: @token, properties: @props', [
+    '@token' => $newToken->token,
+    '@props' => implode(', ', array_keys((array) $newToken)),
+  ]);
+
+  return implode(' | ', $success_output);
 }
