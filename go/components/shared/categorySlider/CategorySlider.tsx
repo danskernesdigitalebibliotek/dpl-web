@@ -84,6 +84,10 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
               const randomIndex = Math.floor(Math.random() * rotations.length)
               const isSelected = pathname === category.path
 
+              console.log("category.path", category.path)
+              console.log("pathname", pathname)
+              console.log("isSelected", isSelected)
+
               return (
                 <div className="keen-slider__slide !overflow-visible" key={category.id}>
                   <SmartLink
