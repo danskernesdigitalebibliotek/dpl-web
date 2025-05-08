@@ -8,3 +8,6 @@ bnf import nodes:
 bnf manage subscriptions:
   title: 'Can manage automatic subscriptions to BNF'
   description: 'Requires bnf_client module to be enabled to function'
+bnf administer go tags:
+  title: 'Can see tags on GO content'
+  description: 'Requires bnf_client module to be enabled to function'

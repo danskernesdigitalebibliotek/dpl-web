@@ -76,6 +76,14 @@ function bnf_client_form_alter(array &$form, FormStateInterface $form_state, str
 
   $current_user = \Drupal::currentUser();
 
+  // We want to hide field_tags on GO content for everyone without the
+  // 'bnf administer go tags' permission.
+  if (str_starts_with($node->bundle(), 'go_') && isset($form['field_tags'])) {
+    if (!$current_user->hasPermission('bnf administer go tags')) {
+      $form['field_tags']['#access'] = FALSE;
+    }
+  }
+
   if (!$current_user->hasPermission('bnf export nodes')) {
     return;
   }

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.go_page.field_paragraphs
     - field.field.node.go_page.field_publication_date
+    - field.field.node.go_page.field_tags
     - node.type.go_page
   module:
     - datetime
@@ -14,6 +15,7 @@ dependencies:
     - paragraphs_features
     - path
     - scheduler
+    - select2
 third_party_settings:
   field_group:
     group_author_date:
@@ -22,7 +24,24 @@ third_party_settings:
       label: 'Author & Date'
       region: content
       parent_name: ''
-      weight: 6
+      weight: 7
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_tagging:
+      children:
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 8
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -75,9 +94,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 10
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   path:
     type: path
-    weight: 7
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -89,6 +118,11 @@ content:
     third_party_settings: {  }
   scheduler_settings:
     weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -114,7 +148,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 8
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
