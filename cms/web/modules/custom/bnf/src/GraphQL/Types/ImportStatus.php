@@ -6,7 +6,6 @@ class ImportStatus
 {
     public const success = 'success';
     public const failure = 'failure';
-    public const duplicate = 'duplicate';
 
     public static function endpoint(): string
     {

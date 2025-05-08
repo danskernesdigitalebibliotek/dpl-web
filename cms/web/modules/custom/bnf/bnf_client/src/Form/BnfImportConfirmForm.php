@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf_client\Form;
 
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -14,6 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -105,6 +105,13 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
       '#disabled' => TRUE,
     ];
 
+    $form['bnf_keep_updated'] = [
+      '#title' => $this->t('Keep updated with Delingstjenesten', [], ['context' => 'BNF']),
+      '#type' => 'checkbox',
+      '#description' => $this->t('Keep this content, which originates from Delingstjenesten, up to date when a new version is available. This will overwrite any custom changes you may have made. <strong>You can always change your mind directly on the content.</strong>', [], ['context' => 'BNF']),
+      '#default_value' => TRUE,
+    ];
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Import content'),
@@ -126,23 +133,25 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $uuid = $form_state->get('uuid');
+    $keepUpdated = !empty($form_state->getValue('bnf_keep_updated'));
     $bnfServer = $form_state->get('bnfServer');
 
     try {
-      $node = $this->bnfImporter->importNode($uuid, $bnfServer);
+      $node = $this->bnfImporter->importNode($uuid, $bnfServer, $keepUpdated);
+
+      if (!($node instanceof NodeInterface)) {
+        throw new \Exception('Importer did not return a node instance.');
+      }
+
       $node->setUnpublished();
       $node->save();
+
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {
       $this->messenger->addError($this->t('Could not import node from BNF.', [], ['context' => 'BNF']));
 
-      if ($e instanceof AlreadyExistsException) {
-        $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
-      }
-      else {
-        $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
-      }
+      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
     }
 
   }

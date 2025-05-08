@@ -52,6 +52,7 @@ permissions:
   - 'administer url aliases'
   - 'bnf export nodes'
   - 'bnf import nodes'
+  - 'bnf manage subscriptions'
   - 'break content lock'
   - 'change own username'
   - 'clone node entity'
