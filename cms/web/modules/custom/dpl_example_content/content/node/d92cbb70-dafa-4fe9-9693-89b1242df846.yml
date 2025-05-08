@@ -1,0 +1,59 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: d92cbb70-dafa-4fe9-9693-89b1242df846
+  bundle: go_category
+  default_langcode: da
+  depends:
+    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Overrask mig'
+  created:
+    -
+      value: 1746540620
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  bnf_state:
+    -
+      value: 0
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Overrask mig | DPL CMS'
+  path:
+    -
+      alias: /kategori/overrask-mig
+      langcode: und
+      pathauto: 1
+  field_category_menu_image:
+    -
+      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+  field_category_menu_title:
+    -
+      value: 'Overrask mig'
+  field_publication_date:
+    -
+      value: '2025-05-06'

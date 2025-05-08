@@ -1,0 +1,59 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: d92feb2f-8e49-4680-9512-472df40a5e76
+  bundle: go_category
+  default_langcode: da
+  depends:
+    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Kærlighed
+  created:
+    -
+      value: 1746540357
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  bnf_state:
+    -
+      value: 0
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Kærlighed | DPL CMS'
+  path:
+    -
+      alias: /kategori/kaerlighed
+      langcode: und
+      pathauto: 1
+  field_category_menu_image:
+    -
+      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+  field_category_menu_title:
+    -
+      value: Kærlighed
+  field_publication_date:
+    -
+      value: '2025-05-06'
