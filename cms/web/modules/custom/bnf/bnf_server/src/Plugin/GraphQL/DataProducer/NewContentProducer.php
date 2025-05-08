@@ -9,8 +9,8 @@ use Drupal\bnf_server\GraphQL\NewContentResponse;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
-use Drupal\node\Entity\Node;
 use Safe\DateTime;
 
 /**
@@ -59,7 +59,7 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
   /**
    * Provide the response to the `newContent` query.
    */
-  public function resolve(string $termUuid, string $since): NewContentResponse {
+  public function resolve(string $termUuid, string $since, FieldContext $fieldContext): NewContentResponse {
     $result = new NewContentResponse();
 
     try {
@@ -71,9 +71,13 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
       return $result;
     }
 
+    // The `node_list` cache tag is cleared when saving any node, so we'll be
+    // able to catch both changes to existing nodes and new nodes.
+    $fieldContext->addCacheTags($this->nodeStorage->getEntityType()->getListCacheTags());
+    $fieldContext->addCacheContexts($this->nodeStorage->getEntityType()->getListCacheContexts());
+
     $query = $this->nodeStorage->getQuery();
-    $query->condition('created', $since->getTimestamp(), '>')
-      ->condition('status', Node::PUBLISHED);
+    $query->condition('changed', $since->getTimestamp(), '>');
 
     $query->condition(
       $query->orConditionGroup()
@@ -81,9 +85,21 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
         ->condition('field_tags.entity:taxonomy_term.uuid', $termUuid)
     );
 
-    $nids = $query->accessCheck(TRUE)->execute();
+    $nids = $query->accessCheck()->execute();
+
+    /** @var \Drupal\node\Entity\Node[] $nodes */
     $nodes = $this->nodeStorage->loadMultiple(array_keys($nids));
-    $result->uuids = array_map(fn ($node) => (string) $node->uuid(), $nodes);
+
+    if ($nodes) {
+      $result->uuids = array_map(fn ($node) => (string) $node->uuid(), $nodes);
+
+      $youngest = array_reduce($nodes, fn ($youngest, $node) => max($youngest, $node->changed->value), 0);
+      $youngest = new DateTime("@$youngest");
+      $result->youngest = $youngest->format(\DateTimeInterface::RFC3339);
+    }
+    else {
+      $result->youngest = $since->format(\DateTimeInterface::RFC3339);
+    }
 
     return $result;
   }

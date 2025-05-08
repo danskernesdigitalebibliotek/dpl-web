@@ -3,15 +3,21 @@
   <p>
     {{ 'It would appear that you have not logged in to BNF through your origin library.'|trans({}, {"context": "BNF"}) }}
   </p>
-  <p>
-    {{ 'To import this content, you can either:'|trans({}, {"context": "BNF"}) }}
-  </p>
-  <ul>
-    <li>{{ 'Go back to your library site, and choose "log in to BNF", and try again'|trans({}, {"context": "BNF"}) }}</li>
-    <li>{{ 'Or:'|trans({}, {"context": "BNF"}) }}</li>
-    <li>
-      {{ 'Go back to your library site, and press import at:'|trans({}, {"context": "BNF"}) }}
-      <br><strong><em>/admin/bnf/import/{{ uuid }}</em></strong>
-    </li>
-  </ul>
+  {% if node_uuid %}
+    <p>
+      {{ 'To import this content, you can either:'|trans({}, {"context": "BNF"}) }}
+    </p>
+    <ul>
+      <li>{{ 'Go back to your library site, and choose "log in to BNF", and try again'|trans({}, {"context": "BNF"}) }}</li>
+      <li>{{ 'Or:'|trans({}, {"context": "BNF"}) }}</li>
+      <li>
+        {{ 'Go back to your library site, and press import at:'|trans({}, {"context": "BNF"}) }}
+        <br><strong><em>/admin/bnf/import/{{ uuid }}</em></strong>
+      </li>
+    </ul>
+  {% else %}
+    <p>
+      {{ 'Please return to your library site, and choose "log in to BNF", and try again'|trans({}, {"context": "BNF"}) }}
+    </p>
+  {% endif %}
 </div>

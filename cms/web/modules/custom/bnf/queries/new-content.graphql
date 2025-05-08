@@ -1,0 +1,9 @@
+query NewContent($uuid: String!, $since: Time!) {
+  newContent(uuid: $uuid, since: $since) {
+    uuids,
+    youngest,
+    errors {
+      message
+    }
+  }
+}

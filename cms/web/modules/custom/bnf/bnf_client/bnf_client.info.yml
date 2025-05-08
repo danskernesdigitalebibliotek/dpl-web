@@ -6,4 +6,6 @@ core_version_requirement: ^10
 configure: bnf_client.settings
 dependencies:
   - bnf:bnf
+  - autowire_plugin_trait:autowire_plugin_trait
+  - job_scheduler:job_scheduler
   - drupal_typed:drupal_typed

@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Routing\AdminContext;
 use Drupal\dpl_go\GoSite;
 use Drupal\dpl_go\PathProcessor\OutboundPathProcessor;
 use Drupal\Tests\UnitTestCase;
@@ -34,6 +35,13 @@ class OutboundPathProcessorTest extends UnitTestCase {
   protected ObjectProphecy $nodeStorage;
 
   /**
+   * AdminContext mock.
+   *
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\Routing\AdminContext>
+   */
+  protected ObjectProphecy $adminContext;
+
+  /**
    * The subject under test.
    */
   protected OutboundPathProcessor $pathProcessor;
@@ -50,9 +58,14 @@ class OutboundPathProcessorTest extends UnitTestCase {
 
     $this->goSite = $this->prophesize(GoSite::class);
     $this->goSite->getGoBaseUrl();
+
+    $this->adminContext = $this->prophesize(AdminContext::class);
+    $this->adminContext->isAdminRoute()->willReturn(FALSE);
+
     $this->pathProcessor = new OutboundPathProcessor(
       $this->goSite->reveal(),
       $typeManager->reveal(),
+      $this->adminContext->reveal(),
     );
   }
 
@@ -121,6 +134,37 @@ class OutboundPathProcessorTest extends UnitTestCase {
       'CMS node on Go' => ['12', FALSE, TRUE, 'https://cms.site'],
       'CMS node on CMS' => ['12', FALSE, FALSE, NULL],
     ];
+  }
+
+  /**
+   * Test that rewriting is disabled on admin pages.
+   *
+   * @dataProvider nodeCases
+   */
+  public function testNoRewritingOnAdminPages(
+    string $nid,
+    bool $isGoNode,
+    bool $isGo,
+    ?string $ignored,
+  ): void {
+    $node = $this->prophesize(EntityBase::class);
+    $this->nodeStorage->load($nid)->willReturn($node);
+    $this->goSite->isGoSite()->willReturn($isGo);
+    $this->goSite->isGoNode($node)->willReturn($isGoNode);
+    $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
+    $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
+    $this->adminContext->isAdminRoute()->willReturn(TRUE);
+
+    $options = [];
+    $newPath = $this->pathProcessor->processOutbound(
+      "/node/{$nid}",
+      $options,
+      new Request(),
+      new BubbleableMetadata(),
+    );
+
+    $this->assertEquals("/node/{$nid}", $newPath);
+    $this->assertArrayNotHasKey('base_url', $options);
   }
 
 }
