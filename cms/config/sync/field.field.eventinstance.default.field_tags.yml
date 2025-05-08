@@ -5,7 +5,7 @@ dependencies:
   config:
     - field.storage.eventinstance.field_tags
     - recurring_events.eventinstance_type.default
-    - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.tags
 id: eventinstance.default.field_tags
 field_name: field_tags
 entity_type: eventinstance
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      categories: categories
+      tags: tags
     sort:
       field: name
       direction: asc
