@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Routing\AdminContext;
 use Drupal\dpl_go\GoSite;
 use Symfony\Component\HttpFoundation\Request;
 use function Safe\preg_match;
@@ -28,6 +29,7 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
   public function __construct(
     protected GoSite $goSite,
     EntityTypeManagerInterface $entityTypeManager,
+    protected AdminContext $adminContext,
   ) {
     $this->nodeStorage = $entityTypeManager->getStorage('node');
   }
@@ -50,6 +52,11 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
     Request $request = NULL,
     BubbleableMetadata $bubbleableMetadata = NULL,
   ): string {
+    // Don't rewrite on admin pages, messes with field editing.
+    if ($this->adminContext->isAdminRoute()) {
+      return $path;
+    }
+
     $pathParts = explode('/', $path);
 
     if (
@@ -71,6 +78,7 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
         $isGoNode = $this->goSite->isGoNode($node);
 
         if ($isGoNode xor $this->goSite->isGoSite()) {
+          $options['absolute'] = TRUE;
           $options['base_url'] = $isGoNode ?
             $this->goSite->getGoBaseUrl() :
             $this->goSite->getCmsBaseUrl();
