@@ -63,6 +63,10 @@ abstract class BnfMapperImportedLinkFieldPluginBase extends BnfMapperPluginBase 
         $node = $this->importer->importNode($object->id, $this->importContext->current());
       }
 
+      if (!$node) {
+        return NULL;
+      }
+
       $goLinkValue = [
         'uri' => $node->toUrl()->toString(),
         'title' => $object->title,
