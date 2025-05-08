@@ -84,8 +84,6 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Favorites list']),
       "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Favorites list']),
       "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Favorites list']),
-      'mapp-domain-config' => \Drupal::config('dpl_mapp.settings')->get('domain'),
-      'mapp-id-config' => \Drupal::config('dpl_mapp.settings')->get('id'),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
