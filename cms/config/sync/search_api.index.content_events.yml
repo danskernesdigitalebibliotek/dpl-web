@@ -133,10 +133,10 @@ datasource_settings:
       selected: {  }
   'entity:node':
     bundles:
-      default: false
+      default: true
       selected:
-        - article
-        - page
+        - branch
+        - campaign
     languages:
       default: true
       selected: {  }
