@@ -14,7 +14,7 @@ import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/gra
 import { WorkId } from "@/lib/types/ids"
 
 export type VideoBundleProps = {
-  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] | undefined
+  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   title: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
   videoUrl: string
 }
@@ -73,7 +73,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
               <div className="col-span-4">
                 <WorkCardStackedWithCaption
                   currentItemNumber={currentItemNumber}
-                  works={works || []}
+                  works={works}
                   materialOrder={materialOrder}
                 />
               </div>

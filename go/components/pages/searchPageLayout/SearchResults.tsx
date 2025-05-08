@@ -3,7 +3,7 @@
 import Link from "next/link"
 import React from "react"
 
-import WorkCard, { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import {
   ManifestationWorkPageFragment,
@@ -31,8 +31,8 @@ const SearchResults = ({ works }: SearchResultProps) => {
           .bestRepresentation as ManifestationWorkPageFragment
 
         // Filter and manifestations
-        const filteredManifestations = filterManifestationsByMaterialType(
-          filterManifestationsByEdition(manifestations)
+        const filteredManifestations = filterManifestationsByEdition(
+          filterManifestationsByMaterialType(manifestations)
         )
         // Sort manifestations
         const sortedManifestations = sortManifestationsBySortPriority(filteredManifestations)
@@ -45,23 +45,34 @@ const SearchResults = ({ works }: SearchResultProps) => {
           bestRepresentation = sortedManifestations[0]
         }
 
+        const title = work.titles.full[0] || ""
+        const url = bestRepresentation
+          ? resolveUrl({
+              routeParams: { work: "work", wid: work.workId },
+              queryParams: {
+                type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
+              },
+            })
+          : ""
+
         return (
           <div key={work.workId} className="col-span-3 lg:col-span-4">
             <Link
-              aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+              aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
               className="focus-visible"
-              href={resolveUrl({
-                routeParams: { work: "work", wid: work.workId },
-                queryParams: { type: bestRepresentation.materialTypes[0].materialTypeGeneral.code },
-              })}>
-              <WorkCardWithCaption title={work.titles.full[0]} creators={work.creators || []}>
-                <WorkCard
-                  workId={work.workId}
-                  title={work.titles.full[0]}
-                  bestRepresentation={bestRepresentation}
-                  manifestations={sortedManifestations}
-                  isWithTilt
-                />
+              href={url}>
+              <WorkCardWithCaption title={title} creators={work.creators || []}>
+                {bestRepresentation ? (
+                  <WorkCard
+                    workId={work.workId}
+                    title={title}
+                    bestRepresentation={bestRepresentation}
+                    manifestations={sortedManifestations}
+                    isWithTilt
+                  />
+                ) : (
+                  <WorkCardEmpty />
+                )}
               </WorkCardWithCaption>
             </Link>
           </div>
