@@ -43,6 +43,9 @@ default:
   revision_translation_affected:
     -
       value: true
+  bnf_state:
+    -
+      value: 0
   entity_clone_template_active:
     -
       value: false
@@ -63,12 +66,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=2C13RpeH'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=kSWVI0F0'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=2C13RpeH'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=kSWVI0F0'
     -
       tag: meta
       attributes:

@@ -5,6 +5,7 @@ _meta:
   bundle: go_category
   default_langcode: da
   depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
     109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
     d219e4de-4984-487e-8e21-9f56c0a0335c: media
 default:
@@ -38,6 +39,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
