@@ -33,7 +33,6 @@ export const fetcher = async <ResponseType>({
     })
 
     if (!response.ok) {
-      console.error(response.status, response.statusText, serviceUrl)
       const data = await response.json()
       throw Error(JSON.stringify(data))
     }
