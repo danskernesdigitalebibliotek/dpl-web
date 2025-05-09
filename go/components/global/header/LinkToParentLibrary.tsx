@@ -18,7 +18,7 @@ const LinkToParentLibrary = () => {
         linkType="external"
         href={parentLibraryUrl}
         target="_blank">
-        {dplCmsConfig?.libraryInfo.name}
+        {dplCmsConfig?.libraryInfo.name || "dit lokale bibliotek"}
       </SmartLink>
     </p>
   )

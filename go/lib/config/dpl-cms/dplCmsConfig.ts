@@ -54,7 +54,7 @@ const dplCmsPublicConfigSchema = z.object({
       adgangsplatformen: z.string().nullable(),
     }),
     libraryInfo: z.object({
-      name: z.string(),
+      name: z.string().nullable(),
     }),
   }),
 })
@@ -81,7 +81,7 @@ export const getDplCmsPublicConfig = async () => {
         adgangsplatformen: null,
       },
       libraryInfo: {
-        name: "",
+        name: null,
       },
     }
   }
