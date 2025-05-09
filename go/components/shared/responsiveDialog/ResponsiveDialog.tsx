@@ -48,7 +48,7 @@ function ResponsiveDialog({
             <DialogHeader>
               <DialogTitle>{title}</DialogTitle>
               {description && <DialogDescription>{description}</DialogDescription>}
-              <hr className="go-divider mt-5 mb-10" />
+              <hr className="mt-5 mb-10" />
             </DialogHeader>
             <DialogBody>{children}</DialogBody>
           </DialogContent>
