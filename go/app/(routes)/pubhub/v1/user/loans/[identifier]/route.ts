@@ -19,7 +19,7 @@ const createLoan = createLoanSchema.transform(loanData => {
     ...(internalordernumber && { orderNumber: internalordernumber }),
     ...(retailerordernumber && { orderId: retailerordernumber }),
     code,
-    message,
+    message: `${message} (#${code})`,
   }
 })
 

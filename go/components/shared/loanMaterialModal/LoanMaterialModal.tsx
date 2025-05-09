@@ -20,6 +20,7 @@ import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import useGetV1LibraryProfile from "@/lib/rest/publizon/useGetV1LibraryProfile"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
@@ -66,7 +67,10 @@ const LoanMaterialModal = ({
   const { mutate } = usePostV1UserLoansIdentifier()
   const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
-  const [publizonError, setPublizonError] = useState<{ code: number; message: string } | null>(null)
+  const [publizonError, setPublizonError] = useState<{
+    code: ApiResponseCode
+    message: string
+  } | null>(null)
   const { closeModal } = modalStore.trigger
   const handleLoanMaterial = () => {
     setIsHandlingLoan(true)
@@ -82,7 +86,6 @@ const LoanMaterialModal = ({
         onError: error => {
           if (error instanceof Error) {
             const errorData = JSON.parse(error.message)
-
             setPublizonError(errorData)
             setIsHandlingLoan(false)
           }

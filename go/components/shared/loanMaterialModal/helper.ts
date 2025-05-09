@@ -1,3 +1,5 @@
+import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
+
 export const publizonErrorMessageMap = {
   105: "Bogen er desværre ikke tilgængelig for udlån lige nu (#105)",
   114: "Ugyldigt kortnummer og/eller pinkode (#114)",
@@ -24,4 +26,4 @@ export const publizonErrorMessageMap = {
   146: "Du har ikke adgang til digitale materialer fra dette bibliotek, da du ikke er registreret som bosiddende i Kommunen. Kontakt biblioteket (#146)",
   147: "Der kunne ikke findes et land med den givne landekode (#147)",
   148: "Der er sket en uventet fejl (#148)",
-} as Record<number, string>
+} as unknown as Record<ApiResponseCode, string>
