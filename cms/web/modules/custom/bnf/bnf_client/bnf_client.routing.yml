@@ -21,7 +21,7 @@ bnf_client.sync_form:
     _form: '\Drupal\bnf_client\Form\BnfSyncForm'
     _title: 'Sync content from Delingstjenesten'
   requirements:
-    _permission: 'bnf client import nodes'
+    _permission: 'bnf import nodes'
 
 bnf_client.server_redirect:
   path: '/admin/bnf/login'
