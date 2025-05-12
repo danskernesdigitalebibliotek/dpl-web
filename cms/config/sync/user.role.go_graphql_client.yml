@@ -12,3 +12,4 @@ is_admin: null
 permissions:
   - 'execute graphql_compose_server arbitrary graphql requests'
   - 'rewrite go urls'
+  - 'get dpl graphql cache tags'
