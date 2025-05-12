@@ -1,10 +1,6 @@
 <?php
 
 /**
- * @file
- */
-
-/**
  * Make sure that we have properly configured the Next Site.
  */
 function dpl_go_deploy_0001_create_next_go_site_configuration(): string {
@@ -23,17 +19,16 @@ function dpl_go_deploy_0001_create_next_go_site_configuration(): string {
 
   $preview_url = sprintf('%s/preview', $base_url);
 
+  // Default revalidate URL and preview/revalidates for development.
+  $revalidate_url = sprintf('%s/cache/revalidate', 'http://host.docker.internal:3000');
+  $preview_secret = 'HRGx27rJGAB8Dy8mJDRd';
+  $revalidate_secret = 'CeXF8E2Rd9wXZ2sswFHR';
+
   // Set the revalidate URL and preview/revalidates for production.
   if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'production') {
     $revalidate_url = sprintf('%s/cache/revalidate', $base_url);
     $preview_secret = getenv('DRUPAL_PREVIEW_SECRET');
     $revalidate_secret = getenv('DRUPAL_REVALIDATE_SECRET');
-  }
-  // Set the revalidate URL and preview/revalidates for development.
-  if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'local') {
-    $revalidate_url = sprintf('%s/cache/revalidate', 'http://host.docker.internal:3000');
-    $preview_secret = 'HRGx27rJGAB8Dy8mJDRd';
-    $revalidate_secret = 'CeXF8E2Rd9wXZ2sswFHR';
   }
 
   // Define the entity data.

@@ -3,7 +3,6 @@
 namespace Drupal\dpl_graphql\EventSubscriber;
 
 use Drupal\Core\Cache\CacheableJsonResponse;
-use Drupal\Core\Cache\CacheableResponseInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -37,7 +36,7 @@ class CacheableResponseSubscriber implements EventSubscriberInterface {
    * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
    *   The event to process.
    */
-  public function onRespond(ResponseEvent $event) {
+  public function onRespond(ResponseEvent $event): void {
     if (!$event->isMainRequest()) {
       return;
     }
