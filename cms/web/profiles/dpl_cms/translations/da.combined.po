@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-05-12 13:05+0200\n"
-"PO-Revision-Date: 2025-05-12 13:05+0200\n"
+"POT-Creation-Date: 2025-05-12 13:51+0200\n"
+"PO-Revision-Date: 2025-05-12 13:51+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3859,6 +3859,19 @@ msgid "Invalid URL or UUID."
 msgstr "Fejlagtig URL eller UUID."
 
 msgctxt "BNF"
+msgid "Refresh all subscriptions?"
+msgstr ""
+
+msgctxt "BNF"
+msgid ""
+"This will check for new updates on subscriptions and content, and update if "
+"necessary."
+msgstr ""
+
+msgid "Refresh subscriptions"
+msgstr ""
+
+msgctxt "BNF"
 msgid "Label"
 msgstr ""
 
@@ -5201,6 +5214,9 @@ msgstr "Importér"
 
 msgid "Confirm import"
 msgstr "Bekræft import"
+
+msgid "Sync content from Delingstjenesten"
+msgstr ""
 
 msgid "BNF Server"
 msgstr "Delingstjenesten Server"
