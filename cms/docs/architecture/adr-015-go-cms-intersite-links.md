@@ -46,7 +46,7 @@ Drupal user 1 isn't able to use the Go front-end, as the link logic
 will be reversed. This is because user 1 is explicitly excluded from
 the above check, as user 1 always gets all permissions. This is purely
 a theoretical limitation, user 1 isn't able to log into the Go site as
-it uses Unilogin for authentication.
+the Go site uses Unilogin for authentication.
 
 Currently it only affects the base part of the URL and assumes that
 the path itself it the same across the sites. Which is a reasonable
