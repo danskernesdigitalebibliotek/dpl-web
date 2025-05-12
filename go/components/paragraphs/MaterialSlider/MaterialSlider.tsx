@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
+  getBestRepresentationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import { WheelControls, defaultSliderOptions } from "@/components/paragraphs/MaterialSlider/helper"
@@ -94,27 +95,20 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works &&
                 works.map(work => {
-                  const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
-                  let bestRepresentation = work.manifestations
-                    .bestRepresentation as ManifestationWorkPageFragment
-
-                  // Filter and manifestations
-                  const filteredManifestations = filterManifestationsByEdition(
-                    filterManifestationsByMaterialType(manifestations)
+                  const manifestations = sortManifestationsBySortPriority(
+                    filterManifestationsByEdition(
+                      filterManifestationsByMaterialType(
+                        work.manifestations.all as ManifestationWorkPageFragment[]
+                      )
+                    )
                   )
-                  // Sort manifestations
-                  const sortedManifestations =
-                    sortManifestationsBySortPriority(filteredManifestations)
-                  // check if bestRepresentation is located in the sortedManifestations
-                  const isBestRepresentationInSortedManifestations = sortedManifestations.some(
-                    manifestation => manifestation.pid === bestRepresentation?.pid
-                  )
-                  // if not, set bestRepresentation to the first manifestation in sortedManifestations
-                  if (!isBestRepresentationInSortedManifestations) {
-                    bestRepresentation = sortedManifestations[0]
-                  }
 
-                  const title = work.titles.full[0] || ""
+                  const bestRepresentation = getBestRepresentationOrFallbackManifestation(
+                    work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
+                    manifestations
+                  )
+
+                  const title = work.titles.full[0]
                   const url = bestRepresentation
                     ? resolveUrl({
                         routeParams: { work: "work", wid: work.workId },
@@ -137,7 +131,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                             workId={work.workId}
                             title={title}
                             bestRepresentation={bestRepresentation}
-                            manifestations={sortedManifestations}
+                            manifestations={manifestations}
                             isWithTilt={true}
                           />
                         ) : (
