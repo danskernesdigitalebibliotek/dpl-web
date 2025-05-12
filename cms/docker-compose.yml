@@ -176,7 +176,7 @@ services:
       # is based on some documentation in Lagoon about hosting a node service:
       # https://docs.lagoon.sh/docker-images/nodejs/#docker-composeyml-snippet
       # We could revise in the future if we need more space.
-      lagoon.persistent.size: 500Mi
+      lagoon.persistent.size: 2Gi
 volumes:
   projectroot:
     driver: local
