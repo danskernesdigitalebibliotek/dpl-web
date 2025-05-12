@@ -30,13 +30,7 @@ const MaterialSliderAutomatic = ({
 
   if (isLoading) return <MaterialSliderSkeleton />
 
-  const works = data?.complexSearch.works
-
-  if (!works) {
-    throw new Error("No works found")
-  }
-
-  return <MaterialSlider works={works} title={titleOptional} />
+  return <MaterialSlider works={data?.complexSearch.works} title={titleOptional} />
 }
 
 export default MaterialSliderAutomatic

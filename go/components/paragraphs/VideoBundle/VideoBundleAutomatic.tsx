@@ -36,13 +36,13 @@ const VideoBundleAutomatic = ({
   )
 
   if (isLoading) return <VideoBundleSkeleton />
-
-  const works = data?.complexSearch.works
-  if (!works) {
-    throw new Error("No works found")
-  }
-
-  return <VideoBundle works={works} title={goVideoTitle} videoUrl={embedVideo.mediaVideotool} />
+  return (
+    <VideoBundle
+      works={data?.complexSearch.works}
+      title={goVideoTitle}
+      videoUrl={embedVideo.mediaVideotool}
+    />
+  )
 }
 
 export default VideoBundleAutomatic

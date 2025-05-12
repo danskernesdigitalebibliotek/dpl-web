@@ -29,7 +29,7 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type MaterialSliderProps = {
-  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
+  works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   title: ParagraphGoMaterialSliderAutomatic["title"] | ParagraphGoMaterialSliderManual["title"]
 }
 
