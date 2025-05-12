@@ -32,6 +32,9 @@ default:
   revision_translation_affected:
     -
       value: true
+  bnf_state:
+    -
+      value: 0
   entity_clone_template_active:
     -
       value: false
@@ -52,12 +55,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=374ecb1b&itok=QVdp7abf'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=374ecb1b&itok=MqWGTS7c'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=374ecb1b&itok=QVdp7abf'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=374ecb1b&itok=MqWGTS7c'
     -
       tag: meta
       attributes:

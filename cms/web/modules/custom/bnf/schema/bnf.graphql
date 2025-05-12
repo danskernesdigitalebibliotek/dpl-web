@@ -105,6 +105,10 @@ type DplTokens {
 """An email address."""
 scalar Email
 
+type Error {
+  message: String!
+}
+
 """A file object to represent an managed file."""
 type File {
   """Filens navn."""
@@ -205,7 +209,6 @@ type ImportResponse {
 enum ImportStatus {
   success
   failure
-  duplicate
 }
 
 """Generic input for key-value pairs."""
@@ -419,7 +422,8 @@ type Mutation {
 
 type NewContentResponse {
   uuids: [String!]!
-  errors: [Violation]
+  youngest: Time!
+  errors: [Error!]!
 }
 
 """
@@ -565,7 +569,7 @@ type NodeGoArticle implements NodeInterface {
 }
 
 """
-GO category pages will be used for creating a "landingpage" for specific categories. 
+GO category pages will be used for creating a "landingpage" for specific categories.
 When creating and publishing a new category page, the category will automatically be added to the category menu.
 """
 type NodeGoCategory implements NodeInterface {
@@ -1045,7 +1049,7 @@ type ParagraphFiles implements ParagraphInterface {
 }
 
 """
-This paragraph displays a generated a list of events, based on specified filters for tags, categories and branches. 
+This paragraph displays a generated a list of events, based on specified filters for tags, categories and branches.
 """
 type ParagraphFilteredEventList implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -1165,7 +1169,7 @@ type ParagraphGoLinkbox implements ParagraphInterface {
 }
 
 """
-This paragraph is used for displaying a range of materials based on a CQL search string. 
+This paragraph is used for displaying a range of materials based on a CQL search string.
 """
 type ParagraphGoMaterialSliderAutomatic implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -1406,7 +1410,7 @@ type ParagraphLanguageSelector implements ParagraphInterface {
 }
 
 """
-Links with icons. Designed for internal/external links and links to search results. 
+Links with icons. Designed for internal/external links and links to search results.
 """
 type ParagraphLinks implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -1448,7 +1452,7 @@ type ParagraphManualEventList implements ParagraphInterface {
 
 """
 Please use the "Material grid link automatically" instead! This paragraph will be deprecated in the future.
-A grid representation of recommended materials, based on a CQL search string. 
+A grid representation of recommended materials, based on a CQL search string.
 """
 type ParagraphMaterialGridAutomatic implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -1483,7 +1487,7 @@ type ParagraphMaterialGridAutomatic implements ParagraphInterface {
   materialGridDescription: String
 
   """
-  The title for the material grid. Leave this blank if you do not want a title. 
+  The title for the material grid. Leave this blank if you do not want a title.
   """
   materialGridTitle: String
 
@@ -1492,7 +1496,7 @@ type ParagraphMaterialGridAutomatic implements ParagraphInterface {
 }
 
 """
-A grid representation of recommended materials, based on a link search string. 
+A grid representation of recommended materials, based on a link search string.
 """
 type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -1526,7 +1530,7 @@ type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
   materialGridLink: String!
 
   """
-  The title for the material grid. Leave this blank if you do not want a title. 
+  The title for the material grid. Leave this blank if you do not want a title.
   """
   materialGridTitle: String
 
@@ -1551,7 +1555,7 @@ type ParagraphMaterialGridManual implements ParagraphInterface {
   materialGridDescription: String
 
   """
-  The title for the material grid. Leave this blank if you do not want a title. 
+  The title for the material grid. Leave this blank if you do not want a title.
   """
   materialGridTitle: String
 
@@ -1630,9 +1634,9 @@ type ParagraphNavSpotsManual implements ParagraphInterface {
 }
 
 """
-This is a paragraph for displaying the opening hours for the branch it is applied to. 
+This is a paragraph for displaying the opening hours for the branch it is applied to.
 
-Opening hours are created under the settings of a branch. 
+Opening hours are created under the settings of a branch.
 """
 type ParagraphOpeningHours implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -2402,8 +2406,6 @@ type ViewReference {
 
 """All available view result types."""
 union ViewResultUnion = GoCategoriesResult
-
-scalar Violation
 
 """Et WorkID-felt."""
 type WorkId {

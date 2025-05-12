@@ -5,6 +5,8 @@ version: "3"
 
 dotenv: [".task.env"]
 
+interval: 500ms
+
 includes:
   translations: ./task/Taskfile.translations.yml
   lagoon: ./task/Taskfile.lagoon.yml
@@ -71,6 +73,25 @@ tasks:
     preconditions:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
+
+  dev:watch:
+    summary: Watch source for changes and clear cache.
+    watch: true
+    sources:
+      - 'web/modules/**/*'
+      - 'web/themes/**/*'
+    cmds:
+      - task dev:cli -- drush cache-rebuild
+
+  dev:watch:bnf:
+    summary: Watch source for changes and clear cache, including BNF.
+    watch: true
+    sources:
+      - 'web/modules/**/*'
+      - 'web/themes/**/*'
+    cmds:
+      - task dev:cli -- drush cache-rebuild
+      - task dev:bnfcli -- drush cache-rebuild
 
   dev:bnf:enable:
     summary: Set env up for BNF development.

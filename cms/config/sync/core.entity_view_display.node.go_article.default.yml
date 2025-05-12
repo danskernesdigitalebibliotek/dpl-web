@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_tags
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
     - node.type.go_article
@@ -27,7 +28,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 114
+    weight: 7
     region: content
   field_override_author:
     type: string
@@ -35,7 +36,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 106
+    weight: 2
     region: content
   field_publication_date:
     type: datetime_default
@@ -44,7 +45,7 @@ content:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
-    weight: 113
+    weight: 6
     region: content
   field_show_override_author:
     type: boolean
@@ -54,14 +55,14 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 107
+    weight: 3
     region: content
   field_subtitle:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 101
+    weight: 1
     region: content
   field_teaser_image:
     type: entity_reference_label
@@ -69,7 +70,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 109
+    weight: 5
     region: content
   field_teaser_text:
     type: string
@@ -77,14 +78,15 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 108
+    weight: 4
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
   field_paragraphs: true
+  field_tags: true
   langcode: true
   search_api_excerpt: true

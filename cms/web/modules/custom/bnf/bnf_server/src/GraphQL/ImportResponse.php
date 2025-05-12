@@ -12,7 +12,7 @@ class ImportResponse {
   /**
    * Result of the import.
    *
-   * Either 'success', 'failure' or 'duplicate'.
+   * Either 'success' or 'failure'.
    */
   public ImportStatus $status = ImportStatus::Failure;
 

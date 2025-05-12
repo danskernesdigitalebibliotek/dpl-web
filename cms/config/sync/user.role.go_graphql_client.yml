@@ -5,6 +5,8 @@ dependencies:
   module:
     - dpl_go
     - graphql
+    - paragraphs
+    - view_unpublished
 id: go_graphql_client
 label: 'GO GraphQL Client'
 weight: 10
@@ -13,3 +15,5 @@ permissions:
   - 'execute graphql_compose_server arbitrary graphql requests'
   - 'rewrite go urls'
   - 'get dpl graphql cache tags'
+  - 'view any unpublished content'
+  - 'view unpublished paragraphs'

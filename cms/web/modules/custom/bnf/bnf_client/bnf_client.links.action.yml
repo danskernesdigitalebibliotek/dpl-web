@@ -1,0 +1,6 @@
+---
+bnf_client.import:
+  title: 'Refresh subscriptions'
+  route_name: bnf_client.sync_form
+  appears_on:
+    - entity.bnf_subscription.collection

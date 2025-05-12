@@ -18,4 +18,9 @@ class NewContentResponse extends Response {
    */
   public array $uuids = [];
 
+  /**
+   * Timestamp of last entry.
+   */
+  public string $youngest = '';
+
 }

@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.go_category.field_go_color
     - field.field.node.go_category.field_paragraphs
     - field.field.node.go_category.field_publication_date
+    - field.field.node.go_category.field_tags
     - node.type.go_category
   module:
     - datetime
@@ -19,6 +20,7 @@ dependencies:
     - paragraphs_features
     - path
     - scheduler
+    - select2
 third_party_settings:
   field_group:
     group_category_info:
@@ -45,7 +47,24 @@ third_party_settings:
       label: 'Author & Date'
       region: content
       parent_name: ''
-      weight: 7
+      weight: 8
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_tagging:
+      children:
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 9
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -113,9 +132,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 10
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   path:
     type: path
-    weight: 8
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -131,7 +160,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 10
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -157,7 +186,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 9
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -249,9 +249,14 @@ display:
         options:
           view_modes:
             'entity:eventseries':
+              ':default': list_teaser
               default: list_teaser
             'entity:node':
+              ':default': list_teaser
               article: list_teaser
+              go_article: list_teaser
+              go_category: list_teaser
+              go_page: list_teaser
               page: list_teaser
       query:
         type: search_api_query

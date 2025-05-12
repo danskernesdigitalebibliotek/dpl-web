@@ -14,6 +14,7 @@ use Drush\Attributes\Help;
 use Drush\Attributes\Usage;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
+use Safe\DateTime;
 
 /**
  * Commands for subscription management.
@@ -47,9 +48,10 @@ class SubscriptionCommands extends DrushCommands {
     name: 'drush bnf:subscription:create 8f647000-cb67-40d0-b942-3f7fbf899c88',
     description: 'Subscribe to 8f647000-cb67-40d0-b942-3f7fbf899c88.'
   )]
-  public function createSubscription(string $uuid = ''): void {
+  public function createSubscription(string $uuid = '', string $label = ''): void {
     $this->storage->create([
       'subscription_uuid' => $uuid,
+      'label' => $label,
     ])
       ->save();
   }
@@ -71,6 +73,21 @@ class SubscriptionCommands extends DrushCommands {
   }
 
   /**
+   * Delete all subscription.
+   */
+  #[Command(name: 'bnf:subscription:delete-all')]
+  #[Help(description: 'Delete all subscriptions')]
+  #[Usage(
+    name: 'drush bnf:subscription:delete-all 4b426ec8-482d-401c-af0e-7f15dc9bfa5c',
+    description: 'Delete all subscriptions'
+  )]
+  public function deleteAllSubscriptions(): void {
+    $entities = $this->storage->loadMultiple();
+
+    $this->storage->delete($entities);
+  }
+
+  /**
    * List subscriptions.
    */
   #[Command(name: 'bnf:subscription:list')]
@@ -78,8 +95,11 @@ class SubscriptionCommands extends DrushCommands {
   #[FieldLabels(labels: [
     'uuid' => 'UUID',
     'subscription_uuid' => 'Subscription UUID',
+    'label' => 'Label',
+    'categories' => 'Categories for content',
+    'tags' => 'Tags for content',
     'created' => 'Created',
-
+    'last' => 'Last update',
   ])]
   public function listSubscriptions(): RowsOfFields {
     /** @var \Drupal\bnf_client\Entity\Subscription[] $subscriptions */
@@ -88,10 +108,22 @@ class SubscriptionCommands extends DrushCommands {
     $rows = [];
 
     foreach ($subscriptions as $subscription) {
+      $last_pulled_timestamp = $subscription->getLast();
+      $last_pulled = new DateTime("@$last_pulled_timestamp");
+      $last_pulled->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
+
+      $created_timestamp = $subscription->created->value;
+      $created = new DateTime("@$created_timestamp");
+      $created->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
+
       $rows[] = [
         'uuid' => $subscription->uuid->value,
-        'subscription_uuid' => $subscription->subscription_uuid->value,
-        'created' => $subscription->created->value,
+        'label' => $subscription->label->value,
+        'subscription_uuid' => $subscription->getSubscriptionUuid(),
+        'tags' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getTags())),
+        'categories' => implode(', ', array_map(fn($term) => "{$term->getName()} ({$term->id()})", $subscription->getCategories())),
+        'created' => "{$created->format('Y-m-d H:i')}\r\n({$created_timestamp})",
+        'last' => "{$last_pulled->format('Y-m-d H:i')}\r\n({$last_pulled_timestamp})",
       ];
     }
 

@@ -160,6 +160,7 @@
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.6",
         "drupal/purge_queues": "^2.1",
+        "drupal/queue_ui": "^3.2",
         "drupal/recurring_events": "^2",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
@@ -194,6 +195,7 @@
         "symfony/property-access": "^6.2",
         "symfony/property-info": "^6.2",
         "thecodingmachine/safe": "^2.5.0",
+        "webmozart/assert": "^1.11",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
@@ -206,6 +208,7 @@
         "phpstan/extension-installer": "^1.3",
         "phpstan/phpstan": "~1.11.11",
         "phpstan/phpstan-phpunit": "^1.3",
+        "phpstan/phpstan-webmozart-assert": "^1.2",
         "phpunit/phpunit": "9.5.10",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "timeweb/phpstan-enum": "^3.1",

@@ -12,5 +12,7 @@ or directly in [the docs folder](docs/)
 
 **tl;dr:** Run `task dev:reset` to get the site up and running locally.
 
+Run `task dev:watch` to clear drupal cache when changing files.
+
 For a environment that consists of both a CMS site and a BNF site, run
 `task dev:bnf:enable` before running reset.
