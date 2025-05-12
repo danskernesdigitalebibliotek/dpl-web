@@ -1,0 +1,11 @@
+uuid: c877b16a-dc18-47a9-8dad-1ec775888e6a
+langcode: en
+status: true
+dependencies: {  }
+id: paragraph.go_material_slider_manual
+site_resolver: site_selector
+configuration:
+  sites:
+    go: go
+revalidator: cache_tag
+revalidator_configuration: {  }
