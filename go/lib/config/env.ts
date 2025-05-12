@@ -4,36 +4,36 @@ import { z } from "zod"
 function getEnvs() {
   return {
     // Public env variables
-    DPL_CMS_HOSTNAME: process.env.NEXT_PUBLIC_DPL_CMS_HOSTNAME,
-    GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
-    GRAPHQL_BASIC_TOKEN_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS,
-    GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI,
-    CODEGEN_LIBRARY_TOKEN: process.env.CODEGEN_LIBRARY_TOKEN,
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    CODEGEN_LIBRARY_TOKEN: process.env.CODEGEN_LIBRARY_TOKEN,
+    DPL_CMS_HOSTNAME: process.env.NEXT_PUBLIC_DPL_CMS_HOSTNAME,
+    GRAPHQL_BASIC_TOKEN_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS,
+    GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
+    GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI,
     NODE_ENV: process.env.NODE_ENV,
     TEST_MODE: process.env.TEST_MODE,
 
     // Server-only env variables
+    GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
     UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
     UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
+    UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
     UNILOGIN_WELLKNOWN_URL: process.env.UNILOGIN_WELLKNOWN_URL,
-    GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
     UNLILOGIN_PUBHUB_CLIENT_ID: process.env.UNLILOGIN_PUBHUB_CLIENT_ID,
     UNLILOGIN_PUBHUB_RETAILER_ID: process.env.UNLILOGIN_PUBHUB_RETAILER_ID,
     UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE,
-    UNLILOGIN_SERVICES_WS_USER: process.env.UNLILOGIN_SERVICES_WS_USER,
     UNLILOGIN_SERVICES_WS_PASSWORD: process.env.UNLILOGIN_SERVICES_WS_PASSWORD,
-    UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
+    UNLILOGIN_SERVICES_WS_USER: process.env.UNLILOGIN_SERVICES_WS_USER,
   }
 }
 
 const EnvSchema = z.object({
-  DPL_CMS_HOSTNAME: z.string(),
-  GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
-  GRAPHQL_BASIC_TOKEN_DPL_CMS: z.string(),
-  GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl),
-  CODEGEN_LIBRARY_TOKEN: z.string().optional(),
   APP_URL: z.string().refine(validateUrl),
+  CODEGEN_LIBRARY_TOKEN: z.string().optional(),
+  DPL_CMS_HOSTNAME: z.string(),
+  GRAPHQL_BASIC_TOKEN_DPL_CMS: z.string(),
+  GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
+  GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
   TEST_MODE: z.coerce.boolean().default(false),
 })
@@ -42,12 +42,12 @@ const EnvSchema = z.object({
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
   GO_SESSION_SECRET: z.string().min(32),
+  UNILOGIN_MUNICIPALITY_ID: z.string(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string(),
-  UNLILOGIN_SERVICES_WS_USER: z.string(),
   UNLILOGIN_SERVICES_WS_PASSWORD: z.string(),
-  UNILOGIN_MUNICIPALITY_ID: z.string(),
+  UNLILOGIN_SERVICES_WS_USER: z.string(),
   // Is fetched from dpl-cms, but can be overridden by env vars
   UNILOGIN_CLIENT_ID: z.string().optional(),
   UNILOGIN_CLIENT_SECRET: z.string().optional(),

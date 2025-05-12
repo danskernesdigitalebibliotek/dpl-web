@@ -177,8 +177,14 @@ export type GoConfigurationPrivate = {
 
 export type GoConfigurationPublic = {
   __typename?: 'GoConfigurationPublic';
+  libraryInfo?: Maybe<GoLibraryInfo>;
   loginUrls?: Maybe<GoLoginUrls>;
   logoutUrls?: Maybe<GoLogoutUrls>;
+};
+
+export type GoLibraryInfo = {
+  __typename?: 'GoLibraryInfo';
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type GoLoginUrls = {
@@ -1966,7 +1972,7 @@ export type GetDplCmsPrivateConfigurationQuery = { __typename?: 'Query', goConfi
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
@@ -2410,6 +2416,9 @@ export const GetDplCmsPublicConfigurationDocument = `
       }
       logoutUrls {
         adgangsplatformen
+      }
+      libraryInfo {
+        name
       }
     }
   }

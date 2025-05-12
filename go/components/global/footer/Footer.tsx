@@ -1,6 +1,8 @@
 import Icon from "@/components/shared/icon/Icon"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 
+import LinkToParentLibrary from "../header/LinkToParentLibrary"
+
 export default function Footer() {
   return (
     <footer className="bg-background-overlay text-typo-body-md py-12 text-center lg:text-left">
@@ -50,9 +52,7 @@ export default function Footer() {
             <div className="bg-foreground mb-10 ml-0 flex flex-0 items-center rounded-full p-0.5 lg:ml-auto">
               <Icon name="logo-with-outline" className="text-background h-auto w-36 lg:w-40" />
             </div>
-            <p className="text-typo-subtitle-lg lg:text-right">
-              En del af Bibliotek og Borgerservice Nordfyns Kommune
-            </p>
+            <LinkToParentLibrary className="text-typo-subtitle-lg lg:w-full lg:text-right" />
           </div>
         </div>
         <hr className="mt-10" />
