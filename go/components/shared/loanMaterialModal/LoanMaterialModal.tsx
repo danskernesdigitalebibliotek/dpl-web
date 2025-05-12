@@ -121,6 +121,8 @@ const LoanMaterialModal = ({
     errors.push(publizonErrorMessageMap[publizonError.code] || publizonError.message)
   }
 
+  const isLoading = isLoadingLibraryProfile || isLoadingLoans
+
   return (
     <ResponsiveDialog
       open={open}
@@ -143,16 +145,13 @@ const LoanMaterialModal = ({
       </div>
 
       {/* Description */}
-      {(isLoadingLibraryProfile || isLoadingLoans) && (
+      {isLoading && (
         <div className="bg-background-skeleton mx-auto mt-10 mb-5 h-[26px] w-[500px] animate-pulse rounded-full" />
       )}
-      {!isLoadingLibraryProfile && !isLoadingLoans && (
+      {!isLoading && (
         <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
           <p className="text-typo-subtitle-md text-center">
-            {!isLoadingLibraryProfile &&
-              !isLoadingLoans &&
-              isLoanPossible &&
-              `Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
+            {`Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
           </p>
 
           {errors.length > 0 && (
@@ -168,14 +167,14 @@ const LoanMaterialModal = ({
 
       <div className="flex flex-row items-center justify-center gap-6">
         {/* Only show "approve loan" button if user can still loan more materials */}
-        {isLoanPossible && !errors.length && !isErrorLibraryProfile && (
+        {!errors.length && (
           <Button
             theme={"primary"}
             size={"lg"}
             onClick={handleLoanMaterial}
-            disabled={isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans}>
-            {!isHandlingLoan && !isLoadingLibraryProfile && !isLoadingLoans && "Ja"}
-            {(isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans) && (
+            disabled={isHandlingLoan || isLoading}>
+            {!isHandlingLoan && !isLoading && "Ja"}
+            {(isHandlingLoan || isLoading) && (
               <Icon
                 name="go-spinner"
                 ariaLabel="Indlæser"
@@ -184,16 +183,9 @@ const LoanMaterialModal = ({
             )}
           </Button>
         )}
-        <Button
-          size={"lg"}
-          disabled={isHandlingLoan || isLoadingLibraryProfile || isLoadingLoans}
-          onClick={() => closeModal()}>
-          {!isLoadingLibraryProfile &&
-            !isLoadingLoans &&
-            (!isLoanPossible || !errors.length || isErrorLibraryProfile || isErrorLoans
-              ? "Nej"
-              : "Luk")}
-          {(isLoadingLibraryProfile || isLoadingLoans) && (
+        <Button size={"lg"} disabled={isHandlingLoan || isLoading} onClick={() => closeModal()}>
+          {errors.length ? "Luk" : "Nej"}
+          {isLoading && (
             <Icon
               name="go-spinner"
               ariaLabel="Indlæser"
