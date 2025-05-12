@@ -40,6 +40,9 @@ This is because "being on the Go site" is defined as GraphQL requests
 from the React front-end. When this is not the case it's assumed to be
 a CMS request.
 
+The rewriting is not done on administrative pages to ensure that the
+original path is used when editing the content.
+
 ## Consequences
 
 Drupal user 1 isn't able to use the Go front-end, as the link logic
