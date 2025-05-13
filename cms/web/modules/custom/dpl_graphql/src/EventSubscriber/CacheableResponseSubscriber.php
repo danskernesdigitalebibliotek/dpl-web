@@ -41,6 +41,14 @@ class CacheableResponseSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    // Is this a GraphQL request at all?
+    $request = $event->getRequest();
+    $is_graphql_request = $request->attributes->get('_graphql');
+    if (!$is_graphql_request) {
+      return;
+    }
+
+    // Check if the user has permission to view the cache tags.
     if (!$this->currentUser->hasPermission('get dpl graphql cache tags')) {
       return;
     }

@@ -44,7 +44,7 @@ function dpl_go_deploy_0001_create_next_go_site_configuration(): string {
     'revalidate_secret' => $revalidate_secret,
   ];
 
-  // Create the entity programmatically like in dpl_update_john().
+  // Create the Go site entity.
   $entity = \Drupal::entityTypeManager()
     ->getStorage('next_site')
     ->create($entity_data);
