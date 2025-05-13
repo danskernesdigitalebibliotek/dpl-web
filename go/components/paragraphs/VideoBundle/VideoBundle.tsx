@@ -14,7 +14,7 @@ import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/gra
 import { WorkId } from "@/lib/types/ids"
 
 export type VideoBundleProps = {
-  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] | undefined
+  works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   title: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
   videoUrl: string
 }

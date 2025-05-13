@@ -31,24 +31,21 @@ function WorkPageLayout({ workId }: { workId: string }) {
   }
 
   const work = data?.work as WorkFullWorkPageFragment
-  const manifestations = work?.manifestations.all as ManifestationWorkPageFragment[]
-
-  // Filter manifestations
-  const filteredManifestations = filterManifestationsByEdition(
-    filterManifestationsByMaterialType(manifestations)
+  const manifestations = filterManifestationsByEdition(
+    filterManifestationsByMaterialType(work?.manifestations.all as ManifestationWorkPageFragment[])
   )
 
   useEffect(() => {
     // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
     // Filter out manifestations that don't match the search params material type
-    const selectedManifestation = filteredManifestations.find(manifestation => {
+    const selectedManifestation = manifestations.find(manifestation => {
       return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
     })
 
     // Set the selected manifestation in the state
     setSelectedManifestation(selectedManifestation)
-  }, [filteredManifestations, searchParams])
+  }, [manifestations, searchParams])
 
   if (isLoading && !data) {
     return (
@@ -67,7 +64,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
       {work && selectedManifestation && (
         <>
           <WorkPageHeader
-            manifestations={filteredManifestations}
+            manifestations={manifestations}
             work={work}
             selectedManifestation={selectedManifestation}
           />

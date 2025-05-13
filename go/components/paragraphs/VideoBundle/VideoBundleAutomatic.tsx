@@ -36,7 +36,6 @@ const VideoBundleAutomatic = ({
   )
 
   if (isLoading) return <VideoBundleSkeleton />
-
   return (
     <VideoBundle
       works={data?.complexSearch.works}

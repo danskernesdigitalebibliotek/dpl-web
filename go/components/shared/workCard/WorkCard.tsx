@@ -6,7 +6,6 @@ import React from "react"
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import Icon from "@/components/shared/icon/Icon"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -18,6 +17,8 @@ import {
   getGetV1ProductsIdentifierAdapterQueryKey,
   getV1ProductsIdentifierAdapter,
 } from "@/lib/rest/publizon/adapter/generated/publizon"
+
+import Icon from "../icon/Icon"
 
 export type TWorkCardProps = {
   workId: string
@@ -159,21 +160,20 @@ export const WorkCardSkeleton = () => {
   )
 }
 
-export const WorkCardEmpty = () => {
+export const WorkCardEmpty = ({ className }: { className?: string }) => {
   return (
-    <div className="h-full w-full space-y-3 lg:space-y-5">
-      <div className="rounded-base bg-background-skeleton w-full">
-        <div className="flex aspect-4/5 w-full flex-col items-center justify-center">
-          <Icon
-            name="question-mark"
-            className="text-foreground opacity-20"
-            aria-label="Spørgsmålstegn ikon"
-          />
-          <p className="text-typo-caption text-center">Kunne ikke vises</p>
-        </div>
-        <div className="py-3 md:py-4">
-          <div className="h-6 md:h-10"></div>
-        </div>
+    <div
+      className={cn(
+        "rounded-base bg-background-overlay flex aspect-5/7 h-full w-full flex-col space-y-3 lg:space-y-5",
+        className
+      )}>
+      <div className="flex w-full flex-1 flex-col items-center justify-center gap-y-4">
+        <Icon
+          name="alert"
+          className="text-foreground h-[50px] opacity-20 lg:h-[80px]"
+          aria-label="Advarsel ikon"
+        />
+        <p className="text-typo-caption text-center opacity-55">Materialet kunne ikke vises</p>
       </div>
     </div>
   )
