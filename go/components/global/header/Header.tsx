@@ -7,13 +7,17 @@ import SearchInput from "@/components/shared/searchInput/SearchInput"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 
+import LinkToParentLibrary from "./LinkToParentLibrary"
 import ProfileButton from "./ProfileButton"
 
 function Header() {
   return (
     <header>
       <div className="h-navigation-top-height bg-background-overlay flex items-center justify-center">
-        <p className="text-typo-caption">Biblioterernes ebøger og lydbøger</p>
+        <Suspense
+          fallback={<div className="bg-background-skeleton h-3 w-14 animate-pulse rounded-full" />}>
+          <LinkToParentLibrary />
+        </Suspense>
       </div>
       <div className="content-container h-navigation-height grid grid-cols-3 items-center">
         <div className="flex flex-0 items-center" data-cy={cyKeys["go-logo"]}>

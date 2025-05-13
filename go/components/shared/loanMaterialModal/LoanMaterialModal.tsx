@@ -114,7 +114,7 @@ const LoanMaterialModal = ({
   }
   if (isErrorLoans || isErrorLibraryProfile) {
     errors.push(
-      "Vi kunne desværre ikke bekræfte, om du kan låne materialet. Prøv venligst igen senere."
+      "Der sket desværre et fejl ved at checke om du kan låne materialet. Prøv igen senere."
     )
   }
   if (publizonError) {

@@ -64,9 +64,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   return (
     <div className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden py-10">
       <div className="col-span-full flex items-center justify-between px-10">
-        <h2 className="text-typo-heading-4">
-          E-materialer jeg har lånt ({loanData.loans?.length})
-        </h2>
+        <h2 className="text-typo-heading-4">Mine lån ({loanData.loans?.length})</h2>
         {!!loanData.loans?.length && (
           <div className="flex flex-row justify-end gap-x-4">
             <Button
@@ -134,7 +132,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               {/* If user doesn't have any loans - lead them to find their first material. */}
               {works.length === 0 && (
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center gap-5">
-                  <p className="text-typo-heading-3">Du har ingen lånte bøger</p>
+                  <p className="text-typo-heading-3">Du har ikke lånt noget endnu</p>
                   <FindBookButton />
                 </div>
               )}

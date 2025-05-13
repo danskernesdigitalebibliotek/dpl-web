@@ -16,10 +16,6 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
   const { paragraphs } = pageData
   const { goArticleImage } = pageData
 
-  if (!paragraphs) {
-    return null
-  }
-
   const mediaImage = goArticleImage?.mediaImage
   const dateString = fromUnixTime(parseInt(pageData.publicationDate.timestamp))
   const publicationDate = new Date(dateString)
@@ -57,7 +53,7 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
         </div>
       </div>
       <div className="gap-y-paragraph-spacing flex w-full flex-col">
-        <ParagraphResolver paragraphs={paragraphs} />
+        {paragraphs && <ParagraphResolver paragraphs={paragraphs} />}
       </div>
     </div>
   )

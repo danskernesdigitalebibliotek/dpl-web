@@ -9,12 +9,13 @@ import React, { useEffect, useState } from "react"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
+  getBestRepresentationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import { WheelControls, defaultSliderOptions } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
-import WorkCard, { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import {
   ParagraphGoMaterialSliderAutomatic,
@@ -28,7 +29,7 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type MaterialSliderProps = {
-  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] | undefined
+  works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   title: ParagraphGoMaterialSliderAutomatic["title"] | ParagraphGoMaterialSliderManual["title"]
 }
 
@@ -94,49 +95,48 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works &&
                 works.map(work => {
-                  const manifestations = work.manifestations.all as ManifestationWorkPageFragment[]
-                  let bestRepresentation = work.manifestations
-                    .bestRepresentation as ManifestationWorkPageFragment
+                  const manifestations = sortManifestationsBySortPriority(
+                    filterManifestationsByEdition(
+                      filterManifestationsByMaterialType(
+                        work.manifestations.all as ManifestationWorkPageFragment[]
+                      )
+                    )
+                  )
 
-                  // Filter and manifestations
-                  const filteredManifestations = filterManifestationsByMaterialType(
-                    filterManifestationsByEdition(manifestations)
+                  const bestRepresentation = getBestRepresentationOrFallbackManifestation(
+                    work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
+                    manifestations
                   )
-                  // Sort manifestations
-                  const sortedManifestations =
-                    sortManifestationsBySortPriority(filteredManifestations)
-                  // check if bestRepresentation is located in the sortedManifestations
-                  const isBestRepresentationInSortedManifestations = sortedManifestations.some(
-                    manifestation => manifestation.pid === bestRepresentation.pid
-                  )
-                  // if not, set bestRepresentation to the first manifestation in sortedManifestations
-                  if (!isBestRepresentationInSortedManifestations) {
-                    bestRepresentation = sortedManifestations[0]
-                  }
+
+                  const title = work.titles.full[0]
+                  const url = bestRepresentation
+                    ? resolveUrl({
+                        routeParams: { work: "work", wid: work.workId },
+                        queryParams: {
+                          type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
+                        },
+                      })
+                    : ""
 
                   return (
                     <Link
                       key={work.workId}
-                      aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+                      aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
                       className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"
-                      href={resolveUrl({
-                        routeParams: { work: "work", wid: work.workId },
-                        queryParams: {
-                          type: work.manifestations.bestRepresentation.materialTypes[0]
-                            .materialTypeGeneral.code,
-                        },
-                      })}>
-                      <WorkCardWithCaption
-                        title={work.titles.full[0]}
-                        creators={work.creators || []}>
-                        <WorkCard
-                          className="dark:bg-background-overlay !dark:bg-background"
-                          workId={work.workId}
-                          title={work.titles.full[0]}
-                          bestRepresentation={bestRepresentation}
-                          manifestations={sortedManifestations}
-                          isWithTilt={true}
-                        />
+                      href={url || ""}>
+                      <WorkCardWithCaption title={title} creators={work.creators || []}>
+                        {bestRepresentation ? (
+                          <WorkCard
+                            className="dark:bg-background-overlay !dark:bg-background"
+                            workId={work.workId}
+                            title={title}
+                            bestRepresentation={bestRepresentation}
+                            manifestations={manifestations}
+                            isWithTilt={true}
+                          />
+                        ) : (
+                          <WorkCardEmpty />
+                        )}
                       </WorkCardWithCaption>
                     </Link>
                   )

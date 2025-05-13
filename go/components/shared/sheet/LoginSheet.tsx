@@ -36,7 +36,7 @@ function LoginSheet({ open }: { open: boolean }) {
                   <Icon name="adgangsplatformen" />
                 </div>
                 <div className="text-typo-heading-4 text-foreground mb-4 text-center">
-                  Login via Biblotekernes fælles loginside
+                  Login via Bibliotekernes fælles loginside
                 </div>
                 <div>
                   {loginUrlAdgangsplatformen && <LoginButton url={loginUrlAdgangsplatformen} />}

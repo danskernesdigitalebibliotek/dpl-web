@@ -76,6 +76,21 @@ export const sortManifestationsBySortPriority = (
   })
 }
 
+export const getBestRepresentationOrFallbackManifestation = (
+  bestRepresentation: ManifestationWorkPageFragment,
+  manifestations: ManifestationWorkPageFragment[]
+) => {
+  // check if bestRepresentation is located in manifestations
+  const isBestRepresentationInManifestations = manifestations.some(
+    manifestation => manifestation.pid === bestRepresentation.pid
+  )
+  // if not, set bestRepresentation to the first manifestation in sortedManifestations
+  if (!isBestRepresentationInManifestations) {
+    return manifestations[0]
+  }
+  return bestRepresentation
+}
+
 export const getManifestationMaterialTypeSpecific = (
   manifestation: ManifestationWorkPageFragment
 ): "e-bog" | "lydbog" | "podcast" | null => {

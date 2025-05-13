@@ -53,6 +53,9 @@ const dplCmsPublicConfigSchema = z.object({
     logoutUrls: z.object({
       adgangsplatformen: z.string().nullable(),
     }),
+    libraryInfo: z.object({
+      name: z.string().nullable(),
+    }),
   }),
 })
 
@@ -76,6 +79,9 @@ export const getDplCmsPublicConfig = async () => {
       },
       logoutUrls: {
         adgangsplatformen: null,
+      },
+      libraryInfo: {
+        name: null,
       },
     }
   }
