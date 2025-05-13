@@ -29,9 +29,21 @@ const modalStore = createStore({
       modalType: modalType,
       props: props,
     }),
-    closeModal: context => ({
+    closeModal: context => {
+      // Reset the modal after a short delay to allow for animations
+      setTimeout(() => {
+        modalStore.send({ type: "resetModal" })
+      }, 500)
+
+      return {
+        ...context,
+        open: false,
+      }
+    },
+    resetModal: context => ({
       ...context,
-      open: false,
+      modalType: null,
+      props: null,
     }),
   },
 })

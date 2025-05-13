@@ -116,6 +116,21 @@
     --content-blue-200: hsla(202, 100%, 60%, 1);
     --content-blue-300: hsla(201, 67%, 29%, 1);
 
+    --error-red-100: hsla(0, 93%, 94%, 1);
+    --error-red-200: hsla(0, 93%, 80%, 1);
+    --error-red-300: hsla(0, 93%, 60%, 1);
+    --error-red-400: hsla(0, 93%, 40%, 1);
+
+    --success-green-100: hsla(141, 84%, 93%, 1);
+    --success-green-200: hsla(141, 84%, 80%, 1);
+    --success-green-300: hsla(141, 84%, 60%, 1);
+    --success-green-400: hsla(141, 84%, 40%, 1);
+
+    --warning-orange-100: hsla(30, 100%, 90%, 1);
+    --warning-orange-200: hsla(30, 100%, 70%, 1);
+    --warning-orange-300: hsla(30, 100%, 50%, 1);
+    --warning-orange-400: hsla(30, 100%, 30%, 1);
+
     /* DYNAMIC COLORS */
     --background: var(--beige);
     --background-overlay: var(--beige-overlay);

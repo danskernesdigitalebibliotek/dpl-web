@@ -1,6 +1,8 @@
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
+// Fetcher for interacting with the Publizon adapter.
+// Ensure this file remains consistent with the local adapter fetcher logic for uniform response handling.
 export const fetcher = async <ResponseType>({
   url,
   method,
@@ -31,6 +33,11 @@ export const fetcher = async <ResponseType>({
       },
       body,
     })
+
+    if (!response.ok) {
+      const data = await response.json()
+      throw Error(JSON.stringify(data))
+    }
 
     try {
       return (await response.json()) as ResponseType

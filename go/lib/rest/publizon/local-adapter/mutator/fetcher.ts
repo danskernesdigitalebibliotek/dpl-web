@@ -2,6 +2,8 @@ import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 
+// Fetcher for interacting with the local Publizon adapter.
+// Ensure this file remains consistent with the adapter fetcher logic for uniform response handling.
 export const fetcher = async <ResponseType>({
   url,
   method,
@@ -33,7 +35,8 @@ export const fetcher = async <ResponseType>({
     })
 
     if (!response.ok) {
-      console.error(response.status, response.statusText, serviceUrl)
+      const data = await response.json()
+      throw Error(JSON.stringify(data))
     }
 
     try {

@@ -70,18 +70,6 @@ async function proxyRequest(
   const authHeader = await getAuthHeader(request, serviceType)
 
   try {
-    // Keep this for debugging purposes. TODO: Remove this when not needed.
-    // eslint-disable-next-line no-console
-    console.log({ authHeader })
-    // eslint-disable-next-line no-console
-    console.log({ proxiedHeaders })
-    // eslint-disable-next-line no-console
-    console.log({ serviceUrl })
-    // eslint-disable-next-line no-console
-    console.log({ method })
-    // eslint-disable-next-line no-console
-    console.log({ body })
-
     const result = await fetch(serviceUrl, {
       method,
       headers: {
@@ -91,19 +79,13 @@ async function proxyRequest(
       body,
     })
 
-    if (result.ok) {
-      const json = await result.json()
-      return new NextResponse(JSON.stringify(json), {
-        status: result.status,
-        headers: {
-          ...request.headers,
-        },
-      })
-    } else {
-      return new NextResponse(null, {
-        status: result.status,
-      })
-    }
+    const json = await result.json()
+    return new NextResponse(JSON.stringify(json), {
+      status: result.status,
+      headers: {
+        ...request.headers,
+      },
+    })
   } catch (error) {
     console.error("Error", error)
     return new NextResponse(null, {
