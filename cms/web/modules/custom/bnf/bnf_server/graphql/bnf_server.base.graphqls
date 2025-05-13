@@ -6,12 +6,14 @@ type ImportResponse {
 enum ImportStatus {
      success
      failure
-     duplicate
 }
 
-scalar Violation
+type Error {
+  message: String!
+}
 
 type NewContentResponse {
   uuids: [String!]!
-  errors: [Violation]
+  youngest: Time!
+  errors: [Error!]!
 }

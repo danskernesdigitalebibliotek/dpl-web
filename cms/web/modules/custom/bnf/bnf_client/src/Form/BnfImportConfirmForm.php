@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf_client\Form;
 
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -14,6 +13,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -46,9 +47,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     protected LoggerInterface $logger,
     ConfigFactoryInterface $configFactory,
     EntityTypeManagerInterface $entityTypeManager,
+    TranslationInterface $stringTranslation,
   ) {
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
     $this->nodeStorage = $entityTypeManager->getStorage('node');
+    $this->setStringTranslation($stringTranslation);
   }
 
   /**
@@ -87,7 +90,10 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     catch (\Exception $e) {
       $importable = FALSE;
 
-      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
+      $this->logger->error(
+        'Could not get node title for @uuid from BNF. @message',
+        ['@message' => $e->getMessage(), '@uuid' => $uuid]
+      );
       $this->messenger->addError($this->t('Cannot import this node from BNF.', [], ['context' => 'BNF']));
     }
 
@@ -103,6 +109,13 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
       '#type' => 'textfield',
       '#default_value' => $title ?? NULL,
       '#disabled' => TRUE,
+    ];
+
+    $form['bnf_keep_updated'] = [
+      '#title' => $this->t('Keep updated with Delingstjenesten', [], ['context' => 'BNF']),
+      '#type' => 'checkbox',
+      '#description' => $this->t('Keep this content, which originates from Delingstjenesten, up to date when a new version is available. This will overwrite any custom changes you may have made. <strong>You can always change your mind directly on the content.</strong>', [], ['context' => 'BNF']),
+      '#default_value' => TRUE,
     ];
 
     $form['actions']['submit'] = [
@@ -126,23 +139,25 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $uuid = $form_state->get('uuid');
+    $keepUpdated = !empty($form_state->getValue('bnf_keep_updated'));
     $bnfServer = $form_state->get('bnfServer');
 
     try {
-      $node = $this->bnfImporter->importNode($uuid, $bnfServer);
+      $node = $this->bnfImporter->importNode($uuid, $bnfServer, $keepUpdated);
+
+      if (!($node instanceof NodeInterface)) {
+        throw new \Exception('Importer did not return a node instance.');
+      }
+
       $node->setUnpublished();
       $node->save();
+
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {
       $this->messenger->addError($this->t('Could not import node from BNF.', [], ['context' => 'BNF']));
 
-      if ($e instanceof AlreadyExistsException) {
-        $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
-      }
-      else {
-        $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
-      }
+      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
     }
 
   }

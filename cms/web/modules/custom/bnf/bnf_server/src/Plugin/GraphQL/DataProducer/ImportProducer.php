@@ -2,12 +2,12 @@
 
 namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_server\GraphQL\ImportResponse;
 use Drupal\bnf_server\GraphQL\ImportStatus;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
+use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -89,21 +89,19 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
     ]);
 
     try {
-      $this->importer->importNode($uuid, $callbackUrl);
+      $node = $this->importer->importNode($uuid, $callbackUrl, FALSE);
 
-      $result->status = ImportStatus::Success;
-      $result->message = 'Node created successfully.';
+      if ($node instanceof NodeInterface) {
+        $result->status = ImportStatus::Success;
+        $result->message = 'Node created successfully.';
+      }
+      else {
+        $result->status = ImportStatus::Skipped;
+        $result->message = 'Import of unknown, unpublished content skipped.';
+      }
     }
     catch (\Exception $e) {
-      if (!$e instanceof AlreadyExistsException) {
-        $this->logger->warning('Could not load node with UUID @uuid at @callbackUrl. @message', [
-          '@uuid' => $uuid,
-          '@callbackUrl' => $callbackUrl,
-          '@message' => $e->getMessage(),
-        ]);
-      }
-
-      $result->status = ($e instanceof AlreadyExistsException) ? ImportStatus::Duplicate : ImportStatus::Failure;
+      $result->status = ImportStatus::Failure;
       $result->message = $e->getMessage();
     }
 

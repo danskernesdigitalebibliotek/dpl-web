@@ -47,10 +47,8 @@ class BnfMapperManagerTest extends KernelTestBase {
 
     $entityManagerProphecy->getStorage('node')->willReturn($nodeStorageProphecy);
     $entityManagerProphecy->getStorage('paragraph')->willReturn($paragraphStorageProphecy);
-
-    $nodeStorageProphecy->loadByProperties([
-      'uuid' => '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
-    ])->willReturn([$nodeProphecy]);
+    $nodeStorageProphecy->loadByProperties(['uuid' => '982e0d87-f6b8-4b84-8de8-c8c8bcfef557'])
+      ->willReturn([]);
 
     $nodeStorageProphecy->create([
       'type' => 'article',

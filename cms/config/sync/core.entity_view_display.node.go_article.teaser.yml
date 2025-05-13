@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_tags
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
     - node.type.go_article
@@ -32,6 +33,7 @@ hidden:
   field_publication_date: true
   field_show_override_author: true
   field_subtitle: true
+  field_tags: true
   field_teaser_image: true
   field_teaser_text: true
   langcode: true

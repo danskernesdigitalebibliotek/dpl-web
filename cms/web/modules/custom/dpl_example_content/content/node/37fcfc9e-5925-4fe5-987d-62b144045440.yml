@@ -1,0 +1,196 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 37fcfc9e-5925-4fe5-987d-62b144045440
+  bundle: go_category
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+    d219e4de-4984-487e-8e21-9f56c0a0335c: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Gys
+  created:
+    -
+      value: 1746516803
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  bnf_state:
+    -
+      value: 0
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Gys | DPL CMS'
+  path:
+    -
+      alias: /kategori/gys
+      langcode: und
+      pathauto: 1
+  field_category_menu_image:
+    -
+      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+  field_category_menu_title:
+    -
+      value: Gys
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 71da71c1-0e3e-486c-9f31-28100c3bc63e
+          bundle: go_material_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1746517459
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'gys'"
+          field_slider_amount_of_materials:
+            -
+              value: 8
+          field_title:
+            -
+              value: 'Material Slider Automatic - Anbefalede gyser bøger'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 0991479f-9003-432b-ad15-ccf2cd55cc06
+          bundle: go_video_bundle_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1746517514
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'horror'"
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: 'Video Bundle Automatic - De uhyggeligeste anbefalinger'
+          field_video_amount_of_materials:
+            -
+              value: 5
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 32fec344-5b92-48c4-ac2d-b603beb82f7a
+          bundle: go_linkbox
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1746517652
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_go_description:
+            -
+              value: 'Det er ikke for sarte sjæle, men hvis du er modig, så klik på dette link.'
+          field_go_link_paragraph:
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: 3037e01b-a26a-495e-a8a8-207ba55eecf9
+                  bundle: go_link
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1746517652
+                  behavior_settings:
+                    -
+                      value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
+                  field_aria_label:
+                    -
+                      value: 'Tør du besøge dette link?'
+                  field_go_link:
+                    -
+                      uri: 'https://www.google.dk'
+                      title: Uhyggeligt!
+                      options:
+                        href: 'https://www.google.dk'
+                        data-entity-type: ''
+                        data-entity-uuid: ''
+                        data-entity-substitution: ''
+                  field_target_blank:
+                    -
+                      value: false
+          field_title:
+            -
+              value: 'Linkbox - Tør du besøge dette link?'
+  field_publication_date:
+    -
+      value: '2025-05-06'

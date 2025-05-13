@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.go_page.field_paragraphs
     - field.field.node.go_page.field_publication_date
+    - field.field.node.go_page.field_tags
     - node.type.go_page
   module:
     - datetime
@@ -21,14 +22,15 @@ content:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
-    weight: 113
+    weight: 1
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
   field_paragraphs: true
+  field_tags: true
   langcode: true
   search_api_excerpt: true

@@ -169,18 +169,14 @@ environments:
         schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
-  pr-1501:
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
+  pr-2296:
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
         command: drush cron
-        service: cli
-      - name: import translations
-        # Quite frequent translation import because of businezz.
-        schedule: "M/30 * * * *"
-        command: drush locale-check && drush locale-update
-        service: cli
-      - name: import danish config translations
-        schedule: "M/30 * * * *"
-        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli

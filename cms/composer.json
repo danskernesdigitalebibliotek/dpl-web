@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.19.1",
+                "version": "2025.20.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.19.1/dist-2025-19-1-5dfca4645fda75e53db66dc642c8ca49c2ce04af.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.20.0/dist-2025-20-0-62873c9ae8fbe938682cdbf5cd37deeeec2df08f.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.19.0",
+                "version": "2025.20.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.19.0/dist-2025-19-0-21450abdb54767bfe0f489e772c9ef9a03b29074.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.20.0/dist-2025-20-0-a210f071906e4606f2eba4c44648ed5b7a2edf13.zip",
                     "type": "zip"
                 }
             }
@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.19.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.19.1",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.20.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.20.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -159,6 +159,7 @@
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.6",
         "drupal/purge_queues": "^2.1",
+        "drupal/queue_ui": "^3.2",
         "drupal/recurring_events": "^2",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
@@ -193,6 +194,7 @@
         "symfony/property-access": "^6.2",
         "symfony/property-info": "^6.2",
         "thecodingmachine/safe": "^2.5.0",
+        "webmozart/assert": "^1.11",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
@@ -205,6 +207,7 @@
         "phpstan/extension-installer": "^1.3",
         "phpstan/phpstan": "~1.11.11",
         "phpstan/phpstan-phpunit": "^1.3",
+        "phpstan/phpstan-webmozart-assert": "^1.2",
         "phpunit/phpunit": "9.5.10",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "timeweb/phpstan-enum": "^3.1",

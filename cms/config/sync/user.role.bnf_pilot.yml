@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - bnf
+    - dpl_admin
 id: bnf_pilot
 label: 'BNF Pilot'
 weight: 12
@@ -11,3 +12,5 @@ is_admin: null
 permissions:
   - 'bnf export nodes'
   - 'bnf import nodes'
+  - 'bnf manage subscriptions'
+  - 'dpl admin access pages'
