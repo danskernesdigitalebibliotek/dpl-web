@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import React from "react"
 
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
@@ -30,22 +30,21 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   const routeType = data.route?.__typename
 
   if (routeType === "RouteRedirect") {
-    // TODO: implement redirect
-    return notFound()
+    if (data.route?.url) redirect(data.route.url)
   }
   if (routeType === "RouteExternal") {
     // TODO: implement external route redirect
     return notFound()
   }
-  if (!routeType) {
-    return notFound()
-  }
-  if (data.route?.entity?.__typename !== "NodeGoCategory") {
-    return notFound()
+  if (routeType === "RouteInternal") {
+    const { entity } = data.route ?? {}
+
+    if (entity?.__typename === "NodeGoCategory") {
+      return <CategoryPageLayout pageData={entity as NodeGoCategory} />
+    }
   }
 
-  const pageData = data.route.entity
-  return <CategoryPageLayout pageData={pageData as NodeGoCategory} />
+  return notFound()
 }
 
 export default page

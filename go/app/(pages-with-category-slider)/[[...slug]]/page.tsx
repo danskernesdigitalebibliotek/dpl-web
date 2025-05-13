@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import React from "react"
 
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
@@ -30,26 +30,23 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const data = await getPage((await props.params).slug)
-
   const routeType = data.route?.__typename
 
   if (routeType === "RouteRedirect") {
-    // TODO: implement redirect
-    return null
+    if (data.route?.url) redirect(data.route.url)
   }
-
   if (routeType === "RouteExternal") {
     // TODO: implement external route redirect
     return null
   }
-
-  if (!routeType || !data?.route?.entity) {
-    return notFound()
+  if (routeType === "RouteInternal") {
+    const { entity } = data.route ?? {}
+    if (entity?.__typename === "NodeGoPage") {
+      return <BasicPageLayout pageData={entity as NodeGoPage} />
+    }
   }
 
-  const pageData = data.route.entity
-
-  return <BasicPageLayout pageData={pageData as NodeGoPage} />
+  return notFound()
 }
 
 export default page

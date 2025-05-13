@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import React from "react"
 
 import loadArticle from "@/app/(pages)/artikel/[...slug]/loadArticle"
@@ -27,22 +27,20 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   const routeType = data.route?.__typename
 
   if (routeType === "RouteRedirect") {
-    // TODO: implement redirect
-    return notFound()
+    if (data.route?.url) redirect(data.route.url)
   }
   if (routeType === "RouteExternal") {
     // TODO: implement external route redirect
     return notFound()
   }
-  if (!routeType) {
-    return notFound()
-  }
-  if (data.route?.entity?.__typename !== "NodeGoArticle") {
-    return notFound()
+  if (routeType === "RouteInternal") {
+    const { entity } = data.route ?? {}
+    if (entity?.__typename === "NodeGoArticle") {
+      return <ArticlePageLayout pageData={entity as TArticlePageLayoutProps} />
+    }
   }
 
-  const pageData = data.route.entity
-  return <ArticlePageLayout pageData={pageData as TArticlePageLayoutProps} />
+  return notFound()
 }
 
 export default page
