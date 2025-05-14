@@ -68,7 +68,7 @@ abstract class BnfMapperImportedLinkFieldPluginBase extends BnfMapperPluginBase 
       }
 
       $goLinkValue = [
-        'uri' => $node->toUrl()->toString(),
+        'uri' => 'entity:node/' . $node->id(),
         'title' => $object->title,
       ];
     }
