@@ -30,7 +30,9 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   const routeType = data.route?.__typename
 
   if (routeType === "RouteRedirect") {
-    if (data.route?.url) redirect(data.route.url)
+    if (data.route?.url) {
+      return redirect(data.route.url)
+    }
   }
   if (routeType === "RouteExternal") {
     // TODO: implement external route redirect
