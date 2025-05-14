@@ -2,8 +2,9 @@
 
 ## Steps
 
-* Upgrade Next + tanstack react-query
-* Update next config til at køre dynamivIO så vi kan bruge cache tags
+* [DONE] Upgrade Next + tanstack react-query
+* [DONE] Update next config til at køre dynamivIO så vi kan bruge cache tags
+* [DONE] Skip react query client when fetching dpl-cms GraphQl API data
 * Suspense in server components
 * Testing of the revalidation endpoint
 * Revalidation endpoint
