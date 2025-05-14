@@ -1,8 +1,6 @@
 import { z } from "zod"
 
-import getQueryClient from "@/lib/getQueryClient"
 import {
-  GetDplCmsPublicConfigurationQuery,
   useGetDplCmsPrivateConfigurationQuery,
   useGetDplCmsPublicConfigurationQuery,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
@@ -10,10 +8,7 @@ import {
 import { getServerEnv } from "../env"
 
 const queryDplCmsPrivateConfig = async () => {
-  const { goConfiguration } = await useGetDplCmsPrivateConfigurationQuery.fetcher(undefined, {
-    next: { revalidate: 30 },
-  })()
-
+  const { goConfiguration } = await useGetDplCmsPrivateConfigurationQuery.fetcher(undefined)()
   return goConfiguration?.private ?? null
 }
 
@@ -62,16 +57,9 @@ const dplCmsPublicConfigSchema = z.object({
 export type TDplCmsPublicConfig = z.infer<typeof dplCmsPublicConfigSchema>["public"]
 
 export const getDplCmsPublicConfig = async () => {
-  const queryClient = getQueryClient()
   try {
-    const config = await queryClient.fetchQuery<GetDplCmsPublicConfigurationQuery>({
-      queryKey: useGetDplCmsPublicConfigurationQuery.getKey(),
-      queryFn: useGetDplCmsPublicConfigurationQuery.fetcher(),
-      initialData: {},
-      staleTime: 0,
-    })
-
-    return dplCmsPublicConfigSchema.parse(config.goConfiguration).public
+    const data = await useGetDplCmsPublicConfigurationQuery.fetcher(undefined)()
+    return dplCmsPublicConfigSchema.parse(data.goConfiguration).public
   } catch {
     return {
       loginUrls: {
