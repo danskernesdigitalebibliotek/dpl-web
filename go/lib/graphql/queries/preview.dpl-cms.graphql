@@ -1,9 +1,12 @@
-query getCategoryPageByPath($path: String!) {
+query getPreviewPageByPath($path: String!) {
   route(path: $path) {
     __typename
     ... on RouteInternal {
       url
       entity {
+        __typename
+        ...nodeGoPage
+        ...nodeGoArticle
         ...nodeGoCategory
       }
     }
