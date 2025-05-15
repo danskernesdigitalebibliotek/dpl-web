@@ -17,20 +17,19 @@ replaceInFile({
   .then((results: unknown) => {
     // eslint-disable-next-line no-console
     console.log("Replacement results:", results)
-  })
-  .catch((error: unknown) => {
-    console.error("Error occurred:", error)
-  })
-
-// Our fetcher returns go cache tags along with the data
-replaceInFile({
-  files: pathToGeneratedFile,
-  from: /Query = {/g,
-  to: "Query = { go: { cacheTags: string[] } } & {",
-})
-  .then((results: unknown) => {
-    // eslint-disable-next-line no-console
-    console.log("Replacement results:", results)
+    // Our fetcher returns go cache tags along with the data
+    replaceInFile({
+      files: pathToGeneratedFile,
+      from: /Query = {/g,
+      to: "Query = { go: { cacheTags: string[] } } & {",
+    })
+      .then((results: unknown) => {
+        // eslint-disable-next-line no-console
+        console.log("Replacement results:", results)
+      })
+      .catch((error: unknown) => {
+        console.error("Error occurred:", error)
+      })
   })
   .catch((error: unknown) => {
     console.error("Error occurred:", error)
