@@ -15,5 +15,8 @@ export default Factory.define<GetAdgangsplatformenLibraryTokenQuery>(() => {
         },
       },
     },
+    go: {
+      cacheTags: [],
+    },
   }
 })
