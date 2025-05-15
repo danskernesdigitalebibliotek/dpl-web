@@ -1,16 +1,28 @@
+import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import React from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
 import { NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
-import { getEntityFromPageData } from "@/lib/helpers/dpl-cms-content"
+import { getEntityFromPageData, loadPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
-import loadCategoryPage from "./loadCategoryPage"
-
 async function getPage(slug: string[]) {
-  const slugString = slug.join("/")
-  return await loadCategoryPage(slugString)
+  "use cache"
+  const {
+    go: { cacheTags },
+    ...data
+  } = await loadPageData({
+    contentPath: slug.join("/"),
+    type: "category",
+  })
+
+  if (cacheTags) {
+    console.log("------- Storing [category] cacheTags -----", cacheTags)
+    cacheTag(...cacheTags)
+  }
+
+  return { go: { cacheTags }, ...data }
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {

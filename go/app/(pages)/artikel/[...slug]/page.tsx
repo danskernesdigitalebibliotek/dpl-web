@@ -1,16 +1,29 @@
+import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import React, { Suspense } from "react"
 
-import loadArticle from "@/app/(pages)/artikel/[...slug]/loadArticle"
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
-import { getEntityFromPageData } from "@/lib/helpers/dpl-cms-content"
+import { getEntityFromPageData, loadPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
 async function getPage(slug: string[]) {
-  const slugString = slug.join("/")
-  return await loadArticle(slugString)
+  "use cache"
+  const {
+    go: { cacheTags },
+    ...data
+  } = await loadPageData({
+    contentPath: slug.join("/"),
+    type: "article",
+  })
+
+  if (cacheTags) {
+    console.log("------- Storing cacheTags -----", cacheTags)
+    cacheTag(...cacheTags)
+  }
+
+  return { go: { cacheTags }, ...data }
 }
 
 type TArticlePageProps = {

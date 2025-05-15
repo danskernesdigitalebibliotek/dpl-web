@@ -1,3 +1,4 @@
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import { z } from "zod"
 
 import {
@@ -57,6 +58,11 @@ const dplCmsPublicConfigSchema = z.object({
 export type TDplCmsPublicConfig = z.infer<typeof dplCmsPublicConfigSchema>["public"]
 
 export const getDplCmsPublicConfig = async () => {
+  "use cache"
+  // Automatically expires after a few minutes
+  cacheLife("minutes")
+
+  // @todo Implement cache tags when we are sure that the cms is revalidating go configuration properly.
   try {
     const data = await useGetDplCmsPublicConfigurationQuery.fetcher(undefined)()
     return dplCmsPublicConfigSchema.parse(data.goConfiguration).public

@@ -1,20 +1,29 @@
+import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import React, { Suspense } from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
 import goConfig from "@/lib/config/goConfig"
 import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
-import { getEntityFromPageData } from "@/lib/helpers/dpl-cms-content"
+import { getEntityFromPageData, loadPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
-import loadPage from "./loadPage"
-
 async function getPage(slug: string[]) {
-  if (!slug) {
-    return await loadPage(goConfig("routes.frontpage"))
+  "use cache"
+  const {
+    go: { cacheTags },
+    ...data
+  } = await loadPageData({
+    contentPath: slug ? slug.join("/") : goConfig("routes.frontpage"),
+    type: "page",
+  })
+
+  if (cacheTags) {
+    console.log("------- Storing [page] cacheTags -----", cacheTags)
+    cacheTag(...cacheTags)
   }
-  const slugString = slug.join("/")
-  return await loadPage(slugString)
+
+  return { go: { cacheTags }, ...data }
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {
