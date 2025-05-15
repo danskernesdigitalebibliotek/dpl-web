@@ -1,4 +1,5 @@
 fragment nodeGoPage on NodeGoPage {
+  __typename
   paragraphs {
     ...goVideo
     ...goVideoBundleAutomatic

@@ -1,14 +1,9 @@
-query getPreviewPageByPath($path: String!) {
-  route(path: $path) {
+query getPreviewPageByIdd($id: ID!, $token: String!) {
+  __typename
+  preview(id: $id, token: $token) {
     __typename
-    ... on RouteInternal {
-      url
-      entity {
-        __typename
-        ...nodeGoPage
-        ...nodeGoArticle
-        ...nodeGoCategory
-      }
-    }
+    ...nodeGoPage
+    ...nodeGoArticle
+    ...nodeGoCategory
   }
 }
