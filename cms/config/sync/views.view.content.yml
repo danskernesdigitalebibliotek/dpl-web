@@ -277,7 +277,7 @@ display:
         options:
           perm: 'access content overview'
       cache:
-        type: tag
+        type: none
       empty:
         area_text_custom:
           id: area_text_custom
