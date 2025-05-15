@@ -6,8 +6,8 @@
 * [DONE] Update next config til at køre dynamivIO så vi kan bruge cache tags
 * [DONE] Skip react query client when fetching dpl-cms GraphQl API data
 * [DONE] Suspense in server components
-* Testing of the revalidation endpoint
-* Revalidation endpoint
+* [DONE] Testing of the revalidation endpoint
+* [DONE] Revalidation endpoint
 * Invalidation env secrets should be handled
 * Implement cache tags in codegen + fetcher
 * Handle cache tags in all dpl-cms fetching functions
