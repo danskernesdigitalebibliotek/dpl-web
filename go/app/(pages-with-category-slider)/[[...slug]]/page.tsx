@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
@@ -40,4 +40,12 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   )
 }
 
-export default page
+async function Page({ params }: { params: Promise<{ slug: string[] }> }) {
+  return (
+    <Suspense>
+      <BasicPage params={params} />
+    </Suspense>
+  )
+}
+
+export default Page

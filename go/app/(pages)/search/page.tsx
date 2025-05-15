@@ -1,6 +1,7 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
 import { Metadata } from "next"
 import { headers } from "next/headers"
+import { Suspense } from "react"
 
 import SearchPageLayout from "@/components/pages/searchPageLayout/SearchPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
@@ -10,7 +11,9 @@ import { prefetchSearchFacets, prefetchSearchResult } from "./fetchSearchResult.
 
 export const metadata: Metadata = setPageMetadata("Find materialer")
 
-const Page = async (props: { searchParams: Promise<{ q: string }> }) => {
+type TSearchPageProps = { searchParams: Promise<{ q: string }> }
+
+const SearchPage = async (props: TSearchPageProps) => {
   const searchParams = await props.searchParams
   const headersList = await headers()
   const { q } = searchParams
@@ -23,6 +26,14 @@ const Page = async (props: { searchParams: Promise<{ q: string }> }) => {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <SearchPageLayout />
     </HydrationBoundary>
+  )
+}
+
+async function Page(props: TSearchPageProps) {
+  return (
+    <Suspense>
+      <SearchPage {...props} />
+    </Suspense>
   )
 }
 

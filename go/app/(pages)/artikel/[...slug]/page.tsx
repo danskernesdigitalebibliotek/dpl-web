@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 
 import loadArticle from "@/app/(pages)/artikel/[...slug]/loadArticle"
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
@@ -13,8 +13,12 @@ async function getPage(slug: string[]) {
   return await loadArticle(slugString)
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {
-  const data = await getPage((await props.params).slug)
+type TArticlePageProps = {
+  params: Promise<{ slug: string[] }>
+}
+
+export async function generateMetadata({ params }: TArticlePageProps) {
+  const data = await getPage((await params).slug)
 
   if (data.route?.__typename === "RouteInternal") {
     const { title } = data.route.entity as TArticlePageLayoutProps
@@ -23,8 +27,8 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
   }
 }
 
-async function page(props: { params: Promise<{ slug: string[] }> }) {
-  const data = await getPage((await props.params).slug)
+async function ArticlePage({ params }: TArticlePageProps) {
+  const data = await getPage((await params).slug)
   const entity = getEntityFromPageData(data)
 
   return (
@@ -34,4 +38,12 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   )
 }
 
-export default page
+async function Page({ params }: TArticlePageProps) {
+  return (
+    <Suspense>
+      <ArticlePage params={params} />
+    </Suspense>
+  )
+}
+
+export default Page
