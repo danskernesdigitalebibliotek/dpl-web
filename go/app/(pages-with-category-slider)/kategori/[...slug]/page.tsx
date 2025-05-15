@@ -18,6 +18,7 @@ async function getPage(slug: string[]) {
   })
 
   if (cacheTags) {
+    // eslint-disable-next-line no-console
     console.log("------- Storing [category] cacheTags -----", cacheTags)
     cacheTag(...cacheTags)
   }
