@@ -1,10 +1,12 @@
 query getPageByPath($path: String!) {
   route(path: $path) {
     __typename
+    ...routeRedirect
     ... on RouteInternal {
       url
       entity {
         ... on NodeGoPage {
+          __typename
           paragraphs {
             ...goVideo
             ...goVideoBundleAutomatic
