@@ -11,7 +11,7 @@ import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
 export const metadata: Metadata = setPageMetadata("Materiale")
 
-type TWorkPageProps = TWorkPageProps
+type TWorkPageProps = { params: Promise<{ id: string }> }
 
 async function WorkPage({ params }: TWorkPageProps) {
   const { id } = await params

@@ -1645,6 +1645,14 @@
   dependencies:
     tslib "^2.4.0"
 
+"@envelop/instrumentation@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@envelop/instrumentation/-/instrumentation-1.0.0.tgz#43268392e065d8ba975cacbdf4fc297dfe3e11e5"
+  integrity sha512-cxgkB66RQB95H3X27jlnxCRNTmPuSTgmBAq6/4n2Dtv4hsk4yz8FadA1ggmd0uZzvKqWD6CR+WFgTjhDqg7eyw==
+  dependencies:
+    "@whatwg-node/promise-helpers" "^1.2.1"
+    tslib "^2.5.0"
+
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.21.5.tgz#c7184a326533fcdf1b8ee0733e21c713b975575f"
@@ -2075,6 +2083,11 @@
   version "1.3.0"
   resolved "https://registry.npmjs.org/@exodus/schemasafe/-/schemasafe-1.3.0.tgz"
   integrity sha512-5Aap/GaRupgNx/feGBwLLTVv8OQFfv3pq2lPRzPg9R+IOBnDgghTGW7l7EuVXOvg5cc/xSAlRW8rBrjIC3Nvqw==
+
+"@fastify/busboy@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-3.1.1.tgz#af3aea7f1e52ec916d8b5c9dcc0f09d4c060a3fc"
+  integrity sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==
 
 "@gql.tada/internal@^1.0.0":
   version "1.0.8"
@@ -5654,20 +5667,28 @@
     "@webassemblyjs/ast" "1.14.1"
     "@xtuc/long" "4.2.2"
 
+"@whatwg-node/disposablestack@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/disposablestack/-/disposablestack-0.0.6.tgz#2064a1425ea66194def6df0c7a1851b6939c82bb"
+  integrity sha512-LOtTn+JgJvX8WfBVJtF08TGrdjuFzGJc4mkP8EdDI8ADbvO7kiexYep1o8dwnt0okb0jYclCDXF13xU7Ge4zSw==
+  dependencies:
+    "@whatwg-node/promise-helpers" "^1.0.0"
+    tslib "^2.6.3"
+
+"@whatwg-node/fetch@^0.10.7":
+  version "0.10.7"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/fetch/-/fetch-0.10.7.tgz#f5f6839ba4af694259480f191d528ffef91e0361"
+  integrity sha512-sL31zX8BqZovZc38ovBFmKEfao9AzZ/24sWSHKNhDhcnzIO/PYAX2xF6vYtgU9hinrEGlvScTTyKSMynHGdfEA==
+  dependencies:
+    "@whatwg-node/node-fetch" "^0.7.19"
+    urlpattern-polyfill "^10.0.0"
+
 "@whatwg-node/fetch@^0.9.0", "@whatwg-node/fetch@^0.9.20":
   version "0.9.21"
   resolved "https://registry.npmjs.org/@whatwg-node/fetch/-/fetch-0.9.21.tgz"
   integrity sha512-Wt0jPb+04JjobK0pAAN7mEHxVHcGA9HoP3OyCsZtyAecNQeADXCZ1MihFwVwjsgaRYuGVmNlsCmLxlG6mor8Gw==
   dependencies:
     "@whatwg-node/node-fetch" "^0.5.23"
-    urlpattern-polyfill "^10.0.0"
-
-"@whatwg-node/fetch@^0.9.22":
-  version "0.9.22"
-  resolved "https://registry.npmjs.org/@whatwg-node/fetch/-/fetch-0.9.22.tgz"
-  integrity sha512-+RIBffgoaRlWV9cKV6wAX71sbeoU2APOI3G13ZRMkabYHwkvDMeZDTyxJcsMXA5CpieJ7NFXF9Xyu72jwvdzqA==
-  dependencies:
-    "@whatwg-node/node-fetch" "^0.5.27"
     urlpattern-polyfill "^10.0.0"
 
 "@whatwg-node/node-fetch@^0.5.23":
@@ -5680,22 +5701,32 @@
     fast-querystring "^1.1.1"
     tslib "^2.6.3"
 
-"@whatwg-node/node-fetch@^0.5.27":
-  version "0.5.27"
-  resolved "https://registry.npmjs.org/@whatwg-node/node-fetch/-/node-fetch-0.5.27.tgz"
-  integrity sha512-0OaMj5W4fzWimRSFq07qFiWfquaUMNB+695GwE76LYKVuah+jwCdzSgsIOtwPkiyJ35w0XGhXmJPiIJCdLwopg==
+"@whatwg-node/node-fetch@^0.7.19":
+  version "0.7.19"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/node-fetch/-/node-fetch-0.7.19.tgz#b8c09eb785782512972137f3bc7e0dad78667cbc"
+  integrity sha512-ippPt75epj7Tg6H5znI9lBBQ4gi+x23QsIF7UN1Z02MUqzhbkjhGsUtNnYGS3osrqvyKtbGKmEya6IqIPRmtdw==
   dependencies:
-    "@kamilkisiela/fast-url-parser" "^1.1.4"
-    busboy "^1.6.0"
-    fast-querystring "^1.1.1"
+    "@fastify/busboy" "^3.1.1"
+    "@whatwg-node/disposablestack" "^0.0.6"
+    "@whatwg-node/promise-helpers" "^1.3.2"
     tslib "^2.6.3"
 
-"@whatwg-node/server@^0.9.49":
-  version "0.9.50"
-  resolved "https://registry.npmjs.org/@whatwg-node/server/-/server-0.9.50.tgz"
-  integrity sha512-7Vd8k6iu+ps8bkZT+Y/wPm42EDh8KojAL+APKa79mntgkyPtdq0r1//CO+0eYqQBz6HGrDxHRT4KChSOy4jGIw==
+"@whatwg-node/promise-helpers@^1.0.0", "@whatwg-node/promise-helpers@^1.2.1", "@whatwg-node/promise-helpers@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/promise-helpers/-/promise-helpers-1.3.2.tgz#3b54987ad6517ef6db5920c66a6f0dada606587d"
+  integrity sha512-Nst5JdK47VIl9UcGwtv2Rcgyn5lWtZ0/mhRQ4G8NN2isxpq2TO30iqHzmwoJycjWuyUfg3GFXqP/gFHXeV57IA==
   dependencies:
-    "@whatwg-node/fetch" "^0.9.22"
+    tslib "^2.6.3"
+
+"@whatwg-node/server@^0.10.3":
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/server/-/server-0.10.6.tgz#657b53aa129f3860a27a348bc38ea2d95f2d46c3"
+  integrity sha512-2Y9qQfNqaPS1rPW6ZXLW01LzsPMC/kV2oGIsTc0Tb17MBmQL+6t/Gt0qExlv0ysmih8WcjMR6jjYReCtrtcb7w==
+  dependencies:
+    "@envelop/instrumentation" "^1.0.0"
+    "@whatwg-node/disposablestack" "^0.0.6"
+    "@whatwg-node/fetch" "^0.10.7"
+    "@whatwg-node/promise-helpers" "^1.3.2"
     tslib "^2.6.3"
 
 "@xmldom/is-dom-node@^1.0.1":
@@ -7196,6 +7227,11 @@ cookie@^1.0.1:
   resolved "https://registry.npmjs.org/cookie/-/cookie-1.0.1.tgz"
   integrity sha512-Xd8lFX4LM9QEEwxQpF9J9NTUh8pmdJO0cyRJhFiDoLTk2eH8FXlRv2IFGYVadZpqI3j8fhNrSdKCeYPxiAhLXw==
 
+cookie@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-1.0.2.tgz#27360701532116bd3f1f9416929d176afe1e4610"
+  integrity sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==
+
 cookies-next@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cookies-next/-/cookies-next-5.1.0.tgz#b6e1c7d11a4e1d38ed0586a7847cd0f403c539e1"
@@ -7215,10 +7251,10 @@ core-js-pure@^3.23.3:
   resolved "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.39.0.tgz"
   integrity sha512-7fEcWwKI4rJinnK+wLTezeg2smbFFdSBP6E2kQZNbnzM2s1rpKQ6aaRteZSSg7FLU3P0HGGVo/gbpfanU36urg==
 
-core-js@^3.38.1:
-  version "3.38.1"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-3.38.1.tgz"
-  integrity sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==
+core-js@^3.41.0:
+  version "3.42.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.42.0.tgz#edbe91f78ac8cfb6df8d997e74d368a68082fe37"
+  integrity sha512-Sz4PP4ZA+Rq4II21qkNqOEDTDrCvcANId3xpIgB34NDkWc3UduWj2dqEtN9yZIq8Dk3HyPI33x9sqqU5C8sr0g==
 
 core-util-is@1.0.2:
   version "1.0.2"
@@ -11738,14 +11774,14 @@ next-drupal@^2.0.0-beta.0:
     react "^18.2.0"
     react-dom "^18.2.0"
 
-next-test-api-route-handler@^4.0.12:
-  version "4.0.12"
-  resolved "https://registry.npmjs.org/next-test-api-route-handler/-/next-test-api-route-handler-4.0.12.tgz"
-  integrity sha512-PW4Mn50j0jWoNeciIL2A8vpyz+jZETsapIrA1EQ3lXuZo1xM6AOEsnfEI/n/4aI87m5CvrjkvNnGg34lciyldQ==
+next-test-api-route-handler@^4.0.16:
+  version "4.0.16"
+  resolved "https://registry.yarnpkg.com/next-test-api-route-handler/-/next-test-api-route-handler-4.0.16.tgz#7ac09101fe831669eb2abc5d37c8f4ee64d44828"
+  integrity sha512-13YKH1X52YzZKDU1fplR3DS6SRZUx+wsw6x6XZXGJnjUWEPL9HmVdyX9/i/8Rv4kC2UXisqLPuTGePTvWRAZGQ==
   dependencies:
-    "@whatwg-node/server" "^0.9.49"
-    cookie "^1.0.1"
-    core-js "^3.38.1"
+    "@whatwg-node/server" "^0.10.3"
+    cookie "^1.0.2"
+    core-js "^3.41.0"
 
 next-themes@^0.4.4:
   version "0.4.4"

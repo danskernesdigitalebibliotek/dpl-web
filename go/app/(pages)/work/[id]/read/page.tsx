@@ -29,4 +29,4 @@ function WorkReadPage() {
   )
 }
 
-export default Page
+export default WorkReadPage

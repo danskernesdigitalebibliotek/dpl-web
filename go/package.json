@@ -127,7 +127,7 @@
     "fishery": "^2.2.2",
     "jsdom": "^25.0.1",
     "mockttp": "^3.17.1",
-    "next-test-api-route-handler": "^4.0.12",
+    "next-test-api-route-handler": "^4.0.16",
     "node-mocks-http": "^1.16.1",
     "orval": "^7.2.0",
     "postcss": "^8.5.3",
