@@ -8,13 +8,10 @@ import ArticlePageLayout, {
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
-import getQueryClient from "@/lib/getQueryClient"
-import {
-  NodeGoCategory,
-  NodeGoPage,
-  useGetPreviewPageByIddQuery,
-} from "@/lib/graphql/generated/dpl-cms/graphql"
+import { NodeGoCategory, NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
+
+import loadPreviewPage from "./loadPreviewPage"
 
 export const metadata: Metadata = setPageMetadata("Preview")
 
@@ -27,11 +24,13 @@ async function Page(props: {
   const { token } = searchParams as { token: string | undefined }
   const { id } = params
 
-  const queryClient = getQueryClient()
+  if (!id || !token) {
+    return notFound()
+  }
 
-  const data = await queryClient.fetchQuery({
-    queryKey: useGetPreviewPageByIddQuery.getKey({ id: id, token: token || "" }),
-    queryFn: useGetPreviewPageByIddQuery.fetcher({ id: id, token: token || "" }),
+  const data = await loadPreviewPage({
+    id: id,
+    token: token,
   })
 
   if (!data) {
@@ -39,7 +38,6 @@ async function Page(props: {
   }
 
   const pageType = data?.preview?.__typename
-
   if (pageType === "NodeGoPage") {
     return (
       <CategorySliderLayout>
@@ -47,11 +45,9 @@ async function Page(props: {
       </CategorySliderLayout>
     )
   }
-
   if (pageType === "NodeGoArticle") {
     return <ArticlePageLayout pageData={data.preview as TArticlePageLayoutProps} />
   }
-
   if (pageType === "NodeGoCategory") {
     return (
       <CategorySliderLayout>
