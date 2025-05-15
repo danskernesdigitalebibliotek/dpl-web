@@ -1,10 +1,11 @@
-import { notFound, redirect } from "next/navigation"
 import React from "react"
 
 import loadArticle from "@/app/(pages)/artikel/[...slug]/loadArticle"
+import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
+import { getEntityFromPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
 async function getPage(slug: string[]) {
@@ -24,23 +25,13 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const data = await getPage((await props.params).slug)
-  const routeType = data.route?.__typename
+  const entity = getEntityFromPageData(data)
 
-  if (routeType === "RouteRedirect") {
-    if (data.route?.url) redirect(data.route.url)
-  }
-  if (routeType === "RouteExternal") {
-    // TODO: implement external route redirect
-    return notFound()
-  }
-  if (routeType === "RouteInternal") {
-    const { entity } = data.route ?? {}
-    if (entity?.__typename === "NodeGoArticle") {
-      return <ArticlePageLayout pageData={entity as TArticlePageLayoutProps} />
-    }
-  }
-
-  return notFound()
+  return (
+    <RedirectNotFoundOrRenderPage data={data} pageType="NodeGoArticle">
+      <ArticlePageLayout pageData={entity as TArticlePageLayoutProps} />
+    </RedirectNotFoundOrRenderPage>
+  )
 }
 
 export default page

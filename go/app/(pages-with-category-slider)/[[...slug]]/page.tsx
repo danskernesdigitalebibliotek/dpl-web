@@ -1,9 +1,10 @@
-import { notFound, redirect } from "next/navigation"
 import React from "react"
 
+import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
 import goConfig from "@/lib/config/goConfig"
 import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { getEntityFromPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
 import loadPage from "./loadPage"
@@ -30,23 +31,13 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const data = await getPage((await props.params).slug)
-  const routeType = data.route?.__typename
+  const entity = getEntityFromPageData(data)
 
-  if (routeType === "RouteRedirect") {
-    if (data.route?.url) redirect(data.route.url)
-  }
-  if (routeType === "RouteExternal") {
-    // TODO: implement external route redirect
-    return null
-  }
-  if (routeType === "RouteInternal") {
-    const { entity } = data.route ?? {}
-    if (entity?.__typename === "NodeGoPage") {
-      return <BasicPageLayout pageData={entity as NodeGoPage} />
-    }
-  }
-
-  return notFound()
+  return (
+    <RedirectNotFoundOrRenderPage data={data} pageType="NodeGoPage">
+      <BasicPageLayout pageData={entity as NodeGoPage} />
+    </RedirectNotFoundOrRenderPage>
+  )
 }
 
 export default page
