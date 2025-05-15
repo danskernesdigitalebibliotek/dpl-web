@@ -147,6 +147,7 @@
         "drupal/metatag": "^2.1",
         "drupal/multiple_fields_remove_button": "^2.2",
         "drupal/multivalue_form_element": "^1.0@beta",
+        "drupal/next": "^2.0",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openapi_ui_swagger": "^1.0",

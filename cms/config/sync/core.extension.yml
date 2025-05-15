@@ -28,6 +28,7 @@ module:
   date_range_formatter: 0
   datetime: 0
   datetime_range: 0
+  decoupled_router: 0
   default_content: 0
   dpl_admin: 0
   dpl_article: 0
@@ -139,6 +140,8 @@ module:
   multiple_fields_remove_button: 0
   multivalue_form_element: 0
   mysql: 0
+  next: 0
+  next_graphql: 0
   node: 0
   openapi: 0
   openapi_rest: 0
@@ -176,6 +179,7 @@ module:
   simple_oauth: 0
   simple_sitemap: 0
   state_log: 0
+  subrequests: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0

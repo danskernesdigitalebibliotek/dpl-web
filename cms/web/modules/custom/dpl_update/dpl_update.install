@@ -608,3 +608,10 @@ function dpl_update_update_10048(): string {
 
   return implode(' | ', $success_output);
 }
+
+/**
+ * Install drupal/nexxt modules for cache revalidation.
+ */
+function dpl_update_update_10049(): string {
+  return _dpl_update_install_modules(['next', 'next_graphql']);
+}

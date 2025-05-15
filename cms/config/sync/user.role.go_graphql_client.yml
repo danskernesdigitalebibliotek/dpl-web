@@ -13,6 +13,7 @@ weight: 10
 is_admin: null
 permissions:
   - 'execute graphql_compose_server arbitrary graphql requests'
+  - 'get dpl graphql cache tags'
   - 'rewrite go urls'
   - 'view any unpublished content'
   - 'view unpublished paragraphs'
