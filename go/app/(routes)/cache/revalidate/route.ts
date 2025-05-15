@@ -18,7 +18,7 @@ const paramsSchema = z.union([
 ])
 
 export async function GET(request: NextRequest) {
-  const secretEnv = getServerEnv("REVALIDATE_CACHE_SECRET")
+  const secretEnv = getServerEnv("DRUPAL_REVALIDATE_SECRET")
   const searchParams = request.nextUrl.searchParams
   const requestParams = Object.fromEntries(searchParams.entries())
 

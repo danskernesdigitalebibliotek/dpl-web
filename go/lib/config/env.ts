@@ -22,7 +22,7 @@ function getEnvs() {
     // Server-only env variables
     GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
     NEXT_PHASE: process.env.NEXT_PHASE,
-    REVALIDATE_CACHE_SECRET: process.env.REVALIDATE_CACHE_SECRET,
+    DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
     UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
     UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
     UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
@@ -58,7 +58,7 @@ const EnvServerSchema = z.object({
       z.literal(PHASE_TEST),
     ])
     .optional(),
-  REVALIDATE_CACHE_SECRET: z.string(),
+  DRUPAL_REVALIDATE_SECRET: z.string(),
   UNILOGIN_MUNICIPALITY_ID: z.string(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),

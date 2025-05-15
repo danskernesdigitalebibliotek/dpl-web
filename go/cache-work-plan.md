@@ -8,7 +8,7 @@
 * [DONE] Suspense in server components
 * [DONE] Testing of the revalidation endpoint
 * [DONE] Revalidation endpoint
-* Invalidation env secrets should be handled
+* [DONE] Invalidation env secrets should be handled
 * Implement cache tags in codegen + fetcher
 * Handle cache tags in all dpl-cms fetching functions
 * Set queryclient cache on dpl-cms to stale (bypass react query)
