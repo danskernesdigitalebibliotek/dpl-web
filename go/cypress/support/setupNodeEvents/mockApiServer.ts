@@ -41,16 +41,16 @@ class MockApiServer {
   mockRestResponse({ method, path: url, data, statusCode = 200 }: MockRestResponseParams) {
     switch (method) {
       case "GET":
-        this.server.forGet(url).thenReply(statusCode, JSON.stringify({ data }))
+        this.server.forGet(url).thenJson(statusCode, data)
         break
       case "POST":
-        this.server.forPost(url).thenReply(statusCode, JSON.stringify({ data }))
+        this.server.forPost(url).thenJson(statusCode, data)
         break
       case "PUT":
-        this.server.forPut(url).thenReply(statusCode, JSON.stringify({ data }))
+        this.server.forPut(url).thenJson(statusCode, data)
         break
       case "DELETE":
-        this.server.forDelete(url).thenReply(statusCode, JSON.stringify({ data }))
+        this.server.forDelete(url).thenJson(statusCode, data)
         break
     }
   }
