@@ -1,6 +1,7 @@
 query getArticleByPath($path: String!) {
   route(path: $path) {
     __typename
+    ...routeRedirect
     ... on RouteInternal {
       url
       entity {
