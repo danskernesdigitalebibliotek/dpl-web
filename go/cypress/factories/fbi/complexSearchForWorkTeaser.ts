@@ -2,7 +2,7 @@ import { Factory } from "fishery"
 
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-import { CombinedWorkFactory } from "../factory-parts/works"
+import { CombinedWorkFactory } from "./factory-parts/works"
 
 type Params = {
   hitcount: number
