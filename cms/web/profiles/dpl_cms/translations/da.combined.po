@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-05-16 10:19+0200\n"
-"PO-Revision-Date: 2025-05-16 10:19+0200\n"
+"POT-Creation-Date: 2025-05-16 14:21+0200\n"
+"PO-Revision-Date: 2025-05-16 14:21+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1407,6 +1407,26 @@ msgstr "Biblioteket har @count eksemplarer."
 msgctxt "Work Page"
 msgid "Other materials"
 msgstr "Andre materialer"
+
+msgctxt "Work Page"
+msgid "Recommendations"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "In same series"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "By same author"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Filter displayed materials"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Select material filter"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Missing data"
