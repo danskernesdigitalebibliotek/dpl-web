@@ -31,6 +31,14 @@ bnf_client.server_redirect:
   requirements:
     _permission: 'bnf import nodes'
 
+bnf_client.new_subscription_redirect:
+  path: '/admin/bnf/subscriptions/new'
+  defaults:
+    _controller: '\Drupal\bnf_client\Controller\NewSubscriptionRedirectController::redirect'
+    _title: 'New subscription'
+  requirements:
+    _permission: 'bnf manage subscriptions'
+
 bnf_client.settings:
   path: '/admin/config/services/bnf'
   defaults:
