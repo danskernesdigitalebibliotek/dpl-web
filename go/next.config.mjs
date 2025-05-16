@@ -1,10 +1,14 @@
 import withPlaiceholder from "@plaiceholder/next"
 import { env } from "process"
 
-function getImageHostname() {
+function getAllowedHostname() {
+  // While testing we allow all hostnames, to avoid errors while using mocked responses
   if (env.NODE_ENV === "test") {
     return "**"
   }
+
+  // Allow images which originate from set DPL CMS hostname
+  // Strip protocol from url, as remotePatterns only supports hostnames
   return env.NEXT_PUBLIC_DPL_CMS_HOSTNAME?.replace(/^https?:\/\//, "") || ""
 }
 
@@ -31,7 +35,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: getImageHostname(),
+        hostname: getAllowedHostname(),
         pathname: "/**",
       },
     ],
