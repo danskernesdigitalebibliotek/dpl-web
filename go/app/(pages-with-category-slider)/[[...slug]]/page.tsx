@@ -39,7 +39,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
   return null
 }
 
-async function page(props: { params: Promise<{ slug: string[] }> }) {
+async function BasicPage(props: { params: Promise<{ slug: string[] }> }) {
   const data = await getPage((await props.params).slug)
   const entity = getEntityFromPageData(data)
 
