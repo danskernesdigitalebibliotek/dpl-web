@@ -7,7 +7,7 @@ import {
   useGetDplCmsPublicConfigurationQuery,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-import { getEnv, getServerEnv } from "../env"
+import { getServerEnv } from "../env"
 
 const queryDplCmsPrivateConfig = async () => {
   const { goConfiguration } = await useGetDplCmsPrivateConfigurationQuery.fetcher(undefined, {
@@ -30,7 +30,7 @@ export const getDplCmsPrivateUniloginConfig = async () => {
 
   let configAPI = {}
   // If we are running in test mode, we don't want to query the DPL CMS config
-  const config = getEnv("TEST_MODE") ? null : await queryDplCmsPrivateConfig()
+  const config = await queryDplCmsPrivateConfig()
   if (config?.unilogin) {
     configAPI = {
       wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,

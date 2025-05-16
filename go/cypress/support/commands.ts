@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Cover } from "@/lib/rest/cover-service-api/generated/model"
 
-import { CyKey } from "./constants"
+import { CyKey, ViewportType, viewports } from "./constants"
 import { Operations, hasOperationName } from "./utils"
 
 type InterceptGraphqlParams = {
@@ -31,19 +31,20 @@ type InterceptCoversParams = {
 }
 
 export type MockGraphQLQueryParams = {
-  operationName: string
+  operationName: Operations
   data: object
 }
 
 export type MockGraphQLMutationParams = {
-  operationName: string
+  operationName: Operations
   data: object
 }
 
 export type MockRestResponseParams = {
-  method: "get" | "post" | "put" | "delete" | "patch"
-  url: string
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
+  path: string
   data: object
+  statusCode?: number
 }
 
 declare global {
@@ -103,6 +104,18 @@ declare global {
        * @example cy.resetServerMocks()
        */
       resetServerMocks(): void
+
+      /**
+       * Checks if the current viewport is mobile
+       * @example cy.isViewport("mobile")
+       */
+      isViewport(viewport: ViewportType): Chainable<boolean>
+
+      /**
+       * Sets the viewport to a specific size
+       * @example cy.setViewport("mobile")
+       */
+      setViewport(viewport: ViewportType): void
     }
   }
 }
@@ -123,7 +136,7 @@ Cypress.Commands.add("expectError", (errorMessage: string) => {
 Cypress.Commands.add(
   "interceptGraphql",
   ({ operationName, data, statusCode = 200 }: InterceptGraphqlParams) => {
-    cy.intercept("POST", "**/ap-service/**", req => {
+    cy.intercept("POST", /(ap-service|graphql)/, req => {
       if (hasOperationName(req, operationName)) {
         if (data) {
           req.reply({ body: { data }, statusCode })
@@ -172,4 +185,14 @@ Cypress.Commands.add("mockServerRest", props => {
  */
 Cypress.Commands.add("resetServerMocks", () => {
   cy.task("resetApiMocks")
+})
+
+Cypress.Commands.add("isViewport", (viewport: ViewportType) => {
+  return cy.window().then(win => {
+    return win.innerWidth === viewports[viewport].width
+  })
+})
+
+Cypress.Commands.add("setViewport", (viewport: ViewportType) => {
+  cy.viewport(viewports[viewport].width, viewports[viewport].height)
 })

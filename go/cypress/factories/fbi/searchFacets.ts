@@ -2,7 +2,7 @@ import { Factory } from "fishery"
 
 import { SearchFacetsQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-import { facetsFactory } from "./factory-parts/facets"
+import { facetsFactory } from "../factory-parts/facets"
 
 export default Factory.define<SearchFacetsQuery>(() => ({
   search: {

@@ -11,7 +11,6 @@ function getEnvs() {
     GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
     GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI,
     NODE_ENV: process.env.NODE_ENV,
-    TEST_MODE: process.env.TEST_MODE,
 
     // Server-only env variables
     GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
@@ -35,7 +34,6 @@ const EnvSchema = z.object({
   GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
   GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
-  TEST_MODE: z.coerce.boolean().default(false),
 })
 
 // Environment variables only available in Nodejs.

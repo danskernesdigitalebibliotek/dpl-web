@@ -10,6 +10,7 @@ import {
   getFacetTranslation,
   sortByActiveFacets,
 } from "@/components/shared/searchFilters/helper"
+import { cyKeys } from "@/cypress/support/constants"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { TFilters } from "@/lib/machines/search/types"
@@ -90,7 +91,8 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
                   term: value.term,
                   filters: selectedFilters,
                 })}
-                withAnimation>
+                withAnimation
+                data-cy={cyKeys["filter-button"]}>
                 {value.term}
               </BadgeButton>
             ))}

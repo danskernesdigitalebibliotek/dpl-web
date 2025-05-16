@@ -51,6 +51,15 @@ const eslintConfig = [
             "Do not use process.env directly. Use getEnv() or getServerEnv() from env.ts instead.",
         },
       ],
+      "no-restricted-properties": [
+        "warn",
+        {
+          object: "cy",
+          property: "setViewport",
+          message:
+            "Beware that setViewport should only be used while debugging Cypress locally. Otherwise it forces the viewport to a fixed size, which is not what we want for responsive testing.",
+        },
+      ],
       "no-restricted-syntax": [
         "error",
         {
