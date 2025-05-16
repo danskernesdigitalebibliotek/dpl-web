@@ -1,6 +1,7 @@
 import { Factory } from "fishery"
 
 import { GetPageByPathQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
+
 import defaultGoResponse from "../factory-parts/defaultGoResponse"
 
 export default Factory.define<GetPageByPathQuery>(() => {
