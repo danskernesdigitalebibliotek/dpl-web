@@ -152,6 +152,12 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10043();
   $messages[] = dpl_update_update_10047();
 
+  /*
+   * dpl_update_update_10050 is not needed, when installing from scratch the
+   * deploy hook that enables bnf_client is used, which properly installs
+   * dependencies.
+   */
+
   return implode('\r\n', $messages);
 }
 
@@ -614,4 +620,15 @@ function dpl_update_update_10048(): string {
  */
 function dpl_update_update_10049(): string {
   return _dpl_update_install_modules(['next', 'next_graphql']);
+}
+
+/**
+ * Enable queue_ui for bnf_client.
+ */
+function dpl_update_update_10050(): string {
+  if (\Drupal::moduleHandler()->moduleExists('bnf_client')) {
+    return _dpl_update_install_modules(['queue_ui']);
+  }
+
+  return "bnf_client not enabled, not enabling queue_ui";
 }
