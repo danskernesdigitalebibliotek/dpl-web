@@ -2,8 +2,11 @@ import { Factory } from "fishery"
 
 import { GetCategoriesQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
+import defaultGoResponse from "./factory-parts/defaultGoResponse"
+
 export default Factory.define<GetCategoriesQuery>(() => {
   return {
+    go: defaultGoResponse.build(),
     goCategories: {
       results: [
         {
