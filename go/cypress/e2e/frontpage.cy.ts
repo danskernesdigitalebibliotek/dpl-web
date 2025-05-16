@@ -79,7 +79,7 @@ describe("Front Page Tests", () => {
         // Maximum number of materials to click through
         const maxAttempts = 10
 
-        // Click the button up to 20 times
+        // Click the button up to 10 times
         for (let i = 0; i < maxAttempts; i++) {
           cy.dataCy("material-slider-next-button")
             .should("exist")

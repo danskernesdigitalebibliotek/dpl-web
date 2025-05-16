@@ -3,8 +3,6 @@ import SearchWithPaginationFactory from "../factories/fbi/searchWithPagination"
 
 describe("Search Result Tests", () => {
   beforeEach(() => {
-    cy.setViewport("desktop")
-
     // Ignore fetch errors from DPL CMS
     cy.expectError("Failed to fetch data from DPL CMS")
     // Intercept search request
