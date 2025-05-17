@@ -8,6 +8,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
       __typename: "RouteInternal",
       url: "https://go-demo.cms-demo.dpl-cms.dplplat01.dpl.reload.dk/go-frontpage",
       entity: {
+        __typename: "NodeGoPage",
         paragraphs: [
           {
             __typename: "ParagraphGoVideoBundleAutomatic",
