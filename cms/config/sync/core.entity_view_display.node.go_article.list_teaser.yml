@@ -74,4 +74,5 @@ hidden:
   field_publication_date: true
   field_tags: true
   langcode: true
+  preview_token: true
   search_api_excerpt: true
