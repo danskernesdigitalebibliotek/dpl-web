@@ -92,10 +92,13 @@ trait FileTrait {
       'field_media_file' => [
         'target_id' => $file->id(),
         'display' => TRUE,
-        'description' => $document->mediaFile->description ?? '',
       ],
       'name' => $document->mediaFile->name,
     ];
+
+    if (!empty($document->mediaFile->description)) {
+      $properties['field_media_file']['description'] = $document->mediaFile->description;
+    }
 
     // Look up existing media - if it exists, referer to that, otherwise create.
     $medias = $mediaStorage->loadByProperties($properties);

@@ -56,7 +56,7 @@ trait EmbedVideoTrait {
 
     $properties = [
       'bundle' => 'video',
-      'name' => $video->name ?? '',
+      'name' => $video->name ?? 'Video',
       'field_media_oembed_video' => $video->mediaOembedVideo,
       'status' => TRUE,
     ];
@@ -81,7 +81,7 @@ trait EmbedVideoTrait {
 
     $properties = [
       'bundle' => 'videotool',
-      'name' => $video->name ?? '',
+      'name' => $video->name ?? 'Video',
       'field_media_videotool' => $video->mediaVideotool,
       'status' => TRUE,
     ];
