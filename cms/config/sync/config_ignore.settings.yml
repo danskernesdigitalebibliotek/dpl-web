@@ -22,6 +22,7 @@ ignored_config_entities:
     - dpl_reservations.settings
     - dpl_unilogin.settings
     - dpl_url_proxy.settings
+    - next.next_site.go
     - novel.settings
     - openid_connect.client.adgangsplatformen
     - system.site
@@ -45,6 +46,7 @@ ignored_config_entities:
     - dpl_reservations.settings
     - dpl_unilogin.settings
     - dpl_url_proxy.settings
+    - next.next_site.go
     - novel.settings
     - openid_connect.client.adgangsplatformen
     - system.site
