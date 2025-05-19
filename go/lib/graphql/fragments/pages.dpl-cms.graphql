@@ -1,0 +1,53 @@
+fragment nodeGoPage on NodeGoPage {
+  __typename
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}
+
+fragment nodeGoArticle on NodeGoArticle {
+  __typename
+  id
+  title
+  subtitle
+  goArticleImage {
+    ...imageFragment
+  }
+  publicationDate {
+    timestamp
+  }
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}
+
+fragment nodeGoCategory on NodeGoCategory {
+  __typename
+  id
+  path
+  title
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}

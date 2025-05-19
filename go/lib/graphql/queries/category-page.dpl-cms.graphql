@@ -5,22 +5,7 @@ query getCategoryPageByPath($path: String!) {
     ... on RouteInternal {
       url
       entity {
-        ... on NodeGoCategory {
-          __typename
-          id
-          path
-          title
-          paragraphs {
-            ...goVideo
-            ...goVideoBundleAutomatic
-            ...goVideoBundleManual
-            ...goMaterialSliderAutomatic
-            ...goMaterialSliderManual
-            ...goLinkbox
-            ...goTextBody
-            ...goImages
-          }
-        }
+        ...nodeGoCategory
       }
     }
   }
