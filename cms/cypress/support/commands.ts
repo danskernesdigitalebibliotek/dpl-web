@@ -82,6 +82,15 @@ Cypress.Commands.add('drupalLogin', (url?: string) => {
   const password = Cypress.env('DRUPAL_PASSWORD');
   cy.session({ username, password }, () => {
     cy.visit('/user/login');
+
+    // If the CookieInformation prompt is here, we want to click it, to not
+    // have it block the user information.
+    cy.get('body').then(($body) => {
+      if ($body.find('.coi-banner__accept').length > 0) {
+        cy.get('.coi-banner__accept').first().click();
+      }
+    });
+
     cy.get('[name="name"]')
       .type(username)
       .parent()
