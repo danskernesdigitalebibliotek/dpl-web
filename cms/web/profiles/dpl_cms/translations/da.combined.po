@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-05-19 13:53+0200\n"
-"PO-Revision-Date: 2025-05-19 13:53+0200\n"
+"POT-Creation-Date: 2025-05-19 14:26+0200\n"
+"PO-Revision-Date: 2025-05-19 14:26+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -526,12 +526,6 @@ msgid "Could not import node from BNF."
 msgstr "Det er ikke muligt at importere denne node fra Delingstjenesten."
 
 msgctxt "BNF"
-msgid ""
-"This subscription already exists. <a href=\"@url\">Do you want to edit/"
-"delete it?</a>"
-msgstr ""
-
-msgctxt "BNF"
 msgid "Only import new content"
 msgstr ""
 
@@ -540,14 +534,6 @@ msgid ""
 "If checked, only upcoming content related to this subscription will be "
 "imported.<br> \"New content\" is defined by content that has been saved, "
 "regardless of publishing date."
-msgstr ""
-
-msgctxt "BNF"
-msgid "Could not create subscription."
-msgstr ""
-
-msgctxt "BNF"
-msgid "Created subscription"
 msgstr ""
 
 msgctxt "BNF"
@@ -4903,6 +4889,9 @@ msgstr ""
 
 msgid "Login to BNF"
 msgstr "Login i Delingstjenesten"
+
+msgid "New subscription"
+msgstr ""
 
 msgid "Manage BNF subscriptions"
 msgstr ""
