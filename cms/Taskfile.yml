@@ -120,6 +120,7 @@ tasks:
       - task dev:cli -- php vendor/bin/phpstan
       - yarn install --frozen-lockfile
       - npx eslint web -c .eslintrc.json --fix
+      - npx eslint cypress -c cypress/.eslintrc.json --fix
 
   dev:build:
     summary: Build docker containers
