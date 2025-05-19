@@ -97,6 +97,19 @@ Cypress.Commands.add('drupalLogin', (url?: string) => {
       .get('[name="pass"]')
       .type(password);
     cy.get('.button-login').click();
+
+    cy.visit('/user/edit');
+
+    // Making sure the required author field is filled out.
+    cy.get('[name="field_author_name[0][value]"]').clear().type(username);
+
+    // Making sure the interface language is set to english, to simplify our
+    // tests using "contains".
+    cy.get('[data-drupal-selector="edit-preferred-langcode"]').select('en');
+    cy.get('[data-drupal-selector="edit-preferred-admin-langcode"]').select(
+      'en',
+    );
+    cy.get('[data-drupal-selector="edit-submit"]').click();
   });
 
   if (url) {
