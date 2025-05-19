@@ -13,33 +13,28 @@ dependencies:
     - field.field.node.go_category.field_tags
     - node.type.go_category
   module:
-    - entity_reference_revisions
+    - dpl_go
     - user
 id: node.go_category.full
 targetEntityType: node
 bundle: go_category
 mode: full
 content:
-  field_paragraphs:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 0
-    region: content
-  links:
+  preview_token:
+    type: go_preview_token_iframe
+    label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
 hidden:
   field_category_menu_image: true
   field_category_menu_sound: true
   field_category_menu_title: true
   field_go_color: true
+  field_paragraphs: true
   field_publication_date: true
   field_tags: true
   langcode: true
+  links: true
   search_api_excerpt: true

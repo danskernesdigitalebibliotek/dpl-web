@@ -43,4 +43,5 @@ hidden:
   field_teaser_image: true
   field_teaser_text: true
   langcode: true
+  preview_token: true
   search_api_excerpt: true

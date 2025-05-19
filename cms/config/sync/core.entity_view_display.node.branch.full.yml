@@ -40,4 +40,5 @@ hidden:
   field_phone: true
   field_promoted_on_lists: true
   langcode: true
+  preview_token: true
   search_api_excerpt: true
