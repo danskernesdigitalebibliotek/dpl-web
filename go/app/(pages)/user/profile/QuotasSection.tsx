@@ -7,7 +7,7 @@ export type LoansDetailsProps = {
   loanData: LoanListResult
 }
 
-const LoansDetails = ({ loanData }: LoansDetailsProps) => {
+const QuotasSection = ({ loanData }: LoansDetailsProps) => {
   const { data, isLoading } = useGetV1LibraryProfile()
 
   if (isLoading) {
@@ -73,4 +73,4 @@ export const QuotasSectionSkeleton = () => {
   )
 }
 
-export default LoansDetails
+export default QuotasSection
