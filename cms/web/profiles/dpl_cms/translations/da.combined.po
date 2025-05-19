@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-05-19 14:43+0200\n"
-"PO-Revision-Date: 2025-05-19 14:43+0200\n"
+"POT-Creation-Date: 2025-05-19 16:28+0200\n"
+"PO-Revision-Date: 2025-05-19 16:28+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4684,6 +4684,9 @@ msgstr "Abonnement"
 
 msgid "Generate proxy url"
 msgstr "Generate proxy URL / Generer proxy URL"
+
+msgid "GO token preview iframe"
+msgstr ""
 
 msgid "List all opening hours for legacy API"
 msgstr "List alle åbningstider for ældre API"
@@ -19094,6 +19097,9 @@ msgstr ""
 
 msgid "Status message icon"
 msgstr "Statusmeddelelsesikon"
+
+msgid "Submitted by %author on %date"
+msgstr ""
 
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
