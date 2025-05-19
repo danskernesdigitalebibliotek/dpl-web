@@ -4,6 +4,7 @@ namespace Drupal\bnf_server\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,7 +52,13 @@ class ServerRedirecter extends ControllerBase {
       ];
     }
 
-    return new TrustedRedirectResponse("$url/admin/bnf/subscriptions/$uuid/$label/create");
+    $query = [
+      'uuid' => $uuid,
+      'label' => $label,
+    ];
+    $url = Url::fromUri("{$url}/admin/bnf/subscriptions/new", ['query' => $query])->toString();
+
+    return new TrustedRedirectResponse($url);
   }
 
 }

@@ -21,7 +21,7 @@ use Drupal\taxonomy\Entity\Term;
  *   admin_permission = "bnf manage subscriptions",
  *   links = {
  *      "collection" = "/admin/bnf/subscriptions",
- *      "add-form" = "/admin/bnf/subscriptions/{uuid}/{label}/create",
+ *      "add-form" = "/admin/bnf/subscriptions/create",
  *      "edit-form" = "/admin/bnf/subscriptions/{bnf_subscription}/edit",
  *      "delete-form" = "/admin/bnf/subscriptions/{bnf_subscription}/delete",
  *    },
@@ -33,9 +33,9 @@ use Drupal\taxonomy\Entity\Term;
  *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *     },
  *     "form" = {
- *        "default" = "Drupal\bnf_client\Entity\Form\SubscriptionCreateForm",
- *        "add" = "Drupal\bnf_client\Entity\Form\SubscriptionCreateForm",
- *        "edit" = "Drupal\Core\Entity\ContentEntityForm",
+ *        "default" = "Drupal\bnf_client\Entity\Form\SubscriptionForm",
+ *        "add" = "Drupal\bnf_client\Entity\Form\SubscriptionForm",
+ *        "edit" = "Drupal\bnf_client\Entity\Form\SubscriptionForm",
  *        "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *      },
  *   },
