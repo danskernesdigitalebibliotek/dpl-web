@@ -73,17 +73,39 @@ class BnfImporter {
         throw new \RuntimeException('Could not fetch content.');
       }
 
+      $existingNodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $nodeData->id]);
+
       // If the node we're looking to import is unpublished, we want to see
       // if it already exists. If not, we want to ignore it.
       if (!$nodeData->status) {
-        $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $nodeData->id]);
-        if (empty($nodes)) {
+        if (empty($existingNodes)) {
           $this->logger->info('Skipped BNF import of unpublished, unknown node.');
           return NULL;
         }
       }
 
+      $newSourceChanged = (string) $nodeData->changed->timestamp;
+
+      $existingNode = reset($existingNodes);
+
+      // If we already know about this Node locally, we want to check if it has
+      // actually been updated since last time we checked.
+      // This is necessary for non-subscription nodes, as we have no other way
+      // of checking - and we want to avoid re-saving the node (and related
+      // media entities) on each scheduled check.
+      if ($existingNode instanceof NodeInterface) {
+        $sourceChanged = $existingNode->get('bnf_source_changed')->getString();
+
+        if ($sourceChanged === $newSourceChanged) {
+          $this->logger->info('Skipping import of node, that has not changed.');
+          return NULL;
+        }
+      }
+
       $node = $this->mapperManager->map($nodeData);
+
+      $node->set('bnf_source_changed', $newSourceChanged);
+
       $info = $response->data?->info;
 
       if ($info?->name) {

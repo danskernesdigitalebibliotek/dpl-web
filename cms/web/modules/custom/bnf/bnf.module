@@ -25,6 +25,11 @@ function bnf_entity_base_field_info(EntityTypeInterface $entity_type): array {
       ->setSetting('enum_class', BnfStateEnum::class)
       ->setDefaultValue(BnfStateEnum::None);
 
+    $fields['bnf_source_changed'] = BaseFieldDefinition::create('string')
+      ->setName('bnf_source_changed')
+      ->setLabel(t('BNF source updated', [], ['context' => 'BNF']))
+      ->setDescription(t('The datetime of when this content was last updated at the source.', [], ['context' => 'BNF']));
+
     $fields['bnf_source_name'] = BaseFieldDefinition::create('string')
       ->setName('bnf_source_name')
       ->setLabel(t('BNF Source', [], ['context' => 'BNF']))
