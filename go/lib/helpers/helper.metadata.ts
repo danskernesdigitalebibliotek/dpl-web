@@ -28,7 +28,7 @@ export const setPageMetadata = (title: string, description?: string) => {
 // Used to set default global metadata for the entire site
 export const setLayoutMetadata = () => {
   return {
-    title: "Børnebiblioteket GO!",
+    title: "GO - Dit Bibliotek",
     description:
       "GO! er en digital platform, der giver børn og unge adgang til bøger, lydbøger og e-bøger.",
     icons: [
