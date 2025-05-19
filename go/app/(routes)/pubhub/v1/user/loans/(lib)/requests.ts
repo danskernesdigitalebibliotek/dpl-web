@@ -50,19 +50,20 @@ export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo
     cardnumber: uniLoginUserInfo.uniid,
   })
 
-  const friendlyCardNumberClient = await friendlyCardNumberClientAsync(
-    "./lib/soap/publizon/v2_7/wsdl/getfriendlycardnumber.wsdl"
-  )
-  const [friendlyCardNumberResponse] = await friendlyCardNumberClient.GetFriendlyCardnumberAsync({
-    ...getPublizonServiceParameters(),
-    cardnumber: uniLoginUserInfo.uniid,
-  })
-
   let libraryUserOrderList =
     libraryUserResponse.GetLibraryUserOrderListResult as TLibraryUserOrderList
 
   // Check if the response data is empty
+  // TODO: write a test for this case inside __tests__/pubhub.test.ts
   if (!libraryUserOrderList.response?.data) {
+    const friendlyCardNumberClient = await friendlyCardNumberClientAsync(
+      "./lib/soap/publizon/v2_7/wsdl/getfriendlycardnumber.wsdl"
+    )
+    const [friendlyCardNumberResponse] = await friendlyCardNumberClient.GetFriendlyCardnumberAsync({
+      ...getPublizonServiceParameters(),
+      cardnumber: uniLoginUserInfo.uniid,
+    })
+
     // If the response data is empty, use the default data and request friendly card number specifically
     const friendlyCardNumberResult =
       friendlyCardNumberResponse.GetFriendlyCardnumberResult as TFriendlyCardNumberResultSchema
