@@ -5,6 +5,9 @@ import { createClientAsync } from "@/lib/soap/publizon/v2_7/generated/getlibrary
 
 import { TFriendlyCardNumberResultSchema, TLibraryUserOrderList } from "./types"
 
+// This is a default response for the library user order list response.
+// In case no data is returned from the getlibraryuserorderlist SOAP service,
+// we will use this default response to avoid errors in the frontend.
 const defaultData = {
   response: {
     status: {
@@ -58,15 +61,17 @@ export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo
   let libraryUserOrderList =
     libraryUserResponse.GetLibraryUserOrderListResult as TLibraryUserOrderList
 
+  // Check if the response data is empty
   if (!libraryUserOrderList.response?.data) {
+    // If the response data is empty, use the default data and request friendly card number specifically
     const friendlyCardNumberResult =
       friendlyCardNumberResponse.GetFriendlyCardnumberResult as TFriendlyCardNumberResultSchema
 
-    if (friendlyCardNumberResult?.response.data) {
-      const friendlyCardNumber = friendlyCardNumberResult?.response?.data?.FriendlyCardNumber
+    if (friendlyCardNumberResult.response.data) {
+      const friendlyCardNumber = friendlyCardNumberResult.response.data.FriendlyCardNumber
 
       const tempObject = { ...defaultData }
-      tempObject.response.data.friendlycardnumber = friendlyCardNumber || ""
+      tempObject.response.data.friendlycardnumber = friendlyCardNumber
       libraryUserOrderList = defaultData
     }
   }
