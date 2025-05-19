@@ -347,9 +347,6 @@
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/commit/da200da280c4c95e6e91f2416581ad3797ab1428.patch"
             },
-            "drupal/jsnlog": {
-                "Disable CSRF token": "patches/jsnlog-disable-csrf_token.patch"
-            },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },

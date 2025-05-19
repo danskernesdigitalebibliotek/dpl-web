@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a509020a23f1b173b07645b1dedf968",
+    "content-hash": "82fe9fef8a3a8ec6a2c91f5a1c007cf5",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -5744,27 +5744,27 @@
         },
         {
             "name": "drupal/jsnlog",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/jsnlog.git",
-                "reference": "8.x-1.3"
+                "reference": "8.x-1.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/jsnlog-8.x-1.3.zip",
-                "reference": "8.x-1.3",
-                "shasum": "b32b8c383d09f895e0750ec62d2aeb7bb496bc82"
+                "url": "https://ftp.drupal.org/files/projects/jsnlog-8.x-1.4.zip",
+                "reference": "8.x-1.4",
+                "shasum": "7f2a2d7a2b969c74650a406805c8b33d1f959ae8"
             },
             "require": {
-                "drupal/core": "^9 || ^10",
-                "whichbrowser/parser": "^2.0"
+                "drupal/core": "^9 || ^10 || ^11",
+                "whichbrowser/parser": "~2.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.3",
-                    "datestamp": "1703170161",
+                    "version": "8.x-1.4",
+                    "datestamp": "1725910687",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
