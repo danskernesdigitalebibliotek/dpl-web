@@ -96,7 +96,7 @@ Cypress.Commands.add('drupalLogin', (url?: string) => {
       .parent()
       .get('[name="pass"]')
       .type(password);
-    cy.get('[value="Log in"]').click();
+    cy.get('.button-login').click();
   });
 
   if (url) {
