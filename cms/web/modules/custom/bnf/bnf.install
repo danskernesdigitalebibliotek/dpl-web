@@ -1,0 +1,22 @@
+<?php
+
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Install bnf_source_changed field on nodes.
+ *
+ * The field is defined in bnf.module, but needs to be installed on existing
+ * sites.
+ */
+function bnf_update_10101(): string {
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $field = BaseFieldDefinition::create('string')
+    ->setName('bnf_source_changed')
+    ->setLabel(t('BNF source updated', [], ['context' => 'BNF']))
+    ->setDescription(t('The datetime of when this content was last updated at the source.', [], ['context' => 'BNF']));
+
+  $definition_manager->installFieldStorageDefinition('bnf_source_changed', 'node', 'node', $field);
+
+  return 'node.bnf_source_changed installed.';
+}
