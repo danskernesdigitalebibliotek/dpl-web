@@ -37,6 +37,8 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
       internalSlider.current?.track?.details?.maxIdx === internalSlider.current?.track?.details?.rel
     )
   }
+  const [audioLoans, setAudioLoans] = useState<string[]>([])
+  const [ebookLoans, setEbookLoans] = useState<string[]>([])
 
   useEffect(() => {
     internalSlider.current?.on("slideChanged", () => {
@@ -106,6 +108,8 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   manifestation={loanManifestation}
                   title={work.titles.full[0]}
                   className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
+                  setAudioLoans={setAudioLoans}
+                  setEbookLoans={setEbookLoans}
                 />
               </Link>
             )
@@ -141,7 +145,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         </div>
       </div>
       <Suspense fallback={<QuotasSectionSkeleton />}>
-        <QuotasSection loanData={loanData} />
+        <QuotasSection audioLoans={audioLoans} ebookLoans={ebookLoans} />
       </Suspense>
     </div>
   )
