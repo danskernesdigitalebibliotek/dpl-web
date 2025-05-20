@@ -28470,7 +28470,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.page.field_canonical_url:description"
 msgid "Please provide a canonical URL if this content has been duplicated from other websites. This helps signal to search engines that the preferred source of this content is the specified canonical URL, preventing potential duplicate content issues and ensuring proper attribution to the original source."
-msgstr ""
+msgstr "Oplys en canonical URL hvis indholdet i artiklen er kopieret fra en anden hjemmeside (fx kopieret fra et andet biblioteks hjemmeside). Dette hjælper med at signalere til søgemaskiner at kilden til indholdet er den specificerede side, og sikrer at den originale kilde krediteres."
 
 #: 
 msgctxt "pathauto.pattern.go_articles:label"
