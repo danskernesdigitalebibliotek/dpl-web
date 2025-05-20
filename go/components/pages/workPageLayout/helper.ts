@@ -20,6 +20,24 @@ export const getManifestationMaterialType = (
 const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
 const allowedPhysicalMaterialTypes = ["BOOKS"]
 
+export const filterMaterialTypes = (manifestations: ManifestationWorkPageFragment[]) => {
+  const filteredManifestationsMaterialTypes = manifestations.map(manifestation => {
+    // console.log(`materialTypes for ${manifestation.pid}`, manifestation.materialTypes)
+    let filteredMaterialTypes = manifestation.materialTypes.filter(materialType => {
+      return allowedMaterialTypes.includes(materialType.materialTypeGeneral.code)
+    })
+    // We can't have a manifestation without a material type
+    if (filteredMaterialTypes.length === 0) {
+      filteredMaterialTypes = [manifestation.materialTypes[0]]
+    }
+    return {
+      ...manifestation,
+      materialTypes: filteredMaterialTypes,
+    } as ManifestationWorkPageFragment
+  })
+  return filteredManifestationsMaterialTypes
+}
+
 // TODO: write unit tests for this function
 // Exclude manifestations with material types that are not allowed
 export const filterManifestationsByMaterialType = (
@@ -32,7 +50,6 @@ export const filterManifestationsByMaterialType = (
         manifestation.materialTypes[0].materialTypeGeneral.code
       )
     }
-
     return allowedMaterialTypes.includes(manifestation.materialTypes[0].materialTypeGeneral.code)
   })
 }
