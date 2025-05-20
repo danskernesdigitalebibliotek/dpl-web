@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
+  filterMaterialTypes,
   getBestRepresentationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
@@ -101,7 +102,9 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                   const manifestations = sortManifestationsBySortPriority(
                     filterManifestationsByEdition(
                       filterManifestationsByMaterialType(
-                        work.manifestations.all as ManifestationWorkPageFragment[]
+                        filterMaterialTypes(
+                          work.manifestations.all as ManifestationWorkPageFragment[]
+                        )
                       )
                     )
                   )

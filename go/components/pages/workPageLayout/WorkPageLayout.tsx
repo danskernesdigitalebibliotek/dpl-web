@@ -1,7 +1,7 @@
 "use client"
 
 import { notFound, useSearchParams } from "next/navigation"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
@@ -15,7 +15,11 @@ import {
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-import { filterManifestationsByEdition, filterManifestationsByMaterialType } from "./helper"
+import {
+  filterManifestationsByEdition,
+  filterManifestationsByMaterialType,
+  filterMaterialTypes,
+} from "./helper"
 
 function WorkPageLayout({ workId }: { workId: string }) {
   const { data, isLoading } = useGetMaterialQuery({
@@ -31,16 +35,23 @@ function WorkPageLayout({ workId }: { workId: string }) {
   }
 
   const work = data?.work as WorkFullWorkPageFragment
-  const manifestations = filterManifestationsByEdition(
-    filterManifestationsByMaterialType(work?.manifestations.all as ManifestationWorkPageFragment[])
-  )
+
+  const manifestations = useMemo(() => {
+    return filterManifestationsByEdition(
+      filterManifestationsByMaterialType(
+        filterMaterialTypes(work?.manifestations.all as ManifestationWorkPageFragment[])
+      )
+    )
+  }, [work?.manifestations.all])
 
   useEffect(() => {
     // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
     // Filter out manifestations that don't match the search params material type
     const selectedManifestation = manifestations.find(manifestation => {
-      return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
+      return !!manifestation.materialTypes.find(
+        materialType => materialType.materialTypeGeneral.code === searchParamsMaterialType
+      )
     })
 
     // Set the selected manifestation in the state
