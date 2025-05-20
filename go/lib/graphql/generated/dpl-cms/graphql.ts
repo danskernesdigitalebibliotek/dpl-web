@@ -236,6 +236,7 @@ export type Language = {
 /** A link. */
 export type Link = {
   __typename?: 'Link';
+  id?: Maybe<Scalars['String']['output']>;
   /** Whether the link is internal to this website. */
   internal: Scalars['Boolean']['output'];
   /** Linkets titel */

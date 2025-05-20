@@ -50,18 +50,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
 
-  const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
-    {
-      type: "pid",
-      // This is always a string - query is disabled when selectedManifestation is false-y
-      identifiers: [selectedManifestation?.pid as string],
-      sizes: [
-        "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
-      ],
-    },
-    { query: { enabled: !!selectedManifestation?.pid } }
-  )
-
   const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
     selectedManifestationIsbns?.[0],
     {
@@ -74,12 +62,9 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     }
   )
 
-  const lowResCover = getLowResCoverUrl(dataCovers)
-  const coverSrc = getCoverUrls(
-    dataCovers,
-    selectedManifestation?.pid ? [selectedManifestation.pid] : undefined,
-    ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
-  )
+  const coverSrc = selectedManifestation.cover.large?.url
+  const lowResCoverSrc = selectedManifestation.cover.thumbnail
+
   const onOptionSelect = (optionSelected: SlideSelectOption) => {
     const url = resolveUrl({
       routeParams: { work: "work", wid: work.workId },
@@ -112,11 +97,11 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
         exit={{ opacity: 0 }}>
         <div className="col-span-4 h-auto lg:order-2">
           <div className="rounded-base flex aspect-1/1 h-auto w-full flex-col items-center justify-center lg:aspect-4/5">
-            {!isLoadingCovers && (
+            {coverSrc && lowResCoverSrc && (
               <CoverPicture
                 alt="Forsidebillede på værket"
-                lowResSrc={lowResCover || ""}
-                src={coverSrc?.[0] || ""}
+                lowResSrc={lowResCoverSrc || ""}
+                src={coverSrc || ""}
               />
             )}
           </div>

@@ -2,6 +2,29 @@
 
 fragment ManifestationCover on Manifestation {
   pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
 }
 
 fragment ManifestationIdentifiers on Manifestation {
