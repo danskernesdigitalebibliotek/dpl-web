@@ -141,7 +141,10 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         </div>
       </div>
       <Suspense fallback={<QuotasSectionSkeleton />}>
-        <QuotasSection loanData={loanData} />
+        <QuotasSection
+          totalAudioUserLoans={loanData.userData?.totalAudioLoans}
+          totalEbookUserLoans={loanData.userData?.totalEbookLoans}
+        />
       </Suspense>
     </div>
   )
