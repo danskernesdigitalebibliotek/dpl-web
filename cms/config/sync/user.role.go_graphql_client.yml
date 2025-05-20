@@ -4,7 +4,9 @@ status: true
 dependencies:
   module:
     - dpl_go
+    - dpl_graphql
     - graphql
+    - graphql_compose_preview
     - paragraphs
     - view_unpublished
 id: go_graphql_client
@@ -13,6 +15,8 @@ weight: 10
 is_admin: null
 permissions:
   - 'execute graphql_compose_server arbitrary graphql requests'
+  - 'get dpl graphql cache tags'
   - 'rewrite go urls'
   - 'view any unpublished content'
+  - 'view graphql_compose_preview entity'
   - 'view unpublished paragraphs'

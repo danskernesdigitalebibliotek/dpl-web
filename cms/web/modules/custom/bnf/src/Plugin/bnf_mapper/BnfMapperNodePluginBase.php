@@ -110,20 +110,7 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
    *   NOTICE: Unsupported paragraphs are skipped.
    */
   private function getParagraphs(NodeArticle|NodePage|NodeGoArticle|NodeGoCategory|NodeGoPage $object): array {
-    $paragraphs = [];
-    $objectParagraphs = $object->paragraphs ?? [];
-
-    foreach ($objectParagraphs as $paragraph) {
-      try {
-        $paragraphs[] = $this->manager->map($paragraph);
-      }
-      catch (\Exception $e) {
-        $this->logger->error('Unable to map paragraph of type - skipping: ' . $e->getMessage());
-      }
-    }
-
-    return $paragraphs;
-
+    return $this->manager->mapAll($object->paragraphs ?? [], TRUE);
   }
 
 }

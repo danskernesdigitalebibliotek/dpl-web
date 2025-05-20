@@ -119,6 +119,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                   underlinedTitle {
                     __typename
@@ -174,6 +175,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                   heroTitle
                 }
@@ -184,6 +186,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                 }
                 ... on ParagraphMaterialGridAutomatic {
@@ -360,6 +363,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                   underlinedTitle {
                     __typename
@@ -415,6 +419,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                   heroTitle
                 }
@@ -425,6 +430,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                 }
                 ... on ParagraphMaterialGridAutomatic {
@@ -593,17 +599,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                     }
                   }
                 }
-                ... on ParagraphGoLink {
-                  id
-                  linkRequired: link {
-                    __typename
-                    internal
-                    title
-                    url
-                  }
-                  targetBlank
-                  ariaLabel
-                }
                 ... on ParagraphGoLinkbox {
                   id
                   title
@@ -632,6 +627,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                         internal
                         title
                         url
+                        id
                       }
                       targetBlank
                       ariaLabel
@@ -791,17 +787,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                     }
                   }
                 }
-                ... on ParagraphGoLink {
-                  id
-                  linkRequired: link {
-                    __typename
-                    internal
-                    title
-                    url
-                  }
-                  targetBlank
-                  ariaLabel
-                }
                 ... on ParagraphGoLinkbox {
                   id
                   title
@@ -830,6 +815,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                         internal
                         title
                         url
+                        id
                       }
                       targetBlank
                       ariaLabel
@@ -988,6 +974,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                         internal
                         title
                         url
+                        id
                       }
                       targetBlank
                       ariaLabel

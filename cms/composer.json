@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.20.0",
+                "version": "2025.21.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.20.0/dist-2025-20-0-62873c9ae8fbe938682cdbf5cd37deeeec2df08f.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.21.0/dist-2025-21-0-3bb970a5136f2e9120bc65ac489784a7a1d45d87.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.20.0",
+                "version": "2025.21.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.20.0/dist-2025-20-0-a210f071906e4606f2eba4c44648ed5b7a2edf13.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.21.0/dist-2025-21-0-4f288ca26177c07e427cb648b8dea2353dc733cc.zip",
                     "type": "zip"
                 }
             }
@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.20.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.20.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.21.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.21.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -133,6 +133,7 @@
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/graphql": "^4.9",
         "drupal/graphql_compose": "^2.2",
+        "drupal/graphql_compose_preview": "^1.1",
         "drupal/handy_cache_tags": "^1.4",
         "drupal/health_check": "^3.1",
         "drupal/honeypot": "^2.2",
@@ -147,6 +148,7 @@
         "drupal/metatag": "^2.1",
         "drupal/multiple_fields_remove_button": "^2.2",
         "drupal/multivalue_form_element": "^1.0@beta",
+        "drupal/next": "^2.0",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openapi_ui_swagger": "^1.0",

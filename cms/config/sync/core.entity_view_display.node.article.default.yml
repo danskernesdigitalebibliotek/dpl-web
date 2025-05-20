@@ -106,4 +106,5 @@ hidden:
   field_canonical_url: true
   field_paragraphs: true
   langcode: true
+  preview_token: true
   search_api_excerpt: true

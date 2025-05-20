@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoLinkbox;
-
 use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -35,6 +35,7 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
+    protected BnfMapperManager $mapper,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
   }
@@ -47,33 +48,25 @@ class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\ParagraphGoLink $goLink */
-    $goLink = $object->goLinkParagraph;
+    /** @var null|\Drupal\paragraphs\Entity\Paragraph $goLinkParagraph */
+    $goLinkParagraph = $this->mapper->map($object->goLinkParagraph);
 
-    $goLinkParagraph = $this->paragraphStorage->create([
-      'type' => 'go_link',
-      'field_aria_label' => $goLink->ariaLabel,
-      'field_target_blank' => $goLink->targetBlank,
-      'field_go_link' => $this->getLinkValue($goLink->linkRequired),
-    ]);
-
-    /** @var \Drupal\paragraphs\Entity\Paragraph $goLinkParagraph */
-
-    $goLinkParagraph->save();
-
-    return $this->paragraphStorage->create([
+    /** @var \Drupal\paragraphs\Entity\Paragraph $linkbox */
+    $linkbox = $this->paragraphStorage->create([
       'type' => 'go_linkbox',
       'field_go_color' => $object->goColor,
       'field_go_description' => $object->goDescription,
       'field_go_image' => $this->getImageValue($object->goImage),
-      'field_go_link_paragraph' => [[
-        'target_id' => $goLinkParagraph->id(),
-        'target_revision_id' => $goLinkParagraph->getRevisionId(),
-      ],
-      ],
       'field_title' => $object->title,
     ]);
 
+    if ($goLinkParagraph) {
+      $linkbox->set('field_go_link_paragraph', [
+        $goLinkParagraph,
+      ]);
+    }
+
+    return $linkbox;
   }
 
 }

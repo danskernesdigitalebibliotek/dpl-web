@@ -18,9 +18,7 @@ use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
 class BnfExtension extends SdlSchemaExtensionPluginBase {
 
   /**
-   * Adding the URL to the content, as part of the NodeInterface.
-   *
-   * Notice that this is linked together with bnf_extension.extension.graphqls.
+   * {@inheritdoc}
    */
   public function registerResolvers(ResolverRegistryInterface $registry): void {
     $builder = new ResolverBuilder();
