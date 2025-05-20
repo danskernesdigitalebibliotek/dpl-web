@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphHero;
-
 use Drupal\bnf\Plugin\Traits\DateTimeTrait;
 use Drupal\bnf\Plugin\Traits\ImageTrait;
-use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileRepositoryInterface;
@@ -23,7 +22,6 @@ use Spawnia\Sailor\ObjectLike;
 )]
 class ParagraphHeroMapper extends BnfMapperParagraphPluginBase {
   use ImageTrait;
-  use LinkTrait;
   use DateTimeTrait;
 
   /**
@@ -33,9 +31,10 @@ class ParagraphHeroMapper extends BnfMapperParagraphPluginBase {
     array $configuration,
     string $pluginId,
     array $pluginDefinition,
-    protected EntityTypeManagerInterface $entityTypeManager,
+    EntityTypeManagerInterface $entityTypeManager,
     protected FileSystemInterface $fileSystem,
     protected FileRepositoryInterface $fileRepository,
+    protected BnfMapperManager $mapper,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
   }
@@ -49,6 +48,11 @@ class ParagraphHeroMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
+    $link = [];
+    if ($object->heroLink) {
+      $link = $this->mapper->map($object->heroLink);
+    }
+
     return $this->paragraphStorage->create([
       'type' => 'hero',
       // We are specifically ignoring the categories, as we do not wish
@@ -60,11 +64,10 @@ class ParagraphHeroMapper extends BnfMapperParagraphPluginBase {
         'format' => $object->heroDescription?->format,
       ],
       'field_hero_image' => $this->getImageValue($object->heroImage),
-      'field_hero_link' => $this->getLinkValue($object->heroLink),
+      'field_hero_link' => $link,
       'field_hero_title' => $object->heroTitle,
       'field_hero_date' => $this->getDateTimeValue($object->heroDate, FALSE),
     ]);
-
   }
 
 }

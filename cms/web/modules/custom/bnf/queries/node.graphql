@@ -75,6 +75,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
           underlinedTitle {
             format
@@ -122,6 +123,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
           heroTitle
         }
@@ -131,6 +133,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
         }
         ... on ParagraphMaterialGridAutomatic {
@@ -289,6 +292,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
           underlinedTitle {
             format
@@ -336,6 +340,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
           heroTitle
         }
@@ -345,6 +350,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
         }
         ... on ParagraphMaterialGridAutomatic {
@@ -496,16 +502,6 @@ query GetNode($id: ID!) {
             }
           }
         }
-        ... on ParagraphGoLink {
-          id
-          linkRequired: link {
-            internal
-            title
-            url
-          }
-          targetBlank
-          ariaLabel
-        }
         ... on ParagraphGoLinkbox {
           id
           title
@@ -530,6 +526,7 @@ query GetNode($id: ID!) {
                 internal
                 title
                 url
+                id
               }
               targetBlank
               ariaLabel
@@ -674,16 +671,6 @@ query GetNode($id: ID!) {
             }
           }
         }
-        ... on ParagraphGoLink {
-          id
-          linkRequired: link {
-            internal
-            title
-            url
-          }
-          targetBlank
-          ariaLabel
-        }
         ... on ParagraphGoLinkbox {
           id
           title
@@ -708,6 +695,7 @@ query GetNode($id: ID!) {
                 internal
                 title
                 url
+                id
               }
               targetBlank
               ariaLabel
@@ -852,6 +840,7 @@ query GetNode($id: ID!) {
                 internal
                 title
                 url
+                id
               }
               targetBlank
               ariaLabel
