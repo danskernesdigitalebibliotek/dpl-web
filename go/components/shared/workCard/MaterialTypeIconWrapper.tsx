@@ -19,7 +19,9 @@ const MaterialTypeIconWrapper = ({
     <div
       className={cn(
         "h-6 w-6 rounded-full md:h-10 md:w-10",
-        costFree ? "bg-content-blue-50" : "bg-background-overlay",
+        costFree
+          ? "bg-blue-title/50 text-blue-title-dark dark:text-white"
+          : "bg-background-overlay",
         className
       )}>
       <div className="flex h-full w-full items-center justify-center">
