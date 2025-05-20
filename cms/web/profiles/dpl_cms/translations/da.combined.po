@@ -28686,27 +28686,27 @@ msgstr ""
 #: 
 msgctxt "BNF"
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: 
 msgctxt "BNF"
 msgid "Created"
-msgstr ""
+msgstr "Skrevet af"
 
 #: 
 msgctxt "BNF"
 msgid "Last updated content"
-msgstr ""
+msgstr "Sidst opdateret indhold"
 
 #: 
 msgctxt "BNF"
 msgid "Import \"@content_title\" to @site_name"
-msgstr ""
+msgstr "Hent \"@content_title\" til @site_name"
 
 #: 
 msgctxt "BNF"
 msgid "Toggle subscription of \"@content_title\" on @site_name"
-msgstr ""
+msgstr "Abonner på \"@content_title\" på @site_name"
 
 #: 
 msgid "Manage BNF subscriptions"
