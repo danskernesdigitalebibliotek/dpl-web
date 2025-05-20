@@ -323,6 +323,9 @@
                 "Don't check for file owner in update": "patches/dont-check-fileowner.patch",
                 "Do not throw error when non-existent permission exist": "https://www.drupal.org/files/issues/2024-06-03/3358586-36.patch"
             },
+            "drupal/content_lock": {
+                "Cache: none should not be set on views.": "https://git.drupalcode.org/issue/content_lock-3525430/-/commit/7381b9382762256428b23789e9208548bc59d7b5.patch"
+            },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
             },
