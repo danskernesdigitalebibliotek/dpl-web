@@ -8,7 +8,9 @@ import { TFriendlyCardNumberResultSchema, TLibraryUserOrderList } from "./types"
 // This is a default response for the library user order list response.
 // In case no data is returned from the getlibraryuserorderlist SOAP service,
 // we will use this default response to avoid errors in the frontend.
-const defaultData = {
+// THIS OBJECT IS NOT CORRESPONDING TO THE REAL RESPONSE. BUT TO THE INFERRED ZOD SCHEMA.
+// TODO: Look into the real response and make this accurate.
+const defaultData: TLibraryUserOrderList = {
   response: {
     status: {
       LibraryExtension: {
@@ -23,23 +25,9 @@ const defaultData = {
     data: {
       orderitem: [],
       friendlycardnumber: "",
-      loans: [],
-      libraryData: {
-        maxAmountPerMonth: 0,
-        maxConcurrentAudiobookLoansPerBorrower: 0,
-        maxConcurrentEbookLoansPerBorrower: 0,
-      },
-      userData: {
-        totalLoans: 0,
-        totalEbookLoans: 0,
-        totalAudioLoans: 0,
-        ebookLoansRemaining: 0,
-        audiobookLoansRemaining: 0,
-        friendlyCardNumber: "",
-      },
     },
   },
-} as TLibraryUserOrderList
+}
 
 export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo) => {
   const client = await createClientAsync(
@@ -50,6 +38,7 @@ export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo
     cardnumber: uniLoginUserInfo.uniid,
   })
 
+  // TLibraryUserOrderList IS NOT CORRESPONDING TO THE REAL RESPONSE. BUT TO THE INFERRED ZOD SCHEMA.
   let libraryUserOrderList =
     libraryUserResponse.GetLibraryUserOrderListResult as TLibraryUserOrderList
 
@@ -71,8 +60,7 @@ export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo
     if (friendlyCardNumberResult.response.data) {
       const friendlyCardNumber = friendlyCardNumberResult.response.data.FriendlyCardNumber
 
-      const tempObject = { ...defaultData }
-      tempObject.response.data.friendlycardnumber = friendlyCardNumber
+      defaultData.response.data.friendlycardnumber = friendlyCardNumber
       libraryUserOrderList = defaultData
     }
   }
