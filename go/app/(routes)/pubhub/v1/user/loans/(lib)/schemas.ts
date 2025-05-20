@@ -32,3 +32,15 @@ export const libraryUserOrderListSchema = z.object({
     }),
   }),
 })
+
+export const friendlyCardNumberResultSchema = z.object({
+  response: z.object({
+    status: z.object({
+      code: z.string(),
+      message: z.string(),
+    }),
+    data: z.object({
+      FriendlyCardNumber: z.string(),
+    }),
+  }),
+})
