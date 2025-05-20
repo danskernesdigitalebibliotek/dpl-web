@@ -400,6 +400,10 @@
     @apply font-headline text-typo-heading-4 my-6;
   }
 
+  .wysiwyg h4 {
+    @apply font-headline text-typo-heading-5 my-6;
+  }
+
   .wysiwyg p {
     @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4;
   }

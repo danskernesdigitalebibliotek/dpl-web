@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
     // Make sure that the user is logged out remotely first. And destroy session.
     await logoutUniloginSSO(session)
     await destroySession(session)
-    return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed")}`)
+    return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-unilogin")}`)
   }
 
   return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)

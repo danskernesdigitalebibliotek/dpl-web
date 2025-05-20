@@ -6,10 +6,18 @@ import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
 export const metadata: Metadata = setPageMetadata("Login fejlede")
 
+const descriptionComponent = (
+  <p>
+    Tjek at dit brugernavn og kode er korrekte, eller prøv spørge din lærer om hjælp. Hvis du bliver
+    ved at opleve fejl, må du meget gerne kontakte vores{" "}
+    <a href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support">support</a>.
+  </p>
+)
+
 const LoginNotAuthorized = () => (
   <ErrorPageLayout
-    title="Login fejlede"
-    description="Af en eller anden grund gik det galt med at logge ind. Prøv igen eller kontakt support."
+    title="Login med UNI-login mislykkedes"
+    description={descriptionComponent}
     buttonText="Gå til forsiden"
     buttonLink="/"
   />
