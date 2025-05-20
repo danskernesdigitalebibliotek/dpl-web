@@ -27247,7 +27247,7 @@ msgstr "Overskriv forfatter"
 #: 
 msgctxt "field.field.node.go_article.field_show_override_author:description"
 msgid "By default, the author is set to the Drupal user that owns the content.<br /><br />If you want to override this, with a manual text, you can check this."
-msgstr ""
+msgstr "Som standard er forfatteren sat til den Drupal-bruger, der ejer indholdet.<br /><br />Hvis du ønsker at tilsidesætte dette med din egen tekst, kan du markere dette."
 
 #: 
 msgctxt "field.field.node.go_article.field_show_override_author:settings:on_label"
