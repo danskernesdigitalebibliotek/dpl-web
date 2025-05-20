@@ -1,4 +1,11 @@
 /* eslint-disable no-restricted-properties */
+import {
+  PHASE_DEVELOPMENT_SERVER,
+  PHASE_EXPORT,
+  PHASE_PRODUCTION_BUILD,
+  PHASE_PRODUCTION_SERVER,
+  PHASE_TEST,
+} from "next/constants"
 import { z } from "zod"
 
 function getEnvs() {
@@ -14,6 +21,8 @@ function getEnvs() {
 
     // Server-only env variables
     GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
+    NEXT_PHASE: process.env.NEXT_PHASE,
+    DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
     UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
     UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
     UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
@@ -40,6 +49,16 @@ const EnvSchema = z.object({
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
   GO_SESSION_SECRET: z.string().min(32),
+  NEXT_PHASE: z
+    .union([
+      z.literal(PHASE_DEVELOPMENT_SERVER),
+      z.literal(PHASE_EXPORT),
+      z.literal(PHASE_PRODUCTION_BUILD),
+      z.literal(PHASE_PRODUCTION_SERVER),
+      z.literal(PHASE_TEST),
+    ])
+    .optional(),
+  DRUPAL_REVALIDATE_SECRET: z.string(),
   UNILOGIN_MUNICIPALITY_ID: z.string(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),

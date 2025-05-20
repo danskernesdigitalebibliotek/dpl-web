@@ -4,10 +4,7 @@ import { useGetLogoutUrlsQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 const loadAdgangsplatformenLogoutUrl = async () => {
   try {
-    const { goConfiguration } = await useGetLogoutUrlsQuery.fetcher(undefined, {
-      // @todo As a part of the caching initiative we should find out what to do here.
-      next: { revalidate: 30 },
-    })()
+    const { goConfiguration } = await useGetLogoutUrlsQuery.fetcher()()
     const validateLogoutUrl = z
       .object({
         adgangsplatformen: z.string(),

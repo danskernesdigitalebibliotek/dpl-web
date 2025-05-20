@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
 import { loadPatronServerSide } from "../helpers/fbs"
+import { isBuildingGoApp } from "../helpers/next-phase"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
@@ -64,6 +65,11 @@ export async function getSession(options?: {
   request: NextRequest
   response: NextResponse
 }): Promise<IronSession<TSessionData>> {
+  // If we are buikding the go app, we will use the default session to simulate an anonymous user.
+  if (isBuildingGoApp()) {
+    return defaultSession as IronSession<TSessionData>
+  }
+
   const { cookies } = await import("next/headers")
   const sessionOptions = await getSessionOptions()
   if (!sessionOptions) {

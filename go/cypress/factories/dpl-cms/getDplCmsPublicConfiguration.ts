@@ -2,6 +2,8 @@ import { Factory } from "fishery"
 
 import { GetDplCmsPublicConfigurationQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
+import defaultGoResponse from "./factory-parts/defaultGoResponse"
+
 type Params = {
   appUrl: string
 }
@@ -9,6 +11,7 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery, Params>(({ tran
   const { appUrl } = transientParams
 
   return {
+    go: defaultGoResponse.build(),
     goConfiguration: {
       public: {
         loginUrls: {

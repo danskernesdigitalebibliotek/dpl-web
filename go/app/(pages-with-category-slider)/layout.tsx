@@ -1,8 +1,10 @@
+import { Suspense } from "react"
+
 import CategorySlider, { TNodeGoCategory } from "@/components/shared/categorySlider/CategorySlider"
 import loadCategories from "@/components/shared/categorySlider/loadCategories"
 import "@/styles/globals.css"
 
-export default async function CategorySliderLayout({
+async function CategorySliderLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -15,5 +17,17 @@ export default async function CategorySliderLayout({
       <CategorySlider categories={categories} />
       <div className="py-space-y">{children}</div>
     </div>
+  )
+}
+
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <Suspense>
+      <CategorySliderLayout>{children}</CategorySliderLayout>
+    </Suspense>
   )
 }

@@ -5,7 +5,7 @@ import React from "react"
 
 import Reader from "@/components/shared/publizonReader/PublizonReader"
 
-function Page() {
+function WorkReadPage() {
   const searchParams = useSearchParams()
   const id = searchParams.get("id")
   const orderId = searchParams.get("orderId")
@@ -29,4 +29,4 @@ function Page() {
   )
 }
 
-export default Page
+export default WorkReadPage

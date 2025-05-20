@@ -1,4 +1,5 @@
 import auth from "./auth"
+import caching from "./caching"
 import libraryToken from "./library-token"
 import materialTypes from "./material-types"
 import routes from "./routes"
@@ -7,6 +8,7 @@ import services from "./services"
 
 export const resolvers = {
   ...auth,
+  ...caching,
   ...libraryToken,
   ...materialTypes,
   ...routes,

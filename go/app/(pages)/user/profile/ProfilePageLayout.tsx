@@ -15,6 +15,7 @@ import Username, { UsernameSkeleton } from "./Username"
 const ProfilePageLayout = async () => {
   const session = await getSession()
 
+  // @todo Would be better to solve this in the middleware.
   if (userIsAnonymous(session)) {
     redirect("/")
   }
