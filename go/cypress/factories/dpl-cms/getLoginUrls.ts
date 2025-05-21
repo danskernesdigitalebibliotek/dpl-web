@@ -10,7 +10,7 @@ export default Factory.define<GetLoginUrlsQuery>(() => {
     goConfiguration: {
       public: {
         loginUrls: {
-          adgangsplatformen: "mocked-login-url",
+          adgangsplatformen: "/some-path",
         },
       },
     },
