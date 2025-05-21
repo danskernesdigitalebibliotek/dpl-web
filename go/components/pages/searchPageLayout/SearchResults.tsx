@@ -35,7 +35,6 @@ const SearchResults = ({ works }: SearchResultProps) => {
             )
           )
         )
-
         const bestRepresentation = getBestRepresentationOrFallbackManifestation(
           work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
           manifestations

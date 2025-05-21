@@ -54,12 +54,10 @@ const WorkCardStackedWithCaption = ({
             )
           )
         )
-
         const bestRepresentation = getBestRepresentationOrFallbackManifestation(
           work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
           manifestations
         )
-
         const title = work.titles.full[0]
         const url = bestRepresentation
           ? resolveUrl({
