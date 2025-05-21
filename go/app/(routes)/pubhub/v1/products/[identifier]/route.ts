@@ -35,5 +35,3 @@ async function getProducts(
 
 // @ts-ignore
 export const GET = withAuth(getProducts)
-
-export const dynamic = "force-dynamic"
