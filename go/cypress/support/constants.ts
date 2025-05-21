@@ -12,6 +12,11 @@ export const cyKeys = {
   "video-bundle-slider": "video-bundle-slider",
   "video-bundle-prev-button": "video-bundle-prev-button",
   "video-bundle-next-button": "video-bundle-next-button",
+  "profile-button": "profile-button",
+  "global-sheet": "global-sheet",
+  "global-sheet-close-button": "global-sheet-close-button",
+  "login-sheet-unilogin-button": "login-sheet-unilogin-button",
+  "login-sheet-adgangsplatformen-button": "login-sheet-adgangsplatformen-button",
 } as const
 
 export type CyKey = keyof typeof cyKeys
