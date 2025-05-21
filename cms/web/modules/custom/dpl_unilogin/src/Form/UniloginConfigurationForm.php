@@ -180,10 +180,10 @@ class UniloginConfigurationForm extends ConfigFormBase {
       ->set('unilogin_api_wellknown_endpoint', $form_state->getValue('unilogin_api_wellknown_endpoint'))
       ->set('unilogin_api_client_id', $form_state->getValue('unilogin_api_client_id'))
       ->set('unilogin_api_client_secret', $form_state->getValue('unilogin_api_client_secret'))
-      ->set('unilogin_api_municipality_id', $form_state->getValue('unilogin_api_municipality_id'))
       ->set('unilogin_api_webservice_user_name', $form_state->getValue('unilogin_api_webservice_user_name'))
       ->set('unilogin_api_webservice_password', $form_state->getValue('unilogin_api_webservice_password'))
       ->set('unilogin_api_pubhub_retailer_key_code', $form_state->getValue('unilogin_api_pubhub_retailer_key_code'))
+      ->set('unilogin_api_municipality_id', $form_state->getValue('unilogin_api_municipality_id'))
       ->save();
   }
 
