@@ -3,9 +3,9 @@
 import { useState } from "react"
 
 import Icon from "../icon/Icon"
-import { Button } from "./Button"
+import { Button, ButtonProps } from "./Button"
 
-const ButtonWithLoadingStateHoc = <TProps extends Record<string, unknown>>(
+const ButtonWithLoadingStateHoc = <TProps extends ButtonProps>(
   Component: React.FC<TProps & { isLoading: boolean; onClick?: () => void }>,
   {
     className,
