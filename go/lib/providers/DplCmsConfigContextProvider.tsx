@@ -2,7 +2,7 @@
 
 import { createContext } from "react"
 
-import { TDplCmsPublicConfig } from "../config/dpl-cms/dplCmsConfig"
+import { TDplCmsPublicConfig } from "../config/dpl-cms/configSchemas"
 
 export const DplCmsConfigContext = createContext<TDplCmsPublicConfig | null>(null)
 
