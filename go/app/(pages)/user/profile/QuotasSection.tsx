@@ -2,12 +2,12 @@ import React from "react"
 
 import useGetV1LibraryProfile from "@/lib/rest/publizon/useGetV1LibraryProfile"
 
-export type LoansDetailsProps = {
-  totalEbookUserLoans?: number
-  totalAudioUserLoans?: number
+export type QuotasSectionProps = {
+  audioLoans: string[]
+  ebookLoans: string[]
 }
 
-const QuotasSection = ({ totalEbookUserLoans, totalAudioUserLoans }: LoansDetailsProps) => {
+const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
   const { data, isLoading } = useGetV1LibraryProfile()
 
   if (isLoading) {
@@ -25,13 +25,13 @@ const QuotasSection = ({ totalEbookUserLoans, totalAudioUserLoans }: LoansDetail
         <div className="align-center flex w-full flex-row justify-between">
           <div className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center gap-4 rounded-sm">
             <p className="text-typo-heading-3">
-              {totalEbookUserLoans} af {data?.maxConcurrentEbookLoansPerBorrower || 0}
+              {ebookLoans.length} af {data?.maxConcurrentEbookLoansPerBorrower || 0}
             </p>
             <p className="text-typo-subtitle-sm opacity-50">E-bøger</p>
           </div>
           <div className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center gap-4 rounded-sm">
             <p className="text-typo-heading-3">
-              {totalAudioUserLoans} af {data?.maxConcurrentAudioLoansPerBorrower || 0}
+              {audioLoans.length} af {data?.maxConcurrentAudioLoansPerBorrower || 0}
             </p>
             <p className="text-typo-subtitle-sm opacity-50">Lydbøger</p>
           </div>

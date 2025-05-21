@@ -34,7 +34,7 @@ const UserLoans = ({ className }: UserLoansProps) => {
       },
       { enabled: !!dataLoans?.loans }
     )
-  // Create an array of works with the matching manifestation inside out of the LOAN ISBNS
+  // Create an array of works with the matching manifestation inside, out of the LOAN ISBNS
   // instead of ComplexSearch data so that we have exactly one manifestation per loan
   const loanWorks: WorkTeaserSearchPageFragment[] | undefined = getIsbnsFromLoans(
     dataLoans?.loans
