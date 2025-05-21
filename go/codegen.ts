@@ -2,7 +2,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli"
 import { loadEnvConfig } from "@next/env"
 
 import { getEnv } from "./lib/config/env"
-import { getDplcmsGraphqlBasicAuthToken } from "./lib/helpers/bearer-token"
+import { getDplcmsGraphqlBasicAuthToken } from "./lib/graphql/fetchers/dpl-cms.fetcher"
 
 loadEnvConfig(process.cwd())
 
