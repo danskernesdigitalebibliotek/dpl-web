@@ -7,9 +7,9 @@ export const getLibraryProfileRequest = async () => {
   const client = await createClientAsyncGetLibraryProfile(
     "./lib/soap/publizon/v2_7/wsdl/getlibraryinfo.wsdl"
   )
-
+  const publizonServiceParameters = await getPublizonServiceParameters()
   const [response] = await client.GetLibraryProfileAsync({
-    ...getPublizonServiceParameters(),
+    ...publizonServiceParameters,
   })
   return response.GetLibraryProfileResult as TGetLibraryProfile
 }

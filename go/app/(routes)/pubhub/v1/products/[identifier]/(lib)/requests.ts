@@ -10,8 +10,10 @@ export const getProductsRequest = async (uniLoginUserInfo: TUserInfo, identifier
   if (!institutionid) {
     throw new Error("Institution id not found")
   }
+  const publizonServiceParameters = await getPublizonServiceParameters()
+
   const [response] = await client.GetProductAsync({
-    ...getPublizonServiceParameters(),
+    ...publizonServiceParameters,
     ebookid: identifier,
   })
 
