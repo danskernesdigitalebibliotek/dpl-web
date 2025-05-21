@@ -7,8 +7,8 @@ namespace Drupal\Tests\dpl_go\Unit;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\State\StateInterface;
 use Drupal\dpl_go\GoSite;
 use Drupal\dpl_lagoon\Services\LagoonRouteResolver;
 use Drupal\Tests\UnitTestCase;
@@ -43,11 +43,11 @@ class GoSiteTest extends UnitTestCase {
   protected ObjectProphecy $nodeStorage;
 
   /**
-   * State mock.
+   * Key-value store mock.
    *
-   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\State\StateInterface>
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\KeyValueStore\KeyValueStoreInterface>
    */
-  protected ObjectProphecy $state;
+  protected ObjectProphecy $keyvalue;
 
   /**
    * Object under test.
@@ -67,13 +67,13 @@ class GoSiteTest extends UnitTestCase {
     $entityTypeManager = $this->prophesize(EntityTypeManagerInterface::class);
     $entityTypeManager->getStorage('node')->willReturn($this->nodeStorage);
 
-    $this->state = $this->prophesize(StateInterface::class);
+    $this->keyvalue = $this->prophesize(KeyValueStoreInterface::class);
 
     $this->goSite = new GoSite(
       $this->routeResolver->reveal(),
       $this->currentUser->reveal(),
       $entityTypeManager->reveal(),
-      $this->state->reveal(),
+      $this->keyvalue->reveal(),
     );
   }
 
@@ -167,8 +167,8 @@ class GoSiteTest extends UnitTestCase {
   public function testIsGoNidGoNode(): void {
     $this->nodeStorage->load('23')->willReturn($this->nodeProphecy('go_node'));
 
-    $this->state->get('dpl_go.node_type_cache_0', [])->willReturn([]);
-    $this->state->set('dpl_go.node_type_cache_0', ['23' => TRUE])->shouldBeCalled();
+    $this->keyvalue->get('dpl_go.node_type_cache_0', [])->willReturn([]);
+    $this->keyvalue->set('dpl_go.node_type_cache_0', ['23' => TRUE])->shouldBeCalled();
 
     $this->assertTrue($this->goSite->isGoNid('23'));
   }
@@ -179,8 +179,8 @@ class GoSiteTest extends UnitTestCase {
   public function testIsGoNidNonGoNode(): void {
     $this->nodeStorage->load('124')->willReturn($this->nodeProphecy('node'));
 
-    $this->state->get('dpl_go.node_type_cache_1', [])->willReturn([]);
-    $this->state->set('dpl_go.node_type_cache_1', ['124' => FALSE])->shouldBeCalled();
+    $this->keyvalue->get('dpl_go.node_type_cache_1', [])->willReturn([]);
+    $this->keyvalue->set('dpl_go.node_type_cache_1', ['124' => FALSE])->shouldBeCalled();
 
     $this->assertFalse($this->goSite->isGoNid('124'));
   }
@@ -191,8 +191,8 @@ class GoSiteTest extends UnitTestCase {
   public function testIsGoNidUsesCache(): void {
     $this->nodeStorage->load('125')->willReturn($this->nodeProphecy('node'));
 
-    $this->state->get('dpl_go.node_type_cache_1', [])->willReturn(['125' => TRUE]);
-    $this->state->set('dpl_go.node_type_cache_1', Argument::any())->shouldNotBeCalled();
+    $this->keyvalue->get('dpl_go.node_type_cache_1', [])->willReturn(['125' => TRUE]);
+    $this->keyvalue->set('dpl_go.node_type_cache_1', Argument::any())->shouldNotBeCalled();
 
     $this->assertTrue($this->goSite->isGoNid('125'));
   }
@@ -203,8 +203,8 @@ class GoSiteTest extends UnitTestCase {
   public function testIsGoNidChunksCache(): void {
     $this->nodeStorage->load('256')->willReturn($this->nodeProphecy('go_node'));
 
-    $this->state->get('dpl_go.node_type_cache_2', [])->willReturn([]);
-    $this->state->set('dpl_go.node_type_cache_2', ['256' => TRUE])->shouldBeCalled();
+    $this->keyvalue->get('dpl_go.node_type_cache_2', [])->willReturn([]);
+    $this->keyvalue->set('dpl_go.node_type_cache_2', ['256' => TRUE])->shouldBeCalled();
 
     $this->assertTrue($this->goSite->isGoNid('256'));
   }
@@ -213,9 +213,9 @@ class GoSiteTest extends UnitTestCase {
    * Test that isGoNid() returns null for non-existent nodes.
    */
   public function testIsGoNidNull(): void {
-    $this->state->get('dpl_go.node_type_cache_2', [])->willReturn([]);
+    $this->keyvalue->get('dpl_go.node_type_cache_2', [])->willReturn([]);
     // As it's the only entry, the state key should be deleted instead.
-    $this->state->delete('dpl_go.node_type_cache_2')->shouldBeCalled();
+    $this->keyvalue->delete('dpl_go.node_type_cache_2')->shouldBeCalled();
 
     $this->assertNull($this->goSite->isGoNid('257'));
   }
