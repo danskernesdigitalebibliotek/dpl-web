@@ -29,36 +29,6 @@ class UniloginConfiguration extends DplReactConfigBase {
   }
 
   /**
-   * Get the Unilogin API endpoint.
-   *
-   * @return string|null
-   *   The Unilogin API endpoint.
-   */
-  public function getUniloginApiEndpoint(): ?string {
-    return $this->loadConfig()->get('unilogin_api_endpoint');
-  }
-
-  /**
-   * Get the Unilogin API wellknown endpoint.
-   *
-   * @return string|null
-   *   The Unilogin API wellknown endpoint.
-   */
-  public function getUniloginApiWellknownEndpoint(): ?string {
-    return $this->loadConfig()->get('unilogin_api_wellknown_endpoint');
-  }
-
-  /**
-   * Get the Unilogin API client ID.
-   *
-   * @return string|null
-   *   The Unilogin API client ID.
-   */
-  public function getUniloginApiClientId(): ?string {
-    return $this->loadConfig()->get('unilogin_api_client_id');
-  }
-
-  /**
    * Get the Unilogin API client secret.
    *
    * @return string|null

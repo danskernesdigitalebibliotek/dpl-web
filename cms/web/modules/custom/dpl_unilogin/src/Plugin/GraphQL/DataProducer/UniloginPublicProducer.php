@@ -2,8 +2,10 @@
 
 namespace Drupal\dpl_unilogin\Plugin\GraphQL\DataProducer;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_unilogin\UniloginConfiguration;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -51,16 +53,11 @@ class UniloginPublicProducer extends DataProducerPluginBase implements Container
    * @return mixed[]|null
    *   The Unilogin configuration.
    */
-  public function resolve(): array | null {
-    $unilogin_config = [
-      'apiUrl' => $this->uniloginConfiguration->getUniloginApiEndpoint(),
-      'apiWellknownUrl' => $this->uniloginConfiguration->getUniloginApiWellknownEndpoint(),
-      'municipalityId' => $this->uniloginConfiguration->getUniloginApiMunicipalityId(),
+  public function resolve(FieldContext $field_context): array {
+    $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
+    return [
+      'municipalityId' => $this->uniloginConfiguration->getUniloginApiMunicipalityId() ?: NULL,
     ];
-
-    // Check if Unilogin configuration is empty and return NULL if it is.
-    $unilogin_config_is_empty = (bool) array_filter(array_values($unilogin_config));
-    return $unilogin_config_is_empty ? $unilogin_config : NULL;
   }
 
 }

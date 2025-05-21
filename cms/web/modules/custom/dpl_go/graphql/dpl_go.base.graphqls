@@ -12,7 +12,6 @@ type GoLogoutUrls {
 }
 
 type UniloginConfigurationPrivate {
-  clientId: String
   clientSecret: String
   webServiceUsername: String
   webServicePassword: String
@@ -20,8 +19,6 @@ type UniloginConfigurationPrivate {
 }
 
 type UniloginConfigurationPublic {
-  apiUrl: String
-  apiWellknownUrl: String
   municipalityId: String
 }
 
