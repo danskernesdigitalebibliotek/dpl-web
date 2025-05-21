@@ -8,21 +8,21 @@ use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Exposes Unilogin public information.
+ * Exposes Unilogin private information.
  *
  * @DataProducer(
- *   id = "unilogin_public_producer",
- *   name = "Unilogin Public Producer",
- *   description = "Exposes Unilogin public information.",
+ *   id = "unilogin_private_producer",
+ *   name = "Unilogin Private Producer",
+ *   description = "Exposes Unilogin sensitive information.",
  *   produces = @ContextDefinition("any",
  *     label = "Request Response"
  *   )
  * )
  */
-class UniloginPublicProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
+class UniloginPrivateProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -30,7 +30,7 @@ class UniloginPublicProducer extends DataProducerPluginBase implements Container
       $plugin_id,
       $plugin_definition,
       $container->get('dpl_unilogin.settings')
-     );
+    );
   }
 
   /**
@@ -53,9 +53,11 @@ class UniloginPublicProducer extends DataProducerPluginBase implements Container
    */
   public function resolve(): array | null {
     $unilogin_config = [
-      'apiUrl' => $this->uniloginConfiguration->getUniloginApiEndpoint(),
-      'apiWellknownUrl' => $this->uniloginConfiguration->getUniloginApiWellknownEndpoint(),
-      'municipalityId' => $this->uniloginConfiguration->getUniloginApiMunicipalityId(),
+      'clientId' => $this->uniloginConfiguration->getUniloginApiClientId(),
+      'clientSecret' => $this->uniloginConfiguration->getUniloginApiClientSecret(),
+      'webServiceUsername' => $this->uniloginConfiguration->getUniloginApiWebServiceUsername(),
+      'webServicePassword' => $this->uniloginConfiguration->getUniloginApiWebServicePassword(),
+      'pubHubRetailerKeyCode' => $this->uniloginConfiguration->getUniloginApiPubhubRetailerKeyCode(),
     ];
 
     // Check if Unilogin configuration is empty and return NULL if it is.

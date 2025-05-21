@@ -11,14 +11,29 @@ type GoLogoutUrls {
   adgangsplatformen: String
 }
 
+type UniloginConfigurationPrivate {
+  clientId: String
+  clientSecret: String
+  webServiceUsername: String
+  webServicePassword: String
+  pubHubRetailerKeyCode: String
+}
+
+type UniloginConfigurationPublic {
+  apiUrl: String
+  apiWellknownUrl: String
+  municipalityId: String
+}
+
 type GoConfigurationPrivate {
-  unilogin: UniloginConfiguration
+  unilogin: UniloginConfigurationPrivate
 }
 
 type GoConfigurationPublic {
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
+  unilogin: UniloginConfigurationPublic
 }
 
 type GoConfiguration {
