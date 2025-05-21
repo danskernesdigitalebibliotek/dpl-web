@@ -81,11 +81,6 @@ const LoanMaterialModal = ({
       }
     )
   }
-  const errors: string[] = []
-
-  if (publizonError) {
-    errors.push(publizonErrorMessageMap[publizonError.code] || publizonError.message)
-  }
 
   return (
     <ResponsiveDialog
@@ -113,11 +108,11 @@ const LoanMaterialModal = ({
         <p className="text-typo-subtitle-md text-center">
           {`Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
         </p>
-        {errors.length > 0 && (
+        {publizonError && (
           <div className="flex">
             <div className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex items-center gap-4 p-4">
               <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
-              <p className="text-typo-link">{errors[0]}</p>
+              <p className="text-typo-link">{publizonErrorMessageMap[publizonError.code]}</p>
             </div>
           </div>
         )}
@@ -125,7 +120,7 @@ const LoanMaterialModal = ({
 
       <div className="flex flex-row items-center justify-center gap-6">
         {/* Only show "approve loan" button if user can still loan more materials */}
-        {!errors.length && (
+        {!publizonError && (
           <Button
             theme={"primary"}
             size={"lg"}
@@ -142,7 +137,7 @@ const LoanMaterialModal = ({
           </Button>
         )}
         <Button size={"lg"} disabled={isHandlingLoan} onClick={() => closeModal()}>
-          {!isHandlingLoan && (errors.length ? "Luk" : "Nej")}
+          {!isHandlingLoan && (publizonError ? "Luk" : "Nej")}
           {isHandlingLoan && (
             <Icon
               name="go-spinner"
