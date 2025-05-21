@@ -1,5 +1,6 @@
 import { Factory } from "fishery"
 
+import { coverFactory } from "./cover"
 import { materialTypeAudioBookFactory, materialTypeEbookFactory } from "./materials"
 import { Work } from "./works"
 
@@ -18,6 +19,7 @@ export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],
   contributors: manifestationContributorFactory.buildList(2),
+  cover: coverFactory.build(),
   identifiers: [
     {
       type: "PUBLIZON",
@@ -44,6 +46,7 @@ export const audioBookManifestationFactory = Factory.define<Manifestation>(() =>
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],
   contributors: manifestationContributorFactory.buildList(1),
+  cover: coverFactory.build(),
   identifiers: [
     {
       type: "PUBLIZON",

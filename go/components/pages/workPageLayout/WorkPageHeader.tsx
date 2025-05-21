@@ -17,11 +17,8 @@ import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
-import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
-import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
-import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"

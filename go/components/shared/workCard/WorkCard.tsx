@@ -8,7 +8,7 @@ import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
-import { Cover, ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import {
   getGetV1ProductsIdentifierAdapterQueryKey,
