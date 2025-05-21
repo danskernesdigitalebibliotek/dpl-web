@@ -11,11 +11,13 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
   if (headers && headers.hasOwnProperty("Cookie")) {
     return { ...contentTypeHeader, ...headers }
   }
-  const dplCmsGraphqlBasicToken = getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")
+  const basicToken = Buffer.from(
+    `${getEnv("GO_GRAPHQL_CONSUMER_USER_NAME")}:${getEnv("GO_GRAPHQL_CONSUMER_USER_PASSWORD")}`
+  ).toString("base64")
 
   return {
     ...contentTypeHeader,
-    Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
+    Authorization: `Basic ${basicToken}`,
     ...headers,
   }
 }
@@ -25,17 +27,8 @@ export function fetcher<TData, TVariables>(
   variables?: TVariables,
   options?: RequestInit & { next?: NextFetchRequestConfig }
 ) {
-  const dplCmsGraphqlEndpoint = getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")
-  const dplCmsGraphqlBasicToken = getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")
-
-  // Check if the environment variables are set
-  if (!dplCmsGraphqlEndpoint) {
-    throw new Error("Missing DPL CMS GraphQL endpoint")
-  }
-  if (!dplCmsGraphqlBasicToken) {
-    throw new Error("Missing DPL CMS GraphQL basic token")
-  }
   const { next, headers } = options || {}
+  const dplCmsGraphqlEndpoint = getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")
 
   return async (): Promise<TData> => {
     try {
