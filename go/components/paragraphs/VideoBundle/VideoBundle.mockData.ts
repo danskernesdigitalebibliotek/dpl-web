@@ -1,4 +1,4 @@
-import { coverFactory } from "@/cypress/factories/factory-parts/cover"
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] = [

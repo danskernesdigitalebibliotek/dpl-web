@@ -1,4 +1,4 @@
-import { coverFactory } from "@/cypress/factories/factory-parts/cover"
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 const manifestationMock = {
