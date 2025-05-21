@@ -8,20 +8,18 @@ use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Exposes Unilogin information.
- *
- * Eg. wellknown url and client id and secret.
+ * Exposes Unilogin public information.
  *
  * @DataProducer(
- *   id = "unilogin_info_producer",
- *   name = "Unilogin Info Producer",
- *   description = "Exposes access tokens.",
+ *   id = "unilogin_public_producer",
+ *   name = "Unilogin Public Producer",
+ *   description = "Exposes Unilogin public information.",
  *   produces = @ContextDefinition("any",
  *     label = "Request Response"
  *   )
  * )
  */
-class UnilogInfoProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
+class UnilogPublicProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -59,9 +57,13 @@ class UnilogInfoProducer extends DataProducerPluginBase implements ContainerFact
       'unilogin_api_wellknown_url' => $this->uniloginConfiguration->getUniloginApiWellknownEndpoint(),
       'unilogin_api_client_id' => $this->uniloginConfiguration->getUniloginApiClientId(),
       'unilogin_api_client_secret' => $this->uniloginConfiguration->getUniloginApiClientSecret(),
+      'unilogin_api_municipality_id' => $this->uniloginConfiguration->getUniloginApiMunicipalityId(),
+      'unilogin_api_services_ws_user' => $this->uniloginConfiguration->getUniloginApiWsUser(),
+      'unilogin_api_services_ws_password' => $this->uniloginConfiguration->getUniloginApiWsPassword(),
+      'unilogin_api_pubhub_retailer_key_code' => $this->uniloginConfiguration->getUniloginApiPubhubRetailerKeyCode(),
     ];
 
-    // Check if UniLogin configuration is empty, and return NULL if it is.
+    // Check if Unilogin configuration is empty and return NULL if it is.
     $unilogin_config_is_empty = (bool) array_filter(array_values($unilogin_config));
     return $unilogin_config_is_empty ? $unilogin_config : NULL;
   }

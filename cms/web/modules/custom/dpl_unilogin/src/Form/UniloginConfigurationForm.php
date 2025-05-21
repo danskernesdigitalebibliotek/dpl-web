@@ -64,45 +64,105 @@ class UniloginConfigurationForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $form['unilogin_configuraion'] = [
+    $form['unilogin_configuration'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Unilogin configuration', [], ['context' => 'Unilogin configuration']),
+      '#title' => $this->t('Unilogin API configuration', [], ['context' => 'Unilogin configuration']),
       '#tree' => FALSE,
     ];
 
-    $form['unilogin_configuraion']['unilogin_api_endpoint'] = [
+    $form['unilogin_configuration']['unilogin_api_endpoints'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('API endpoints', [], ['context' => 'Unilogin configuration']),
+      '#tree' => FALSE,
+    ];
+
+    $form['unilogin_configuration']['unilogin_api_endpoints']['unilogin_api_endpoint'] = [
       '#type' => 'textfield',
       '#size' => 100,
-      '#title' => $this->t('UniLogin API endpoint URL.', [], ['context' => 'Unilogin configuration']),
-      '#description' => $this->t('The UniLogin API endpoint url.', [], ['context' => 'Unilogin configuration']),
+      '#title' => $this->t('Unilogin API endpoint URL.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin API endpoint url.', [], ['context' => 'Unilogin configuration']),
       '#default_value' => $this->uniloginConfiguration->getUniloginApiEndpoint(),
       '#required' => TRUE,
     ];
 
-    $form['unilogin_configuraion']['unilogin_api_wellknown_endpoint'] = [
+    $form['unilogin_configuration']['unilogin_api_endpoints']['unilogin_api_wellknown_endpoint'] = [
       '#type' => 'textfield',
       '#size' => 100,
-      '#title' => $this->t('UniLogin API wellknown endpoint URL', [], ['context' => 'Unilogin configuration']),
-      '#description' => $this->t('The UniLogin API wellknown endpoint url.', [], ['context' => 'Unilogin configuration']),
+      '#title' => $this->t('Unilogin API wellknown endpoint URL', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin API wellknown endpoint url.', [], ['context' => 'Unilogin configuration']),
       '#default_value' => $this->uniloginConfiguration->getUniloginApiWellknownEndpoint(),
       '#required' => TRUE,
     ];
 
-    $form['unilogin_configuraion']['unilogin_api_client_id'] = [
+    $form['unilogin_configuration']['unilogin_api_credentials'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('API credentials', [], ['context' => 'Unilogin configuration']),
+      '#tree' => FALSE,
+    ];
+
+    $form['unilogin_configuration']['unilogin_api_credentials']['unilogin_api_client_id'] = [
       '#type' => 'textfield',
       '#size' => 100,
-      '#title' => $this->t('UniLogin API client ID.', [], ['context' => 'Unilogin configuration']),
-      '#description' => $this->t('The UniLogin API client ID.', [], ['context' => 'Unilogin configuration']),
+      '#title' => $this->t('Unilogin API client ID.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin API client ID.', [], ['context' => 'Unilogin configuration']),
       '#default_value' => $this->uniloginConfiguration->getUniloginApiClientId(),
       '#required' => TRUE,
     ];
 
-    $form['unilogin_configuraion']['unilogin_api_client_secret'] = [
+    $form['unilogin_configuration']['unilogin_api_credentials']['unilogin_api_client_secret'] = [
       '#type' => 'textfield',
       '#size' => 100,
-      '#title' => $this->t('UniLogin API client secret.', [], ['context' => 'Unilogin configuration']),
-      '#description' => $this->t('The UniLogin API client secret.', [], ['context' => 'Unilogin configuration']),
+      '#title' => $this->t('Unilogin API client secret.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin API client secret.', [], ['context' => 'Unilogin configuration']),
       '#default_value' => $this->uniloginConfiguration->getUniloginApiClientSecret(),
+      '#required' => TRUE,
+    ];
+
+    $form['unilogin_configuration']['webservice_configuration'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Webservice configuration', [], ['context' => 'Unilogin configuration']),
+      '#tree' => FALSE,
+    ];
+
+    $form['unilogin_configuration']['webservice_configuration']['unilogin_api_webservice_user_name'] = [
+      '#type' => 'textfield',
+      '#size' => 100,
+      '#title' => $this->t('Unilogin webservice username.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin webservice username.', [], ['context' => 'Unilogin configuration']),
+      '#default_value' => $this->uniloginConfiguration->getUniloginApiWebServiceUsername(),
+      '#required' => TRUE,
+    ];
+
+    $form['unilogin_configuration']['webservice_configuration']['unilogin_api_webservice_password'] = [
+      '#type' => 'textfield',
+      '#size' => 100,
+      '#title' => $this->t('Unilogin webservice password.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin webservice password.', [], ['context' => 'Unilogin configuration']),
+      '#default_value' => $this->uniloginConfiguration->getUniloginApiWebServicePassword(),
+      '#required' => TRUE,
+    ];
+
+    $form['unilogin_configuration']['pubhub_configuration'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('PubHub configuration', [], ['context' => 'Unilogin configuration']),
+      '#tree' => FALSE,
+    ];
+
+    $form['unilogin_configuration']['pubhub_configuration']['unilogin_api_pubhub_retailer_key_code'] = [
+      '#type' => 'textfield',
+      '#size' => 100,
+      '#title' => $this->t('Retailer key code.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The PubHub retailer key code.', [], ['context' => 'Unilogin configuration']),
+      '#default_value' => $this->uniloginConfiguration->getUniloginApiPubhubRetailerKeyCode(),
+      '#required' => TRUE,
+    ];
+
+    $form['unilogin_configuration']['unilogin_api_municipality_id'] = [
+      '#type' => 'textfield',
+      '#size' => 100,
+      '#title' => $this->t('Unilogin municipality ID.', [], ['context' => 'Unilogin configuration']),
+      '#description' => $this->t('The Unilogin municipality ID.', [], ['context' => 'Unilogin configuration']),
+      '#default_value' => $this->uniloginConfiguration->getUniloginApiMunicipalityId(),
       '#required' => TRUE,
     ];
 
@@ -120,6 +180,10 @@ class UniloginConfigurationForm extends ConfigFormBase {
       ->set('unilogin_api_wellknown_endpoint', $form_state->getValue('unilogin_api_wellknown_endpoint'))
       ->set('unilogin_api_client_id', $form_state->getValue('unilogin_api_client_id'))
       ->set('unilogin_api_client_secret', $form_state->getValue('unilogin_api_client_secret'))
+      ->set('unilogin_api_municipality_id', $form_state->getValue('unilogin_api_municipality_id'))
+      ->set('unilogin_api_webservice_user_name', $form_state->getValue('unilogin_api_webservice_user_name'))
+      ->set('unilogin_api_webservice_password', $form_state->getValue('unilogin_api_webservice_password'))
+      ->set('unilogin_api_pubhub_retailer_key_code', $form_state->getValue('unilogin_api_pubhub_retailer_key_code'))
       ->save();
   }
 
