@@ -110,7 +110,7 @@ export const getBestRepresentationOrFallbackManifestation = (
   if (!filteredBestRepresentation.length || !isBestRepresentationInManifestations) {
     return manifestations[0]
   }
-  return filterMaterialTypes([bestRepresentation])[0]
+  return filteredBestRepresentation[0]
 }
 
 export const getManifestationMaterialTypeSpecific = (
