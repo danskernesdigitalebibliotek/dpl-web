@@ -2,6 +2,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli"
 import { loadEnvConfig } from "@next/env"
 
 import { getEnv } from "./lib/config/env"
+import { getDplcmsGraphqlBasicAuthToken } from "./lib/helpers/bearer-token"
 
 loadEnvConfig(process.cwd())
 
@@ -14,7 +15,7 @@ const config: CodegenConfig = {
       schema: {
         [getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")]: {
           headers: {
-            Authorization: `Basic ${getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")}`,
+            Authorization: `Basic ${getDplcmsGraphqlBasicAuthToken()}`,
           },
         },
       },

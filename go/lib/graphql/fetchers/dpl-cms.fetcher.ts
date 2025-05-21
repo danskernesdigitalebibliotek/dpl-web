@@ -3,6 +3,11 @@ import goConfig from "@/lib/config/goConfig"
 
 import AccessForbiddenError from "./AccessForbiddenError"
 
+export const getDplcmsGraphqlBasicAuthToken = () =>
+  Buffer.from(
+    `${getEnv("GO_GRAPHQL_CONSUMER_USER_NAME")}:${getEnv("GO_GRAPHQL_CONSUMER_USER_PASSWORD")}`
+  ).toString("base64")
+
 const getHeaders = (headers: RequestInit["headers"] | undefined) => {
   const contentTypeHeader = {
     "Content-Type": "application/json",
@@ -11,10 +16,7 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
   if (headers && headers.hasOwnProperty("Cookie")) {
     return { ...contentTypeHeader, ...headers }
   }
-  const basicToken = Buffer.from(
-    `${getEnv("GO_GRAPHQL_CONSUMER_USER_NAME")}:${getEnv("GO_GRAPHQL_CONSUMER_USER_PASSWORD")}`
-  ).toString("base64")
-
+  const basicToken = getDplcmsGraphqlBasicAuthToken()
   return {
     ...contentTypeHeader,
     Authorization: `Basic ${basicToken}`,
@@ -53,7 +55,6 @@ export function fetcher<TData, TVariables>(
       const cacheTagsRaw = res.headers.get(goConfig("caching.dpl-cms.cachetags-header"))
       return { ...json.data, go: { cacheTags: cacheTagsRaw ? cacheTagsRaw.split(" ") : null } }
     } catch (error) {
-      console.log("Error in fetcher", error)
       throw new Error("Failed to fetch data from DPL CMS", { cause: error })
     }
   }
