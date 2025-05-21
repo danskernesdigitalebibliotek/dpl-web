@@ -55,7 +55,7 @@ class UniloginConfiguration extends DplReactConfigBase {
    *   The Unilogin API webservice username.
    */
   public function getUniloginApiWebServiceUsername(): ?string {
-    return $this->loadConfig()->get('unilogin_api_webservice_user_name');
+    return $this->loadConfig()->get('unilogin_api_webservice_username');
   }
 
   /**

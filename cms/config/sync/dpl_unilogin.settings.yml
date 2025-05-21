@@ -1,6 +1,5 @@
-unilogin_api_client_id: null
 unilogin_api_client_secret: null
-unilogin_api_webservice_user_name: null
+unilogin_api_webservice_username: null
 unilogin_api_webservice_password: null
 unilogin_api_pubhub_retailer_key_code: null
 unilogin_api_municipality_id: null

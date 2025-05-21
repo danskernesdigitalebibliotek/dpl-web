@@ -90,7 +90,7 @@ class UniloginConfigurationForm extends ConfigFormBase {
       '#tree' => FALSE,
     ];
 
-    $form['unilogin_configuration']['webservice_configuration']['unilogin_api_webservice_user_name'] = [
+    $form['unilogin_configuration']['webservice_configuration']['unilogin_api_webservice_username'] = [
       '#type' => 'textfield',
       '#size' => 100,
       '#title' => $this->t('Unilogin webservice username.', [], ['context' => 'Unilogin configuration']),
@@ -139,7 +139,7 @@ class UniloginConfigurationForm extends ConfigFormBase {
 
     $this->config($this->configService->getConfigKey())
       ->set('unilogin_api_client_secret', $form_state->getValue('unilogin_api_client_secret') ?? NULL)
-      ->set('unilogin_api_webservice_user_name', $form_state->getValue('unilogin_api_webservice_user_name') ?? NULL)
+      ->set('unilogin_api_webservice_username', $form_state->getValue('unilogin_api_webservice_username') ?? NULL)
       ->set('unilogin_api_webservice_password', $form_state->getValue('unilogin_api_webservice_password') ?? NULL)
       ->set('unilogin_api_pubhub_retailer_key_code', $form_state->getValue('unilogin_api_pubhub_retailer_key_code') ?? NULL)
       ->set('unilogin_api_municipality_id', $form_state->getValue('unilogin_api_municipality_id') ?? NULL)

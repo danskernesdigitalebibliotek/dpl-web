@@ -50,7 +50,7 @@ class UniloginPublicProducer extends DataProducerPluginBase implements Container
   /**
    * Resolves the Unilogin info.
    *
-   * @return mixed[]|null
+   * @return mixed[]
    *   The Unilogin configuration.
    */
   public function resolve(FieldContext $field_context): array {
