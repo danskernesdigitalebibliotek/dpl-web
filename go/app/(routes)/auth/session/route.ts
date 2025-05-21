@@ -12,5 +12,3 @@ export async function GET() {
     return Response.json({ error: e }, { status: 500 })
   }
 }
-
-export const dynamic = "force-dynamic"
