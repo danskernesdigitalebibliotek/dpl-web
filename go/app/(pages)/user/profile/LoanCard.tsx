@@ -70,6 +70,7 @@ const LoanCard = ({
     if (!dataProducts?.product) {
       return
     }
+    // TODO: Maybe we could move this logic to the parent component (?)
     if (!isCostFree) {
       if (isManifestationAudioBook(manifestation as ManifestationWorkPageFragment)) {
         setAudioLoans(prev =>
