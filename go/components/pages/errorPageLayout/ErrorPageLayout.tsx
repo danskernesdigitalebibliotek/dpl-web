@@ -10,15 +10,15 @@ const ErrorPageLayout = ({
   buttonLink,
 }: {
   title: string
-  description: string
+  description: React.ReactNode
   buttonText: string
   buttonLink: string
 }) => {
   return (
     <div className="content-container grid-go w-full">
-      <div className="flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2 lg:my-grid-gap-half col-span-10">
-        <h2 className="text-typo-huge">{title}</h2>
-        <p className="text-typo-body-lg max-w-prose">{description}</p>
+      <div className="flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2 lg:my-grid-gap-half col-span-8">
+        <h2 className="text-typo-heading-1">{title}</h2>
+        <div className="wysiwyg max-w-prose">{description}</div>
         <Button ariaLabel={buttonText} asChild size={"lg"}>
           <Link href={buttonLink} className="text-typo-body-lg">
             {buttonText}

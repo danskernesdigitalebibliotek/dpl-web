@@ -2,12 +2,12 @@ import React from "react"
 
 import useGetV1LibraryProfile from "@/lib/rest/publizon/useGetV1LibraryProfile"
 
-export type LoansDetailsProps = {
+export type QuotasSectionProps = {
   audioLoans: string[]
   ebookLoans: string[]
 }
 
-const LoansDetails = ({ audioLoans, ebookLoans }: LoansDetailsProps) => {
+const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
   const { data, isLoading } = useGetV1LibraryProfile()
 
   if (isLoading) {
@@ -71,4 +71,4 @@ export const QuotasSectionSkeleton = () => {
   )
 }
 
-export default LoansDetails
+export default QuotasSection

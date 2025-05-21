@@ -116,9 +116,12 @@ const LoanCard = ({
               iconName={getManifestationMaterialTypeIcon(
                 manifestation as ManifestationWorkPageFragment
               )}
-              className={cn("z-floating-icon relative mx-auto -mt-14 outline-1", {
-                "bg-background": !isCostFree,
-              })}
+              className={cn(
+                "relative z-10 mx-auto -mt-14 outline-1",
+                isCostFree
+                  ? "bg-content-blue-100 dark:text-blue-title-dark"
+                  : "bg-background-overlay-solid"
+              )}
               costFree={isCostFree}
             />
           </div>

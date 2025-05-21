@@ -17,7 +17,7 @@ export async function GET() {
   // We could not retrieve the user token.
   // So we redirect to the login failed page  without setting the session.
   console.error("Could not retrieve Adgangsplatformen user token.")
-  return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed")}`)
+  return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-ap")}`)
 }
 
 export const dynamic = "force-dynamic"

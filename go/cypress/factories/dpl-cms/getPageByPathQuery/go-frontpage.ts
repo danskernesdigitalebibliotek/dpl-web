@@ -2,8 +2,11 @@ import { Factory } from "fishery"
 
 import { GetPageByPathQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
+import defaultGoResponse from "../factory-parts/defaultGoResponse"
+
 export default Factory.define<GetPageByPathQuery>(() => {
   return {
+    go: defaultGoResponse.build(),
     route: {
       __typename: "RouteInternal",
       url: "https://go-demo.cms-demo.dpl-cms.dplplat01.dpl.reload.dk/go-frontpage",

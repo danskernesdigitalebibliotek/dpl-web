@@ -111,7 +111,6 @@
     --content-orange-200: hsla(34, 100%, 50%, 1);
     --content-orange-300: hsla(30, 79%, 27%, 1);
 
-    --content-blue-50: hsla(200, 86%, 86%, 0.4);
     --content-blue-100: hsla(200, 86%, 86%, 1);
     --content-blue-200: hsla(202, 100%, 60%, 1);
     --content-blue-300: hsla(201, 67%, 29%, 1);
@@ -399,6 +398,10 @@
 
   .wysiwyg h3 {
     @apply font-headline text-typo-heading-4 my-6;
+  }
+
+  .wysiwyg h4 {
+    @apply font-headline text-typo-heading-5 my-6;
   }
 
   .wysiwyg p {

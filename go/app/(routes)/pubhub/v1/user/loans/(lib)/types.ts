@@ -1,7 +1,11 @@
 import { isArray } from "lodash"
 import { z } from "zod"
 
-import { libraryUserOrderListSchema, orderItemSchema } from "./schemas"
+import {
+  friendlyCardNumberResultSchema,
+  libraryUserOrderListSchema,
+  orderItemSchema,
+} from "./schemas"
 
 type TOrderItem = z.infer<typeof orderItemSchema>
 
@@ -9,3 +13,4 @@ export const isOrderItem = (input: TOrderItem | TOrderItem[]): input is TOrderIt
   !isArray(input) && orderItemSchema.safeParse(input).success
 
 export type TLibraryUserOrderList = z.infer<typeof libraryUserOrderListSchema>
+export type TFriendlyCardNumberResultSchema = z.infer<typeof friendlyCardNumberResultSchema>
