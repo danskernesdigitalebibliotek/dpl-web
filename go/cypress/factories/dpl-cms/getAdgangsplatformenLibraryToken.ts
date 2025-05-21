@@ -3,8 +3,11 @@ import { Factory } from "fishery"
 
 import { GetAdgangsplatformenLibraryTokenQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
+import defaultGoResponse from "./factory-parts/defaultGoResponse"
+
 export default Factory.define<GetAdgangsplatformenLibraryTokenQuery>(() => {
   return {
+    go: defaultGoResponse.build(),
     dplTokens: {
       adgangsplatformen: {
         library: {

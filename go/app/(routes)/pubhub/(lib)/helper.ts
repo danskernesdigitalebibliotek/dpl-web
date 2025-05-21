@@ -34,8 +34,7 @@ export function withAuth<TExtraContext extends Record<string, unknown> = Record<
 
       // If authrnticated, call the original handler
       return handler(req, contextWithAuth)
-    } catch (error) {
-      console.error(error)
+    } catch {
       return new Response("Not Authorized", { status: 401 })
     }
   }

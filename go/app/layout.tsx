@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
@@ -31,7 +32,7 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-export default async function RootLayout({
+async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -54,5 +55,17 @@ export default async function RootLayout({
         </DplCmsConfigContextProvider>
       </body>
     </html>
+  )
+}
+
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <Suspense>
+      <RootLayout>{children}</RootLayout>
+    </Suspense>
   )
 }

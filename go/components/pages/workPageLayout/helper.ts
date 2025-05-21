@@ -20,6 +20,20 @@ export const getManifestationMaterialType = (
 const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
 const allowedPhysicalMaterialTypes = ["BOOKS"]
 
+// filter out unallowed material types from manifestations
+export const filterMaterialTypes = (manifestations: ManifestationWorkPageFragment[]) => {
+  const filteredManifestationsMaterialTypes = manifestations.map(manifestation => {
+    const filteredMaterialTypes = manifestation.materialTypes.filter(materialType => {
+      return allowedMaterialTypes.includes(materialType.materialTypeGeneral.code)
+    })
+    return {
+      ...manifestation,
+      materialTypes: filteredMaterialTypes,
+    } as ManifestationWorkPageFragment
+  })
+  return filteredManifestationsMaterialTypes
+}
+
 // TODO: write unit tests for this function
 // Exclude manifestations with material types that are not allowed
 export const filterManifestationsByMaterialType = (
@@ -29,11 +43,16 @@ export const filterManifestationsByMaterialType = (
     // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
     if (manifestation.accessTypes[0].code === "PHYSICAL") {
       return allowedPhysicalMaterialTypes.includes(
-        manifestation.materialTypes[0].materialTypeGeneral.code
+        manifestation.materialTypes[0]?.materialTypeGeneral.code
       )
     }
-
-    return allowedMaterialTypes.includes(manifestation.materialTypes[0].materialTypeGeneral.code)
+    if (manifestation.accessTypes[0].code === "ONLINE") {
+      const matchinMaterialType = manifestation.materialTypes.find(type =>
+        allowedMaterialTypes.includes(type.materialTypeGeneral.code)
+      )
+      return !!matchinMaterialType
+    }
+    return false
   })
 }
 
@@ -80,15 +99,18 @@ export const getBestRepresentationOrFallbackManifestation = (
   bestRepresentation: ManifestationWorkPageFragment,
   manifestations: ManifestationWorkPageFragment[]
 ) => {
+  const filteredBestRepresentation = filterManifestationsByMaterialType(
+    filterMaterialTypes([bestRepresentation])
+  )
   // check if bestRepresentation is located in manifestations
   const isBestRepresentationInManifestations = manifestations.some(
     manifestation => manifestation.pid === bestRepresentation.pid
   )
   // if not, set bestRepresentation to the first manifestation in sortedManifestations
-  if (!isBestRepresentationInManifestations) {
+  if (!filteredBestRepresentation.length || !isBestRepresentationInManifestations) {
     return manifestations[0]
   }
-  return bestRepresentation
+  return filteredBestRepresentation[0]
 }
 
 export const getManifestationMaterialTypeSpecific = (

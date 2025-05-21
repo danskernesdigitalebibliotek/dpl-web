@@ -19,8 +19,8 @@ export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFr
 }
 
 export const getIsbnsFromWork = (work: WorkFullWorkPageFragment) => {
-  const isbnsnested = work.manifestations.all.map(manifestation =>
+  const isbnsNested = work.manifestations.all.map(manifestation =>
     getIsbnsFromManifestation(manifestation)
   )
-  return filterFalsyValuesFromArray(flatten(isbnsnested))
+  return filterFalsyValuesFromArray(flatten(isbnsNested))
 }

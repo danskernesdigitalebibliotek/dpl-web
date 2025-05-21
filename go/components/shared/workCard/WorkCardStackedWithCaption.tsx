@@ -4,6 +4,7 @@ import React from "react"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
+  filterMaterialTypes,
   getBestRepresentationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
@@ -49,16 +50,14 @@ const WorkCardStackedWithCaption = ({
         const manifestations = sortManifestationsBySortPriority(
           filterManifestationsByEdition(
             filterManifestationsByMaterialType(
-              work.manifestations.all as ManifestationWorkPageFragment[]
+              filterMaterialTypes(work.manifestations.all as ManifestationWorkPageFragment[])
             )
           )
         )
-
         const bestRepresentation = getBestRepresentationOrFallbackManifestation(
           work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
           manifestations
         )
-
         const title = work.titles.full[0]
         const url = bestRepresentation
           ? resolveUrl({

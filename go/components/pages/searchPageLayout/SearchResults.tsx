@@ -15,6 +15,7 @@ import { resolveUrl } from "@/lib/helpers/helper.routes"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
+  filterMaterialTypes,
   getBestRepresentationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "../workPageLayout/helper"
@@ -30,11 +31,10 @@ const SearchResults = ({ works }: SearchResultProps) => {
         const manifestations = sortManifestationsBySortPriority(
           filterManifestationsByEdition(
             filterManifestationsByMaterialType(
-              work.manifestations.all as ManifestationWorkPageFragment[]
+              filterMaterialTypes(work.manifestations.all as ManifestationWorkPageFragment[])
             )
           )
         )
-
         const bestRepresentation = getBestRepresentationOrFallbackManifestation(
           work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
           manifestations
