@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
-import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
@@ -8,7 +7,6 @@ import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
-import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
@@ -32,40 +30,28 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  const dplCmsConfig = await getDplCmsPublicConfig()
-  return (
-    <html lang="da">
-      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
-        <GridHelper hideInProduction />
-        <DplCmsConfigContextProvider config={dplCmsConfig}>
-          <Theme>
-            <ReactQueryProvider>
-              <Header />
-              <DynamicSheet />
-              <DynamicModal />
-              {children}
-              <Footer />
-            </ReactQueryProvider>
-          </Theme>
-        </DplCmsConfigContextProvider>
-      </body>
-    </html>
-  )
-}
-
 export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <Suspense>
-      <RootLayout>{children}</RootLayout>
-    </Suspense>
+    <html lang="da">
+      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
+        <GridHelper hideInProduction />
+
+        <Theme>
+          <ReactQueryProvider>
+            <Header />
+            <DplCmsConfigContextProvider>
+              <DynamicSheet />
+            </DplCmsConfigContextProvider>
+            <DynamicModal />
+            {children}
+            <Footer />
+          </ReactQueryProvider>
+        </Theme>
+      </body>
+    </html>
   )
 }
