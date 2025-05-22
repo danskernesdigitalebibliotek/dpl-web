@@ -43,7 +43,11 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
     );
 
     $registry->addFieldResolver('GoConfigurationPrivate', 'unilogin',
-    $builder->produce('unilogin_info_producer')
+      $builder->produce('unilogin_private_producer')
+    );
+
+    $registry->addFieldResolver('GoConfigurationPublic', 'unilogin',
+      $builder->produce('unilogin_public_producer')
     );
   }
 

@@ -139,7 +139,7 @@ class BnfImporter {
     catch (\Throwable $e) {
       $this->logger->error(
         'Failed to import content. @message',
-        ['@message' => $e->getMessage()]
+        ['@message' => $e->getMessage() . ' ' . $e->getTraceAsString()]
       );
 
       throw new \RuntimeException('Could not import content.');
