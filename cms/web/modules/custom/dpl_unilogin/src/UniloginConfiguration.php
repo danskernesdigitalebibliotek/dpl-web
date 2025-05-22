@@ -5,7 +5,7 @@ namespace Drupal\dpl_unilogin;
 use Drupal\dpl_react\DplReactConfigBase;
 
 /**
- * Class that handles UniLogin configuration settings.
+ * Class that handles Unilogin configuration settings.
  */
 class UniloginConfiguration extends DplReactConfigBase {
 
@@ -29,43 +29,53 @@ class UniloginConfiguration extends DplReactConfigBase {
   }
 
   /**
-   * Get the UniLogin API endpoint.
+   * Get the Unilogin API client secret.
    *
-   * @return string
-   *   The UniLogin API endpoint.
-   */
-  public function getUniloginApiEndpoint(): ?string {
-    return $this->loadConfig()->get('unilogin_api_endpoint');
-  }
-
-  /**
-   * Get the UniLogin API wellknown endpoint.
-   *
-   * @return string
-   *   The UniLogin API wellknown endpoint.
-   */
-  public function getUniloginApiWellknownEndpoint(): ?string {
-    return $this->loadConfig()->get('unilogin_api_wellknown_endpoint');
-  }
-
-  /**
-   * Get the UniLogin API client ID.
-   *
-   * @return string
-   *   The UniLogin API client ID.
-   */
-  public function getUniloginApiClientId(): ?string {
-    return $this->loadConfig()->get('unilogin_api_client_id');
-  }
-
-  /**
-   * Get the UniLogin API client secret.
-   *
-   * @return string
-   *   The UniLogin API client secret.
+   * @return string|null
+   *   The Unilogin API client secret.
    */
   public function getUniloginApiClientSecret(): ?string {
     return $this->loadConfig()->get('unilogin_api_client_secret');
+  }
+
+  /**
+   * Get the Unilogin API municipality ID.
+   *
+   * @return string|null
+   *   The Unilogin API municipality ID.
+   */
+  public function getUniloginApiMunicipalityId(): ?string {
+    return $this->loadConfig()->get('unilogin_api_municipality_id');
+  }
+
+  /**
+   * Get the Unilogin API webservice username.
+   *
+   * @return string|null
+   *   The Unilogin API webservice username.
+   */
+  public function getUniloginApiWebServiceUsername(): ?string {
+    return $this->loadConfig()->get('unilogin_api_webservice_username');
+  }
+
+  /**
+   * Get the Unilogin API webservice password.
+   *
+   * @return string|null
+   *   The Unilogin API webservice password.
+   */
+  public function getUniloginApiWebServicePassword(): ?string {
+    return $this->loadConfig()->get('unilogin_api_webservice_password');
+  }
+
+  /**
+   * Get the Unilogin API Pubhub retailer key code.
+   *
+   * @return string|null
+   *   The Unilogin API Pubhub retailer key code.
+   */
+  public function getUniloginApiPubhubRetailerKeyCode(): ?string {
+    return $this->loadConfig()->get('unilogin_api_pubhub_retailer_key_code');
   }
 
 }
