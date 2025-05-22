@@ -1,5 +1,6 @@
 import { add, isPast, sub } from "date-fns"
 import { IronSession, getIronSession } from "iron-session"
+import { unstable_rethrow } from "next/navigation"
 import { NextRequest, NextResponse } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
@@ -70,13 +71,13 @@ export async function getSession(options?: {
     return defaultSession as IronSession<TSessionData>
   }
 
-  const { cookies } = await import("next/headers")
   const sessionOptions = await getSessionOptions()
   if (!sessionOptions) {
     return defaultSession as IronSession<TSessionData>
   }
 
   try {
+    const { cookies } = await import("next/headers")
     const cookieStore = await cookies()
     const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
     const session = !options
@@ -100,6 +101,10 @@ export async function getSession(options?: {
 
     return session
   } catch (error) {
+    // Try to follow unstable_rethrow advise in this post:
+    // https://stackoverflow.com/questions/78010331/dynamic-server-usage-page-couldnt-be-rendered-statically-because-it-used-next
+    unstable_rethrow(error)
+
     console.error(error)
     return defaultSession as IronSession<TSessionData>
   }
