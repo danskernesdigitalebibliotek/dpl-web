@@ -20,7 +20,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
-import useGetV1ProductsIdentifier from "@/lib/rest/publizon/useGetV1ProductsIdentifier"
+import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 export type LoanCardProps = {
@@ -49,7 +49,7 @@ const LoanCard = ({
   const manifestationIsbn = manifestation.identifiers.find(
     identifier => identifier.type === "ISBN"
   )?.value
-  const { data: dataProducts } = useGetV1ProductsIdentifier(manifestationIsbn || "")
+  const { data: dataProducts } = useGetV1ProductsIdentifierAdapter(manifestationIsbn || "")
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(
     dataCovers,

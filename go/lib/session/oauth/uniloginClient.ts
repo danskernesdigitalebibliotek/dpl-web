@@ -1,15 +1,18 @@
 import * as client from "openid-client"
 
-import { getDplCmsPrivateUniloginConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
-import { getEnv } from "@/lib/config/env"
+import { getDplCmsPrivateConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+import { getEnv, getServerEnv } from "@/lib/config/env"
 
 export const uniloginClientSettings = {
   post_login_route: `${getEnv("APP_URL")}/user/profile`,
 }
 
 export async function getUniloginClientConfig() {
-  const { wellknownUrl, clientId, clientSecret } = await getDplCmsPrivateUniloginConfig()
-
+  const {
+    unilogin: { clientSecret },
+  } = await getDplCmsPrivateConfig()
+  const clientId = getServerEnv("UNILOGIN_CLIENT_ID")
+  const wellknownUrl = getServerEnv("UNILOGIN_WELLKNOWN_URL")
   let isMissingConfiguration = false
   // We need all of these to be able to continue.
   // TODO: Consider if we should throw an error instead of just logging.

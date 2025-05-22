@@ -30,11 +30,13 @@ const defaultData: TLibraryUserOrderList = {
 }
 
 export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo) => {
+  const publizonServiceParameters = await getPublizonServiceParameters()
+
   const client = await createClientAsync(
     "./lib/soap/publizon/v2_7/wsdl/getlibraryuserorderlist.wsdl"
   )
   const [libraryUserResponse] = await client.GetLibraryUserOrderListAsync({
-    ...getPublizonServiceParameters(),
+    ...publizonServiceParameters,
     cardnumber: uniLoginUserInfo.uniid,
   })
 
@@ -49,7 +51,7 @@ export const getLibraryUserOrderListRequest = async (uniLoginUserInfo: TUserInfo
       "./lib/soap/publizon/v2_7/wsdl/getfriendlycardnumber.wsdl"
     )
     const [friendlyCardNumberResponse] = await friendlyCardNumberClient.GetFriendlyCardnumberAsync({
-      ...getPublizonServiceParameters(),
+      ...publizonServiceParameters,
       cardnumber: uniLoginUserInfo.uniid,
     })
 
