@@ -260,6 +260,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                 }
                 ... on ParagraphTextBody {
@@ -504,6 +505,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                     internal
                     title
                     url
+                    id
                   }
                 }
                 ... on ParagraphTextBody {
