@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-05-22 08:46+0200\n"
-"PO-Revision-Date: 2025-05-22 08:46+0200\n"
+"POT-Creation-Date: 2025-05-22 10:31+0200\n"
+"PO-Revision-Date: 2025-05-22 10:31+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4081,11 +4081,6 @@ msgstr ""
 "Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for at hente "
 "en ny token."
 
-msgid "List of DPL-Go Unilogin configuration."
-msgstr ""
-"\n"
-"List of DPL-Go Unilogin configuration."
-
 msgid "A WorkID field."
 msgstr "Et WorkID-felt."
 
@@ -4635,44 +4630,60 @@ msgid "Other materials"
 msgstr "Andre materialer"
 
 msgctxt "Unilogin configuration"
-msgid "Unilogin configuration"
-msgstr "Unilogin configuration"
-
-msgctxt "Unilogin configuration"
-msgid "UniLogin API endpoint URL."
-msgstr "UniLogin API endpoint URL."
-
-msgctxt "Unilogin configuration"
-msgid "The UniLogin API endpoint url."
-msgstr "The UniLogin API endpoint url."
-
-msgctxt "Unilogin configuration"
-msgid "UniLogin API wellknown endpoint URL"
-msgstr "Kendt Unilogin API slutpunkturl"
-
-msgctxt "Unilogin configuration"
-msgid "The UniLogin API wellknown endpoint url."
-msgstr "The UniLogin API wellknown endpoint url."
-
-msgctxt "Unilogin configuration"
-msgid "UniLogin API client ID."
-msgstr "UniLogin API client ID."
-
-msgctxt "Unilogin configuration"
-msgid "The UniLogin API client ID."
+msgid "Unilogin API configuration"
 msgstr ""
-"\n"
-"The UniLogin API client ID."
 
 msgctxt "Unilogin configuration"
-msgid "UniLogin API client secret."
-msgstr "UniLogin API client secret."
-
-msgctxt "Unilogin configuration"
-msgid "The UniLogin API client secret."
+msgid "API credentials"
 msgstr ""
-"\n"
-"The UniLogin API client secret."
+
+msgctxt "Unilogin configuration"
+msgid "Unilogin API client secret."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The Unilogin API client secret."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "Webservice configuration"
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "Unilogin webservice username."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The Unilogin webservice username."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "Unilogin webservice password."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The Unilogin webservice password."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "PubHub configuration"
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "Retailer key code."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The PubHub retailer key code."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "Unilogin municipality ID."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The Unilogin municipality ID."
+msgstr ""
 
 msgid "Allowed if bnf_server is enabled."
 msgstr ""
