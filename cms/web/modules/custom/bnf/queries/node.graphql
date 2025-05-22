@@ -199,6 +199,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
         }
         ... on ParagraphTextBody {
@@ -416,6 +417,7 @@ query GetNode($id: ID!) {
             internal
             title
             url
+            id
           }
         }
         ... on ParagraphTextBody {
