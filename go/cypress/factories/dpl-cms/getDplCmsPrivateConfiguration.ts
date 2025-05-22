@@ -10,10 +10,10 @@ export default Factory.define<GetDplCmsPrivateConfigurationQuery>(() => {
     goConfiguration: {
       private: {
         unilogin: {
-          unilogin_api_client_id: "mocked-client-id",
-          unilogin_api_client_secret: "mocked-client-secret",
-          unilogin_api_url: "mocked-api-url",
-          unilogin_api_wellknown_url: "mocked-wellknown-url",
+          clientSecret: "mocked-client-secret",
+          webServiceUsername: "mocked-web-service-username",
+          webServicePassword: "mocked-web-service-password",
+          pubHubRetailerKeyCode: "mocked-retailer-key-code",
         },
       },
     },

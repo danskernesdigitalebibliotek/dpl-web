@@ -1,16 +1,21 @@
-import { getServerEnv } from "../config/env"
+import { getDplCmsPrivateConfig, getDplCmsPublicConfig } from "../config/dpl-cms/dplCmsConfig"
 
-export const getUniloginWsCredentials = () => {
-  const username = getServerEnv("UNLILOGIN_SERVICES_WS_USER")
-  const password = getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD")
-
+export const getUniloginWsCredentials = async () => {
+  const {
+    unilogin: { webServiceUsername: username, webServicePassword: password },
+  } = await getDplCmsPrivateConfig()
   return {
     username,
     password,
   }
 }
 
-export const getLibraryMunicipalityId = () => getServerEnv("UNILOGIN_MUNICIPALITY_ID")
+export const getLibraryMunicipalityId = async () => {
+  const {
+    unilogin: { municipalityId },
+  } = await getDplCmsPublicConfig()
+  return municipalityId
+}
 
 export const getInstitutionIds = (text: string) =>
   text.replace(/\[([^\]]*)\]/g, "$1").split(",") ?? []

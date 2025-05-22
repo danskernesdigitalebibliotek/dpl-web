@@ -2,10 +2,10 @@ query getDplCmsPrivateConfiguration {
   goConfiguration {
     private {
       unilogin {
-        unilogin_api_client_id
-        unilogin_api_client_secret
-        unilogin_api_url
-        unilogin_api_wellknown_url
+        clientSecret
+        pubHubRetailerKeyCode
+        webServicePassword
+        webServiceUsername
       }
     }
   }
@@ -14,14 +14,17 @@ query getDplCmsPrivateConfiguration {
 query getDplCmsPublicConfiguration {
   goConfiguration {
     public {
+      libraryInfo {
+        name
+      }
       loginUrls {
         adgangsplatformen
       }
       logoutUrls {
         adgangsplatformen
       }
-      libraryInfo {
-        name
+      unilogin {
+        municipalityId
       }
     }
   }

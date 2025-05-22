@@ -61,12 +61,12 @@ const EnvServerSchema = z.object({
       z.literal(PHASE_TEST),
     ])
     .optional(),
-  UNILOGIN_MUNICIPALITY_ID: z.string(),
+  UNILOGIN_MUNICIPALITY_ID: z.string().optional(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
-  UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string(),
-  UNLILOGIN_SERVICES_WS_PASSWORD: z.string(),
-  UNLILOGIN_SERVICES_WS_USER: z.string(),
+  UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string().optional(),
+  UNLILOGIN_SERVICES_WS_PASSWORD: z.string().optional(),
+  UNLILOGIN_SERVICES_WS_USER: z.string().optional(),
   // Is fetched from dpl-cms, but can be overridden by env vars
   UNILOGIN_CLIENT_ID: z.string().optional(),
   UNILOGIN_CLIENT_SECRET: z.string().optional(),

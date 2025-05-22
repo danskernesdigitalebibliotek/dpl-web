@@ -7,7 +7,11 @@ export const getInstitutionRequest = async (institutionId: string) => {
   const client = await createClientAsync("./lib/soap/unilogin/wsiinst-v5/wsdl/ws.wsdl", {
     forceSoap12Headers: true,
   })
-  const { username, password } = getUniloginWsCredentials()
+  const { username, password } = await getUniloginWsCredentials()
+  if (!username || !password) {
+    throw new Error("Missing Unilogin credentials")
+  }
+
   const [response] = await client.hentInstitutionAsync({
     wsBrugerid: username,
     wsPassword: password,
