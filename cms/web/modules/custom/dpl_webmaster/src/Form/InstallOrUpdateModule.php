@@ -101,6 +101,7 @@ class InstallOrUpdateModule extends FormBase {
       '#type' => 'file',
       '#title' => $this->t('Upload a module archive'),
       '#description' => $this->t('For example: %filename from your local computer', ['%filename' => 'name.tar.gz']),
+      '#required' => TRUE,
     ];
 
     $form['actions'] = ['#type' => 'actions'];
@@ -111,17 +112,6 @@ class InstallOrUpdateModule extends FormBase {
     ];
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-    // Same as UpdateManagerInstall::validateForm();
-    $all_files = $this->getRequest()->files->get('files', []);
-    if (empty($all_files['project_upload'])) {
-      $form_state->setErrorByName('project_url', $this->t('You must either provide a URL or upload an archive file.'));
-    }
   }
 
   /**
