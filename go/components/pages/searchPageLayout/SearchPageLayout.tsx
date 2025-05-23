@@ -17,8 +17,14 @@ const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const loadMoreRefIsInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
-  const { data, isLoadingFacets, isLoadingResults, isLoadingMoreResults, searchQuery } =
-    useSearchDataAndLoadingStates()
+  const {
+    data,
+    isLoadingFacets,
+    isLoadingResults,
+    isLoadingMoreResults,
+    machineIsReady,
+    searchQuery,
+  } = useSearchDataAndLoadingStates()
 
   useEffect(() => {
     if (loadMoreRefIsInView) {
@@ -32,6 +38,10 @@ const SearchPageLayout = () => {
   const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
   const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
+
+  if (!machineIsReady) {
+    return null
+  }
 
   return (
     <div className="content-container space-y-grid-gap-2">
