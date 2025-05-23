@@ -295,3 +295,15 @@ function dpl_update_deploy_bnf(): string {
 
   return $result;
 }
+
+/**
+ * Reverting unwanted cache tag update from contrib module update.
+ */
+function dpl_update_deploy_fix_content_view(): string {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('views.view.content');
+  $config->set('display.default.display_options.cache.type', 'tag');
+  $config->save(TRUE);
+
+  return 'views.view.contentdisplay.default.display_options.cache.type => tag';
+}
