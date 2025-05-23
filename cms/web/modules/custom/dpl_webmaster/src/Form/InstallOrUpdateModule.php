@@ -99,7 +99,7 @@ class InstallOrUpdateModule extends FormBase {
 
     $form['project_upload'] = [
       '#type' => 'file',
-      '#title' => $this->t('Upload a module or theme archive'),
+      '#title' => $this->t('Upload a module archive'),
       '#description' => $this->t('For example: %filename from your local computer', ['%filename' => 'name.tar.gz']),
     ];
 
