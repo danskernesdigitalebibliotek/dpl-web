@@ -56,6 +56,7 @@ permissions:
   - 'administer redirects'
   - 'bnf export nodes'
   - 'bnf import nodes'
+  - 'bnf manage subscriptions'
   - 'break content lock'
   - 'change own username'
   - 'clone eventinstance entity'

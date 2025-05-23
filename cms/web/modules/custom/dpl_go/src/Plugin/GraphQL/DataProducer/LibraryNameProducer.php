@@ -2,8 +2,10 @@
 
 namespace Drupal\dpl_go\Plugin\GraphQL\DataProducer;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -48,7 +50,8 @@ class LibraryNameProducer extends DataProducerPluginBase implements ContainerFac
   /**
    * Resolves the library name.
    */
-  public function resolve(): string {
+  public function resolve(FieldContext $field_context): string {
+    $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
     $theme = $this->themeManager->getActiveTheme()->getName();
     return theme_get_setting('logo_title', $theme);
   }

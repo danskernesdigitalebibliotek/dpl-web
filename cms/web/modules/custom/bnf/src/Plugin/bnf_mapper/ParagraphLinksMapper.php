@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphLinks;
-
-use Drupal\bnf\Plugin\Traits\LinkTrait;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -18,7 +18,18 @@ use Spawnia\Sailor\ObjectLike;
   )]
 class ParagraphLinksMapper extends BnfMapperParagraphPluginBase {
 
-  use LinkTrait;
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(
+    array $configuration,
+    string $pluginId,
+    array $pluginDefinition,
+    EntityTypeManagerInterface $entityTypeManager,
+    protected BnfMapperManager $mapper,
+  ) {
+    parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
+  }
 
   /**
    * {@inheritdoc}
@@ -28,16 +39,9 @@ class ParagraphLinksMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    $links = $object->link;
-    $linkValues = [];
-
-    foreach ($links as $link) {
-      $linkValues[] = $this->getLinkValue($link);
-    }
-
     return $this->paragraphStorage->create([
       'type' => 'links',
-      'field_link' => $linkValues,
+      'field_link' => $this->mapper->mapAll($object->link, TRUE),
     ]);
 
   }

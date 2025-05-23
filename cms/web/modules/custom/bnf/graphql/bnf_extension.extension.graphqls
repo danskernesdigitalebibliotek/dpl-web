@@ -26,3 +26,9 @@ extend type NodeGoCategory {
 extend type NodeGoPage {
   url: String!
 }
+
+# Expand link fields with the UUID of the referenced content, if it's
+# an internal link.
+extend type Link {
+  id: String
+}
