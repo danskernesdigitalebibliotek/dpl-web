@@ -91,29 +91,14 @@ class InstallOrUpdateModule extends FormBase {
 
     $form['help_text'] = [
       '#prefix' => '<p>',
-      '#markup' => $this->t('You can find <a href=":module_url">modules</a> and <a href=":theme_url">themes</a> on <a href=":drupal_org_url">drupal.org</a>. The following file extensions are supported: %extensions.', [
-        ':module_url' => 'https://www.drupal.org/project/modules',
-        ':theme_url' => 'https://www.drupal.org/project/themes',
-        ':drupal_org_url' => 'https://www.drupal.org',
+      '#markup' => $this->t('The following file extensions are supported: %extensions.', [
         '%extensions' => $this->archiverManager->getExtensions(),
       ]),
       '#suffix' => '</p>',
     ];
 
-    $form['project_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Add from a URL'),
-      '#description' => $this->t('For example: %url', ['%url' => 'https://ftp.drupal.org/files/projects/name.tar.gz']),
-    ];
-
     // Provide upload option only if file module exists.
     if ($this->moduleHandler->moduleExists('file')) {
-      $form['information'] = [
-        '#prefix' => '<strong>',
-        '#markup' => $this->t('Or'),
-        '#suffix' => '</strong>',
-      ];
-
       $form['project_upload'] = [
         '#type' => 'file',
         '#title' => $this->t('Upload a module or theme archive'),
@@ -138,13 +123,8 @@ class InstallOrUpdateModule extends FormBase {
     // Same as UpdateManagerInstall::validateForm();
     $all_files = $this->getRequest()->files->get('files', []);
     if ($this->moduleHandler->moduleExists('file')) {
-      if (!($form_state->getValue('project_url') xor !empty($all_files['project_upload']))) {
+      if (empty($all_files['project_upload'])) {
         $form_state->setErrorByName('project_url', $this->t('You must either provide a URL or upload an archive file.'));
-      }
-    }
-    else {
-      if (!($form_state->getValue('project_url'))) {
-        $form_state->setErrorByName('project_url', $this->t('You must provide a URL to install.'));
       }
     }
   }
@@ -158,25 +138,17 @@ class InstallOrUpdateModule extends FormBase {
     // (search for 'UpdateManagerInstall').
     $local_cache = '';
     $all_files = $this->getRequest()->files->get('files', []);
-    if ($form_state->getValue('project_url')) {
-      $local_cache = update_manager_file_get($form_state->getValue('project_url'));
-      if (!$local_cache) {
-        $this->messenger()->addError($this->t('Unable to retrieve Drupal project from %url.', ['%url' => $form_state->getValue('project_url')]));
-        return;
-      }
+
+    $validators = ['FileExtension' => ['extensions' => $this->archiverManager->getExtensions()]];
+    /** @var \Drupal\file\FileInterface|null $finfo */
+    $finfo = file_save_upload('project_upload', $validators, FALSE, 0, FileExists::Replace);
+    if (!$finfo) {
+      // Failed to upload the file. file_save_upload() calls
+      // \Drupal\Core\Messenger\MessengerInterface::addError() on failure.
+      return;
     }
-    elseif (!empty($all_files['project_upload']) && $this->moduleHandler->moduleExists('file')) {
-      $validators = ['FileExtension' => ['extensions' => $this->archiverManager->getExtensions()]];
-      /** @var \Drupal\file\FileInterface|null $finfo */
-      $finfo = file_save_upload('project_upload', $validators, FALSE, 0, FileExists::Replace);
-      if (!$finfo) {
-        // Failed to upload the file. file_save_upload() calls
-        // \Drupal\Core\Messenger\MessengerInterface::addError() on failure.
-        return;
-      }
-      /** @var string $local_cache */
-      $local_cache = $finfo->getFileUri();
-    }
+    /** @var string $local_cache */
+    $local_cache = $finfo->getFileUri();
 
     $directory = _update_manager_extract_directory();
     try {
