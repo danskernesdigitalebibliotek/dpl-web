@@ -17,14 +17,8 @@ const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const loadMoreRefIsInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
-  const {
-    data,
-    isLoadingFacets,
-    isLoadingResults,
-    isLoadingMoreResults,
-    machineIsReady,
-    searchQuery,
-  } = useSearchDataAndLoadingStates()
+  const { data, isLoadingFacets, isLoadingResults, isLoadingMoreResults, searchQuery } =
+    useSearchDataAndLoadingStates()
 
   useEffect(() => {
     if (loadMoreRefIsInView) {
