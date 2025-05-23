@@ -42,13 +42,13 @@ export default function Layout({
 
         <Theme>
           <ReactQueryProvider>
-            <Header />
             <DplCmsConfigContextProvider>
+              <Header />
               <DynamicSheet />
+              <DynamicModal />
+              {children}
+              <Footer />
             </DplCmsConfigContextProvider>
-            <DynamicModal />
-            {children}
-            <Footer />
           </ReactQueryProvider>
         </Theme>
       </body>
