@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useContext } from "react"
 
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
