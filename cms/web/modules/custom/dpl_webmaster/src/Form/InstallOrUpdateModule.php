@@ -97,14 +97,11 @@ class InstallOrUpdateModule extends FormBase {
       '#suffix' => '</p>',
     ];
 
-    // Provide upload option only if file module exists.
-    if ($this->moduleHandler->moduleExists('file')) {
-      $form['project_upload'] = [
-        '#type' => 'file',
-        '#title' => $this->t('Upload a module or theme archive'),
-        '#description' => $this->t('For example: %filename from your local computer', ['%filename' => 'name.tar.gz']),
-      ];
-    }
+    $form['project_upload'] = [
+      '#type' => 'file',
+      '#title' => $this->t('Upload a module or theme archive'),
+      '#description' => $this->t('For example: %filename from your local computer', ['%filename' => 'name.tar.gz']),
+    ];
 
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['submit'] = [
@@ -122,10 +119,8 @@ class InstallOrUpdateModule extends FormBase {
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     // Same as UpdateManagerInstall::validateForm();
     $all_files = $this->getRequest()->files->get('files', []);
-    if ($this->moduleHandler->moduleExists('file')) {
-      if (empty($all_files['project_upload'])) {
-        $form_state->setErrorByName('project_url', $this->t('You must either provide a URL or upload an archive file.'));
-      }
+    if (empty($all_files['project_upload'])) {
+      $form_state->setErrorByName('project_url', $this->t('You must either provide a URL or upload an archive file.'));
     }
   }
 
