@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerLink\Link;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphBanner;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\UnderlinedTitle\Text;
 use Drupal\bnf\Plugin\bnf_mapper\ParagraphBannerMapper;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\FileRepositoryInterface;
 use Drupal\paragraphs\Entity\Paragraph;
+use Prophecy\Argument;
 
 /**
  * Tests the banner paragraph mapper (excluding image).
  */
 class ParagraphBannerMapperTest extends EntityMapperTestBase {
+
+  /**
+   * The subject under test.
+   */
+  protected ParagraphBannerMapper $mapper;
 
   /**
    * {@inheritdoc}
@@ -30,6 +39,27 @@ class ParagraphBannerMapperTest extends EntityMapperTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp(): void {
+    parent::setUp();
+    $manager = $this->prophesize(BnfMapperManager::class);
+    $manager->map(Argument::any())->willReturn(['fake' => 'link mapper']);
+    $fileSystemProphecy = $this->prophesize(FileSystemInterface::class);
+    $fileRepositoryProphecy = $this->prophesize(FileRepositoryInterface::class);
+
+    $this->mapper = new ParagraphBannerMapper(
+      [],
+      '',
+      [],
+      $this->entityManagerProphecy->reveal(),
+      $fileSystemProphecy->reveal(),
+      $fileRepositoryProphecy->reveal(),
+      $manager->reveal(),
+    );
+  }
+
+  /**
    * Test banner paragraph mapping without image field.
    */
   public function testParagraphBannerMapping(): void {
@@ -40,21 +70,9 @@ class ParagraphBannerMapperTest extends EntityMapperTestBase {
         'format' => 'basic_html',
       ],
       'field_banner_description' => 'This is a description',
-      'field_banner_link' => [
-        'uri' => 'https://foo.bar',
-        'title' => 'Link title',
-      ],
+      'field_banner_link' => ['fake' => 'link mapper'],
       'field_banner_image' => [],
     ])->willReturn($this->entityProphecy)->shouldBeCalled();
-
-    $mapper = new ParagraphBannerMapper(
-      [],
-      '',
-      [],
-      $this->entityManagerProphecy->reveal(),
-      $this->fileSystemProphecy->reveal(),
-      $this->fileRepositoryProphecy->reveal(),
-    );
 
     $graphqlElement = ParagraphBanner::make(
       id: 'banner_test',
@@ -71,7 +89,7 @@ class ParagraphBannerMapperTest extends EntityMapperTestBase {
       ),
     );
 
-    $result = $mapper->map($graphqlElement);
+    $result = $this->mapper->map($graphqlElement);
 
     $this->assertSame($this->entityProphecy->reveal(), $result);
   }

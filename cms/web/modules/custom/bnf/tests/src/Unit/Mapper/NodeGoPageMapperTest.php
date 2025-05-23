@@ -46,6 +46,9 @@ class NodeGoPageMapperTest extends EntityMapperTestBase {
 
     $manager = $this->prophesize(BnfMapperManager::class);
 
+    $manager->mapAll([], TRUE)
+      ->willReturn([]);
+
     $mapper = new NodeGoPageMapper(
       [],
       '',
