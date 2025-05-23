@@ -223,6 +223,7 @@ class OpeningHoursRepository {
   public function delete(int $id, ?int $repetitionId = NULL): bool {
     $instance = $this->load($id);
     if (!$instance) {
+      $this->logger->error("Could not load Opening Hour '{$id}' to be deleted");
       return FALSE;
     }
     if ($repetitionId && $instance->repetition->id !== $repetitionId) {
@@ -255,7 +256,13 @@ class OpeningHoursRepository {
 
     // If a row was affected then the operation had an effect. That is a
     // success.
-    return $numRowsAffected > 0;
+    $hasRowsAffected = $numRowsAffected > 0;
+
+    if (!$hasRowsAffected) {
+      $this->logger->warning('No rows affected when trying to delete opening hours instance with id ' . $instance->id);
+    }
+
+    return $hasRowsAffected;
   }
 
   /**
