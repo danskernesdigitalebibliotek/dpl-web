@@ -8,7 +8,7 @@ import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
-import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
+import DplCmsConfigContextProviderServer from "@/lib/providers/DplCmsConfigContextProviderServer"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -42,13 +42,13 @@ export default function Layout({
 
         <Theme>
           <ReactQueryProvider>
-            <DplCmsConfigContextProvider>
+            <DplCmsConfigContextProviderServer>
               <Header />
               <DynamicSheet />
               <DynamicModal />
               {children}
               <Footer />
-            </DplCmsConfigContextProvider>
+            </DplCmsConfigContextProviderServer>
           </ReactQueryProvider>
         </Theme>
       </body>
