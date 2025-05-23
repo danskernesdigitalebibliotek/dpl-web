@@ -10,7 +10,6 @@ import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
-import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -37,22 +36,21 @@ async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const dplCmsConfig = await getDplCmsPublicConfig()
+  // Warm up cpl cms config cache.
+  getDplCmsPublicConfig()
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
-        <DplCmsConfigContextProvider config={dplCmsConfig}>
-          <Theme>
-            <ReactQueryProvider>
-              <Header />
-              <DynamicSheet />
-              <DynamicModal />
-              {children}
-              <Footer />
-            </ReactQueryProvider>
-          </Theme>
-        </DplCmsConfigContextProvider>
+        <Theme>
+          <ReactQueryProvider>
+            <Header />
+            <DynamicSheet />
+            <DynamicModal />
+            {children}
+            <Footer />
+          </ReactQueryProvider>
+        </Theme>
       </body>
     </html>
   )

@@ -1,3 +1,5 @@
+"use server"
+
 import { unstable_cacheLife as cacheLife } from "next/cache"
 
 import {
@@ -97,6 +99,7 @@ const getDplCmsPublicConfigData = async () => {
 
 export const getDplCmsPublicConfig = async () => {
   const data = await getDplCmsPublicConfigData()
+  // If environment variables are set, they will override the values from DPL CMS.
   const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
   if (envMunicipalityId) {
     data.unilogin.municipalityId = envMunicipalityId
