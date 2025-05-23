@@ -39,18 +39,14 @@ const SearchPageLayout = () => {
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
   const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
 
-  if (!machineIsReady) {
-    return null
-  }
-
   return (
     <div className="content-container space-y-grid-gap-2">
-      {searchQuery && (
+      {searchQuery && machineIsReady && (
         <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
           {`Viser resultater for ${searchQueryText} ${hitCountText}`}
         </h1>
       )}
-      {searchQuery ? (
+      {searchQuery && machineIsReady ? (
         <>
           {!isLoadingFacets && data.facets && data.facets.length > 0 ? (
             <div className="relative">
@@ -63,7 +59,6 @@ const SearchPageLayout = () => {
             </div>
           ) : (
             <>
-              <div className="lg:hidden">{/* <SearchFiltersMobileSkeleton /> */}</div>
               <div className="hidden lg:block">
                 <SearchFiltersDesktopSkeleton />
               </div>
