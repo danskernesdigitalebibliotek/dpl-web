@@ -1,7 +1,9 @@
+"use client"
+
 import React from "react"
 
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+import useDplCmsPublicConfig from "@/lib/config/dpl-cms/useDplCmsPublicConfig"
 import { getEnv } from "@/lib/config/env"
 import { cn } from "@/lib/helpers/helper.cn"
 
@@ -9,8 +11,8 @@ export type LinkToParentLibraryProps = {
   className?: string
 }
 
-const LinkToParentLibrary = async ({ className }: LinkToParentLibraryProps) => {
-  const { libraryInfo: { name: libraryName = null } = {} } = await getDplCmsPublicConfig()
+const LinkToParentLibrary = ({ className }: LinkToParentLibraryProps) => {
+  const libraryName = useDplCmsPublicConfig()?.config?.libraryInfo?.name
   const parentLibraryUrl = getEnv("DPL_CMS_HOSTNAME")
 
   return (
