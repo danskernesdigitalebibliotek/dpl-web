@@ -61,7 +61,7 @@ class InstallOrUpdateModule extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'update_manager_install_form';
+    return 'dpl_webmaster_upload_form';
   }
 
   /**

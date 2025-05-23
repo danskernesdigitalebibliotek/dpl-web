@@ -6,7 +6,7 @@ export class InstallOrUpdatePage extends PageObject {
   constructor() {
     super({ path: '/admin/modules/install-or-update' });
     this.addElements = {
-      form: () => cy.get('form#update-manager-install-form'),
+      form: () => cy.get('form#dpl-webmaster-upload-form'),
       fileField: () => this.elements.form().find('#edit-project-upload'),
       submit: () => this.elements.form().find('input[type=submit]'),
     };
