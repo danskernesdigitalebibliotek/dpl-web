@@ -88,12 +88,14 @@ export async function GET(request: NextRequest) {
       config,
       tokenSet.access_token!
     )) as TIntrospectionResponse
+
     const introspect = schemas.introspect.parse(introspectResponse)
 
     const claims = tokenSetResponse.claims()! as TClaims
 
     // UserInfo Request
     const userInfoResponse = await client.fetchUserInfo(config, tokenSet.access_token, claims.sub)
+
     const userinfo = schemas.uniLoginUserInfo.parse(userInfoResponse)
 
     // Set basic session info.
@@ -105,8 +107,12 @@ export async function GET(request: NextRequest) {
 
     const institutionId = getInstitutionId(introspect.institution_ids)
     // Check if user is authorized to log.
-    const isAuthorized = await isUniloginUserAuthorizedToLogIn(institutionId, claims)
-    if (!isAuthorized) {
+    const isAuthorized = await isUniloginUserAuthorizedToLogIn(
+      institutionId,
+      claims,
+      userinfo.isMocked ?? false
+    )
+    if (isAuthorized === false) {
       // Make sure that the user is logged out remotely first. And destroy session.
       await logoutUniloginSSO(session)
       await destroySession(session)
