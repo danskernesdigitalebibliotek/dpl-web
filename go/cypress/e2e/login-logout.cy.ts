@@ -1,4 +1,9 @@
 import getLoginUrls from "../factories/dpl-cms/getLoginUrls"
+import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
+import configuration from "../factories/unilogin/configuration"
+import introspection from "../factories/unilogin/introspection"
+import tokenSet from "../factories/unilogin/tokenSet"
+import userinfo from "../factories/unilogin/userinfo"
 
 describe("Login / Logout UI Tests", () => {
   beforeEach(() => {
@@ -27,7 +32,7 @@ describe("Login / Logout UI Tests", () => {
     cy.dataCy("global-sheet").should("not.exist")
   })
 
-  it.only("Should open unilogin page", () => {
+  it("Should open unilogin page", () => {
     // Opens login modal with beforeEach
 
     const uniloginUrl = "/auth/login/unilogin"
@@ -69,13 +74,41 @@ describe("Login / Logout UI Tests", () => {
 })
 
 describe("Login / Logout API Tests", () => {
+  const mockedCallbackUrl =
+    "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
+
   it("Should login when performing unilogin callback", () => {
     cy.mockServerRest({
       method: "GET",
-      path: "/auth/callback/unilogin",
-      data: { message: "success" },
+      path: "/.well-known/openid-configuration",
+      data: configuration.build(),
     })
 
-    cy.visit("/auth/callback/unilogin")
+    cy.mockServerRest({
+      method: "POST",
+      path: "/token",
+      data: tokenSet.build(),
+    })
+
+    cy.mockServerRest({
+      method: "POST",
+      path: "/introspect",
+      data: introspection.build(),
+    })
+
+    cy.mockServerRest({
+      method: "GET",
+      path: "/userinfo",
+      data: userinfo.build(),
+    })
+
+    cy.interceptGraphql({
+      operationName: "complexSearchForWorkTeaser",
+      data: complexSearchForWorkTeaser.build(),
+    })
+
+    cy.visit(mockedCallbackUrl)
+
+    cy.location("pathname").should("eq", "/user/profile")
   })
 })
