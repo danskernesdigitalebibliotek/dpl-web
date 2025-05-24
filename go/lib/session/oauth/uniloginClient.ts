@@ -34,6 +34,9 @@ export async function getUniloginClientConfig() {
     return null
   }
 
+  const shouldAllowInsecureRequests =
+    getEnv("NODE_ENV") === "test" || getEnv("NODE_ENV") === "development"
+
   return await client.discovery(
     new URL(String(wellknownUrl)),
     clientId as string,
@@ -41,7 +44,7 @@ export async function getUniloginClientConfig() {
     undefined,
     {
       // Allow insecure requests while testing
-      execute: process.env.NODE_ENV === "test" ? [client.allowInsecureRequests] : [],
+      execute: shouldAllowInsecureRequests ? [client.allowInsecureRequests] : [],
     }
   )
 }
