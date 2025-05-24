@@ -15,6 +15,7 @@ const schemas = {
   }),
   uniLoginUserInfo: z.object({
     sub: z.string(),
+    isMocked: z.boolean().optional(),
   }),
   institution: z.object({
     instnr: z.string().regex(/^[A-Z0-9]+$/),
