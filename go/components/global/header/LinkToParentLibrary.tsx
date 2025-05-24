@@ -12,19 +12,28 @@ export type LinkToParentLibraryProps = {
 }
 
 const LinkToParentLibrary = ({ className }: LinkToParentLibraryProps) => {
-  const libraryName = useDplCmsPublicConfig()?.config?.libraryInfo?.name
+  const { config, isLoading } = useDplCmsPublicConfig()
   const parentLibraryUrl = getEnv("DPL_CMS_HOSTNAME")
+  const libraryName = config?.libraryInfo?.name ?? "dit lokale bibliotek"
+
+  if (isLoading !== false) {
+    return <p className={cn("text-typo-caption", className)}>En del af...</p>
+  }
 
   return (
     <p className={cn("text-typo-caption", className)}>
       En del af{" "}
-      <SmartLink
-        className="animate-text-underline"
-        linkType="external"
-        href={parentLibraryUrl}
-        target="_blank">
-        {libraryName || "dit lokale bibliotek"}
-      </SmartLink>
+      {parentLibraryUrl ? (
+        <SmartLink
+          className="animate-text-underline"
+          linkType="external"
+          href={parentLibraryUrl}
+          target="_blank">
+          {libraryName}
+        </SmartLink>
+      ) : (
+        libraryName
+      )}
     </p>
   )
 }
