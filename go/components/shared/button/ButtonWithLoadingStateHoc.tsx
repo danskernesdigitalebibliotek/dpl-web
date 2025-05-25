@@ -6,7 +6,7 @@ import Icon from "../icon/Icon"
 import { Button, ButtonProps } from "./Button"
 
 const ButtonWithLoadingStateHoc = <TProps extends ButtonProps>(
-  Component: React.FC<TProps & { isLoading: boolean; onClick?: () => void }>,
+  Component: React.FC<TProps & { onClick?: () => void }>,
   {
     className,
     size,
@@ -46,10 +46,8 @@ const ButtonWithLoadingStateHoc = <TProps extends ButtonProps>(
     return (
       <Component
         {...(props as TProps & {
-          isLoading: boolean
           onClick: typeof handleClick
         })}
-        isLoading={isLoading}
         onClick={handleClick}
       />
     )
