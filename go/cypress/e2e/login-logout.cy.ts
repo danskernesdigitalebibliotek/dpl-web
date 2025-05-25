@@ -1,4 +1,3 @@
-import getLoginUrls from "../factories/dpl-cms/getLoginUrls"
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import configuration from "../factories/unilogin/configuration"
 import introspection from "../factories/unilogin/introspection"
@@ -7,11 +6,6 @@ import userinfo from "../factories/unilogin/userinfo"
 
 describe("Login / Logout UI Tests", () => {
   beforeEach(() => {
-    cy.interceptGraphql({
-      operationName: "getLoginUrls",
-      data: getLoginUrls.build(),
-    })
-
     // Visit search page and wait for client side render
     cy.visit("/search").contains("Ingen søgeord fundet")
 
@@ -49,17 +43,13 @@ describe("Login / Logout UI Tests", () => {
 
     // Check if mocked unilogin page is open
     cy.location("pathname").should("eq", uniloginUrl)
-
-    Cypress.on("uncaught:exception", () => {
-      return false
-    })
   })
 
   it("Should open adgangsplatformen page", () => {
     // Opens login modal with beforeEach
 
     // Intercept mocked adgangsplatformen login page
-    cy.intercept("GET", "/some-path", {
+    cy.intercept("GET", "/mocked/login*", {
       statusCode: 200,
       body: "<html>I am login page</html>",
       headers: { "content-type": "text/html" },
@@ -69,7 +59,7 @@ describe("Login / Logout UI Tests", () => {
     cy.dataCy("login-sheet-adgangsplatformen-button").click()
 
     // Check if mocked adgangsplatformen page is open
-    cy.location("pathname").should("eq", "/some-path")
+    cy.location("pathname").should("eq", "/mocked/login")
   })
 })
 
