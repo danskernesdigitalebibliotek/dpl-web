@@ -17,6 +17,7 @@ class MockApiServer {
 
   reset() {
     this.server.reset()
+    this.server.enableDebug()
   }
 
   start() {
