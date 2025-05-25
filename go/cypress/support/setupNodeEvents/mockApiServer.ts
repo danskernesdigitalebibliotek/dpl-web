@@ -10,6 +10,12 @@ class MockApiServer {
   private readonly server: Mockttp
   private readonly port: number
 
+  shouldEnableDebug() {
+    if (process.env.DEBUG_MOCK_SERVER === "true") {
+      this.server.enableDebug()
+    }
+  }
+
   constructor() {
     this.server = getLocal()
     this.port = 9000 // The port to listen for incoming requests
@@ -17,12 +23,12 @@ class MockApiServer {
 
   reset() {
     this.server.reset()
-    this.server.enableDebug()
+    this.shouldEnableDebug()
   }
 
   start() {
     this.server.start(this.port)
-    this.server.enableDebug()
+    this.shouldEnableDebug()
   }
 
   stop() {

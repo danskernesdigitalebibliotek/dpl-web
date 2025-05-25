@@ -17,7 +17,9 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = on => {
   })
 
   function log(requestType: string, operationName: string) {
-    console.info(`\x1b[32m${requestType}:`, `\x1b[34m${operationName}`)
+    if (process.env.DEBUG_MOCK_SERVER === "true") {
+      console.info(`\x1b[32m${requestType}:`, `\x1b[34m${operationName}`)
+    }
   }
 
   on("task", {

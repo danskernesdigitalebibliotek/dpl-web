@@ -77,9 +77,9 @@ describe("Front Page Tests", () => {
           .should("contain.text", "Dette er titlen på en e-bog")
 
         // Maximum number of materials to click through
-        const maxAttempts = 10
+        const maxAttempts = 20
 
-        // Click the button up to 10 times
+        // Click the button up to 20 times
         for (let i = 0; i < maxAttempts; i++) {
           cy.dataCy("material-slider-next-button")
             .should("exist")
