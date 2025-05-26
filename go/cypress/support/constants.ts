@@ -17,6 +17,7 @@ export const cyKeys = {
   "global-sheet-close-button": "global-sheet-close-button",
   "login-sheet-unilogin-button": "login-sheet-unilogin-button",
   "login-sheet-adgangsplatformen-button": "login-sheet-adgangsplatformen-button",
+  "logout-button": "logout-button",
 } as const
 
 export type CyKey = keyof typeof cyKeys

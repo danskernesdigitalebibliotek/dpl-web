@@ -39,7 +39,7 @@ jobs:
         with:
           install: false
           build: yarn build:test
-          start: yarn start
+          start: yarn start:test
           # wait for search page to be available
           # TODO: change this to origin URL when front page data has been mocked
           wait-on: http://localhost:3000/search
