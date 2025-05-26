@@ -1,8 +1,8 @@
 "use client"
 
-import React from "react"
+import React, { useContext } from "react"
 
-import useDplCmsPublicConfig from "@/lib/config/dpl-cms/useDplCmsPublicConfig"
+import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 import { sheetStore } from "@/store/sheet.store"
 
 import Icon from "../icon/Icon"
@@ -10,7 +10,8 @@ import LoginButton from "./LoginButton"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "./Sheet"
 
 function LoginSheet({ open }: { open: boolean }) {
-  const loginUrlAdgangsplatformen = useDplCmsPublicConfig()?.config?.loginUrls.adgangsplatformen
+  const dplCmsConfig = useContext(DplCmsConfigContext)
+  const loginUrlAdgangsplatformen = dplCmsConfig?.loginUrls?.adgangsplatformen
   const { closeSheet } = sheetStore.trigger
 
   return (

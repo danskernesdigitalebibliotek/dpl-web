@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
@@ -9,6 +10,7 @@ import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
+import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -30,27 +32,40 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-export default function RootLayout({
+async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // Warm up cpl cms config cache.
-  getDplCmsPublicConfig()
+  const dplCmsConfig = await getDplCmsPublicConfig()
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
-        <Theme>
-          <ReactQueryProvider>
-            <Header />
-            <DynamicSheet />
-            <DynamicModal />
-            {children}
-            <Footer />
-          </ReactQueryProvider>
-        </Theme>
+        <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
+          <Theme>
+            <ReactQueryProvider>
+              <Header />
+              <DynamicSheet />
+              <DynamicModal />
+              {children}
+              <Footer />
+            </ReactQueryProvider>
+          </Theme>
+        </DplCmsConfigContextProvider>
       </body>
     </html>
+  )
+}
+
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <Suspense>
+      <RootLayout>{children}</RootLayout>
+    </Suspense>
   )
 }
