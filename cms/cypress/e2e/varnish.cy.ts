@@ -24,7 +24,7 @@ describe('Varnish', () => {
     // Create a node as admin.
     cy.drupalLogin('/node/add/article');
     cy.findByLabelText('Title').type(node.title);
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.clickSaveButton();
     cy.contains(node.title);
     cy.should('not.contain', node.subtitle);
     // We do not have a good way to store the current path between tests so
@@ -48,7 +48,7 @@ describe('Varnish', () => {
       force: true,
     });
     cy.findByLabelText('Subtitle').type(node.subtitle);
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.clickSaveButton();
     cy.contains(node.title);
     cy.contains(node.subtitle);
 

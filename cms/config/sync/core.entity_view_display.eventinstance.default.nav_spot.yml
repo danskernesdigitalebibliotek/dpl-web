@@ -32,7 +32,7 @@ mode: nav_spot
 content:
   branch:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -57,7 +57,7 @@ content:
     region: content
   event_screen_names:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -67,7 +67,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: hero_wide
+      view_mode: nav_spot
       link: false
     third_party_settings: {  }
     weight: 1
@@ -82,7 +82,7 @@ content:
     region: content
   event_ticket_capacity:
     type: number_integer
-    label: visible
+    label: above
     settings:
       thousand_separator: ''
       prefix_suffix: true

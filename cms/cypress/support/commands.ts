@@ -213,7 +213,7 @@ const adgangsplatformenLoginOauthMappings = ({
   cy.createMapping({
     request: {
       method: 'GET',
-      urlPath: '/external/agencyid/patrons/patronid/v2',
+      urlPath: '/external/agencyid/patrons/patronid/v4',
       headers: {
         Authorization: {
           equalTo: `Bearer ${accessToken}`,
@@ -253,6 +253,7 @@ Cypress.Commands.add(
     });
   },
 );
+
 Cypress.Commands.add(
   'setupAdgangsplatformenRegisterMappinngs',
   ({
@@ -273,10 +274,11 @@ Cypress.Commands.add(
       userCPR,
       userGuid,
     });
+    // Patron creation
     cy.createMapping({
       request: {
         method: 'POST',
-        urlPattern: '.*/external/agencyid/patrons/v4',
+        urlPattern: '.*/external/agencyid/patrons/v9',
       },
       response: {
         jsonBody: {
@@ -339,6 +341,36 @@ Cypress.Commands.add('getBySel', (selector, checkVisible = false, ...args) => {
   return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
 });
 
+Cypress.Commands.add('clickSaveButton', () => {
+  cy.get('#edit-gin-sticky-actions input[value="Save"]').click();
+});
+
+Cypress.Commands.add('deleteEntitiesIfExists', (name) => {
+  const formattedSearchString = name.toLowerCase().replace(/ /g, '+');
+
+  cy.drupalLogin();
+  cy.visit(
+    `/admin/content?title=${formattedSearchString}&status=All&langcode=All`,
+  );
+
+  cy.get('tbody').then((tbody) => {
+    if (tbody.find('td.views-empty').length) {
+      cy.log('No branches to delete.');
+    } else {
+      cy.get('input[title="Select all rows in this table"]').check({
+        force: true,
+      });
+      cy.get('#edit-action').select('node_delete_action');
+      cy.contains('input', 'Apply to selected items').click();
+      cy.contains('input', 'Delete').click();
+    }
+  });
+});
+
+Cypress.Commands.add('openParagraphsModal', () => {
+  cy.get('button[title="Show all Paragraphs"]').click();
+});
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -377,6 +409,9 @@ declare global {
         checkVisible?: boolean,
         ...args: unknown[]
       ): Chainable;
+      deleteEntitiesIfExists(name: string): Chainable<null>;
+      clickSaveButton(): Chainable<null>;
+      openParagraphsModal(): Chainable<null>;
     }
   }
 }

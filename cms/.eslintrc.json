@@ -1,6 +1,6 @@
 {
   "extends": [
-    "plugin:drupal-contrib/9.x"
+    "plugin:drupal-contrib/passing"
   ],
   "rules": {
     "no-console": ["error", { "allow": ["debug", "warn", "error"] }]
@@ -10,9 +10,11 @@
     "**/web/libraries/",
     "**/web/modules/contrib/",
     "**/web/sites/**/files/",
+    "**/web/sites/default/default.services.yml",
     "**/web/themes/custom/novel/assets/",
     "**/web/themes/contrib/",
     "**/web/modules/local/",
+    "**/web/modules/custom/bnf/bnf_example_content/content/",
     "**/web/modules/custom/dpl_example_content/content/",
     "**/web/modules/custom/dpl_static_content/content/"
   ]

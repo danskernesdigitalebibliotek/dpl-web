@@ -1,0 +1,32 @@
+uuid: 2718ce7a-df5d-4599-a0d2-5842495bebe1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.go_page.field_paragraphs
+    - field.field.node.go_page.field_publication_date
+    - field.field.node.go_page.field_tags
+    - node.type.go_page
+  module:
+    - dpl_go
+    - user
+id: node.go_page.full
+targetEntityType: node
+bundle: go_page
+mode: full
+content:
+  preview_token:
+    type: go_preview_token_iframe
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_paragraphs: true
+  field_publication_date: true
+  field_tags: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

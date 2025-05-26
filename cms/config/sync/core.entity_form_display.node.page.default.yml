@@ -5,17 +5,20 @@ dependencies:
   config:
     - field.field.node.page.field_branch
     - field.field.node.page.field_breadcrumb_parent
+    - field.field.node.page.field_canonical_url
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
     - field.field.node.page.field_publication_date
     - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
     - field.field.node.page.field_teaser_image
     - field.field.node.page.field_teaser_text
     - node.type.page
   module:
     - datetime
     - field_group
+    - link
     - media_library
     - media_library_edit
     - paragraphs
@@ -59,6 +62,40 @@ third_party_settings:
         description: ''
         required_fields: true
         weight: 0
+    group_tagging:
+      children:
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 14
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_metatags:
+      children:
+        - field_canonical_url
+      label: 'Meta tags'
+      region: content
+      parent_name: ''
+      weight: 15
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -83,6 +120,14 @@ content:
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_canonical_url:
+    type: link_default
+    weight: 12
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   field_display_titles:
     type: boolean_checkbox
@@ -144,6 +189,16 @@ content:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 8
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
     weight: 10
@@ -163,18 +218,23 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 14
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 10
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 9
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -200,7 +260,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 15
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }

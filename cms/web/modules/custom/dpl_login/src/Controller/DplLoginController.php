@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
@@ -10,8 +14,7 @@ use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +23,13 @@ use Symfony\Component\HttpFoundation\Response;
  * DPL React Controller.
  */
 class DplLoginController extends ControllerBase {
+
   use StringTranslationTrait;
+
+  /**
+   * OpenID connect client storage.
+   */
+  protected EntityStorageInterface $clientStorage;
 
   /**
    * {@inheritdoc}
@@ -28,25 +37,10 @@ class DplLoginController extends ControllerBase {
   public function __construct(
     protected UserTokens $userTokens,
     protected Config $config,
-    protected OpenIDConnectClientInterface $client,
     protected OpenIDConnectClaims $claims,
-  ) {}
-
-  /**
-   * {@inheritdoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The Drupal service container.
-   *
-   * @return static
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('dpl_login.user_tokens'),
-      $container->get('dpl_login.adgangsplatformen.config'),
-      $container->get('dpl_login.adgangsplatformen.client'),
-      $container->get('openid_connect.claims')
-    );
+    protected OpenIDConnectSessionInterface $session,
+  ) {
+    $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
   }
 
   /**
@@ -114,13 +108,42 @@ class DplLoginController extends ControllerBase {
    *   A redirect to the authorization endpoint.
    */
   public function login(Request $request): Response {
-    $_SESSION['openid_connect_op'] = 'login';
-    if ($current_path = $request->query->get('current-path')) {
-      $_SESSION['openid_connect_destination'] = $current_path;
+    // Ideally the /login route shouldn't be available to logged in users, but
+    // seem to get a lot of unexplained "Already logged in" exceptions in the
+    // logs which means that people manage to go through login only to get an
+    // error because there's already a user logged in. So to use a softer
+    // approach, we just log them out of Drupal, if they're still logged into
+    // Adgangsplatformen they'll just get redirected right back and logged in
+    // again. We'll log the referrer to try and figure out how this happens.
+    if ($this->currentUser()->isAuthenticated()) {
+      $this->getLogger('dpl_login')->warning('Authenticated user hit /login, referrer: %referer', [
+        'referer' => $request->headers->get('referer') ?? "unknown",
+      ]);
+
+      user_logout();
+
+      // As we just nuked the session above, trying to save `current-path` in
+      // session isn't going to work, so redirect to ourselves to get a fresh
+      // session.
+      return new LocalRedirectResponse($request->getUri());
     }
 
-    $scopes = $this->claims->getScopes($this->client);
-    return $this->client->authorize($scopes);
+    $this->session->saveOp('login');
+    if ($current_path = (string) $request->query->get('current-path')) {
+      $this->session->saveTargetLinkUri($current_path);
+    }
+
+    $client_name = 'adgangsplatformen';
+    /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
+    $client = $this->clientStorage->load($client_name);
+
+    if (!$client) {
+      throw new \RuntimeException("No {$client_name} openid_connect client");
+    }
+
+    $plugin = $client->getPlugin();
+    $scopes = $this->claims->getScopes($plugin);
+    return $plugin->authorize($scopes);
   }
 
 }

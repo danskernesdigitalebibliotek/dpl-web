@@ -56,9 +56,14 @@ class AdminPages extends ControllerBase {
 
     // Adding a link to each node type.
     foreach ($node_types as $node_type) {
+      $node_type_id = (string) $node_type->id();
+      $access = $this->entityTypeManager()->getAccessControlHandler('node')->createAccess($node_type_id, NULL, [], TRUE);
+      if (!$access->isAllowed()) {
+        continue;
+      }
       $create_links[] = [
         'title' => $node_type->label(),
-        'url' => Url::fromRoute('node.add', ['node_type' => $node_type->id()]),
+        'url' => Url::fromRoute('node.add', ['node_type' => $node_type_id]),
         'description' => $node_type->getDescription(),
       ];
     }

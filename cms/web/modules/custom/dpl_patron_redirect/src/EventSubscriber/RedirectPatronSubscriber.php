@@ -10,6 +10,7 @@ use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
+use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -42,6 +43,8 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
    *   Current user account.
    * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $killSwitch
    *   Page cache kill switch to disable cache for these redirects.
+   * @param \Drupal\openid_connect\OpenIDConnectSession $session
+   *   OpenID Connect session.
    */
   public function __construct(
     private AliasManagerInterface $aliasManager,
@@ -50,6 +53,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
     ConfigFactoryInterface $configFactory,
     private AccountProxyInterface $account,
     private KillSwitch $killSwitch,
+    private OpenIDConnectSession $session,
   ) {
     $this->configuration = $configFactory->get('dpl_patron_redirect.settings');
   }
@@ -77,9 +81,9 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
         // Set redirect Url after login. If you use the $request->getSession()
         // object this trick simply do not work and the redirect after login is
         // ignored.
-        $_SESSION['openid_connect_destination'] = $path;
+        $this->session->saveTargetLinkUri($path);
 
-        // Response built from the ThrustedRedirectReponse class is not cached.
+        // Response built from the TrustedRedirectResponse class is not cached.
         // But the problem here is the page cache for anonymous requests, which
         // caches all responses, even redirects and no matter if they are
         // cacheable or not. This will kill that cache.

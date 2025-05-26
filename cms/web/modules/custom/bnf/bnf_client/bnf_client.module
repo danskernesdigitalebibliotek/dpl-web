@@ -1,0 +1,229 @@
+<?php
+
+use Drupal\bnf\BnfStateEnum;
+use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_client\Hook\JobSchedulerHooks;
+use Drupal\bnf_client\Hook\SubscriptionHooks;
+use Drupal\bnf_client\Services\BnfExporter;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeForm;
+use Drupal\node\NodeInterface;
+
+/**
+ * Getting the field definitions for node. We need this as part of install.
+ *
+ * @return \Drupal\Core\Field\BaseFieldDefinition[]
+ *   The field definitions.
+ */
+function _bnf_client_node_field_definitions(): array {
+  $fields = [];
+
+  $fields['bnf_source_subscriptions'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('BNF source subscriptions', [], ['context' => 'BNF']))
+    ->setDescription(t('The subscriptions that this content originates from.', [], ['context' => 'BNF']))
+    ->setSetting('target_type', 'bnf_subscription')
+    ->setSetting('handler', 'default')
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+  return $fields;
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * Creating our custom programmatic fields.
+ *
+ * @return \Drupal\Core\Field\FieldDefinitionInterface[]
+ *   The field definitions.
+ */
+function bnf_client_entity_base_field_info(EntityTypeInterface $entity_type): array {
+  $fields = [];
+
+  // Create new fields for node bundle.
+  if ($entity_type->id() === 'node') {
+    $fields = _bnf_client_node_field_definitions();
+  }
+
+  return $fields;
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Altering the node edit form, and adding an option to export the node to BNF.
+ * If checked, a custom form submit handler will take care of the rest.
+ *
+ * @see bnf_client_form_node_form_submit()
+ */
+function bnf_client_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+
+  if (!($form_object instanceof NodeForm)) {
+    return;
+  }
+
+  $node = $form_object->getEntity();
+  $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+  if ((!$node instanceof NodeInterface) || !in_array($node->bundle(), $allowed_cts)) {
+    return;
+  }
+
+  $current_user = \Drupal::currentUser();
+
+  // We want to hide field_tags on GO content for everyone without the
+  // 'bnf administer go tags' permission.
+  if (str_starts_with($node->bundle(), 'go_') && isset($form['field_tags'])) {
+    if (!$current_user->hasPermission('bnf administer go tags')) {
+      $form['field_tags']['#access'] = FALSE;
+    }
+  }
+
+  if (!$current_user->hasPermission('bnf export nodes')) {
+    return;
+  }
+
+  if (empty($form['actions']['submit'])) {
+    \Drupal::logger('bnf_client')->error('Could not find submit button - cannot show BNF export flow.');
+    return;
+  }
+
+  // When adding the submit handler here, it happens after ::save() and any
+  // validation.
+  $form['actions']['submit']['#submit'][] = 'bnf_client_form_node_form_submit';
+
+  // Let's hide the publishing button when BNF is checked, as the value will
+  // be ignored and the node will be published regardless.
+  $form['status']['#states']['invisible'] =
+    [':input[name="bnf_export"]' => ['checked' => TRUE]];
+
+  // Getting the BNF state, if it exists.
+  $state = BnfStateEnum::None;
+
+  if ($node->hasField(BnfStateEnum::FIELD_NAME) && !$node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
+    /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $state_field */
+    $state_field = $node->get(BnfStateEnum::FIELD_NAME);
+    $states = $state_field->enums();
+    $state = reset($states);
+  }
+
+  if (in_array($state, [BnfStateEnum::Imported, BnfStateEnum::LocallyClaimed])) {
+    $form['bnf_keep_updated'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Keep updated with Delingstjenesten', [], ['context' => 'BNF']),
+      '#description' => t('Keep this content, which originates from Delingstjenesten, up to date when a new version is available. This will overwrite any custom changes you may have made.', [], ['context' => 'BNF']),
+      '#default_value' => ($state == BnfStateEnum::Imported),
+    ];
+  }
+
+  $exportable = ($state == BnfStateEnum::None);
+
+  $form['bnf_export'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Publish and submit to BNF', [], ['context' => 'BNF']),
+    '#default_value' => FALSE,
+    '#disabled' => !$exportable,
+    '#description' => $exportable ?
+    t('Please make sure that all content and media as part of this article is OK to be used by other libraries.', [], ['context' => 'BNF']) :
+    t('This content cannot be sent to BNF, as it has either been exported or imported already.', [], ['context' => 'BNF']),
+  ];
+}
+
+/**
+ * A custom form submit handler, that publishes node, and "exports" to BNF.
+ */
+function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_state): void {
+  /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
+  $form_object = $form_state->getFormObject();
+
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $form_object->getEntity();
+
+  $bnf_keep_updated = $form_state->getValue('bnf_keep_updated');
+
+  // If the content has been imported, the editor can choose if they want to
+  // keep it up-to-date with the BNF server.
+  // See more info in BnfStateEnum.
+  if (!is_null($bnf_keep_updated)) {
+    $state = ($bnf_keep_updated) ? BnfStateEnum::Imported : BnfStateEnum::LocallyClaimed;
+    $node->set(BnfStateEnum::FIELD_NAME, $state);
+    $node->save();
+  }
+
+  if (empty($form_state->getValue('bnf_export'))) {
+    return;
+  }
+
+  try {
+    $node->setPublished();
+    $node->save();
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('bnf_client')->error('Could not publish node as part of BNF export. @message', ['@message' => $e->getMessage()]);
+
+    \Drupal::messenger()->addError(
+      t("Could not publish node - will not send to BNF.", [], ['context' => 'BNF'])
+    );
+  }
+
+  try {
+    $service = DrupalTyped::service(BnfExporter::class, 'bnf_client.exporter');
+    $service->exportNode($node);
+
+    \Drupal::messenger()->addStatus(
+      t("Content has been published and sent to BNF.", [], ['context' => 'BNF'])
+    );
+  }
+  catch (\Throwable $e) {
+    \Drupal::messenger()->addError(t('Could not export node to BNF.', [], ['context' => 'BNF']));
+
+    \Drupal::logger('bnf_client')->error('Could not export node to BNF. @message', ['@message' => $e->getMessage()]);
+
+  }
+}
+
+/*
+ * The following hook functions is for Drupal 10, they can be removed, together
+ * with the hook class service in `bnf_client.services.yml` when upgrading to
+ * Drupal 11.
+ */
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+#[LegacyHook]
+function bnf_client_bnf_subscription_insert(EntityInterface $entity): void {
+  \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+#[LegacyHook]
+function bnf_client_bnf_subscription_update(EntityInterface $entity): void {
+  \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+#[LegacyHook]
+function bnf_client_bnf_subscription_delete(EntityInterface $entity): void {
+  \Drupal::service(SubscriptionHooks::class)->subscriptionDelete($entity);
+}
+
+/**
+ * Implements hook_cron_job_scheduler_info().
+ *
+ * @return non-empty-array<string, array{'worker callback': callable}>
+ *   Job scheduler information.
+ */
+#[LegacyHook]
+function bnf_client_cron_job_scheduler_info(): array {
+  return \Drupal::service(JobSchedulerHooks::class)->subscriptionsUpdateJobSchedule();
+}

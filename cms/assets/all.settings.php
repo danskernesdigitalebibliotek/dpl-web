@@ -33,8 +33,31 @@ if (InstallerKernel::installationAttempted()) {
   $config['jsonlog.settings']['jsonlog_severity_threshold'] = 0;
 }
 
-// Exclude development modules from configuration export.
+// Support overriding the database configuration using non-standard Lagoon
+// environment variables.
+// This is explicitly added to support migration between databases.
+if (getenv('MARIADB_DATABASE_OVERRIDE')) {
+  $databases['default']['default'] = [
+    'driver' => 'mysql',
+    // These settings intentionally do not have defaults. If overriding the
+    // database configuration then all standard configuration must be defined.
+    'database' => getenv('MARIADB_DATABASE_OVERRIDE'),
+    'username' => getenv('MARIADB_USERNAME_OVERRIDE'),
+    'password' => getenv('MARIADB_PASSWORD_OVERRIDE'),
+    'host' => getenv('MARIADB_HOST_OVERRIDE'),
+    // These settings intentionally have defaults. It is not likely that they
+    // will be defined when overriding the database.
+    'port' => getenv('MARIADB_PORT_OVERRIDE') ?: 3306,
+    'charset' => getenv('MARIADB_CHARSET_OVERRIDE') ?: 'utf8mb4',
+    'collation' => getenv('MARIADB_COLLATION_OVERRIDE') ?: 'utf8mb4_general_ci',
+    'prefix' => '',
+  ];
+}
+
+// Exclude certain modules from configuration export.
 $settings['config_exclude_modules'] = [
+  // Development modules that is only enabled in development environment.
+  'bnf_example_content',
   'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',
@@ -47,6 +70,9 @@ $settings['config_exclude_modules'] = [
   'restui',
   'upgrade_status',
   'uuid_url',
+  // These are enabled as needed, so exclude them from export.
+  'bnf_client',
+  'bnf_server',
 ];
 
 // Defines where the sync folder of your configuration lives. In this case it's
@@ -99,15 +125,15 @@ if (getenv('CI')) {
   $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs-openplatform.dbc.dk'];
   $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.dbc.dk'];
   // Adgangsplatformen OpenID Connect client.
-  $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
+  $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
+  $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
+  $config['openid_connect.client.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
+  $config['openid_connect.client.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
   // The actual values here are not important. The primary thing is that the
   // Adgangsplatformen OpenID Connect client is configured.
-  $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['agency_id'] = '100200';
+  $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
+  $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
+  $config['openid_connect.client.adgangsplatformen']['settings']['agency_id'] = '100200';
 
   // Set service base urls for the react apps.
   // We need http domains for testing in CI context.
@@ -133,10 +159,6 @@ if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
   // because the user pulling in the changes won't have permissions to modify
   // files in the directory.
   $settings['skip_permissions_hardening'] = TRUE;
-
-  // Set default Unilogin configuration on non-production environments.
-  $config['dpl_unilogin.settings']['unilogin_api_endpoint'] = 'https://et-broker.unilogin.dk';
-  $config['dpl_unilogin.settings']['unilogin_api_wellknown_endpoint'] = 'https://et-broker.unilogin.dk/auth/realms/broker/.well-known/openid-configuration';
 }
 
 // Setup Redis.

@@ -21,7 +21,7 @@ class LibraryToken {
    *
    * @var int
    */
-  public int $expire;
+  public int $expiresIn;
 
   /**
    * Named constructor that create a Library Token object.
@@ -51,7 +51,7 @@ class LibraryToken {
 
     $token = new static();
     $token->token = $token_data['access_token'];
-    $token->expire = $token_data['expires_in'];
+    $token->expiresIn = $token_data['expires_in'];
 
     return $token;
   }

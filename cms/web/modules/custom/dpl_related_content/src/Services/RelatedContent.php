@@ -454,7 +454,7 @@ class RelatedContent {
       return [];
     }
 
-    $date = new DrupalDateTime('today');
+    $date = new DrupalDateTime('now');
     $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $formatted_date = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
@@ -479,7 +479,7 @@ class RelatedContent {
     $query->condition('eid.status', 1);
 
     // We only want events in the future (e.g. - active events).
-    $query->condition('eid.date__value', $formatted_date, '>=');
+    $query->condition('eid.date__end_value', $formatted_date, '>=');
     $query->orderBy('eid.date__value', 'ASC');
     // We know that we will never need more than the maximum items,
     // so we will limit the query to this.

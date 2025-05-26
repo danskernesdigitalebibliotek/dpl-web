@@ -1,0 +1,29 @@
+---
+services:
+  _defaults:
+    autowire: true
+
+  bnf.importer:
+    class: Drupal\bnf\Services\BnfImporter
+    arguments:
+      $logger: '@logger.channel.bnf'
+  Drupal\bnf\Services\BnfImporter: '@bnf.importer'
+
+  bnf.import_context_stack:
+    class: Drupal\bnf\Services\ImportContextStack
+  Drupal\bnf\Services\ImportContextStack: '@bnf.import_context_stack'
+
+  plugin.manager.bnf_mapper:
+    class: Drupal\bnf\BnfMapperManager
+    parent: default_plugin_manager
+  Drupal\bnf\BnfMapperManager: '@plugin.manager.bnf_mapper'
+
+  logger.channel.bnf:
+    parent: logger.channel_base
+    arguments:
+      - 'bnf'
+
+  # This hook services definitions is only needed by Drupal 10, it can
+  # be removed when we upgrade to Drupal 11.
+  Drupal\bnf\Hook\GraphQLComposeHooks:
+    class: Drupal\bnf\Hook\GraphQLComposeHooks

@@ -1,0 +1,116 @@
+<?php
+
+use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_server\Controller\LoginController;
+use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_build().
+ *
+ * Setting the allowed importable content types as contextual filter.
+ */
+function bnf_server_views_pre_build(ViewExecutable $view): void {
+  if ($view->id() === 'importable_content') {
+    $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+    $view->setArguments([implode('+', $allowed_cts)]);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Displaying the "import content to my site" button on content, if the user
+ * has logged in and has the callback cookie context.
+ */
+function bnf_server_preprocess_page(array &$variables): void {
+  $session = \Drupal::request()->getSession();
+
+  $site_url = $session->get(LoginController::CALLBACK_URL_KEY);
+  $site_name = $session->get(LoginController::SITE_NAME_KEY);
+  $site_name = $site_name ?? t('my site', [], ['context' => 'BNF']);
+
+  if (!$site_url || \Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
+  }
+
+  $variables['#cache']['contexts'][] = 'bnf_library_session';
+
+  if ($site_name) {
+    $variables['page']['content']['logged_notifier'] = [
+      '#theme' => 'bnf_server_logged_notifier',
+      '#name' => $site_name,
+      '#url' => Url::fromRoute('view.importable_content.page'),
+    ];
+  }
+
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $node = \Drupal::routeMatch()->getParameter('node');
+  $term = \Drupal::routeMatch()->getParameter('taxonomy_term');
+
+  if ($route_name === 'entity.node.canonical' && ($node instanceof Node)) {
+
+    $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+    if (in_array($node->bundle(), $allowed_cts)) {
+      $variables['page']['content']['import_link'] = [
+        '#theme' => 'bnf_server_import_link',
+        '#cache' => ['max-age' => 0],
+        '#label' => t(
+          'Import "@content_title" to @site_name',
+          ['@content_title' => $node->label(), '@site_name' => $site_name],
+          ['context' => 'BNF']
+        ),
+        '#url' => Url::fromRoute(
+          'bnf_server.import_redirect',
+          ['uuid' => $node->uuid()]
+        ),
+      ];
+    }
+  }
+  elseif ($route_name === 'entity.taxonomy_term.canonical' && ($term instanceof Term)) {
+
+    $variables['page']['content']['import_link'] = [
+      '#theme' => 'bnf_server_import_link',
+      '#label' => t(
+        'Toggle subscription of "@content_title" on @site_name',
+        ['@content_title' => $term->getName(), '@site_name' => $site_name],
+        ['context' => 'BNF']
+      ),
+      '#url' => Url::fromRoute(
+        'bnf_server.subscribe_redirect',
+        ['uuid' => $term->uuid(), 'label' => $term->getName()],
+      ),
+    ];
+
+  }
+
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bnf_server_theme(): array {
+  return [
+    'bnf_server_import_link' => [
+      'variables' => [
+        'url' => NULL,
+        'label' => NULL,
+      ],
+    ],
+    'bnf_server_missing_callback' => [
+      'variables' => [
+        'node_uuid' => NULL,
+      ],
+    ],
+    'bnf_server_logged_notifier' => [
+      'variables' => [
+        'url' => NULL,
+        'name' => NULL,
+      ],
+    ],
+  ];
+}

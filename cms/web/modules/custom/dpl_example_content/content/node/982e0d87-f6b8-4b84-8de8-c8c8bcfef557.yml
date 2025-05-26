@@ -36,6 +36,9 @@ default:
   revision_translation_affected:
     -
       value: true
+  bnf_state:
+    -
+      value: 0
   entity_clone_template_active:
     -
       value: false
@@ -56,12 +59,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=T5LAeqss'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=fy8bOt76'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=T5LAeqss'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=fy8bOt76'
     -
       tag: meta
       attributes:

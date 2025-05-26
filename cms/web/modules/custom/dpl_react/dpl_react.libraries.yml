@@ -203,6 +203,18 @@ recommendation:
     - dpl_react/base
     - dpl_react/handler
 
+reader:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/Reader.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
 opening-hours:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
@@ -223,6 +235,18 @@ material-grid-automatic:
     gpl-compatible: true
   js:
     /libraries/dpl-react/MaterialGridAutomatic.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+material-grid-link-automatic:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/MaterialGridLinkAutomatic.js: {}
   dependencies:
     - dpl_react/base
     - dpl_react/handler

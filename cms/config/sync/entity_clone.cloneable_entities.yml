@@ -5,3 +5,8 @@ cloneable_entities:
   - paragraph
   - custom_perms_entity
   - password_policy
+  - simple_sitemap_type
+  - simple_sitemap
+  - key
+  - key_config_override
+  - bnf_subscription

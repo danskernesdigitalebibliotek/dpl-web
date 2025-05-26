@@ -7,8 +7,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/dpl_consumers.crud.php';
-
 /**
  * Run consumer creation on deploy.
  *
@@ -22,8 +20,29 @@ require_once __DIR__ . '/dpl_consumers.crud.php';
  * as we don't want to create duplicates.
  */
 function dpl_consumers_deploy_10001(): void {
-  dpl_consumers_delete_user();
-  dpl_consumers_delete_consumer();
-  dpl_consumers_create_user();
-  dpl_consumers_create_consumer();
+  // Noop. We don't need to do anything here.
+  // Since we have changed our minds.
+  // @see dpl_consumers_deploy_10002().
+}
+
+/**
+ * Expand the users, roles, consumers so they can handle both BNF and GO.
+ *
+ * So we delete previous entities and create new ones.
+ */
+function dpl_consumers_deploy_10002(): void {
+  /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $consumer_handler */
+  $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
+
+  // Delete consume and users that we want to handle differently.
+  // We want to create consumers and consumer users
+  // specifically for the two known consumers (BNF and Go) and connected users.
+  $consumer_handler->getConsumer('graphql_consumer')->delete();
+  $consumer_handler->getConsumerUser('GraphQL Consumer')->delete();
+  $consumer_handler->getConsumerUser('graphql_consumer')->delete();
+
+  // Create new consumers (BNF and Go) and their users and roles.
+  foreach (dpl_consumers_known_consumers_settings() as $consumer) {
+    $consumer_handler->create($consumer['consumer'], $consumer['user'], $consumer['role']);
+  }
 }

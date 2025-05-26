@@ -31,6 +31,9 @@ default:
   revision_translation_affected:
     -
       value: true
+  bnf_state:
+    -
+      value: 0
   entity_clone_template_active:
     -
       value: true
@@ -60,6 +63,7 @@ default:
       postal_code: ''
       address_line1: ''
       address_line2: ''
+      address_line3: ''
   field_promoted_on_lists:
     -
       value: false

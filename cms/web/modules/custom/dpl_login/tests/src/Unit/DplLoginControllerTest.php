@@ -6,6 +6,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
@@ -20,6 +22,8 @@ use Drupal\dpl_login\RegisteredUserTokensProvider;
 use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
+use Drupal\openid_connect\OpenIDConnectSession;
+use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\Tests\UnitTestCase;
 use phpmock\Mock;
@@ -77,7 +81,6 @@ class DplLoginControllerTest extends UnitTestCase {
     $user_tokens = $this->prophesize(UserTokens::class);
     $user_tokens->getCurrent()->willReturn($fake_unregistered_user_token);
 
-    $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config = $this->prophesize(ImmutableConfig::class);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
@@ -97,26 +100,38 @@ class DplLoginControllerTest extends UnitTestCase {
     $openid_connect_claims = $this->prophesize(OpenIDConnectClaims::class);
     $openid_connect_claims->getScopes()->willReturn('some scopes');
 
+    $openid_connect_session = $this->prophesize(OpenIDConnectSession::class);
+    $entity_type_manager = $this->prophesize(EntityTypeManagerInterface::class);
+    $openid_connect_client_storage = $this->prophesize(EntityStorageInterface::class);
+    $entity_type_manager->getStorage('openid_connect_client')->willReturn($openid_connect_client_storage);
+
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
+    $container->setAlias(UserTokens::class, 'dpl_login.user_tokens');
     $container->set('dpl_login.unregistered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
     $container->set('config.manager', $config_manager->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
     $container->set('openid_connect.claims', $openid_connect_claims->reveal());
+    $container->setAlias(OpenIDConnectClaims::class, 'openid_connect.claims');
+    $container->set('openid_connect.session', $openid_connect_session->reveal());
+    $container->setAlias(OpenIDConnectSessionInterface::class, 'openid_connect.session');
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
     $container->set('dpl_login.adgangsplatformen.client', $openid_connect_client->reveal());
+    $container->set('entity_type.manager', $entity_type_manager->reveal());
 
     \Drupal::setContainer($container);
   }
 
   /**
-   * Make sure an config missing exception is thrown.
+   * Make sure a config missing exception is thrown.
    */
   public function testThatExceptionIsThrownIfLogoutEndpointIsMissing(): void {
     $container = \Drupal::getContainer();
+    $container->set('dpl_login.adgangsplatformen.config', new Config($container->get('config.manager')));
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
     $controller = DplLoginController::create($container);
     $this->expectException(MissingConfigurationException::class);
     $this->expectExceptionMessage('Adgangsplatformen plugin config variable logout_endpoint is missing');
@@ -127,8 +142,8 @@ class DplLoginControllerTest extends UnitTestCase {
    * The user is redirected to external login when logging out.
    */
   public function testThatExternalRedirectIsActivatedWhenLoggingOut(): void {
-    // @todo This test is skipped because after the current-path functionality
-    // was added to DplLoginController:logout(), we need to mock more services.
+    // @todo This test is skipped after the current-path functionality was
+    // added to DplLoginController:logout(), we need to mock more services.
     $this->markTestSkipped('After logout is handling current-path, this test has to be updated.');
 
     $config = $this->prophesize(ImmutableConfig::class);
@@ -155,7 +170,7 @@ class DplLoginControllerTest extends UnitTestCase {
   }
 
   /**
-   * Test that normal Drupal users (admins get logged out.
+   * Test that normal Drupal users (admins) get logged out.
    */
   public function testThatAdminsGetLoggedOut(): void {
     $config = $this->prophesize(ImmutableConfig::class);
@@ -177,6 +192,7 @@ class DplLoginControllerTest extends UnitTestCase {
 
     $container = \Drupal::getContainer();
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
     $container->set('dpl_login.registered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
@@ -184,7 +200,7 @@ class DplLoginControllerTest extends UnitTestCase {
     \Drupal::setContainer($container);
 
     $controller = DplLoginController::create($container);
-    $response = $response = $controller->logout($this->prophesize(Request::class)->reveal());
+    $response = $controller->logout($this->prophesize(Request::class)->reveal());
 
     $this->assertInstanceOf(RedirectResponse::class, $response);
     $this->assertSame(

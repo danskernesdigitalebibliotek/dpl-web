@@ -97,6 +97,7 @@ class ReoccurringDateFormatter {
    */
   public function getUpcomingEventIds(EventSeries $event_series): array {
     $date = new DrupalDateTime();
+    $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $formatted = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
     // Find the next upcoming eventinstance in this series - e.g., the
@@ -104,7 +105,7 @@ class ReoccurringDateFormatter {
     $query = $this->entityTypeManager->getStorage('eventinstance')->getQuery();
     $upcoming_ids = $query
       ->condition('eventseries_id', $event_series->id())
-      ->condition('date.value', $formatted, '>=')
+      ->condition('date.end_value', $formatted, '>=')
       ->accessCheck(TRUE)
       ->condition('status', TRUE)
       ->sort('date.value', 'ASC')

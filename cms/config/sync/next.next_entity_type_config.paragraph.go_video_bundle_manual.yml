@@ -1,0 +1,11 @@
+uuid: 861ccab4-5543-4e8d-b9d7-529469d7cda3
+langcode: en
+status: true
+dependencies: {  }
+id: paragraph.go_video_bundle_manual
+site_resolver: site_selector
+configuration:
+  sites:
+    go: go
+revalidator: cache_tag
+revalidator_configuration: {  }

@@ -6,6 +6,15 @@ dependencies:
     - field.storage.eventseries.field_event_paragraphs
     - paragraphs.paragraphs_type.campaign_rule
     - paragraphs.paragraphs_type.event_ticket_category
+    - paragraphs.paragraphs_type.go_images
+    - paragraphs.paragraphs_type.go_link
+    - paragraphs.paragraphs_type.go_linkbox
+    - paragraphs.paragraphs_type.go_material_slider_automatic
+    - paragraphs.paragraphs_type.go_material_slider_manual
+    - paragraphs.paragraphs_type.go_text_body
+    - paragraphs.paragraphs_type.go_video
+    - paragraphs.paragraphs_type.go_video_bundle_automatic
+    - paragraphs.paragraphs_type.go_video_bundle_manual
     - recurring_events.eventseries_type.default
   module:
     - entity_reference_revisions
@@ -25,21 +34,132 @@ settings:
     target_bundles:
       campaign_rule: campaign_rule
       event_ticket_category: event_ticket_category
+      go_link: go_link
+      go_images: go_images
+      go_linkbox: go_linkbox
+      go_material_slider_automatic: go_material_slider_automatic
+      go_material_slider_manual: go_material_slider_manual
+      go_text_body: go_text_body
+      go_video: go_video
+      go_video_bundle_automatic: go_video_bundle_automatic
+      go_video_bundle_manual: go_video_bundle_manual
     negate: 1
     target_bundles_drag_drop:
+      accordion:
+        weight: 39
+        enabled: false
+      banner:
+        weight: 40
+        enabled: false
+      breadcrumb_children:
+        weight: 41
+        enabled: false
       campaign_rule:
         weight: 6
         enabled: true
+      card_grid_automatic:
+        weight: 43
+        enabled: false
+      card_grid_manual:
+        weight: 44
+        enabled: false
+      content_slider:
+        weight: 45
+        enabled: false
+      content_slider_automatic:
+        weight: 46
+        enabled: false
       event_ticket_category:
         weight: 7
         enabled: true
+      files:
+        weight: 48
+        enabled: false
+      filtered_event_list:
+        weight: 49
+        enabled: false
+      go_images:
+        weight: 51
+        enabled: true
+      go_link:
+        weight: 50
+        enabled: true
+      go_linkbox:
+        weight: 51
+        enabled: true
+      go_material_slider_automatic:
+        weight: 52
+        enabled: true
+      go_material_slider_manual:
+        weight: 53
+        enabled: true
+      go_text_body:
+        weight: 54
+        enabled: true
+      go_video:
+        weight: 55
+        enabled: true
+      go_video_bundle_automatic:
+        weight: 56
+        enabled: true
+      go_video_bundle_manual:
+        weight: 57
+        enabled: true
+      hero:
+        weight: 58
+        enabled: false
+      language_selector:
+        weight: 59
+        enabled: false
       links:
         weight: 8
+        enabled: false
+      manual_event_list:
+        weight: 61
+        enabled: false
+      material_grid_automatic:
+        weight: 62
+        enabled: false
+      material_grid_link_automatic:
+        weight: 63
+        enabled: false
+      material_grid_manual:
+        weight: 64
         enabled: false
       medias:
         weight: 9
         enabled: false
+      nav_grid_manual:
+        weight: 66
+        enabled: false
+      nav_spots_manual:
+        weight: 67
+        enabled: false
+      opening_hours:
+        weight: 68
+        enabled: false
+      recommendation:
+        weight: 69
+        enabled: false
+      simple_links:
+        weight: 70
+        enabled: false
       text_body:
         weight: 10
+        enabled: false
+      user_registration_item:
+        weight: 72
+        enabled: false
+      user_registration_linklist:
+        weight: 73
+        enabled: false
+      user_registration_section:
+        weight: 74
+        enabled: false
+      video:
+        weight: 75
+        enabled: false
+      webform:
+        weight: 76
         enabled: false
 field_type: entity_reference_revisions

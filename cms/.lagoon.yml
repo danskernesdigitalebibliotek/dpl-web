@@ -12,8 +12,15 @@ tasks:
     - run:
         name: Create new GH deployment
         command: |
+          ENVIRONMENT=$LAGOON_ENVIRONMENT
+
+          # We want BNF to show up as a separate environment.
+          if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+            ENVIRONMENT=$LAGOON_ENVIRONMENT-bnf
+          fi
+
           GH_DEPLOYMENTS=$(curl -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
-          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$LAGOON_ENVIRONMENT")
+          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$ENVIRONMENT")
           GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENTS" | grep '"id":' | head -n 1 | sed 's/[^0-9]*\([0-9]*\).*/\1/')
 
           echo "$GH_DEPLOYMENTS"
@@ -23,7 +30,7 @@ tasks:
           # file. Environment variables are killed between tasks, apart from
           # the global ones.
           echo "$GH_DEPLOYMENT_ID" > /tmp/GH_DEPLOYMENT_ID
-          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/dpl-cms-$LAGOON_ENVIRONMENT/deployments"
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/$LAGOON_PROJECT-$LAGOON_ENVIRONMENT/deployments"
           echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
 
           echo "Creating a initial pending deployment status."
@@ -46,6 +53,20 @@ tasks:
             # Practice shows that the cache needs to be cleared to avoid
             # configuration errors even after a site install.
             drush cr
+          fi
+        service: cli
+        shell: bash
+    - run:
+        name: Add BNF overrides
+        command: |
+          if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+            # Make it a bit more obvious that this is the BNF site.
+            drush config:set --yes system.site name "Delingstjenesten (test)"
+            drush config:set --yes novel.settings logo_title "Delingstjenesten"
+            drush config:set --yes novel.settings logo_place "test"
+            drush config:set --yes novel.settings logo_img_enable "0"
+            drush config:set --yes gin.settings logo.use_default "0"
+            drush config:set --yes gin.settings logo.path "themes/custom/novel/images/delingstjenesten.png"
           fi
         service: cli
         shell: bash
@@ -109,9 +130,6 @@ tasks:
 
             drush user:create patron --password="$PR_DRUPAL_PWD"
             drush user:role:add 'patron' patron
-
-            drush user:create graphql_consumer --password="$PR_DRUPAL_PWD"
-            drush user:role:add 'graphql_consumer' graphql_consumer
           else
             echo "Test users already exist. Skipping creation..."
           fi
@@ -151,18 +169,14 @@ environments:
         schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
-  pr-1501:
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
+  pr-2296:
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
         command: drush cron
-        service: cli
-      - name: import translations
-        # Quite frequent translation import because of businezz.
-        schedule: "M/30 * * * *"
-        command: drush locale-check && drush locale-update
-        service: cli
-      - name: import danish config translations
-        schedule: "M/30 * * * *"
-        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli

@@ -10,6 +10,8 @@
  */
 
 use Drupal\Core\Extension\ModuleInstallerInterface;
+use Drupal\dpl_library_token\LibraryTokenHandler;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
@@ -42,6 +44,34 @@ function _dpl_update_uninstall_modules(array $modules): string {
   DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->uninstall($modules);
   $modules_string = implode(', ', $modules);
   return "Uninstalled modules: {$modules_string}.";
+}
+
+/**
+ * Remove elements from the list of automatically ignored config entities.
+ *
+ * The elements have been added because an administrative user have updated the
+ * configuration. This may only be a temporary measure. Unignoring entities will
+ * bring them back to following the default of the project.
+ *
+ * @param string[] $entities
+ *   The names of the entities which should no longer be ignored.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_config_auto_unignore_entites(array $entities): string {
+  $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore_auto.settings');
+  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
+
+  $updated_ignored_configs = array_diff($ignored_configs, $entities);
+  $config_ignore_settings->set('ignored_config_entities', $updated_ignored_configs)->save();
+  $removed_ignored_entities_string = implode(', ', array_intersect($ignored_configs, $entities));
+  if ($removed_ignored_entities_string) {
+    return "Removed $removed_ignored_entities_string from config_ignore_auto.ignored_config_entities.";
+  }
+  else {
+    return "No entities removed from config_ignore_auto.ignored_config_entities.";
+  }
 }
 
 /**
@@ -112,6 +142,22 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10028();
   $messages[] = dpl_update_update_10029();
   $messages[] = dpl_update_update_10030();
+  $messages[] = dpl_update_update_10031();
+  $messages[] = dpl_update_update_10034();
+  $messages[] = dpl_update_update_10035();
+  $messages[] = dpl_update_update_10037();
+  $messages[] = dpl_update_update_10039();
+  $messages[] = dpl_update_update_10040();
+  $messages[] = dpl_update_update_10042();
+  $messages[] = dpl_update_update_10043();
+  $messages[] = dpl_update_update_10047();
+  $messages[] = dpl_update_update_10051();
+
+  /*
+   * dpl_update_update_10050 is not needed, when installing from scratch the
+   * deploy hook that enables bnf_client is used, which properly installs
+   * dependencies.
+   */
 
   return implode('\r\n', $messages);
 }
@@ -351,4 +397,246 @@ function dpl_update_update_10030(): string {
   );
 
   return $return;
+}
+
+/**
+ * Installing simple sitemap.
+ */
+function dpl_update_update_10031(): string {
+  return _dpl_update_install_modules(['simple_sitemap']);
+}
+
+/**
+ * Installing purge queues.
+ */
+function dpl_update_update_10032(): string {
+  return _dpl_update_install_modules(['purge_queues']);
+}
+
+/**
+ * Use alternate database backend for purge queue.
+ */
+function dpl_update_update_10033(): string {
+  // @see https://git.drupalcode.org/project/purge_queues/-/blob/2.0.x/src/Plugin/Purge/Queue/AltDatabaseQueue.php?ref_type=heads#L12
+  \Drupal::configFactory()->getEditable('purge.plugins')->set('queue', 'database_alt')->save();
+  return 'Configured purge queue to use database_alt.';
+}
+
+/**
+ * Installing graphql_compose_routes.
+ */
+function dpl_update_update_10034(): string {
+  return _dpl_update_install_modules(['graphql_compose_routes']);
+}
+
+/**
+ * Introducing a two module for the Go project and Lagoon handling.
+ */
+function dpl_update_update_10035(): string {
+  return _dpl_update_install_modules(['dpl_go', 'dpl_lagoon']);
+}
+
+/**
+ * Install state log.
+ */
+function dpl_update_update_10036(): string {
+  return _dpl_update_install_modules(['state_log']);
+}
+
+/**
+ * Installing Media VideoTool.
+ */
+function dpl_update_update_10037(): string {
+  return _dpl_update_install_modules(['media_videotool']);
+}
+
+/**
+ * Adding autowire_plugin_trait for BNF.
+ */
+function dpl_update_update_10038(): string {
+  return _dpl_update_install_modules(['autowire_plugin_trait']);
+}
+
+/**
+ * Remove old field instances and storage for paragraph fields.
+ */
+function dpl_update_update_10039(): string {
+  $messages = [];
+
+  $instance = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('paragraph.go_linkbox.field_go_link');
+  if ($instance) {
+    $instance->delete();
+    $messages[] = 'Deleted field.instance: paragraph.go_linkbox.field_go_link';
+  }
+
+  $instance = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('paragraph.go_link.field_link');
+  if ($instance) {
+    $instance->delete();
+    $messages[] = 'Deleted field.instance: paragraph.go_link.field_link';
+  }
+
+  $storage = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->load('paragraph.field_go_link');
+  if ($storage) {
+    $storage->delete();
+    $messages[] = 'Deleted field.storage: paragraph.field_go_link';
+  }
+
+  return $messages
+    ? implode('; ', $messages)
+    : 'No stale paragraph field configs found.';
+}
+
+/**
+ * Installing External Auth module.
+ */
+function dpl_update_update_10040(): string {
+  return _dpl_update_install_modules(['externalauth']);
+}
+
+/**
+ * Install HTTP cache control module.
+ */
+function dpl_update_update_10041(): string {
+  return _dpl_update_install_modules(['http_cache_control']);
+}
+
+/**
+ * Uninstall JSNLog module.
+ */
+function dpl_update_update_10042(): string {
+  return _dpl_update_uninstall_modules(['jsnlog']);
+}
+
+/**
+ * Remove old ereolen config settings from both agency and patron configs.
+ */
+function dpl_update_update_10043(): string {
+  \Drupal::configFactory()
+    ->getEditable('dpl_library_agency.settings')
+    ->clear('ereolen_my_page_url')
+    ->clear('ereolen_homepage_url')
+    ->save();
+
+  \Drupal::configFactory()
+    ->getEditable('dpl_patron_page.settings')
+    ->clear('always_available_ereolen')
+    ->save();
+
+  return 'Removed old ereolen config keys from dpl_library_agency.settings and dpl_patron_page.settings.';
+}
+
+/**
+ * Unignore system.performance configuration.
+ */
+function dpl_update_update_10044(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'system.performance',
+    // We need to unignore this as well as it is handled on the same config
+    // form as system.performance.
+    'http_cache_control.settings',
+  ]);
+}
+
+/**
+ * Install BNF base module.
+ *
+ * Notice - this is ONLY the base module. The client and server modules get
+ * enabled seperately.
+ */
+function dpl_update_update_10045(): string {
+  return _dpl_update_install_modules(['bnf']);
+}
+
+/**
+ * Half-ignore and un-auto-ignore core.extension.
+ */
+function dpl_update_update_10046(): string {
+  // Bring active version of `config_ignore.settings` in line with exported
+  // config right away. Might not be necessary if no modules are enabled before
+  // the next config import, but to be safe.
+  $config = \Drupal::configFactory()->getEditable('config_ignore.settings');
+  $ignored_config_entities = $config->get('ignored_config_entities') ?: [];
+
+  $import = $ignored_config_entities;
+  $import[] = 'core.extension';
+
+  $export = $ignored_config_entities;
+
+  $config->set('mode', 'intermediate');
+  $config->set('ignored_config_entities', ['import' => $import, 'export' => $export]);
+  $config->save();
+
+  return _dpl_update_config_auto_unignore_entites(['core.extension']);
+}
+
+/**
+ * Install graphql_compose_views module.
+ */
+function dpl_update_update_10047(): string {
+  return _dpl_update_install_modules(['graphql_compose_views']);
+}
+
+/**
+ * Force a new library token to be fetched because token signature has changed.
+ */
+function dpl_update_update_10048(): string {
+  $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
+  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
+  $oldToken = $handler->getToken();
+  $success_output = [];
+
+  if ($oldToken) {
+    $success_output[] = t('Old token that was not deleted: Token: @token, properties: @props', [
+      '@token' => $oldToken->token,
+      '@props' => implode(', ', array_keys((array) $oldToken)),
+    ]);
+  }
+
+  if (!$newToken = $handler->fetchToken(
+    $config->getAgencyId(),
+    $config->getClientId(),
+    $config->getClientSecret(),
+    $config->getTokenEndpoint()
+  )) {
+    return 'Failed to fetch new library token.';
+  }
+  $handler->setToken(token: $newToken);
+
+  $success_output[] = t('New token: Token: @token, properties: @props', [
+    '@token' => $newToken->token,
+    '@props' => implode(', ', array_keys((array) $newToken)),
+  ]);
+
+  return implode(' | ', $success_output);
+}
+
+/**
+ * Install drupal/nexxt modules for cache revalidation.
+ */
+function dpl_update_update_10049(): string {
+  return _dpl_update_install_modules(['next', 'next_graphql']);
+}
+
+/**
+ * Enable queue_ui for bnf_client.
+ */
+function dpl_update_update_10050(): string {
+  if (\Drupal::moduleHandler()->moduleExists('bnf_client')) {
+    return _dpl_update_install_modules(['queue_ui']);
+  }
+
+  return "bnf_client not enabled, not enabling queue_ui";
+}
+
+/**
+ * Install graphql_compose_preview module.
+ */
+function dpl_update_update_10051(): string {
+  return _dpl_update_install_modules(['graphql_compose_preview']);
 }

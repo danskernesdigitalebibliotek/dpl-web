@@ -5,8 +5,34 @@ dependencies:
   config:
     - field.storage.node.field_paragraphs
     - node.type.branch
-    - paragraphs.paragraphs_type.campaign_rule
-    - paragraphs.paragraphs_type.event_ticket_category
+    - paragraphs.paragraphs_type.accordion
+    - paragraphs.paragraphs_type.banner
+    - paragraphs.paragraphs_type.breadcrumb_children
+    - paragraphs.paragraphs_type.card_grid_automatic
+    - paragraphs.paragraphs_type.card_grid_manual
+    - paragraphs.paragraphs_type.content_slider
+    - paragraphs.paragraphs_type.content_slider_automatic
+    - paragraphs.paragraphs_type.files
+    - paragraphs.paragraphs_type.filtered_event_list
+    - paragraphs.paragraphs_type.hero
+    - paragraphs.paragraphs_type.language_selector
+    - paragraphs.paragraphs_type.links
+    - paragraphs.paragraphs_type.manual_event_list
+    - paragraphs.paragraphs_type.material_grid_automatic
+    - paragraphs.paragraphs_type.material_grid_link_automatic
+    - paragraphs.paragraphs_type.material_grid_manual
+    - paragraphs.paragraphs_type.medias
+    - paragraphs.paragraphs_type.nav_grid_manual
+    - paragraphs.paragraphs_type.nav_spots_manual
+    - paragraphs.paragraphs_type.opening_hours
+    - paragraphs.paragraphs_type.recommendation
+    - paragraphs.paragraphs_type.simple_links
+    - paragraphs.paragraphs_type.text_body
+    - paragraphs.paragraphs_type.user_registration_item
+    - paragraphs.paragraphs_type.user_registration_linklist
+    - paragraphs.paragraphs_type.user_registration_section
+    - paragraphs.paragraphs_type.video
+    - paragraphs.paragraphs_type.webform
   module:
     - entity_reference_revisions
 id: node.branch.field_paragraphs
@@ -23,53 +49,151 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      campaign_rule: campaign_rule
-      event_ticket_category: event_ticket_category
-    negate: 1
+      text_body: text_body
+      links: links
+      medias: medias
+      accordion: accordion
+      card_grid_automatic: card_grid_automatic
+      card_grid_manual: card_grid_manual
+      content_slider: content_slider
+      files: files
+      hero: hero
+      nav_grid_manual: nav_grid_manual
+      nav_spots_manual: nav_spots_manual
+      recommendation: recommendation
+      video: video
+      banner: banner
+      breadcrumb_children: breadcrumb_children
+      content_slider_automatic: content_slider_automatic
+      filtered_event_list: filtered_event_list
+      language_selector: language_selector
+      manual_event_list: manual_event_list
+      material_grid_automatic: material_grid_automatic
+      material_grid_link_automatic: material_grid_link_automatic
+      material_grid_manual: material_grid_manual
+      opening_hours: opening_hours
+      simple_links: simple_links
+      user_registration_item: user_registration_item
+      user_registration_linklist: user_registration_linklist
+      user_registration_section: user_registration_section
+      webform: webform
+    negate: 0
     target_bundles_drag_drop:
       accordion:
         weight: 16
-        enabled: false
+        enabled: true
+      banner:
+        weight: 40
+        enabled: true
+      breadcrumb_children:
+        weight: 41
+        enabled: true
       campaign_rule:
         weight: 2
-        enabled: true
+        enabled: false
       card_grid_automatic:
         weight: 18
-        enabled: false
+        enabled: true
       card_grid_manual:
         weight: 19
-        enabled: false
+        enabled: true
       content_slider:
         weight: 20
-        enabled: false
+        enabled: true
+      content_slider_automatic:
+        weight: 46
+        enabled: true
       event_ticket_category:
         weight: 7
-        enabled: true
+        enabled: false
       files:
         weight: 22
+        enabled: true
+      filtered_event_list:
+        weight: 49
+        enabled: true
+      go_images:
+        weight: 51
+        enabled: false
+      go_link:
+        weight: 50
+        enabled: false
+      go_linkbox:
+        weight: 51
+        enabled: false
+      go_material_slider_automatic:
+        weight: 52
+        enabled: false
+      go_material_slider_manual:
+        weight: 53
+        enabled: false
+      go_text_body:
+        weight: 54
+        enabled: false
+      go_video:
+        weight: 55
+        enabled: false
+      go_video_bundle_automatic:
+        weight: 56
+        enabled: false
+      go_video_bundle_manual:
+        weight: 57
         enabled: false
       hero:
         weight: 23
-        enabled: false
+        enabled: true
+      language_selector:
+        weight: 59
+        enabled: true
       links:
         weight: 8
-        enabled: false
+        enabled: true
+      manual_event_list:
+        weight: 61
+        enabled: true
+      material_grid_automatic:
+        weight: 62
+        enabled: true
+      material_grid_link_automatic:
+        weight: 63
+        enabled: true
+      material_grid_manual:
+        weight: 64
+        enabled: true
       medias:
         weight: 9
-        enabled: false
+        enabled: true
       nav_grid_manual:
         weight: 26
-        enabled: false
+        enabled: true
       nav_spots_manual:
         weight: 27
-        enabled: false
+        enabled: true
+      opening_hours:
+        weight: 68
+        enabled: true
       recommendation:
         weight: 28
-        enabled: false
+        enabled: true
+      simple_links:
+        weight: 70
+        enabled: true
       text_body:
         weight: 4
-        enabled: false
+        enabled: true
+      user_registration_item:
+        weight: 72
+        enabled: true
+      user_registration_linklist:
+        weight: 73
+        enabled: true
+      user_registration_section:
+        weight: 74
+        enabled: true
       video:
         weight: 30
-        enabled: false
+        enabled: true
+      webform:
+        weight: 76
+        enabled: true
 field_type: entity_reference_revisions

@@ -5,6 +5,8 @@ version: "3"
 
 dotenv: [".task.env"]
 
+interval: 500ms
+
 includes:
   translations: ./task/Taskfile.translations.yml
   lagoon: ./task/Taskfile.lagoon.yml
@@ -31,10 +33,11 @@ vars:
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
 
-  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
+  DOCKER_COMPOSE_FILES_BNF:
+    sh: if [[ -f web/sites/sites.php ]]; then echo "-f docker-compose.bnf.yml"; fi
+  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml {{ .DOCKER_COMPOSE_FILES_BNF}}"
   DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
   DOCKER_COMPOSE_FILES_CI: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml"
-  DOCKER_COMPOSE_FILES_DEV: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.dev.yml"
 
   # Sql dump files directory
   DIR_RESTORE_DATABASE: "restore/database"
@@ -71,6 +74,39 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:watch:
+    summary: Watch source for changes and clear cache.
+    watch: true
+    sources:
+      - 'web/modules/**/*'
+      - 'web/themes/**/*'
+    cmds:
+      - task dev:cli -- drush cache-rebuild
+
+  dev:watch:bnf:
+    summary: Watch source for changes and clear cache, including BNF.
+    watch: true
+    sources:
+      - 'web/modules/**/*'
+      - 'web/themes/**/*'
+    cmds:
+      - task dev:cli -- drush cache-rebuild
+      - task dev:bnfcli -- drush cache-rebuild
+
+  dev:bnf:enable:
+    summary: Set env up for BNF development.
+    silent: true
+    cmds:
+      - cp assets/sites.php web/sites
+      - echo 'Enabled, remember to run "task dev:reset"'
+
+  dev:bnf:disable:
+    summary: Reset env to non-BNF development.
+    silent: true
+    cmds:
+      - rm web/sites/sites.php
+      - echo 'Disabled, remember to run "task dev:reset"'
+
   dev:format:
     summary: Lint custom code, and fix when possible
     cmds:
@@ -101,6 +137,13 @@ tasks:
     # log output. dev:cli gets called a lot.
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
+
+  dev:bnfcli:
+    summary: dev:cli for BNF site, a noop if BNF not enabled
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm bnfcli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
@@ -154,38 +197,31 @@ tasks:
       # Start local environment.
       - task dev:start
       # Install site.
-      - task dev:cli -- drush site-install --existing-config -y
-      # Practice shows that the cache needs to be cleared to avoid configuration
-      # errors even after a site install.
-      - task dev:cache:clear:drupal
-      # Import translations.
-      - |
-        if [ -n "${SKIP_LANGUAGE_IMPORT}" ]; then
-          echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
-        else
-          task dev:cli -- drush locale-check
-          task dev:cli -- drush locale-update
-          task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
-        fi
-      # Clear all caches to ensure we have a pristine setup.
-      - task dev:cache:clear:all
-      # Run deploy hooks.
-      - task dev:cli -- drush deploy -y
-      # Ensure site is reachable and warm any caches
-      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
-      # Enable dev modules.
-      - task dev:enable-dev-tools
-      - task dev:create-users
-      # Show a one-time login to the local site.
+      - task dev:cli -- ./dev-scripts/install-site.sh {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      # Possibly install the BNF site.
+      - task dev:bnfcli -- ./dev-scripts/install-site.sh --bnf-content {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      - task dev:bnfcli -- drush --yes config:set system.site name BNF
+      # Show a one-time login to the local site(s).
       - task dev:cli -- drush user-login
-    env:
-      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_DEV }}"
+      - task dev:bnfcli -- drush user-login
+      -
+  dev:bnf:generate-graphql:
+    desc: Generate graphQL client classes. See web/modules/custom/bnf/queries/README.md
+    cmds:
+      - task dev:bnfcli -- ./vendor/bin/sailor introspect
+      - task dev:bnfcli -- ./vendor/bin/sailor
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
     cmds:
       - task dev:cli -- ./dev-scripts/cli-set-openid-settings.sh
       - task dev:run-cron
+
+  dev:unilogin:configure:
+    desc: Set Unilogin settings based on .env variables.
+    cmds:
+      - task dev:cli -- ./dev-scripts/cli-set-unilogin-settings.sh
+      - task dev:cache:clear:all
 
   dev:run-cron:
     desc: Run cron in the container
@@ -195,6 +231,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
+      # If changing this, keep the corresponding line in ./dev-scripts/install-site.sh in sync.
       - task dev:cli -- drush install -y devel dpl_example_content field_ui purge_ui restui uuid_url views_ui dblog
 
   dev:enable-xdebug:
@@ -211,6 +248,7 @@ tasks:
 
   dev:create-users:
     desc: Create test users, with test roles
+    # If changing this, keep the corresponding lines in ./dev-scripts/install-site.sh in sync.
     cmds:
       - task dev:cli -- drush user:create editor --password="test"
       - task dev:cli -- drush user:role:add 'editor' editor
@@ -229,9 +267,6 @@ tasks:
 
       - task dev:cli -- drush user:create patron --password="test"
       - task dev:cli -- drush user:role:add 'patron' patron
-
-      - task dev:cli -- drush user:create graphql_consumer --password="test"
-      - task dev:cli -- drush user:role:add 'graphql_consumer' graphql_consumer
 
   dev:import-profile-translations:
     desc: Import our custom profile translations. This is done automatically on deploy.
@@ -304,9 +339,10 @@ tasks:
           docker run --rm \
           -v ${PWD}:/local \
           openapitools/openapi-generator-cli:v7.1.0 generate \
-          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
+          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/refs/heads/main/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client \
-          -c /local/.openapi-generator/fbs.config.yaml
+          -c /local/.openapi-generator/fbs.config.yaml \
+          --skip-validate-spec
 
   dev:codegen:dpl-cms:
     desc: Generate CMS API package from OpenAPI specification

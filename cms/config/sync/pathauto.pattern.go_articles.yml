@@ -1,0 +1,22 @@
+uuid: 6e8e4db7-e7ca-4ddd-9695-c1e3ff5cbe86
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: go_articles
+label: 'GO Articles'
+type: 'canonical_entities:node'
+pattern: '/artikel/[node:title]'
+selection_criteria:
+  a368c87e-5eeb-4c02-b967-8a7a79d5aef7:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: a368c87e-5eeb-4c02-b967-8a7a79d5aef7
+    context_mapping:
+      node: node
+    bundles:
+      go_article: go_article
+selection_logic: and
+weight: -5
+relationships: {  }

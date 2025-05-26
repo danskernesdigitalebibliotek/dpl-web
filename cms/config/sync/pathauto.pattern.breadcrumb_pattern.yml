@@ -8,7 +8,18 @@ id: breadcrumb_pattern
 label: 'Breadcrumb pattern'
 type: 'canonical_entities:node'
 pattern: '[dpl_breadcrumb:breadcrumb-url-alias]'
-selection_criteria: {  }
+selection_criteria:
+  f8e93f99-e638-4c48-9901-278f15d59aa1:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: f8e93f99-e638-4c48-9901-278f15d59aa1
+    context_mapping:
+      node: node
+    bundles:
+      article: article
+      branch: branch
+      campaign: campaign
+      page: page
 selection_logic: and
 weight: -5
 relationships: {  }

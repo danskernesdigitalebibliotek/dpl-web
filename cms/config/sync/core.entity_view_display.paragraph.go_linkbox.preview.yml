@@ -1,0 +1,31 @@
+uuid: 0e4eb567-adf2-4b52-b1df-fe7bb5fc7bd7
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.go_linkbox.field_go_color
+    - field.field.paragraph.go_linkbox.field_go_description
+    - field.field.paragraph.go_linkbox.field_go_image
+    - field.field.paragraph.go_linkbox.field_go_link_paragraph
+    - field.field.paragraph.go_linkbox.field_title
+    - paragraphs.paragraphs_type.go_linkbox
+id: paragraph.go_linkbox.preview
+targetEntityType: paragraph
+bundle: go_linkbox
+mode: preview
+content:
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_go_color: true
+  field_go_description: true
+  field_go_image: true
+  field_go_link_paragraph: true
+  search_api_excerpt: true

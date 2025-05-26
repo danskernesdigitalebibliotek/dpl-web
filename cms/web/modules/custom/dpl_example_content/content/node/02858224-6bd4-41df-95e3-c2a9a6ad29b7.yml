@@ -46,6 +46,9 @@ default:
   revision_translation_affected:
     -
       value: true
+  bnf_state:
+    -
+      value: 0
   entity_clone_template_active:
     -
       value: false
@@ -671,6 +674,39 @@ default:
             -
               value: 'Enkeltstående accordion'
               format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: aca35201-d132-4af6-9cd9-90948499234f
+          bundle: material_grid_link_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1738224893
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_amount_of_materials:
+            -
+              value: 8
+          field_material_grid_description:
+            -
+              value: 'Dette er beskrivelsen af hvad grid''et indeholder. Jeg har søgt på "Harry" med sublocation "fantasy"'
+          field_material_grid_link:
+            -
+              value: 'https://dapple-cms.docker/advanced-search?sublocation=fantasy&advancedSearchCql=%27harry%27&linked=true"'
+          field_material_grid_title:
+            -
+              value: 'Material Grid automatic (Link) 8 materialer'
     -
       entity:
         _meta:

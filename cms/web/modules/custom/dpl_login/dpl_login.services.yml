@@ -18,12 +18,14 @@ services:
     arguments:
       - '@dpl_login.registered_user_tokens'
       - '@dpl_login.unregistered_user_tokens'
+  Drupal\dpl_login\UserTokens: '@dpl_login.user_tokens'
+
   dpl_login.authentication.user_token:
     class: Drupal\dpl_login\UserTokenAuthProvider
     arguments:
       - '@dpl_login.adgangsplatformen.client'
       - '@module_handler'
-      - '@openid_connect.authmap'
+      - '@externalauth.externalauth'
     tags:
       - {
           name: authentication_provider,
@@ -46,6 +48,8 @@ services:
   dpl_login.adgangsplatformen.config:
     class: Drupal\dpl_login\Adgangsplatformen\Config
     arguments: ['@config.manager']
+  Drupal\dpl_login\Adgangsplatformen\Config: '@dpl_login.adgangsplatformen.config'
+
   dpl_login.openid_user_info:
     class: Drupal\dpl_login\OpenIdUserInfoService
     arguments: ['@settings']

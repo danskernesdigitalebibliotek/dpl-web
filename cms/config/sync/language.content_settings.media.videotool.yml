@@ -1,0 +1,11 @@
+uuid: 12270206-6f4a-4535-9be1-0aae4eeda411
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.videotool
+id: media.videotool
+target_entity_type_id: media
+target_bundle: videotool
+default_langcode: site_default
+language_alterable: false

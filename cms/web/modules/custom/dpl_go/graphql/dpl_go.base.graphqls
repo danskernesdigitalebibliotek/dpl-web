@@ -1,0 +1,39 @@
+
+type GoLibraryInfo {
+  name: String
+}
+
+type GoLoginUrls {
+  adgangsplatformen: String
+}
+
+type GoLogoutUrls {
+  adgangsplatformen: String
+}
+
+type UniloginConfigurationPrivate {
+  clientSecret: String
+  webServiceUsername: String
+  webServicePassword: String
+  pubHubRetailerKeyCode: String
+}
+
+type UniloginConfigurationPublic {
+  municipalityId: String
+}
+
+type GoConfigurationPrivate {
+  unilogin: UniloginConfigurationPrivate
+}
+
+type GoConfigurationPublic {
+  libraryInfo: GoLibraryInfo
+  loginUrls: GoLoginUrls
+  logoutUrls: GoLogoutUrls
+  unilogin: UniloginConfigurationPublic
+}
+
+type GoConfiguration {
+  public: GoConfigurationPublic
+  private: GoConfigurationPrivate
+}

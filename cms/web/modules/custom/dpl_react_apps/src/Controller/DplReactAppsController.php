@@ -13,8 +13,10 @@ use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\json_encode as json_encode;
-use function Safe\preg_replace as preg_replace;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use function Safe\json_encode;
+use function Safe\preg_replace;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -147,6 +149,8 @@ class DplReactAppsController extends ControllerBase {
       'showing-results-for-text' => $this->t('Showing results for "@query"', [], ['context' => 'Search Result']),
       'showing-text' => $this->t('Showing', [], ['context' => 'Search Result']),
       'web-search-link-text' => $this->t('Switch to the results for the library content.', [], ['context' => 'Search Result']),
+      'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
+      'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -230,6 +234,8 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-location-description-text' => $this->t('Add a comma separated list for multiple locations', [], ['context' => 'advanced search']),
       'advanced-search-filter-sublocation-text' => $this->t('sublocation', [], ['context' => 'advanced search']),
       'advanced-search-filter-sublocation-description-text' => $this->t('Add a comma separated list for multiple sublocations', [], ['context' => 'advanced search']),
+      'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
+      'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -269,9 +275,12 @@ class DplReactAppsController extends ControllerBase {
       'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
+      'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
+      'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
 
       // Texts.
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
+      'approve-loan-text' => $this->t('Approve loan', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
       'audience-text' => $this->t('Audience', [], ['context' => 'Work Page']),
       'blocked-button-text' => $this->t('Blocked', [], ['context' => 'Work Page']),
@@ -345,6 +354,7 @@ class DplReactAppsController extends ControllerBase {
       'language-text' => $this->t('Language', [], ['context' => 'Work Page']),
       'libraries-have-the-material-text' => $this->t('Libraries have the material', [], ['context' => 'Work Page']),
       'listen-online-text' => $this->t('Listen online', [], ['context' => 'Work Page']),
+      'loan-with-material-type-text' => $this->t('Loan @materialType', [], ['context' => 'Work Page']),
       'login-to-see-review-text' => $this->t('Log in to read the review', [], ['context' => 'Work Page']),
       'material-header-all-editions-text' => $this->t('All editions', [], ['context' => 'Work Page']),
       'material-header-author-by-text' => $this->t('By', [], ['context' => 'Work Page']),
@@ -365,6 +375,12 @@ class DplReactAppsController extends ControllerBase {
           $this->t('We have @count copies of the material in stock', [], ['context' => 'Work Page']),
         ],
       ],
+      'material-grid-related-title-text' => $this->t('Other materials', [], ['context' => 'Work Page']),
+      'material-grid-related-recommendations-data-label-text' => $this->t('Recommendations', [], ['context' => 'Work Page']),
+      'material-grid-related-series-data-label-text' => $this->t('In same series', [], ['context' => 'Work Page']),
+      'material-grid-related-author-data-label-text' => $this->t('By same author', [], ['context' => 'Work Page']),
+      'material-grid-related-inline-filters-aria-label-text' => $this->t('Filter displayed materials', [], ['context' => 'Work Page']),
+      'material-grid-related-select-aria-label-text' => $this->t('Select material filter', [], ['context' => 'Work Page']),
       'missing-data-text' => $this->t('Missing data', [], ['context' => 'Work Page']),
       'modal-reservation-form-email-header-description-text' => $this->t('If you want to receive notifications by e-mail, you can enter or change the desired e-mail here.', [], ['context' => 'Work Page']),
       'modal-reservation-form-email-header-title-text' => $this->t('Change email', [], ['context' => 'Work Page']),
@@ -377,9 +393,25 @@ class DplReactAppsController extends ControllerBase {
       'not-living-in-municipality-text' => $this->t("You don't live in the municipality where this library is located.", [], ['context' => 'Work Page']),
       'number-in-queue-text' => $this->t('You are number @number in the queue', [], ['context' => 'Work Page']),
       'ok-button-text' => $this->t('Ok', [], ['context' => 'Work Page']),
+      'online-internal-modal-close-aria-label-text' => $this->t('Close reader/player modal', [], ['context' => 'Work Page']),
+      'online-internal-modal-screen-reader-description-text' => $this->t('Modal for reader/player material', [], ['context' => 'Work Page']),
+      'online-internal-modal-ensure-notification-text' => $this->t('If you wish to receive notifications when the material is ready for loan, you need to add your email address or phone number.', [], ['context' => 'Work Page']),
+      'online-internal-response-error-subtitle-text' => $this->t('@title could not be borrowed or reserved', [], ['context' => 'Work Page']),
+      'online-internal-response-error-title-text' => $this->t('Something went wrong.', [], ['context' => 'Work Page']),
+      'online-internal-response-loaned-subtitle-text' => $this->t('@title is borrowed to you', [], ['context' => 'Work Page']),
+      'online-internal-response-loaned-title-text' => $this->t('You have now borrowed the material!', [], ['context' => 'Work Page']),
+      'online-internal-response-reserved-subtitle-text' => $this->t('@title is reserved for you', [], ['context' => 'Work Page']),
+      'online-internal-response-reserved-title-text' => $this->t('The material is now reserved for you!', [], ['context' => 'Work Page']),
+      'online-internal-errors-text' => $this->t('Something went wrong', [], ['context' => 'Work Page']),
+      'online-internal-success-loaned-text' => $this->t('You can read/listen to the material until @expirationDate', [], ['context' => 'Work Page']),
+      'online-internal-success-reserved-text' => $this->t('You have reserved the material. If you have provided an phonenumber or email during the reservation, you will receive a notification when the material is ready. Please note that the loan does not happen automatically.', [], ['context' => 'Work Page']),
+      'online-internal-success-manual-borrowing-notice-text' => $this->t('Please note that the loan does not happen automatically. You must manually borrow the digital material yourself within 48 hours', [], ['context' => 'Work Page']),
       'online-limit-month-audiobook-info-text' => $this->t('You have borrowed @count out of @limit possible audio-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
+      'online-material-player-text' => $this->t('Listen to @materialType', [], ['context' => 'Work Page']),
+      'online-material-reader-text' => $this->t('Read @materialType', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
+      'online-material-teaser-text' => $this->t('Try @materialType', [], ['context' => 'Work Page']),
       'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
       'open-order-owned-own-catalogue-text' => $this->t('Item available, order through the librarys catalogue', [], ['context' => 'Work Page']),
       'open-order-owned-wrong-mediumtype-text' => $this->t('Item available but medium type not accepted', [], ['context' => 'Work Page']),
@@ -405,12 +437,34 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-title-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'original-title-text' => $this->t('Original title', [], ['context' => 'Work Page']),
       'periodical-select-edition-text' => $this->t('Edition', [], ['context' => 'Work Page']),
+      'player-modal-close-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
+      'player-modal-description-text' => $this->t('Modal for player', [], ['context' => 'Work Page']),
       'periodical-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'periodikum-select-week-text' => $this->t('Week', [], ['context' => 'Work Page']),
       'periodikum-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'pickup-location-text' => $this->t('Pick up at', [], ['context' => 'Work Page']),
       'possible-text' => $this->t('possible', [], ['context' => 'Work Page']),
       'publisher-text' => $this->t('Publisher', [], ['context' => 'Work Page']),
+      'publizon-error-status-an-unexpected-error-occurred-text' => $this->t('An unexpected error occurred', [], ['context' => 'Work Page']),
+      'publizon-error-status-book-can-be-borrowed-again-in90-days-text' => $this->t('The book can be borrowed again 90 days after the last loan expires', [], ['context' => 'Work Page']),
+      'publizon-error-status-book-can-only-be-renewed-once-text' => $this->t('The book can only be renewed once', [], ['context' => 'Work Page']),
+      'publizon-error-status-book-cannot-be-borrowed-text' => $this->t('The book cannot be borrowed', [], ['context' => 'Work Page']),
+      'publizon-error-status-book-is-not-available-for-loan-text' => $this->t('The book is not available for loan', [], ['context' => 'Work Page']),
+      'publizon-error-status-book-unfortunately-not-available-for-loan-text' => $this->t('The book is unfortunately not available for loan', [], ['context' => 'Work Page']),
+      'publizon-error-status-card-temporarily-blocked-text' => $this->t('The card is temporarily blocked due to too many failed login attempts. Try again in 2 hours.', [], ['context' => 'Work Page']),
+      'publizon-error-status-invalid-card-number-pin-text' => $this->t('Invalid card number and/or PIN code.', [], ['context' => 'Work Page']),
+      'publizon-error-status-invalid-email-address-text' => $this->t('Invalid email address', [], ['context' => 'Work Page']),
+      'publizon-error-status-invalid-phone-number-text' => $this->t('Invalid phone number', [], ['context' => 'Work Page']),
+      'publizon-error-status-library-server-not-responding-text' => $this->t("The library's server is not responding – try logging in again later.", [], ['context' => 'Work Page']),
+      'publizon-error-status-monthly-loan-limit-reached-text' => $this->t('Your library has reached the limit for the number of loans this month', [], ['context' => 'Work Page']),
+      'publizon-error-status-no-access-because-not-resident-text' => $this->t('You do not have access to digital materials from this library as you are not registered as a resident in the municipality. Contact the library.', [], ['context' => 'Work Page']),
+      'publizon-error-status-no-country-found-with-given-country-code-text' => $this->t('No country could be found with the given country code', [], ['context' => 'Work Page']),
+      'publizon-error-status-number-of-simultaneous-blue-loans-exceeded-text' => $this->t('The number of simultaneous loans of blue titles has been exceeded', [], ['context' => 'Work Page']),
+      'publizon-error-status-number-of-simultaneous-loans-exceeded-text' => $this->t('The number of simultaneous loans has been exceeded', [], ['context' => 'Work Page']),
+      'publizon-error-status-the-book-is-already-reserved-text' => $this->t('The book is already reserved', [], ['context' => 'Work Page']),
+      'publizon-error-status-unknown-error-at-library-text' => $this->t('Unknown error at the library – try logging in again later.', [], ['context' => 'Work Page']),
+      'publizon-error-status-unknown-error-text' => $this->t('Unknown error.', [], ['context' => 'Work Page']),
+      'publizon-error-status-you-can-reserve-up-to3-titles-text' => $this->t('You can reserve up to 3 titles', [], ['context' => 'Work Page']),
       'queue-text' => $this->t('in queue', [], ['context' => 'Work Page']),
       'rating-is-text' => $this->t('Rating of this item is', [], ['context' => 'Work Page']),
       'rating-text' => $this->t('out of', [], ['context' => 'Work Page']),
@@ -498,6 +552,40 @@ class DplReactAppsController extends ControllerBase {
     }
 
     return $urls;
+  }
+
+  /**
+   * Render the Reader React app.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The HTTP request containing query parameters.
+   *
+   * @return mixed[]
+   *   Render array with the Reader app block.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   */
+  public function reader(Request $request): array {
+    $identifier = $request->query->get('identifier');
+    $orderid = $request->query->get('orderid');
+
+    if (!$identifier && !$orderid) {
+      throw new BadRequestHttpException('Either identifier or orderid must be provided.');
+    }
+
+    $data = [
+      'identifier' => $identifier ?? NULL,
+      'orderid' => $orderid ?? NULL,
+    ];
+
+    $app = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'reader',
+      '#data' => $data,
+    ];
+
+    return $app;
+
   }
 
 }

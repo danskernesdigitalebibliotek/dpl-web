@@ -14,8 +14,9 @@ use Drupal\node\NodeInterface;
 function dpl_article_preprocess_node(array &$variables): void {
   $node = $variables['node'] ?? NULL;
 
-  // Process only if the node is a valid Node entity and is of the type article.
-  if (!($node instanceof NodeInterface) || $node->bundle() !== 'article') {
+  // Process only if the node is a valid Node entity and is of
+  // the type article or go_article.
+  if (!($node instanceof NodeInterface) || !in_array($node->bundle(), ['article', 'go_article'], TRUE)) {
     return;
   }
 
@@ -33,7 +34,8 @@ function dpl_article_preprocess_node(array &$variables): void {
 /**
  * Implements hook_form_alter().
  *
- * Modifies node forms to control the visibility of articles fields.
+ * Modifies node forms to control the visibility
+ * of article and go_article fields.
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
@@ -43,8 +45,8 @@ function dpl_article_preprocess_node(array &$variables): void {
  *   The unique identifier of the form.
  */
 function dpl_article_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  // Target only article node creation or edit forms.
-  if (!str_starts_with($form_id, 'node_article_')) {
+  // Target only article and go_article node creation or edit forms.
+  if (!str_starts_with($form_id, 'node_article_') && !str_starts_with($form_id, 'node_go_article_')) {
     return;
   }
 

@@ -1,0 +1,29 @@
+uuid: a71d1077-309c-42ca-8da2-6fb7dff2e7ec
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category_menu_sound
+    - media.type.audio
+    - node.type.go_category
+id: node.go_category.field_category_menu_sound
+field_name: field_category_menu_sound
+entity_type: node
+bundle: go_category
+label: 'Category menu sound'
+description: "The category sound will be able to be played in the category menu as part of this category's menu element."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      audio: audio
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

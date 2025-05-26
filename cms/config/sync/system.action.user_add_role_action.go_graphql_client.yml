@@ -1,0 +1,14 @@
+uuid: 5b4da83f-bde0-4d1a-afd0-62b5a758379e
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.go_graphql_client
+  module:
+    - user
+id: user_add_role_action.go_graphql_client
+label: 'Add the GO GraphQL Client role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: go_graphql_client

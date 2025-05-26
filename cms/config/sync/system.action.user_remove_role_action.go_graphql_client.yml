@@ -1,0 +1,14 @@
+uuid: c8fe6acb-1517-47b9-abb1-b6e66472bf54
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.go_graphql_client
+  module:
+    - user
+id: user_remove_role_action.go_graphql_client
+label: 'Remove the GO GraphQL Client role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: go_graphql_client

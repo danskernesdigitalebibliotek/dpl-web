@@ -155,20 +155,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
     ];
 
-    $form['reservations']['ereolen_my_page_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Ereolen my page link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('My page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? GeneralSettings::EREOLEN_MY_PAGE_URL,
-    ];
-
-    $form['reservations']['ereolen_homepage_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Ereolen home link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('Home page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_homepage_url') ?? GeneralSettings::EREOLEN_HOMEPAGE_URL,
-    ];
-
     $form['reservations']['pause_reservation_info_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
@@ -332,8 +318,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
-      ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('fbi_profiles', [
         'default' => $form_state->getValue('fbi_profile_default'),

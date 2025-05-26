@@ -6,6 +6,8 @@ parameters:
     - web/themes/custom
   excludePaths:
     - **/tests/src/Unit/*
+    - **/tests/src/Kernel/*
+    - web/modules/custom/bnf/src/GraphQL/*
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
     - '#Method .*\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
@@ -14,8 +16,9 @@ parameters:
     - '#Call to deprecated method legacyConfig\(\) of class Drupal\\dpl_react\\DplReactConfigBase.#'
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
-    - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
+    - '#.*\:\:(addButtonSubmit|buildConfigurationForm|buildForm|buildInputElement|defaultConfiguration|getEditableConfigNames|getMetadataAttributes|submitForm|validateElement|validateForm)\(\) .* no value type specified in iterable type array\.#'
     - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
+    - '#_form_submit\(\) has parameter \$form with no value type specified in iterable type array\.#'
     # Drupal *_theme() implementation returns array which we cannot provide more detailed typing of.
     - '#Function .*_theme\(\) return type has no value type specified in iterable type array\.#'
     # Drupal *_theme() uses arrays which we cannot provide more detailed typing of.
@@ -78,3 +81,5 @@ parameters:
     - web/core/modules/locale/locale.batch.inc
     - web/core/modules/locale/locale.bulk.inc
     - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
+    # Drupal\dpl_webmaster\Form\InstallOrUpdateModule uses this.
+    - web/core/modules/update/update.authorize.inc

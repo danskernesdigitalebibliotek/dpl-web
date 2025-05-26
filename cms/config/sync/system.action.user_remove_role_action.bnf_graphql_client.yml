@@ -1,0 +1,14 @@
+uuid: 64ba08c0-435a-4e68-b9db-ad5e36751432
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.bnf_graphql_client
+  module:
+    - user
+id: user_remove_role_action.bnf_graphql_client
+label: 'Remove the BNF GraphQL Client role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: bnf_graphql_client

@@ -1,0 +1,18 @@
+uuid: a7a2e482-9a95-462e-9183-5a809059b5e0
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_login
+id: adgangsplatformen
+label: Adgangsplatformen
+plugin: adgangsplatformen
+settings:
+  client_id: abc
+  client_secret: abc
+  iss_allowed_domains: ''
+  authorization_endpoint: 'https://login.bib.dk/oauth/authorize'
+  token_endpoint: 'https://login.bib.dk/oauth/token/'
+  userinfo_endpoint: 'https://login.bib.dk/userinfo/'
+  logout_endpoint: 'https://login.bib.dk/logout'
+  agency_id: '123'

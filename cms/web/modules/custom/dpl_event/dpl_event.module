@@ -313,7 +313,8 @@ function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query)
 /**
  * Implements hook_form_alter().
  *
- * Alter event forms to hide screen names when the feature is disabled.
+ * - Move the "Published" checkbox gin sticky action header.
+ * - Hide screen names if the feature is disabled.
  */
 function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   $forms = [
@@ -322,8 +323,14 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     'eventinstance_default_edit_form',
     'eventinstance_default_add_form',
   ];
+
   if (!in_array($form_id, $forms)) {
     return;
+  }
+
+  // Move the "Published" checkbox to the gin sticky action header.
+  if (isset($form['status'])) {
+    $form['status']['#group'] = 'status';
   }
 
   if (!isset($form['field_screen_names'])) {

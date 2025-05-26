@@ -69,17 +69,4 @@ function dpl_example_content_modules_installed(array $modules) : void {
   $new_front_page = '/frontpage';
   $config_site->set('page.front', '/frontpage')->save();
   $logger->info("Update frontpage link to {$new_front_page}, as part of example content installation.");
-
-  // Set example logo.
-  $config_novel = \Drupal::configFactory()->getEditable('novel.settings');
-  $logo_path = 'public://2024-07/logoeksempelbib.png';
-
-  $config_novel->set('logo_title', 'Eksempel Biblioteket')
-    ->set('logo_place', 'Eksempelvej Bib')
-    ->set('logo.use_default', FALSE)
-    ->set('logo.path', $logo_path)
-    ->save();
-
-  $logger->notice('Updated theme settings for novel theme.');
-
 }

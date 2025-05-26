@@ -36,7 +36,7 @@ const reverseDateString = (date: string) => date.split('-').reverse().join('-');
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLogin('/node/add/branch');
   cy.get('#edit-title-0-value').type(branchTitle);
-  cy.get('button[title="Show all Paragraphs"]').click();
+  cy.openParagraphsModal();
   // Forcing and multiple was the only way I could get this to work
   cy.get('button[value="Opening Hours"]').click({
     multiple: true,
@@ -52,7 +52,7 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.get('#edit-field-address-0-address-locality')
     .type('Example City', { force: true })
     .should('have.value', 'Example City');
-  cy.get('input[value="Save"]').click();
+  cy.clickSaveButton();
   cy.get('a[href^="/node/"][href$="/edit"]').click({ force: true });
   cy.get('a[href*="/edit/opening-hours"]').click();
   // Save the URL for the admin page and the page itself for later use
@@ -60,27 +60,6 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
     Cypress.env('adminUrl', url);
     const pageUrl = url.replace('/edit/opening-hours', '');
     Cypress.env('pageUrl', pageUrl);
-  });
-};
-
-const deleteAllTestBranchesIfExists = () => {
-  const formattedSearchString = branchTitle.toLowerCase().replace(/ /g, '+');
-  cy.drupalLogin();
-  cy.visit(
-    `/admin/content?title=${formattedSearchString}&type=branch&status=All&langcode=All`,
-  );
-
-  cy.get('tbody').then((tbody) => {
-    if (tbody.find('td.views-empty').length) {
-      cy.log('No branches to delete.');
-    } else {
-      cy.get('input[title="Select all rows in this table"]').check({
-        force: true,
-      });
-      cy.get('#edit-action').select('node_delete_action');
-      cy.contains('input', 'Apply to selected items').click();
-      cy.contains('input', 'Delete').click();
-    }
   });
 };
 
@@ -457,7 +436,7 @@ const deleteRestOfOpeningHoursSeries = ({
 
 describe('Opening hours editor', () => {
   beforeEach(() => {
-    deleteAllTestBranchesIfExists();
+    cy.deleteEntitiesIfExists(branchTitle);
     createTestBranchAndVisitOpeningHoursAdmin();
   });
 

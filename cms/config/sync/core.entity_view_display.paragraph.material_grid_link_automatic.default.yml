@@ -1,0 +1,48 @@
+uuid: 22f681b2-20df-46de-aa37-b580a2416dcd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.material_grid_link_automatic.field_amount_of_materials
+    - field.field.paragraph.material_grid_link_automatic.field_material_grid_description
+    - field.field.paragraph.material_grid_link_automatic.field_material_grid_link
+    - field.field.paragraph.material_grid_link_automatic.field_material_grid_title
+    - paragraphs.paragraphs_type.material_grid_link_automatic
+  module:
+    - options
+id: paragraph.material_grid_link_automatic.default
+targetEntityType: paragraph
+bundle: material_grid_link_automatic
+mode: default
+content:
+  field_amount_of_materials:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_material_grid_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_material_grid_link:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_material_grid_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

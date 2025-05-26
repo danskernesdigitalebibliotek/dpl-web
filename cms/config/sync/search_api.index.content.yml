@@ -11,7 +11,6 @@ dependencies:
     - search_api.server.db_search
   module:
     - node
-    - search_api
 id: content
 name: Content
 description: ''
@@ -93,7 +92,9 @@ datasource_settings:
   'entity:node':
     bundles:
       default: true
-      selected: {  }
+      selected:
+        - branch
+        - campaign
     languages:
       default: true
       selected: {  }
@@ -118,6 +119,7 @@ tracker_settings:
     indexing_order: fifo
 options:
   cron_limit: 50
+  delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
 server: db_search

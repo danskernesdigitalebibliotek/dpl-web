@@ -1,0 +1,19 @@
+type ImportResponse {
+  status: ImportStatus!
+  message: String!
+}
+
+enum ImportStatus {
+     success
+     failure
+}
+
+type Error {
+  message: String!
+}
+
+type NewContentResponse {
+  uuids: [String!]!
+  youngest: Time!
+  errors: [Error!]!
+}

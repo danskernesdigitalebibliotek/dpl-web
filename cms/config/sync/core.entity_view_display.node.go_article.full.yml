@@ -1,0 +1,44 @@
+uuid: 22cba7d6-ab66-46a8-b57e-a2e4eedb6d2b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.go_article.field_go_article_image
+    - field.field.node.go_article.field_override_author
+    - field.field.node.go_article.field_paragraphs
+    - field.field.node.go_article.field_publication_date
+    - field.field.node.go_article.field_show_override_author
+    - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_tags
+    - field.field.node.go_article.field_teaser_image
+    - field.field.node.go_article.field_teaser_text
+    - node.type.go_article
+  module:
+    - dpl_go
+    - user
+id: node.go_article.full
+targetEntityType: node
+bundle: go_article
+mode: full
+content:
+  preview_token:
+    type: go_preview_token_iframe
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_go_article_image: true
+  field_override_author: true
+  field_paragraphs: true
+  field_publication_date: true
+  field_show_override_author: true
+  field_subtitle: true
+  field_tags: true
+  field_teaser_image: true
+  field_teaser_text: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

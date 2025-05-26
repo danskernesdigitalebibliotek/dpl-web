@@ -1,0 +1,21 @@
+uuid: ed096796-5a52-4233-a4b7-893baeed9840
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_go_color
+    - paragraphs.paragraphs_type.go_linkbox
+  module:
+    - options
+id: paragraph.go_linkbox.field_go_color
+field_name: field_go_color
+entity_type: paragraph
+bundle: go_linkbox
+label: Color
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
