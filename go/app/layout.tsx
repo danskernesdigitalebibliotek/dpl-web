@@ -8,7 +8,6 @@ import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
-import DplCmsConfigContextProviderServer from "@/lib/providers/DplCmsConfigContextProviderServer"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -30,25 +29,24 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-export default function Layout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Warm up cpl cms config cache.
+  getDplCmsPublicConfig()
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
-
         <Theme>
           <ReactQueryProvider>
-            <DplCmsConfigContextProviderServer>
-              <Header />
-              <DynamicSheet />
-              <DynamicModal />
-              {children}
-              <Footer />
-            </DplCmsConfigContextProviderServer>
+            <Header />
+            <DynamicSheet />
+            <DynamicModal />
+            {children}
+            <Footer />
           </ReactQueryProvider>
         </Theme>
       </body>

@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useContext } from "react"
+import React from "react"
 
-import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
+import useDplCmsPublicConfig from "@/lib/config/dpl-cms/useDplCmsPublicConfig"
 import { sheetStore } from "@/store/sheet.store"
 
 import Icon from "../icon/Icon"
@@ -10,8 +10,7 @@ import LoginButton from "./LoginButton"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "./Sheet"
 
 function LoginSheet({ open }: { open: boolean }) {
-  const dplCmsConfig = useContext(DplCmsConfigContext)
-  const loginUrlAdgangsplatformen = dplCmsConfig?.loginUrls?.adgangsplatformen
+  const loginUrlAdgangsplatformen = useDplCmsPublicConfig()?.config?.loginUrls.adgangsplatformen
   const { closeSheet } = sheetStore.trigger
 
   return (
@@ -30,7 +29,6 @@ function LoginSheet({ open }: { open: boolean }) {
                 <LoginButton url="/auth/login/unilogin" />
               </div>
             </div>
-
             <>
               <hr className="mx-auto" />
               <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
@@ -41,7 +39,10 @@ function LoginSheet({ open }: { open: boolean }) {
                   Login via Bibliotekernes fælles loginside
                 </div>
                 <div>
-                  {loginUrlAdgangsplatformen && <LoginButton url={loginUrlAdgangsplatformen} />}
+                  <LoginButton
+                    url={loginUrlAdgangsplatformen ?? ""}
+                    disabled={!loginUrlAdgangsplatformen}
+                  />
                 </div>
               </div>
             </>
