@@ -16,9 +16,9 @@ const ErrorPageLayout = ({
 }) => {
   return (
     <div className="content-container grid-go w-full">
-      <div className="flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2 lg:my-grid-gap-half col-span-8">
+      <div className="flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2 lg:my-grid-gap-half col-span-6">
         <h2 className="text-typo-heading-1">{title}</h2>
-        <div className="wysiwyg max-w-prose">{description}</div>
+        <div className="wysiwyg">{description}</div>
         <Button ariaLabel={buttonText} asChild size={"lg"}>
           <Link href={buttonLink} className="text-typo-body-lg">
             {buttonText}

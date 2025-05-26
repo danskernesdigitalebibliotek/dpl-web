@@ -8,13 +8,9 @@ export const metadata: Metadata = setPageMetadata("Login fejlede")
 
 const descriptionComponent = (
   <>
+    <p>Vi kunne ikke logge dig ind med din biblioteksbruger.</p>
     <p>
-      Vi kunne ikke logge dig ind med din biblioteksbruger. Tjek venligst om lånernummer/cpr-nummer
-      og kode er korrekt indtastet, og om du har en biblioteksbruger i kommunen.
-    </p>
-    <p>
-      Hvis alle informationerne er korrekte, kan du prøve igen senere. Hvis du bliver ved at opleve
-      fejl, må du meget gerne kontakte vores{" "}
+      Prøv igen om lidt. Hvis du bliver ved at opleve fejl, må du meget gerne kontakte vores{" "}
       <a href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support">support</a>.
     </p>
   </>
