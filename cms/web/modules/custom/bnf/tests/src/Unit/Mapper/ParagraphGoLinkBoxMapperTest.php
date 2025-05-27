@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\LinkRequired\Link;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\ParagraphGoLink;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoLinkbox;
 use Drupal\bnf\Plugin\bnf_mapper\ParagraphGoLinkboxMapper;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\FileRepositoryInterface;
 use Drupal\paragraphs\Entity\Paragraph;
+use Prophecy\Argument;
 
 /**
  * Tests the go_linkbox paragraph mapper (excluding image).
  */
 class ParagraphGoLinkBoxMapperTest extends EntityMapperTestBase {
+
+  /**
+   * The subject under test.
+   */
+  protected ParagraphGoLinkboxMapper $mapper;
 
   /**
    * {@inheritdoc}
@@ -30,54 +39,40 @@ class ParagraphGoLinkBoxMapperTest extends EntityMapperTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp(): void {
+    parent::setUp();
+    $manager = $this->prophesize(BnfMapperManager::class);
+    $manager->map(Argument::any())->willReturn(['fake' => 'link mapper']);
+    $fileSystemProphecy = $this->prophesize(FileSystemInterface::class);
+    $fileRepositoryProphecy = $this->prophesize(FileRepositoryInterface::class);
+
+    $this->mapper = new ParagraphGoLinkboxMapper(
+      [],
+      '',
+      [],
+      $this->entityManagerProphecy->reveal(),
+      $fileSystemProphecy->reveal(),
+      $fileRepositoryProphecy->reveal(),
+      $manager->reveal(),
+    );
+  }
+
+  /**
    * Test go linkbox paragraph mapping without image field.
    */
   public function testParagraphGoLinkBoxMapping(): void {
-    $goLinkParagraph = $this->prophesize(Paragraph::class);
-    $goLinkParagraph->id()->willReturn(88);
-    $goLinkParagraph->getRevisionId()->willReturn(888);
-    $goLinkParagraph->save()->shouldBeCalled();
-
-    $this->storageProphecy->create([
-      'type' => 'go_link',
-      'field_aria_label' => 'Accessible link',
-      'field_target_blank' => TRUE,
-      'field_go_link' => [
-        'uri' => 'https://foo.bar',
-        'title' => 'Link title',
-      ],
-    ])->willReturn($goLinkParagraph->reveal())->shouldBeCalled();
 
     $this->storageProphecy->create([
       'type' => 'go_linkbox',
       'field_go_color' => 'mint',
       'field_go_description' => 'A short description',
       'field_go_image' => [],
-      'field_go_link_paragraph' => [[
-        'target_id' => 88,
-        'target_revision_id' => 888,
-      ],
-      ],
       'field_title' => 'Linkbox title',
     ])->willReturn($this->entityProphecy)->shouldBeCalled();
 
-    $mapper = $this->getMockBuilder(ParagraphGoLinkboxMapper::class)
-      ->setConstructorArgs([
-        [],
-        '',
-        [],
-        $this->entityManagerProphecy->reveal(),
-        $this->fileSystemProphecy->reveal(),
-        $this->fileRepositoryProphecy->reveal(),
-      ])
-      ->onlyMethods(['getImageValue', 'getLinkValue'])
-      ->getMock();
-
-    $mapper->method('getImageValue')->willReturn([]);
-    $mapper->method('getLinkValue')->willReturn([
-      'uri' => 'https://foo.bar',
-      'title' => 'Link title',
-    ]);
+    $this->entityProphecy->set('field_go_link_paragraph', [['fake' => 'link mapper']])->shouldBeCalled();
 
     $graphqlElement = ParagraphGoLinkbox::make(
       id: 'linkbox_1',
@@ -97,7 +92,7 @@ class ParagraphGoLinkBoxMapperTest extends EntityMapperTestBase {
       goImage: NULL
     );
 
-    $result = $mapper->map($graphqlElement);
+    $result = $this->mapper->map($graphqlElement);
     $this->assertSame($result, $this->entityProphecy->reveal());
   }
 

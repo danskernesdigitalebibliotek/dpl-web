@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\dpl_go\Unit\PathProcessor;
 
-use Drupal\Core\Entity\EntityBase;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\AdminContext;
 use Drupal\dpl_go\GoSite;
@@ -28,13 +25,6 @@ class OutboundPathProcessorTest extends UnitTestCase {
   protected ObjectProphecy $goSite;
 
   /**
-   * Node storage mock.
-   *
-   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\Entity\EntityStorageInterface>
-   */
-  protected ObjectProphecy $nodeStorage;
-
-  /**
    * AdminContext mock.
    *
    * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\Routing\AdminContext>
@@ -52,10 +42,6 @@ class OutboundPathProcessorTest extends UnitTestCase {
   public function setUp(): void {
     parent::setUp();
 
-    $this->nodeStorage = $this->prophesize(EntityStorageInterface::class);
-    $typeManager = $this->prophesize(EntityTypeManagerInterface::class);
-    $typeManager->getStorage('node')->willReturn($this->nodeStorage);
-
     $this->goSite = $this->prophesize(GoSite::class);
     $this->goSite->getGoBaseUrl();
 
@@ -64,7 +50,6 @@ class OutboundPathProcessorTest extends UnitTestCase {
 
     $this->pathProcessor = new OutboundPathProcessor(
       $this->goSite->reveal(),
-      $typeManager->reveal(),
       $this->adminContext->reveal(),
     );
   }
@@ -96,10 +81,8 @@ class OutboundPathProcessorTest extends UnitTestCase {
     bool $isGo,
     ?string $expectedBaseUrl,
   ): void {
-    $node = $this->prophesize(EntityBase::class);
-    $this->nodeStorage->load($nid)->willReturn($node);
     $this->goSite->isGoSite()->willReturn($isGo);
-    $this->goSite->isGoNode($node)->willReturn($isGoNode);
+    $this->goSite->isGoNid($nid)->willReturn($isGoNode);
     $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
     $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
 
@@ -147,10 +130,8 @@ class OutboundPathProcessorTest extends UnitTestCase {
     bool $isGo,
     ?string $ignored,
   ): void {
-    $node = $this->prophesize(EntityBase::class);
-    $this->nodeStorage->load($nid)->willReturn($node);
     $this->goSite->isGoSite()->willReturn($isGo);
-    $this->goSite->isGoNode($node)->willReturn($isGoNode);
+    $this->goSite->isGoNid($nid)->willReturn($isGoNode);
     $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
     $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
     $this->adminContext->isAdminRoute()->willReturn(TRUE);

@@ -28348,7 +28348,7 @@ msgstr "Side"
 #: 
 msgctxt "Patron page"
 msgid "DIGITAL LOANS"
-msgstr ""
+msgstr "Digitale lån"
 
 #: 
 msgctxt "Work Page"
