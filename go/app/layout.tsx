@@ -42,7 +42,7 @@ async function RootLayout({
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
-        <DplCmsConfigContextProvider config={dplCmsConfig}>
+        <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
           <Theme>
             <ReactQueryProvider>
               <Header />

@@ -1,5 +1,6 @@
+"use server"
+
 import { unstable_cacheLife as cacheLife } from "next/cache"
-import { z } from "zod"
 
 import {
   useGetDplCmsPrivateConfigurationQuery,
@@ -7,66 +8,78 @@ import {
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import { getServerEnv } from "../env"
+import { privateConfigSchema, publicConfigSchema } from "./configSchemas"
 
 const queryDplCmsPrivateConfig = async () => {
   const { goConfiguration } = await useGetDplCmsPrivateConfigurationQuery.fetcher(undefined)()
   return goConfiguration?.private ?? null
 }
 
-export const getDplCmsPrivateUniloginConfig = async () => {
-  const wellknownUrl = getServerEnv("UNILOGIN_WELLKNOWN_URL")
-  const clientId = getServerEnv("UNILOGIN_CLIENT_ID")
-  const clientSecret = getServerEnv("UNILOGIN_CLIENT_SECRET")
+const queryDplCmsPublicConfig = async () => {
+  const { goConfiguration } = await useGetDplCmsPublicConfigurationQuery.fetcher(undefined)()
+  return goConfiguration?.public ?? null
+}
 
-  const configEnv = {
-    wellknownUrl,
-    clientId,
-    clientSecret,
-  }
+const getDplCmsPrivateConfigData = async () => {
+  "use cache"
+  // Automatically expires after a few minutes
+  // @todo Implement cache tags when we are sure that the cms is revalidating go configuration properly.
+  cacheLife("minutes")
 
-  let configAPI = {}
-  // If we are running in test mode, we don't want to query the DPL CMS config
-  const config = await queryDplCmsPrivateConfig()
-  if (config?.unilogin) {
-    configAPI = {
-      wellknownUrl: config.unilogin.unilogin_api_wellknown_url ?? null,
-      clientId: config.unilogin.unilogin_api_client_id ?? null,
-      clientSecret: config.unilogin.unilogin_api_client_secret ?? null,
+  try {
+    const data = await queryDplCmsPrivateConfig()
+    return privateConfigSchema.parse(data)
+  } catch {
+    return {
+      unilogin: {
+        clientSecret: null,
+        webServiceUsername: null,
+        webServicePassword: null,
+        pubHubRetailerKeyCode: null,
+      },
     }
-  }
-
-  return {
-    ...configAPI,
-    ...configEnv,
   }
 }
 
-const dplCmsPublicConfigSchema = z.object({
-  public: z.object({
-    loginUrls: z.object({
-      adgangsplatformen: z.string().nullable(),
-    }),
-    logoutUrls: z.object({
-      adgangsplatformen: z.string().nullable(),
-    }),
-    libraryInfo: z.object({
-      name: z.string().nullable(),
-    }),
-  }),
-})
+export const getDplCmsPrivateConfig = async () => {
+  const data = await getDplCmsPrivateConfigData()
 
-export type TDplCmsPublicConfig = z.infer<typeof dplCmsPublicConfigSchema>["public"]
+  const uniLoginConfigEnv = {
+    ...(getServerEnv("UNILOGIN_CLIENT_SECRET")
+      ? { clientSecret: getServerEnv("UNILOGIN_CLIENT_SECRET") }
+      : {}),
+    ...(getServerEnv("UNLILOGIN_SERVICES_WS_USER")
+      ? { webServiceUsername: getServerEnv("UNLILOGIN_SERVICES_WS_USER") }
+      : {}),
+    ...(getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD")
+      ? { webServicePassword: getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD") }
+      : {}),
+    ...(getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE")
+      ? { pubHubRetailerKeyCode: getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE") }
+      : {}),
+  }
 
-export const getDplCmsPublicConfig = async () => {
+  const unilogin = {
+    ...data.unilogin,
+    ...uniLoginConfigEnv,
+  }
+  return {
+    ...data,
+    unilogin,
+  }
+}
+
+const getDplCmsPublicConfigData = async () => {
   "use cache"
   // Automatically expires after a few minutes
+  // @todo Implement cache tags when we are sure that the cms is revalidating go configuration properly.
   cacheLife("minutes")
 
-  // @todo Implement cache tags when we are sure that the cms is revalidating go configuration properly.
   try {
-    const data = await useGetDplCmsPublicConfigurationQuery.fetcher(undefined)()
-    return dplCmsPublicConfigSchema.parse(data.goConfiguration).public
+    const data = await queryDplCmsPublicConfig()
+    return publicConfigSchema.parse(data)
   } catch {
+    console.error("Failed to parse DPL CMS public config")
     return {
       loginUrls: {
         adgangsplatformen: null,
@@ -77,6 +90,20 @@ export const getDplCmsPublicConfig = async () => {
       libraryInfo: {
         name: null,
       },
+      unilogin: {
+        municipalityId: null,
+      },
     }
   }
+}
+
+export const getDplCmsPublicConfig = async () => {
+  const data = await getDplCmsPublicConfigData()
+  // If environment variables are set, they will override the values from DPL CMS.
+  const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
+  if (envMunicipalityId) {
+    data.unilogin.municipalityId = envMunicipalityId
+  }
+
+  return data
 }

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import React from "react"
+import React, { Suspense } from "react"
 
 import CategorySliderLayout from "@/app/(pages-with-category-slider)/layout"
 import ArticlePageLayout, {
@@ -15,7 +15,7 @@ import loadPreviewPage from "./loadPreviewPage"
 
 export const metadata: Metadata = setPageMetadata("Preview")
 
-async function Page(props: {
+async function PreviewPage(props: {
   params: Promise<{ id: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
@@ -57,6 +57,17 @@ async function Page(props: {
   }
 
   return notFound()
+}
+
+async function Page(props: {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  return (
+    <Suspense>
+      <PreviewPage {...props} />
+    </Suspense>
+  )
 }
 
 export default Page

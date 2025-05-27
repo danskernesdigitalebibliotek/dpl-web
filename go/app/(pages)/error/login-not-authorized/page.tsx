@@ -10,14 +10,15 @@ const descriptionComponent = (
   <>
     <p>
       Din skole er ikke tilmeldt GO med UNI-login. Brug almindeligt bibliotekslogin i stedet. Hvis
-      du ikke har et, kan du få et på dit lokale bibliotek med en forælder/værge. Det er gratis.
+      du ikke har et, kan du få et på dit lokale bibliotek med en forælder/værge. Det koster ikke
+      noget at få et bibliotekslogin.
     </p>
     <h4>
       Er du medarbejder på en skole, der ønsker en aftale om login med UNI-login på eReolen GO?
     </h4>
     <p>
       For at elever og medarbejdere på din skole kan få adgang til at logge ind med UNI-login på GO,
-      skal I kontakte jeres kommunes bibliotek, for at få nærmere informationer om muligheden.
+      skal I kontakte jeres kommunes bibliotek for at få nærmere informationer om muligheden.
     </p>
     <p>
       Er du i tvivl, om I allerede er tilmeldt GO med UNI-login, eller har du andre generelle

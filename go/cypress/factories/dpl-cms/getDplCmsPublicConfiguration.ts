@@ -20,6 +20,12 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery, Params>(({ tran
         logoutUrls: {
           adgangsplatformen: `${appUrl}/logout?current-path=/go-logout`,
         },
+        libraryInfo: {
+          name: "Test Library",
+        },
+        unilogin: {
+          municipalityId: "110",
+        },
       },
     },
   }

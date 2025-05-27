@@ -1,19 +1,21 @@
 "use client"
 
-import { createContext } from "react"
+import React, { createContext } from "react"
 
-import { TDplCmsPublicConfig } from "../config/dpl-cms/dplCmsConfig"
+import { TDplCmsPublicConfig } from "../config/dpl-cms/configSchemas"
 
 export const DplCmsConfigContext = createContext<TDplCmsPublicConfig | null>(null)
 
-export default function DplCmsConfigContextProvider({
+function DplCmsConfigContextProvider({
+  dplCmsConfig,
   children,
-  config,
 }: {
+  dplCmsConfig: TDplCmsPublicConfig
   children: React.ReactNode
-  config: TDplCmsPublicConfig | null
 }) {
   return (
-    <DplCmsConfigContext.Provider value={config ?? null}>{children}</DplCmsConfigContext.Provider>
+    <DplCmsConfigContext.Provider value={dplCmsConfig}>{children}</DplCmsConfigContext.Provider>
   )
 }
+
+export default DplCmsConfigContextProvider

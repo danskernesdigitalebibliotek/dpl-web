@@ -1,6 +1,7 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
 import { Metadata } from "next"
 import { headers } from "next/headers"
+import { Suspense } from "react"
 
 import SearchPageLayout from "@/components/pages/searchPageLayout/SearchPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
@@ -29,7 +30,11 @@ const SearchPage = async (props: TSearchPageProps) => {
 }
 
 async function Page(props: TSearchPageProps) {
-  return <SearchPage {...props} />
+  return (
+    <Suspense>
+      <SearchPage {...props} />
+    </Suspense>
+  )
 }
 
 export default Page
