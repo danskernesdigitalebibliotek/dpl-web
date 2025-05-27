@@ -21,6 +21,7 @@ describe('Webforms', () => {
     cy.findByRole('button', { name: 'Send besked' }).click();
     cy.findByLabelText('Dit navn').then((element) => {
       expect(element[0].validationMessage).to.be.oneOf([
+        'Udfyld dette felt.',
         'Please fill in this field.',
         'Please fill out this field.',
       ]);
