@@ -11,6 +11,12 @@ type GoLogoutUrls {
   adgangsplatformen: String
 }
 
+type SearchProfiles {
+  defaultProfile: String
+  searchProfile: String
+  materialProfile: String
+}
+
 type UniloginConfigurationPrivate {
   clientSecret: String
   webServiceUsername: String
@@ -30,6 +36,7 @@ type GoConfigurationPublic {
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
+  searchProfiles: SearchProfiles
   unilogin: UniloginConfigurationPublic
 }
 
