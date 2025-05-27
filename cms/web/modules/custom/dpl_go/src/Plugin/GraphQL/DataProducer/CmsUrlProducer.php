@@ -51,6 +51,7 @@ class CmsUrlProducer extends DataProducerPluginBase implements ContainerFactoryP
    * Resolves the library name.
    */
   public function resolve(FieldContext $field_context): string {
+    /* @todo We should make this cacheable and add cache tags */
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
     return $this->goSite->getCmsBaseUrl();
   }

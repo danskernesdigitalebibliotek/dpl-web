@@ -1,7 +1,7 @@
 
 type GoLibraryInfo {
   name: String
-  cmsUrl: String
+  cmsUrl: String!
 }
 
 type GoLoginUrls {
