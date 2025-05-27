@@ -1,8 +1,4 @@
 describe('Webforms', () => {
-  before(() => {
-    cy.enableDevelMailLog();
-  });
-
   it('Go to the default contact webform page and fill it out successfully.', () => {
     cy.visit('/kontakt');
     cy.findByLabelText('Dit navn').type('John Doe');

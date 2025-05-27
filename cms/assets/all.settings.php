@@ -144,6 +144,12 @@ if (getenv('CI')) {
     'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
   ];
 
+  // Avoid attempts to send out mail during tests.
+  $config['mailsystem.settings']['defaults'] = [
+    'formatter' => 'devel_mail_log',
+    'sender' => 'devel_mail_log',
+  ];
+
   // We need to be fixed language in our UI texts
   // because we use them for assertions in tests.
   $config['language.negotiation']['selected_langcode'] = 'en';

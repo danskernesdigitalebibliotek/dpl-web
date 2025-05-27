@@ -116,15 +116,6 @@ Cypress.Commands.add('drupalCron', () => {
   cy.drupalLogout();
 });
 
-Cypress.Commands.add('enableDevelMailLog', () => {
-  cy.drupalLogin();
-  cy.visit('/admin/config/system/mailsystem');
-  cy.findByLabelText('Formatter').select('devel_mail_log');
-  cy.findByLabelText('Sender').select('devel_mail_log');
-  cy.findByRole('button', { name: 'Save configuration' }).click();
-  cy.anonymousUser();
-});
-
 const adgangsplatformenLoginOauthMappings = ({
   userIsAlreadyRegistered,
   authorizationCode,
@@ -387,7 +378,6 @@ declare global {
       drupalLogin(url?: string): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
-      enableDevelMailLog(): Chainable<null>;
       adgangsplatformenLogin(params: {
         authorizationCode: string;
         accessToken: string;
