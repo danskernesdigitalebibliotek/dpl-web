@@ -104,27 +104,18 @@ describe('Webforms', () => {
 
   it('Can delete an existing webform.', () => {
     cy.drupalLogin('/admin/structure/webform');
-    cy.get('td')
-      .contains('Cypress Test Webform')
-      .closest('tr')
-      .findByRole('button')
-      .click()
-      .then(() => {
-        cy.get('td')
-          .contains('Cypress Test Webform')
-          .closest('tr')
-          .contains('li > a', 'Delete')
-          .click();
-      });
-    cy.get('.messages__content').contains(
-      'Are you sure you want to delete the Cypress Test Webform webform?',
+    cy.get('[data-drupal-selector="edit-items-cypress-test-webform"]').click();
+    cy.findByLabelText('Action').select('Delete webform');
+    cy.findAllByRole('button', {
+      name: 'Apply to selected items',
+    })
+      .first()
+      .click();
+    cy.findByLabelText('Warning message').contains(
+      'Are you sure you want to delete this webform?',
     );
-    cy.findByLabelText(
-      'Yes, I want to delete the Cypress Test Webform webform',
-    ).click();
+    cy.findByLabelText('Yes, I want to delete this webform.').click();
     cy.findByRole('button', { name: 'Delete' }).click();
-    cy.get('.messages__content').contains(
-      'The webform Cypress Test Webform has been deleted.',
-    );
+    cy.findByLabelText('Status message').contains('Deleted 1 item');
   });
 });
