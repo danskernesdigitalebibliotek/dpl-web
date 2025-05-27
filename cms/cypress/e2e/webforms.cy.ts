@@ -19,8 +19,8 @@ describe('Webforms', () => {
   it('Go to the default contact webform page and check that required fields are working.', () => {
     cy.visit('/kontakt');
     cy.findByRole('button', { name: 'Send besked' }).click();
-    cy.findByLabelText('Dit navn').then(($input) => {
-      expect($input[0].validationMessage).to.be.oneOf([
+    cy.findByLabelText('Dit navn').then((element) => {
+      expect(element[0].validationMessage).to.be.oneOf([
         'Please fill in this field.',
         'Please fill out this field.',
       ]);
