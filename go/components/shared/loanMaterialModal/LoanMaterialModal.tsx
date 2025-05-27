@@ -106,7 +106,7 @@ const LoanMaterialModal = ({
       {/* Description */}
       <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
         <p className="text-typo-subtitle-md text-center">
-          {`Er du sikker på at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
+          {`Er du sikker på, at du vil låne materialet${` (${getManifestationMaterialTypeSpecific(manifestation)})?` || "?"}`}
         </p>
         {publizonError && (
           <div className="flex">
