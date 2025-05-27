@@ -2,15 +2,14 @@
  * @file
  * Handles Mapp tracking in the browser.
  */
-/* global wts:false */
 
-(function dplMapp(once, wts) {
+(function dplMapp(once) {
   const pushEvent = function pushEvent(eventId, eventData) {
     console.debug('DPL Mapp: Pushing %s event %o', eventId, eventData);
 
     // Ensure that the Mapp object is defined before pushing event.
-    if (typeof wts !== 'undefined') {
-      wts.push(['send', eventId, eventData]);
+    if (typeof window.wts !== 'undefined') {
+      window.wts.push(['send', eventId, eventData]);
     }
   };
 
@@ -38,4 +37,4 @@
       );
     },
   };
-})(once, wts);
+})(once);
