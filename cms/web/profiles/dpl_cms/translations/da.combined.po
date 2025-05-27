@@ -26584,7 +26584,7 @@ msgstr "Afpubliser serien, når alle instancer har været afholdt (anbefales IKK
 #: 
 msgctxt "DPL event"
 msgid "Notice - if series get unpublished, old instance links will no longer work. If you however keep the series published, expired instances will redirect to the associated series."
-msgstr "Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instans-links ikke virke længere. Kan være et problem ift. links I har udsendt på fx sociale medier. Hvis du vælger at bevare publiseringen, vil udløbne instanser blive henvist til de relaterede serier."
+msgstr "Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instans-links ikke virke længere. Borgerne kan møde døde links, som I har udsendt på fx sociale medier eller hvis hvis I har indsat instansen i en manuel paragraf. Hvis du vælger at bevare publiseringen, vil udløbne instanser blive henvist til de relaterede serier."
 
 #: 
 msgctxt "BNF"
