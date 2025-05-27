@@ -19,5 +19,3 @@ export async function GET() {
   console.error("Could not retrieve Adgangsplatformen user token.")
   return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-ap")}`)
 }
-
-export const dynamic = "force-dynamic"
