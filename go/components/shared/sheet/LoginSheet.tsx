@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useContext } from "react"
 
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
@@ -28,7 +30,6 @@ function LoginSheet({ open }: { open: boolean }) {
                 <LoginButton url="/auth/login/unilogin" />
               </div>
             </div>
-
             <>
               <hr className="mx-auto" />
               <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
@@ -39,7 +40,10 @@ function LoginSheet({ open }: { open: boolean }) {
                   Login via Bibliotekernes fælles loginside
                 </div>
                 <div>
-                  {loginUrlAdgangsplatformen && <LoginButton url={loginUrlAdgangsplatformen} />}
+                  <LoginButton
+                    url={loginUrlAdgangsplatformen ?? ""}
+                    disabled={!loginUrlAdgangsplatformen}
+                  />
                 </div>
               </div>
             </>

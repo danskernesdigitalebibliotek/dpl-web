@@ -14,10 +14,7 @@ function Header() {
   return (
     <header>
       <div className="h-navigation-top-height bg-background-overlay flex items-center justify-center">
-        <Suspense
-          fallback={<div className="bg-background-skeleton h-3 w-14 animate-pulse rounded-full" />}>
-          <LinkToParentLibrary />
-        </Suspense>
+        <LinkToParentLibrary />
       </div>
       <div className="content-container h-navigation-height grid grid-cols-3 items-center">
         <div className="flex flex-0 items-center" data-cy={cyKeys["go-logo"]}>

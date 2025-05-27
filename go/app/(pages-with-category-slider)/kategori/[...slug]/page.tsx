@@ -1,5 +1,5 @@
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
-import React from "react"
+import React, { Suspense } from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
@@ -38,7 +38,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
   return null
 }
 
-async function page(props: { params: Promise<{ slug: string[] }> }) {
+async function CategoryPage(props: { params: Promise<{ slug: string[] }> }) {
   const data = await getPage((await props.params).slug)
   const entity = getEntityFromPageData(data)
 
@@ -46,6 +46,14 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
     <RedirectNotFoundOrRenderPage data={data} pageType="NodeGoCategory">
       <CategoryPageLayout pageData={entity as NodeGoCategory} />
     </RedirectNotFoundOrRenderPage>
+  )
+}
+
+async function page(props: { params: Promise<{ slug: string[] }> }) {
+  return (
+    <Suspense>
+      <CategoryPage {...props} />
+    </Suspense>
   )
 }
 

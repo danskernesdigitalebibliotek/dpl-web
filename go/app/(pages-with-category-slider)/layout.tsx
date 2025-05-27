@@ -4,20 +4,11 @@ import CategorySlider, { TNodeGoCategory } from "@/components/shared/categorySli
 import loadCategories from "@/components/shared/categorySlider/loadCategories"
 import "@/styles/globals.css"
 
-async function CategorySliderLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+async function CategorySliderLayout() {
   const data = await loadCategories()
   const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
 
-  return (
-    <div className="min-h-screen-minus-navigation-height flex h-full w-full flex-col">
-      <CategorySlider categories={categories} />
-      <div className="py-space-y">{children}</div>
-    </div>
-  )
+  return <CategorySlider categories={categories} />
 }
 
 export default function Layout({
@@ -26,8 +17,11 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <Suspense>
-      <CategorySliderLayout>{children}</CategorySliderLayout>
-    </Suspense>
+    <div className="min-h-screen-minus-navigation-height flex h-full w-full flex-col">
+      <Suspense>
+        <CategorySliderLayout />
+      </Suspense>
+      <div className="py-space-y">{children}</div>
+    </div>
   )
 }

@@ -41,12 +41,12 @@ const SearchPageLayout = () => {
 
   return (
     <div className="content-container space-y-grid-gap-2">
-      {searchQuery && (
+      {searchQuery && machineIsReady && (
         <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
           {`Viser resultater for ${searchQueryText} ${hitCountText}`}
         </h1>
       )}
-      {searchQuery ? (
+      {searchQuery && machineIsReady ? (
         <>
           {!isLoadingFacets && data.facets && data.facets.length > 0 ? (
             <div className="relative">
@@ -59,7 +59,6 @@ const SearchPageLayout = () => {
             </div>
           ) : (
             <>
-              <div className="lg:hidden">{/* <SearchFiltersMobileSkeleton /> */}</div>
               <div className="hidden lg:block">
                 <SearchFiltersDesktopSkeleton />
               </div>
@@ -89,11 +88,9 @@ const SearchPageLayout = () => {
         </>
       ) : (
         <>
-          {machineIsReady && (
-            <div className="text-typo-body-1">
-              <p className="text-foreground opacity-80">Ingen søgeord fundet</p>
-            </div>
-          )}
+          <div className="text-typo-body-1">
+            <p className="text-foreground opacity-80">Ingen søgeord fundet</p>
+          </div>
         </>
       )}
       <div ref={loadMoreRef} className="h-0 -translate-y-[500px] opacity-0"></div>

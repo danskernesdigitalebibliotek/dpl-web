@@ -4,19 +4,20 @@ import { Button } from "@/components/shared/button/Button"
 import ButtonWithLoadingStateHoc from "@/components/shared/button/ButtonWithLoadingStateHoc"
 
 type TFindBookButtonProps = {
-  isLoading?: boolean
   onClick?: () => void
   url: string
+  disabled?: boolean
 }
 
 const className = "min-w-40"
 const theme = "primary"
 
-const LoginButton = ({ onClick, url }: TFindBookButtonProps) => {
+const LoginButton = ({ onClick, url, disabled }: TFindBookButtonProps) => {
   const router = useRouter()
 
   return (
     <Button
+      disabled={disabled}
       theme="primary"
       onClick={() => {
         if (onClick) {
