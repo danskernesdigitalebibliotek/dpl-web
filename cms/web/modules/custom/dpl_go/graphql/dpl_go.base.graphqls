@@ -13,9 +13,9 @@ type GoLogoutUrls {
 }
 
 type SearchProfiles {
-  defaultProfile: String
-  searchProfile: String
-  materialProfile: String
+  default: String
+  local: String
+  global: String
 }
 
 type UniloginConfigurationPrivate {
