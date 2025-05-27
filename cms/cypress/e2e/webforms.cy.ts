@@ -93,7 +93,8 @@ describe('Webforms', () => {
       .contains('Cypress Test Webform')
       .closest('tr')
       .contains('li > a', 'Build')
-      .click();
+      // Use force to bypass sticky table header.
+      .click({ force: true });
     cy.get('.tabs__link').contains('Settings').click();
     cy.get('.tabs__link').contains('Emails / Handlers').click();
     cy.get('.local-actions__item').contains('Add email').click();
