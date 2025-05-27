@@ -82,7 +82,6 @@ describe('Webforms', () => {
     cy.get(
       'a[data-drupal-selector="edit-elements-textfield-operation"]',
     ).click();
-    //cy.findByLabelText('Title').closest('input').type('Test text field');
     cy.get('input[data-drupal-selector="title"]').type('Test text field');
     cy.findByRole('button', { name: 'Save' }).click();
   });
