@@ -4,25 +4,24 @@ namespace Drupal\dpl_go\Plugin\GraphQL\DataProducer;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_library_agency\FbiProfileType;
-use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\dpl_go\GoSite;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Resolves search profiles configuration for the library.
+ * Resolves the FB-CMS URL of the library.
  *
  * @DataProducer(
- *   id = "search_profiles_producer",
- *   name = "Library Search Profiles Producer",
- *   description = "Provides the library search profile configuration.",
+ *   id = "cms_url_producer",
+ *   name = "FB-CMS URL Producer",
+ *   description = "Provides the FB-CMS URL.",
  *   produces = @ContextDefinition("any",
  *     label = "Request Response"
  *   )
  * )
  */
-class SearchProfilesProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
+class CmsUrlProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -31,7 +30,7 @@ class SearchProfilesProducer extends DataProducerPluginBase implements Container
     array $configuration,
     string $pluginId,
     mixed $pluginDefinition,
-    protected GeneralSettings $generalSettings,
+    protected GoSite $goSite,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -44,23 +43,16 @@ class SearchProfilesProducer extends DataProducerPluginBase implements Container
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('dpl_library_agency.general_settings')
+      $container->get('dpl_go.go_site'),
     );
   }
 
   /**
-   * Resolves the Unilogin info.
-   *
-   * @return mixed[]
-   *   The Unilogin configuration.
+   * Resolves the library name.
    */
-  public function resolve(FieldContext $field_context): array {
+  public function resolve(FieldContext $field_context): string {
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
-    return [
-      'defaultProfile' => $this->generalSettings->getFbiProfile(FbiProfileType::DEFAULT) ?: NULL,
-      'searchProfile' => $this->generalSettings->getFbiProfile(FbiProfileType::LOCAL) ?: NULL,
-      'materialProfile' => $this->generalSettings->getFbiProfile(FbiProfileType::GLOBAL) ?: NULL,
-    ];
+    return $this->goSite->getCmsBaseUrl();
   }
 
 }

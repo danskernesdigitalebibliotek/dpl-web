@@ -42,6 +42,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
       $builder->produce('library_name')
     );
 
+    $registry->addFieldResolver('GoLibraryInfo', 'cmsUrl',
+      $builder->produce('cms_url_producer')
+    );
+
     $registry->addFieldResolver('GoConfigurationPrivate', 'unilogin',
       $builder->produce('unilogin_private_producer')
     );
