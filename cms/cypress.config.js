@@ -8,6 +8,9 @@ module.exports = defineConfig({
       runMode: 3,
       openMode: 0,
     },
+    setupNodeEvents(on, config) {
+      require('cypress-terminal-report/src/installLogsPrinter')(on)
+    }
   },
   env: {
     // This is intentionally left empty.
