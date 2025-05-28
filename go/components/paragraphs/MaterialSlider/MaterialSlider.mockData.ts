@@ -1,136 +1,355 @@
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] = [
   {
-    workId: "work-of:870970-basis:47664349",
+    workId: "work-of:870970-basis:22252852",
     titles: {
-      full: ["Adams cykel"],
-      original: [],
+      full: ["Harry Potter og De Vises Sten"],
+      original: ["Harry Potter and the philosopher's stone"],
     },
     creators: [
       {
-        display: "Jørn Jensen (f. 1946)",
+        display: "Joanne K. Rowling",
         __typename: "Person",
       },
     ],
     materialTypes: [
       {
         materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
         },
       },
     ],
     workYear: {
-      display: "2019",
+      display: "1997",
     },
     manifestations: {
       all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
+                code: "BOOKS",
+                display: "bøger",
               },
             },
           ],
-          pid: "870970-basis:48137857",
+          pid: "870970-basis:38289977",
           identifiers: [
             {
-              type: "PUBLIZON",
-              value: "9788772147253",
-            },
-            {
               type: "ISBN",
-              value: "9788772147253",
+              value: "9788702301588",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "356 sider, ill. i farver",
           },
-          dateFirstEdition: {
-            display: "2019",
-          },
+          dateFirstEdition: null,
           edition: {
             publicationYear: {
               display: "2020",
               year: 2020,
             },
             contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2020",
+            edition: "9. udgave",
+            summary: "9. udgave, 2020",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
+              display: "Hanna Lützen",
             },
             {
-              display: "Marianne Pedersen",
+              display: "MinaLima (firma)",
             },
           ],
           contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:51980247",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702173222",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "355 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2015",
+              year: 2015,
+            },
+            contributors: [],
+            edition: "6 udgave",
+            summary: "6 udgave, 2015",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:51989252",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702179859",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "246 sider, ill. i farver, 28cm",
+          },
+          dateFirstEdition: {
+            display: "2015",
+          },
+          edition: {
+            publicationYear: {
+              display: "2015",
+              year: 2015,
+            },
+            contributors: [],
+            edition: "1. illustrerede udgave, 7. udgave",
+            summary: "1. illustrerede udgave, 7. udgave, 2015",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Jim Kay",
+            },
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:54871910",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702272451",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "355 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2018",
+              year: 2018,
+            },
+            contributors: [],
+            edition: "8. udgave",
+            summary: "8. udgave, 2018",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
+              },
+            },
+          ],
+          pid: "870970-basis:27638708",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702075380",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "1 cd i 1 mappe (mp3, 9 t., 40 min.)",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2009",
+              year: 2009,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2009",
+          },
+          genreAndForm: ["eventyrlige fortællinger", "romaner"],
+          publisher: ["Gyldendal Lyd"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+            {
+              display: "Jesper Christensen (f. 1948)",
+            },
+          ],
+          contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
         },
       ],
       bestRepresentation: {
         accessTypes: [
           {
-            code: "ONLINE",
-            display: "Digital",
+            code: "PHYSICAL",
+            display: "fysisk",
           },
         ],
-        access: [],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
         materialTypes: [
           {
             materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
+              code: "BOOKS",
+              display: "bøger",
             },
           },
         ],
-        pid: "870970-basis:48137857",
+        pid: "870970-basis:38289977",
         identifiers: [
           {
-            type: "PUBLIZON",
-            value: "9788772147253",
-          },
-          {
             type: "ISBN",
-            value: "9788772147253",
+            value: "9788702301588",
           },
         ],
+        cover: coverFactory.build(),
         physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
+          summaryFull: "356 sider, ill. i farver",
         },
-        dateFirstEdition: {
-          display: "2019",
-        },
+        dateFirstEdition: null,
         edition: {
           publicationYear: {
             display: "2020",
             year: 2020,
           },
           contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2020",
+          edition: "9. udgave",
+          summary: "9. udgave, 2020",
         },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
+        genreAndForm: ["romaner", "fantasy"],
+        publisher: ["Gyldendal"],
         contributors: [
           {
-            display: "Kim Dalsgaard",
+            display: "Hanna Lützen",
           },
           {
-            display: "Marianne Pedersen",
+            display: "MinaLima (firma)",
           },
         ],
         contributorsFromDescription: [],
@@ -138,488 +357,466 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     },
   },
   {
-    workId: "work-of:870970-basis:53559662",
+    workId: "work-of:870970-basis:25197887",
     titles: {
-      full: ["Adams ballon"],
-      original: [],
+      full: ["Harry Potter og Hemmelighedernes Kammer"],
+      original: ["Harry Potter and the Chamber of Secrets"],
     },
     creators: [
       {
-        display: "Jørn Jensen (f. 1946)",
+        display: "Joanne K. Rowling",
         __typename: "Person",
       },
     ],
     materialTypes: [
       {
         materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
         },
       },
     ],
     workYear: {
-      display: "2017",
+      display: "1998",
     },
     manifestations: {
       all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
+                code: "BOOKS",
+                display: "bøger",
               },
             },
           ],
-          pid: "870970-basis:46618718",
+          pid: "870970-basis:61636935",
           identifiers: [
             {
-              type: "PUBLIZON",
-              value: "9788772144450",
-            },
-            {
               type: "ISBN",
-              value: "9788772144450",
+              value: "9788702319361",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "384 sider, ill. i farver",
           },
-          dateFirstEdition: {
-            display: "2017",
-          },
+          dateFirstEdition: null,
           edition: {
             publicationYear: {
-              display: "2017",
-              year: 2017,
+              display: "2021",
+              year: 2021,
             },
             contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2017",
+            edition: "9. udgave",
+            summary: "9. udgave, 2021",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
+              display: "Hanna Lützen",
             },
             {
-              display: "Marianne Pedersen",
+              display: "MinaLima (firma)",
             },
           ],
           contributorsFromDescription: [],
         },
-      ],
-      bestRepresentation: {
-        accessTypes: [
-          {
-            code: "ONLINE",
-            display: "Digital",
-          },
-        ],
-        access: [],
-        materialTypes: [
-          {
-            materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
-            },
-          },
-        ],
-        pid: "870970-basis:46618718",
-        identifiers: [
-          {
-            type: "PUBLIZON",
-            value: "9788772144450",
-          },
-          {
-            type: "ISBN",
-            value: "9788772144450",
-          },
-        ],
-        physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
-        },
-        dateFirstEdition: {
-          display: "2017",
-        },
-        edition: {
-          publicationYear: {
-            display: "2017",
-            year: 2017,
-          },
-          contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2017",
-        },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
-        contributors: [
-          {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
-          },
-        ],
-        contributorsFromDescription: [],
-      },
-    },
-  },
-  {
-    workId: "work-of:870970-basis:53559700",
-    titles: {
-      full: ["Adams bold"],
-      original: [],
-    },
-    creators: [
-      {
-        display: "Jørn Jensen (f. 1946)",
-        __typename: "Person",
-      },
-    ],
-    materialTypes: [
-      {
-        materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
-        },
-      },
-    ],
-    workYear: {
-      display: "2017",
-    },
-    manifestations: {
-      all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
+                code: "BOOKS",
+                display: "bøger",
               },
             },
           ],
-          pid: "870970-basis:46618734",
+          pid: "870970-basis:51980239",
           identifiers: [
             {
-              type: "PUBLIZON",
-              value: "9788772144467",
-            },
-            {
               type: "ISBN",
-              value: "9788772144467",
+              value: "9788702173239",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "396 sider",
           },
-          dateFirstEdition: {
-            display: "2017",
-          },
+          dateFirstEdition: null,
           edition: {
             publicationYear: {
-              display: "2017",
-              year: 2017,
+              display: "2015",
+              year: 2015,
             },
             contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2017",
+            edition: "6. udgave",
+            summary: "6. udgave, 2015",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
-            },
-            {
-              display: "Marianne Pedersen",
+              display: "Hanna Lützen",
             },
           ],
           contributorsFromDescription: [],
         },
-      ],
-      bestRepresentation: {
-        accessTypes: [
-          {
-            code: "ONLINE",
-            display: "Digital",
-          },
-        ],
-        access: [],
-        materialTypes: [
-          {
-            materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
-            },
-          },
-        ],
-        pid: "870970-basis:46618734",
-        identifiers: [
-          {
-            type: "PUBLIZON",
-            value: "9788772144467",
-          },
-          {
-            type: "ISBN",
-            value: "9788772144467",
-          },
-        ],
-        physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
-        },
-        dateFirstEdition: {
-          display: "2017",
-        },
-        edition: {
-          publicationYear: {
-            display: "2017",
-            year: 2017,
-          },
-          contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2017",
-        },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
-        contributors: [
-          {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
-          },
-        ],
-        contributorsFromDescription: [],
-      },
-    },
-  },
-  {
-    workId: "work-of:870970-basis:54486995",
-    titles: {
-      full: ["Adams pony"],
-      original: [],
-    },
-    creators: [
-      {
-        display: "Jørn Jensen (f. 1946)",
-        __typename: "Person",
-      },
-    ],
-    materialTypes: [
-      {
-        materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
-        },
-      },
-    ],
-    workYear: {
-      display: "2018",
-    },
-    manifestations: {
-      all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
               },
             },
           ],
-          pid: "870970-basis:46680057",
+          pid: "870970-basis:27639097",
           identifiers: [
             {
-              type: "PUBLIZON",
-              value: "9788772145099",
+              type: "ISBN",
+              value: "9788702075397",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "1 cd i 1 mappe (mp3, 11 t., 3 min.)",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2009",
+              year: 2009,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2009",
+          },
+          genreAndForm: ["eventyrlige fortællinger", "romaner"],
+          publisher: ["Gyldendal Lyd"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+            {
+              display: "Jesper Christensen (f. 1948)",
+            },
+          ],
+          contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "710100-katalog:22677780",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788700459946",
             },
             {
               type: "ISBN",
-              value: "9788772145099",
+              value: "87-00-45994-1",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "338 sider",
           },
           dateFirstEdition: {
-            display: "2018",
+            display: "1999",
           },
           edition: {
             publicationYear: {
-              display: "2018",
-              year: 2018,
+              display: "1999",
+              year: 1999,
             },
             contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2018",
+            edition: "2. udgave",
+            summary: "2. udgave, 1999",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
+              display: "Hanna Lützen",
             },
+          ],
+          contributorsFromDescription: ["på dansk ved Hanna Lützen"],
+        },
+        {
+          accessTypes: [
             {
-              display: "Marianne Pedersen",
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:29316945",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702114331",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "338 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2012",
+              year: 2012,
+            },
+            contributors: [],
+            edition: "5. udgave",
+            summary: "5. udgave, 2012",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
             },
           ],
           contributorsFromDescription: [],
         },
-      ],
-      bestRepresentation: {
-        accessTypes: [
-          {
-            code: "ONLINE",
-            display: "Digital",
-          },
-        ],
-        access: [],
-        materialTypes: [
-          {
-            materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
-            },
-          },
-        ],
-        pid: "870970-basis:46680057",
-        identifiers: [
-          {
-            type: "PUBLIZON",
-            value: "9788772145099",
-          },
-          {
-            type: "ISBN",
-            value: "9788772145099",
-          },
-        ],
-        physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
-        },
-        dateFirstEdition: {
-          display: "2018",
-        },
-        edition: {
-          publicationYear: {
-            display: "2018",
-            year: 2018,
-          },
-          contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2018",
-        },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
-        contributors: [
-          {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
-          },
-        ],
-        contributorsFromDescription: [],
-      },
-    },
-  },
-  {
-    workId: "work-of:870970-basis:54487037",
-    titles: {
-      full: ["Adams fugl"],
-      original: [],
-    },
-    creators: [
-      {
-        display: "Jørn Jensen (f. 1946)",
-        __typename: "Person",
-      },
-    ],
-    materialTypes: [
-      {
-        materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
-        },
-      },
-    ],
-    workYear: {
-      display: "2018",
-    },
-    manifestations: {
-      all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
+                code: "BOOKS",
+                display: "bøger",
               },
             },
           ],
-          pid: "870970-basis:46679989",
+          pid: "870970-basis:52652219",
           identifiers: [
             {
-              type: "PUBLIZON",
-              value: "9788772145105",
-            },
-            {
               type: "ISBN",
-              value: "9788772145105",
+              value: "9788702204681",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "259 sider, ill. i farver, 28cm",
           },
           dateFirstEdition: {
-            display: "2018",
+            display: "2016",
           },
+          edition: {
+            publicationYear: {
+              display: "2016",
+              year: 2016,
+            },
+            contributors: [],
+            edition: "Illustreret udgave, 7. udgave",
+            summary: "Illustreret udgave, 7. udgave, 2016",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Jim Kay",
+            },
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
+              },
+            },
+          ],
+          pid: "870970-basis:25254031",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "87-02-02780-1",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "9 cd'er (11 t., 3 min.)",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2004",
+              year: 2004,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2004",
+          },
+          genreAndForm: ["eventyrlige fortællinger", "romaner"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+            {
+              display: "Jesper Christensen (f. 1948)",
+            },
+          ],
+          contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:54871929",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702272444",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "396 sider",
+          },
+          dateFirstEdition: null,
           edition: {
             publicationYear: {
               display: "2018",
               year: 2018,
             },
             contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2018",
+            edition: "8. udgave",
+            summary: "8. udgave, 2018",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
-            },
-            {
-              display: "Marianne Pedersen",
+              display: "Hanna Lützen",
             },
           ],
           contributorsFromDescription: [],
@@ -628,53 +825,946 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
       bestRepresentation: {
         accessTypes: [
           {
-            code: "ONLINE",
-            display: "Digital",
+            code: "PHYSICAL",
+            display: "fysisk",
           },
         ],
-        access: [],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
         materialTypes: [
           {
             materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
+              code: "BOOKS",
+              display: "bøger",
             },
           },
         ],
-        pid: "870970-basis:46679989",
+        pid: "870970-basis:61636935",
         identifiers: [
           {
-            type: "PUBLIZON",
-            value: "9788772145105",
-          },
-          {
             type: "ISBN",
-            value: "9788772145105",
+            value: "9788702319361",
           },
         ],
+        cover: coverFactory.build(),
         physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
+          summaryFull: "384 sider, ill. i farver",
+        },
+        dateFirstEdition: null,
+        edition: {
+          publicationYear: {
+            display: "2021",
+            year: 2021,
+          },
+          contributors: [],
+          edition: "9. udgave",
+          summary: "9. udgave, 2021",
+        },
+        genreAndForm: ["romaner", "fantasy"],
+        publisher: ["Gyldendal"],
+        contributors: [
+          {
+            display: "Hanna Lützen",
+          },
+          {
+            display: "MinaLima (firma)",
+          },
+        ],
+        contributorsFromDescription: [],
+      },
+    },
+  },
+  {
+    workId: "work-of:870970-basis:25197909",
+    titles: {
+      full: ["Harry Potter og Flammernes Pokal"],
+      original: ["Harry Potter and the goblet of fire"],
+    },
+    creators: [
+      {
+        display: "Joanne K. Rowling",
+        __typename: "Person",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
+    ],
+    workYear: {
+      display: "2000",
+    },
+    manifestations: {
+      all: [
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:47092183",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702284799",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "450 sider, ill. i farver, 28 cm",
+          },
+          dateFirstEdition: {
+            display: "2019",
+          },
+          edition: {
+            publicationYear: {
+              display: "2019",
+              year: 2019,
+            },
+            contributors: [],
+            edition: "Illustreret udgave, 8. udgave",
+            summary: "Illustreret udgave, 8. udgave, 2019",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+            {
+              display: "Jim Kay",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "710100-katalog:23540703",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702002805",
+            },
+            {
+              type: "ISBN",
+              value: "87-02-00280-9",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "684 sider",
+          },
+          dateFirstEdition: {
+            display: "2000",
+          },
+          edition: {
+            publicationYear: {
+              display: "2001",
+              year: 2001,
+            },
+            contributors: [],
+            edition: "2. udgave",
+            summary: "2. udgave, 2001",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: ["på dansk ved Hanna Lützen"],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:51980190",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702173253",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "615 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2015",
+              year: 2015,
+            },
+            contributors: [],
+            edition: "6. udgave",
+            summary: "6. udgave, 2015",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:54871953",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702272475",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "615 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2018",
+              year: 2018,
+            },
+            contributors: [],
+            edition: "7. udgave",
+            summary: "7. udgave, 2018",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:29317070",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702114362",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "684 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2012",
+              year: 2012,
+            },
+            contributors: [],
+            edition: "5. udgave",
+            summary: "5. udgave, 2012",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+      ],
+      bestRepresentation: {
+        accessTypes: [
+          {
+            code: "PHYSICAL",
+            display: "fysisk",
+          },
+        ],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: "BOOKS",
+              display: "bøger",
+            },
+          },
+        ],
+        pid: "870970-basis:47092183",
+        identifiers: [
+          {
+            type: "ISBN",
+            value: "9788702284799",
+          },
+        ],
+        cover: coverFactory.build(),
+        physicalDescription: {
+          summaryFull: "450 sider, ill. i farver, 28 cm",
         },
         dateFirstEdition: {
-          display: "2018",
+          display: "2019",
         },
+        edition: {
+          publicationYear: {
+            display: "2019",
+            year: 2019,
+          },
+          contributors: [],
+          edition: "Illustreret udgave, 8. udgave",
+          summary: "Illustreret udgave, 8. udgave, 2019",
+        },
+        genreAndForm: ["romaner", "fantasy"],
+        publisher: ["Gyldendal"],
+        contributors: [
+          {
+            display: "Hanna Lützen",
+          },
+          {
+            display: "Jim Kay",
+          },
+        ],
+        contributorsFromDescription: [],
+      },
+    },
+  },
+  {
+    workId: "work-of:870970-basis:134823658",
+    titles: {
+      full: ["Atlas : historien om Pa Salt"],
+      original: ["Atlas (engelsk)"],
+    },
+    creators: [
+      {
+        display: "Lucinda Riley",
+        __typename: "Person",
+      },
+      {
+        display: "Harry Whittaker",
+        __typename: "Person",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeGeneral: {
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
+    ],
+    workYear: null,
+    manifestations: {
+      all: [
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:134823658",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788763865708",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "656 sider",
+          },
+          dateFirstEdition: {
+            display: "2023",
+          },
+          edition: {
+            publicationYear: {
+              display: "2023",
+              year: 2023,
+            },
+            contributors: [],
+            edition: "1. udgave",
+            summary: "1. udgave, 2023",
+          },
+          genreAndForm: ["romaner", "slægtsromaner", "historiske romaner"],
+          publisher: ["Cicero"],
+          contributors: [
+            {
+              display: "Birgitte Brix",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
+              },
+            },
+          ],
+          pid: "870970-basis:137288524",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702411799",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "2 cd'er i 1 mappe (mp3, 19 t., 45 min.)",
+          },
+          dateFirstEdition: {
+            display: "2023",
+          },
+          edition: {
+            publicationYear: {
+              display: "2023",
+              year: 2023,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2023",
+          },
+          genreAndForm: ["slægtsromaner", "historiske romaner", "romaner"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Maria Stokholm",
+            },
+            {
+              display: "Birgitte Brix",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+      ],
+      bestRepresentation: {
+        accessTypes: [
+          {
+            code: "PHYSICAL",
+            display: "fysisk",
+          },
+        ],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: "BOOKS",
+              display: "bøger",
+            },
+          },
+        ],
+        pid: "870970-basis:134823658",
+        identifiers: [
+          {
+            type: "ISBN",
+            value: "9788763865708",
+          },
+        ],
+        cover: coverFactory.build(),
+        physicalDescription: {
+          summaryFull: "656 sider",
+        },
+        dateFirstEdition: {
+          display: "2023",
+        },
+        edition: {
+          publicationYear: {
+            display: "2023",
+            year: 2023,
+          },
+          contributors: [],
+          edition: "1. udgave",
+          summary: "1. udgave, 2023",
+        },
+        genreAndForm: ["romaner", "slægtsromaner", "historiske romaner"],
+        publisher: ["Cicero"],
+        contributors: [
+          {
+            display: "Birgitte Brix",
+          },
+        ],
+        contributorsFromDescription: [],
+      },
+    },
+  },
+  {
+    workId: "work-of:870970-basis:27267912",
+    titles: {
+      full: ["Harry Potter og Dødsregalierne"],
+      original: ["Harry Potter and the deathly hallows"],
+    },
+    creators: [
+      {
+        display: "Joanne K. Rowling",
+        __typename: "Person",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeGeneral: {
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
+    ],
+    workYear: {
+      display: "2007",
+    },
+    manifestations: {
+      all: [
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
+              },
+            },
+          ],
+          pid: "870970-basis:26931215",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702062311",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "20 cd'er (23 t., 45 min.)",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2007",
+              year: 2007,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2007",
+          },
+          genreAndForm: ["eventyrlige fortællinger", "romaner"],
+          publisher: ["Gyldendal Lyd"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+            {
+              display: "Jesper Christensen (f. 1948)",
+            },
+          ],
+          contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:29316910",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702114430",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "655 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2012",
+              year: 2012,
+            },
+            contributors: [],
+            edition: "4. udgave",
+            summary: "4. udgave, 2012",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:51979591",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702173284",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "648 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2015",
+              year: 2015,
+            },
+            contributors: [],
+            edition: "5. udgave",
+            summary: "5. udgave, 2015",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:54872186",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702272420",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "648 sider",
+          },
+          dateFirstEdition: null,
+          edition: {
+            publicationYear: {
+              display: "2018",
+              year: 2018,
+            },
+            contributors: [],
+            edition: "6. udgave",
+            summary: "6. udgave, 2018",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "710100-katalog:26917921",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702062281",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "655 sider",
+          },
+          dateFirstEdition: {
+            display: "2007",
+          },
+          edition: {
+            publicationYear: {
+              display: "2007",
+              year: 2007,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2007",
+          },
+          genreAndForm: ["romaner", "fantasy"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Hanna Lützen",
+            },
+          ],
+          contributorsFromDescription: ["på dansk ved Hanna Lützen"],
+        },
+      ],
+      bestRepresentation: {
+        accessTypes: [
+          {
+            code: "PHYSICAL",
+            display: "fysisk",
+          },
+        ],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: "BOOKS",
+              display: "bøger",
+            },
+          },
+        ],
+        pid: "870970-basis:54872186",
+        identifiers: [
+          {
+            type: "ISBN",
+            value: "9788702272420",
+          },
+        ],
+        cover: coverFactory.build(),
+        physicalDescription: {
+          summaryFull: "648 sider",
+        },
+        dateFirstEdition: null,
         edition: {
           publicationYear: {
             display: "2018",
             year: 2018,
           },
           contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2018",
+          edition: "6. udgave",
+          summary: "6. udgave, 2018",
         },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
+        genreAndForm: ["romaner", "fantasy"],
+        publisher: ["Gyldendal"],
         contributors: [
           {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
+            display: "Hanna Lützen",
           },
         ],
         contributorsFromDescription: [],

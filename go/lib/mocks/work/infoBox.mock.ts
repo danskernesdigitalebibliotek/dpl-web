@@ -1,3 +1,4 @@
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 const workMock = {
@@ -107,6 +108,7 @@ const workMock = {
         dateFirstEdition: null,
         genreAndForm: ["fantasy", "romaner", "roman"],
         publisher: ["Gad"],
+        cover: coverFactory.build(),
         contributors: [
           {
             display: "Michael Brostrup",
@@ -276,6 +278,7 @@ const workMock = {
       dateFirstEdition: null,
       genreAndForm: ["fantasy", "romaner", "roman"],
       publisher: ["Gad"],
+      cover: coverFactory.build(),
       contributors: [
         {
           display: "Michael Brostrup",

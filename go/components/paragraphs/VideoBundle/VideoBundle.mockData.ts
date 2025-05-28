@@ -1,15 +1,16 @@
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] = [
   {
-    workId: "work-of:870970-basis:47664349",
+    workId: "work-of:870970-basis:39018608",
     titles: {
-      full: ["Adams cykel"],
+      full: ["Kvinde kend din historie : spejl dig i fortiden"],
       original: [],
     },
     creators: [
       {
-        display: "Jørn Jensen (f. 1946)",
+        display: "Gry Jexen",
         __typename: "Person",
       },
     ],
@@ -20,20 +21,84 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           code: "EBOOKS",
         },
       },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
     ],
-    workYear: {
-      display: "2019",
-    },
+    workYear: null,
     manifestations: {
       all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:39018608",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702300529",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "335 sider, ill. i farver",
+          },
+          dateFirstEdition: {
+            display: "2021",
+          },
+          edition: {
+            publicationYear: {
+              display: "2021",
+              year: 2021,
+            },
+            contributors: [],
+            edition: "1. udgave",
+            summary: "1. udgave, 2021",
+          },
+          genreAndForm: ["biografier"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Thit Thyrring",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "online",
+            },
+          ],
+          access: [
+            {
+              __typename: "Ereol",
+              origin: "eReolen",
+              url: "https://ereolen.dk/ting/object/870970-basis:39018594",
+              canAlwaysBeLoaned: false,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
@@ -42,40 +107,685 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               },
             },
           ],
-          pid: "870970-basis:48137857",
+          pid: "870970-basis:39018594",
           identifiers: [
             {
               type: "PUBLIZON",
-              value: "9788772147253",
+              value: "9788702325362",
             },
             {
               type: "ISBN",
-              value: "9788772147253",
+              value: "9788702325362",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "Ill. i farver",
+          },
+          dateFirstEdition: {
+            display: "2021",
+          },
+          edition: {
+            publicationYear: {
+              display: "2021",
+              year: 2021,
+            },
+            contributors: [],
+            edition: "1. e-bogsudgave",
+            summary: "1. e-bogsudgave, 2021",
+          },
+          genreAndForm: ["biografier"],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Thit Thyrring",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+      ],
+      bestRepresentation: {
+        accessTypes: [
+          {
+            code: "PHYSICAL",
+            display: "fysisk",
+          },
+        ],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: "BOOKS",
+              display: "bøger",
+            },
+          },
+        ],
+        pid: "870970-basis:39018608",
+        identifiers: [
+          {
+            type: "ISBN",
+            value: "9788702300529",
+          },
+        ],
+        cover: coverFactory.build(),
+        physicalDescription: {
+          summaryFull: "335 sider, ill. i farver",
+        },
+        dateFirstEdition: {
+          display: "2021",
+        },
+        edition: {
+          publicationYear: {
+            display: "2021",
+            year: 2021,
+          },
+          contributors: [],
+          edition: "1. udgave",
+          summary: "1. udgave, 2021",
+        },
+        genreAndForm: ["biografier"],
+        publisher: ["Gyldendal"],
+        contributors: [
+          {
+            display: "Thit Thyrring",
+          },
+        ],
+        contributorsFromDescription: [],
+      },
+    },
+  },
+  {
+    workId: "work-of:870970-basis:52200504",
+    titles: {
+      full: ["Det sensitive hjerte : når alle døre står åbne"],
+      original: [],
+    },
+    creators: [
+      {
+        display: "Emilie Jahnnie Sigård",
+        __typename: "Person",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
+    ],
+    workYear: null,
+    manifestations: {
+      all: [
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:52144493",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788799865208",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "414 sider, ill.",
+          },
+          dateFirstEdition: {
+            display: "2015",
+          },
+          edition: {
+            publicationYear: {
+              display: "2015",
+              year: 2015,
+            },
+            contributors: [],
+            edition: "1. udgave",
+            summary: "1. udgave, 2015",
+          },
+          genreAndForm: [],
+          publisher: ["Emija"],
+          contributors: [],
+          contributorsFromDescription: [],
+        },
+      ],
+      bestRepresentation: {
+        accessTypes: [
+          {
+            code: "PHYSICAL",
+            display: "fysisk",
+          },
+        ],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: "BOOKS",
+              display: "bøger",
+            },
+          },
+        ],
+        pid: "870970-basis:52144493",
+        identifiers: [
+          {
+            type: "ISBN",
+            value: "9788799865208",
+          },
+        ],
+        cover: coverFactory.build(),
+        physicalDescription: {
+          summaryFull: "414 sider, ill.",
+        },
+        dateFirstEdition: {
+          display: "2015",
+        },
+        edition: {
+          publicationYear: {
+            display: "2015",
+            year: 2015,
+          },
+          contributors: [],
+          edition: "1. udgave",
+          summary: "1. udgave, 2015",
+        },
+        genreAndForm: [],
+        publisher: ["Emija"],
+        contributors: [],
+        contributorsFromDescription: [],
+      },
+    },
+  },
+  {
+    workId: "work-of:870970-basis:62910593",
+    titles: {
+      full: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+      original: [],
+    },
+    creators: [
+      {
+        display: "Emilie Stein",
+        __typename: "Person",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeGeneral: {
+          display: "e-bøger",
+          code: "EBOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
+    ],
+    workYear: null,
+    manifestations: {
+      all: [
+        {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "online",
+            },
+          ],
+          access: [
+            {
+              __typename: "Ereol",
+              origin: "eReolen",
+              url: "https://ereolen.dk/ting/object/870970-basis:62910585",
+              canAlwaysBeLoaned: false,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "EBOOKS",
+                display: "e-bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:62910585",
+          identifiers: [
+            {
+              type: "PUBLIZON",
+              value: "9788702341812",
+            },
+            {
+              type: "ISBN",
+              value: "9788702341812",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "202 sider, ill. i farver",
+          },
+          dateFirstEdition: {
+            display: "2022",
+          },
+          edition: {
+            publicationYear: {
+              display: "2022",
+              year: 2022,
+            },
+            contributors: [],
+            edition: "1. e-bogsudgave",
+            summary: "1. e-bogsudgave, 2022",
+          },
+          genreAndForm: [],
+          publisher: ["Gyldendal"],
+          contributors: [],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:62910593",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788702341805",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "202 sider, ill. i farver",
+          },
+          dateFirstEdition: {
+            display: "2022",
+          },
+          edition: {
+            publicationYear: {
+              display: "2022",
+              year: 2022,
+            },
+            contributors: [],
+            edition: "1. udgave",
+            summary: "1. udgave, 2022",
+          },
+          genreAndForm: [],
+          publisher: ["Gyldendal"],
+          contributors: [
+            {
+              display: "Thit Thyrring",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "online",
+            },
+          ],
+          access: [
+            {
+              __typename: "Ereol",
+              origin: "eReolen",
+              url: "https://ereolen.dk/ting/object/870970-basis:62935537",
+              canAlwaysBeLoaned: false,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
+              },
+            },
+          ],
+          pid: "870970-basis:62935537",
+          identifiers: [
+            {
+              type: "PUBLIZON",
+              value: "9788702341829",
+            },
+            {
+              type: "ISBN",
+              value: "9788702341829",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "2 t., 8 min.",
+          },
+          dateFirstEdition: {
+            display: "2022",
+          },
+          edition: {
+            publicationYear: {
+              display: "2022",
+              year: 2022,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2022",
+          },
+          genreAndForm: [],
+          publisher: ["Gyldendal"],
+          contributors: [],
+          contributorsFromDescription: [],
+        },
+      ],
+      bestRepresentation: {
+        accessTypes: [
+          {
+            code: "PHYSICAL",
+            display: "fysisk",
+          },
+        ],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: "BOOKS",
+              display: "bøger",
+            },
+          },
+        ],
+        pid: "870970-basis:62910593",
+        identifiers: [
+          {
+            type: "ISBN",
+            value: "9788702341805",
+          },
+        ],
+        cover: coverFactory.build(),
+        physicalDescription: {
+          summaryFull: "202 sider, ill. i farver",
+        },
+        dateFirstEdition: {
+          display: "2022",
+        },
+        edition: {
+          publicationYear: {
+            display: "2022",
+            year: 2022,
+          },
+          contributors: [],
+          edition: "1. udgave",
+          summary: "1. udgave, 2022",
+        },
+        genreAndForm: [],
+        publisher: ["Gyldendal"],
+        contributors: [
+          {
+            display: "Thit Thyrring",
+          },
+        ],
+        contributorsFromDescription: [],
+      },
+    },
+  },
+  {
+    workId: "work-of:870970-basis:46313151",
+    titles: {
+      full: ["Lilys længsel"],
+      original: ["Then came you"],
+    },
+    creators: [
+      {
+        display: "Lisa Kleypas",
+        __typename: "Person",
+      },
+    ],
+    materialTypes: [
+      {
+        materialTypeGeneral: {
+          display: "lydbøger",
+          code: "AUDIO_BOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "e-bøger",
+          code: "EBOOKS",
+        },
+      },
+      {
+        materialTypeGeneral: {
+          display: "bøger",
+          code: "BOOKS",
+        },
+      },
+    ],
+    workYear: null,
+    manifestations: {
+      all: [
+        {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "online",
+            },
+          ],
+          access: [
+            {
+              __typename: "AccessUrl",
+              origin: "nota.dk",
+              url: "https://nota.dk/bibliotek/bogid/47078",
+              loginRequired: false,
+            },
+            {
+              __typename: "Ereol",
+              origin: "eReolen",
+              url: "https://ereolen.dk/ting/object/870970-basis:48241638",
+              canAlwaysBeLoaned: false,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "AUDIO_BOOKS",
+                display: "lydbøger",
+              },
+            },
+          ],
+          pid: "870970-basis:48241638",
+          identifiers: [
+            {
+              type: "PUBLIZON",
+              value: "9788763861823",
+            },
+            {
+              type: "ISBN",
+              value: "9788763861823",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "11 t., 18 min.",
           },
           dateFirstEdition: {
             display: "2019",
           },
           edition: {
             publicationYear: {
-              display: "2020",
-              year: 2020,
+              display: "2019",
+              year: 2019,
+            },
+            contributors: [],
+            edition: "",
+            summary: "2019",
+          },
+          genreAndForm: ["kærlighedsromaner", "historiske romaner", "romaner"],
+          publisher: ["Cicero"],
+          contributors: [
+            {
+              display: "Camilla Qvistgaard Dyssel",
+            },
+            {
+              display: "Emilie Harild Gaardboe",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "ONLINE",
+              display: "online",
+            },
+          ],
+          access: [
+            {
+              __typename: "Ereol",
+              origin: "eReolen",
+              url: "https://ereolen.dk/ting/object/870970-basis:46313143",
+              canAlwaysBeLoaned: false,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "EBOOKS",
+                display: "e-bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:46313143",
+          identifiers: [
+            {
+              type: "PUBLIZON",
+              value: "9788763860963",
+            },
+            {
+              type: "ISBN",
+              value: "9788763860963",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: null,
+          dateFirstEdition: {
+            display: "2019",
+          },
+          edition: {
+            publicationYear: {
+              display: "2019",
+              year: 2019,
+            },
+            contributors: [],
+            edition: "1. eBogsudgave",
+            summary: "1. eBogsudgave, 2019",
+          },
+          genreAndForm: ["romaner", "kærlighedsromaner", "historiske romaner"],
+          publisher: ["Pretty Ink"],
+          contributors: [
+            {
+              display: "Emilie Harild Gaardboe",
+            },
+          ],
+          contributorsFromDescription: [],
+        },
+        {
+          accessTypes: [
+            {
+              code: "PHYSICAL",
+              display: "fysisk",
+            },
+          ],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+          materialTypes: [
+            {
+              materialTypeGeneral: {
+                code: "BOOKS",
+                display: "bøger",
+              },
+            },
+          ],
+          pid: "870970-basis:46313151",
+          identifiers: [
+            {
+              type: "ISBN",
+              value: "9788763860956",
+            },
+          ],
+          cover: coverFactory.build(),
+          physicalDescription: {
+            summaryFull: "389 sider",
+          },
+          dateFirstEdition: {
+            display: "2019",
+          },
+          edition: {
+            publicationYear: {
+              display: "2019",
+              year: 2019,
             },
             contributors: [],
             edition: "1. udgave",
-            summary: "1. udgave, 2020",
+            summary: "1. udgave, 2019",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["romaner", "kærlighedsromaner", "historiske romaner"],
+          publisher: ["Pretty Ink"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
-            },
-            {
-              display: "Marianne Pedersen",
+              display: "Emilie Harild Gaardboe",
             },
           ],
           contributorsFromDescription: [],
@@ -84,53 +794,52 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
       bestRepresentation: {
         accessTypes: [
           {
-            code: "ONLINE",
-            display: "Digital",
+            code: "PHYSICAL",
+            display: "fysisk",
           },
         ],
-        access: [],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
         materialTypes: [
           {
             materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
+              code: "BOOKS",
+              display: "bøger",
             },
           },
         ],
-        pid: "870970-basis:48137857",
+        pid: "870970-basis:46313151",
         identifiers: [
           {
-            type: "PUBLIZON",
-            value: "9788772147253",
-          },
-          {
             type: "ISBN",
-            value: "9788772147253",
+            value: "9788763860956",
           },
         ],
+        cover: coverFactory.build(),
         physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
+          summaryFull: "389 sider",
         },
         dateFirstEdition: {
           display: "2019",
         },
         edition: {
           publicationYear: {
-            display: "2020",
-            year: 2020,
+            display: "2019",
+            year: 2019,
           },
           contributors: [],
           edition: "1. udgave",
-          summary: "1. udgave, 2020",
+          summary: "1. udgave, 2019",
         },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
+        genreAndForm: ["romaner", "kærlighedsromaner", "historiske romaner"],
+        publisher: ["Pretty Ink"],
         contributors: [
           {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
+            display: "Emilie Harild Gaardboe",
           },
         ],
         contributorsFromDescription: [],
@@ -138,80 +847,87 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     },
   },
   {
-    workId: "work-of:870970-basis:53559662",
+    workId: "work-of:870970-basis:50506878",
     titles: {
-      full: ["Adams ballon"],
+      full: ["Biologi 9 : elevbog"],
       original: [],
     },
     creators: [
       {
-        display: "Jørn Jensen (f. 1946)",
+        display: "Pernille Ulla Andersen",
+        __typename: "Person",
+      },
+      {
+        display: "Ulla Hjøllund Linderoth",
         __typename: "Person",
       },
     ],
     materialTypes: [
       {
         materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
+          display: "bøger",
+          code: "BOOKS",
         },
       },
     ],
-    workYear: {
-      display: "2017",
-    },
+    workYear: null,
     manifestations: {
       all: [
         {
           accessTypes: [
             {
-              code: "ONLINE",
-              display: "Digital",
+              code: "PHYSICAL",
+              display: "fysisk",
             },
           ],
-          access: [],
+          access: [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
           materialTypes: [
             {
               materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
+                code: "BOOKS",
+                display: "bøger",
               },
             },
           ],
-          pid: "870970-basis:46618718",
+          pid: "870970-basis:50506878",
           identifiers: [
             {
-              type: "PUBLIZON",
-              value: "9788772144450",
-            },
-            {
               type: "ISBN",
-              value: "9788772144450",
+              value: "9788777028229",
             },
           ],
+          cover: coverFactory.build(),
           physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
+            summaryFull: "128 sider, ill. i farver",
           },
           dateFirstEdition: {
-            display: "2017",
+            display: "2013",
           },
           edition: {
             publicationYear: {
-              display: "2017",
-              year: 2017,
+              display: "2013",
+              year: 2013,
             },
             contributors: [],
             edition: "1. udgave",
-            summary: "1. udgave, 2017",
+            summary: "1. udgave, 2013",
           },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
+          genreAndForm: ["undervisningsmaterialer"],
+          publisher: ["Geografforlaget"],
           contributors: [
             {
-              display: "Kim Dalsgaard",
+              display: "Emilie Søndergaard",
             },
             {
-              display: "Marianne Pedersen",
+              display: "Jesper Frederiksen",
+            },
+            {
+              display: "Jens Sørensen",
             },
           ],
           contributorsFromDescription: [],
@@ -220,461 +936,58 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
       bestRepresentation: {
         accessTypes: [
           {
-            code: "ONLINE",
-            display: "Digital",
+            code: "PHYSICAL",
+            display: "fysisk",
           },
         ],
-        access: [],
+        access: [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
         materialTypes: [
           {
             materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
+              code: "BOOKS",
+              display: "bøger",
             },
           },
         ],
-        pid: "870970-basis:46618718",
+        pid: "870970-basis:50506878",
         identifiers: [
           {
-            type: "PUBLIZON",
-            value: "9788772144450",
-          },
-          {
             type: "ISBN",
-            value: "9788772144450",
+            value: "9788777028229",
           },
         ],
+        cover: coverFactory.build(),
         physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
+          summaryFull: "128 sider, ill. i farver",
         },
         dateFirstEdition: {
-          display: "2017",
+          display: "2013",
         },
         edition: {
           publicationYear: {
-            display: "2017",
-            year: 2017,
+            display: "2013",
+            year: 2013,
           },
           contributors: [],
           edition: "1. udgave",
-          summary: "1. udgave, 2017",
+          summary: "1. udgave, 2013",
         },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
+        genreAndForm: ["undervisningsmaterialer"],
+        publisher: ["Geografforlaget"],
         contributors: [
           {
-            display: "Kim Dalsgaard",
+            display: "Emilie Søndergaard",
           },
           {
-            display: "Marianne Pedersen",
-          },
-        ],
-        contributorsFromDescription: [],
-      },
-    },
-  },
-  {
-    workId: "work-of:870970-basis:53559700",
-    titles: {
-      full: ["Adams bold"],
-      original: [],
-    },
-    creators: [
-      {
-        display: "Jørn Jensen (f. 1946)",
-        __typename: "Person",
-      },
-    ],
-    materialTypes: [
-      {
-        materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
-        },
-      },
-    ],
-    workYear: {
-      display: "2017",
-    },
-    manifestations: {
-      all: [
-        {
-          accessTypes: [
-            {
-              code: "ONLINE",
-              display: "Digital",
-            },
-          ],
-          access: [],
-          materialTypes: [
-            {
-              materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
-              },
-            },
-          ],
-          pid: "870970-basis:46618734",
-          identifiers: [
-            {
-              type: "PUBLIZON",
-              value: "9788772144467",
-            },
-            {
-              type: "ISBN",
-              value: "9788772144467",
-            },
-          ],
-          physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
-          },
-          dateFirstEdition: {
-            display: "2017",
-          },
-          edition: {
-            publicationYear: {
-              display: "2017",
-              year: 2017,
-            },
-            contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2017",
-          },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
-          contributors: [
-            {
-              display: "Kim Dalsgaard",
-            },
-            {
-              display: "Marianne Pedersen",
-            },
-          ],
-          contributorsFromDescription: [],
-        },
-      ],
-      bestRepresentation: {
-        accessTypes: [
-          {
-            code: "ONLINE",
-            display: "Digital",
-          },
-        ],
-        access: [],
-        materialTypes: [
-          {
-            materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
-            },
-          },
-        ],
-        pid: "870970-basis:46618734",
-        identifiers: [
-          {
-            type: "PUBLIZON",
-            value: "9788772144467",
+            display: "Jesper Frederiksen",
           },
           {
-            type: "ISBN",
-            value: "9788772144467",
-          },
-        ],
-        physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
-        },
-        dateFirstEdition: {
-          display: "2017",
-        },
-        edition: {
-          publicationYear: {
-            display: "2017",
-            year: 2017,
-          },
-          contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2017",
-        },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
-        contributors: [
-          {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
-          },
-        ],
-        contributorsFromDescription: [],
-      },
-    },
-  },
-  {
-    workId: "work-of:870970-basis:54486995",
-    titles: {
-      full: ["Adams pony"],
-      original: [],
-    },
-    creators: [
-      {
-        display: "Jørn Jensen (f. 1946)",
-        __typename: "Person",
-      },
-    ],
-    materialTypes: [
-      {
-        materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
-        },
-      },
-    ],
-    workYear: {
-      display: "2018",
-    },
-    manifestations: {
-      all: [
-        {
-          accessTypes: [
-            {
-              code: "ONLINE",
-              display: "Digital",
-            },
-          ],
-          access: [],
-          materialTypes: [
-            {
-              materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
-              },
-            },
-          ],
-          pid: "870970-basis:46680057",
-          identifiers: [
-            {
-              type: "PUBLIZON",
-              value: "9788772145099",
-            },
-            {
-              type: "ISBN",
-              value: "9788772145099",
-            },
-          ],
-          physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
-          },
-          dateFirstEdition: {
-            display: "2018",
-          },
-          edition: {
-            publicationYear: {
-              display: "2018",
-              year: 2018,
-            },
-            contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2018",
-          },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
-          contributors: [
-            {
-              display: "Kim Dalsgaard",
-            },
-            {
-              display: "Marianne Pedersen",
-            },
-          ],
-          contributorsFromDescription: [],
-        },
-      ],
-      bestRepresentation: {
-        accessTypes: [
-          {
-            code: "ONLINE",
-            display: "Digital",
-          },
-        ],
-        access: [],
-        materialTypes: [
-          {
-            materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
-            },
-          },
-        ],
-        pid: "870970-basis:46680057",
-        identifiers: [
-          {
-            type: "PUBLIZON",
-            value: "9788772145099",
-          },
-          {
-            type: "ISBN",
-            value: "9788772145099",
-          },
-        ],
-        physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
-        },
-        dateFirstEdition: {
-          display: "2018",
-        },
-        edition: {
-          publicationYear: {
-            display: "2018",
-            year: 2018,
-          },
-          contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2018",
-        },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
-        contributors: [
-          {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
-          },
-        ],
-        contributorsFromDescription: [],
-      },
-    },
-  },
-  {
-    workId: "work-of:870970-basis:54487037",
-    titles: {
-      full: ["Adams fugl"],
-      original: [],
-    },
-    creators: [
-      {
-        display: "Jørn Jensen (f. 1946)",
-        __typename: "Person",
-      },
-    ],
-    materialTypes: [
-      {
-        materialTypeGeneral: {
-          display: "e-bøger",
-          code: "EBOOKS",
-        },
-      },
-    ],
-    workYear: {
-      display: "2018",
-    },
-    manifestations: {
-      all: [
-        {
-          accessTypes: [
-            {
-              code: "ONLINE",
-              display: "Digital",
-            },
-          ],
-          access: [],
-          materialTypes: [
-            {
-              materialTypeGeneral: {
-                code: "EBOOKS",
-                display: "e-bøger",
-              },
-            },
-          ],
-          pid: "870970-basis:46679989",
-          identifiers: [
-            {
-              type: "PUBLIZON",
-              value: "9788772145105",
-            },
-            {
-              type: "ISBN",
-              value: "9788772145105",
-            },
-          ],
-          physicalDescription: {
-            summaryFull: "17 sider, ill. i farver",
-          },
-          dateFirstEdition: {
-            display: "2018",
-          },
-          edition: {
-            publicationYear: {
-              display: "2018",
-              year: 2018,
-            },
-            contributors: [],
-            edition: "1. udgave",
-            summary: "1. udgave, 2018",
-          },
-          genreAndForm: ["roman"],
-          publisher: ["Elysion"],
-          contributors: [
-            {
-              display: "Kim Dalsgaard",
-            },
-            {
-              display: "Marianne Pedersen",
-            },
-          ],
-          contributorsFromDescription: [],
-        },
-      ],
-      bestRepresentation: {
-        accessTypes: [
-          {
-            code: "ONLINE",
-            display: "Digital",
-          },
-        ],
-        access: [],
-        materialTypes: [
-          {
-            materialTypeGeneral: {
-              code: "EBOOKS",
-              display: "e-bøger",
-            },
-          },
-        ],
-        pid: "870970-basis:46679989",
-        identifiers: [
-          {
-            type: "PUBLIZON",
-            value: "9788772145105",
-          },
-          {
-            type: "ISBN",
-            value: "9788772145105",
-          },
-        ],
-        physicalDescription: {
-          summaryFull: "17 sider, ill. i farver",
-        },
-        dateFirstEdition: {
-          display: "2018",
-        },
-        edition: {
-          publicationYear: {
-            display: "2018",
-            year: 2018,
-          },
-          contributors: [],
-          edition: "1. udgave",
-          summary: "1. udgave, 2018",
-        },
-        genreAndForm: ["roman"],
-        publisher: ["Elysion"],
-        contributors: [
-          {
-            display: "Kim Dalsgaard",
-          },
-          {
-            display: "Marianne Pedersen",
+            display: "Jens Sørensen",
           },
         ],
         contributorsFromDescription: [],

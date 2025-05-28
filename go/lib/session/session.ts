@@ -1,7 +1,7 @@
 import { add, isPast, sub } from "date-fns"
 import { IronSession, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, connection } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
@@ -281,6 +281,9 @@ export const getDplCmsSessionCookie = async () => {
 }
 
 export const destroySession = async (session: IronSession<TSessionData>) => {
+  // ⁠await connection() is used to ensure that this function dynamically renders correctly, as ⁠session.destroy() only operates on the client.
+  // https://nextjs.org/docs/app/api-reference/functions/connection
+  await connection()
   // Destroy session and additional go-session cookies.
   session.destroy()
   await deleteGoSessionCookies()

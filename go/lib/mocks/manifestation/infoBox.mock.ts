@@ -1,3 +1,4 @@
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 const manifestationMock = {
@@ -75,6 +76,7 @@ const manifestationMock = {
   },
   genreAndForm: ["roman", "fantasy"],
   publisher: ["Flachs"],
+  cover: coverFactory.build(),
   contributors: [
     {
       display: "Trine Bech",

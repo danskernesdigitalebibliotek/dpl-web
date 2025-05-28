@@ -15,5 +15,3 @@ export async function GET() {
 
   return destroySessionAndRedirectToFrontPage(session)
 }
-
-export const dynamic = "force-dynamic"

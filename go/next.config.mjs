@@ -41,6 +41,16 @@ const nextConfig = {
         hostname: getAllowedHostname(),
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "fbiinfo-present.dbc.dk",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "default-forsider.dbc.dk",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (config, options) => {

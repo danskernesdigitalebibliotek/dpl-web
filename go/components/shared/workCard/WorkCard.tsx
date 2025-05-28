@@ -10,9 +10,6 @@ import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIc
 import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
-import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
-import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import {
   getGetV1ProductsIdentifierAdapterQueryKey,
   getV1ProductsIdentifierAdapter,
@@ -37,14 +34,6 @@ const WorkCard = ({
   className,
   isWithTilt = false,
 }: TWorkCardProps) => {
-  const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
-    type: "pid",
-    identifiers: [bestRepresentation.pid],
-    sizes: [
-      "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
-    ],
-  })
-
   // TODO: in storybook, request don't work, so we need make a mock request using fishery
   // For each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
@@ -71,21 +60,8 @@ const WorkCard = ({
     },
   })
 
-  const allPids = [
-    bestRepresentation.pid,
-    ...manifestations.map(manifestation => manifestation.pid),
-  ]
-  const coverSrc = getCoverUrls(dataCovers, allPids || [], [
-    "default",
-    "original",
-    "large",
-    "medium-large",
-    "medium",
-    "small-medium",
-    "small",
-    "xx-small",
-  ])
-  const lowResCover = getLowResCoverUrl(dataCovers)
+  const coverSrc = bestRepresentation.cover.large?.url
+  const lowResCoverSrc = bestRepresentation.cover.thumbnail
 
   const isSomeMaterialTypePodcast = manifestationsWithPublizonData.some(
     manifestation => manifestation.materialTypes[0].materialTypeGeneral.code === "PODCASTS"
@@ -111,10 +87,10 @@ const WorkCard = ({
       ) : null}
       <div className="relative mx-auto flex aspect-5/7 h-full w-full">
         <div className="h-full w-full">
-          {!isLoadingCovers && (
+          {coverSrc && lowResCoverSrc && (
             <CoverPicture
-              lowResSrc={lowResCover || ""}
-              src={coverSrc?.[0] || ""}
+              lowResSrc={lowResCoverSrc}
+              src={coverSrc}
               alt={`${title} cover billede`}
               withTilt={isWithTilt}
               className="select-none"
