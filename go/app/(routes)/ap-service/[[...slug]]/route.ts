@@ -58,7 +58,7 @@ async function proxyRequest(
 
   const { slug } = await params
   const serviceType = slug[0] as TServiceType
-  const baseUrl = getApServiceUrl(serviceType)
+  const baseUrl = await getApServiceUrl(serviceType)
 
   if (!baseUrl) {
     return new Response("Not found", { status: 404 })

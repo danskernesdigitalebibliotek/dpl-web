@@ -42,7 +42,7 @@ export type Address = {
   sortingCode?: Maybe<Scalars['String']['output']>;
 };
 
-/** Address country. */
+/** Kommune. */
 export type AddressCountry = {
   __typename?: 'AddressCountry';
   /** The code of the country. */
@@ -85,10 +85,10 @@ export type BetweenStringInput = {
   min?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** A CQL search string. */
+/** En CQL søgestreng. */
 export type CqlSearch = {
   __typename?: 'CQLSearch';
-  /** The CQL search string. */
+  /** CQL søgestrengen. */
   value?: Maybe<Scalars['String']['output']>;
 };
 
@@ -133,11 +133,11 @@ export type File = {
   __typename?: 'File';
   /** The description of the file. */
   description?: Maybe<Scalars['String']['output']>;
-  /** The mime type of the file. */
+  /** Filens mime-type. */
   mime?: Maybe<Scalars['String']['output']>;
-  /** The name of the file. */
+  /** Filens navn. */
   name?: Maybe<Scalars['String']['output']>;
-  /** The size of the file in bytes. */
+  /** Filens størrelse i bytes. */
   size: Scalars['Int']['output'];
   /** The URL of the file. */
   url: Scalars['String']['output'];
@@ -146,7 +146,7 @@ export type File = {
 /** Result for view go_categories display go_categories. */
 export type GoCategoriesResult = View & {
   __typename?: 'GoCategoriesResult';
-  /** The description of the view. */
+  /** Viewets beskrivelse. */
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
@@ -180,11 +180,13 @@ export type GoConfigurationPublic = {
   libraryInfo?: Maybe<GoLibraryInfo>;
   loginUrls?: Maybe<GoLoginUrls>;
   logoutUrls?: Maybe<GoLogoutUrls>;
+  searchProfiles?: Maybe<SearchProfiles>;
   unilogin?: Maybe<UniloginConfigurationPublic>;
 };
 
 export type GoLibraryInfo = {
   __typename?: 'GoLibraryInfo';
+  cmsUrl: Scalars['String']['output'];
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -228,9 +230,9 @@ export type Language = {
   __typename?: 'Language';
   /** The language direction. */
   direction?: Maybe<Scalars['String']['output']>;
-  /** The language code. */
+  /** Sprogkoden. */
   id?: Maybe<Scalars['ID']['output']>;
-  /** The language name. */
+  /** Sprogets navn. */
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -240,9 +242,9 @@ export type Link = {
   id?: Maybe<Scalars['String']['output']>;
   /** Whether the link is internal to this website. */
   internal: Scalars['Boolean']['output'];
-  /** The title of the link. */
+  /** Linkets titel */
   title?: Maybe<Scalars['String']['output']>;
-  /** The URL of the link. */
+  /** Linkets URL */
   url?: Maybe<Scalars['String']['output']>;
 };
 
@@ -261,7 +263,7 @@ export type MediaAudio = MediaInterface & {
   mediaAudioFile: File;
   /** Name */
   name: Scalars['String']['output'];
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
@@ -282,7 +284,7 @@ export type MediaDocument = MediaInterface & {
   mediaFile: File;
   /** Name */
   name: Scalars['String']['output'];
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
@@ -310,7 +312,7 @@ export type MediaImage = MediaInterface & {
   mediaImage: Image;
   /** Name */
   name: Scalars['String']['output'];
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
@@ -328,7 +330,7 @@ export type MediaInterface = {
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
@@ -352,7 +354,7 @@ export type MediaVideo = MediaInterface & {
   mediaOembedVideo: Scalars['String']['output'];
   /** Name */
   name: Scalars['String']['output'];
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
@@ -373,7 +375,7 @@ export type MediaVideotool = MediaInterface & {
   mediaVideotool: Scalars['String']['output'];
   /** Name */
   name: Scalars['String']['output'];
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
@@ -400,7 +402,7 @@ export type NodeArticle = NodeInterface & {
   canonicalUrl?: Maybe<Link>;
   /** Categories */
   categories?: Maybe<TermUnion>;
-  /** The time that the node was last edited. */
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
@@ -412,9 +414,9 @@ export type NodeArticle = NodeInterface & {
   overrideAuthor?: Maybe<Scalars['String']['output']>;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
-  /** Promoted to front page */
+  /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
@@ -425,7 +427,7 @@ export type NodeArticle = NodeInterface & {
   showOverrideAuthor?: Maybe<Scalars['Boolean']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** Sticky at top of lists */
+  /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
   /** Subtitle */
   subtitle?: Maybe<Scalars['String']['output']>;
@@ -447,7 +449,7 @@ export type NodeArticle = NodeInterface & {
 /** Use Go articles for news-worthy content, that does not get updated regularly. */
 export type NodeGoArticle = NodeInterface & {
   __typename?: 'NodeGoArticle';
-  /** The time that the node was last edited. */
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
@@ -461,9 +463,9 @@ export type NodeGoArticle = NodeInterface & {
   overrideAuthor?: Maybe<Scalars['String']['output']>;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
-  /** Promoted to front page */
+  /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
@@ -474,7 +476,7 @@ export type NodeGoArticle = NodeInterface & {
   showOverrideAuthor?: Maybe<Scalars['Boolean']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** Sticky at top of lists */
+  /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
   /** Subtitle */
   subtitle?: Maybe<Scalars['String']['output']>;
@@ -503,7 +505,7 @@ export type NodeGoCategory = NodeInterface & {
   categoryMenuSound?: Maybe<MediaUnion>;
   /** The category title will be shown in the category menu as part of this category's menu element. */
   categoryMenuTitle: Scalars['String']['output'];
-  /** The time that the node was last edited. */
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
@@ -515,15 +517,15 @@ export type NodeGoCategory = NodeInterface & {
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
-  /** Promoted to front page */
+  /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** Sticky at top of lists */
+  /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
@@ -537,7 +539,7 @@ export type NodeGoCategory = NodeInterface & {
  */
 export type NodeGoPage = NodeInterface & {
   __typename?: 'NodeGoPage';
-  /** The time that the node was last edited. */
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
@@ -547,15 +549,15 @@ export type NodeGoPage = NodeInterface & {
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
-  /** Promoted to front page */
+  /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** Sticky at top of lists */
+  /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
@@ -564,7 +566,7 @@ export type NodeGoPage = NodeInterface & {
 
 /** Entity type node. */
 export type NodeInterface = {
-  /** The time that the node was last edited. */
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
@@ -572,13 +574,13 @@ export type NodeInterface = {
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
-  /** Promoted to front page */
+  /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** Sticky at top of lists */
+  /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
@@ -609,7 +611,7 @@ export type NodePage = NodeInterface & {
    * content issues and ensuring proper attribution to the original source.
    */
   canonicalUrl?: Maybe<Link>;
-  /** The time that the node was last edited. */
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
   /** The date and time that the content was created. */
   created: DateTime;
@@ -629,15 +631,15 @@ export type NodePage = NodeInterface & {
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
-  /** Promoted to front page */
+  /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** Sticky at top of lists */
+  /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
   /** Subtitle */
   subtitle?: Maybe<Scalars['String']['output']>;
@@ -1611,11 +1613,25 @@ export type SchemaInformation = {
   version?: Maybe<Scalars['String']['output']>;
 };
 
+/** Various FBI profiles configured by the local library. */
+export type SearchProfiles = {
+  __typename?: 'SearchProfiles';
+  /**
+   * This is meant to be a fallback profile if no other profile is specified.
+   * But is not being used in the current implementation.
+   */
+  default?: Maybe<Scalars['String']['output']>;
+  /** This is the profile is using materials from other libraries as well. */
+  global?: Maybe<Scalars['String']['output']>;
+  /** This is the profile used for searching works in the library's catalog. */
+  local?: Maybe<Scalars['String']['output']>;
+};
+
 /** Sort direction. */
 export type SortDirection =
-  /** Ascending */
+  /** Stigende */
   | 'ASC'
-  /** Descending */
+  /** Faldende */
   | 'DESC';
 
 /** The schema's entry-point for subscriptions. */
@@ -1628,23 +1644,23 @@ export type Subscription = {
 /** Entity type taxonomy_term. */
 export type TermBreadcrumbStructure = TermInterface & {
   __typename?: 'TermBreadcrumbStructure';
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
   /** The title that is shown above the list of referenced content. Will not be shown, if there are no children displayed. */
   childrenTitle?: Maybe<Scalars['String']['output']>;
   /** Content */
   content: NodeUnion;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Should a list of contents that reference this breadcrumb, be shown automatically on this page? */
   showChildren?: Maybe<Scalars['Boolean']['output']>;
@@ -1652,121 +1668,121 @@ export type TermBreadcrumbStructure = TermInterface & {
   showChildrenSubtitles?: Maybe<Scalars['Boolean']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
 /** Entity type taxonomy_term. */
 export type TermCategories = TermInterface & {
   __typename?: 'TermCategories';
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
 /** Entity type taxonomy_term. */
 export type TermInterface = {
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
 /** Kategorier af åbningstider, f.eks. "Åbent" eller "Telefontid" */
 export type TermOpeningHoursCategories = TermInterface & {
   __typename?: 'TermOpeningHoursCategories';
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
 /** Screens to display content on */
 export type TermScreenName = TermInterface & {
   __typename?: 'TermScreenName';
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
 /** Entity type taxonomy_term. */
 export type TermTags = TermInterface & {
   __typename?: 'TermTags';
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
@@ -1776,25 +1792,25 @@ export type TermUnion = TermBreadcrumbStructure | TermCategories | TermOpeningHo
 /** List of email categories used for sending webform submissions. Each category is associated with an email address. */
 export type TermWebformEmailCategories = TermInterface & {
   __typename?: 'TermWebformEmailCategories';
-  /** The time that the term was last edited. */
+  /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Description */
+  /** Beskrivelse */
   description: Text;
   /** Add which email to send form submissions of this category to. */
   email: Scalars['Email']['output'];
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** The term language code. */
+  /** Term sprogkode. */
   langcode: Language;
   /** Name */
   name: Scalars['String']['output'];
-  /** The parents of this term. */
+  /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
-  /** URL alias */
+  /** Alternativ URL */
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
-  /** The weight of this term in relation to other terms. */
+  /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
@@ -1835,7 +1851,6 @@ export type Translation = {
 
 export type UniloginConfigurationPrivate = {
   __typename?: 'UniloginConfigurationPrivate';
-  clientId?: Maybe<Scalars['String']['output']>;
   clientSecret?: Maybe<Scalars['String']['output']>;
   pubHubRetailerKeyCode?: Maybe<Scalars['String']['output']>;
   webServicePassword?: Maybe<Scalars['String']['output']>;
@@ -1859,7 +1874,7 @@ export type UnsupportedType = {
 
 /** Views represent collections of curated data from the CMS. */
 export type View = {
-  /** The description of the view. */
+  /** Viewets beskrivelse. */
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
@@ -1933,10 +1948,10 @@ export type ViewReference = {
 /** All available view result types. */
 export type ViewResultUnion = GoCategoriesResult;
 
-/** A WorkID field. */
+/** Et WorkID-felt. */
 export type WorkId = {
   __typename?: 'WorkId';
-  /** The material type (e.g., bog, e-bog). */
+  /** Materialetype (fx bog, film, lydbog) */
   material_type?: Maybe<Scalars['String']['output']>;
   /** The WorkID value */
   work_id?: Maybe<Scalars['String']['output']>;
@@ -1997,7 +2012,7 @@ export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } }
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', searchProfiles?: { __typename?: 'SearchProfiles', local?: string | null } | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
@@ -2497,6 +2512,9 @@ export const GetDplCmsPublicConfigurationDocument = `
     query getDplCmsPublicConfiguration {
   goConfiguration {
     public {
+      searchProfiles {
+        local
+      }
       libraryInfo {
         name
       }
