@@ -1,9 +1,9 @@
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import configuration from "../factories/unilogin/configuration"
+import institution from "../factories/unilogin/institution"
 import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
 import userinfo from "../factories/unilogin/userinfo"
-import { mockFrontpage } from "./frontpage.cy"
 
 describe("Login / Logout UI Tests", () => {
   beforeEach(() => {
@@ -64,7 +64,7 @@ describe("Login / Logout UI Tests", () => {
   })
 })
 
-describe.only("UNI•Login: Login / Logout API Tests", () => {
+describe("UNI•Login: Login / Logout API Tests", () => {
   const performLoginCallback = () => {
     const mockedCallbackUrl =
       "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
@@ -93,6 +93,11 @@ describe.only("UNI•Login: Login / Logout API Tests", () => {
       data: userinfo.build(),
     })
 
+    cy.mockServerSoap({
+      path: "/institution",
+      data: institution,
+    })
+
     cy.interceptGraphql({
       operationName: "complexSearchForWorkTeaser",
       data: complexSearchForWorkTeaser.build(),
@@ -108,7 +113,6 @@ describe.only("UNI•Login: Login / Logout API Tests", () => {
   })
 
   it("Should logout when clicking logout button", () => {
-    mockFrontpage()
     performLoginCallback()
 
     cy.dataCy("logout-button").click()

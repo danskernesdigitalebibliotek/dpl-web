@@ -4,6 +4,7 @@ import {
   MockGraphQLMutationParams,
   MockGraphQLQueryParams,
   MockRestResponseParams,
+  MockSoapResponseParams,
 } from "../commands"
 
 class MockApiServer {
@@ -60,6 +61,16 @@ class MockApiServer {
         this.server.forDelete(url).thenJson(statusCode, data)
         break
     }
+  }
+
+  mockSoapResponse({ path: url, data, statusCode = 200 }: MockSoapResponseParams) {
+    this.server.forPost(url).thenCallback(() => ({
+      status: statusCode,
+      headers: {
+        "content-type": "application/soap+xml; charset=utf-8",
+      },
+      body: data,
+    }))
   }
 }
 

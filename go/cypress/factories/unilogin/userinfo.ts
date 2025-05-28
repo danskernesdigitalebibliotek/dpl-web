@@ -11,6 +11,5 @@ export default Factory.define<Schema>(() => {
   const tokens = tokenSet.build()
   return {
     sub: tokens.sub?.toString() ?? "",
-    isMocked: true,
   }
 })

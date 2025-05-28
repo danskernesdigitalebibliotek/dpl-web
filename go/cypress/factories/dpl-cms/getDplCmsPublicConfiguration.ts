@@ -1,6 +1,6 @@
 import { Factory } from "fishery"
 
-import { TDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+import { TDplCmsPublicConfig } from "@/lib/config/dpl-cms/configSchemas"
 import { GetDplCmsPublicConfigurationQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import defaultGoResponse from "./factory-parts/defaultGoResponse"

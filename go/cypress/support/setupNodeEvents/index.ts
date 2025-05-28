@@ -2,6 +2,7 @@ import {
   MockGraphQLMutationParams,
   MockGraphQLQueryParams,
   MockRestResponseParams,
+  MockSoapResponseParams,
 } from "../commands"
 import MockApiServer from "./mockApiServer"
 
@@ -41,6 +42,12 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = on => {
       log("Mocking REST response", `${method} ${path}`)
 
       mockApiServer.mockRestResponse({ method, path, data })
+      return null // Return null to indicate that the task has been completed
+    },
+
+    mockSoapResponse({ path, data }: MockSoapResponseParams) {
+      log("Mocking SOAP response", path)
+      mockApiServer.mockSoapResponse({ path, data })
       return null // Return null to indicate that the task has been completed
     },
 

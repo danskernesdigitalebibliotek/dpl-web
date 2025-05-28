@@ -32,8 +32,8 @@
     "typecheck": "tsc --noEmit",
     "cypress:open": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e",
     "cypress:run": "yarn cypress:run:mobile; yarn cypress:run:desktop",
-    "cypress:run:mobile": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress run --env viewport=mobile",
-    "cypress:run:desktop": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress run --env viewport=desktop",
+    "cypress:run:mobile": "NODE_ENV=test cypress run --env viewport=mobile",
+    "cypress:run:desktop": "NODE_ENV=test cypress run --env viewport=desktop",
     "shadcn:add": "npx shadcn@canary add $MODULE",
     "post-process-dpl-cms-graphql": "tsx ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
   },
