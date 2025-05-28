@@ -14,6 +14,9 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery, Params>(({ tran
     go: defaultGoResponse.build(),
     goConfiguration: {
       public: {
+        searchProfiles: {
+          local: "next",
+        },
         loginUrls: {
           adgangsplatformen: `${appUrl}/login?current-path=/go-login`,
         },

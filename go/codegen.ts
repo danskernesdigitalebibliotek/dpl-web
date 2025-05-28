@@ -56,7 +56,8 @@ const config: CodegenConfig = {
       documents: "**/*.fbi.graphql",
       schema: [
         {
-          [getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")]: {
+          // Needs a fallback if the environment variable is not set
+          [getEnv("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI") || ""]: {
             headers: {
               Authorization: `Bearer ${getEnv("CODEGEN_LIBRARY_TOKEN")}`,
             },

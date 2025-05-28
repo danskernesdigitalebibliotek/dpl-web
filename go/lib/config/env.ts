@@ -12,12 +12,12 @@ function getEnvs() {
   return {
     // Public env variables
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    CODEGEN_LIBRARY_TOKEN: process.env.CODEGEN_LIBRARY_TOKEN,
+    CODEGEN_LIBRARY_TOKEN: process.env.NEXT_PUBLIC_CODEGEN_LIBRARY_TOKEN,
+    CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI,
     DPL_CMS_HOSTNAME: process.env.NEXT_PUBLIC_DPL_CMS_HOSTNAME,
     GO_GRAPHQL_CONSUMER_USER_NAME: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_NAME,
     GO_GRAPHQL_CONSUMER_USER_PASSWORD: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD,
     GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
-    GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI,
     NODE_ENV: process.env.NODE_ENV,
 
     // Server-only env variables
@@ -39,11 +39,11 @@ function getEnvs() {
 const EnvSchema = z.object({
   APP_URL: z.string().refine(validateUrl),
   CODEGEN_LIBRARY_TOKEN: z.string().optional(),
+  CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl).optional(),
   DPL_CMS_HOSTNAME: z.string(),
   GO_GRAPHQL_CONSUMER_USER_NAME: z.string(),
   GO_GRAPHQL_CONSUMER_USER_PASSWORD: z.string(),
   GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
-  GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
 })
 
