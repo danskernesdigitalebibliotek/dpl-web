@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
+import { getEnv } from "./lib/config/env"
+import goConfig from "./lib/config/goConfig"
 import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
 import { userIsAnonymous, userIsLoggedInAtDplCms } from "./lib/helpers/user"
@@ -17,7 +19,12 @@ import {
   uniloginAccessTokenShouldBeRefreshed,
 } from "./lib/session/session"
 
+// These pages require a logged-in user.
+// The user gets redirected to the front page if they are not logged in.
+const protectedPages = [`/${goConfig("routes.user-profile")}`]
+
 export async function middleware(request: NextRequest) {
+  const currentPath = request.nextUrl.pathname
   const requestHeaders = new Headers(request.headers)
   const response = NextResponse.next({
     request: {
@@ -29,6 +36,14 @@ export async function middleware(request: NextRequest) {
   await ensureLibraryTokenExist(request)
 
   const session = await getSession({ request, response })
+
+  if (protectedPages.includes(currentPath)) {
+    // If the user is anonymous, we will redirect to the front page.
+    // @todo Write a test in the middleware test suite to ensure this works.
+    if (userIsAnonymous(session)) {
+      return NextResponse.redirect(getEnv("APP_URL"))
+    }
+  }
 
   // Destroy the session if we have an active session but no dpl cms session cookie.
   if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
