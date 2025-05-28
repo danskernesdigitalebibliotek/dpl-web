@@ -16,7 +16,6 @@ const LoginButton = ({ onClick, url, ...props }: TFindBookButtonProps) => {
 
   return (
     <Button
-      disabled={disabled}
       theme="primary"
       onClick={() => {
         if (onClick) {

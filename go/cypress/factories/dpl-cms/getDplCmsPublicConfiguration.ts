@@ -23,7 +23,7 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
           name: "Test Library",
         },
         unilogin: {
-          municipalityId: "110",
+          municipalityId: "101",
         },
       } satisfies TDplCmsPublicConfig,
     },

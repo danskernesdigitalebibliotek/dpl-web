@@ -80,6 +80,10 @@ const getDplCmsPublicConfigData = async () => {
     return publicConfigSchema.parse(data)
   } catch {
     console.error("Failed to parse DPL CMS public config")
+
+    // Make sure that the cache is invalidated after a few seconds
+    cacheLife("seconds")
+
     return {
       searchProfiles: {
         local: null,

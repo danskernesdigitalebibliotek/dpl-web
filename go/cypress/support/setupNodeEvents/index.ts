@@ -6,20 +6,24 @@ import {
 } from "../commands"
 import MockApiServer from "./mockApiServer"
 
-export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = on => {
+export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, config) => {
   const mockApiServer = new MockApiServer()
 
   on("before:run", () => {
     mockApiServer.start()
+
+    if (config.env.viewport) {
+      log("Running test with viewport:", config.env.viewport, true)
+    }
   })
 
   on("after:run", () => {
     mockApiServer.stop()
   })
 
-  function log(requestType: string, operationName: string) {
-    if (process.env.DEBUG_MOCK_SERVER === "true") {
-      console.info(`\x1b[32m${requestType}:`, `\x1b[34m${operationName}`)
+  function log(requestType: string, operationName: string, force: boolean = false) {
+    if (process.env.DEBUG_MOCK_SERVER === "true" || force) {
+      console.info(`\x1b[32m${requestType}`, `\x1b[34m${operationName}`)
     }
   }
 

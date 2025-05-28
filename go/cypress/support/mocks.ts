@@ -1,4 +1,3 @@
-import coverService from "../factories/covers/coverService"
 import GetAdgangsplatformenLibraryToken from "../factories/dpl-cms/getAdgangsplatformenLibraryToken"
 import GetCategories from "../factories/dpl-cms/getCategories"
 import GetDplCmsPrivateConfiguration from "../factories/dpl-cms/getDplCmsPrivateConfiguration"
@@ -22,12 +21,6 @@ export const mockConfig = () => {
   cy.mockServerGraphQLQuery({
     operationName: "getDplCmsPrivateConfiguration",
     data: GetDplCmsPrivateConfiguration.build(),
-  })
-}
-
-export const mockCovers = () => {
-  cy.interceptCovers({
-    covers: coverService.build(),
   })
 }
 
