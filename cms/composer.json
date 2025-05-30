@@ -123,7 +123,7 @@
         "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
         "drupal/externalauth": "^2.0",
-        "drupal/facets": "^2.0",
+        "drupal/facets": "^3.0",
         "drupal/field_group": "^4.0",
         "drupal/field_inheritance": "^2.0",
         "drupal/flat_taxonomy": "^2.0",
@@ -170,7 +170,7 @@
         "drupal/search_api": "^1.31",
         "drupal/select2_multicheck": "^1.0",
         "drupal/selective_better_exposed_filters": "^3.0",
-        "drupal/simple_menu_permissions": "^2.0",
+        "drupal/simple_menu_permissions": "^3.0",
         "drupal/simple_oauth": "^5.2",
         "drupal/simple_sitemap": "^4.2",
         "drupal/state_log": "^2.2",
@@ -346,9 +346,6 @@
             },
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/commit/da200da280c4c95e6e91f2416581ad3797ab1428.patch"
-            },
-            "drupal/jsnlog": {
-                "Disable CSRF token": "patches/jsnlog-disable-csrf_token.patch"
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
