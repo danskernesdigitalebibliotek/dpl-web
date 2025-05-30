@@ -6148,17 +6148,17 @@
         },
         {
             "name": "drupal/metatag",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/metatag.git",
-                "reference": "2.1.0"
+                "reference": "2.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/metatag-2.1.0.zip",
-                "reference": "2.1.0",
-                "shasum": "c28fe2fdac68a9370a6af6cbafff4425dd5148f3"
+                "url": "https://ftp.drupal.org/files/projects/metatag-2.1.1.zip",
+                "reference": "2.1.1",
+                "shasum": "94f272db388cbf1e4df775a2677f8c35818c9382"
             },
             "require": {
                 "drupal/core": "^9.4 || ^10 || ^11",
@@ -6166,7 +6166,7 @@
                 "php": ">=8.0"
             },
             "require-dev": {
-                "drupal/forum": "*",
+                "drupal/forum": "1.x-dev",
                 "drupal/hal": "^1 || ^2 || ^9",
                 "drupal/metatag_dc": "*",
                 "drupal/metatag_open_graph": "*",
@@ -6178,8 +6178,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.0",
-                    "datestamp": "1731004042",
+                    "version": "2.1.1",
+                    "datestamp": "1748539484",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8550,17 +8550,17 @@
         },
         {
             "name": "drupal/twig_tweak",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/twig_tweak.git",
-                "reference": "3.4.0"
+                "reference": "3.4.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/twig_tweak-3.4.0.zip",
-                "reference": "3.4.0",
-                "shasum": "1f47f71b4cfbad97fff11db1adc72c311bb1645e"
+                "url": "https://ftp.drupal.org/files/projects/twig_tweak-3.4.1.zip",
+                "reference": "3.4.1",
+                "shasum": "ceaa5ea8f357ce8827c728f22871265f0f7cd74f"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11.0",
@@ -8574,8 +8574,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.4.0",
-                    "datestamp": "1721562308",
+                    "version": "3.4.1",
+                    "datestamp": "1748530577",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8593,7 +8593,7 @@
             ],
             "authors": [
                 {
-                    "name": "Chi",
+                    "name": "chi",
                     "homepage": "https://www.drupal.org/user/556138"
                 }
             ],
@@ -9014,17 +9014,17 @@
         },
         {
             "name": "drupal/webform",
-            "version": "6.2.8",
+            "version": "6.2.9",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/webform.git",
-                "reference": "6.2.8"
+                "reference": "6.2.9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/webform-6.2.8.zip",
-                "reference": "6.2.8",
-                "shasum": "5552f9a76b5a4e33beb3ea75664beb5d47c334cc"
+                "url": "https://ftp.drupal.org/files/projects/webform-6.2.9.zip",
+                "reference": "6.2.9",
+                "shasum": "650752c3cc6d0144c6f378b8d25d45c083e23600"
             },
             "require": {
                 "drupal/core": "^10.2",
@@ -9074,8 +9074,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.2.8",
-                    "datestamp": "1732627900",
+                    "version": "6.2.9",
+                    "datestamp": "1733851063",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -9107,12 +9107,12 @@
                     "homepage": "https://www.drupal.org/user/493050"
                 },
                 {
-                    "name": "quicksketch",
-                    "homepage": "https://www.drupal.org/user/35821"
+                    "name": "mandclu",
+                    "homepage": "https://www.drupal.org/user/52136"
                 },
                 {
-                    "name": "torotil",
-                    "homepage": "https://www.drupal.org/user/865256"
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
                 }
             ],
             "description": "Enables the creation of webforms and questionnaires.",
