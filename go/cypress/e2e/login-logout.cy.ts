@@ -1,3 +1,4 @@
+import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import configuration from "../factories/unilogin/configuration"
 import institution from "../factories/unilogin/institution"
@@ -107,6 +108,41 @@ describe("UNI•Login: Login / Logout API Tests", () => {
   }
 
   it("Should login when performing unilogin callback", () => {
+    performLoginCallback()
+
+    cy.location("pathname").should("eq", "/user/profile")
+  })
+
+  it("Should logout when clicking logout button", () => {
+    performLoginCallback()
+
+    cy.dataCy("logout-button").click()
+
+    cy.location("pathname").should("eq", "/")
+  })
+})
+
+describe.only("Adgangsplatformen: Login / Logout API Tests", () => {
+  const performLoginCallback = () => {
+    const mockedCallbackUrl = "/auth/callback/adgangsplatformen"
+
+    //Set mocked session cookie
+    cy.setCookie("SSESS", "cookie-value")
+
+    cy.mockServerGraphQLQuery({
+      operationName: "getAdgangsplatformenUserToken",
+      data: getAdgangsplatformenUserToken.build(),
+    })
+
+    cy.interceptGraphql({
+      operationName: "complexSearchForWorkTeaser",
+      data: complexSearchForWorkTeaser.build(),
+    })
+
+    cy.visit(mockedCallbackUrl)
+  }
+
+  it("Should login when performing adgangsplatformen callback", () => {
     performLoginCallback()
 
     cy.location("pathname").should("eq", "/user/profile")
