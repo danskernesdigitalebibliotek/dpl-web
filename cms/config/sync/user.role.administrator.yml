@@ -11,13 +11,19 @@ dependencies:
     - media.type.document
     - media.type.image
     - media.type.video
+    - media.type.videotool
     - node.type.article
     - node.type.branch
     - node.type.campaign
+    - node.type.go_article
+    - node.type.go_category
+    - node.type.go_page
     - node.type.page
     - rest.resource.dpl_opening_hours_create
     - rest.resource.dpl_opening_hours_delete
     - rest.resource.dpl_opening_hours_update
+    - system.menu.admin
+    - system.menu.main
     - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.opening_hours_categories
@@ -38,6 +44,7 @@ dependencies:
     - dpl_library_agency
     - dpl_mapp
     - dpl_opening_hours
+    - dpl_unilogin
     - dpl_url_proxy
     - dpl_webform
     - entity_clone
@@ -122,6 +129,7 @@ permissions:
   - 'administer software updates'
   - 'administer themes'
   - 'administer themes novel'
+  - 'administer unilogin settings'
   - 'administer url proxy configuration'
   - 'administer webform'
   - 'administer webform element access'
@@ -140,6 +148,9 @@ permissions:
   - 'create branch content'
   - 'create campaign content'
   - 'create document media'
+  - 'create go_article content'
+  - 'create go_category content'
+  - 'create go_page content'
   - 'create image media'
   - 'create media'
   - 'create page content'
@@ -152,6 +163,7 @@ permissions:
   - 'create url aliases'
   - 'create users'
   - 'create video media'
+  - 'create videotool media'
   - 'create webform'
   - 'delete all revisions'
   - 'delete any article content'
@@ -160,10 +172,14 @@ permissions:
   - 'delete any campaign content'
   - 'delete any document media'
   - 'delete any file'
+  - 'delete any go_article content'
+  - 'delete any go_category content'
+  - 'delete any go_page content'
   - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
   - 'delete any video media'
+  - 'delete any videotool media'
   - 'delete any webform'
   - 'delete any webform submission'
   - 'delete article revisions'
@@ -171,6 +187,9 @@ permissions:
   - 'delete campaign revisions'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
+  - 'delete go_article revisions'
+  - 'delete go_category revisions'
+  - 'delete go_page revisions'
   - 'delete links in admin menu'
   - 'delete links in main menu'
   - 'delete media'
@@ -183,9 +202,13 @@ permissions:
   - 'delete own eventinstance entity'
   - 'delete own eventseries entity'
   - 'delete own files'
+  - 'delete own go_article content'
+  - 'delete own go_category content'
+  - 'delete own go_page content'
   - 'delete own image media'
   - 'delete own page content'
   - 'delete own video media'
+  - 'delete own videotool media'
   - 'delete own webform'
   - 'delete own webform submission'
   - 'delete page revisions'
@@ -203,9 +226,13 @@ permissions:
   - 'edit any branch content'
   - 'edit any campaign content'
   - 'edit any document media'
+  - 'edit any go_article content'
+  - 'edit any go_category content'
+  - 'edit any go_page content'
   - 'edit any image media'
   - 'edit any page content'
   - 'edit any video media'
+  - 'edit any videotool media'
   - 'edit any webform'
   - 'edit any webform submission'
   - 'edit eventinstance entity'
@@ -220,9 +247,13 @@ permissions:
   - 'edit own document media'
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
+  - 'edit own go_article content'
+  - 'edit own go_category content'
+  - 'edit own go_page content'
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit own videotool media'
   - 'edit own webform'
   - 'edit own webform submission'
   - 'edit terms in breadcrumb_structure'
@@ -248,6 +279,9 @@ permissions:
   - 'revert all revisions'
   - 'revert article revisions'
   - 'revert campaign revisions'
+  - 'revert go_article revisions'
+  - 'revert go_category revisions'
+  - 'revert go_page revisions'
   - 'revert page revisions'
   - 'role-assign users by role'
   - 'schedule publishing of eventseries'
@@ -266,10 +300,16 @@ permissions:
   - 'view any unpublished article content'
   - 'view any unpublished branch content'
   - 'view any unpublished campaign content'
+  - 'view any unpublished go_article content'
+  - 'view any unpublished go_category content'
+  - 'view any unpublished go_page content'
   - 'view any unpublished page content'
   - 'view any webform submission'
   - 'view article revisions'
   - 'view campaign revisions'
+  - 'view go_article revisions'
+  - 'view go_category revisions'
+  - 'view go_page revisions'
   - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view own unpublished media'

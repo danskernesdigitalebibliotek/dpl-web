@@ -11,9 +11,13 @@ dependencies:
     - media.type.document
     - media.type.image
     - media.type.video
+    - media.type.videotool
     - node.type.article
     - node.type.branch
     - node.type.campaign
+    - node.type.go_article
+    - node.type.go_category
+    - node.type.go_page
     - node.type.page
     - taxonomy.vocabulary.tags
   module:
@@ -29,6 +33,7 @@ dependencies:
     - node
     - override_node_options
     - paragraphs
+    - path
     - recurring_events
     - redirect
     - scheduler
@@ -67,19 +72,28 @@ permissions:
   - 'create audio media'
   - 'create campaign content'
   - 'create document media'
+  - 'create go_article content'
+  - 'create go_category content'
+  - 'create go_page content'
   - 'create image media'
   - 'create media'
   - 'create page content'
   - 'create terms in tags'
+  - 'create url aliases'
   - 'create video media'
+  - 'create videotool media'
   - 'delete any article content'
   - 'delete any audio media'
   - 'delete any campaign content'
   - 'delete any document media'
+  - 'delete any go_article content'
+  - 'delete any go_category content'
+  - 'delete any go_page content'
   - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
   - 'delete any video media'
+  - 'delete any videotool media'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
   - 'delete media'
@@ -90,17 +104,25 @@ permissions:
   - 'delete own eventinstance entity'
   - 'delete own eventseries entity'
   - 'delete own files'
+  - 'delete own go_article content'
+  - 'delete own go_category content'
+  - 'delete own go_page content'
   - 'delete own image media'
   - 'delete own page content'
   - 'delete own video media'
+  - 'delete own videotool media'
   - 'dpl admin access pages'
   - 'edit any article content'
   - 'edit any audio media'
   - 'edit any campaign content'
   - 'edit any document media'
+  - 'edit any go_article content'
+  - 'edit any go_category content'
+  - 'edit any go_page content'
   - 'edit any image media'
   - 'edit any page content'
   - 'edit any video media'
+  - 'edit any videotool media'
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
   - 'edit own article content'
@@ -109,9 +131,13 @@ permissions:
   - 'edit own document media'
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
+  - 'edit own go_article content'
+  - 'edit own go_category content'
+  - 'edit own go_page content'
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit own videotool media'
   - 'edit terms in tags'
   - 'override all published option'
   - 'schedule publishing of eventseries'
@@ -126,6 +152,9 @@ permissions:
   - 'view any unpublished article content'
   - 'view any unpublished branch content'
   - 'view any unpublished campaign content'
+  - 'view any unpublished go_article content'
+  - 'view any unpublished go_category content'
+  - 'view any unpublished go_page content'
   - 'view any unpublished page content'
   - 'view own unpublished content'
   - 'view own unpublished media'
