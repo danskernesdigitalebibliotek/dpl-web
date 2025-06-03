@@ -16,6 +16,7 @@ use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
+use Drupal\next\Entity\NextSite;
 use Drupal\user\Entity\User;
 
 /**
@@ -155,6 +156,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10047();
   $messages[] = dpl_update_update_10051();
   $messages[] = dpl_update_update_10052();
+  $messages[] = dpl_update_update_10053();
 
   /*
    * dpl_update_update_10050 is not needed, when installing from scratch the
@@ -646,46 +648,58 @@ function dpl_update_update_10051(): string {
 
 /**
  * Update passwords for the go_graphql and bnf_graphql users.
+ *
+ * @throws \Exception
  */
 function dpl_update_update_10052(): string {
+
+  $update_password = function (string $user_name, string | false $password): string {
+    if (!$password) {
+      throw new \Exception(sprintf("Password for user '%s' is not set.", $user_name));
+    }
+
+    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+    $users = $entity_type_manager->getStorage('user')->loadByProperties(['name' => $user_name]);
+    $user = reset($users);
+
+    if (!($user instanceof User)) {
+      throw new \Exception(sprintf("No user found with the name: '%s'", $user_name));
+    }
+
+    $user->setPassword($password);
+    $user->save();
+
+    return sprintf("Password for user '%s' has been updated.", $user_name);
+  };
+
   $feedback = [];
-
-  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
-
-  $users = $entity_type_manager->getStorage('user')->loadByProperties(['name' => 'bnf_graphql']);
-  $bnf_user = reset($users);
-
-  if ($bnf_user instanceof User) {
-
-    $go_password = getenv('BNF_GRAPHQL_CONSUMER_USER_PASSWORD');
-    if ($go_password) {
-      $bnf_user->setPassword($go_password);
-      $bnf_user->save();
-    }
-    else {
-      $feedback[] = 'Environment variable "BNF_GRAPHQL_CONSUMER_USER_PASSWORD" is not set.';
-    }
-  }
-  else {
-    $feedback[] = "No user found with the name 'bnf_graphql'.";
-  }
-
-  $users = $entity_type_manager->getStorage('user')->loadByProperties(['name' => 'go_graphql']);
-  $go_user = reset($users);
-
-  if ($go_user instanceof User) {
-    $go_password = getenv('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD');
-    if ($go_password) {
-      $go_user->setPassword($go_password);
-      $go_user->save();
-    }
-    else {
-      $feedback[] = 'Environment variable "NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD" is not set.';
-    }
-  }
-  else {
-    $feedback[] = "No user found with the name 'go_graphql'.";
-  }
+  $feedback[] = $update_password('bnf_graphql', getenv('BNF_GRAPHQL_CONSUMER_USER_PASSWORD'));
+  $feedback[] = $update_password('go_graphql', getenv('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD'));
 
   return implode("\n", $feedback);
+}
+
+/**
+ * Make sure to set DRUPAL_REVALIDATE_SECRET in the database.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10053(): string {
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $next_site = $entity_type_manager->getStorage('next_site')->load('go');
+
+  $revalidate_secret = getenv('DRUPAL_REVALIDATE_SECRET');
+
+  if (!$revalidate_secret) {
+    throw new \Exception('DRUPAL_REVALIDATE_SECRET environment variable is not set.');
+  }
+
+  if (!$next_site instanceof NextSite) {
+    throw new \Exception("No next site found with ID 'go'.");
+  }
+
+  $next_site->setRevalidateSecret($revalidate_secret);
+  $next_site->save();
+
+  return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
 }
