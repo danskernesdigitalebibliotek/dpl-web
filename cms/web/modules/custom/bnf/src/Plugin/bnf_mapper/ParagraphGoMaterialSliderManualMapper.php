@@ -7,7 +7,6 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoMaterialSliderManual;
 
-use Drupal\bnf\Plugin\Traits\MaterialWorkIdTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -17,8 +16,6 @@ use Spawnia\Sailor\ObjectLike;
   id: ParagraphGoMaterialSliderManual::class,
 )]
 class ParagraphGoMaterialSliderManualMapper extends BnfMapperParagraphPluginBase {
-
-  use MaterialWorkIdTrait;
 
   /**
    * {@inheritdoc}
@@ -32,7 +29,10 @@ class ParagraphGoMaterialSliderManualMapper extends BnfMapperParagraphPluginBase
     $workIdsValues = [];
 
     foreach ($workIds as $workId) {
-      $workIdsValues[] = $this->getMaterialValue($workId);
+      $workIdsValues[] = [
+        'value' => $workId->work_id,
+        'material_type' => $workId->material_type,
+      ];
     }
 
     return $this->paragraphStorage->create([

@@ -1,6 +1,7 @@
 
 type GoLibraryInfo {
   name: String
+  cmsUrl: String!
 }
 
 type GoLoginUrls {
@@ -9,6 +10,25 @@ type GoLoginUrls {
 
 type GoLogoutUrls {
   adgangsplatformen: String
+}
+
+"""
+Various FBI profiles configured by the local library.
+"""
+type SearchProfiles {
+  """
+  This is meant to be a fallback profile if no other profile is specified.
+  But is not being used in the current implementation.
+  """
+  default: String
+  """
+  This is the profile used for searching works in the library's catalog.
+  """
+  local: String
+  """
+  This is the profile is using materials from other libraries as well.
+  """
+  global: String
 }
 
 type UniloginConfigurationPrivate {
@@ -30,6 +50,7 @@ type GoConfigurationPublic {
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
+  searchProfiles: SearchProfiles
   unilogin: UniloginConfigurationPublic
 }
 

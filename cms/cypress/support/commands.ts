@@ -82,12 +82,34 @@ Cypress.Commands.add('drupalLogin', (url?: string) => {
   const password = Cypress.env('DRUPAL_PASSWORD');
   cy.session({ username, password }, () => {
     cy.visit('/user/login');
+
+    // If the CookieInformation prompt is here, we want to click it, to not
+    // have it block the user information.
+    cy.get('body').then(($body) => {
+      if ($body.find('.coi-banner__accept').length > 0) {
+        cy.get('.coi-banner__accept').first().click();
+      }
+    });
+
     cy.get('[name="name"]')
       .type(username)
       .parent()
       .get('[name="pass"]')
       .type(password);
-    cy.get('[value="Log in"]').click();
+    cy.get('.button-login').click();
+
+    cy.visit('/user/edit');
+
+    // Making sure the required author field is filled out.
+    cy.get('[name="field_author_name[0][value]"]').clear().type(username);
+
+    // Making sure the interface language is set to english, to simplify our
+    // tests using "contains".
+    cy.get('[data-drupal-selector="edit-preferred-langcode"]').select('en');
+    cy.get('[data-drupal-selector="edit-preferred-admin-langcode"]').select(
+      'en',
+    );
+    cy.get('[data-drupal-selector="edit-submit"]').click();
   });
 
   if (url) {
@@ -105,10 +127,10 @@ Cypress.Commands.add('drupalLogout', () => {
 
 Cypress.Commands.add('drupalCron', () => {
   // Because we run Wiremock as a proxy only services configured with the
-  //  proxy will use it. We need to proxy requests during cron and only the
-  // web container is configured to use the proxy and thus we have to run
+  // proxy will use it. We need to proxy requests during cron and only the
+  // web container is configured to use the proxy, and thus we have to run
   // cron through the web frontend. Using the proxy with the CLI container would
-  // cause too many irrelevant requests to pass throuh the proxy.
+  // cause too many irrelevant requests to pass through the proxy.
   cy.drupalLogin();
   cy.visit('/admin/config/system/cron');
   cy.get('[value="Run cron"]').click();

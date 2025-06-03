@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_go\PathProcessor;
 
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\AdminContext;
@@ -21,17 +19,10 @@ use function Safe\preg_match;
  */
 class OutboundPathProcessor implements OutboundPathProcessorInterface {
 
-  /**
-   * Node storage.
-   */
-  protected EntityStorageInterface $nodeStorage;
-
   public function __construct(
     protected GoSite $goSite,
-    EntityTypeManagerInterface $entityTypeManager,
     protected AdminContext $adminContext,
   ) {
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
   }
 
   /**
@@ -72,11 +63,8 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
         $bubbleableMetadata->addCacheContexts(['dpl_is_go']);
       }
 
-      $node = $this->nodeStorage->load($pathParts[2]);
-
-      if ($node) {
-        $isGoNode = $this->goSite->isGoNode($node);
-
+      $isGoNode = $this->goSite->isGoNid($pathParts[2]);
+      if (!is_null($isGoNode)) {
         if ($isGoNode xor $this->goSite->isGoSite()) {
           $options['absolute'] = TRUE;
           $options['base_url'] = $isGoNode ?

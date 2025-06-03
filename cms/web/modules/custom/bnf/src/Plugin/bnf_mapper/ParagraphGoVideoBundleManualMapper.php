@@ -8,7 +8,6 @@ use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoVideoBundleManual;
 
 use Drupal\bnf\Plugin\Traits\EmbedVideoTrait;
-use Drupal\bnf\Plugin\Traits\MaterialWorkIdTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -19,7 +18,7 @@ use Spawnia\Sailor\ObjectLike;
 )]
 class ParagraphGoVideoBundleManualMapper extends BnfMapperParagraphPluginBase {
 
-  use MaterialWorkIdTrait;
+
   use EmbedVideoTrait;
 
   /**
@@ -34,7 +33,10 @@ class ParagraphGoVideoBundleManualMapper extends BnfMapperParagraphPluginBase {
     $workIdsValues = [];
 
     foreach ($workIds as $workId) {
-      $workIdsValues[] = $this->getMaterialValue($workId);
+      $workIdsValues[] = [
+        'value' => $workId->work_id,
+        'material_type' => $workId->material_type,
+      ];
     }
 
     return $this->paragraphStorage->create([

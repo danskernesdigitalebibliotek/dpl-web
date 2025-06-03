@@ -7,7 +7,6 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphMaterialGridAutomatic;
 
-use Drupal\bnf\Plugin\Traits\MaterialWorkIdTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -17,7 +16,6 @@ use Spawnia\Sailor\ObjectLike;
   id: ParagraphMaterialGridAutomatic::class,
 )]
 class ParagraphMaterialGridAutomaticMapper extends BnfMapperParagraphPluginBase {
-  use MaterialWorkIdTrait;
 
   /**
    * {@inheritdoc}
@@ -32,6 +30,7 @@ class ParagraphMaterialGridAutomaticMapper extends BnfMapperParagraphPluginBase 
       'field_material_grid_title' => $object->materialGridTitle,
       'field_material_grid_description' => $object->materialGridDescription,
       'field_cql_search' => ['value' => $object->cqlSearch->value],
+      'field_amount_of_materials' => $object->amountOfMaterials,
     ]);
 
   }

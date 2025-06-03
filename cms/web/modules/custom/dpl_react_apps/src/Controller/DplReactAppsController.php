@@ -471,6 +471,8 @@ class DplReactAppsController extends ControllerBase {
       'read-article-text' => $this->t('Read article', [], ['context' => 'Work Page']),
       'receive-email-when-material-ready-text' => $this->t('Receive mail when the material is ready', [], ['context' => 'Work Page']),
       'receive-sms-when-material-ready-text' => $this->t('Receive SMS when the material is ready', [], ['context' => 'Work Page']),
+      'reservable-from-another-library-missing-email-text' => $this->t('You need to add an email address to reserve from another library.', [], ['context' => 'Work Page']),
+      'reservable-from-another-library-extra-info-text' => $this->t('NOTE! This material is ordered from another library. Therefore, it may take a few days before it appears on your list of reservations.', [], ['context' => 'Work Page']),
       'reservable-from-another-library-text' => $this->t('Ordered from another library', [], ['context' => 'Work Page']),
       'reservation-errors-description-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'reservation-errors-title-text' => $this->t('Reservation error', [], ['context' => 'Work Page']),

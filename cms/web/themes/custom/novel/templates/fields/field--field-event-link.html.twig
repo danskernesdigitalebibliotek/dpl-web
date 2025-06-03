@@ -1,4 +1,6 @@
 {% if has_event_link %}
+  {% set node = element['#object'] %}
+  {% set node_title = node.label() %}
   {% for item in items %}
       {% set url = item.content['#url'].external ? item.content['#url'].uri : item.content['#url'].toString() %}
       {% set title = item.content['#title'] %}
@@ -7,11 +9,24 @@
       "btn-primary",
       "btn-filled",
       "btn-large",
-      "event-header__button"
+      "event-header__button",
+      "js-dpl-mapp",
       ] %}
 
+     {% set event_data = {
+        linkId: "Klik på Køb billet",
+        customClickParameter: {
+          "24": node_title
+        }
+      }|json_encode %}
+
       {% if event_is_active %}
-          <a {{ item.attributes.setAttribute('href', url).addClass(classes).setAttribute('target', '_blank') }}>
+        <a {{ item.attributes
+          .setAttribute('href', url)
+          .setAttribute('target', '_blank')
+          .addClass(classes)
+          .setAttribute('data-dpl-mapp-event-id', 'click')
+          .setAttribute('data-dpl-mapp-event-data', event_data|raw) }}>
               {{ title }}
           </a>
       {% else %}
