@@ -17,6 +17,7 @@ const nextConfig = {
   experimental: {
     dynamicIO: true,
   },
+  output: "standalone",
   typescript: {
     // @todo This is a temporary solution!!
     // We are trying to bring down the build time.
