@@ -173,6 +173,7 @@ services:
     labels:
       provenance: false
       lagoon.type: node
+
 volumes:
   projectroot:
     driver: local
