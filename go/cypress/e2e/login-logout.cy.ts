@@ -1,3 +1,5 @@
+import routes from "@/lib/config/resolvers/routes"
+
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import configuration from "../factories/unilogin/configuration"
@@ -31,7 +33,7 @@ describe("Login / Logout UI Tests", () => {
   it("Should open unilogin page", () => {
     // Opens login modal with beforeEach
 
-    const uniloginUrl = "/auth/login/unilogin"
+    const uniloginUrl = routes["routes.login.unilogin"]
 
     // Intercept unilogin callback page
     cy.intercept("GET", uniloginUrl, {

@@ -3,6 +3,7 @@
 import React, { useContext } from "react"
 
 import { cyKeys } from "@/cypress/support/constants"
+import routes from "@/lib/config/resolvers/routes"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 import { sheetStore } from "@/store/sheet.store"
 
@@ -29,7 +30,7 @@ function LoginSheet({ open }: { open: boolean }) {
               </div>
               <div>
                 <LoginButton
-                  url="/auth/login/unilogin"
+                  url={routes["routes.login.unilogin"]}
                   data-cy={cyKeys["login-sheet-unilogin-button"]}
                 />
               </div>
