@@ -63,8 +63,8 @@ function dpl_consumers_known_consumers_settings(): array {
   if (!$bnf_consumer_user_password = getenv('BNF_GRAPHQL_CONSUMER_USER_PASSWORD')) {
     throw new \Exception('BNF_GRAPHQL_CONSUMER_USER_PASSWORD not found.');
   }
-  if (!$go_consumer_user_password = getenv('GO_GRAPHQL_CONSUMER_USER_PASSWORD')) {
-    throw new \Exception('GO_GRAPHQL_CONSUMER_USER_PASSWORD not found.');
+  if (!$go_consumer_user_password = getenv('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD')) {
+    throw new \Exception('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD not found.');
   }
 
   return [
