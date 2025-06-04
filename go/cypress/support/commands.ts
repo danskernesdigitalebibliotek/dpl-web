@@ -47,6 +47,12 @@ export type MockRestResponseParams = {
   statusCode?: number
 }
 
+export type MockSoapResponseParams = {
+  path: string
+  data: string
+  statusCode?: number
+}
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -98,6 +104,13 @@ declare global {
        * @example cy.mockServerRest({ method: "get", url: "/api/users", data: { users: [] } })
        */
       mockServerRest(params: MockRestResponseParams): void
+
+      /**
+       * Mocks a server-side SOAP API endpoint
+       * @param params - The parameters for mocking the SOAP API endpoint
+       * @example cy.mockServerSoap({ path: "/institution", data: institution.build() })
+       */
+      mockServerSoap(params: MockSoapResponseParams): void
 
       /**
        * Resets all server-side MSW mocks
@@ -177,6 +190,13 @@ Cypress.Commands.add("mockServerGraphQLMutation", props => {
  */
 Cypress.Commands.add("mockServerRest", props => {
   cy.task("mockRestResponse", props)
+})
+
+/**
+ * Server-side SOAP API mocking
+ */
+Cypress.Commands.add("mockServerSoap", props => {
+  cy.task("mockSoapResponse", props)
 })
 
 /**

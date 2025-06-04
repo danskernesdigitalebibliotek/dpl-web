@@ -4,11 +4,18 @@ import {
   MockGraphQLMutationParams,
   MockGraphQLQueryParams,
   MockRestResponseParams,
+  MockSoapResponseParams,
 } from "../commands"
 
 class MockApiServer {
   private readonly server: Mockttp
   private readonly port: number
+
+  shouldEnableDebug() {
+    if (process.env.DEBUG_MOCK_SERVER === "true") {
+      this.server.enableDebug()
+    }
+  }
 
   constructor() {
     this.server = getLocal()
@@ -17,11 +24,12 @@ class MockApiServer {
 
   reset() {
     this.server.reset()
+    this.shouldEnableDebug()
   }
 
   start() {
     this.server.start(this.port)
-    this.server.enableDebug()
+    this.shouldEnableDebug()
   }
 
   stop() {
@@ -53,6 +61,16 @@ class MockApiServer {
         this.server.forDelete(url).thenJson(statusCode, data)
         break
     }
+  }
+
+  mockSoapResponse({ path: url, data, statusCode = 200 }: MockSoapResponseParams) {
+    this.server.forPost(url).thenCallback(() => ({
+      status: statusCode,
+      headers: {
+        "content-type": "application/soap+xml; charset=utf-8",
+      },
+      body: data,
+    }))
   }
 }
 

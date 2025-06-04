@@ -5152,6 +5152,11 @@
   resolved "https://registry.npmjs.org/@types/junit-report-builder/-/junit-report-builder-3.0.2.tgz"
   integrity sha512-R5M+SYhMbwBeQcNXYWNCZkl09vkVfAtcPIaCGdzIkkbeaTrVbGQ7HVgi4s+EmM/M1K4ZuWQH0jGcvMvNePfxYA==
 
+"@types/jwt-simple@^0.5.36":
+  version "0.5.36"
+  resolved "https://registry.yarnpkg.com/@types/jwt-simple/-/jwt-simple-0.5.36.tgz#0d9e91f3f629fcd4c50d46caf8f49f2059bebd48"
+  integrity sha512-UKOigRdpPdj7ODP+ouBC5U+7l0W0dAzGbrK23P0HFnTjVqbDAAEem8LIhTZf6NrDV/Bw8cxWQZnZ4DPBZkHfpA==
+
 "@types/lodash@^4.17.12":
   version "4.17.12"
   resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.12.tgz"
@@ -11102,6 +11107,11 @@ junit-report-builder@^5.1.1:
     lodash "^4.17.21"
     make-dir "^3.1.0"
     xmlbuilder "^15.1.1"
+
+jwt-simple@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/jwt-simple/-/jwt-simple-0.5.6.tgz#3357adec55b26547114157be66748995b75b333a"
+  integrity sha512-40aUybvhH9t2h71ncA1/1SbtTNCVZHgsTsTgqPUxGWDmUDrXyDf2wMNQKEbdBjbf4AI+fQhbECNTV6lWxQKUzg==
 
 keen-slider@^6.8.6:
   version "6.8.6"

@@ -19,6 +19,7 @@ function getEnvs() {
     GO_GRAPHQL_CONSUMER_USER_PASSWORD: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD,
     GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
     NODE_ENV: process.env.NODE_ENV,
+    TEST_MODE: process.env.TEST_MODE,
 
     // Server-only env variables
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
@@ -45,6 +46,7 @@ const EnvSchema = z.object({
   GO_GRAPHQL_CONSUMER_USER_PASSWORD: z.string(),
   GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
+  TEST_MODE: z.coerce.boolean().default(false),
 })
 
 // Environment variables only available in Nodejs.

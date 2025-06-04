@@ -22,7 +22,5 @@ export function DynamicSheet() {
     SheetContentComponentTypes[sheetType as keyof typeof SheetContentComponentTypes] || null
   if (DynamicSheetContentType === null) return null
 
-  // TODO: figure out how to type props dynamically
-  // @ts-ignore
-  return <DynamicSheetContentType open={open} {...props} />
+  return <DynamicSheetContentType facets={[]} open={open} {...props} />
 }

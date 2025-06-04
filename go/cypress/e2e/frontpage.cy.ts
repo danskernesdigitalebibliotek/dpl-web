@@ -1,24 +1,5 @@
-import GetCategories from "../factories/dpl-cms/getCategories"
-import GoFrontpage from "../factories/dpl-cms/getPageByPathQuery/go-frontpage"
-import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
-
 describe("Front Page Tests", () => {
   beforeEach(() => {
-    cy.mockServerGraphQLQuery({
-      operationName: "getPageByPath",
-      data: GoFrontpage.build(),
-    })
-
-    cy.mockServerGraphQLQuery({
-      operationName: "getCategories",
-      data: GetCategories.build(),
-    })
-
-    cy.interceptGraphql({
-      operationName: "complexSearchForWorkTeaser",
-      data: ComplexSearchForWorkTeaser.build(),
-    })
-
     cy.visit("/")
   })
 
@@ -77,9 +58,9 @@ describe("Front Page Tests", () => {
           .should("contain.text", "Dette er titlen på en e-bog")
 
         // Maximum number of materials to click through
-        const maxAttempts = 10
+        const maxAttempts = 20
 
-        // Click the button up to 10 times
+        // Click the button up to 20 times
         for (let i = 0; i < maxAttempts; i++) {
           cy.dataCy("material-slider-next-button")
             .should("exist")

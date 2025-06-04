@@ -3,7 +3,7 @@ import { env } from "process"
 
 function getAllowedHostname() {
   // While testing we allow all hostnames, to avoid errors while using mocked responses
-  if (env.NODE_ENV === "test") {
+  if (env.NODE_ENV !== "production") {
     return "**"
   }
 

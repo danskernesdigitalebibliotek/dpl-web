@@ -9,7 +9,7 @@ const { combinedEnv } = loadEnvConfig(process.cwd(), true)
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:3000",
+    baseUrl: combinedEnv.NEXT_PUBLIC_APP_URL,
     setupNodeEvents(on, config) {
       config.env = {
         ...combinedEnv,
