@@ -54,6 +54,9 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+# Make sure we have ourt startup script
+COPY --from=builder /app/lagoon ./lagoon
+RUN rm ./lagoon/*.dockerfile
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
