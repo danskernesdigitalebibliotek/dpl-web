@@ -155,6 +155,11 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.57.1.tgz"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
+"@hammzj/cypress-page-object@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/@hammzj/cypress-page-object/-/cypress-page-object-2.3.0.tgz"
+  integrity sha512-AT2mN+UiHaAFPEvPWm8/ayL9T4XgymfkkdfsB+zAbp3KNC8nf3rjEF3g27Kc3va0BfowfiGzI5TO9XFowx5bAw==
+
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.13.0.tgz"
