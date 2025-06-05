@@ -49,10 +49,6 @@ tasks:
             # Otherwise install and let drush generate a password.
               drush si --existing-config -y
             fi
-
-            # Practice shows that the cache needs to be cleared to avoid
-            # configuration errors even after a site install.
-            drush cr
           fi
         service: cli
         shell: bash
