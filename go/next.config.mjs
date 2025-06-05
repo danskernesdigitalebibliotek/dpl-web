@@ -16,6 +16,7 @@ function getAllowedHostname() {
 const nextConfig = {
   experimental: {
     dynamicIO: true,
+    nodeMiddleware: true,
   },
   output: "standalone",
   typescript: {
