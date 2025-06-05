@@ -46,7 +46,7 @@ RUN rm ./lagoon/*.dockerfile
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=1000:1000 /app/.next/standalone ./
-COPY --from=builder --chown=1000:1000 /app/.next/static ./.next/static
+COPY --from=builder --chown=10000:10000 /app/.next/standalone ./
+COPY --from=builder --chown=10000:10000 /app/.next/static ./.next/static
 
 CMD ["/app/lagoon/start.sh"]
