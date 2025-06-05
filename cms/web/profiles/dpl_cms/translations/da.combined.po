@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-06-04 11:45+0200\n"
-"PO-Revision-Date: 2025-06-04 11:45+0200\n"
+"POT-Creation-Date: 2025-06-05 11:45+0200\n"
+"PO-Revision-Date: 2025-06-05 11:45+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -9894,15 +9894,6 @@ msgstr "Behandlet @processed af @total tilsidesatte metatag-poster."
 msgid "There were no overridden Metatag records."
 msgstr "Der var ingen tilsidesatte Metatag records."
 
-msgid "Metatags"
-msgstr "Metatags"
-
-msgid "Tokens related to Metatags."
-msgstr "Tokens relateret til metatags."
-
-msgid "Metatag values for the current page."
-msgstr "Metatag-værdier for den aktuelle side."
-
 msgid ""
 "This module allows a site to automatically provide structured metadata, aka "
 "\"meta tags\", about the site and individual pages."
@@ -10036,6 +10027,15 @@ msgstr "Metatags (Skjult felt for JSON support)"
 msgid "The computed meta tags for the entity."
 msgstr "De beregnede meta tags for enheden."
 
+msgid "Metatags"
+msgstr "Metatags"
+
+msgid "Tokens related to Metatags."
+msgstr "Tokens relateret til metatags."
+
+msgid "Metatag values for the current page."
+msgstr "Metatag-værdier for den aktuelle side."
+
 msgid ""
 "Provides support for meta tags used to control the mobile browser experience."
 msgstr ""
@@ -10126,13 +10126,13 @@ msgstr ""
 "Følgende tokens er tilgængelige. Du kan bruge Twig-syntaks i dette felt."
 
 msgid "Meta tags"
-msgstr "Meta tags"
+msgstr "Meta-tags"
 
 msgid "Overridden"
 msgstr "Tilsidesat"
 
 msgid "Using defaults"
-msgstr "Brug af standardindstillinger"
+msgstr "Bruger standardindstillinger"
 
 msgid ""
 "The custom admin pages for managing Views meta tags at /admin/config/search/"
@@ -11149,7 +11149,7 @@ msgid "An established standard to which the described resource conforms."
 msgstr "En etableret standard, som den beskrevne ressource overholder."
 
 msgid "Abstract"
-msgstr "Abstract"
+msgstr "Resume"
 
 msgid "A summary of the resource."
 msgstr "En oversigt over ressourcen."
@@ -12249,8 +12249,7 @@ msgid ""
 "Describes the name and version number of the software or publishing tool "
 "used to create the page."
 msgstr ""
-"Beskriver navn og versionsnummer på softwaren eller publiceringsværktøjet, "
-"der blev brugt til at oprette siden."
+"Beskriver navn og versionsnummer på det værktøj, der har genereret siden."
 
 msgid "Robots"
 msgstr "Robotter"
@@ -12259,8 +12258,8 @@ msgid ""
 "Provides search engines with specific directions for what to do when this "
 "page is indexed."
 msgstr ""
-"Leverer søgemaskiner med specifikke instruktioner for hvad der skal gøres, "
-"når denne side er indekseret."
+"Giver søgemaskiner anvisninger til, hvad de skal gøre, når de indekserer "
+"denne side."
 
 msgid "Author"
 msgstr "Author"
@@ -12446,7 +12445,7 @@ msgid "Phone number"
 msgstr "Telefonnummer"
 
 msgid "Fax number"
-msgstr "Fax nummer"
+msgstr "Faxnummer"
 
 msgid "Video type"
 msgstr "Video type"
@@ -12497,7 +12496,7 @@ msgstr ""
 "i <a href='https://en.wikipedia.org/wiki/ISO_8601'>ISO 8601</a> format."
 
 msgid "Street address"
-msgstr "Gadenavn"
+msgstr "Adresse"
 
 msgid "The title of the content, e.g., <em>The Rock</em>."
 msgstr "Titlen på indhold, f.eks., <em>The Rock</em>."
@@ -13206,7 +13205,7 @@ msgstr ""
 "overholder et formelt identifikationssystem."
 
 msgid "Creator"
-msgstr "Forfatter"
+msgstr "Skaber"
 
 msgid ""
 "An entity primarily responsible for making the resource. Examples of a "
@@ -13368,7 +13367,7 @@ msgid "Provides support for Twitter's Card meta tags."
 msgstr "Leverer support for Twitters Card metatags."
 
 msgid "Add default meta tags"
-msgstr "Tilføj default meta-tags"
+msgstr "Tilføj standard meta-tag"
 
 msgid "Delete default meta tags"
 msgstr "Slet standard meta tags"
