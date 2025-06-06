@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/cache@v4
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       # Validate the format of the tag. We only want to react on a precise pattern.
