@@ -1,4 +1,4 @@
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.25.21 as builder
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.25.23 as builder
 
 ARG GO_CMS_DOMAIN=cms-playground.dpl-cms.dplplat01.dpl.reload.dk
 
