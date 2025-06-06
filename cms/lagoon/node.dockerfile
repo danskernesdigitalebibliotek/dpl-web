@@ -44,6 +44,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/lagoon ./lagoon
 RUN rm ./lagoon/*.dockerfile
 
+# We need the middleware too.
+COPY --from=builder /app/middleware.ts ./middleware.ts
+
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=10000:10000 /app/.next/standalone ./
