@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_webmaster\Form;
 
+use Drupal\Core\Archiver\ArchiverInterface;
 use Drupal\Core\Archiver\ArchiverManager;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\File\FileExists;
@@ -46,6 +47,8 @@ class InstallOrUpdateModule extends FormBase {
    *   The state service.
    * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
    *   The current session.
+   * @param \Drupal\Core\Archiver\ArchiverManager $archiverManager
+   *   The archive manager service.
    */
   public function __construct(
     protected string $root,
@@ -55,6 +58,7 @@ class InstallOrUpdateModule extends FormBase {
     protected FileSystemInterface $fileSystem,
     protected StateInterface $state,
     protected SessionInterface $session,
+    protected ArchiverManager $archiveManager,
   ) {}
 
   /**
@@ -76,6 +80,7 @@ class InstallOrUpdateModule extends FormBase {
       $container->get('file_system'),
       $container->get('state'),
       $container->get('session'),
+      $container->get('plugin.manager.archiver'),
     );
   }
 
@@ -137,7 +142,7 @@ class InstallOrUpdateModule extends FormBase {
 
     $directory = _update_manager_extract_directory();
     try {
-      $archive = update_manager_archive_extract($local_cache, $directory);
+      $archive = $this->extract($local_cache, $directory);
     }
     catch (\Exception $e) {
       $this->messenger()->addError($e->getMessage());
@@ -247,6 +252,40 @@ class InstallOrUpdateModule extends FormBase {
       system_authorized_init('update_authorize_run_install', __DIR__ . '/../../update.authorize.inc', $arguments, $this->t('Update manager'));
       $form_state->setRedirectUrl(system_authorized_get_url());
     }
+  }
+
+  /**
+   * Extract archive.
+   */
+  protected function extract(string $file, string $directory): ArchiverInterface {
+    /** @var \Drupal\Core\Archiver\ArchiverInterface $archiver */
+    $archiver = $this->archiverManager->getInstance([
+      'filepath' => $file,
+    ]);
+    if (!$archiver) {
+      throw new \Exception("Cannot extract '$file', not a valid archive");
+    }
+
+    $files = $archiver->listContents();
+
+    // Unfortunately, we can only use the directory name to determine the project
+    // name. Some archivers list the first file as the directory (i.e., MODULE/)
+    // and others list an actual file (i.e., MODULE/README.TXT).
+    $project = strtok($files[0], '/\\');
+
+    // Delete the destination if it exists.
+    $extract_location = $directory . '/' . $project;
+    if (file_exists($extract_location)) {
+      try {
+        $this->fileSystem->deleteRecursive($extract_location);
+      }
+      catch (\FileException $e) {
+        // Ignore failed deletes.
+      }
+    }
+
+    $archiver->extract($directory);
+    return $archiver;
   }
 
   /**
