@@ -13,3 +13,23 @@ field.value.dpl_fbi_work_id:
     value:
       type: label
       label: Value
+
+field.field_type.dpl_fbi_cql_search:
+  type: mapping
+  label: 'CQL Search field'
+  mapping:
+    value:
+      type: string
+      label: 'CQL query'
+    link:
+      type: string
+      label: 'Link to search'
+    location:
+      type: string
+      label: 'Location filter'
+    sublocation:
+      type: string
+      label: 'Sub-location filter'
+    onshelf:
+      type: boolean
+      label: 'On-shelf filter'

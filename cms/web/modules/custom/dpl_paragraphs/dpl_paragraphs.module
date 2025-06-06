@@ -274,7 +274,23 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
   // Get the common render array, used by all material grid paragraphs.
   $render = _dpl_paragraphs_prepare_material_grid($paragraph);
   $render['#name'] = 'material-grid-automatic';
-  $render['#data']['cql'] = $paragraph->get('field_cql_search')->getString();
+
+  $cql_search = $paragraph->get('field_cql_search')->getValue();
+
+  $onshelf = !empty($cql_search[0]['onshelf']);
+  $render['#data']['cql'] = $cql_search[0]['value'];
+  $render['#data']['onshelf'] = $onshelf ? 'true' : 'false';
+
+  $filters = ['location', 'sublocation', 'sort'];
+
+  foreach ($filters as $filter) {
+    // Only set the data filters if they actually exist.
+    if (empty($cql_search[0][$filter])) {
+      continue;
+    }
+
+    $render['#data'][$filter] = $cql_search[0][$filter];
+  }
 
   $variables['content'] = [
     'material_grid' => $render,
