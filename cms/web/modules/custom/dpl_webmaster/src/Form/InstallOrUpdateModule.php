@@ -34,7 +34,7 @@ class InstallOrUpdateModule extends FormBase {
    * Constructs a new InstallOrUpdateModule.
    *
    * @param string $root
-   *   The root location under which installed projects will be saved.
+   *   The Drupal root under which installed projects will be saved.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler.
    * @param string $sitePath
@@ -73,7 +73,7 @@ class InstallOrUpdateModule extends FormBase {
    */
   public static function create(ContainerInterface $container): self {
     return new static(
-      (string) $container->get('update.root'),
+      (string) $container->get('kernel')->getAppRoot(),
       $container->get('module_handler'),
       $container->getParameter('site.path'),
       $container->get('plugin.manager.archiver'),
