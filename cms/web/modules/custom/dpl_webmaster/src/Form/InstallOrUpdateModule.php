@@ -146,16 +146,7 @@ class InstallOrUpdateModule extends FormBase {
       return;
     }
 
-    $files = $archive->listContents();
-    if (!$files) {
-      $this->messenger()->addError($this->t('Provided archive contains no files.'));
-      return;
-    }
-
-    // Unfortunately, we can only use the directory name to determine the
-    // project name. Some archivers list the first file as the directory (i.e.,
-    // MODULE/) and others list an actual file (i.e., MODULE/README.TXT).
-    $project = strtok($files[0], '/\\');
+    $project = $this->getProjectName($archive);
 
     if (!$project) {
       $this->messenger()->addError($this->t('Could not determine module name from archive'));
@@ -252,6 +243,21 @@ class InstallOrUpdateModule extends FormBase {
   }
 
   /**
+   * Get project name from archive.
+   *
+   * The achive file name might not match the project name, so extract the
+   * project name by getting the directory name inside the archive.
+   */
+  protected function getProjectName(ArchiverInterface $archiver): string {
+    $files = $archiver->listContents();
+
+    // Unfortunately, we can only use the directory name to determine the project
+    // name. Some archivers list the first file as the directory (i.e., MODULE/)
+    // and others list an actual file (i.e., MODULE/README.TXT).
+    return strtok($files[0], '/\\');
+  }
+
+  /**
    * Extract archive.
    */
   protected function extract(string $file, string $directory): ArchiverInterface {
@@ -263,12 +269,7 @@ class InstallOrUpdateModule extends FormBase {
       throw new \Exception("Cannot extract '$file', not a valid archive");
     }
 
-    $files = $archiver->listContents();
-
-    // Unfortunately, we can only use the directory name to determine the project
-    // name. Some archivers list the first file as the directory (i.e., MODULE/)
-    // and others list an actual file (i.e., MODULE/README.TXT).
-    $project = strtok($files[0], '/\\');
+    $project = $this->getProjectName($archiver);
 
     // Delete the destination if it exists.
     $extract_location = $directory . '/' . $project;
