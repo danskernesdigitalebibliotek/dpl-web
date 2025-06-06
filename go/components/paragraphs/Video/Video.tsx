@@ -31,7 +31,9 @@ const Video = (Video: VideoProps) => {
             className="absolute inset-0 h-full w-full"
             src={embedVideo?.mediaVideotool}
             allowFullScreen
-            allow="autoplay; fullscreen"></iframe>
+            allow="autoplay; fullscreen"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
