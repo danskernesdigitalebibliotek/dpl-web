@@ -16,7 +16,6 @@ function getAllowedHostname() {
 const nextConfig = {
   experimental: {
     dynamicIO: true,
-    nodeMiddleware: true,
   },
   typescript: {
     // @todo This is a temporary solution!!
