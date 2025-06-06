@@ -90,9 +90,6 @@ class InstallOrUpdateModule extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     // This is an unchanged copy of UpdateManagerInstall::buildForm().
     $this->moduleHandler->loadInclude('update', 'inc', 'update.manager');
-    if (!_update_manager_check_backends($form, 'install')) {
-      return $form;
-    }
 
     $form['help_text'] = [
       '#prefix' => '<p>',
