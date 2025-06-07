@@ -62,10 +62,10 @@ export const defaultSession: TSessionData = {
   type: "anonymous",
 }
 
-export async function getSession(options?: {
-  request: NextRequest
-  response: NextResponse
-}): Promise<IronSession<TSessionData>> {
+export async function getSession(
+  request?: Request | NextRequest,
+  response?: NextResponse
+): Promise<IronSession<TSessionData>> {
   // If we are buikding the go app, we will use the default session to simulate an anonymous user.
   if (isBuildingGoApp()) {
     return defaultSession as IronSession<TSessionData>
@@ -80,9 +80,10 @@ export async function getSession(options?: {
     const { cookies } = await import("next/headers")
     const cookieStore = await cookies()
     const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
-    const session = !options
-      ? await getIronSession<TSessionData>(cookieStore, sessionOptions)
-      : await getIronSession<TSessionData>(options.request, options.response, sessionOptions)
+    const session =
+      request && response
+        ? await getIronSession<TSessionData>(request, response, sessionOptions)
+        : await getIronSession<TSessionData>(cookieStore, sessionOptions)
 
     if (!session?.isLoggedIn) {
       // Return the default session if the session is not logged in.
