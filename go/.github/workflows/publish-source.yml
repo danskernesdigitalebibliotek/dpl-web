@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       # Validate the format of the tag. We only want to react on a precise pattern.
       - name: Detect release tag
         id: detect_tag
@@ -27,6 +28,7 @@ jobs:
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         with:
           node-version-file: ".nvmrc"
+          cache: "yarn"
 
       - name: Install dependencies
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
