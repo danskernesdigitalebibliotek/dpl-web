@@ -166,14 +166,6 @@ services:
     environment:
       << : *default-environment
 
-  node:
-    build:
-      context: .
-      dockerfile: lagoon/node.dockerfile
-    labels:
-      provenance: false
-      lagoon.type: node
-
 volumes:
   projectroot:
     driver: local
