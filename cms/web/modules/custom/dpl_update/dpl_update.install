@@ -17,6 +17,7 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
 use Drupal\next\Entity\NextSite;
+use Drupal\queue_ui\QueueUIBatchInterface;
 use Drupal\user\Entity\User;
 
 /**
@@ -700,4 +701,42 @@ function dpl_update_update_10053(): string {
   $next_site->save();
 
   return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
+}
+
+/**
+ * Set sites to automatically be subscribed to the GO basic subscription.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10054(): string {
+  $feedback = [];
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $subscription_storage = $entity_type_manager->getStorage('bnf_subscription');
+
+  $uuid = '4669c003-5673-46eb-9950-aa62ca4b4a2f';
+
+  /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
+  $existing = $subscription_storage->loadByProperties([
+    'subscription_uuid' => $uuid,
+  ]);
+
+  if ($existing) {
+    $feedback[] = 'The subscription already exists. Skipping creation';
+
+  }
+  else {
+    $subscription_storage->create([
+      'subscription_uuid' => $uuid,
+      'label' => 'GO: Formidling til børn',
+    ])->save();
+
+    $feedback[] = 'Successfully created subscription for "GO: Formidling til børn".';
+
+    $queue_batch = DrupalTyped::service(QueueUIBatchInterface::class, 'queue_ui.batch');
+    $queue_batch->batch(['bnf_client_new_content', 'bnf_client_node_update']);
+
+    $feedback[] = 'Started batch processing for BNF subscriptions and nodes.';
+  }
+
+  return implode("\n", $feedback);
 }
