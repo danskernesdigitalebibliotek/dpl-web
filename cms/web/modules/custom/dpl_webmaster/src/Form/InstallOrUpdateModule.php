@@ -6,7 +6,9 @@ namespace Drupal\dpl_webmaster\Form;
 
 use Drupal\Core\Archiver\ArchiverInterface;
 use Drupal\Core\Archiver\ArchiverManager;
+use Drupal\Core\Extension\InfoParserInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\File\Exception\FileException;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\FileTransfer\Local;
@@ -49,6 +51,8 @@ class InstallOrUpdateModule extends FormBase {
    *   The current session.
    * @param \Drupal\Core\Archiver\ArchiverManager $archiverManager
    *   The archive manager service.
+   * @param \Drupal\Core\Extension\InfoParserInterface $infoParser
+   *   The info parser service.
    */
   public function __construct(
     protected string $root,
@@ -59,6 +63,7 @@ class InstallOrUpdateModule extends FormBase {
     protected StateInterface $state,
     protected SessionInterface $session,
     protected ArchiverManager $archiveManager,
+    protected InfoParserInterface $infoParser,
   ) {}
 
   /**
@@ -81,6 +86,7 @@ class InstallOrUpdateModule extends FormBase {
       $container->get('state'),
       $container->get('session'),
       $container->get('plugin.manager.archiver'),
+      $container->get('info_parser'),
     );
   }
 
@@ -124,7 +130,6 @@ class InstallOrUpdateModule extends FormBase {
     // the handling of already installed modules and file permissions check
     // (search for 'UpdateManagerInstall').
     $local_cache = '';
-    $all_files = $this->getRequest()->files->get('files', []);
 
     $validators = ['FileExtension' => ['extensions' => $this->archiverManager->getExtensions()]];
     /** @var \Drupal\file\FileInterface|null $finfo */
@@ -146,9 +151,10 @@ class InstallOrUpdateModule extends FormBase {
       return;
     }
 
-    $project = $this->getProjectName($archive);
-
-    if (!$project) {
+    try {
+      $project = $this->getProjectName($archive);
+    }
+    catch (\Throwable) {
       $this->messenger()->addError($this->t('Could not determine module name from archive'));
       return;
     }
@@ -156,8 +162,6 @@ class InstallOrUpdateModule extends FormBase {
     $archive_errors = $this->verifyProject($project, $local_cache, $directory);
     if (!empty($archive_errors)) {
       $this->messenger()->addError(array_shift($archive_errors));
-      // @todo Fix me in D8: We need a way to set multiple errors on the same
-      //   form element and have all of them appear!
       if (!empty($archive_errors)) {
         foreach ($archive_errors as $error) {
           $this->messenger()->addError($error);
@@ -201,17 +205,23 @@ class InstallOrUpdateModule extends FormBase {
   protected function getProjectName(ArchiverInterface $archiver): string {
     $files = $archiver->listContents();
 
-    // Unfortunately, we can only use the directory name to determine the project
-    // name. Some archivers list the first file as the directory (i.e., MODULE/)
-    // and others list an actual file (i.e., MODULE/README.TXT).
-    return strtok($files[0], '/\\');
+    // Unfortunately, we can only use the directory name to determine the
+    // project name. Some archivers list the first file as the directory (i.e.,
+    // MODULE/) and others list an actual file (i.e., MODULE/README.TXT).
+    $project = strtok($files[0], '/\\');
+
+    if (!$project) {
+      throw new \RuntimeException('Could not determine project name from archive.');
+    }
+
+    return $project;
   }
 
   /**
    * Extract archive.
    */
   protected function extract(string $file, string $directory): ArchiverInterface {
-    /** @var \Drupal\Core\Archiver\ArchiverInterface $archiver */
+    /** @var \Drupal\Core\Archiver\ArchiverInterface|null $archiver */
     $archiver = $this->archiverManager->getInstance([
       'filepath' => $file,
     ]);
@@ -227,7 +237,7 @@ class InstallOrUpdateModule extends FormBase {
       try {
         $this->fileSystem->deleteRecursive($extract_location);
       }
-      catch (\FileException $e) {
+      catch (FileException $e) {
         // Ignore failed deletes.
       }
     }
@@ -240,7 +250,9 @@ class InstallOrUpdateModule extends FormBase {
    * Sanity check an unpacked archive.
    *
    * This does the same as the old update_verify_update_archive().
-   * @return array<>
+   *
+   * @return array<string|int, mixed>
+   *   List of error messages.
    */
   protected function verifyProject(string $project, string $archive_file, string $directory): array {
     $errors = [];
@@ -254,25 +266,29 @@ class InstallOrUpdateModule extends FormBase {
         && file_exists("$directory/$project/core/modules/system/system.module")
     ) {
       return [
-        'no-core' => t('Automatic updating of Drupal core is not supported. See the <a href=":update-guide">Updating Drupal guide</a> for information on how to update Drupal core manually.', [':update-guide' => 'https://www.drupal.org/docs/updating-drupal']),
+        'no-core' => $this->t('Automatic updating of Drupal core is not supported. See the <a href=":update-guide">Updating Drupal guide</a> for information on how to update Drupal core manually.', [':update-guide' => 'https://www.drupal.org/docs/updating-drupal']),
       ];
     }
 
-    // Parse all the .info.yml files and make sure at least one is compatible with
-    // this version of Drupal core. If one is compatible, then the project as a
-    // whole is considered compatible (since, for example, the project may ship
-    // with some out-of-date modules that are not necessary for its overall
+    // Parse all the .info.yml files and make sure at least one is compatible
+    // with this version of Drupal core. If one is compatible, then the project
+    // as a whole is considered compatible (since, for example, the project may
+    // ship with some out-of-date modules that are not necessary for its overall
     // functionality).
     $compatible_project = FALSE;
     $incompatible = [];
-    $files = $this->fileSystem->scanDirectory("$directory/$project", '/.*\.info.yml$/', ['key' => 'name', 'min_depth' => 0]);
+    $files = $this->fileSystem->scanDirectory(
+      "$directory/$project",
+      '/.*\.info.yml$/',
+      ['key' => 'name', 'min_depth' => 0],
+    );
     foreach ($files as $file) {
       // Get the .info.yml file for the module or theme this file belongs to.
-      $info = \Drupal::service('info_parser')->parse($file->uri);
+      $info = $this->infoParser->parse($file->uri);
 
       // If the module or theme is incompatible with Drupal core, set an error.
       if ($info['core_incompatible']) {
-        $incompatible[] = !empty($info['name']) ? $info['name'] : t('Unknown');
+        $incompatible[] = !empty($info['name']) ? $info['name'] : $this->t('Unknown');
       }
       else {
         $compatible_project = TRUE;
@@ -281,16 +297,16 @@ class InstallOrUpdateModule extends FormBase {
     }
 
     if (empty($files)) {
-      $errors[] = t('%archive_file does not contain any .info.yml files.', ['%archive_file' => $file_system->basename($archive_file)]);
+      $errors[] = $this->t('%archive_file does not contain any .info.yml files.', ['%archive_file' => $this->fileSystem->basename($archive_file)]);
     }
     elseif (!$compatible_project) {
-      $errors[] = \Drupal::translation()->formatPlural(
+      $errors[] = $this->formatPlural(
         count($incompatible),
         '%archive_file contains a version of %names that is not compatible with Drupal @version.',
         '%archive_file contains versions of modules or themes that are not compatible with Drupal @version: %names',
         [
           '@version' => \Drupal::VERSION,
-          '%archive_file' => $file_system->basename($archive_file),
+          '%archive_file' => $this->fileSystem->basename($archive_file),
           '%names' => implode(', ', $incompatible),
         ]
       );
