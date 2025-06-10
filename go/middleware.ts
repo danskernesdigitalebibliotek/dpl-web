@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
   // Make sure we have a library token cookie.
   await ensureLibraryTokenExist(request)
 
-  const session = await getSession({ request, response })
+  const session = await getSession(request, response)
 
   if (protectedPages.includes(currentPath)) {
     // If the user is anonymous, we will redirect to the front page.
