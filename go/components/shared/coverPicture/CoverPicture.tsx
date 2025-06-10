@@ -51,8 +51,6 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
             <img
               src={covers.thumbnail}
               alt={alt}
-              height={imageHeight}
-              width={imageWidth}
               sizes="20px"
               loading="lazy"
               className={cn(
@@ -68,9 +66,6 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               srcSet={`${covers.xSmall?.url} 120w, ${covers.small?.url} 240w, ${covers.medium?.url} 480w, ${covers.large?.url} 960w`}
               sizes="(max-width: 500px) 110px, (max-width: 1024px) 230px, 320px"
               alt={alt}
-              height={imageHeight}
-              width={imageWidth}
-              sizes="100vw"
               loading="lazy"
               className={cn(
                 `shadow-cover-picture absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain
