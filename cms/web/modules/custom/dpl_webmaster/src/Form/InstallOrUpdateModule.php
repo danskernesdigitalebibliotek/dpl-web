@@ -166,54 +166,26 @@ class InstallOrUpdateModule extends FormBase {
       return;
     }
 
-    // Make sure the Updater registry is loaded.
-    drupal_get_updaters();
+    $projectDestination = $this->root . '/modules/local/' . $project;
 
-    $project_location = $directory . '/' . $project;
-    try {
-      $updater = Updater::factory($project_location, $this->root);
-    }
-    catch (\Exception $e) {
-      $this->messenger()->addError($e->getMessage());
-      return;
-    }
-
-    try {
-      $project_title = Updater::getProjectTitle($project_location);
-    }
-    catch (\Exception $e) {
-      $this->messenger()->addError($e->getMessage());
-      return;
-    }
-
-    if (!$project_title) {
-      $this->messenger()->addError($this->t('Unable to determine %project name.', ['%project' => $project]));
-    }
-
-    if (!$updater instanceof Module) {
-      $this->messenger()->addError($this->t('%project is not a module.', ['%project' => $project]));
-      return;
-    }
+    $projectLocation = $directory . '/' . $project;
 
     // This is where we diverge from UpdateManagerInstall and pass over control
     // to update.php. It'll pick up the files for the module as we've already
     // extracted it in the directory where it expects to find it.
-    if ($updater->isInstalled()) {
+    if (file_exists($projectDestination)) {
       $this->updateProject([$project], $form_state);
       return;
     }
 
-    $projectRealLocation = $this->fileSystem->realpath($project_location);
+    $projectRealLocation = $this->fileSystem->realpath($projectLocation);
 
     if (!$projectRealLocation) {
       $this->messenger()->addError($this->t('Internal error, could not find files.'));
       return;
     }
 
-    $this->overwriteProject(
-      $projectRealLocation,
-      $this->root . '/modules/local/' . $project,
-    );
+    $this->overwriteProject($projectRealLocation, $projectDestination);
 
     $this->messenger()->addMessage($this->t('%project sucessfully uploaded. You can now enable it below.', ['%project' => $project]));
 
