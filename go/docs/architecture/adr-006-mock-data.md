@@ -46,4 +46,4 @@ We did not actively look into other JS based alternatives, but briefly considere
 ## Consequences
 
 Advanced API responses WILL take more time to define as factories, because we can only benefit from Fishery, if data is split up into reusable atomic objects.
-But it is required that each developer takes his time to define a Factory, as it will benefit adding changes in the future.
+But it is required that each developer takes their time to define a Factory, as it will benefit adding changes in the future.
