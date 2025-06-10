@@ -16,10 +16,6 @@ done
 # Install site.
 drush site-install --existing-config -y
 
-# Practice shows that the cache needs to be cleared to avoid configuration
-# errors even after a site install.
-drush cache:rebuild -y
-
 # Import translations.
 if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then
   echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
