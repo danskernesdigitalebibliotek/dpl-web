@@ -60,8 +60,7 @@ const WorkCard = ({
     },
   })
 
-  const coverSrc = bestRepresentation.cover.large?.url
-  const lowResCoverSrc = bestRepresentation.cover.thumbnail
+  const covers = bestRepresentation.cover
 
   const isSomeMaterialTypePodcast = manifestationsWithPublizonData.some(
     manifestation => manifestation.materialTypes[0].materialTypeGeneral.code === "PODCASTS"
@@ -87,10 +86,9 @@ const WorkCard = ({
       ) : null}
       <div className="relative mx-auto flex aspect-5/7 h-full w-full">
         <div className="h-full w-full">
-          {coverSrc && lowResCoverSrc && (
+          {covers && (
             <CoverPicture
-              lowResSrc={lowResCoverSrc}
-              src={coverSrc}
+              covers={covers}
               alt={`${title} cover billede`}
               withTilt={isWithTilt}
               className="select-none"
