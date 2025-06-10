@@ -33,7 +33,7 @@ describe("Front Page Tests", () => {
       cy.dataCy("video-bundle-next-button").click()
 
       cy.dataCy("work-card-title")
-        .eq(1)
+        .first()
         .should("be.visible")
         .should("contain.text", "Dette er titlen på en lydbog")
 
