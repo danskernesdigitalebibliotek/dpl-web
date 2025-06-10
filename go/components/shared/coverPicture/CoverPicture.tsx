@@ -51,6 +51,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
             <img
               src={covers.thumbnail}
               alt={alt}
+              sizes="20px"
               loading="lazy"
               className={cn(
                 `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain transition-all duration-500

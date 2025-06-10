@@ -31,6 +31,39 @@ const WorkCardStackedWithCaption = ({
   materialOrder,
   currentItemNumber,
 }: WorkCardStackedWithCaptionProps) => {
+  // Get the current work based on currentItemNumber
+  const currentWork = works[currentItemNumber - 1]
+
+  // Early return if no current work
+  if (!currentWork) {
+    return null
+  }
+
+  const manifestations = sortManifestationsBySortPriority(
+    filterManifestationsByEdition(
+      filterManifestationsByMaterialType(
+        filterMaterialTypes(currentWork.manifestations.all as ManifestationWorkPageFragment[])
+      )
+    )
+  )
+
+  const bestRepresentation = getBestRepresentationOrFallbackManifestation(
+    currentWork.manifestations.bestRepresentation as ManifestationWorkPageFragment,
+    manifestations
+  )
+
+  const title = currentWork.titles.full[0]
+  const url = bestRepresentation
+    ? resolveUrl({
+        routeParams: { work: "work", wid: currentWork.workId },
+        queryParams: {
+          type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
+        },
+      })
+    : ""
+
+  const zIndex = materialOrder.indexOf(currentWork.workId as WorkId)
+
   return (
     <div className="relative">
       {[...Array(2)].map((_, index) => (
@@ -46,69 +79,32 @@ const WorkCardStackedWithCaption = ({
             }
           )}></div>
       ))}
-      {works.map((work, index) => {
-        const manifestations = sortManifestationsBySortPriority(
-          filterManifestationsByEdition(
-            filterManifestationsByMaterialType(
-              filterMaterialTypes(work.manifestations.all as ManifestationWorkPageFragment[])
-            )
-          )
-        )
-        const bestRepresentation = getBestRepresentationOrFallbackManifestation(
-          work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
-          manifestations
-        )
-        const title = work.titles.full[0]
-        const url = bestRepresentation
-          ? resolveUrl({
-              routeParams: { work: "work", wid: work.workId },
-              queryParams: {
-                type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
-              },
-            })
-          : ""
-
-        const zIndex = materialOrder.indexOf(work.workId as WorkId)
-        return (
-          <Link
-            key={work.workId}
-            aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
-            className="focus-visible block h-full w-full space-y-3 lg:space-y-5"
-            href={url}
-            aria-hidden={currentItemNumber - 1 !== index}
-            tabIndex={currentItemNumber - 1 !== index ? -1 : undefined}
-            style={{ zIndex }}>
-            <WorkCardWithCaption
-              creators={work.creators || []}
+      <Link
+        key={currentWork.workId}
+        aria-label={`Tilgå værket ${title} af ${displayCreators(currentWork.creators, 1)}`}
+        className="focus-visible block h-full w-full space-y-3 lg:space-y-5"
+        href={url}
+        style={{ zIndex }}>
+        <WorkCardWithCaption
+          creators={currentWork.creators || []}
+          title={title}
+          className="pointer-events-auto relative h-auto overflow-visible opacity-100">
+          {bestRepresentation ? (
+            <WorkCard
+              className={cn("bg-background dark:bg-background-overlay-solid shadow-stacked-card")}
+              workId={currentWork.workId}
               title={title}
-              className={cn(
-                "relative",
-                currentItemNumber - 1 === index
-                  ? "pointer-events-auto h-auto overflow-visible opacity-100"
-                  : "pointer-events-none h-0 overflow-hidden opacity-0"
-              )}>
-              {bestRepresentation ? (
-                <WorkCard
-                  className={cn(
-                    "bg-background dark:bg-background-overlay-solid shadow-stacked-card"
-                  )}
-                  workId={work.workId}
-                  title={title}
-                  bestRepresentation={bestRepresentation}
-                  manifestations={manifestations}
-                  isWithTilt
-                />
-              ) : (
-                <WorkCardEmpty
-                  className={cn(
-                    "bg-background dark:bg-background-overlay-solid shadow-stacked-card"
-                  )}
-                />
-              )}
-            </WorkCardWithCaption>
-          </Link>
-        )
-      })}
+              bestRepresentation={bestRepresentation}
+              manifestations={manifestations}
+              isWithTilt
+            />
+          ) : (
+            <WorkCardEmpty
+              className={cn("bg-background dark:bg-background-overlay-solid shadow-stacked-card")}
+            />
+          )}
+        </WorkCardWithCaption>
+      </Link>
     </div>
   )
 }
