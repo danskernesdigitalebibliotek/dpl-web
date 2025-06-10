@@ -40,3 +40,5 @@ async function getLibraryProfile() {
 }
 
 export const GET = withAuth(getLibraryProfile)
+
+export const dynamic = "force-dynamic"

@@ -144,3 +144,5 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
 }
+
+export const dynamic = "force-dynamic"
