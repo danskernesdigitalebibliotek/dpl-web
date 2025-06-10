@@ -18,7 +18,8 @@ content:
     type: cql_search_widget
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      advanced: 0
     third_party_settings: {  }
   field_slider_amount_of_materials:
     type: number

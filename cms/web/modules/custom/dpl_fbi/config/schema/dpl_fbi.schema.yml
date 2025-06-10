@@ -33,3 +33,11 @@ field.field_type.dpl_fbi_cql_search:
     onshelf:
       type: boolean
       label: 'On-shelf filter'
+
+field.widget.settings.dpl_fbi_cql_search:
+  type: mapping
+  label: 'CQL Search field widget settings'
+  mapping:
+    advanced:
+      type: boolean
+      label: 'Enable advanced fields'

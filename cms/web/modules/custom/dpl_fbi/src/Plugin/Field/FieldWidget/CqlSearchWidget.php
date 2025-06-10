@@ -69,6 +69,68 @@ class CqlSearchWidget extends WidgetBase {
   }
 
   /**
+   * {@inheritdoc}
+   *
+   * @param array<mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form_state object.
+   *
+   * @return array<mixed>
+   *   The altered form array.
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
+    $columns =
+      $this->fieldDefinition->getFieldStorageDefinition()->getColumns();
+
+    unset($columns['value']);
+    $columns = array_keys($columns);
+
+    $element['advanced'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enabled advanced fields', [], ['context' => 'DPL material search']),
+      '#description' => $this->t('Allow editor to fill data into advanced fields (@fields)', [
+        '@fields' => implode(', ', $columns),
+      ], ['context' => 'DPL material search']),
+      '#default_value' => $this->getSetting('advanced') ?? TRUE,
+    ];
+
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @return array<mixed>
+   *   The default settings.
+   */
+  public static function defaultSettings():array {
+    return [
+      'advanced' => TRUE,
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @return array<string>
+   *   The summary strings.
+   */
+  public function settingsSummary(): array {
+    $summary = [];
+
+    $summary[] = $this->getSetting('advanced') ?
+      $this->t(
+        'Advanced fields enabled', [], ['context' => 'DPL material search']
+      ) :
+      $this->t(
+        'Advanced fields NOT enabled', [], ['context' => 'DPL material search']
+      );
+
+    return $summary;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
@@ -135,56 +197,65 @@ class CqlSearchWidget extends WidgetBase {
       '#attributes' => [
         'class' => ['material-search-filters'],
       ],
-      'sort' => [
-        '#type' => 'select',
-        '#title' => $fieldStorageDefinition->getPropertyDefinition('sort')?->getLabel(),
-        '#default_value' => $items[$delta]->sort ?? 'sort.latestpublicationdate.desc',
-        '#options' => [
-          'sort.latestpublicationdate.desc' => $this->t(
-            'By publication date (descending)', [], ['context' => 'DPL material search']
-          ),
-          'sort.latestpublicationdate.asc' => $this->t(
-            'By publication date (ascending)', [], ['context' => 'DPL material search']
-          ),
-          'sort.title.desc' => $this->t(
-            'By title (descending)', [], ['context' => 'DPL material search']
-          ),
-          'sort.title.asc' => $this->t(
-            'By title (ascending)', [], ['context' => 'DPL material search']
-          ),
-          'sort.creator.desc' => $this->t(
-            'By creator (descending)', [], ['context' => 'DPL material search']
-          ),
-          'sort.creator.asc' => $this->t(
-            'By creator (ascending)', [], ['context' => 'DPL material search']
-          ),
-          'relevance' => $this->t(
-            'By relevance', [], ['context' => 'DPL material search']
-          ),
-        ],
-      ],
+
       'cql' => [
         '#type' => 'textarea',
         '#title' => $fieldStorageDefinition->getPropertyDefinition('value')?->getLabel(),
         '#required' => TRUE,
         '#default_value' => $items[$delta]->value ?? '',
+        '#weight' => 0,
       ],
-      'location' => [
-        '#type' => 'textarea',
-        '#title' => $fieldStorageDefinition->getPropertyDefinition('location')?->getLabel(),
-        '#default_value' => $items[$delta]->location ?? '',
-      ],
-      'sublocation' => [
-        '#type' => 'textarea',
-        '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
-        '#default_value' => $items[$delta]->sublocation ?? '',
-      ],
-      'onshelf' => [
-        '#type' => 'checkbox',
-        '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
-        '#default_value' => $items[$delta]->onshelf ?? '',
-      ],
+
     ];
+
+    if ($this->getSetting('advanced')) {
+      $element['filters'] += [
+        'sort' => [
+          '#type' => 'select',
+          '#weight' => -1,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('sort')?->getLabel(),
+          '#default_value' => $items[$delta]->sort ?? 'sort.latestpublicationdate.desc',
+          '#options' => [
+            'sort.latestpublicationdate.desc' => $this->t(
+              'By publication date (descending)', [], ['context' => 'DPL material search']
+            ),
+            'sort.latestpublicationdate.asc' => $this->t(
+              'By publication date (ascending)', [], ['context' => 'DPL material search']
+            ),
+            'sort.title.desc' => $this->t(
+              'By title (descending)', [], ['context' => 'DPL material search']
+            ),
+            'sort.title.asc' => $this->t(
+              'By title (ascending)', [], ['context' => 'DPL material search']
+            ),
+            'sort.creator.desc' => $this->t(
+              'By creator (descending)', [], ['context' => 'DPL material search']
+            ),
+            'sort.creator.asc' => $this->t(
+              'By creator (ascending)', [], ['context' => 'DPL material search']
+            ),
+            'relevance' => $this->t(
+              'By relevance', [], ['context' => 'DPL material search']
+            ),
+          ],
+        ],
+        'location' => [
+          '#type' => 'textarea',
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('location')?->getLabel(),
+          '#default_value' => $items[$delta]->location ?? '',
+        ],
+        'sublocation' => [
+          '#type' => 'textarea',
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
+          '#default_value' => $items[$delta]->sublocation ?? '',
+        ],
+        'onshelf' => [
+          '#type' => 'checkbox',
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
+          '#default_value' => $items[$delta]->onshelf ?? '',
+        ],
+      ];
+    }
 
     return $element;
   }
@@ -259,11 +330,16 @@ class CqlSearchWidget extends WidgetBase {
     $response->addCommand(new RemoveCommand(".$warningClass"));
 
     // Empty out the link field, and hide it by closing the details.
-    $response->addCommand(new InvokeCommand("[name=\"$linkName\"]", 'val', []));
+    $response->addCommand(new InvokeCommand("[name=\"$linkName\"]", 'val', ['']));
     $response->addCommand(new InvokeCommand(".link-details", 'removeAttr', ['open']));
 
     // Setting the value of the CQL field.
     $response->addCommand(new InvokeCommand("[name=\"$cqlName\"]", 'val', [$cqlValue]));
+
+    // Do not attempt to set advanced values if they are not enabled.
+    if (!$this->getSetting('advanced')) {
+      return $response;
+    }
 
     // The onshelf is special, as it is a checkbox, and the value is sent along
     // as a string 'true'/'false'.
