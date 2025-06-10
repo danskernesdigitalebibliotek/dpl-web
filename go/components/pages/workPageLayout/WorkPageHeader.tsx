@@ -59,8 +59,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     }
   )
 
-  const coverSrc = selectedManifestation.cover.large?.url
-  const lowResCoverSrc = selectedManifestation.cover.thumbnail
+  const covers = selectedManifestation.cover
 
   const onOptionSelect = (optionSelected: SlideSelectOption) => {
     const url = resolveUrl({
@@ -94,13 +93,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
         exit={{ opacity: 0 }}>
         <div className="col-span-4 h-auto lg:order-2">
           <div className="rounded-base flex aspect-1/1 h-auto w-full flex-col items-center justify-center lg:aspect-4/5">
-            {coverSrc && lowResCoverSrc && (
-              <CoverPicture
-                alt="Forsidebillede på værket"
-                lowResSrc={lowResCoverSrc || ""}
-                src={coverSrc || ""}
-              />
-            )}
+            {covers && <CoverPicture alt="Forsidebillede på værket" covers={covers} />}
           </div>
           {slideSelectOptions && (
             <div className="flex w-full justify-center pt-12">

@@ -2,11 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 
 const defaultArgs = {
-  src: "https://res.cloudinary.com/dandigbib/image/upload/v1544470826/saxo.dk/9788762722880.jpg",
-  lowResSrc:
-    "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_xxs/v1544470826/saxo.dk/9788762722880.jpg",
+  covers: coverFactory.build(),
   alt: "Cover picture alt text",
 }
 
@@ -17,11 +16,8 @@ const meta = {
     layout: "centered",
   },
   argTypes: {
-    lowResSrc: {
-      control: { type: "text" },
-    },
-    src: {
-      control: { type: "text" },
+    covers: {
+      control: { type: "object" },
     },
     alt: {
       control: { type: "text" },
@@ -79,7 +75,7 @@ export const WithTiltDarkMode: Story = {
 }
 
 export const WithoutCover: Story = {
-  args: { ...defaultArgs, src: "", lowResSrc: "" },
+  args: { ...defaultArgs, covers: {} },
   render: args => (
     <div
       className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
@@ -90,7 +86,7 @@ export const WithoutCover: Story = {
 }
 
 export const WithoutCoverDarkMode: Story = {
-  args: { ...defaultArgs, src: "", lowResSrc: "" },
+  args: { ...defaultArgs, covers: {} },
   decorators: [darkModeDecorator],
   render: args => (
     <div
