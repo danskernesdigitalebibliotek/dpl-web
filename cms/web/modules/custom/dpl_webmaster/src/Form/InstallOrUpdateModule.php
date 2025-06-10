@@ -203,43 +203,21 @@ class InstallOrUpdateModule extends FormBase {
       return;
     }
 
-    $project_real_location = $this->fileSystem->realpath($project_location);
-    $arguments = [
-      'project' => $project,
-      'updater_name' => get_class($updater),
-      'local_url' => $project_real_location,
-    ];
+    $projectRealLocation = $this->fileSystem->realpath($project_location);
 
-    // This process is inherently difficult to test therefore use a state flag.
-    $test_authorize = FALSE;
-    if (drupal_valid_test_ua()) {
-      $test_authorize = $this->state->get('test_uploaders_via_prompt', FALSE);
+    if (!$projectRealLocation) {
+      $this->messenger()->addError($this->t('Internal error, could not find files.'));
+      return;
     }
 
-    // This is the other difference from UpdateManagerInstall. Core checks if it
-    // can update the files directly by checking that the owner of the uploaded
-    // module files is the same as the owner of the site directory, but that
-    // doesn't work in our case. In reality, the only proper test is actually
-    // trying to write the files, so we just assume here.
-    if (!$test_authorize) {
-      $this->moduleHandler->loadInclude('update', 'inc', 'update.authorize');
-      $filetransfer = new Local($this->root, $this->fileSystem);
-      $response = call_user_func_array('update_authorize_run_install', array_merge([$filetransfer], $arguments));
-      if ($response instanceof Response) {
-        $form_state->setResponse($response);
-      }
-    }
+    $this->overwriteProject(
+      $projectRealLocation,
+      $this->root . '/modules/local/' . $project,
+    );
 
-    // Otherwise, go through the regular workflow to prompt for FTP/SSH
-    // credentials and invoke update_authorize_run_install() indirectly with
-    // whatever FileTransfer object authorize.php creates for us.
-    else {
-      // The page title must be passed here to ensure it is initially used when
-      // authorize.php loads for the first time with the FTP/SSH credentials
-      // form.
-      system_authorized_init('update_authorize_run_install', __DIR__ . '/../../update.authorize.inc', $arguments, $this->t('Update manager'));
-      $form_state->setRedirectUrl(system_authorized_get_url());
-    }
+    $this->messenger()->addMessage($this->t('%project sucessfully uploaded. You can now enable it below.', ['%project' => $project]));
+
+    $form_state->setRedirect('system.modules_list');
   }
 
   /**
@@ -347,6 +325,38 @@ class InstallOrUpdateModule extends FormBase {
     }
 
     return $errors;
+  }
+
+  /**
+   * Move project into place.
+   *
+   * As the source (most likely in /tmp) and destination is probably on separate
+   * mounts, copy the project to a temporary directory next to the destination,
+   * and use then use an atomic move.
+   */
+  protected function overwriteProject(string $source, string $dest): void {
+    $tmp = $dest . '-temp';
+
+    $files = $this->fileSystem->scanDirectory(dirname($source), '/.*/');
+
+    $this->fileSystem->prepareDirectory($tmp, FileSystemInterface::CREATE_DIRECTORY);
+
+    foreach ($files as $file) {
+      $tmpFile = $tmp . substr($file->uri, strlen($source));
+
+      // Ensure the file directory exists before trying to copy it.
+      $dirName = dirname($tmpFile);
+      $this->fileSystem->prepareDirectory($dirName, FileSystemInterface::CREATE_DIRECTORY);
+
+      $this->fileSystem->copy(
+        $file->uri,
+        $tmpFile,
+      );
+    }
+
+    $this->fileSystem->move($tmp, $dest);
+
+    $this->fileSystem->deleteRecursive($source);
   }
 
   /**
