@@ -14,6 +14,7 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\FileTransfer\Local;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\Updater\Module;
 use Drupal\Core\Updater\Updater;
@@ -142,7 +143,7 @@ class InstallOrUpdateModule extends FormBase {
     /** @var string $local_cache */
     $local_cache = $finfo->getFileUri();
 
-    $directory = _update_manager_extract_directory();
+    $directory = $this->getTemporaryDirectory();
     try {
       $archive = $this->extract($local_cache, $directory);
     }
@@ -194,6 +195,21 @@ class InstallOrUpdateModule extends FormBase {
     $this->messenger()->addMessage($this->t('%project sucessfully uploaded. You can now enable it below.', ['%project' => $project]));
 
     $form_state->setRedirect('system.modules_list');
+  }
+
+  /**
+   * Get temporary working directory.
+   *
+   * Ensures it exists.
+   */
+  protected function getTemporaryDirectory(): string {
+    // Basically a copy of what _update_manager_extract_directory() did.
+    $directory = 'temporary://dpl-webmaster-' . substr(hash('sha256', Settings::getHashSalt()), 0, 8);
+    if ($create && !file_exists($directory)) {
+      mkdir($directory);
+    }
+
+    return $directory;
   }
 
   /**
@@ -360,7 +376,7 @@ class InstallOrUpdateModule extends FormBase {
     drupal_get_updaters();
 
     $updates = [];
-    $directory = _update_manager_extract_directory();
+    $directory = $this->getTemporaryDirectory();
 
     $project_real_location = NULL;
     foreach ($projects as $project) {
