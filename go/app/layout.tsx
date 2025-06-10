@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
-import { connection } from "next/server"
 import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
