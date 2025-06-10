@@ -69,19 +69,18 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
             {categories.map((category, index) => {
               // Rotation effect options
               const rotations = [
-                "has-checked:rotate-2",
-                "has-checked:rotate-3",
                 "has-checked:rotate-4",
-                "has-checked:rotate-5",
-                "has-checked:rotate-6",
-                "has-checked:-rotate-2",
                 "has-checked:-rotate-3",
+                "has-checked:rotate-2",
+                "has-checked:rotate-6",
                 "has-checked:-rotate-4",
-                "has-checked:-rotate-5",
+                "has-checked:rotate-5",
+                "has-checked:-rotate-2",
+                "has-checked:rotate-3",
                 "has-checked:-rotate-6",
+                "has-checked:-rotate-5",
               ]
-
-              const randomIndex = Math.floor(Math.random() * rotations.length)
+              const randomIndex = index % rotations.length
               const isSelected = pathname === category.path
 
               return (
