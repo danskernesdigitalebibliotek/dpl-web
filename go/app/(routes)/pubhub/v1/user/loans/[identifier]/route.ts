@@ -47,3 +47,5 @@ async function createdigitalLoan(
 }
 
 export const POST = withAuth(createdigitalLoan)
+
+export const dynamic = "force-dynamic"

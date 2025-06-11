@@ -8,6 +8,7 @@ const routes = {
   "routes.login-not-authorized": "error/login-not-authorized",
   "routes.session": "auth/session",
   "routes.adgangsplatformen-service-proxy": "ap-service",
+  "routes.login.unilogin": "/auth/login/unilogin",
 }
 
 export default routes

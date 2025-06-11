@@ -30,3 +30,5 @@ export async function GET() {
 
   return Response.redirect(redirectTo)
 }
+
+export const dynamic = "force-dynamic"

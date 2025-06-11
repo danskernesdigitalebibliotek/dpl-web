@@ -20,7 +20,7 @@ export type TImageBaseProps = {
 export default function ImageBase({
   imageSizing = "intrinsic",
   src,
-  sizes = "100vw",
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
   priority = false,
   className,
   width,
@@ -46,6 +46,7 @@ export default function ImageBase({
           height={height}
           alt={alt}
           onLoad={() => setImageLoaded(true)}
+          loading="lazy"
           style={
             base64
               ? {
@@ -75,6 +76,7 @@ export default function ImageBase({
           height={height}
           alt={alt}
           onLoad={() => setImageLoaded(true)}
+          loading="lazy"
           style={
             base64
               ? {

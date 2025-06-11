@@ -28,9 +28,7 @@ function Header() {
           <DarkModeToggle />
         </div>
         <div className="flex flex-0 justify-end gap-x-4">
-          <Suspense fallback={<p>Loading...</p>}>
-            <ProfileButton />
-          </Suspense>
+          <ProfileButton />
         </div>
       </div>
       <div className="h-navigation-search-height">

@@ -54,3 +54,5 @@ async function getLibraryUserOrder(request: NextRequest, context: { uniLoginUser
 }
 
 export const GET = withAuth(getLibraryUserOrder)
+
+export const dynamic = "force-dynamic"

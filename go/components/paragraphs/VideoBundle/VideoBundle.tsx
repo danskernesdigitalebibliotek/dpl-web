@@ -59,6 +59,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 src={videoUrl}
                 allowFullScreen
                 allow="autoplay; fullscreen"
+                loading="lazy"
               />
             </div>
             <div

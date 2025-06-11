@@ -17,9 +17,6 @@ import {
   ManifestationWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
-import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
-import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -39,23 +36,12 @@ const LoanCard = ({
   setEbookLoans,
 }: LoanCardProps) => {
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
-  const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
-    type: "pid",
-    identifiers: [manifestation.pid],
-    sizes: [
-      "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
-    ],
-  })
+
   const manifestationIsbn = manifestation.identifiers.find(
     identifier => identifier.type === "ISBN"
   )?.value
   const { data: dataProducts } = useGetV1ProductsIdentifierAdapter(manifestationIsbn || "")
-  const lowResCover = getLowResCoverUrl(dataCovers)
-  const coverSrc = getCoverUrls(
-    dataCovers,
-    [manifestation.pid],
-    ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
-  )
+
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
   const targetDate = new Date(loan?.loanExpireDateUtc || "")
   const today = new Date()
@@ -91,7 +77,7 @@ const LoanCard = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manifestation, isCostFree, dataProducts])
 
-  if (isLoadingCovers || isLoadingLoans) {
+  if (isLoadingLoans) {
     return (
       <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
         <div className="aspect-1/1 h-full w-full p-14">
@@ -107,8 +93,7 @@ const LoanCard = ({
         <div className="block h-full w-full space-y-3 px-[15%]">
           <div className="relative h-[85%]">
             <CoverPicture
-              lowResSrc={lowResCover || ""}
-              src={coverSrc?.[0] || ""}
+              covers={manifestation.cover}
               alt={`${title} cover billede`}
               withTilt={false}
               className="select-none"

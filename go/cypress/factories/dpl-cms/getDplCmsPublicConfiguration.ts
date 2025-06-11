@@ -1,15 +1,11 @@
 import { Factory } from "fishery"
 
+import { TDplCmsPublicConfig } from "@/lib/config/dpl-cms/configSchemas"
 import { GetDplCmsPublicConfigurationQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import defaultGoResponse from "./factory-parts/defaultGoResponse"
 
-type Params = {
-  appUrl: string
-}
-export default Factory.define<GetDplCmsPublicConfigurationQuery, Params>(({ transientParams }) => {
-  const { appUrl } = transientParams
-
+export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
   return {
     go: defaultGoResponse.build(),
     goConfiguration: {
@@ -18,18 +14,18 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery, Params>(({ tran
           local: "next",
         },
         loginUrls: {
-          adgangsplatformen: `${appUrl}/login?current-path=/go-login`,
+          adgangsplatformen: "/mocked/login",
         },
         logoutUrls: {
-          adgangsplatformen: `${appUrl}/logout?current-path=/go-logout`,
+          adgangsplatformen: "/mocked/logout",
         },
         libraryInfo: {
           name: "Test Library",
         },
         unilogin: {
-          municipalityId: "110",
+          municipalityId: "101",
         },
-      },
+      } satisfies TDplCmsPublicConfig,
     },
   }
 })

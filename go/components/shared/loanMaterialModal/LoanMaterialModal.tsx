@@ -6,16 +6,13 @@ import {
   getManifestationMaterialTypeSpecific,
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
-import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
-import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
-import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 import { modalStore } from "@/store/modal.store"
@@ -30,28 +27,7 @@ const LoanMaterialModal = ({
   manifestation: ManifestationWorkPageFragment
 }) => {
   const queryClient = useQueryClient()
-  const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
-    {
-      type: "pid",
-      // This is always a string - query is disabled when selectedManifestation is false-y
-      identifiers: [manifestation.pid as string],
-      sizes: [
-        "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
-      ],
-    },
-    { query: { enabled: !!manifestation.pid } }
-  )
-  const lowResCover = getLowResCoverUrl(dataCovers)
-  const coverSrc = getCoverUrls(dataCovers, manifestation?.pid ? [manifestation.pid] : undefined, [
-    "default",
-    "original",
-    "large",
-    "medium-large",
-    "medium",
-    "small-medium",
-    "small",
-    "xx-small",
-  ])
+
   const { mutate } = usePostV1UserLoansIdentifier()
   const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
@@ -87,16 +63,7 @@ const LoanMaterialModal = ({
       open={open}
       title={`Lån ${getManifestationMaterialTypeSpecific(manifestation) || "materialet"}`}>
       <div className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center justify-center lg:aspect-4/5">
-        {isLoadingCovers && (
-          <div className="aspect-1/1 h-36 lg:aspect-4/5">
-            <CoverPictureSkeleton />
-          </div>
-        )}
-        <CoverPicture
-          alt="Forsidebillede på værket"
-          lowResSrc={lowResCover || ""}
-          src={coverSrc?.[0] || ""}
-        />
+        <CoverPicture alt="Forsidebillede på værket" covers={manifestation.cover} />
         <MaterialTypeIconWrapper
           iconName={getManifestationMaterialTypeIcon(manifestation)}
           className="bg-background absolute -bottom-6 h-10 w-10 outline-1"

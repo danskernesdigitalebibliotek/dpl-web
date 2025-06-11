@@ -37,6 +37,11 @@ export async function getUniloginClientConfig() {
   return await client.discovery(
     new URL(String(wellknownUrl)),
     clientId as string,
-    clientSecret as string
+    clientSecret as string,
+    undefined,
+    {
+      // Allow insecure requests while testing
+      execute: getEnv("TEST_MODE") ? [client.allowInsecureRequests] : [],
+    }
   )
 }

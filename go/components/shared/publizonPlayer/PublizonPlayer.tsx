@@ -35,6 +35,7 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
         src={`https://play.pubhub.dk/index141.html?o=${orderId}`}
         style={{ height: "300px" }}
         className="player h-full w-full"
+        loading="lazy"
       />
     )
   }
@@ -46,6 +47,7 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
         src={`https://play.pubhub.dk/index141.html?i=${identifier}`}
         style={{ height: "300px" }}
         className="player rounded-base h-full w-full"
+        loading="lazy"
       />
     )
   }
