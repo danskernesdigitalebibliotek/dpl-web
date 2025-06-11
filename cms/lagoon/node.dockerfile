@@ -19,9 +19,6 @@ ARG NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphq
 ARG UNLILOGIN_PUBHUB_CLIENT_ID
 ARG UNLILOGIN_PUBHUB_RETAILER_ID
 
-RUN echo "Building DPL Go Node image with the following environment variables (1643)"
-RUN printenv
-
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN yarn run build
