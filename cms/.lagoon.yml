@@ -170,7 +170,14 @@ environments:
         schedule: "M * * * *"
         command: drush err:purge paragraph
         service: cli
-  pr-2296:
+  pr-2474:
+    routes:
+      - varnish:
+          - "cms-playground.dpl-cms.dplplat01.dpl.reload.dk":
+      - node:
+          - "go.cms-playground.dpl-cms.dplplat01.dpl.reload.dk":
+              annotations:
+                nginx.ingress.kubernetes.io/proxy-buffer-size: 32k
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
