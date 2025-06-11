@@ -4,8 +4,8 @@
   {% set publication_date = node.field_publication_date.value|date('U') %}
 {% endif %}
 
-{% include '@novel/components/list-item.html.twig'
-  with {
+{{ include('@novel/components/list-item.html.twig'
+  , {
   attributes: attributes,
   url: url,
   baseIconPath: baseIconPath,
@@ -15,4 +15,4 @@
   date: publication_date|format_date('date_short_month'),
   description: content.field_teaser_text.0|default(content.field_subtitle),
   bottom: content.field_branch,
-} only %}
+}, false) }}

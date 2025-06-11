@@ -6,14 +6,14 @@
   {% endif %}
 
   {% if parent_entity.hasField('field_show_subtitles') %}
-    {% set show_subtitles = parent_entity.get('field_show_subtitles').getString() == "1" %}
+    {% set show_subtitles = parent_entity.get('field_show_subtitles').getString() == '1' %}
   {% endif %}
 {% endif %}
 
-{% include '@novel/components/nav-grid.html.twig'
-  with {
-  'attributes': attributes,
-  'title': title,
-  'items': items,
-  'show_subtitles': show_subtitles
-} only %}
+{{ include('@novel/components/nav-grid.html.twig'
+  , {
+  attributes: attributes,
+  title: title,
+  items: items,
+  show_subtitles: show_subtitles,
+}, false) }}

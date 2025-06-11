@@ -1,6 +1,6 @@
 {% set has_image = (image is not empty) and logo_img_enable %}
 
-<a href="{{ path('<front>') }}" class="logo" aria-label="{{ 'Go to frontpage'|t({}, {'context': 'Logo aria-label'}) }}">
+<a href="{{ path('<front>') }}" class="logo" aria-label="{{ 'Go to frontpage'|t({}, {context: 'Logo aria-label'}) }}">
   <figure class="logo__content">
     {% if has_image %}
       {{ image }}

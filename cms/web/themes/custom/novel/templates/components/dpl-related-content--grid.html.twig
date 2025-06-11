@@ -1,11 +1,11 @@
 {% extends '@dpl_related_content/dpl-related-content.html.twig' %}
 
 {% block content %}
-  {% include '@novel/components/card-grid.html.twig'
-    with {
-    'attributes': attributes,
-    'title': title,
-    'items': items,
-    'link': link,
-  } only %}
+  {{ include('@novel/components/card-grid.html.twig'
+    , {
+    attributes: attributes,
+    title: title,
+    items: items,
+    link: link,
+  }, false) }}
 {% endblock %}

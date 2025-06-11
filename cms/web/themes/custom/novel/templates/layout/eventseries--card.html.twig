@@ -1,5 +1,5 @@
-{% include '@novel/components/card.html.twig'
-  with {
+{{ include('@novel/components/card.html.twig'
+  , {
   attributes: attributes,
   media: content.field_teaser_image,
   variant: 'x-large',
@@ -8,5 +8,5 @@
   type_tag: 'Event'|trans,
   date_tag: formatted_date,
   title: content.title,
-  url: eventseries|entity_url.toString()
-} only %}
+  url: eventseries|entity_url.toString(),
+}, false) }}
