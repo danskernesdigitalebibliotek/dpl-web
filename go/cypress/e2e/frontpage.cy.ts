@@ -12,6 +12,7 @@ describe("Front Page Tests", () => {
   it("Should navigate video bundle", () => {
     cy.dataCy("video-bundle")
       .first()
+      .scrollIntoView()
       .within(() => {
         cy.isViewport("mobile").then(isMobile => {
           if (isMobile) {
@@ -47,6 +48,10 @@ describe("Front Page Tests", () => {
   }
 
   it("Should navigate materials in material slider", () => {
+    // Since we are swapping between skeleton and real content with lazy loading,
+    // we need to ensure the skeleton is visible first because that triggers the loading of the real content.
+    cy.dataCy("material-slider-skeleton").first().scrollIntoView()
+
     cy.dataCy("material-slider")
       .first()
       .should("be.visible")

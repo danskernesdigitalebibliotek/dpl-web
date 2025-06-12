@@ -6,6 +6,7 @@ export const cyKeys = {
   "filters-button": "filters-button",
   "filter-button": "filter-button",
   "material-slider": "material-slider",
+  "material-slider-skeleton": "material-slider-skeleton",
   "material-slider-prev-button": "material-slider-prev-button",
   "material-slider-next-button": "material-slider-next-button",
   "video-bundle": "video-bundle",

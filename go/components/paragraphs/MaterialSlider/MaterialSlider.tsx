@@ -157,7 +157,9 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
 
 export const MaterialSliderSkeleton = () => {
   return (
-    <div className="bg-background-overlay overflow-hidden">
+    <div
+      className="bg-background-overlay overflow-hidden"
+      data-cy={cyKeys["material-slider-skeleton"]}>
       <div className="content-container gap-paragraph-spacing py-paragraph-spacing flex flex-col">
         <div className="flex items-center justify-between">
           <div className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse rounded-full" />
