@@ -75,6 +75,9 @@ parameters:
       path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
     # Ignore options for Drush commands. These are specified using specialized annotations.
     - '#Method Drupal\\.*\Commands\\.* has parameter \$options with no value type specified in iterable type array\.#'
+    # These attributes is Drupal 11, but PHP ignores unknown
+    # attributes by design. So tell phpstan these are okay.
+    - '#Attribute class Drupal\\Core\\Hook\\Attribute\\(Legacy)?Hook does not exist\.#'
 
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
