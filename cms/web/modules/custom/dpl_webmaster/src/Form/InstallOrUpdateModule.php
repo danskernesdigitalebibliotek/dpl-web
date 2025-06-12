@@ -14,9 +14,7 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\State\StateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use function Safe\mkdir;
 
 /**
@@ -37,27 +35,18 @@ class InstallOrUpdateModule extends FormBase {
    *   The Drupal root under which installed projects will be saved.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler.
-   * @param string $sitePath
-   *   The site path.
    * @param \Drupal\Core\Archiver\ArchiverManager $archiverManager
    *   The archiver plugin manager service.
    * @param \Drupal\Core\File\FileSystemInterface $fileSystem
    *   The file system service.
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The state service.
-   * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-   *   The current session.
    * @param \Drupal\Core\Extension\InfoParserInterface $infoParser
    *   The info parser service.
    */
   public function __construct(
     protected string $root,
     protected ModuleHandlerInterface $moduleHandler,
-    protected string $sitePath,
     protected ArchiverManager $archiverManager,
     protected FileSystemInterface $fileSystem,
-    protected StateInterface $state,
-    protected SessionInterface $session,
     protected InfoParserInterface $infoParser,
   ) {}
 
@@ -75,11 +64,8 @@ class InstallOrUpdateModule extends FormBase {
     return new static(
       (string) $container->get('kernel')->getAppRoot(),
       $container->get('module_handler'),
-      $container->getParameter('site.path'),
       $container->get('plugin.manager.archiver'),
       $container->get('file_system'),
-      $container->get('state'),
-      $container->get('session'),
       $container->get('info_parser'),
     );
   }
