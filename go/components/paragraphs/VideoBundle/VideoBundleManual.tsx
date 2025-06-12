@@ -8,6 +8,7 @@ import {
   ParagraphGoVideoBundleManual,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { useParagraphDataLazyLoading } from "@/lib/helpers/paragraphs"
 
 export type VideoBundleManualProps = {
   goVideoTitle: ParagraphGoVideoBundleManual["goVideoTitle"]
@@ -23,6 +24,7 @@ const VideoBundleManual = ({
   embedVideo,
   videoBundleWorkIds,
 }: VideoBundleManualProps) => {
+  const { paragraphRef, paragraphIsInView } = useParagraphDataLazyLoading()
   const { data, isLoading } = useComplexSearchForWorkTeaserQuery(
     {
       cql: videoBundleWorkIds?.map(id => `workId=${id.work_id}`).join(" OR ") || "",
@@ -30,17 +32,22 @@ const VideoBundleManual = ({
       limit: 100,
       filters: {},
     },
-    { enabled: !!videoBundleWorkIds }
+    { enabled: paragraphIsInView && !!videoBundleWorkIds }
   )
 
-  if (isLoading) return <VideoBundleSkeleton />
+  const showSkeleton = isLoading || !paragraphIsInView
 
   return (
-    <VideoBundle
-      works={data?.complexSearch.works}
-      title={goVideoTitle}
-      videoUrl={embedVideo.mediaVideotool}
-    />
+    <div ref={paragraphRef}>
+      {showSkeleton && <VideoBundleSkeleton />}
+      {!showSkeleton && (
+        <VideoBundle
+          works={data?.complexSearch.works}
+          title={goVideoTitle}
+          videoUrl={embedVideo.mediaVideotool}
+        />
+      )}
+    </div>
   )
 }
 

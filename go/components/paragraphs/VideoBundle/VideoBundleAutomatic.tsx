@@ -8,6 +8,7 @@ import {
   ParagraphGoVideoBundleAutomatic,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { useParagraphDataLazyLoading } from "@/lib/helpers/paragraphs"
 
 type VideoBundleAutomaticProps = {
   goVideoTitle: ParagraphGoVideoBundleAutomatic["goVideoTitle"]
@@ -25,6 +26,7 @@ const VideoBundleAutomatic = ({
   cqlSearch,
   videoAmountOfMaterials,
 }: VideoBundleAutomaticProps) => {
+  const { paragraphRef, paragraphIsInView } = useParagraphDataLazyLoading()
   const { data, isLoading } = useComplexSearchForWorkTeaserQuery(
     {
       cql: cqlSearch?.value || "",
@@ -35,13 +37,19 @@ const VideoBundleAutomatic = ({
     { enabled: !!cqlSearch }
   )
 
-  if (isLoading) return <VideoBundleSkeleton />
+  const showSkeleton = isLoading || !paragraphIsInView
+
   return (
-    <VideoBundle
-      works={data?.complexSearch.works}
-      title={goVideoTitle}
-      videoUrl={embedVideo.mediaVideotool}
-    />
+    <div ref={paragraphRef}>
+      {showSkeleton && <VideoBundleSkeleton />}
+      {!showSkeleton && (
+        <VideoBundle
+          works={data?.complexSearch.works}
+          title={goVideoTitle}
+          videoUrl={embedVideo.mediaVideotool}
+        />
+      )}
+    </div>
   )
 }
 
