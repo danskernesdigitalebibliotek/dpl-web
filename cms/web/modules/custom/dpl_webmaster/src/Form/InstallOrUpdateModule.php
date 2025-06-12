@@ -11,16 +11,13 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\File\Exception\FileException;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\FileTransfer\Local;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\State\StateInterface;
-use Drupal\Core\Updater\Module;
-use Drupal\Core\Updater\Updater;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use function Safe\mkdir;
 
 /**
  * Upload or update an uploaded module.
@@ -50,8 +47,6 @@ class InstallOrUpdateModule extends FormBase {
    *   The state service.
    * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
    *   The current session.
-   * @param \Drupal\Core\Archiver\ArchiverManager $archiverManager
-   *   The archive manager service.
    * @param \Drupal\Core\Extension\InfoParserInterface $infoParser
    *   The info parser service.
    */
@@ -63,7 +58,6 @@ class InstallOrUpdateModule extends FormBase {
     protected FileSystemInterface $fileSystem,
     protected StateInterface $state,
     protected SessionInterface $session,
-    protected ArchiverManager $archiveManager,
     protected InfoParserInterface $infoParser,
   ) {}
 
@@ -86,7 +80,6 @@ class InstallOrUpdateModule extends FormBase {
       $container->get('file_system'),
       $container->get('state'),
       $container->get('session'),
-      $container->get('plugin.manager.archiver'),
       $container->get('info_parser'),
     );
   }
@@ -175,14 +168,6 @@ class InstallOrUpdateModule extends FormBase {
 
     $projectLocation = $directory . '/' . $project;
 
-    // This is where we diverge from UpdateManagerInstall and pass over control
-    // to update.php. It'll pick up the files for the module as we've already
-    // extracted it in the directory where it expects to find it.
-    if (file_exists($projectDestination)) {
-      $this->updateProject([$project], $form_state);
-      return;
-    }
-
     $projectRealLocation = $this->fileSystem->realpath($projectLocation);
 
     if (!$projectRealLocation) {
@@ -191,6 +176,20 @@ class InstallOrUpdateModule extends FormBase {
     }
 
     $this->overwriteProject($projectRealLocation, $projectDestination);
+
+    // If it's an enabled module, send user to `update.php`.
+    if ($this->moduleHandler->moduleExists($project)) {
+      // Skip the first info page of `update.php`.
+      $form_state->setRedirect('system.db_update', ['op' => 'selection']);
+      // Flush the Opcode cache. If we don't there could be a small delay
+      // between updating the files and PHP noticing, which can make
+      // `update.php` think there's no updates (as the new update hooks isn't
+      // available yet). Only invalidating the relevant files would be nicer,
+      // but more work, and uploading a module is a fairly uncommon event.
+      opcache_reset();
+
+      return;
+    }
 
     $this->messenger()->addMessage($this->t('%project sucessfully uploaded. You can now enable it below.', ['%project' => $project]));
 
@@ -205,7 +204,7 @@ class InstallOrUpdateModule extends FormBase {
   protected function getTemporaryDirectory(): string {
     // Basically a copy of what _update_manager_extract_directory() did.
     $directory = 'temporary://dpl-webmaster-' . substr(hash('sha256', Settings::getHashSalt()), 0, 8);
-    if ($create && !file_exists($directory)) {
+    if (!file_exists($directory)) {
       mkdir($directory);
     }
 
@@ -358,46 +357,15 @@ class InstallOrUpdateModule extends FormBase {
       );
     }
 
+    // Remove the destination if it exists, else move will just move inside the
+    // destination directory.
+    if (file_exists($dest)) {
+      $this->fileSystem->deleteRecursive($dest);
+    }
+
     $this->fileSystem->move($tmp, $dest);
 
     $this->fileSystem->deleteRecursive($source);
-  }
-
-  /**
-   * Copy uploaded module into place run updates.
-   *
-   * @param string[] $projects
-   *   List of projects to update.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state to set redirect on.
-   */
-  protected function updateProject(array $projects, FormStateInterface $form_state): void {
-    // Most of this has been lifted from UpdateReady::submitForm().
-    drupal_get_updaters();
-
-    $updates = [];
-    $directory = $this->getTemporaryDirectory();
-
-    $project_real_location = NULL;
-    foreach ($projects as $project) {
-      $project_location = $directory . '/' . $project;
-      $updater = Updater::factory($project_location, $this->root);
-      $project_real_location = $this->fileSystem->realpath($project_location);
-      $updates[] = [
-        'project' => $project,
-        'updater_name' => get_class($updater),
-        'local_url' => $project_real_location,
-      ];
-    }
-
-    // Contrary to UpdateReady::submitForm(), we don't check file owners or
-    // support FTP method.
-    $this->moduleHandler->loadInclude('update', 'inc', 'update.authorize');
-    $filetransfer = new Local($this->root, $this->fileSystem);
-    $response = update_authorize_run_update($filetransfer, $updates);
-    if ($response instanceof Response) {
-      $form_state->setResponse($response);
-    }
   }
 
 }

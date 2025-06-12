@@ -22,44 +22,21 @@ export class InstallOrUpdatePage extends PageObject {
       .then(($body) => {
         if ($body.find('table.module-list').length) {
           // The new version just redirects to the module list with a message.
-          cy.get('.messages-list').contains('sucessfully uploaded. You can now enable it below.');
+          cy.get('.messages-list').contains('sucessfully uploaded. You can now enable it below.').should('exist');
           return false;
         }
 
         return true;
       })
-      .then((legacy) => {
-        if (legacy) {
-          // Wait for the batch job to complete and figure out if we're
-          // being offered to run database updates and do it if we are
-          // (which means this was an module update).
-          cy.get('.authorize-results')
-          // While .authorize-results signals we're done, it doesn't contain
-          // the link we need.
-            .get('.content')
-            .then(($section) => {
-              if ($section.find('a:contains("Run database updates")').length) {
-                return true;
-              }
+      .then((isUpdate) => {
+        if (isUpdate) {
+          cy.get('.content').then(($content) => {
+            if ($content.find('a:contains("Apply pending updates")').length) {
+              return true;
+            }
 
-              return false;
-            })
-            .then((isUpdate) => {
-              if (isUpdate) {
-                cy.get('a:contains("Run database updates")').click();
-
-                // Overview page.
-                cy.get('a:contains("Continue")').click();
-
-                cy.get('.content').then(($content) => {
-                  if ($content.find('a:contains("Apply pending updates")').length) {
-                    return true;
-                  }
-
-                  return false;
-                });
-              }
-            })
+            return false;
+          })
             .then((hasDbUpdates) => {
               if (hasDbUpdates) {
                 // Review updates page.
