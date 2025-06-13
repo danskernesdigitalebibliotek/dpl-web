@@ -1,0 +1,7 @@
+---
+services:
+  _defaults:
+    autowire: true
+
+  dpl_media_cleanup:
+    class: Drupal\dpl_media_cleanup\Services\MediaCleanup

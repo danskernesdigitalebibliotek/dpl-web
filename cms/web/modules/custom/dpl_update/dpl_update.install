@@ -826,3 +826,10 @@ function dpl_update_update_10055(): string {
 
   return 'New field columns added.';
 }
+
+/**
+ * Enable dpl_media_cleanup module.
+ */
+function dpl_update_update_10056(): string {
+  return _dpl_update_install_modules(['dpl_media_cleanup']);
+}
