@@ -25,12 +25,11 @@ else
   drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
 fi
 
-# Clear all caches to ensure we have a pristine setup.
-drush cache:rebuild -y
-drush cache:rebuild-external -y
-
 # Run deploy hooks.
 drush deploy -y
+
+# Clear external caches to ensure we have a pristine setup.
+drush cache:rebuild-external -y
 
 # Ensure site is reachable and warm any caches
 curl --silent --show-error --fail --output /dev/null http://varnish:8080/
