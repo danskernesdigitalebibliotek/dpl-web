@@ -22,7 +22,9 @@ export class InstallOrUpdatePage extends PageObject {
       .then(($body) => {
         if ($body.find('table.module-list').length) {
           // The new version just redirects to the module list with a message.
-          cy.get('.messages-list').contains('sucessfully uploaded. You can now enable it below.').should('exist');
+          cy.get('.messages-list')
+            .contains('sucessfully uploaded. You can now enable it below.')
+            .should('exist');
           return false;
         }
 
@@ -30,13 +32,14 @@ export class InstallOrUpdatePage extends PageObject {
       })
       .then((isUpdate) => {
         if (isUpdate) {
-          cy.get('.content').then(($content) => {
-            if ($content.find('a:contains("Apply pending updates")').length) {
-              return true;
-            }
+          cy.get('.content')
+            .then(($content) => {
+              if ($content.find('a:contains("Apply pending updates")').length) {
+                return true;
+              }
 
-            return false;
-          })
+              return false;
+            })
             .then((hasDbUpdates) => {
               if (hasDbUpdates) {
                 // Review updates page.
