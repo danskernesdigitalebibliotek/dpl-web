@@ -239,7 +239,7 @@ class InstallOrUpdateModule extends FormBase {
         $this->fileSystem->deleteRecursive($extract_location);
       }
       catch (FileException $e) {
-        // Ignore failed deletes.
+        throw new \Exception("Cannot extract '$file', destination not empty");
       }
     }
 
