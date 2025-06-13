@@ -67,78 +67,101 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
               loaded ? "m-0 opacity-100" : "opacity-0"
             )}>
             {categories.map((category, index) => {
-              // Rotation effect options
-              const rotations = [
-                "has-checked:rotate-2",
-                "has-checked:rotate-3",
-                "has-checked:rotate-4",
-                "has-checked:rotate-5",
-                "has-checked:rotate-6",
-                "has-checked:-rotate-2",
-                "has-checked:-rotate-3",
-                "has-checked:-rotate-4",
-                "has-checked:-rotate-5",
-                "has-checked:-rotate-6",
-              ]
-
-              const randomIndex = Math.floor(Math.random() * rotations.length)
               const isSelected = pathname === category.path
 
               return (
-                <div className="keen-slider__slide !overflow-visible" key={category.id}>
-                  <SmartLink
-                    aria-label={`Gå til kategori ${category.categoryMenuTitle}`}
-                    href={category.path || ""}
-                    className={cn(
-                      `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
-                      transition-all duration-200 lg:p-[24px]`,
-                      isSelected ? `${rotations[randomIndex]}` : ""
-                    )}>
-                    <div
-                      className={cn(
-                        `bg-background-overlay relative flex aspect-1/1 items-center justify-center overflow-hidden
-                        rounded-sm transition-all duration-300 forced-colors:hidden`,
-                        // Add hover effect based on every category by fourth index
-                        index % 4 === 0 &&
-                          "group-hover:bg-content-1 group-focus:bg-content-1 group-has-checked:bg-content-1",
-                        index % 4 === 1 &&
-                          "group-hover:bg-content-2 group-focus:bg-content-2 group-has-checked:bg-content-2",
-                        index % 4 === 2 &&
-                          "group-hover:bg-content-3 group-focus:bg-content-3 group-has-checked:bg-content-3",
-                        index % 4 === 3 &&
-                          "group-hover:bg-content-4 group-focus:bg-content-4 group-has-checked:bg-content-4"
-                      )}>
-                      {category.categoryMenuImage.mediaImage.url && (
-                        <ImageBase
-                          className="grayscale-100 transition-all duration-300 group-hover:grayscale-0 group-focus:grayscale-0
-                            group-has-checked:grayscale-0"
-                          sizes="10vw"
-                          imageSizing="intrinsic"
-                          src={category.categoryMenuImage.mediaImage.url}
-                          width={category.categoryMenuImage.mediaImage.width}
-                          height={category.categoryMenuImage.mediaImage.height}
-                          alt={category.categoryMenuImage.mediaImage?.alt || ""}
-                        />
-                      )}
-
-                      <input
-                        type="radio"
-                        name="category"
-                        checked={isSelected}
-                        className="pointer-events-none appearance-none"
-                        disabled
-                      />
-                    </div>
-                    <p className="text-typo-subtitle-sm text-center">
-                      {category.categoryMenuTitle}
-                    </p>
-                  </SmartLink>
-                </div>
+                <CategorySlide
+                  isSelected={isSelected}
+                  key={index}
+                  category={category}
+                  index={index}
+                />
               )
             })}
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function CategorySlide({
+  category,
+  index,
+  isSelected,
+}: {
+  category: TNodeGoCategory
+  index: number
+  isSelected: boolean
+}) {
+  const [randomIndex, setRandomIndex] = useState<number>(0)
+
+  // Rotation effect options
+  const rotations = [
+    "has-checked:rotate-2",
+    "has-checked:rotate-3",
+    "has-checked:rotate-4",
+    "has-checked:rotate-5",
+    "has-checked:rotate-6",
+    "has-checked:-rotate-2",
+    "has-checked:-rotate-3",
+    "has-checked:-rotate-4",
+    "has-checked:-rotate-5",
+    "has-checked:-rotate-6",
+  ]
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * rotations.length)
+    setRandomIndex(randomIndex)
+  }, [rotations.length])
+
+  return (
+    <div className="keen-slider__slide !overflow-visible" key={category.id}>
+      <SmartLink
+        aria-label={`Gå til kategori ${category.categoryMenuTitle}`}
+        href={category.path || ""}
+        className={cn(
+          `group flex h-full w-full cursor-pointer flex-col gap-y-2 !overflow-visible p-[12px] ring-0 outline-0
+          transition-all duration-200 lg:p-[24px]`,
+          isSelected ? `${rotations[randomIndex]}` : ""
+        )}>
+        <div
+          className={cn(
+            `bg-background-overlay relative flex aspect-1/1 items-center justify-center overflow-hidden
+            rounded-sm transition-all duration-300 forced-colors:hidden`,
+            // Add hover effect based on every category by fourth index
+            index % 4 === 0 &&
+              "group-hover:bg-content-1 group-focus:bg-content-1 group-has-checked:bg-content-1",
+            index % 4 === 1 &&
+              "group-hover:bg-content-2 group-focus:bg-content-2 group-has-checked:bg-content-2",
+            index % 4 === 2 &&
+              "group-hover:bg-content-3 group-focus:bg-content-3 group-has-checked:bg-content-3",
+            index % 4 === 3 &&
+              "group-hover:bg-content-4 group-focus:bg-content-4 group-has-checked:bg-content-4"
+          )}>
+          {category.categoryMenuImage.mediaImage.url && (
+            <ImageBase
+              className="grayscale-100 transition-all duration-300 group-hover:grayscale-0 group-focus:grayscale-0
+                group-has-checked:grayscale-0"
+              sizes="10vw"
+              imageSizing="intrinsic"
+              src={category.categoryMenuImage.mediaImage.url}
+              width={category.categoryMenuImage.mediaImage.width}
+              height={category.categoryMenuImage.mediaImage.height}
+              alt={category.categoryMenuImage.mediaImage?.alt || ""}
+            />
+          )}
+
+          <input
+            type="radio"
+            name="category"
+            checked={isSelected}
+            className="pointer-events-none appearance-none"
+            disabled
+          />
+        </div>
+        <p className="text-typo-subtitle-sm text-center">{category.categoryMenuTitle}</p>
+      </SmartLink>
     </div>
   )
 }

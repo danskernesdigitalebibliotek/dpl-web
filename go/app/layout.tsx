@@ -39,22 +39,17 @@ async function RootLayout({
 }>) {
   const dplCmsConfig = await getDplCmsPublicConfig()
   return (
-    <html lang="da">
-      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
-        <GridHelper hideInProduction />
-        <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
-          <Theme>
-            <ReactQueryProvider>
-              <Header />
-              <DynamicSheet />
-              <DynamicModal />
-              {children}
-              <Footer />
-            </ReactQueryProvider>
-          </Theme>
-        </DplCmsConfigContextProvider>
-      </body>
-    </html>
+    <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
+      <Theme>
+        <ReactQueryProvider>
+          <Header />
+          <DynamicSheet />
+          <DynamicModal />
+          {children}
+          <Footer />
+        </ReactQueryProvider>
+      </Theme>
+    </DplCmsConfigContextProvider>
   )
 }
 
@@ -64,8 +59,13 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <Suspense>
-      <RootLayout>{children}</RootLayout>
-    </Suspense>
+    <html lang="da">
+      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
+        <GridHelper hideInProduction />
+        <Suspense>
+          <RootLayout>{children}</RootLayout>
+        </Suspense>
+      </body>
+    </html>
   )
 }

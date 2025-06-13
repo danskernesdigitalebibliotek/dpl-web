@@ -17,7 +17,7 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="min-h-screen-minus-navigation-height flex h-full w-full flex-col">
+    <div className="min-h-screen-minus-navigation-height flex flex-col">
       <Suspense>
         <CategorySliderLayout />
       </Suspense>
