@@ -1,7 +1,8 @@
 "use client"
 
 import { useQueries } from "@tanstack/react-query"
-import React from "react"
+import { useInView } from "framer-motion"
+import React, { useRef } from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
@@ -34,6 +35,11 @@ const WorkCard = ({
   className,
   isWithTilt = false,
 }: TWorkCardProps) => {
+  const workCardRef = useRef(null)
+  const workCardIsInView = useInView(workCardRef, {
+    once: true,
+  })
+
   // TODO: in storybook, request don't work, so we need make a mock request using fishery
   // For each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
@@ -45,7 +51,7 @@ const WorkCard = ({
         queryKey: getGetV1ProductsIdentifierAdapterQueryKey(isbn),
         queryFn: () => getV1ProductsIdentifierAdapter(isbn),
         // If the manifestation is not online, skip the request
-        enabled: manifestation.accessTypes[0].code === "ONLINE",
+        enabled: workCardIsInView && manifestation.accessTypes[0].code === "ONLINE",
       }
     }),
     combine: results => {
@@ -72,6 +78,7 @@ const WorkCard = ({
 
   return (
     <div
+      ref={workCardRef}
       key={workId}
       data-cy={cyKeys["work-card"]}
       className={cn(
