@@ -89,8 +89,8 @@ function dpl_logging_user_presave(User $user): void {
       [
         '@label' => $label,
         '@key' => $key,
-        '@original_value' => $original_value[0]['value'],
-        '@value' => $value[0]['value'] ?? NULL,
+        '@original_value' => $original_value[0]['value'] ?? '(not set)',
+        '@value' => $value[0]['value'] ?? '(not set)',
       ],
       ['context' => 'DPL logging']
     )->render();
