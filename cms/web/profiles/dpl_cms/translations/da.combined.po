@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-06-13 13:14+0200\n"
-"PO-Revision-Date: 2025-06-13 13:14+0200\n"
+"POT-Creation-Date: 2025-06-13 14:11+0200\n"
+"PO-Revision-Date: 2025-06-13 14:11+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -161,26 +161,11 @@ msgstr "Dette link vil kun blive vist, hvis der er indhold."
 msgid "Submit"
 msgstr "Submit"
 
-msgid ""
-"You can find <a href=\":module_url\">modules</a> and <a href=\":"
-"theme_url\">themes</a> on <a href=\":drupal_org_url\">drupal.org</a>. The "
-"following file extensions are supported: %extensions."
+msgid "The following file extensions are supported: %extensions."
 msgstr ""
-"Du kan finde <a href=\":module_url\">moduler</a> og <a href=\":"
-"theme_url\">temaer</a> på <a href=\":drupal_org_url\">drupal.org</a>. De "
-"følgende filendelser er understøttet: %extensions."
 
-msgid "Add from a URL"
-msgstr "Add from a URL"
-
-msgid "For example: %url"
-msgstr "For eksempel: %url"
-
-msgid "Or"
-msgstr "Eller"
-
-msgid "Upload a module or theme archive"
-msgstr "Upload a module or theme archive"
+msgid "Upload a module archive"
+msgstr ""
 
 msgid "For example: %filename from your local computer"
 msgstr "For eksempel: %filename fra din egen computer"
@@ -188,31 +173,35 @@ msgstr "For eksempel: %filename fra din egen computer"
 msgid "Continue"
 msgstr "Fortsæt"
 
-msgid "You must either provide a URL or upload an archive file."
-msgstr "You must either provide a URL or upload an archive file."
-
-msgid "You must provide a URL to install."
-msgstr ""
-"\n"
-"You must provide a URL to install."
-
-msgid "Unable to retrieve Drupal project from %url."
-msgstr "Kan ikke hente Drupal-projekt fra %url."
-
-msgid "Provided archive contains no files."
-msgstr "Det angivne arkiv indeholder ingen filer."
-
 msgid "Could not determine module name from archive"
 msgstr "Det er ikke muligt at bestemme modulnavnet fra arkivet."
 
-msgid "Unable to determine %project name."
-msgstr "Kan ikke fastslå %project navn."
+msgid "Internal error, could not find files."
+msgstr ""
 
-msgid "%project is not a module."
-msgstr "%project is not a module."
+msgid "%project sucessfully uploaded. You can now enable it below."
+msgstr ""
 
-msgid "Update manager"
-msgstr "Update manager"
+msgid ""
+"Automatic updating of Drupal core is not supported. See the <a href=\":"
+"update-guide\">Updating Drupal guide</a> for information on how to update "
+"Drupal core manually."
+msgstr ""
+
+msgid "Unknown"
+msgstr "Ukendt"
+
+msgid "%archive_file does not contain any .info.yml files."
+msgstr "%archive_file indeholder ikke nogen .info.yml-filer."
+
+msgid ""
+"%archive_file contains a version of %names that is not compatible with "
+"Drupal @version."
+msgid_plural ""
+"%archive_file contains versions of modules or themes that are not compatible "
+"with Drupal @version: %names"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "(Locked by @username)"
 msgstr "(Låst af @username)"
