@@ -29,20 +29,21 @@ describe('Webmaster', () => {
         cy.exec('rm -rf web/modules/local/test_module');
       }
     });
+
+    // Check that the module doesn't exist. We need this to ensure
+    // Cypress is done running the above.
+    adminModulesPage.visit([]);
+    adminModulesPage.moduleExists('test_module').should('be.false');
   });
 
   it('can upload and enable a module', () => {
-    const adminModulesPage = new AdminModulesPage();
-    adminModulesPage.visit([]);
-
-    adminModulesPage.moduleExists('test_module').should('be.false');
-
     const installOrUpdatePage = new InstallOrUpdatePage();
     installOrUpdatePage.visit([]);
     installOrUpdatePage.uploadModule(
       'cypress/fixtures/test_module/v1.0.0/test_module.tar.gz',
     );
 
+    const adminModulesPage = new AdminModulesPage();
     adminModulesPage.visit([]);
     adminModulesPage.moduleExists('test_module').should('be.true');
     adminModulesPage.moduleEnabled('test_module').should('be.false');
