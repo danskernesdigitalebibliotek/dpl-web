@@ -39,24 +39,20 @@ final class CqlSearchItem extends FieldItemBase {
       ->setLabel(t('CQL search string'))
       ->setRequired(TRUE);
 
-    $properties['link'] = DataDefinition::create('string')
-      ->setLabel(t('Link to search', [], ['context' => 'DPL material search']))
-      ->setRequired(FALSE);
-
     $properties['location'] = DataDefinition::create('string')
-      ->setLabel(t('Location', [], ['context' => 'DPL material search']))
+      ->setLabel(t('Location', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
 
     $properties['sublocation'] = DataDefinition::create('string')
-      ->setLabel(t('Sub-location', [], ['context' => 'DPL material search']))
+      ->setLabel(t('Sub-location', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
 
     $properties['onshelf'] = DataDefinition::create('boolean')
-      ->setLabel(t('On-shelf', [], ['context' => 'DPL material search']))
+      ->setLabel(t('On-shelf', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
 
     $properties['sort'] = DataDefinition::create('string')
-      ->setLabel(t('Sorting', [], ['context' => 'DPL material search']))
+      ->setLabel(t('Sorting', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
 
     return $properties;
@@ -134,15 +130,15 @@ final class CqlSearchItem extends FieldItemBase {
    *   The field definition for which to generate the sample value.
    *
    * @return array{value: string}
-   *   Array containing a sample 'value' for the field.
+   *   Array containing a sample value for the fields.
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition): array {
     $values['value'] = " term.title='Harry Potter' AND term.creator= 'J.K. Rowling' AND ( term.generalmaterialtype='bøger' OR term.generalmaterialtype='e-bøger') AND term.fictionnonfiction='fiction'";
-    $values['link'] = "/advanced-search?sort=sort.creator.asc&onshelf=true&sublocation=fantasy&advancedSearchCql=+term.title%3D'Harry+Potter'+AND+term.creator%3D+'J.K.+Rowling'+AND+(+term.generalmaterialtype%3D'bøger'+OR+term.generalmaterialtype%3D'e-bøger')+AND+term.fictionnonfiction%3D'fiction'";
     $values['location'] = '';
     $values['sublocation'] = 'fantasy';
     $values['onshelf'] = 1;
     $values['sort'] = 'sort.latestpublicationdate.asc';
+    $values['link'] = "/advanced-search?sort=sort.creator.asc&onshelf=true&sublocation=fantasy&advancedSearchCql=+term.title%3D'Harry+Potter'+AND+term.creator%3D+'J.K.+Rowling'+AND+(+term.generalmaterialtype%3D'bøger'+OR+term.generalmaterialtype%3D'e-bøger')+AND+term.fictionnonfiction%3D'fiction'";
     return $values;
   }
 

@@ -219,7 +219,7 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
  * @return array<mixed>
  *   A render array that can be expanded.
  */
-function _dpl_paragraphs_prepare_material_grid(ParagraphInterface $paragraph): array {
+function _dpl_paragraphs_prepare_material_grid_render_array(ParagraphInterface $paragraph): array {
   $title = NULL;
   $description = NULL;
   $display_amount = 8;
@@ -261,7 +261,7 @@ function _dpl_paragraphs_prepare_material_grid(ParagraphInterface $paragraph): a
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  *
- * @see _dpl_paragraphs_prepare_material_grid()
+ * @see _dpl_paragraphs_prepare_material_grid_render_array()
  */
 function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$variables): void {
   $view_mode = $variables['view_mode'] ?? 'default';
@@ -272,7 +272,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
   }
 
   // Get the common render array, used by all material grid paragraphs.
-  $render = _dpl_paragraphs_prepare_material_grid($paragraph);
+  $render = _dpl_paragraphs_prepare_material_grid_render_array($paragraph);
   $render['#name'] = 'material-grid-automatic';
 
   $cql_search = $paragraph->get('field_cql_search')->getValue();
@@ -303,7 +303,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  *
- * @see _dpl_paragraphs_prepare_material_grid()
+ * @see _dpl_paragraphs_prepare_material_grid_render_array()
  */
 function dpl_paragraphs_preprocess_paragraph__material_grid_link_automatic(array &$variables): void {
   $view_mode = $variables['view_mode'] ?? 'default';
@@ -314,7 +314,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_link_automatic(array
   }
 
   // Get the common render array, used by all material grid paragraphs.
-  $render = _dpl_paragraphs_prepare_material_grid($paragraph);
+  $render = _dpl_paragraphs_prepare_material_grid_render_array($paragraph);
   $render['#name'] = 'material-grid-link-automatic';
   $render['#data']['link'] = $paragraph->get('field_material_grid_link')->getString();
 
@@ -329,7 +329,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_link_automatic(array
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  *
- * @see _dpl_paragraphs_prepare_material_grid()
+ * @see _dpl_paragraphs_prepare_material_grid_render_array()
  */
 function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$variables): void {
   $view_mode = $variables['view_mode'] ?? 'default';
@@ -340,7 +340,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
   }
 
   // Get the common render array, used by all material grid paragraphs.
-  $render = _dpl_paragraphs_prepare_material_grid($paragraph);
+  $render = _dpl_paragraphs_prepare_material_grid_render_array($paragraph);
 
   $materials = [];
   $work_ids = (array) $paragraph->get('field_material_grid_work_ids')->getValue();

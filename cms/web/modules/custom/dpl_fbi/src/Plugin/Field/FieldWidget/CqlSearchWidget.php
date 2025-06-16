@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_fbi\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Ajax\AfterCommand;
 use Drupal\Core\Ajax\AjaxResponse;
@@ -32,7 +33,6 @@ use function Safe\preg_match;
  * )
  */
 class CqlSearchWidget extends WidgetBase {
-
 
   /**
    * The module handler, we use to get dpl_admin assets.
@@ -88,10 +88,10 @@ class CqlSearchWidget extends WidgetBase {
 
     $element['advanced'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Enabled advanced fields', [], ['context' => 'DPL material search']),
+      '#title' => $this->t('Enabled advanced fields', [], ['context' => 'dpl_fbi']),
       '#description' => $this->t('Allow editor to fill data into advanced fields (@fields)', [
         '@fields' => implode(', ', $columns),
-      ], ['context' => 'DPL material search']),
+      ], ['context' => 'dpl_fbi']),
       '#default_value' => $this->getSetting('advanced') ?? TRUE,
     ];
 
@@ -121,10 +121,10 @@ class CqlSearchWidget extends WidgetBase {
 
     $summary[] = $this->getSetting('advanced') ?
       $this->t(
-        'Advanced fields enabled', [], ['context' => 'DPL material search']
+        'Advanced fields enabled', [], ['context' => 'dpl_fbi']
       ) :
       $this->t(
-        'Advanced fields NOT enabled', [], ['context' => 'DPL material search']
+        'Advanced fields NOT enabled', [], ['context' => 'dpl_fbi']
       );
 
     return $summary;
@@ -135,35 +135,41 @@ class CqlSearchWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $fieldStorageDefinition = $items->getFieldDefinition()->getFieldStorageDefinition();
+    $linkWrapperId = Html::getUniqueId('cql-search-link-wrapper');
 
     $element['link'] = [
       '#type' => 'details',
-      '#title' => $this->t('Fill out fields using link (optional)', [], ['context' => 'DPL material search']),
+      '#name' => $linkWrapperId,
+      '#title' => $this->t('Fill out fields using link (optional)', [], ['context' => 'dpl_fbi']),
       '#open' => empty($items[$delta]->value),
       '#attributes' => [
+        'id' => $linkWrapperId,
         'class' => ['link-details'],
       ],
     ];
 
     $element['link']['url'] = [
       '#type' => 'textarea',
-      '#title' => $fieldStorageDefinition->getPropertyDefinition('link')?->getLabel(),
+      '#rows' => 4,
+      '#title' => $this->t('Link to search', [], ['context' => 'dpl_fbi']),
       '#default_value' => $items[$delta]->link ?? '',
-      '#prefix' => '<div id="field-my-input-wrapper">',
+      '#prefix' => '<div>',
       '#suffix' => '</div>',
       '#attributes' => [
         'placeholder' => $this->t(
           'E.g. https://mitbibliotek.dk/advanced-search?advancedSearchCql=%27Harry+Potter%27',
-          [], ['context' => 'DPL material search']
+          [], ['context' => 'dpl_fbi']
         ),
       ],
     ];
 
     $element['link']['submit_url'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Load filters from URL', [], ['context' => 'DPL material search']),
+      '#name' => Html::getUniqueId('cql-search-link-submit'),
+      '#value' => $this->t('Load filters from URL', [], ['context' => 'dpl_fbi']),
       '#ajax' => [
         'callback' => [$this, 'loadFilters'],
+        'wrapper' => $linkWrapperId,
       ],
       '#executes_submit_callback' => FALSE,
       // Placing the button inside the textarea, to make it clear that they
@@ -183,7 +189,7 @@ class CqlSearchWidget extends WidgetBase {
 
     $element['link']['guide'] = [
       '#type' => 'details',
-      '#title' => $this->t('Video-guide on how to find link', [], ['context' => 'DPL material search']),
+      '#title' => $this->t('Video-guide on how to find link', [], ['context' => 'dpl_fbi']),
       '#open' => FALSE,
       'video' => [
         '#type' => 'markup',
@@ -193,19 +199,15 @@ class CqlSearchWidget extends WidgetBase {
 
     $element['filters'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Search filters', [], ['context' => 'DPL material search']),
-      '#attributes' => [
-        'class' => ['material-search-filters'],
-      ],
-
+      '#title' => $this->t('Search filters', [], ['context' => 'dpl_fbi']),
       'cql' => [
         '#type' => 'textarea',
+        '#rows' => 3,
         '#title' => $fieldStorageDefinition->getPropertyDefinition('value')?->getLabel(),
         '#required' => TRUE,
         '#default_value' => $items[$delta]->value ?? '',
         '#weight' => 0,
       ],
-
     ];
 
     if ($this->getSetting('advanced')) {
@@ -217,35 +219,37 @@ class CqlSearchWidget extends WidgetBase {
           '#default_value' => $items[$delta]->sort ?? 'sort.latestpublicationdate.desc',
           '#options' => [
             'sort.latestpublicationdate.desc' => $this->t(
-              'By publication date (descending)', [], ['context' => 'DPL material search']
+              'By publication date (descending)', [], ['context' => 'dpl_fbi']
             ),
             'sort.latestpublicationdate.asc' => $this->t(
-              'By publication date (ascending)', [], ['context' => 'DPL material search']
+              'By publication date (ascending)', [], ['context' => 'dpl_fbi']
             ),
             'sort.title.desc' => $this->t(
-              'By title (descending)', [], ['context' => 'DPL material search']
+              'By title (descending)', [], ['context' => 'dpl_fbi']
             ),
             'sort.title.asc' => $this->t(
-              'By title (ascending)', [], ['context' => 'DPL material search']
+              'By title (ascending)', [], ['context' => 'dpl_fbi']
             ),
             'sort.creator.desc' => $this->t(
-              'By creator (descending)', [], ['context' => 'DPL material search']
+              'By creator (descending)', [], ['context' => 'dpl_fbi']
             ),
             'sort.creator.asc' => $this->t(
-              'By creator (ascending)', [], ['context' => 'DPL material search']
+              'By creator (ascending)', [], ['context' => 'dpl_fbi']
             ),
             'relevance' => $this->t(
-              'By relevance', [], ['context' => 'DPL material search']
+              'By relevance', [], ['context' => 'dpl_fbi']
             ),
           ],
         ],
         'location' => [
           '#type' => 'textarea',
+          '#rows' => 2,
           '#title' => $fieldStorageDefinition->getPropertyDefinition('location')?->getLabel(),
           '#default_value' => $items[$delta]->location ?? '',
         ],
         'sublocation' => [
           '#type' => 'textarea',
+          '#rows' => 2,
           '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
           '#default_value' => $items[$delta]->sublocation ?? '',
         ],
@@ -286,12 +290,18 @@ class CqlSearchWidget extends WidgetBase {
     $array_parents = array_slice($array_parents, 0, -2);
     $formElement = NestedArray::getValue($form, $array_parents);
 
+    // We want to find the DOM selector for the outer-most container.
+    // We'll do that, by looking up the form element that we have, and remove
+    // everything after "subform" - that way, we have found the paragraph.
+    $parentSelector = $formElement['#attributes']['data-drupal-selector'] ?? '';
+    $parentSelector = strstr($parentSelector, 'subform', TRUE) . 'subform';
+    $parentSelector = "[data-drupal-selector=\"$parentSelector\"]";
+
     // To load the value, we want to do something similar, but instead of
     // looking at #array_parents, we'll instead look at #parents.
     $parents = (array) $triggeringElement['#parents'];
     $parents = array_slice($parents, 0, -2);
     $values = $formState->getValue($parents);
-
     $link = $values['link']['url'] ?? '';
 
     // When pasting a link, spaces may be added unintentionally in the
@@ -300,7 +310,7 @@ class CqlSearchWidget extends WidgetBase {
     $linkName = $formElement['link']['url']['#name'];
 
     // The JS selector we use with AJAX.
-    $linkSelector = "[name=\"$linkName\"]";
+    $linkSelector = "$parentSelector [name=\"$linkName\"]";
 
     $response = new AjaxResponse();
 
@@ -314,7 +324,7 @@ class CqlSearchWidget extends WidgetBase {
     if (!$cqlValue) {
       $warningMessage = $this->t(
         'The link you pasted is not valid. See video below, for how to find a correct link.',
-        [], ['context' => 'DPL material search']
+        [], ['context' => 'dpl_fbi']
       );
       $warningMarkup = Markup::create(
         "<div class=\"dpl-form-warning $warningClass\">{$warningMessage->render()}</div>"
@@ -327,14 +337,14 @@ class CqlSearchWidget extends WidgetBase {
 
     // Remove warning that may have been set previously, due to invalid URL.
     $response->addCommand(new InvokeCommand($linkSelector, 'removeClass', ['error']));
-    $response->addCommand(new RemoveCommand(".$warningClass"));
+    $response->addCommand(new RemoveCommand("$parentSelector .$warningClass"));
 
     // Empty out the link field, and hide it by closing the details.
-    $response->addCommand(new InvokeCommand("[name=\"$linkName\"]", 'val', ['']));
-    $response->addCommand(new InvokeCommand(".link-details", 'removeAttr', ['open']));
+    $response->addCommand(new InvokeCommand("$parentSelector [name=\"$linkName\"]", 'val', ['']));
+    $response->addCommand(new InvokeCommand("$parentSelector .link-details", 'removeAttr', ['open']));
 
     // Setting the value of the CQL field.
-    $response->addCommand(new InvokeCommand("[name=\"$cqlName\"]", 'val', [$cqlValue]));
+    $response->addCommand(new InvokeCommand("$parentSelector [name=\"$cqlName\"]", 'val', [$cqlValue]));
 
     // Do not attempt to set advanced values if they are not enabled.
     if (!$this->getSetting('advanced')) {
@@ -347,7 +357,7 @@ class CqlSearchWidget extends WidgetBase {
     $onshelfValue = (string) $this->getFilter($link, 'onshelf');
     $onshelfBoolValue = (strtolower($onshelfValue) === 'true');
     $response->addCommand(new InvokeCommand(
-        "[name=\"$onshelfName\"]",
+        "$parentSelector [name=\"$onshelfName\"]",
         'prop',
         ['checked', $onshelfBoolValue])
     );
@@ -364,7 +374,7 @@ class CqlSearchWidget extends WidgetBase {
       $value = $this->getFilter($link, $filterKey);
       $value = !empty($value) ? $value : $filterDefaultValue;
 
-      $response->addCommand(new InvokeCommand("[name=\"$name\"]", 'val', [$value]));
+      $response->addCommand(new InvokeCommand("$parentSelector [name=\"$name\"]", 'val', [$value]));
     }
 
     return $response;
@@ -409,7 +419,7 @@ class CqlSearchWidget extends WidgetBase {
    * This works, whether it's an absolute or relative URL, and regardless
    * which base site is used.
    */
-  private function getFilter(string $url, string $key): ?string {
+  public static function getFilter(string $url, string $key): ?string {
     // Add HTTP prefix if missing to ensure parse_url works correctly.
     if (!preg_match('#^https?://#', $url)) {
       $url = 'https://' . trim($url, '/');

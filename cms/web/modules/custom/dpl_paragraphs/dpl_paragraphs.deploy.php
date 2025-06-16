@@ -6,9 +6,8 @@
  */
 
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\dpl_fbi\Plugin\Field\FieldWidget\CqlSearchWidget;
 use Drupal\paragraphs\Entity\Paragraph;
-use function Safe\parse_url;
-use function Safe\preg_match;
 
 /**
  * Migrate work id field.
@@ -94,32 +93,6 @@ function dpl_paragraphs_migrate_field_value(string $entity_type, ?string $bundle
 }
 
 /**
- * Copies the getFilter() functionality from MaterialSearchWidget.
- *
- * As this is a one-time thing, we'll just copy the functionality, rather than
- * making everything complicated with a common service or trait.
- *
- * @see dpl_paragraphs_deploy_migrate_material_grid_link()
- */
-function _dpl_paragraphs_get_filter(string $url, string $key): ?string {
-  // Add HTTP prefix if missing to ensure parse_url works correctly.
-  if (!preg_match('#^https?://#', $url)) {
-    $url = 'https://' . trim($url, '/');
-  }
-
-  $parts = parse_url($url);
-
-  if (isset($parts['query'])) {
-    parse_str($parts['query'], $query);
-    $result = $query[$key] ?? NULL;
-
-    return is_string($result) ? ltrim($result) : NULL;
-  }
-
-  return NULL;
-}
-
-/**
  * Migrating and combining material_grid paragraphs to one single.
  *
  * Material_grid_link_automatic is now deprecated and has instead been replaced
@@ -195,15 +168,16 @@ function dpl_paragraphs_deploy_migrate_material_grid_link(): string {
       }
 
       $search_values = [];
+      $link = '';
 
       if ($paragraph->hasField('field_material_grid_link')) {
         $link = $paragraph->get('field_material_grid_link')->getString();
 
-        $search_values['value'] = _dpl_paragraphs_get_filter($link, 'advancedSearchCql');
-        $search_values['location'] = _dpl_paragraphs_get_filter($link, 'location');
-        $search_values['sublocation'] = _dpl_paragraphs_get_filter($link, 'sublocation');
-        $search_values['onshelf'] = _dpl_paragraphs_get_filter($link, 'onshelf');
-        $search_values['sort'] = _dpl_paragraphs_get_filter($link, 'sort');
+        $search_values['value'] = CqlSearchWidget::getFilter($link, 'advancedSearchCql');
+        $search_values['location'] = CqlSearchWidget::getFilter($link, 'location');
+        $search_values['sublocation'] = CqlSearchWidget::getFilter($link, 'sublocation');
+        $search_values['onshelf'] = CqlSearchWidget::getFilter($link, 'onshelf');
+        $search_values['sort'] = CqlSearchWidget::getFilter($link, 'sort');
       }
 
       // If for whatever reason a CQL has not been set, we'll log it, and
@@ -212,8 +186,12 @@ function dpl_paragraphs_deploy_migrate_material_grid_link(): string {
       // in the link fields.
       if (empty($search_values['value'])) {
         \Drupal::logger('dpl_paragraphs')->error(
-          'Paragraph @pid of type @type could not be migrated: CQL was not being set.',
-          ['@pid' => $pid, '@type' => $paragraph->getType()]
+          'Paragraph @pid of type @type could not be migrated: CQL could not be determined from link "@link"',
+          [
+            '@pid' => $pid,
+            '@type' => $paragraph->getType(),
+            '@link' => $link,
+          ]
         );
 
         continue;
