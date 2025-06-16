@@ -1,8 +1,8 @@
 # Set the environment variables.
 # These ones are varying from environment to environment.
-local GO_SUB_DOMAIN="go."
+GO_SUB_DOMAIN="go."
 # If primaryDomain uses www, then we want to put the go subdomain in there like this: www.go.restOfDomain.tld
-local PRIMARY_GO_DOMAIN="${GO_SUB_DOMAIN}${LAGOON_DOMAIN}"
+PRIMARY_GO_DOMAIN="${GO_SUB_DOMAIN}${LAGOON_DOMAIN}"
 if [[ $LAGOON_DOMAIN == www* ]]; then
   PRIMARY_GO_DOMAIN="${LAGOON_DOMAIN/www./www.${GO_SUB_DOMAIN}}"
 fi
