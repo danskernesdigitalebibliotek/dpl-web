@@ -1,7 +1,5 @@
 "use server"
 
-import { unstable_cacheLife as cacheLife } from "next/cache"
-
 import {
   useGetDplCmsPrivateConfigurationQuery,
   useGetDplCmsPublicConfigurationQuery,
@@ -21,10 +19,9 @@ const queryDplCmsPublicConfig = async () => {
 }
 
 const getDplCmsPrivateConfigData = async () => {
-  "use cache"
-  // Automatically expires after a few minutes
-  // @todo Implement cache tags when we are sure that the cms is revalidating go configuration properly.
-  cacheLife("minutes")
+  // @todo: We should cache the config data, becauuse:
+  // 1. It is not expected to change often.
+  // 2. We want to avoid hitting the DPL CMS API if possible.
 
   try {
     const data = await queryDplCmsPrivateConfig()
@@ -70,20 +67,15 @@ export const getDplCmsPrivateConfig = async () => {
 }
 
 const getDplCmsPublicConfigData = async () => {
-  "use cache"
-  // Automatically expires after a few minutes
-  // @todo Implement cache tags when we are sure that the cms is revalidating go configuration properly.
-  cacheLife("minutes")
+  // @todo: We should cache the config data, becauuse:
+  // 1. It is not expected to change often.
+  // 2. We want to avoid hitting the DPL CMS API if possible.
 
   try {
     const data = await queryDplCmsPublicConfig()
     return publicConfigSchema.parse(data)
   } catch {
     console.error("Failed to parse DPL CMS public config")
-
-    // Make sure that the cache is invalidated after a few seconds
-    cacheLife("seconds")
-
     return {
       searchProfiles: {
         local: null,
