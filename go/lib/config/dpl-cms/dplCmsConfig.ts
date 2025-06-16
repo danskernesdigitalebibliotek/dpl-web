@@ -19,9 +19,9 @@ const queryDplCmsPublicConfig = async () => {
 }
 
 const getDplCmsPrivateConfigData = async () => {
-  // @todo: We should cache the config data, becauuse:
-  // 1. It is not expected to change often.
-  // 2. We want to avoid hitting the DPL CMS API if possible.
+  "use cache"
+  // @todo: We should handle triggered revalidation or having a longer caching time.
+  // Right now the default cache time should be 15 minutes.
 
   try {
     const data = await queryDplCmsPrivateConfig()
@@ -67,9 +67,9 @@ export const getDplCmsPrivateConfig = async () => {
 }
 
 const getDplCmsPublicConfigData = async () => {
-  // @todo: We should cache the config data, becauuse:
-  // 1. It is not expected to change often.
-  // 2. We want to avoid hitting the DPL CMS API if possible.
+  "use cache"
+  // @todo: We should handle triggered revalidation or having a longer caching time.
+  // Right now the default cache time should be 15 minutes.
 
   try {
     const data = await queryDplCmsPublicConfig()
