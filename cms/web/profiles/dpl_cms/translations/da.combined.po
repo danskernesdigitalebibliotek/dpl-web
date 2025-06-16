@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-06-16 11:22+0200\n"
-"PO-Revision-Date: 2025-06-16 11:22+0200\n"
+"POT-Creation-Date: 2025-06-16 15:19+0200\n"
+"PO-Revision-Date: 2025-06-16 15:19+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2233,6 +2233,50 @@ msgstr "Delopstilling"
 msgctxt "advanced search"
 msgid "Add a comma separated list for multiple sublocations"
 msgstr "Sæt komma mellem delopstillinger for at filtrere på flere"
+
+msgctxt "advanced search"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Relevance"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Latest publication date"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Latest publication date (descending)"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Latest publication date (ascending)"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Author"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Author (ascending)"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Author (descending)"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Title"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Title (ascending)"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Title (descending)"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Already reserved"
@@ -18286,10 +18330,10 @@ msgid "The URL of the content type's edit page."
 msgstr "URLen på indholdstypens redigeringsside."
 
 msgid "Translation source term"
-msgstr "Oversættelse af kildeterm"
+msgstr "Oversættelsens kildeterm"
 
 msgid "The source term for this current term's translation set."
-msgstr "The source term for this current term's translation set."
+msgstr "Kildeterm for den aktuelle terms oversættelsessæt."
 
 msgid "The URL of the taxonomy term's edit page."
 msgstr "URLen på taksonomitermens redigeringsside."
@@ -18391,7 +18435,7 @@ msgid "Language name"
 msgstr "Sprognavn"
 
 msgid "The language name."
-msgstr "Sprogets navn."
+msgstr "Navnet på sproget."
 
 msgid "The language code."
 msgstr "Sprogkoden."
@@ -18399,20 +18443,20 @@ msgstr "Sprogkoden."
 msgid ""
 "Whether the language is written left-to-right (ltr) or right-to-left (rtl)."
 msgstr ""
-"Om sproget er skrevet fra venstre mod højre (vth) eller fra højre mod "
-"venstre (htv)."
+"Om sproget er skrevet fra venstre mod højre (ltr) eller fra højre mod "
+"venstre (rtl)."
 
 msgid "Domain"
 msgstr "Domæne"
 
 msgid "The domain name to use for the language."
-msgstr "Domænenavnet, der skal bruges til sproget."
+msgstr "Det domænenavn, der skal bruges til sproget."
 
 msgid "Path prefix"
 msgstr "Stipræfiks"
 
 msgid "Path prefix for URLs in the language."
-msgstr "Path prefix for URLs in the language."
+msgstr "Stipræfiks for URL'er på sproget."
 
 msgid "Current page"
 msgstr "Nuværende side"
@@ -18442,7 +18486,7 @@ msgid "Interface language"
 msgstr "Grænsefladesprog"
 
 msgid "The active user interface language."
-msgstr "Det aktive user interface-sprog."
+msgstr "Det aktive brugergrænsefladesprog."
 
 msgid "Content language"
 msgstr "Indholdssprog"
