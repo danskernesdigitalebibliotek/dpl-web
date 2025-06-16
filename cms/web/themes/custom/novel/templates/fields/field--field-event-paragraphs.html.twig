@@ -1,5 +1,5 @@
-{% include '@novel/components/paragraphs.html.twig'
-  with {
+{{ include('@novel/components/paragraphs.html.twig'
+  , {
   attributes: attributes,
-  items: items
-} only %}
+  items: items,
+}, false) }}

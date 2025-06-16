@@ -6,8 +6,8 @@
   {% set title = drupal_field(title_field, parent_entity.getEntityTypeId(), parent_entity.id(), 'title_display') %}
 {% endif %}
 
-{% include '@novel/components/slider.html.twig'
-  with {
-  'title': title,
-  'items': items,
-} only %}
+{{ include('@novel/components/slider.html.twig'
+  , {
+  title: title,
+  items: items,
+}, false) }}

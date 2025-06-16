@@ -1,5 +1,5 @@
-{% include '@novel/components/list-item-stacked.html.twig'
-  with {
+{{ include('@novel/components/list-item-stacked.html.twig'
+  , {
   attributes: attributes,
   url: eventinstance_url,
   baseIconPath: baseIconPath,
@@ -8,4 +8,4 @@
   date: content.date,
   start_time: start_time,
   end_time: end_time,
-} only %}
+}, false) }}

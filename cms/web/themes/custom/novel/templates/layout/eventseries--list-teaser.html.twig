@@ -1,5 +1,5 @@
-{% include '@novel/components/list-item.html.twig'
-  with {
+{{ include('@novel/components/list-item.html.twig'
+  , {
   attributes: attributes,
   url: eventseries|entity_url.toString(),
   baseIconPath: baseIconPath,
@@ -9,4 +9,4 @@
   date: formatted_date,
   description: content.field_teaser_text.0|default(content.field_subtitle),
   bottom: content.field_branch,
-} only %}
+}, false) }}

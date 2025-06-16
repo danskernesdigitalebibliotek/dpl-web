@@ -1,5 +1,5 @@
-{% include '@novel/components/slider.html.twig'
-  with {
-  'title': 'Upcoming events'|trans,
-  'items': rows,
-} only %}
+{{ include('@novel/components/slider.html.twig'
+  , {
+  title: 'Upcoming events'|trans,
+  items: rows,
+}, false) }}

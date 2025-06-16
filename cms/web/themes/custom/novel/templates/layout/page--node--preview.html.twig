@@ -52,16 +52,16 @@
     </main>
   {% else %}
 
-    {% include '@novel/layout/header.html.twig'
-      with {
-      'header': page.header,
-      'search_header': search.header,
-      'patron_menu': patron.menu,
-      'logo': logo,
-      'opening_hours_url': opening_hours_url,
-      'opening_hours_sidebar_large': opening_hours_sidebar_large,
-      'opening_hours_sidebar_small': opening_hours_sidebar_small,
-    } only %}
+    {{ include('@novel/layout/header.html.twig'
+      , {
+      header: page.header,
+      search_header: search.header,
+      patron_menu: patron.menu,
+      logo: logo,
+      opening_hours_url: opening_hours_url,
+      opening_hours_sidebar_large: opening_hours_sidebar_large,
+      opening_hours_sidebar_small: opening_hours_sidebar_small,
+    }, false) }}
 
     {{ drupal_block('system_messages_block') }}
 
@@ -73,22 +73,22 @@
       {% if related_children.items %}
         {# @todo - this needs to be replaced by proper styling. #}
         <div class="mt-64">
-          {% include '@novel/components/breadcrumb-children.html.twig'
-            with {
+          {{ include('@novel/components/breadcrumb-children.html.twig'
+            , {
             title: related_children.title,
             show_subtitles: related_children.show_subtitles,
             items: related_children.items,
-          } only %}
+          }, false) }}
         </div>
       {% endif %}
 
       {{ related_content }}
     </main>
 
-    {% include '@novel/layout/footer.html.twig'
-      with {
-      'settings': footer_settings,
-      'logo': logo,
-    } only %}
+    {{ include('@novel/layout/footer.html.twig'
+      , {
+      settings: footer_settings,
+      logo: logo,
+    }, false) }}
   {% endif %}
 </div>

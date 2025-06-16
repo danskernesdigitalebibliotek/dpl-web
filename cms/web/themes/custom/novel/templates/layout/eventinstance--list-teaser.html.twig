@@ -1,5 +1,5 @@
-{% include '@novel/components/list-item.html.twig'
-  with {
+{{ include('@novel/components/list-item.html.twig'
+  , {
   attributes: attributes,
   url: eventinstance_url,
   baseIconPath: baseIconPath,
@@ -14,4 +14,4 @@
   ticket_price: ticket_price_display,
   datetime_attribute: datetime_attribute,
   image_placeholder_text: content.event_teaser_text,
-} only %}
+}, false) }}

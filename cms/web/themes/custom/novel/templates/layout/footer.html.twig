@@ -2,17 +2,17 @@
     {# mobile footer #}
     <div class="pagefold-parent--small internal-pagefold-parent footer__mobile">
         <div class="pagefold-triangle--small pagefold-inherit-parent"></div>
-        {% include '@novel/components/footer-accordions.html.twig' %}
-        {% include '@novel/components/footer-widgets.html.twig' with {logo} %}
-        {% include '@novel/components/footer-separator.html.twig' %}
-        {% include '@novel/components/footer-info.html.twig' %}
+        {{ include('@novel/components/footer-accordions.html.twig') }}
+        {{ include('@novel/components/footer-widgets.html.twig', {logo}) }}
+        {{ include('@novel/components/footer-separator.html.twig') }}
+        {{ include('@novel/components/footer-info.html.twig') }}
     </div>
     {# desktop footer #}
     <div class="pagefold-parent--medium internal-pagefold-parent footer__desktop">
         <div class="pagefold-triangle--medium pagefold-inherit-parent"></div>
-        {% include '@novel/components/footer-columns.html.twig' %}
-        {% include '@novel/components/footer-widgets.html.twig' with {logo} %}
-        {% include '@novel/components/footer-separator.html.twig' %}
-        {% include '@novel/components/footer-info.html.twig' %}
+        {{ include('@novel/components/footer-columns.html.twig') }}
+        {{ include('@novel/components/footer-widgets.html.twig', {logo}) }}
+        {{ include('@novel/components/footer-separator.html.twig') }}
+        {{ include('@novel/components/footer-info.html.twig') }}
     </div>
 </footer>

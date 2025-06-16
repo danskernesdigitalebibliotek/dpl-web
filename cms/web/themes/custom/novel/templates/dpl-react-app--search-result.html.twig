@@ -28,7 +28,7 @@
       </div>
       <ul class="content-list">
         {% for i in 1..number_of_fake_result_items %}
-          <li class="content-list__item">{% include 'search-result-item.html.twig' %}</li>
+          <li class="content-list__item">{{ include('search-result-item.html.twig') }}</li>
         {% endfor %}
       </ul>
     </div>

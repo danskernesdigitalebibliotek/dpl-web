@@ -9,7 +9,7 @@
 
         {{ content.field_subtitle }}
 
-        {% include '@novel/components/article-header-info.html.twig' with {'author_name': author_name, 'node': node} %}
+        {{ include('@novel/components/article-header-info.html.twig', {author_name: author_name, node: node}) }}
 
         {% if (content.field_tags.0) %}
           <div class="article_header--tags">
