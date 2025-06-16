@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-06-13 15:11+0200\n"
-"PO-Revision-Date: 2025-06-13 15:11+0200\n"
+"POT-Creation-Date: 2025-06-16 10:23+0200\n"
+"PO-Revision-Date: 2025-06-16 10:23+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -14162,6 +14162,9 @@ msgstr "Antal tilføjelser mellem links: @count"
 msgid "Use arrows for drag & drop"
 msgstr "Brug pile til træk & slip"
 
+msgid "Hide sidebar"
+msgstr ""
+
 msgid "Paragraphs Editor Enhancements"
 msgstr "Paragraphs redaktør forbedringer"
 
@@ -14173,6 +14176,9 @@ msgstr "Vis Paragraphs i dialog som"
 
 msgid "Show arrows for drag & drop"
 msgstr "Vis pile for træk og slip"
+
+msgid "Hide sidebar in dialog"
+msgstr ""
 
 msgid "Paragraphs category"
 msgstr "Paragraphs kategori"
@@ -14972,6 +14978,9 @@ msgstr "Du har allerede tilmeldt dig denne begivenhed."
 
 msgid "Registrant successfully updated"
 msgstr "Deltager succesfuldt opdateret"
+
+msgid "Unable to update registrant"
+msgstr ""
 
 msgid "Cancel Your Registration"
 msgstr "Annuller din registrering"
