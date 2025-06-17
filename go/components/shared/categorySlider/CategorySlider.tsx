@@ -10,6 +10,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 import ImageBase from "../image/ImageBase"
 import SmartLink from "../smartLink/SmartLink"
+import loadCategories from "./loadCategories"
 
 export const sliderOptions: KeenSliderOptions = {
   initial: 0,
@@ -39,14 +40,21 @@ export type TNodeGoCategory = {
   }
 } & NodeGoCategory
 
-function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
+function CategorySlider() {
   const [sliderRef] = useKeenSlider(sliderOptions, [WheelControls])
-  const [loaded, setLoaded] = useState(false)
+  const [categories, setCategories] = useState<TNodeGoCategory[] | false>(false)
   const pathname = usePathname()
 
   useEffect(() => {
-    setLoaded(true)
-  }, [])
+    if (categories) {
+      return
+    }
+
+    loadCategories().then(data => {
+      const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
+      setCategories(categories || [])
+    })
+  }, [categories])
 
   if (!categories) {
     return null
@@ -64,20 +72,21 @@ function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
             ref={sliderRef}
             className={cn(
               "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
-              loaded ? "m-0 opacity-100" : "opacity-0"
+              categories ? "m-0 opacity-100" : "opacity-0"
             )}>
-            {categories.map((category, index) => {
-              const isSelected = pathname === category.path
+            {categories &&
+              categories.map((category, index) => {
+                const isSelected = pathname === category.path
 
-              return (
-                <CategorySlide
-                  isSelected={isSelected}
-                  key={index}
-                  category={category}
-                  index={index}
-                />
-              )
-            })}
+                return (
+                  <CategorySlide
+                    isSelected={isSelected}
+                    key={index}
+                    category={category}
+                    index={index}
+                  />
+                )
+              })}
           </div>
         </div>
       </div>
