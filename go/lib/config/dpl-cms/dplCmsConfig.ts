@@ -1,5 +1,7 @@
 "use server"
 
+import { connection } from "next/server"
+
 import {
   useGetDplCmsPrivateConfigurationQuery,
   useGetDplCmsPublicConfigurationQuery,
@@ -39,6 +41,7 @@ const getDplCmsPrivateConfigData = async () => {
 }
 
 export const getDplCmsPrivateConfig = async () => {
+  await connection()
   const data = await getDplCmsPrivateConfigData()
 
   const uniLoginConfigEnv = {
@@ -97,6 +100,7 @@ const getDplCmsPublicConfigData = async () => {
 }
 
 export const getDplCmsPublicConfig = async () => {
+  await connection()
   const data = await getDplCmsPublicConfigData()
   // If environment variables are set, they will override the values from DPL CMS.
   const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
