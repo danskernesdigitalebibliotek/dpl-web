@@ -23,7 +23,7 @@ export const loadLibraryToken = async () => {
       .safeParse(data?.dplTokens?.adgangsplatformen?.library)
 
     if (validateLibraryToken.error) {
-      console.error(validateLibraryToken.error)
+      console.error("Error parsing library token:", validateLibraryToken.error.flatten())
       return null
     }
     return validateLibraryToken.data
