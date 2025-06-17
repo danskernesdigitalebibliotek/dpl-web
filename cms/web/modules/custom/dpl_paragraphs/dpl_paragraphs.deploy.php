@@ -210,7 +210,7 @@ function dpl_paragraphs_deploy_migrate_material_grid_link(): string {
       // Replace old with new in parent field.
       $items = $parent->get($parent_field_name)->getValue();
       $items[$delta]['target_id'] = $new_paragraph->id();
-      $items[$delta]['target_revision_id'] = $new_paragraph->id();
+      $items[$delta]['target_revision_id'] = $new_paragraph->getRevisionId();
 
       $parent->set($parent_field_name, $items);
       $parent->save();
