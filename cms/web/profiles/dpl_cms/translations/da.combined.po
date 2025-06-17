@@ -113,7 +113,7 @@ msgstr "DPL React bibliotek mangler (@dir) "
 #: 
 msgctxt "Search Result"
 msgid "+ more filters"
-msgstr "+ flere filtre"
+msgstr "Flere filtre"
 
 #: 
 msgctxt "Search Result"
