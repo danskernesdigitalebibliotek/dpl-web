@@ -6,13 +6,13 @@
 %}
 <a {{ attributes.addClass(classes).setAttribute('href', url) }}>
   <div class="content-list-item__image-container">
-    {% include '@novel/components/media-container.html.twig'
-      with {
+    {{ include('@novel/components/media-container.html.twig'
+      , {
       attributes: create_attribute(),
       media: image,
       has_media: image,
       placeholder_text: image_placeholder_text,
-    } only %}
+    }, false) }}
   </div>
   <div class="content-list-item__content">
     {{ categories }}

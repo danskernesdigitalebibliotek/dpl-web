@@ -40,8 +40,8 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
   public function processOutbound(
     $path,
     &$options = [],
-    Request $request = NULL,
-    BubbleableMetadata $bubbleableMetadata = NULL,
+    ?Request $request = NULL,
+    ?BubbleableMetadata $bubbleableMetadata = NULL,
   ): string {
     // Don't rewrite on admin pages, messes with field editing.
     if ($this->adminContext->isAdminRoute()) {

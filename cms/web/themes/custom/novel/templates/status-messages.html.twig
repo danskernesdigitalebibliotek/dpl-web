@@ -34,9 +34,9 @@
         {% for message in messages %}
           <li>
             {% if type == 'error' %}
-              {% include '@novel/error-message.html.twig' with {message: message} %}
+              {{ include('@novel/error-message.html.twig', {message: message}) }}
             {% elseif type == 'status' %}
-              {% include '@novel/status-message.html.twig' with {message: message} %}
+              {{ include('@novel/status-message.html.twig', {message: message}) }}
             {% else %}
               {{ message }}
             {% endif %}
@@ -45,9 +45,9 @@
       </ul>
     {% else %}
       {% if type == 'error' %}
-        {% include '@novel/error-message.html.twig' with {message: messages|first} %}
+        {{ include('@novel/error-message.html.twig', {message: messages|first}) }}
       {% elseif type == 'status' %}
-        {% include '@novel/status-message.html.twig' with {message: messages|first} %}
+        {{ include('@novel/status-message.html.twig', {message: messages|first}) }}
       {% else %}
         {{ messages|first }}
       {% endif %}

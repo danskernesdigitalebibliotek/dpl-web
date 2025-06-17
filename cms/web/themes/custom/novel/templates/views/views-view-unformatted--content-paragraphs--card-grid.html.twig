@@ -1,6 +1,6 @@
-{% include '@novel/components/card-grid.html.twig'
-  with {
-  'attributes': attributes,
-  'title': view.getTitle(),
-  'items': rows,
-} only %}
+{{ include('@novel/components/card-grid.html.twig'
+  , {
+  attributes: attributes,
+  title: view.getTitle(),
+  items: rows,
+}, false) }}

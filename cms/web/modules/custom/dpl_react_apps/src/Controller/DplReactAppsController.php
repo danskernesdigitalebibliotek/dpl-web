@@ -236,6 +236,17 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-sublocation-description-text' => $this->t('Add a comma separated list for multiple sublocations', [], ['context' => 'advanced search']),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+      'advanced-search-sort-label-text' => $this->t('Sort by', [], ['context' => 'advanced search']),
+      'advanced-search-sort-relevance-text' => $this->t('Relevance', [], ['context' => 'advanced search']),
+      'advanced-search-sort-latest-pub-date-text' => $this->t('Latest publication date', [], ['context' => 'advanced search']),
+      'advanced-search-sort-latest-pub-date-desc-text' => $this->t('Latest publication date (descending)', [], ['context' => 'advanced search']),
+      'advanced-search-sort-latest-pub-date-asc-text' => $this->t('Latest publication date (ascending)', [], ['context' => 'advanced search']),
+      'advanced-search-sort-creator-text' => $this->t('Author', [], ['context' => 'advanced search']),
+      'advanced-search-sort-creator-asc-text' => $this->t('Author (ascending)', [], ['context' => 'advanced search']),
+      'advanced-search-sort-creator-desc-text' => $this->t('Author (descending)', [], ['context' => 'advanced search']),
+      'advanced-search-sort-title-text' => $this->t('Title', [], ['context' => 'advanced search']),
+      'advanced-search-sort-title-asc-text' => $this->t('Title (ascending)', [], ['context' => 'advanced search']),
+      'advanced-search-sort-title-desc-text' => $this->t('Title (descending)', [], ['context' => 'advanced search']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 

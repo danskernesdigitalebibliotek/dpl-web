@@ -1,5 +1,5 @@
-{% include '@novel/components/hero.html.twig'
-  with {
+{{ include('@novel/components/hero.html.twig'
+  , {
   attributes: attributes,
   title: content.field_hero_title,
   teaser_text: content.field_teaser_text.0,
@@ -9,5 +9,5 @@
   date: content.field_hero_date,
   description: content.field_hero_description,
   media: content.field_hero_image.0,
-  baseIconPath: baseIconPath
-} only %}
+  baseIconPath: baseIconPath,
+}, false) }}

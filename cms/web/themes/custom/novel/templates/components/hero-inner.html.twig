@@ -34,11 +34,11 @@
   {% endif %}
 
   {% if description_items %}
-    {% include "@novel/components/list-description.html.twig" with {
+    {{ include('@novel/components/list-description.html.twig', {
       attributes: create_attribute(),
       type: 'hero',
       items: description_items,
-    } only %}
+    }, false) }}
   {% endif %}
 
 </div>
