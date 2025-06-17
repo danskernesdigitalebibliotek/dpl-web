@@ -55,7 +55,8 @@ export function fetcher<TData, TVariables>(
       const cacheTagsRaw = res.headers.get(goConfig("caching.dpl-cms.cachetags-header"))
       return { ...json.data, go: { cacheTags: cacheTagsRaw ? cacheTagsRaw.split(" ") : null } }
     } catch (error) {
-      throw new Error("Failed to fetch data from DPL CMS", { cause: error })
+      console.error(error)
+      throw new Error("Failed to fetch data from DPL CMS")
     }
   }
 }
