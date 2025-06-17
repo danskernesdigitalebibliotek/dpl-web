@@ -53,6 +53,7 @@ const SearchResults = ({ works }: SearchResultProps) => {
         return (
           <div key={work.workId} className="col-span-3 lg:col-span-4">
             <Link
+              prefetch={false}
               aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
               className="focus-visible"
               href={url}>
