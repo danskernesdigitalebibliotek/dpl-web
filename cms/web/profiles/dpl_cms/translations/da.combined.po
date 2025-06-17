@@ -28807,55 +28807,55 @@ msgstr ""
 #: 
 msgctxt "advanced search"
 msgid "Sort by"
-msgstr ""
+msgstr "Sorter efter"
 
 #: 
 msgctxt "advanced search"
 msgid "Relevance"
-msgstr ""
+msgstr "Bedste match"
 
 #: 
 msgctxt "advanced search"
 msgid "Latest publication date"
-msgstr ""
+msgstr "Udgivelsesdato"
 
 #: 
 msgctxt "advanced search"
 msgid "Latest publication date (descending)"
-msgstr ""
+msgstr "Nyeste først"
 
 #: 
 msgctxt "advanced search"
 msgid "Latest publication date (ascending)"
-msgstr ""
+msgstr "Ældste først"
 
 #: 
 msgctxt "advanced search"
 msgid "Author"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 #: 
 msgctxt "advanced search"
 msgid "Author (ascending)"
-msgstr ""
+msgstr "A - Å"
 
 #: 
 msgctxt "advanced search"
 msgid "Author (descending)"
-msgstr ""
+msgstr "Å - A"
 
 #: 
 msgctxt "advanced search"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "advanced search"
 msgid "Title (ascending)"
-msgstr ""
+msgstr "A - Å"
 
 #: 
 msgctxt "advanced search"
 msgid "Title (descending)"
-msgstr ""
+msgstr "Å - A"
 
