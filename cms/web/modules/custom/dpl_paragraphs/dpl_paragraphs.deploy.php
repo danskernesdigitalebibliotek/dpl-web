@@ -176,8 +176,13 @@ function dpl_paragraphs_deploy_migrate_material_grid_link(): string {
         $search_values['value'] = CqlSearchWidget::getFilter($link, 'advancedSearchCql');
         $search_values['location'] = CqlSearchWidget::getFilter($link, 'location');
         $search_values['sublocation'] = CqlSearchWidget::getFilter($link, 'sublocation');
-        $search_values['onshelf'] = CqlSearchWidget::getFilter($link, 'onshelf');
-        $search_values['sort'] = CqlSearchWidget::getFilter($link, 'sort');
+
+        $sort_value = CqlSearchWidget::getFilter($link, 'sort');
+        $search_values['sort'] = !empty($sort_value) ? $sort_value : 'sort.latestpublicationdate.desc';
+
+        // Onshelf value is a boolean, sent along as a 'true'/'false' string.
+        $onshelf_value = (string) CqlSearchWidget::getFilter($link, 'onshelf');
+        $search_values['onshelf'] = (strtolower($onshelf_value) === 'true');
       }
 
       // If for whatever reason a CQL has not been set, we'll log it, and
