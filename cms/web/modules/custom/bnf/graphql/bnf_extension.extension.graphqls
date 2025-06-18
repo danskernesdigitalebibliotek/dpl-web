@@ -2,6 +2,14 @@ extend interface NodeInterface {
   url: String!
 }
 
+extend type MediaVideo {
+  thumbnail: String!
+}
+
+extend type MediaVideotool {
+  thumbnail: String!
+}
+
 # Ideally, we wouldn't want to manually create each content type here, but
 # there is no way around that, with how GraphQL works with interfaces.
 # If a new content type is added, a warning will show up in the GraphQL explorer
