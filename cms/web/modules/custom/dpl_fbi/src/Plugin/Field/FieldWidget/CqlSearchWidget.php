@@ -204,7 +204,6 @@ class CqlSearchWidget extends WidgetBase {
         '#type' => 'textarea',
         '#rows' => 3,
         '#title' => $fieldStorageDefinition->getPropertyDefinition('value')?->getLabel(),
-        '#required' => TRUE,
         '#default_value' => $items[$delta]->value ?? '',
         '#weight' => 0,
       ],
