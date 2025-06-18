@@ -36,6 +36,24 @@ class BnfExtension extends SdlSchemaExtensionPluginBase {
         ->map('entity', $builder->fromParent())
     ));
 
+    $registry->addFieldResolver('MediaVideo', 'thumbnail', $builder->compose(
+      $builder->produce('property_path')
+        ->map('type', $builder->fromValue('entity:media'))
+        ->map('value', $builder->fromParent())
+        ->map('path', $builder->fromValue('thumbnail.entity')),
+      $builder->produce('image_url')
+        ->map('entity', $builder->fromParent())
+    ));
+
+    $registry->addFieldResolver('MediaVideotool', 'thumbnail', $builder->compose(
+      $builder->produce('property_path')
+        ->map('type', $builder->fromValue('entity:media'))
+        ->map('value', $builder->fromParent())
+        ->map('path', $builder->fromValue('thumbnail.entity')),
+      $builder->produce('image_url')
+        ->map('entity', $builder->fromParent())
+    ));
+
   }
 
 }
