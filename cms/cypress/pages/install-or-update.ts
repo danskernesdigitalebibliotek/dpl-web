@@ -7,8 +7,10 @@ export class InstallOrUpdatePage extends PageObject {
     super({ path: '/admin/modules/install-or-update' });
     this.addElements = {
       form: () => cy.get('form#dpl-webmaster-upload-form'),
-      fileField: () => this.elements.form().find('#edit-project-upload'),
-      submit: () => this.elements.form().find('input[type=submit]'),
+      fileField: () =>
+        this.elements.form().findByLabelText('Upload a module archive'),
+      submit: () =>
+        this.elements.form().findByRole('button', { name: /Continue/i }),
     };
   }
 
@@ -34,19 +36,18 @@ export class InstallOrUpdatePage extends PageObject {
         if (isUpdate) {
           cy.get('.content')
             .then(($content) => {
-              if ($content.find('a:contains("Apply pending updates")').length) {
-                return true;
-              }
-
-              return false;
+              return !!$content.find('a:contains("Apply pending updates")')
+                .length;
             })
             .then((hasDbUpdates) => {
               if (hasDbUpdates) {
                 // Review updates page.
-                cy.get('a:contains("Apply pending updates")').click();
+                cy.findByRole('link', {
+                  name: /Apply pending updates/i,
+                }).click();
 
                 // And wait for the Review log page.
-                cy.get('a:contains("Front page")');
+                cy.findByRole('link', { name: /Front page/i });
               }
             });
         }

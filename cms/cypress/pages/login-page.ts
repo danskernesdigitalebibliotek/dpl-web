@@ -7,9 +7,12 @@ export class LoginPage extends PageObject {
     super({ path: '/user/login' });
     this.addElements = {
       form: () => cy.get('#user-login-form'),
-      nameField: () => this.elements.form().find('[name="name"]'),
-      passField: () => this.elements.form().find('[name="pass"]'),
-      loginButton: () => this.elements.form().find('[value="Log in"]'),
+      nameField: () =>
+        this.elements.form().findByRole('textbox', { name: /Username/i }),
+      // There's no password role, so we just get it by label.
+      passField: () => this.elements.form().findByLabelText('Password'),
+      loginButton: () =>
+        this.elements.form().findByRole('button', { name: /Log in/i }),
     };
   }
 
