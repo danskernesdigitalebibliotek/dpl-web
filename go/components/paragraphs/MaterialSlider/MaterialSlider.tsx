@@ -126,6 +126,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
 
                   return (
                     <Link
+                      prefetch={false}
                       key={work.workId}
                       aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
                       className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"

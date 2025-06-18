@@ -17,7 +17,7 @@ function SmartLink({
   // Internal link
   if (linkType === "internal") {
     return (
-      <Link className={className} href={href} target={target}>
+      <Link className={className} href={href} target={target} prefetch={false}>
         {children}
       </Link>
     )

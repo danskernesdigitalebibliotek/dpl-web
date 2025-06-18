@@ -92,6 +92,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
             const loanManifestation = work.manifestations.all[0]
             return (
               <Link
+                prefetch={false}
                 key={loanManifestation.pid}
                 aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
                 className={cn(

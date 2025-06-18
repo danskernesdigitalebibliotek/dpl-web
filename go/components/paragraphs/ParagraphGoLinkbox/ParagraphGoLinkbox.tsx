@@ -78,6 +78,7 @@ function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
             {linkUrl && linkTitle && (
               <Button asChild>
                 <Link
+                  prefetch={false}
                   title={linkTitle}
                   href={linkUrl}
                   area-label={areaLabel || linkTitle}

@@ -84,7 +84,8 @@ const WorkCardStackedWithCaption = ({
         aria-label={`Tilgå værket ${title} af ${displayCreators(currentWork.creators, 1)}`}
         className="focus-visible block h-full w-full space-y-3 lg:space-y-5"
         href={url}
-        style={{ zIndex }}>
+        style={{ zIndex }}
+        prefetch={false}>
         <WorkCardWithCaption
           creators={currentWork.creators || []}
           title={title}
