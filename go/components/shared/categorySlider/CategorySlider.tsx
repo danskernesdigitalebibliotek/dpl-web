@@ -61,35 +61,21 @@ function CategorySlider() {
   }
 
   return (
-    <div className="-my-[12px] overflow-hidden lg:-my-[20px]">
-      <div className="content-container w-full">
-        <div
-          className={cn(
-            `lg:w-[calc(100%+48px) w-[calc(100%+24px) relative -mx-[24px] !overflow-visible px-[12px]
-            lg:-mx-[48px] lg:px-[24px]`
-          )}>
-          <div
-            ref={sliderRef}
-            className={cn(
-              "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
-              categories ? "m-0 opacity-100" : "opacity-0"
-            )}>
-            {categories &&
-              categories.map((category, index) => {
-                const isSelected = pathname === category.path
-
-                return (
-                  <CategorySlide
-                    isSelected={isSelected}
-                    key={index}
-                    category={category}
-                    index={index}
-                  />
-                )
-              })}
-          </div>
-        </div>
-      </div>
+    <div
+      ref={sliderRef}
+      className={cn(
+        "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
+        categories ? "m-0 opacity-100" : "opacity-0"
+      )}>
+      {categories &&
+        categories.map((category, index) => (
+          <CategorySlide
+            isSelected={pathname === category.path}
+            key={index}
+            category={category}
+            index={index}
+          />
+        ))}
     </div>
   )
 }
