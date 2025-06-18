@@ -1,15 +1,15 @@
 <article {{ attributes.addClass('event-page') }}>
   <header class="event-header">
-    {% include "@novel/components/hero.html.twig" with {
+    {{ include('@novel/components/hero.html.twig', {
       attributes: create_attribute(),
       title: label,
       teaser_text: teaser_text,
       categories: categories,
-      date: expired ? 'Expired'|t({}, {'context': 'DPL event'}) : date,
+      date: expired ? 'Expired'|t({}, {context: 'DPL event'}) : date,
       media: image.0,
       baseIconPath: baseIconPath,
-      cta: cta
-    } only %}
+      cta: cta,
+    }, false) }}
   </header>
 
   <section class="event-description">
@@ -22,11 +22,11 @@
       </div>
     </div>
 
-    {% include "@novel/components/list-description.html.twig" with {
+    {{ include('@novel/components/list-description.html.twig', {
       attributes: create_attribute(),
       type: 'event',
       items: description_items,
-    } only %}
+    }, false) }}
   </section>
 
   {% if event_instances %}

@@ -1,7 +1,7 @@
 {%
   set classes = [
   'hero',
-  media ? '' : 'hero--has-no-media'
+  media ? '' : 'hero--has-no-media',
 ]
 %}
 
@@ -11,7 +11,7 @@
     {% set target = link.0['#url'].options.target|default('_self') %}
 
     <a href="{{ url }}" target="{{ target }}" class="hero__content arrow arrow__hover--right-large">
-      {% include "@novel/components/hero-inner.html.twig" %}
+      {{ include('@novel/components/hero-inner.html.twig') }}
 
       <div>
         {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
@@ -20,20 +20,20 @@
 
   {% else %}
     <div class="hero__content">
-      {% include "@novel/components/hero-inner.html.twig" %}
+      {{ include('@novel/components/hero-inner.html.twig') }}
     </div>
 
   {% endif %}
 
   <div class="hero__visual">
     <div class="hero__visual-inner">
-      {% include '@novel/components/media-container.html.twig'
-        with {
+      {{ include('@novel/components/media-container.html.twig'
+        , {
         attributes: create_attribute(),
         media: media,
         has_media: media,
         placeholder_text: teaser_text,
-      } only %}
+      }, false) }}
     </div>
   </div>
 </section>

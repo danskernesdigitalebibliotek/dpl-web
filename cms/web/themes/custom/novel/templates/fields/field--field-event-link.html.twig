@@ -6,18 +6,18 @@
       {% set title = item.content['#title'] %}
 
       {% set classes = [
-      "btn-primary",
-      "btn-filled",
-      "btn-large",
-      "event-header__button",
-      "js-dpl-mapp",
+      'btn-primary',
+      'btn-filled',
+      'btn-large',
+      'event-header__button',
+      'js-dpl-mapp',
       ] %}
 
      {% set event_data = {
-        linkId: "Klik på Køb billet",
+        linkId: 'Klik på Køb billet',
         customClickParameter: {
-          "24": node_title
-        }
+          24: node_title,
+        },
       }|json_encode %}
 
       {% if event_is_active %}

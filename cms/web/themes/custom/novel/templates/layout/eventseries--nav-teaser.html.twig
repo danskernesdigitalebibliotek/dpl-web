@@ -1,8 +1,8 @@
-{% include '@novel/components/nav-teaser.html.twig'
-  with {
+{{ include('@novel/components/nav-teaser.html.twig'
+  , {
   attributes: attributes,
   title: content.title,
   subtitle: content.field_teaser_text.0,
   url: eventseries|entity_url.toString(),
-  baseIconPath: baseIconPath
-} only %}
+  baseIconPath: baseIconPath,
+}, false) }}
