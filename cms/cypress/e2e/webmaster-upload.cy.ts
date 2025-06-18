@@ -12,6 +12,10 @@ describe('Webmaster', () => {
       Cypress.env('DRUPAL_PASSWORD'),
     );
 
+    // Intuitively it makes most sense to clean up after a test after
+    // it is run, but after hooks might not be called if the test
+    // fails hard enough. So ensure a pristine environment before
+    // running the test instead.
     const adminModulesPage = new AdminModulesPage();
     adminModulesPage.visit([]);
     adminModulesPage.moduleExists('test_module').then((exists) => {
@@ -24,6 +28,7 @@ describe('Webmaster', () => {
           }
         });
 
+        // Remove the module files, so we're starting all fresh.
         cy.exec('rm -rf web/modules/local/test_module');
       }
     });
