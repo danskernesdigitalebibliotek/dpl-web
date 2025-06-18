@@ -7,9 +7,7 @@ import { TestModulePage } from '../pages/test-module-page';
 describe('Webmaster', () => {
   beforeEach(() => {
     // Obviously we need to be logged in to upload a module.
-    const loginPage = new LoginPage();
-    loginPage.visit([]);
-    loginPage.login(
+    LoginPage.ensureLogin(
       Cypress.env('DRUPAL_USERNAME'),
       Cypress.env('DRUPAL_PASSWORD'),
     );
