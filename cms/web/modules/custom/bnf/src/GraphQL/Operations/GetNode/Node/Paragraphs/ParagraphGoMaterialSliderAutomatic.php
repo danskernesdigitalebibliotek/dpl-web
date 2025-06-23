@@ -4,28 +4,29 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
  * @property string $id
- * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch $cqlSearch
  * @property int $sliderAmountOfMaterials
  * @property string $title
  * @property string $__typename
+ * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch|null $cqlSearch
  */
 class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch $cqlSearch
      * @param int $sliderAmountOfMaterials
      * @param string $title
+     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch|null $cqlSearch
      */
-    public static function make($id, $cqlSearch, $sliderAmountOfMaterials, $title): self
-    {
+    public static function make(
+        $id,
+        $sliderAmountOfMaterials,
+        $title,
+        $cqlSearch = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+    ): self {
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
             $instance->id = $id;
-        }
-        if ($cqlSearch !== self::UNDEFINED) {
-            $instance->cqlSearch = $cqlSearch;
         }
         if ($sliderAmountOfMaterials !== self::UNDEFINED) {
             $instance->sliderAmountOfMaterials = $sliderAmountOfMaterials;
@@ -34,6 +35,9 @@ class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
             $instance->title = $title;
         }
         $instance->__typename = 'ParagraphGoMaterialSliderAutomatic';
+        if ($cqlSearch !== self::UNDEFINED) {
+            $instance->cqlSearch = $cqlSearch;
+        }
 
         return $instance;
     }
@@ -45,10 +49,10 @@ class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
-            'cqlSearch' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch),
             'sliderAmountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
             'title' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'cqlSearch' => new \Spawnia\Sailor\Convert\NullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch),
         ];
     }
 

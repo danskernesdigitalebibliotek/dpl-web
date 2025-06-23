@@ -20,7 +20,8 @@ content:
     type: cql_search_widget
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      advanced: 0
     third_party_settings: {  }
   field_embed_video:
     type: media_library_widget

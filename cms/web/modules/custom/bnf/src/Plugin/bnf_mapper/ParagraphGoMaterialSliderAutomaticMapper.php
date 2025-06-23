@@ -30,7 +30,7 @@ class ParagraphGoMaterialSliderAutomaticMapper extends BnfMapperParagraphPluginB
       'field_title' => $object->title,
       'field_slider_amount_of_materials' => $object->sliderAmountOfMaterials ?? 8,
       'field_cql_search' => [
-        'value' => $object->cqlSearch->value,
+        'value' => $object->cqlSearch?->value,
       ],
     ]);
 
