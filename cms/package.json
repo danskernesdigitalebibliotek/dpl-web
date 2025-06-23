@@ -7,7 +7,7 @@
     "@hammzj/cypress-page-object": "^2.3.0",
     "@lhci/cli": "^0.8",
     "@testing-library/cypress": "^10.0.3",
-    "@types/node": "^20",
+    "@types/node": "^22",
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
     "chrome-launcher": "1.2.0",
