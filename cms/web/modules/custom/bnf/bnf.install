@@ -1,6 +1,8 @@
 <?php
 
+use Drupal\bnf\BnfStateEnum;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\node\Entity\Node;
 
 /**
  * Install bnf_source_changed field on nodes.
@@ -19,4 +21,45 @@ function bnf_update_10101(): string {
   $definition_manager->installFieldStorageDefinition('bnf_source_changed', 'node', 'node', $field);
 
   return 'node.bnf_source_changed installed.';
+}
+
+/**
+ * Find all BNF-imported nodes, and make sure they are not entity templates.
+ *
+ * Nodes imported from Delingstjenesten have mistakenly been automatically
+ * created as entity_clone_templates. That means they've been spamming the
+ * /node/add page.
+ *
+ * We've fixed the code so this doesn't happen for future imports, but this
+ * action also finds all existing, imported nodes, and sets template to FALSE.
+ */
+function bnf_update_10102(): string {
+  $target_states = [
+    BnfStateEnum::Imported->value,
+    BnfStateEnum::LocallyClaimed->value,
+  ];
+
+  $ids =
+    \Drupal::entityQuery('node')
+      ->condition(BnfStateEnum::FIELD_NAME, $target_states, 'IN')
+      ->condition('entity_clone_template_active', TRUE)
+      // As it is a migration action, we do not want any access checks.
+      ->accessCheck(FALSE)
+      ->execute();
+
+  $nodes = Node::loadMultiple($ids);
+  $updated_count = 0;
+
+  foreach ($nodes as $node) {
+    try {
+      $node->set('entity_clone_template_active', FALSE);
+      $node->save();
+      $updated_count++;
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('bnf')->error('Unable to disable entity_clone_template as part of bnf_update_10102: @error', ['@error' => $e->getMessage()]);
+    }
+  }
+
+  return "$updated_count imported BNF nodes updated.";
 }
