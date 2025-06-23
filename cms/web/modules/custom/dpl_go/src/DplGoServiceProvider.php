@@ -12,8 +12,8 @@ use Drupal\Core\DependencyInjection\ServiceProviderBase;
  *
  * On sites whose primary domain starts with `www`, Drupal sets the cookie
  * domain to `.www.<site>` per default. This means that the cookie isn't shared
- * with `www.go.<site>` and the login doesn't work. So we set it explicitly
- * without the `.www` prefix.
+ * with `www.go.<site>` and the login doesn't work. In these cases we set it
+ * explicitly without the `.www` prefix.
  */
 class DplGoServiceProvider extends ServiceProviderBase {
 
@@ -49,9 +49,12 @@ class DplGoServiceProvider extends ServiceProviderBase {
       $cookieDomain = '.' . $domain;
     }
 
-    if (str_starts_with($cookieDomain, '.www.')) {
-      $cookieDomain = substr($cookieDomain, 4);
+    // If there's no www prefix, we don't need to do anything.
+    if (!str_starts_with($cookieDomain, '.www.')) {
+      return;
     }
+
+    $cookieDomain = substr($cookieDomain, 4);
 
     $cookieSettings['cookie_domain'] = $cookieDomain;
 
