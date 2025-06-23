@@ -1,5 +1,7 @@
 "use client"
 
+import { useWindowSize } from "@uidotdev/usehooks"
+import { motion } from "framer-motion"
 import { KeenSliderOptions, useKeenSlider } from "keen-slider/react"
 import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -41,11 +43,14 @@ export type TNodeGoCategory = {
 } & NodeGoCategory
 
 function CategorySlider() {
-  const [sliderRef] = useKeenSlider(sliderOptions, [WheelControls])
+  const [sliderRef, categorySlider] = useKeenSlider(sliderOptions, [WheelControls])
+  const size = useWindowSize()
   const [categories, setCategories] = useState<TNodeGoCategory[] | false>(false)
   const pathname = usePathname()
 
   useEffect(() => {
+    categorySlider.current?.update()
+
     if (categories) {
       return
     }
@@ -54,28 +59,40 @@ function CategorySlider() {
       const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
       setCategories(categories || [])
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories])
 
-  if (!categories) {
-    return null
-  }
+  // If window size changes, update the slider
+  useEffect(() => {
+    categorySlider.current?.update()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size.width])
 
   return (
     <div
-      ref={sliderRef}
-      className={cn(
-        "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
-        categories ? "m-0 opacity-100" : "opacity-0"
-      )}>
-      {categories &&
-        categories.map((category, index) => (
-          <CategorySlide
-            isSelected={pathname === category.path}
-            key={index}
-            category={category}
-            index={index}
-          />
-        ))}
+      // This div is used to set the height of the slider based on the viewport width and the number of slides + padding
+      // The height needs to is calculated because the categories are loaded dynamically
+      className="h-[calc(100vw/3.5+18px)]
+        lg:h-[min(calc((100vw-var(--grid-edge)*2)/6.5+54px),calc(((1600px-var(--grid-edge)*2)/6.5)+54px))]">
+      {categories && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          ref={sliderRef}
+          className={cn(
+            "keen-slider relative z-10 w-full !overflow-visible opacity-0 transition-opacity duration-300"
+          )}>
+          {categories.map((category, index) => (
+            <CategorySlide
+              isSelected={pathname === category.path}
+              key={index}
+              category={category}
+              index={index}
+            />
+          ))}
+        </motion.div>
+      )}
     </div>
   )
 }
