@@ -37,8 +37,16 @@ class DplGoServiceProvider extends ServiceProviderBase {
     }
     else {
       // We can't use the service from `dpl_lagoon` for this, as obviously we
-      // can't use the container. Add the dot to mimic how Drupal generates it.
-      $cookieDomain = '.' . getenv('LAGOON_DOMAIN');
+      // can't use the container.
+      $domain = getenv('LAGOON_DOMAIN');
+
+      if (!$domain) {
+        // Without a domain, we can't do much.
+        return;
+      }
+
+      // Add the dot to mimic how Drupal generates it.
+      $cookieDomain = '.' . $domain;
     }
 
     if (str_starts_with($cookieDomain, '.www.')) {
