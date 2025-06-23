@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-06-23 14:02+0200\n"
-"PO-Revision-Date: 2025-06-23 14:02+0200\n"
+"POT-Creation-Date: 2025-06-23 14:35+0200\n"
+"PO-Revision-Date: 2025-06-23 14:35+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1806,6 +1806,11 @@ msgstr "Noget der ligner"
 msgctxt "Something similar"
 msgid "Other materials"
 msgstr "Andre materialer"
+
+msgid ""
+"Paragraph migration of @old_type to @new_type completed. @count / @total "
+"migrated."
+msgstr ""
 
 msgctxt "Material Grid"
 msgid "Show all"
@@ -4208,6 +4213,22 @@ msgstr ""
 msgid "CQL search string"
 msgstr "CQL Søgestreng"
 
+msgctxt "dpl_fbi"
+msgid "Location"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Sub-location"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "On-shelf"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Sorting"
+msgstr ""
+
 msgid "Text value"
 msgstr "Tekstværdi"
 
@@ -4332,18 +4353,83 @@ msgstr ""
 "data. Prøv venligst igen. Hvis problemet opstår igen, kunne det skyldes "
 "problemer med appen."
 
-msgid "CQL Search String"
-msgstr "CQL søgestreng"
-
-msgid "Enter CQL search string"
-msgstr "Indtast CQL søgestreng"
-
-msgid ""
-"CQL search string field. Perform an advanced search and copy/paste the "
-"string to this field."
+msgctxt "dpl_fbi"
+msgid "Enabled advanced fields"
 msgstr ""
-"CQL søgestrengsfelt. Udfør en avanceret søgning og kopier/indsæt strengen "
-"til dette felt."
+
+msgctxt "dpl_fbi"
+msgid "Allow editor to fill data into advanced fields (@fields)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Advanced fields enabled"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Advanced fields NOT enabled"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Fill out fields using link (optional)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Link to search"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid ""
+"E.g. https://mitbibliotek.dk/advanced-search?"
+"advancedSearchCql=%27Harry+Potter%27"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Load filters from URL"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Search filters"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By publication date (descending)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By publication date (ascending)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By title (descending)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By title (ascending)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By creator (descending)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By creator (ascending)"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "By relevance"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid ""
+"The link you pasted is not valid.<br> See the guide, for how to find a "
+"correct link."
+msgstr ""
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nej"
 
 msgid "Get tickets"
 msgstr "Hent billetter"
@@ -8719,12 +8805,6 @@ msgstr "F.eks. div, sektion, side osv."
 
 msgid "Show label"
 msgstr "Vis etiket"
-
-msgid "No"
-msgstr "Nej"
-
-msgid "Yes"
-msgstr "Ja"
 
 msgid "Label element"
 msgstr "Label-element"
@@ -22861,19 +22941,17 @@ msgid "This paragraph will show a list of events that are manually selected."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:label"
-msgid "Material grid automatic (deprecated)"
+msgid "Material grid automatic"
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:description"
 msgid ""
-"Please use the \"Material grid link automatically\" instead! This paragraph "
-"will be deprecated in the future.\r\n"
-"A grid representation of recommended materials, based on a CQL search "
-"string. "
+"A grid representation of recommended materials, based on a CQL string and "
+"filters."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.material_grid_link_automatic:label"
-msgid "Material grid link automatic"
+msgid "Material grid link automatic (DEPRECATED - WILL BE DELETED)"
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.material_grid_link_automatic:description"
