@@ -4,9 +4,9 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
  * @property string $id
- * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch $cqlSearch
  * @property int $amountOfMaterials
  * @property string $__typename
+ * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch|null $cqlSearch
  * @property string|null $materialGridDescription
  * @property string|null $materialGridTitle
  */
@@ -14,15 +14,15 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch $cqlSearch
      * @param int $amountOfMaterials
+     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch|null $cqlSearch
      * @param string|null $materialGridDescription
      * @param string|null $materialGridTitle
      */
     public static function make(
         $id,
-        $cqlSearch,
         $amountOfMaterials,
+        $cqlSearch = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridDescription = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
@@ -31,13 +31,13 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
         if ($id !== self::UNDEFINED) {
             $instance->id = $id;
         }
-        if ($cqlSearch !== self::UNDEFINED) {
-            $instance->cqlSearch = $cqlSearch;
-        }
         if ($amountOfMaterials !== self::UNDEFINED) {
             $instance->amountOfMaterials = $amountOfMaterials;
         }
         $instance->__typename = 'ParagraphMaterialGridAutomatic';
+        if ($cqlSearch !== self::UNDEFINED) {
+            $instance->cqlSearch = $cqlSearch;
+        }
         if ($materialGridDescription !== self::UNDEFINED) {
             $instance->materialGridDescription = $materialGridDescription;
         }
@@ -55,9 +55,9 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
-            'cqlSearch' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch),
             'amountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'cqlSearch' => new \Spawnia\Sailor\Convert\NullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch),
             'materialGridDescription' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'materialGridTitle' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];

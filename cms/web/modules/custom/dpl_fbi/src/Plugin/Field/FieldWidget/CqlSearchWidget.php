@@ -9,7 +9,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -42,29 +41,13 @@ class CqlSearchWidget extends WidgetBase {
   /**
    * {@inheritDoc}
    */
-  public function __construct(
-    string $plugin_id,
-    $plugin_definition,
-    FieldDefinitionInterface $field_definition,
-    array $settings,
-    array $third_party_settings,
-    ModuleHandlerInterface $module_handler,
-  ) {
-    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
-    $this->moduleHandler = $module_handler;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new static(
       $plugin_id,
       $plugin_definition,
       $configuration['field_definition'],
       $configuration['settings'],
-      $configuration['third_party_settings'],
-      $container->get('module_handler')
+      $configuration['third_party_settings']
     );
   }
 
@@ -177,23 +160,6 @@ class CqlSearchWidget extends WidgetBase {
       '#attributes' => [
         'class' => ['button--primary'],
         'style' => 'position: absolute; margin-top: -80px; right: 40px;',
-      ],
-    ];
-
-    // Loading the help video, that is part of dpl_admin's assets.
-    // We could have put this video in the dpl_paragraphs module, but I think
-    // in the future we will do this more, and it would be nice to have all the
-    // help-assets in one central place.
-    $dplAdminPath = $this->moduleHandler->getModule('dpl_admin')->getPath();
-    $videoPath = "$dplAdminPath/assets/material_search.webm";
-
-    $element['link']['guide'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Video-guide on how to find link', [], ['context' => 'dpl_fbi']),
-      '#open' => FALSE,
-      'video' => [
-        '#type' => 'markup',
-        '#markup' => Markup::create("<video controls width=\"100%\" ><source src=\"/$videoPath\" type=\"video/webm\" /></video>"),
       ],
     ];
 
@@ -318,11 +284,15 @@ class CqlSearchWidget extends WidgetBase {
 
     $warningClass = 'dpl-material-search-warning';
 
+    // Remove warning that may have been set previously, due to invalid URL.
+    $response->addCommand(new InvokeCommand($linkSelector, 'removeClass', ['error']));
+    $response->addCommand(new RemoveCommand("$parentSelector .$warningClass"));
+
     // If the user inputted a link that we could not find any CQL data from,
     // we'll display a warning.
     if (!$cqlValue) {
       $warningMessage = $this->t(
-        'The link you pasted is not valid. See video below, for how to find a correct link.',
+        'The link you pasted is not valid.<br> See the guide, for how to find a correct link.',
         [], ['context' => 'dpl_fbi']
       );
       $warningMarkup = Markup::create(
@@ -333,10 +303,6 @@ class CqlSearchWidget extends WidgetBase {
 
       return $response;
     }
-
-    // Remove warning that may have been set previously, due to invalid URL.
-    $response->addCommand(new InvokeCommand($linkSelector, 'removeClass', ['error']));
-    $response->addCommand(new RemoveCommand("$parentSelector .$warningClass"));
 
     // Empty out the link field, and hide it by closing the details.
     $response->addCommand(new InvokeCommand("$parentSelector [name=\"$linkName\"]", 'val', ['']));

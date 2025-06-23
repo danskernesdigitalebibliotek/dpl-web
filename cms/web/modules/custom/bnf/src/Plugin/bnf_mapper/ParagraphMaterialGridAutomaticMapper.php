@@ -29,7 +29,7 @@ class ParagraphMaterialGridAutomaticMapper extends BnfMapperParagraphPluginBase 
       'type' => 'material_grid_automatic',
       'field_material_grid_title' => $object->materialGridTitle,
       'field_material_grid_description' => $object->materialGridDescription,
-      'field_cql_search' => ['value' => $object->cqlSearch->value],
+      'field_cql_search' => ['value' => $object->cqlSearch?->value],
       'field_amount_of_materials' => $object->amountOfMaterials,
     ]);
 
