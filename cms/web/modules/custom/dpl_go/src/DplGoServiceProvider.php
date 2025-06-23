@@ -37,16 +37,23 @@ class DplGoServiceProvider extends ServiceProviderBase {
     }
     else {
       // We can't use the service from `dpl_lagoon` for this, as obviously we
-      // can't use the container.
-      $domain = getenv('LAGOON_DOMAIN');
+      // can't use the container while building it.
+      $route = getenv('LAGOON_ROUTE');
 
-      if (!$domain) {
-        // Without a domain, we can't do much.
+      if (!$route) {
+        // Without a route, we can't do much.
+        return;
+      }
+
+      // Split off the scheme.
+      $parts = explode('//', $route, 2);
+
+      if (!isset($parts[1]) || !$parts[1]) {
         return;
       }
 
       // Add the dot to mimic how Drupal generates it.
-      $cookieDomain = '.' . $domain;
+      $cookieDomain = '.' . $parts[1];
     }
 
     // If there's no www prefix, we don't need to do anything.
