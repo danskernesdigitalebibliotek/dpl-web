@@ -138,11 +138,6 @@ tasks:
           drush en -y dpl_example_content
         service: cli
     - run:
-        name: Print out Lagoon env vars for debugging
-        command: |
-          printenv | grep LAGOON
-        service: cli
-    - run:
         name: Setting Deployment status success
         command: |
           DRUPAL_URL=$(drush browse)
