@@ -138,9 +138,9 @@ tasks:
           drush en -y dpl_example_content
         service: cli
     - run:
-        name: Run drush cache rebuild again
+        name: Print out Lagoon env vars for debugging
         command: |
-          drush cache:rebuild || true
+          printenv | grep LAGOON
         service: cli
     - run:
         name: Setting Deployment status success
