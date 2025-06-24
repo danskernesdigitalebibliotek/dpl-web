@@ -52,7 +52,7 @@ export const fetcher = async <ResponseType>({
     }
 
     const message = error instanceof Error ? error.message : "Unknown error"
-    console.error(message, serviceUrl)
+    console.error("publizon fetcher error", message, serviceUrl)
   }
 
   // Do nothing. Some of our responses are intentionally empty and thus
