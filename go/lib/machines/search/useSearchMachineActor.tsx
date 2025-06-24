@@ -98,6 +98,8 @@ const useSearchMachineActor = () => {
     // We are only interested in rebooting the search machine
     // if we are on the search page.
     if (!isSearchPage(pathname)) {
+      // Clear the search input for other pages.
+      actor.send({ type: "RESET_CURRENT_QUERY" })
       return
     }
 
