@@ -1,5 +1,7 @@
 "use client"
 
+import { useWindowSize } from "@uidotdev/usehooks"
+import { motion } from "framer-motion"
 import { KeenSliderOptions, useKeenSlider } from "keen-slider/react"
 import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -10,6 +12,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 import ImageBase from "../image/ImageBase"
 import SmartLink from "../smartLink/SmartLink"
+import loadCategories from "./loadCategories"
 
 export const sliderOptions: KeenSliderOptions = {
   initial: 0,
@@ -39,48 +42,57 @@ export type TNodeGoCategory = {
   }
 } & NodeGoCategory
 
-function CategorySlider({ categories }: { categories?: TNodeGoCategory[] }) {
-  const [sliderRef] = useKeenSlider(sliderOptions, [WheelControls])
-  const [loaded, setLoaded] = useState(false)
+function CategorySlider() {
+  const [sliderRef, categorySlider] = useKeenSlider(sliderOptions, [WheelControls])
+  const size = useWindowSize()
+  const [categories, setCategories] = useState<TNodeGoCategory[] | false>(false)
   const pathname = usePathname()
 
   useEffect(() => {
-    setLoaded(true)
-  }, [])
+    categorySlider.current?.update()
 
-  if (!categories) {
-    return null
-  }
+    if (categories) {
+      return
+    }
+
+    loadCategories().then(data => {
+      const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
+      setCategories(categories || [])
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories])
+
+  // If window size changes, update the slider
+  useEffect(() => {
+    categorySlider.current?.update()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size.width])
 
   return (
-    <div className="-my-[12px] overflow-hidden lg:-my-[20px]">
-      <div className="content-container w-full">
-        <div
+    <div
+      // This div is used to set the height of the slider based on the viewport width and the number of slides + padding
+      // The height needs to is calculated because the categories are loaded dynamically
+      className="h-[calc((100vw-var(--grid-edge)*2)/3.5+36px)]
+        lg:h-[min(calc((100vw-var(--grid-edge)*2)/6.5+54px),calc(((1600px-var(--grid-edge)*2)/6.5)+54px))]">
+      {categories && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          ref={sliderRef}
           className={cn(
-            `lg:w-[calc(100%+48px) w-[calc(100%+24px) relative -mx-[24px] !overflow-visible px-[12px]
-            lg:-mx-[48px] lg:px-[24px]`
+            "keen-slider relative z-10 w-full !overflow-visible opacity-0 transition-opacity duration-300"
           )}>
-          <div
-            ref={sliderRef}
-            className={cn(
-              "keen-slider relative z-10 w-full !overflow-visible transition-opacity duration-300",
-              loaded ? "m-0 opacity-100" : "opacity-0"
-            )}>
-            {categories.map((category, index) => {
-              const isSelected = pathname === category.path
-
-              return (
-                <CategorySlide
-                  isSelected={isSelected}
-                  key={index}
-                  category={category}
-                  index={index}
-                />
-              )
-            })}
-          </div>
-        </div>
-      </div>
+          {categories.map((category, index) => (
+            <CategorySlide
+              isSelected={pathname === category.path}
+              key={index}
+              category={category}
+              index={index}
+            />
+          ))}
+        </motion.div>
+      )}
     </div>
   )
 }

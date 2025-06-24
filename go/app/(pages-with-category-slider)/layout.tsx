@@ -1,15 +1,5 @@
-import { Suspense } from "react"
-
-import CategorySlider, { TNodeGoCategory } from "@/components/shared/categorySlider/CategorySlider"
-import loadCategories from "@/components/shared/categorySlider/loadCategories"
+import CategorySlider from "@/components/shared/categorySlider/CategorySlider"
 import "@/styles/globals.css"
-
-async function CategorySliderLayout() {
-  const data = await loadCategories()
-  const categories = data?.goCategories?.results as TNodeGoCategory[] | undefined
-
-  return <CategorySlider categories={categories} />
-}
 
 export default function Layout({
   children,
@@ -18,9 +8,15 @@ export default function Layout({
 }>) {
   return (
     <div className="min-h-screen-minus-navigation-height flex flex-col">
-      <Suspense>
-        <CategorySliderLayout />
-      </Suspense>
+      <div className="-my-[12px] overflow-hidden lg:-my-[20px]">
+        <div className="content-container w-full">
+          <div
+            className="lg:w-[calc(100%+48px) w-[calc(100%+24px) relative -mx-[24px] !overflow-visible px-[12px]
+              lg:-mx-[48px] lg:px-[24px]">
+            <CategorySlider />
+          </div>
+        </div>
+      </div>
       <div className="py-space-y">{children}</div>
     </div>
   )

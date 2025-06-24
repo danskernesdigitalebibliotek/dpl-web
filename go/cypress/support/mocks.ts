@@ -30,7 +30,7 @@ export const mockFrontpage = () => {
     data: GoFrontpage.build(),
   })
 
-  cy.mockServerGraphQLQuery({
+  cy.interceptGraphql({
     operationName: "getCategories",
     data: GetCategories.build(),
   })
