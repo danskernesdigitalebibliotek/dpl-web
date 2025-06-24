@@ -1,7 +1,7 @@
 import { add, isPast, sub } from "date-fns"
 import { IronSession, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
-import { NextRequest, NextResponse, connection } from "next/server"
+import { NextResponse, connection } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
@@ -62,10 +62,7 @@ export const defaultSession: TSessionData = {
   type: "anonymous",
 }
 
-export async function getSession(
-  request?: Request | NextRequest,
-  response?: NextResponse
-): Promise<IronSession<TSessionData>> {
+export async function getSession(): Promise<IronSession<TSessionData>> {
   // If we are buikding the go app, we will use the default session to simulate an anonymous user.
   if (isBuildingGoApp()) {
     return defaultSession as IronSession<TSessionData>
@@ -80,10 +77,7 @@ export async function getSession(
     const { cookies } = await import("next/headers")
     const cookieStore = await cookies()
     const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
-    const session =
-      request && response
-        ? await getIronSession<TSessionData>(request, response, sessionOptions)
-        : await getIronSession<TSessionData>(cookieStore, sessionOptions)
+    const session = await getIronSession<TSessionData>(cookieStore, sessionOptions)
 
     if (!session?.isLoggedIn) {
       // Return the default session if the session is not logged in.
