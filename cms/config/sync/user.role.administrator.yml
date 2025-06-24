@@ -136,6 +136,7 @@ permissions:
   - 'administer webform submission'
   - 'bnf export nodes'
   - 'bnf import nodes'
+  - 'bnf manage subscriptions'
   - 'break content lock'
   - 'cancel users by role'
   - 'change own username'

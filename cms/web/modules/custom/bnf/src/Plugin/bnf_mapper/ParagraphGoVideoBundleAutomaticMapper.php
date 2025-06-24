@@ -33,7 +33,7 @@ class ParagraphGoVideoBundleAutomaticMapper extends BnfMapperParagraphPluginBase
       'field_go_video_title' => $object->goVideoTitle,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
       'field_video_amount_of_materials' => $object->videoAmountOfMaterials,
-      'field_cql_search' => ['value' => $object->cqlSearch->value],
+      'field_cql_search' => ['value' => $object->cqlSearch?->value],
     ]);
 
   }

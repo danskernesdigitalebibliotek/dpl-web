@@ -208,175 +208,158 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
 }
 
 /**
- * Prepares the React app data for the Material Grid (Automatic)  paragraph.
+ * Prepares the common React app data for the Material Grid paragraphs.
  *
- * Data from the paragraph fields used to configure the Material Grid,
- * includes the grid's title, a CQL search string for material filtering,
- * and how many materials should be displayed.
+ * @see dpl_paragraphs_preprocess_paragraph__material_grid_automatic()
+ * @see dpl_paragraphs_preprocess_paragraph__material_grid_link_automatic()
+ * @see dpl_paragraphs_preprocess_paragraph__material_grid_manual()
+ * @see \Drupal\paragraphs\Entity\Paragraph
+ * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ *
+ * @return array<mixed>
+ *   A render array that can be expanded.
+ */
+function _dpl_paragraphs_prepare_material_grid_render_array(ParagraphInterface $paragraph): array {
+  $title = NULL;
+  $description = NULL;
+  $display_amount = 8;
+
+  if ($paragraph->hasField('field_material_grid_title')) {
+    $title = $paragraph->get('field_material_grid_title')->getString();
+  }
+
+  if ($paragraph->hasField('field_material_grid_description')) {
+    $description = $paragraph->get('field_material_grid_description')->getString();
+  }
+
+  if ($paragraph->hasField('field_amount_of_materials')) {
+    $display_amount = (int) $paragraph->get('field_amount_of_materials')->getString();
+  }
+
+  // Build configurations for blacklisted search branches and all branches.
+  $branch_settings = \Drupal::service('dpl_library_agency.branch_settings');
+  $branch_repository = \Drupal::service('dpl_library_agency.branch.repository');
+  $blacklisted_search_branches_config = DplReactAppsController::buildBranchesListProp($branch_settings->getExcludedSearchBranches());
+  $branches_config = DplReactAppsController::buildBranchesJsonProp($branch_repository->getBranches());
+
+  return [
+    '#theme' => 'dpl_react_app',
+    '#data' => [
+      'title' => $title,
+      'description' => $description,
+      'selected-amount-of-materials-for-display' => $display_amount,
+      'button-text' => t('Show all', [], ['context' => 'Material Grid']),
+      'blacklisted-search-branches-config' => $blacklisted_search_branches_config,
+      'branches-config' => $branches_config,
+    ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}
+
+/**
+ * Prepares the React app data for the Material Grid (Automatic) paragraph.
  *
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  *
- * @see \Drupal\paragraphs\Entity\Paragraph
- * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ * @see _dpl_paragraphs_prepare_material_grid_render_array()
  */
 function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$variables): void {
-
+  $view_mode = $variables['view_mode'] ?? 'default';
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)) {
+  if ($view_mode === 'preview' || !($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_cql_search')) {
     return;
   }
 
-  if (!$paragraph->hasField('field_amount_of_materials') ||
-    !$paragraph->hasField('field_material_grid_title') ||
-    !$paragraph->hasField('field_material_grid_description') ||
-    !$paragraph->hasField('field_cql_search')) {
-    return;
+  // Get the common render array, used by all material grid paragraphs.
+  $render = _dpl_paragraphs_prepare_material_grid_render_array($paragraph);
+  $render['#name'] = 'material-grid-automatic';
+
+  $cql_search = $paragraph->get('field_cql_search')->getValue();
+
+  $onshelf = !empty($cql_search[0]['onshelf']);
+  $render['#data']['cql'] = $cql_search[0]['value'];
+  $render['#data']['onshelf'] = $onshelf ? 'true' : 'false';
+
+  $filters = ['location', 'sublocation', 'sort'];
+
+  foreach ($filters as $filter) {
+    // Only set the data filters if they actually exist.
+    if (empty($cql_search[0][$filter])) {
+      continue;
+    }
+
+    $render['#data'][$filter] = $cql_search[0][$filter];
   }
 
-  // Extract field values.
-  $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
-  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
-  $cql = $paragraph->get('field_cql_search')->getString();
-  $selected_amount_of_materials_for_display = (int) $paragraph->get('field_amount_of_materials')->getString();
-
-  // Build configurations for blacklisted search branches and all branches.
-  $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
-  $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
-  $blacklistedSearchBranchesConfig = DplReactAppsController::buildBranchesListProp($branchSettings->getExcludedSearchBranches());
-  $branchesConfig = DplReactAppsController::buildBranchesJsonProp($branchRepository->getBranches());
-
-  // Prepare the React app variables.
-  $variables['react_app_material_grid_automatic'] = [
-    '#theme' => 'dpl_react_app',
-    '#name' => 'material-grid-automatic',
-    '#data' => [
-      'title' => $material_grid_title,
-      'description' => $material_grid_description,
-      'cql' => $cql,
-      'selected-amount-of-materials-for-display' => $selected_amount_of_materials_for_display,
-      'button-text' => t('Show all', [], ['context' => 'Material Grid']),
-      'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
-      'branches-config' => $branchesConfig,
-    ] + DplReactAppsController::externalApiBaseUrls(),
+  $variables['content'] = [
+    'material_grid' => $render,
   ];
 }
 
 /**
  * Prepares the React app data for the Material Grid Link (Automatic) paragraph.
  *
- * Data from the paragraph fields used to configure the Material Grid,
- * includes the grid's title, a link search string for material filtering,
- * and how many materials should be displayed.
- *
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  *
- * @see \Drupal\paragraphs\Entity\Paragraph
- * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ * @see _dpl_paragraphs_prepare_material_grid_render_array()
  */
 function dpl_paragraphs_preprocess_paragraph__material_grid_link_automatic(array &$variables): void {
-
+  $view_mode = $variables['view_mode'] ?? 'default';
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)) {
+  if ($view_mode === 'preview' || !($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_material_grid_link')) {
     return;
   }
 
-  if (!$paragraph->hasField('field_amount_of_materials') ||
-    !$paragraph->hasField('field_material_grid_title') ||
-    !$paragraph->hasField('field_material_grid_description') ||
-    !$paragraph->hasField('field_material_grid_link')) {
-    return;
-  }
+  // Get the common render array, used by all material grid paragraphs.
+  $render = _dpl_paragraphs_prepare_material_grid_render_array($paragraph);
+  $render['#name'] = 'material-grid-link-automatic';
+  $render['#data']['link'] = $paragraph->get('field_material_grid_link')->getString();
 
-  // Extract field values.
-  $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
-  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
-  $link = $paragraph->get('field_material_grid_link')->getString();
-  $selected_amount_of_materials_for_display = (int) $paragraph->get('field_amount_of_materials')->getString();
-
-  // Build configurations for blacklisted search branches and all branches.
-  $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
-  $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
-  $blacklistedSearchBranchesConfig = DplReactAppsController::buildBranchesListProp($branchSettings->getExcludedSearchBranches());
-  $branchesConfig = DplReactAppsController::buildBranchesJsonProp($branchRepository->getBranches());
-
-  // Prepare the React app variables.
-  $variables['react_app_material_grid_link_automatic'] = [
-    '#theme' => 'dpl_react_app',
-    '#name' => 'material-grid-link-automatic',
-    '#data' => [
-      'title' => $material_grid_title,
-      'description' => $material_grid_description,
-      'link' => $link,
-      'selected-amount-of-materials-for-display' => $selected_amount_of_materials_for_display,
-      'button-text' => t('Show all', [], ['context' => 'Material Grid']),
-      'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
-      'branches-config' => $branchesConfig,
-    ] + DplReactAppsController::externalApiBaseUrls(),
+  $variables['content'] = [
+    'material_grid' => $render,
   ];
 }
 
 /**
  * Prepares the React app data for the Material Grid (Manual) paragraph.
  *
- * Data from the paragraph fields used to configure the Material Grid,
- * includes the grid's title, and an array of materialId's (work-ids).
- *
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  *
- * @see \Drupal\paragraphs\Entity\Paragraph
- * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ * @see _dpl_paragraphs_prepare_material_grid_render_array()
  */
 function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$variables): void {
-
+  $view_mode = $variables['view_mode'] ?? 'default';
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)  ||
-    !$paragraph->hasField('field_material_grid_title') ||
-    !$paragraph->hasField('field_material_grid_description') ||
-    !$paragraph->hasField('field_material_grid_work_ids')) {
+  if ($view_mode === 'preview' || !($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_material_grid_work_ids')) {
     return;
   }
 
-  // Extract field values.
-  $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
-  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
+  // Get the common render array, used by all material grid paragraphs.
+  $render = _dpl_paragraphs_prepare_material_grid_render_array($paragraph);
+
   $materials = [];
+  $work_ids = (array) $paragraph->get('field_material_grid_work_ids')->getValue();
 
-  if (!$paragraph->get('field_material_grid_work_ids')->isEmpty()) {
-    foreach ($paragraph->get('field_material_grid_work_ids')->getValue() as $item) {
+  foreach ($work_ids as $work_id) {
+    $wid = $work_id['value'];
+    $material_type = $work_id['material_type'];
 
-      $wid = $item['value'];
-      $materialType = $item['material_type'];
-
-      $materials[] = [
-        'wid' => $wid,
-        'materialType' => $materialType,
-      ];
-    }
+    $materials[] = [
+      'wid' => $wid,
+      'materialType' => $material_type,
+    ];
   }
-  // Build configurations for blacklisted search branches and all branches.
-  $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
-  $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
-  $blacklistedSearchBranchesConfig = DplReactAppsController::buildBranchesListProp($branchSettings->getExcludedSearchBranches());
-  $branchesConfig = DplReactAppsController::buildBranchesJsonProp($branchRepository->getBranches());
 
-  // Prepare the React app variables.
-  $variables['react_app_material_grid_manual'] = [
-    '#theme' => 'dpl_react_app',
-    '#name' => 'material-grid-manual',
-    '#data' => [
-      'materials' => $materials,
-      'title' => $material_grid_title,
-      'description' => $material_grid_description,
-      'button-text' => t('Show all', [], ['context' => 'Material Grid']),
-      'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
-      'branches-config' => $branchesConfig,
-    ] + DplReactAppsController::externalApiBaseUrls(),
+  $render['#name'] = 'material-grid-manual';
+  $render['#data']['materials'] = $materials;
+
+  $variables['content'] = [
+    'material_grid' => $render,
   ];
 }
 
