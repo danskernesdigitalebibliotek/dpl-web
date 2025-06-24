@@ -48,7 +48,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
   return (
     <div className="bg-background-overlay" data-cy={cyKeys["video-bundle"]}>
       <div className="content-container">
-        <div className="my-paragraph-spacing w-full text-center">
+        <div className="py-paragraph-spacing w-full text-center">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
           <div className="grid-go items-start">
             <div className="rounded-base relative col-span-full aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">

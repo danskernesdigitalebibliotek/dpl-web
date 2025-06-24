@@ -72,7 +72,7 @@ function CategorySlider() {
     <div
       // This div is used to set the height of the slider based on the viewport width and the number of slides + padding
       // The height needs to is calculated because the categories are loaded dynamically
-      className="h-[calc(100vw/3.5+18px)]
+      className="h-[calc((100vw-var(--grid-edge)*2)/3.5+36px)]
         lg:h-[min(calc((100vw-var(--grid-edge)*2)/6.5+54px),calc(((1600px-var(--grid-edge)*2)/6.5)+54px))]">
       {categories && (
         <motion.div
