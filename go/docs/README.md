@@ -36,6 +36,7 @@
   - [Config handling](#config-handling)
   - [Storybook](#storybook)
   - [Cypress](#cypress)
+- [Test production database locally](#test-production-database-locally)
 - [Deployment](#deployment)
   - [git branches and pull requests](#git-branches-and-pull-requests)
   - [Create pull request](#create-pull-request)
@@ -256,6 +257,22 @@ To start Cypress, run the following commands:
 yarn dev # Start the development server
 yarn cypress:run # Run all Cypress tests
 ```
+
+## Test production database locally
+
+To test the production database locally, you need to download a copy of the production database to your local development environment. This allows you to debug issues and verify features using real data, while ensuring that your local changes do not affect the live environment.
+
+Follow these steps to test the production database locally:
+
+1. **Obtain a database dump and import it to local dpl-cms environment**:
+
+   Follow the guide in DPL-CMS:
+
+   <https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-CMS/local-development/?h=database#download-database-and-files-from-lagoon>
+
+2. **Update CMS variables**: In your local DPL-CMS, navigate to the "People" tab to view the list of users. Locate the user `go_graphql` and click the edit button. In the edit user form, update the password field with the value of `NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD` from your `.env.local` file in this project.
+
+3. **Start the application**: Launch your development server as usual. The application should now display data from the imported production database.
 
 ## Deployment
 
