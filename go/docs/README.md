@@ -274,6 +274,11 @@ Follow these steps to test the production database locally:
 
 3. **Start the application**: Launch your development server as usual. The application should now display data from the imported production database.
 
+### NOTES
+
+- Before testing, clear all cookies from your browser to avoid potential issues caused by existing cookies.
+- If you are testing login, ensure that the local domain is whitelisted for the relevant library in STIL.
+
 ## Deployment
 
 ### git branches and pull requests
