@@ -264,7 +264,7 @@ To test the production database locally, you need to download a copy of the prod
 
 Follow these steps to test the production database locally:
 
-1. **Obtain a database dump and import it to local dpl-cms environment**:
+1. **Obtain a database and if necessary a file dump and import it to local dpl-cms environment**:
 
    Follow the guide in DPL-CMS:
 
@@ -278,6 +278,7 @@ Follow these steps to test the production database locally:
 
 - Before testing, clear all cookies from your browser to avoid potential issues caused by existing cookies.
 - If you are testing login, ensure that the local domain is whitelisted for the relevant library in STIL.
+- As webmaster libraries can add their own modules, it can sometimes be necessary to download a copy of their file system as well as the database. The reason for this is, that a database import will not be successful if it can't find all modules.
 
 ## Deployment
 
