@@ -123,8 +123,7 @@ export async function GET(request: NextRequest) {
     session.uniLoginUserInfo = {
       sub: userinfo.sub,
       uniid: introspect.uniid,
-      // TODO: Rename this into institutionIds
-      institution_ids:
+      institutionIds:
         institutionId === "A04441" ? ["101047"] : getInstitutionIds(introspect.institution_ids),
     }
     session.user = {
