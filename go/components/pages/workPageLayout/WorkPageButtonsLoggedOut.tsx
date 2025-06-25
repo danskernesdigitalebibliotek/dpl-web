@@ -31,7 +31,7 @@ const WorkPageButtonsLoggedOut = ({
   const { openModal } = modalStore.trigger
 
   if (isManifestationBook(selectedManifestation))
-    return <WorkPageInfoBox text="Bogen kan lånes på dit bibliotek" />
+    return <WorkPageInfoBox text="Dette er en fysisk bog. Den kan lånes på dit lokale bibliotek" />
 
   if (isManifestationEbook(selectedManifestation)) {
     const previewUrl = resolveUrl({
