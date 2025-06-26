@@ -10,6 +10,53 @@ updates:
     directory: "/"
     # The maximum number of pull requests for version updates
     open-pull-requests-limit: 10
+    groups:
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      graphql:
+        patterns:
+          - "graphql"
+          - "@graphql-codegen/*"
+          - "@0no-co/graphqlsp"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "tsx"
+          - "@types/*"
+      prettier:
+        patterns:
+          - "prettier"
+          - "@prettier/*"
+      tailwindcss:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "prettier-plugin-tailwindcss"
+          - "tailwindcss-animate"
+          - "tailwind-merge"
+          - "class-variance-authority"
+          - "clsx"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+          - "@chromatic-com/storybook"
+      xstate:
+        patterns:
+          - "xstate"
+          - "@xstate/*"
+      vite:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "vitest"
+
     # Check the npm registry for updates every day (weekdays)
     schedule:
       interval: weekly
