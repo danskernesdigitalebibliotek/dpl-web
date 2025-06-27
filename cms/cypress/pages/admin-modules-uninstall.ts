@@ -7,7 +7,7 @@ export class AdminModulesUninstallPage extends PageObject {
     super({ path: '/admin/modules/uninstall' });
     this.addElements = {
       table: () => cy.get('table'),
-      submit: () => cy.get('[value="Uninstall"]'),
+      submit: () => cy.findByRole('button', { name: /Uninstall/i }),
     };
   }
 
@@ -20,7 +20,7 @@ export class AdminModulesUninstallPage extends PageObject {
 
     // Technically another page, but we'll handle it.
     cy.get('#system-modules-uninstall-confirm-form').then(() =>
-      cy.get('[value="Uninstall"]').click(),
+      cy.findByRole('button', { name: /Uninstall/i }).click(),
     );
   }
 

@@ -7,9 +7,12 @@ export class LoginPage extends PageObject {
     super({ path: '/user/login' });
     this.addElements = {
       form: () => cy.get('#user-login-form'),
-      nameField: () => this.elements.form().find('[name="name"]'),
-      passField: () => this.elements.form().find('[name="pass"]'),
-      loginButton: () => this.elements.form().find('[value="Log in"]'),
+      nameField: () =>
+        this.elements.form().findByRole('textbox', { name: /Username/i }),
+      // There's no password role, so we just get it by label.
+      passField: () => this.elements.form().findByLabelText('Password'),
+      loginButton: () =>
+        this.elements.form().findByRole('button', { name: /Log in/i }),
     };
   }
 
@@ -17,12 +20,18 @@ export class LoginPage extends PageObject {
     this.elements.nameField().type(user);
     this.elements.passField().type(pass);
     this.elements.loginButton().click();
+  }
 
-    // In general, page objects shouldn't make assertions like this,
-    // but we'll make an exception with login failure, to make it more
-    // explicit for the developer what went wrong.
-    cy.get('a[data-drupal-link-system-path="logout"]').should('exist');
+  static ensureLogin(user: string, pass: string) {
+    cy.session({ user, pass }, () => {
+      const loginPage = new LoginPage();
+      loginPage.visit([]);
+      loginPage.login(user, pass);
 
-    return this;
+      // In general, page objects shouldn't make assertions like this,
+      // but we'll make an exception with login failure, to make it more
+      // explicit for the developer what went wrong.
+      cy.get('a[data-drupal-link-system-path="logout"]').should('exist');
+    });
   }
 }

@@ -7,7 +7,6 @@ export class TestModulePage extends PageObject {
     super({ path: '/test-module' });
     this.addElements = {
       info: () => cy.get('#test-module-info'),
-      submit: () => cy.get('[value="Install"]'),
       version: () => this.elements.info().find('#version'),
       updb: () => this.elements.info().find('#updb'),
     };
