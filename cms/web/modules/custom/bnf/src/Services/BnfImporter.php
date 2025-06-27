@@ -54,7 +54,7 @@ class BnfImporter {
     $nodeData = $response->data?->node;
 
     if (!$nodeData) {
-      throw new \RuntimeException('Could not fetch content.');
+      throw new \RuntimeException("Could not fetch title for {$uuid}.");
     }
 
     return $nodeData->title;
@@ -78,7 +78,7 @@ class BnfImporter {
       $nodeData = $response->data?->node;
 
       if (!$nodeData) {
-        throw new \RuntimeException('Could not fetch content.');
+        throw new \RuntimeException("Could not fetch content for {$uuid}.");
       }
 
       $existingNodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $nodeData->id]);
@@ -87,7 +87,7 @@ class BnfImporter {
       // if it already exists. If not, we want to ignore it.
       if (!$nodeData->status) {
         if (empty($existingNodes)) {
-          $this->logger->info('Skipped BNF import of unpublished, unknown node.');
+          $this->logger->info("Skipped BNF import of unpublished, unknown node {$uuid}.");
           return NULL;
         }
       }
@@ -105,7 +105,7 @@ class BnfImporter {
         $sourceChanged = $existingNode->get('bnf_source_changed')->getString();
 
         if ($sourceChanged === $newSourceChanged) {
-          $this->logger->info('Skipping import of node, that has not changed.');
+          $this->logger->info("Skipping import of node, that has not changed {$uuid}.");
           return NULL;
         }
       }
@@ -138,11 +138,11 @@ class BnfImporter {
     }
     catch (\Throwable $e) {
       $this->logger->error(
-        'Failed to import content. @message',
+        "Failed to import content {$uuid}. @message",
         ['@message' => $e->getMessage() . ' ' . $e->getTraceAsString()]
       );
 
-      throw new \RuntimeException('Could not import content.');
+      throw new \RuntimeException("Could not import content {$uuid}.", 0, $e);
     }
     finally {
       $this->importContext->pop();
