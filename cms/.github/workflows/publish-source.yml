@@ -12,7 +12,7 @@ jobs:
       - name: Detect release tag
         id: detect_tag
         run: |
-          if [[ "${{ github.ref }}" =~ ^refs/tags/[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          if [[ "${{ github.ref }}" =~ ^/refs\/tags\/(\d+\.\d+\.\d+|[a-zA-Z]+-\d+\.\d+)/$ ]]
           then
             echo ::set-output name=IS_RELEASE_TAG::true
           else
