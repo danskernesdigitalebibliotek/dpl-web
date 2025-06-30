@@ -24,7 +24,7 @@ class MediaCleanup {
   /**
    * The revision notice that we can use later for look up.
    */
-  public string $cleanupNoticeText = 'Unpublished for duplicate cleanup (DPL Media Cleanup)';
+  const CLEANUP_NOTICE_TEXT = 'Unpublished for duplicate cleanup (DPL Media Cleanup)';
 
   /**
    * Find media IDs that previously were archived.
@@ -39,7 +39,7 @@ class MediaCleanup {
       // We are looking up unpublished nodes, so we want no access check.
       ->accessCheck(FALSE)
       ->condition('status', 0)
-      ->condition('revision_log_message', $this->cleanupNoticeText)
+      ->condition('revision_log_message', $this::CLEANUP_NOTICE_TEXT)
       ->execute();
   }
 
@@ -56,7 +56,7 @@ class MediaCleanup {
 
     // newRevision is necessary for us to be able to put a revision message.
     $media->setNewRevision();
-    $media->setRevisionLogMessage($this->cleanupNoticeText);
+    $media->setRevisionLogMessage($this::CLEANUP_NOTICE_TEXT);
     $media->save();
   }
 
