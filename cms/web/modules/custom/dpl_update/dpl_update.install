@@ -826,3 +826,13 @@ function dpl_update_update_10055(): string {
 
   return 'New field columns added.';
 }
+
+/**
+ * Unignore GraphQL roles.
+ */
+function dpl_update_update_10056(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'user.role.go_graphql_client',
+    'user.role.bnf_graphql_client',
+  ]);
+}
