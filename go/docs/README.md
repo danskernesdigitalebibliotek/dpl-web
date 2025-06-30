@@ -270,14 +270,20 @@ Follow these steps to test the production database locally:
 
    <https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-CMS/local-development/?h=database#download-database-and-files-from-lagoon>
 
-2. **Update CMS variables**: In your local DPL-CMS, navigate to the "People" tab to view the list of users. Locate the user `go_graphql` and click the edit button. In the edit user form, update the password field with the value of `NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD` from your `.env.local` file in this project.
+2. **Update CMS user credentials**: In your local DPL-CMS, go to the "People" tab and find the user named `go_graphql`. Click "Edit" for this user. Update the password field to match the value of `NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD` from your `.env.local` file in this project.
+   **Note:** Occasionally, the password update may not take effect as expected. If you encounter this issue, repeat step 1 and try again.
 
 3. **Start the application**: Launch your development server as usual. The application should now display data from the imported production database.
 
 ### NOTES
 
 - Before testing, clear all cookies from your browser to avoid potential issues caused by existing cookies.
-- If you are testing login, ensure that the local domain is whitelisted for the relevant library in STIL.
+- If you are testing login functionality, make sure the local domain is whitelisted for the relevant library in STIL.
+- To configure "adgangsplatform" tokens and Unilogin for local development, run:
+  ```bash
+  task dev:openid:configure && task dev:unilogin:configure
+  ```
+  This will set up authentication using materials from the Copenhagen library.
 - As webmaster libraries can add their own modules, it can sometimes be necessary to download a copy of their file system as well as the database. The reason for this is, that a database import will not be successful if it can't find all modules.
 
 ## Deployment
