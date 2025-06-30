@@ -74,9 +74,7 @@ class BnfImporter {
 
     try {
       $response = GetNode::execute($uuid);
-
-      $nodeData = $response->data?->node;
-
+      $nodeData = $response->errorFree()->data->node;
       if (!$nodeData) {
         throw new \RuntimeException("Could not fetch content for {$uuid}.");
       }
@@ -114,9 +112,8 @@ class BnfImporter {
 
       $node->set('bnf_source_changed', $newSourceChanged);
 
-      $info = $response->data?->info;
-
-      if ($info?->name) {
+      $info = $response->errorFree()->data->info;
+      if ($info->name) {
         $node->set('bnf_source_name', $info->name);
       }
 
