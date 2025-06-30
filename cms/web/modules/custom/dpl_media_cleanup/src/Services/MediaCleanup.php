@@ -152,7 +152,7 @@ class MediaCleanup {
   /**
    * Getting the tables and fields to look up media data.
    *
-   * @return array<string>
+   * @return array<string, string>
    *   table-name => field-name.
    */
   protected function getFieldTables(): array {
