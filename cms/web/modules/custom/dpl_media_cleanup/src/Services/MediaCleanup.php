@@ -3,11 +3,13 @@
 namespace Drupal\dpl_media_cleanup\Services;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\media\MediaInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Keeping the media-library in order.
@@ -86,9 +88,7 @@ class MediaCleanup {
       ->having('COUNT(entity_id) > 1')
       ->execute();
 
-    // PHPStan gets confused that $duplicateFids might be NULL, but in reality
-    // it won't be - and if it is, we do want an exception to be thrown.
-    // @phpstan-ignore-next-line
+    Assert::isInstanceOf($duplicateFids, StatementInterface::class);
     $duplicateFids = $duplicateFids->fetchCol();
 
     if (empty($duplicateFids)) {
@@ -101,9 +101,7 @@ class MediaCleanup {
       ->condition('mfi.field_media_image_target_id', $duplicateFids, 'IN')
       ->execute();
 
-    // PHPStan gets confused that $duplicateFids might be NULL, but in reality
-    // it won't be - and if it is, we do want an exception to be thrown.
-    // @phpstan-ignore-next-line
+    Assert::isInstanceOf($mediaIds, StatementInterface::class);
     $mediaIds = $mediaIds->fetchCol();
 
     if (empty($mediaIds)) {
@@ -138,9 +136,7 @@ class MediaCleanup {
         ->condition($field, $mediaIds, 'IN')
         ->execute();
 
-      // PHPStan gets confused that $duplicateFids might be NULL, but in reality
-      // it won't be - and if it is, we do want an exception to be thrown.
-      // @phpstan-ignore-next-line
+      Assert::isInstanceOf($tableMediaIds, StatementInterface::class);
       $tableMediaIds = $tableMediaIds->fetchCol();
 
       $usedMediaIds = array_merge($usedMediaIds, $tableMediaIds);
