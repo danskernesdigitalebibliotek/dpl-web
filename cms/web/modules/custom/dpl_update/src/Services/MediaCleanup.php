@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_media_cleanup\Services;
+namespace Drupal\dpl_update\Services;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\StatementInterface;

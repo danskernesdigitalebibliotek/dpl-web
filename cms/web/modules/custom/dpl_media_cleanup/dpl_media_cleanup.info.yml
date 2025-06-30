@@ -1,6 +1,0 @@
----
-name: DPL Media Cleanup
-type: module
-description: Automatic cleanup of orphaned medias.
-core_version_requirement: ^10
-package: DPL
