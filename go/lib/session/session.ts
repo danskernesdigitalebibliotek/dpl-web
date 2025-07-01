@@ -36,7 +36,7 @@ export interface TSessionData {
   uniLoginUserInfo?: {
     sub: string
     uniid: string
-    institution_ids: string[]
+    institutionIds: string[]
   }
   user?: {
     name?: string

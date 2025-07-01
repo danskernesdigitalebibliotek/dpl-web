@@ -6,7 +6,7 @@ import { createClientAsync as createClientAsyncCreateLoan } from "@/lib/soap/pub
 export const createLoanRequest = async (uniLoginUserInfo: TUserInfo, ebookId: string) => {
   const client = await createClientAsyncCreateLoan("./lib/soap/publizon/v2_7/wsdl/createloan.wsdl")
   const { clientid, retailerid, retailerkeycode } = await getPublizonServiceParameters()
-  const institutionid = uniLoginUserInfo.institution_ids[0]
+  const institutionid = uniLoginUserInfo.institutionIds[0]
   if (!institutionid) {
     throw new Error("Institution id not found")
   }

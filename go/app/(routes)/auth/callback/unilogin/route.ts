@@ -123,8 +123,11 @@ export async function GET(request: NextRequest) {
     session.uniLoginUserInfo = {
       sub: userinfo.sub,
       uniid: introspect.uniid,
-      // TODO: Rename this into institutionIds
-      institution_ids:
+      institutionIds:
+        // A04441 is a testinstitution for DDF test users.
+        // If the user is a DDF test user, we set the institutionIds to a hardcoded value.
+        // The hardcoded value happens to be: "Christianshavns skole".
+        // Otherwise the testusers wont be able to loan/reserve e-materials.
         institutionId === "A04441" ? ["101047"] : getInstitutionIds(introspect.institution_ids),
     }
     session.user = {
