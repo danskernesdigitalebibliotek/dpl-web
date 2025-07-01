@@ -242,6 +242,7 @@ class CqlSearchWidget extends WidgetBase {
             '#type' => 'textfield',
             '#title' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_value')?->getLabel(),
             '#default_value' => $items[$delta]->first_accession_date_value ?? '',
+            '#description' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_value')?->getDescription(),
           ],
         ],
       ];
