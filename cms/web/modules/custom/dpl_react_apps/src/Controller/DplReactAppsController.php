@@ -4,6 +4,7 @@ namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
@@ -236,9 +237,9 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-sublocation-description-text' => $this->t('Add a comma separated list for multiple sublocations', [], ['context' => 'advanced search']),
       'advanced-search-first-accession-date-text' => $this->t('Date for first accession date', [], ['context' => 'advanced search']),
       'advanced-search-first-accession-date-operator-text' => $this->t('Choose operator', [], ['context' => 'advanced search']),
-      'advanced-search-filter-later-than-text' => $this->t('Date later than', [], ['context' => 'advanced search']),
-      'advanced-search-filter-exact-date-text' => $this->t('Exact date', [], ['context' => 'advanced search']),
-      'advanced-search-filter-earlier-than-text' => $this->t('Date earlier than', [], ['context' => 'advanced search']),
+      'advanced-search-filter-later-than-text' => FirstAccessionDateOperator::LaterThan->label(),
+      'advanced-search-filter-exact-date-text' => FirstAccessionDateOperator::ExactDate->label(),
+      'advanced-search-filter-earlier-than-text' => FirstAccessionDateOperator::EarlierThan->label(),
       'advanced-search-first-accession-date-description-text' => $this->t('The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and ”MONTHS” can also be used. For example ”NOW - 60 DAYS”. Remember to add a space on both sides of the plus and minus symbols.', [], ['context' => 'advanced search']),
       'advanced-search-first-accession-date-specify-date-text' => $this->t('Input desired date in format ”YYYY-MM-DD”', [], ['context' => 'advanced search']),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
