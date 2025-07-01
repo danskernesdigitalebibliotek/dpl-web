@@ -13,6 +13,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\parse_url;
 use function Safe\preg_match;
@@ -223,6 +224,26 @@ class CqlSearchWidget extends WidgetBase {
           '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
           '#default_value' => $items[$delta]->onshelf ?? '',
         ],
+        'first_accession_date' => [
+          '#type' => 'fieldset',
+          '#title' => $this->t('First accession date', [], ['context' => 'dpl_fbi']),
+
+          'operator' => [
+            '#title' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_operator')?->getLabel(),
+            '#type' => 'select',
+            '#default_value' => $items[$delta]->first_accession_date_operator ?? FirstAccessionDateOperator::GreaterThan->value,
+            '#options' => [
+              FirstAccessionDateOperator::GreaterThan->value => FirstAccessionDateOperator::GreaterThan->label(),
+              FirstAccessionDateOperator::Equals->value => FirstAccessionDateOperator::Equals->label(),
+              FirstAccessionDateOperator::LessThan->value => FirstAccessionDateOperator::LessThan->label(),
+            ],
+          ],
+          'value' => [
+            '#type' => 'textfield',
+            '#title' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_value')?->getLabel(),
+            '#default_value' => $items[$delta]->first_accession_date_value ?? '',
+          ],
+        ],
       ];
     }
 
@@ -372,6 +393,8 @@ class CqlSearchWidget extends WidgetBase {
         'sublocation' => $values['filters']['sublocation'] ?? '',
         'onshelf' => !empty($values['filters']['onshelf']),
         'sort' => $values['filters']['sort'] ?? 'relevance',
+        'first_accession_date_value' => $values['filters']['first_accession_date']['value'] ?? '',
+        'first_accession_date_operator' => $values['filters']['first_accession_date']['operator'] ?? '',
       ];
 
       $items->set($delta, $value);
