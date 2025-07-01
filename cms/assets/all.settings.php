@@ -185,6 +185,13 @@ if (getenv('LAGOON')) {
     // Enable the cache backend.
     $settings['cache']['default'] = 'cache.backend.redis';
 
+    // The graphql module seems to have issues with things getting munged in
+    // the cache. Obviously this shouldn't happen, but for the moment move
+    // it's cache to the database.
+    // @see https://www.drupal.org/project/graphql/issues/3477239
+    $settings['cache']['bins']['graphql_ast'] = 'cache.backend.database';
+    $settings['cache']['bins']['graphql_results'] = 'cache.backend.database';
+
     // The default example configuration that ships with the module works fine.
     // By using it, we rely on future developers that updates the module to
     // spot if any major changes happens to the config, but as we're using the
