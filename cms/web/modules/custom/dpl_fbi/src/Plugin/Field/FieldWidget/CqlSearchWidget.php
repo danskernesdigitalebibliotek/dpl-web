@@ -231,11 +231,11 @@ class CqlSearchWidget extends WidgetBase {
           'operator' => [
             '#title' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_operator')?->getLabel(),
             '#type' => 'select',
-            '#default_value' => $items[$delta]->first_accession_date_operator ?? FirstAccessionDateOperator::GreaterThan->value,
+            '#default_value' => $items[$delta]->first_accession_date_operator ?? FirstAccessionDateOperator::LaterThan->value,
             '#options' => [
-              FirstAccessionDateOperator::GreaterThan->value => FirstAccessionDateOperator::GreaterThan->label(),
-              FirstAccessionDateOperator::Equals->value => FirstAccessionDateOperator::Equals->label(),
-              FirstAccessionDateOperator::LessThan->value => FirstAccessionDateOperator::LessThan->label(),
+              FirstAccessionDateOperator::LaterThan->value => FirstAccessionDateOperator::LaterThan->label(),
+              FirstAccessionDateOperator::ExactDate->value => FirstAccessionDateOperator::ExactDate->label(),
+              FirstAccessionDateOperator::EarlierThan->value => FirstAccessionDateOperator::EarlierThan->label(),
             ],
           ],
           'value' => [
@@ -356,7 +356,7 @@ class CqlSearchWidget extends WidgetBase {
     // We expect formats like <2025-01-01 or >NOW - 90 DAYS.
     preg_match("/^\s*(?<operator>\W+)\s*(?<value>.*)\s*$/", $firstAccessionDateValue, $matches);
 
-    $operatorValue = FirstAccessionDateOperator::tryFrom($matches['operator']) ?? FirstAccessionDateOperator::GreaterThan;
+    $operatorValue = FirstAccessionDateOperator::tryFrom($matches['operator']) ?? FirstAccessionDateOperator::LaterThan;
     $operatorName = $firstAccessionDateFormElement['operator']['#name'];
     $response->addCommand(new InvokeCommand("$parentSelector [name=\"$operatorName\"]", 'val', [$operatorValue]));
 

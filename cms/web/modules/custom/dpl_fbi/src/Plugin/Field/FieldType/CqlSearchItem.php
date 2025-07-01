@@ -171,7 +171,7 @@ final class CqlSearchItem extends FieldItemBase {
     $values['onshelf'] = 1;
     $values['sort'] = 'sort.latestpublicationdate.asc';
     $values['first_accession_date_value'] = '2025-01-01';
-    $values['first_accession_date_operator'] = FirstAccessionDateOperator::GreaterThan;
+    $values['first_accession_date_operator'] = FirstAccessionDateOperator::LaterThan;
     $values['link'] = "/advanced-search?sort=sort.creator.asc&onshelf=true&sublocation=fantasy&advancedSearchCql=+term.title%3D'Harry+Potter'+AND+term.creator%3D+'J.K.+Rowling'+AND+(+term.generalmaterialtype%3D'bøger'+OR+term.generalmaterialtype%3D'e-bøger')+AND+term.fictionnonfiction%3D'fiction'";
     return $values;
   }

@@ -9,11 +9,11 @@ namespace Drupal\dpl_fbi;
  */
 enum FirstAccessionDateOperator: string {
 
-  case GreaterThan = '>';
+  case LaterThan = '>';
 
-  case Equals = '=';
+  case ExactDate = '=';
 
-  case LessThan = '<';
+  case EarlierThan = '<';
 
   /**
    * Provide a human-readable representation of the enum.
@@ -25,9 +25,9 @@ enum FirstAccessionDateOperator: string {
     $translation = \Drupal::translation();
 
     return match($this) {
-      self::GreaterThan => $translation->translate('Greater than', [], ['context' => 'dpl_fbi'])->render(),
-      self::Equals => $translation->translate('Equals', [], ['context' => 'dpl_fbi'])->render(),
-      self::LessThan => $translation->translate('Less than', [], ['context' => 'dpl_fbi'])->render(),
+      self::LaterThan => $translation->translate('Later than', [], ['context' => 'dpl_fbi'])->render(),
+      self::ExactDate => $translation->translate('Exact date', [], ['context' => 'dpl_fbi'])->render(),
+      self::EarlierThan => $translation->translate('Earlier than', [], ['context' => 'dpl_fbi'])->render(),
     };
   }
 
