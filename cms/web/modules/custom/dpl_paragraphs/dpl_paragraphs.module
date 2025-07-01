@@ -281,6 +281,12 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
   $render['#data']['cql'] = $cql_search[0]['value'];
   $render['#data']['onshelf'] = $onshelf ? 'true' : 'false';
 
+  // The first accession date filter consists of both an operator and a value.
+  // Only pass the value if both are set.
+  if (!empty($cql_search[0]['first_accession_date_operator']) && !empty($cql_search[0]['first_accession_date_value'])) {
+    $render['#data']['firstaccessiondateitem'] = $cql_search[0]['first_accession_date_operator'] . $cql_search[0]['first_accession_date_value'];
+  }
+
   $filters = ['location', 'sublocation', 'sort'];
 
   foreach ($filters as $filter) {
