@@ -33,6 +33,12 @@ field.field_type.dpl_fbi_cql_search:
     onshelf:
       type: boolean
       label: 'On-shelf filter'
+    first_accession_date_value:
+      type: string
+      label: 'First accession date filter: Value'
+    first_accession_date_operator:
+      type: string
+      label: 'First accession date filter: Operator'
 
 field.widget.settings.dpl_fbi_cql_search:
   type: mapping

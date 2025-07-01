@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_fbi\Plugin\Field\FieldType;
 
+use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -53,6 +54,17 @@ final class CqlSearchItem extends FieldItemBase {
 
     $properties['sort'] = DataDefinition::create('string')
       ->setLabel(t('Sorting', [], ['context' => 'dpl_fbi']))
+      ->setRequired(FALSE);
+
+    // Use a string instead of a proper datetime_iso8601 to support relative
+    // dates supported by CQL e.g. "NOW - 90 DAYS".
+    $properties['first_accession_date_value'] = DataDefinition::create('string')
+      ->setLabel(t('First accession date: Value', [], ['context' => 'dpl_fbi']))
+      ->setRequired(FALSE);
+
+    // Type matches values from \Drupal\dpl_fbi\FirstAccessionDateOperator.
+    $properties['first_accession_date_operator'] = DataDefinition::create('string')
+      ->setLabel(t('First accession date: Operator', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
 
     return $properties;
@@ -114,6 +126,21 @@ final class CqlSearchItem extends FieldItemBase {
         'not null' => FALSE,
         'description' => '"On shelf" search filter',
       ],
+      'first_accession_date_value' => [
+        // Use a varchar instead of a proper datetime to support relative dates
+        // supported by CQL e.g. "NOW - 90 DAYS".
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'description' => '"First accession date" search filter: Value',
+      ],
+      'first_accession_date_operator' => [
+        // Type matches values from \Drupal\dpl_fbi\FirstAccessionDateOperator.
+        'type' => 'varchar',
+        'length' => 1,
+        'not null' => FALSE,
+        'description' => '"First accession date" search filter: Operator',
+      ],
     ];
 
     $schema = [
@@ -138,6 +165,8 @@ final class CqlSearchItem extends FieldItemBase {
     $values['sublocation'] = 'fantasy';
     $values['onshelf'] = 1;
     $values['sort'] = 'sort.latestpublicationdate.asc';
+    $values['first_accession_date_value'] = '2025-01-01';
+    $values['first_accession_date_operator'] = FirstAccessionDateOperator::GreaterThan;
     $values['link'] = "/advanced-search?sort=sort.creator.asc&onshelf=true&sublocation=fantasy&advancedSearchCql=+term.title%3D'Harry+Potter'+AND+term.creator%3D+'J.K.+Rowling'+AND+(+term.generalmaterialtype%3D'bøger'+OR+term.generalmaterialtype%3D'e-bøger')+AND+term.fictionnonfiction%3D'fiction'";
     return $values;
   }
