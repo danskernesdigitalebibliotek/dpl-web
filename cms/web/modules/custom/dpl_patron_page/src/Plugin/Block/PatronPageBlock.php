@@ -97,6 +97,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'patron-page-basic-details-address-label-text' => $this->t('Address', [], ['context' => 'Patron page']),
       'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS', [], ['context' => 'Patron page']),
       'patron-page-basic-details-name-label-text' => $this->t('Name', [], ['context' => 'Patron page']),
+      'patron-page-basic-friendly-card-number-label-text' => $this->t('Card number', [], ['context' => 'Patron page']),
       'patron-page-change-pickup-body-text' => $this->t('patron page change pickup body text', [], ['context' => 'Patron page']),
       'patron-page-change-pickup-header-text' => $this->t('RESERVATIONS', [], ['context' => 'Patron page']),
       'patron-page-delete-profile-link-text' => $this->t('Delete your profile', [], ['context' => 'Patron page']),
