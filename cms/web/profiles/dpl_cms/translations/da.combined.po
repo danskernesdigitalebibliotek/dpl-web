@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-06-24 13:22+0200\n"
-"PO-Revision-Date: 2025-06-24 13:22+0200\n"
+"POT-Creation-Date: 2025-07-01 16:30+0200\n"
+"PO-Revision-Date: 2025-07-01 16:30+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2240,6 +2240,25 @@ msgid "Add a comma separated list for multiple sublocations"
 msgstr "Sæt komma mellem delopstillinger for at filtrere på flere"
 
 msgctxt "advanced search"
+msgid "Date for first accession date"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Choose operator"
+msgstr ""
+
+msgctxt "advanced search"
+msgid ""
+"The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and "
+"”MONTHS” can also be used. For example ”NOW - 90 DAYS”. Remember to add a "
+"space on both sides of the plus and minus symbols."
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Input desired date in format ”YYYY-MM-DD”"
+msgstr ""
+
+msgctxt "advanced search"
 msgid "Sort by"
 msgstr "Sorter efter"
 
@@ -2265,11 +2284,11 @@ msgstr "Forfatter / ophav"
 
 msgctxt "advanced search"
 msgid "Author (ascending)"
-msgstr "A - Å"
+msgstr "Forfatter / ophav (A - Å)"
 
 msgctxt "advanced search"
 msgid "Author (descending)"
-msgstr "Å - A"
+msgstr "Forfatter / ophav (Å - A)"
 
 msgctxt "advanced search"
 msgid "Title"
@@ -2277,11 +2296,11 @@ msgstr "Titel"
 
 msgctxt "advanced search"
 msgid "Title (ascending)"
-msgstr "A - Å"
+msgstr "Titel (A - Å)"
 
 msgctxt "advanced search"
 msgid "Title (descending)"
-msgstr "Å - A"
+msgstr "Titel (Å - A)"
 
 msgctxt "Work Page"
 msgid "Already reserved"
@@ -4210,6 +4229,18 @@ msgstr ""
 "Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for at hente "
 "en ny token."
 
+msgctxt "dpl_fbi"
+msgid "Later than"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Exact date"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "Earlier than"
+msgstr ""
+
 msgid "CQL search string"
 msgstr "CQL Søgestreng"
 
@@ -4227,6 +4258,21 @@ msgstr ""
 
 msgctxt "dpl_fbi"
 msgid "Sorting"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "First accession date: Value"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid ""
+"The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and "
+"”MONTHS” can also be used. For example ”NOW - 90 DAYS”. Remember to add a "
+"space on both sides of the plus and minus symbols."
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "First accession date: Operator"
 msgstr ""
 
 msgid "Text value"
@@ -4417,6 +4463,10 @@ msgstr ""
 
 msgctxt "dpl_fbi"
 msgid "By relevance"
+msgstr ""
+
+msgctxt "dpl_fbi"
+msgid "First accession date"
 msgstr ""
 
 msgctxt "dpl_fbi"
@@ -25518,6 +25568,128 @@ msgstr ""
 
 msgctxt "views.view.files:display:page_2:display_options:arguments:fid:title"
 msgid "File usage information for {{ arguments.fid }}"
+msgstr ""
+
+msgctxt "views.view.firstaccessiondate_content_admin:label"
+msgid "Content using firstaccessiondate"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"title"
+msgid "Content using firstaccessiondate in CQL searches"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"fields:title:label"
+msgid "Title"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"fields:uid:label"
+msgid "Author"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"fields:field_material_grid_title:label"
+msgid "Material grid title"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"fields:field_cql_search:label"
+msgid "CQL Search"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"fields:changed:label"
+msgid "Updated"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"pager:options:tags:next"
+msgid "Next ›"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"pager:options:tags:previous"
+msgid "‹ Previous"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"exposed_form:options:submit_button"
+msgid "Apply"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"filters:field_cql_search_value:expose:label"
+msgid "CQL search"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:default:display_options:"
+"header:result:content"
+msgid "Displaying @start - @end of @total"
+msgstr ""
+
+msgctxt ""
+"views.view.firstaccessiondate_content_admin:display:page_1:display_title"
+msgid "Page"
 msgstr ""
 
 msgctxt "views.view.go_categories:label"

@@ -13,6 +13,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\parse_url;
 use function Safe\preg_match;
@@ -223,6 +224,27 @@ class CqlSearchWidget extends WidgetBase {
           '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
           '#default_value' => $items[$delta]->onshelf ?? '',
         ],
+        'first_accession_date' => [
+          '#type' => 'fieldset',
+          '#title' => $this->t('First accession date', [], ['context' => 'dpl_fbi']),
+
+          'operator' => [
+            '#title' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_operator')?->getLabel(),
+            '#type' => 'select',
+            '#default_value' => $items[$delta]->first_accession_date_operator ?? FirstAccessionDateOperator::LaterThan->value,
+            '#options' => [
+              FirstAccessionDateOperator::LaterThan->value => FirstAccessionDateOperator::LaterThan->label(),
+              FirstAccessionDateOperator::ExactDate->value => FirstAccessionDateOperator::ExactDate->label(),
+              FirstAccessionDateOperator::EarlierThan->value => FirstAccessionDateOperator::EarlierThan->label(),
+            ],
+          ],
+          'value' => [
+            '#type' => 'textfield',
+            '#title' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_value')?->getLabel(),
+            '#default_value' => $items[$delta]->first_accession_date_value ?? '',
+            '#description' => $fieldStorageDefinition->getPropertyDefinition('first_accession_date_value')?->getDescription(),
+          ],
+        ],
       ];
     }
 
@@ -327,6 +349,21 @@ class CqlSearchWidget extends WidgetBase {
         ['checked', $onshelfBoolValue])
     );
 
+    // The first accession date filter consists of two parts in one filter value
+    // where each part corresponds to a separate form element.
+    $firstAccessionDateValue = $this->getFilter($link, 'firstaccessiondateitem') ?? '';
+    $firstAccessionDateFormElement = $formElement['filters']['first_accession_date'];
+    // We expect formats like <2025-01-01 or >NOW - 90 DAYS.
+    preg_match("/^\s*(?<operator>\W+)\s*(?<value>.*)\s*$/", $firstAccessionDateValue, $matches);
+
+    $operatorValue = FirstAccessionDateOperator::tryFrom($matches['operator']) ?? FirstAccessionDateOperator::LaterThan;
+    $operatorName = $firstAccessionDateFormElement['operator']['#name'];
+    $response->addCommand(new InvokeCommand("$parentSelector [name=\"$operatorName\"]", 'val', [$operatorValue]));
+
+    $valueValue = $matches['value'] ?? '';
+    $valueName = $firstAccessionDateFormElement['value']['#name'];
+    $response->addCommand(new InvokeCommand("$parentSelector [name=\"$valueName\"]", 'val', [$valueValue]));
+
     // Add remaining, simple filters, along with their default values.
     $filter_default_values = [
       'location' => '',
@@ -372,6 +409,8 @@ class CqlSearchWidget extends WidgetBase {
         'sublocation' => $values['filters']['sublocation'] ?? '',
         'onshelf' => !empty($values['filters']['onshelf']),
         'sort' => $values['filters']['sort'] ?? 'relevance',
+        'first_accession_date_value' => $values['filters']['first_accession_date']['value'] ?? '',
+        'first_accession_date_operator' => $values['filters']['first_accession_date']['operator'] ?? '',
       ];
 
       $items->set($delta, $value);

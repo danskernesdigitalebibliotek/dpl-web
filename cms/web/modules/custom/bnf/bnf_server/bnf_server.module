@@ -27,6 +27,8 @@ function bnf_server_views_pre_build(ViewExecutable $view): void {
  * has logged in and has the callback cookie context.
  */
 function bnf_server_preprocess_page(array &$variables): void {
+  $variables['#cache']['contexts'][] = 'bnf_library_session';
+
   $session = \Drupal::request()->getSession();
 
   $site_url = $session->get(LoginController::CALLBACK_URL_KEY);
@@ -36,8 +38,6 @@ function bnf_server_preprocess_page(array &$variables): void {
   if (!$site_url || \Drupal::service('router.admin_context')->isAdminRoute()) {
     return;
   }
-
-  $variables['#cache']['contexts'][] = 'bnf_library_session';
 
   if ($site_name) {
     $variables['page']['content']['logged_notifier'] = [
