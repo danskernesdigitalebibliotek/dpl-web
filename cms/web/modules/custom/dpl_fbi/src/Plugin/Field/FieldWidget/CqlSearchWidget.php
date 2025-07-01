@@ -348,6 +348,21 @@ class CqlSearchWidget extends WidgetBase {
         ['checked', $onshelfBoolValue])
     );
 
+    // The first accession date filter consists of two parts in one filter value
+    // where each part corresponds to a separate form element.
+    $firstAccessionDateValue = $this->getFilter($link, 'firstaccessiondateitem') ?? '';
+    $firstAccessionDateFormElement = $formElement['filters']['first_accession_date'];
+    // We expect formats like <2025-01-01 or >NOW - 90 DAYS.
+    preg_match("/^\s*(?<operator>\W+)\s*(?<value>.*)\s*$/", $firstAccessionDateValue, $matches);
+
+    $operatorValue = FirstAccessionDateOperator::tryFrom($matches['operator']) ?? FirstAccessionDateOperator::GreaterThan;
+    $operatorName = $firstAccessionDateFormElement['operator']['#name'];
+    $response->addCommand(new InvokeCommand("$parentSelector [name=\"$operatorName\"]", 'val', [$operatorValue]));
+
+    $valueValue = $matches['value'] ?? '';
+    $valueName = $firstAccessionDateFormElement['value']['#name'];
+    $response->addCommand(new InvokeCommand("$parentSelector [name=\"$valueName\"]", 'val', [$valueValue]));
+
     // Add remaining, simple filters, along with their default values.
     $filter_default_values = [
       'location' => '',
