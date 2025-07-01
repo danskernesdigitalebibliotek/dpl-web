@@ -61,7 +61,7 @@ final class CqlSearchItem extends FieldItemBase {
     $properties['first_accession_date_value'] = DataDefinition::create('string')
       ->setLabel(t('First accession date: Value', [], ['context' => 'dpl_fbi']))
       ->setDescription(t(
-        'The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and ”MONTHS” can also be used. For example ”NOW - 60 DAYS”. Remember to add a space on both sides of the plus and minus symbols.',
+        'The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and ”MONTHS” can also be used. For example ”NOW - 90 DAYS”. Remember to add a space on both sides of the plus and minus symbols.',
         [],
         ['context' => 'dpl_fbi']
       ))
