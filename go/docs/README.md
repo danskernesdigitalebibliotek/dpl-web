@@ -36,6 +36,7 @@
   - [Config handling](#config-handling)
   - [Storybook](#storybook)
   - [Cypress](#cypress)
+- [Test production database locally](#test-production-database-locally)
 - [Deployment](#deployment)
   - [git branches and pull requests](#git-branches-and-pull-requests)
   - [Create pull request](#create-pull-request)
@@ -256,6 +257,34 @@ To start Cypress, run the following commands:
 yarn dev # Start the development server
 yarn cypress:run # Run all Cypress tests
 ```
+
+## Test production database locally
+
+To test the production database locally, you need to download a copy of the production database to your local development environment. This allows you to debug issues and verify features using real data, while ensuring that your local changes do not affect the live environment.
+
+Follow these steps to test the production database locally:
+
+1. **Obtain a database and if necessary a file dump and import it to local dpl-cms environment**:
+
+   Follow the guide in DPL-CMS:
+
+   <https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-CMS/local-development/?h=database#download-database-and-files-from-lagoon>
+
+2. **Update CMS user credentials**: In your local DPL-CMS, go to the "People" tab and find the user named `go_graphql`. Click "Edit" for this user. Update the password field to match the value of `NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD` from your `.env.local` file in this project.
+   **Note:** Occasionally, the password update may not take effect as expected. If you encounter this issue, repeat step 1 and try again.
+
+3. **Start the application**: Launch your development server as usual. The application should now display data from the imported production database.
+
+### NOTES
+
+- Before testing, clear all cookies from your browser to avoid potential issues caused by existing cookies.
+- If you are testing login functionality, make sure the local domain is whitelisted for the relevant library in STIL.
+- To configure "adgangsplatform" tokens and Unilogin for local development, run:
+  ```bash
+  task dev:openid:configure && task dev:unilogin:configure
+  ```
+  This will set up authentication using materials from the Copenhagen library.
+- As webmaster libraries can add their own modules, it can sometimes be necessary to download a copy of their file system as well as the database. The reason for this is, that a database import will not be successful if it can't find all modules.
 
 ## Deployment
 
