@@ -121,8 +121,11 @@ function _dpl_update_update_translation(string $english, string $danish, ?string
  *   The field type that we are updating.
  * @param array<string> $fields
  *   The new fields that we are adding.
+ *
+ * @return string
+ *   The feedback message.
  */
-function _dpl_update_add_field_columns(string $field_type, array $fields): void {
+function _dpl_update_add_field_columns(string $field_type, array $fields): string {
   // This part of the function is taken from drupal stackexchange:
   // https://drupal.stackexchange.com/questions/255495/add-column-to-custom-field-schema
   if (!$field_storage_configs = \Drupal::entityTypeManager()
@@ -177,6 +180,12 @@ function _dpl_update_add_field_columns(string $field_type, array $fields): void 
       }
     }
   }
+
+  return sprintf(
+    "Added columns %s to field type %s",
+    implode(", ", $fields),
+    $field_type
+  );
 }
 
 /**
