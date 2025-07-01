@@ -239,7 +239,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-later-than-text' => $this->t('Date later than', [], ['context' => 'advanced search']),
       'advanced-search-filter-exact-date-text' => $this->t('Exact date', [], ['context' => 'advanced search']),
       'advanced-search-filter-earlier-than-text' => $this->t('Date earlier than', [], ['context' => 'advanced search']),
-      'advanced-search-first-accession-date-description-text' => $this->t('The format should be YYYY-DD-MM e.g. 2024-24-11. Terms ”NOW”, ”DAYS” and ”MONTHS” can also be used. For example ”NOW - 60 DAYS”. Remember to add a space on both sides of the plus and minus symbols', [], ['context' => 'advanced search']),
+      'advanced-search-first-accession-date-description-text' => $this->t('The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and ”MONTHS” can also be used. For example ”NOW - 60 DAYS”. Remember to add a space on both sides of the plus and minus symbols.', [], ['context' => 'advanced search']),
       'advanced-search-first-accession-date-specify-date-text' => $this->t('Input desired date in format ”YYYY-MM-DD”', [], ['context' => 'advanced search']),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
