@@ -854,3 +854,28 @@ function dpl_update_update_10057(): string {
     'first_accession_date_value', 'first_accession_date_operator',
   ]);
 }
+
+/**
+ * Update DRUPAL_REVALIDATE_SECRET in the database.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10058(): string {
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $next_site = $entity_type_manager->getStorage('next_site')->load('go');
+
+  $revalidate_secret = getenv('DRUPAL_REVALIDATE_SECRET');
+
+  if (!$revalidate_secret) {
+    throw new \Exception('DRUPAL_REVALIDATE_SECRET environment variable is not set.');
+  }
+
+  if (!$next_site instanceof NextSite) {
+    throw new \Exception("No next site found with ID 'go'.");
+  }
+
+  $next_site->setRevalidateSecret($revalidate_secret);
+  $next_site->save();
+
+  return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
+}
