@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\LinkRequired\Link;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MoreLink\Link;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -14,7 +14,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: Link::class,
   )]
-class FieldGoLinkRequiredMapper extends BnfMapperImportReferencePluginBase {
+class FieldMoreLinkMapper extends BnfMapperImportReferencePluginBase {
 
   /**
    * {@inheritDoc}
@@ -23,6 +23,7 @@ class FieldGoLinkRequiredMapper extends BnfMapperImportReferencePluginBase {
     if (!$object instanceof Link) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
+
     return $this->mapLink($object);
   }
 
