@@ -473,6 +473,8 @@ field_config:
         enabled: true
       field_show_subtitles:
         enabled: true
+      field_title:
+        enabled: true
     nav_spots_manual:
       field_nav_spots_content:
         enabled: true
