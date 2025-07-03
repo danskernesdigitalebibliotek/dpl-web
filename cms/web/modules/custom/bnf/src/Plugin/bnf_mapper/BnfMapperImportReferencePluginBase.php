@@ -62,6 +62,34 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
   }
 
   /**
+   * Mapping entity reference fields.
+   *
+   * @param array<mixed> $ids
+   *   The UUIDs that we will try to import.
+   *
+   * @return array<mixed>
+   *   The reference data, ready to be put into a Drupal field.
+   */
+  public function mapEntityReferences(array $ids): array {
+    $referenceData = [];
+
+    foreach ($ids as $id) {
+      $node = $this->importReferencedNode((string) $id);
+
+      if (!$node) {
+        continue;
+      }
+
+      $referenceData[] = [
+        'target_id' => $node->id(),
+        'target_type' => 'node',
+      ];
+    }
+
+    return $referenceData;
+  }
+
+  /**
    * Mapping link fields.
    */
   public function mapLink(BannerLink|GoLink|HeroLink|LinksLink|MoreLink $object): mixed {
