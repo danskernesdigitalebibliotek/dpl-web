@@ -28,7 +28,7 @@ export const loadUserToken = async () => {
       .safeParse(data?.dplTokens?.adgangsplatformen?.user)
 
     if (validateUserToken.error) {
-      console.error(validateUserToken.error.flatten())
+      console.error("loadUserToken error", validateUserToken.error.flatten())
       return null
     }
 
