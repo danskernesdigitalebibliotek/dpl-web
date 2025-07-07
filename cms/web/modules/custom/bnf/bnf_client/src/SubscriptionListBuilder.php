@@ -18,7 +18,8 @@ class SubscriptionListBuilder extends EntityListBuilder {
    * @return string[]
    *   The row header, containing labels for each value.
    */
-  public function buildHeader() {
+  public function buildHeader(): array {
+    $header = [];
     // IMPORTANT - The order of this list must match the rows.
     $header['label'] = $this->t('Label', [], ['context' => 'BNF']);
     $header['categories'] = $this->t('Categories', [], ['context' => 'BNF']);
@@ -43,12 +44,12 @@ class SubscriptionListBuilder extends EntityListBuilder {
       return [];
     }
 
-    $last_pulled_timestamp = $entity->getLast();
-    $last_pulled = new DateTime("@$last_pulled_timestamp");
-    $last_pulled->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
+    $lastUpdatedTimestamp = $entity->getLast();
+    $lastUpdated = new DateTime("@$lastUpdatedTimestamp");
+    $lastUpdated->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
 
-    $created_timestamp = $entity->created->value;
-    $created = new DateTime("@$created_timestamp");
+    $createdTimestamp = $entity->created->value;
+    $created = new DateTime("@$createdTimestamp");
     $created->setTimezone(new \DateTimeZone('Europe/Copenhagen'));
 
     // IMPORTANT - The order of this list must match the header.
@@ -56,8 +57,8 @@ class SubscriptionListBuilder extends EntityListBuilder {
       'label' => $entity->label->value,
       'categories' => implode(', ', array_map(fn($term) => $term->getName(), $entity->getCategories())),
       'tags' => implode(', ', array_map(fn($term) => $term->getName(), $entity->getTags())),
-      'created' => $created_timestamp ? $created->format('Y-m-d H:i') : NULL,
-      'last_updated' => $last_pulled_timestamp ? $last_pulled->format('Y-m-d H:i') : NULL,
+      'created' => $createdTimestamp ? $created->format('Y-m-d H:i') : NULL,
+      'last_updated' => $lastUpdatedTimestamp ? $lastUpdated->format('Y-m-d H:i') : NULL,
     ];
 
     return $row + parent::buildRow($entity);
