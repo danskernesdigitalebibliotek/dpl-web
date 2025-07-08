@@ -1,4 +1,3 @@
-# Dependabot configuration files that automate our dependency updates by creating pull requests.
 # The PRs are labeled and grouped by package ecosystem and semver update type.
 # We intentionally use grouping and pull request limits to avoid creating too many PRs and
 # exhausting the number of available pull requests in Lagoon.
@@ -14,48 +13,74 @@ updates:
       radix-ui:
         patterns:
           - "@radix-ui/*"
-      graphql:
+      graphql-codegen:
         patterns:
-          - "graphql"
           - "@graphql-codegen/*"
-          - "@0no-co/graphqlsp"
-      eslint:
-        patterns:
-          - "eslint"
-          - "eslint-*"
-          - "@eslint/*"
       typescript:
         patterns:
           - "typescript"
           - "tsx"
-          - "@types/*"
-      prettier:
+      react:
         patterns:
-          - "prettier"
-          - "@prettier/*"
+          - "react"
+          - "@types/react"
+      react-dom:
+        patterns:
+          - "react-dom"
+          - "@types/react-dom"
+      next:
+        patterns:
+          - "next"
+          - "@next/env"
+          - "next-themes"
+          - "eslint-config-next"
+          - "@next/eslint-plugin-next"
       tailwindcss:
         patterns:
           - "tailwindcss"
           - "@tailwindcss/*"
-          - "prettier-plugin-tailwindcss"
           - "tailwindcss-animate"
-          - "tailwind-merge"
+      prettier:
+        patterns:
+          - "prettier"
+          - "eslint-config-prettier"
+      cva:
+        patterns:
           - "class-variance-authority"
           - "clsx"
+      tailwind-merge:
+        patterns:
+          - "tailwind-merge"
+          - "prettier-plugin-merge"
+          - "prettier-plugin-tailwindcss"
+          - "prettier-plugin-classnames"
       storybook:
         patterns:
           - "storybook"
           - "@storybook/*"
           - "@chromatic-com/storybook"
+          - "eslint-plugin-storybook"
       xstate:
         patterns:
           - "xstate"
           - "@xstate/*"
       vite:
         patterns:
-          - "vite"
-          - "@vitejs/*"
           - "vitest"
+          - "vite-tsconfig-paths"
+          - "@vitejs/plugin-react"
+      react-query:
+        patterns:
+          - "@tanstack/react-query"
+          - "@tanstack/react-query-devtools"
+      jwt-simple:
+        patterns:
+          - "jwt-simple"
+          - "@types/jwt-simple"
+      cypress:
+        patterns:
+          - "cypress"
+          - "eslint-plugin-cypress"
 
     # Check the npm registry for updates every day (weekdays)
     schedule:
