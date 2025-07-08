@@ -24,10 +24,8 @@ updates:
       react:
         patterns:
           - "react"
-          - "@types/react"
-      react-dom:
-        patterns:
           - "react-dom"
+          - "@types/react"
           - "@types/react-dom"
       next:
         patterns:
