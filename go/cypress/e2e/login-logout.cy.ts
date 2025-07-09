@@ -124,7 +124,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
   })
 })
 
-describe.only("Adgangsplatformen: Login / Logout API Tests", () => {
+describe("Adgangsplatformen: Login / Logout API Tests", () => {
   const performLoginCallback = () => {
     const mockedCallbackUrl = "/auth/callback/adgangsplatformen"
 
