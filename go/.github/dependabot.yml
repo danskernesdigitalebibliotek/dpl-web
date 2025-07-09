@@ -10,6 +10,77 @@ updates:
     directory: "/"
     # The maximum number of pull requests for version updates
     open-pull-requests-limit: 10
+    groups:
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      graphql-codegen:
+        patterns:
+          - "@graphql-codegen/*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "tsx"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      next:
+        patterns:
+          - "next"
+          - "@next/env"
+          - "next-themes"
+          - "eslint-config-next"
+          - "@next/eslint-plugin-next"
+      tailwindcss:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "tailwindcss-animate"
+      prettier:
+        patterns:
+          - "prettier"
+          - "eslint-config-prettier"
+      cva:
+        patterns:
+          - "class-variance-authority"
+          - "clsx"
+      tailwind-merge:
+        patterns:
+          - "tailwind-merge"
+          - "prettier-plugin-merge"
+          - "prettier-plugin-tailwindcss"
+          - "prettier-plugin-classnames"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+          - "@chromatic-com/storybook"
+          - "eslint-plugin-storybook"
+      xstate:
+        patterns:
+          - "xstate"
+          - "@xstate/*"
+      vite:
+        patterns:
+          - "vitest"
+          - "vite-tsconfig-paths"
+          - "@vitejs/plugin-react"
+      react-query:
+        patterns:
+          - "@tanstack/react-query"
+          - "@tanstack/react-query-devtools"
+      jwt-simple:
+        patterns:
+          - "jwt-simple"
+          - "@types/jwt-simple"
+      cypress:
+        patterns:
+          - "cypress"
+          - "eslint-plugin-cypress"
+
     # Check the npm registry for updates every day (weekdays)
     schedule:
       interval: weekly
