@@ -14,7 +14,6 @@ use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_login\Adgangsplatformen\Config;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use function Safe\json_encode;
@@ -37,26 +36,6 @@ class DplReactAppsController extends ControllerBase {
     protected GeneralSettings $generalSettings,
     protected Config $adgangsplatformenConfig,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The Drupal service container.
-   *
-   * @return static
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('renderer'),
-      $container->get('dpl_library_agency.reservation_settings'),
-      $container->get('dpl_library_agency.branch_settings'),
-      $container->get('dpl_library_agency.branch.repository'),
-      $container->get('dpl_instant_loan.settings'),
-      $container->get('dpl_library_agency.general_settings'),
-      $container->get('dpl_login.adgangsplatformen.config'),
-    );
-  }
 
   /**
    * Build a string of JSON data containing information about branches.
