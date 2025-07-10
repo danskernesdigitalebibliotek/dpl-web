@@ -10,14 +10,12 @@ use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use function Safe\json_encode;
-use function Safe\preg_replace;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -543,8 +541,6 @@ class DplReactAppsController extends ControllerBase {
    *   An array of base urls.
    */
   public static function externalApiBaseUrls(): array {
-    /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
-    $general_settings = \Drupal::service('dpl_library_agency.general_settings');
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
     $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
@@ -553,29 +549,17 @@ class DplReactAppsController extends ControllerBase {
 
     // Get base urls from this module.
     $configuredServices = $react_apps_settings->get('services') ?? [];
-    $services = [];
+    $services = \Drupal::moduleHandler()->invokeAll('dpl_react_apps_api_urls');
     foreach ($configuredServices as $name => $conf) {
+      // @todo remove when the FBI URL configuration is moved to dpl_fbi.
+      if ($name == 'fbi') {
+        continue;
+      }
+
       $services[$name] = $conf['base_url'];
     }
 
-    // The base url of the FBI service is a special case
-    // because a part (the profile) of the base url can differ.
-    // Lets' handle that:
-    if (!empty($services['fbi'])) {
-      $placeholder_url = $services['fbi'];
-      foreach ($general_settings->getFbiProfiles() as $type => $profile) {
-        $service_key = sprintf('fbi-%s', $type);
-        // The default FBI service has its own key with no suffix.
-        if ($type === FbiProfileType::Default->value) {
-          $service_key = 'fbi';
-        }
-        // Create a service url with the profile embedded.
-        $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
-        $services[$service_key] = $base_url;
-      }
-    }
-
-    // Get base urls from other modules.
+    // Get base urls from other modules. @todo Use the hook from other modules.
     $services['fbs'] = $fbs_settings->get('base_url');
     $services['publizon'] = $publizon_settings->loadConfig()->get('base_url');
 
