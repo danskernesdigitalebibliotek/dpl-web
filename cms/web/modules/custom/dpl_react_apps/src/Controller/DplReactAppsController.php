@@ -227,6 +227,7 @@ class DplReactAppsController extends ControllerBase {
       'clause-or-text' => $this->t('or', [], ['context' => 'advanced search']),
       'copied-link-to-this-search-text' => $this->t('Link copied to clipboard', [], ['context' => 'advanced search']),
       'copied-to-clipboard-text' => $this->t('Copied', [], ['context' => 'advanced search']),
+      'cql-search-external-help-link-text' => $this->t('CQL search external help link text', [], ['context' => 'advanced search']),
       'cql-search-title-text' => $this->t('CQL search', [], ['context' => 'advanced search']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search']),
       'showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
