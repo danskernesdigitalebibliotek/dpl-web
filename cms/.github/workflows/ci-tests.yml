@@ -306,7 +306,7 @@ jobs:
       - name: Setup site
         run: task ci:reset
       - name: Extract GraphQL schema and generate client
-        run: task dev:bnf:generate-graphql
+        run: task dev:codegen:bnf-graphql
       - name: Ensure GraphQL client code has not drifted
         run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/src/GraphQL/*
 

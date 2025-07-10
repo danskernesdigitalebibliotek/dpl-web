@@ -197,14 +197,8 @@ tasks:
       - task dev:bnfcli -- drush --yes config:set system.site name BNF
       # Show a one-time login to the local site(s).
       - task dev:cli -- drush user-login
-      - task dev:bnfcli -- drush user-login
 
-  dev:bnf:generate-graphql:
-    desc: Generate graphQL client classes. See web/modules/custom/bnf/queries/README.md
-    cmds:
-      - task dev:bnfcli -- ./vendor/bin/sailor introspect
-      - task dev:bnfcli -- ./vendor/bin/sailor
-      - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
+      - task dev:bnfcli -- drush user-login
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
@@ -351,6 +345,13 @@ tasks:
           -i ./local/openapi.json \
           -g php-symfony -o /local/packages/cms-api \
           -c /local/.openapi-generator/dpl-cms.config.yaml
+
+  dev:codegen:bnf-graphql:
+    desc: Generate graphQL client classes. See web/modules/custom/bnf/queries/README.md
+    cmds:
+      - task dev:bnfcli -- drush sailor:introspect bnf
+      - task dev:bnfcli -- drush sailor:codegen bnf
+      - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
 
   dev:composer:update-design-system:
     desc: Update the DPL design system package to a specific version or branch release.
