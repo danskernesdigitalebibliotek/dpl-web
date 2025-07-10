@@ -552,13 +552,17 @@ class DplReactAppsController extends ControllerBase {
     $publizon_settings = \Drupal::service('dpl_publizon.settings');
 
     // Get base urls from this module.
-    $services = $react_apps_settings->get('services') ?? [];
+    $configuredServices = $react_apps_settings->get('services') ?? [];
+    $services = [];
+    foreach ($configuredServices as $name => $conf) {
+      $services[$name] = $conf['base_url'];
+    }
 
     // The base url of the FBI service is a special case
     // because a part (the profile) of the base url can differ.
     // Lets' handle that:
-    if (!empty($services) && !empty($services['fbi']['base_url'])) {
-      $placeholder_url = $services['fbi']['base_url'];
+    if (!empty($services['fbi'])) {
+      $placeholder_url = $services['fbi'];
       foreach ($general_settings->getFbiProfiles() as $type => $profile) {
         $service_key = sprintf('fbi-%s', $type);
         // The default FBI service has its own key with no suffix.
@@ -567,17 +571,17 @@ class DplReactAppsController extends ControllerBase {
         }
         // Create a service url with the profile embedded.
         $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
-        $services[$service_key] = ['base_url' => $base_url];
+        $services[$service_key] = $base_url;
       }
     }
 
     // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
-    $services['publizon'] = ['base_url' => $publizon_settings->loadConfig()->get('base_url')];
+    $services['fbs'] = $fbs_settings->get('base_url');
+    $services['publizon'] = $publizon_settings->loadConfig()->get('base_url');
 
     $urls = [];
     foreach ($services as $api => $definition) {
-      $urls[sprintf('%s-base-url', $api)] = $definition['base_url'];
+      $urls[sprintf('%s-base-url', $api)] = $definition;
     }
 
     return $urls;
