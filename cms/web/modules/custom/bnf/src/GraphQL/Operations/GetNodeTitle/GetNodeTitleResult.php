@@ -36,6 +36,6 @@ class GetNodeTitleResult extends \Spawnia\Sailor\Result
 
     public static function config(): string
     {
-        return \Safe\realpath(__DIR__ . '/../../../../../../../../sailor.php');
+        return \Safe\realpath(__DIR__ . '/../../../../sailor.php');
     }
 }
