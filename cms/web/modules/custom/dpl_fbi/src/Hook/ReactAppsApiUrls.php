@@ -7,8 +7,8 @@ namespace Drupal\dpl_fbi\Hook;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_library_agency\FbiProfileType;
-use Drupal\dpl_library_agency\GeneralSettings;
 use function Safe\preg_replace;
 
 /**
@@ -23,7 +23,7 @@ class ReactAppsApiUrls {
 
   public function __construct(
     ConfigFactoryInterface $configFactory,
-    protected GeneralSettings $agencySettings,
+    protected Fbi $fbi,
   ) {
     // @todo The profile settings belong in this module too, as does the
     // FbiProfileType enum.
@@ -42,10 +42,9 @@ class ReactAppsApiUrls {
 
     $apiUrls = [];
 
-    // The base url of the FBI service is a special case
-    // because a part (the profile) of the base url can differ.
+    // Create an URL for each profile.
     if ($baseUrl) {
-      foreach ($this->agencySettings->getFbiProfiles() as $type => $profile) {
+      foreach ($this->fbi->getProfiles() as $type => $profile) {
         $service_key = sprintf('fbi-%s', $type);
         // The default FBI service has its own key with no suffix.
         if ($type === FbiProfileType::DEFAULT->value) {
