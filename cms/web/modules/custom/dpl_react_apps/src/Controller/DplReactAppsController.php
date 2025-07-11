@@ -551,11 +551,6 @@ class DplReactAppsController extends ControllerBase {
     $configuredServices = $react_apps_settings->get('services') ?? [];
     $services = \Drupal::moduleHandler()->invokeAll('dpl_react_apps_api_urls');
     foreach ($configuredServices as $name => $conf) {
-      // @todo remove when the FBI URL configuration is moved to dpl_fbi.
-      if ($name == 'fbi') {
-        continue;
-      }
-
       $services[$name] = $conf['base_url'];
     }
 

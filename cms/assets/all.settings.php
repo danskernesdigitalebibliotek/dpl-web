@@ -100,8 +100,6 @@ $settings['file_private_path'] = $app_root . '/sites/default/files/private';
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],
-  // @todo This should be updated to use the correct URL when available.
-  'fbi' => ['base_url' => 'https://temp.fbi-api.dbc.dk/[profile]/graphql'],
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
 
@@ -112,6 +110,7 @@ $databases['default']['default']['collation'] = 'utf8mb4_danish_ci';
 
 if (getenv('CI')) {
   // Set service base urls for the external APIs to mocked services.
+  $config['dpl_fbi.settings'] = ['base_url' => 'http://fbi.dpl-cms.local/[profile]/graphql'];
   $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs.dpl-cms.local'];
   $config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.dbc.dk'];
   // Adgangsplatformen OpenID Connect client.
@@ -129,7 +128,6 @@ if (getenv('CI')) {
   // We need http domains for testing in CI context.
   $config['dpl_react_apps.settings']['services'] = [
     'cover' => ['base_url' => 'http://cover.dandigbib.org'],
-    'fbi' => ['base_url' => 'http://fbi.dpl-cms.local/[profile]/graphql'],
     'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
   ];
 
