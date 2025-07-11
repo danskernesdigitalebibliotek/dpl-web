@@ -1,0 +1,7 @@
+---
+services:
+  _defaults:
+    autowire: true
+
+  # Hook services can be removed in D11.
+  Drupal\dpl_fbi\Hook\ReactAppsApiUrls: {}

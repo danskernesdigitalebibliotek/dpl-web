@@ -1,7 +1,7 @@
 <?php
 
-use Drupal\dpl_library_agency\FbiProfileType;
-use function Safe\preg_replace;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_fbi\Hook\ReactAppsApiUrls;
 
 /**
  * Add field types for which remove button will be added.
@@ -13,40 +13,15 @@ function dpl_fbi_multiple_field_remove_button_field_types_alter(array &$fieldTyp
   $fieldTypes[] = "dpl_fbi_work_id";
 }
 
+/* Legacy hooks can be removed in D11. */
+
 /**
  * Implements hook_dpl_react_apps_api_urls().
  *
  * @return array<string, string>
  *   Service to URL mapping.
  */
+#[LegacyHook]
 function dpl_fbi_dpl_react_apps_api_urls(): array {
-  // @todo Move the setting to this moudel.
-  $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
-  $services = $react_apps_settings->get('services') ?? [];
-
-  // @todo The profile settings belong in this module too, as does the
-  // FbiProfileType class.
-  /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
-  $general_settings = \Drupal::service('dpl_library_agency.general_settings');
-
-  $apiUrls = [];
-
-  // The base url of the FBI service is a special case
-  // because a part (the profile) of the base url can differ.
-  // Lets' handle that:
-  if (!empty($services['fbi'])) {
-    $placeholder_url = $services['fbi']['base_url'];
-    foreach ($general_settings->getFbiProfiles() as $type => $profile) {
-      $service_key = sprintf('fbi-%s', $type);
-      // The default FBI service has its own key with no suffix.
-      if ($type === FbiProfileType::DEFAULT->value) {
-        $service_key = 'fbi';
-      }
-      // Create a service url with the profile embedded.
-      $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
-      $apiUrls[$service_key] = $base_url;
-    }
-  }
-
-  return $apiUrls;
+  return \Drupal::service(ReactAppsApiUrls::class)->reactApiUrls();
 }
