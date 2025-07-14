@@ -879,3 +879,22 @@ function dpl_update_update_10058(): string {
 
   return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
 }
+
+/**
+ * Unignore system.performance configuration.
+ *
+ * It has been ignored, as we had to disable CSS and JS aggregration with
+ * a custom script, to avoid a full on release.
+ *
+ * We also want to do this specifically *before* the config is imported,
+ * as we have added these changes to system.performance.yml, just incase
+ * something has gone wrong with the semi-manual script solution.
+ */
+function dpl_update_update_10059(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'system.performance',
+    // We need to unignore this as well as it is handled on the same config
+    // form as system.performance.
+    'http_cache_control.settings',
+  ]);
+}
