@@ -295,6 +295,7 @@ class DplReactAppsController extends ControllerBase {
       'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
+      'find-on-shelf-disclosures-default-open-config' => (int) $this->generalSettings->getFindOnShelfDisclosuresDefaultOpen(),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
 
