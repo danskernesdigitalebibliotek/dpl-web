@@ -7,8 +7,8 @@ const events = {
     title: 'Single event',
     subtitle: 'A subtitle',
     recurType: 'Custom/Single Event',
-    start: dayjs('2030-01-01T10:00:00'),
-    end: dayjs('2030-01-01T16:00:00'),
+    start: dayjs('2030-01-01T10:15:00'),
+    end: dayjs('2030-01-01T16:15:00'),
   },
 };
 
