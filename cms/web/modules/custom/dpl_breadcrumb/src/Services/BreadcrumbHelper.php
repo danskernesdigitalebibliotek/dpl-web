@@ -16,37 +16,11 @@ use Drupal\recurring_events\Entity\EventSeries;
 use Drupal\taxonomy\TermInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTime;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Menu Helper service for DPL breadcrumb.
  */
 class BreadcrumbHelper {
-
-  /**
-   * The entity type interface.
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * The language manager.
-   */
-  protected LanguageManagerInterface $languageManager;
-
-  /**
-   * PathAuto alias cleaner.
-   */
-  protected AliasCleanerInterface $aliasCleaner;
-
-  /**
-   * Translation interface.
-   */
-  protected TranslationInterface $translation;
-
-  /**
-   * Custom logger service.
-   */
-  protected LoggerInterface $logger;
 
   /**
    * Should the current page also be shown in the breadcrumb?
@@ -67,30 +41,12 @@ class BreadcrumbHelper {
    * {@inheritdoc}
    */
   public function __construct(
-    EntityTypeManagerInterface $entity_type_manager,
-    LanguageManagerInterface $language_manager,
-    AliasCleanerInterface $alias_cleaner,
-    TranslationInterface $translation,
-    LoggerInterface $logger,
+    protected LoggerInterface $logger,
+    protected AliasCleanerInterface $aliasCleaner,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected LanguageManagerInterface $languageManager,
+    protected TranslationInterface $translation,
   ) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->languageManager = $language_manager;
-    $this->aliasCleaner = $alias_cleaner;
-    $this->translation = $translation;
-    $this->logger = $logger;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('language.manager'),
-      $container->get('pathauto.alias_cleaner'),
-      $container->get('string_translation'),
-      $container->get('dpl_breadcrumb.logger'),
-    );
   }
 
   /**
