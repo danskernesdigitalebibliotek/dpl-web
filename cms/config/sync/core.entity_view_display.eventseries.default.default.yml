@@ -7,6 +7,7 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_all_day
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
     - field.field.eventseries.default.field_event_paragraphs
@@ -165,6 +166,7 @@ hidden:
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_event_all_day: true
   field_event_state: true
   field_relevant_ticket_manager: true
   field_screen_names: true
