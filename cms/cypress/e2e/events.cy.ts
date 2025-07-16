@@ -69,6 +69,34 @@ describe('Events', () => {
       );
   });
 
+  it('all-day event is respected', () => {
+    // Login as admin.
+    cy.drupalLogin('/events/add/default');
+
+    cy.findByLabelText('Title').type(events.singleEvent.title);
+    cy.findByLabelText('Subtitle').type(events.singleEvent.subtitle);
+    cy.findByLabelText('Recur Type').select(events.singleEvent.recurType, {
+      // We have to use force when using Select2.
+      force: true,
+    });
+    typeInCkEditor('Hello, world!');
+
+    setDate('Start date', events.singleEvent.start);
+    setDate('End date', events.singleEvent.end);
+
+    const warningText =
+      'Any times below will be overwritten and saved as 00:00 - 23:59';
+
+    cy.contains(warningText).should('not.be.visible');
+    cy.findByLabelText('All day').click();
+    cy.contains(warningText).should('be.visible');
+
+    cy.clickSaveButton();
+
+    cy.contains(events.singleEvent.start.format('HH:mm')).should('not.exist');
+    cy.contains('All day').should('be.visible');
+  });
+
   before(() => {
     cy.drupalLogin('/admin/content/eventseries');
     // Delete all preexisting instances of each event.
