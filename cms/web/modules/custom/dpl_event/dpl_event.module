@@ -340,6 +340,21 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     return;
   }
 
+  if (isset($form['field_event_all_day'])) {
+    $form['field_event_all_day']['warning'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['dpl-form-warning']],
+      '#states' => [
+        'visible' => [
+          ':input[name="field_event_all_day[value]"]' => ['checked' => TRUE],
+        ],
+      ],
+      'message' => [
+        '#markup' => t('Any times below will be overwritten and saved as 00:00 - 23:59', [], ['context' => 'dpl_event']),
+      ],
+    ];
+  }
+
   // Move the "Published" checkbox to the gin sticky action header.
   if (isset($form['status'])) {
     $form['status']['#group'] = 'status';
