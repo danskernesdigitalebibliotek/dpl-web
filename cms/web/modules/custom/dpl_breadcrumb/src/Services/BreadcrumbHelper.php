@@ -4,6 +4,7 @@ namespace Drupal\dpl_breadcrumb\Services;
 
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Breadcrumb\Breadcrumb;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -46,6 +47,7 @@ class BreadcrumbHelper {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected LanguageManagerInterface $languageManager,
     protected TranslationInterface $translation,
+    protected ConfigFactoryInterface $configFactory,
   ) {
   }
 
@@ -238,7 +240,14 @@ class BreadcrumbHelper {
       $date_string = $instance->get('date')->getValue()[0]['value'] ?? NULL;
 
       if (!empty($date_string)) {
-        $date = new DateTime($date_string);
+        // The value we get out is in UTC. We want to alter it to whatever
+        // is the default timezone of the site.
+        // Otherwise, 02/01 00:00:00 might show up as 01/01 22:00:00.
+        $timezone = $this->configFactory->get('system.date')->get('timezone.default');
+        $timezone = new \DateTimeZone($timezone);
+        $date = new DateTime($date_string, new \DateTimeZone('UTC'));
+        $date->setTimezone($timezone);
+
         $formatted_date = $date->format('Y-m-d');
         $breadcrumb->addLink($instance->toLink($formatted_date));
         $breadcrumb->addCacheableDependency($instance);
