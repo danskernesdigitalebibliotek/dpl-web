@@ -276,6 +276,18 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
       $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
     }
   }
+
+  if ($eventInstance->hasField('event_all_day') &&
+    !empty($eventInstance->get('event_all_day')->getString())) {
+    $variables['start_time'] = t('All day');
+    unset($variables['end_time']);
+  }
+
+  $variables['time_combined'] = $variables['start_time'];
+
+  if (!empty($variables['end_time'])) {
+    $variables['time_combined'] .= " - {$variables['end_time']}";
+  }
 }
 
 /**

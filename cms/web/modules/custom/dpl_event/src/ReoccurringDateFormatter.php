@@ -49,13 +49,13 @@ class ReoccurringDateFormatter {
     $end_date = $upcoming_event_dates['end'];
 
     switch ($recur_type) {
-      // Daily | H:i - H:i.
+      // Daily | (time).
       case 'daily_recurring_date':
         $date_string = $this->translation->translate('Every day');
 
         break;
 
-      // Mondays, Tuesday & Wednesdays | H:i - H:i.
+      // Mondays, Tuesday & Wednesdays | (time).
       case 'weekly_recurring_date':
         $week_days = [];
 
@@ -69,7 +69,7 @@ class ReoccurringDateFormatter {
         );
         break;
 
-      // DD/MM/YY | H:i - H:i.
+      // DD/MM/YY | (time).
       default:
         $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
 
@@ -83,9 +83,14 @@ class ReoccurringDateFormatter {
         break;
     }
 
+    if ($event_series->hasField('field_event_all_day') &&
+        !empty($event_series->get('field_event_all_day')->getString())) {
+      return $date_string;
+    }
+
     $time_string = "{$this->formatDate($start_date, 'H:i')} - {$this->formatDate($end_date, 'H:i')}";
 
-    return "$date_string $time_string";
+    return "$date_string - $time_string";
 
   }
 
