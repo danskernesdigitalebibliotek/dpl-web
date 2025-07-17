@@ -879,3 +879,15 @@ function dpl_update_update_10058(): string {
 
   return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
 }
+
+/**
+ * Add new data columns to dpl_fbi_cql_search custom field.
+ */
+function dpl_update_update_10059(): string {
+  _dpl_update_add_field_columns('dpl_fbi_cql_search', [
+    'branch',
+    'department',
+  ]);
+
+  return 'New field columns added.';
+}

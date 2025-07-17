@@ -48,6 +48,14 @@ final class CqlSearchItem extends FieldItemBase {
       ->setLabel(t('Sub-location', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
 
+    $properties['branch'] = DataDefinition::create('string')
+      ->setLabel(t('Branch', [], ['context' => 'dpl_fbi']))
+      ->setRequired(FALSE);
+
+    $properties['department'] = DataDefinition::create('string')
+      ->setLabel(t('Department', [], ['context' => 'dpl_fbi']))
+      ->setRequired(FALSE);
+
     $properties['onshelf'] = DataDefinition::create('boolean')
       ->setLabel(t('On-shelf', [], ['context' => 'dpl_fbi']))
       ->setRequired(FALSE);
@@ -118,6 +126,18 @@ final class CqlSearchItem extends FieldItemBase {
         'length' => 1024,
         'not null' => FALSE,
         'description' => '"Sub-location" search filter',
+      ],
+      'branch' => [
+        'type' => 'text',
+        'length' => 1024,
+        'not null' => FALSE,
+        'description' => '"Branch" search filter',
+      ],
+      'department' => [
+        'type' => 'text',
+        'length' => 1024,
+        'not null' => FALSE,
+        'description' => '"Department" search filter',
       ],
       'sort' => [
         'type' => 'varchar',

@@ -219,6 +219,20 @@ class CqlSearchWidget extends WidgetBase {
           '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
           '#default_value' => $items[$delta]->sublocation ?? '',
         ],
+        'branch' => [
+          '#type' => 'textarea',
+          '#rows' => 2,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('branch')
+          ?->getLabel(),
+          '#default_value' => $items[$delta]->branch ?? '',
+        ],
+        'department' => [
+          '#type' => 'textarea',
+          '#rows' => 2,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('department')
+          ?->getLabel(),
+          '#default_value' => $items[$delta]->department ?? '',
+        ],
         'onshelf' => [
           '#type' => 'checkbox',
           '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
@@ -368,6 +382,8 @@ class CqlSearchWidget extends WidgetBase {
     $filter_default_values = [
       'location' => '',
       'sublocation' => '',
+      'branch' => '',
+      'department' => '',
       'sort' => 'relevance',
     ];
 
@@ -407,6 +423,8 @@ class CqlSearchWidget extends WidgetBase {
         'value' => $values['filters']['cql'] ?? '',
         'location' => $values['filters']['location'] ?? '',
         'sublocation' => $values['filters']['sublocation'] ?? '',
+        'branch' => $values['filters']['branch'] ?? '',
+        'department' => $values['filters']['department'] ?? '',
         'onshelf' => !empty($values['filters']['onshelf']),
         'sort' => $values['filters']['sort'] ?? 'relevance',
         'first_accession_date_value' => $values['filters']['first_accession_date']['value'] ?? '',
