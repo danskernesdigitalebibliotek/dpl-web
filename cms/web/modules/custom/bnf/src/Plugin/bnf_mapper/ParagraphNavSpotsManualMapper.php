@@ -6,7 +6,6 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphCardGridManual;
 
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphNavSpotsManual;
 use Drupal\bnf\Services\BnfImporter;
@@ -18,7 +17,7 @@ use Spawnia\Sailor\ObjectLike;
  * Mapping ParagraphNavSpotsManual => nav_spots_manual.
  */
 #[BnfMapper(
-  id: ParagraphCardGridManual::class,
+  id: ParagraphNavSpotsManual::class,
 )]
 class ParagraphNavSpotsManualMapper extends BnfMapperImportReferencePluginBase {
 
@@ -51,7 +50,8 @@ class ParagraphNavSpotsManualMapper extends BnfMapperImportReferencePluginBase {
       $references = $this->mapEntityReferences($object->navSpotsContentUuids);
     }
 
-    return $this->entityTypeManager->getStorage('paragraph')->create([
+    $storage = $this->entityTypeManager->getStorage('paragraph');
+    return $storage->create([
       'type' => 'nav_spots_manual',
       'field_nav_spots_content' => $references,
     ]);

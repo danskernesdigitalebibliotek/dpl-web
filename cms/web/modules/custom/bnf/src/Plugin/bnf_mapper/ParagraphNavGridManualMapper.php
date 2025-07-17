@@ -6,7 +6,6 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphCardGridManual;
 
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphNavGridManual;
 use Drupal\bnf\Services\BnfImporter;
@@ -18,7 +17,7 @@ use Spawnia\Sailor\ObjectLike;
  * Mapping ParagraphNavGridManualMapper => nav_grid_manual.
  */
 #[BnfMapper(
-  id: ParagraphCardGridManual::class,
+  id: ParagraphNavGridManual::class,
 )]
 class ParagraphNavGridManualMapper extends BnfMapperImportReferencePluginBase {
 
