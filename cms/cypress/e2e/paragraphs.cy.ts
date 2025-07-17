@@ -238,6 +238,8 @@ describe('Paragraphs module', () => {
     cy.get('@subform').findByLabelText('Location').as('locationField');
     cy.get('@subform').findByLabelText('Sub-location').as('sublocationField');
     cy.get('@subform').findByLabelText('On-shelf').as('onshelfField');
+    cy.get('@subform').findByLabelText('Branch').as('branchField');
+    cy.get('@subform').findByLabelText('Department').as('departmentField');
 
     cy.get('@sortField').should(
       'have.value',
@@ -247,11 +249,13 @@ describe('Paragraphs module', () => {
     cy.get('@locationField').should('be.empty');
     cy.get('@sublocationField').should('be.empty');
     cy.get('@onshelfField').should('not.be.checked');
+    cy.get('@branchField').should('be.empty');
+    cy.get('@departmentField').should('be.empty');
 
     // Testing that link input updates the filters, and that a relative link
     // also works.
     cy.get('@linkField').type(
-      "/advanced-search?sort=sort.latestpublicationdate.asc&onshelf=true&location=børn&sublocation=fantasy&advancedSearchCql=+term.title%3D'Harry+Potter'+AND+term.creator%3D+'J.K.+Rowling'+AND+(+term.generalmaterialtype%3D'bøger'+OR+term.generalmaterialtype%3D'e-bøger')+AND+term.fictionnonfiction%3D'fiction'",
+      "/advanced-search?sort=sort.latestpublicationdate.asc&onshelf=true&location=børn&sublocation=fantasy&advancedSearchCql=+term.title%3D'Harry+Potter'+AND+term.creator%3D+'J.K.+Rowling'+AND+(+term.generalmaterialtype%3D'bøger'+OR+term.generalmaterialtype%3D'e-bøger')+AND+term.fictionnonfiction%3D'fiction'&branch=710111&department=voksen",
       { delay: 0 },
     );
     cy.get('@loadFiltersField').click();
@@ -266,6 +270,8 @@ describe('Paragraphs module', () => {
     );
     cy.get('@locationField').should('have.value', 'børn');
     cy.get('@sublocationField').should('have.value', 'fantasy');
+    cy.get('@branchField').should('have.value', '710111');
+    cy.get('@departmentField').should('have.value', 'voksen');
     cy.get('@onshelfField').should('be.checked');
 
     // Testing that new input takes precedence, that an absolute link
@@ -281,6 +287,8 @@ describe('Paragraphs module', () => {
     cy.get('@cqlField').should('have.value', "'Harry Potter'");
     cy.get('@locationField').should('be.empty');
     cy.get('@sublocationField').should('be.empty');
+    cy.get('@branchField').should('be.empty');
+    cy.get('@departmentField').should('be.empty');
     cy.get('@onshelfField').should('not.be.checked');
 
     // Re-sets all the values.
