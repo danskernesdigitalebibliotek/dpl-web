@@ -1,0 +1,21 @@
+uuid: 6a67f715-bfe9-4a09-9746-443eb95a8b10
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_automatic_list_hide
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_automatic_list_hide
+field_name: field_automatic_list_hide
+entity_type: eventseries
+bundle: default
+label: 'Hide in automatic lists'
+description: "If chosen, this eventseries and it's instances will not show up in automatic lists across the site.<br><br />The event will still show up in lists where it is manually added, and in Google search results."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

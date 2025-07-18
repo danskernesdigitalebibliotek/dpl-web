@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_automatic_list_hide
     - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
@@ -131,6 +132,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_automatic_list_hide:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_branch:
     type: select2_entity_reference
     weight: 0
@@ -243,7 +251,7 @@ content:
     third_party_settings: {  }
   field_relevant_ticket_manager:
     type: boolean_checkbox
-    weight: 25
+    weight: 26
     region: content
     settings:
       display_label: true

@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.eventseries.field_automatic_list_hide
     - field.storage.eventseries.field_description
     - field.storage.eventseries.field_event_place
     - field.storage.eventseries.field_teaser_text
@@ -29,6 +30,14 @@ field_settings:
       fields:
         - 'entity:eventseries/field_categories'
         - 'entity:node/field_categories'
+  field_automatic_list_hide:
+    label: 'Hide in automatic lists'
+    datasource_id: 'entity:eventseries'
+    property_path: field_automatic_list_hide
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.eventseries.field_automatic_list_hide
   field_branch:
     label: Branch
     datasource_id: 'entity:node'
