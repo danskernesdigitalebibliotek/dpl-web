@@ -42,7 +42,7 @@ export const EBookFactory = Factory.define<Work>(({ sequence }) => ({
   ],
   materialTypes: [materialTypeEbookFactory.build(), materialTypeAudioBookFactory.build()],
   manifestations: {
-    all: [eBookManifestationFactory.build()],
+    all: [eBookManifestationFactory.build(), audioBookManifestationFactory.build()],
     bestRepresentation: eBookManifestationFactory.build(),
   },
 }))

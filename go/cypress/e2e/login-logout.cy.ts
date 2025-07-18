@@ -1,5 +1,8 @@
 import routes from "@/lib/config/resolvers/routes"
 
+import getV1LibraryProfileAdapterFactory from "../factories/ap/getV1LibraryProfileAdapter"
+import getV1ProductsIdentifierAdapterFactory from "../factories/ap/getV1ProductsIdentifierAdapter"
+import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import configuration from "../factories/unilogin/configuration"
@@ -115,6 +118,39 @@ describe("UNI•Login: Login / Logout API Tests", () => {
     cy.location("pathname").should("eq", "/user/profile")
   })
 
+  it("Should show loans on unilogin user profile page", () => {
+    performLoginCallback()
+
+    cy.intercept("GET", "/pubhub/v1/library/profile", {
+      statusCode: 200,
+      body: getV1LibraryProfileAdapterFactory.build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.intercept("GET", "/pubhub/v1/user/loans", {
+      statusCode: 200,
+      body: getV1UserLoansAdapterFactory.build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/9788711917141", {
+      statusCode: 200,
+      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "9788711917141" }).build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/8788711917141", {
+      statusCode: 200,
+      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "8788711917141" }).build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.dataCy("loan-slider").should("be.visible")
+    cy.dataCy("loan-slider-next-button").click()
+    cy.dataCy("loan-slider-prev-button").click()
+    cy.dataCy("loan-slider-work").should("have.length", 5)
+  })
+
   it("Should logout when clicking logout button", () => {
     performLoginCallback()
 
@@ -124,7 +160,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
   })
 })
 
-describe.only("Adgangsplatformen: Login / Logout API Tests", () => {
+describe("Adgangsplatformen: Login / Logout API Tests", () => {
   const performLoginCallback = () => {
     const mockedCallbackUrl = "/auth/callback/adgangsplatformen"
 
@@ -136,11 +172,6 @@ describe.only("Adgangsplatformen: Login / Logout API Tests", () => {
       data: getAdgangsplatformenUserToken.build(),
     })
 
-    cy.interceptGraphql({
-      operationName: "complexSearchForWorkTeaser",
-      data: complexSearchForWorkTeaser.build(),
-    })
-
     cy.visit(mockedCallbackUrl)
   }
 
@@ -148,6 +179,48 @@ describe.only("Adgangsplatformen: Login / Logout API Tests", () => {
     performLoginCallback()
 
     cy.location("pathname").should("eq", "/user/profile")
+  })
+
+  it("Should show loans on adgangsplatformen user profile page", () => {
+    performLoginCallback()
+
+    cy.intercept("GET", "/auth/session", {
+      isLoggedIn: true,
+      expires: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour from now
+      user: {
+        name: "Adgangsplatformen bruger",
+      },
+      type: "adgangsplatformen",
+    })
+
+    cy.intercept("GET", "ap-service/pubhub-adapter/v1/library/profile", {
+      statusCode: 200,
+      body: getV1LibraryProfileAdapterFactory.build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/user/loans", {
+      statusCode: 200,
+      body: getV1UserLoansAdapterFactory.build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/9788711917141", {
+      statusCode: 200,
+      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "9788711917141" }).build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/8788711917141", {
+      statusCode: 200,
+      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "8788711917141" }).build(),
+      headers: { "content-type": "application/json" },
+    })
+
+    cy.dataCy("loan-slider").should("be.visible")
+    cy.dataCy("loan-slider-next-button").click()
+    cy.dataCy("loan-slider-prev-button").click()
+    cy.dataCy("loan-slider-work").should("have.length", 5)
   })
 
   it("Should logout when clicking logout button", () => {
