@@ -15,7 +15,7 @@ class DplDisallowSimpleOauthRequests implements SimpleOauthRequestPolicyInterfac
   /**
    * {@inheritdoc}
    */
-  public function isOauth2Request(Request $request) {
+  public function isOauth2Request(Request $request): bool {
 
     // Check if the request URL starts with /graphql.
     if (strpos($request->getPathInfo(), '/graphql') !== 0) {
