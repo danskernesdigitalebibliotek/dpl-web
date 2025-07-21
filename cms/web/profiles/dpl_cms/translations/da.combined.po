@@ -28958,7 +28958,7 @@ msgstr ""
 #: 
 msgctxt "advanced search"
 msgid "Date for first accession date"
-msgstr ""
+msgstr "Datointerval for opr. indkøb af en udgave af et værk"
 
 #: 
 msgctxt "advanced search"
@@ -28993,7 +28993,7 @@ msgstr "Tidligere end"
 #: 
 msgctxt "dpl_fbi"
 msgid "First accession date: Value"
-msgstr "Firstaccessiondate: Værdi"
+msgstr "Firstaccessiondateitem: Værdi"
 
 #: 
 msgctxt "dpl_fbi"
@@ -29003,12 +29003,12 @@ msgstr "Datoformatet skal være YYYY-MM-DD, f.eks. 2024-12-24. Termerne \"NOW\",
 #: 
 msgctxt "dpl_fbi"
 msgid "First accession date: Operator"
-msgstr "Firstaccessiondate: Operator"
+msgstr "Firstaccessiondateitem: Operator"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "First accession date"
-msgstr ""
+msgstr "Filtrering på Firstaccessiondateitem"
 
 #: 
 msgctxt "views.view.firstaccessiondate_content_admin:label"
