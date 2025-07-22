@@ -207,6 +207,20 @@ class CqlSearchWidget extends WidgetBase {
             ),
           ],
         ],
+        'branch' => [
+          '#type' => 'textarea',
+          '#rows' => 2,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('branch')
+          ?->getLabel(),
+          '#default_value' => $items[$delta]->branch ?? '',
+        ],
+        'department' => [
+          '#type' => 'textarea',
+          '#rows' => 2,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('department')
+          ?->getLabel(),
+          '#default_value' => $items[$delta]->department ?? '',
+        ],
         'location' => [
           '#type' => 'textarea',
           '#rows' => 2,
@@ -219,6 +233,7 @@ class CqlSearchWidget extends WidgetBase {
           '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
           '#default_value' => $items[$delta]->sublocation ?? '',
         ],
+
         'onshelf' => [
           '#type' => 'checkbox',
           '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
@@ -368,6 +383,8 @@ class CqlSearchWidget extends WidgetBase {
     $filter_default_values = [
       'location' => '',
       'sublocation' => '',
+      'branch' => '',
+      'department' => '',
       'sort' => 'relevance',
     ];
 
@@ -405,6 +422,8 @@ class CqlSearchWidget extends WidgetBase {
       $values = $input[$this->fieldDefinition->getName()][$delta] ?? [];
       $value = [
         'value' => $values['filters']['cql'] ?? '',
+        'branch' => $values['filters']['branch'] ?? '',
+        'department' => $values['filters']['department'] ?? '',
         'location' => $values['filters']['location'] ?? '',
         'sublocation' => $values['filters']['sublocation'] ?? '',
         'onshelf' => !empty($values['filters']['onshelf']),
