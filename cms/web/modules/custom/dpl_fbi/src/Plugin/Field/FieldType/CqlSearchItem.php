@@ -115,18 +115,6 @@ final class CqlSearchItem extends FieldItemBase {
         'description' => 'CQL search string.',
         'length' => 16000,
       ],
-      'location' => [
-        'type' => 'text',
-        'length' => 1024,
-        'not null' => FALSE,
-        'description' => '"Location" search filter',
-      ],
-      'sublocation' => [
-        'type' => 'text',
-        'length' => 1024,
-        'not null' => FALSE,
-        'description' => '"Sub-location" search filter',
-      ],
       'branch' => [
         'type' => 'text',
         'length' => 1024,
@@ -138,6 +126,18 @@ final class CqlSearchItem extends FieldItemBase {
         'length' => 1024,
         'not null' => FALSE,
         'description' => '"Department" search filter',
+      ],
+      'location' => [
+        'type' => 'text',
+        'length' => 1024,
+        'not null' => FALSE,
+        'description' => '"Location" search filter',
+      ],
+      'sublocation' => [
+        'type' => 'text',
+        'length' => 1024,
+        'not null' => FALSE,
+        'description' => '"Sub-location" search filter',
       ],
       'sort' => [
         'type' => 'varchar',

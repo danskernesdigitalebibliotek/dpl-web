@@ -207,18 +207,6 @@ class CqlSearchWidget extends WidgetBase {
             ),
           ],
         ],
-        'location' => [
-          '#type' => 'textarea',
-          '#rows' => 2,
-          '#title' => $fieldStorageDefinition->getPropertyDefinition('location')?->getLabel(),
-          '#default_value' => $items[$delta]->location ?? '',
-        ],
-        'sublocation' => [
-          '#type' => 'textarea',
-          '#rows' => 2,
-          '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
-          '#default_value' => $items[$delta]->sublocation ?? '',
-        ],
         'branch' => [
           '#type' => 'textarea',
           '#rows' => 2,
@@ -233,6 +221,19 @@ class CqlSearchWidget extends WidgetBase {
           ?->getLabel(),
           '#default_value' => $items[$delta]->department ?? '',
         ],
+        'location' => [
+          '#type' => 'textarea',
+          '#rows' => 2,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('location')?->getLabel(),
+          '#default_value' => $items[$delta]->location ?? '',
+        ],
+        'sublocation' => [
+          '#type' => 'textarea',
+          '#rows' => 2,
+          '#title' => $fieldStorageDefinition->getPropertyDefinition('sublocation')?->getLabel(),
+          '#default_value' => $items[$delta]->sublocation ?? '',
+        ],
+
         'onshelf' => [
           '#type' => 'checkbox',
           '#title' => $fieldStorageDefinition->getPropertyDefinition('onshelf')?->getLabel(),
@@ -421,10 +422,10 @@ class CqlSearchWidget extends WidgetBase {
       $values = $input[$this->fieldDefinition->getName()][$delta] ?? [];
       $value = [
         'value' => $values['filters']['cql'] ?? '',
-        'location' => $values['filters']['location'] ?? '',
-        'sublocation' => $values['filters']['sublocation'] ?? '',
         'branch' => $values['filters']['branch'] ?? '',
         'department' => $values['filters']['department'] ?? '',
+        'location' => $values['filters']['location'] ?? '',
+        'sublocation' => $values['filters']['sublocation'] ?? '',
         'onshelf' => !empty($values['filters']['onshelf']),
         'sort' => $values['filters']['sort'] ?? 'relevance',
         'first_accession_date_value' => $values['filters']['first_accession_date']['value'] ?? '',
