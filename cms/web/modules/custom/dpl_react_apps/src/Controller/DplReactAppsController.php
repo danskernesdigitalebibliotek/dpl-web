@@ -365,6 +365,7 @@ class DplReactAppsController extends ControllerBase {
       'hearts-icon-text' => $this->t('hearts', [], ['context' => 'Work Page']),
       'identifier-text' => $this->t('Identifiers', [], ['context' => 'Work Page']),
       'in-same-series-text' => $this->t('In the same series', [], ['context' => 'Work Page']),
+      'infomedia-copyright-text' => $this->t('All material in Infomedia is covered by copyright law and may not be copied without special permission.', [], ['context' => 'Work Page']),
       'infomedia-modal-close-modal-aria-label-text' => $this->t('Close infomedia modal', [], ['context' => 'Work Page']),
       'infomedia-modal-screen-reader-modal-description-text' => $this->t('Infomedia modal screen reader description', [], ['context' => 'Work Page']),
       'instant-loan-sub-title-text' => $this->t('Avoid the queue and pick up the material now', [], ['context' => 'Work Page']),
