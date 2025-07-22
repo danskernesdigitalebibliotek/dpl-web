@@ -377,6 +377,7 @@ class DplReactAppsController extends ControllerBase {
       'interest-period-two-months-config-text' => $this->t('1', [], ['context' => 'Work Page']),
       'isbn-text' => $this->t('ISBN', [], ['context' => 'Work Page']),
       'language-text' => $this->t('Language', [], ['context' => 'Work Page']),
+      'library-assessment-text' => $this->t('Library assessment', [], ['context' => 'Work Page']),
       'libraries-have-the-material-text' => $this->t('Libraries have the material', [], ['context' => 'Work Page']),
       'listen-online-text' => $this->t('Listen online', [], ['context' => 'Work Page']),
       'loan-with-material-type-text' => $this->t('Loan @materialType', [], ['context' => 'Work Page']),
