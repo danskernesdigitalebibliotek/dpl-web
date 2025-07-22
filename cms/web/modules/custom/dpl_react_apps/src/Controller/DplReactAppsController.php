@@ -562,7 +562,7 @@ class DplReactAppsController extends ControllerBase {
       foreach ($general_settings->getFbiProfiles() as $type => $profile) {
         $service_key = sprintf('fbi-%s', $type);
         // The default FBI service has its own key with no suffix.
-        if ($type === FbiProfileType::DEFAULT->value) {
+        if ($type === FbiProfileType::Default->value) {
           $service_key = 'fbi';
         }
         // Create a service url with the profile embedded.

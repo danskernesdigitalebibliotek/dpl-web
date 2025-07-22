@@ -66,7 +66,7 @@ class PreviewTokenIframeGoFormatter extends FormatterBase {
    *   The iframe URL.
    */
   protected function getLinkUrl(): string {
-    return $this->goSite->getGoBaseUrl() . '/preview/' . '[node:preview:uuid]' . '?token=' . '[node:preview:token]';
+    return $this->goSite->getGoBaseUrl() . '/preview/[node:preview:uuid]?token=[node:preview:token]';
   }
 
   /**
