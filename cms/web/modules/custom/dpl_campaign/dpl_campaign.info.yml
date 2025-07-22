@@ -2,7 +2,7 @@ name: 'dpl_campaign'
 type: module
 description: 'A module that deliveres possibility for campaign CRUD and integration with Dpl React Apps'
 package: 'DPL'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - drupal:serialization
   - handy_cache_tags:handy_cache_tags

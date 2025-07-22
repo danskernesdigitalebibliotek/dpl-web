@@ -2,4 +2,4 @@ name: 'DPL Cache settings'
 type: module
 description: 'Giving admins a clearer access to cache-clearing, and the consequences.'
 package: 'DPL'
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11

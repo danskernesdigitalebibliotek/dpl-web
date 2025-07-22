@@ -2,7 +2,7 @@ name: Patron registration
 description: Enable registration of new patrons
 package: DPL
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - dpl_library_agency:dpl_library_agency
   - dpl_patron_page:dpl_patron_page

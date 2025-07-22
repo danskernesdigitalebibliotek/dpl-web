@@ -6,4 +6,4 @@ dependencies:
   - config_translation_po:config_translation_po
 
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

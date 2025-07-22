@@ -2,7 +2,7 @@ name: DPL related content - test suite
 description: Testing the functionality of DPL Related Content.
 package: DPL
 type: module
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - default_content:default_content
   - dpl_related_content:dpl_related_content

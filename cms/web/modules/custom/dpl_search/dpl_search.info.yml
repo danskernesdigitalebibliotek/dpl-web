@@ -2,4 +2,4 @@ name: DPL Search
 description: Handling the search pages.
 package: DPL
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

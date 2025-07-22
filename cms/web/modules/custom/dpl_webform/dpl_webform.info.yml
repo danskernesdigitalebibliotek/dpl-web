@@ -3,7 +3,7 @@ description: 'Handles custom webform configuration'
 package: DPL
 
 type: module
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
   - webform:webform
