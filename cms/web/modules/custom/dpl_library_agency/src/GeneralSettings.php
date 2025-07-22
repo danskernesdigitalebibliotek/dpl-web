@@ -22,6 +22,7 @@ class GeneralSettings extends DplReactConfigBase {
   // not expected to be changing often.
   const FBI_PROFILE = 'next';
   const OPENING_HOURS_URL = '/branches';
+  const FIND_ON_SHELF_DISCLOSURES_DEFAULT_OPEN = FALSE;
 
   /**
    * Gets the configuration key for general settings.
@@ -149,6 +150,17 @@ class GeneralSettings extends DplReactConfigBase {
     return [
       'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
     ];
+  }
+
+  /**
+   * Get the default setting for find on shelf disclosures.
+   *
+   * @return bool
+   *   True if disclosures should be shown by default, false otherwise.
+   */
+  public function getFindOnShelfDisclosuresDefaultOpen(): bool {
+    return $this->loadConfig()->get('find_on_shelf_disclosures_default_open')
+      ?? self::FIND_ON_SHELF_DISCLOSURES_DEFAULT_OPEN;
   }
 
   /**

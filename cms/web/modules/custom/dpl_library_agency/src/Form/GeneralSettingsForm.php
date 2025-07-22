@@ -184,6 +184,20 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
     ];
 
+    $form['find_on_shelf'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Find on shelf', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['find_on_shelf']['find_on_shelf_disclosures_default_open'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Default open find on shelf disclosures', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('find_on_shelf_disclosures_default_open') ?? FALSE,
+      '#description' => $this->t('If checked, the find on shelf disclosures will be open by default', [], ['context' => 'Library Agency Configuration']),
+    ];
+
     $form['expiration_warning'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Expiration warning', [], ['context' => 'Library Agency Configuration']),
@@ -319,6 +333,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
+      ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('fbi_profiles', [
         'default' => $form_state->getValue('fbi_profile_default'),
         'local' => $form_state->getValue('fbi_profile_local'),
