@@ -28888,7 +28888,7 @@ msgstr "Link til søgning"
 #: 
 msgctxt "dpl_fbi"
 msgid "E.g. https://mitbibliotek.dk/advanced-search?advancedSearchCql=%27Harry+Potter%27"
-msgstr ""
+msgstr "F.eks. E.g. https://mitbibliotek.dk/advanced-search?advancedSearchCql=%27Harry+Potter%27"
 
 #: 
 msgctxt "dpl_fbi"
@@ -28903,42 +28903,42 @@ msgstr ""
 #: 
 msgctxt "dpl_fbi"
 msgid "By publication date (descending)"
-msgstr ""
+msgstr "Nyeste først"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "By publication date (ascending)"
-msgstr ""
+msgstr "Ældste først"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "By title (descending)"
-msgstr ""
+msgstr "Titel (Å - A)"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "By title (ascending)"
-msgstr ""
+msgstr "Titel (A - Å)"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "By creator (descending)"
-msgstr ""
+msgstr "Forfatter / ophav (Å - A)"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "By creator (ascending)"
-msgstr ""
+msgstr "Forfatter / ophav (A - Å)"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "By relevance"
-msgstr ""
+msgstr "Bedste match"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "The link you pasted is not valid.<br> See the guide, for how to find a correct link."
-msgstr ""
+msgstr "Ugyldigt link"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:label"
