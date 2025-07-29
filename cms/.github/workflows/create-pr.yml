@@ -85,11 +85,10 @@ jobs:
 
       - name: Create branch
         id: create_branch
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           branch: ${{ env.PR_BRANCH }}
           commit_message: "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"
-          create_branch: true
         if: ${{ steps.manipulate_composer.outcome == 'success' }}
 
       - name: Create PR
