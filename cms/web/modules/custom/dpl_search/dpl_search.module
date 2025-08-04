@@ -33,6 +33,23 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
 
   $input = urldecode($input);
 
+  // For creator, subject, or dk5 searches, use the filter value instead of "*".
+  if ($input === '*') {
+    $creator = \Drupal::request()->query->get('creators');
+    $subject = \Drupal::request()->query->get('subjects');
+    $dk5 = \Drupal::request()->query->get('dk5');
+
+    if ($creator) {
+      $input = $creator;
+    }
+    elseif ($subject) {
+      $input = $subject;
+    }
+    elseif ($dk5) {
+      $input = $dk5;
+    }
+  }
+
   $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
 
   if (!($view instanceof ViewExecutable)) {
@@ -40,7 +57,7 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
   }
 
   $view->setDisplay('page');
-  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => $input]);
+  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => (string) $input]);
   $view->execute();
   if (empty($view->total_rows)) {
     return;
