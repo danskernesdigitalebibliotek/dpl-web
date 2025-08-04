@@ -85,7 +85,7 @@ describe('Events', () => {
     setDate('End date', events.singleEvent.end);
 
     const warningText =
-      'Any times below will be overwritten and saved as 00:00 - 23:59';
+      'Any specific times below will be ignored when "All day" is enabled';
 
     cy.contains(warningText).should('not.be.visible');
     cy.findByLabelText('All day').click();

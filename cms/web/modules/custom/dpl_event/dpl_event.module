@@ -350,7 +350,7 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
         ],
       ],
       'message' => [
-        '#markup' => t('Any times below will be overwritten and saved as 00:00 - 23:59', [], ['context' => 'dpl_event']),
+        '#markup' => t('Any specific times below will be ignored when "All day" is enabled', [], ['context' => 'dpl_event']),
       ],
     ];
   }
