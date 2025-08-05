@@ -34,7 +34,7 @@ async function getLibraryProfile() {
     const responseData = await getLibraryProfileRequest()
     return NextResponse.json(libraryProfile.parse(responseData))
   } catch (error) {
-    console.error(error)
+    console.error("getLibraryProfile error", error)
     throw new Response("Unprocessable content", { status: 422 })
   }
 }

@@ -100,7 +100,7 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
     // https://stackoverflow.com/questions/78010331/dynamic-server-usage-page-couldnt-be-rendered-statically-because-it-used-next
     unstable_rethrow(error)
 
-    console.error(error)
+    console.error("getSession error", error)
     return defaultSession as IronSession<TSessionData>
   }
 }
