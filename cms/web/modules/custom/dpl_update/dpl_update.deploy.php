@@ -12,6 +12,46 @@ use Drupal\recurring_events\Entity\EventSeries;
 
 use Drupal\dpl_update\Services\MediaCleanup;
 use Drupal\media\Entity\Media;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
+
+/**
+ * Update the permissions for a supplied list of roles.
+ *
+ * This hook is necessary, as some library websites have access to update their
+ * own permissions, and these changes are respected despite "config-import".
+ * This is the same logic that also makes the _dpl_update_install_modules
+ * necessary when adding modules.
+ *
+ * @param array<string|RoleInterface> $roles
+ *   The roles that we want to update.
+ * @param array<string> $permissions
+ *   The permissions we want to either add or remove.
+ * @param bool $grant
+ *   TRUE if we want to add the permissions - FALSE if we want to remove them.
+ */
+function _dpl_update_alter_permissions(array $roles, array $permissions, bool $grant = TRUE): void {
+  foreach ($roles as $role) {
+    if (is_string($role)) {
+      $role = Role::load($role);
+
+      if (!($role instanceof RoleInterface)) {
+        throw new UnexpectedValueException("Could not find role $role");
+      }
+    }
+
+    foreach ($permissions as $permission) {
+      if ($grant) {
+        $role->grantPermission($permission);
+      }
+      else {
+        $role->revokePermission($permission);
+      }
+    }
+
+    $role->save();
+  }
+}
 
 /**
  * Linking new field inheritances with existing eventinstances.

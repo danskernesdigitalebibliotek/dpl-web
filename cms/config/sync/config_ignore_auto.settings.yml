@@ -2,17 +2,6 @@ _core:
   default_config_hash: s2rKO-wXqIkVbzZgmSGZGBSZTnvTUEwKZ3158TVXcaw
 status: true
 whitelist_config_entities:
-  - user.role.anonymous
-  - user.role.authenticated
-  - user.role.administrator
-  - user.role.local_administrator
-  - user.role.editor
-  - user.role.external_system
-  - user.role.mediator
-  - user.role.patron
-  - user.role.bnf_pilot
-  - user.role.bnf_graphql_client
-  - user.role.go_graphql_client
   - bnf_client.settings.yml
 direction_operations:
   - import_create

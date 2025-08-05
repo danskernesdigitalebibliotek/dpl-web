@@ -1,0 +1,30 @@
+---
+on:
+  workflow_call:
+    inputs:
+      trigger-path:
+        required: true
+        type: string
+      target-code:
+        required: true
+        type: string
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - name: If trigger paths have changed, check if target code is present
+        shell: bash
+        run: |
+          if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '${{ inputs.trigger-path }}'; then
+            echo "Role config was changed, checking for hook..."
+            if ! git diff origin/${{ github.base_ref }}...HEAD -- web/ | grep '${{ inputs.target-code }}'; then
+              echo "::error file=${{ inputs.trigger-path }}::${{ inputs.trigger-path }} config changed but '${{ inputs.target-code }}' hook not found in changes."
+              exit 1
+            fi
+          else
+            echo "No relevant changes detected."
+          fi

@@ -1,0 +1,21 @@
+---
+name: Check that webmaster-controlled config has been updated using hooks.
+on:
+  pull_request:
+    paths:
+      - 'config/sync/core.extension.yml'
+      - 'config/sync/user.role.*.yml'
+jobs:
+  checkRoles:
+    name: Check roles has been updated correctly
+    uses: ./.github/workflows/webmaster-config-workflow.yml
+    with:
+      trigger-path: 'config/sync/user.role.*.yml'
+      target-code: '_dpl_update_alter_permissions'
+
+  checkModules:
+    name: Check roles has been updated correctly
+    uses: ./.github/workflows/webmaster-config-workflow.yml
+    with:
+      trigger-path: 'config/sync/core.extension.yml'
+      target-code: '_dpl_update_install_modules'

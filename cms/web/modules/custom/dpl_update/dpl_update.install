@@ -881,6 +881,18 @@ function dpl_update_update_10058(): string {
 }
 
 /**
+ * Add new data columns to dpl_fbi_cql_search custom field.
+ */
+function dpl_update_update_10059(): string {
+  _dpl_update_add_field_columns('dpl_fbi_cql_search', [
+    'branch',
+    'department',
+  ]);
+
+  return 'New field columns added.';
+}
+
+/**
  * Unignore system.performance configuration.
  *
  * It has been ignored, as we had to disable CSS and JS aggregration with
@@ -890,7 +902,7 @@ function dpl_update_update_10058(): string {
  * as we have added these changes to system.performance.yml, just incase
  * something has gone wrong with the semi-manual script solution.
  */
-function dpl_update_update_10059(): string {
+function dpl_update_update_10060(): string {
   return _dpl_update_config_auto_unignore_entites([
     'system.performance',
     // We need to unignore this as well as it is handled on the same config
