@@ -5,5 +5,7 @@ services:
 
   Drupal\dpl_fbi\Fbi: {}
 
+  Drupal\dpl_fbi\SailorEndpointConfig: {}
+
   # Hook services can be removed in D11.
   Drupal\dpl_fbi\Hook\ReactAppsApiUrls: {}

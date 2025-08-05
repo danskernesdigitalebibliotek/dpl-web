@@ -4,6 +4,7 @@ namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
@@ -33,6 +34,7 @@ class DplReactAppsController extends ControllerBase {
     protected DplInstantLoanSettings $instantLoanSettings,
     protected GeneralSettings $generalSettings,
     protected Config $adgangsplatformenConfig,
+    protected Fbi $fbi,
   ) {}
 
   /**
@@ -258,6 +260,19 @@ class DplReactAppsController extends ControllerBase {
     $this->renderer->addCacheableDependency($app, $this->branchSettings);
 
     return $app;
+  }
+
+  /**
+   * Title for work page.
+   */
+  public function workTitle(string $wid): string {
+    try {
+      return $this->fbi->getWorkTitle($wid);
+    }
+    catch (\Throwable) {
+      // Fall back to empty string.
+      return '';
+    }
   }
 
   /**
