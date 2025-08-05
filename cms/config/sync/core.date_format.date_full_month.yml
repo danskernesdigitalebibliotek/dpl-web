@@ -5,4 +5,4 @@ dependencies: {  }
 id: date_full_month
 label: 'Date full month'
 locked: false
-pattern: 'd. F Y'
+pattern: 'j. F Y'
