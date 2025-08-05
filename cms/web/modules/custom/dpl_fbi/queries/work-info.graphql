@@ -1,0 +1,7 @@
+query WorkInfo($wid: String) {
+  work(id: $wid) {
+    titles {
+      full
+    }
+  }
+}

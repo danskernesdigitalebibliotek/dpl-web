@@ -353,6 +353,12 @@ tasks:
       - task dev:bnfcli -- drush sailor:codegen bnf
       - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
 
+  dev:codegen:fbi-graphql:
+    desc: Generate graphQL client classes for dpl_fbi.
+    cmds:
+      - task dev:cli -- drush sailor:introspect dpl_fbi
+      - task dev:cli -- drush sailor:codegen dpl_fbi
+
   dev:composer:update-design-system:
     desc: Update the DPL design system package to a specific version or branch release.
     summary: |
