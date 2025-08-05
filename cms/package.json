@@ -8,10 +8,10 @@
     "@lhci/cli": "^0.8",
     "@testing-library/cypress": "^10.0.3",
     "@types/node": "^22",
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
-    "@typescript-eslint/parser": "^8.38.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
     "chrome-launcher": "1.2.0",
-    "cypress": "^14.5.2",
+    "cypress": "^14.5.3",
     "cypress-if": "^1.13.2",
     "cypress-plugin-api": "^2.11.2",
     "cypress-terminal-report": "^7.2.1",
@@ -25,7 +25,7 @@
     "markdownlint-cli2": "^0.16.0",
     "pa11y-ci": "https://github.com/pa11y/pa11y-ci/archive/5c842cf1b9fe2867b70ff5354851d985be8d71c4.tar.gz",
     "prettier": "^3.6.2",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "wiremock-rest-client": "^1.11.0"
   },
   "scripts": {
