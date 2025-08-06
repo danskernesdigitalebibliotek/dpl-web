@@ -87,7 +87,7 @@ export default (baseUri?: string, options?: Options) => {
         urlPattern: "/next.*/graphql",
         bodyPatterns: [
           {
-            matchesJsonPath: matchGraphqlQuery("localSuggestionsFromQueryString"),
+            matchesJsonPath: matchGraphqlQuery("suggestionsFromQueryString"),
           },
         ],
       },
