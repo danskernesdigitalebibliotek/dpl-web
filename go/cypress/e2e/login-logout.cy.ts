@@ -172,6 +172,11 @@ describe("Adgangsplatformen: Login / Logout API Tests", () => {
       data: getAdgangsplatformenUserToken.build(),
     })
 
+    cy.interceptGraphql({
+      operationName: "complexSearchForWorkTeaser",
+      data: complexSearchForWorkTeaser.build(),
+    })
+
     cy.visit(mockedCallbackUrl)
   }
 
