@@ -59,6 +59,24 @@ const eslintConfig = [
           message:
             "Beware that setViewport should only be used while debugging Cypress locally. Otherwise it forces the viewport to a fixed size, which is not what we want for responsive testing.",
         },
+        {
+          object: "describe",
+          property: "only",
+          message:
+            "describe.only() should not be used in production code. Remove .only() to run all tests.",
+        },
+        {
+          object: "it",
+          property: "only",
+          message:
+            "it.only() should not be used in production code. Remove .only() to run all tests.",
+        },
+        {
+          object: "test",
+          property: "only",
+          message:
+            "test.only() should not be used in production code. Remove .only() to run all tests.",
+        },
       ],
       "no-restricted-syntax": [
         "error",
