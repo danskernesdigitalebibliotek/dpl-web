@@ -5,11 +5,22 @@ import getV1ProductsIdentifierAdapterFactory from "../factories/ap/getV1Products
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
+import {
+  audioBookManifestationIdentifierFactory,
+  eBookManifestationIdentifierFactory,
+  identifierFactory,
+} from "../factories/fbi/factory-parts/identifier"
+import {
+  audioBookManifestationFactory,
+  eBookManifestationFactory,
+} from "../factories/fbi/factory-parts/manifestations"
+import { AudioBookFactory, EBookFactory } from "../factories/fbi/factory-parts/works"
 import configuration from "../factories/unilogin/configuration"
 import institution from "../factories/unilogin/institution"
 import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
 import userinfo from "../factories/unilogin/userinfo"
+import { mockFrontpage } from "../support/mocks"
 
 describe("Login / Logout UI Tests", () => {
   beforeEach(() => {
@@ -104,11 +115,6 @@ describe("UNI•Login: Login / Logout API Tests", () => {
       data: institution,
     })
 
-    cy.interceptGraphql({
-      operationName: "complexSearchForWorkTeaser",
-      data: complexSearchForWorkTeaser.build(),
-    })
-
     cy.visit(mockedCallbackUrl)
   }
 
@@ -127,28 +133,71 @@ describe("UNI•Login: Login / Logout API Tests", () => {
       headers: { "content-type": "application/json" },
     })
 
+    const identifiers = identifierFactory.buildList(9)
+
     cy.intercept("GET", "/pubhub/v1/user/loans", {
       statusCode: 200,
-      body: getV1UserLoansAdapterFactory.build(),
+      body: getV1UserLoansAdapterFactory.transient({ identifiers }).build(),
       headers: { "content-type": "application/json" },
     })
 
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/9788711917141", {
-      statusCode: 200,
-      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "9788711917141" }).build(),
-      headers: { "content-type": "application/json" },
+    const works = identifiers.map((identifier, index) => {
+      if (index % 2 === 0) {
+        return EBookFactory.build({
+          manifestations: {
+            all: [
+              eBookManifestationFactory.build({
+                identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
+              }),
+            ],
+            bestRepresentation: eBookManifestationFactory.build({
+              identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
+            }),
+          },
+        })
+      }
+
+      return AudioBookFactory.build({
+        manifestations: {
+          all: [
+            audioBookManifestationFactory.build({
+              identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
+            }),
+          ],
+          bestRepresentation: audioBookManifestationFactory.build({
+            identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
+          }),
+        },
+      })
     })
 
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/8788711917141", {
-      statusCode: 200,
-      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "8788711917141" }).build(),
-      headers: { "content-type": "application/json" },
+    cy.interceptGraphql({
+      operationName: "complexSearchForWorkTeaser",
+      data: complexSearchForWorkTeaser.build({
+        complexSearch: {
+          hitcount: identifiers.length,
+          works,
+        },
+      }),
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/*", reg => {
+      // Intercept the request and respond with a mocked product
+      const id = reg.url.split("/").pop() // Get the last part of the URL which is the product ID
+
+      reg.reply({
+        statusCode: 200,
+        body: getV1ProductsIdentifierAdapterFactory.build({
+          product: { externalProductId: { id }, costFree: true },
+        }),
+        headers: { "content-type": "application/json" },
+      })
     })
 
     cy.dataCy("loan-slider").should("be.visible")
     cy.dataCy("loan-slider-next-button").click()
     cy.dataCy("loan-slider-prev-button").click()
-    cy.dataCy("loan-slider-work").should("have.length", 5)
+    cy.dataCy("loan-slider-work").should("have.length", identifiers.length)
   })
 
   it("Should logout when clicking logout button", () => {
@@ -204,32 +253,76 @@ describe("Adgangsplatformen: Login / Logout API Tests", () => {
       headers: { "content-type": "application/json" },
     })
 
+    const identifiers = identifierFactory.buildList(6)
+
     cy.intercept("GET", "/ap-service/pubhub-adapter/v1/user/loans", {
       statusCode: 200,
-      body: getV1UserLoansAdapterFactory.build(),
+      body: getV1UserLoansAdapterFactory.transient({ identifiers }).build(),
       headers: { "content-type": "application/json" },
     })
 
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/9788711917141", {
-      statusCode: 200,
-      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "9788711917141" }).build(),
-      headers: { "content-type": "application/json" },
+    const works = identifiers.map((identifier, index) => {
+      if (index % 2 === 0) {
+        return EBookFactory.build({
+          manifestations: {
+            all: [
+              eBookManifestationFactory.build({
+                identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
+              }),
+            ],
+            bestRepresentation: eBookManifestationFactory.build({
+              identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
+            }),
+          },
+        })
+      }
+
+      return AudioBookFactory.build({
+        manifestations: {
+          all: [
+            audioBookManifestationFactory.build({
+              identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
+            }),
+          ],
+          bestRepresentation: audioBookManifestationFactory.build({
+            identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
+          }),
+        },
+      })
     })
 
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/8788711917141", {
-      statusCode: 200,
-      body: getV1ProductsIdentifierAdapterFactory.transient({ id: "8788711917141" }).build(),
-      headers: { "content-type": "application/json" },
+    cy.interceptGraphql({
+      operationName: "complexSearchForWorkTeaser",
+      data: complexSearchForWorkTeaser.build({
+        complexSearch: {
+          hitcount: identifiers.length,
+          works,
+        },
+      }),
+    })
+
+    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/*", reg => {
+      // Intercept the request and respond with a mocked product
+      const id = reg.url.split("/").pop() // Get the last part of the URL which is the product ID
+
+      reg.reply({
+        statusCode: 200,
+        body: getV1ProductsIdentifierAdapterFactory.build({
+          product: { externalProductId: { id }, costFree: true },
+        }),
+        headers: { "content-type": "application/json" },
+      })
     })
 
     cy.dataCy("loan-slider").should("be.visible")
     cy.dataCy("loan-slider-next-button").click()
     cy.dataCy("loan-slider-prev-button").click()
-    cy.dataCy("loan-slider-work").should("have.length", 5)
+    cy.dataCy("loan-slider-work").should("have.length", identifiers.length)
   })
 
   it("Should logout when clicking logout button", () => {
     performLoginCallback()
+    mockFrontpage()
 
     cy.dataCy("logout-button").click()
 

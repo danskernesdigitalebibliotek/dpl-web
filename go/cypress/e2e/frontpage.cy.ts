@@ -1,5 +1,8 @@
+import { mockFrontpage } from "../support/mocks"
+
 describe("Front Page Tests", () => {
   beforeEach(() => {
+    mockFrontpage()
     cy.visit("/")
   })
 

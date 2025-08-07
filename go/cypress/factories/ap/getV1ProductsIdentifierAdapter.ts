@@ -2,15 +2,7 @@ import { Factory } from "fishery"
 
 import { ProductResult } from "@/lib/rest/publizon/adapter/generated/model"
 
-import { IDENTIFIERS } from "../fbi/factory-parts/identifier"
-
-type TTransientParams = {
-  id: string
-}
-
-export default Factory.define<ProductResult, TTransientParams>(({ transientParams }) => {
-  const { id } = transientParams
-
+export default Factory.define<ProductResult>(({}) => {
   return {
     product: {
       createdUtc: "2025-05-05T09:35:30.027Z",
@@ -24,7 +16,7 @@ export default Factory.define<ProductResult, TTransientParams>(({ transientParam
       productType: 2,
       externalProductId: {
         idType: 15,
-        id: id === IDENTIFIERS.AUDIOBOOK ? IDENTIFIERS.AUDIOBOOK : IDENTIFIERS.EBOOK,
+        id: "8788711917141",
       },
       internalProductId: "26e9f3cc-bf1b-4951-bad6-381b415c07b4",
       contributors: [
@@ -80,7 +72,7 @@ export default Factory.define<ProductResult, TTransientParams>(({ transientParam
           code: "YFS",
         },
       ],
-      costFree: true,
+      costFree: false,
     },
     code: 101,
     message: "OK (#101).",
