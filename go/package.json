@@ -108,7 +108,7 @@
     "@tailwindcss/postcss": "^4.0.7",
     "@tanstack/react-query-devtools": "^5.59.0",
     "@testing-library/react": "^16.0.1",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@tsconfig/create-react-app": "^2.0.5",
     "@types/jwt-simple": "^0.5.36",
     "@types/node": "^20.0.0",
