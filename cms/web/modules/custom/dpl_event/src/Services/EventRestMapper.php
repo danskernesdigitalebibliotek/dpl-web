@@ -57,6 +57,7 @@ class EventRestMapper {
       'branches' => $this->getBranches(),
       'address' => $this->getAddress(),
       'tags' => $this->getTags(),
+      'categories' => $this->getCategories(),
       'partners' => $this->getMultiValue('event_partners'),
       'ticketCapacity' => $this->getValue('event_ticket_capacity'),
       'ticketCategories' => $this->getTicketCategories(),
@@ -101,22 +102,45 @@ class EventRestMapper {
   }
 
   /**
+   * Getting associated term names.
+   *
+   * @param string $field_key
+   *   The field inheritance key.
+   *
+   * @return string[]
+   *   The translated term labels.
+   */
+  private function getTaxonomyNames(string $field_key): array {
+    $names = [];
+
+    /** @var \Drupal\taxonomy\TermInterface[] $terms */
+    $terms = $this->event->get($field_key)->referencedEntities();
+
+    foreach ($terms as $term) {
+      $names[] = $term->getName();
+    }
+
+    return $names;
+  }
+
+  /**
    * Getting associated tags.
    *
    * @return string[]
    *   The translated tag labels.
    */
   private function getTags(): array {
-    $names = [];
+    return $this->getTaxonomyNames('event_tags');
+  }
 
-    /** @var \Drupal\taxonomy\TermInterface[] $tags */
-    $tags = $this->event->get('event_tags')->referencedEntities();
-
-    foreach ($tags as $tag) {
-      $names[] = $tag->getName();
-    }
-
-    return $names;
+  /**
+   * Getting associated categories.
+   *
+   * @return string[]
+   *   The translated tag labels.
+   */
+  private function getCategories(): array {
+    return $this->getTaxonomyNames('event_categories');
   }
 
   /**

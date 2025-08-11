@@ -159,6 +159,14 @@ final class EventsResource extends EventResourceBase {
                     ],
                     'required' => ['street', 'zip_code', 'city', 'country'],
                   ],
+                  'categories' => [
+                    'type' => 'array',
+                    'description' => 'The categories associated with the event.',
+                    'items' => [
+                      'type' => 'string',
+                      'description' => 'The name of a category.',
+                    ],
+                  ],
                   'tags' => [
                     'type' => 'array',
                     'description' => 'The tags associated with the event.',

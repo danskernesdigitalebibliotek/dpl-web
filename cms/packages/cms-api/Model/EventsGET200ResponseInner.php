@@ -169,6 +169,18 @@ class EventsGET200ResponseInner
     protected ?EventsGET200ResponseInnerAddress $address = null;
 
     /**
+     * The categories associated with the event.
+     *
+     * @var string[]|null
+     * @SerializedName("categories")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $categories = null;
+
+    /**
      * The tags associated with the event.
      *
      * @var string[]|null
@@ -271,6 +283,7 @@ class EventsGET200ResponseInner
             $this->dateTime = array_key_exists('dateTime', $data) ? $data['dateTime'] : $this->dateTime;
             $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
+            $this->categories = array_key_exists('categories', $data) ? $data['categories'] : $this->categories;
             $this->tags = array_key_exists('tags', $data) ? $data['tags'] : $this->tags;
             $this->partners = array_key_exists('partners', $data) ? $data['partners'] : $this->partners;
             $this->ticketCategories = array_key_exists('ticketCategories', $data) ? $data['ticketCategories'] : $this->ticketCategories;
@@ -590,6 +603,32 @@ class EventsGET200ResponseInner
     public function setAddress(?EventsGET200ResponseInnerAddress $address = null): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Gets categories.
+     *
+     * @return string[]|null
+     */
+    public function getCategories(): ?array
+    {
+        return $this->categories;
+    }
+
+
+
+    /**
+     * Sets categories.
+     *
+     * @param string[]|null $categories  The categories associated with the event.
+     *
+     * @return $this
+     */
+    public function setCategories(?array $categories = null): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }
