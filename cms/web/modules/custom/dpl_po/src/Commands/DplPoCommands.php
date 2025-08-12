@@ -6,7 +6,9 @@ use Drupal\Component\Gettext\PoHeader;
 use Drupal\Component\Gettext\PoItem;
 use Drupal\Component\Gettext\PoStreamReader;
 use Drupal\Component\Gettext\PoStreamWriter;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\File\Exception\FileException;
 use Drupal\Core\File\Exception\InvalidStreamWrapperException;
@@ -52,6 +54,8 @@ class DplPoCommands extends DrushCommands {
     protected FileSystemInterface $fileSystem,
     protected ModuleHandlerInterface $moduleHandler,
     protected ClientInterface $httpClient,
+    protected EntityFieldManagerInterface $entityFieldManager,
+    protected CacheBackendInterface $configCache,
   ) {}
 
   /**
@@ -221,6 +225,14 @@ class DplPoCommands extends DrushCommands {
 
     drush_backend_batch_process();
 
+    // Clearing the config cache and the field definition cache.
+    // This appears to be necessary when we run these commands through Drush CLI
+    // but not when running it through the config_translation_po form.
+    // If we do *not* clear the caches right away, some translations may not
+    // apply, even upon a future cache clear.
+    // The main place we've experienced this issue has been on field labels.
+    $this->configCache->invalidateAll();
+    $this->entityFieldManager->clearCachedFieldDefinitions();
   }
 
   /**
