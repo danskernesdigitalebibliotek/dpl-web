@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import React, { Suspense } from "react"
 
@@ -16,6 +17,10 @@ async function getPage(slug: string[]) {
     contentPath: slug.join("/"),
     type: "category",
   })
+
+  if (isEmpty(data)) {
+    notFound()
+  }
 
   if (cacheTags) {
     // eslint-disable-next-line no-console
