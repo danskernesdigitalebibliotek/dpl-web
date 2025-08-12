@@ -42,7 +42,7 @@ describe('Events', () => {
     // Ensure that the core data from the event is displayed on the resulting page.
     // @todo This should probably be replaced by a visual regression test.
     cy.contains(events.singleEvent.title);
-    cy.contains(events.singleEvent.start.format('DD MMMM YYYY'));
+    cy.contains(events.singleEvent.start.format('D. MMMM YYYY'));
     cy.contains(
       `${events.singleEvent.start.format(
         'HH:mm',
