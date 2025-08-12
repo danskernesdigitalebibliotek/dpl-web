@@ -1,5 +1,6 @@
 import { isEmpty } from "lodash"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
+import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
