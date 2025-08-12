@@ -73,7 +73,7 @@ class ReoccurringDateFormatter {
       default:
         $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
 
-        $date_string = $this->formatDate($start_date, 'j F');
+        $date_string = $this->formatDate($start_date, 'j. F');
 
         if (count($upcoming_ids) > 1) {
           $prefix = $this->translation->translate('Next');

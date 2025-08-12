@@ -211,10 +211,10 @@ display:
           type: date_range_without_time
           settings:
             timezone_override: ''
-            one_day: 'd F Y'
-            one_month: 'd - {d} F Y'
-            several_months: 'd F - {d} {F} Y'
-            several_years: 'd F Y - {d} {F} {Y}'
+            one_day: 'j. F Y'
+            one_month: 'j. - {j}. F Y'
+            several_months: 'j. F - {j}. {F} Y'
+            several_years: 'j. F Y - {j}. {F} {Y}'
           group_column: value
           group_columns: {  }
           group_rows: true

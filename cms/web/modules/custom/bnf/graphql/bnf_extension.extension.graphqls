@@ -40,3 +40,15 @@ extend type NodeGoPage {
 extend type Link {
   id: String
 }
+
+extend type ParagraphNavGridManual {
+  contentReferenceUuids: [String]
+}
+
+extend type ParagraphNavSpotsManual {
+  navSpotsContentUuids: [String]
+}
+
+extend type ParagraphCardGridManual {
+  gridContentUuids: [String]
+}

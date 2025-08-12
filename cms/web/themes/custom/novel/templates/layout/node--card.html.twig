@@ -5,7 +5,7 @@
 {% endif %}
 
 {% if node.bundle != 'page' %}
-  {% set date_tag = publication_date|format_date('date_short_month') %}
+  {% set date_tag = publication_date|format_date('date_full_month') %}
 {% endif %}
 
 {% if node.bundle == 'article' %}
