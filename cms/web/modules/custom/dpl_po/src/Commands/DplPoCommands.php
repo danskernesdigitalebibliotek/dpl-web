@@ -182,26 +182,30 @@ class DplPoCommands extends DrushCommands {
 
   /**
    * Import a configuration .po file in a batch.
+   *
+   * This closely mirrors/duplicates the functionality in
+   * \Drupal\config_translation_po\Form\ImportConfigForm::submitForm().
    */
   protected function importConfigPoFileBatch(string $source): void {
+    $this->moduleHandler->loadInclude('locale', 'translation.inc');
     $this->moduleHandler->loadInclude('locale', 'bulk.inc');
     $this->moduleHandler->loadInclude('config_translation_po', 'bulk.inc');
 
     $this->validateSource($source);
 
-    // @todo Get the full enderstanding of all the options here.
-    // Until now it has been tested that behaviour is as expected
-    // but it would be nice to know all implications of the settings.
-    $options = [
-      'customized' => 0,
+    // Options that mirror config_translation_po\Form\ImportConfigForm settings.
+    $options = array_merge(_locale_translation_default_update_options(), [
+      'langcode' => $this->languageCode,
       'overwrite_options' => [
+        // Form-label: "Overwrite non-customized translations".
         'not_customized' => 1,
+        // Form-label: "Overwrite existing customized translations".
         'customized' => 1,
       ],
-      'finish_feedback' => TRUE,
-      'use_remote' => TRUE,
-      'langcode' => $this->languageCode,
-    ];
+      // Form-label: "Treat imported strings as custom translations".
+      // So - we do **NOT** want to treat imported strings as custom.
+      'customized' => LOCALE_NOT_CUSTOMIZED,
+    ]);
 
     $file = $this->createFile($source);
     /** @var object{"uri": string} $file */
