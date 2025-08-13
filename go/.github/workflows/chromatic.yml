@@ -7,18 +7,10 @@ on:
     branches:
       - main
       - develop
-    paths:
-      - "**.css"
-      - "**.js"
-      - "**.tsx"
   pull_request:
     branches:
       - main
       - develop
-    paths:
-      - "**.css"
-      - "**.js"
-      - "**.tsx"
 
 # List of jobs
 jobs:
