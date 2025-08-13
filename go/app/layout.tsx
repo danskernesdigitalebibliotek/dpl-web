@@ -14,6 +14,8 @@ import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProv
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
+import GlobalError from "./GlobalError"
+
 export const metadata: Metadata = setLayoutMetadata()
 
 // When adding or changing fonts, remember to update the imports in .storybook/preview.tsx
@@ -63,7 +65,9 @@ export default function Layout({
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
         <Suspense>
-          <RootLayout>{children}</RootLayout>
+          <RootLayout>
+            <GlobalError>{children}</GlobalError>
+          </RootLayout>
         </Suspense>
       </body>
     </html>
