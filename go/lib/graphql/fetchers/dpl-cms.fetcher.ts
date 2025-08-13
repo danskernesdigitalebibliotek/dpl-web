@@ -53,8 +53,8 @@ export function fetcher<TData, TVariables>(
       }
 
       if (json.errors) {
-        console.error("GraphQL errors:", json.errors)
-        throw new Error("GraphQL errors occurred")
+        console.error("DPL CMS GraphQL errors:", json.errors)
+        throw new Error("DPL CMS GraphQL errors occurred")
       }
 
       const cacheTagsRaw = res.headers.get(goConfig("caching.dpl-cms.cachetags-header"))
