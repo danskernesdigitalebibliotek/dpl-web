@@ -32,6 +32,7 @@ async function getHealthStatus() {
   } catch {}
 
   try {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     const { go, ...frontpageData } = await loadPageData({
       contentPath: goConfig("routes.frontpage"),
       type: "page",
