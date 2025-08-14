@@ -8,7 +8,7 @@ import { loadPageData } from "@/lib/helpers/dpl-cms-content"
 type TRequestsNames = "frontpage"
 
 type THealthStatusRequestBody = {
-  version: string
+  version: "unknown" | `${number}.${number}.${number}`
   requests:
     | {
         [key in TRequestsNames]: {
@@ -21,7 +21,7 @@ type THealthStatusRequestBody = {
 
 async function getHealthStatus() {
   const requestBody: THealthStatusRequestBody = {
-    version: "",
+    version: "unknown",
     requests: {},
   }
 
@@ -29,12 +29,10 @@ async function getHealthStatus() {
     // Get version from .version json file in root of project. .version file should only exist in lagoon.
     const jsonFile = await fs.readFile(".version", "utf8")
     requestBody.version = JSON.parse(jsonFile).version
-  } catch (error) {
-    requestBody.version = `Error reading version: ${error instanceof Error ? error.message : "Unknown error"}`
-  }
+  } catch {}
 
   try {
-    const frontpageData = await loadPageData({
+    const { go, ...frontpageData } = await loadPageData({
       contentPath: goConfig("routes.frontpage"),
       type: "page",
     })
