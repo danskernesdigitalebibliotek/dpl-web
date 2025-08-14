@@ -17,7 +17,7 @@ interface GlobalErrorProps {
 // - https://nextjs.org/docs/app/api-reference/file-conventions/error#graceful-error-recovery-with-a-custom-error-boundary
 // - https://medium.com/@kaiqueperezz/handling-errors-in-the-frontend-with-next-js-improving-ux-and-avoiding-surprises-3970d3f88821
 
-class GlobalError extends Component<GlobalErrorProps, GlobalErrorState> {
+class GlobalErrorBoundary extends Component<GlobalErrorProps, GlobalErrorState> {
   contentRef: React.RefObject<HTMLDivElement>
 
   constructor(props: Record<string, unknown>) {
@@ -52,4 +52,4 @@ class GlobalError extends Component<GlobalErrorProps, GlobalErrorState> {
     return <div ref={this.contentRef}>{this.props.children}</div>
   }
 }
-export default GlobalError
+export default GlobalErrorBoundary

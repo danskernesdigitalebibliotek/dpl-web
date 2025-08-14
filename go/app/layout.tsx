@@ -14,7 +14,7 @@ import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProv
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
-import GlobalError from "./GlobalError"
+import GlobalErrorBoundary from "./GlobalErrorBoundary"
 
 export const metadata: Metadata = setLayoutMetadata()
 
@@ -66,7 +66,7 @@ export default function Layout({
         <GridHelper hideInProduction />
         <Suspense>
           <RootLayout>
-            <GlobalError>{children}</GlobalError>
+            <GlobalErrorBoundary>{children}</GlobalErrorBoundary>
           </RootLayout>
         </Suspense>
       </body>
