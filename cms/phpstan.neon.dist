@@ -81,8 +81,10 @@ parameters:
 
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
+    # We use this, as part of DplPoCommands.php.
     - web/core/modules/locale/locale.batch.inc
     - web/core/modules/locale/locale.bulk.inc
+    - web/core/modules/locale/locale.translation.inc
     - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
     # Drupal\dpl_webmaster\Form\InstallOrUpdateModule uses this.
     - web/core/modules/update/update.authorize.inc
