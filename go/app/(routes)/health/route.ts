@@ -5,20 +5,22 @@ import { NextResponse } from "next/server"
 import goConfig from "@/lib/config/goConfig"
 import { loadPageData } from "@/lib/helpers/dpl-cms-content"
 
+type HealthStatusRequest = {
+  function: string
+  route: string
+  status: "ok" | "error"
+  message: string
+}
+
 type HealthStatusRequestBody = {
   version: string
-  requests: {
-    [key: string]: {
-      status: "ok" | "error"
-      message: string
-    }
-  }
+  requests: HealthStatusRequest[]
 }
 
 async function getHealthStatus() {
   const requestBody: HealthStatusRequestBody = {
     version: "",
-    requests: {},
+    requests: [],
   }
 
   try {
@@ -35,22 +37,30 @@ async function getHealthStatus() {
       type: "page",
     })
 
-    if (!isEmpty(frontpageData)) {
-      requestBody.requests.frontpage = {
+    const { ...data } = frontpageData
+
+    if (!isEmpty(data)) {
+      requestBody.requests.push({
+        function: "loadPageData",
+        route: goConfig("routes.frontpage"),
         status: "ok",
         message: "Frontpage data loaded successfully",
-      }
+      })
     } else {
-      requestBody.requests.frontpage = {
+      requestBody.requests.push({
+        function: "loadPageData",
+        route: goConfig("routes.frontpage"),
         status: "error",
         message: `Frontpage data is empty`,
-      }
+      })
     }
   } catch (error) {
-    requestBody.requests.frontpage = {
+    requestBody.requests.push({
+      function: "loadPageData",
+      route: goConfig("routes.frontpage"),
       status: "error",
       message: `Error loading frontpage data: ${error instanceof Error ? error.message : "Unknown error"}`,
-    }
+    })
   }
 
   return NextResponse.json(requestBody, { status: 200 })
