@@ -5,22 +5,24 @@ import { NextResponse } from "next/server"
 import goConfig from "@/lib/config/goConfig"
 import { loadPageData } from "@/lib/helpers/dpl-cms-content"
 
-type HealthStatusRequest = {
-  function: string
-  route: string
-  status: "ok" | "error"
-  message: string
-}
+type TRequestsNames = "frontpage"
 
-type HealthStatusRequestBody = {
+type THealthStatusRequestBody = {
   version: string
-  requests: HealthStatusRequest[]
+  requests:
+    | {
+        [key in TRequestsNames]: {
+          status: "ok" | "error"
+          message: string
+        }
+      }
+    | Record<string, never>
 }
 
 async function getHealthStatus() {
-  const requestBody: HealthStatusRequestBody = {
+  const requestBody: THealthStatusRequestBody = {
     version: "",
-    requests: [],
+    requests: {},
   }
 
   try {
@@ -37,30 +39,22 @@ async function getHealthStatus() {
       type: "page",
     })
 
-    const { ...data } = frontpageData
-
-    if (!isEmpty(data)) {
-      requestBody.requests.push({
-        function: "loadPageData",
-        route: goConfig("routes.frontpage"),
+    if (!isEmpty(frontpageData)) {
+      requestBody.requests.frontpage = {
         status: "ok",
         message: "Frontpage data loaded successfully",
-      })
+      }
     } else {
-      requestBody.requests.push({
-        function: "loadPageData",
-        route: goConfig("routes.frontpage"),
+      requestBody.requests.frontpage = {
         status: "error",
         message: `Frontpage data is empty`,
-      })
+      }
     }
   } catch (error) {
-    requestBody.requests.push({
-      function: "loadPageData",
-      route: goConfig("routes.frontpage"),
+    requestBody.requests.frontpage = {
       status: "error",
       message: `Error loading frontpage data: ${error instanceof Error ? error.message : "Unknown error"}`,
-    })
+    }
   }
 
   return NextResponse.json(requestBody, { status: 200 })
