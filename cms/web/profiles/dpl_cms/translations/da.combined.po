@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-08-12 13:22+0200\n"
-"PO-Revision-Date: 2025-08-12 13:22+0200\n"
+"POT-Creation-Date: 2025-08-14 08:25+0200\n"
+"PO-Revision-Date: 2025-08-14 08:25+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4732,6 +4732,13 @@ msgstr "Hent billetter"
 
 msgid "Buy tickets"
 msgstr "Køb billet"
+
+msgid "All day"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Any specific times below will be ignored when \"All day\" is enabled"
+msgstr ""
 
 msgctxt "DPL event"
 msgid "DKK"
@@ -20524,6 +20531,25 @@ msgctxt "field.field.eventinstance.default.field_event_address:description"
 msgid "Use this value to specific a different address than the event branch."
 msgstr ""
 
+msgctxt "field.field.eventinstance.default.field_event_all_day:label"
+msgid "All day"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_all_day:description"
+msgid ""
+"If the event is not limited to a certain time of day, you can enable it here."
+msgstr ""
+
+msgctxt ""
+"field.field.eventinstance.default.field_event_all_day:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt ""
+"field.field.eventinstance.default.field_event_all_day:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_event_image:label"
 msgid "Image"
 msgstr ""
@@ -20636,6 +20662,24 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_address:description"
 msgid "Use this value to specific a different address than the event branch."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_all_day:label"
+msgid "All day"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_all_day:description"
+msgid ""
+"If the event is not limited to a certain time of day, you can enable it here."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_all_day:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt ""
+"field.field.eventseries.default.field_event_all_day:settings:off_label"
+msgid "Off"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_image:label"
