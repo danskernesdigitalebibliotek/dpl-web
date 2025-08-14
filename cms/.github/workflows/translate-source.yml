@@ -21,7 +21,7 @@ jobs:
     env:
       LANGUAGE: da
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
@@ -67,7 +67,7 @@ jobs:
     env:
       LANGUAGE: da
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Install go-task
