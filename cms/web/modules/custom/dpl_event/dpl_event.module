@@ -276,6 +276,18 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
       $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
     }
   }
+
+  if ($eventInstance->hasField('event_all_day') &&
+    !empty($eventInstance->get('event_all_day')->getString())) {
+    $variables['start_time'] = t('All day');
+    unset($variables['end_time']);
+  }
+
+  $variables['time_combined'] = $variables['start_time'];
+
+  if (!empty($variables['end_time'])) {
+    $variables['time_combined'] .= " - {$variables['end_time']}";
+  }
 }
 
 /**
@@ -328,6 +340,21 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     return;
   }
 
+  if (isset($form['field_event_all_day'])) {
+    $form['field_event_all_day']['warning'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['dpl-form-warning']],
+      '#states' => [
+        'visible' => [
+          ':input[name="field_event_all_day[value]"]' => ['checked' => TRUE],
+        ],
+      ],
+      'message' => [
+        '#markup' => t('Any specific times below will be ignored when "All day" is enabled', [], ['context' => 'dpl_event']),
+      ],
+    ];
+  }
+
   // Move the "Published" checkbox to the gin sticky action header.
   if (isset($form['status'])) {
     $form['status']['#group'] = 'status';
@@ -350,4 +377,53 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
   }
 
   $form['field_screen_names']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_recurring_events_event_instances_pre_create_alter().
+ *
+ * If the eventseries is set to be an all-day, we want to ignore any times
+ * set, and instead set them to 00:00 - 23:59.
+ *
+ * @param array<mixed> $dates
+ *   The requested dates of the instances.
+ * @param \Drupal\recurring_events\Entity\EventSeries $series
+ *   The parent event series.
+ */
+function dpl_event_recurring_events_event_instances_pre_create_alter(array &$dates, EventSeries $series): void {
+  if (!$series->hasField('field_event_all_day') ||
+    empty($series->get('field_event_all_day')->getString())) {
+    return;
+  }
+
+  $timezone = \Drupal::config('system.date')->get('timezone.default');
+  $timezone = new \DateTimeZone($timezone);
+  $timezoneUtc = new \DateTimeZone('UTC');
+
+  foreach ($dates as &$date) {
+    $startDate = $date['start_date'] ?? NULL;
+    $endDate = $date['end_date'] ?? NULL;
+
+    if (!($startDate instanceof DrupalDateTime) || (!($endDate instanceof DrupalDateTime))) {
+      continue;
+    }
+
+    // First, we need to tell Drupal that the times we're giving are in the
+    // default timezone, and not UTC.
+    // This mimics how Drupal also would interpret it, if we were setting the
+    // times in the interface.
+    $startDate->setTimezone($timezone);
+    $startDate->setTime(0, 0, 0);
+    $endDate->setTimezone($timezone);
+    $endDate->setTime(23, 59, 59);
+
+    // Drupal does not save the timezone information in the database - it will
+    // be saved as UTC. So, we need to convert this back to UTC first.
+    $startDate->setTimezone($timezoneUtc);
+    $endDate->setTimezone($timezoneUtc);
+
+    $date['start_date'] = $startDate;
+    $date['end_date'] = $endDate;
+  }
+
 }

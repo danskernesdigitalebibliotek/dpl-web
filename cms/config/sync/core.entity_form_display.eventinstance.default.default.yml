@@ -7,6 +7,7 @@ dependencies:
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
     - field.field.eventinstance.default.field_event_paragraphs
@@ -43,7 +44,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 13
+      weight: 15
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -60,7 +61,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 14
+      weight: 16
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -78,7 +79,7 @@ third_party_settings:
       label: 'Event details'
       region: content
       parent_name: ''
-      weight: 12
+      weight: 14
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -94,7 +95,7 @@ third_party_settings:
       label: Infoscreen
       region: content
       parent_name: ''
-      weight: 15
+      weight: 17
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -111,7 +112,7 @@ mode: default
 content:
   date:
     type: daterange_default
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -145,10 +146,17 @@ content:
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 4
+    weight: 5
     region: content
     settings:
       wrapper_type: details
+    third_party_settings: {  }
+  field_event_all_day:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
@@ -161,7 +169,7 @@ content:
         show_edit: '1'
   field_event_link:
     type: link_default
-    weight: 5
+    weight: 6
     region: content
     settings:
       placeholder_url: ''
@@ -169,7 +177,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 11
+    weight: 13
     region: content
     settings:
       title: Paragraph
@@ -199,7 +207,7 @@ content:
           drag_drop: false
   field_event_partners:
     type: string_textfield
-    weight: 9
+    weight: 10
     region: content
     settings:
       size: 60
@@ -207,7 +215,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 8
+    weight: 9
     region: content
     settings:
       size: 60
@@ -275,14 +283,14 @@ content:
     third_party_settings: {  }
   field_ticket_capacity:
     type: number
-    weight: 6
+    weight: 7
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 7
+    weight: 8
     region: content
     settings:
       title: Paragraph
@@ -310,13 +318,18 @@ content:
           dialog_style: tiles
   path:
     type: path
-    weight: 16
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 10
+    weight: 11
     region: content
     settings:
       display_label: true

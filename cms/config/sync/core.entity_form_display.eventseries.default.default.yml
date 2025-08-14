@@ -7,6 +7,7 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_all_day
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
     - field.field.eventseries.default.field_event_paragraphs
@@ -44,7 +45,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 22
+      weight: 24
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -61,7 +62,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 23
+      weight: 25
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -79,7 +80,7 @@ third_party_settings:
       label: 'Event details'
       region: content
       parent_name: ''
-      weight: 21
+      weight: 23
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -95,7 +96,7 @@ third_party_settings:
       label: Infoscreen
       region: content
       parent_name: ''
-      weight: 24
+      weight: 26
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -114,19 +115,19 @@ mode: default
 content:
   consecutive_recurring_date:
     type: consecutive_recurring_date
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   custom_date:
     type: daterange_default
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   daily_recurring_date:
     type: daily_recurring_date
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -160,10 +161,17 @@ content:
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 10
+    weight: 11
     region: content
     settings:
       wrapper_type: details
+    third_party_settings: {  }
+  field_event_all_day:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
@@ -176,7 +184,7 @@ content:
         show_edit: '1'
   field_event_link:
     type: link_default
-    weight: 11
+    weight: 13
     region: content
     settings:
       placeholder_url: ''
@@ -184,7 +192,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 20
+    weight: 22
     region: content
     settings:
       title: Paragraph
@@ -212,7 +220,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 15
+    weight: 17
     region: content
     settings:
       size: 60
@@ -220,7 +228,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 14
+    weight: 16
     region: content
     settings:
       size: 60
@@ -279,14 +287,14 @@ content:
     third_party_settings: {  }
   field_ticket_capacity:
     type: number
-    weight: 12
+    weight: 14
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 13
+    weight: 15
     region: content
     settings:
       title: Paragraph
@@ -314,37 +322,42 @@ content:
           dialog_style: tiles
   monthly_recurring_date:
     type: monthly_recurring_date
-    weight: 7
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 25
+    weight: 27
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 17
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   recur_type:
     type: select2
-    weight: 3
+    weight: 4
     region: content
     settings:
       width: 100%
     third_party_settings: {  }
   scheduler_settings:
-    weight: 19
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 16
+    weight: 18
     region: content
     settings:
       display_label: true
@@ -369,19 +382,19 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 18
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   weekly_recurring_date:
     type: weekly_recurring_date
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   yearly_recurring_date:
     type: yearly_recurring_date
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }

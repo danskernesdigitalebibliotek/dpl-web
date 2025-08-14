@@ -8,6 +8,7 @@ dependencies:
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
     - field.field.eventinstance.default.field_event_paragraphs
@@ -32,7 +33,7 @@ mode: nav_teaser
 content:
   branch:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -44,6 +45,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  event_all_day:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 53
     region: content
   event_relevant_ticket_manager:
     type: boolean
@@ -57,7 +68,7 @@ content:
     region: content
   event_screen_names:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -65,7 +76,7 @@ content:
     region: content
   event_ticket_capacity:
     type: number_integer
-    label: visible
+    label: above
     settings:
       thousand_separator: ''
       prefix_suffix: true
@@ -109,6 +120,7 @@ hidden:
   field_categories: true
   field_description: true
   field_event_address: true
+  field_event_all_day: true
   field_event_image: true
   field_event_link: true
   field_event_paragraphs: true

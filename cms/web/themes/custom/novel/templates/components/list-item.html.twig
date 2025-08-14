@@ -39,7 +39,7 @@
       <div class="content-list-item__content-right-container">
         {% if start_date or end_date %}
           <time class="content-list-item__time" datetime="{{ datetime_attribute }}">
-            {{ start_date }} - {{ end_date }}
+            {{ start_date }}{% if end_date %} - {{ end_date }}{% endif %}
           </time>
         {% endif %}
         {% if ticket_price %}
