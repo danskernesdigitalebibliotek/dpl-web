@@ -139,6 +139,16 @@ class EventsGET200ResponseInner
     protected ?string $state = null;
 
     /**
+     * Whether the event is marked as an all-day event, without time relevance.
+     *
+     * @var bool|null
+     * @SerializedName("all_day")
+     * @Assert\Type("bool")
+     * @Type("bool")
+     */
+    protected ?bool $allDay = null;
+
+    /**
      * @var EventsGET200ResponseInnerDateTime|null
      * @SerializedName("date_time")
      * @Assert\NotNull()
@@ -280,6 +290,7 @@ class EventsGET200ResponseInner
             $this->ticketManagerRelevance = array_key_exists('ticketManagerRelevance', $data) ? $data['ticketManagerRelevance'] : $this->ticketManagerRelevance;
             $this->image = array_key_exists('image', $data) ? $data['image'] : $this->image;
             $this->state = array_key_exists('state', $data) ? $data['state'] : $this->state;
+            $this->allDay = array_key_exists('allDay', $data) ? $data['allDay'] : $this->allDay;
             $this->dateTime = array_key_exists('dateTime', $data) ? $data['dateTime'] : $this->dateTime;
             $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
@@ -525,6 +536,32 @@ class EventsGET200ResponseInner
     public function setState(?string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Gets allDay.
+     *
+     * @return bool|null
+     */
+    public function isAllDay(): ?bool
+    {
+        return $this->allDay;
+    }
+
+
+
+    /**
+     * Sets allDay.
+     *
+     * @param bool|null $allDay  Whether the event is marked as an all-day event, without time relevance.
+     *
+     * @return $this
+     */
+    public function setAllDay(?bool $allDay = null): self
+    {
+        $this->allDay = $allDay;
 
         return $this;
     }
