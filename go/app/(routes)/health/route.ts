@@ -29,7 +29,15 @@ async function getHealthStatus() {
     // Get version from .version json file in root of project. .version file should only exist in lagoon.
     const jsonFile = await fs.readFile(".version", "utf8")
     requestBody.version = JSON.parse(jsonFile).version
-  } catch {}
+  } catch (error) {
+    return NextResponse.json(
+      {
+        status: "error",
+        message: `Error reading version file: ${error instanceof Error ? error.message : "Unknown error"}`,
+      },
+      { status: 500 }
+    )
+  }
 
   try {
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
@@ -48,12 +56,15 @@ async function getHealthStatus() {
         status: "error",
         message: `Frontpage data is empty`,
       }
+
+      return NextResponse.json(requestBody, { status: 500 })
     }
   } catch (error) {
     requestBody.requests.frontpage = {
       status: "error",
       message: `Error loading frontpage data: ${error instanceof Error ? error.message : "Unknown error"}`,
     }
+    return NextResponse.json(requestBody, { status: 500 })
   }
 
   return NextResponse.json(requestBody, { status: 200 })
