@@ -38,22 +38,20 @@ async function getHealthStatus() {
       type: "page",
     })
 
-    if (!isEmpty(frontpageData)) {
-      requestBody.requests.frontpage = {
-        status: "ok",
-        message: "Frontpage data loaded successfully",
-      }
-    } else {
-      requestBody.requests.frontpage = {
-        status: "error",
-        message: `Frontpage data is empty`,
-      }
+    if (isEmpty(frontpageData)) {
+      throw new Error("Frontpage data is empty")
+    }
+
+    requestBody.requests.frontpage = {
+      status: "ok",
+      message: "Frontpage data loaded successfully",
     }
   } catch (error) {
     requestBody.requests.frontpage = {
       status: "error",
       message: `Error loading frontpage data: ${error instanceof Error ? error.message : "Unknown error"}`,
     }
+    return NextResponse.json(requestBody, { status: 500 })
   }
 
   return NextResponse.json(requestBody, { status: 200 })
