@@ -432,6 +432,12 @@ class RelatedContent {
 
     $es_query = $this->entityTypeManager->getStorage('eventseries')->getQuery();
 
+    $group = $es_query->orConditionGroup()
+      ->condition('field_automatic_list_hide', FALSE)
+      ->notExists('field_automatic_list_hide');
+
+    $es_query->condition($group);
+
     $es_query->condition('status', TRUE);
     $es_query->accessCheck(TRUE);
 

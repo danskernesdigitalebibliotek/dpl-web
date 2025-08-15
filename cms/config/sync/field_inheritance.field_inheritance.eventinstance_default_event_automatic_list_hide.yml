@@ -1,0 +1,14 @@
+uuid: 2b0d9764-82a6-4fca-8b5a-3db3ff359b08
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_automatic_list_hide
+label: 'Event Hide in automatic lists'
+type: inherit
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_automatic_list_hide
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: ''
+plugin: default_inheritance

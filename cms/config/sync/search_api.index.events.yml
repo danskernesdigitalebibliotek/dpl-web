@@ -36,6 +36,14 @@ field_settings:
     dependencies:
       module:
         - recurring_events
+  event_automatic_list_hide:
+    label: 'Event Hide in automatic lists'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_automatic_list_hide
+    type: boolean
+    dependencies:
+      module:
+        - field_inheritance
   event_categories:
     label: 'Event categories'
     datasource_id: 'entity:eventinstance'
@@ -104,6 +112,7 @@ tracker_settings:
     indexing_order: fifo
 options:
   cron_limit: 50
+  delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
 server: db_search

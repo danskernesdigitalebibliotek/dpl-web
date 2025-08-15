@@ -1,0 +1,18 @@
+uuid: e0013bd5-6064-4a84-b959-035060c3808d
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventseries.field_automatic_list_hide
+field_name: field_automatic_list_hide
+entity_type: eventseries
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

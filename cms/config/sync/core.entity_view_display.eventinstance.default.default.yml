@@ -210,6 +210,7 @@ content:
 hidden:
   body: true
   description: true
+  event_automatic_list_hide: true
   event_relevant_ticket_manager: true
   event_state: true
   event_ticket_capacity: true

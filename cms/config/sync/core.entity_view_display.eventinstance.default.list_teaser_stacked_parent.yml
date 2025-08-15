@@ -82,6 +82,16 @@ content:
     third_party_settings: {  }
     weight: 53
     region: content
+  event_automatic_list_hide:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 53
+    region: content
   event_categories:
     type: entity_reference_label
     label: hidden
