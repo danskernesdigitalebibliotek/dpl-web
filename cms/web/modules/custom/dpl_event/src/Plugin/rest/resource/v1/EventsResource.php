@@ -107,6 +107,10 @@ final class EventsResource extends EventResourceBase {
                       'Occurred',
                     ],
                   ],
+                  'all_day' => [
+                    'type' => 'boolean',
+                    'description' => 'Whether the event is marked as an all-day event, without time relevance.',
+                  ],
                   'date_time' => [
                     'type' => 'object',
                     'description' => 'When the event occurs.',

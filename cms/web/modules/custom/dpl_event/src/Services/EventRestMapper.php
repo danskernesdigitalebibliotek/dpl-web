@@ -63,6 +63,7 @@ class EventRestMapper {
       'ticketCategories' => $this->getTicketCategories(),
       'createdAt' => $this->getDateField('created'),
       'updatedAt' => $this->event->getUpdatedDate(),
+      'allDay' => !empty($this->getValue('event_all_day')),
       'dateTime' => $this->getDate(),
       'externalData' => $this->getExternalData(),
       'screenNames' => $this->event->getScreenNames(),

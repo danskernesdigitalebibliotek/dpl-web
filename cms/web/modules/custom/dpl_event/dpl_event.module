@@ -21,6 +21,62 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventSeries;
 
 /**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * If the eventinstance is set to be an all-day, we want to ignore any times
+ * set, and instead set them to 00:00 - 23:59.
+ */
+function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
+  if (!$eventinstance->hasField('event_all_day')) {
+    return;
+  }
+
+  $all_day = $eventinstance->get('event_all_day')->getString();
+
+  if (empty($all_day)) {
+    return;
+  }
+
+  $timezone = \Drupal::config('system.date')->get('timezone.default');
+  $timezone = new \DateTimeZone($timezone);
+  $timezone_utc = new \DateTimeZone('UTC');
+
+  $dates = $eventinstance->get('date')->getValue();
+
+  foreach ($dates as &$date) {
+    $start_date = $date['value'] ?? NULL;
+    $end_date = $date['end_value'] ?? NULL;
+
+    if (!($start_date) || (!($end_date))) {
+      continue;
+    }
+
+    // First, we need to tell Drupal that the times we're giving are in the
+    // default timezone, and not UTC.
+    // This mimics how Drupal also would interpret it, if we were setting the
+    // times in the interface.
+    $start_date = new DrupalDateTime($start_date);
+    $end_date = new DrupalDateTime($end_date);
+    $start_date->setTimezone($timezone);
+    $end_date->setTimezone($timezone);
+
+    $start_date->setTime(0, 0, 0);
+    $end_date->setTime(23, 59, 59);
+
+    // Drupal does not save the timezone information in the database - it will
+    // be saved as UTC. So, we need to convert this back to UTC first.
+    $start_date->setTimezone($timezone_utc);
+    $end_date->setTimezone($timezone_utc);
+
+    $date['value'] = $start_date->format('Y-m-d\TH:i:s');
+    $date['end_value'] = $end_date->format('Y-m-d\TH:i:s');
+
+  }
+
+  $eventinstance->set('date', $dates);
+}
+
+/**
  * Implements hook_entity_bundle_info_alter().
  *
  * @param mixed[] $bundles
@@ -377,53 +433,4 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
   }
 
   $form['field_screen_names']['#access'] = FALSE;
-}
-
-/**
- * Implements hook_recurring_events_event_instances_pre_create_alter().
- *
- * If the eventseries is set to be an all-day, we want to ignore any times
- * set, and instead set them to 00:00 - 23:59.
- *
- * @param array<mixed> $dates
- *   The requested dates of the instances.
- * @param \Drupal\recurring_events\Entity\EventSeries $series
- *   The parent event series.
- */
-function dpl_event_recurring_events_event_instances_pre_create_alter(array &$dates, EventSeries $series): void {
-  if (!$series->hasField('field_event_all_day') ||
-    empty($series->get('field_event_all_day')->getString())) {
-    return;
-  }
-
-  $timezone = \Drupal::config('system.date')->get('timezone.default');
-  $timezone = new \DateTimeZone($timezone);
-  $timezoneUtc = new \DateTimeZone('UTC');
-
-  foreach ($dates as &$date) {
-    $startDate = $date['start_date'] ?? NULL;
-    $endDate = $date['end_date'] ?? NULL;
-
-    if (!($startDate instanceof DrupalDateTime) || (!($endDate instanceof DrupalDateTime))) {
-      continue;
-    }
-
-    // First, we need to tell Drupal that the times we're giving are in the
-    // default timezone, and not UTC.
-    // This mimics how Drupal also would interpret it, if we were setting the
-    // times in the interface.
-    $startDate->setTimezone($timezone);
-    $startDate->setTime(0, 0, 0);
-    $endDate->setTimezone($timezone);
-    $endDate->setTime(23, 59, 59);
-
-    // Drupal does not save the timezone information in the database - it will
-    // be saved as UTC. So, we need to convert this back to UTC first.
-    $startDate->setTimezone($timezoneUtc);
-    $endDate->setTimezone($timezoneUtc);
-
-    $date['start_date'] = $startDate;
-    $date['end_date'] = $endDate;
-  }
-
 }
