@@ -25,13 +25,13 @@ updates:
         update-types:
           - "patch"
     ignore:
-      - dependency-name: 'drupal/potion'
-      - dependency-name: 'spawnia/sailor'
+      - dependency-name: "drupal/potion"
+      - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
     schedule:
       interval: weekly
       day: monday
-      time: '04:00'
+      time: "04:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -54,7 +54,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: '04:00'
+      time: "04:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
