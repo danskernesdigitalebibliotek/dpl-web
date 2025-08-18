@@ -26,6 +26,8 @@ updates:
           - "patch"
     ignore:
       - dependency-name: 'drupal/potion'
+      - dependency-name: 'spawnia/sailor'
+        versions: [">1.1.0"]
     schedule:
       interval: weekly
       day: monday
