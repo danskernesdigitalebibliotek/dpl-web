@@ -67,20 +67,11 @@ updates:
       - "dev-scripts"
   - package-ecosystem: npm
     directory: "/"
-    open-pull-requests-limit: 2
-    groups:
+    ignore:
       # @types/node are linked to the Node version used within the project.
       # Bump the package manually when upgrading to a new Node version.
-      types-node:
-        patterns:
-          - "@types/node"
-        update-types:
-          - "minor"
-          - "patch"
-      minor-js-dependencies:
-        update-types:
-          - "minor"
-          - "patch"
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
       day: monday
