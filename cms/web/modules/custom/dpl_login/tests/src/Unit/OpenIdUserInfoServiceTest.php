@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\dpl_login\Unit;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Site\Settings;
 use Drupal\dpl_login\AuthorizationIdType;
 use Drupal\dpl_login\OpenIdUserInfoService;
@@ -20,6 +22,11 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   private Settings $settings;
 
   /**
+   * Config factory mock.
+   */
+  private ConfigFactoryInterface $configFactory;
+
+  /**
    * {@inheritdoc}
    */
   public function setUp(): void {
@@ -28,6 +35,17 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
     $settings = [];
     $settings['hash_salt'] = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
     $this->settings = new Settings($settings);
+
+    // Mock config factory to return site email.
+    $site_config = $this->createMock(ImmutableConfig::class);
+    $site_config->method('get')
+      ->with('mail')
+      ->willReturn('mail@folkebibliotekernescms.dk');
+
+    $this->configFactory = $this->createMock(ConfigFactoryInterface::class);
+    $this->configFactory->method('get')
+      ->with('system.site')
+      ->willReturn($site_config);
   }
 
   /**
@@ -36,7 +54,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
    * @dataProvider cprHasPrecedenceOverUniqueIdData
    */
   public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_sub_id, AuthorizationIdType $expected_id_type) {
-    $service = new OpenIdUserInfoService($this->settings);
+    $service = new OpenIdUserInfoService($this->settings, $this->configFactory);
     $sub_id = $service->getSubjectIdFromUserInfo($userinfo);
     $id_type = $service->getIdentifierDataFromUserInfo($userinfo)['type'];
 
@@ -48,7 +66,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
    * Test Exception if both CPR and uniqueId are missing.
    */
   public function testThatGettingSubHashFromUserInfoThrowsAnExceptionIfBothCprAndUniqueIdAreMissing() {
-    $service = new OpenIdUserInfoService($this->settings);
+    $service = new OpenIdUserInfoService($this->settings, $this->configFactory);
     $userinfo = [
       'attributes' => [],
     ];
@@ -64,7 +82,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
    * @dataProvider weGetUniqueHashesNotMatterWhatData
    */
   public function testThatHashedIdentifiersAreUnique(string $id_1, string $id_2) {
-    $service = new OpenIdUserInfoService($this->settings);
+    $service = new OpenIdUserInfoService($this->settings, $this->configFactory);
     $hash1 = $service->hashIdentifier($id_1);
     $hash2 = $service->hashIdentifier($id_2);
     $this->assertNotEquals($hash1, $hash2);
@@ -74,7 +92,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
    * Test that hashed identifier is reproducible.
    */
   public function testThatHashedIdentifierIsReproducible() {
-    $service = new OpenIdUserInfoService($this->settings);
+    $service = new OpenIdUserInfoService($this->settings, $this->configFactory);
     $id = '9d67c9fa-81d6-41ce-8b42-9d187b306fd9';
     $hash1 = $service->hashIdentifier($id);
     $hash2 = $service->hashIdentifier($id);
@@ -99,7 +117,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
     $mock = $builder->build();
     $mock->enable();
 
-    $service = new OpenIdUserInfoService($this->settings);
+    $service = new OpenIdUserInfoService($this->settings, $this->configFactory);
     $userinfo = $service->getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse([
       'attributes' => [
         'cpr' => '1234567890',
@@ -108,10 +126,51 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
     ]);
 
     $this->assertEquals([
-      'email' => '9999999999999@dpl-cms.invalid',
+      'email' => '9999999999999.invalid@folkebibliotekernescms.dk',
       'name' => '9999999999999',
       'sub' => 'e2057a73dd0aa38c7fa4450a9a0561494cd4baa4a1b769d6f04deb3e3677379e',
     ], $userinfo);
+
+    $mock->disable();
+  }
+
+  /**
+   * Test fallback domain when site mail config is empty.
+   */
+  public function testFallbackDomainWhenSiteMailIsEmpty() {
+    // Mock config factory to return empty site email.
+    $site_config = $this->createMock(ImmutableConfig::class);
+    $site_config->method('get')
+      ->with('mail')
+    // Empty email.
+      ->willReturn('');
+
+    $config_factory = $this->createMock(ConfigFactoryInterface::class);
+    $config_factory->method('get')
+      ->with('system.site')
+      ->willReturn($site_config);
+
+    // Mock uniqid to get predictable result.
+    $builder = new MockBuilder();
+    $builder->setNamespace('Drupal\dpl_login')
+      ->setName("uniqid")
+      ->setFunction(
+        function () {
+          return 'testuser123';
+        }
+      );
+    $mock = $builder->build();
+    $mock->enable();
+
+    $service = new OpenIdUserInfoService($this->settings, $config_factory);
+    $userinfo = $service->getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse([
+      'attributes' => [
+        'cpr' => '1234567890',
+      ],
+    ]);
+
+    // Should use fallback domain.
+    $this->assertEquals('testuser123.invalid@folkebibliotekernescms.dk', $userinfo['email']);
 
     $mock->disable();
   }
