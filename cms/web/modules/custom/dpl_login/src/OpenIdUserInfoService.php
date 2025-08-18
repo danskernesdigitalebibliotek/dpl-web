@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_login;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Site\Settings;
 
 /**
@@ -16,6 +17,7 @@ class OpenIdUserInfoService {
    */
   public function __construct(
     private Settings $settings,
+    private ConfigFactoryInterface $configFactory,
   ) {}
 
   /**
@@ -32,7 +34,16 @@ class OpenIdUserInfoService {
   public function getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse(array $response): array {
     $name = uniqid();
     // Drupal needs an email. We set a unique one to apply to that rule.
-    $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
+    $site_mail = $this->configFactory->get('system.site')->get('mail');
+    if (empty($site_mail) || !str_contains($site_mail, '@')) {
+      // Fallback to a safe default domain if config is missing or invalid.
+      $domain = 'folkebibliotekernescms.dk';
+    }
+    else {
+      $domain_part = strstr($site_mail, '@');
+      $domain = $domain_part !== FALSE ? substr($domain_part, 1) : 'folkebibliotekernescms.dk';
+    }
+    $userinfo['email'] = sprintf('%s.invalid@%s', $name, $domain);
     // Drupal needs a username. We use the unique id to apply to that rule.
     $userinfo['name'] = $name;
     // openid_connect module needs the subject id for creating the auth map.
