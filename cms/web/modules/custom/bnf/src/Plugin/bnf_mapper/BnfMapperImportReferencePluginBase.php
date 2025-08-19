@@ -25,7 +25,7 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
   /**
    * The max amount of levels down we want to import.
    */
-  static public int $recursionLimit = 3;
+  static public int $recursionLimit = 5;
 
   /**
    * {@inheritdoc}
