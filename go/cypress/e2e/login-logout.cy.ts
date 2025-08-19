@@ -5,16 +5,8 @@ import getV1ProductsIdentifierAdapterFactory from "../factories/ap/getV1Products
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
-import {
-  audioBookManifestationIdentifierFactory,
-  eBookManifestationIdentifierFactory,
-  identifierFactory,
-} from "../factories/fbi/factory-parts/identifier"
-import {
-  audioBookManifestationFactory,
-  eBookManifestationFactory,
-} from "../factories/fbi/factory-parts/manifestations"
-import { AudioBookFactory, EBookFactory } from "../factories/fbi/factory-parts/works"
+import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
+import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
 import configuration from "../factories/unilogin/configuration"
 import institution from "../factories/unilogin/institution"
 import introspection from "../factories/unilogin/introspection"
@@ -141,42 +133,12 @@ describe("UNI•Login: Login / Logout API Tests", () => {
       headers: { "content-type": "application/json" },
     })
 
-    const works = identifiers.map((identifier, index) => {
-      if (index % 2 === 0) {
-        return EBookFactory.build({
-          manifestations: {
-            all: [
-              eBookManifestationFactory.build({
-                identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
-              }),
-            ],
-            bestRepresentation: eBookManifestationFactory.build({
-              identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
-            }),
-          },
-        })
-      }
-
-      return AudioBookFactory.build({
-        manifestations: {
-          all: [
-            audioBookManifestationFactory.build({
-              identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
-            }),
-          ],
-          bestRepresentation: audioBookManifestationFactory.build({
-            identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
-          }),
-        },
-      })
-    })
-
     cy.interceptGraphql({
       operationName: "complexSearchForWorkTeaser",
       data: complexSearchForWorkTeaser.build({
         complexSearch: {
           hitcount: identifiers.length,
-          works,
+          works: worksWithIdentifiersFactory.transient({ identifiers }).build(),
         },
       }),
     })
@@ -261,42 +223,12 @@ describe("Adgangsplatformen: Login / Logout API Tests", () => {
       headers: { "content-type": "application/json" },
     })
 
-    const works = identifiers.map((identifier, index) => {
-      if (index % 2 === 0) {
-        return EBookFactory.build({
-          manifestations: {
-            all: [
-              eBookManifestationFactory.build({
-                identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
-              }),
-            ],
-            bestRepresentation: eBookManifestationFactory.build({
-              identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
-            }),
-          },
-        })
-      }
-
-      return AudioBookFactory.build({
-        manifestations: {
-          all: [
-            audioBookManifestationFactory.build({
-              identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
-            }),
-          ],
-          bestRepresentation: audioBookManifestationFactory.build({
-            identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
-          }),
-        },
-      })
-    })
-
     cy.interceptGraphql({
       operationName: "complexSearchForWorkTeaser",
       data: complexSearchForWorkTeaser.build({
         complexSearch: {
           hitcount: identifiers.length,
-          works,
+          works: worksWithIdentifiersFactory.transient({ identifiers }).build(),
         },
       }),
     })
