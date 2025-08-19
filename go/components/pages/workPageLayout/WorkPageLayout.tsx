@@ -75,7 +75,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     })
 
     setSelectedManifestation(selectedManifestation)
-  }, [searchParams])
+  }, [searchParams, manifestations])
 
   if (isLoading && !data) {
     return (
