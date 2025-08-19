@@ -37,6 +37,8 @@ export const hasManifestationAllowedMaterialTypes = (
     )
     return !!matchingMaterialType
   }
+
+  return false
 }
 
 // filter out unallowed material types from manifestations
@@ -60,7 +62,7 @@ export const filterManifestationsByMaterialType = (
 ) => {
   return filter(manifestations, manifestation => {
     const isAllowedMaterialType = hasManifestationAllowedMaterialTypes(manifestation)
-    return isAllowedMaterialType || false
+    return isAllowedMaterialType
   })
 }
 
