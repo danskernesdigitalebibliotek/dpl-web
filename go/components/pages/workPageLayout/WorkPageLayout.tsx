@@ -1,6 +1,6 @@
 "use client"
 
-import { notFound, useSearchParams } from "next/navigation"
+import { notFound, useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useMemo, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
@@ -14,14 +14,17 @@ import {
   WorkFullWorkPageFragment,
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
+  getBestRepresentationOrFallbackManifestation,
 } from "./helper"
 
 function WorkPageLayout({ workId }: { workId: string }) {
+  const router = useRouter()
   const { data, isLoading } = useGetMaterialQuery({
     wid: workId,
   })
@@ -47,6 +50,23 @@ function WorkPageLayout({ workId }: { workId: string }) {
   useEffect(() => {
     // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
+
+    if (!searchParamsMaterialType) {
+      // If no material type is specified is url params, redirect the bestRepresentation manifestation if available or a fallback manifestation
+      const manifestation = getBestRepresentationOrFallbackManifestation(
+        work.manifestations.bestRepresentation,
+        manifestations
+      )
+
+      if (manifestation) {
+        const url = resolveUrl({
+          routeParams: { work: "work", wid: work.workId },
+          queryParams: { type: manifestation.materialTypes[0].materialTypeGeneral.code },
+        })
+        router.replace(url, { scroll: false })
+      }
+    }
+
     // Filter out manifestations that don't match the search params material type
     const selectedManifestation = manifestations.find(manifestation => {
       return !!manifestation.materialTypes.find(
@@ -54,9 +74,8 @@ function WorkPageLayout({ workId }: { workId: string }) {
       )
     })
 
-    // Set the selected manifestation in the state
     setSelectedManifestation(selectedManifestation)
-  }, [manifestations, searchParams])
+  }, [searchParams])
 
   if (isLoading && !data) {
     return (

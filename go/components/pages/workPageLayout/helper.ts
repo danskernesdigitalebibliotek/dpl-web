@@ -20,6 +20,25 @@ export const getManifestationMaterialType = (
 const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
 const allowedPhysicalMaterialTypes = ["BOOKS"]
 
+export const hasManifestationAllowedMaterialTypes = (
+  manifestation: ManifestationWorkPageFragment
+) => {
+  // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
+  if (manifestation.accessTypes[0].code === "PHYSICAL") {
+    return allowedPhysicalMaterialTypes.includes(
+      manifestation.materialTypes[0]?.materialTypeGeneral.code
+    )
+  }
+
+  // if the manifestation is online, we want to include it if it has an allowed online material type
+  if (manifestation.accessTypes[0].code === "ONLINE") {
+    const matchingMaterialType = manifestation.materialTypes.find(type =>
+      allowedMaterialTypes.includes(type.materialTypeGeneral.code)
+    )
+    return !!matchingMaterialType
+  }
+}
+
 // filter out unallowed material types from manifestations
 export const filterMaterialTypes = (manifestations: ManifestationWorkPageFragment[]) => {
   const filteredManifestationsMaterialTypes = manifestations.map(manifestation => {
@@ -40,19 +59,8 @@ export const filterManifestationsByMaterialType = (
   manifestations: ManifestationWorkPageFragment[]
 ) => {
   return filter(manifestations, manifestation => {
-    // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
-    if (manifestation.accessTypes[0].code === "PHYSICAL") {
-      return allowedPhysicalMaterialTypes.includes(
-        manifestation.materialTypes[0]?.materialTypeGeneral.code
-      )
-    }
-    if (manifestation.accessTypes[0].code === "ONLINE") {
-      const matchinMaterialType = manifestation.materialTypes.find(type =>
-        allowedMaterialTypes.includes(type.materialTypeGeneral.code)
-      )
-      return !!matchinMaterialType
-    }
-    return false
+    const isAllowedMaterialType = hasManifestationAllowedMaterialTypes(manifestation)
+    return isAllowedMaterialType || false
   })
 }
 
