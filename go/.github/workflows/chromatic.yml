@@ -7,23 +7,10 @@ on:
     branches:
       - main
       - develop
-    paths:
-      - "**.css"
-      - "**.js"
-      - "**.tsx"
   pull_request:
     branches:
       - main
       - develop
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
-    paths:
-      - "**.css"
-      - "**.js"
-      - "**.tsx"
 
 # List of jobs
 jobs:
