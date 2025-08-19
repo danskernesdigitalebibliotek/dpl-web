@@ -1,3 +1,4 @@
+---
 services:
   dpl_po.commands:
     class: \Drupal\dpl_po\Commands\DplPoCommands
@@ -7,5 +8,7 @@ services:
       - '@file_system'
       - '@module_handler'
       - '@http_client'
+      - '@entity_field.manager'
+      - '@cache.config'
     tags:
       - { name: drush.command }

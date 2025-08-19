@@ -1,0 +1,14 @@
+uuid: c4b9acc2-f2a6-4696-9afd-6f9160649ba4
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_all_day
+label: 'Event all day'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_all_day
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_all_day
+plugin: default_inheritance

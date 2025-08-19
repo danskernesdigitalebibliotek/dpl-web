@@ -16,7 +16,7 @@ jobs:
     name: Validate Composer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
@@ -36,7 +36,7 @@ jobs:
     name: Check code style
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup PHP, with composer and extensions
       uses: shivammathur/setup-php@v2
       with:
@@ -55,7 +55,7 @@ jobs:
     name: Check Twig code style
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
@@ -74,7 +74,7 @@ jobs:
     name: Analyse code using PHPStan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
@@ -94,7 +94,7 @@ jobs:
     name: Run PHP unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
@@ -112,7 +112,7 @@ jobs:
     name: Test site performance using Lighthouse
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -135,7 +135,7 @@ jobs:
     name: Test accessibility using Pa11y
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -159,7 +159,7 @@ jobs:
     name: Run Cypress functional tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -189,7 +189,7 @@ jobs:
     name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         # git with HTTP authentication provides an easy way for us to install
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
@@ -209,7 +209,7 @@ jobs:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -230,7 +230,7 @@ jobs:
     name: Lint Drupal assets
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         # git with HTTP authentication provides an easy way for us to install
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
@@ -248,7 +248,7 @@ jobs:
     name: Lint Cypress tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         # git with HTTP authentication provides an easy way for us to install
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
@@ -266,7 +266,7 @@ jobs:
     name: Check OpenAPI specification
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -292,7 +292,7 @@ jobs:
     name: Check GraphQL specification
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -314,7 +314,7 @@ jobs:
     name: Check Drupal Config
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -335,7 +335,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Check PHP version in composer.json
         run: |
           if ! jq .require.php composer.json | grep ${{ env.PHP_VERSION }}; then

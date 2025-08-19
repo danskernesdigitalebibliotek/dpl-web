@@ -157,6 +157,7 @@ Class | Method | HTTP request | Description
  - [EventsGET200ResponseInnerDateTime](docs/Model/EventsGET200ResponseInnerDateTime.md)
  - [EventsGET200ResponseInnerImage](docs/Model/EventsGET200ResponseInnerImage.md)
  - [EventsGET200ResponseInnerSeries](docs/Model/EventsGET200ResponseInnerSeries.md)
+ - [EventsGET200ResponseInnerTeaserImage](docs/Model/EventsGET200ResponseInnerTeaserImage.md)
  - [EventsGET200ResponseInnerTicketCategoriesInner](docs/Model/EventsGET200ResponseInnerTicketCategoriesInner.md)
  - [EventsGET200ResponseInnerTicketCategoriesInnerPrice](docs/Model/EventsGET200ResponseInnerTicketCategoriesInnerPrice.md)
  - [ProxyUrlGET200Response](docs/Model/ProxyUrlGET200Response.md)

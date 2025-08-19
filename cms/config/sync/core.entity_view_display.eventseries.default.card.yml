@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventseries.card
+    - field.field.eventseries.default.field_automatic_list_hide
     - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_all_day
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
     - field.field.eventseries.default.field_event_paragraphs
@@ -70,10 +72,12 @@ hidden:
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_automatic_list_hide: true
   field_branch: true
   field_categories: true
   field_description: true
   field_event_address: true
+  field_event_all_day: true
   field_event_image: true
   field_event_link: true
   field_event_paragraphs: true

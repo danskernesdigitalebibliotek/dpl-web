@@ -96,6 +96,18 @@ final class EventsResource extends EventResourceBase {
                     ],
                     'required' => ['url'],
                   ],
+                  'teaserImage' => [
+                    'type' => 'object',
+                    'description' => 'The uniform teaser image for the event.',
+                    'properties' => [
+                      'url' => [
+                        'type' => 'string',
+                        'format' => 'uri',
+                        'description' => 'An absolute URL for the image. Unlike the main image, this is scaled and cropped to be identical in all instances - matching the teaser images of the website lists.',
+                      ],
+                    ],
+                    'required' => ['url'],
+                  ],
                   'state' => [
                     'type' => 'string',
                     'description' => 'The state of the event.',
@@ -106,6 +118,10 @@ final class EventsResource extends EventResourceBase {
                       'Cancelled',
                       'Occurred',
                     ],
+                  ],
+                  'all_day' => [
+                    'type' => 'boolean',
+                    'description' => 'Whether the event is marked as an all-day event, without time relevance.',
                   ],
                   'date_time' => [
                     'type' => 'object',
