@@ -46,6 +46,10 @@ updates:
       - "dev-scripts"
   - package-ecosystem: npm
     directory: "/"
+    groups:
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
     ignore:
       # @types/node are linked to the Node version used within the project.
       # Bump the package manually when upgrading to a new Node version.
