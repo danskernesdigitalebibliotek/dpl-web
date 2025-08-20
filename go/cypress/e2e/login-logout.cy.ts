@@ -15,7 +15,7 @@ import userinfo from "../factories/unilogin/userinfo"
 import { mockFrontpage } from "../support/mocks"
 
 describe("Login / Logout UI Tests", () => {
-  beforeEach(() => {
+  it("Should open and close login modal", () => {
     // Visit search page and wait for client side render
     cy.visit("/search").contains("Ingen søgeord fundet")
 
@@ -24,10 +24,6 @@ describe("Login / Logout UI Tests", () => {
 
     // Check if login modal is open and visible
     cy.dataCy("global-sheet").should("be.visible")
-  })
-
-  it("Should open and close login modal", () => {
-    // Opens login modal with beforeEach
 
     // Close login modal
     cy.dataCy("global-sheet-close-button").click()
@@ -37,7 +33,14 @@ describe("Login / Logout UI Tests", () => {
   })
 
   it("Should open unilogin page", () => {
-    // Opens login modal with beforeEach
+    // Visit search page and wait for client side render
+    cy.visit("/search")
+
+    // Click profile button
+    cy.dataCy("profile-button").click()
+
+    // Check if login modal is open and visible
+    cy.dataCy("global-sheet").should("be.visible")
 
     const uniloginUrl = routes["routes.login.unilogin"]
 
@@ -56,7 +59,14 @@ describe("Login / Logout UI Tests", () => {
   })
 
   it("Should open adgangsplatformen page", () => {
-    // Opens login modal with beforeEach
+    // Visit search page and wait for client side render
+    cy.visit("/search")
+
+    // Click profile button
+    cy.dataCy("profile-button").click()
+
+    // Check if login modal is open and visible
+    cy.dataCy("global-sheet").should("be.visible")
 
     // Intercept mocked adgangsplatformen login page
     cy.intercept("GET", "/mocked/login*", {
@@ -111,6 +121,15 @@ describe("UNI•Login: Login / Logout API Tests", () => {
   }
 
   it("Should login when performing unilogin callback", () => {
+    // Visit search page and wait for client side render
+    cy.visit("/search").contains("Ingen søgeord fundet")
+
+    // Click profile button
+    cy.dataCy("profile-button").click()
+
+    // Check if login modal is open and visible
+    cy.dataCy("global-sheet").should("be.visible")
+
     performLoginCallback()
 
     cy.location("pathname").should("eq", "/user/profile")
@@ -163,6 +182,15 @@ describe("UNI•Login: Login / Logout API Tests", () => {
   })
 
   it("Should logout when clicking logout button", () => {
+    // Visit search page and wait for client side render
+    cy.visit("/search")
+
+    // Click profile button
+    cy.dataCy("profile-button").click()
+
+    // Check if login modal is open and visible
+    cy.dataCy("global-sheet").should("be.visible")
+
     performLoginCallback()
 
     cy.dataCy("logout-button").click()
