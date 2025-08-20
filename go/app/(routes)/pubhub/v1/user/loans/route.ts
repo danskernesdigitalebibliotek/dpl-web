@@ -48,7 +48,7 @@ async function getLibraryUserOrder(request: NextRequest, context: { uniLoginUser
     const responseData = await getLibraryUserOrderListRequest(uniLoginUserInfo)
     return NextResponse.json(libraryUserOrderList.parse(responseData))
   } catch (error) {
-    console.error(error)
+    console.error("getLibraryUserOrder error", error)
     throw new Response("Unprocessable content", { status: 422 })
   }
 }

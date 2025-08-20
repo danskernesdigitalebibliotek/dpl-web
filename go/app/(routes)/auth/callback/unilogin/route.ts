@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
 
     await session.save()
   } catch (error) {
-    console.error(error)
+    console.error("unilogin error", error)
     // Make sure that the user is logged out remotely first. And destroy session.
     await logoutUniloginSSO(session)
     await destroySession(session)

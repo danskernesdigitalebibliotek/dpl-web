@@ -6,22 +6,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "**.css"
-      - "**.js"
-      - "**.tsx"
+      - develop
   pull_request:
     branches:
       - main
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
-    paths:
-      - "**.css"
-      - "**.js"
-      - "**.tsx"
+      - develop
 
 # List of jobs
 jobs:
@@ -53,7 +42,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@v13
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.

@@ -1,5 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc"
 import js from "@eslint/js"
+import pluginCypress from "eslint-plugin-cypress"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -26,13 +27,24 @@ const eslintConfig = [
     "next/typescript",
     "prettier",
     "plugin:storybook/recommended",
-    "plugin:cypress/recommended",
     "plugin:import/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended"
   ),
+  {
+    files: ["cypress/**/*.{js,ts}", "**/*.cy.{js,ts}"],
+    plugins: {
+      pluginCypress,
+    },
+    languageOptions: {
+      ...pluginCypress.configs.globals.languageOptions,
+    },
+    rules: {
+      ...pluginCypress.configs.recommended.rules,
+    },
+  },
   {
     rules: {
       "no-console": [
@@ -58,6 +70,24 @@ const eslintConfig = [
           property: "setViewport",
           message:
             "Beware that setViewport should only be used while debugging Cypress locally. Otherwise it forces the viewport to a fixed size, which is not what we want for responsive testing.",
+        },
+        {
+          object: "describe",
+          property: "only",
+          message:
+            "describe.only() should not be used in production code. Remove .only() to run all tests.",
+        },
+        {
+          object: "it",
+          property: "only",
+          message:
+            "it.only() should not be used in production code. Remove .only() to run all tests.",
+        },
+        {
+          object: "test",
+          property: "only",
+          message:
+            "test.only() should not be used in production code. Remove .only() to run all tests.",
         },
       ],
       "no-restricted-syntax": [

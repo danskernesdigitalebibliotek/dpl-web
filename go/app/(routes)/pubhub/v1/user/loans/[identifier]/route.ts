@@ -41,7 +41,7 @@ async function createdigitalLoan(
 
     return NextResponse.json(data)
   } catch (error) {
-    console.error(error)
+    console.error("createdigitalLoan error", error)
     throw new Response("Unprocessable content", { status: 422 })
   }
 }
