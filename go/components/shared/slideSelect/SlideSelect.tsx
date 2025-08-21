@@ -25,11 +25,11 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
 
   return (
     <div
-      className="border-foreground relative flex max-w-full flex-row flex-nowrap justify-center rounded-full border-2
-        p-1">
+      className="border-background outline-foreground relative flex w-full max-w-[500px] flex-row flex-nowrap
+        justify-center overflow-hidden rounded-full border-2 outline-2">
       {/* Animated black background */}
       <motion.div
-        className="bg-foreground absolute top-1 h-7 w-auto rounded-full"
+        className="bg-foreground absolute h-7 w-auto rounded-full"
         layout // Framer Motion automatically animates layout changes
         initial={false} // Prevents the initial animation
         transition={{
@@ -38,8 +38,8 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
           damping: 25,
         }}
         style={{
-          width: `calc(${100 / options.length}% - 8px)`, // Dynamic width based on the number of options
-          left: `calc(${(100 / options.length) * selectedOptionIndex}% + 4px)`, // Moves to the selected option
+          width: `calc(${100 / options.length}%)`, // Dynamic width based on the number of options
+          left: `calc(${(100 / options.length) * selectedOptionIndex}%)`, // Moves to the selected option
         }}
       />
       {/* Render the options */}
@@ -59,10 +59,15 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
             }}
             variant="transparent"
             classNames={cn(
-              "z-slide-select min-w-36 flex items-center justify-center",
+              "z-slide-select flex items-center justify-center min-w-0 flex-1 ",
               selectedOptionIndex === index && "text-background"
             )}>
-            {!!iconName && <Icon className="m-[-7px] h-7 w-7 shrink-0" name={iconName} />}
+            {!!iconName && (
+              <Icon
+                className="m-[-7px] block h-7 w-7 shrink-0 lg:hidden xl:block"
+                name={iconName}
+              />
+            )}
             <span>{option.display}</span>
           </BadgeButton>
         )

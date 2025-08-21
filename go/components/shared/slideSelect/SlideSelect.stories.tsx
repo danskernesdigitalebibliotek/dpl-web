@@ -35,7 +35,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: defaultArgs,
   render: args => (
-    <div className="flex w-full max-w-[90vw] justify-center">
+    <div className="flex w-full max-w-[90vw] justify-center p-1">
       <SlideSelect {...args} />
     </div>
   ),
@@ -45,7 +45,7 @@ export const DarkMode: Story = {
   args: defaultArgs,
   decorators: [darkModeDecorator],
   render: args => (
-    <div className="flex w-full max-w-[90vw] justify-center">
+    <div className="flex w-full max-w-[90vw] justify-center p-1">
       <SlideSelect {...args} />
     </div>
   ),
