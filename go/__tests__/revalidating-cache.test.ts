@@ -28,7 +28,7 @@ describe("Revalidate cache endpoint", () => {
         appHandler: revalidateCacheHandler,
         url: `/cache/revalidate?tags=tag1,tag2`,
         async test({ fetch }) {
-          expect((await fetch()).json()).resolves.toStrictEqual({
+          await expect((await fetch()).json()).resolves.toStrictEqual({
             error: "Bad Request",
           })
           expect((await fetch()).status).toBe(400)
@@ -44,7 +44,7 @@ describe("Revalidate cache endpoint", () => {
         appHandler: revalidateCacheHandler,
         url: `/cache/revalidate?secret=abe`,
         async test({ fetch }) {
-          expect((await fetch()).json()).resolves.toStrictEqual({
+          await expect((await fetch()).json()).resolves.toStrictEqual({
             error: "Bad Request",
           })
           expect((await fetch()).status).toBe(400)
@@ -57,7 +57,7 @@ describe("Revalidate cache endpoint", () => {
       appHandler: revalidateCacheHandler,
       url: `/cache/revalidate?secret=abe&path=/some/path`,
       async test({ fetch }) {
-        expect((await fetch()).json()).resolves.toStrictEqual({
+        await expect((await fetch()).json()).resolves.toStrictEqual({
           error: "Not authorized",
         })
         expect((await fetch()).status).toBe(401)
@@ -69,7 +69,7 @@ describe("Revalidate cache endpoint", () => {
       appHandler: revalidateCacheHandler,
       url: `/cache/revalidate?secret=abe&tags=tag1,tag2`,
       async test({ fetch }) {
-        expect((await fetch()).json()).resolves.toStrictEqual({
+        await expect((await fetch()).json()).resolves.toStrictEqual({
           error: "Not authorized",
         })
         expect((await fetch()).status).toBe(401)
@@ -81,7 +81,7 @@ describe("Revalidate cache endpoint", () => {
       appHandler: revalidateCacheHandler,
       url: `/cache/revalidate?secret=CeXF8E2Rd9wXZ2sswFHR&path=/some/path`,
       async test({ fetch }) {
-        expect((await fetch()).json()).resolves.toStrictEqual({
+        await expect((await fetch()).json()).resolves.toStrictEqual({
           message: "Revalidation successful",
         })
         expect((await fetch()).status).toBe(200)
@@ -93,7 +93,7 @@ describe("Revalidate cache endpoint", () => {
       appHandler: revalidateCacheHandler,
       url: `/cache/revalidate?secret=CeXF8E2Rd9wXZ2sswFHR&tags=tag1,tag2`,
       async test({ fetch }) {
-        expect((await fetch()).json()).resolves.toStrictEqual({
+        await expect((await fetch()).json()).resolves.toStrictEqual({
           message: "Revalidation successful",
         })
         expect((await fetch()).status).toBe(200)

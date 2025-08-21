@@ -117,7 +117,6 @@ const getFakeSessions = () => {
     uniloginSessionThatShouldBeRefreshed,
     uniloginSessionWithExpiredRefreshToken,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
-    adgangsPlatformenSessionThatShouldBeRefreshed,
     adgangsPlatformenSessionThatIsTooOld,
     anonymousSession: sessionFunctions.defaultSession,
   }
