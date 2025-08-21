@@ -1,24 +1,23 @@
 import routes from "@/lib/config/resolvers/routes"
 
-import getV1LibraryProfileAdapterFactory from "../factories/ap/getV1LibraryProfileAdapter"
-import getV1ProductsIdentifierAdapterFactory from "../factories/ap/getV1ProductsIdentifierAdapter"
-import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
-import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
-import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
-import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
 import configuration from "../factories/unilogin/configuration"
 import institution from "../factories/unilogin/institution"
 import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
 import userinfo from "../factories/unilogin/userinfo"
-import { mockFrontpage } from "../support/mocks"
+import { mockAPProfilePage, mockFrontpage, mockUniloginProfilePage } from "../support/mocks"
 
 describe("Login / Logout UI Tests", () => {
-  it("Should open and close login modal", () => {
-    // Visit search page and wait for client side render
-    cy.visit("/search").contains("Ingen søgeord fundet")
+  beforeEach(() => {
+    mockFrontpage()
+    cy.visit("/")
 
+    // Ignore fetch errors from DPL CMS
+    cy.expectError("Failed to fetch data from DPL CMS")
+  })
+
+  it("Should open and close login modal", () => {
     // Click profile button
     cy.dataCy("profile-button").click()
 
@@ -33,9 +32,6 @@ describe("Login / Logout UI Tests", () => {
   })
 
   it("Should open unilogin page", () => {
-    // Visit search page and wait for client side render
-    cy.visit("/search")
-
     // Click profile button
     cy.dataCy("profile-button").click()
 
@@ -59,9 +55,6 @@ describe("Login / Logout UI Tests", () => {
   })
 
   it("Should open adgangsplatformen page", () => {
-    // Visit search page and wait for client side render
-    cy.visit("/search")
-
     // Click profile button
     cy.dataCy("profile-button").click()
 
@@ -84,6 +77,14 @@ describe("Login / Logout UI Tests", () => {
 })
 
 describe("UNI•Login: Login / Logout API Tests", () => {
+  beforeEach(() => {
+    mockFrontpage()
+    cy.visit("/")
+
+    // Ignore fetch errors from DPL CMS
+    cy.expectError("Failed to fetch data from DPL CMS")
+  })
+
   const performLoginCallback = () => {
     const mockedCallbackUrl =
       "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
@@ -121,9 +122,6 @@ describe("UNI•Login: Login / Logout API Tests", () => {
   }
 
   it("Should login when performing unilogin callback", () => {
-    // Visit search page and wait for client side render
-    cy.visit("/search").contains("Ingen søgeord fundet")
-
     // Click profile button
     cy.dataCy("profile-button").click()
 
@@ -137,54 +135,15 @@ describe("UNI•Login: Login / Logout API Tests", () => {
 
   it("Should show loans on unilogin user profile page", () => {
     performLoginCallback()
-
-    cy.intercept("GET", "/pubhub/v1/library/profile", {
-      statusCode: 200,
-      body: getV1LibraryProfileAdapterFactory.build(),
-      headers: { "content-type": "application/json" },
-    })
-
-    const identifiers = identifierFactory.buildList(9)
-
-    cy.intercept("GET", "/pubhub/v1/user/loans", {
-      statusCode: 200,
-      body: getV1UserLoansAdapterFactory.transient({ identifiers }).build(),
-      headers: { "content-type": "application/json" },
-    })
-
-    cy.interceptGraphql({
-      operationName: "complexSearchForWorkTeaser",
-      data: complexSearchForWorkTeaser.build({
-        complexSearch: {
-          hitcount: identifiers.length,
-          works: worksWithIdentifiersFactory.transient({ identifiers }).build(),
-        },
-      }),
-    })
-
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/*", reg => {
-      // Intercept the request and respond with a mocked product
-      const id = reg.url.split("/").pop() // Get the last part of the URL which is the product ID
-
-      reg.reply({
-        statusCode: 200,
-        body: getV1ProductsIdentifierAdapterFactory.build({
-          product: { externalProductId: { id }, costFree: true },
-        }),
-        headers: { "content-type": "application/json" },
-      })
-    })
+    mockUniloginProfilePage()
 
     cy.dataCy("loan-slider").should("be.visible")
     cy.dataCy("loan-slider-next-button").click()
     cy.dataCy("loan-slider-prev-button").click()
-    cy.dataCy("loan-slider-work").should("have.length", identifiers.length)
+    cy.dataCy("loan-slider-work").should("have.length", 9)
   })
 
   it("Should logout when clicking logout button", () => {
-    // Visit search page and wait for client side render
-    cy.visit("/search")
-
     // Click profile button
     cy.dataCy("profile-button").click()
 
@@ -192,6 +151,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
     cy.dataCy("global-sheet").should("be.visible")
 
     performLoginCallback()
+    mockUniloginProfilePage()
 
     cy.dataCy("logout-button").click()
 
@@ -200,6 +160,14 @@ describe("UNI•Login: Login / Logout API Tests", () => {
 })
 
 describe("Adgangsplatformen: Login / Logout API Tests", () => {
+  beforeEach(() => {
+    mockFrontpage()
+    cy.visit("/")
+
+    // Ignore fetch errors from DPL CMS
+    cy.expectError("Failed to fetch data from DPL CMS")
+  })
+
   const performLoginCallback = () => {
     const mockedCallbackUrl = "/auth/callback/adgangsplatformen"
 
@@ -209,11 +177,6 @@ describe("Adgangsplatformen: Login / Logout API Tests", () => {
     cy.mockServerGraphQLQuery({
       operationName: "getAdgangsplatformenUserToken",
       data: getAdgangsplatformenUserToken.build(),
-    })
-
-    cy.interceptGraphql({
-      operationName: "complexSearchForWorkTeaser",
-      data: complexSearchForWorkTeaser.build(),
     })
 
     cy.visit(mockedCallbackUrl)
@@ -227,57 +190,12 @@ describe("Adgangsplatformen: Login / Logout API Tests", () => {
 
   it("Should show loans on adgangsplatformen user profile page", () => {
     performLoginCallback()
-
-    cy.intercept("GET", "/auth/session", {
-      isLoggedIn: true,
-      expires: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour from now
-      user: {
-        name: "Adgangsplatformen bruger",
-      },
-      type: "adgangsplatformen",
-    })
-
-    cy.intercept("GET", "ap-service/pubhub-adapter/v1/library/profile", {
-      statusCode: 200,
-      body: getV1LibraryProfileAdapterFactory.build(),
-      headers: { "content-type": "application/json" },
-    })
-
-    const identifiers = identifierFactory.buildList(6)
-
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/user/loans", {
-      statusCode: 200,
-      body: getV1UserLoansAdapterFactory.transient({ identifiers }).build(),
-      headers: { "content-type": "application/json" },
-    })
-
-    cy.interceptGraphql({
-      operationName: "complexSearchForWorkTeaser",
-      data: complexSearchForWorkTeaser.build({
-        complexSearch: {
-          hitcount: identifiers.length,
-          works: worksWithIdentifiersFactory.transient({ identifiers }).build(),
-        },
-      }),
-    })
-
-    cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/*", reg => {
-      // Intercept the request and respond with a mocked product
-      const id = reg.url.split("/").pop() // Get the last part of the URL which is the product ID
-
-      reg.reply({
-        statusCode: 200,
-        body: getV1ProductsIdentifierAdapterFactory.build({
-          product: { externalProductId: { id }, costFree: true },
-        }),
-        headers: { "content-type": "application/json" },
-      })
-    })
+    mockAPProfilePage()
 
     cy.dataCy("loan-slider").should("be.visible")
     cy.dataCy("loan-slider-next-button").click()
     cy.dataCy("loan-slider-prev-button").click()
-    cy.dataCy("loan-slider-work").should("have.length", identifiers.length)
+    cy.dataCy("loan-slider-work").should("have.length", 9)
   })
 
   it("Should logout when clicking logout button", () => {
