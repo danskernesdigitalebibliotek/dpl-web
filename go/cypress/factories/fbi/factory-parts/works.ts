@@ -2,6 +2,10 @@ import { Factory } from "fishery"
 
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
+import {
+  audioBookManifestationIdentifierFactory,
+  eBookManifestationIdentifierFactory,
+} from "./identifier"
 import { audioBookManifestationFactory, eBookManifestationFactory } from "./manifestations"
 import { materialTypeAudioBookFactory, materialTypeEbookFactory } from "./materials"
 
@@ -42,10 +46,46 @@ export const EBookFactory = Factory.define<Work>(({ sequence }) => ({
   ],
   materialTypes: [materialTypeEbookFactory.build(), materialTypeAudioBookFactory.build()],
   manifestations: {
-    all: [eBookManifestationFactory.build()],
+    all: [eBookManifestationFactory.build(), audioBookManifestationFactory.build()],
     bestRepresentation: eBookManifestationFactory.build(),
   },
 }))
+
+export const worksWithIdentifiersFactory = Factory.define<Work[], { identifiers: string[] }>(
+  ({ transientParams }) => {
+    const { identifiers = [] } = transientParams
+
+    return identifiers.map((identifier, index) => {
+      if (index % 2 === 0) {
+        return EBookFactory.build({
+          manifestations: {
+            all: [
+              eBookManifestationFactory.build({
+                identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
+              }),
+            ],
+            bestRepresentation: eBookManifestationFactory.build({
+              identifiers: [eBookManifestationIdentifierFactory.build({ value: identifier })],
+            }),
+          },
+        })
+      }
+
+      return AudioBookFactory.build({
+        manifestations: {
+          all: [
+            audioBookManifestationFactory.build({
+              identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
+            }),
+          ],
+          bestRepresentation: audioBookManifestationFactory.build({
+            identifiers: [audioBookManifestationIdentifierFactory.build({ value: identifier })],
+          }),
+        },
+      })
+    })
+  }
+)
 
 export const CombinedWorkFactory = Factory.define<Work>(({ sequence }) => {
   const isAudioBook = sequence % 2 === 0

@@ -1,40 +1,56 @@
 import { Factory } from "fishery"
 
 import { coverFactory } from "./cover"
+import {
+  audioBookManifestationIdentifierFactory,
+  eBookManifestationIdentifierFactory,
+} from "./identifier"
 import { materialTypeAudioBookFactory, materialTypeEbookFactory } from "./materials"
 import { Work } from "./works"
 
 type Manifestation = Work["manifestations"]["all"][0]
 
 export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
-  pid: "1",
   accessTypes: [
     {
       code: "ONLINE",
-      display: "Digital",
+      display: "online",
     },
   ],
-  access: [],
+  access: [
+    {
+      __typename: "Ereol",
+      origin: "eReolen Go",
+      url: "https://ereolengo.dk/ting/object/870970-basis:136357166",
+      canAlwaysBeLoaned: false,
+    },
+    {
+      __typename: "Ereol",
+      origin: "eReolen",
+      url: "https://ereolen.dk/ting/object/870970-basis:136357166",
+      canAlwaysBeLoaned: false,
+    },
+  ],
   genreAndForm: ["myter", "billedbøger"],
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],
   contributors: manifestationContributorFactory.buildList(2),
   cover: coverFactory.build(),
-  identifiers: [
-    {
-      type: "PUBLIZON",
-      value: "9788711917145",
-    },
-    {
-      type: "ISBN",
-      value: "9788711917145",
-    },
-  ],
+  pid: "870970-basis:38772791",
+  identifiers: [eBookManifestationIdentifierFactory.build()],
   materialTypes: [materialTypeEbookFactory.build()],
+  edition: {
+    publicationYear: {
+      display: "2023",
+      year: 2023,
+    },
+    contributors: [],
+    edition: "",
+    summary: "2023",
+  },
 }))
 
 export const audioBookManifestationFactory = Factory.define<Manifestation>(() => ({
-  pid: "2",
   accessTypes: [
     {
       code: "ONLINE",
@@ -47,17 +63,18 @@ export const audioBookManifestationFactory = Factory.define<Manifestation>(() =>
   contributorsFromDescription: [],
   contributors: manifestationContributorFactory.buildList(1),
   cover: coverFactory.build(),
-  identifiers: [
-    {
-      type: "PUBLIZON",
-      value: "9788726204353",
-    },
-    {
-      type: "ISBN",
-      value: "9788726204353",
-    },
-  ],
+  pid: "870970-basis:38772791",
+  identifiers: [audioBookManifestationIdentifierFactory.build()],
   materialTypes: [materialTypeAudioBookFactory.build()],
+  edition: {
+    publicationYear: {
+      display: "2022",
+      year: 2022,
+    },
+    contributors: [],
+    edition: "",
+    summary: "2022",
+  },
 }))
 
 export const manifestationContributorFactory = Factory.define<Manifestation["contributors"][0]>(

@@ -31,6 +31,7 @@
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit",
     "cypress:open": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e",
+    "cypress:open:mobile": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e --env viewport=mobile",
     "cypress:run": "yarn cypress:run:mobile; yarn cypress:run:desktop",
     "cypress:run:mobile": "NODE_ENV=test cypress run --env viewport=mobile",
     "cypress:run:desktop": "NODE_ENV=test cypress run --env viewport=desktop",

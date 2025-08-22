@@ -1,9 +1,8 @@
 import "./commands"
-import { mockConfig, mockFrontpage } from "./mocks"
+import { mockConfig } from "./mocks"
 
 beforeEach(() => {
   mockConfig()
-  mockFrontpage()
 })
 
 afterEach(() => {

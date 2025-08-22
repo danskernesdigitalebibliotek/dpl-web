@@ -3,6 +3,7 @@ import SearchWithPaginationFactory from "../factories/fbi/searchWithPagination"
 
 describe("Search Result Tests", () => {
   beforeEach(() => {
+    // @todo Instead of ignoring exception we should mock the data.
     // Ignore fetch errors from DPL CMS
     cy.expectError("Failed to fetch data from DPL CMS")
     // Intercept search request
