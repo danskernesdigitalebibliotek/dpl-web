@@ -13,6 +13,7 @@ describe("Login / Logout UI Tests", () => {
     mockFrontpage()
     cy.visit("/")
 
+    // @todo Instead of ignoring exception we should mock the data.
     // Ignore fetch errors from DPL CMS
     cy.expectError("Failed to fetch data from DPL CMS")
   })
@@ -81,6 +82,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
     mockFrontpage()
     cy.visit("/")
 
+    // @todo Instead of ignoring exception we should mock the data.
     // Ignore fetch errors from DPL CMS
     cy.expectError("Failed to fetch data from DPL CMS")
   })
@@ -164,6 +166,7 @@ describe("Adgangsplatformen: Login / Logout API Tests", () => {
     mockFrontpage()
     cy.visit("/")
 
+    // @todo Instead of ignoring exception we should mock the data.
     // Ignore fetch errors from DPL CMS
     cy.expectError("Failed to fetch data from DPL CMS")
   })
