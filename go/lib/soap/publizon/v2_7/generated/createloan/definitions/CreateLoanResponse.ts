@@ -1,4 +1,4 @@
-import { CreateLoanResult } from "./CreateLoanResult";
+import type { CreateLoanResult } from "./CreateLoanResult";
 
 /** CreateLoanResponse */
 export interface CreateLoanResponse {

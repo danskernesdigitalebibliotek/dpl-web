@@ -1,7 +1,7 @@
-import { Client as SoapClient, createClientAsync as soapCreateClientAsync, IExOptions as ISoapExOptions } from "soap";
-import { CreateLoan } from "./definitions/CreateLoan";
-import { CreateLoanResponse } from "./definitions/CreateLoanResponse";
-import { Createloan } from "./services/Createloan";
+import { Client as SoapClient, createClientAsync as soapCreateClientAsync, type IExOptions as ISoapExOptions } from "soap";
+import type { CreateLoan } from "./definitions/CreateLoan";
+import type { CreateLoanResponse } from "./definitions/CreateLoanResponse";
+import type { Createloan } from "./services/Createloan";
 
 export interface CreateloanClient extends SoapClient {
     Createloan: Createloan;

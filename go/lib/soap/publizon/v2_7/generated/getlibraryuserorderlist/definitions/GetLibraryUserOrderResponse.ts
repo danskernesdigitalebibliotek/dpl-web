@@ -1,4 +1,4 @@
-import { GetLibraryUserOrderResult } from "./GetLibraryUserOrderResult";
+import type { GetLibraryUserOrderResult } from "./GetLibraryUserOrderResult";
 
 /** GetLibraryUserOrderResponse */
 export interface GetLibraryUserOrderResponse {

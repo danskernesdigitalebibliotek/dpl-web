@@ -1,9 +1,9 @@
-import { Client as SoapClient, createClientAsync as soapCreateClientAsync, IExOptions as ISoapExOptions } from "soap";
-import { GetLibraryUserOrderList } from "./definitions/GetLibraryUserOrderList";
-import { GetLibraryUserOrderListResponse } from "./definitions/GetLibraryUserOrderListResponse";
-import { GetLibraryUserOrder } from "./definitions/GetLibraryUserOrder";
-import { GetLibraryUserOrderResponse } from "./definitions/GetLibraryUserOrderResponse";
-import { Getlibraryuserorderlist } from "./services/Getlibraryuserorderlist";
+import { Client as SoapClient, createClientAsync as soapCreateClientAsync, type IExOptions as ISoapExOptions } from "soap";
+import type { GetLibraryUserOrderList } from "./definitions/GetLibraryUserOrderList";
+import type { GetLibraryUserOrderListResponse } from "./definitions/GetLibraryUserOrderListResponse";
+import type { GetLibraryUserOrder } from "./definitions/GetLibraryUserOrder";
+import type { GetLibraryUserOrderResponse } from "./definitions/GetLibraryUserOrderResponse";
+import type { Getlibraryuserorderlist } from "./services/Getlibraryuserorderlist";
 
 export interface GetlibraryuserorderlistClient extends SoapClient {
     Getlibraryuserorderlist: Getlibraryuserorderlist;

@@ -1,9 +1,9 @@
-import { Client as SoapClient, createClientAsync as soapCreateClientAsync, IExOptions as ISoapExOptions } from "soap";
-import { GetProductLoanStatus } from "./definitions/GetProductLoanStatus";
-import { GetProductLoanStatusResponse } from "./definitions/GetProductLoanStatusResponse";
-import { GetProductLoanStatusList } from "./definitions/GetProductLoanStatusList";
-import { GetProductLoanStatusListResponse } from "./definitions/GetProductLoanStatusListResponse";
-import { Getproductloanstatus } from "./services/Getproductloanstatus";
+import { Client as SoapClient, createClientAsync as soapCreateClientAsync, type IExOptions as ISoapExOptions } from "soap";
+import type { GetProductLoanStatus } from "./definitions/GetProductLoanStatus";
+import type { GetProductLoanStatusResponse } from "./definitions/GetProductLoanStatusResponse";
+import type { GetProductLoanStatusList } from "./definitions/GetProductLoanStatusList";
+import type { GetProductLoanStatusListResponse } from "./definitions/GetProductLoanStatusListResponse";
+import type { Getproductloanstatus } from "./services/Getproductloanstatus";
 
 export interface GetproductloanstatusClient extends SoapClient {
     Getproductloanstatus: Getproductloanstatus;

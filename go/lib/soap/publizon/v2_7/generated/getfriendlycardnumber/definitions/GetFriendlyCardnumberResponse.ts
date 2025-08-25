@@ -1,4 +1,4 @@
-import { GetFriendlyCardnumberResult } from "./GetFriendlyCardnumberResult";
+import type { GetFriendlyCardnumberResult } from "./GetFriendlyCardnumberResult";
 
 /** GetFriendlyCardnumberResponse */
 export interface GetFriendlyCardnumberResponse {

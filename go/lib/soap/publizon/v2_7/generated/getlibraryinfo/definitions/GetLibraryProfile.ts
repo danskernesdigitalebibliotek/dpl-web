@@ -1,4 +1,4 @@
-import { InstitutionTags } from "./InstitutionTags";
+import type { InstitutionTags } from "./InstitutionTags";
 
 /** GetLibraryProfile */
 export interface GetLibraryProfile {

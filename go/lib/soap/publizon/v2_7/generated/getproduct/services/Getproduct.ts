@@ -1,5 +1,5 @@
-import { GetproductSoap } from "../ports/GetproductSoap";
-import { GetproductSoap12 } from "../ports/GetproductSoap12";
+import type { GetproductSoap } from "../ports/GetproductSoap";
+import type { GetproductSoap12 } from "../ports/GetproductSoap12";
 
 export interface Getproduct {
     readonly GetproductSoap: GetproductSoap;

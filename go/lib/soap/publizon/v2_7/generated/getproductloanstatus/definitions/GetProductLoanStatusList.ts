@@ -1,4 +1,4 @@
-import { Ebookids } from "./Ebookids";
+import type { Ebookids } from "./Ebookids";
 
 /** GetProductLoanStatusList */
 export interface GetProductLoanStatusList {

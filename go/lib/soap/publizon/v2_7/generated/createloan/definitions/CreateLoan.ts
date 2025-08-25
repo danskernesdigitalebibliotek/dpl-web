@@ -1,4 +1,4 @@
-import { InstitutionTags } from "./InstitutionTags";
+import type { InstitutionTags } from "./InstitutionTags";
 
 /** CreateLoan */
 export interface CreateLoan {

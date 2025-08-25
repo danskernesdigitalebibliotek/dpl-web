@@ -1,4 +1,4 @@
-import { Institution } from "./Institution";
+import type { Institution } from "./Institution";
 
 /** tns:HentInstitutionerResponse */
 export interface TnshentInstitutionerResponse {

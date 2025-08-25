@@ -1,10 +1,9 @@
-// This is generated code thus no need for type checking...
-// @ts-nocheck
-export { GetLibraryProfile } from "./definitions/GetLibraryProfile";
-export { InstitutionTags } from "./definitions/InstitutionTags";
-export { GetLibraryProfileResponse } from "./definitions/GetLibraryProfileResponse";
-export { GetLibraryProfileResult } from "./definitions/GetLibraryProfileResult";
-export { createClientAsync, GetlibraryinfoClient } from "./client";
-export { Getlibraryinfo } from "./services/Getlibraryinfo";
-export { GetlibraryinfoSoap } from "./ports/GetlibraryinfoSoap";
-export { GetlibraryinfoSoap12 } from "./ports/GetlibraryinfoSoap12";
+export type { GetLibraryProfile } from "./definitions/GetLibraryProfile";
+export type { InstitutionTags } from "./definitions/InstitutionTags";
+export type { GetLibraryProfileResponse } from "./definitions/GetLibraryProfileResponse";
+export type { GetLibraryProfileResult } from "./definitions/GetLibraryProfileResult";
+export { createClientAsync } from "./client";
+export type { GetlibraryinfoClient } from "./client";
+export type { Getlibraryinfo } from "./services/Getlibraryinfo";
+export type { GetlibraryinfoSoap } from "./ports/GetlibraryinfoSoap";
+export type { GetlibraryinfoSoap12 } from "./ports/GetlibraryinfoSoap12";
