@@ -40,6 +40,8 @@ function WorkPageLayout({ workId }: { workId: string }) {
   const work = data?.work as WorkFullWorkPageFragment
 
   const manifestations = useMemo(() => {
+    if (!work?.manifestations.all) return []
+
     return filterManifestationsByEdition(
       filterManifestationsByMaterialType(
         filterMaterialTypes(work?.manifestations.all as ManifestationWorkPageFragment[])
