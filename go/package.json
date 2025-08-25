@@ -127,6 +127,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-storybook": "^0.10.1",
+    "fetch-to-curl": "^0.6.0",
     "fishery": "^2.2.2",
     "jsdom": "^25.0.1",
     "jwt-simple": "^0.5.6",
