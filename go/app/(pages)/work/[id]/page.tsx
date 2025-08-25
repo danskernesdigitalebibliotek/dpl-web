@@ -20,13 +20,15 @@ async function WorkPage({ params }: TWorkPageProps) {
   const queryClient = getQueryClient()
   const workId = decodeURIComponent(id)
 
+  const queryFn = await createServerQueryFn({
+    fetcher: useGetMaterialQuery.fetcher,
+    variables: { wid: workId },
+    cookieStore,
+  })
+
   await queryClient.prefetchQuery({
     queryKey: useGetMaterialQuery.getKey({ wid: workId }),
-    queryFn: await createServerQueryFn({
-      fetcher: useGetMaterialQuery.fetcher,
-      variables: { wid: workId },
-      cookieStore,
-    }),
+    queryFn,
   })
 
   // Dehydrate the query data after ensuring it is fetched
