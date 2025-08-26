@@ -71,6 +71,25 @@ describe('Webforms', () => {
     );
   });
 
+  it('Check that EVAC email validation rejects invalid email addresses.', () => {
+    cy.visit('/kontakt');
+    cy.findByLabelText('Dit navn').type('John Doe');
+    // Test with an obviously invalid email that should fail EVAC validation
+    cy.findByLabelText('Din e-mailadresse').type(
+      'invalid.email@nonexistent-domain.invalid',
+    );
+    cy.findByLabelText('Kategori').select(1);
+    cy.findByLabelText('Emne').type('Test EVAC validation');
+    cy.findByLabelText('Besked').type(
+      'Testing email validation with EVAC module',
+    );
+    cy.findByRole('button', { name: 'Send besked' }).click();
+    // EVAC should reject this email and cause form submission to fail
+    cy.get('.error-message__description').contains(
+      'is not valid. Use the format user@example.com',
+    );
+  });
+
   it('Create a new webform with textfield element.', () => {
     cy.drupalLogin('/admin/structure/webform/add');
     cy.findByLabelText('Title').type('Cypress Test Webform');

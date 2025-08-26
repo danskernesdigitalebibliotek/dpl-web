@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86104dea11faa0e0a61920a27e90c16c",
+    "content-hash": "629a2fad8abe91a9ba431a65fc19992f",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -4389,6 +4389,60 @@
             "homepage": "https://www.drupal.org/project/enum_field",
             "support": {
                 "source": "https://git.drupalcode.org/project/enum_field"
+            }
+        },
+        {
+            "name": "drupal/evac",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/evac.git",
+                "reference": "1.0.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/evac-1.0.6.zip",
+                "reference": "1.0.6",
+                "shasum": "e4449805484127cac0db84b70a022d16c8b6182c"
+            },
+            "require": {
+                "drupal/core": "^10.2 || ^11",
+                "egulias/email-validator": "^3|^4"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.6",
+                    "datestamp": "1726310263",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas De Rijcke (andreasderijcke)",
+                    "homepage": "https://www.drupal.org/u/andreasderijcke",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Adds additional email validator services and allows to replace the one from Core.",
+            "homepage": "https://drupal.org/project/evac",
+            "keywords": [
+                "Drupal",
+                "Mail"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/evac",
+                "issues": "https://www.drupal.org/project/issues/evac"
             }
         },
         {

@@ -14,7 +14,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # Install site.
-drush site-install --existing-config -y
+drush site-install --existing-config --account-mail="dev@folkebibliotekernescms.dk" --site-mail="dev@folkebibliotekernescms.dk" -y
 
 # Import translations.
 if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then

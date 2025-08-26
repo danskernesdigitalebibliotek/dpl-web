@@ -52,4 +52,4 @@ services:
 
   dpl_login.openid_user_info:
     class: Drupal\dpl_login\OpenIdUserInfoService
-    arguments: ['@settings']
+    arguments: ['@settings', '@config.factory']
