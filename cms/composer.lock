@@ -7242,17 +7242,17 @@
         },
         {
             "name": "drupal/queue_ui",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/queue_ui.git",
-                "reference": "3.2.1"
+                "reference": "3.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/queue_ui-3.2.1.zip",
-                "reference": "3.2.1",
-                "shasum": "1578dc075f83c0f318a3a61f89e0d62f00fa0786"
+                "url": "https://ftp.drupal.org/files/projects/queue_ui-3.2.2.zip",
+                "reference": "3.2.2",
+                "shasum": "d4fb0647005f4fdf2abcb54368e6f7b6c90c85ce"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11.0"
@@ -7264,8 +7264,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.2.1",
-                    "datestamp": "1729672832",
+                    "version": "3.2.2",
+                    "datestamp": "1754517514",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
