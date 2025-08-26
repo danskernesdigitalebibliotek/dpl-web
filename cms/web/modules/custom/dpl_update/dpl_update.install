@@ -282,6 +282,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10047();
   $messages[] = dpl_update_update_10051();
   $messages[] = dpl_update_update_10061();
+  $messages[] = dpl_update_update_10062();
 
   /*
    * dpl_update_update_10050 is not needed, when installing from scratch the
@@ -932,4 +933,14 @@ function dpl_update_update_10060(): string {
  */
 function dpl_update_update_10061(): string {
   return _dpl_update_install_modules(['evac']);
+}
+
+/**
+ * Add the "Om eReolen" subscription to BNF.
+ */
+function dpl_update_update_10062(): string {
+  return _dpl_update_add_bnf_subscription(
+    '6f204837-ed6f-4683-b8c9-4200005ac1ae',
+    'Om eReolen'
+  );
 }
