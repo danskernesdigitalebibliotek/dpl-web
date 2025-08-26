@@ -1,5 +1,5 @@
-import { Gruppe } from "./Gruppe";
-import { Licens } from "./Licens";
+import type { Gruppe } from "./Gruppe";
+import type { Licens } from "./Licens";
 
 /**
  * gruppeLicens

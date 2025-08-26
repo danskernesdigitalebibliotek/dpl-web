@@ -1,7 +1,7 @@
-import { Client as SoapClient, createClientAsync as soapCreateClientAsync, IExOptions as ISoapExOptions } from "soap";
-import { GetProduct } from "./definitions/GetProduct";
-import { GetProductResponse } from "./definitions/GetProductResponse";
-import { Getproduct } from "./services/Getproduct";
+import { Client as SoapClient, createClientAsync as soapCreateClientAsync, type IExOptions as ISoapExOptions } from "soap";
+import type { GetProduct } from "./definitions/GetProduct";
+import type { GetProductResponse } from "./definitions/GetProductResponse";
+import type { Getproduct } from "./services/Getproduct";
 
 export interface GetproductClient extends SoapClient {
     Getproduct: Getproduct;

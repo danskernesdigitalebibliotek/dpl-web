@@ -1,4 +1,4 @@
-import { Gruppe } from "./Gruppe";
+import type { Gruppe } from "./Gruppe";
 
 /** tns:HentGrupperResponse */
 export interface TnshentGrupperResponse {

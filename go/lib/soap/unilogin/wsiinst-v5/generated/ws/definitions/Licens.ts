@@ -1,4 +1,4 @@
-import { Tjeneste } from "./Tjeneste";
+import type { Tjeneste } from "./Tjeneste";
 
 /**
  * licens

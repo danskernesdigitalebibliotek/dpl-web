@@ -1,5 +1,5 @@
-import { CreateloanSoap } from "../ports/CreateloanSoap";
-import { CreateloanSoap12 } from "../ports/CreateloanSoap12";
+import type { CreateloanSoap } from "../ports/CreateloanSoap";
+import type { CreateloanSoap12 } from "../ports/CreateloanSoap12";
 
 export interface Createloan {
     readonly CreateloanSoap: CreateloanSoap;

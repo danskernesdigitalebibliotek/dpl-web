@@ -1,9 +1,8 @@
-// This is generated code thus no need for type checking...
-// @ts-nocheck
-export { GetProduct } from "./definitions/GetProduct";
-export { GetProductResponse } from "./definitions/GetProductResponse";
-export { GetProductResult } from "./definitions/GetProductResult";
-export { createClientAsync, GetproductClient } from "./client";
-export { Getproduct } from "./services/Getproduct";
-export { GetproductSoap } from "./ports/GetproductSoap";
-export { GetproductSoap12 } from "./ports/GetproductSoap12";
+export type { GetProduct } from "./definitions/GetProduct";
+export type { GetProductResponse } from "./definitions/GetProductResponse";
+export type { GetProductResult } from "./definitions/GetProductResult";
+export { createClientAsync } from "./client";
+export type { GetproductClient } from "./client";
+export type { Getproduct } from "./services/Getproduct";
+export type { GetproductSoap } from "./ports/GetproductSoap";
+export type { GetproductSoap12 } from "./ports/GetproductSoap12";

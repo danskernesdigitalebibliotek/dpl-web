@@ -1,4 +1,4 @@
-import { GetProductResult } from "./GetProductResult";
+import type { GetProductResult } from "./GetProductResult";
 
 /** GetProductResponse */
 export interface GetProductResponse {

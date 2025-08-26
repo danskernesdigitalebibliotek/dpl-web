@@ -1,7 +1,7 @@
-import { GetProductLoanStatus } from "../definitions/GetProductLoanStatus";
-import { GetProductLoanStatusResponse } from "../definitions/GetProductLoanStatusResponse";
-import { GetProductLoanStatusList } from "../definitions/GetProductLoanStatusList";
-import { GetProductLoanStatusListResponse } from "../definitions/GetProductLoanStatusListResponse";
+import type { GetProductLoanStatus } from "../definitions/GetProductLoanStatus";
+import type { GetProductLoanStatusResponse } from "../definitions/GetProductLoanStatusResponse";
+import type { GetProductLoanStatusList } from "../definitions/GetProductLoanStatusList";
+import type { GetProductLoanStatusListResponse } from "../definitions/GetProductLoanStatusListResponse";
 
 export interface GetproductloanstatusSoap12 {
     GetProductLoanStatus(getProductLoanStatus: GetProductLoanStatus, callback: (err: any, result: GetProductLoanStatusResponse, rawResponse: any, soapHeader: any, rawRequest: any) => void): void;

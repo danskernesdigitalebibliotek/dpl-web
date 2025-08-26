@@ -1,4 +1,4 @@
-import { GetProductLoanStatusListResult } from "./GetProductLoanStatusListResult";
+import type { GetProductLoanStatusListResult } from "./GetProductLoanStatusListResult";
 
 /** GetProductLoanStatusListResponse */
 export interface GetProductLoanStatusListResponse {

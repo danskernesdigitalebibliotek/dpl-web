@@ -1,7 +1,7 @@
-import { Client as SoapClient, createClientAsync as soapCreateClientAsync, IExOptions as ISoapExOptions } from "soap";
-import { GetFriendlyCardnumber } from "./definitions/GetFriendlyCardnumber";
-import { GetFriendlyCardnumberResponse } from "./definitions/GetFriendlyCardnumberResponse";
-import { Getfriendlycardnumber } from "./services/Getfriendlycardnumber";
+import { Client as SoapClient, createClientAsync as soapCreateClientAsync, type IExOptions as ISoapExOptions } from "soap";
+import type { GetFriendlyCardnumber } from "./definitions/GetFriendlyCardnumber";
+import type { GetFriendlyCardnumberResponse } from "./definitions/GetFriendlyCardnumberResponse";
+import type { Getfriendlycardnumber } from "./services/Getfriendlycardnumber";
 
 export interface GetfriendlycardnumberClient extends SoapClient {
     Getfriendlycardnumber: Getfriendlycardnumber;
