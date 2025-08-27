@@ -30,7 +30,7 @@ We have to ways of cache data:
 
 #### FB CMS API content and configuration
 
-Makes use of the "use cache" directive of Nextjs.
+Makes use of the ["use cache" directive](https://nextjs.org/docs/app/api-reference/directives/use-cache) of Nextjs.
 
 ##### Page Caching
 
