@@ -282,7 +282,6 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10047();
   $messages[] = dpl_update_update_10051();
   $messages[] = dpl_update_update_10061();
-  $messages[] = dpl_update_update_10062();
 
   /*
    * dpl_update_update_10050 is not needed, when installing from scratch the
