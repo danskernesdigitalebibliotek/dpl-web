@@ -10106,6 +10106,11 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
+fetch-to-curl@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/fetch-to-curl/-/fetch-to-curl-0.6.0.tgz#4ed792de97582b15a1bc891297079ac60fbb01a5"
+  integrity sha512-Gsn0baHnENueQrtvKGikEkaAJhfQYDbSFnyZvI/qnwiZtdIwiuK6iJ0BAKzS3bEzpWyUr6SV9uB4H3HUwl/yZA==
+
 figures@^3.0.0, figures@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/figures/-/figures-3.2.0.tgz"
