@@ -19,7 +19,6 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
 use Drupal\next\Entity\NextSite;
-use Drupal\queue_ui\QueueUIBatchInterface;
 use Drupal\user\Entity\User;
 
 /**
@@ -224,11 +223,6 @@ function _dpl_update_add_bnf_subscription(string $uuid, string $label): string {
   ])->save();
 
   $feedback[] = "Successfully created subscription for '$label' ($uuid).";
-
-  $queue_batch = DrupalTyped::service(QueueUIBatchInterface::class, 'queue_ui.batch');
-  $queue_batch->batch(['bnf_client_new_content', 'bnf_client_node_update']);
-
-  $feedback[] = 'Started batch processing for BNF subscriptions and nodes.';
 
   return implode("\n", $feedback);
 }
