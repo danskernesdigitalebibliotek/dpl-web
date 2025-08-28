@@ -183,7 +183,7 @@ performance (it is unclear how much though).
 ### FB CMS cache
 
 By using cache tags we can store the content infinitely which is obviously good
-for the performance of the FB CMS and the FB CMS graph API, because it makes
+for the performance of the FB CMS and the FB CMS GraphQL API, because it makes
 sure that we have a minimal amount of requests sent to it.
 
 The configuration cache could be added to the cache tag handling. It would demand
