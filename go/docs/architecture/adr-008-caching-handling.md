@@ -21,7 +21,7 @@ troubleshooting/debugging when things go wrong.
 
 Caching is implemented at the request level. When fetching data, the data is
 stored in various ways (explained later). Subsequent fetches will collect the
-data from the cache until the cache is deleted.
+data from the cache until the cache expire.
 
 We have to ways of cache data:
 
