@@ -21,15 +21,13 @@ in the cache not being renewed.
 By having a simple model and clear rules for the caching strategy it can help
 troubleshooting/debugging when things go wrong.
 
-### Caching Strategy for FB CMS
+So in our model caching is implemented at the request level using Next.js's
+["use cache" directive](https://nextjs.org/docs/app/api-reference/directives/use-cache)
+in functions. This approach allows for targeted cache invalidation strategies
+using cache tags.
 
-Caching is implemented at the request level using Next.js's caching method by
-using the "use cache" directives in functions. This approach allows for targeted
-cache invalidation strategies using cache tags.
-
-#### FB CMS API Content and Configuration
-
-Makes use of the ["use cache" directive](https://nextjs.org/docs/app/api-reference/directives/use-cache) of Next.js.
+In order to make use of "use cache" we had to use Next 15's Canary version track
+that is used for experimental features. More about that in the "Consequences" section.
 
 ##### Page Caching
 
@@ -127,3 +125,17 @@ NOTE:
 The configuration cache could be added to the cache tag handling. It would demand
 invalidation requests sent when ever configuration is updated at the FB CMS - so
 additional coding is required in both the Go and in the FB CMS application.
+
+### Choosing "use cache" and "dynamicIo"
+
+In order to make use of the "use cache" and cache tags functionality in Nextjs 15
+you have to use the [Canary versions](https://nextjs.org/blog/next-15).
+
+It was a bit of a surprise for us because we thought those features came out of
+the box.
+Although we did not experience major flaws yet, it is not a nice feeling to choose
+an ustable track with experimental features that portentially can go wrong in
+production or be removed entirely in the future.
+
+But we thought that the fact that we could make use of cache tags and
+invalidation outweighted the instability/uncertanties of being on the Canary track.
