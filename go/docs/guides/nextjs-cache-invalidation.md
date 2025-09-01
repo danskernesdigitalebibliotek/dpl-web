@@ -21,7 +21,7 @@ the GO application when content changes in DPL-CMS are not reflecting on the fro
 ### Step 1: Identify Cache Tags
 
 1. Make a request to the DPL-CMS `/graphql` endpoint for the content you want to
-invalidate.
+   invalidate.
 2. Check the response headers for `x-dpl-graphql-cache-tags`
 3. Look for cache tags that start with `node:[id]` where `[id]` is the content identifier
 

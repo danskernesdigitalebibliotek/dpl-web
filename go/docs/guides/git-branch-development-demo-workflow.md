@@ -2,7 +2,7 @@
 
 ## Overview
 
-This runbook documents the feature development and demoing  Git workflow for
+This runbook documents the feature development and demoing Git workflow for
 the GO project, including branch creation, pull request process, tagging,
 and deployment procedures for testing environments.
 
@@ -79,6 +79,7 @@ and deployment procedures for testing environments.
 
 2. Create pull request from feature branch to `develop`
 3. Fill in PR description with:
+
    - Link to JIRA ticket
    - Description of changes
    - Testing instructions
@@ -94,6 +95,7 @@ After PR approval, create a release tag for customer testing:
 1. **Tag Naming Convention**: `[environment]-[year][month][day].[sequence_number]`
 
    **Available Test Environments:**
+
    - `playground` - Playground testing environment
    - `demo` - Demo testing environment
 
@@ -105,6 +107,7 @@ After PR approval, create a release tag for customer testing:
    ```
 
    **Examples:**
+
    - `demo-20250701.1`
    - `playground-20250701.1`
    - `playground-20250701.2` (if second release same day)
@@ -113,6 +116,7 @@ After PR approval, create a release tag for customer testing:
 
 1. Navigate to DPL-CMS repository
 2. Switch to the appropriate environment branch:
+
    - For playground: `dpl-go-reload-playground`
    - For demo: `dpl-go-demo`
 
