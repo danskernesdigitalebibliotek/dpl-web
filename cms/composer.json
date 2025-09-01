@@ -336,7 +336,8 @@
             },
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch",
-                "3530772: entity_clone_template_active should be FALSE by default": "https://git.drupalcode.org/project/entity_clone_template/-/commit/7cd2ee6541cd25b6370b304911d49a00c46c3a0.patch"
+                "3530772: entity_clone_template_active should be FALSE by default": "https://git.drupalcode.org/project/entity_clone_template/-/commit/7cd2ee6541cd25b6370b304911d49a00c46c3a0.patch",
+                "3530772: entity_clone_template_image default should be valid": "https://git.drupalcode.org/project/entity_clone_template/-/commit/402d76cd2c9a7a7176dec57d079cfbe806d57e50.patch"
             },
             "drupal/entity_reference_revisions": {
                 "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
