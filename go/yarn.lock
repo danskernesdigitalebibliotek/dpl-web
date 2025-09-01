@@ -6744,18 +6744,18 @@
   resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.10.tgz#a1337ca426aa61cef9fe15b5b28e340a72f6fa99"
   integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
 
-"@xstate/react@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/@xstate/react/-/react-5.0.0.tgz"
-  integrity sha512-MkYMpmqqCdK43wSl/V/jSpsvumzV4RSG2ZOUEAIrg/w36BJpyufMrsR0rz7POX5ICF5s3xzP9q7Hd5TyM5SSyQ==
+"@xstate/react@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-6.0.0.tgz#c103e0afb8da8b21c9b83338f37258946853e35d"
+  integrity sha512-xXlLpFJxqLhhmecAXclBECgk+B4zYSrDTl8hTfPZBogkn82OHKbm9zJxox3Z/YXoOhAQhKFTRLMYGdlbhc6T9A==
   dependencies:
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.4.1":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.4.1.tgz#e3930785fcdfda0619dd54073d5cf00a888135e8"
-  integrity sha512-1nAbGGD45QYSe08eUDv/0dVFt0yOlfOJmmYGzw6e/hWQ92ih2cu6Jc6CimkBSFWzNIfQtaPvYhYCHP8GwNqrzw==
+"@xstate/store@^3.9.2":
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.9.2.tgz#e2f0c623882ce44e58978d8f43a1169e0cbb3fab"
+  integrity sha512-wOMS4WNrDA3STbO8JtGnOvFdXlIG4rCRsWas7MNljFm87lQUIL3dj7yQ2Smb5WQq/M88gYLd9Ju2d+cyLBRt1Q==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -16993,10 +16993,10 @@ xpath@^0.0.33:
   resolved "https://registry.yarnpkg.com/xpath/-/xpath-0.0.33.tgz#5136b6094227c5df92002e7c3a13516a5074eb07"
   integrity sha512-NNXnzrkDrAzalLhIUc01jO2mOzXGXh1JwPgkihcLLzw98c0WgYDmmjSh1Kl3wzaxSVWMuA+fe0WTWOBDWCBmNA==
 
-xstate@^5.18.2:
-  version "5.18.2"
-  resolved "https://registry.npmjs.org/xstate/-/xstate-5.18.2.tgz"
-  integrity sha512-hab5VOe29D0agy8/7dH1lGw+7kilRQyXwpaChoMu4fe6rDP+nsHYhDYKfS2O4iXE7myA98TW6qMEudj/8NXEkA==
+xstate@^5.21.0:
+  version "5.21.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.21.0.tgz#9b44cadbc3e0e570e07c1e270af893b9109bdbdf"
+  integrity sha512-y4wmqxjyAa0tgz4k3m/MgTF1kDOahE5+xLfWt5eh1sk+43DatLhKlI8lQDJZpvihZavjbD3TUgy2PRMphhhqgQ==
 
 xtend@^4.0.0, xtend@^4.0.2:
   version "4.0.2"
