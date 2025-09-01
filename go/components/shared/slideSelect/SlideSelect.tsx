@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import React from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import { cyKeys } from "@/cypress/support/constants"
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
@@ -49,6 +50,7 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
         return (
           <BadgeButton
             key={index}
+            data-cy={cyKeys[`slide-select-option`]}
             ariaLabel={
               selectedOptionIndex === index
                 ? `Nu viser materialet som ${option.display}`

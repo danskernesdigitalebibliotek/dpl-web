@@ -66,6 +66,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   ariaLabel?: string
+  dataCy?: string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -77,6 +78,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         aria-label={ariaLabel || ""}
+        // eslint-disable-next-line no-restricted-syntax
+        data-cy={props.dataCy || undefined}
       />
     )
   }

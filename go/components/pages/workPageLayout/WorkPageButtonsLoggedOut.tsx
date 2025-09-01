@@ -7,6 +7,7 @@ import {
   isManifestationPodcast,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { modalStore } from "@/store/modal.store"
@@ -41,7 +42,11 @@ const WorkPageButtonsLoggedOut = ({
 
     return (
       <WorkPageButtons>
-        <WorkPageButton ariaLabel="Prøv e-bog" asChild disabled={!identifier}>
+        <WorkPageButton
+          ariaLabel="Prøv e-bog"
+          dataCy={cyKeys["try-ebook-button"]}
+          asChild
+          disabled={!identifier}>
           <SmartLink linkType="external" href={previewUrl}>
             Prøv e-bog
           </SmartLink>

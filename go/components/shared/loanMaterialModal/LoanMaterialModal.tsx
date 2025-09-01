@@ -91,6 +91,7 @@ const LoanMaterialModal = ({
           <Button
             theme={"primary"}
             size={"lg"}
+            dataCy="approve-loan-button"
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan}>
             {!isHandlingLoan && "Ja"}
