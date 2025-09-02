@@ -277,6 +277,10 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
 
   $cql_search = $paragraph->get('field_cql_search')->getValue();
 
+  if (empty($cql_search[0]['value'])) {
+    return;
+  }
+
   $onshelf = !empty($cql_search[0]['onshelf']);
   $render['#data']['cql'] = $cql_search[0]['value'];
   $render['#data']['onshelf'] = $onshelf ? 'true' : 'false';
