@@ -154,14 +154,6 @@ describe("Middleware", () => {
         expire: { timestamp: 999999999 },
       })
     )
-
-    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
-      Promise.resolve({
-        getAll: vi.fn(() => []),
-        get: vi.fn(() => undefined),
-      })
-    )
-
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValueOnce(
       Promise.resolve(sessions.anonymousSession)
     )
