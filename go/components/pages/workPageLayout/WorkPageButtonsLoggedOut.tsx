@@ -7,7 +7,6 @@ import {
   isManifestationPodcast,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { modalStore } from "@/store/modal.store"
