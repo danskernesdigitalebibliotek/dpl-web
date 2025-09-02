@@ -89,6 +89,9 @@ updates:
         patterns:
           - "cypress"
           - "eslint-plugin-cypress"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
