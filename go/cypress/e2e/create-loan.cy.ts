@@ -118,9 +118,7 @@ describe("Create loan UI Tests", () => {
     // Find the loan ebook button using its text
     cy.contains("Lån e-bog").click()
 
-    // Approve the loan in the approve loan modal
-    cy.get("[data-cy='approve-loan-button']").click()
-
+    // Mock loans request and return the expected loan
     cy.intercept("GET", "/pubhub/v1/user/loans", {
       statusCode: 200,
       body: getV1UserLoansAdapterFactory.build({
@@ -136,12 +134,14 @@ describe("Create loan UI Tests", () => {
       headers: { "content-type": "application/json" },
     })
 
+    // Approve the loan in the approve loan modal
+    cy.get("[data-cy='approve-loan-button']").click()
+
     // Find the loan ebook button using its text
     cy.contains("Læs e-bog")
 
-    const identifiers = ["9788711668016"]
-
     // Mock GraphQL response for complex search
+    const identifiers = ["9788711668016"]
     cy.interceptGraphql({
       operationName: "complexSearchForWorkTeaser",
       data: complexSearchForWorkTeaser.build({
