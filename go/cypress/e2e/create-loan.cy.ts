@@ -44,7 +44,7 @@ describe("Create loan UI Tests", () => {
     cy.url().should("include", "/work/work-of%3A870970-basis%3A136817027/read")
   })
 
-  it.only("Navigate to loanable digital material and make a loan with unilogin user", () => {
+  it("Navigate to loanable digital material and make a loan with unilogin user", () => {
     cy.interceptGraphql({
       operationName: "getMaterial",
       data: getMaterial.build(),
