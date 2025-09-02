@@ -10,6 +10,7 @@ import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
@@ -91,7 +92,7 @@ const LoanMaterialModal = ({
           <Button
             theme={"primary"}
             size={"lg"}
-            dataCy="approve-loan-button"
+            data-cy={cyKeys["approve-loan-button"]}
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan}>
             {!isHandlingLoan && "Ja"}
