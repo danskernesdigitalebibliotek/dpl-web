@@ -1,7 +1,7 @@
-import { Elev1 } from "./Elev1";
-import { Ansat1 } from "./Ansat1";
-import { Ekstern1 } from "./Ekstern1";
-import { Gruppe } from "./Gruppe";
+import type { Elev1 } from "./Elev1";
+import type { Ansat1 } from "./Ansat1";
+import type { Ekstern1 } from "./Ekstern1";
+import type { Gruppe } from "./Gruppe";
 
 /**
  * instBruger

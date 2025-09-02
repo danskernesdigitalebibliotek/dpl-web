@@ -19,6 +19,10 @@ export const cyKeys = {
   "login-sheet-unilogin-button": "login-sheet-unilogin-button",
   "login-sheet-adgangsplatformen-button": "login-sheet-adgangsplatformen-button",
   "logout-button": "logout-button",
+  "loan-slider": "loan-slider",
+  "loan-slider-work": "loan-slider-work",
+  "loan-slider-prev-button": "loan-slider-prev-button",
+  "loan-slider-next-button": "loan-slider-next-button",
 } as const
 
 export type CyKey = keyof typeof cyKeys

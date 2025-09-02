@@ -9,7 +9,16 @@ updates:
     # Look for `package.json` and `lock` files in the `root` directory
     directory: "/"
     # The maximum number of pull requests for version updates
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
     groups:
       radix-ui:
         patterns:
@@ -81,23 +90,19 @@ updates:
           - "cypress"
           - "eslint-plugin-cypress"
 
-    # Check the npm registry for updates every day (weekdays)
-    schedule:
-      interval: weekly
-      timezone: Europe/Copenhagen
-    labels:
-      - "dependencies"
-
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
     # You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.
     directory: "/"
     # The maximum number of pull requests for version updates
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
     # Check the npm registry for updates every day (weekdays)
     schedule:
       interval: "weekly"
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
     labels:
       - dependencies
       - github_actions

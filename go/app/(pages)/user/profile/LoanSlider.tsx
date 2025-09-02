@@ -13,6 +13,7 @@ import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
+import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -73,6 +74,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               disabled={reachedStart}
               variant="icon"
               ariaLabel="Vis forrige værker"
+              data-cy={cyKeys["loan-slider-prev-button"]}
               onClick={() => onLeftClick()}>
               <Icon className="h-[24px] w-[24px]" name="arrow-left" />
             </Button>
@@ -80,6 +82,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               disabled={reachedEnd}
               variant="icon"
               ariaLabel="Vis næste værker"
+              data-cy={cyKeys["loan-slider-next-button"]}
               onClick={() => onRightClick()}>
               <Icon className="h-[24px] w-[24px]" name="arrow-right" />
             </Button>
@@ -87,11 +90,15 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         )}
       </div>
       <div className="-mx-grid-edge px-grid-edge col-span-full">
-        <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
+        <div
+          ref={sliderRef}
+          className={"keen-slider !overflow-visible"}
+          data-cy={cyKeys["loan-slider"]}>
           {works.map((work, index) => {
             const loanManifestation = work.manifestations.all[0]
             return (
               <Link
+                data-cy={cyKeys["loan-slider-work"]}
                 prefetch={false}
                 key={loanManifestation.pid}
                 aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}

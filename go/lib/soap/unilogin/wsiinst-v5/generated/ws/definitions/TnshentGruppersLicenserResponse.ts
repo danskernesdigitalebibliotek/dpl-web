@@ -1,4 +1,4 @@
-import { GruppeLicens } from "./GruppeLicens";
+import type { GruppeLicens } from "./GruppeLicens";
 
 /** tns:HentGruppersLicenserResponse */
 export interface TnshentGruppersLicenserResponse {

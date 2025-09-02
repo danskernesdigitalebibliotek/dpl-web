@@ -1,5 +1,5 @@
-import { GetlibraryinfoSoap } from "../ports/GetlibraryinfoSoap";
-import { GetlibraryinfoSoap12 } from "../ports/GetlibraryinfoSoap12";
+import type { GetlibraryinfoSoap } from "../ports/GetlibraryinfoSoap";
+import type { GetlibraryinfoSoap12 } from "../ports/GetlibraryinfoSoap12";
 
 export interface Getlibraryinfo {
     readonly GetlibraryinfoSoap: GetlibraryinfoSoap;

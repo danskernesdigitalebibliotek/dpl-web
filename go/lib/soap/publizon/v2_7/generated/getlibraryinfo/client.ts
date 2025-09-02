@@ -1,7 +1,7 @@
-import { Client as SoapClient, createClientAsync as soapCreateClientAsync, IExOptions as ISoapExOptions } from "soap";
-import { GetLibraryProfile } from "./definitions/GetLibraryProfile";
-import { GetLibraryProfileResponse } from "./definitions/GetLibraryProfileResponse";
-import { Getlibraryinfo } from "./services/Getlibraryinfo";
+import { Client as SoapClient, createClientAsync as soapCreateClientAsync, type IExOptions as ISoapExOptions } from "soap";
+import type { GetLibraryProfile } from "./definitions/GetLibraryProfile";
+import type { GetLibraryProfileResponse } from "./definitions/GetLibraryProfileResponse";
+import type { Getlibraryinfo } from "./services/Getlibraryinfo";
 
 export interface GetlibraryinfoClient extends SoapClient {
     Getlibraryinfo: Getlibraryinfo;

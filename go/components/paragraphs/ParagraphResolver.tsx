@@ -5,12 +5,12 @@ import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 import ParagraphGoImages from "./Images/Images"
 import ParagraphGoMaterialSliderAutomatic from "./MaterialSlider/MaterialSliderAutomatic"
 import ParagraphGoMaterialSliderManual from "./MaterialSlider/MaterialSliderManual"
+import { ParagraphErrorBoundary } from "./ParagraphErrorBoundary/ParagraphErrorBoundary"
 import ParagraphGoLinkbox from "./ParagraphGoLinkbox/ParagraphGoLinkbox"
 import ParagraphGoTextBody from "./TextBody/TextBody"
 import ParagraphGoVideo from "./Video/Video"
 import ParagraphGoVideoBundleAutomatic from "./VideoBundle/VideoBundleAutomatic"
 import ParagraphGoVideoBundleManual from "./VideoBundle/VideoBundleManual"
-import { ParagraphErrorBoundary } from "./paragraphErrorBoundary/paragraphErrorBoundary"
 
 function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
   const components = {

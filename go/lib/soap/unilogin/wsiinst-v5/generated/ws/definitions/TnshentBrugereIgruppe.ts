@@ -1,6 +1,6 @@
 
 /** tns:HentBrugereIGruppe */
-export interface TnshentBrugereIGruppe {
+export interface TnshentBrugereIgruppe {
     /** xs:string */
     wsBrugerid?: string;
     /** xs:string */

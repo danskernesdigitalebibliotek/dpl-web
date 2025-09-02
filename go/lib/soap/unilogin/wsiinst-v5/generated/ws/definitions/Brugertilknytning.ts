@@ -1,6 +1,6 @@
-import { Elev } from "./Elev";
-import { Ansat } from "./Ansat";
-import { Ekstern } from "./Ekstern";
+import type { Elev } from "./Elev";
+import type { Ansat } from "./Ansat";
+import type { Ekstern } from "./Ekstern";
 
 /**
  * brugertilknytning

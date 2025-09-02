@@ -1,4 +1,4 @@
-import { GetLibraryProfileResult } from "./GetLibraryProfileResult";
+import type { GetLibraryProfileResult } from "./GetLibraryProfileResult";
 
 /** GetLibraryProfileResponse */
 export interface GetLibraryProfileResponse {
