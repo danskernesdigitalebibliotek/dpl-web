@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Cover } from "@/lib/rest/cover-service-api/generated/model"
+import { TSessionType } from "@/lib/types/session"
 
 import { CyKey, ViewportType, viewports } from "./constants"
 import { Operations, hasOperationName } from "./utils"
@@ -119,6 +120,19 @@ declare global {
       resetServerMocks(): void
 
       /**
+       * Creates a new GO session of the specified type.
+       * This custom Cypress command initializes a session for testing purposes,
+       * allowing you to simulate different user session types within your tests.
+       *
+       * @param params - An object containing the session details.
+       * @param params.type - The type of session to create (e.g., "unilogin", "adgangsplatformen", etc.).
+       * @returns A Cypress Chainable that resolves when the session has been created.
+       * @example
+       * cy.createGoSession({ type: "unilogin" })
+       */
+      createGoSession({ type }: { type: TSessionType }): Chainable<void>
+
+      /**
        * Checks if the current viewport is mobile
        * @example cy.isViewport("mobile")
        */
@@ -215,4 +229,10 @@ Cypress.Commands.add("isViewport", (viewport: ViewportType) => {
 
 Cypress.Commands.add("setViewport", (viewport: ViewportType) => {
   cy.viewport(viewports[viewport].width, viewports[viewport].height)
+})
+
+Cypress.Commands.add("createGoSession", ({ type }: { type: TSessionType }) => {
+  cy.task("getMockedGoSessionCookieValue", { type }).then(encodedSession => {
+    cy.setCookie("go-session", encodedSession as string)
+  })
 })
