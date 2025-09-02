@@ -1,0 +1,12 @@
+_core:
+  default_config_hash: vdtV6OwNZJllgJSgsrS-fqbXNcPUFp72HO933BIRdb8
+replace: true
+replacement: dns_check
+multiple_with_and:
+  dns_check: dns_check
+  spoof_check: spoof_check
+  message_id: '0'
+  no_rfc_warnings: '0'
+  rfc: '0'
+log_errors: false
+log_warnings: false

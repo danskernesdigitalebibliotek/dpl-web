@@ -9,6 +9,7 @@ services:
     arguments:
       - '@current_user'
       - '@dpl_graphql.logger'
+      - '@entity_type.manager'
 
     tags:
       - { name: event_subscriber }

@@ -165,6 +165,11 @@ if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
   // because the user pulling in the changes won't have permissions to modify
   // files in the directory.
   $settings['skip_permissions_hardening'] = TRUE;
+
+  // Enable EVAC error and warning logging in development environments
+  // to help debug email validation issues.
+  $config['evac.settings']['log_errors'] = TRUE;
+  $config['evac.settings']['log_warnings'] = TRUE;
 }
 
 // Setup Redis.

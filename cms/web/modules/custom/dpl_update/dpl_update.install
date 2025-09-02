@@ -19,7 +19,7 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
 use Drupal\next\Entity\NextSite;
-use Drupal\queue_ui\QueueUIBatchInterface;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
 
 /**
@@ -189,6 +189,87 @@ function _dpl_update_add_field_columns(string $field_type, array $fields): strin
 }
 
 /**
+ * Helper function to add a BNF subscription.
+ *
+ * @param string $uuid
+ *   The UUID of the subscription to add.
+ * @param string $label
+ *   The label for the subscription.
+ * @param string|null $tag_name
+ *   Optional tag name to create and associate with the subscription.
+ *   If provided, a taxonomy term will be created in the 'tags' vocabulary
+ *   and the subscription will be configured to automatically tag all
+ *   imported content with this term.
+ *
+ * @return string
+ *   Feedback message.
+ */
+function _dpl_update_add_bnf_subscription(string $uuid, string $label, ?string $tag_name = NULL): string {
+  $feedback = [];
+
+  if (!\Drupal::moduleHandler()->moduleExists('bnf_client')) {
+    return 'The bnf_client module is not enabled. Subscription could not be created.';
+  }
+
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $subscription_storage = $entity_type_manager->getStorage('bnf_subscription');
+
+  /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
+  $existing = $subscription_storage->loadByProperties([
+    'subscription_uuid' => $uuid,
+  ]);
+
+  if ($existing) {
+    return "The subscription '$label' ($uuid) already exists. Skipping creation.";
+  }
+
+  // Create the subscription.
+  $subscription_data = [
+    'subscription_uuid' => $uuid,
+    'label' => $label,
+  ];
+
+  // Create and associate taxonomy term if tag name is provided.
+  if (!empty($tag_name)) {
+    $term_storage = $entity_type_manager->getStorage('taxonomy_term');
+
+    // Check if tag already exists.
+    $existing_terms = $term_storage->loadByProperties([
+      'name' => $tag_name,
+      'vid' => 'tags',
+    ]);
+
+    if ($existing_terms) {
+      $tag_term = reset($existing_terms);
+      $feedback[] = "Found existing tag '$tag_name' (ID: {$tag_term->id()}).";
+    }
+    else {
+      // Create new taxonomy term.
+      $tag_term = Term::create([
+        'name' => $tag_name,
+        'vid' => 'tags',
+      ]);
+      $tag_term->save();
+      $feedback[] = "Created new tag '$tag_name' (ID: {$tag_term->id()}).";
+    }
+
+    // Add the tag to the subscription data.
+    $subscription_data['tags'] = [['target_id' => $tag_term->id()]];
+  }
+
+  $subscription = $subscription_storage->create($subscription_data);
+  $subscription->save();
+
+  $feedback[] = "Successfully created subscription for '$label' ($uuid).";
+
+  if (!empty($tag_name)) {
+    $feedback[] = "Subscription configured to automatically tag imported content with '$tag_name'.";
+  }
+
+  return implode("\n", $feedback);
+}
+
+/**
  * Run on the initial site setup.
  *
  * Remember to references to individual update hooks, as these updates probably
@@ -236,6 +317,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10043();
   $messages[] = dpl_update_update_10047();
   $messages[] = dpl_update_update_10051();
+  $messages[] = dpl_update_update_10061();
 
   /*
    * dpl_update_update_10050 is not needed, when installing from scratch the
@@ -789,40 +871,10 @@ function dpl_update_update_10053(): string {
  * @throws \Exception
  */
 function dpl_update_update_10054(): string {
-  $feedback = [];
-
-  if (!\Drupal::moduleHandler()->moduleExists('bnf_client')) {
-    $feedback[] = 'The bnf_client module is not enabled. Subscription should not be created.';
-  }
-  else {
-    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
-    $subscription_storage = $entity_type_manager->getStorage('bnf_subscription');
-
-    $uuid = '4669c003-5673-46eb-9950-aa62ca4b4a2f';
-
-    /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
-    $existing = $subscription_storage->loadByProperties([
-      'subscription_uuid' => $uuid,
-    ]);
-
-    if ($existing) {
-      $feedback[] = 'The subscription already exists. Skipping creation';
-    }
-    else {
-      $subscription_storage->create([
-        'subscription_uuid' => $uuid,
-        'label' => 'GO: Formidling til børn',
-      ])->save();
-
-      $feedback[] = 'Successfully created subscription for "GO: Formidling til børn".';
-
-      $queue_batch = DrupalTyped::service(QueueUIBatchInterface::class, 'queue_ui.batch');
-      $queue_batch->batch(['bnf_client_new_content', 'bnf_client_node_update']);
-
-      $feedback[] = 'Started batch processing for BNF subscriptions and nodes.';
-    }
-  }
-  return implode("\n", $feedback);
+  return _dpl_update_add_bnf_subscription(
+    '4669c003-5673-46eb-9950-aa62ca4b4a2f',
+    'GO: Formidling til børn'
+  );
 }
 
 /**
@@ -909,4 +961,22 @@ function dpl_update_update_10060(): string {
     // form as system.performance.
     'http_cache_control.settings',
   ]);
+}
+
+/**
+ * Install EVAC module for enhanced email validation.
+ */
+function dpl_update_update_10061(): string {
+  return _dpl_update_install_modules(['evac']);
+}
+
+/**
+ * Add the "Om eReolen" subscription to BNF with automatic tagging.
+ */
+function dpl_update_update_10062(): string {
+  return _dpl_update_add_bnf_subscription(
+    '6f204837-ed6f-4683-b8c9-4200005ac1ae',
+    'Om eReolen',
+    'Om eReolen'
+  );
 }
