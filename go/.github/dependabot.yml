@@ -92,6 +92,8 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "next"
+        versions: [">=15.4.0-canary.47"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
