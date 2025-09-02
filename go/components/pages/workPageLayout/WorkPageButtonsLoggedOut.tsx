@@ -42,11 +42,7 @@ const WorkPageButtonsLoggedOut = ({
 
     return (
       <WorkPageButtons>
-        <WorkPageButton
-          ariaLabel="Prøv e-bog"
-          dataCy={cyKeys["try-ebook-button"]}
-          asChild
-          disabled={!identifier}>
+        <WorkPageButton ariaLabel="Prøv e-bog" asChild disabled={!identifier}>
           <SmartLink linkType="external" href={previewUrl}>
             Prøv e-bog
           </SmartLink>
