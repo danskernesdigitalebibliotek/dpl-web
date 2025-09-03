@@ -13,6 +13,7 @@ use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -34,6 +35,7 @@ class DplReactAppsController extends ControllerBase {
     protected BranchRepositoryInterface $branchRepository,
     protected DplInstantLoanSettings $instantLoanSettings,
     protected GeneralSettings $generalSettings,
+    protected Config $adgangsplatformenConfig,
   ) {}
 
   /**
@@ -52,6 +54,7 @@ class DplReactAppsController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_instant_loan.settings'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('dpl_login.adgangsplatformen.config'),
     );
   }
 
@@ -300,6 +303,7 @@ class DplReactAppsController extends ControllerBase {
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'find-on-shelf-disclosures-default-open-config' => (int) $this->generalSettings->getFindOnShelfDisclosuresDefaultOpen(),
+      'agency-id-config' => $this->adgangsplatformenConfig->getAgencyId(),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
 
