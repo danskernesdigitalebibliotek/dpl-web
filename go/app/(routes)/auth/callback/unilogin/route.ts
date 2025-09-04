@@ -89,18 +89,20 @@ export async function GET(request: NextRequest) {
       config,
       tokenSet.access_token!
     )) as TIntrospectionResponse
-    const introspect = parseUniloginServiceResponse(
-      () => schemas.introspect.parse(introspectResponse),
-      introspectResponse.uniid ?? null
-    )
+    const introspect = parseUniloginServiceResponse({
+      step: "introspect",
+      parsingFunction: () => schemas.introspect.parse(introspectResponse),
+      uniid: introspectResponse.uniid ?? null,
+    })
     const { uniid } = introspect
 
     // UserInfo Request
     const userInfoResponse = await client.fetchUserInfo(config, tokenSet.access_token, claims.sub)
-    const userinfo = parseUniloginServiceResponse(
-      () => schemas.uniLoginUserInfo.parse(userInfoResponse),
-      uniid
-    )
+    const userinfo = parseUniloginServiceResponse({
+      step: "userinfo",
+      parsingFunction: () => schemas.uniLoginUserInfo.parse(userInfoResponse),
+      uniid,
+    })
 
     // Set basic session info.
     session.isLoggedIn = true

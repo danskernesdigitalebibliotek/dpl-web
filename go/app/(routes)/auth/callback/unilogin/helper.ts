@@ -25,10 +25,18 @@ export const isUniloginUserAuthorizedToLogIn = async (
   return institution.kommunenr === municipalityId
 }
 
-export const parseUniloginServiceResponse = <T>(parsingFunction: () => T, uniid?: string) =>
+export const parseUniloginServiceResponse = <T>({
+  parsingFunction,
+  uniid,
+  step,
+}: {
+  parsingFunction: () => T
+  step: "introspect" | "userinfo"
+  uniid?: string
+}) =>
   zodParseWithContext(
-    () => parsingFunction(),
+    parsingFunction,
     uniid
-      ? `error affecting user with the uniid: ${uniid}`
-      : "error parsing Unilogin service response"
+      ? `[${step}] error affecting user with the uniid: ${uniid}`
+      : `[${step}] error parsing Unilogin service response`
   )
