@@ -63,11 +63,6 @@ updates:
         patterns:
           - "xstate"
           - "@xstate/*"
-      vite:
-        patterns:
-          - "vitest"
-          - "vite-tsconfig-paths"
-          - "@vitejs/plugin-react"
       react-query:
         patterns:
           - "@tanstack/react-query"
