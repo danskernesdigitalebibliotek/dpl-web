@@ -93,11 +93,13 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * - auth (Authentication routes)
+     * - ap-service (Adgangsplatform service proxy route)
+     * - health (Health check route)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!auth|ap-service|_next|favicon.ico|favicon-*|sitemap.xml|robots.txt|site.webmanifest).*)",
+    "/((?!auth|ap-service|health|_next|favicon.ico|favicon-*|sitemap.xml|robots.txt|site.webmanifest).*)",
   ],
 }
