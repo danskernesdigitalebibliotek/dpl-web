@@ -1,3 +1,7 @@
+import { sealData } from "iron-session"
+
+import { TSessionType } from "@/lib/types/session"
+
 import {
   MockGraphQLMutationParams,
   MockGraphQLQueryParams,
@@ -53,6 +57,27 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
       log("Mocking SOAP response", path)
       mockApiServer.mockSoapResponse({ path, data })
       return null // Return null to indicate that the task has been completed
+    },
+
+    async getMockedGoSessionCookieValue({ type }: { type: TSessionType }) {
+      const password = process.env.GO_SESSION_SECRET
+      if (!password) {
+        throw new Error("GO_SESSION_SECRET is not defined")
+      }
+
+      if (!["unilogin", "adgangsplatformen", "anonymous"].includes(type)) {
+        return null
+      }
+
+      const values = {
+        unilogin: { user: { username: "uniloginUserName" } },
+        adgangsplatformen: { user: { name: "Firstname Lastname" } },
+        anonymous: { isLoggedIn: false },
+        default: { isLoggedIn: true, type },
+      }
+
+      const encodedSession = await sealData({ ...values.default, ...values[type] }, { password })
+      return encodedSession
     },
 
     resetApiMocks() {
