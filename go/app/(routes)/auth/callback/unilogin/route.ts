@@ -89,6 +89,15 @@ export async function GET(request: NextRequest) {
       tokenSet.access_token!
     )) as TIntrospectionResponse
 
+    if (!introspectResponse.institution_ids) {
+      console.error(
+        "No institution_ids or undefined institution_ids value found on introspection response",
+        {
+          uniid: introspectResponse.uniid,
+        }
+      )
+    }
+
     const introspect = schemas.introspect.parse(introspectResponse)
 
     const claims = tokenSetResponse.claims()! as TClaims
