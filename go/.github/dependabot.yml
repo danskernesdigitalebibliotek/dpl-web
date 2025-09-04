@@ -94,7 +94,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "next"
         versions: [">=15.4.0-canary.47"]
-
+      - dependency-name: "zod"
+        versions: [">=3.23.8"]
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
