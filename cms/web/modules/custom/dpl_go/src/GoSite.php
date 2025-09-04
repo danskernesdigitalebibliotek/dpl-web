@@ -42,7 +42,7 @@ class GoSite {
    * Is the current request considered "the Go site".
    *
    * This is true when the current user is the Go GraphQL consumer user that the
-   * React front-end uses. Which is the only user given the "rewrite go urls"
+   * React front-end uses. Which is the only user given the "use absolute cms urls"
    * permission.
    */
   public function isGoSite(): bool {
@@ -50,7 +50,11 @@ class GoSite {
     // site when they visit the site as the redirect to the front page that's
     // implicit in `/` gets rewritten, so exclude them. Means that user 1 can't
     // use the Go site, but they shouldn't be able to log into it anyway.
-    return $this->currentUser->hasPermission('rewrite go urls') && $this->currentUser->id() != 1;
+    return $this->currentUser->hasPermission('use absolute cms urls') && $this->currentUser->id() != 1;
+  }
+
+  public function useAbsoluteUrls(): bool {
+    return $this->currentUser->hasPermission('use absolute cms and go urls') && $this->currentUser->id() != 1;
   }
 
   /**
