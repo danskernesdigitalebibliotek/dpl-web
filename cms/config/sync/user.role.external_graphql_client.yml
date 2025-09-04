@@ -1,0 +1,9 @@
+uuid: f30639e3-4c54-44c9-8a76-9d503a318067
+langcode: en
+status: true
+dependencies: {  }
+id: external_graphql_client
+label: 'External GraphQL Client'
+weight: 13
+is_admin: null
+permissions: {  }

@@ -1,0 +1,14 @@
+uuid: b23663ec-afee-4d2f-b8dc-5e3213c5afbb
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.external_graphql_client
+  module:
+    - user
+id: user_add_role_action.external_graphql_client
+label: 'Add the External GraphQL Client role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: external_graphql_client

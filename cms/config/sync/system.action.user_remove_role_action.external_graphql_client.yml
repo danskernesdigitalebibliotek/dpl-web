@@ -1,0 +1,14 @@
+uuid: c1756787-0bdc-4474-8b1c-7fc8b08cefc7
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.external_graphql_client
+  module:
+    - user
+id: user_remove_role_action.external_graphql_client
+label: 'Remove the External GraphQL Client role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: external_graphql_client
