@@ -104,6 +104,14 @@ updates:
         versions: ["15.5.2"]
       - dependency-name: "zod"
         versions: [">=3.23.8"]
+      - dependency-name: "tailwind-merge"
+        versions: [">=3.0.2"]
+      - dependency-name: "prettier-plugin-classnames"
+        versions: [">=0.7.3"]
+      - dependency-name: "prettier-plugin-merge"
+        versions: [">=0.7.1"]
+      - dependency-name: "prettier-plugin-tailwindcss"
+        versions: [">=0.6.11"]
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
