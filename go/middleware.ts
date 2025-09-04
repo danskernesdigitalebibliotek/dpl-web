@@ -14,6 +14,7 @@ import {
   destroySession,
   getDplCmsSessionCookie,
   getSession,
+  removePCKECodeVerifierFromSessionIfItExists,
   saveAdgangsplatformenSession,
   uniloginAccessTokenHasExpired,
   uniloginAccessTokenShouldBeRefreshed,
@@ -36,6 +37,11 @@ export async function middleware(request: NextRequest) {
   await ensureLibraryTokenExist(request)
 
   const session = await getSession()
+
+  // Since we  do not need the PKCE code verifier on non-auth routes,
+  // we will remove it from the session if it exists.
+  // It is safe because the middleware only runs on non-auth routes.
+  await removePCKECodeVerifierFromSessionIfItExists(session)
 
   if (protectedPages.includes(currentPath)) {
     // If the user is anonymous, we will redirect to the front page.
