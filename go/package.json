@@ -9,7 +9,6 @@
     "build:dev": "NEXT_PUBLIC_APP_URL=http://dapple-cms.docker:3000 next build",
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
-    "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
     "codegen:fbs": "rm -rf src/lib/rest/fbs/generated/model/*.* && orval --project fbs",
     "codegen:graphql": "NODE_ENV=development DOTENV_CONFIG_PATH=./.env.local NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen -r dotenv/config --require tsconfig-paths/register --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/* && orval --project publizonAdapter && orval --project publizonLocalAdapter",

@@ -41,30 +41,6 @@ const publizonConfig = (type: string): Options => ({
 })
 
 export default defineConfig({
-  coverService: {
-    output: {
-      mode: "split",
-      target: "lib/rest/cover-service-api/generated/cover-service.ts",
-      schemas: "lib/rest/cover-service-api/generated/model",
-      client: "react-query",
-      override: {
-        mutator: {
-          path: "lib/rest/cover-service-api/mutator/fetcher.ts",
-          name: "fetcher",
-        },
-        query: {
-          useQuery: true,
-        },
-      },
-      prettier: true,
-    },
-    input: {
-      target: "https://cover.dandigbib.org/spec.yaml",
-      converterOptions: {
-        indent: 2,
-      },
-    },
-  },
   publizonAdapter: publizonConfig("adapter"),
   publizonLocalAdapter: publizonConfig("local-adapter"),
   fbs: {
