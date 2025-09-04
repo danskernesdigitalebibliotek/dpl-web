@@ -151,8 +151,10 @@ class OutboundPathProcessorTest extends UnitTestCase {
 
   /**
    * Test that useAbsoluteUrls forces absolute URLs regardless of XOR logic.
-   * Simulates external users (API consumers) who have the 'use absolute cms and go urls'
-   * permission but are not considered 'Go site' users.
+   *
+   * Simulates external users (API consumers) who have the
+   * 'use absolute cms and go urls' permission but are not considered
+   * 'Go site' users.
    *
    * @dataProvider absoluteUrlCases
    */
