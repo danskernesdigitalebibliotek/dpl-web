@@ -31,7 +31,11 @@ class IsGoCacheContext implements CacheContextInterface {
    * {@inheritdoc}
    */
   public function getContext(): string {
-    return $this->goSite->isGoSite() ? '1' : '0';
+    if ($this->goSite->useAbsoluteUrls()) {
+      return 'x';
+    }
+
+    return ($this->goSite->isGoSite() ? '1' : '0');
   }
 
   /**

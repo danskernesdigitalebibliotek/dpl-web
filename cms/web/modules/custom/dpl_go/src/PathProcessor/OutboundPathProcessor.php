@@ -65,7 +65,7 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
 
       $isGoNode = $this->goSite->isGoNid($pathParts[2]);
       if (!is_null($isGoNode)) {
-        if ($isGoNode xor $this->goSite->isGoSite()) {
+        if ($this->goSite->useAbsoluteUrls() || ($isGoNode xor $this->goSite->isGoSite())) {
           $options['absolute'] = TRUE;
           $options['base_url'] = $isGoNode ?
             $this->goSite->getGoBaseUrl() :

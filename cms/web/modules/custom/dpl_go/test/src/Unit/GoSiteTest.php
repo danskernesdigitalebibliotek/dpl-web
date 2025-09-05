@@ -117,13 +117,22 @@ class GoSiteTest extends UnitTestCase {
   public function testGoSiteDetection(): void {
     // Not user 1.
     $this->currentUser->id()->willReturn(12);
-    $this->currentUser->hasPermission('rewrite go urls')->willReturn(TRUE);
+    $this->currentUser->hasPermission('use absolute cms urls')->willReturn(TRUE);
 
     $this->assertTrue($this->goSite->isGoSite());
 
-    $this->currentUser->hasPermission('rewrite go urls')->willReturn(FALSE);
+    $this->currentUser->hasPermission('use absolute cms urls')->willReturn(FALSE);
 
     $this->assertFalse($this->goSite->isGoSite());
+
+    // Test useAbsoluteUrls method.
+    $this->currentUser->hasPermission('use absolute cms and go urls')->willReturn(TRUE);
+
+    $this->assertTrue($this->goSite->useAbsoluteUrls());
+
+    $this->currentUser->hasPermission('use absolute cms and go urls')->willReturn(FALSE);
+
+    $this->assertFalse($this->goSite->useAbsoluteUrls());
   }
 
   /**
@@ -134,7 +143,7 @@ class GoSiteTest extends UnitTestCase {
    */
   public function testSuperUserSiteDetection(): void {
     $this->currentUser->id()->willReturn(1);
-    $this->currentUser->hasPermission('rewrite go urls')->willReturn(TRUE);
+    $this->currentUser->hasPermission('use absolute cms urls')->willReturn(TRUE);
 
     $this->assertFalse($this->goSite->isGoSite());
   }

@@ -1,3 +1,7 @@
-rewrite go urls:
-  title: 'Get URLs rewritten for the Go frontend'
-  description: 'URLs is rewritten to be relative to the Go site, not the CMS site'
+use absolute cms urls:
+  title: 'Use absolute CMS URLs.'
+  description: 'CMS URLs on the Go site should be absolute'
+
+use absolute cms and go urls:
+  title: 'Use absolute URLs for both CMS and Go.'
+  description: 'Use absolute URLs for both Go and CMS content (for external services)'
