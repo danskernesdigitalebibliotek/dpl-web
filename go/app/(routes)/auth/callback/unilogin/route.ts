@@ -15,7 +15,7 @@ import {
 import { TUniloginTokenSet } from "@/lib/types/session"
 
 import { logoutUniloginSSO } from "../../logout/helpers"
-import { isUniloginUserAuthorizedToLogIn } from "./helper"
+import { isUniloginUserAuthorizedToLogIn, parseUniloginServiceResponse } from "./helper"
 import schemas from "./schemas"
 
 type TClaims = {
@@ -83,20 +83,26 @@ export async function GET(request: NextRequest) {
     })
 
     const tokenSet = schemas.tokenSet.parse(tokenSetResponse) as TUniloginTokenSet
+    const claims = tokenSetResponse.claims()! as TClaims
 
     const introspectResponse = (await client.tokenIntrospection(
       config,
       tokenSet.access_token!
     )) as TIntrospectionResponse
-
-    const introspect = schemas.introspect.parse(introspectResponse)
-
-    const claims = tokenSetResponse.claims()! as TClaims
+    const introspect = parseUniloginServiceResponse({
+      step: "introspect",
+      parsingFunction: () => schemas.introspect.parse(introspectResponse),
+      uniid: introspectResponse.uniid ?? null,
+    })
+    const { uniid } = introspect
 
     // UserInfo Request
     const userInfoResponse = await client.fetchUserInfo(config, tokenSet.access_token, claims.sub)
-
-    const userinfo = schemas.uniLoginUserInfo.parse(userInfoResponse)
+    const userinfo = parseUniloginServiceResponse({
+      step: "userinfo",
+      parsingFunction: () => schemas.uniLoginUserInfo.parse(userInfoResponse),
+      uniid,
+    })
 
     // Set basic session info.
     session.isLoggedIn = true

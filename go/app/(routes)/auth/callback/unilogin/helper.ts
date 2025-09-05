@@ -1,5 +1,6 @@
 import { getInstitutionRequest } from "@/app/(routes)/auth/callback/unilogin/requests"
 import { getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
+import { zodParseWithContext } from "@/lib/helpers/zod-validation"
 
 export const isUniloginUserAuthorizedToLogIn = async (
   institutionId: string | null,
@@ -23,3 +24,19 @@ export const isUniloginUserAuthorizedToLogIn = async (
   }
   return institution.kommunenr === municipalityId
 }
+
+export const parseUniloginServiceResponse = <T>({
+  parsingFunction,
+  uniid,
+  step,
+}: {
+  parsingFunction: () => T
+  step: "introspect" | "userinfo"
+  uniid?: string
+}) =>
+  zodParseWithContext(
+    parsingFunction,
+    uniid
+      ? `[${step}] error affecting user with the uniid: ${uniid}`
+      : `[${step}] error parsing Unilogin service response`
+  )
