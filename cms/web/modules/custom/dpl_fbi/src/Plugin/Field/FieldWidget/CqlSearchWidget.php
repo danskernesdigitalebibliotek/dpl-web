@@ -169,6 +169,7 @@ class CqlSearchWidget extends WidgetBase {
       '#title' => $this->t('Search filters', [], ['context' => 'dpl_fbi']),
       'cql' => [
         '#type' => 'textarea',
+        '#required' => TRUE,
         '#rows' => 3,
         '#title' => $fieldStorageDefinition->getPropertyDefinition('value')?->getLabel(),
         '#default_value' => $items[$delta]->value ?? '',
