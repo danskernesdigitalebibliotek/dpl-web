@@ -23,15 +23,14 @@ export const isUniloginUserAuthorizedToLogIn = async (
     return true
   }
 
-  // Log unauthorized access attempt
-  if (institution.kommunenr !== municipalityId) {
+  const municipalityMatch = institution.kommunenr === municipalityId
+  if (!municipalityMatch) {
     console.error(
-      `unilogin error: Unauthorized unilogin attempt. uniid: ${uniid} institution.kommunenr: ${institution.kommunenr} municipalityId: ${municipalityId}`
+      `unilogin error: User institution does not match expected municipality ${municipalityId}`,
+      institution
     )
-    return false
   }
-
-  return institution.kommunenr === municipalityId
+  return municipalityMatch
 }
 
 export const parseUniloginServiceResponse = <T>({

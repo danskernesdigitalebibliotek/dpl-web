@@ -28,6 +28,7 @@ export async function GET() {
     code_challenge_method,
   })
 
+  console.info("unilogin authorization flow started", session)
   return Response.redirect(redirectTo)
 }
 
