@@ -1,3 +1,4 @@
+import { first } from "lodash"
 import React, { useMemo } from "react"
 
 import {
@@ -25,7 +26,7 @@ const WorkPageButtonsLoggedIn = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
-  const identifier = selectedManifestation?.identifiers[0].value
+  const identifier = first(selectedManifestation?.identifiers)?.value || undefined
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
