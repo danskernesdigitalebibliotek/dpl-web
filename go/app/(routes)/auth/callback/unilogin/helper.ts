@@ -8,12 +8,12 @@ export const isUniloginUserAuthorizedToLogIn = async (
 ) => {
   // If the user do not have a license through STIL we do not allow access
   if (claims?.has_license === "false") {
-    console.error("User does not have a STIL license")
+    console.error("unilogin error: User does not have a STIL license")
     return false
   }
 
   if (!institutionId) {
-    console.error("InstitutionId was not provided")
+    console.error("unilogin error: InstitutionId was not provided")
     return false
   }
   const institution = await getInstitutionRequest(institutionId)
@@ -22,6 +22,15 @@ export const isUniloginUserAuthorizedToLogIn = async (
   if (institution.instnr === "A04441") {
     return true
   }
+
+  // Log unauthorized access attempt
+  if (institution.kommunenr !== municipalityId) {
+    console.error(
+      `unilogin error: Unauthorized unilogin attempt. uniid: ${uniid} institution.kommunenr: ${institution.kommunenr} municipalityId: ${municipalityId}`
+    )
+    return false
+  }
+
   return institution.kommunenr === municipalityId
 }
 
