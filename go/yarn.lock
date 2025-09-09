@@ -4083,10 +4083,10 @@
     "@emnapi/runtime" "^1.4.3"
     "@tybys/wasm-util" "^0.10.0"
 
-"@next/env@15.0.3":
-  version "15.0.3"
-  resolved "https://registry.npmjs.org/@next/env/-/env-15.0.3.tgz"
-  integrity sha512-t9Xy32pjNOvVn2AS+Utt6VmyrshbpfUMhIjFO60gI58deSo/KgLOp31XZ4O+kY/Is8WAGYwA5gR7kOb1eORDBA==
+"@next/env@15.4.0":
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/@next/env/-/env-15.4.0.tgz#2cd25fc6f49c254f19e507bf40e14cf6a8aa6120"
+  integrity sha512-kBYxl9PAHdv3jDHATShroexpqx+aTadYjpxPJnvXFHpxQ5b8hRpGjSn5OCOwakCYiIgHYB+/yAYD7Lm+vUbwGQ==
 
 "@next/env@15.4.0-canary.47":
   version "15.4.0-canary.47"

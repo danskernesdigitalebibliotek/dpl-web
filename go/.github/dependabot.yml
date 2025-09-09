@@ -81,7 +81,7 @@ updates:
       - dependency-name: "next"
         versions: [">=15.4.0-canary.47"]
       - dependency-name: "@next/*"
-        versions: [">=15.5.2"]
+        versions: [">=15.4.0"]
       - dependency-name: "zod"
         update-types: ["version-update:semver-major"]
       - dependency-name: "storybook"
