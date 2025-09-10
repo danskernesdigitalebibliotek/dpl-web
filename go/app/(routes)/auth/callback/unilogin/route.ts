@@ -7,6 +7,7 @@ import goConfig from "@/lib/config/goConfig"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
+  TSessionData,
   destroySession,
   getSession,
   getSessionOptions,
@@ -48,7 +49,7 @@ export interface TIntrospectionResponse extends IntrospectionResponse {
 
 interface TUniloginLoginContext {
   session?: TSessionData
-  tokenSet?: TokenEndpointResponse
+  tokenSet?: client.TokenEndpointResponse
   introspection?: TIntrospectionResponse
   userInfo?: client.UserInfoResponse
 }
