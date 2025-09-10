@@ -157,6 +157,8 @@ export async function GET(request: NextRequest) {
     }
 
     await session.save()
+    console.info(`unilogin success - uniid: ${introspect.uniid} logged in successfully`)
+    return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
   } catch (error) {
     console.error("unilogin error", error, loginContext)
     // Make sure that the user is logged out remotely first. And destroy session.
@@ -164,9 +166,6 @@ export async function GET(request: NextRequest) {
     await destroySession(session)
     return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-unilogin")}`)
   }
-
-  console.info(`unilogin success: ${introspect.uniid} logged in successfully`)
-  return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
 }
 
 export const dynamic = "force-dynamic"
