@@ -6,7 +6,7 @@
     "@apidevtools/swagger-cli": "^4.0.4",
     "@hammzj/cypress-page-object": "^2.3.0",
     "@lhci/cli": "^0.8",
-    "@testing-library/cypress": "^10.0.3",
+    "@testing-library/cypress": "^10.1.0",
     "@types/node": "^22",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",
