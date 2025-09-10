@@ -7,6 +7,7 @@ import goConfig from "@/lib/config/goConfig"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
+  TSessionData,
   destroySession,
   getSession,
   getSessionOptions,
@@ -46,12 +47,23 @@ export interface TIntrospectionResponse extends IntrospectionResponse {
   institution_ids: string
 }
 
+interface TUniloginLoginContext {
+  session?: TSessionData
+  tokenSet?: client.TokenEndpointResponse
+  introspection?: TIntrospectionResponse
+  userInfo?: client.UserInfoResponse
+}
+
 export async function GET(request: NextRequest) {
   const session = await getSession()
   const config = await getUniloginClientConfig()
   const appUrl = getEnv("APP_URL")
   const sessionOptions = await getSessionOptions()
+  const loginContext: TUniloginLoginContext = {
+    session,
+  }
 
+  // TODO: remove "!sessionOptions" as it can never be false
   if (!config || !sessionOptions) {
     return NextResponse.redirect(appUrl)
   }
@@ -81,7 +93,7 @@ export async function GET(request: NextRequest) {
       pkceCodeVerifier: session.code_verifier,
       idTokenExpected: true,
     })
-
+    loginContext.tokenSet = tokenSetResponse
     const tokenSet = schemas.tokenSet.parse(tokenSetResponse) as TUniloginTokenSet
     const claims = tokenSetResponse.claims()! as TClaims
 
@@ -89,6 +101,7 @@ export async function GET(request: NextRequest) {
       config,
       tokenSet.access_token!
     )) as TIntrospectionResponse
+    loginContext.introspection = introspectResponse
     const introspect = parseUniloginServiceResponse({
       step: "introspect",
       parsingFunction: () => schemas.introspect.parse(introspectResponse),
@@ -98,6 +111,7 @@ export async function GET(request: NextRequest) {
 
     // UserInfo Request
     const userInfoResponse = await client.fetchUserInfo(config, tokenSet.access_token, claims.sub)
+    loginContext.userInfo = userInfoResponse
     const userinfo = parseUniloginServiceResponse({
       step: "userinfo",
       parsingFunction: () => schemas.uniLoginUserInfo.parse(userInfoResponse),
@@ -143,15 +157,15 @@ export async function GET(request: NextRequest) {
     }
 
     await session.save()
+    console.info(`unilogin success - uniid: ${introspect.uniid} logged in successfully`)
+    return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
   } catch (error) {
-    console.error("unilogin error", error)
+    console.error("unilogin error", error, loginContext)
     // Make sure that the user is logged out remotely first. And destroy session.
     await logoutUniloginSSO(session)
     await destroySession(session)
     return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-unilogin")}`)
   }
-
-  return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
 }
 
 export const dynamic = "force-dynamic"

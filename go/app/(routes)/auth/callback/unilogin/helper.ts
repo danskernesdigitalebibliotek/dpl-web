@@ -8,12 +8,12 @@ export const isUniloginUserAuthorizedToLogIn = async (
 ) => {
   // If the user do not have a license through STIL we do not allow access
   if (claims?.has_license === "false") {
-    console.error("User does not have a STIL license")
+    console.error("unilogin error: User does not have a STIL license")
     return false
   }
 
   if (!institutionId) {
-    console.error("InstitutionId was not provided")
+    console.error("unilogin error: InstitutionId was not provided")
     return false
   }
   const institution = await getInstitutionRequest(institutionId)
@@ -22,7 +22,15 @@ export const isUniloginUserAuthorizedToLogIn = async (
   if (institution.instnr === "A04441") {
     return true
   }
-  return institution.kommunenr === municipalityId
+
+  const municipalityMatch = institution.kommunenr === municipalityId
+  if (!municipalityMatch) {
+    console.error(
+      `unilogin error: User institution does not match expected municipality ${municipalityId}`,
+      institution
+    )
+  }
+  return municipalityMatch
 }
 
 export const parseUniloginServiceResponse = <T>({
