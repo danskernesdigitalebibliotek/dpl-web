@@ -1,15 +1,19 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import LoanSlider, { LoanSliderSkeleton } from "@/app/(pages)/user/profile/LoanSlider"
+import {
+  filterManifestationsByEdition,
+  filterManifestationsByMaterialType,
+  filterMaterialTypes,
+} from "@/components/pages/workPageLayout/helper"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
   useComplexSearchForWorkTeaserQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 export type UserLoansProps = {
@@ -17,28 +21,31 @@ export type UserLoansProps = {
 }
 
 const UserLoans = ({ className }: UserLoansProps) => {
+  const [userIsbns, setUserIsbns] = useState<string[]>([])
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
-  const getIsbnsFromLoans = (loans: LoanListResult["loans"] | null | undefined) => {
-    return loans?.map(loan => loan.libraryBook?.identifier) || []
-  }
+
+  useEffect(() => {
+    if (dataLoans?.loans) {
+      const isbns = dataLoans.loans.map(loan => loan.libraryBook?.identifier)
+      setUserIsbns(isbns)
+    }
+  }, [dataLoans])
+
+  const cql = userIsbns.map(isbn => `term.isbn=${isbn}`).join(" OR ") || ""
   const { data: dataComplexSearch, isLoading: isLoadingComplexSearch } =
     useComplexSearchForWorkTeaserQuery(
       {
-        cql:
-          getIsbnsFromLoans(dataLoans?.loans)
-            .map(isbn => `term.isbn=${isbn}`)
-            .join(" OR ") || "",
+        cql,
         offset: 0,
         limit: 100,
         filters: {},
       },
-      { enabled: !!dataLoans?.loans }
+      { enabled: userIsbns.length > 0 }
     )
+
   // Create an array of works with the matching manifestation inside, out of the LOAN ISBNS
   // instead of ComplexSearch data so that we have exactly one manifestation per loan
-  const loanWorks: WorkTeaserSearchPageFragment[] | undefined = getIsbnsFromLoans(
-    dataLoans?.loans
-  ).reduce((isbnAcc, isbn) => {
+  const loanWorks: WorkTeaserSearchPageFragment[] = userIsbns.reduce((isbnAcc, isbn) => {
     // Find the work that contains the matching ISBN inside one of its manifestations
     const loanWork = dataComplexSearch?.complexSearch.works.find(work => {
       return work.manifestations.all.some(manifestation =>
@@ -49,9 +56,13 @@ const UserLoans = ({ className }: UserLoansProps) => {
     if (!loanWork) {
       return isbnAcc
     }
+    // Filter the all manifestations to only include those allowed
+    const filteredManifestations = filterManifestationsByEdition(
+      filterManifestationsByMaterialType(filterMaterialTypes(loanWork.manifestations.all))
+    )
     // Find the specific manifestation inside the found work
     const loanManifestation: ManifestationSearchPageTeaserFragment | undefined =
-      loanWork.manifestations.all.find(manifestation =>
+      filteredManifestations.find(manifestation =>
         manifestation.identifiers.some(identifier => identifier.value === isbn)
       )
     // Skip if no matching manifestation is found
