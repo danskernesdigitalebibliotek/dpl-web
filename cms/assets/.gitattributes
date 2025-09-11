@@ -1,3 +1,7 @@
+# NOTE: .gitattributes is scaffolded, but committed in order for
+# GitHub to be able to see it. Edit asserts/.gitattributes and run
+# `composer install` to modify it.
+
 # Mark FBS client and CMS API produced by OpenAPI Generator as generated.
 packages/fbs-client/**/*.* linguist-generated=true
 packages/cms-api/**/*.* linguist-generated=true
