@@ -26,7 +26,11 @@ const UserLoans = ({ className }: UserLoansProps) => {
 
   useEffect(() => {
     if (dataLoans?.loans) {
-      const isbns = dataLoans.loans.map(loan => loan.libraryBook?.identifier)
+      // Make sure isbns is allways returns an array
+      const isbns = dataLoans?.loans
+        ? dataLoans.loans.map(loan => loan?.libraryBook?.identifier ?? "").filter(Boolean)
+        : []
+
       setUserIsbns(isbns)
     }
   }, [dataLoans])
