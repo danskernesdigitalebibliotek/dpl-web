@@ -26,7 +26,7 @@ const WorkPageButtonsLoggedOut = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
-  const identifier = first(selectedManifestation?.identifiers)?.value || undefined
+  const identifier = first(selectedManifestation?.identifiers)?.value
 
   const { openSheet } = sheetStore.trigger
   const { openModal } = modalStore.trigger

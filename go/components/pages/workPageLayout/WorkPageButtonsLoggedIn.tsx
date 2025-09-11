@@ -26,7 +26,7 @@ const WorkPageButtonsLoggedIn = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
-  const identifier = first(selectedManifestation?.identifiers)?.value || undefined
+  const identifier = first(selectedManifestation?.identifiers)?.value
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
