@@ -6,7 +6,6 @@ import GetCategories from "../factories/dpl-cms/getCategories"
 import GetDplCmsPrivateConfiguration from "../factories/dpl-cms/getDplCmsPrivateConfiguration"
 import GetDplCmsPublicConfiguration from "../factories/dpl-cms/getDplCmsPublicConfiguration"
 import GoFrontpage from "../factories/dpl-cms/getPageByPathQuery/go-frontpage"
-import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
 import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
@@ -45,6 +44,19 @@ export const mockFrontpage = () => {
     operationName: "complexSearchForWorkTeaser",
     data: ComplexSearchForWorkTeaser.build(),
   })
+
+  cy.intercept("GET", "/ap-service/pubhub-adapter/v1/products/*", reg => {
+    // Intercept the request and respond with a mocked product
+    const id = reg.url.split("/").pop() // Get the last part of the URL which is the product ID
+
+    reg.reply({
+      statusCode: 200,
+      body: getV1ProductsIdentifierAdapterFactory.build({
+        product: { externalProductId: { id }, costFree: true },
+      }),
+      headers: { "content-type": "application/json" },
+    })
+  })
 }
 
 export const mockAPProfilePage = () => {
@@ -64,7 +76,7 @@ export const mockAPProfilePage = () => {
 
   cy.interceptGraphql({
     operationName: "complexSearchForWorkTeaser",
-    data: complexSearchForWorkTeaser.build({
+    data: ComplexSearchForWorkTeaser.build({
       complexSearch: {
         hitcount: identifiers.length,
         works: worksWithIdentifiersFactory.transient({ identifiers }).build(),
@@ -103,7 +115,7 @@ export const mockUniloginProfilePage = () => {
 
   cy.interceptGraphql({
     operationName: "complexSearchForWorkTeaser",
-    data: complexSearchForWorkTeaser.build({
+    data: ComplexSearchForWorkTeaser.build({
       complexSearch: {
         hitcount: identifiers.length,
         works: worksWithIdentifiersFactory.transient({ identifiers }).build(),

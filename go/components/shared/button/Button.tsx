@@ -66,6 +66,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   ariaLabel?: string
+  dataCy?: string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
