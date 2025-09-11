@@ -1,3 +1,4 @@
+import { first } from "lodash"
 import React from "react"
 
 import {
@@ -25,7 +26,7 @@ const WorkPageButtonsLoggedOut = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
-  const identifier = selectedManifestation?.identifiers[0].value
+  const identifier = first(selectedManifestation?.identifiers)?.value
 
   const { openSheet } = sheetStore.trigger
   const { openModal } = modalStore.trigger

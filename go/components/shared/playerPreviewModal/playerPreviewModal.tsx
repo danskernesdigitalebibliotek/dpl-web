@@ -1,3 +1,5 @@
+import { first } from "lodash"
+
 import { isManifestationPodcast } from "@/components/pages/workPageLayout/helper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
@@ -11,11 +13,13 @@ function PlayerPreviewModal({
   open: boolean
   manifestation: ManifestationWorkPageFragment
 }) {
+  const identifier = first(manifestation?.identifiers)?.value
+
   return (
     <ResponsiveDialog
       open={open}
       title={`Prøv ${isManifestationPodcast(manifestation) ? "Podcast" : "Lydbog"}`}>
-      <Player type="preview" identifier={manifestation.identifiers[0].value} />
+      <Player type="preview" identifier={identifier || ""} />
     </ResponsiveDialog>
   )
 }
