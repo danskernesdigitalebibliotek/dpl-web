@@ -13,7 +13,6 @@ import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import useSession from "@/hooks/useSession"
 import {
-  GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
@@ -71,8 +70,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const slideSelectOptions = workMaterialTypesWithDisplayName
 
-  const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]
-    .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
+  const selectedManifestationMaterialTypeCode =
+    selectedManifestation?.materialTypes[0].materialTypeGeneral.code
 
   const isSelectedManifestationPodcast =
     selectedManifestationMaterialTypeCode === "PODCASTS" || false

@@ -5,10 +5,7 @@ import React from "react"
 
 import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
-import {
-  ManifestationWorkPageFragment,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
@@ -30,13 +27,11 @@ const SearchResults = ({ works }: SearchResultProps) => {
       {works.map(work => {
         const manifestations = sortManifestationsBySortPriority(
           filterManifestationsByEdition(
-            filterManifestationsByMaterialType(
-              filterMaterialTypes(work.manifestations.all as ManifestationWorkPageFragment[])
-            )
+            filterManifestationsByMaterialType(filterMaterialTypes(work.manifestations.all))
           )
         )
         const bestRepresentation = getBestRepresentationOrFallbackManifestation(
-          work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
+          work.manifestations.bestRepresentation,
           manifestations
         )
 

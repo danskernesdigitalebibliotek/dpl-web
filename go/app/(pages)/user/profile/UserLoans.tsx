@@ -49,7 +49,9 @@ const UserLoans = ({ className }: UserLoansProps) => {
 
   // Create an array of works with the matching manifestation inside, out of the LOAN ISBNS
   // instead of ComplexSearch data so that we have exactly one manifestation per loan
-  const loanWorks: WorkTeaserSearchPageFragment[] = userIsbns.reduce((isbnAcc, isbn) => {
+  const loanWorks: WorkTeaserSearchPageFragment[] = userIsbns.reduce<
+    WorkTeaserSearchPageFragment[]
+  >((isbnAcc, isbn) => {
     // Find the work that contains the matching ISBN inside one of its manifestations
     const loanWork = dataComplexSearch?.complexSearch.works.find(work => {
       return work.manifestations.all.some(manifestation =>
@@ -79,7 +81,7 @@ const UserLoans = ({ className }: UserLoansProps) => {
       manifestations: { all: [loanManifestation], bestRepresentation: loanManifestation },
     }
     return [...isbnAcc, workWithSingleManifestation]
-  }, [] as WorkTeaserSearchPageFragment[])
+  }, [])
 
   return (
     <div className={cn("col-span-full", className)}>

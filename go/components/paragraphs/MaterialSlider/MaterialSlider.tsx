@@ -23,10 +23,7 @@ import {
   ParagraphGoMaterialSliderAutomatic,
   ParagraphGoMaterialSliderManual,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
-import {
-  ComplexSearchForWorkTeaserQuery,
-  ManifestationWorkPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
@@ -102,15 +99,13 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                   const manifestations = sortManifestationsBySortPriority(
                     filterManifestationsByEdition(
                       filterManifestationsByMaterialType(
-                        filterMaterialTypes(
-                          work.manifestations.all as ManifestationWorkPageFragment[]
-                        )
+                        filterMaterialTypes(work.manifestations.all)
                       )
                     )
                   )
 
                   const bestRepresentation = getBestRepresentationOrFallbackManifestation(
-                    work.manifestations.bestRepresentation as ManifestationWorkPageFragment,
+                    work.manifestations.bestRepresentation,
                     manifestations
                   )
 
