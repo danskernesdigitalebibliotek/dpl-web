@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import LoanSlider, { LoanSliderSkeleton } from "@/app/(pages)/user/profile/LoanSlider"
 import {
@@ -21,21 +21,11 @@ export type UserLoansProps = {
 }
 
 const UserLoans = ({ className }: UserLoansProps) => {
-  const [userIsbns, setUserIsbns] = useState<string[]>([])
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
-
-  useEffect(() => {
-    if (dataLoans?.loans) {
-      // Make sure isbns is allways returns an array
-      const isbns = dataLoans?.loans
-        ? dataLoans.loans.map(loan => loan?.libraryBook?.identifier ?? "").filter(Boolean)
-        : []
-
-      setUserIsbns(isbns)
-    }
-  }, [dataLoans])
-
+  const userIsbns =
+    dataLoans?.loans?.map(loan => loan?.libraryBook?.identifier ?? "").filter(Boolean) || []
   const cql = userIsbns.map(isbn => `term.isbn=${isbn}`).join(" OR ") || ""
+
   const { data: dataComplexSearch, isLoading: isLoadingComplexSearch } =
     useComplexSearchForWorkTeaserQuery(
       {
