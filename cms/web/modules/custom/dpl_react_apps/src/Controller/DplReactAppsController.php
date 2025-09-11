@@ -269,7 +269,11 @@ class DplReactAppsController extends ControllerBase {
     try {
       return $this->fbi->getWorkTitle($wid);
     }
-    catch (\Throwable) {
+    catch (\Throwable $e) {
+      $this->getLogger('dpl_react_apps')->error(
+        'Could not fetch work title from FBI: @message', [
+          '@message' => $e->getMessage(),
+        ]);
       // Fall back to empty string.
       return '';
     }
