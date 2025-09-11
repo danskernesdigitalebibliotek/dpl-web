@@ -32,6 +32,8 @@ class SailorEndpointConfig extends EndpointConfig {
         'headers' => [
           'Authorization' => 'Bearer ' . $this->tokenHandler->getToken()?->token,
         ],
+        // Low timeout, we don't want to hang on FBI being down.
+        'timeout' => 1,
       ]
     );
   }
