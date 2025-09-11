@@ -98,58 +98,57 @@ The application is now running at [https://localhost:3000](https://localhost:300
 
 In the project, you'll see the following folders and files:
 
-| File(s)                       | Description                                                                                                                                               |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| \_\_tests\_\_/\*              | Unit tests for the application components and utilities. Using [vitest][vitest]                                                                           |
-| .github/\*                    | GitHub configuration files and workflows                                                                                                                  |
-| .storybook/\*                 | Configuration files and stories for Storybook                                                                                                             |
-| .vscode.example/\*            | Example settings and recommendations for Visual Studio Code workspace                                                                                     |
-| app/\*                        | Routes for the [App Router][app-router]                                                                                                                   |
-| components/global/\*          | Components that should always be rendered on the page                                                                                                     |
-| components/pages/\*           | For page layout components used as children on routes (Useful when making API calls server-side on the route and render page layouts as child components) |
-| components/paragraphs/\*      | Components named according to Drupal CMS conventions for editorial sections on a page                                                                     |
-| components/shadcn/\*          | Imported [shadcn/ui][shadcn] components                                                                                                                   |
-| components/shared/\*          | Reusable components that can be optionally used across various other components                                                                           |
-| hooks/\*                      | Custom React hooks                                                                                                                                        |
-| lagoon/\*                     | TODO: add description                                                                                                                                     |
-| lib/\*                        | Library utilities and configurations                                                                                                                      |
-| lib/config/\*                 | Centralized access to environment variables and CMS configuration settings                                                                                |
-| lib/graphql/\*                | GraphQL-related utilities and configurations                                                                                                              |
-| lib/graphql/fetchers/\*       | Custom fetch functions used for fetching data through [React Query][react-query]                                                                          |
-| lib/graphql/fragments/\*      | GraphQL fragments used to define reusable pieces of data queries                                                                                          |
-| lib/graphql/generated/\*      | Auto-generated GraphQL types and queries based on the GraphQL schema                                                                                      |
-| lib/graphql/queries/\*        | Custom GraphQL queries used throughout the application                                                                                                    |
-| lib/helpers/\*                | Utility functions and helpers used across the application                                                                                                 |
-| lib/machines/\*               | State machines and related logic for managing complex state transitions through [xstate][xstate]                                                          |
-| lib/providers/\*              | Context providers and related logic for managing global state and dependencies                                                                            |
-| lib/rest/\*                   | REST API-related utilities and configurations                                                                                                             |
-| lib/rest/cover-service-api/\* | Custom functions and configurations for interacting with the Cover Service API                                                                            |
-| lib/rest/publizon-api/\*      | Custom functions and configurations for interacting with the Publizon API                                                                                 |
-| lib/session/\*                | Session management utilities and configurations                                                                                                           |
-| lib/shadcn/\*                 | Utilities for shadcn/ui components                                                                                                                        |
-| lib/types/\*                  | Manually added types used throughout the application                                                                                                      |
-| public/\*                     | Non-code, unprocessed assets (fonts, icons, etc.)                                                                                                         |
-| styles/\*                     | Global [Tailwind] CSS files                                                                                                                               |
-| .editorconfig/                | Configuration file for maintaining consistent coding styles between different editors and IDEs                                                            |
-| .env.example                  | Example environment variables file                                                                                                                        |
-| .env.local                    | Local environment variables file, specific to your development environment (git ignored)                                                                  |
-| .env.test                     | Environment variables file for testing                                                                                                                    |
-| .eslintignore                 | File specifying which files and directories to ignore by ESLint                                                                                           |
-| .eslintrc.json                | Configuration file for ESLint rules and settings                                                                                                          |
-| .gitignore                    | Specifies intentionally untracked files to ignore                                                                                                         |
-| .nvmrc                        | Node version manager configuration file                                                                                                                   |
-| .prettierignore               | File specifying which files and directories to ignore by Prettier                                                                                         |
-| codegen.ts                    | Configuration file for generating code based on GraphQL schema                                                                                            |
-| components.json               | Configuration file for defining and managing component metadata (necessary when installing shadcn components)                                             |
-| next.config.mjs               | Next.js configuration file                                                                                                                                |
-| orval.config.ts               | Configuration file for Orval, a tool for generating API clients from OpenAPI specifications                                                               |
-| package.json                  | Contains metadata about the project and its dependencies, scripts, and other configurations                                                               |
-| postcss.config.mjs            | Configuration file for PostCSS, a tool for transforming CSS with JavaScript plugins (necessary for Tailwind to compile)                                   |
-| tailwind.config.ts            | [Tailwind] CSS configuration file                                                                                                                         |
-| Taskfile.yml                  | Task automation file used to define and run tasks                                                                                                         |
-| tsconfig.json                 | TypeScript configuration file                                                                                                                             |
-| vitest.config.ts              | Configuration file for [Vitest][vitest]                                                                                                                   |
-| yarn.lock                     | Lockfile for Yarn, ensuring consistent installs across different environments                                                                             |
+| File(s)                  | Description                                                                                                                                               |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \_\_tests\_\_/\*         | Unit tests for the application components and utilities. Using [vitest][vitest]                                                                           |
+| .github/\*               | GitHub configuration files and workflows                                                                                                                  |
+| .storybook/\*            | Configuration files and stories for Storybook                                                                                                             |
+| .vscode.example/\*       | Example settings and recommendations for Visual Studio Code workspace                                                                                     |
+| app/\*                   | Routes for the [App Router][app-router]                                                                                                                   |
+| components/global/\*     | Components that should always be rendered on the page                                                                                                     |
+| components/pages/\*      | For page layout components used as children on routes (Useful when making API calls server-side on the route and render page layouts as child components) |
+| components/paragraphs/\* | Components named according to Drupal CMS conventions for editorial sections on a page                                                                     |
+| components/shadcn/\*     | Imported [shadcn/ui][shadcn] components                                                                                                                   |
+| components/shared/\*     | Reusable components that can be optionally used across various other components                                                                           |
+| hooks/\*                 | Custom React hooks                                                                                                                                        |
+| lagoon/\*                | TODO: add description                                                                                                                                     |
+| lib/\*                   | Library utilities and configurations                                                                                                                      |
+| lib/config/\*            | Centralized access to environment variables and CMS configuration settings                                                                                |
+| lib/graphql/\*           | GraphQL-related utilities and configurations                                                                                                              |
+| lib/graphql/fetchers/\*  | Custom fetch functions used for fetching data through [React Query][react-query]                                                                          |
+| lib/graphql/fragments/\* | GraphQL fragments used to define reusable pieces of data queries                                                                                          |
+| lib/graphql/generated/\* | Auto-generated GraphQL types and queries based on the GraphQL schema                                                                                      |
+| lib/graphql/queries/\*   | Custom GraphQL queries used throughout the application                                                                                                    |
+| lib/helpers/\*           | Utility functions and helpers used across the application                                                                                                 |
+| lib/machines/\*          | State machines and related logic for managing complex state transitions through [xstate][xstate]                                                          |
+| lib/providers/\*         | Context providers and related logic for managing global state and dependencies                                                                            |
+| lib/rest/\*              | REST API-related utilities and configurations                                                                                                             |
+| lib/rest/publizon-api/\* | Custom functions and configurations for interacting with the Publizon API                                                                                 |
+| lib/session/\*           | Session management utilities and configurations                                                                                                           |
+| lib/shadcn/\*            | Utilities for shadcn/ui components                                                                                                                        |
+| lib/types/\*             | Manually added types used throughout the application                                                                                                      |
+| public/\*                | Non-code, unprocessed assets (fonts, icons, etc.)                                                                                                         |
+| styles/\*                | Global [Tailwind] CSS files                                                                                                                               |
+| .editorconfig/           | Configuration file for maintaining consistent coding styles between different editors and IDEs                                                            |
+| .env.example             | Example environment variables file                                                                                                                        |
+| .env.local               | Local environment variables file, specific to your development environment (git ignored)                                                                  |
+| .env.test                | Environment variables file for testing                                                                                                                    |
+| .eslintignore            | File specifying which files and directories to ignore by ESLint                                                                                           |
+| .eslintrc.json           | Configuration file for ESLint rules and settings                                                                                                          |
+| .gitignore               | Specifies intentionally untracked files to ignore                                                                                                         |
+| .nvmrc                   | Node version manager configuration file                                                                                                                   |
+| .prettierignore          | File specifying which files and directories to ignore by Prettier                                                                                         |
+| codegen.ts               | Configuration file for generating code based on GraphQL schema                                                                                            |
+| components.json          | Configuration file for defining and managing component metadata (necessary when installing shadcn components)                                             |
+| next.config.mjs          | Next.js configuration file                                                                                                                                |
+| orval.config.ts          | Configuration file for Orval, a tool for generating API clients from OpenAPI specifications                                                               |
+| package.json             | Contains metadata about the project and its dependencies, scripts, and other configurations                                                               |
+| postcss.config.mjs       | Configuration file for PostCSS, a tool for transforming CSS with JavaScript plugins (necessary for Tailwind to compile)                                   |
+| tailwind.config.ts       | [Tailwind] CSS configuration file                                                                                                                         |
+| Taskfile.yml             | Task automation file used to define and run tasks                                                                                                         |
+| tsconfig.json            | TypeScript configuration file                                                                                                                             |
+| vitest.config.ts         | Configuration file for [Vitest][vitest]                                                                                                                   |
+| yarn.lock                | Lockfile for Yarn, ensuring consistent installs across different environments                                                                             |
 
 ### git workflows
 
@@ -192,12 +191,6 @@ yarn codegen:all-rest-services
 ```
 
 The custom functions and configurations for these services are located in the `lib/rest` directory.
-
-```bash
-yarn codegen:covers
-```
-
-The `lib/rest/cover-service-api` directory contains functions and configurations for interacting with the Cover Service API. This API is used to fetch cover images and related metadata for various resources.
 
 ```bash
 yarn codegen:graphql

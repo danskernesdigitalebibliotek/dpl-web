@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Cover } from "@/lib/rest/cover-service-api/generated/model"
 import { TSessionType } from "@/lib/types/session"
 
 import { CyKey, ViewportType, viewports } from "./constants"
@@ -14,17 +13,6 @@ type InterceptGraphqlParams = {
    * The fishery data to use for response
    */
   data?: object
-  /**
-   * The status code to return (defaults to 200)
-   */
-  statusCode?: number
-}
-
-type InterceptCoversParams = {
-  /**
-   * The fishery data to use for response
-   */
-  covers: Cover
   /**
    * The status code to return (defaults to 200)
    */
@@ -77,13 +65,6 @@ declare global {
        * @example cy.interceptGraphql({ operationName: "searchWithPagination", data: SearchWithPaginationFactory.build() })
        */
       interceptGraphql(params: InterceptGraphqlParams): void
-
-      /**
-       * Intercepts cover request that returns fishery data
-       * @param params - The parameters for intercepting the cover request
-       * @example cy.interceptCovers({ covers: coverService.build() })
-       */
-      interceptCovers(params: InterceptCoversParams): void
 
       /**
        * Mocks a server-side GraphQL query using MSW
@@ -174,16 +155,6 @@ Cypress.Commands.add(
     }).as(`${operationName} GraphQL operation`)
   }
 )
-
-Cypress.Commands.add("interceptCovers", ({ covers, statusCode = 200 }: InterceptCoversParams) => {
-  cy.intercept("GET", "**/covers**", req => {
-    if (covers) {
-      req.reply({ body: [covers], statusCode })
-    } else {
-      req.reply({ statusCode })
-    }
-  }).as(`Cover Service`)
-})
 
 /**
  * Server-side GraphQL query mocking with MSW
