@@ -5,28 +5,28 @@ import goConfig from "@/lib/config/goConfig"
 import {
   GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
+  ManifestationSearchPageTeaserFragment,
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
-  WorkMaterialTypesFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { LibraryProfile, LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 export const getManifestationMaterialType = (
-  manifestation: ManifestationWorkPageFragment
-): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"] => {
-  return manifestation.materialTypes[0].materialTypeGeneral
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+) => {
+  return manifestation.materialTypes?.[0].materialTypeGeneral
 }
 
 const allowedMaterialTypes = ["BOOKS", "EBOOKS", "AUDIO_BOOKS", "PODCASTS"]
 const allowedPhysicalMaterialTypes = ["BOOKS"]
 
 export const hasManifestationAllowedMaterialTypes = (
-  manifestation: ManifestationWorkPageFragment
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
 ) => {
   // if the manifestation is physical, we only want to include it if it's a an allowed material physical type
   if (manifestation.accessTypes[0].code === "PHYSICAL") {
     return allowedPhysicalMaterialTypes.includes(
-      manifestation.materialTypes[0]?.materialTypeGeneral.code
+      manifestation.materialTypes?.[0]?.materialTypeGeneral.code
     )
   }
 
@@ -42,7 +42,9 @@ export const hasManifestationAllowedMaterialTypes = (
 }
 
 // filter out unallowed material types from manifestations
-export const filterMaterialTypes = (manifestations: ManifestationWorkPageFragment[]) => {
+export const filterMaterialTypes = (
+  manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
+) => {
   const filteredManifestationsMaterialTypes = manifestations.map(manifestation => {
     const filteredMaterialTypes = manifestation.materialTypes.filter(materialType => {
       return allowedMaterialTypes.includes(materialType.materialTypeGeneral.code)
@@ -50,7 +52,7 @@ export const filterMaterialTypes = (manifestations: ManifestationWorkPageFragmen
     return {
       ...manifestation,
       materialTypes: filteredMaterialTypes,
-    } as ManifestationWorkPageFragment
+    }
   })
   return filteredManifestationsMaterialTypes
 }
@@ -58,8 +60,8 @@ export const filterMaterialTypes = (manifestations: ManifestationWorkPageFragmen
 // TODO: write unit tests for this function
 // Exclude manifestations with material types that are not allowed
 export const filterManifestationsByMaterialType = (
-  manifestations: ManifestationWorkPageFragment[]
-) => {
+  manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
+): (ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment)[] => {
   return filter(manifestations, manifestation => {
     const isAllowedMaterialType = hasManifestationAllowedMaterialTypes(manifestation)
     return isAllowedMaterialType
@@ -68,35 +70,40 @@ export const filterManifestationsByMaterialType = (
 
 // TODO: write unit tests for this function
 // If multiple manifestations share the same material type, keep only the latest edition
-export const filterManifestationsByEdition = (manifestations: ManifestationWorkPageFragment[]) => {
-  return manifestations.reduce((acc, current) => {
-    const existing = acc.find(
-      item =>
-        item.materialTypes[0].materialTypeGeneral.code ===
-        current.materialTypes[0].materialTypeGeneral.code
-    )
-    if (!existing) {
-      acc.push(current)
-    } else {
-      const existingEdition = existing.edition?.publicationYear?.year || 0
-      const currentEdition = current.edition?.publicationYear?.year || 0
-      if (currentEdition > existingEdition) {
-        acc = acc.filter(
-          item =>
-            item.materialTypes[0].materialTypeGeneral.code !==
-            current.materialTypes[0].materialTypeGeneral.code
-        )
+export const filterManifestationsByEdition = (
+  manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
+): (ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment)[] => {
+  return manifestations.reduce(
+    (acc: (ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment)[], current) => {
+      const existing = acc.find(
+        item =>
+          item?.materialTypes?.[0].materialTypeGeneral.code ===
+          current?.materialTypes?.[0].materialTypeGeneral.code
+      )
+      if (!existing) {
         acc.push(current)
+      } else {
+        const existingEdition = existing.edition?.publicationYear?.year || 0
+        const currentEdition = current.edition?.publicationYear?.year || 0
+        if (currentEdition > existingEdition) {
+          acc = acc.filter(
+            item =>
+              item?.materialTypes?.[0].materialTypeGeneral.code !==
+              current?.materialTypes?.[0].materialTypeGeneral.code
+          )
+          acc.push(current)
+        }
       }
-    }
-    return acc
-  }, [] as ManifestationWorkPageFragment[])
+      return acc
+    },
+    []
+  )
 }
 
 // Sort manifestations by materialTypeSortPriority
 export const sortManifestationsBySortPriority = (
-  manifestations: ManifestationWorkPageFragment[]
-): ManifestationWorkPageFragment[] => {
+  manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
+): ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[] => {
   const sortPriority = goConfig("materialtypes.sortpriority")
   return manifestations.sort((manifestationA, manifestationB) => {
     const priorityA = sortPriority.indexOf(manifestationA.materialTypes[0].materialTypeGeneral.code)
@@ -106,9 +113,9 @@ export const sortManifestationsBySortPriority = (
 }
 
 export const getBestRepresentationOrFallbackManifestation = (
-  bestRepresentation: ManifestationWorkPageFragment,
-  manifestations: ManifestationWorkPageFragment[]
-) => {
+  bestRepresentation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
+  manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
+): ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment => {
   const filteredBestRepresentation = filterManifestationsByMaterialType(
     filterMaterialTypes([bestRepresentation])
   )
@@ -124,7 +131,7 @@ export const getBestRepresentationOrFallbackManifestation = (
 }
 
 export const getManifestationMaterialTypeSpecific = (
-  manifestation: ManifestationWorkPageFragment
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
 ): "e-bog" | "lydbog" | "podcast" | null => {
   if (isManifestationEbook(manifestation)) {
     return "e-bog"
@@ -148,28 +155,36 @@ export const getManifestationByMaterialType = (
 }
 
 const isManifestationOfMaterialType = (
-  manifestation: ManifestationWorkPageFragment,
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
   materialType: GeneralMaterialTypeCodeEnum
 ) => {
   return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
 }
 
-export const isManifestationBook = (manifestation: ManifestationWorkPageFragment) => {
+export const isManifestationBook = (
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, "BOOKS")
 }
 
-export const isManifestationEbook = (manifestation: ManifestationWorkPageFragment) => {
+export const isManifestationEbook = (
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, "EBOOKS")
 }
 
-export const isManifestationAudioBook = (manifestation: ManifestationWorkPageFragment) => {
+export const isManifestationAudioBook = (
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, "AUDIO_BOOKS")
 }
 
-export const isManifestationPodcast = (manifestation: ManifestationWorkPageFragment) => {
+export const isManifestationPodcast = (
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, "PODCASTS")
 }
@@ -229,7 +244,9 @@ export const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMa
   }) as SlideSelectOption[]
 }
 
-export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
+export const getManifestationMaterialTypeIcon = (
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+) => {
   const materialType = getManifestationMaterialType(manifestation)
   // If we couldn't find the right material type, we show the icon for "question-mark"
   // Note that this has to be the same as the name of the icon in the icon library.

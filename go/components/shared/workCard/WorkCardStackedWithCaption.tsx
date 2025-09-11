@@ -9,10 +9,7 @@ import {
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import WorkCard, { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
-import {
-  ManifestationWorkPageFragment,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -41,14 +38,12 @@ const WorkCardStackedWithCaption = ({
 
   const manifestations = sortManifestationsBySortPriority(
     filterManifestationsByEdition(
-      filterManifestationsByMaterialType(
-        filterMaterialTypes(currentWork.manifestations.all as ManifestationWorkPageFragment[])
-      )
+      filterManifestationsByMaterialType(filterMaterialTypes(currentWork.manifestations.all))
     )
   )
 
   const bestRepresentation = getBestRepresentationOrFallbackManifestation(
-    currentWork.manifestations.bestRepresentation as ManifestationWorkPageFragment,
+    currentWork.manifestations.bestRepresentation,
     manifestations
   )
 
