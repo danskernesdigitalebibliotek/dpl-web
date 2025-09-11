@@ -156,6 +156,6 @@ describe("Create loan UI Tests", () => {
     cy.visit("/user/profile")
 
     // Assert that the loan slider contains the expected number of works
-    cy.dataCy("loan-slider-work").should("have.length", 1).contains
+    cy.dataCy("loan-slider-work").should("have.length", 1)
   })
 })
