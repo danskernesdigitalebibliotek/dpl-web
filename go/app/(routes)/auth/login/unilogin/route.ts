@@ -10,7 +10,6 @@ export async function GET() {
   const appUrl = getEnv("APP_URL")
 
   if (session.isLoggedIn) {
-    // User is already logged in, redirect to profile page.
     return Response.redirect(`${appUrl}/user/profile`)
   }
 

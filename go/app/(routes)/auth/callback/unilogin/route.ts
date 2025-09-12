@@ -64,7 +64,6 @@ export async function GET(request: NextRequest) {
   }
 
   if (session.isLoggedIn) {
-    // User is already logged in, redirect to profile page.
     return NextResponse.redirect(`${appUrl}/user/profile`)
   }
 
