@@ -6,6 +6,12 @@ import { getSession } from "@/lib/session/session"
 
 export async function GET() {
   const session = await getSession()
+
+  if (session.isLoggedIn) {
+    // User is already logged in, redirect to profile page.
+    return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
+  }
+
   const config = await getUniloginClientConfig()
   const appUrl = getEnv("APP_URL")
 
