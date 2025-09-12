@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
 
   if (session.isLoggedIn) {
     // User is already logged in, redirect to profile page.
-    return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
+    return NextResponse.redirect(`${appUrl}/user/profile`)
   }
 
   // TODO: remove "!sessionOptions" as it can never be false
