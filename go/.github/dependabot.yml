@@ -40,7 +40,6 @@ updates:
         patterns:
           - "next"
           - "@next/env"
-          - "next-themes"
           - "eslint-config-next"
           - "@next/eslint-plugin-next"
       tailwindcss:
@@ -56,27 +55,14 @@ updates:
         patterns:
           - "class-variance-authority"
           - "clsx"
-      tailwind-merge:
-        patterns:
-          - "tailwind-merge"
-          - "prettier-plugin-merge"
-          - "prettier-plugin-tailwindcss"
-          - "prettier-plugin-classnames"
       storybook:
         patterns:
           - "storybook"
           - "@storybook/*"
-          - "@chromatic-com/storybook"
-          - "eslint-plugin-storybook"
       xstate:
         patterns:
           - "xstate"
           - "@xstate/*"
-      vite:
-        patterns:
-          - "vitest"
-          - "vite-tsconfig-paths"
-          - "@vitejs/plugin-react"
       react-query:
         patterns:
           - "@tanstack/react-query"
@@ -89,7 +75,29 @@ updates:
         patterns:
           - "cypress"
           - "eslint-plugin-cypress"
-
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "next"
+        versions: [">=15.4.0-canary.47"]
+      - dependency-name: "@next/*"
+        versions: [">=15.4.0"]
+      - dependency-name: "zod"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "storybook"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@storybook/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "next-drupal"
+        versions: [">=2.0.0-beta.0"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react-dom"
+        update-types: ["version-update:semver-major"]
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
