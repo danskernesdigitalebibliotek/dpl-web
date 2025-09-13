@@ -26,6 +26,7 @@ export async function GET() {
     scope: "openid",
     code_challenge,
     code_challenge_method,
+    prompt: "login",
   })
 
   console.info("unilogin authorization flow started", session)
