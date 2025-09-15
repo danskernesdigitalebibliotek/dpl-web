@@ -105,7 +105,7 @@
     "@storybook/test": "^8.5.3",
     "@storybook/test-runner": "^0.23.0",
     "@svgr/webpack": "^8.1.0",
-    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/postcss": "^4.1.13",
     "@tanstack/react-query-devtools": "^5.87.4",
     "@testing-library/react": "^16.3.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
