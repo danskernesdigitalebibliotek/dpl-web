@@ -72,10 +72,6 @@ updates:
         patterns:
           - "jwt-simple"
           - "@types/jwt-simple"
-      cypress:
-        patterns:
-          - "cypress"
-          - "eslint-plugin-cypress"
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
