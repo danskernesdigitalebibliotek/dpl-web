@@ -11937,10 +11937,10 @@ joi@^17.11.0:
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
 
-jose@^6.0.12:
-  version "6.0.12"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-6.0.12.tgz#56253d94d46bd784addc4bde3691c323552fe7e4"
-  integrity sha512-T8xypXs8CpmiIi78k0E+Lk7T2zlK4zDyg+o1CZ4AkOHgDg98ogdP2BeZ61lTFKFyoEwJ9RgAgN+SdM3iPgNonQ==
+jose@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-6.1.0.tgz#96285365689d16f2845a353964d2284bf19f464c"
+  integrity sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==
 
 js-md4@^0.3.2:
   version "0.3.2"
@@ -13190,10 +13190,10 @@ oas-validator@^5.0.8:
     should "^13.2.1"
     yaml "^1.10.0"
 
-oauth4webapi@^3.6.1:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.6.2.tgz#bca92404af8bbdbb7f1475b3a760ebcb0e8eb24d"
-  integrity sha512-hwWLiyBYuqhVdcIUJMJVKdEvz+DCweOcbSfqDyIv9PuUwrNfqrzfHP2bypZgZdbYOS67QYqnAnvZa2BJwBBrHw==
+oauth4webapi@^3.8.1:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.8.1.tgz#a6e205570c09e33aa656982c85e78841a57a6fec"
+  integrity sha512-olkZDELNycOWQf9LrsELFq8n05LwJgV8UkrS0cburk6FOwf8GvLam+YB+Uj5Qvryee+vwWOfQVeI5Vm0MVg7SA==
 
 object-assign@^4, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
@@ -13348,13 +13348,13 @@ openapi3-ts@^4.2.2:
   dependencies:
     yaml "^2.8.0"
 
-openid-client@^6.6.3:
-  version "6.6.3"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.6.3.tgz#3f4570e00b0c52d684302e041149747220d61a77"
-  integrity sha512-sYYFJsyN21bjf/QepIU/t6w22tEUT+rYVPf1VZOSQwC+s1hAkyZpvAbFNLMrnrYMS/H74MctEHna2jPLvWbkCA==
+openid-client@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.8.0.tgz#ae60540fc1aaf595ee9100004ebda722e1d80e60"
+  integrity sha512-oG1d1nAVhIIE+JSjLS+7E9wY1QOJpZltkzlJdbZ7kEn7Hp3hqur2TEeQ8gLOHoHkhbRAGZJKoOnEQcLOQJuIyg==
   dependencies:
-    jose "^6.0.12"
-    oauth4webapi "^3.6.1"
+    jose "^6.1.0"
+    oauth4webapi "^3.8.1"
 
 optionator@^0.9.3:
   version "0.9.4"
