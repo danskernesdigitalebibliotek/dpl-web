@@ -59,6 +59,7 @@ updates:
         patterns:
           - "storybook"
           - "@storybook/*"
+          - "eslint-plugin-storybook"
       xstate:
         patterns:
           - "xstate"
@@ -87,6 +88,8 @@ updates:
       - dependency-name: "storybook"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@storybook/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint-plugin-storybook"
         update-types: ["version-update:semver-major"]
       - dependency-name: "next-drupal"
         versions: [">=2.0.0-beta.0"]
