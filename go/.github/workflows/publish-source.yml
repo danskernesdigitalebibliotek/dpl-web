@@ -28,7 +28,7 @@ jobs:
             echo ::set-output name=IS_RELEASE_TAG::false
           fi
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         with:
           node-version-file: ".nvmrc"
