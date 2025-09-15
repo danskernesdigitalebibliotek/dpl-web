@@ -109,7 +109,7 @@
     "@tanstack/react-query-devtools": "^5.87.1",
     "@testing-library/react": "^16.3.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@tsconfig/create-react-app": "^2.0.5",
+    "@tsconfig/create-react-app": "^2.0.7",
     "@types/jwt-simple": "^0.5.36",
     "@types/node": "^20.0.0",
     "@types/react": "npm:types-react@19.0.0-rc.1",

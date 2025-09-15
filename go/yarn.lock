@@ -5916,10 +5916,10 @@
     minimatch "^10.0.1"
     path-browserify "^1.0.1"
 
-"@tsconfig/create-react-app@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/@tsconfig/create-react-app/-/create-react-app-2.0.5.tgz"
-  integrity sha512-NiXzSMJabQtVTPwFmBWX+eyee2dfhRSnQ6NNbtCZfXemGxOq+N0+RMPVYu+sz6riUZANHTnvvHoS1k87ksyDXg==
+"@tsconfig/create-react-app@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@tsconfig/create-react-app/-/create-react-app-2.0.7.tgz#d54781e28b6204dc0a0be44b501c7dada8ab974d"
+  integrity sha512-gSui0f0bjRi824CzbUWdTaTrmQCCu23X/duAZLcYiJWmSok3aKAfBwg5lq1x/aBj3AuL9XQwE7RmvYxW5GG/Mg==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
