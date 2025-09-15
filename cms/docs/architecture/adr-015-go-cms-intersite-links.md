@@ -31,7 +31,7 @@ This is basically how the domain language negotiation plugin in Drupal
 core implements links between language versions, so the method should
 be fairly safe.
 
-What "site" we're on is determined by checking the `rewrite go urls`
+What "site" we're on is determined by checking the `use absolute cms urls`
 permission, which is only given to the `go_graphql_client` role which
 in turn is only given to the `go_graphql` user that's used for the Go
 GraphQL consumer.

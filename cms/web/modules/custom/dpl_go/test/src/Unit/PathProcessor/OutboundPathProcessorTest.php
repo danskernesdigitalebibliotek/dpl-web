@@ -81,6 +81,7 @@ class OutboundPathProcessorTest extends UnitTestCase {
     bool $isGo,
     ?string $expectedBaseUrl,
   ): void {
+    $this->goSite->useAbsoluteUrls()->willReturn(FALSE);
     $this->goSite->isGoSite()->willReturn($isGo);
     $this->goSite->isGoNid($nid)->willReturn($isGoNode);
     $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
@@ -146,6 +147,53 @@ class OutboundPathProcessorTest extends UnitTestCase {
 
     $this->assertEquals("/node/{$nid}", $newPath);
     $this->assertArrayNotHasKey('base_url', $options);
+  }
+
+  /**
+   * Test that useAbsoluteUrls forces absolute URLs regardless of XOR logic.
+   *
+   * Simulates external users (API consumers) who have the
+   * 'use absolute cms and go urls' permission but are not considered
+   * 'Go site' users.
+   *
+   * @dataProvider absoluteUrlCases
+   */
+  public function testUseAbsoluteUrlsForcing(
+    string $nid,
+    bool $isGoNode,
+    string $expectedBaseUrl,
+  ): void {
+    $this->goSite->useAbsoluteUrls()->willReturn(TRUE);
+    $this->goSite->isGoSite()->willReturn(FALSE);
+    $this->goSite->isGoNid($nid)->willReturn($isGoNode);
+    $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
+    $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
+
+    $options = [];
+    $newPath = $this->pathProcessor->processOutbound(
+      "/node/{$nid}",
+      $options,
+      new Request(),
+      new BubbleableMetadata(),
+    );
+
+    $this->assertEquals("/node/{$nid}", $newPath);
+    $this->assertArrayHasKey('base_url', $options);
+    $this->assertTrue($options['absolute']);
+    $this->assertEquals($expectedBaseUrl, $options['base_url']);
+  }
+
+  /**
+   * Test cases for testUseAbsoluteUrlsForcing.
+   *
+   * @return array<string, array<string|bool>>
+   *   Array of test cases.
+   */
+  public function absoluteUrlCases(): array {
+    return [
+      'Go node with external user having absolute URLs permission' => ['12', TRUE, 'https://go.cms.site'],
+      'CMS node with external user having absolute URLs permission' => ['12', FALSE, 'https://cms.site'],
+    ];
   }
 
 }
