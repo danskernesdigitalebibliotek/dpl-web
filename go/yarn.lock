@@ -6089,10 +6089,10 @@
   resolved "https://registry.yarnpkg.com/@types/jwt-simple/-/jwt-simple-0.5.36.tgz#0d9e91f3f629fcd4c50d46caf8f49f2059bebd48"
   integrity sha512-UKOigRdpPdj7ODP+ouBC5U+7l0W0dAzGbrK23P0HFnTjVqbDAAEem8LIhTZf6NrDV/Bw8cxWQZnZ4DPBZkHfpA==
 
-"@types/lodash@^4.17.12":
-  version "4.17.12"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.12.tgz"
-  integrity sha512-sviUmCE8AYdaF/KIHLDJBQgeYzPBI0vf/17NaYehBJfYD1j6/L95Slh07NlyK2iNyBNaEkb3En2jRt+a8y3xZQ==
+"@types/lodash@^4.17.20":
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.20.tgz#1ca77361d7363432d29f5e55950d9ec1e1c6ea93"
+  integrity sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==
 
 "@types/mdx@^2.0.0":
   version "2.0.13"
