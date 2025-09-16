@@ -2,7 +2,7 @@ name: Example content for DPL CMS
 type: module
 description: Provides example content for demo sites.
 package: DPL
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - default_content:default_content
 default_content:

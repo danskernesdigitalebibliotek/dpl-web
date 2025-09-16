@@ -2,7 +2,7 @@ name: 'VideoTool'
 type: module
 description: 'Integrate the VideoTool video platform into the Media module'
 package: Media
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
   - drupal:media

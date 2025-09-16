@@ -10,4 +10,4 @@ dependencies:
   - dpl_react_apps:dpl_react_apps
   - dpl_protected_nodes:dpl_protected_nodes
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

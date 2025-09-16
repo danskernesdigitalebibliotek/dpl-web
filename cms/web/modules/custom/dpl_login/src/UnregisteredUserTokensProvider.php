@@ -23,7 +23,7 @@ class UnregisteredUserTokensProvider extends AbstractUserTokensProvider implemen
    * {@inheritdoc}
    */
   protected function getAccessTokenType(): AccessTokenType {
-    return AccessTokenType::UNREGISTERED_USER;
+    return AccessTokenType::UnregisteredUser;
   }
 
 }

@@ -50,7 +50,7 @@ class AccessToken {
     $token = new static();
     $token->token = $access_token;
     $token->expire = $expire;
-    $token->type = AccessTokenType::UNKNOWN;
+    $token->type = AccessTokenType::Unknown;
 
     return $token;
   }

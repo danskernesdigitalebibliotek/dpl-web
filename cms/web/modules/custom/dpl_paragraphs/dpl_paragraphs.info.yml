@@ -2,4 +2,4 @@ name: 'DPL Paragraphs'
 type: module
 description: 'Tweaks to various DPL paragraphs'
 package: 'DPL'
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11

@@ -95,7 +95,6 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
         'type' => 'string_textfield',
         'weight' => 10,
       ]);
-    ;
 
     $fields['categories'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel('Categories')

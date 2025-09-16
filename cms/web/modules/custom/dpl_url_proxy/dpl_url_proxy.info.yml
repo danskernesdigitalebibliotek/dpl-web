@@ -2,4 +2,4 @@ name: 'DPL Url Proxy'
 type: module
 description: 'Module for generating specially formatted external urls'
 package: 'DPL'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

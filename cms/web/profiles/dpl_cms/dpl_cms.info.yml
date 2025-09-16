@@ -1,7 +1,7 @@
 name: DPL CMS
 type: profile
 description: 'Web platform for the Danish Public Libraries'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 
 distribution:
   name: DPL CMS

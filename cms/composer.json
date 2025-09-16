@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.36.0",
+                "version": "2025.38.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.36.0/dist-2025-36-0-a368aa2ef5360c6653afa6ad80eb1281ddaed8b4.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.38.0/dist-2025-38-0-816ebd2ac49922846559abd485a015c2dd12ab0c.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.36.0",
+                "version": "2025.38.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.36.0/dist-2025-36-0-b8f970ec82779a00ac3fd8d5da38c057c32c4bdb.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.38.0/dist-2025-38-0-46b50df7c5282c3b6cfa90dda9da461016896ed3.zip",
                     "type": "zip"
                 }
             }
@@ -83,7 +83,7 @@
         }
     ],
     "require": {
-        "php": "8.1.*",
+        "php": "8.3.*",
         "ext-dom": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.36.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.36.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.38.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.38.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -112,13 +112,14 @@
         "drupal/consumers": "^1.19",
         "drupal/content_lock": "^2.4",
         "drupal/cookieinformation": "^2.1",
-        "drupal/core-composer-scaffold": "10.4.8",
-        "drupal/core-recommended": "10.4.8",
+        "drupal/core": "^10",
+        "drupal/core-composer-scaffold": "^10",
+        "drupal/core-recommended": "^10",
         "drupal/date_range_formatter": "^4.0",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
         "drupal/dynamic_entity_reference": "^3.1",
-        "drupal/editor_advanced_link": "^2.2",
+        "drupal/editor_advanced_link": "^2",
         "drupal/entity_clone_template": "^2.0",
         "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
@@ -140,6 +141,10 @@
         "drupal/honeypot": "^2.2",
         "drupal/http_cache_control": "^2.5",
         "drupal/job_scheduler": "^4.0",
+        "drupal/jquery_ui": "^1.7",
+        "drupal/jquery_ui_datepicker": "^2.1",
+        "drupal/jquery_ui_slider": "^2.1",
+        "drupal/jquery_ui_touch_punch": "^1.1",
         "drupal/jsnlog": "^1.3",
         "drupal/jsonlog": "^4.0",
         "drupal/language_neutral_aliases": "^3.1",
@@ -172,7 +177,7 @@
         "drupal/select2_multicheck": "^1.0",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^3.0",
-        "drupal/simple_oauth": "^5.2",
+        "drupal/simple_oauth": "^6",
         "drupal/simple_sitemap": "^4.2",
         "drupal/state_log": "^2.2",
         "drupal/taxonomy_unique": "^2.5",
@@ -186,7 +191,7 @@
         "drupal/view_unpublished": "^1.1",
         "drupal/views_infinite_scroll": "^2.0",
         "drupal/webform": "^6.2",
-        "drush/drush": "^12",
+        "drush/drush": "^13",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
         "npm-asset/select2": "^4.0",
@@ -332,7 +337,7 @@
                 "3396393: Entity with a dynamic entity reference field can't be cloned using entity_clone": "https://www.drupal.org/files/issues/2023-10-24/3396393-2.patch"
             },
             "drupal/entity_clone": {
-                "2708731: Allow redirect to edit form after cloning": "https://www.drupal.org/files/issues/2022-11-15/improve-workflow-of-cloned-entity-2708731-39.patch"
+                "2708731: Allow redirect to edit form after cloning": "https://www.drupal.org/files/issues/2024-07-25/improve-workflow-of-cloned-entity-2708731-40_patch.patch"
             },
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch",
@@ -341,6 +346,9 @@
             },
             "drupal/entity_reference_revisions": {
                 "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
+            },
+            "drupal/facets": {
+                "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
             },
             "drupal/field_inheritance": {
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"

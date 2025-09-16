@@ -352,6 +352,19 @@ function dpl_update_deploy_fix_content_view(): string {
 }
 
 /**
+ * Update go_graphql_client role permissions for DDFSAL-332.
+ *
+ * Replace 'rewrite go urls' permission with 'use absolute cms urls'.
+ */
+function dpl_update_deploy_update_go_permissions_ddfsal_332(): string {
+  // Remove the old permission and add the new one.
+  _dpl_update_alter_permissions(['go_graphql_client'], ['rewrite go urls'], FALSE);
+  _dpl_update_alter_permissions(['go_graphql_client'], ['use absolute cms urls'], TRUE);
+
+  return 'Updated go_graphql_client role: removed "rewrite go urls", added "use absolute cms urls".';
+}
+
+/**
  * Find duplicate medias, and hide them in the media library.
  *
  * As part of a bug, all medias pulled from Delingstjenesten/BNF were duplicated

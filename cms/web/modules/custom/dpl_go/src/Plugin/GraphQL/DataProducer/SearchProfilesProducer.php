@@ -57,9 +57,9 @@ class SearchProfilesProducer extends DataProducerPluginBase implements Container
   public function resolve(FieldContext $field_context): array {
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
     return [
-      'default' => $this->generalSettings->getFbiProfile(FbiProfileType::DEFAULT) ?: NULL,
-      'local' => $this->generalSettings->getFbiProfile(FbiProfileType::LOCAL) ?: NULL,
-      'global' => $this->generalSettings->getFbiProfile(FbiProfileType::GLOBAL) ?: NULL,
+      'default' => $this->generalSettings->getFbiProfile(FbiProfileType::Default) ?: NULL,
+      'local' => $this->generalSettings->getFbiProfile(FbiProfileType::Local) ?: NULL,
+      'global' => $this->generalSettings->getFbiProfile(FbiProfileType::Global) ?: NULL,
     ];
   }
 

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-09-02 14:09+0200\n"
-"PO-Revision-Date: 2025-09-02 14:09+0200\n"
+"POT-Creation-Date: 2025-09-16 16:02+0200\n"
+"PO-Revision-Date: 2025-09-16 16:02+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1086,11 +1086,13 @@ msgid "Buy tickets"
 msgstr "Køb billet"
 
 msgid "All day"
-msgstr ""
+msgstr "Hele dagen"
 
 msgctxt "dpl_event"
 msgid "Any specific times below will be ignored when \"All day\" is enabled"
 msgstr ""
+"Når \"Hele dagen\" er slået til, vil specifikke tidspunkter nedenfor blive "
+"ignoreret."
 
 msgctxt "DPL related content"
 msgid "Related content"
@@ -1926,7 +1928,7 @@ msgstr "F.eks. \"Børn\" eller \"Voksen\""
 
 msgctxt "advanced search"
 msgid "Date for first accession date"
-msgstr "Filtrering på opr. indkøbsdato (firstaccessiondateitem)"
+msgstr "Filtrering på opr. indkøbsdato"
 
 msgctxt "advanced search"
 msgid "Choose operator"
@@ -3793,7 +3795,7 @@ msgstr "Søgeheader input"
 
 msgctxt "Global"
 msgid "Input must contain at least one non-whitespace character."
-msgstr "Input skal indeholde minimum tre tegn"
+msgstr "Input skal indeholde minimum ét tegn"
 
 msgctxt "Global"
 msgid "Shift"
@@ -6536,8 +6538,17 @@ msgstr "Administrer brugere efter rolleindstillinger"
 msgid "Manage Administer Users by Role settings."
 msgstr "Administrer indstillinger for brugeradministration efter rolle."
 
-msgid "Links"
-msgstr "Links"
+msgid "BEF: library noUiSlider"
+msgstr ""
+
+msgid "Better exposed filters library noUiSlider is installed locally."
+msgstr ""
+
+msgid ""
+"Better exposed filters library noUiSlider is not installed locally and will "
+"be loaded from CDN. Loading external files from a CDN may be a data "
+"protection violation."
+msgstr ""
 
 msgid "Test module for Better Exposed Filters"
 msgstr "Testmodul for Better Exposed Filters"
@@ -6582,6 +6593,14 @@ msgstr "Forsinkelse på autosubmit for tekstfelt"
 msgid "Configure a delay in ms before triggering autosubmit on textfields."
 msgstr ""
 "Konfigurer en forsinkelse i ms før udløsning af autosubmit på tekstfelter."
+
+msgid "Textfield autosubmit minimum length"
+msgstr ""
+
+msgid ""
+"Configure a minimum textfield length before triggering autosubmit on "
+"textfields."
+msgstr ""
 
 msgid "Hide submit button"
 msgstr "Skjul submit-knap"
@@ -6767,6 +6786,13 @@ msgid ""
 msgstr ""
 "Change behavior of \"Rewrite the text displayed\" to overwrite labels based "
 "on option key. eg. All|New label"
+
+msgid "Hide the label"
+msgstr ""
+
+msgid ""
+"Hides the label visually, so it is still usable for accessibility purposes."
+msgstr ""
 
 msgid "Make filter options collapsible"
 msgstr "Gør filterindstillinger sammenklappelige"
@@ -7048,6 +7074,9 @@ msgstr ""
 
 msgid "Single On/Off Checkbox"
 msgstr "Enkelt Tænd/Sluk afkrydsningsfelt"
+
+msgid "Links"
+msgstr "Links"
 
 msgid "Date Picker"
 msgstr "Datovælger"
@@ -8080,23 +8109,8 @@ msgstr "Klon alle <em>@label</em> medieenheder"
 msgid "Allow for bundle-level permissions for Node (and Media) entity types"
 msgstr "Tillad for bundt-niveau tilladelser for node (og media) enhedstyper"
 
-msgid "Add format"
-msgstr "Tilføj format"
-
 msgid "Clone"
 msgstr "Klon"
-
-msgid "Create new style"
-msgstr "Opret nyt format"
-
-msgid "Save"
-msgstr "Gem"
-
-msgid "Save configuration"
-msgstr "Gem indstillinger"
-
-msgid "Add language"
-msgstr "Tilføj sprog"
 
 msgid "Entities referenced by field <em>@label (@field_id)</em>."
 msgstr "Enheder refereret af feltet <em>@label (@field_id)</em>."
@@ -8191,11 +8205,17 @@ msgstr "Udeluk klonet"
 msgid "Exclude \" - Cloned\" from title of cloned entity."
 msgstr "Udeluk \"- Klonet\" fra titlen på klonet enhed"
 
+msgid "Moderation state for cloned @entity_type"
+msgstr ""
+
+msgid "What state the cloned entity should start as."
+msgstr ""
+
 msgid "Save cloned @entity_type as published"
 msgstr "Publicer klonet indhold "
 
-msgid "If the cloned entity should be save as a published entity."
-msgstr "Hvis det klonede indhold skal gemmes som publiceret."
+msgid "If the cloned entity should be saved as a published entity."
+msgstr ""
 
 msgid "Save cloned @language translation as a new entity"
 msgstr "Gem klonet @language oversættelse som en ny enhed"
@@ -8216,6 +8236,19 @@ msgstr "Hvis den klonede enhed skal gemmes med alle oversættelser."
 msgid "Available translations"
 msgstr "Tilgængelige oversættelser"
 
+msgid "@translated_language (Original language)"
+msgstr ""
+
+msgid "@translated_language"
+msgstr ""
+
+msgid "Save cloned comments"
+msgstr ""
+
+msgid ""
+"If the original entity has comments, it should also be possible to clone it."
+msgstr ""
+
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -8232,9 +8265,9 @@ msgid ""
 "being\n"
 "        cloned), please set your cloning preferences. This will affect the "
 "clone form presented to users when they\n"
-"        clone entities. Default behaviour for whether or not the child "
+"        clone entities. Default behavior for whether or not the child "
 "entities should be cloned is specified in\n"
-"        the left-most column.  To prevent users from altering behaviour for "
+"        the left-most column.  To prevent users from altering behavior for "
 "each type when they're actually cloning\n"
 "        (but still allowing them to see what will happen), use the middle "
 "column. The right-most column can be used\n"
@@ -8243,20 +8276,6 @@ msgid ""
 "        (in the left-most column). See the clone form (by cloning an entity) "
 "for more information."
 msgstr ""
-"For each type of child entity (the entity that's referenced by the entity "
-"being\n"
-"        cloned), please set your cloning preferences. This will affect the "
-"clone form presented to users when they\n"
-"        clone entities. Default behaviour for whether or not the child "
-"entities should be cloned is specified in\n"
-"        the left-most column.  To prevent users from altering behaviour for "
-"each type when they're actually cloning\n"
-"        (but still allowing them to see what will happen), use the middle "
-"column. The right-most column can be used\n"
-"        to hide the form options from users completely. This will run the "
-"clone operation with the defaults set here\n"
-"        (in the left-most column). See the clone form (by cloning an entity) "
-"for more information."
 
 msgid "Checkboxes default value"
 msgstr "Standardværdi for afkrydsningsfelter"
@@ -9957,6 +9976,9 @@ msgstr "Ingen matchere tilføjet."
 
 msgid "Weight for @title"
 msgstr "Vægt af @title"
+
+msgid "Save"
+msgstr "Gem"
 
 msgid "No matchers available."
 msgstr "Ingen matchere tilgængelige."
@@ -19051,6 +19073,9 @@ msgstr "@purger bruger http:// men dens port er 443!"
 msgid "All purgers configured."
 msgstr "Alle konfigurerede rensere."
 
+msgid "Save configuration"
+msgstr "Gem indstillinger"
+
 msgid "A label that describes this purger."
 msgstr "Et mærkat, der beskriver denne purger."
 
@@ -22895,6 +22920,14 @@ msgctxt "search_api.server.db_search:name"
 msgid "DB Search"
 msgstr "DB Søgning"
 
+msgctxt "simple_oauth.oauth2_scope.bnf_graphql_client:description"
+msgid "BNF GraphQL Client"
+msgstr "BNF GraphQL Client"
+
+msgctxt "simple_oauth.oauth2_scope.go_graphql_client:description"
+msgid "GO GraphQL Client"
+msgstr "GO GraphQL Client"
+
 msgctxt "simple_oauth.oauth2_token.bundle.access_token:label"
 msgid "Access Token"
 msgstr "Access token"
@@ -23057,6 +23090,10 @@ msgctxt "system.action.user_add_role_action.bnf_pilot:label"
 msgid "Add the BNF Pilot role to the selected user(s)"
 msgstr ""
 
+msgctxt "system.action.user_add_role_action.external_graphql_client:label"
+msgid "Add the External GraphQL Client role to the selected user(s)"
+msgstr ""
+
 msgctxt "system.action.user_add_role_action.external_system:label"
 msgid "Add the External system role to the selected user(s)"
 msgstr ""
@@ -23079,6 +23116,10 @@ msgstr "Remove the BNF GraphQL Client role from the selected user(s)"
 
 msgctxt "system.action.user_remove_role_action.bnf_pilot:label"
 msgid "Remove the BNF Pilot role from the selected user(s)"
+msgstr ""
+
+msgctxt "system.action.user_remove_role_action.external_graphql_client:label"
+msgid "Remove the External GraphQL Client role from the selected user(s)"
 msgstr ""
 
 msgctxt "system.action.user_remove_role_action.external_system:label"
@@ -23417,6 +23458,10 @@ msgstr ""
 
 msgctxt "user.role.editor:label"
 msgid "Editor"
+msgstr ""
+
+msgctxt "user.role.external_graphql_client:label"
+msgid "External GraphQL Client"
 msgstr ""
 
 msgctxt "user.role.external_system:label"
@@ -25056,6 +25101,10 @@ msgstr ""
 
 msgctxt "views.view.importable_content:display:default:display_options:exposed_form:options:bef:general:secondary_label"
 msgid "Advanced options"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:exposed_form:options:bef:filter:field_categories_target_id_1:advanced:placeholder_text"
+msgid "test"
 msgstr ""
 
 msgctxt "views.view.importable_content:display:default:display_options:arguments:type:exception:title"

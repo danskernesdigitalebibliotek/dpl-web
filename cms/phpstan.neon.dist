@@ -88,3 +88,6 @@ parameters:
     - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
     # Drupal\dpl_webmaster\Form\InstallOrUpdateModule uses this.
     - web/core/modules/update/update.authorize.inc
+
+  scanDirectories:
+    - vendor/drush/drush/src-symfony-compatibility

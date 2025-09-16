@@ -8,4 +8,4 @@ dependencies:
   - dpl_react:dpl_react
   - dpl_react_apps:dpl_react_apps
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

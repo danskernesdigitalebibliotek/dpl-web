@@ -71,7 +71,7 @@ services:
     build:
       context: .
       dockerfile: lagoon/cli.dockerfile
-    image: &cli-image uselagoon/php-8.1-cli-drupal:latest # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
+    image: &cli-image uselagoon/php-8.3-cli-drupal:latest # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:

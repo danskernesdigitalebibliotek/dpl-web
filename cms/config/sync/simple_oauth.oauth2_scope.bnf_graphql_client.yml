@@ -1,0 +1,18 @@
+uuid: 169e9049-8ec2-452f-8ede-2ef290e00986
+langcode: da
+status: true
+dependencies: {  }
+id: bnf_graphql_client
+name: bnf_graphql_client
+description: 'BNF GraphQL Client'
+grant_types:
+  authorization_code:
+    status: true
+  client_credentials:
+    status: true
+  refresh_token:
+    status: true
+umbrella: false
+parent: null
+granularity_id: null
+granularity_configuration: {  }

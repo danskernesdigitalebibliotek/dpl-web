@@ -297,7 +297,8 @@ class MatchResource extends ResourceBase {
       $matched_campaign_rules_count = 0;
       foreach ($campaign_rules as $campaign_rule) {
         $campaign_facet = $campaign_rule->get('field_campaign_rule_facet')->first()?->getString();
-        if (in_array($campaign_rule->facetName, $processed_facets)) {
+
+        if (in_array($campaign_facet, $processed_facets)) {
           continue;
         }
 

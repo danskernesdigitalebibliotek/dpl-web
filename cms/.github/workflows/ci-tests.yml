@@ -2,7 +2,7 @@
 on: pull_request
 name: CI Tests
 env:
-  PHP_VERSION: 8.1
+  PHP_VERSION: 8.3
   COMPOSER_VERSION: v2
 
 # Detect if this action is already running, and cancel it.
@@ -195,7 +195,7 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           cache: 'yarn'
       - name: Install dependencies
@@ -236,7 +236,7 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           cache: 'yarn'
       - name: Install dependencies
@@ -254,7 +254,7 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           cache: 'yarn'
       - name: Install dependencies

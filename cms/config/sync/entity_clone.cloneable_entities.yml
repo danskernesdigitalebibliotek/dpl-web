@@ -10,3 +10,4 @@ cloneable_entities:
   - key
   - key_config_override
   - bnf_subscription
+  - oauth2_scope

@@ -2,7 +2,7 @@ name: Example content for BNF
 type: module
 description: Provides example content for Delingstjenesten
 package: DPL
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - default_content:default_content
   - drupal_typed:drupal_typed

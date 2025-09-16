@@ -8,6 +8,6 @@ namespace Drupal\dpl_login;
  * Used to distinguish between different identifiers.
  */
 enum AuthorizationIdType: string {
-  case CPR = 'cpr';
-  case UNIQUE_ID = 'unique_id';
+  case Cpr = 'cpr';
+  case UniqueId = 'unique_id';
 }

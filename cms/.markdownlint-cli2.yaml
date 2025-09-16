@@ -13,3 +13,5 @@ ignores:
   - 'packages/cms-api'
   - 'dev-scripts/dpl-react'
   - './.github/**/*'
+  - '.cache'
+  - '.history'
