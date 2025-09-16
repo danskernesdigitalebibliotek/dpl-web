@@ -38,7 +38,7 @@ class OpeningHoursEditorController extends ControllerBase {
         'opening-hours-branch-id-config' => $node->id(),
         'opening-hours-editor-categories-config' => $this->buildOpeningHoursCategoriesArray($openingHoursCategories),
         'opening-hours-confirm-add-repeated-text' => $this->t('Do you want to add this repeated opening hour?', [], ['context' => 'DPL Opening Hours Editor']),
-        'opening-hours-edit-event-confirm-option-all-text' => $this->t('This and feuture instances', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-edit-event-confirm-option-all-text' => $this->t('This and future instances', [], ['context' => 'DPL Opening Hours Editor']),
         'opening-hours-edit-event-confirm-option-this-text' => $this->t('Only this instance', [], ['context' => 'DPL Opening Hours Editor']),
         'opening-hours-edit-event-title-text'  => $this->t('Edit opening hour', [], ['context' => 'DPL Opening Hours Editor']),
         'opening-hours-event-form-category-text' => $this->t('Opening hour', [], ['context' => 'DPL Opening Hours Editor']),
@@ -50,6 +50,7 @@ class OpeningHoursEditorController extends ControllerBase {
         'opening-hours-event-form-start-time-text' => $this->t('Start time', [], ['context' => 'DPL Opening Hours Editor']),
         'opening-hours-remove-event-title-text' => $this->t('Remove opening hour', [], ['context' => 'DPL Opening Hours Editor']),
         'opening-hours-repeated-icon-alt-text'  => $this->t('Repeated opening hour', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-loading-text' => $this->t('Loading..', [], ['context' => 'DPL Opening Hours Editor']),
 
         // Buttons:
         'opening-hours-confirm-add-repeated-cancel-text' => $this->t('Cancel', [], ['context' => 'DPL Opening Hours Editor']),
