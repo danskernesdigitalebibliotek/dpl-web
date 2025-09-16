@@ -10,9 +10,11 @@ import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
+import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 import { modalStore } from "@/store/modal.store"
@@ -43,7 +45,7 @@ const LoanMaterialModal = ({
       {
         onSuccess: () => {
           // Refetch data to update the UI for WorkPageButtons
-          queryClient.invalidateQueries({ queryKey: ["/v1/user/loans"] })
+          queryClient.invalidateQueries({ queryKey: getGetV1UserLoansAdapterQueryKey() })
           setIsHandlingLoan(false)
           closeModal()
         },
@@ -91,6 +93,7 @@ const LoanMaterialModal = ({
           <Button
             theme={"primary"}
             size={"lg"}
+            data-cy={cyKeys["approve-loan-button"]}
             onClick={handleLoanMaterial}
             disabled={isHandlingLoan}>
             {!isHandlingLoan && "Ja"}

@@ -294,3 +294,12 @@ export const redirectToFrontPageAndReloadSession = async () => {
 
   return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
 }
+
+export const sessionHasPKCECodeVerifier = (session: IronSession<TSessionData>) => {
+  return !!session.code_verifier
+}
+
+export const removePCKECodeVerifierFromSession = async (session: IronSession<TSessionData>) => {
+  delete session.code_verifier
+  await session.save()
+}

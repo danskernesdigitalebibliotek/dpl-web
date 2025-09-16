@@ -9,17 +9,11 @@ export const loanFactory = Factory.define<Loan>(({ sequence }) => {
 
   return {
     orderId: "eb740fd3-e06d-4e96-9105-f89c3a38bad8",
-    orderNumber: "88fcadd6-2d89-48e9-9b34-88bf93ba6f4c",
     orderDateUtc: formatISO(orderDate),
     loanExpireDateUtc: formatISO(expireDate),
-    isSubscriptionLoan: true,
     libraryBook: {
       identifier: "8788711917141",
-      identifierType: 3,
-      title: "Kender du J.K. Rowling?",
-      publishersName: "Lindhardt og Ringhof",
     },
-    fileExtensionType: 3,
   }
 })
 
@@ -27,9 +21,11 @@ export default Factory.define<LoanListResult>(({ transientParams }) => {
   const { identifiers } = transientParams
 
   // for each identifier, create a loan and add it to the loans array
-  const loans = identifiers.map((identifier: string) => {
-    return loanFactory.build({ libraryBook: { identifier } })
-  })
+  const loans = identifiers
+    ? identifiers.map((identifier: string) => {
+        return loanFactory.build({ libraryBook: { identifier } })
+      })
+    : []
 
   return {
     loans: loans,

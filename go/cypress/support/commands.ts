@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Cover } from "@/lib/rest/cover-service-api/generated/model"
+import { TSessionType } from "@/lib/types/session"
 
 import { CyKey, ViewportType, viewports } from "./constants"
 import { Operations, hasOperationName } from "./utils"
@@ -13,17 +13,6 @@ type InterceptGraphqlParams = {
    * The fishery data to use for response
    */
   data?: object
-  /**
-   * The status code to return (defaults to 200)
-   */
-  statusCode?: number
-}
-
-type InterceptCoversParams = {
-  /**
-   * The fishery data to use for response
-   */
-  covers: Cover
   /**
    * The status code to return (defaults to 200)
    */
@@ -78,13 +67,6 @@ declare global {
       interceptGraphql(params: InterceptGraphqlParams): void
 
       /**
-       * Intercepts cover request that returns fishery data
-       * @param params - The parameters for intercepting the cover request
-       * @example cy.interceptCovers({ covers: coverService.build() })
-       */
-      interceptCovers(params: InterceptCoversParams): void
-
-      /**
        * Mocks a server-side GraphQL query using MSW
        * @param params - The parameters for mocking the GraphQL query
        * @example cy.mockServerGraphQLQuery({ operationName: "GetUser", data: { user: { id: 1, name: "Test User" } } })
@@ -117,6 +99,19 @@ declare global {
        * @example cy.resetServerMocks()
        */
       resetServerMocks(): void
+
+      /**
+       * Creates a new GO session of the specified type.
+       * This custom Cypress command initializes a session for testing purposes,
+       * allowing you to simulate different user session types within your tests.
+       *
+       * @param params - An object containing the session details.
+       * @param params.type - The type of session to create (e.g., "unilogin", "adgangsplatformen", etc.).
+       * @returns A Cypress Chainable that resolves when the session has been created.
+       * @example
+       * cy.createGoSession({ type: "unilogin" })
+       */
+      createGoSession({ type }: { type: TSessionType }): Chainable<void>
 
       /**
        * Checks if the current viewport is mobile
@@ -160,16 +155,6 @@ Cypress.Commands.add(
     }).as(`${operationName} GraphQL operation`)
   }
 )
-
-Cypress.Commands.add("interceptCovers", ({ covers, statusCode = 200 }: InterceptCoversParams) => {
-  cy.intercept("GET", "**/covers**", req => {
-    if (covers) {
-      req.reply({ body: [covers], statusCode })
-    } else {
-      req.reply({ statusCode })
-    }
-  }).as(`Cover Service`)
-})
 
 /**
  * Server-side GraphQL query mocking with MSW
@@ -215,4 +200,10 @@ Cypress.Commands.add("isViewport", (viewport: ViewportType) => {
 
 Cypress.Commands.add("setViewport", (viewport: ViewportType) => {
   cy.viewport(viewports[viewport].width, viewports[viewport].height)
+})
+
+Cypress.Commands.add("createGoSession", ({ type }: { type: TSessionType }) => {
+  cy.task("getMockedGoSessionCookieValue", { type }).then(encodedSession => {
+    cy.setCookie("go-session", encodedSession as string)
+  })
 })

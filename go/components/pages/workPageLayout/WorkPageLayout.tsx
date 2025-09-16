@@ -45,7 +45,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     return filterManifestationsByEdition(
       filterManifestationsByMaterialType(filterMaterialTypes(allManifestations))
     )
-  }, [allManifestations])
+  }, [allManifestations]) as ManifestationWorkPageFragment[]
 
   useEffect(() => {
     // Get the material type from the search params
@@ -57,7 +57,6 @@ function WorkPageLayout({ workId }: { workId: string }) {
         bestRepresentation,
         manifestations
       )
-
       if (manifestation) {
         const url = resolveUrl({
           routeParams: { work: "work", wid: work.workId },
@@ -69,10 +68,10 @@ function WorkPageLayout({ workId }: { workId: string }) {
 
     // Filter out manifestations that don't match the search params material type
     const selectedManifestation = manifestations.find(manifestation => {
-      return !!manifestation.materialTypes.find(
+      return !!manifestation?.materialTypes.find(
         materialType => materialType.materialTypeGeneral.code === searchParamsMaterialType
       )
-    })
+    }) as ManifestationWorkPageFragment
 
     setSelectedManifestation(selectedManifestation)
   }, [searchParams, manifestations])

@@ -70,6 +70,8 @@ vi.mock("@/lib/session/session", async importOriginal => {
     getDplCmsSessionCookie: vi.fn(),
     getSession: vi.fn(),
     saveAdgangsplatformenSession: vi.fn(),
+    removePCKECodeVerifierFromSession: vi.fn(),
+    sessionHasPKCECodeVerifier: vi.fn(),
   }
 })
 
@@ -154,14 +156,6 @@ describe("Middleware", () => {
         expire: { timestamp: 999999999 },
       })
     )
-
-    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
-      Promise.resolve({
-        getAll: vi.fn(() => []),
-        get: vi.fn(() => undefined),
-      })
-    )
-
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValueOnce(
       Promise.resolve(sessions.anonymousSession)
     )
@@ -390,5 +384,63 @@ describe("Middleware", () => {
     await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  it("removes PKCE code verifier from session if it exists", async () => {
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => []),
+      })
+    )
+
+    // Create a session with a code_verifier
+    const sessionWithCodeVerifier = {
+      ...sessions.anonymousSession,
+      code_verifier: "test-pkce-code-verifier",
+      save: vi.fn(),
+    }
+
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessionWithCodeVerifier)
+    )
+
+    const removePCKECodeVerifierSpy = vi.spyOn(
+      sessionFunctions,
+      "removePCKECodeVerifierFromSession"
+    )
+
+    await middleware(getNextRequestWithLibraryTokenCookie())
+
+    // Verify that the function was called with the session
+    expect(removePCKECodeVerifierSpy).toHaveBeenCalledTimes(1)
+    expect(removePCKECodeVerifierSpy).toHaveBeenCalledWith(sessionWithCodeVerifier)
+  })
+
+  it("does not attempt to remove PKCE code verifier if it doesn't exist in session", async () => {
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => []),
+      })
+    )
+
+    // Create a session without a code_verifier
+    const sessionWithoutCodeVerifier = {
+      ...sessions.anonymousSession,
+      save: vi.fn(),
+    }
+
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessionWithoutCodeVerifier)
+    )
+
+    const removePCKECodeVerifierSpy = vi.spyOn(
+      sessionFunctions,
+      "removePCKECodeVerifierFromSession"
+    )
+
+    await middleware(getNextRequestWithLibraryTokenCookie())
+
+    // Verify that the removal function was NOT called since there's no code_verifier
+    expect(removePCKECodeVerifierSpy).toHaveBeenCalledTimes(0)
   })
 })

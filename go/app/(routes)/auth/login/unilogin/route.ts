@@ -9,6 +9,10 @@ export async function GET() {
   const config = await getUniloginClientConfig()
   const appUrl = getEnv("APP_URL")
 
+  if (session.isLoggedIn) {
+    return Response.redirect(`${appUrl}/user/profile`)
+  }
+
   if (!config) {
     return Response.redirect(String(appUrl))
   }
@@ -26,8 +30,10 @@ export async function GET() {
     scope: "openid",
     code_challenge,
     code_challenge_method,
+    prompt: "login",
   })
 
+  console.info("unilogin authorization flow started", session)
   return Response.redirect(redirectTo)
 }
 
