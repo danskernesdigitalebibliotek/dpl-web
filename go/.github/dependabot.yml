@@ -97,6 +97,8 @@ updates:
         versions: [">=19.0.0"]
       - dependency-name: "@types/react-dom"
         versions: [">=19.0.0"]
+      - dependency-name: "prettier-plugin-classnames"
+        versions: [">=0.7.3"]
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
