@@ -2,4 +2,4 @@ name: 'DrupalTyped'
 type: module
 description: 'Better, faster, stronger types'
 package: Development
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11

@@ -89,12 +89,12 @@ class OpenIdUserInfoService {
 
     if ($unique_id) {
       $id = $unique_id;
-      $type = AuthorizationIdType::UNIQUE_ID;
+      $type = AuthorizationIdType::UniqueId;
     }
 
     if ($cpr) {
       $id = $cpr;
-      $type = AuthorizationIdType::CPR;
+      $type = AuthorizationIdType::Cpr;
     }
 
     return ['id' => $id, 'type' => $type];

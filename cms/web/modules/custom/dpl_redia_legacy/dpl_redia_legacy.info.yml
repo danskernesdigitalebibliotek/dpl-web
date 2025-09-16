@@ -2,7 +2,7 @@ name: 'DPL Redia Legacy feeds'
 type: module
 description: 'Various legacy integrations, used for the Redia App.'
 package: DPL
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
   - dpl_opening_hours:dpl_opening_hours

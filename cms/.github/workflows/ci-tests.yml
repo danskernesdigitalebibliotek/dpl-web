@@ -2,7 +2,7 @@
 on: pull_request
 name: CI Tests
 env:
-  PHP_VERSION: 8.1
+  PHP_VERSION: 8.3
   COMPOSER_VERSION: v2
 
 # Detect if this action is already running, and cancel it.

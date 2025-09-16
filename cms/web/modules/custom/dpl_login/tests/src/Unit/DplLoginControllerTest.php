@@ -64,10 +64,10 @@ class DplLoginControllerTest extends UnitTestCase {
       ],
     ]);
     $fake_registered_user_token = clone $fake_access_token;
-    $fake_registered_user_token->type = AccessTokenType::USER;
+    $fake_registered_user_token->type = AccessTokenType::User;
 
     $fake_unregistered_user_token = clone $fake_access_token;
-    $fake_unregistered_user_token->type = AccessTokenType::UNREGISTERED_USER;
+    $fake_unregistered_user_token->type = AccessTokenType::UnregisteredUser;
 
     $user_token_provider = $this->prophesize(RegisteredUserTokensProvider::class);
     $user_token_provider->getAccessToken()->willReturn($fake_registered_user_token);

@@ -2,7 +2,7 @@ name: Novel
 type: theme
 base theme: stable9
 description: 'Custom theme for the Danish Public Libraries'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 
 # We want to add dpl_react as a module dependency
 # but we get an error upon theme install.

@@ -188,7 +188,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
           ],
         ],
         'e2057a73dd0aa38c7fa4450a9a0561494cd4baa4a1b769d6f04deb3e3677379e',
-        AuthorizationIdType::CPR,
+        AuthorizationIdType::Cpr,
       ],
       'uniqueId is getting hashed when cpr is missing' => [
         [
@@ -197,7 +197,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
           ],
         ],
         '70abf093ee19f055b16d35e494e3cc1c6a0f4bae36c6b07ae9ed0d7867bf1909',
-        AuthorizationIdType::UNIQUE_ID,
+        AuthorizationIdType::UniqueId,
       ],
     ];
   }

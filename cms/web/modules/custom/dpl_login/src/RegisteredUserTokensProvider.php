@@ -23,7 +23,7 @@ class RegisteredUserTokensProvider extends AbstractUserTokensProvider implements
    * {@inheritdoc}
    */
   protected function getAccessTokenType(): AccessTokenType {
-    return AccessTokenType::USER;
+    return AccessTokenType::User;
   }
 
 }

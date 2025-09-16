@@ -336,7 +336,7 @@ function dpl_react_apps_texts(): array {
     'three-months' => t('3 months', [], ['context' => 'Global']),
     'two-months' => t('2 months', [], ['context' => 'Global']),
   ];
-};
+}
 
 /**
  * Implements hook_dpl_react_apps_data().

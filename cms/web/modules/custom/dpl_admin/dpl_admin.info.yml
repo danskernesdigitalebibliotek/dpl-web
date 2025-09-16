@@ -2,7 +2,7 @@ name: 'Admin'
 type: module
 description: 'Functionality related to the admin/editor experience'
 package: 'DPL'
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
   - drupal_typed:drupal_typed

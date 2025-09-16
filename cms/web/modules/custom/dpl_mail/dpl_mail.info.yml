@@ -3,7 +3,7 @@ description: 'Handles mail related features and configuration'
 package: DPL
 
 type: module
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
   - azure_mailer:azure_mailer

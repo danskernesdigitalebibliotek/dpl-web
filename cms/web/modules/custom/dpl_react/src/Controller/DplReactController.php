@@ -73,10 +73,10 @@ class DplReactController extends ControllerBase {
     }
 
     if ($access_token = $this->userTokens->getCurrent()) {
-      if ($access_token->type === AccessTokenType::UNREGISTERED_USER) {
+      if ($access_token->type === AccessTokenType::UnregisteredUser) {
         $this->setAccessTokenContentLine('unregistered-user', $access_token, $content_lines);
       }
-      elseif ($access_token->type === AccessTokenType::USER) {
+      elseif ($access_token->type === AccessTokenType::User) {
         $this->setAccessTokenContentLine('user', $access_token, $content_lines);
       }
     }

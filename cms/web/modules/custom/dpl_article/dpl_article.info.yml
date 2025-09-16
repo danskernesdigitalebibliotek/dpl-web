@@ -2,4 +2,4 @@ name: 'Article'
 type: module
 description: 'Functionality related to creating article content.'
 package: 'DPL'
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11

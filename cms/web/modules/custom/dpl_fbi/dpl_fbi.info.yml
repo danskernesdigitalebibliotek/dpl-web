@@ -2,4 +2,4 @@ name: FBI integration
 type: module
 description: Integration with with FBI API, https://fbi-api.dbc.dk/.
 package: DPL
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11

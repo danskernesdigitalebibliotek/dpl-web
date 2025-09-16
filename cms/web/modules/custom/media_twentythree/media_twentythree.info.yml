@@ -2,7 +2,7 @@ name: 'TwentyThree'
 type: module
 description: 'Integrate the TwentyThree video platform into the Media module with oEmbed support'
 package: Media
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
   - drupal:media

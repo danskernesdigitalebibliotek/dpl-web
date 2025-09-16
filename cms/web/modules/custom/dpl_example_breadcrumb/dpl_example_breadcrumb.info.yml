@@ -2,7 +2,7 @@ name: Example content for DPL Breadcrumb
 type: module
 description: 'This module was used for breadcrumb content, it is now deprecated.'
 package: DPL
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - default_content:default_content
   - dpl_breadcrumb:dpl_breadcrumb

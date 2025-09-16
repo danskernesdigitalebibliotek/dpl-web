@@ -2,7 +2,7 @@ name: 'DPL static content: Views aliases'
 type: module
 description: Adds path aliases to core views pages
 package: DPL
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - default_content:default_content
 

@@ -261,7 +261,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['fbi_profiles']['fbi_profile_default'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default profile', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::DEFAULT),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::Default),
       '#description' => $this->t('The default profile to use when using the FBI API.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
       '#required' => TRUE,
@@ -270,7 +270,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['fbi_profiles']['fbi_profile_local'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search profile', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::LOCAL),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::Local),
       '#description' => $this->t('The profile to use when searching for materials.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
       '#required' => TRUE,
@@ -279,7 +279,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['fbi_profiles']['fbi_profile_global'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Material profile', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::GLOBAL),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::Global),
       '#description' => $this->t('The profile to use when requesting data about a material.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
       '#required' => TRUE,

@@ -8,7 +8,7 @@ namespace Drupal\dpl_login;
  * Used to distinguish between registered and unregistered users.
  */
 enum AccessTokenType: string {
-  case USER = 'user';
-  case UNREGISTERED_USER = 'unregistered_user';
-  case UNKNOWN = 'unknown';
+  case User = 'user';
+  case UnregisteredUser = 'unregistered_user';
+  case Unknown = 'unknown';
 }
