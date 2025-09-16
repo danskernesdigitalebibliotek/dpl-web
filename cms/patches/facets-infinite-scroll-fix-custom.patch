@@ -1,0 +1,19 @@
+diff --git a/src/Plugin/facets/url_processor/QueryString.php b/src/Plugin/facets/url_processor/QueryString.php
+index 64c6cad..9d6335f 100644
+--- a/src/Plugin/facets/url_processor/QueryString.php
++++ b/src/Plugin/facets/url_processor/QueryString.php
+@@ -315,6 +315,14 @@ class QueryString extends UrlProcessorPluginBase {
+   protected function initializeActiveFilters() {
+     if ($this->request->isXmlHttpRequest()) {
+       $url_parameters = $this->request->request;
++      // For AJAX requests from views_infinite_scroll, we need to preserve
++      // both query parameters and request data to maintain filter state
++      $query_params = $this->request->query->all();
++      foreach ($query_params as $key => $value) {
++        if (!$url_parameters->has($key)) {
++          $url_parameters->set($key, $value);
++        }
++      }
+     }
+     else {
+       $url_parameters = $this->request->query;
