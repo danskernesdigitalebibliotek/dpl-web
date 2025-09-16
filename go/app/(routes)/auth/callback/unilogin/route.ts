@@ -63,6 +63,10 @@ export async function GET(request: NextRequest) {
     session,
   }
 
+  if (session.isLoggedIn) {
+    return NextResponse.redirect(`${appUrl}/user/profile`)
+  }
+
   // TODO: remove "!sessionOptions" as it can never be false
   if (!config || !sessionOptions) {
     return NextResponse.redirect(appUrl)
