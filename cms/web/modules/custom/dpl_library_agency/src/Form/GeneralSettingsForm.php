@@ -184,6 +184,36 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
     ];
 
+    $form['search'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Search', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['search']['search_infobox'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Search Info Box', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['search']['search_infobox']['search_infobox_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Title', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('search_infobox_title') ?? GeneralSettings::SEARCH_INFOBOX_TITLE,
+      '#description' => $this->t('The title of the search info box.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $form['search']['search_infobox']['search_infobox_content'] = [
+      '#type' => 'text_format',
+      '#title' => $this->t('Content', [], ['context' => 'Library Agency Configuration']),
+      '#format' => 'limited',
+      '#allowed_formats' => ['limited'],
+      '#default_value' => $config->get('search_infobox_content.value') ?? json_decode(GeneralSettings::SEARCH_INFOBOX_CONTENT, true)['value'],
+      '#description' => $this->t('The content of the search info box.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
     $form['find_on_shelf'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Find on shelf', [], ['context' => 'Library Agency Configuration']),
@@ -339,6 +369,8 @@ class GeneralSettingsForm extends ConfigFormBase {
         'local' => $form_state->getValue('fbi_profile_local'),
         'global' => $form_state->getValue('fbi_profile_global'),
       ])
+      ->set('search_infobox_title', $form_state->getValue('search_infobox_title'))
+      ->set('search_infobox_content', $form_state->getValue('search_infobox_content'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));

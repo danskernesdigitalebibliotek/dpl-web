@@ -23,6 +23,8 @@ class GeneralSettings extends DplReactConfigBase {
   const FBI_PROFILE = 'next';
   const OPENING_HOURS_URL = '/branches';
   const FIND_ON_SHELF_DISCLOSURES_DEFAULT_OPEN = FALSE;
+  const SEARCH_INFOBOX_TITLE = '';
+  const SEARCH_INFOBOX_CONTENT = '{"value":"","format":"limited"}';
 
   /**
    * Gets the configuration key for general settings.
