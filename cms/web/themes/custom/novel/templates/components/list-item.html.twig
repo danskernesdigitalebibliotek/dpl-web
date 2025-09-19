@@ -2,9 +2,19 @@
   set classes = [
   'content-list-item',
   'arrow__hover--right-small',
+  status ? 'content-list-item--status-parent',
 ]
 %}
 <a {{ attributes.addClass(classes).setAttribute('href', url) }}>
+  {% if status %}
+    <span class="tag tag--fill tag--small status
+      {%- if status_value == 'TicketSaleNotOpen' %} status--not-for-sale{% endif -%}
+      {%- if status_value == 'SoldOut' %} status--sold-out{% endif -%}
+      {%- if status_value == 'Cancelled' %} status--cancelled{% endif -%}
+      {%- if status_value == 'Occurred' %} status--occurred{% endif -%}">
+      {{ status }}
+    </span>
+  {% endif %}
   <div class="content-list-item__image-container">
     {{ include('@novel/components/media-container.html.twig'
       , {

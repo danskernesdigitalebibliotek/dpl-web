@@ -298,6 +298,12 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
 function dpl_event_preprocess_eventinstance(array &$variables): void {
   $eventInstance = $variables['eventinstance'];
 
+  $state = $eventInstance->getState();
+  if ($state instanceof EventState) {
+    $variables['status'] = $state->label();
+    $variables['status_value'] = $state->value;
+  }
+
   if ($eventInstance->hasField('event_ticket_categories')) {
     $ticket_categories = $eventInstance->get('event_ticket_categories')->referencedEntities();
     $prices = [];
