@@ -16834,10 +16834,10 @@ xpath@^0.0.33:
   resolved "https://registry.yarnpkg.com/xpath/-/xpath-0.0.33.tgz#5136b6094227c5df92002e7c3a13516a5074eb07"
   integrity sha512-NNXnzrkDrAzalLhIUc01jO2mOzXGXh1JwPgkihcLLzw98c0WgYDmmjSh1Kl3wzaxSVWMuA+fe0WTWOBDWCBmNA==
 
-xstate@^5.21.0:
-  version "5.21.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.21.0.tgz#9b44cadbc3e0e570e07c1e270af893b9109bdbdf"
-  integrity sha512-y4wmqxjyAa0tgz4k3m/MgTF1kDOahE5+xLfWt5eh1sk+43DatLhKlI8lQDJZpvihZavjbD3TUgy2PRMphhhqgQ==
+xstate@^5.22.0:
+  version "5.22.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.22.0.tgz#9756b1067954938bf2fa09fe2d1bb9af2e4a0fca"
+  integrity sha512-5d73WWQaAozOaHl/la5TuriybLab9DNkzzYEte5UG2YwsVCR7SSDZJkyS6qfaOYGCFOjZjjSwEEVro4iqN3Slw==
 
 xtend@^4.0.0, xtend@^4.0.2:
   version "4.0.2"
