@@ -72,6 +72,10 @@ updates:
         patterns:
           - "jwt-simple"
           - "@types/jwt-simple"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/js"
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
@@ -86,7 +90,7 @@ updates:
       - dependency-name: "@storybook/*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "eslint-plugin-storybook"
-        update-types: ["version-update:semver-major"]
+        update-types: ["version-update:semver-minor"]
       - dependency-name: "next-drupal"
         versions: [">=2.0.0-beta.0"]
       - dependency-name: "react"
