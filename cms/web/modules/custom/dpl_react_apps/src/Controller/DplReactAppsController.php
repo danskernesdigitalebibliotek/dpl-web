@@ -120,6 +120,7 @@ class DplReactAppsController extends ControllerBase {
       'search-infobox-config' => json_encode([
         'title' => $this->generalSettings->loadConfig()->get('search_infobox_title'),
         'content' => $this->generalSettings->loadConfig()->get('search_infobox_content'),
+        'buttonText' => $this->generalSettings->loadConfig()->get('search_infobox_button_text'),
       ]),
       // Dynamic values, set through preprocess.
       'web-search-config' => json_encode([
