@@ -2,16 +2,25 @@
   set classes = [
   'content-list-item',
   'arrow__hover--right-small',
-  status ? 'content-list-item--status-parent',
+  (status_value and status_value != 'Active') ? 'content-list-item--status-parent',
 ]
 %}
+
+{%
+    set status_classes = [
+        'tag',
+        'tag--fill',
+        'tag--small',
+        'status',
+        status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
+        status_value == 'SoldOut' ? 'status--sold-out',
+        status_value == 'Cancelled' ? 'status--cancelled',
+        status_value == 'Occurred' ? 'status--occurred',
+    ]
+%}
 <a {{ attributes.addClass(classes).setAttribute('href', url) }}>
-  {% if status %}
-    <span class="tag tag--fill tag--small status
-      {%- if status_value == 'TicketSaleNotOpen' %} status--not-for-sale{% endif -%}
-      {%- if status_value == 'SoldOut' %} status--sold-out{% endif -%}
-      {%- if status_value == 'Cancelled' %} status--cancelled{% endif -%}
-      {%- if status_value == 'Occurred' %} status--occurred{% endif -%}">
+  {% if status_value and status_value != 'Active' %}
+    <span class="{{ status_classes|join(' ') }}">
       {{ status }}
     </span>
   {% endif %}

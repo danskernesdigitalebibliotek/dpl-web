@@ -1,19 +1,37 @@
 {%
   set classes = [
-  'content-list-item-stacked',
-  'arrow__hover--right-small',
-]
+    'content-list-item-stacked',
+    'arrow__hover--right-small',
+  ]
+%}
+
+{%
+  set status_classes = [
+    'tag',
+    'tag--fill',
+    'tag--small',
+    'status',
+    status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
+    status_value == 'SoldOut' ? 'status--sold-out',
+    status_value == 'Cancelled' ? 'status--cancelled',
+    status_value == 'Occurred' ? 'status--occurred',
+  ]
 %}
 
 <a {{ attributes.addClass(classes).setAttribute('href', url) }}>
-  <h2 class="hide-visually">{{ title }}</h2>
+    <h2 class="hide-visually">{{ title }}</h2>
 
-  {% if date or start_time %}
-    <time class="content-list-item-stacked__content" datetime="{{ datetime_attribute }}">
-      <span class="content-list-item-stacked__date">{{ date }}</span>
-      <span class="content-list-item-stacked__time">{{ time_combined }}</span>
-    </time>
-  {% endif %}
+    {% if date or start_time %}
+        <div class="content-list-item-stacked__content" datetime="{{ datetime_attribute }}">
+            <div class="content-list-item-stacked__date-status">
+                <time class="content-list-item-stacked__date">{{ date }}</time>
+                {% if status_value and status_value != 'Active' %}
+                    <span class="{{ status_classes|join(' ') }}">{{ status }}</span>
+                {% endif %}
+            </div>
+            <time class="content-list-item-stacked__time">{{ time_combined }}</time>
+        </div>
+    {% endif %}
 
-  {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+    {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
 </a>
