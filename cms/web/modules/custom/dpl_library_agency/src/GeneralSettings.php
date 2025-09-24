@@ -18,6 +18,7 @@ class GeneralSettings extends DplReactConfigBase {
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
+  const ZERO_HITS_SEARCH_LINK = '/din-sogning-har-0-resultater';
   // We define these urls so that the admins don't have to - e-reolen urls is
   // not expected to be changing often.
   const FBI_PROFILE = 'next';
