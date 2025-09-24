@@ -15,6 +15,7 @@ use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\preg_match as preg_match;
+use function Safe\json_decode;
 
 /**
  * General Settings form for a library agency.
