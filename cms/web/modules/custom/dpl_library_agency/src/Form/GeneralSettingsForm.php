@@ -214,11 +214,11 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('The content of the search info box.', [], ['context' => 'Library Agency Configuration']),
     ];
 
-    $form['search']['search_infobox']['search_infobox_button_text'] = [
+    $form['search']['search_infobox']['search_infobox_button_label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Button text', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('search_infobox_button_text') ?? GeneralSettings::SEARCH_INFOBOX_BUTTON_TEXT,
-      '#description' => $this->t('The text of the button in the search info box.', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('search_infobox_button_label') ?? GeneralSettings::SEARCH_INFOBOX_BUTTON_LABEL,
+      '#description' => $this->t('The text of the button in the search info box navigating to advanced search.', [], ['context' => 'Library Agency Configuration']),
     ];
 
     $form['find_on_shelf'] = [
@@ -378,7 +378,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ])
       ->set('search_infobox_title', $form_state->getValue('search_infobox_title'))
       ->set('search_infobox_content', $form_state->getValue('search_infobox_content'))
-      ->set('search_infobox_button_text', $form_state->getValue('search_infobox_button_text'))
+      ->set('search_infobox_button_label', $form_state->getValue('search_infobox_button_label'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));
