@@ -210,7 +210,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Content', [], ['context' => 'Library Agency Configuration']),
       '#format' => 'limited',
       '#allowed_formats' => ['limited'],
-      '#default_value' => $config->get('search_infobox_content.value') ?? json_decode(GeneralSettings::SEARCH_INFOBOX_CONTENT, true)['value'],
+      '#default_value' => $config->get('search_infobox_content.value') ?? json_decode(GeneralSettings::SEARCH_INFOBOX_CONTENT, TRUE)['value'],
       '#description' => $this->t('The content of the search info box.', [], ['context' => 'Library Agency Configuration']),
     ];
 
