@@ -397,6 +397,7 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
     ),
     'view-fees-and-compensation-rates' =>
     $fees_settings->getViewFeesAndCompensationRatesUrl(),
+    'zero-hits-search' => $general_settings->getZeroHitsSearchUrl(),
   ];
 
   if (!empty($fees_settings->getBlockedPatronElinkUrl())) {

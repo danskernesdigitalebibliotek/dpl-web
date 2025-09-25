@@ -170,10 +170,10 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
-    $form['reservations']['zero_hits_search_link'] = [
+    $form['reservations']['zero_hits_search_url'] = [
       '#type' => 'linkit',
-      '#title' => $this->t('Link til 0-hits søgninger', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('Link to the page that should be shown when a search returns zero results. <br />
+      '#title' => $this->t('URL til 0-hits søgninger', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('URL to the page that should be shown when a search returns zero results. <br />
                                          You can add a relative url (e.g. /no-results). <br />
                                          You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
@@ -181,7 +181,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
       ],
-      '#default_value' => $config->get('zero_hits_search_link') ?? GeneralSettings::ZERO_HITS_SEARCH_LINK,
+      '#default_value' => $config->get('zero_hits_search_url') ?? GeneralSettings::ZERO_HITS_SEARCH_URL,
     ];
 
     $form['opening_hours_url'] = [
@@ -398,7 +398,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('zero_hits_search_link', $form_state->getValue('zero_hits_search_link'))
+      ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('fbi_profiles', [

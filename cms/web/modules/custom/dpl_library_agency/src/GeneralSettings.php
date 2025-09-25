@@ -18,7 +18,7 @@ class GeneralSettings extends DplReactConfigBase {
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
-  const ZERO_HITS_SEARCH_LINK = '/din-sogning-har-0-resultater';
+  const ZERO_HITS_SEARCH_URL = '/din-sogning-har-0-resultater';
   // We define these urls so that the admins don't have to - e-reolen urls is
   // not expected to be changing often.
   const FBI_PROFILE = 'next';
@@ -182,15 +182,15 @@ class GeneralSettings extends DplReactConfigBase {
   }
 
   /**
-   * Gets the zero hits search link URL.
+   * Gets the zero hits search URL.
    *
    * @return string
-   *   The zero hits search link URL.
+   *   The zero hits search URL.
    */
-  public function getZeroHitsSearchLink(): string {
+  public function getZeroHitsSearchUrl(): string {
     return dpl_react_apps_format_app_url(
-      $this->loadConfig()->get('zero_hits_search_link'),
-      self::ZERO_HITS_SEARCH_LINK
+      $this->loadConfig()->get('zero_hits_search_url'),
+      self::ZERO_HITS_SEARCH_URL
     );
   }
 
