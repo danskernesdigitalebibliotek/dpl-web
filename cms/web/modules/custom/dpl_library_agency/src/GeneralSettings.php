@@ -181,4 +181,17 @@ class GeneralSettings extends DplReactConfigBase {
     );
   }
 
+  /**
+   * Gets the zero hits search link URL.
+   *
+   * @return string
+   *   The zero hits search link URL.
+   */
+  public function getZeroHitsSearchLink(): string {
+    return dpl_react_apps_format_app_url(
+      $this->loadConfig()->get('zero_hits_search_link'),
+      self::ZERO_HITS_SEARCH_LINK
+    );
+  }
+
 }

@@ -161,6 +161,7 @@ class DplReactAppsController extends ControllerBase {
       'web-search-link-text' => $this->t('Switch to the results for the library content.', [], ['context' => 'Search Result']),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+      'zero-hits-search-link-config' => $this->generalSettings->getZeroHitsSearchLink(),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -269,6 +270,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-sort-title-text' => $this->t('Title', [], ['context' => 'advanced search']),
       'advanced-search-sort-title-asc-text' => $this->t('Title (ascending)', [], ['context' => 'advanced search']),
       'advanced-search-sort-title-desc-text' => $this->t('Title (descending)', [], ['context' => 'advanced search']),
+      'zero-hits-search-link-config' => $this->generalSettings->getZeroHitsSearchLink(),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
