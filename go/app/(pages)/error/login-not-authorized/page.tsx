@@ -23,8 +23,7 @@ const descriptionComponent = (
     <p>
       Er du i tvivl, om I allerede er tilmeldt GO med UNI-login, eller har du andre generelle
       spørgsmål vedr. GO og deltagelse med UNI-Login, kan vi kontaktes på{" "}
-      <a href="mailto:kontakt@detdigitalefolkebibliotek.dk">kontakt@detdigitalefolkebibliotek.dk</a>
-      .
+      <a href="mailto:unilogin@ereolengo.dk">unilogin@ereolengo.dk</a>.
     </p>
   </>
 )
