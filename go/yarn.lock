@@ -13422,10 +13422,10 @@ oas-validator@^5.0.8:
     should "^13.2.1"
     yaml "^1.10.0"
 
-oauth4webapi@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.8.1.tgz#a6e205570c09e33aa656982c85e78841a57a6fec"
-  integrity sha512-olkZDELNycOWQf9LrsELFq8n05LwJgV8UkrS0cburk6FOwf8GvLam+YB+Uj5Qvryee+vwWOfQVeI5Vm0MVg7SA==
+oauth4webapi@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.8.2.tgz#500d1979038c14656f3f24ff1eb501ff3993115b"
+  integrity sha512-FzZZ+bht5X0FKe7Mwz3DAVAmlH1BV5blSak/lHMBKz0/EBMhX6B10GlQYI51+oRp8ObJaX0g6pXrAxZh5s8rjw==
 
 object-assign@^4, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
@@ -13557,13 +13557,13 @@ openapi3-ts@4.5.0:
   dependencies:
     yaml "^2.8.0"
 
-openid-client@^6.8.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.8.0.tgz#ae60540fc1aaf595ee9100004ebda722e1d80e60"
-  integrity sha512-oG1d1nAVhIIE+JSjLS+7E9wY1QOJpZltkzlJdbZ7kEn7Hp3hqur2TEeQ8gLOHoHkhbRAGZJKoOnEQcLOQJuIyg==
+openid-client@^6.8.1:
+  version "6.8.1"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.8.1.tgz#0e6dd3c1e9c98771ebf387b793ce9f626791a924"
+  integrity sha512-VoYT6enBo6Vj2j3Q5Ec0AezS+9YGzQo1f5Xc42lreMGlfP4ljiXPKVDvCADh+XHCV/bqPu/wWSiCVXbJKvrODw==
   dependencies:
     jose "^6.1.0"
-    oauth4webapi "^3.8.1"
+    oauth4webapi "^3.8.2"
 
 optionator@^0.9.3:
   version "0.9.4"
