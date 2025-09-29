@@ -45,7 +45,7 @@
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@redux-devtools/extension": "^3.3.0",
-    "@reloaddk/wsdl-tsclient": "^1.8.3",
+    "@reloaddk/wsdl-tsclient": "^1.8.4",
     "@tanstack/react-query": "^5.90.1",
     "@types/lodash": "^4.17.20",
     "@uidotdev/usehooks": "^2.4.1",
