@@ -219,7 +219,21 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Button text', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $config->get('search_infobox_button_label') ?? GeneralSettings::SEARCH_INFOBOX_BUTTON_LABEL,
-      '#description' => $this->t('The text of the button in the search info box navigating to advanced search.', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('The label for the button in the search info box. Maximum 30 characters.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $form['search']['search_infobox']['search_infobox_button_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('Button URL', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('The URL the button in the search info box should link to. <br />
+                                  You can add a relative url (e.g. /advanced-search). <br />
+                                  You can search for an internal url. <br />
+                                  You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('search_infobox_button_url') ?? GeneralSettings::SEARCH_INFOBOX_BUTTON_URL,
     ];
 
     $form['find_on_shelf'] = [
@@ -380,6 +394,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('search_infobox_title', $form_state->getValue('search_infobox_title'))
       ->set('search_infobox_content', $form_state->getValue('search_infobox_content'))
       ->set('search_infobox_button_label', $form_state->getValue('search_infobox_button_label'))
+      ->set('search_infobox_button_url', $form_state->getValue('search_infobox_button_url'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));
