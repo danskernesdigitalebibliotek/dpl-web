@@ -88,7 +88,7 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
     $nids = $query->accessCheck()->execute();
 
     /** @var \Drupal\node\Entity\Node[] $nodes */
-    $nodes = $this->nodeStorage->loadMultiple(array_keys($nids));
+    $nodes = $this->nodeStorage->loadMultiple(array_values($nids));
 
     if ($nodes) {
       $result->uuids = array_map(fn ($node) => (string) $node->uuid(), $nodes);
