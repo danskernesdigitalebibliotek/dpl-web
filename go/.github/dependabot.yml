@@ -90,7 +90,7 @@ updates:
       - dependency-name: "@storybook/*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "eslint-plugin-storybook"
-        update-types: ["version-update:semver-minor"]
+        versions: [">=9.0.7"]
       - dependency-name: "next-drupal"
         versions: [">=2.0.0-beta.0"]
       - dependency-name: "react"
@@ -105,6 +105,9 @@ updates:
         versions: [">=0.7.3"]
       - dependency-name: "sharp"
         versions: [">=0.33.5"]
+      - dependency-name: "cypress"
+        update-types: ["version-update:semver-major"]
+
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
