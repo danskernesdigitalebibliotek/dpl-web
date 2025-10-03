@@ -64,7 +64,6 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
                 onOptionSelect(option)
                 // Use optimistic update to immediately reflect the selection
                 // in the UI while the actual state update happens
-                // code:
                 setOptimisticSelected(option.code)
               })
             }}
