@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-01 18:08+0200\n"
-"PO-Revision-Date: 2025-10-01 18:08+0200\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-01 18:09+0200\n"
-"PO-Revision-Date: 2025-10-01 18:09+0200\n"
+"POT-Creation-Date: 2025-10-06 22:03+0200\n"
+"PO-Revision-Date: 2025-10-06 22:03+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -10391,40 +10379,14 @@ msgstr ""
 msgid "Configure Custom tags below."
 msgstr "Configure Custom tags below."
 
-msgid ""
-"Multiple values may be used, separated by `:delimiter`. Note: Tokens that "
-"return multiple values will be handled automatically."
-msgstr ""
-"Flere værdier kan anvendes, adskilt af :delimiter. Bemærk: Tokens, der "
-"returnerer flere værdier, vil blive håndteret automatisk."
-
-msgid ""
-"This will be able to extract the URL from an image field if the field is "
-"configured properly."
-msgstr ""
-"Dette vil kunne udtrække URL'en fra et billedfelt, hvis feltet er "
-"konfigureret korrekt."
-
-msgid ""
-"Any relative or protocol-relative URLs will be converted to absolute URLs."
-msgstr ""
-"Alle relative eller protokol-relative URL'er vil blive konverteret til "
-"absolutte URL'er."
-
-msgid ""
-"Any URLs which start with \"http://\" will be converted to \"https://\"."
-msgstr ""
-"Alle URL'er, der starter med \"http://\" bliver konverteret til \"https://\"."
-
-msgid ""
-"This will be truncated to a maximum of %max characters after any tokens are "
-"processed."
-msgstr ""
-"Dette vil blive afkortet til maksimalt %max tegn, efter at eventuelle tokens "
-"er behandlet."
-
 msgid "Specify the name of the custom tag."
 msgstr "Specify the name of the custom tag."
+
+msgid ""
+"Enter a unique identifier for this custom tag. This identifier can contain "
+"lowercase letters, numbers and underscores. This is only used internally, it "
+"is not used in the actual HTML output."
+msgstr ""
 
 msgid "Specify the description of the Custom tag."
 msgstr "Specify the description of the Custom tag."
@@ -10435,29 +10397,95 @@ msgstr "Meta"
 msgid "Select the HTML element of the Custom tag."
 msgstr "Select the HTML element of the Custom tag."
 
-msgid "Name attribute"
-msgstr "Name attribute"
-
-msgid "Http Equiv"
-msgstr "Http Equiv"
-
-msgid "Item Prop"
-msgstr "Item Prop"
-
-msgid "Rel"
-msgstr "Rel"
-
-msgid "Select the Name attribute of the Custom tag."
-msgstr "Select the Name attribute of the Custom tag."
-
 msgid "Value attribute"
 msgstr "Værdi attribut"
 
 msgid "Href"
 msgstr "Href"
 
-msgid "Select the Value attribute of the Custom tag."
-msgstr "Vælg værdiattributten for det brugerdefinerede tag."
+msgid "Charset"
+msgstr ""
+
+msgid ""
+"Select the Value attribute of the Custom tag. This determines which HTML "
+"attribute will contain the user-provided content."
+msgstr ""
+
+msgid "HTML Attributes"
+msgstr "HTML-attributter"
+
+msgid ""
+"Define the HTML attributes for this custom meta tag. The first attribute "
+"serves as the primary identifier and is required. Additional attributes are "
+"optional and provide fixed values for all instances of this tag."
+msgstr ""
+
+msgid "Primary attribute (Required)"
+msgstr ""
+
+msgid "Additional attribute @num"
+msgstr ""
+
+msgid "This attribute identifies the meta tag and is required."
+msgstr ""
+
+msgid "This attribute provides a fixed value for all instances of this tag."
+msgstr ""
+
+msgid "Attribute name"
+msgstr ""
+
+msgid "Common values: name, property, rel, http-equiv, itemprop."
+msgstr ""
+
+msgid "Additional attribute name (e.g., type, sizes)."
+msgstr ""
+
+msgid "Attribute value"
+msgstr ""
+
+msgid ""
+"For new tags, defaults to the machine name. For existing tags, this "
+"identifies the specific meta tag."
+msgstr ""
+
+msgid "Fixed value for this attribute."
+msgstr ""
+
+msgid "Add another attribute"
+msgstr ""
+
+msgid "Examples"
+msgstr "Eksempler"
+
+msgid ""
+"<h4>Common Examples:</h4>\n"
+"        <ul>\n"
+"          <li><strong>Basic meta tag:</strong><br>\n"
+"            Primary attribute: name = \"description\"<br>\n"
+"            Result: &lt;meta name=\"description\" content=\"[user-input]\" /"
+"&gt;</li>\n"
+"          <li><strong>Open Graph tag:</strong><br>\n"
+"            Primary attribute: property = \"og:title\"<br>\n"
+"            Result: &lt;meta property=\"og:title\" content=\"[user-input]\" /"
+"&gt;</li>\n"
+"          <li><strong>Twitter Card:</strong><br>\n"
+"            Primary attribute: name = \"twitter:card\"<br>\n"
+"            Result: &lt;meta name=\"twitter:card\" content=\"[user-input]\" /"
+"&gt;</li>\n"
+"          <li><strong>Link with type:</strong><br>\n"
+"            Primary attribute: rel = \"icon\"<br>\n"
+"            Additional attribute: type = \"image/svg+xml\"<br>\n"
+"            Result: &lt;link rel=\"icon\" type=\"image/svg+xml\" "
+"href=\"[user-input]\" /&gt;</li>\n"
+"        </ul>"
+msgstr ""
+
+msgid "At least one attribute with both name and value must be provided."
+msgstr ""
+
+msgid "The primary attribute name and value are required."
+msgstr ""
 
 msgid "Created %label Custom tag."
 msgstr "Oprettet %label brugerdefineret tag."
@@ -10708,6 +10736,21 @@ msgstr "Stillet til rådighed af"
 msgid "All meta tags in the \"@group\" group."
 msgstr "Alle meta tags i \"@group\"-gruppen."
 
+msgid "Total number of metatags"
+msgstr ""
+
+msgid "Total number of groups"
+msgstr ""
+
+msgid "Name of group"
+msgstr ""
+
+msgid "Number of metatags"
+msgstr ""
+
+msgid "Metatag"
+msgstr "Metatag"
+
 msgid "No Referrer"
 msgstr "No Referrer"
 
@@ -10824,11 +10867,60 @@ msgstr ""
 "notranslate - Forhindrer søgemaskiner i at tilbyde oversættelse af denne "
 "side i søgeresultater."
 
-msgid "Metatag"
-msgstr "Metatag"
+msgid ""
+"Multiple values may be used, separated by `:delimiter`. Note: Tokens that "
+"return multiple values will be handled automatically."
+msgstr ""
+"Flere værdier kan anvendes, adskilt af :delimiter. Bemærk: Tokens, der "
+"returnerer flere værdier, vil blive håndteret automatisk."
+
+msgid ""
+"This will be able to extract the URL from an image field if the field is "
+"configured properly."
+msgstr ""
+"Dette vil kunne udtrække URL'en fra et billedfelt, hvis feltet er "
+"konfigureret korrekt."
+
+msgid ""
+"Any relative or protocol-relative URLs will be converted to absolute URLs."
+msgstr ""
+"Alle relative eller protokol-relative URL'er vil blive konverteret til "
+"absolutte URL'er."
+
+msgid ""
+"Any URLs which start with \"http://\" will be converted to \"https://\"."
+msgstr ""
+"Alle URL'er, der starter med \"http://\" bliver konverteret til \"https://\"."
+
+msgid ""
+"Set to %none to disable inheritance of the parent value and prevent the "
+"output of this metatag entirely."
+msgstr ""
+
+msgid ""
+"This will be truncated to a maximum of %max characters after any tokens are "
+"processed."
+msgstr ""
+"Dette vil blive afkortet til maksimalt %max tegn, efter at eventuelle tokens "
+"er behandlet."
+
+msgid "Empty formatter"
+msgstr "Tomme formatter"
+
+msgid "This field stores code meta tags."
+msgstr "Dette felt indeholder kodede meta tags."
+
+msgid "Meta tags (computed)"
+msgstr "Metatags (beregnet)"
+
+msgid "Computed meta tags"
+msgstr "Beregnede meta tags"
 
 msgid "Tag"
 msgstr "Tag"
+
+msgid "Advanced meta tags form"
+msgstr "Avanceret meta-tags felt"
 
 msgid "Place field in sidebar"
 msgstr "Placér felt i sidebar"
@@ -10970,6 +11062,14 @@ msgstr ""
 "\\n\\r\\t\\v\") will be trimmed automatically and do not need to be listed "
 "in this field. The trimming is applied at the very end after the tag is "
 "trimmed for length, and after the trimming option was executed."
+
+msgid "Optional suffix to add"
+msgstr ""
+
+msgid ""
+"If provided this string will be added at the end of all meta tags that are "
+"trimmed to length."
+msgstr ""
 
 msgid "Metatag widget options"
 msgstr "Metatag widgetindstillinger"
@@ -11388,6 +11488,14 @@ msgstr "Udgivelsesdato"
 
 msgid "The date the book was released."
 msgstr "Udgivelsesdato"
+
+msgid "Creator's fediverse account"
+msgstr ""
+
+msgid ""
+"The fediverse @username for the content creator / author for this page, "
+"including the first @ symbol."
+msgstr ""
 
 msgid "Audio URL"
 msgstr "Audio URL"
@@ -12122,6 +12230,12 @@ msgid ""
 msgstr ""
 "Et PNG-billede, der er 144px bredt og 144px højt. Brugt med iPad med @2x "
 "skærmbillede kørende iOS <= 6."
+
+msgid "SVG icon"
+msgstr ""
+
+msgid "A scalable vector graphic (SVG) file."
+msgstr ""
 
 msgid "Icon: 192px x 192px"
 msgstr "Ikon: 192px x 192px"
@@ -13455,21 +13569,6 @@ msgstr "Grundlæggende tags"
 
 msgid "Simple meta tags."
 msgstr "Simple meta tags."
-
-msgid "Empty formatter"
-msgstr "Tomme formatter"
-
-msgid "This field stores code meta tags."
-msgstr "Dette felt indeholder kodede meta tags."
-
-msgid "Meta tags (computed)"
-msgstr "Metatags (beregnet)"
-
-msgid "Computed meta tags"
-msgstr "Beregnede meta tags"
-
-msgid "Advanced meta tags form"
-msgstr "Avanceret meta-tags felt"
 
 msgid "Metatag Field Diff"
 msgstr "Meta tag feltforskel"
