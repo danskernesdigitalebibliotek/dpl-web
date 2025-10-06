@@ -1,3 +1,4 @@
+---
 dpl_event.settings:
   path: '/admin/config/dpl-event/settings'
   defaults:
@@ -5,3 +6,12 @@ dpl_event.settings:
     _form: 'Drupal\dpl_event\Form\SettingsForm'
   requirements:
     _permission: 'administer library agency configuration'
+dpl_event.copy_inherited:
+  path: '/events/{eventinstance}/copy-inherited'
+  defaults:
+    _title: 'Copy values from eventseries'
+    _form: 'Drupal\dpl_event\Form\CopyInheritedForm'
+  requirements:
+    _permission: 'edit eventinstance entity'
+  options:
+    _admin_route: TRUE
