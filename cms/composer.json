@@ -199,7 +199,7 @@
         "phpdocumentor/reflection-docblock": "^5.3",
         "spatie/color": "^1.5",
         "spawnia/sailor": "^1.1.0",
-        "symfony/property-access": "^6.2",
+        "symfony/property-access": "^7.3",
         "symfony/property-info": "^7.3",
         "thecodingmachine/safe": "^2.5.0",
         "webmozart/assert": "^1.11",
