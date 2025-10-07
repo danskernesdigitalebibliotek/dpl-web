@@ -1,4 +1,10 @@
 services:
+  dpl_login.logout_expired_tokens:
+    class: Drupal\dpl_login\EventSubscriber\LogoutExpiredTokensSubscriber
+    tags:
+      - { name: event_subscriber }
+    autowire: true
+
   dpl_login.route_rewire_logout:
     class: Drupal\dpl_login\Routing\RewireLogoutSubscriber
     tags:
