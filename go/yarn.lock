@@ -3103,7 +3103,7 @@
     "@graphql-tools/utils" "8.9.0"
     tslib "^2.4.0"
 
-"@graphql-tools/merge@^9.0.0", "@graphql-tools/merge@^9.0.6":
+"@graphql-tools/merge@^9.0.0":
   version "9.0.7"
   resolved "https://registry.npmjs.org/@graphql-tools/merge/-/merge-9.0.7.tgz"
   integrity sha512-lbTrIuXIbUSmSumHkPRY1QX0Z8JEtmRhnIrkH7vkfeEmf0kNn/nCWvJwqokm5U7L+a+DA1wlRM4slIlbfXjJBA==
@@ -3151,17 +3151,7 @@
     "@graphql-tools/utils" "^10.0.13"
     tslib "^2.4.0"
 
-"@graphql-tools/schema@^10.0.0", "@graphql-tools/schema@^10.0.3", "@graphql-tools/schema@^10.0.4":
-  version "10.0.6"
-  resolved "https://registry.npmjs.org/@graphql-tools/schema/-/schema-10.0.6.tgz"
-  integrity sha512-EIJgPRGzpvDFEjVp+RF1zNNYIC36BYuIeZ514jFoJnI6IdxyVyIRDLx/ykgMdaa1pKQerpfdqDnsF4JnZoDHSQ==
-  dependencies:
-    "@graphql-tools/merge" "^9.0.6"
-    "@graphql-tools/utils" "^10.5.4"
-    tslib "^2.4.0"
-    value-or-promise "^1.0.12"
-
-"@graphql-tools/schema@^10.0.23":
+"@graphql-tools/schema@^10.0.0", "@graphql-tools/schema@^10.0.23", "@graphql-tools/schema@^10.0.3", "@graphql-tools/schema@^10.0.4":
   version "10.0.23"
   resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-10.0.23.tgz#d8865e96f37a04ca43303d7024add7edbe0c5ed4"
   integrity sha512-aEGVpd1PCuGEwqTXCStpEkmheTHNdMayiIKH1xDWqYp9i8yKv9FRDgkGrY4RD8TNxnf7iII+6KOBGaJ3ygH95A==
@@ -3278,10 +3268,10 @@
     symbol-observable "^1.0.4"
     ws "^8.8.0"
 
-"@httptoolkit/util@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@httptoolkit/util/-/util-0.1.6.tgz#b945855013d6b2e4115d2c7d470cca5e72a81cdc"
-  integrity sha512-DO4hp9B4rOWq0ERlQUIWYuhwX5NomYeSG5njW0d7fQvM4CtQeeq0ddTXTvinHkm0NtKDwLebIkHT3Ow/MiDY2w==
+"@httptoolkit/util@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@httptoolkit/util/-/util-0.1.7.tgz#bff6c1a172060165a85957896fc0d58301bd599b"
+  integrity sha512-oSLHg3Dug3u4ZjwUFds5dbXt4uhXmVvwrSvEAYAHZnX4xn4Rvvjj9qf99r71sMji/jq01zgvGXenHFZgiFJbXA==
 
 "@httptoolkit/websocket-stream@^6.0.1":
   version "6.0.1"
@@ -12997,16 +12987,16 @@ mkdirp@^3.0.1:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-3.0.1.tgz#e44e4c5607fb279c168241713cc6e0fea9adcb50"
   integrity sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==
 
-mockttp@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.1.0.tgz#58be9ba41371ed0c8fd19b15c593d6e7b9ad06ae"
-  integrity sha512-OokdS/PEnEbT24x9Ar3SbdpqzA3Yz99AIgU7ylTSYHOQ/A8xmeGEG8QMdTh/Apus4uU5E67iCq48ZFXi7BCImA==
+mockttp@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.2.0.tgz#69adb4ef89ff8fa7335a2c580779e86e3e3c643d"
+  integrity sha512-Ef5E851VbOVlRshzpo76gn5gyyQgoGsBq/3nN6BBqucoPODm4RTRQKlLMuE97L6zbkwWNgiZlQrl7Zdp0ZTgYg==
   dependencies:
     "@graphql-tools/schema" "^8.5.0"
     "@graphql-tools/utils" "^8.8.0"
     "@httptoolkit/httpolyglot" "^3.0.0"
     "@httptoolkit/subscriptions-transport-ws" "^0.11.2"
-    "@httptoolkit/util" "^0.1.6"
+    "@httptoolkit/util" "^0.1.7"
     "@httptoolkit/websocket-stream" "^6.0.1"
     "@peculiar/asn1-schema" "^2.3.15"
     "@peculiar/asn1-x509" "^2.3.15"
