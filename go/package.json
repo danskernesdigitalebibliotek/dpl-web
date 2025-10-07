@@ -114,7 +114,7 @@
     "@types/node": "^20.19.17",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@vitejs/plugin-react": "^5.0.4",
     "axe-playwright": "^2.2.2",
     "cypress": "^14.5.4",
