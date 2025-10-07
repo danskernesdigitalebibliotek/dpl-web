@@ -58,3 +58,7 @@ services:
   dpl_login.openid_user_info:
     class: Drupal\dpl_login\OpenIdUserInfoService
     arguments: ['@settings', '@config.factory']
+
+  dpl_login.user:
+    class: Drupal\dpl_login\User
+  Drupal\dpl_login\User: '@dpl_login.user'
