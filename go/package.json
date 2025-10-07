@@ -121,7 +121,7 @@
     "eslint": "^9.36.0",
     "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-cypress": "^5.1.1",
+    "eslint-plugin-cypress": "^5.2.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
