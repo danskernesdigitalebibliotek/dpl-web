@@ -19,6 +19,7 @@ use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Controller\DplLoginController;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\RegisteredUserTokensProvider;
+use Drupal\dpl_login\User;
 use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
@@ -26,8 +27,6 @@ use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\Tests\UnitTestCase;
-use phpmock\Mock;
-use phpmock\MockBuilder;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,13 +43,6 @@ class DplLoginControllerTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-
-    $builder = new MockBuilder();
-    $builder->setNamespace('Drupal\dpl_login\Controller')
-      ->setName("user_logout")
-      ->setFunction(fn() => NULL)
-      ->build()
-      ->enable();
 
     $logger = $this->prophesize(LoggerInterface::class);
     $logger->error(Argument::any(), Argument::any())->shouldNotBeCalled();
@@ -105,6 +97,8 @@ class DplLoginControllerTest extends UnitTestCase {
     $openid_connect_client_storage = $this->prophesize(EntityStorageInterface::class);
     $entity_type_manager->getStorage('openid_connect_client')->willReturn($openid_connect_client_storage);
 
+    $user_service = $this->prophesize(User::class);
+
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
@@ -121,7 +115,8 @@ class DplLoginControllerTest extends UnitTestCase {
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
     $container->set('dpl_login.adgangsplatformen.client', $openid_connect_client->reveal());
     $container->set('entity_type.manager', $entity_type_manager->reveal());
-
+    $container->set('dpl_login.user', $user_service->reveal());
+    $container->setAlias(User::class, 'dpl_login.user');
     \Drupal::setContainer($container);
   }
 
@@ -207,13 +202,6 @@ class DplLoginControllerTest extends UnitTestCase {
       'https://local.site',
       $response->headers->get('location')
     );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function tearDown(): void {
-    Mock::disableAll();
   }
 
 }
