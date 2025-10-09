@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.nav_spot
     - field.field.node.branch.field_address
     - field.field.node.branch.field_address_dawa
+    - field.field.node.branch.field_agency_branch_id
     - field.field.node.branch.field_email
     - field.field.node.branch.field_main_media
     - field.field.node.branch.field_paragraphs
@@ -27,6 +28,7 @@ content:
 hidden:
   field_address: true
   field_address_dawa: true
+  field_agency_branch_id: true
   field_email: true
   field_main_media: true
   field_paragraphs: true

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.branch.field_address
     - field.field.node.branch.field_address_dawa
+    - field.field.node.branch.field_agency_branch_id
     - field.field.node.branch.field_email
     - field.field.node.branch.field_main_media
     - field.field.node.branch.field_paragraphs
@@ -15,6 +16,7 @@ dependencies:
     - address
     - address_dawa
     - entity_reference_revisions
+    - options
     - telephone_formatter
     - user
 id: node.branch.default
@@ -35,6 +37,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 6
+    region: content
+  field_agency_branch_id:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_email:
     type: email_mailto

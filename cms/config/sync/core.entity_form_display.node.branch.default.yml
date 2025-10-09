@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.branch.field_address
     - field.field.node.branch.field_address_dawa
+    - field.field.node.branch.field_agency_branch_id
     - field.field.node.branch.field_email
     - field.field.node.branch.field_main_media
     - field.field.node.branch.field_paragraphs
@@ -61,6 +62,12 @@ content:
     settings:
       size: 80
       placeholder: 'Search for address..'
+    third_party_settings: {  }
+  field_agency_branch_id:
+    type: options_select
+    weight: 26
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_email:
     type: email_default
