@@ -15,3 +15,6 @@ dpl_event.copy_inherited:
     _permission: 'edit eventinstance entity'
   options:
     _admin_route: TRUE
+    parameters:
+      eventinstance:
+        type: entity:eventinstance

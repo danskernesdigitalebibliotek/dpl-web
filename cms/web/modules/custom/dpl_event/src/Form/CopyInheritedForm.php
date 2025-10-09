@@ -52,16 +52,12 @@ class CopyInheritedForm implements FormInterface, ContainerInjectionInterface {
    * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    // Finding the eventinstance from the route parameter.
-    // This gets sent along automatically as we come from events/{ID}/edit.
-    $id = $this->routeMatch->getParameter('eventinstance');
-    $event_storage = $this->entityTypeManager->getStorage('eventinstance');
-    $instance = $event_storage->load($id);
+    $instance = $this->routeMatch->getParameter('eventinstance');
 
     if (!($instance instanceof EventInstance)) {
       $this->messenger->addError($this->t(
-        'Could not find event-instance with id @id',
-        ['@id' => $id],
+        'Could not find event-instance',
+        [],
         ['context' => 'dpl_event']
       ));
       return $form;
