@@ -5,8 +5,13 @@
  * Contains dpl_library_agency.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_library_agency\Branch\FbsBranchRepository;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeForm;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_dpl_protected_nodes_get_protected_nodes().
@@ -50,3 +55,68 @@ function dpl_library_agency_field_agency_branch_id_options(): array {
   }
 }
 
+/**
+ * Implements hook_form_alter().
+ *
+ * Adding a custom validator to branch node forms.
+ *
+ * @see dpl_library_agency_validate_branch_node()
+ */
+function dpl_library_agency_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (!in_array($form_id, ['node_branch_edit_form', 'node_branch_form'])) {
+    return;
+  }
+
+  $form['#validate'][] = 'dpl_library_agency_validate_branch_node';
+}
+
+/**
+ * Validating the branch node edit/add forms.
+ *
+ * Making sure that any agency branch ID inputted is not used by any other
+ * nodes.
+ *
+ * @param array<mixed> $form
+ *   See dpl_library_agency_form_alter().
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   See dpl_library_agency_form_alter().
+ */
+function dpl_library_agency_validate_branch_node(array &$form, FormStateInterface $form_state): void {
+  $form_object = $form_state->getFormObject();
+
+  if (!($form_object instanceof NodeForm)) {
+    return;
+  }
+
+  $user_input = $form_state->getUserInput();
+  $branch_id = $user_input['field_agency_branch_id'] ?? NULL;
+
+  if (empty($branch_id)) {
+    return;
+  }
+
+  $current_node = $form_object->getEntity();
+
+  if (!($current_node instanceof NodeInterface)) {
+    return;
+  }
+
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  /** @var \Drupal\node\NodeInterface[] $used_nodes */
+  $used_nodes = $node_storage->loadByProperties([
+    'field_agency_branch_id' => $branch_id,
+  ]);
+
+  foreach ($used_nodes as $used_node) {
+    if ($used_node->id() !== $current_node->id()) {
+
+      $form_state->setErrorByName(
+        'field_agency_branch_id',
+        t('This agency branch ID is already in use by @title', ['@title' => $used_node->label()], ['context' => 'dpl_library_agency']),
+      );
+      return;
+    }
+  }
+
+}
