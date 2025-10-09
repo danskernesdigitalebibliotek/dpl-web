@@ -980,3 +980,10 @@ function dpl_update_update_10062(): string {
     'Om eReolen'
   );
 }
+
+/**
+ * Install address_dawa module.
+ */
+function dpl_update_update_10063(): string {
+  return _dpl_update_install_modules(['address_dawa']);
+}
