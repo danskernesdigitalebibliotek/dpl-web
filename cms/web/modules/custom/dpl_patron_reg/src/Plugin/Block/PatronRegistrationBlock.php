@@ -104,7 +104,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     $data = [
       // Configuration.
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
-      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches(), TRUE),
       'min-age-config' => $config->get('age_limit') ?? DplPatronRegSettings::AGE_LIMIT,
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,

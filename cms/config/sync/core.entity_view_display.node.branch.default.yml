@@ -16,7 +16,6 @@ dependencies:
     - address
     - address_dawa
     - entity_reference_revisions
-    - options
     - telephone_formatter
     - user
 id: node.branch.default
@@ -37,13 +36,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 6
-    region: content
-  field_agency_branch_id:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 7
     region: content
   field_email:
     type: email_mailto
@@ -86,6 +78,7 @@ content:
     weight: 0
     region: content
 hidden:
+  field_agency_branch_id: true
   field_promoted_on_lists: true
   langcode: true
   preview_token: true

@@ -6,6 +6,7 @@ use Drupal\address_dawa\AddressDawaItemInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
+
 /**
  * Value object representing a branch in an agency.
  *
