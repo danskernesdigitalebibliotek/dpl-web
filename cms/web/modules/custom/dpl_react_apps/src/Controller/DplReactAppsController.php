@@ -7,7 +7,6 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
-use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\FbiProfileType;
@@ -75,19 +74,39 @@ class DplReactAppsController extends ControllerBase {
    *
    * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
    *   The branches to build the string with.
+   * @param bool $includeAddress
+   *   If the branch data should include editor-fed addresses from Drupal.
    *
    * @todo This should be moved into an service to make it more sharable
    *       between modules.
    *
    * @throws \Safe\Exceptions\JsonException
    */
-  public static function buildBranchesJsonProp(array $branches) : string {
-    return json_encode(array_map(function (Branch $branch) {
-      return [
+  public static function buildBranchesJsonProp(array $branches, bool $includeAddress = FALSE) : string {
+    $output = [];
+
+    foreach ($branches as $branch) {
+      $branch_output = [
         'branchId' => $branch->id,
         'title' => $branch->title,
       ];
-    }, $branches));
+
+      if ($includeAddress) {
+        $address = $branch->getAddressData();
+
+        if (!empty($address)) {
+          $branch_output['address'] = [
+            'value' => $address->getTextValue(),
+            'lat' => $address->getLat(),
+            'lng' => $address->getLng(),
+          ];
+        }
+      }
+
+      $output[] = $branch_output;
+    }
+
+    return (json_encode($output));
   }
 
   /**

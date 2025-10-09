@@ -2,6 +2,10 @@
 
 namespace Drupal\dpl_library_agency\Branch;
 
+use Drupal\address_dawa\AddressDawaItemInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeInterface;
 /**
  * Value object representing a branch in an agency.
  *
@@ -31,5 +35,48 @@ class Branch {
     public string $id,
     public string $title,
   ) {}
+
+  /**
+   * Getting a (possibly) associated Drupal 'branch' node.
+   *
+   * @return ?NodeInterface
+   *   A branch node if available.
+   */
+  public function getNode(): ?NodeInterface {
+    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+
+    $storage = $entity_type_manager->getStorage('node');
+    $nodes = $storage->loadByProperties([
+      'type' => 'branch',
+      'field_agency_branch_id' => $this->id,
+    ]);
+
+    $node = reset($nodes);
+    return ($node instanceof NodeInterface) ? $node : NULL;
+  }
+
+  /**
+   * Getting address data of a branch, set on a possible Drupal node.
+   *
+   * @return \Drupal\address_dawa\AddressDawaItemInterface|null
+   *   The address field, along with metadata such as GPS coordinates.
+   */
+  public function getAddressData(): ?AddressDawaItemInterface {
+    $node = $this->getNode();
+
+    if (!($node) || !$node->hasField('field_address_dawa')) {
+      return NULL;
+    }
+
+    $field = $node->get('field_address_dawa');
+
+    if ($field->isEmpty()) {
+      return NULL;
+    }
+
+    $value = $field->first();
+
+    return ($value instanceof AddressDawaItemInterface) ? $value : NULL;
+  }
 
 }
