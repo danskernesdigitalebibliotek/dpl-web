@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.branch.field_address
+    - field.field.node.branch.field_address_dawa
     - field.field.node.branch.field_email
     - field.field.node.branch.field_main_media
     - field.field.node.branch.field_paragraphs
@@ -12,6 +13,7 @@ dependencies:
     - node.type.branch
   module:
     - address
+    - address_dawa
     - entity_reference_revisions
     - telephone_formatter
     - user
@@ -26,6 +28,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_address_dawa:
+    type: address_dawa
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_email:
     type: email_mailto
