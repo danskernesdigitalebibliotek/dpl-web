@@ -90,7 +90,7 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
         // case continue.
       }
       if (isset($user_info['sub'])) {
-        $user = $this->externalAuth->load($user_info['sub'], $this->client->getPluginId());
+        $user = $this->externalAuth->load($user_info['sub'], 'openid_connect.' . $this->client->getPluginId());
         $return = ($user instanceof AccountInterface) ? $user : NULL;
       }
     }
