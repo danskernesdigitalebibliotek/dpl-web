@@ -173,21 +173,8 @@ class CopyInheritedForm implements FormInterface, ContainerInjectionInterface {
         continue;
       }
 
-      $entity_type = $entity->getEntityTypeId();
-
-      // Getting all the values in a format we can use in $storage->create().
-      $values = $entity->toArray();
-
-      // Unsetting ID values, that we want ->create() to fill out dynamically.
-      unset($values['id']);
-      unset($values['uuid']);
-      unset($values['revision_id']);
-      unset($values['parent_id']);
-
-      $storage = $this->entityTypeManager->getStorage($entity_type);
-
       /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity_copy */
-      $entity_copy = $storage->create($values);
+      $entity_copy = $entity->createDuplicate();
 
       // This entity might *also* have entity reference fields, which we might
       // also want to copy. Example: paragraphs within paragraphs.
