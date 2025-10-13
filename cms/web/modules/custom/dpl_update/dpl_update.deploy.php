@@ -9,9 +9,10 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
-
 use Drupal\dpl_update\Services\MediaCleanup;
 use Drupal\media\Entity\Media;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
 
@@ -415,4 +416,33 @@ function dpl_update_deploy_clean_medias(array &$sandbox): string {
   }
 
   return "Archived {$sandbox['current']}/{$sandbox['total']} duplicate medias.";
+}
+
+/**
+ * Create 0-hit search page.
+ *
+ * Creates a new page with title "Din søgning har 0 resultater" and a text_body
+ * paragraph.
+ */
+function dpl_update_deploy_create_zero_hit_search_page(): string {
+  $paragraph = Paragraph::create([
+    'type' => 'text_body',
+    'field_body' => [
+      'value' => 'Hvis du har svært ved at finde det du leder efter, så kan du kontakte eller besøge biblioteket for hjælp eller <a href="https://bibliotek.dk" target="_blank">søge på bibliotek.dk</a>.',
+      'format' => 'basic',
+    ],
+  ]);
+
+  $node = Node::create([
+    'type' => 'page',
+    'title' => 'Din søgning har 0 resultater',
+    'uid' => 1,
+    'field_paragraphs' => [$paragraph],
+    'field_display_titles' => TRUE,
+    'status' => TRUE,
+    'langcode' => 'da',
+  ]);
+  $node->save();
+
+  return "Created 0-hit search page with title 'Din søgning har 0 resultater' (node ID: {$node->id()}).";
 }
