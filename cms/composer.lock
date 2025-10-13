@@ -1597,6 +1597,7 @@
                 "issues": "https://github.com/doctrine/annotations/issues",
                 "source": "https://github.com/doctrine/annotations/tree/1.14.4"
             },
+            "abandoned": true,
             "time": "2024-09-05T10:15:52+00:00"
         },
         {
@@ -5988,30 +5989,26 @@
         },
         {
             "name": "drupal/linkit",
-            "version": "7.0.9",
+            "version": "7.0.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/linkit.git",
-                "reference": "7.0.9"
+                "reference": "7.0.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/linkit-7.0.9.zip",
-                "reference": "7.0.9",
-                "shasum": "fa75d31583a5866c8dd1f0455b7b5d19642c6f34"
+                "url": "https://ftp.drupal.org/files/projects/linkit-7.0.10.zip",
+                "reference": "7.0.10",
+                "shasum": "10a7d4bce0038e887e597911b60919496c640f41"
             },
             "require": {
                 "drupal/core": "^10.1 || ^11"
             },
-            "require-dev": {
-                "drupal/ckeditor": "*",
-                "drupal/imce": "*"
-            },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "7.0.9",
-                    "datestamp": "1757621287",
+                    "version": "7.0.10",
+                    "datestamp": "1759925018",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -11026,16 +11023,16 @@
         },
         {
             "name": "mck89/peast",
-            "version": "v1.17.2",
+            "version": "v1.17.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "465810689c477fbba17f4f949b75e4d0bdab13ea"
+                "reference": "c6a63f32410d2e4ee2cd20fe94b35af147fb852d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/465810689c477fbba17f4f949b75e4d0bdab13ea",
-                "reference": "465810689c477fbba17f4f949b75e4d0bdab13ea",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/c6a63f32410d2e4ee2cd20fe94b35af147fb852d",
+                "reference": "c6a63f32410d2e4ee2cd20fe94b35af147fb852d",
                 "shasum": ""
             },
             "require": {
@@ -11048,7 +11045,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17.2-dev"
+                    "dev-master": "1.17.4-dev"
                 }
             },
             "autoload": {
@@ -11069,9 +11066,9 @@
             "description": "Peast is PHP library that generates AST for JavaScript code",
             "support": {
                 "issues": "https://github.com/mck89/peast/issues",
-                "source": "https://github.com/mck89/peast/tree/v1.17.2"
+                "source": "https://github.com/mck89/peast/tree/v1.17.4"
             },
-            "time": "2025-07-01T09:30:45+00:00"
+            "time": "2025-10-10T12:53:17+00:00"
         },
         {
             "name": "mglaman/phpstan-drupal",
