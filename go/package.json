@@ -133,7 +133,7 @@
     "mockttp": "^4.2.0",
     "next-test-api-route-handler": "^5.0.3",
     "node-mocks-http": "^1.17.2",
-    "orval": "^7.13.0",
+    "orval": "^7.13.2",
     "postcss": "^8.5.6",
     "prepend-file": "^2.0.1",
     "prettier": "^3.6.2",
