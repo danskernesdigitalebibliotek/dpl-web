@@ -530,6 +530,9 @@ class DplReactAppsController extends ControllerBase {
       'type-text' => $this->t('Type', [], ['context' => 'Work Page']),
       'we-have-shopped-text' => $this->t('In stock:', [], ['context' => 'Work Page']),
       'you-have-borrowed-text' => $this->t('You have borrowed', [], ['context' => 'Work Page']),
+      'copy-link-default-text' => $this->t('Copy link', [], ['context' => 'Work Page']),
+      'copy-link-success-text' => $this->t('Link copied', [], ['context' => 'Work Page']),
+      'copy-link-to-edition-text' => $this->t('Copy link to edition', [], ['context' => 'Work Page']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
