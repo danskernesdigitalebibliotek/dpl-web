@@ -29443,12 +29443,12 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Search"
-msgstr ""
+msgstr "Søgning"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Search Info Box"
-msgstr ""
+msgstr "Hjælpebånd i Simple Search"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -29458,7 +29458,7 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "The title of the search info box."
-msgstr ""
+msgstr "Overskriften på hjælpebåndet i søgeresultatet."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -29468,7 +29468,7 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "The content of the search info box."
-msgstr ""
+msgstr "Teksten på hjælpebåndet i søgeresultatet. Tænk over, hvordan du vil hjælpe brugeren videre, fx til Avanceret søgning, BIbliotek.dk eller bibliotekets kontaktside."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -29478,7 +29478,7 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "The label for the button in the search info box. Maximum 30 characters."
-msgstr ""
+msgstr "Teksten på link-knappen. OBS brug max. 30 tegn!"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -29491,7 +29491,10 @@ msgid "The URL the button in the search info box should link to. <br />\n"
 "                                  You can add a relative url (e.g. /advanced-search). <br />\n"
 "                                  You can search for an internal url. <br />\n"
 "                                  You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Den URL, som link-knappen i hjælpebåndet skal linke videre til. <br />\n"
+"                                         Du kan tilføje en relativ url (fx /advanced-search). <br />\n"
+"                                         Du kan søge efter en intern url. <br />\n"
+"                                         Du kan tilføje en ekstern url (der starter med with \"http://\" or \"https://\"), fx https://bibliotek.dk."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -29504,7 +29507,10 @@ msgid "URL to the page that should be shown when a search returns zero results. 
 "                                         You can add a relative url (e.g. /no-results). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "URL til den side, der bliver vist, når en søgning har 0 resultater. <br />\n"
+"                                         Du kan tilføje en relativ url (fx /din-sogning-har-0-resultater). <br />\n"
+"                                         Du kan søge efter en intern url. <br />\n"
+"                                         Du kan tilføje en ekstern url (der starter med with \"http://\" or \"https://\")."
 
 #: 
 msgctxt "Work Page"
