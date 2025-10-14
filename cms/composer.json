@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.40.0",
+                "version": "2025.42.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.40.0/dist-2025-40-0-63f085a89483e7900a097e5a46ae581fdc4cc647.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.42.0/dist-2025-42-0-98c23afb7354d1e4572909466604ae87cd9aa01d.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.40.0",
+                "version": "2025.42.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.40.0/dist-2025-40-0-2d17557e7129a888c1640cae8e026f06189254b5.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.42.0/dist-2025-42-0-92ccdecdd950a5c1d092b8db93fbfb6c053a93a3.zip",
                     "type": "zip"
                 }
             }
@@ -87,12 +87,12 @@
         "ext-dom": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
-        "brick/math": "^0.13.0",
+        "brick/math": "^0.14.0",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.40.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.40.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.42.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.42.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -199,8 +199,8 @@
         "phpdocumentor/reflection-docblock": "^5.3",
         "spatie/color": "^1.5",
         "spawnia/sailor": "^1.1.0",
-        "symfony/property-access": "^6.2",
-        "symfony/property-info": "^6.2",
+        "symfony/property-access": "^7.3",
+        "symfony/property-info": "^7.3",
         "thecodingmachine/safe": "^2.5.0",
         "webmozart/assert": "^1.11",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
@@ -338,11 +338,6 @@
             },
             "drupal/entity_clone": {
                 "2708731: Allow redirect to edit form after cloning": "https://www.drupal.org/files/issues/2024-07-25/improve-workflow-of-cloned-entity-2708731-40_patch.patch"
-            },
-            "drupal/entity_clone_template": {
-                "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch",
-                "3530772: entity_clone_template_active should be FALSE by default": "https://git.drupalcode.org/project/entity_clone_template/-/commit/7cd2ee6541cd25b6370b304911d49a00c46c3a0.patch",
-                "3530772: entity_clone_template_image default should be valid": "https://git.drupalcode.org/project/entity_clone_template/-/commit/402d76cd2c9a7a7176dec57d079cfbe806d57e50.patch"
             },
             "drupal/entity_reference_revisions": {
                 "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
