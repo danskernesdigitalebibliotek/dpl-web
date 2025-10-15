@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\dpl_login\User;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,7 @@ class DplPatronRegController extends ControllerBase {
   public function __construct(
     protected OpenIDConnectSessionInterface $session,
     protected OpenIDConnectClaims $claims,
+    protected User $user,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
   }
@@ -50,7 +52,7 @@ class DplPatronRegController extends ControllerBase {
     // If we're logged in, logout the current user, else openid_connect will
     // throw an exception on return.
     if ($this->currentUser()->isAuthenticated()) {
-      user_logout();
+      $this->user->logout();
 
       // As we just nuked the session above, trying to save `current-path` in
       // session isn't going to work, so redirect to ourselves to get a fresh
