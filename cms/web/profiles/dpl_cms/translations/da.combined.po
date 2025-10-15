@@ -28947,12 +28947,12 @@ msgstr "Find på hylden"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Default open find on shelf disclosures"
-msgstr ""
+msgstr "Fold alle filialer ud i Find på hylden"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "If checked, the find on shelf disclosures will be open by default"
-msgstr "Vælg hvorvidt alle faner i Find på hylden automatisk skal være udfoldet eller ej"
+msgstr "Hvis denne er tjekket til, så er alle Filialer i Find på hylden udfoldet."
 
 #: 
 msgctxt "dpl_fbi"
