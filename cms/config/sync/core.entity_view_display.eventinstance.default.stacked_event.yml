@@ -38,9 +38,9 @@ mode: stacked_event
 content:
   branch:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 50
     region: content

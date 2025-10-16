@@ -95,6 +95,67 @@ class ReoccurringDateFormatter {
   }
 
   /**
+   * Retrieves the string representation of an EventSeries date range without time.
+   *
+   * @param \Drupal\recurring_events\Entity\EventSeries $event_series
+   *   The EventSeries entity object.
+   *
+   * @return string
+   *   A human-readable string description of a date range without time.
+   */
+  public function getSeriesDateStringWithoutTime(EventSeries $event_series): string|null {
+    // Depending on the reoccuring types, we will want to build a human
+    // readable string. This is necessary on this level, as e.g. weekly events
+    // have a possibility to define day per week, where monthly can also
+    // define day of the month.
+    $recur_type = $event_series->getRecurType();
+
+    $upcoming_event_dates = $this->getUpcomingEventDetails($event_series);
+    if (empty($upcoming_event_dates)) {
+      return $this->translation->translate('Expired');
+    }
+
+    $start_date = $upcoming_event_dates['start'];
+
+    switch ($recur_type) {
+      // Daily | (no time).
+      case 'daily_recurring_date':
+        $date_string = $this->translation->translate('Every day');
+        break;
+
+      // Mondays, Tuesday & Wednesdays | (no time).
+      case 'weekly_recurring_date':
+        $week_days = [];
+
+        foreach ($event_series->getWeeklyDays() as $week_day) {
+          $week_days[] = $this->translation->translate($week_day);
+        }
+
+        $date_string = $this->translation->translate(
+          'Every @days',
+          ['@days' => implode(', ', $week_days)]
+        );
+        break;
+
+      // DD/MM/YY | (no time).
+      default:
+        $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
+
+        $date_string = $this->formatDate($start_date, 'j. F');
+
+        if (count($upcoming_ids) > 1) {
+          $prefix = $this->translation->translate('Next');
+          $date_string = "{$prefix}: {$date_string}";
+        }
+
+        break;
+    }
+
+    // Always return just the date string without time
+    return $date_string;
+  }
+
+  /**
    * Finding the IDs of all events that are in the future.
    *
    * @return array<int, string>
