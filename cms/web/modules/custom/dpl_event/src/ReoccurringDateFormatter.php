@@ -151,7 +151,7 @@ class ReoccurringDateFormatter {
         break;
     }
 
-    // Always return just the date string without time
+    // Always return just the date string without time.
     return $date_string;
   }
 
