@@ -266,6 +266,7 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   }
 
   $instance_storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
+  /** @var \Drupal\recurring_events\Entity\EventInstance[] $event_instances */
   $event_instances = $instance_storage->loadMultiple($upcoming_ids);
 
   // Get timing and pricing info from the first upcoming event instance.
@@ -276,13 +277,15 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
     // Extract start_time, end_time and datetime attributes from first instance.
     if (!$first_instance->get('date')->isEmpty()) {
       $date_field = $first_instance->get('date')->first();
-      $start_time = $date_field->start_date;
-      $end_time = $date_field->end_date;
+
+      $start_time = $date_field?->start_date;
+      $end_time = $date_field?->end_date;
 
       if ($start_time instanceof DrupalDateTime) {
         $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
         $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
       }
+
       if ($end_time instanceof DrupalDateTime) {
         $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
       }
@@ -291,7 +294,9 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
       if ($first_instance->hasField('event_all_day') &&
         !empty($first_instance->get('event_all_day')->getString())) {
         $variables['start_time'] = t('All day');
-        unset($variables['end_time']);
+        if (isset($variables['end_time'])) {
+          unset($variables['end_time']);
+        }
       }
     }
 
@@ -393,7 +398,9 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
   if ($eventInstance->hasField('event_all_day') &&
     !empty($eventInstance->get('event_all_day')->getString())) {
     $variables['start_time'] = t('All day');
-    unset($variables['end_time']);
+    if (isset($variables['end_time'])) {
+      unset($variables['end_time']);
+    }
   }
 
   $variables['time_combined'] = $variables['start_time'];
