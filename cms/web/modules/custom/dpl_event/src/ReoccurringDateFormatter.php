@@ -95,7 +95,7 @@ class ReoccurringDateFormatter {
   }
 
   /**
-   * Retrieves the string representation of an EventSeries date range without time.
+   * Retrieves the string representation date range without time.
    *
    * @param \Drupal\recurring_events\Entity\EventSeries $event_series
    *   The EventSeries entity object.
