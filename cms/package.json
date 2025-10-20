@@ -14,7 +14,7 @@
     "cypress": "^15.4.0",
     "cypress-if": "^1.13.2",
     "cypress-plugin-api": "^2.11.2",
-    "cypress-terminal-report": "^7.3.0",
+    "cypress-terminal-report": "^7.3.3",
     "dayjs": "^1.11.18",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
