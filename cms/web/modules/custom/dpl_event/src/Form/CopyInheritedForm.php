@@ -66,6 +66,24 @@ class CopyInheritedForm implements FormInterface, ContainerInjectionInterface {
     $form_state->set('instance', $instance);
     $form_state->set('series', $instance->getEventSeries());
 
+    $form['description'] = [
+      '#prefix' => '<p>',
+      '#suffix' => '</p>',
+      '#markup' => $this->t('If you press the button “Insert values from the series”, this instance will be filled with all the content you have created in the series.', [], ['context' => 'dpl_event']),
+    ];
+
+    $form['description2'] = [
+      '#prefix' => '<p>',
+      '#suffix' => '</p>',
+      '#markup' => $this->t('<strong>What is the point of this?</strong> You can have the content filled in so you can adjust it on this one instance and not for all instances in the series — for example, if you need to change a date or something in the body text.', [], ['context' => 'dpl_event']),
+    ];
+
+    $form['description3'] = [
+      '#prefix' => '<p>',
+      '#suffix' => '</p>',
+      '#markup' => $this->t('Be aware that as soon as you have inserted the content into the instance, <strong>this instance will no longer be updated when you make changes in the series.</strong> This cannot be undone.', [], ['context' => 'dpl_event']),
+    ];
+
     $form['overwrite_existing'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Overwrite any existing values', [], ['context' => 'dpl_event']),
@@ -73,10 +91,9 @@ class CopyInheritedForm implements FormInterface, ContainerInjectionInterface {
 
     $form['actions'] = [
       '#type' => 'actions',
-
       'submit' => [
         '#type' => 'submit',
-        '#value' => $this->t('Copy values to instance', [], ['context' => 'dpl_event']),
+        '#value' => $this->t('Insert values to instance', [], ['context' => 'dpl_event']),
       ],
     ];
 

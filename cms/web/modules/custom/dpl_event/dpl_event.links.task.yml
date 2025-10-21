@@ -1,6 +1,6 @@
 ---
 dpl_event.copy_inherited:
-  title: 'Copy values from series'
+  title: 'Insert values from series'
   base_route: entity.eventinstance.canonical
   weight: 1000
   # This route needs a paramater $eventinstance that already exists on the base route.

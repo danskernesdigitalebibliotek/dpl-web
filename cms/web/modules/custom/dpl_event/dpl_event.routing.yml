@@ -9,7 +9,7 @@ dpl_event.settings:
 dpl_event.copy_inherited:
   path: '/events/{eventinstance}/copy-inherited'
   defaults:
-    _title: 'Copy values from eventseries'
+    _title: 'Insert values from eventseries'
     _form: 'Drupal\dpl_event\Form\CopyInheritedForm'
   requirements:
     _permission: 'edit eventinstance entity'
