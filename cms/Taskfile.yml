@@ -152,6 +152,7 @@ tasks:
       - dev:build
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
+      - ./dev-scripts/local-setup-domain.sh
     vars:
       CI:
         sh: '[[ -z "${CI}" ]] && echo "false" || echo "true"'
@@ -183,6 +184,10 @@ tasks:
     cmds:
       # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
+      # Pull the images (necessary for the first reset)
+      - task dev:pull
+      # Start local environment.
+      - task dev:start
       # Build site.
       - task dev:cli -- composer install
       # Always reinstall packages tracking develop builds. The content of such
@@ -193,10 +198,6 @@ tasks:
       - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
       - task dev:cli -- composer -d dev-scripts/dpl-react install
-      # Pull the images (necessary for the first reset)
-      - task dev:pull
-      # Start local environment.
-      - task dev:start
       # Install site.
       - task dev:cli -- ./dev-scripts/install-site.sh {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       # Possibly install the BNF site.
