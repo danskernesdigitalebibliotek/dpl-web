@@ -85,36 +85,6 @@ content:
     third_party_settings: {  }
     weight: 53
     region: content
-  event_link:
-    type: link
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  event_relevant_ticket_manager:
-    type: boolean
-    label: visible
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 60
-    region: content
-  event_screen_names:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 60
-    region: content
   event_categories:
     type: entity_reference_label
     label: hidden
@@ -138,6 +108,44 @@ content:
       link: false
     third_party_settings: {  }
     weight: 4
+    region: content
+  event_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  event_place:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  event_relevant_ticket_manager:
+    type: boolean
+    label: visible
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 60
+    region: content
+  event_screen_names:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 60
     region: content
   event_tags:
     type: entity_reference_label
@@ -172,14 +180,6 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 64
-    region: content
-  event_place:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 7
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
