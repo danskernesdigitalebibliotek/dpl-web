@@ -296,16 +296,12 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
 
   // Adding a list of upcoming eventinstances, displayed on the full series.
   $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
-  $event_instances = array_values($event_instances);
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
 
-  foreach ($event_instances as $index => $event_instance) {
-    $view_mode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
-    $renderable_instance = $viewBuilder->view($event_instance, $view_mode);
-    $variables['event_instances'][] = $renderable_instance;
+  foreach ($event_instances as $event_instance) {
+    $variables['event_instances'][] = $viewBuilder->view($event_instance, 'stacked_event');
   }
-
 }
 
 /**
