@@ -29,11 +29,13 @@ class ReoccurringDateFormatter {
    *
    * @param \Drupal\recurring_events\Entity\EventSeries $event_series
    *   The EventSeries entity object.
+   * @param bool $include_time
+   *   Whether or not to show the time as part of the output.
    *
    * @return string
    *   A human-readable string description of a date range.
    */
-  public function getSeriesDateString(EventSeries $event_series): string|null {
+  public function getSeriesDateString(EventSeries $event_series, bool $include_time = TRUE): string|null {
     // Depending on the reoccuring types, we will want to build a human
     // readable string. This is necessary on this level, as e.g. weekly events
     // have a possibility to define day per week, where monthly can also
@@ -49,13 +51,13 @@ class ReoccurringDateFormatter {
     $end_date = $upcoming_event_dates['end'];
 
     switch ($recur_type) {
-      // Daily | (time).
+      // Daily.
       case 'daily_recurring_date':
         $date_string = $this->translation->translate('Every day');
 
         break;
 
-      // Mondays, Tuesday & Wednesdays | (time).
+      // Mondays, Tuesday & Wednesdays.
       case 'weekly_recurring_date':
         $week_days = [];
 
@@ -69,7 +71,7 @@ class ReoccurringDateFormatter {
         );
         break;
 
-      // DD/MM/YY | (time).
+      // DD/MM/YY.
       default:
         $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
 
@@ -83,8 +85,7 @@ class ReoccurringDateFormatter {
         break;
     }
 
-    if ($event_series->hasField('field_event_all_day') &&
-        !empty($event_series->get('field_event_all_day')->getString())) {
+    if (!$include_time || $this->isAllDay($event_series)) {
       return $date_string;
     }
 
@@ -95,64 +96,11 @@ class ReoccurringDateFormatter {
   }
 
   /**
-   * Retrieves the string representation date range without time.
-   *
-   * @param \Drupal\recurring_events\Entity\EventSeries $event_series
-   *   The EventSeries entity object.
-   *
-   * @return string
-   *   A human-readable string description of a date range without time.
+   * If an event has been marked as an all-day event, rather than specific time.
    */
-  public function getSeriesDateStringWithoutTime(EventSeries $event_series): string|null {
-    // Depending on the reoccuring types, we will want to build a human
-    // readable string. This is necessary on this level, as e.g. weekly events
-    // have a possibility to define day per week, where monthly can also
-    // define day of the month.
-    $recur_type = $event_series->getRecurType();
-
-    $upcoming_event_dates = $this->getUpcomingEventDetails($event_series);
-    if (empty($upcoming_event_dates)) {
-      return $this->translation->translate('Expired');
-    }
-
-    $start_date = $upcoming_event_dates['start'];
-
-    switch ($recur_type) {
-      // Daily | (no time).
-      case 'daily_recurring_date':
-        $date_string = $this->translation->translate('Every day');
-        break;
-
-      // Mondays, Tuesday & Wednesdays | (no time).
-      case 'weekly_recurring_date':
-        $week_days = [];
-
-        foreach ($event_series->getWeeklyDays() as $week_day) {
-          $week_days[] = $this->translation->translate($week_day);
-        }
-
-        $date_string = $this->translation->translate(
-          'Every @days',
-          ['@days' => implode(', ', $week_days)]
-        );
-        break;
-
-      // DD/MM/YY | (no time).
-      default:
-        $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
-
-        $date_string = $this->formatDate($start_date, 'j. F');
-
-        if (count($upcoming_ids) > 1) {
-          $prefix = $this->translation->translate('Next');
-          $date_string = "{$prefix}: {$date_string}";
-        }
-
-        break;
-    }
-
-    // Always return just the date string without time.
-    return $date_string;
+  public function isAllDay(EventSeries $event_series): bool {
+    return ($event_series->hasField('field_event_all_day') &&
+      !empty($event_series->get('field_event_all_day')->getString()));
   }
 
   /**
@@ -234,7 +182,7 @@ class ReoccurringDateFormatter {
   /**
    * Format a datetime to a string respecting the local timezone.
    */
-  private function formatDate(DrupalDateTime $datetime, string $format) : string {
+  public function formatDate(DrupalDateTime $datetime, string $format) : string {
     return $this->dateFormatter->format($datetime->getTimestamp(), 'custom', $format);
   }
 

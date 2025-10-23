@@ -252,72 +252,51 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   }
 
   $service = DrupalTyped::service(ReoccurringDateFormatter::class, 'dpl_event.reoccurring_date_formatter');
-  $upcoming_ids = $service->getUpcomingEventIds($event_series);
 
   // Use different date formatters based on view mode.
   $view_mode = $variables['view_mode'] ?? 'default';
   if ($view_mode === 'list_teaser') {
     // For list teaser view, use date without time.
-    $variables['formatted_date'] = $service->getSeriesDateStringWithoutTime($event_series);
+    $variables['formatted_date'] = $service->getSeriesDateString($event_series, FALSE);
   }
   else {
     // For full view and other views, use date with time.
     $variables['formatted_date'] = $service->getSeriesDateString($event_series);
   }
 
-  $instance_storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
-  /** @var \Drupal\recurring_events\Entity\EventInstance[] $event_instances */
-  $event_instances = $instance_storage->loadMultiple($upcoming_ids);
+  $upcoming_event_details = $service->getUpcomingEventDetails($event_series);
+  $upcoming_ids = $upcoming_event_details['upcoming_ids'] ?? [];
 
-  // Get timing and pricing info from the first upcoming event instance.
-  if (!empty($event_instances)) {
-    $first_instance = reset($event_instances);
-    $date_formatter = \Drupal::service('date.formatter');
+  if ($service->isAllDay($event_series)) {
+    $variables['start_time'] = t('All day');
+  }
+  else {
+    $start_date = $upcoming_event_details['start'] ?? NULL;
+    $end_date = $upcoming_event_details['end'] ?? NULL;
 
-    // Extract start_time, end_time and datetime attributes from first instance.
-    if (!$first_instance->get('date')->isEmpty()) {
-      $date_field = $first_instance->get('date')->first();
-
-      $start_time = $date_field?->start_date;
-      $end_time = $date_field?->end_date;
-
-      if ($start_time instanceof DrupalDateTime) {
-        $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
-        $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
-      }
-
-      if ($end_time instanceof DrupalDateTime) {
-        $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
-      }
-
-      // Handle all day events.
-      if ($first_instance->hasField('event_all_day') &&
-        !empty($first_instance->get('event_all_day')->getString())) {
-        $variables['start_time'] = t('All day');
-        if (isset($variables['end_time'])) {
-          unset($variables['end_time']);
-        }
-      }
+    if ($start_date instanceof DrupalDateTime) {
+      $variables['start_time'] = $service->formatDate($start_date, 'H:i');
+      $variables['datetime_attribute'] = $service->formatDate($start_date, DATE_ATOM);
     }
 
-    // Get ticket pricing from first instance.
-    if ($first_instance->hasField('event_ticket_categories')) {
-      $ticket_categories = $first_instance->get('event_ticket_categories')->referencedEntities();
-      $prices = [];
-      foreach ($ticket_categories as $category) {
-        if ($category->hasField('field_ticket_category_price') && !$category->get('field_ticket_category_price')->isEmpty()) {
-          $prices[] = $category->get('field_ticket_category_price')->value;
-        }
-      }
-      $price_formatter = \Drupal::service('dpl_event.price_formatter');
-      $variables['ticket_price_display'] = $price_formatter->formatPriceRange($prices);
+    if ($end_date instanceof DrupalDateTime) {
+      $variables['end_time'] = $service->formatDate($end_date, 'H:i');
     }
   }
 
-  if (count($upcoming_ids) < 2) {
+  // Add cache tags and 12-hours max-age fallback.
+  $variables['#cache'] = [
+    '#max-age' => (60 * 60 * 12),
+    '#tags' => ['eventinstance_list', 'eventseries_list'],
+  ];
+
+  if (count($upcoming_ids) < 2 || $view_mode !== 'full') {
     return;
   }
 
+  // Adding a list of upcoming eventinstances, displayed on the full series.
+  $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
+  $event_instances = array_values($event_instances);
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
 
@@ -327,11 +306,6 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
     $variables['event_instances'][] = $renderable_instance;
   }
 
-  // Add cache tags and 12-hours max-age fallback.
-  $variables['#cache'] = [
-    '#max-age' => (60 * 60 * 12),
-    '#tags' => ['eventinstance_list', 'eventseries_list'],
-  ];
 }
 
 /**
