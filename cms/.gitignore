@@ -68,3 +68,4 @@ docker-compose.override.yml
 
 # We use this in the BNF setup, it should never be committed.
 /web/sites/sites.php
+
