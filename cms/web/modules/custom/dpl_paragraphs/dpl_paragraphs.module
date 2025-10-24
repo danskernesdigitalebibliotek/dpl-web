@@ -247,7 +247,7 @@ function _dpl_paragraphs_prepare_material_grid_render_array(ParagraphInterface $
     '#data' => [
       'title' => $title,
       'description' => $description,
-      'selected-amount-of-materials-for-display' => $display_amount,
+      'requested-amount' => $display_amount,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
       'blacklisted-search-branches-config' => $blacklisted_search_branches_config,
       'branches-config' => $branches_config,
