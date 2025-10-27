@@ -12,13 +12,13 @@ field_name: field_address_dawa
 entity_type: node
 bundle: branch
 label: Address
-description: ''
+description: 'Start typing to look up addresses in Denmark.'
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   address_type: adresse
-  allow_non_unique_address: false
+  allow_non_unique_address: true
   allow_non_danish_address: true
 field_type: address_dawa

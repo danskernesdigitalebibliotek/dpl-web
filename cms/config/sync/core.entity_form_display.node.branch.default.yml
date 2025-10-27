@@ -28,7 +28,6 @@ third_party_settings:
   field_group:
     group_contact_details:
       children:
-        - field_address_dawa
         - field_email
         - field_phone
       label: 'Contact details'
@@ -51,17 +50,17 @@ mode: default
 content:
   field_address:
     type: address_default
-    weight: 10
+    weight: 11
     region: content
     settings:
       wrapper_type: fieldset
     third_party_settings: {  }
   field_address_dawa:
     type: address_dawa
-    weight: 13
+    weight: 10
     region: content
     settings:
-      size: 80
+      size: 120
       placeholder: 'Search for address..'
     third_party_settings: {  }
   field_agency_branch_id:
