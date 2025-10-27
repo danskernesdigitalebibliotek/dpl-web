@@ -237,6 +237,16 @@ const adgangsplatformenLoginOauthMappings = ({
       jsonBody: patronBody(userIsAlreadyRegistered),
     },
   });
+
+  cy.createMapping({
+    request: {
+      method: 'GET',
+      urlPath: '/logout',
+    },
+    response: {
+      body: "A OK."
+    }
+  });
 };
 
 Cypress.Commands.add(
