@@ -57,7 +57,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
       return $default_return;
     }
 
-    return $field->view();
+    return $field->view('full');
   }
 
   /**
@@ -98,7 +98,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
       return NULL;
     }
 
-    $branch_address_field = 'field_address';
+    $branch_address_field = 'field_address_dawa';
     $branch = $branch_field->referencedEntities()[0] ?? NULL;
 
     if (!($branch instanceof NodeInterface) || !$branch->hasField($branch_address_field)) {

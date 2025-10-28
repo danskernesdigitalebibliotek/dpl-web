@@ -14,7 +14,7 @@ dependencies:
     - node.type.branch
   module:
     - address
-    - address_dawa
+    - dpl_library_agency
     - entity_reference_revisions
     - telephone_formatter
     - user
@@ -31,18 +31,18 @@ content:
     weight: 2
     region: content
   field_address_dawa:
-    type: address_dawa
-    label: above
+    type: dpl_address_dawa_formatter
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 3
     region: content
   field_email:
     type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_main_media:
     type: entity_reference_entity_view
@@ -60,7 +60,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_phone:
     type: telephone_formatter
@@ -70,7 +70,7 @@ content:
       link: true
       default_country: DK
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   links:
     settings: {  }
