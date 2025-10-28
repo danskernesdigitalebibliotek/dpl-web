@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-27 11:27+0100\n"
-"PO-Revision-Date: 2025-10-27 11:27+0100\n"
+"POT-Creation-Date: 2025-10-28 10:43+0100\n"
+"PO-Revision-Date: 2025-10-28 10:43+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2376,6 +2376,36 @@ msgstr ""
 msgctxt "Work Page"
 msgid "Copy link to edition"
 msgstr "Kopier link til udgave\n"
+
+msgctxt "Work Page"
+msgid "Change edition"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Choose"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Latest edition"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Close edition switch modal"
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"Select which edition you would like to reserve from the available options "
+"below."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Edition switch modal"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Choose Edition"
+msgstr ""
 
 msgctxt "Opening Hours"
 msgid "Opening Hours"
