@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-28 10:43+0100\n"
-"PO-Revision-Date: 2025-10-28 10:43+0100\n"
+"POT-Creation-Date: 2025-10-28 11:11+0100\n"
+"PO-Revision-Date: 2025-10-28 11:11+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2025-10-28 11:12+0100\n"
+"PO-Revision-Date: 2025-10-28 11:12+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5006,6 +5018,43 @@ msgstr ""
 "paragraf. Hvis du vælger at bevare publiseringen, vil udløbne instanser "
 "blive henvist til de relaterede serier."
 
+msgctxt "dpl_event"
+msgid "Could not find event-instance"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"If you press the button “Insert values from the series”, this instance will "
+"be filled with all the content you have created in the series."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"<strong>What is the point of this?</strong> You can have the content filled "
+"in so you can adjust it on this one instance and not for all instances in "
+"the series — for example, if you need to change a date or something in the "
+"body text."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"Be aware that as soon as you have inserted the content into the instance, "
+"<strong>this instance will no longer be updated when you make changes in the "
+"series.</strong> This cannot be undone."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Overwrite any existing values"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Insert values to instance"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Values has been copied and saved from series."
+msgstr ""
+
 msgid "Get tickets"
 msgstr "Hent billetter"
 
@@ -5808,11 +5857,17 @@ msgstr "Arrangementsindstillinger"
 msgid "Configure handling of events."
 msgstr "Indstillinger for arrangementer"
 
+msgid "Insert values from series"
+msgstr ""
+
 msgid "Event"
 msgstr "Arrangement"
 
 msgid "Custom handling related to events."
 msgstr "Indstillinger for arrangementer"
+
+msgid "Insert values from eventseries"
+msgstr ""
 
 msgid "DPL Cookies"
 msgstr "DPL Cookies"
