@@ -61,7 +61,7 @@ services:
     environment:
       << : *default-environment
       # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
-      # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
+      # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy)
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-bnfvarnish.${DEV_TLD:-docker}
       VIRTUAL_PORT: 8080
       SERVICE_NAME: bnfvarnish

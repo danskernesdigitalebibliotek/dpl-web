@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-14 13:02+0200\n"
-"PO-Revision-Date: 2025-10-14 13:02+0200\n"
+"POT-Creation-Date: 2025-10-28 14:32+0100\n"
+"PO-Revision-Date: 2025-10-28 14:32+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2229,6 +2229,9 @@ msgid ""
 "You do not have access to digital materials from this library as you are not "
 "registered as a resident in the municipality. Contact the library."
 msgstr ""
+"Du har ikke adgang til lån af digitale materialer fra dette bibliotek, da du "
+"ikke har en registreret bopælsadresse i kommunen. Kontakt biblioteket for "
+"yderligere oplysninger."
 
 msgctxt "Work Page"
 msgid "No country could be found with the given country code"
@@ -2372,7 +2375,37 @@ msgstr ""
 
 msgctxt "Work Page"
 msgid "Copy link to edition"
+msgstr "Kopier link til udgave\n"
+
+msgctxt "Work Page"
+msgid "Change edition"
+msgstr "Skift udgave"
+
+msgctxt "Work Page"
+msgid "Choose"
+msgstr "Vælg"
+
+msgctxt "Work Page"
+msgid "Latest edition"
+msgstr "Seneste udgave"
+
+msgctxt "Work Page"
+msgid "Close edition switch modal"
 msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"Select which edition you would like to reserve from the available options "
+"below."
+msgstr "Vælg hvilken af udgaverne, som du vil reservere."
+
+msgctxt "Work Page"
+msgid "Edition switch modal"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Choose Edition"
+msgstr "Vælg udgave"
 
 msgctxt "Opening Hours"
 msgid "Opening Hours"
@@ -3081,6 +3114,13 @@ msgid ""
 "                                         You can add an external url "
 "(starting with \"http://\" or \"https://\")."
 msgstr ""
+"URL til den side, der bliver vist, når en søgning har 0 resultater. <br />\n"
+"                                         Du kan tilføje en relativ url (fx /"
+"din-sogning-har-0-resultater). <br />\n"
+"                                         Du kan søge efter en intern url. "
+"<br />\n"
+"                                         Du kan tilføje en ekstern url (der "
+"starter med with \"http://\" or \"https://\")."
 
 msgctxt "Library Agency Configuration"
 msgid "Opening Hours Link (remove link to enable sidebar)"
@@ -3110,11 +3150,11 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Search"
-msgstr ""
+msgstr "Søgning"
 
 msgctxt "Library Agency Configuration"
 msgid "Search Info Box"
-msgstr ""
+msgstr "Hjælpebånd i Simple Search"
 
 msgctxt "Library Agency Configuration"
 msgid "Title"
@@ -3122,7 +3162,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "The title of the search info box."
-msgstr ""
+msgstr "Overskriften på hjælpebåndet i søgeresultatet."
 
 msgctxt "Library Agency Configuration"
 msgid "Content"
@@ -3131,6 +3171,9 @@ msgstr ""
 msgctxt "Library Agency Configuration"
 msgid "The content of the search info box."
 msgstr ""
+"Teksten på hjælpebåndet i søgeresultatet. Tænk over, hvordan du vil hjælpe "
+"brugeren videre, fx til Avanceret søgning, BIbliotek.dk eller bibliotekets "
+"kontaktside."
 
 msgctxt "Library Agency Configuration"
 msgid "Button text"
@@ -3138,7 +3181,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "The label for the button in the search info box. Maximum 30 characters."
-msgstr ""
+msgstr "Teksten på link-knappen. OBS brug max. 30 tegn!"
 
 msgctxt "Library Agency Configuration"
 msgid "Button URL"
@@ -3154,6 +3197,13 @@ msgid ""
 "                                  You can add an external url (starting with "
 "\"http://\" or \"https://\")."
 msgstr ""
+"Den URL, som link-knappen i hjælpebåndet skal linke videre til. <br />\n"
+"                                         Du kan tilføje en relativ url (fx /"
+"advanced-search). <br />\n"
+"                                         Du kan søge efter en intern url. "
+"<br />\n"
+"                                         Du kan tilføje en ekstern url (der "
+"starter med with \"http://\" or \"https://\"), fx https://bibliotek.dk."
 
 msgctxt "Library Agency Configuration"
 msgid "Find on shelf"
@@ -3161,13 +3211,12 @@ msgstr "Find på hylden"
 
 msgctxt "Library Agency Configuration"
 msgid "Default open find on shelf disclosures"
-msgstr ""
+msgstr "Fold alle filialer ud i Find på hylden"
 
 msgctxt "Library Agency Configuration"
 msgid "If checked, the find on shelf disclosures will be open by default"
 msgstr ""
-"Vælg hvorvidt alle faner i Find på hylden automatisk skal være udfoldet "
-"eller ej"
+"Hvis denne er tjekket til, så er alle Filialer i Find på hylden udfoldet."
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
@@ -3521,7 +3570,7 @@ msgid "Image"
 msgstr "Billede"
 
 msgid "Media type"
-msgstr "Media type"
+msgstr "Medie type"
 
 msgid "Generate thumbnails"
 msgstr ""
@@ -4957,6 +5006,43 @@ msgstr ""
 "paragraf. Hvis du vælger at bevare publiseringen, vil udløbne instanser "
 "blive henvist til de relaterede serier."
 
+msgctxt "dpl_event"
+msgid "Could not find event-instance"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"If you press the button “Insert values from the series”, this instance will "
+"be filled with all the content you have created in the series."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"<strong>What is the point of this?</strong> You can have the content filled "
+"in so you can adjust it on this one instance and not for all instances in "
+"the series — for example, if you need to change a date or something in the "
+"body text."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"Be aware that as soon as you have inserted the content into the instance, "
+"<strong>this instance will no longer be updated when you make changes in the "
+"series.</strong> This cannot be undone."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Overwrite any existing values"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Insert values to instance"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Values has been copied and saved from series."
+msgstr ""
+
 msgid "Get tickets"
 msgstr "Hent billetter"
 
@@ -5759,11 +5845,17 @@ msgstr "Arrangementsindstillinger"
 msgid "Configure handling of events."
 msgstr "Indstillinger for arrangementer"
 
+msgid "Insert values from series"
+msgstr ""
+
 msgid "Event"
 msgstr "Arrangement"
 
 msgid "Custom handling related to events."
 msgstr "Indstillinger for arrangementer"
+
+msgid "Insert values from eventseries"
+msgstr ""
 
 msgid "DPL Cookies"
 msgstr "DPL Cookies"
@@ -18103,19 +18195,6 @@ msgstr ""
 "Afpubliceret af Scheduler. Den planlagte dato for afpublicering var "
 "@unpublish_on."
 
-msgid "Config Update for actions"
-msgstr "Config opdatering for handlinger"
-
-msgid "Enable Config Update Reports"
-msgstr "Enable Config Update Reports"
-
-msgid ""
-"Action '%action_id' is missing. Use <a href=':url'>Config Update</a> to "
-"import the missing action."
-msgstr ""
-"Handlingen '%action_id' mangler. Brug <a href=':url'>Config Update</a> til "
-"at importere den manglende handling."
-
 msgid "settings"
 msgstr "indstillinger"
 
@@ -21647,9 +21726,7 @@ msgstr ""
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:description"
 msgid ""
 "Determines the amount of materials that will be shown, based on the CQL "
-"string. <br /><br />Obs: If for example a CQL string has 11 results, and an "
-"editor chooses 12. The list will display 8 instead of 11, since the grid "
-"should be able to increment by 4. "
+"string. "
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_cql_search:label"
@@ -21757,10 +21834,10 @@ msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_work_ids:description"
 msgid ""
-"The grid will only display materials in internvals of 4. <br /><br />Example "
-"work ID: work-of:870970-basis:136336282.<br /><br />If you need to link to a "
-"specific type, select it from the dropdown and the system will display that, "
-"if it is available."
+"Example work ID: work-of:870970-basis:136336282.<br /><br />If you need to "
+"link to a specific type, select it from the dropdown and the system will "
+"display that, if it is available. <strong>Supports a maximum of 32 items.</"
+"strong>"
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_manual.field_work_id:label"
@@ -22138,34 +22215,130 @@ msgid "16"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:0:label"
-msgid "4"
+msgid "1"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:1:label"
-msgid "8"
+msgid "2"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:2:label"
-msgid "12"
+msgid "3"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:3:label"
-msgid "16"
+msgid "4"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:4:label"
-msgid "20"
+msgid "5"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:5:label"
-msgid "24"
+msgid "6"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:6:label"
-msgid "28"
+msgid "7"
 msgstr ""
 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:7:label"
+msgid "8"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:8:label"
+msgid "9"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:9:label"
+msgid "10"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:10:label"
+msgid "11"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:11:label"
+msgid "12"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:12:label"
+msgid "13"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:13:label"
+msgid "14"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:14:label"
+msgid "15"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:15:label"
+msgid "16"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:16:label"
+msgid "17"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:17:label"
+msgid "18"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:18:label"
+msgid "19"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:19:label"
+msgid "20"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:20:label"
+msgid "21"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:21:label"
+msgid "22"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:22:label"
+msgid "23"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:23:label"
+msgid "24"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:24:label"
+msgid "25"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:25:label"
+msgid "26"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:26:label"
+msgid "27"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:27:label"
+msgid "28"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:28:label"
+msgid "29"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:29:label"
+msgid "30"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:30:label"
+msgid "31"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:31:label"
 msgid "32"
 msgstr ""
 

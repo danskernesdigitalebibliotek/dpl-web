@@ -381,7 +381,7 @@ Cypress.Commands.add('deleteEntitiesIfExists', (name) => {
 });
 
 Cypress.Commands.add('openParagraphsModal', () => {
-  cy.get('button[title="Show all Paragraphs"]').click();
+  cy.get('button[title="Show all Paragraphs"]').first().click();
 });
 
 // According to the documentation of types and Cypress commands
