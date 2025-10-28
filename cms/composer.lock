@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "586cfac638852687040494676a0b0be7",
+    "content-hash": "79338b942214e1bd5ec487f0c15a21ae",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1107,19 +1107,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2025.44.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.44.0/dist-2025-44-0-aa70aeb29319678fa1f46644a1d8c8fb80290413.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-KBHBIB-100-brugeroprettelse-afdeling/dist-kbhbib-100-brugeroprettelse-afdeling.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2025.44.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.44.0/dist-2025-44-0-ee0874ae76a8d170f790a220d96f114a7f66dacf.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-KBHBIB-100-brugeroprettelse-vaelg-afdeling/dist-kbhbib-100-brugeroprettelse-vaelg-afdeling.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -21736,6 +21736,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-design-system": 20,
         "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/address_dawa": 20,
         "drupal/default_content": 15,

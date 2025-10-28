@@ -56,10 +56,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.44.0",
+                "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.44.0/dist-2025-44-0-ee0874ae76a8d170f790a220d96f114a7f66dacf.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-KBHBIB-100-brugeroprettelse-vaelg-afdeling/dist-kbhbib-100-brugeroprettelse-vaelg-afdeling.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -72,9 +72,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.44.0",
+                "version": "0.0.0-dev",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.44.0/dist-2025-44-0-aa70aeb29319678fa1f46644a1d8c8fb80290413.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-KBHBIB-100-brugeroprettelse-afdeling/dist-kbhbib-100-brugeroprettelse-afdeling.zip",
                     "type": "zip"
                 }
             }
@@ -107,8 +107,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.44.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.44.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
