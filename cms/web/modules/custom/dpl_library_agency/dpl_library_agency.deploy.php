@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\node\NodeInterface;
 use function Safe\preg_replace;
 use function Safe\json_decode;
@@ -91,4 +92,16 @@ function dpl_library_agency_deploy_migrate_addresses(): string {
   $total_count = count($branches);
 
   return "Migrated $updated_count/$total_count branch addresses to DAWA field.";
+}
+
+/**
+ * Setting the default value for 'branch address search' setting.
+ */
+function dpl_library_agency_deploy_set_address_search(): string {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('dpl_library_agency.general_settings');
+  $config->set('enable_branch_address_search', GeneralSettings::ENABLE_BRANCH_ADDRESS_SEARCH);
+  $config->save(TRUE);
+
+  return "Default config value for branch address search set.";
 }
