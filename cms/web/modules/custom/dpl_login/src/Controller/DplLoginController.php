@@ -12,6 +12,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\User;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
@@ -39,6 +40,7 @@ class DplLoginController extends ControllerBase {
     protected Config $config,
     protected OpenIDConnectClaims $claims,
     protected OpenIDConnectSessionInterface $session,
+    protected User $user,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
   }
@@ -64,7 +66,7 @@ class DplLoginController extends ControllerBase {
     // Log out user in Drupal.
     // We do this regardless whether it is possible to logout remotely or not.
     // We do not want the user to get stuck on the site in a logged in state.
-    user_logout();
+    $this->user->logout();
 
     // Handle case of a user that is either:
     // NOT authenticated by Adgangsplatformen
@@ -120,7 +122,7 @@ class DplLoginController extends ControllerBase {
         'referer' => $request->headers->get('referer') ?? "unknown",
       ]);
 
-      user_logout();
+      $this->user->logout();
 
       // As we just nuked the session above, trying to save `current-path` in
       // session isn't going to work, so redirect to ourselves to get a fresh

@@ -126,7 +126,7 @@ jobs:
       - name: Run Lighthouse test
         run: task ci:lighthouse
       - name: Archive logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: lighthouse-results
           path: .lighthouseci
@@ -150,7 +150,7 @@ jobs:
         run: task ci:pa11y
       - name: Archive screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: pa11y-screenshots
           path: pa11y/screenshots
@@ -174,13 +174,13 @@ jobs:
         run: task ci:cypress
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cypress-videos
           path: cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cypress-screenshots
           path: cypress/screenshots
@@ -195,7 +195,7 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           cache: 'yarn'
       - name: Install dependencies
@@ -236,7 +236,7 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           cache: 'yarn'
       - name: Install dependencies
@@ -254,7 +254,7 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           cache: 'yarn'
       - name: Install dependencies

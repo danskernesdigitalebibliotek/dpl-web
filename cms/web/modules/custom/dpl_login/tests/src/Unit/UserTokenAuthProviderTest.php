@@ -75,7 +75,7 @@ class UserTokenAuthProviderTest extends UnitTestCase {
    */
   public function testKnownBearerTokenAuthenticatesUser(): void {
     $user = ($this->prophesize(AccountInterface::class))->reveal();
-    $this->authMap->load('unique-patron-id', 'adgangsplatformen')->willReturn($user);
+    $this->authMap->load('unique-patron-id', 'openid_connect.adgangsplatformen')->willReturn($user);
     $this->openIdClient->retrieveUserInfo('abcd1234')->willReturn([
       'sub' => 'unique-patron-id',
     ]);
@@ -109,7 +109,7 @@ class UserTokenAuthProviderTest extends UnitTestCase {
    * A request with a known bearer token mapping to an unknown user does not.
    */
   public function testUnknownPatronIdDoesNotAuthenticateUser(): void {
-    $this->authMap->load('unknown-patron-id', 'adgangsplatformen')->willReturn(FALSE);
+    $this->authMap->load('unknown-patron-id', 'openid_connect.adgangsplatformen')->willReturn(FALSE);
     $this->openIdClient->retrieveUserInfo('abcd1234')->willReturn([
       'sub' => 'unknown-patron-id',
     ]);

@@ -15,6 +15,7 @@ use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\preg_match as preg_match;
+use function Safe\json_decode;
 
 /**
  * General Settings form for a library agency.
@@ -169,6 +170,20 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
+    $form['reservations']['zero_hits_search_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('URL til 0-hits søgninger', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('URL to the page that should be shown when a search returns zero results. <br />
+                                         You can add a relative url (e.g. /no-results). <br />
+                                         You can search for an internal url. <br />
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('zero_hits_search_url') ?? GeneralSettings::ZERO_HITS_SEARCH_URL,
+    ];
+
     $form['opening_hours_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Opening Hours Link (remove link to enable sidebar)', [], ['context' => 'Library Agency Configuration']),
@@ -182,6 +197,57 @@ class GeneralSettingsForm extends ConfigFormBase {
         'linkit_profile_id' => 'default',
       ],
       '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
+    ];
+
+    $form['search'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Search', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['search']['search_infobox'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Search Info Box', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['search']['search_infobox']['search_infobox_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Title', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('search_infobox_title') ?? GeneralSettings::SEARCH_INFOBOX_TITLE,
+      '#description' => $this->t('The title of the search info box.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $form['search']['search_infobox']['search_infobox_content'] = [
+      '#type' => 'text_format',
+      '#title' => $this->t('Content', [], ['context' => 'Library Agency Configuration']),
+      '#format' => 'limited',
+      '#allowed_formats' => ['limited'],
+      '#default_value' => $config->get('search_infobox_content.value') ?? json_decode(GeneralSettings::SEARCH_INFOBOX_CONTENT, TRUE)['value'],
+      '#description' => $this->t('The content of the search info box.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $form['search']['search_infobox']['search_infobox_button_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Button text', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('search_infobox_button_label') ?? GeneralSettings::SEARCH_INFOBOX_BUTTON_LABEL,
+      '#description' => $this->t('The label for the button in the search info box. Maximum 30 characters.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $form['search']['search_infobox']['search_infobox_button_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('Button URL', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('The URL the button in the search info box should link to. <br />
+                                  You can add a relative url (e.g. /advanced-search). <br />
+                                  You can search for an internal url. <br />
+                                  You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('search_infobox_button_url') ?? GeneralSettings::SEARCH_INFOBOX_BUTTON_URL,
     ];
 
     $form['find_on_shelf'] = [
@@ -332,6 +398,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
+      ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('fbi_profiles', [
@@ -339,6 +406,10 @@ class GeneralSettingsForm extends ConfigFormBase {
         'local' => $form_state->getValue('fbi_profile_local'),
         'global' => $form_state->getValue('fbi_profile_global'),
       ])
+      ->set('search_infobox_title', $form_state->getValue('search_infobox_title'))
+      ->set('search_infobox_content', $form_state->getValue('search_infobox_content'))
+      ->set('search_infobox_button_label', $form_state->getValue('search_infobox_button_label'))
+      ->set('search_infobox_button_url', $form_state->getValue('search_infobox_button_url'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));

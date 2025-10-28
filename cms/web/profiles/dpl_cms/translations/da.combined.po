@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-01 18:08+0200\n"
-"PO-Revision-Date: 2025-10-01 18:08+0200\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-01 18:09+0200\n"
-"PO-Revision-Date: 2025-10-01 18:09+0200\n"
+"POT-Creation-Date: 2025-10-27 11:27+0100\n"
+"PO-Revision-Date: 2025-10-27 11:27+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -228,7 +216,8 @@ msgstr "Luk"
 msgctxt "React apps (Global error handling)"
 msgid "An error occurred"
 msgstr ""
-"Der opstod en uventet fejl, prøv igen senere eller kontakt biblioteket."
+"Der opstod en uventet fejl - du kan prøve at opdatere siden, prøve igen "
+"senere eller kontakte biblioteket."
 
 msgctxt "Global"
 msgid "Animated series"
@@ -2240,6 +2229,9 @@ msgid ""
 "You do not have access to digital materials from this library as you are not "
 "registered as a resident in the municipality. Contact the library."
 msgstr ""
+"Du har ikke adgang til lån af digitale materialer fra dette bibliotek, da du "
+"ikke har en registreret bopælsadresse i kommunen. Kontakt biblioteket for "
+"yderligere oplysninger."
 
 msgctxt "Work Page"
 msgid "No country could be found with the given country code"
@@ -2372,6 +2364,18 @@ msgstr "Hjemme:"
 msgctxt "Work Page"
 msgid "You have borrowed"
 msgstr "Du har lånt"
+
+msgctxt "Work Page"
+msgid "Copy link"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Link copied"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Copy link to edition"
+msgstr "Kopier link til udgave\n"
 
 msgctxt "Opening Hours"
 msgid "Opening Hours"
@@ -3066,6 +3070,29 @@ msgstr ""
 "tilføje en ekstern url (startende med with \"http://\" or \"https://\")."
 
 msgctxt "Library Agency Configuration"
+msgid "URL til 0-hits søgninger"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"URL to the page that should be shown when a search returns zero results. "
+"<br />\n"
+"                                         You can add a relative url (e.g. /"
+"no-results). <br />\n"
+"                                         You can search for an internal url. "
+"<br />\n"
+"                                         You can add an external url "
+"(starting with \"http://\" or \"https://\")."
+msgstr ""
+"URL til den side, der bliver vist, når en søgning har 0 resultater. <br />\n"
+"                                         Du kan tilføje en relativ url (fx /"
+"din-sogning-har-0-resultater). <br />\n"
+"                                         Du kan søge efter en intern url. "
+"<br />\n"
+"                                         Du kan tilføje en ekstern url (der "
+"starter med with \"http://\" or \"https://\")."
+
+msgctxt "Library Agency Configuration"
 msgid "Opening Hours Link (remove link to enable sidebar)"
 msgstr "Åbningstider link (fjern link for at aktivere sidebar)"
 
@@ -3092,18 +3119,74 @@ msgstr ""
 "(starting with \"http://\" or \"https://\")."
 
 msgctxt "Library Agency Configuration"
+msgid "Search"
+msgstr "Søgning"
+
+msgctxt "Library Agency Configuration"
+msgid "Search Info Box"
+msgstr "Hjælpebånd i Simple Search"
+
+msgctxt "Library Agency Configuration"
+msgid "Title"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The title of the search info box."
+msgstr "Overskriften på hjælpebåndet i søgeresultatet."
+
+msgctxt "Library Agency Configuration"
+msgid "Content"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The content of the search info box."
+msgstr ""
+"Teksten på hjælpebåndet i søgeresultatet. Tænk over, hvordan du vil hjælpe "
+"brugeren videre, fx til Avanceret søgning, BIbliotek.dk eller bibliotekets "
+"kontaktside."
+
+msgctxt "Library Agency Configuration"
+msgid "Button text"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The label for the button in the search info box. Maximum 30 characters."
+msgstr "Teksten på link-knappen. OBS brug max. 30 tegn!"
+
+msgctxt "Library Agency Configuration"
+msgid "Button URL"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"The URL the button in the search info box should link to. <br />\n"
+"                                  You can add a relative url (e.g. /advanced-"
+"search). <br />\n"
+"                                  You can search for an internal url. <br /"
+">\n"
+"                                  You can add an external url (starting with "
+"\"http://\" or \"https://\")."
+msgstr ""
+"Den URL, som link-knappen i hjælpebåndet skal linke videre til. <br />\n"
+"                                         Du kan tilføje en relativ url (fx /"
+"advanced-search). <br />\n"
+"                                         Du kan søge efter en intern url. "
+"<br />\n"
+"                                         Du kan tilføje en ekstern url (der "
+"starter med with \"http://\" or \"https://\"), fx https://bibliotek.dk."
+
+msgctxt "Library Agency Configuration"
 msgid "Find on shelf"
 msgstr "Find på hylden"
 
 msgctxt "Library Agency Configuration"
 msgid "Default open find on shelf disclosures"
-msgstr ""
+msgstr "Fold alle filialer ud i Find på hylden"
 
 msgctxt "Library Agency Configuration"
 msgid "If checked, the find on shelf disclosures will be open by default"
 msgstr ""
-"Vælg hvorvidt alle faner i Find på hylden automatisk skal være udfoldet "
-"eller ej"
+"Hvis denne er tjekket til, så er alle Filialer i Find på hylden udfoldet."
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
@@ -3422,6 +3505,9 @@ msgstr ""
 "Kan ikke hente token fra Adgangsplatformen. Tjek venligst, om det angivne "
 "Client ID, Client Secret and Agency ID er korrekt."
 
+msgid "Could not find token for user."
+msgstr ""
+
 msgid "Library token"
 msgstr "Biblioteks token"
 
@@ -3454,7 +3540,7 @@ msgid "Image"
 msgstr "Billede"
 
 msgid "Media type"
-msgstr "Media type"
+msgstr "Medie type"
 
 msgid "Generate thumbnails"
 msgstr ""
@@ -10391,40 +10477,14 @@ msgstr ""
 msgid "Configure Custom tags below."
 msgstr "Configure Custom tags below."
 
-msgid ""
-"Multiple values may be used, separated by `:delimiter`. Note: Tokens that "
-"return multiple values will be handled automatically."
-msgstr ""
-"Flere værdier kan anvendes, adskilt af :delimiter. Bemærk: Tokens, der "
-"returnerer flere værdier, vil blive håndteret automatisk."
-
-msgid ""
-"This will be able to extract the URL from an image field if the field is "
-"configured properly."
-msgstr ""
-"Dette vil kunne udtrække URL'en fra et billedfelt, hvis feltet er "
-"konfigureret korrekt."
-
-msgid ""
-"Any relative or protocol-relative URLs will be converted to absolute URLs."
-msgstr ""
-"Alle relative eller protokol-relative URL'er vil blive konverteret til "
-"absolutte URL'er."
-
-msgid ""
-"Any URLs which start with \"http://\" will be converted to \"https://\"."
-msgstr ""
-"Alle URL'er, der starter med \"http://\" bliver konverteret til \"https://\"."
-
-msgid ""
-"This will be truncated to a maximum of %max characters after any tokens are "
-"processed."
-msgstr ""
-"Dette vil blive afkortet til maksimalt %max tegn, efter at eventuelle tokens "
-"er behandlet."
-
 msgid "Specify the name of the custom tag."
 msgstr "Specify the name of the custom tag."
+
+msgid ""
+"Enter a unique identifier for this custom tag. This identifier can contain "
+"lowercase letters, numbers and underscores. This is only used internally, it "
+"is not used in the actual HTML output."
+msgstr ""
 
 msgid "Specify the description of the Custom tag."
 msgstr "Specify the description of the Custom tag."
@@ -10435,29 +10495,95 @@ msgstr "Meta"
 msgid "Select the HTML element of the Custom tag."
 msgstr "Select the HTML element of the Custom tag."
 
-msgid "Name attribute"
-msgstr "Name attribute"
-
-msgid "Http Equiv"
-msgstr "Http Equiv"
-
-msgid "Item Prop"
-msgstr "Item Prop"
-
-msgid "Rel"
-msgstr "Rel"
-
-msgid "Select the Name attribute of the Custom tag."
-msgstr "Select the Name attribute of the Custom tag."
-
 msgid "Value attribute"
 msgstr "Værdi attribut"
 
 msgid "Href"
 msgstr "Href"
 
-msgid "Select the Value attribute of the Custom tag."
-msgstr "Vælg værdiattributten for det brugerdefinerede tag."
+msgid "Charset"
+msgstr ""
+
+msgid ""
+"Select the Value attribute of the Custom tag. This determines which HTML "
+"attribute will contain the user-provided content."
+msgstr ""
+
+msgid "HTML Attributes"
+msgstr "HTML-attributter"
+
+msgid ""
+"Define the HTML attributes for this custom meta tag. The first attribute "
+"serves as the primary identifier and is required. Additional attributes are "
+"optional and provide fixed values for all instances of this tag."
+msgstr ""
+
+msgid "Primary attribute (Required)"
+msgstr ""
+
+msgid "Additional attribute @num"
+msgstr ""
+
+msgid "This attribute identifies the meta tag and is required."
+msgstr ""
+
+msgid "This attribute provides a fixed value for all instances of this tag."
+msgstr ""
+
+msgid "Attribute name"
+msgstr ""
+
+msgid "Common values: name, property, rel, http-equiv, itemprop."
+msgstr ""
+
+msgid "Additional attribute name (e.g., type, sizes)."
+msgstr ""
+
+msgid "Attribute value"
+msgstr ""
+
+msgid ""
+"For new tags, defaults to the machine name. For existing tags, this "
+"identifies the specific meta tag."
+msgstr ""
+
+msgid "Fixed value for this attribute."
+msgstr ""
+
+msgid "Add another attribute"
+msgstr ""
+
+msgid "Examples"
+msgstr "Eksempler"
+
+msgid ""
+"<h4>Common Examples:</h4>\n"
+"        <ul>\n"
+"          <li><strong>Basic meta tag:</strong><br>\n"
+"            Primary attribute: name = \"description\"<br>\n"
+"            Result: &lt;meta name=\"description\" content=\"[user-input]\" /"
+"&gt;</li>\n"
+"          <li><strong>Open Graph tag:</strong><br>\n"
+"            Primary attribute: property = \"og:title\"<br>\n"
+"            Result: &lt;meta property=\"og:title\" content=\"[user-input]\" /"
+"&gt;</li>\n"
+"          <li><strong>Twitter Card:</strong><br>\n"
+"            Primary attribute: name = \"twitter:card\"<br>\n"
+"            Result: &lt;meta name=\"twitter:card\" content=\"[user-input]\" /"
+"&gt;</li>\n"
+"          <li><strong>Link with type:</strong><br>\n"
+"            Primary attribute: rel = \"icon\"<br>\n"
+"            Additional attribute: type = \"image/svg+xml\"<br>\n"
+"            Result: &lt;link rel=\"icon\" type=\"image/svg+xml\" "
+"href=\"[user-input]\" /&gt;</li>\n"
+"        </ul>"
+msgstr ""
+
+msgid "At least one attribute with both name and value must be provided."
+msgstr ""
+
+msgid "The primary attribute name and value are required."
+msgstr ""
 
 msgid "Created %label Custom tag."
 msgstr "Oprettet %label brugerdefineret tag."
@@ -10708,6 +10834,21 @@ msgstr "Stillet til rådighed af"
 msgid "All meta tags in the \"@group\" group."
 msgstr "Alle meta tags i \"@group\"-gruppen."
 
+msgid "Total number of metatags"
+msgstr ""
+
+msgid "Total number of groups"
+msgstr ""
+
+msgid "Name of group"
+msgstr ""
+
+msgid "Number of metatags"
+msgstr ""
+
+msgid "Metatag"
+msgstr "Metatag"
+
 msgid "No Referrer"
 msgstr "No Referrer"
 
@@ -10824,11 +10965,60 @@ msgstr ""
 "notranslate - Forhindrer søgemaskiner i at tilbyde oversættelse af denne "
 "side i søgeresultater."
 
-msgid "Metatag"
-msgstr "Metatag"
+msgid ""
+"Multiple values may be used, separated by `:delimiter`. Note: Tokens that "
+"return multiple values will be handled automatically."
+msgstr ""
+"Flere værdier kan anvendes, adskilt af :delimiter. Bemærk: Tokens, der "
+"returnerer flere værdier, vil blive håndteret automatisk."
+
+msgid ""
+"This will be able to extract the URL from an image field if the field is "
+"configured properly."
+msgstr ""
+"Dette vil kunne udtrække URL'en fra et billedfelt, hvis feltet er "
+"konfigureret korrekt."
+
+msgid ""
+"Any relative or protocol-relative URLs will be converted to absolute URLs."
+msgstr ""
+"Alle relative eller protokol-relative URL'er vil blive konverteret til "
+"absolutte URL'er."
+
+msgid ""
+"Any URLs which start with \"http://\" will be converted to \"https://\"."
+msgstr ""
+"Alle URL'er, der starter med \"http://\" bliver konverteret til \"https://\"."
+
+msgid ""
+"Set to %none to disable inheritance of the parent value and prevent the "
+"output of this metatag entirely."
+msgstr ""
+
+msgid ""
+"This will be truncated to a maximum of %max characters after any tokens are "
+"processed."
+msgstr ""
+"Dette vil blive afkortet til maksimalt %max tegn, efter at eventuelle tokens "
+"er behandlet."
+
+msgid "Empty formatter"
+msgstr "Tomme formatter"
+
+msgid "This field stores code meta tags."
+msgstr "Dette felt indeholder kodede meta tags."
+
+msgid "Meta tags (computed)"
+msgstr "Metatags (beregnet)"
+
+msgid "Computed meta tags"
+msgstr "Beregnede meta tags"
 
 msgid "Tag"
 msgstr "Tag"
+
+msgid "Advanced meta tags form"
+msgstr "Avanceret meta-tags felt"
 
 msgid "Place field in sidebar"
 msgstr "Placér felt i sidebar"
@@ -10970,6 +11160,14 @@ msgstr ""
 "\\n\\r\\t\\v\") will be trimmed automatically and do not need to be listed "
 "in this field. The trimming is applied at the very end after the tag is "
 "trimmed for length, and after the trimming option was executed."
+
+msgid "Optional suffix to add"
+msgstr ""
+
+msgid ""
+"If provided this string will be added at the end of all meta tags that are "
+"trimmed to length."
+msgstr ""
 
 msgid "Metatag widget options"
 msgstr "Metatag widgetindstillinger"
@@ -11388,6 +11586,14 @@ msgstr "Udgivelsesdato"
 
 msgid "The date the book was released."
 msgstr "Udgivelsesdato"
+
+msgid "Creator's fediverse account"
+msgstr ""
+
+msgid ""
+"The fediverse @username for the content creator / author for this page, "
+"including the first @ symbol."
+msgstr ""
 
 msgid "Audio URL"
 msgstr "Audio URL"
@@ -12122,6 +12328,12 @@ msgid ""
 msgstr ""
 "Et PNG-billede, der er 144px bredt og 144px højt. Brugt med iPad med @2x "
 "skærmbillede kørende iOS <= 6."
+
+msgid "SVG icon"
+msgstr ""
+
+msgid "A scalable vector graphic (SVG) file."
+msgstr ""
 
 msgid "Icon: 192px x 192px"
 msgstr "Ikon: 192px x 192px"
@@ -13455,21 +13667,6 @@ msgstr "Grundlæggende tags"
 
 msgid "Simple meta tags."
 msgstr "Simple meta tags."
-
-msgid "Empty formatter"
-msgstr "Tomme formatter"
-
-msgid "This field stores code meta tags."
-msgstr "Dette felt indeholder kodede meta tags."
-
-msgid "Meta tags (computed)"
-msgstr "Metatags (beregnet)"
-
-msgid "Computed meta tags"
-msgstr "Beregnede meta tags"
-
-msgid "Advanced meta tags form"
-msgstr "Avanceret meta-tags felt"
 
 msgid "Metatag Field Diff"
 msgstr "Meta tag feltforskel"
@@ -17924,19 +18121,6 @@ msgid ""
 msgstr ""
 "Afpubliceret af Scheduler. Den planlagte dato for afpublicering var "
 "@unpublish_on."
-
-msgid "Config Update for actions"
-msgstr "Config opdatering for handlinger"
-
-msgid "Enable Config Update Reports"
-msgstr "Enable Config Update Reports"
-
-msgid ""
-"Action '%action_id' is missing. Use <a href=':url'>Config Update</a> to "
-"import the missing action."
-msgstr ""
-"Handlingen '%action_id' mangler. Brug <a href=':url'>Config Update</a> til "
-"at importere den manglende handling."
 
 msgid "settings"
 msgstr "indstillinger"

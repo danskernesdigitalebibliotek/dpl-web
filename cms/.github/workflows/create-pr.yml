@@ -85,7 +85,7 @@ jobs:
 
       - name: Create branch
         id: create_branch
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           branch: ${{ env.PR_BRANCH }}
           commit_message: "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"

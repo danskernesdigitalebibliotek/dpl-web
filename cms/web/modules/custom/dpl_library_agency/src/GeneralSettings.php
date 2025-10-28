@@ -18,11 +18,16 @@ class GeneralSettings extends DplReactConfigBase {
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
+  const ZERO_HITS_SEARCH_URL = '/din-sogning-har-0-resultater';
   // We define these urls so that the admins don't have to - e-reolen urls is
   // not expected to be changing often.
   const FBI_PROFILE = 'next';
   const OPENING_HOURS_URL = '/branches';
   const FIND_ON_SHELF_DISCLOSURES_DEFAULT_OPEN = FALSE;
+  const SEARCH_INFOBOX_TITLE = '';
+  const SEARCH_INFOBOX_CONTENT = '{"value":"","format":"limited"}';
+  const SEARCH_INFOBOX_BUTTON_LABEL = '';
+  const SEARCH_INFOBOX_BUTTON_URL = '';
 
   /**
    * Gets the configuration key for general settings.
@@ -173,6 +178,19 @@ class GeneralSettings extends DplReactConfigBase {
     return dpl_react_apps_format_app_url(
       $this->loadConfig()->get('pause_reservation_info_url'),
       self::PAUSE_RESERVATION_INFO_URL
+    );
+  }
+
+  /**
+   * Gets the zero hits search URL.
+   *
+   * @return string
+   *   The zero hits search URL.
+   */
+  public function getZeroHitsSearchUrl(): string {
+    return dpl_react_apps_format_app_url(
+      $this->loadConfig()->get('zero_hits_search_url'),
+      self::ZERO_HITS_SEARCH_URL
     );
   }
 
