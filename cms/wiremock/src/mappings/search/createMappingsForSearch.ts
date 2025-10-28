@@ -55,4 +55,23 @@ export default (baseUri?: string, options?: Options) => {
       },
     });
   });
+
+  // Get covers. This returns the same cover for everything, but at
+  // least it prevents errors.
+  import("./data/fbi/covers.json").then((json) => {
+    wiremock(baseUri, options).mappings.createMapping({
+      request: {
+        method: "POST",
+        urlPattern: "/next.*/graphql",
+        bodyPatterns: [
+          {
+            matchesJsonPath: matchGraphqlQuery("GetCoversByPids"),
+          },
+        ],
+      },
+      response: {
+        jsonBody: json,
+      },
+    });
+  });
 };
