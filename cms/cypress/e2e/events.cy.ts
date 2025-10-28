@@ -153,9 +153,9 @@ describe('Events', () => {
     cy.get('[name="field_event_title[0][value]"]').should('be.empty');
     cy.contains('Hello from series!').should('not.exist');
 
-    // Copy values from the series.
-    cy.contains('Copy values from series').click();
-    cy.contains('Copy values to instance').click();
+    // Getting values from the series.
+    cy.contains('Insert values from series').click();
+    cy.contains('Insert values to instance').click();
 
     // Checking that the values have been set, and add instance-only changes.
     cy.get('[name="field_event_title[0][value]"]').should(
@@ -172,9 +172,9 @@ describe('Events', () => {
     cy.go('back');
 
     // Checking that copying from series *without* overwriting respects values.
-    cy.contains('Copy values from series').click();
+    cy.contains('Insert values from series').click();
     cy.get('[data-drupal-selector="edit-overwrite-existing"]').uncheck();
-    cy.contains('Copy values to instance').click();
+    cy.contains('Insert values to instance').click();
 
     cy.contains('Hello from instance!').should('exist');
     cy.contains('Hello from series!').should('not.exist');
@@ -185,9 +185,9 @@ describe('Events', () => {
     );
 
     // Re-copying and overwriting from series.
-    cy.contains('Copy values from series').click();
+    cy.contains('Insert values from series').click();
     cy.get('[data-drupal-selector="edit-overwrite-existing"]').check();
-    cy.contains('Copy values to instance').click();
+    cy.contains('Insert values to instance').click();
 
     cy.get('[name="field_event_title[0][value]"]').should(
       'not.contain.value',
