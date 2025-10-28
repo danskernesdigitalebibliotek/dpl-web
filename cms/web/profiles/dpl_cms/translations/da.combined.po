@@ -29519,12 +29519,12 @@ msgstr "Kopier link til udgave\n"
 #: 
 msgctxt "Work Page"
 msgid "Change edition"
-msgstr ""
+msgstr "Skift udgave"
 
 #: 
 msgctxt "Work Page"
 msgid "Choose"
-msgstr ""
+msgstr "Vælg"
 
 #: 
 msgctxt "Work Page"
@@ -29539,7 +29539,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Select which edition you would like to reserve from the available options below."
-msgstr ""
+msgstr "Vælg hvilken af udgaverne, som du vil reservere."
 
 #: 
 msgctxt "Work Page"
@@ -29549,7 +29549,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Choose Edition"
-msgstr ""
+msgstr "Vælg udgave"
 
 #: 
 msgctxt "dpl_event"
