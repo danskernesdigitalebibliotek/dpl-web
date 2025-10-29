@@ -128,6 +128,11 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'post-register-redirect-info-bottom-text' => $this->t("You will be sent to the Adgangsplatformen to log in again in @seconds seconds.", [], ['context' => 'Create patron']),
       'post-register-redirect-info-top-text' => $this->t("You are now registered as a user and need to log in again to be able to use the application.", [], ['context' => 'Create patron']),
       'post-register-redirect-button-text' => $this->t("Log in again", [], ['context' => 'Create patron']),
+      'library-select-empty-state-text' => $this->t("Choose library", [], ['context' => 'Create patron']),
+      'find-library-dialog-title-text' => $this->t("Find nearest library", [], ['context' => 'Create patron']),
+      'find-library-dialog-dawa-input-label-text' => $this->t("Enter your address", [], ['context' => 'Create patron']),
+      'find-library-dialog-dawa-input-placeholder-text' => $this->t("Ex. Torvegade 1, 1401 København K", [], ['context' => 'Create patron']),
+      'find-library-dialog-search-button-text' => $this->t("Find nearest library using your location", [], ['context' => 'Create patron']),
 
       // Urls.
       'redirect-on-user-created-url' => $redirect_on_user_created_url,
