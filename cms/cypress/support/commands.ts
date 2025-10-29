@@ -244,8 +244,8 @@ const adgangsplatformenLoginOauthMappings = ({
       urlPath: '/logout',
     },
     response: {
-      body: "A OK."
-    }
+      body: 'A OK.',
+    },
   });
 };
 

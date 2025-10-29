@@ -123,7 +123,10 @@ describe('Adgangsplatformen', () => {
     cy.get('[data-cy="complete-user-registration-button"]').click();
     cy.get('[data-cy="button"]').click();
     cy.origin('http://adgangsplatformen.dpl-cms.local', () => {
-      cy.url().should('to.match', /^http:\/\/adgangsplatformen.dpl-cms.local\/logout\?.*/);
+      cy.url().should(
+        'to.match',
+        /^http:\/\/adgangsplatformen.dpl-cms.local\/logout\?.*/,
+      );
       cy.url().should(
         'to.match',
         /.*redirect_uri=.*\/login%3Fcurrent-path%3D\/velkommen.*/,
