@@ -110,9 +110,9 @@ tasks:
       - task dev:cli -- php vendor/bin/phpcs
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
       - task dev:cli -- php vendor/bin/phpstan
-      - yarn install --frozen-lockfile
-      - npx eslint web -c .eslintrc.json --fix
-      - npx eslint cypress -c cypress/.eslintrc.json --fix
+      - task dev:cli -- yarn install --frozen-lockfile
+      - task dev:cli -- npx eslint web -c .eslintrc.json --fix
+      - task dev:cli -- npx eslint cypress -c cypress/.eslintrc.json --fix
 
   dev:build:
     summary: Build docker containers
@@ -203,7 +203,7 @@ tasks:
     cmds:
       - task dev:bnfcli -- ./vendor/bin/sailor introspect
       - task dev:bnfcli -- ./vendor/bin/sailor
-      - npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
+      - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
