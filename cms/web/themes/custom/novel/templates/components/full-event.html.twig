@@ -1,5 +1,5 @@
 <article {{ attributes.addClass('event-page') }}>
-  <header class="event-header">
+  <header class="border-bottom">
     {{ include('@novel/components/hero.html.twig', {
       attributes: create_attribute(),
       title: label,
@@ -9,6 +9,7 @@
       media: image.0,
       baseIconPath: baseIconPath,
       cta: cta,
+      price: price,
     }, false) }}
   </header>
 
@@ -22,11 +23,26 @@
       </div>
     </div>
 
-    {{ include('@novel/components/list-description.html.twig', {
-      attributes: create_attribute(),
-      type: 'event',
-      items: description_items,
-    }, false) }}
+    <div class="event-description__info">
+      <div class="event-description__card">
+        {{ include('@novel/components/list-description.html.twig', {
+          attributes: create_attribute(),
+          type: 'event',
+          items: description_items,
+        }, false) }}
+
+         <div class="event-description__price">
+          {{ price }}
+        </div>
+      </div>
+
+      {{ include('@novel/components/list-description.html.twig', {
+        attributes: create_attribute(),
+        type: 'relations',
+        items: relations_items,
+      }, false) }}
+    </div>
+
   </section>
 
   {% if event_instances %}
@@ -38,5 +54,5 @@
     </section>
   {% endif %}
 
-  {{ paragraphs }}
+    {{ paragraphs }}
 </article>
