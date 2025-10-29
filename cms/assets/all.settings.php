@@ -113,7 +113,7 @@ $databases['default']['default']['collation'] = 'utf8mb4_danish_ci';
 if (getenv('CI')) {
   // Set service base urls for the external APIs to mocked services.
   $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs.dpl-cms.local'];
-  $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.dbc.dk'];
+  $config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.dbc.dk'];
   // Adgangsplatformen OpenID Connect client.
   $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/authorize';
   $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/token/';
@@ -129,9 +129,8 @@ if (getenv('CI')) {
   // We need http domains for testing in CI context.
   $config['dpl_react_apps.settings']['services'] = [
     'cover' => ['base_url' => 'http://cover.dandigbib.org'],
-    // @todo This should be updated to use the correct URL when available.
     'fbi' => ['base_url' => 'http://fbi.dpl-cms.local/[profile]/graphql'],
-    'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
+    'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
   ];
 
   // Avoid attempts to send out mail during tests.
