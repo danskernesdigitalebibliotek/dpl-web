@@ -56,14 +56,6 @@ vars:
   CYPRESS_BASE_PORT:
     sh: docker compose port varnish 8080 2>/dev/null | cut -d ":" -f2
   CYPRESS_HOST_LOCAL: "http://localhost:{{ .CYPRESS_BASE_PORT }}"
-  # Wiremock.
-  WIREMOCK_HTTP_PORT:
-    sh: docker compose port wiremock 80 2>/dev/null | cut -d ":" -f2
-  WIREMOCK_HTTPS_PORT:
-    sh: docker compose port wiremock 443 2>/dev/null | cut -d ":" -f2
-  WIREMOCK_HOST_DOCKER: http://wiremock
-  WIREMOCK_HOST_LOCAL: "http://localhost:{{ .WIREMOCK_HTTP_PORT }}"
-  WIREMOCK_HOST_LOCAL_HTTPS: "https://localhost:{{ .WIREMOCK_HTTPS_PORT }}"
 
 tasks:
   ghcr:login:
@@ -465,42 +457,29 @@ tasks:
     cmds:
       - yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - http_proxy={{ .WIREMOCK_HOST_LOCAL }} https_proxy={{ .WIREMOCK_HOST_LOCAL_HTTPS }} npx cypress open
+      - npx cypress open
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
-      CYPRESS_WIREMOCK_URL: "{{ .WIREMOCK_HOST_LOCAL }}"
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
-      # Enable this to help with debugging with network and proxy requests.
-      # https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs
-      # DEBUG: cypress:network:*,cypress:server:request,-cypress:network:cors
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn pa11y:ci
-
-  ci:wiremock:browser:
-    desc: Watch the site with a wiremock http proxy. ⚠️  Depends on Chrome installed on OS ⚠️
-    deps: [ci:wiremock:create-mappings]
-    cmds:
-      - echo '⚠️  Please make sure that Chrome is installed in your OS.'
-      - yarn wiremock:browser
-    env:
-      HTTP_PROXY: "{{ .WIREMOCK_HOST_LOCAL }}"
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn pa11y:ci
 
   ci:wiremock:create-mappings:
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn wiremock:create-mappings
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn wiremock:create-mappings
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome npx lhci autorun
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx lhci autorun
 
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification

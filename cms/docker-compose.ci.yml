@@ -27,7 +27,6 @@ services:
       - wiremock
     environment:
       CYPRESS_BASE_URL: "http://varnish:8080"
-      CYPRESS_WIREMOCK_URL: "http://wiremock"
 
   wiremock:
     image: wiremock/wiremock:2.32.0
