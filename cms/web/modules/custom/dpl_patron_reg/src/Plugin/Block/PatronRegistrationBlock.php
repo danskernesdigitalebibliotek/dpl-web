@@ -132,7 +132,14 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'find-library-dialog-title-text' => $this->t("Find nearest library", [], ['context' => 'Create patron']),
       'find-library-dialog-dawa-input-label-text' => $this->t("Enter your address", [], ['context' => 'Create patron']),
       'find-library-dialog-dawa-input-placeholder-text' => $this->t("Ex. Torvegade 1, 1401 København K", [], ['context' => 'Create patron']),
-      'find-library-dialog-search-button-text' => $this->t("Find nearest library using your location", [], ['context' => 'Create patron']),
+      'find-library-dialog-geo-location-button-text' => $this->t("Find nearest library using your location", [], ['context' => 'Create patron']),
+      'find-library-dialog-suggestions-list-label-text' => $this->t("Choose library", [], ['context' => 'Create patron']),
+      'geo-location-error-not-supported-text' => $this->t("Geolocation is not supported by your browser.", [], ['context' => 'Create patron']),
+      'geo-location-error-permission-denied-text' => $this->t("You have denied access to your location. Allow location access in your browser.", [], ['context' => 'Create patron']),
+      'geo-location-error-position-unavailable-text' => $this->t("Your location is not available at the moment.", [], ['context' => 'Create patron']),
+      'geo-location-error-timeout-text' => $this->t("The request for your location timed out. Please try again.", [], ['context' => 'Create patron']),
+      'geo-location-error-default-text' => $this->t("An error occurred while retrieving your location.", [], ['context' => 'Create patron']),
+      'reverse-geocode-error-default-text' => $this->t("An error occurred while reverse geocoding your location.", [], ['context' => 'Create patron']),
 
       // Urls.
       'redirect-on-user-created-url' => $redirect_on_user_created_url,
