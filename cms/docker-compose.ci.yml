@@ -2,6 +2,8 @@ x-links: &links
   - 'wiremock:fbi.dpl-cms.local'
   - 'wiremock:fbs.dpl-cms.local'
   - 'wiremock:adgangsplatformen.dpl-cms.local'
+  # For mapp-tracking.cy.ts
+  - 'wiremock:responder.wt-safetag.com'
 
 services:
   node-chrome:
