@@ -10,6 +10,7 @@ services:
     build:
       context: .
       dockerfile: docker/node-chromium.dockerfile
+    links: *links
     volumes:
       - 'projectroot:/app'
     depends_on:
