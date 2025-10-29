@@ -14,7 +14,7 @@ describe('Wiremock', () => {
         },
       },
     });
-    cy.request('http://dummy/smoke/test')
+    cy.request('http://fbi.dpl-cms.local/smoke/test')
       .its('body')
       .should('deep.equal', { success: true });
   });
