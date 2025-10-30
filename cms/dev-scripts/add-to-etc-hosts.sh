@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 
-DOMAIN="dpl-cms.docker"
-CONTAINER_NAME="https"
+set -aeo pipefail
+
+if [[ "$#" != "2" ]]; then
+  cat <<EOF
+Usage: $0 <SERVICE> <HOSTNAME>
+
+Add docker compose service as hostname to /etc/hosts.
+EOF
+  exit 1;
+fi
+
+CONTAINER_NAME=$1
+DOMAIN=$2
 
 CONTAINER_ID=$(docker compose ps "$CONTAINER_NAME" --quiet --no-trunc)
 [[ -z "$CONTAINER_ID" ]] && exit

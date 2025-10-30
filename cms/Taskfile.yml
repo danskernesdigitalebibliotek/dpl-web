@@ -144,7 +144,7 @@ tasks:
       - dev:build
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
-      - ./dev-scripts/local-setup-domain.sh
+      - ./dev-scripts/add-to-etc-hosts.sh https dpl-cms.docker
     vars:
       CI:
         sh: '[[ -z "${CI}" ]] && echo "false" || echo "true"'
