@@ -437,6 +437,17 @@ tasks:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       SKIP_LANGUAGE_IMPORT: "true"
 
+  ci:local:
+    desc: Make CI setup usable from a local browser.
+    cmds:
+      # These should be in sync with x-links in docker-compose.ci.yml.
+      - ./dev-scripts/add-to-etc-hosts.sh wiremock fbi.dpl-cms.local
+      - ./dev-scripts/add-to-etc-hosts.sh wiremock fbs.dpl-cms.local
+      - ./dev-scripts/add-to-etc-hosts.sh wiremock adgangsplatformen.dpl-cms.local
+      - ./dev-scripts/add-to-etc-hosts.sh wiremock responder.wt-safetag.com
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+
   ci:cypress:
     desc: Run Cypress functional tests
     deps: [ci:wiremock:create-mappings]
