@@ -5,10 +5,7 @@ import { StubMapping } from 'wiremock-rest-client/dist/model/stub-mapping.model'
 import { RequestPattern } from 'wiremock-rest-client/dist/model/request-pattern.model';
 
 const wiremock = (baseUri?: string, options?: Options) => {
-  return new WireMockRestClient(
-    baseUri || Cypress.env('WIREMOCK_URL'),
-    options,
-  );
+  return new WireMockRestClient('http://wiremock', options);
 };
 
 Cypress.Commands.add('createMapping', (stub: StubMapping) => {
@@ -235,6 +232,16 @@ const adgangsplatformenLoginOauthMappings = ({
     },
     response: {
       jsonBody: patronBody(userIsAlreadyRegistered),
+    },
+  });
+
+  cy.createMapping({
+    request: {
+      method: 'GET',
+      urlPath: '/logout',
+    },
+    response: {
+      body: 'A OK.',
     },
   });
 };
