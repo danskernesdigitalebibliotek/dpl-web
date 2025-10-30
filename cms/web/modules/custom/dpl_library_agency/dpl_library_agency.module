@@ -45,7 +45,7 @@ function dpl_library_agency_field_agency_branch_id_options(): array {
     $branches = $repository->getBranches();
 
     foreach ($branches as $branch) {
-      $options[$branch->id] = "$branch->title ($branch->id)";
+      $options[$branch->id] = "$branch->originalTitle ($branch->id)";
     }
 
     return $options;

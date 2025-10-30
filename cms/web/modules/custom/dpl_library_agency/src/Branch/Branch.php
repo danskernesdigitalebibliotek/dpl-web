@@ -25,17 +25,34 @@ use Drupal\node\NodeInterface;
 class Branch {
 
   /**
+   * The Drupal node that may be associated to this branch, via editor-mapping.
+   */
+  public ?NodeInterface $node = NULL;
+
+  /**
+   * The title that originally came from upstream.
+   */
+  public string $originalTitle = '';
+
+  /**
    * Constructor.
    *
    * @param string $id
    *   The id of the library. Typically an ISIL code.
    * @param string $title
-   *   The title of the library.
+   *   The original title of the library.
    */
   public function __construct(
     public string $id,
     public string $title,
-  ) {}
+  ) {
+    $this->originalTitle = $this->title;
+    $this->node = $this->getNode();
+
+    if ($this->node && $this->node->label()) {
+      $this->title = (string) $this->node->label();
+    }
+  }
 
   /**
    * Getting a (possibly) associated Drupal 'branch' node.
@@ -63,13 +80,11 @@ class Branch {
    *   The address field, along with metadata such as GPS coordinates.
    */
   public function getAddressData(): ?AddressDawaItemInterface {
-    $node = $this->getNode();
-
-    if (!($node) || !$node->hasField('field_address_dawa')) {
+    if (!($this->node) || !$this->node->hasField('field_address_dawa')) {
       return NULL;
     }
 
-    $field = $node->get('field_address_dawa');
+    $field = $this->node->get('field_address_dawa');
 
     if ($field->isEmpty()) {
       return NULL;
