@@ -42,7 +42,7 @@ function LoginSheet({ open }: { open: boolean }) {
                   <Icon name="adgangsplatformen" />
                 </div>
                 <div className="text-typo-heading-4 text-foreground mb-4 text-center">
-                  Login via Bibliotekernes fælles loginside
+                  Login med dit bibliotekslogin
                 </div>
                 <div>
                   <LoginButton
