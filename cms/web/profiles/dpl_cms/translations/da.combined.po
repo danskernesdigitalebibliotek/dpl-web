@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-10-30 11:48+0100\n"
-"PO-Revision-Date: 2025-10-30 11:48+0100\n"
+"POT-Creation-Date: 2025-10-30 15:16+0100\n"
+"PO-Revision-Date: 2025-10-30 15:16+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -26371,6 +26371,10 @@ msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:user_bulk_form:label"
 msgid "Bulk update"
+msgstr ""
+
+msgctxt "views.view.user_admin_people:display:default:display_options:fields:user_bulk_form:action_title"
+msgid "Action"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:name:label"
