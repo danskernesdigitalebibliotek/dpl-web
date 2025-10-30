@@ -20,6 +20,24 @@ export default (baseUri?: string, options?: Options) => {
     });
   });
 
+  // Get Work for work.cy.ts.
+  import("./data/fbi/WorkInfo.json").then((json) => {
+    wiremock(baseUri, options).mappings.createMapping({
+      request: {
+        method: "POST",
+        urlPattern: "/next.*/graphql",
+        bodyPatterns: [
+          {
+            matchesJsonPath: matchGraphqlQuery("WorkInfo"),
+          },
+        ],
+      },
+      response: {
+        jsonBody: json,
+      },
+    });
+  });
+
   // Get Infomedia.
   import("./data/fbi/getInfomedia.json").then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
