@@ -4,6 +4,7 @@ description: 'Module for handling library agency configuration and functionality
 package: 'DPL'
 core_version_requirement: ^10 || ^11
 dependencies:
+  - dpl_fbi:dpl_fbi
   - dpl_fbs:dpl_fbs
   - dpl_library_token:dpl_library_token
   - dpl_protected_nodes:dpl_protected_nodes

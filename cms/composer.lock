@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79338b942214e1bd5ec487f0c15a21ae",
+    "content-hash": "6041710223a820a58a1891206f2c036b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -6541,22 +6541,22 @@
         },
         {
             "name": "drupal/openapi_rest",
-            "version": "2.0.0-rc3",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/openapi_rest.git",
-                "reference": "8.x-2.0-rc3"
+                "reference": "8.x-2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/openapi_rest-8.x-2.0-rc3.zip",
-                "reference": "8.x-2.0-rc3",
-                "shasum": "7b53926033bfee8f99b71f43f22ecc7b78b3d44e"
+                "url": "https://ftp.drupal.org/files/projects/openapi_rest-8.x-2.0.zip",
+                "reference": "8.x-2.0",
+                "shasum": "c635c216ce76bc9c1d8af26b29817464731e7035"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/core": "^10.3 || ^11",
                 "drupal/openapi": "^2",
-                "drupal/schemata": "^1.0@beta",
+                "drupal/schemata": "^1",
                 "drupal/schemata_json_schema": "*"
             },
             "require-dev": {
@@ -6565,11 +6565,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.0-rc3",
-                    "datestamp": "1670346527",
+                    "version": "8.x-2.0",
+                    "datestamp": "1760549467",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "RC releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },

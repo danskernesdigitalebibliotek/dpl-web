@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_library_agency;
 
+use Drupal\dpl_fbi\FbiProfileType;
 use Drupal\dpl_react\DplReactConfigBase;
 
 /**
@@ -133,7 +134,7 @@ class GeneralSettings extends DplReactConfigBase {
   /**
    * Get profile name.
    *
-   * @param FbiProfileType $fbi_profile
+   * @param \Drupal\dpl_fbi\FbiProfileType $fbi_profile
    *   The FBI profile type.
    *
    * @return string

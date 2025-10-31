@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_library_agency;
+namespace Drupal\dpl_fbi;
 
 /**
  * FBI Profile types.

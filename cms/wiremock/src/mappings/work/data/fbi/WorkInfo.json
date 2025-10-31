@@ -1,0 +1,14 @@
+{
+  "data": {
+    "__typename": "Query",
+    "work": {
+      "__typename": "Work",
+      "titles": {
+        "__typename": "WorkTitles",
+        "full": [
+          "Harry Potter og Fønixordenen"
+        ]
+      }
+    }
+  }
+}

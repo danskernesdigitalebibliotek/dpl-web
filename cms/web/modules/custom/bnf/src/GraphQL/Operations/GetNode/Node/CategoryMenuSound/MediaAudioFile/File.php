@@ -56,6 +56,6 @@ class File extends \Spawnia\Sailor\ObjectLike
 
     public static function config(): string
     {
-        return \Safe\realpath(__DIR__ . '/../../../../../../../../../../../sailor.php');
+        return \Safe\realpath(__DIR__ . '/../../../../../../../sailor.php');
     }
 }

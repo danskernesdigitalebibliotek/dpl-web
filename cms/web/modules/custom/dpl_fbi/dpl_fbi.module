@@ -1,5 +1,8 @@
 <?php
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_fbi\Hook\ReactAppsApiUrls;
+
 /**
  * Add field types for which remove button will be added.
  *
@@ -8,4 +11,17 @@
  */
 function dpl_fbi_multiple_field_remove_button_field_types_alter(array &$fieldTypes): void {
   $fieldTypes[] = "dpl_fbi_work_id";
+}
+
+/* Legacy hooks can be removed in D11. */
+
+/**
+ * Implements hook_dpl_react_apps_api_urls().
+ *
+ * @return array<string, string>
+ *   Service to URL mapping.
+ */
+#[LegacyHook]
+function dpl_fbi_dpl_react_apps_api_urls(): array {
+  return \Drupal::service(ReactAppsApiUrls::class)->reactApiUrls();
 }
