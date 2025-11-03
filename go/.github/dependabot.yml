@@ -109,6 +109,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "orval"
         versions: [">=7.13"]
+      - dependency-name: "eslint-config-next"
+        versions: [">=15.5.6"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
