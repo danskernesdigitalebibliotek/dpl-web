@@ -107,6 +107,8 @@ updates:
         versions: [">=0.33.5"]
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "orval"
+        versions: [">=7.13"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
