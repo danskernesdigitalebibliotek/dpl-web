@@ -1,6 +1,5 @@
 import { renderHook, waitFor } from "@testing-library/react"
-import { describe } from "node:test"
-import { expect, test } from "vitest"
+import { describe, expect, test } from "vitest"
 
 import MissingConfigurationError from "@/lib/config/errors/MissingConfigurationError"
 import goConfig from "@/lib/config/goConfig"

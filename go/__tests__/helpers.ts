@@ -1,8 +1,8 @@
-import { vi, test as vitestTest } from "vitest"
+import { type MockInstance, vi, test as vitestTest } from "vitest"
 
 type ConsoleSpy = {
-  error: ReturnType<typeof vi.spyOn>
-  info: ReturnType<typeof vi.spyOn>
+  error: MockInstance<typeof console.error>
+  info: MockInstance<typeof console.info>
 }
 
 /**
