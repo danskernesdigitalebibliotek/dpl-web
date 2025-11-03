@@ -3230,10 +3230,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@httptoolkit/httpolyglot@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@httptoolkit/httpolyglot/-/httpolyglot-3.0.0.tgz#b7f5588df6f9c119ce953d9e4f9f1aceddb51def"
-  integrity sha512-yT22g5mKLK4xQNRotwEZ4J2lRYCeDa69dlNQgjwO1uFidfwOG0iExIzaSf5juajjUIHc1/nnHDegj8ON0S6g0w==
+"@httptoolkit/httpolyglot@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@httptoolkit/httpolyglot/-/httpolyglot-3.0.1.tgz#b76598a852232c59fcab98d717c22bef512e169f"
+  integrity sha512-fU9psZBRc49PfdrxFZ8W19SwVQ4+rrc0EYVxmy7H41y6/elaIu5p68wly4uLVt1DPD0K92MdN65GqP3N1ofZKg==
   dependencies:
     "@types/node" "*"
 
@@ -4559,13 +4559,13 @@
     asn1js "^3.0.6"
     tslib "^2.8.1"
 
-"@peculiar/asn1-pkcs8@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@peculiar/asn1-pkcs8/-/asn1-pkcs8-2.4.0.tgz#53c3c8dd2e99a2499f4a1e1639b8b4284f0b6a46"
-  integrity sha512-4r2LtsAM0HWXLxetGTYKyBumky7W6C1EuiOctqhl7zFK5MHjiZ+9WOeaoeTPR1g3OEoeG7KEWIkaUOyRH4ojTw==
+"@peculiar/asn1-pkcs8@^2.4.0", "@peculiar/asn1-pkcs8@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@peculiar/asn1-pkcs8/-/asn1-pkcs8-2.5.0.tgz#1939643773e928a4802813b595e324a05b453709"
+  integrity sha512-L7599HTI2SLlitlpEP8oAPaJgYssByI4eCwQq2C9eC90otFpm8MRn66PpbKviweAlhinWQ3ZjDD2KIVtx7PaVw==
   dependencies:
-    "@peculiar/asn1-schema" "^2.4.0"
-    "@peculiar/asn1-x509" "^2.4.0"
+    "@peculiar/asn1-schema" "^2.5.0"
+    "@peculiar/asn1-x509" "^2.5.0"
     asn1js "^3.0.6"
     tslib "^2.8.1"
 
@@ -4593,10 +4593,10 @@
     asn1js "^3.0.6"
     tslib "^2.8.1"
 
-"@peculiar/asn1-schema@^2.3.15", "@peculiar/asn1-schema@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@peculiar/asn1-schema/-/asn1-schema-2.4.0.tgz#e3aa7917d433b4c3fcfa1fcb57eac233b1c38787"
-  integrity sha512-umbembjIWOrPSOzEGG5vxFLkeM8kzIhLkgigtsOrfLKnuzxWxejAcUX+q/SoZCdemlODOcr5WiYa7+dIEzBXZQ==
+"@peculiar/asn1-schema@^2.3.15", "@peculiar/asn1-schema@^2.4.0", "@peculiar/asn1-schema@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@peculiar/asn1-schema/-/asn1-schema-2.5.0.tgz#4e58d7c3087c4259cebf5363e092f85b9cbf0ca1"
+  integrity sha512-YM/nFfskFJSlHqv59ed6dZlLZqtZQwjRVJ4bBAiWV08Oc+1rSd5lDZcBEx0lGDHfSoH3UziI2pXt2UM33KerPQ==
   dependencies:
     asn1js "^3.0.6"
     pvtsutils "^1.3.6"
@@ -4612,12 +4612,12 @@
     asn1js "^3.0.6"
     tslib "^2.8.1"
 
-"@peculiar/asn1-x509@^2.3.15", "@peculiar/asn1-x509@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@peculiar/asn1-x509/-/asn1-x509-2.4.0.tgz#ca8ec0d409678e1a47bc324c3dc739085186123f"
-  integrity sha512-F7mIZY2Eao2TaoVqigGMLv+NDdpwuBKU1fucHPONfzaBS4JXXCNCmfO0Z3dsy7JzKGqtDcYC1mr9JjaZQZNiuw==
+"@peculiar/asn1-x509@^2.3.15", "@peculiar/asn1-x509@^2.4.0", "@peculiar/asn1-x509@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@peculiar/asn1-x509/-/asn1-x509-2.5.0.tgz#305f9cd534f4b6a723d27fc59363f382debf5500"
+  integrity sha512-CpwtMCTJvfvYTFMuiME5IH+8qmDe3yEWzKHe7OOADbGfq7ohxeLaXwQo0q4du3qs0AII3UbLCvb9NF/6q0oTKQ==
   dependencies:
-    "@peculiar/asn1-schema" "^2.4.0"
+    "@peculiar/asn1-schema" "^2.5.0"
     asn1js "^3.0.6"
     pvtsutils "^1.3.6"
     tslib "^2.8.1"
@@ -12654,12 +12654,7 @@ lru-cache@^10.2.0:
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.4.3.tgz#410fc8a17b70e598013df257c2446b7f3383f119"
   integrity sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==
 
-lru-cache@^11.1.0:
-  version "11.2.1"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-11.2.1.tgz#d426ac471521729c6c1acda5f7a633eadaa28db2"
-  integrity sha512-r8LA6i4LP4EeWOhqBaZZjDWwehd1xUJPCJd9Sv300H0ZmcUER4+JPh7bqqZeqs1o5pgtgvXm+d9UGrB5zZGDiQ==
-
-lru-cache@^11.2.2:
+lru-cache@^11.1.0, lru-cache@^11.2.2:
   version "11.2.2"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-11.2.2.tgz#40fd37edffcfae4b2940379c0722dc6eeaa75f24"
   integrity sha512-F9ODfyqML2coTIsQpSkRHnLSZMtkU8Q+mSfcaIyKwy58u+8k5nvAYeiNhsyMARvzNcXJ9QfWVrcPsC9e9rAxtg==
@@ -12932,17 +12927,18 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mockttp@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.2.0.tgz#69adb4ef89ff8fa7335a2c580779e86e3e3c643d"
-  integrity sha512-Ef5E851VbOVlRshzpo76gn5gyyQgoGsBq/3nN6BBqucoPODm4RTRQKlLMuE97L6zbkwWNgiZlQrl7Zdp0ZTgYg==
+mockttp@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.2.1.tgz#0ed8407fc6e98276288221e8f658935bdc2a193d"
+  integrity sha512-pH9DtzfsHZrd7KkOpqpifkepcwhiBrAJwgoGmhQYp+5HzBa/ehMwmTFBEQ0+HCOUzLKWt1B0182Ovl5fdEp/Bw==
   dependencies:
     "@graphql-tools/schema" "^8.5.0"
     "@graphql-tools/utils" "^8.8.0"
-    "@httptoolkit/httpolyglot" "^3.0.0"
+    "@httptoolkit/httpolyglot" "^3.0.1"
     "@httptoolkit/subscriptions-transport-ws" "^0.11.2"
     "@httptoolkit/util" "^0.1.7"
     "@httptoolkit/websocket-stream" "^6.0.1"
+    "@peculiar/asn1-pkcs8" "^2.5.0"
     "@peculiar/asn1-schema" "^2.3.15"
     "@peculiar/asn1-x509" "^2.3.15"
     "@peculiar/x509" "^1.12.3"
