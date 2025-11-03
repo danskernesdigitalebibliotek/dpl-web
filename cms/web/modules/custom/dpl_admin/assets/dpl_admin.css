@@ -213,3 +213,31 @@ body:has(.eventseries-form--confirm) .form-actions {
 .paragraph-type--material-grid-link-automatic {
   word-break: break-all;
 }
+
+.select2-selection__rendered, .select2-search {
+  width: 100%;
+}
+
+.select2-selection__rendered {
+  white-space: normal !important;
+}
+
+.select2-selection__choice {
+  margin-bottom: 10px;
+}
+
+.select2-selection__choice__remove {
+  margin-left: 5px;
+  width: 0.5rem !important;
+}
+
+.select2-selection__clear {
+  width: 25px !important;
+  height: 25px !important;
+  text-align: center !important;
+  margin-right: 20px !important;
+}
+
+.select2-search--dropdown {
+  padding: 0 !important;
+}
