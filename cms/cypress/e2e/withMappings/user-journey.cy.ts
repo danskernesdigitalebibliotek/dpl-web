@@ -27,7 +27,7 @@ describe('User journey', () => {
   });
 
   it('Shows material page & reservation button is rendered', () => {
-    cy.visit('/work/work-of:870970-basis:54181744')
+    cy.visit('/work/work-of:870970-basis:25245784')
       .getBySel('material-header-content')
       .scrollIntoView()
       .contains('Harry Potter og Fønixordenen');
@@ -52,7 +52,7 @@ describe('User journey', () => {
       userCPR,
       userGuid,
     });
-    cy.visit('/work/work-of:870970-basis:54181744');
+    cy.visit('/work/work-of:870970-basis:25245784');
     cy.getBySel('material-header-author-text').scrollIntoView();
     cy.getBySel('material-header-buttons-physical').click();
     // We have to wait for the modal to be fully rendered.
