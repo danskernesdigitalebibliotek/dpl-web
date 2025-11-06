@@ -31,6 +31,10 @@ describe('Proxy URL replacement', () => {
     adminPage.saveConfiguration();
   });
 
+  beforeEach(() => {
+    cy.viewport(1280, 720);
+  });
+
   it('Returns the proxied URL for anonymous users', () => {
     LoginPage.anonymousUser();
 
