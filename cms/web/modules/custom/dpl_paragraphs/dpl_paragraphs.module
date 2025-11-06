@@ -13,7 +13,6 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\node\NodeForm;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
-use Symfony\Component\Routing\Exception\InvalidParameterException;
 use function Safe\parse_url;
 use function Safe\preg_match;
 
@@ -137,74 +136,47 @@ function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
  * React app. Otherwise, we use the recommendation React app.
  */
 function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
-
   $paragraph = $variables['paragraph'] ?? NULL;
-  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_recommendation_work_id') || $paragraph->get('field_recommendation_work_id')->isEmpty()) {
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  if ($view_mode === 'preview' ||
+      !($paragraph instanceof ParagraphInterface) ||
+      !$paragraph->hasField('field_recommendation_work_id') ||
+      $paragraph->get('field_recommendation_work_id')->isEmpty()) {
     return;
   }
 
-  // Check for the existence of additional fields.
-  if ($paragraph->hasField('field_recommendation_title') &&
-    $paragraph->hasField('field_recommendation_description') &&
-    $paragraph->hasField('field_image_position_right')) {
+  $work_id_field = $paragraph->get('field_recommendation_work_id');
+  $work_id = $work_id_field->value;
+  $material_type = $work_id_field->material_type ?? NULL;
 
-    $paragraph_title = $paragraph->get('field_recommendation_title')->getString();
-    $paragraph_description = $paragraph->get('field_recommendation_description')->getString();
-    $paragraph_image_position_right = $paragraph->get('field_image_position_right')->getString();
+  $data = [
+    'wid' => $work_id,
+    'material-type' => $material_type,
+  ] + DplReactAppsController::externalApiBaseUrls();
 
-    $work_id_field = $paragraph->get('field_recommendation_work_id');
-    $work_id = $work_id_field->value;
-    $material_type = $work_id_field->material_type ?? NULL;
+  if ($paragraph->hasField('field_recommendation_title')) {
+    $title = $paragraph->get('field_recommendation_title')->getValue();
 
-    if (!empty($paragraph_title) || !empty($paragraph_description)) {
-      // The URL only needs to be constructed if the paragraph has a title
-      // or description, otherwise the URL is constructed in the React app.
-      $route_parameters = ['wid' => $work_id];
-      $query_parameters = [];
-      $material_url = NULL;
-
-      if (!empty($material_type)) {
-        $query_parameters['type'] = $material_type;
-      }
-
-      try {
-        $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
-          ['absolute' => TRUE, 'query' => $query_parameters]);
-
-        $material_url = $material_url_object->toString();
-      }
-      catch (InvalidParameterException $e) {
-        \Drupal::logger('dpl_paragraphs')->error(
-          'Could not render Recommendation paragraph - most likely cause the @wid WorkID is in wrong format. @exception',
-          ['@wid' => $work_id, '@exception' => $e->getMessage()]
-        );
-      }
-
-      $variables['react_app'] = [
-        '#theme' => 'dpl_react_app',
-        '#name' => 'recommended-material',
-        '#data' => [
-          'wid' => $work_id,
-          'material-type' => $material_type,
-        ] + DplReactAppsController::externalApiBaseUrls(),
-        '#material_url' => $material_url,
-        '#position_image_right' => $paragraph_image_position_right,
-      ];
-    }
-    else {
-      // Align React's prop type: String '1' for true, boolean false otherwise.
-      $paragraph_image_position_right = $paragraph_image_position_right === '1' ? '1' : FALSE;
-      $variables['react_app'] = [
-        '#theme' => 'dpl_react_app',
-        '#name' => 'recommendation',
-        '#data' => [
-          'wid' => $work_id,
-          'material-type' => $material_type,
-          'position-image-right' => $paragraph_image_position_right,
-        ] + DplReactAppsController::externalApiBaseUrls(),
-      ];
-    }
+    $data['title'] = $title[0]['value'] ?? '';
   }
+
+  if ($paragraph->hasField('field_recommendation_description')) {
+    $data['description'] = $paragraph->get('field_recommendation_description')->getString();
+  }
+
+  if ($paragraph->hasField('field_image_position_right')) {
+    $image_position_right = $paragraph->get('field_image_position_right')->getString();
+
+    // Align React's prop type: String '1' for true, boolean false otherwise.
+    $data['position-image-right'] = $image_position_right === '1' ? '1' : FALSE;
+  }
+
+  $variables['content']['react_app'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'recommendation',
+    '#data' => $data,
+  ];
 }
 
 /**
@@ -247,7 +219,7 @@ function _dpl_paragraphs_prepare_material_grid_render_array(ParagraphInterface $
     '#data' => [
       'title' => $title,
       'description' => $description,
-      'selected-amount-of-materials-for-display' => $display_amount,
+      'requested-amount' => $display_amount,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
       'blacklisted-search-branches-config' => $blacklisted_search_branches_config,
       'branches-config' => $branches_config,

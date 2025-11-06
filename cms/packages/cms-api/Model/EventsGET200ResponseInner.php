@@ -13,7 +13,7 @@
 /**
  * DPL CMS - REST API
  *
- * The REST API provide by the core REST module.
+ * The REST API provided by the core REST module.
  *
  * The version of the OpenAPI document: Versioning not supported
  * 

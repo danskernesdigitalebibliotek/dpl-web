@@ -2,14 +2,17 @@ services:
   dpl_library_agency.reservation_settings:
     class: Drupal\dpl_library_agency\ReservationSettings
     arguments: ['@config.manager']
+  Drupal\dpl_library_agency\ReservationSettings: '@dpl_library_agency.reservation_settings'
 
   dpl_library_agency.branch_settings:
     class: Drupal\dpl_library_agency\BranchSettings
     arguments: ['@config.manager']
+  Drupal\dpl_library_agency\BranchSettings: '@dpl_library_agency.branch_settings'
 
   dpl_library_agency.general_settings:
     class: Drupal\dpl_library_agency\GeneralSettings
     arguments: ['@config.manager']
+  Drupal\dpl_library_agency\GeneralSettings: '@dpl_library_agency.general_settings'
 
   dpl_library_agency.list_size_settings:
     class: Drupal\dpl_library_agency\ListSizeSettings
@@ -21,6 +24,7 @@ services:
       - '@dpl_library_agency.branch.repository.cache'
       - '@dpl_library_agency.branch.repository.empty'
       - '@dpl_library_agency.logger'
+  Drupal\dpl_library_agency\Branch\BranchRepositoryInterface: '@dpl_library_agency.branch.repository'
 
   dpl_library_agency.branch.repository.empty:
     class: Drupal\dpl_library_agency\Branch\EmptyBranchRepository

@@ -100,8 +100,6 @@ $settings['file_private_path'] = $app_root . '/sites/default/files/private';
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],
-  // @todo This should be updated to use the correct URL when available.
-  'fbi' => ['base_url' => 'https://temp.fbi-api.dbc.dk/[profile]/graphql'],
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
 
@@ -111,24 +109,15 @@ $databases['default']['default']['charset'] = 'utf8mb4';
 $databases['default']['default']['collation'] = 'utf8mb4_danish_ci';
 
 if (getenv('CI')) {
-  // Curl settings needed to make PHP ignore SSL errors when using Wiremock as
-  // a proxy. We do not have a proper SSL setup with trusted certificates.
-  $settings['http_client_config']['verify'] = FALSE;
-  $settings['http_client_config']['curl'] = [
-    CURLOPT_PROXY_SSL_VERIFYHOST => 0,
-    CURLOPT_PROXY_SSL_VERIFYPEER => FALSE,
-  ];
-  // Specify non-HTTP versions of endpoints. This is required to make Cypress
-  // mocking work. It does not support ignoring self-signed certificates from
-  // Wiremock.
-  // Service base urls for the external APIs.
-  $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs-openplatform.dbc.dk'];
-  $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.dbc.dk'];
+  // Set service base urls for the external APIs to mocked services.
+  $config['dpl_fbi.settings'] = ['base_url' => 'http://fbi.dpl-cms.local/[profile]/graphql'];
+  $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs.dpl-cms.local'];
+  $config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.dbc.dk'];
   // Adgangsplatformen OpenID Connect client.
-  $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
-  $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
-  $config['openid_connect.client.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
-  $config['openid_connect.client.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
+  $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/authorize';
+  $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/token/';
+  $config['openid_connect.client.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/userinfo/';
+  $config['openid_connect.client.adgangsplatformen']['settings']['logout_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/logout';
   // The actual values here are not important. The primary thing is that the
   // Adgangsplatformen OpenID Connect client is configured.
   $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
@@ -139,9 +128,7 @@ if (getenv('CI')) {
   // We need http domains for testing in CI context.
   $config['dpl_react_apps.settings']['services'] = [
     'cover' => ['base_url' => 'http://cover.dandigbib.org'],
-    // @todo This should be updated to use the correct URL when available.
-    'fbi' => ['base_url' => 'http://temp.fbi-api.dbc.dk/[profile]/graphql'],
-    'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
+    'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
   ];
 
   // Avoid attempts to send out mail during tests.

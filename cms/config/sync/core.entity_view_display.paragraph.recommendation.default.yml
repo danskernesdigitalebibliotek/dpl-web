@@ -9,45 +9,15 @@ dependencies:
     - field.field.paragraph.recommendation.field_recommendation_work_id
     - field.field.paragraph.recommendation.field_work_id
     - paragraphs.paragraphs_type.recommendation
-  module:
-    - text
 id: paragraph.recommendation.default
 targetEntityType: paragraph
 bundle: recommendation
 mode: default
-content:
-  field_image_position_right:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 5
-    region: content
-  field_recommendation_description:
-    type: basic_string
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_recommendation_title:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_recommendation_work_id:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 7
-    region: content
+content: {  }
 hidden:
+  field_image_position_right: true
+  field_recommendation_description: true
+  field_recommendation_title: true
+  field_recommendation_work_id: true
   field_work_id: true
   search_api_excerpt: true

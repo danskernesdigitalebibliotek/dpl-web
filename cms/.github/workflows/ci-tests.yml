@@ -126,7 +126,7 @@ jobs:
       - name: Run Lighthouse test
         run: task ci:lighthouse
       - name: Archive logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: lighthouse-results
           path: .lighthouseci
@@ -150,7 +150,7 @@ jobs:
         run: task ci:pa11y
       - name: Archive screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: pa11y-screenshots
           path: pa11y/screenshots
@@ -174,13 +174,13 @@ jobs:
         run: task ci:cypress
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cypress-videos
           path: cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cypress-screenshots
           path: cypress/screenshots
@@ -306,7 +306,7 @@ jobs:
       - name: Setup site
         run: task ci:reset
       - name: Extract GraphQL schema and generate client
-        run: task dev:bnf:generate-graphql
+        run: task dev:codegen:bnf-graphql
       - name: Ensure GraphQL client code has not drifted
         run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/src/GraphQL/*
 
