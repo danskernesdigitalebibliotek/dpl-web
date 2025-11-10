@@ -21,11 +21,13 @@ and doesn't throw any errors.
 The BNF client module has a `job_schedule` that queues subscription
 and node updates which is then processed by the queue system.
 
+Use the `drush queue:*` commands to inspect the state of the queue.
+
 ## Subscription issues
 
 The subscription queue job queries for new content and queues node
 updates for new content. As it just queues, nothing much can go wrong
-here apart from GraphQL related failuers. The "Last updated content"
+here apart from GraphQL related failures. The "Last updated content"
 property visible in the back-end corresponds to changed time of the
 latest queued node (modulo cron run delay), so this is an indicator as
 to whether the client has "seen" the newest nodes.
