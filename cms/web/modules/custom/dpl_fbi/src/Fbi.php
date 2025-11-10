@@ -111,6 +111,13 @@ class Fbi {
   }
 
   /**
+   * Get work abstract.
+   */
+  public function getWorkAbstract(string $wid): string {
+    return $this->getWorkInfo($wid)?->abstract[0] ?? '';
+  }
+
+  /**
    * Caching work info getter.
    */
   protected function getWorkInfo(string $wid): ?Work {

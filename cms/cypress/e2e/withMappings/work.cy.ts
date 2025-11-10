@@ -19,5 +19,6 @@ describe('Work page', () => {
     work.metaProperty('og:type').should('eq', 'website');
 
     work.metaProperty('og:title').should('eq', 'Harry Potter og Fønixordenen');
+    work.metaProperty('og:description').should('eq', 'Da Harry Potter vender tilbage til Hogwarts er meget ændret. Man tror, at han lyver angående Voldemort, og ministeriet sender en repræsentant til skolen, der snart er delt i to fjendtlige lejre.');
   });
 });

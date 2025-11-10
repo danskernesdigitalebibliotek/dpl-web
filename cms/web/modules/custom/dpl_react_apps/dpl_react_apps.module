@@ -435,6 +435,7 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
     $fbi = DrupalTyped::service(Fbi::class, Fbi::class);
     try {
       $tags['og:title'] = $fbi->getWorkTitle($wid);
+      $tags['og:description'] = $fbi->getWorkAbstract($wid);
     }
     catch (\Throwable $e) {
       // Keep calm and carry on.
