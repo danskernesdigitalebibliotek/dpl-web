@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-11-10 13:59+0100\n"
-"PO-Revision-Date: 2025-11-10 13:59+0100\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-11-10 14:00+0100\n"
-"PO-Revision-Date: 2025-11-10 14:00+0100\n"
+"POT-Creation-Date: 2025-11-10 16:39+0100\n"
+"PO-Revision-Date: 2025-11-10 16:39+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3236,6 +3224,17 @@ msgctxt "Library Agency Configuration"
 msgid "If checked, the find on shelf disclosures will be open by default"
 msgstr ""
 "Hvis denne er tjekket til, så er alle Filialer i Find på hylden udfoldet."
+
+msgctxt "Library Agency Configuration"
+msgid "Hide unavailable holdings"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"If checked, holdings with 0 available copies will be hidden from the \"Find "
+"on shelf\" modal. This does not hide entire libraries, only individual "
+"holding lines with no available copies."
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
