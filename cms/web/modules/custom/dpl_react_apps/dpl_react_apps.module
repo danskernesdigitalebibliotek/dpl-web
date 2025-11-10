@@ -429,6 +429,19 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
 
   $variables['page']['#attached']['html_head'][] = [$meta_sitename, 'og-sitename'];
 
+  $current_url = Url::fromRoute('<current>')->setAbsolute();
+
+  $meta_url = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'property' => 'og:url',
+      'content' => $current_url->toString(),
+    ],
+  ];
+
+  $variables['page']['#attached']['html_head'][] = [$meta_url, 'og-url'];
+
+
   if ($route->getRouteName() !== 'dpl_react_apps.work') {
     return;
   }

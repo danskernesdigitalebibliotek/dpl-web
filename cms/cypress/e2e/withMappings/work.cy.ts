@@ -14,5 +14,6 @@ describe('Work page', () => {
       .should('eq', 'Harry Potter og Fønixordenen | DPL CMS');
 
     work.metaProperty('og:site_name').should('eq', 'DPL CMS');
+    work.metaProperty('og:url').should('eq', 'http://varnish:8080/work/work-of%3A870970-basis%3A25245784');
   });
 });
