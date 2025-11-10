@@ -7,6 +7,7 @@ namespace Drupal\dpl_fbi;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\dpl_fbi\GraphQL\Operations\WorkInfo;
+use Drupal\dpl_fbi\GraphQL\Operations\WorkInfo\Work\Work;
 use function Safe\preg_replace;
 
 /**
@@ -27,6 +28,13 @@ class Fbi {
    * @todo This ought to be our own configuration, but await work on DDFNEXT-957.
    */
   protected ImmutableConfig $agencySettings;
+
+  /**
+   * Static cache of work info.
+   *
+   * @var array<\Drupal\dpl_fbi\GraphQL\Operations\WorkInfo\Work\Work|null>
+   */
+  protected array $works;
 
   /**
    * Constructor.
@@ -97,14 +105,22 @@ class Fbi {
 
   /**
    * Get title of work.
-   *
-   * This should be replaced with a function that returns all the metadata the
-   * work page needs.
    */
   public function getWorkTitle(string $wid): string {
-    $info = WorkInfo::execute($wid);
+    return $this->getWorkInfo($wid)?->titles->full[0] ?? '';
+  }
 
-    return $info->errorFree()->data?->work->titles->full[0] ?? '';
+  /**
+   * Caching work info getter.
+   */
+  protected function getWorkInfo(string $wid): ?Work {
+    if (!isset($this->works[$wid])) {
+      $info = WorkInfo::execute($wid);
+
+      $this->works[$wid] = $info->errorFree()->data->work;
+    }
+
+    return $this->works[$wid];
   }
 
 }
