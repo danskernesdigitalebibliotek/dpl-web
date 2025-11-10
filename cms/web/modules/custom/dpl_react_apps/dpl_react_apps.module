@@ -12,6 +12,8 @@
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
+use Drupal\dpl_fbi\Fbi;
+use Drupal\drupal_typed\DrupalTyped;
 use function Safe\json_encode;
 
 /**
@@ -419,7 +421,7 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
   $site_name = \Drupal::config('system.site')->get('name');
   $current_url = Url::fromRoute('<current>')->setAbsolute();
 
-  $general_tags = [
+  $tags = [
     'og:site_name' => $site_name,
     'og:url' => $current_url->toString(),
     // Documentation on valid og:types is sordidly lacking, and the few that
@@ -428,7 +430,18 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
     'og:type' => 'website',
   ];
 
-  foreach ($general_tags as $name => $value) {
+  if ($route->getRouteName() === 'dpl_react_apps.work') {
+    $wid = $route->getParameter('wid');
+    $fbi = DrupalTyped::service(Fbi::class, Fbi::class);
+    try {
+      $tags['og:title'] = $fbi->getWorkTitle($wid);
+    }
+    catch (\Throwable $e) {
+      // Keep calm and carry on.
+    }
+  }
+
+  foreach ($tags as $name => $value) {
     $meta_tag = [
       '#tag' => 'meta',
       '#attributes' => [
@@ -439,11 +452,6 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
 
     $variables['page']['#attached']['html_head'][] = [$meta_tag, "meta-{$name}"];
   }
-
-  if ($route->getRouteName() !== 'dpl_react_apps.work') {
-    return;
-  }
-
 }
 
 /**
