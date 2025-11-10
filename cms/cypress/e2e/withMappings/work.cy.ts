@@ -15,5 +15,7 @@ describe('Work page', () => {
 
     work.metaProperty('og:site_name').should('eq', 'DPL CMS');
     work.metaProperty('og:url').should('eq', 'http://varnish:8080/work/work-of%3A870970-basis%3A25245784');
+    // See comment in dpl_react_apps_preprocess_html() as to why this is.
+    work.metaProperty('og:type').should('eq', 'website');
   });
 });

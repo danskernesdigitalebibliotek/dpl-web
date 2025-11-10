@@ -414,33 +414,31 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
 function dpl_react_apps_preprocess_html(array &$variables): void {
   $route = \Drupal::routeMatch();
 
-
   // @todo Move site general meta tags to a more appropriate module (which needs
   // to be created).
   $site_name = \Drupal::config('system.site')->get('name');
-
-  $meta_sitename = [
-    '#tag' => 'meta',
-    '#attributes' => [
-      'property' => 'og:site_name',
-      'content' => $site_name,
-    ],
-  ];
-
-  $variables['page']['#attached']['html_head'][] = [$meta_sitename, 'og-sitename'];
-
   $current_url = Url::fromRoute('<current>')->setAbsolute();
 
-  $meta_url = [
-    '#tag' => 'meta',
-    '#attributes' => [
-      'property' => 'og:url',
-      'content' => $current_url->toString(),
-    ],
+  $general_tags = [
+    'og:site_name' => $site_name,
+    'og:url' => $current_url->toString(),
+    // Documentation on valid og:types is sordidly lacking, and the few that
+    // seems to be agreement on doesn't cover most of our material types. The
+    // old Ding2 just used 'website', so we'll roll with that.
+    'og:type' => 'website',
   ];
 
-  $variables['page']['#attached']['html_head'][] = [$meta_url, 'og-url'];
+  foreach ($general_tags as $name => $value) {
+    $meta_tag = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => $name,
+        'content' => $value,
+      ],
+    ];
 
+    $variables['page']['#attached']['html_head'][] = [$meta_tag, "meta-{$name}"];
+  }
 
   if ($route->getRouteName() !== 'dpl_react_apps.work') {
     return;
