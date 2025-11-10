@@ -118,6 +118,19 @@ class Fbi {
   }
 
   /**
+   * Get work cover information.
+   */
+  public function getWorkCoverInfo(string $wid): ?CoverInfo {
+    $cover = $this->getWorkInfo($wid)?->manifestations->bestRepresentation->cover->large;
+
+    if ($cover && $cover->url && $cover->height && $cover->width) {
+      return new CoverInfo($cover->url, $cover->height, $cover->width);
+    }
+
+    return NULL;
+  }
+
+  /**
    * Caching work info getter.
    */
   protected function getWorkInfo(string $wid): ?Work {

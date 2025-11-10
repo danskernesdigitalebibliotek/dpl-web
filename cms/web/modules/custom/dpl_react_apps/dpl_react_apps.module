@@ -436,6 +436,14 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
     try {
       $tags['og:title'] = $fbi->getWorkTitle($wid);
       $tags['og:description'] = $fbi->getWorkAbstract($wid);
+      $coverInfo = $fbi->getWorkCoverInfo($wid);
+
+      if ($coverInfo) {
+        $tags['og:image'] = $coverInfo->url;
+        $tags['og:image:url'] = $coverInfo->url;
+        $tags['og:image:height'] = $coverInfo->height;
+        $tags['og:image:width'] = $coverInfo->width;
+      }
     }
     catch (\Throwable $e) {
       // Keep calm and carry on.
