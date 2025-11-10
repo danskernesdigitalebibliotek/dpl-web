@@ -519,6 +519,12 @@ type Corporation implements SubjectInterface & CreatorInterface {
   type: SubjectTypeEnum!
   language: Language
   local: Boolean
+
+  """VIAF identifier of the creator"""
+  viafid: String
+
+  """Additional data from Wikidata"""
+  wikidata(language: LanguageCodeEnum): Wikidata
 }
 
 type Cover {
@@ -533,12 +539,25 @@ type Cover {
   small: CoverDetails
   medium: CoverDetails
   large: CoverDetails
+  original: CoverDetails
 }
 
 type CoverDetails {
   url: String
   width: Int
   height: Int
+}
+
+type CreatorImage {
+  """Url to creator image. Width 800px"""
+  small: String
+
+  """Url to creator image. Width 1200px"""
+  medium: String
+
+  """Url to creator image. Width 1800px"""
+  large: String
+  attributionText: String
 }
 
 interface CreatorInterface {
@@ -552,6 +571,9 @@ interface CreatorInterface {
   A list of which kinds of contributions this creator made to this creation
   """
   roles: [Role!]!
+
+  """VIAF identifier of the creator"""
+  viafid: String
 }
 
 type DK5MainEntry {
@@ -1154,9 +1176,6 @@ type Manifestation {
   """The publication status of a catalogued manifestation."""
   cataloguedPublicationStatus: CataloguedPublicationStatus
 
-  """Field for presenting bibliographic records in MARC format"""
-  marc: MarcRecord
-
   """Relations to other manifestations"""
   relations: Relations!
 
@@ -1281,28 +1300,6 @@ type Manifestations {
   Only one manifestation per unit is returned.
   """
   searchHits: [SearchHit!]
-}
-
-type MarcRecord {
-  """The marc record identifier"""
-  id: String!
-
-  """The library agency"""
-  agencyId: String!
-
-  """The bibliographic record identifier"""
-  bibliographicRecordId: String!
-
-  """The MARC record collection content as marcXchange XML string"""
-  content: String!
-
-  """
-  The serialization format of the MARC record content. Defaults to 'marcXchange'
-  """
-  contentSerializationFormat: String!
-
-  """Flag indicating whether or not the record is deleted"""
-  deleted: Boolean!
 }
 
 type MaterialType {
@@ -1501,6 +1498,12 @@ type Person implements SubjectInterface & CreatorInterface {
   type: SubjectTypeEnum!
   language: Language
   local: Boolean
+
+  """VIAF identifier of the creator"""
+  viafid: String
+
+  """Additional metadata for the creator"""
+  wikidata(language: LanguageCodeEnum): Wikidata
 }
 
 type PhysicalUnitDescription {
@@ -2260,10 +2263,17 @@ type UniverseContentResult {
 
 union UniverseContentUnion = Work | Series
 
-type Work {
-  """Field for presenting bibliographic records in MARC format"""
-  marc: MarcRecord
+type Wikidata {
+  education: [String!]
+  image: CreatorImage
+  nationality: String
+  occupation: [String!]
+  wikidataId: String
+  description: String
+  awards: [String!]
+}
 
+type Work {
   """Relations to other manifestations"""
   relations: Relations!
 
