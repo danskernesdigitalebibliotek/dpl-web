@@ -8151,17 +8151,17 @@
         },
         {
             "name": "drupal/simple_oauth",
-            "version": "6.0.8",
+            "version": "6.0.9",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/simple_oauth.git",
-                "reference": "6.0.8"
+                "reference": "6.0.9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/simple_oauth-6.0.8.zip",
-                "reference": "6.0.8",
-                "shasum": "562e795a06c71b16c09453671b167d4f00fb3fe9"
+                "url": "https://ftp.drupal.org/files/projects/simple_oauth-6.0.9.zip",
+                "reference": "6.0.9",
+                "shasum": "7502dad3b09bc80213ae8864e7c3e351949f298b"
             },
             "require": {
                 "drupal/consumers": "^1.17",
@@ -8177,8 +8177,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.0.8",
-                    "datestamp": "1761808728",
+                    "version": "6.0.9",
+                    "datestamp": "1762247642",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
