@@ -15,7 +15,8 @@ export class WorkPage extends PageObject {
    * Get meta tag by property name.
    */
   metaProperty(name: string) {
-    return cy.get(`head meta[property="${name}"]`).should('have.attr', 'content');
+    return cy
+      .get(`head meta[property="${name}"]`)
+      .should('have.attr', 'content');
   }
-
 }
