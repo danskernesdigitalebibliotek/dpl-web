@@ -1,4 +1,3 @@
-
 {{ include('@novel/components/list-item.html.twig'
   , {
   attributes: attributes,
@@ -9,10 +8,12 @@
   date: content.date,
   title: content.title,
   description: content.event_description,
-  bottom: content.branch,
+  branch: content.branch,
   start_date: start_time,
   end_date: end_time,
   ticket_price: ticket_price_display,
   datetime_attribute: datetime_attribute,
   image_placeholder_text: content.event_teaser_text,
+  status: status,
+  status_value: status_value,
 }, false) }}
