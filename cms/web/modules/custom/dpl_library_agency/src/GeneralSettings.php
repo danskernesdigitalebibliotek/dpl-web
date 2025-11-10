@@ -25,6 +25,7 @@ class GeneralSettings extends DplReactConfigBase {
   const FBI_PROFILE = 'next';
   const OPENING_HOURS_URL = '/branches';
   const FIND_ON_SHELF_DISCLOSURES_DEFAULT_OPEN = FALSE;
+  const FIND_ON_SHELF_HIDE_UNAVAILABLE_HOLDINGS = FALSE;
   const SEARCH_INFOBOX_TITLE = '';
   const SEARCH_INFOBOX_CONTENT = '{"value":"","format":"limited"}';
   const SEARCH_INFOBOX_BUTTON_LABEL = '';
@@ -167,6 +168,17 @@ class GeneralSettings extends DplReactConfigBase {
   public function getFindOnShelfDisclosuresDefaultOpen(): bool {
     return $this->loadConfig()->get('find_on_shelf_disclosures_default_open')
       ?? self::FIND_ON_SHELF_DISCLOSURES_DEFAULT_OPEN;
+  }
+
+  /**
+   * Get the setting for hiding unavailable holdings in find on shelf.
+   *
+   * @return bool
+   *   True if unavailable holdings should be hidden, false otherwise.
+   */
+  public function getFindOnShelfHideUnavailableHoldings(): bool {
+    return $this->loadConfig()->get('find_on_shelf_hide_unavailable_holdings')
+      ?? self::FIND_ON_SHELF_HIDE_UNAVAILABLE_HOLDINGS;
   }
 
   /**
