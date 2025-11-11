@@ -34,4 +34,10 @@ export class LoginPage extends PageObject {
       cy.get('a[data-drupal-link-system-path="logout"]').should('exist');
     });
   }
+
+  // Strictly isn't related to the login page, but those interested in
+  // calling this would already be using LoginPage.
+  static anonymousUser() {
+    cy.session('anonymous', () => {});
+  }
 }

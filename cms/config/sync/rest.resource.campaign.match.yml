@@ -4,7 +4,6 @@ status: true
 dependencies:
   module:
     - dpl_campaign
-    - dpl_login
     - serialization
     - user
 id: campaign.match
@@ -16,5 +15,4 @@ configuration:
   formats:
     - json
   authentication:
-    - dpl_login_user_token
     - cookie

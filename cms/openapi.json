@@ -1182,7 +1182,11 @@
         "summary": "Generate proxy url",
         "operationId": "proxy-url:GET",
         "schemes": ["http"],
-        "security": []
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
       }
     }
   }
