@@ -12,6 +12,8 @@
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
+use Drupal\dpl_fbi\Fbi;
+use Drupal\drupal_typed\DrupalTyped;
 use function Safe\json_encode;
 
 /**
@@ -405,6 +407,59 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
     $data['urls'] += [
       'blocked-patron-e-link' => $fees_settings->getBlockedPatronElinkUrl(),
     ];
+  }
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function dpl_react_apps_preprocess_html(array &$variables): void {
+  $route = \Drupal::routeMatch();
+
+  // @todo Move site general meta tags to a more appropriate module (which needs
+  // to be created).
+  $site_name = \Drupal::config('system.site')->get('name');
+  $current_url = Url::fromRoute('<current>')->setAbsolute();
+
+  $tags = [
+    'og:site_name' => $site_name,
+    'og:url' => $current_url->toString(),
+    // Documentation on valid og:types is sordidly lacking, and the few that
+    // seems to be agreement on doesn't cover most of our material types. The
+    // old Ding2 just used 'website', so we'll roll with that.
+    'og:type' => 'website',
+  ];
+
+  if ($route->getRouteName() === 'dpl_react_apps.work') {
+    $wid = $route->getParameter('wid');
+    $fbi = DrupalTyped::service(Fbi::class, Fbi::class);
+    try {
+      $tags['og:title'] = $fbi->getWorkTitle($wid);
+      $tags['og:description'] = $fbi->getWorkAbstract($wid);
+      $coverInfo = $fbi->getWorkCoverInfo($wid);
+
+      if ($coverInfo) {
+        $tags['og:image'] = $coverInfo->url;
+        $tags['og:image:url'] = $coverInfo->url;
+        $tags['og:image:height'] = $coverInfo->height;
+        $tags['og:image:width'] = $coverInfo->width;
+      }
+    }
+    catch (\Throwable $e) {
+      // Keep calm and carry on.
+    }
+  }
+
+  foreach ($tags as $name => $value) {
+    $meta_tag = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => $name,
+        'content' => $value,
+      ],
+    ];
+
+    $variables['page']['#attached']['html_head'][] = [$meta_tag, "meta-{$name}"];
   }
 }
 
