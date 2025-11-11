@@ -8,14 +8,14 @@
     "@lhci/cli": "^0.8",
     "@testing-library/cypress": "^10.1.0",
     "@types/node": "^22",
-    "@typescript-eslint/eslint-plugin": "^8.46.2",
-    "@typescript-eslint/parser": "^8.46.2",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "chrome-launcher": "1.2.1",
-    "cypress": "^15.5.0",
+    "cypress": "^15.6.0",
     "cypress-if": "^1.13.2",
     "cypress-plugin-api": "^2.11.2",
     "cypress-terminal-report": "^7.3.3",
-    "dayjs": "^1.11.18",
+    "dayjs": "^1.11.19",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^2.12.1",
@@ -32,8 +32,7 @@
     "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",
     "pa11y:ci": "pa11y-ci",
     "wiremock:dev:watch": "tsc -p wiremock -w",
-    "wiremock:build": "tsc -p wiremock",
-    "wiremock:browser": "yarn wiremock:build && node wiremock/build/goggles.js"
+    "wiremock:build": "tsc -p wiremock"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

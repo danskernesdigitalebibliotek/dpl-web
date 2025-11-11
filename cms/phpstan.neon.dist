@@ -7,7 +7,7 @@ parameters:
   excludePaths:
     - **/tests/src/Unit/*
     - **/tests/src/Kernel/*
-    - web/modules/custom/bnf/src/GraphQL/*
+    - web/modules/custom/*/src/GraphQL/*
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
     - '#Method .*\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'

@@ -4,12 +4,11 @@ import { Options } from "wiremock-rest-client/dist/model/options.model";
 export const matchGraphqlQuery = (id: string) =>
   `$.[?(@.query=~/.*query ${id}\\(.*/s)]`;
 
+export const matchWidVariable = (id: string) =>
+  `$.[?(@.variables.wid=="${id}")]`;
+
 export const wiremock = (baseUri?: string, options?: Options) => {
-  const wiremockEndpoint = process.env.HTTP_PROXY;
-  if (!wiremockEndpoint) {
-    throw new Error("HTTP_PROXY environment variable is not set");
-  }
-  return new WireMockRestClient(wiremockEndpoint, options);
+  return new WireMockRestClient('http://wiremock', options);
 };
 
 export default wiremock;

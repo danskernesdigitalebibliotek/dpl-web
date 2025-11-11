@@ -3,9 +3,9 @@ langcode: da
 status: true
 dependencies:
   module:
-    - dpl_login
     - dpl_url_proxy
     - serialization
+    - user
 id: proxy-url
 plugin_id: proxy-url
 granularity: resource
@@ -15,4 +15,4 @@ configuration:
   formats:
     - json
   authentication:
-    - dpl_login_user_token
+    - cookie

@@ -6,11 +6,11 @@ use DanskernesDigitaleBibliotek\FBS\ApiException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_fbi\FbiProfileType;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\Branch\IdBranchRepository;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -264,6 +264,13 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('If checked, the find on shelf disclosures will be open by default', [], ['context' => 'Library Agency Configuration']),
     ];
 
+    $form['find_on_shelf']['find_on_shelf_hide_unavailable_holdings'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide unavailable holdings', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('find_on_shelf_hide_unavailable_holdings') ?? GeneralSettings::FIND_ON_SHELF_HIDE_UNAVAILABLE_HOLDINGS,
+      '#description' => $this->t('If checked, holdings with 0 available copies will be hidden from the "Find on shelf" modal. This does not hide entire libraries, only individual holding lines with no available copies.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
     $form['expiration_warning'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Expiration warning', [], ['context' => 'Library Agency Configuration']),
@@ -401,6 +408,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
+      ->set('find_on_shelf_hide_unavailable_holdings', $form_state->getValue('find_on_shelf_hide_unavailable_holdings'))
       ->set('fbi_profiles', [
         'default' => $form_state->getValue('fbi_profile_default'),
         'local' => $form_state->getValue('fbi_profile_local'),

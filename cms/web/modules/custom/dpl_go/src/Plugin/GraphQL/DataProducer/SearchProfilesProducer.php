@@ -4,8 +4,7 @@ namespace Drupal\dpl_go\Plugin\GraphQL\DataProducer;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_library_agency\FbiProfileType;
-use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\dpl_fbi\Fbi;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,7 +30,7 @@ class SearchProfilesProducer extends DataProducerPluginBase implements Container
     array $configuration,
     string $pluginId,
     mixed $pluginDefinition,
-    protected GeneralSettings $generalSettings,
+    protected Fbi $fbi,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -39,12 +38,12 @@ class SearchProfilesProducer extends DataProducerPluginBase implements Container
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('dpl_library_agency.general_settings')
+      $container->get(Fbi::class),
     );
   }
 
@@ -56,11 +55,8 @@ class SearchProfilesProducer extends DataProducerPluginBase implements Container
    */
   public function resolve(FieldContext $field_context): array {
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
-    return [
-      'default' => $this->generalSettings->getFbiProfile(FbiProfileType::Default) ?: NULL,
-      'local' => $this->generalSettings->getFbiProfile(FbiProfileType::Local) ?: NULL,
-      'global' => $this->generalSettings->getFbiProfile(FbiProfileType::Global) ?: NULL,
-    ];
+
+    return $this->fbi->getProfiles();
   }
 
 }

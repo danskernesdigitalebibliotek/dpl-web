@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "schemes": ["http"],
   "info": {
-    "description": "The REST API provide by the core REST module.",
+    "description": "The REST API provided by the core REST module.",
     "title": "DPL CMS - REST API",
     "version": "Versioning not supported"
   },
@@ -1182,7 +1182,11 @@
         "summary": "Generate proxy url",
         "operationId": "proxy-url:GET",
         "schemes": ["http"],
-        "security": []
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
       }
     }
   }

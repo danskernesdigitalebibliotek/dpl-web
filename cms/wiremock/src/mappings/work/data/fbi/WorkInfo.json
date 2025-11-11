@@ -1,0 +1,32 @@
+{
+  "data": {
+    "__typename": "Query",
+    "work": {
+      "__typename": "Work",
+      "titles": {
+        "__typename": "WorkTitles",
+        "full": [
+          "Harry Potter og Fønixordenen"
+        ]
+      },
+      "abstract": [
+        "Da Harry Potter vender tilbage til Hogwarts er meget ændret. Man tror, at han lyver angående Voldemort, og ministeriet sender en repræsentant til skolen, der snart er delt i to fjendtlige lejre."
+      ],
+      "manifestations": {
+        "__typename": "Manifestations",
+        "bestRepresentation": {
+          "__typename": "Manifestation",
+          "cover": {
+            "__typename": "Cover",
+            "large": {
+              "__typename": "CoverDetails",
+              "url": "https://fbiinfo-present.dbc.dk/images/ya_tuimVRnuHc1l2eH2vUA/960px!AToFFTysXitsGCdsOfEvO_szAC8UxhkSalSZySxb4xjmUQ",
+              "height": 604,
+              "width": 500
+            }
+          }
+        }
+      }
+    }
+  }
+}

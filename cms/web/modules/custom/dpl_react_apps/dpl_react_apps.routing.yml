@@ -16,6 +16,7 @@ dpl_react_apps.work:
   path: '/work/{wid}'
   defaults:
     _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::work'
+    _title_callback: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::workTitle'
   requirements:
     _permission: 'access content'
 

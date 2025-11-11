@@ -4,21 +4,19 @@ namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_login\Adgangsplatformen\Config;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use function Safe\json_encode;
-use function Safe\preg_replace;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -36,27 +34,8 @@ class DplReactAppsController extends ControllerBase {
     protected DplInstantLoanSettings $instantLoanSettings,
     protected GeneralSettings $generalSettings,
     protected Config $adgangsplatformenConfig,
+    protected Fbi $fbi,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The Drupal service container.
-   *
-   * @return static
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('renderer'),
-      $container->get('dpl_library_agency.reservation_settings'),
-      $container->get('dpl_library_agency.branch_settings'),
-      $container->get('dpl_library_agency.branch.repository'),
-      $container->get('dpl_instant_loan.settings'),
-      $container->get('dpl_library_agency.general_settings'),
-      $container->get('dpl_login.adgangsplatformen.config'),
-    );
-  }
 
   /**
    * Build a string of JSON data containing information about branches.
@@ -284,6 +263,23 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
+   * Title for work page.
+   */
+  public function workTitle(string $wid): string {
+    try {
+      return $this->fbi->getWorkTitle($wid);
+    }
+    catch (\Throwable $e) {
+      $this->getLogger('dpl_react_apps')->error(
+        'Could not fetch work title from FBI: @message', [
+          '@message' => $e->getMessage(),
+        ]);
+      // Fall back to empty string.
+      return '';
+    }
+  }
+
+  /**
    * Render work page.
    *
    * @param string $wid
@@ -309,6 +305,7 @@ class DplReactAppsController extends ControllerBase {
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'find-on-shelf-disclosures-default-open-config' => (int) $this->generalSettings->getFindOnShelfDisclosuresDefaultOpen(),
+      'find-on-shelf-hide-unavailable-holdings-config' => (int) $this->generalSettings->getFindOnShelfHideUnavailableHoldings(),
       'agency-id-config' => $this->adgangsplatformenConfig->getAgencyId(),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
@@ -564,8 +561,6 @@ class DplReactAppsController extends ControllerBase {
    *   An array of base urls.
    */
   public static function externalApiBaseUrls(): array {
-    /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
-    $general_settings = \Drupal::service('dpl_library_agency.general_settings');
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
     $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
@@ -573,32 +568,19 @@ class DplReactAppsController extends ControllerBase {
     $publizon_settings = \Drupal::service('dpl_publizon.settings');
 
     // Get base urls from this module.
-    $services = $react_apps_settings->get('services') ?? [];
-
-    // The base url of the FBI service is a special case
-    // because a part (the profile) of the base url can differ.
-    // Lets' handle that:
-    if (!empty($services) && !empty($services['fbi']['base_url'])) {
-      $placeholder_url = $services['fbi']['base_url'];
-      foreach ($general_settings->getFbiProfiles() as $type => $profile) {
-        $service_key = sprintf('fbi-%s', $type);
-        // The default FBI service has its own key with no suffix.
-        if ($type === FbiProfileType::Default->value) {
-          $service_key = 'fbi';
-        }
-        // Create a service url with the profile embedded.
-        $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
-        $services[$service_key] = ['base_url' => $base_url];
-      }
+    $configuredServices = $react_apps_settings->get('services') ?? [];
+    $services = \Drupal::moduleHandler()->invokeAll('dpl_react_apps_api_urls');
+    foreach ($configuredServices as $name => $conf) {
+      $services[$name] = $conf['base_url'];
     }
 
-    // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
-    $services['publizon'] = ['base_url' => $publizon_settings->loadConfig()->get('base_url')];
+    // Get base urls from other modules. @todo Use the hook from other modules.
+    $services['fbs'] = $fbs_settings->get('base_url');
+    $services['publizon'] = $publizon_settings->loadConfig()->get('base_url');
 
     $urls = [];
     foreach ($services as $api => $definition) {
-      $urls[sprintf('%s-base-url', $api)] = $definition['base_url'];
+      $urls[sprintf('%s-base-url', $api)] = $definition;
     }
 
     return $urls;

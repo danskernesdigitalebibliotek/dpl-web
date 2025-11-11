@@ -10,11 +10,6 @@ services:
     tags:
       - { name: event_subscriber }
 
-  dpl_login.route_disable_csrf:
-    class: Drupal\dpl_login\Routing\DisableCsrfCheckSubscriber
-    tags:
-      - { name: event_subscriber }
-
   dpl_login.registered_user_tokens:
     class: Drupal\dpl_login\RegisteredUserTokensProvider
     arguments: ['@tempstore.private']
@@ -30,18 +25,6 @@ services:
       - '@dpl_login.unregistered_user_tokens'
   Drupal\dpl_login\UserTokens: '@dpl_login.user_tokens'
 
-  dpl_login.authentication.user_token:
-    class: Drupal\dpl_login\UserTokenAuthProvider
-    arguments:
-      - '@dpl_login.adgangsplatformen.client'
-      - '@module_handler'
-      - '@externalauth.externalauth'
-    tags:
-      - {
-          name: authentication_provider,
-          provider_id: 'dpl_login_user_token',
-          priority: 0,
-        }
   dpl_login.library_agency_id_provider:
     class: Drupal\dpl_login\LibraryAgencyIdProvider
     arguments: ['@dpl_login.adgangsplatformen.config']

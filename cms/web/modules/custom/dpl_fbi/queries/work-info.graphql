@@ -1,0 +1,19 @@
+query WorkInfo($wid: String) {
+  work(id: $wid) {
+    titles {
+      full
+    }
+    abstract
+    manifestations {
+      bestRepresentation {
+        cover {
+          large {
+            url
+            height
+            width
+          }
+        }
+      }
+    }
+  }
+}
