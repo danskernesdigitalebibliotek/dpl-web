@@ -64,7 +64,9 @@ export default function Layout({
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
-        <CookieInformation />
+        <Suspense>
+          <CookieInformation />
+        </Suspense>
         <GridHelper hideInProduction />
         <Suspense>
           <RootLayout>

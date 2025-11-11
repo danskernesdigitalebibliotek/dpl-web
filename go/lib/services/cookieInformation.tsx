@@ -1,6 +1,15 @@
+import { headers } from "next/headers"
 import Script from "next/script"
 
-export function CookieInformation() {
+export async function CookieInformation() {
+  const headersList = await headers()
+  const host = headersList.get("host") || ""
+
+  // Temporarily only render on go.delingstjenesten.dk
+  if (host !== "go.delingstjenesten.dk") {
+    return null
+  }
+
   return (
     <Script
       id="CookieConsent"
