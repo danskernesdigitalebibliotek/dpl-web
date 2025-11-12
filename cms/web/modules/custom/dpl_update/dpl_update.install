@@ -13,8 +13,11 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
+use Drupal\dpl_update\Services\ConfigIgnoreCleanup;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
@@ -267,6 +270,51 @@ function _dpl_update_add_bnf_subscription(string $uuid, string $label, ?string $
   }
 
   return implode("\n", $feedback);
+}
+
+/**
+ * Implements hook_requirements().
+ *
+ * Display a notice on /admin/reports/status if unsupported config is ignored.
+ *
+ * @return array<mixed>
+ *   Render array.
+ */
+function dpl_update_requirements(string $phase): array {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  $service = DrupalTyped::service(ConfigIgnoreCleanup::class, 'dpl_update.config_ignore_cleanup');
+  $unsupported_items = $service->getUnsupportedIgnores();
+
+  if (empty($unsupported_items)) {
+    return [];
+  }
+
+  // Build a simple item list of the unsupported entries.
+  $list_build = [
+    '#theme' => 'item_list',
+    '#items' => array_map(static function ($item) {
+      // Cast to string just in case the service returns objects/arrays.
+      return (string) $item;
+    }, $unsupported_items),
+  ];
+
+  // Render to plain markup for the 'description' field.
+  // Status report expects a string/Markup, not a render array.
+  $renderer = DrupalTyped::service(RendererInterface::class, 'renderer');
+  $items = $renderer->renderInIsolation($list_build);
+
+  return [
+    'dpl_update_unsupported_config_ignores' => [
+      'title' => t('Unsupported configuration ignores', [], ['context' => 'dpl_update']),
+      'value' => t('Overriden configuration, that is not supported by DPL-CMS. These items will be ignored by future DPL releases, and may result in broken functionality.', [], ['context' => 'dpl_update']),
+      'description' => Markup::create($items),
+      'severity' => REQUIREMENT_WARNING,
+      'weight' => -999,
+    ],
+  ];
 }
 
 /**
