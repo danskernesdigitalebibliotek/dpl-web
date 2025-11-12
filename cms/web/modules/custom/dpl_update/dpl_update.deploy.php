@@ -446,3 +446,22 @@ function dpl_update_deploy_create_zero_hit_search_page(): string {
 
   return "Created 0-hit search page with title 'Din søgning har 0 resultater' (node ID: {$node->id()}).";
 }
+
+/**
+ * Update config_ignore_auto to not affect drush cex.
+ */
+function dpl_update_deploy_set_config_settings(): string {
+  $config_ignore_auto_settings = \Drupal::configFactory()
+    ->getEditable('config_ignore_auto.settings');
+
+  $config_ignore_auto_settings->set('direction_operations', [
+    'import_create',
+    'import_update',
+    'import_delete',
+  ]);
+
+  $config_ignore_auto_settings->save();
+
+  return 'config_ignore_auto.settings.direction_operations updated to only ignore import.';
+}
+
