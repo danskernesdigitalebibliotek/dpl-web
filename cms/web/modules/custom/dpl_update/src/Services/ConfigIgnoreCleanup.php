@@ -140,3 +140,29 @@ class ConfigIgnoreCleanup {
     return $unused_items;
   }
 
+  /**
+   * Find auto-ignores that do not differ from codebase, and remove them.
+   */
+  public function cleanUnusedIgnores(): string {
+    $items = $this->autoIgnoredItems;
+
+    if (empty($items)) {
+      return 'No auto-ignored config to clean-up.';
+    }
+
+    $unused_items = $this->getUnusedAutoIgnores();
+
+    $filtered_items = array_diff($items, $unused_items);
+    $this->configAutoIgnoreSettings->set('ignored_config_entities', $filtered_items);
+    $this->configAutoIgnoreSettings->save();
+
+    $original_count = count($items);
+    $new_count = count($filtered_items);
+    $change_count = $original_count - $new_count;
+
+    $message = "Removed $change_count items from config_ignore_auto.settings.ignored_config_entities";
+    $this->logger->info($message);
+    return $message;
+  }
+
+}

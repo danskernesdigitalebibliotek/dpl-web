@@ -5,6 +5,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\dpl_update\Services\ConfigIgnoreCleanup;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
@@ -465,3 +466,10 @@ function dpl_update_deploy_set_config_settings(): string {
   return 'config_ignore_auto.settings.direction_operations updated to only ignore import.';
 }
 
+/**
+ * Remove any auto-ignored config that is identical to codebase.
+ */
+function dpl_update_deploy_clean_config(): string {
+  $service = DrupalTyped::service(ConfigIgnoreCleanup::class, 'dpl_update.config_ignore_cleanup');
+  return $service->cleanUnusedIgnores();
+}
