@@ -57,7 +57,7 @@ class DplSomethingSimilarController extends ControllerBase {
     $plugin_block = $this->blockManager->createInstance('dpl_something_similar_block', $config);
 
     $access_result = $plugin_block->access($this->currentUser());
-    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+    if (!$access_result) {
       throw new AccessDeniedHttpException();
     }
 
