@@ -1,0 +1,305 @@
+{
+  "data": {
+    "work": {
+      "workId": "work-of:150060-pressdisp:9GVA",
+      "titles": {
+        "full": [
+          "The Wall Street Journal"
+        ],
+        "original": [],
+        "tvSeries": null
+      },
+      "abstract": [
+        "Aviser og Magasiner kan med PressReader læses online. Der er adgang i 24 timer via linket. De kan læses fra udgivelsesdagen og der er op til 90 dages arkiv"
+      ],
+      "creators": [],
+      "series": [],
+      "workYear": null,
+      "genreAndForm": [],
+      "manifestations": {
+        "all": [
+          {
+            "pid": "150060-pressdisp:9GVA",
+            "genreAndForm": [],
+            "source": [
+              "PressReader"
+            ],
+            "languages": {
+              "main": [],
+              "notes": []
+            },
+            "titles": {
+              "main": [
+                "The Wall Street Journal"
+              ],
+              "original": []
+            },
+            "fictionNonfiction": {
+              "display": "nonfiktion",
+              "code": "NONFICTION"
+            },
+            "materialTypes": [
+              {
+                "materialTypeSpecific": {
+                  "display": "avis (online)"
+                }
+              }
+            ],
+            "creators": [],
+            "publisher": [],
+            "identifiers": [
+              {
+                "value": "https://www.pressreader.com/9gva"
+              }
+            ],
+            "contributors": [],
+            "edition": null,
+            "dateFirstEdition": null,
+            "audience": {
+              "generalAudience": [],
+              "ages": [],
+              "childrenOrAdults": [
+                {
+                  "display": "til voksne",
+                  "code": "FOR_ADULTS"
+                }
+              ]
+            },
+            "notes": [
+              {
+                "display": [
+                  "Udgivelsesland: USA"
+                ]
+              },
+              {
+                "display": [
+                  "Udkommer: 22:0 -MTWTFS"
+                ]
+              }
+            ],
+            "physicalDescription": null,
+            "hostPublication": null,
+            "manifestationParts": null,
+            "accessTypes": [
+              {
+                "code": "ONLINE"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "AccessUrl",
+                "origin": "www.pressreader.com",
+                "url": "https://www.pressreader.com/9gva",
+                "loginRequired": false,
+                "status": "OK"
+              }
+            ],
+            "shelfmark": null,
+            "workYear": null,
+            "catalogueCodes": {
+              "nationalBibliography": [],
+              "otherCatalogues": []
+            }
+          }
+        ],
+        "latest": {
+          "pid": "150060-pressdisp:9GVA",
+          "genreAndForm": [],
+          "source": [
+            "PressReader"
+          ],
+          "languages": {
+            "main": [],
+            "notes": []
+          },
+          "titles": {
+            "main": [
+              "The Wall Street Journal"
+            ],
+            "original": []
+          },
+          "fictionNonfiction": {
+            "display": "nonfiktion",
+            "code": "NONFICTION"
+          },
+          "materialTypes": [
+            {
+              "materialTypeSpecific": {
+                "display": "avis (online)"
+              }
+            }
+          ],
+          "creators": [],
+          "publisher": [],
+          "identifiers": [
+            {
+              "value": "https://www.pressreader.com/9gva"
+            }
+          ],
+          "contributors": [],
+          "edition": null,
+          "dateFirstEdition": null,
+          "audience": {
+            "generalAudience": [],
+            "ages": [],
+            "childrenOrAdults": [
+              {
+                "display": "til voksne",
+                "code": "FOR_ADULTS"
+              }
+            ]
+          },
+          "notes": [
+            {
+              "display": [
+                "Udgivelsesland: USA"
+              ]
+            },
+            {
+              "display": [
+                "Udkommer: 22:0 -MTWTFS"
+              ]
+            }
+          ],
+          "physicalDescription": null,
+          "hostPublication": null,
+          "manifestationParts": null,
+          "accessTypes": [
+            {
+              "code": "ONLINE"
+            }
+          ],
+          "access": [
+            {
+              "__typename": "AccessUrl",
+              "origin": "www.pressreader.com",
+              "url": "https://www.pressreader.com/9gva",
+              "loginRequired": false,
+              "status": "OK"
+            }
+          ],
+          "shelfmark": null,
+          "workYear": null,
+          "catalogueCodes": {
+            "nationalBibliography": [],
+            "otherCatalogues": []
+          }
+        },
+        "bestRepresentation": {
+          "pid": "150060-pressdisp:9GVA",
+          "genreAndForm": [],
+          "source": [
+            "PressReader"
+          ],
+          "languages": {
+            "main": [],
+            "notes": []
+          },
+          "titles": {
+            "main": [
+              "The Wall Street Journal"
+            ],
+            "original": []
+          },
+          "fictionNonfiction": {
+            "display": "nonfiktion",
+            "code": "NONFICTION"
+          },
+          "materialTypes": [
+            {
+              "materialTypeSpecific": {
+                "display": "avis (online)"
+              }
+            }
+          ],
+          "creators": [],
+          "publisher": [],
+          "identifiers": [
+            {
+              "value": "https://www.pressreader.com/9gva"
+            }
+          ],
+          "contributors": [],
+          "edition": null,
+          "dateFirstEdition": null,
+          "audience": {
+            "generalAudience": [],
+            "ages": [],
+            "childrenOrAdults": [
+              {
+                "display": "til voksne",
+                "code": "FOR_ADULTS"
+              }
+            ]
+          },
+          "notes": [
+            {
+              "display": [
+                "Udgivelsesland: USA"
+              ]
+            },
+            {
+              "display": [
+                "Udkommer: 22:0 -MTWTFS"
+              ]
+            }
+          ],
+          "physicalDescription": null,
+          "hostPublication": null,
+          "manifestationParts": null,
+          "accessTypes": [
+            {
+              "code": "ONLINE"
+            }
+          ],
+          "access": [
+            {
+              "__typename": "AccessUrl",
+              "origin": "www.pressreader.com",
+              "url": "https://www.pressreader.com/9gva",
+              "loginRequired": false,
+              "status": "OK"
+            }
+          ],
+          "shelfmark": null,
+          "workYear": null,
+          "catalogueCodes": {
+            "nationalBibliography": [],
+            "otherCatalogues": []
+          }
+        }
+      },
+      "materialTypes": [
+        {
+          "materialTypeSpecific": {
+            "display": "avis (online)"
+          }
+        }
+      ],
+      "mainLanguages": [],
+      "subjects": {
+        "all": [
+          {
+            "display": "Digitale magasiner"
+          },
+          {
+            "display": "Digitale tidsskrifter"
+          },
+          {
+            "display": "PressReader"
+          }
+        ],
+        "dbcVerified": []
+      },
+      "fictionNonfiction": {
+        "display": "nonfiktion",
+        "code": "NONFICTION"
+      },
+      "dk5MainEntry": null,
+      "relations": {
+        "hasReview": [],
+        "hasAdaptation": []
+      }
+    }
+  }
+}

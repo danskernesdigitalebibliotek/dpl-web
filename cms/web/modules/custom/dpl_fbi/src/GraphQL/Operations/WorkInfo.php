@@ -38,6 +38,22 @@ class WorkInfo extends \Spawnia\Sailor\Operation
               __typename
               full
             }
+            abstract
+            manifestations {
+              __typename
+              bestRepresentation {
+                __typename
+                cover {
+                  __typename
+                  large {
+                    __typename
+                    url
+                    height
+                    width
+                  }
+                }
+              }
+            }
           }
         }';
     }

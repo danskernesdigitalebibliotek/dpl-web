@@ -252,23 +252,36 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   }
 
   $service = DrupalTyped::service(ReoccurringDateFormatter::class, 'dpl_event.reoccurring_date_formatter');
-  $upcoming_ids = $service->getUpcomingEventIds($event_series);
 
-  $variables['formatted_date'] = $service->getSeriesDateString($event_series);
-
-  if (count($upcoming_ids) < 2) {
-    return;
+  // Use different date formatters based on view mode.
+  $view_mode = $variables['view_mode'] ?? 'default';
+  if ($view_mode === 'list_teaser') {
+    // For list teaser view, use date without time.
+    $variables['formatted_date'] = $service->getSeriesDateString($event_series, FALSE);
+  }
+  else {
+    // For full view and other views, use date with time.
+    $variables['formatted_date'] = $service->getSeriesDateString($event_series);
   }
 
-  $instance_storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
-  $event_instances = $instance_storage->loadMultiple($upcoming_ids);
-  $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
-  $variables['event_instances'] = [];
+  $upcoming_event_details = $service->getUpcomingEventDetails($event_series);
+  $upcoming_ids = $upcoming_event_details['upcoming_ids'] ?? [];
 
-  foreach ($event_instances as $index => $event_instance) {
-    $view_mode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
-    $renderable_instance = $viewBuilder->view($event_instance, $view_mode);
-    $variables['event_instances'][] = $renderable_instance;
+  if ($service->isAllDay($event_series)) {
+    $variables['start_time'] = t('All day');
+  }
+  else {
+    $start_date = $upcoming_event_details['start'] ?? NULL;
+    $end_date = $upcoming_event_details['end'] ?? NULL;
+
+    if ($start_date instanceof DrupalDateTime) {
+      $variables['start_time'] = $service->formatDate($start_date, 'H:i');
+      $variables['datetime_attribute'] = $service->formatDate($start_date, DATE_ATOM);
+    }
+
+    if ($end_date instanceof DrupalDateTime) {
+      $variables['end_time'] = $service->formatDate($end_date, 'H:i');
+    }
   }
 
   // Add cache tags and 12-hours max-age fallback.
@@ -276,6 +289,19 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
     '#max-age' => (60 * 60 * 12),
     '#tags' => ['eventinstance_list', 'eventseries_list'],
   ];
+
+  if (count($upcoming_ids) < 2 || $view_mode !== 'full') {
+    return;
+  }
+
+  // Adding a list of upcoming eventinstances, displayed on the full series.
+  $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
+  $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
+  $variables['event_instances'] = [];
+
+  foreach ($event_instances as $event_instance) {
+    $variables['event_instances'][] = $viewBuilder->view($event_instance, 'stacked_event');
+  }
 }
 
 /**
@@ -297,6 +323,12 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
  */
 function dpl_event_preprocess_eventinstance(array &$variables): void {
   $eventInstance = $variables['eventinstance'];
+
+  $state = $eventInstance->getState();
+  if ($state instanceof EventState) {
+    $variables['status'] = $state->label();
+    $variables['status_value'] = $state->value;
+  }
 
   if ($eventInstance->hasField('event_ticket_categories')) {
     $ticket_categories = $eventInstance->get('event_ticket_categories')->referencedEntities();
@@ -336,7 +368,9 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
   if ($eventInstance->hasField('event_all_day') &&
     !empty($eventInstance->get('event_all_day')->getString())) {
     $variables['start_time'] = t('All day');
-    unset($variables['end_time']);
+    if (isset($variables['end_time'])) {
+      unset($variables['end_time']);
+    }
   }
 
   $variables['time_combined'] = $variables['start_time'];

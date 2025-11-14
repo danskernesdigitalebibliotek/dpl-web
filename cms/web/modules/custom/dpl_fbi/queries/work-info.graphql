@@ -3,5 +3,17 @@ query WorkInfo($wid: String) {
     titles {
       full
     }
+    abstract
+    manifestations {
+      bestRepresentation {
+        cover {
+          large {
+            url
+            height
+            width
+          }
+        }
+      }
+    }
   }
 }

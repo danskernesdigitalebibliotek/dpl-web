@@ -7,6 +7,9 @@
   image: content.field_teaser_image.0,
   categories: content.field_categories,
   date: formatted_date,
-  description: content.field_teaser_text.0|default(content.field_subtitle),
-  bottom: content.field_branch,
+  description: content.field_description,
+  branch: content.field_branch,
+  start_date: start_time,
+  end_date: end_time,
+  ticket_price: ticket_price_display,
 }, false) }}

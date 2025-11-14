@@ -1,18 +1,54 @@
 {%
   set classes = [
-  'content-list-item-stacked',
-  'arrow__hover--right-small',
-]
+    'content-list-item-stacked',
+    'arrow__hover--right-small',
+  ]
+%}
+
+{%
+  set status_classes = [
+    'tag',
+    'tag--fill',
+    'tag--small',
+    'status',
+    status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
+    status_value == 'SoldOut' ? 'status--sold-out',
+    status_value == 'Cancelled' ? 'status--cancelled',
+    status_value == 'Occurred' ? 'status--occurred',
+  ]
 %}
 
 <a {{ attributes.addClass(classes).setAttribute('href', url) }}>
   <h2 class="hide-visually">{{ title }}</h2>
 
   {% if date or start_time %}
-    <time class="content-list-item-stacked__content" datetime="{{ datetime_attribute }}">
-      <span class="content-list-item-stacked__date">{{ date }}</span>
-      <span class="content-list-item-stacked__time">{{ time_combined }}</span>
-    </time>
+    <div class="content-list-item-stacked__status">
+      {% if status_value and status_value != 'Active' %}
+        <span class="{{ status_classes|join(' ') }}">{{ status }}</span>
+      {% endif %}
+    </div>
+
+    <div class="content-list-item-stacked__content">
+      <div class="content-list-item-stacked__content__item">
+        {{ source(baseIconPath ~ '/collection/icon-pin.svg') }}
+
+        <p class="content-list-item-stacked__location">{{ branch }}</p>
+      </div>
+      <div class="content-list-item-stacked__content__item">
+        {{ source(baseIconPath ~ '/collection/icon-event.svg') }}
+
+        <p class="content-list-item-stacked__date">{{ date }}</p>
+      </div>
+      <div class="content-list-item-stacked__content__item">
+        {{ source(baseIconPath ~ '/collection/icon-time.svg') }}
+
+        {% if start_date or end_date %}
+          <time class="content-list-item-stacked__time" datetime="{{ datetime_attribute }}">
+            {{ start_date }}{% if end_date %} - {{ end_date }}{% endif %}
+          </time>
+        {% endif %}
+      </div>
+    </div>
   {% endif %}
 
   {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
