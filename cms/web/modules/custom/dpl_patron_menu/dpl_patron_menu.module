@@ -32,7 +32,7 @@ function dpl_patron_menu_preprocess_page(array &$variables): void {
 
   // @todo create service for access check.
   $access_result = $plugin_block->access(\Drupal::currentUser());
-  if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+  if (!$access_result) {
     throw new AccessDeniedHttpException();
   }
 
