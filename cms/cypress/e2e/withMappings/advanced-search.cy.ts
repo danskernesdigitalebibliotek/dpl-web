@@ -3,7 +3,7 @@ describe('User journey', () => {
     cy.visit('/arrangementer').getBySel('search-header-dropdown-icon').click();
     cy.getBySel('search-header-dropdown').click();
     cy.url().should('include', 'advanced-search');
-    cy.get('h1').should('contain', 'advanced search');
+    cy.contains('h1', /advanced search|Avanceret søgning/i);
   });
 
   it('Can fill out the search form, translate it into CQL & switch to CQL search with the same translation', () => {
