@@ -69,7 +69,7 @@ class ConfigIgnoreCleanup {
    * @return array<string>
    *   The ignored items.
    */
-  public function getNonWhitelistedIgnores(): array {
+  public function getWebmasterIgnores(): array {
     // Getting the whitelists from config_ignore and config_ignore_auto.
     $whitelist = $this->configIgnoreSettings->get('ignored_config_entities');
     $whitelist = $whitelist + $this->configAutoIgnoreSettings->get('whitelist_config_entities');
@@ -97,13 +97,13 @@ class ConfigIgnoreCleanup {
    *
    * This is displayed as a report on /admin/report/status and can also
    * be pulled from drush using:
-   * drush php:eval "print_r(\Drupal::service('dpl_update.config_ignore_cleanup')->getUnsupportedIgnores());"
+   * drush php:eval "print_r(\Drupal::service('dpl_update.config_ignore_cleanup')->getOverridenConfig());"
    *
    * @return array<string>
    *   Unsupported items that ignore and override config from the filesystem.
    */
-  public function getUnsupportedIgnores(): array {
-    $items = $this->getNonWhitelistedIgnores();
+  public function getOverridenConfig(): array {
+    $items = $this->getWebmasterIgnores();
     $unsupported_items = [];
 
     // Loop through the non-whitelisted ignores, and check if it exists as part
