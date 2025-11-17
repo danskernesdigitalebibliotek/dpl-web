@@ -1,6 +1,13 @@
 describe('User journey', () => {
   it('Can access the advanced search page from home page', () => {
-    cy.visit('/arrangementer').getBySel('search-header-dropdown-icon').click();
+    cy.viewport('macbook-13');
+    cy.visit('/arrangementer');
+    cy.getBySel('search-header-dropdown-icon').should('not.be.visible');
+    cy.get('a.header__advanced-desktop').should('be.visible');
+    cy.viewport('iphone-8');
+    cy.getBySel('search-header-dropdown-icon').should('be.visible');
+    cy.get('a.header__advanced-desktop').should('not.be.visible');
+    cy.getBySel('search-header-dropdown-icon').click();
     cy.getBySel('search-header-dropdown').click();
     cy.url().should('include', 'advanced-search');
     cy.contains('h1', /advanced search|Avanceret søgning/i);
