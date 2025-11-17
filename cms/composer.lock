@@ -4301,17 +4301,17 @@
         },
         {
             "name": "drupal/enum_field",
-            "version": "1.0.7",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/enum_field.git",
-                "reference": "1.0.7"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/enum_field-1.0.7.zip",
-                "reference": "1.0.7",
-                "shasum": "bc5cf38c23da9bdb73ba554b42c58c642c984bcb"
+                "url": "https://ftp.drupal.org/files/projects/enum_field-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "f0c01900bba5ad3f6a460bd80bfed599807573bc"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10 || ^11"
@@ -4319,8 +4319,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.7",
-                    "datestamp": "1754483788",
+                    "version": "1.1.0",
+                    "datestamp": "1763110919",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
