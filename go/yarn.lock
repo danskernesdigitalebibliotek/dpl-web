@@ -4914,10 +4914,10 @@
     "@babel/runtime" "^7.23.2"
     immutable "^4.3.4"
 
-"@reloaddk/wsdl-tsclient@^1.8.6":
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.8.6.tgz#bf4928cc39baa366cf927d3ce2c60dc3431a176a"
-  integrity sha512-fQijM7sJ9lQ2F6MtLnWV4oB9QrjrOeC99w2HwWDgHz7nhG4d8PEaaTKK4ZwLVIA8J2T66D7dTs8axfjyfRQTsA==
+"@reloaddk/wsdl-tsclient@^1.8.7":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.8.7.tgz#11662b361fd525b6244fa71ec81a8d83bb7db390"
+  integrity sha512-u47MRkBHSGK54b1CXJo10jIN2gKHy4dgXlBdULvJL/JKD2GVCyC3aQBzBnbBqowneP2MkPjaWM4UA+mAqrtVDg==
   dependencies:
     camelcase "^8.0.0"
     chalk "^5.6.0"
