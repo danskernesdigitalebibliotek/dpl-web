@@ -6092,10 +6092,10 @@
     path-browserify "^1.0.1"
     tinyglobby "^0.2.14"
 
-"@tsconfig/create-react-app@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@tsconfig/create-react-app/-/create-react-app-2.0.8.tgz#d6c2508f3c351569e9879ce172385f6bc4fcef3c"
-  integrity sha512-ErLvUPDisg5cdi9IjoC2lGN86iySg6+BPHiwds7pNMPvyI4abn5pobTBpq1gEzDTrt8axW5iWTE1doD+cMwBwA==
+"@tsconfig/create-react-app@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@tsconfig/create-react-app/-/create-react-app-2.0.9.tgz#7da4a3653cad48d23a784ab6e2b825da6c69117f"
+  integrity sha512-2+Jmppd67O7syHtgrrnhhMrqqVU10NRQsOAgfqIzBlAcCO3Q8ew1nnSPR7hWdJDEsd1Gbfd02olyjjMhFQe5UQ==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
@@ -12774,14 +12774,7 @@ lz-string@^1.5.0:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.5.0.tgz#c1ab50f77887b712621201ba9fd4e3a6ed099941"
   integrity sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
 
-magic-string@^0.30.19, magic-string@^0.30.21, magic-string@^0.30.5:
-  version "0.30.21"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.21.tgz#56763ec09a0fa8091df27879fd94d19078c00d91"
-  integrity sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==
-  dependencies:
-    "@jridgewell/sourcemap-codec" "^1.5.5"
-
-magic-string@^0.30.21:
+magic-string@^0.30.21, magic-string@^0.30.5:
   version "0.30.21"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.21.tgz#56763ec09a0fa8091df27879fd94d19078c00d91"
   integrity sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==
