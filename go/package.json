@@ -111,7 +111,7 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@tsconfig/create-react-app": "^2.0.8",
     "@types/jwt-simple": "^0.5.36",
-    "@types/node": "^20.19.24",
+    "@types/node": "^20.19.25",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
