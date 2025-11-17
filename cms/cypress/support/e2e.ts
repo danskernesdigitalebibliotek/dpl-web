@@ -24,3 +24,22 @@ import 'cypress-plugin-api';
 // Collect logs for the console.
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
 installLogsCollector();
+
+beforeEach(() => {
+  cy.log('Setting cookie consent to Accept All');
+  cy.setCookie(
+    'CookieInformationConsent',
+    encodeURIComponent(`{
+      "timestamp": "2025-11-17T10:37:38.950Z",
+      "consents_approved": [
+        "cookie_cat_necessary",
+        "cookie_cat_functional",
+        "cookie_cat_statistic",
+        "cookie_cat_marketing",
+        "cookie_cat_unclassified"
+      ],
+      "consents_denied": [],
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:145.0) Gecko/20100101 Firefox/145.0"
+    }`),
+  );
+});
