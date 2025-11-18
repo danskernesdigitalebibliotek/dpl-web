@@ -1,31 +1,33 @@
-{%
-  set status_classes = [
-    'tag',
-    'tag--fill',
-    'tag--small',
-    'status',
-    status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
-    status_value == 'SoldOut' ? 'status--sold-out',
-    status_value == 'Cancelled' ? 'status--cancelled',
-    status_value == 'Occurred' ? 'status--occurred',
-  ]
-%}
+{% set status_classes = [
+  'tag',
+  'tag--fill',
+  'tag--small',
+  'status',
+  status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
+  status_value == 'SoldOut' ? 'status--sold-out',
+  status_value == 'Cancelled' ? 'status--cancelled',
+  status_value == 'Occurred' ? 'status--occurred',
+] %}
 
-<a class="content-list-item content-list-item-grid arrow__hover--right-small" {{ attributes.addClass(classes).setAttribute('href', url) }}>
-  <div class="content-list-item__image-container content-list-item--status-parent">
+<a
+  class="content-list-item content-list-item-grid arrow__hover--right-small" {{ attributes.addClass(classes).setAttribute('href', url) }}>
+  <div
+    class="content-list-item__image-container content-list-item--status-parent">
     {% if status_value and status_value != 'Active' %}
-        <span class="{{ status_classes|join(' ') }}">{{ status }}</span>
+      <span class="{{ status_classes|join(' ') }}">{{ status }}</span>
     {% endif %}
     {{ include('@novel/components/media-container.html.twig'
       , {
-      attributes: create_attribute(),
-      media: image,
-      has_media: image,
-      placeholder_text: image_placeholder_text,
-    }, false) }}
+        attributes: create_attribute(),
+        media: image,
+        has_media: image,
+        placeholder_text: image_placeholder_text,
+      }, false) }}
   </div>
   <div class="content-list-item__content">
-    {{ categories }}
+    <div class="content-list-item__tag-container">
+      {{ categories }}
+    </div>
 
     <div class="content-list-item__content-top-container">
       <div class="content-list-item__content-top-container__inner">
@@ -36,36 +38,50 @@
           </div>
         {% endif %}
       </div>
-      <div class="content-list-item__content-top-container__price">
-          {{ ticket_price }}
-        </div>
+      <div class="content-list-item__content-top-container__meta">
+        {{ ticket_price }}
+      </div>
     </div>
 
     <div class="content-list-item__content-bottom-container">
-      <div class="content-list-item__content-bottom-container__item">
-        {{ source(baseIconPath ~ '/collection/icon-pin.svg') }}
+      {% if branch %}
+        <div class="content-list-item__content-bottom-container__item">
+          {{ source(baseIconPath ~ '/collection/icon-pin.svg') }}
 
-        {{ branch }}
-      </div>
-      <div class="content-list-item__content-bottom-container__item">
-        {{ source(baseIconPath ~ '/collection/icon-event.svg') }}
+          {{ branch }}
+        </div>
+      {% endif %}
+      {% if publication_date %}
+        <div class="content-list-item__content-bottom-container__item">
+          <p class="content-list-item__date">{{ publication_date }}</p>
+        </div>
+      {% endif %}
+      {% if date %}
+        <div class="content-list-item__content-bottom-container__item">
+          {{ source(baseIconPath ~ '/collection/icon-event.svg') }}
 
-        <p class="content-list-item__date">{{ date }}</p>
-      </div>
-      <div class="content-list-item__content-bottom-container__item">
-        {% if start_date or end_date %}
+          <p class="content-list-item__date">{{ date }}</p>
+        </div>
+      {% endif %}
+      {% if start_date or end_date %}
+
+        <div class="content-list-item__content-bottom-container__item content-list-item__content-bottom-container__item--time">
           {{ source(baseIconPath ~ '/collection/icon-time.svg') }}
 
-          <time class="content-list-item__time" datetime="{{ datetime_attribute }}">
+          <time class="content-list-item__time"
+                datetime="{{ datetime_attribute }}">
             {{ start_date }}{% if end_date %} - {{ end_date }}{% endif %}
           </time>
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
+
     </div>
 
-    <div class="content-list-item__content__price">
-      {{ ticket_price }}
-    </div>
+    {% if ticket_price %}
+      <div class="content-list-item__content__price">
+        {{ ticket_price }}
+      </div>
+    {% endif %}
   </div>
   {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
 </a>
