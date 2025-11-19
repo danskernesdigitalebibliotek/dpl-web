@@ -13,8 +13,11 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
+use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
@@ -267,6 +270,51 @@ function _dpl_update_add_bnf_subscription(string $uuid, string $label, ?string $
   }
 
   return implode("\n", $feedback);
+}
+
+/**
+ * Implements hook_requirements().
+ *
+ * Display a notice on /admin/reports/status if unsupported config is ignored.
+ *
+ * @return array<mixed>
+ *   Render array.
+ */
+function dpl_update_requirements(string $phase): array {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  $service = DrupalTyped::service(ConfigIgnore::class, 'dpl_update.config_ignore');
+  $unsupported_items = $service->getOverridenConfig();
+
+  if (empty($unsupported_items)) {
+    return [];
+  }
+
+  // Build a simple item list of the unsupported entries.
+  $list_build = [
+    '#theme' => 'item_list',
+    '#items' => array_map(static function ($item) {
+      // Cast to string just in case the service returns objects/arrays.
+      return (string) $item;
+    }, $unsupported_items),
+  ];
+
+  // Render to plain markup for the 'description' field.
+  // Status report expects a string/Markup, not a render array.
+  $renderer = DrupalTyped::service(RendererInterface::class, 'renderer');
+  $items = $renderer->renderInIsolation($list_build);
+
+  return [
+    'dpl_update_unsupported_config_ignores' => [
+      'title' => t('Unsupported configuration ignores', [], ['context' => 'dpl_update']),
+      'value' => t('Overriden configuration, that is not supported by DPL-CMS. These items will be ignored by future DPL releases, and may result in broken functionality.', [], ['context' => 'dpl_update']),
+      'description' => Markup::create($items),
+      'severity' => REQUIREMENT_WARNING,
+      'weight' => -999,
+    ],
+  ];
 }
 
 /**
@@ -979,4 +1027,24 @@ function dpl_update_update_10062(): string {
     'Om eReolen',
     'Om eReolen'
   );
+}
+
+/**
+ * Remove unsupported items in config_ignore_auto, if not webmaster library.
+ */
+function dpl_update_update_10063(): string {
+  if (\Drupal::moduleHandler()->moduleExists('dpl_webmaster')) {
+    return "Webmaster library detected - no items removed.";
+  }
+
+  // If not webmaster, remove offending items from config_ignore_auto.
+  // These are items that have been handpicked after brief analysis.
+  // We could also just pass all items using ->getOverridenConfig(), but
+  // once 2025.48.X has been released, we will do a new report, and then we have
+  // a better idea of whether it's safe to do.
+  return _dpl_update_config_auto_unignore_entites([
+    'core.date_format.date_full_month',
+    'scheduler.settings',
+    'openid_connect.settings',
+  ]);
 }

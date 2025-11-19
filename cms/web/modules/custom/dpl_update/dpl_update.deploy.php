@@ -5,6 +5,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
@@ -445,4 +446,30 @@ function dpl_update_deploy_create_zero_hit_search_page(): string {
   $node->save();
 
   return "Created 0-hit search page with title 'Din søgning har 0 resultater' (node ID: {$node->id()}).";
+}
+
+/**
+ * Update config_ignore_auto to not affect drush cex.
+ */
+function dpl_update_deploy_set_config_settings(): string {
+  $config_ignore_auto_settings = \Drupal::configFactory()
+    ->getEditable('config_ignore_auto.settings');
+
+  $config_ignore_auto_settings->set('direction_operations', [
+    'import_create',
+    'import_update',
+    'import_delete',
+  ]);
+
+  $config_ignore_auto_settings->save();
+
+  return 'config_ignore_auto.settings.direction_operations updated to only ignore import.';
+}
+
+/**
+ * Remove any auto-ignored config that is identical to codebase.
+ */
+function dpl_update_deploy_clean_config(): string {
+  $service = DrupalTyped::service(ConfigIgnore::class, 'dpl_update.config_ignore');
+  return $service->cleanUnusedIgnores();
 }

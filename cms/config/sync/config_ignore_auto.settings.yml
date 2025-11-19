@@ -7,6 +7,3 @@ direction_operations:
   - import_create
   - import_update
   - import_delete
-  - export_create
-  - export_update
-  - export_delete
