@@ -4,7 +4,7 @@ namespace Drupal\dpl_update\EventSubscriber;
 
 use Drupal\Core\Config\ConfigCrudEvent;
 use Drupal\Core\Config\ConfigEvents;
-use Drupal\dpl_update\Services\ConfigIgnoreCleanup;
+use Drupal\dpl_update\Services\ConfigIgnore;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,8 +19,8 @@ class ConfigSubscriber implements EventSubscriberInterface {
    * {@inheritDoc}
    */
   public function __construct(
-    #[Autowire(service: 'dpl_update.config_ignore_cleanup')]
-    protected ConfigIgnoreCleanup $configCleaner,
+    #[Autowire(service: 'dpl_update.config_ignore')]
+    protected ConfigIgnore $configCleaner,
   ) {}
 
   /**

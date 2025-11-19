@@ -17,7 +17,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
-use Drupal\dpl_update\Services\ConfigIgnoreCleanup;
+use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
@@ -285,7 +285,7 @@ function dpl_update_requirements(string $phase): array {
     return [];
   }
 
-  $service = DrupalTyped::service(ConfigIgnoreCleanup::class, 'dpl_update.config_ignore_cleanup');
+  $service = DrupalTyped::service(ConfigIgnore::class, 'dpl_update.config_ignore');
   $unsupported_items = $service->getOverridenConfig();
 
   if (empty($unsupported_items)) {

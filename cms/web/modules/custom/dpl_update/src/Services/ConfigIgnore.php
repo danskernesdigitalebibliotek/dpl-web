@@ -13,7 +13,7 @@ use function Safe\preg_match;
 /**
  * Maintainer service for keeping ignored config in check.
  */
-class ConfigIgnoreCleanup {
+class ConfigIgnore {
 
   /**
    * The settings for config_ignore_auto.
@@ -97,7 +97,7 @@ class ConfigIgnoreCleanup {
    *
    * This is displayed as a report on /admin/report/status and can also
    * be pulled from drush using:
-   * drush php:eval "print_r(\Drupal::service('dpl_update.config_ignore_cleanup')->getOverridenConfig());"
+   * drush php:eval "print_r(\Drupal::service('dpl_update.config_ignore')->getOverridenConfig());"
    *
    * @return array<string>
    *   Unsupported items that ignore and override config from the filesystem.

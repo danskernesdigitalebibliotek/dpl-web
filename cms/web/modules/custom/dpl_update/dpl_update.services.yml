@@ -6,8 +6,8 @@ services:
   dpl_update.media_cleanup:
     class: Drupal\dpl_update\Services\MediaCleanup
 
-  dpl_update.config_ignore_cleanup:
-    class: Drupal\dpl_update\Services\ConfigIgnoreCleanup
+  dpl_update.config_ignore:
+    class: Drupal\dpl_update\Services\ConfigIgnore
 
   logger.channel.dpl_update:
     parent: logger.channel_base
