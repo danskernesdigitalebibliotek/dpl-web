@@ -6,8 +6,7 @@
 ]
 %}
 
-<section class="border-bottom">
-    <div {{ attributes.addClass(classes) }}>
+    <section {{ attributes.addClass(classes) }}>
         {% if link.0 %}
             {% set url = link.0['#url'].external ? link.0['#url'].uri : link.0['#url'].toString() %}
             {% set target = link.0['#url'].options.target|default('_self') %}
@@ -38,5 +37,4 @@
       }, false) }}
             </div>
         </div>
-    </div>
-</section>
+    </section>

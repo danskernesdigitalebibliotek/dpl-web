@@ -13,9 +13,10 @@
     }, false) }}
   </header>
 
-  <section class="event-description">
-    <div class="event-description__content">
-      <div class="event-description__description">{{ description }}</div>
+  <section class="border-bottom">
+  <div class="event-description hero-grid">
+    <div class="event-description__content  hero-grid__mixed-left">
+      <div class="event-description__description ">{{ description }}</div>
       <div class="event-description__links">
         {% if tags.0 %}
           {{ tags }}
@@ -23,7 +24,7 @@
       </div>
     </div>
 
-    <div class="event-description__info">
+    <div class="event-description__info hero-grid__mixed-right">
       <div class="event-description__card">
         {{ include('@novel/components/list-description.html.twig', {
           attributes: create_attribute(),
@@ -43,6 +44,7 @@
       }, false) }}
     </div>
 
+  </div>
   </section>
 
   {% if event_instances %}
