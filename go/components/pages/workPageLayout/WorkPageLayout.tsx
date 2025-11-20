@@ -19,7 +19,7 @@ import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
-  getBestRepresentationOrFallbackManifestation,
+  getEbookManifestationOrFallbackManifestation,
 } from "./helper"
 
 function WorkPageLayout({ workId }: { workId: string }) {
@@ -52,8 +52,8 @@ function WorkPageLayout({ workId }: { workId: string }) {
     const searchParamsMaterialType = searchParams.get("type")
 
     if (!searchParamsMaterialType && bestRepresentation) {
-      // If no material type is specified is url params, redirect the bestRepresentation manifestation if available or a fallback manifestation
-      const manifestation = getBestRepresentationOrFallbackManifestation(
+      // If no material type is specified is url params, redirect to the ebook manifestation if available or a fallback manifestation
+      const manifestation = getEbookManifestationOrFallbackManifestation(
         bestRepresentation,
         manifestations
       )
@@ -74,6 +74,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     }) as ManifestationWorkPageFragment
 
     setSelectedManifestation(selectedManifestation)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, manifestations])
 
   if (isLoading && !data) {

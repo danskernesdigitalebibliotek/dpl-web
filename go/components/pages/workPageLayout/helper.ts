@@ -120,11 +120,11 @@ export const getEbookManifestationOrFallbackManifestation = (
   const ebookManifestation = manifestations.find(manifestation =>
     isManifestationEbook(manifestation)
   )
-  
+
   if (ebookManifestation) {
     return ebookManifestation
   }
-  
+
   return getBestRepresentationOrFallbackManifestation(bestRepresentation, manifestations)
 }
 
