@@ -61,7 +61,7 @@ class DplPatronPageController extends ControllerBase {
 
     // @todo add a service for access check.
     $access_result = $plugin_block->access($this->currentUser());
-    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+    if (!$access_result) {
       throw new AccessDeniedHttpException();
     }
 

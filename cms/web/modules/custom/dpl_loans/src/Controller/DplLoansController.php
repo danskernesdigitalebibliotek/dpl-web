@@ -62,7 +62,7 @@ class DplLoansController extends ControllerBase {
     $plugin_block = $this->blockManager->createInstance('dpl_loans_list_block', $config);
 
     $access_result = $plugin_block->access($this->currentUser());
-    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+    if (!$access_result) {
       throw new AccessDeniedHttpException();
     }
 
