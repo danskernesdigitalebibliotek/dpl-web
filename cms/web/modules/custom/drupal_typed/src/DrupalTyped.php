@@ -15,15 +15,19 @@ class DrupalTyped {
    *
    * @param class-string<T> $className
    *   The required class name of the service to retrieve.
-   * @param string $serviceName
-   *   The ID of the service to retrieve.
+   * @param ?string $serviceName
+   *   The ID of the service to retrieve. Defaults to $className.
    *
    * @template T of object
    *
    * @return T
    *   The specified service.
    */
-  public static function service(string $className, string $serviceName): object {
+  public static function service(string $className, ?string $serviceName = NULL): object {
+    if (!$serviceName) {
+      $serviceName = $className;
+    }
+
     $service = \Drupal::service($serviceName);
     if (!$service instanceof $className) {
       $actualClass = get_class($service);
