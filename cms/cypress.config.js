@@ -1,6 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  video: true,
   e2e: {
     // baseUrl is set using environment variables because it differs between
     // development and CI setups.
