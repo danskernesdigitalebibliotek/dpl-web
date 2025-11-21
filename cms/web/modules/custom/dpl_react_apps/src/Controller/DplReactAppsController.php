@@ -74,7 +74,7 @@ class DplReactAppsController extends ControllerBase {
         $location = $branch->getAddressData();
 
         if (!empty($location)) {
-          $dawa_data = $location->getData()['adgangsadresse'];
+          $dawa_data = $location->getData()['adgangsadresse'] ?? NULL;
 
           $postal_city = "{$dawa_data?->postnummer?->nr} {$dawa_data?->postnummer?->navn}";
           // Rather than building the whole address string ourselves, we'll

@@ -45,7 +45,7 @@ class AddressDawaFormatter extends FormatterBase {
    *   }
    */
   protected function buildOutput(AddressDawaItemInterface $item): array {
-    $dawa_data = $item->getData()['adgangsadresse'];
+    $dawa_data = $item->getData()['adgangsadresse'] ?? NULL;
     $postal_code = $dawa_data?->postnummer?->nr;
     $city = $dawa_data?->postnummer?->navn;
 
