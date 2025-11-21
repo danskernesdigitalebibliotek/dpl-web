@@ -371,6 +371,11 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-facet-source-text' => $this->t('Source', [], ['context' => 'advanced search 2']),
       'advanced-search-facet-subject-text' => $this->t('Subject', [], ['context' => 'advanced search 2']),
       'advanced-search-facet-year-text' => $this->t('Year', [], ['context' => 'advanced search 2']),
+      'advanced-search-limit-search-text' => $this->t('Refine your search', [], ['context' => 'advanced search 2']),
+      'advanced-search-multiselect-search-placeholder-text' => $this->t('Search...', [], ['context' => 'advanced search 2']),
+      'advanced-search-range-from-text' => $this->t('From', [], ['context' => 'advanced search 2']),
+      'advanced-search-range-to-text' => $this->t('To', [], ['context' => 'advanced search 2']),
+      'advanced-search-title-text' => $this->t('Advanced search', [], ['context' => 'advanced search 2']),
 
       // Mapp.
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
