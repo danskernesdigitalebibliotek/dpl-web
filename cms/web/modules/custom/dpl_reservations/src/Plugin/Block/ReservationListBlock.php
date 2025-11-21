@@ -94,6 +94,17 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'page-size-desktop' => $this->reservationsSettings->getListSizeDesktop(),
       'page-size-mobile' => $this->reservationsSettings->getListSizeMobile(),
       'expiration-warning-days-before-config' => $general_settings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+
+      // Texts.
+      // @todo Move to dpl_reservations_dpl_react_apps_data()?
+      // Tried to add it there, but it only seem to accept strings as values.
+      'materials-in-stock-info-text' => [
+        'type' => 'plural',
+        'text' => [
+          $this->t('We have 1 copy of the material in stock', [], ['context' => 'Reservation list']),
+          $this->t('We have @count copies of the material in stock', [], ['context' => 'Reservation list']),
+        ],
+      ],
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
