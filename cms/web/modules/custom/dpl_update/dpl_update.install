@@ -1048,3 +1048,23 @@ function dpl_update_update_10063(): string {
     'openid_connect.settings',
   ]);
 }
+
+/**
+ * Install address_dawa module.
+ */
+function dpl_update_update_10064(): string {
+  return _dpl_update_install_modules(['address_dawa']);
+}
+
+/**
+ * Adding default translations for 'Find Bibliotek'.
+ */
+function dpl_update_update_10065(): string {
+  $return = _dpl_update_update_translation('Choose library', 'Vælg bibliotek', 'Create patron');
+  $return .= _dpl_update_update_translation('Collection library', 'Afhentningsbibliotek', 'Create patron');
+  $return .= _dpl_update_update_translation('Find nearest library', 'Find nærmeste bibliotek', 'Create patron');
+  $return .= _dpl_update_update_translation('Find nearest library using your location', 'Find nærmeste bibliotek ud fra din lokation', 'Create patron');
+  $return .= _dpl_update_update_translation('Enter your address', 'Indtast din adresse', 'Create patron');
+
+  return $return;
+}

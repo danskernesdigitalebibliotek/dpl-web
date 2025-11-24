@@ -6,6 +6,7 @@ use DanskernesDigitaleBibliotek\FBS\ApiException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_fbi\FbiProfileType;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -120,6 +121,41 @@ class GeneralSettingsForm extends ConfigFormBase {
       $disabled = TRUE;
     }
 
+    $form['general'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('General', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['general']['enable_branch_address_search'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable "Find nearest branch"', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t(
+        'If enabled, the user will be able to find their nearest library branch, using an address field. <br />
+                                         <strong>For the best experience, make sure to <a href="@edit_url">edit all branches and assign an agency ID and address.</a></strong> <br />
+                                         You can, for example, see this new functionality on the patron registration page.',
+        ['@edit_url' => Url::fromRoute('system.admin_content', ['type' => 'branch'])->toString()],
+        ['context' => 'Library Agency Configuration']
+      ),
+      '#default_value' => $config->get('enable_branch_address_search') ?? GeneralSettings::ENABLE_BRANCH_ADDRESS_SEARCH,
+    ];
+
+    $form['general']['opening_hours_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('Opening Hours Link (remove link to enable sidebar)', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('The link with information about opening hours. <br />
+                                         If no link is added, the opening hours sidebar modal is enabled. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
+    ];
+
     $form['reservations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
@@ -182,21 +218,6 @@ class GeneralSettingsForm extends ConfigFormBase {
         'linkit_profile_id' => 'default',
       ],
       '#default_value' => $config->get('zero_hits_search_url') ?? GeneralSettings::ZERO_HITS_SEARCH_URL,
-    ];
-
-    $form['opening_hours_url'] = [
-      '#type' => 'linkit',
-      '#title' => $this->t('Opening Hours Link (remove link to enable sidebar)', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('The link with information about opening hours. <br />
-                                         If no link is added, the opening hours sidebar modal is enabled. <br />
-                                         You can add a relative url (e.g. /takster). <br />
-                                         You can search for an internal url. <br />
-                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
-      '#autocomplete_route_name' => 'linkit.autocomplete',
-      '#autocomplete_route_parameters' => [
-        'linkit_profile_id' => 'default',
-      ],
-      '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
     ];
 
     $form['search'] = [
@@ -407,6 +428,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
+      ->set('enable_branch_address_search', $form_state->getValue('enable_branch_address_search'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('find_on_shelf_hide_unavailable_holdings', $form_state->getValue('find_on_shelf_hide_unavailable_holdings'))
       ->set('fbi_profiles', [

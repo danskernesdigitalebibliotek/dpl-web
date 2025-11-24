@@ -3,6 +3,7 @@
 namespace Drupal\dpl_patron_reg\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -33,6 +34,8 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    *   The plugin ID for the plugin instance.
    * @param array $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\Core\Config\ConfigFactory $configFactory
+   *   A config factory, that we can use to look up general settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch-settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
@@ -48,6 +51,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     array $configuration,
     string $plugin_id,
     array $plugin_definition,
+    protected ConfigFactory $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
     protected ReservationSettings $reservationSettings,
@@ -66,6 +70,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.reservation_settings'),
@@ -104,12 +109,12 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     $data = [
       // Configuration.
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
-      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches(), TRUE),
       'min-age-config' => $config->get('age_limit') ?? DplPatronRegSettings::AGE_LIMIT,
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
-
+      'branch-address-search-enabled-config' => (int) $this->configFactory->getEditable('dpl_library_agency.general_settings')->get('enable_branch_address_search'),
       // Texts.
       'create-patron-branch-dropdown-note-text' => $this->t("Choose preferred library for pickup of your future reservations.", [], ['context' => 'Create patron']),
       'create-patron-button-error-text' => $this->t("Error occurred", [], ['context' => 'Create patron']),
@@ -123,6 +128,18 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'post-register-redirect-info-bottom-text' => $this->t("You will be sent to the Adgangsplatformen to log in again in @seconds seconds.", [], ['context' => 'Create patron']),
       'post-register-redirect-info-top-text' => $this->t("You are now registered as a user and need to log in again to be able to use the application.", [], ['context' => 'Create patron']),
       'post-register-redirect-button-text' => $this->t("Log in again", [], ['context' => 'Create patron']),
+      'library-select-empty-state-text' => $this->t("Choose library", [], ['context' => 'Create patron']),
+      'find-library-dialog-title-text' => $this->t("Find nearest library", [], ['context' => 'Create patron']),
+      'find-library-dialog-dawa-input-label-text' => $this->t("Enter your address", [], ['context' => 'Create patron']),
+      'find-library-dialog-dawa-input-placeholder-text' => $this->t("Ex. Torvegade 1, 1401 København K", [], ['context' => 'Create patron']),
+      'find-library-dialog-geo-location-button-text' => $this->t("Find nearest library using your location", [], ['context' => 'Create patron']),
+      'find-library-dialog-suggestions-list-label-text' => $this->t("Choose library", [], ['context' => 'Create patron']),
+      'geo-location-error-not-supported-text' => $this->t("Geolocation is not supported by your browser.", [], ['context' => 'Create patron']),
+      'geo-location-error-permission-denied-text' => $this->t("You have denied access to your location. Allow location access in your browser.", [], ['context' => 'Create patron']),
+      'geo-location-error-position-unavailable-text' => $this->t("Your location is not available at the moment.", [], ['context' => 'Create patron']),
+      'geo-location-error-timeout-text' => $this->t("The request for your location timed out. Please try again.", [], ['context' => 'Create patron']),
+      'geo-location-error-default-text' => $this->t("An error occurred while retrieving your location.", [], ['context' => 'Create patron']),
+      'reverse-geocode-error-default-text' => $this->t("An error occurred while reverse geocoding your location.", [], ['context' => 'Create patron']),
 
       // Urls.
       'redirect-on-user-created-url' => $redirect_on_user_created_url,

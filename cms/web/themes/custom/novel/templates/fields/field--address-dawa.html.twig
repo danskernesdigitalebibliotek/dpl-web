@@ -1,0 +1,6 @@
+<div class="address" translate="no">
+  {% for item in items %}
+    {{ item['content']['address'] }}<br>
+    {{ item['content']['postal_code'] }} {{ item['content']['city'] }}
+  {% endfor %}
+</div>

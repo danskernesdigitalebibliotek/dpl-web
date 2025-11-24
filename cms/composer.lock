@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04e1ee8fda64259620b37eee12e7c7e4",
+    "content-hash": "d49e9de903cc99ee1733345443f66359",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2313,6 +2313,19 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/address"
             }
+        },
+        {
+            "name": "drupal/address_dawa",
+            "version": "dev-2.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/address_dawa.git",
+                "reference": "2.x"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module"
         },
         {
             "name": "drupal/admin_toolbar",
@@ -21777,7 +21790,9 @@
     "stability-flags": {
         "danskernesdigitalebibliotek/dpl-design-system": 20,
         "danskernesdigitalebibliotek/dpl-react": 20,
+        "drupal/address_dawa": 20,
         "drupal/default_content": 15,
+        "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
         "drupal/openid_connect": 15,
         "drupal/potion": 20

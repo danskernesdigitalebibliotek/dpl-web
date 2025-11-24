@@ -1,0 +1,21 @@
+uuid: 7dc7dfad-d975-4e46-afa1-f15afb842103
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agency_branch_id
+    - node.type.branch
+  module:
+    - options
+id: node.branch.field_agency_branch_id
+field_name: field_agency_branch_id
+entity_type: node
+bundle: branch
+label: 'Agency Branch ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

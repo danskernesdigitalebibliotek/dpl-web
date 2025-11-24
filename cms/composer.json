@@ -29,6 +29,22 @@
             }
         },
         {
+            "type": "package",
+            "package": {
+                "name": "drupal/address_dawa",
+                "type": "drupal-module",
+                "version": "dev-2.x",
+                "source": {
+                    "type": "git",
+                    "url": "https://git.drupalcode.org/project/address_dawa.git",
+                    "reference": "2.x"
+                },
+                "require": {
+                    "drupal/core": "^8 || ^9 || ^10"
+                }
+            }
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -97,6 +113,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^2.0",
+        "drupal/address_dawa": "dev-2.x",
         "drupal/admin_toolbar": "^3.6",
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
@@ -314,6 +331,10 @@
             }
         },
         "patches": {
+            "drupal/address_dawa": {
+                "3407189: Automated Drupal 10 compatibility fixes": "https://www.drupal.org/files/issues/2023-12-09/address_dawa.2.0.1.rector.patch",
+                "3550696: Update API endpoints.": "https://git.drupalcode.org/project/address_dawa/-/commit/330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
+            },
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
             },
