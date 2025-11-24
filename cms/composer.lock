@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6041710223a820a58a1891206f2c036b",
+    "content-hash": "d49e9de903cc99ee1733345443f66359",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -21792,6 +21792,7 @@
         "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/address_dawa": 20,
         "drupal/default_content": 15,
+        "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
         "drupal/openid_connect": 15,
         "drupal/potion": 20
