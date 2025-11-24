@@ -5053,17 +5053,17 @@
         },
         {
             "name": "drupal/graphql_compose",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql_compose.git",
-                "reference": "2.4.0"
+                "reference": "2.4.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.4.0.zip",
-                "reference": "2.4.0",
-                "shasum": "dfda4dadbea944c9ba86b9fa885361cd3cb287a9"
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.4.1.zip",
+                "reference": "2.4.1",
+                "shasum": "a58ccdbbf93aea9bc1da439ad8a4693573f6fe7b"
             },
             "require": {
                 "doctrine/inflector": "^2",
@@ -5102,8 +5102,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.4.0",
-                    "datestamp": "1752105727",
+                    "version": "2.4.1",
+                    "datestamp": "1763681644",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6312,17 +6312,17 @@
         },
         {
             "name": "drupal/multivalue_form_element",
-            "version": "1.0.0-beta7",
+            "version": "1.0.0-beta8",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/multivalue_form_element.git",
-                "reference": "1.0.0-beta7"
+                "reference": "1.0.0-beta8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/multivalue_form_element-1.0.0-beta7.zip",
-                "reference": "1.0.0-beta7",
-                "shasum": "5d59af85d37c251ef0b4ef36eddc42b0222ecfb9"
+                "url": "https://ftp.drupal.org/files/projects/multivalue_form_element-1.0.0-beta8.zip",
+                "reference": "1.0.0-beta8",
+                "shasum": "532e3f22708aa2b2fbdc6eaf007bfb6860bef814"
             },
             "require": {
                 "drupal/core": "^10 || ^11"
@@ -6330,8 +6330,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-beta7",
-                    "datestamp": "1739788827",
+                    "version": "1.0.0-beta8",
+                    "datestamp": "1763385941",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -12074,16 +12074,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.6.3",
+            "version": "5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "94f8051919d1b0369a6bcc7931d679a511c03fe9"
+                "reference": "90a04bcbf03784066f16038e87e23a0a83cee3c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/94f8051919d1b0369a6bcc7931d679a511c03fe9",
-                "reference": "94f8051919d1b0369a6bcc7931d679a511c03fe9",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/90a04bcbf03784066f16038e87e23a0a83cee3c2",
+                "reference": "90a04bcbf03784066f16038e87e23a0a83cee3c2",
                 "shasum": ""
             },
             "require": {
@@ -12132,22 +12132,22 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.3"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.4"
             },
-            "time": "2025-08-01T19:43:32+00:00"
+            "time": "2025-11-17T21:13:10+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.10.0",
+            "version": "1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a"
+                "reference": "f626740b38009078de0dc8b2b9dc4e7f749c6eba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/679e3ce485b99e84c775d28e2e96fade9a7fb50a",
-                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/f626740b38009078de0dc8b2b9dc4e7f749c6eba",
+                "reference": "f626740b38009078de0dc8b2b9dc4e7f749c6eba",
                 "shasum": ""
             },
             "require": {
@@ -12190,9 +12190,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.11.1"
             },
-            "time": "2024-11-09T15:12:26+00:00"
+            "time": "2025-11-21T11:31:57+00:00"
         },
         {
             "name": "phpowermove/docblock",
@@ -21792,7 +21792,6 @@
         "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/address_dawa": 20,
         "drupal/default_content": 15,
-        "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
         "drupal/openid_connect": 15,
         "drupal/potion": 20
