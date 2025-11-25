@@ -2,7 +2,7 @@
 {% set label = content.field_ticket_category_name|render|striptags|trim %}
 {% set price = content.field_ticket_category_price|render|striptags|trim %}
 
-<div data-ticket-label="{{ label }}" data-ticket-price="{{ price }}">
+<div class="ticket-category" data-ticket-label="{{ label }}" data-ticket-price="{{ price }}">
   {% if label %}
     {{ label }}:
   {% endif %}

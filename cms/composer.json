@@ -29,6 +29,22 @@
             }
         },
         {
+            "type": "package",
+            "package": {
+                "name": "drupal/address_dawa",
+                "type": "drupal-module",
+                "version": "dev-2.x",
+                "source": {
+                    "type": "git",
+                    "url": "https://git.drupalcode.org/project/address_dawa.git",
+                    "reference": "2.x"
+                },
+                "require": {
+                    "drupal/core": "^8 || ^9 || ^10"
+                }
+            }
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -40,10 +56,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.46.0",
+                "version": "2025.48.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.46.0/dist-2025-46-0-cbd7ba797173ada11d6132f6a61bc5cf27b57cf1.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.48.0/dist-2025-48-0-1c358389b5038e7610fe025048d0194ef8d002a1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +72,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.46.0",
+                "version": "2025.48.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.46.0/dist-2025-46-0-c799daa8efe38de4c0b2454b8de741dd9f1eea60.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.48.0/dist-2025-48-0-7ecec4ee90a040f686f8a48b5896a802b86a2f9f.zip",
                     "type": "zip"
                 }
             }
@@ -91,12 +107,13 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.46.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.46.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.48.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.48.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^2.0",
+        "drupal/address_dawa": "dev-2.x",
         "drupal/admin_toolbar": "^3.6",
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
@@ -314,6 +331,10 @@
             }
         },
         "patches": {
+            "drupal/address_dawa": {
+                "3407189: Automated Drupal 10 compatibility fixes": "https://www.drupal.org/files/issues/2023-12-09/address_dawa.2.0.1.rector.patch",
+                "3550696: Update API endpoints.": "https://git.drupalcode.org/project/address_dawa/-/commit/330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
+            },
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
             },

@@ -245,26 +245,36 @@ class EventRestMapper {
    * @see BranchAddressFormatter
    */
   private function getAddress(): EventsGET200ResponseInnerAddress {
+    $address = new EventsGET200ResponseInnerAddress();
+    $address->setLocation($this->getValue('event_place'));
+
     // Loading the field, and rendering it, to let the BranchAddressFormatter
     // do the work of looking up a possible branch.
     $rendered = $this->event->get('event_address')->view('full');
+    $street = NULL;
 
-    $zip = $rendered[0]['postal_code']['#value'] ?? NULL;
-    $address_1 = $rendered[0]['address_line1']['#value'] ?? NULL;
-    $address_2 = $rendered[0]['address_line2']['#value'] ?? NULL;
+    if ($rendered['#field_type'] === 'address_dawa') {
+      $zip = $rendered[0]['postal_code'] ?? NULL;
+      $city = $rendered[0]['city'] ?? NULL;
+      $street = $rendered[0]['address'] ?? NULL;
+      $country = $rendered[0]['country'] ?? NULL;
+    }
+    else {
+      $country = $rendered[0]['country_code']['#value'] ?? NULL;
+      $city = $rendered[0]['locality']['#value'] ?? NULL;
+      $zip = $rendered[0]['postal_code']['#value'] ?? NULL;
+      $address_1 = $rendered[0]['address_line1']['#value'] ?? NULL;
+      $address_2 = $rendered[0]['address_line2']['#value'] ?? NULL;
 
-    $street = "$address_1 $address_2";
-
-    if (empty($address_1) && empty($address_2)) {
-      $street = NULL;
+      if (!empty($address_1) || !empty($address_2)) {
+        $street = "$address_1 $address_2";
+      }
     }
 
-    $address = new EventsGET200ResponseInnerAddress();
-    $address->setLocation($this->getValue('event_place'));
     $address->setStreet($street);
     $address->setZipCode(!empty($zip) ? intval($zip) : NULL);
-    $address->setCity($rendered[0]['locality']['#value'] ?? NULL);
-    $address->setCountry($rendered[0]['country_code']['#value'] ?? NULL);
+    $address->setCity($city);
+    $address->setCountry($country);
 
     return $address;
   }

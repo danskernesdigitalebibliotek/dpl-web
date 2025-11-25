@@ -2,7 +2,7 @@
   {% set description_items = [
     {
       label: 'Address'|trans,
-      value: content.field_address.0 ? content.field_address : null,
+      value: content.field_address_dawa.0 ? content.field_address_dawa : null,
     },
     {
       label: 'Email'|trans,
@@ -14,7 +14,7 @@
     },
 
   ] %}
-
+ <header class="border-bottom">
   {{ include('@novel/components/hero.html.twig'
     , {
     attributes: create_attribute(),
@@ -24,6 +24,7 @@
     description_items: description_items,
     baseIconPath: baseIconPath,
   }, false) }}
+  </header>
 
     {{ content.field_paragraphs }}
 </article>

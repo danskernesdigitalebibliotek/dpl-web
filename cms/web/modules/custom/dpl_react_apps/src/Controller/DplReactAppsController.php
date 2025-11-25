@@ -8,7 +8,6 @@ use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
-use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
@@ -54,19 +53,48 @@ class DplReactAppsController extends ControllerBase {
    *
    * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
    *   The branches to build the string with.
+   * @param bool $includeAddress
+   *   If the branch data should include editor-fed addresses from Drupal.
    *
    * @todo This should be moved into an service to make it more sharable
    *       between modules.
    *
    * @throws \Safe\Exceptions\JsonException
    */
-  public static function buildBranchesJsonProp(array $branches) : string {
-    return json_encode(array_map(function (Branch $branch) {
-      return [
+  public static function buildBranchesJsonProp(array $branches, bool $includeAddress = FALSE) : string {
+    $output = [];
+
+    foreach ($branches as $branch) {
+      $branch_output = [
         'branchId' => $branch->id,
         'title' => $branch->title,
       ];
-    }, $branches));
+
+      if ($includeAddress) {
+        $location = $branch->getAddressData();
+
+        if (!empty($location)) {
+          $dawa_data = $location->getData()['adgangsadresse'] ?? NULL;
+
+          $postal_city = "{$dawa_data?->postnummer?->nr} {$dawa_data?->postnummer?->navn}";
+          // Rather than building the whole address string ourselves, we'll
+          // just take the pre-built one, and remove the city info.
+          $address = str_replace(" $postal_city", '', $location->getTextValue());
+
+          $branch_output['location'] = [
+            'address' => $address,
+            'city' => $postal_city,
+            'value' => $location->getTextValue(),
+            'lat' => $location->getLat(),
+            'lng' => $location->getLng(),
+          ];
+        }
+      }
+
+      $output[] = $branch_output;
+    }
+
+    return (json_encode($output));
   }
 
   /**

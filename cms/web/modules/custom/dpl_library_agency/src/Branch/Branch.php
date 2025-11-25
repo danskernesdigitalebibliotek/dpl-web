@@ -2,6 +2,11 @@
 
 namespace Drupal\dpl_library_agency\Branch;
 
+use Drupal\address_dawa\AddressDawaItemInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeInterface;
+
 /**
  * Value object representing a branch in an agency.
  *
@@ -20,16 +25,74 @@ namespace Drupal\dpl_library_agency\Branch;
 class Branch {
 
   /**
+   * The Drupal node that may be associated to this branch, via editor-mapping.
+   */
+  public ?NodeInterface $node = NULL;
+
+  /**
+   * The title that originally came from upstream.
+   */
+  public string $originalTitle = '';
+
+  /**
    * Constructor.
    *
    * @param string $id
    *   The id of the library. Typically an ISIL code.
    * @param string $title
-   *   The title of the library.
+   *   The original title of the library.
    */
   public function __construct(
     public string $id,
     public string $title,
-  ) {}
+  ) {
+    $this->originalTitle = $this->title;
+    $this->node = $this->getNode();
+
+    if ($this->node && $this->node->label()) {
+      $this->title = (string) $this->node->label();
+    }
+  }
+
+  /**
+   * Getting a (possibly) associated Drupal 'branch' node.
+   *
+   * @return ?NodeInterface
+   *   A branch node if available.
+   */
+  public function getNode(): ?NodeInterface {
+    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+
+    $storage = $entity_type_manager->getStorage('node');
+    $nodes = $storage->loadByProperties([
+      'type' => 'branch',
+      'field_agency_branch_id' => $this->id,
+    ]);
+
+    $node = reset($nodes);
+    return ($node instanceof NodeInterface) ? $node : NULL;
+  }
+
+  /**
+   * Getting address data of a branch, set on a possible Drupal node.
+   *
+   * @return \Drupal\address_dawa\AddressDawaItemInterface|null
+   *   The address field, along with metadata such as GPS coordinates.
+   */
+  public function getAddressData(): ?AddressDawaItemInterface {
+    if (!($this->node) || !$this->node->hasField('field_address_dawa')) {
+      return NULL;
+    }
+
+    $field = $this->node->get('field_address_dawa');
+
+    if ($field->isEmpty()) {
+      return NULL;
+    }
+
+    $value = $field->first();
+
+    return ($value instanceof AddressDawaItemInterface) ? $value : NULL;
+  }
 
 }

@@ -22,7 +22,7 @@ trait HasVideoToolFeaturesTrait {
   }
 
   /**
-   * Function for checking if a specific entity is of the VideoTool type..
+   * Function for checking if a specific entity is of the VideoTool type.
    */
   protected static function targetEntityIsVideoTool(FieldDefinitionInterface $fieldDefinition, callable $isApplicable): bool {
     if ($fieldDefinition->getTargetEntityTypeId() !== 'media') {

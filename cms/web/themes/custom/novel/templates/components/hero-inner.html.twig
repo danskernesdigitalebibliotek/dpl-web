@@ -15,6 +15,12 @@
 
   <h1 class="hero__title">{{ title }}</h1>
 
+  {% if price %}
+    <div class="hero__price">
+      {{ price }}
+    </div>
+  {% endif %}
+
   {% if description %}
     <div class="hero__description">
       {{ description }}
