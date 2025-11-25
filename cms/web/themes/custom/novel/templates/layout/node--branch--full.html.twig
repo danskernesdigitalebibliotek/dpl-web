@@ -14,7 +14,7 @@
     },
 
   ] %}
-
+ <header class="border-bottom">
   {{ include('@novel/components/hero.html.twig'
     , {
     attributes: create_attribute(),
@@ -24,6 +24,7 @@
     description_items: description_items,
     baseIconPath: baseIconPath,
   }, false) }}
+  </header>
 
     {{ content.field_paragraphs }}
 </article>
