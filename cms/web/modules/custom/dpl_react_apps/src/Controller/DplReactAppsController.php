@@ -377,6 +377,17 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-range-to-text' => $this->t('To', [], ['context' => 'advanced search 2']),
       'advanced-search-title-text' => $this->t('Advanced search', [], ['context' => 'advanced search 2']),
 
+      // Sort.
+      'advanced-search-sort-label-text' => $this->t('Sort by', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-relevance-text' => $this->t('Relevance', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-latest-pub-date-text' => $this->t('Publication date', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-latest-pub-date-desc-text' => $this->t('Newest first', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-latest-pub-date-asc-text' => $this->t('Oldest first', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-creator-text' => $this->t('Author', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-title-text' => $this->t('Title', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-asc-text' => $this->t('A-Z', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-desc-text' => $this->t('Z-A', [], ['context' => 'advanced search 2']),
+
       // Mapp.
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
