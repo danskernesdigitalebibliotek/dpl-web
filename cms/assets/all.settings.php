@@ -72,6 +72,7 @@ $settings['config_exclude_modules'] = [
   'uuid_url',
   // These are enabled as needed, so exclude them from export.
   'bnf_client',
+  'queue_ui',
   'bnf_server',
 ];
 
