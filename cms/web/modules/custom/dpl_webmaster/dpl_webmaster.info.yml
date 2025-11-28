@@ -7,3 +7,5 @@ core_version_requirement: ^10 || ^11
 dependencies:
   - drupal:update
   - drupal:file
+  - dpl_update:dpl_update
+  - asset_injector:asset_injector
