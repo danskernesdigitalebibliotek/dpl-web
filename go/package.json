@@ -50,7 +50,7 @@
     "@types/lodash": "^4.17.21",
     "@uidotdev/usehooks": "^2.4.1",
     "@xstate/react": "^6.0.0",
-    "@xstate/store": "^3.11.2",
+    "@xstate/store": "^3.12.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cookies-next": "^6.1.1",

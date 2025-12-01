@@ -7002,10 +7002,10 @@
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.11.2":
-  version "3.11.2"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.11.2.tgz#e16097fbd50fd0f7e1d4f268b6881cea063e3d4e"
-  integrity sha512-AleJBq1k2UMiDEslIahAQgQKjLHWJERVKbVqw+ZBnyP3GsNuz05K4RugTHGkJBF5MpcB5xwlRRFcjABRoiF7mQ==
+"@xstate/store@^3.12.0":
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.12.0.tgz#de3e5afb0c6c5395139d28688b61d3fb5c84fc49"
+  integrity sha512-sAdSe6GcNu5SgxqXq3yDp3UM5koIj8BN2fQF+8Haen1kLK5NMQFGzsF9pEI1AIsFvzsHwNtMFfO6SW0PV1Ekbg==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
