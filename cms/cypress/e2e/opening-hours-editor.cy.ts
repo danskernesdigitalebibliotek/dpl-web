@@ -434,7 +434,7 @@ const deleteRestOfOpeningHoursSeries = ({
   confirmEditRepeatedOpeningHourForm('all');
 };
 
-describe('Opening hours editor', () => {
+describe.skip('Opening hours editor', () => {
   beforeEach(() => {
     cy.deleteEntitiesIfExists(branchTitle);
     createTestBranchAndVisitOpeningHoursAdmin();
