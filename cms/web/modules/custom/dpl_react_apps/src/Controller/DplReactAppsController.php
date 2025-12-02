@@ -316,6 +316,7 @@ class DplReactAppsController extends ControllerBase {
       'show-more-text' => $this->t('Show more', [], ['context' => 'advanced search 2']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search 2']),
       'showing-materials-text' => $this->t('showing materials (@hitcount)', [], ['context' => 'advanced search 2']),
+      'add-more-filters-text' => $this->t('More filters', [], ['context' => 'advanced search 2']),
 
       // Texts - AdvancedSearchV2Args.
       'advanced-search-add-row-text' => $this->t('Add row', [], ['context' => 'advanced search 2']),
