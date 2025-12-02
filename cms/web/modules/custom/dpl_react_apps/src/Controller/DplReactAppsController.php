@@ -382,6 +382,9 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-range-from-text' => $this->t('From', [], ['context' => 'advanced search 2']),
       'advanced-search-range-to-text' => $this->t('To', [], ['context' => 'advanced search 2']),
       'advanced-search-title-text' => $this->t('Advanced search', [], ['context' => 'advanced search 2']),
+      'advanced-search-age-badge-open-ended-text' => $this->t('@age+ year olds', [], ['context' => 'advanced search 2']),
+      'advanced-search-age-badge-single-text' => $this->t('@age year olds', [], ['context' => 'advanced search 2']),
+      'advanced-search-age-badge-range-text' => $this->t('@from-@to year olds', [], ['context' => 'advanced search 2']),
 
       // Sort.
       'advanced-search-sort-label-text' => $this->t('Sort by', [], ['context' => 'advanced search 2']),
