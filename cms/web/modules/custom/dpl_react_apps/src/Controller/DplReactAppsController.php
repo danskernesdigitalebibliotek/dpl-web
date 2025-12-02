@@ -298,6 +298,10 @@ class DplReactAppsController extends ControllerBase {
    */
   public function advancedSearchV2(): array {
     $data = [
+    // Cql link (Should maybe be removed later).
+      'advanced-search-v2-cql-search-url' => '/cql',
+      'advanced-search-v2-to-cql-search-button-text' => $this->t('Go to old CQL search', [], ['context' => 'advanced search 2']),
+
       // Config.
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
