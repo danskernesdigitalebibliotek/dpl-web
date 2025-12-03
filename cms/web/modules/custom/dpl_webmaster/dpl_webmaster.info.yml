@@ -1,7 +1,7 @@
 name: Webmaster
 type: module
 description: 'Webmaster library support functionality'
-package: 'DPL'
+package: 'DPL - Webmaster'
 core_version_requirement: ^10 || ^11
 
 dependencies:
