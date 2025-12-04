@@ -21,6 +21,19 @@ class DplGoServiceProvider implements ServiceModifierInterface {
    * {@inheritdoc}
    */
   public function alter(ContainerBuilder $container): void {
+    $this->fixCookieDomain($container);
+  }
+
+  /**
+   * Fix cookie domain for sites using www. prefix.
+   *
+   * Without this, Drupal will set the cookie domain to `.www.something.tld`,
+   * but the Go site is assigned the name `www.go.something.tld`, so the cookies
+   * Go site cannot see the main site cookies.
+   *
+   * So in this case, set the cookie domain to `.something.tld`.
+   */
+  protected function fixCookieDomain(ContainerBuilder $container): void {
     $parameter = 'session.storage.options';
 
     if (!$container->getParameterBag()->has($parameter)) {
