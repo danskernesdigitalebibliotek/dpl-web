@@ -49,24 +49,10 @@ class DplGoServiceProvider implements ServiceModifierInterface {
       $cookieDomain = $cookieSettings['cookie_domain'];
     }
     else {
-      // We can't use the service from `dpl_lagoon` for this, as obviously we
-      // can't use the container while building it.
-      $route = getenv('LAGOON_ROUTE');
-
-      if (!$route) {
-        // Without a route, we can't do much.
-        return;
-      }
-
-      // Split off the scheme.
-      $parts = explode('//', $route, 2);
-
-      if (!isset($parts[1]) || !$parts[1]) {
-        return;
-      }
+      ['host' => $cookieDomain] = $this->getLagoonRouteSchemeAndHost();
 
       // Add the dot to mimic how Drupal generates it.
-      $cookieDomain = '.' . $parts[1];
+      $cookieDomain = '.' . $cookieDomain;
     }
 
     // If there's no www prefix, we don't need to do anything.
@@ -79,6 +65,72 @@ class DplGoServiceProvider implements ServiceModifierInterface {
     $cookieSettings['cookie_domain'] = $cookieDomain;
 
     $container->setParameter($parameter, $cookieSettings);
+  }
+
+  /**
+   * Configure CORS.
+   *
+   * The next module pre-2.0.1 automatically set allowedOrigins to `*` and
+   * enabled CORS, which is a gaping security hole. 2.0.1 doesn't anymore, so we
+   * need to configure CORS ourselves.
+   */
+  public function configureCors(ContainerBuilder $container): void {
+    /** @var array{'enabled': bool, 'allowedOrigin': string[]} $corsConfig */
+    $corsConfig = $container->getParameter('cors.config');
+    if (!$corsConfig['enabled']) {
+      // When running locally, allow any origin, as there's no accounting for
+      // local setups.
+      if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'local') {
+        $allowedOrigin = '*';
+      }
+      else {
+        ['scheme' => $scheme, 'host' => $host] = $this->getLagoonRouteSchemeAndHost();
+        if (str_starts_with($host, 'www.')) {
+          $host = 'www.go.' . substr($host, 4);
+        }
+        else {
+          $host = 'go.' . $host;
+        }
+
+        $allowedOrigin = $scheme . '//' . $host;
+      }
+
+      $corsConfig['allowedOrigins'] = [$allowedOrigin];
+      $corsConfig['enabled'] = TRUE;
+      $container->setParameter('cors.config', $corsConfig);
+    }
+  }
+
+  /**
+   * Return the Lagoon route split into scheme and host.
+   *
+   * We can't use the service from `dpl_lagoon` for this, as obviously we
+   * can't use the container while building it.
+   *
+   * @return array{'scheme': string, 'host': string}
+   *   Scheme and host from LAGOON_ROUTE, or null if unset.
+   */
+  protected function getLagoonRouteSchemeAndHost(): array {
+    // We can't use the service from `dpl_lagoon` for this, as obviously we
+    // can't use the container while building it.
+    $route = getenv('LAGOON_ROUTE');
+
+    if (!$route) {
+      // Without a route, we can't do much.
+      throw new \RuntimeException('No LAGOON_ROUTE variable');
+    }
+
+    // Split off the scheme.
+    $parts = explode('//', $route, 2);
+
+    if (!isset($parts[1]) || !$parts[1]) {
+      throw new \RuntimeException('LAGOON_ROUTE variable corrupted');
+    }
+
+    return [
+      'scheme' => $parts[0],
+      'host' => $parts[1],
+    ];
   }
 
 }

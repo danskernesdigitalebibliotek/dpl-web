@@ -10,13 +10,19 @@ use Drupal\Tests\UnitTestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
 use function Safe\putenv;
 
 /**
  * Test the Go service provider.
  */
 class DplGoServiceProviderTest extends UnitTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function tearDown(): void {
+    putenv('LAGOON_ENVIRONMENT_TYPE');
+  }
 
   /**
    * Test that cookie domain is properly set for www sites.
@@ -61,6 +67,79 @@ class DplGoServiceProviderTest extends UnitTestCase {
     $container->getParameter('session.storage.options')->willReturn(['unrelated' => 'setting']);
 
     return $container;
+  }
+
+  /**
+   * Test that CORS is properly configured for non-www. domains.
+   */
+  public function testCorsConfigurationForNonWwwDomains(): void {
+    $provider = new DplGoServiceProvider();
+    $container = $this->prophesize(ContainerBuilder::class);
+    $container->getParameter('cors.config')->willReturn([
+      'enabled' => FALSE,
+      'allowedHeaders' => [],
+      'allowedOrigins' => ['*'],
+    ]);
+
+    putenv('LAGOON_ROUTE=https://gotest.local');
+
+    $provider->configureCors($container->reveal());
+
+    $container->setParameter('cors.config', [
+      'enabled' => TRUE,
+      'allowedHeaders' => [],
+      'allowedOrigins' => ['https://go.gotest.local'],
+    ]
+    )->shouldHaveBeenCalled();
+  }
+
+  /**
+   * Test that CORS is properly configured for www. domains.
+   */
+  public function testCorsConfigurationForWwwDomains(): void {
+    $provider = new DplGoServiceProvider();
+    $container = $this->prophesize(ContainerBuilder::class);
+    $container->getParameter('cors.config')->willReturn([
+      'enabled' => FALSE,
+      'allowedHeaders' => [],
+      'allowedOrigins' => ['*'],
+    ]);
+
+    putenv('LAGOON_ROUTE=https://www.gotest.local');
+
+    $provider->configureCors($container->reveal());
+
+    $container->setParameter('cors.config', [
+      'enabled' => TRUE,
+      'allowedHeaders' => [],
+      'allowedOrigins' => ['https://www.go.gotest.local'],
+    ]
+    )->shouldHaveBeenCalled();
+  }
+
+  /**
+   * Test that CORS is properly configured locally.
+   */
+  public function testCorsConfigurationForLocal(): void {
+    $provider = new DplGoServiceProvider();
+    $container = $this->prophesize(ContainerBuilder::class);
+    $container->getParameter('cors.config')->willReturn([
+      'enabled' => FALSE,
+      'allowedHeaders' => [],
+      'allowedOrigins' => ['*'],
+    ]);
+
+    putenv('LAGOON_ENVIRONMENT_TYPE=local');
+    putenv('LAGOON_ROUTE=https://www.gotest.local');
+
+    $provider->configureCors($container->reveal());
+
+    $container->setParameter('cors.config', [
+      'enabled' => TRUE,
+      'allowedHeaders' => [],
+      'allowedOrigins' => ['*'],
+    ]
+    )->shouldHaveBeenCalled();
   }
 
 }
