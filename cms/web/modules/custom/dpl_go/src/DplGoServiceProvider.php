@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\dpl_go;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
-use Drupal\Core\DependencyInjection\ServiceProviderBase;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 
 /**
  * Ensures `www.` prefix is stripped from cookie_domain.
@@ -15,7 +15,7 @@ use Drupal\Core\DependencyInjection\ServiceProviderBase;
  * with `www.go.<site>` and the login doesn't work. In these cases we set it
  * explicitly without the `.www` prefix.
  */
-class DplGoServiceProvider extends ServiceProviderBase {
+class DplGoServiceProvider implements ServiceModifierInterface {
 
   /**
    * {@inheritdoc}
