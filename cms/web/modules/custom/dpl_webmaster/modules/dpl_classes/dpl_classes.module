@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_classes\Hook\EntityHooks;
+use Drupal\dpl_classes\Hook\PreprocessHooks;
+use Drupal\drupal_typed\DrupalTyped;
+
+/*
+ * The following LegacyHooks can be removed when upgrading to Drupal 11.2,
+ * together with the hook class service definitions.
+ */
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * @return \Drupal\Core\Field\FieldDefinitionInterface[]
+ *   The field definitions.
+ */
+#[LegacyHook]
+function dpl_classes_entity_base_field_info(EntityTypeInterface $entity_type): array {
+  return DrupalTyped::service(EntityHooks::class)->baseFieldInfo($entity_type);
+}
+
+/**
+ * Node preprocess function.
+ */
+#[LegacyHook]
+function dpl_classes_preprocess_node(array &$variables): void {
+  DrupalTyped::service(PreprocessHooks::class)->preprocessNode($variables);
+}
+
+/**
+ * Field preprocess function.
+ */
+#[LegacyHook]
+function dpl_classes_preprocess_field(array &$variables): void {
+  DrupalTyped::service(PreprocessHooks::class)->preprocessField($variables);
+}

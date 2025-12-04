@@ -1,0 +1,8 @@
+---
+services:
+  _defaults:
+    autowire: true
+
+  # Hook services, can be removed when upgrading to Drupal 11.2.
+  Drupal\dpl_classes\Hook\EntityHooks: {}
+  Drupal\dpl_classes\Hook\PreprocessHooks: {}
