@@ -41,4 +41,3 @@ async function getLibraryProfile() {
 }
 
 export const GET = withAuth(getLibraryProfile)
-

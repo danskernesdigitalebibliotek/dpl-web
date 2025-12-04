@@ -4,7 +4,6 @@
 import { add, sub } from "date-fns"
 import * as headersFunctions from "next/headers"
 import { NextRequest } from "next/server"
-import * as client from "openid-client"
 import { describe, it, vi } from "vitest"
 
 import goConfig from "@/lib/config/goConfig"

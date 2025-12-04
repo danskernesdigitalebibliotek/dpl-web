@@ -1,5 +1,7 @@
 import { FlatCompat } from "@eslint/eslintrc"
 import js from "@eslint/js"
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals"
+import nextTypescript from "eslint-config-next/typescript"
 import pluginCypress from "eslint-plugin-cypress"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
@@ -17,24 +19,31 @@ const eslintConfig = [
     ignores: [
       "lib/soap/publizon/v2_7/generated/",
       "lib/soap/unilogin/wsiinst-v5/generated/",
+      "lib/rest/**/generated/",
       "**/.history/",
     ],
   },
-  ...compat.extends(
-    "next/core-web-vitals",
-    "next/typescript",
-    "prettier",
-    "plugin:storybook/recommended",
-    "plugin:import/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "plugin:jsx-a11y/recommended"
-  ),
+  {
+    linterOptions: {
+      reportUnusedDisableDirectives: "off",
+    },
+  },
+  ...nextTypescript,
+  ...nextCoreWebVitals,
+  ...compat.config({
+    extends: [
+      "prettier",
+      "plugin:storybook/recommended",
+      "plugin:import/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:import/typescript",
+    ],
+  }),
   {
     files: ["cypress/**/*.{js,ts}", "**/*.cy.{js,ts}"],
     plugins: {
-      pluginCypress,
+      cypress: pluginCypress,
     },
     languageOptions: {
       ...pluginCypress.configs.globals.languageOptions,
@@ -117,6 +126,12 @@ const eslintConfig = [
       "cypress/unsafe-to-chain-command": "off",
 
       "react-hooks/exhaustive-deps": ["warn"],
+      // Disable new rules from eslint-config-next 16
+      "react-hooks/refs": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/static-components": "off",
+      "react-hooks/immutability": "off",
+      "cypress/no-unnecessary-waiting": "off",
     },
   },
   {
