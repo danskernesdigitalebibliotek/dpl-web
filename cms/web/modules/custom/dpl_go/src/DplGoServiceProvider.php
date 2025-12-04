@@ -33,7 +33,7 @@ class DplGoServiceProvider implements ServiceModifierInterface {
    *
    * So in this case, set the cookie domain to `.something.tld`.
    */
-  protected function fixCookieDomain(ContainerBuilder $container): void {
+  public function fixCookieDomain(ContainerBuilder $container): void {
     $parameter = 'session.storage.options';
 
     if (!$container->getParameterBag()->has($parameter)) {
