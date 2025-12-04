@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, connection } from "next/server"
 
 import { withAuth } from "@/app/(routes)/pubhub/(lib)/helper"
 import { TUserInfo } from "@/app/(routes)/pubhub/(lib)/types"
@@ -9,6 +9,7 @@ import { libraryUserOrderListSchema } from "./(lib)/schemas"
 import { isOrderItem } from "./(lib)/types"
 
 async function getLibraryUserOrder(request: NextRequest, context: { uniLoginUserInfo: TUserInfo }) {
+  await connection() // Opt into dynamic rendering
   const { uniLoginUserInfo } = context
   const libraryUserOrderList = libraryUserOrderListSchema.transform(orderListData => {
     const orderListResponse = orderListData.response
@@ -55,4 +56,3 @@ async function getLibraryUserOrder(request: NextRequest, context: { uniLoginUser
 
 export const GET = withAuth(getLibraryUserOrder)
 
-export const dynamic = "force-dynamic"

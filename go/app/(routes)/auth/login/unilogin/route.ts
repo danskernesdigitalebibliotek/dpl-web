@@ -1,3 +1,4 @@
+import { connection } from "next/server"
 import * as client from "openid-client"
 
 import { getEnv } from "@/lib/config/env"
@@ -5,6 +6,7 @@ import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
 
 export async function GET() {
+  await connection() // Opt into dynamic rendering
   const session = await getSession()
   const config = await getUniloginClientConfig()
   const appUrl = getEnv("APP_URL")
@@ -36,5 +38,3 @@ export async function GET() {
   console.info("unilogin authorization flow started", session)
   return Response.redirect(redirectTo)
 }
-
-export const dynamic = "force-dynamic"

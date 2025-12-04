@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, connection } from "next/server"
 import * as client from "openid-client"
 import type { IntrospectionResponse } from "openid-client"
 
@@ -55,6 +55,7 @@ interface TUniloginLoginContext {
 }
 
 export async function GET(request: NextRequest) {
+  await connection() // Opt into dynamic rendering
   const session = await getSession()
   const config = await getUniloginClientConfig()
   const appUrl = getEnv("APP_URL")
@@ -171,5 +172,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-unilogin")}`)
   }
 }
-
-export const dynamic = "force-dynamic"

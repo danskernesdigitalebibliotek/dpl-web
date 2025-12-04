@@ -14,20 +14,12 @@ function getAllowedHostname() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    dynamicIO: true,
-  },
+  cacheComponents: true,
   typescript: {
     // @todo This is a temporary solution!!
     // We are trying to bring down the build time.
     // Remember to remove this once the build time is optimized!!!
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    // @todo This is a temporary solution!!
-    // We are trying to bring down the build time.
-    // Remember to remove this once the build time is optimized!!!
-    ignoreDuringBuilds: true,
   },
   images: {
     remotePatterns: [
