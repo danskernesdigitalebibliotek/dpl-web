@@ -32,7 +32,7 @@ class DplGoServiceProviderTest extends UnitTestCase {
     $container = $this->cookieTestContainer();
     putenv('LAGOON_ROUTE=https://www.gotest.local');
 
-    $provider->fixCookieDomain($container->reveal());
+    $provider->configureCookieDomain($container->reveal());
 
     $container->setParameter("session.storage.options", [
       'unrelated' => 'setting',
@@ -48,7 +48,7 @@ class DplGoServiceProviderTest extends UnitTestCase {
     $container = $this->cookieTestContainer();
     putenv('LAGOON_ROUTE=https://gotest.local');
 
-    $provider->fixCookieDomain($container->reveal());
+    $provider->configureCookieDomain($container->reveal());
 
     $container->setParameter(Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
   }
