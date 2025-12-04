@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build-storybook": "storybook build",
-    "build": "next build --webpack",
+    "build": "next build",
     "build:test": "NODE_ENV=test next build",
     "build:dev": "NEXT_PUBLIC_APP_URL=http://dapple-cms.docker:3000 next build",
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",

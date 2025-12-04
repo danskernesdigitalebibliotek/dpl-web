@@ -21,6 +21,21 @@ const nextConfig = {
     // Remember to remove this once the build time is optimized!!!
     ignoreBuildErrors: true,
   },
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              babel: false,
+            },
+          },
+        ],
+        as: "*.js",
+      },
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -44,19 +59,6 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
-  },
-  webpack: (config, options) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: "@svgr/webpack",
-          options: { babel: false },
-        },
-      ],
-    })
-    return config
   },
 }
 
