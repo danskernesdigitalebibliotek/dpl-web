@@ -8,14 +8,14 @@ dpl_react_apps.search_result:
 dpl_react_apps.advanced_search:
   path: '/advanced-search'
   defaults:
-    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearchV2'
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearch'
   requirements:
     _permission: 'access content'
 
-dpl_react_apps.cql_search:
-  path: '/cql'
+dpl_react_apps.advancedsearch:
+  path: '/advancedsearch'
   defaults:
-    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearch'
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearchV2'
   requirements:
     _permission: 'access content'
 

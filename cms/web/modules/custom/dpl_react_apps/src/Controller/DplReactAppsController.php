@@ -299,7 +299,7 @@ class DplReactAppsController extends ControllerBase {
   public function advancedSearchV2(): array {
     $data = [
     // Cql link (Should maybe be removed later).
-      'advanced-search-v2-cql-search-url' => '/cql',
+      'advanced-search-v2-cql-search-url' => '/advanced-search',
       'advanced-search-v2-to-cql-search-button-text' => $this->t('CQL search', [], ['context' => 'advanced search 2']),
 
       // Config.
