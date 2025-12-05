@@ -312,7 +312,6 @@ class DplReactAppsController extends ControllerBase {
       'in-series-text' => $this->t('Part of series', [], ['context' => 'advanced search 2']),
       'loading-text' => $this->t('Loading...', [], ['context' => 'advanced search 2']),
       'result-pager-status-text' => $this->t('Showing @itemsShown of @hitcount results', [], ['context' => 'advanced search 2']),
-      'no-search-result-text' => $this->t('No results found', [], ['context' => 'advanced search 2']),
       'show-more-text' => $this->t('Show more', [], ['context' => 'advanced search 2']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search 2']),
       'showing-materials-text' => $this->t('showing materials (@hitcount)', [], ['context' => 'advanced search 2']),
