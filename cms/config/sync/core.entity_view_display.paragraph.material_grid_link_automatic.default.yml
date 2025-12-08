@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.material_grid_link_automatic.field_amount_of_materials
+    - field.field.paragraph.material_grid_link_automatic.field_material_amount
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_link
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_title
@@ -19,6 +20,15 @@ content:
     type: list_default
     label: above
     settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_material_amount:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
     third_party_settings: {  }
     weight: 2
     region: content

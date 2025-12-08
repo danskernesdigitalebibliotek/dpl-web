@@ -4,7 +4,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
  * @property string $id
- * @property int $amountOfMaterials
+ * @property int $materialAmount
  * @property string $materialGridLink
  * @property string $__typename
  * @property string|null $materialGridDescription
@@ -14,14 +14,14 @@ class ParagraphMaterialGridLinkAutomatic extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param int $amountOfMaterials
+     * @param int $materialAmount
      * @param string $materialGridLink
      * @param string|null $materialGridDescription
      * @param string|null $materialGridTitle
      */
     public static function make(
         $id,
-        $amountOfMaterials,
+        $materialAmount,
         $materialGridLink,
         $materialGridDescription = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
@@ -31,8 +31,8 @@ class ParagraphMaterialGridLinkAutomatic extends \Spawnia\Sailor\ObjectLike
         if ($id !== self::UNDEFINED) {
             $instance->id = $id;
         }
-        if ($amountOfMaterials !== self::UNDEFINED) {
-            $instance->amountOfMaterials = $amountOfMaterials;
+        if ($materialAmount !== self::UNDEFINED) {
+            $instance->materialAmount = $materialAmount;
         }
         if ($materialGridLink !== self::UNDEFINED) {
             $instance->materialGridLink = $materialGridLink;
@@ -55,7 +55,7 @@ class ParagraphMaterialGridLinkAutomatic extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
-            'amountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
+            'materialAmount' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
             'materialGridLink' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'materialGridDescription' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),

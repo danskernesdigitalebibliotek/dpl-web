@@ -29,7 +29,7 @@ class ParagraphMaterialGridLinkAutomaticMapper extends BnfMapperParagraphPluginB
       'type' => 'material_grid_link_automatic',
       'field_material_grid_title' => $object->materialGridTitle,
       'field_material_grid_description' => $object->materialGridDescription,
-      'field_amount_of_materials' => $object->amountOfMaterials ?? 8,
+      'field_material_amount' => $object->materialAmount ?? 8,
       'field_material_grid_link' => $object->materialGridLink,
     ]);
 

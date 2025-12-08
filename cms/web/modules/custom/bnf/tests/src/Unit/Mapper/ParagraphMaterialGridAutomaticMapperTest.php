@@ -34,7 +34,7 @@ class ParagraphMaterialGridAutomaticMapperTest extends EntityMapperTestBase {
   public function testParagraphMaterialGridAutomaticMapping(): void {
     $this->storageProphecy->create([
       'type' => 'material_grid_automatic',
-      'field_amount_of_materials' => 8,
+      'field_material_amount' => 8,
       'field_material_grid_title' => 'Popular Wizarding Books',
       'field_material_grid_description' => 'A selection of magical literature',
       'field_cql_search' => ['value' => 'title any "magic"'],
@@ -50,7 +50,7 @@ class ParagraphMaterialGridAutomaticMapperTest extends EntityMapperTestBase {
     $graphqlElement = ParagraphMaterialGridAutomatic::make(
       id: 'auto_grid_1',
       cqlSearch: CQLSearch::make(value: 'title any "magic"'),
-      amountOfMaterials: 8,
+      materialAmount: 8,
       materialGridDescription: 'A selection of magical literature',
       materialGridTitle: 'Popular Wizarding Books'
     );

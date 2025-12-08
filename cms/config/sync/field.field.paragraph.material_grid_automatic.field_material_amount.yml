@@ -1,0 +1,25 @@
+uuid: 195aee51-b3ff-48bd-89c7-80f8f153377b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_material_amount
+    - paragraphs.paragraphs_type.material_grid_automatic
+id: paragraph.material_grid_automatic.field_material_amount
+field_name: field_material_amount
+entity_type: paragraph
+bundle: material_grid_automatic
+label: 'Amount of materials'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 8
+default_value_callback: ''
+settings:
+  min: 0
+  max: 100
+  prefix: ''
+  suffix: ' materials'
+field_type: integer

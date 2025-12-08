@@ -695,7 +695,7 @@ default:
           revision_translation_affected:
             -
               value: true
-          field_amount_of_materials:
+          field_material_amount:
             -
               value: 8
           field_material_grid_description:
@@ -728,7 +728,7 @@ default:
           revision_translation_affected:
             -
               value: true
-          field_amount_of_materials:
+          field_material_amount:
             -
               value: 8
           field_cql_search:
@@ -761,7 +761,7 @@ default:
           revision_translation_affected:
             -
               value: true
-          field_amount_of_materials:
+          field_material_amount:
             -
               value: 4
           field_cql_search:
