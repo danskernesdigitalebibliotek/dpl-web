@@ -145,7 +145,7 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^4.0.13"
+    "vitest": "^4.0.15"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
   "resolutions": {
