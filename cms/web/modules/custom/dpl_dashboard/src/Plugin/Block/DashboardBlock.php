@@ -87,6 +87,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
+      'blacklisted-availability-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Urls.
