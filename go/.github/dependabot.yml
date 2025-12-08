@@ -79,28 +79,10 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "next"
-        versions: [">=15.4.0-canary.47"]
-      - dependency-name: "@next/*"
-        versions: [">=15.4.0"]
       - dependency-name: "zod"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "storybook"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@storybook/*"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "eslint-plugin-storybook"
-        versions: [">=9.0.7"]
       - dependency-name: "next-drupal"
         versions: [">=2.0.0-beta.0"]
-      - dependency-name: "react"
-        versions: [">=19.0.0"]
-      - dependency-name: "react-dom"
-        versions: [">=19.0.0"]
-      - dependency-name: "@types/react"
-        versions: [">=19.0.0"]
-      - dependency-name: "@types/react-dom"
-        versions: [">=19.0.0"]
       - dependency-name: "prettier-plugin-classnames"
         versions: [">=0.7.3"]
       - dependency-name: "sharp"
@@ -109,10 +91,6 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "orval"
         versions: [">=7.13"]
-      - dependency-name: "eslint-config-next"
-        versions: [">=15.5.6"]
-      - dependency-name: "@storybook/test-runner"
-        versions: [">=0.23.0"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
