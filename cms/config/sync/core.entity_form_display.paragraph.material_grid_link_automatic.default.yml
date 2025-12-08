@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.material_grid_link_automatic.field_amount_of_materials
+    - field.field.paragraph.material_grid_link_automatic.field_material_amount
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_link
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_title
@@ -13,11 +14,12 @@ targetEntityType: paragraph
 bundle: material_grid_link_automatic
 mode: default
 content:
-  field_amount_of_materials:
-    type: options_select
+  field_material_amount:
+    type: number
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      placeholder: ''
     third_party_settings: {  }
   field_material_grid_description:
     type: string_textarea
@@ -45,4 +47,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_amount_of_materials: true
   status: true

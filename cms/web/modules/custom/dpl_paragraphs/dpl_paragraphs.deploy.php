@@ -245,3 +245,34 @@ function dpl_paragraphs_deploy_migrate_material_grid_link(): string {
     $placeholders
   )->render();
 }
+
+/**
+ * Migrate field_amount_of_materials => field_material_amount.
+ */
+function dpl_paragraphs_deploy_migrate_material_amount(): string {
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $pids = $storage->getQuery()
+    ->condition('field_amount_of_materials', '', '<>')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  /** @var \Drupal\paragraphs\Entity\Paragraph[] $paragraphs */
+  $paragraphs = $storage->loadMultiple($pids);
+  $updated_count = 0;
+
+  foreach ($paragraphs as $paragraph) {
+    $value = (int) $paragraph->get('field_amount_of_materials')->getString();
+    $value = !empty($value) ? $value : 8;
+
+    // Sanity check, that should not apply regardless.
+    if (!$paragraph->hasField('field_material_amount')) {
+      continue;
+    }
+
+    $paragraph->set('field_material_amount', $value);
+    $paragraph->save();
+    $updated_count++;
+  }
+
+  return "Migrated amount-field for $updated_count paragraphs.";
+}

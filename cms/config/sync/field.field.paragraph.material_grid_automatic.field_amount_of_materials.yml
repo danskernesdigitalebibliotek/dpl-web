@@ -11,9 +11,9 @@ id: paragraph.material_grid_automatic.field_amount_of_materials
 field_name: field_amount_of_materials
 entity_type: paragraph
 bundle: material_grid_automatic
-label: 'Amount of materials'
+label: 'Amount of materials (Deprecated - will be deleted!)'
 description: 'Determines the amount of materials that will be shown, based on the CQL string. '
-required: true
+required: false
 translatable: false
 default_value:
   -

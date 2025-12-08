@@ -924,13 +924,13 @@ type ParagraphManualEventList implements ParagraphInterface {
 type ParagraphMaterialGridAutomatic implements ParagraphInterface {
   id: ID!
 
-  amountOfMaterials: Int!
-
   cqlSearch: CQLSearch
 
   created: DateTime!
 
   langcode: Language!
+
+  materialAmount: Int!
 
   materialGridDescription: String
 
@@ -942,11 +942,11 @@ type ParagraphMaterialGridAutomatic implements ParagraphInterface {
 type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
   id: ID!
 
-  amountOfMaterials: Int!
-
   created: DateTime!
 
   langcode: Language!
+
+  materialAmount: Int!
 
   materialGridDescription: String
 
@@ -1146,14 +1146,6 @@ type Query {
   goConfiguration: GoConfiguration
   dplTokens: DplTokens
 
-  node(
-    id: ID!
-
-    langcode: String
-
-    revision: ID
-  ): NodeUnion
-
   paragraph(
     id: ID!
 
@@ -1161,6 +1153,14 @@ type Query {
 
     revision: ID
   ): ParagraphUnion
+
+  node(
+    id: ID!
+
+    langcode: String
+
+    revision: ID
+  ): NodeUnion
 
   info: SchemaInformation!
 

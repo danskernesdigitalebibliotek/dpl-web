@@ -35,7 +35,7 @@ class ParagraphMaterialGridLinkAutomaticMapperTest extends EntityMapperTestBase 
       'type' => 'material_grid_link_automatic',
       'field_material_grid_title' => 'Recommended Reading',
       'field_material_grid_description' => 'Books from the Hogwarts library',
-      'field_amount_of_materials' => 5,
+      'field_material_amount' => 5,
       'field_material_grid_link' => 'https://example.com/magic',
     ])->willReturn($this->entityProphecy)->shouldBeCalled();
 
@@ -48,7 +48,7 @@ class ParagraphMaterialGridLinkAutomaticMapperTest extends EntityMapperTestBase 
 
     $graphqlElement = ParagraphMaterialGridLinkAutomatic::make(
       id: 'grid_link_auto_1',
-      amountOfMaterials: 5,
+      materialAmount: 5,
       materialGridLink: 'https://example.com/magic',
       materialGridDescription: 'Books from the Hogwarts library',
       materialGridTitle: 'Recommended Reading'

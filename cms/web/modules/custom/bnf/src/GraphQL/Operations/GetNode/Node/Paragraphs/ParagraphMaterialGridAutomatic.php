@@ -4,7 +4,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
  * @property string $id
- * @property int $amountOfMaterials
+ * @property int $materialAmount
  * @property string $__typename
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch|null $cqlSearch
  * @property string|null $materialGridDescription
@@ -14,14 +14,14 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param int $amountOfMaterials
+     * @param int $materialAmount
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch|null $cqlSearch
      * @param string|null $materialGridDescription
      * @param string|null $materialGridTitle
      */
     public static function make(
         $id,
-        $amountOfMaterials,
+        $materialAmount,
         $cqlSearch = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridDescription = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $materialGridTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
@@ -31,8 +31,8 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
         if ($id !== self::UNDEFINED) {
             $instance->id = $id;
         }
-        if ($amountOfMaterials !== self::UNDEFINED) {
-            $instance->amountOfMaterials = $amountOfMaterials;
+        if ($materialAmount !== self::UNDEFINED) {
+            $instance->materialAmount = $materialAmount;
         }
         $instance->__typename = 'ParagraphMaterialGridAutomatic';
         if ($cqlSearch !== self::UNDEFINED) {
@@ -55,7 +55,7 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
-            'amountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
+            'materialAmount' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'cqlSearch' => new \Spawnia\Sailor\Convert\NullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch),
             'materialGridDescription' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),

@@ -166,11 +166,11 @@ query GetNode($id: ID!) {
           }
           materialGridDescription
           materialGridTitle
-          amountOfMaterials
+          materialAmount
         }
         ... on ParagraphMaterialGridLinkAutomatic {
           id
-          amountOfMaterials
+          materialAmount
           materialGridDescription
           materialGridLink
           materialGridTitle
@@ -408,11 +408,11 @@ query GetNode($id: ID!) {
           }
           materialGridDescription
           materialGridTitle
-          amountOfMaterials
+          materialAmount
         }
         ... on ParagraphMaterialGridLinkAutomatic {
           id
-          amountOfMaterials
+          materialAmount
           materialGridDescription
           materialGridLink
           materialGridTitle
