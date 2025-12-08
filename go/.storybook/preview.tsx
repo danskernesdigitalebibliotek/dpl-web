@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react"
+import type { Preview } from "@storybook/nextjs"
 import localFont from "next/font/local"
 import React from "react"
 
@@ -34,7 +34,7 @@ const preview: Preview = {
       appDirectory: true,
     },
     viewport: {
-      viewports: {
+      options: {
         sm: {
           name: "Small",
           styles: { width: "640px", height: "900px" },
