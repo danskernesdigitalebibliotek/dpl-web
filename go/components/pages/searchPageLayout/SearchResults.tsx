@@ -13,7 +13,7 @@ import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
-  getBestRepresentationOrFallbackManifestation,
+  getEbookManifestationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "../workPageLayout/helper"
 
@@ -30,17 +30,17 @@ const SearchResults = ({ works }: SearchResultProps) => {
             filterManifestationsByMaterialType(filterMaterialTypes(work.manifestations.all))
           )
         )
-        const bestRepresentation = getBestRepresentationOrFallbackManifestation(
+        const manifestation = getEbookManifestationOrFallbackManifestation(
           work.manifestations.bestRepresentation,
           manifestations
         )
 
         const title = work.titles.full[0]
-        const url = bestRepresentation
+        const url = manifestation
           ? resolveUrl({
               routeParams: { work: "work", wid: work.workId },
               queryParams: {
-                type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
+                type: manifestation.materialTypes[0].materialTypeGeneral.code,
               },
             })
           : ""
@@ -53,11 +53,11 @@ const SearchResults = ({ works }: SearchResultProps) => {
               className="focus-visible"
               href={url}>
               <WorkCardWithCaption title={title} creators={work.creators || []}>
-                {bestRepresentation ? (
+                {manifestation ? (
                   <WorkCard
                     workId={work.workId}
                     title={title}
-                    bestRepresentation={bestRepresentation}
+                    bestRepresentation={manifestation}
                     manifestations={manifestations}
                     isWithTilt
                   />

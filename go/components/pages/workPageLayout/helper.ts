@@ -112,6 +112,23 @@ export const sortManifestationsBySortPriority = (
   })
 }
 
+// If no ebook manifestation is found, return the best representation or a fallback manifestation
+export const getEbookManifestationOrFallbackManifestation = (
+  bestRepresentation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
+  manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
+): ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment => {
+  const ebookManifestation = manifestations.find(manifestation =>
+    isManifestationEbook(manifestation)
+  )
+
+  if (ebookManifestation) {
+    return ebookManifestation
+  }
+
+  return getBestRepresentationOrFallbackManifestation(bestRepresentation, manifestations)
+}
+
+// If no best representation is found, return the first manifestation in sortedManifestations
 export const getBestRepresentationOrFallbackManifestation = (
   bestRepresentation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
   manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]

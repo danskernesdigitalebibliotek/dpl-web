@@ -5,7 +5,7 @@ import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
-  getBestRepresentationOrFallbackManifestation,
+  getEbookManifestationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import WorkCard, { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
@@ -42,17 +42,17 @@ const WorkCardStackedWithCaption = ({
     )
   )
 
-  const bestRepresentation = getBestRepresentationOrFallbackManifestation(
+  const manifestation = getEbookManifestationOrFallbackManifestation(
     currentWork.manifestations.bestRepresentation,
     manifestations
   )
 
   const title = currentWork.titles.full[0]
-  const url = bestRepresentation
+  const url = manifestation
     ? resolveUrl({
         routeParams: { work: "work", wid: currentWork.workId },
         queryParams: {
-          type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
+          type: manifestation.materialTypes[0].materialTypeGeneral.code,
         },
       })
     : ""
@@ -85,12 +85,12 @@ const WorkCardStackedWithCaption = ({
           creators={currentWork.creators || []}
           title={title}
           className="pointer-events-auto relative h-auto overflow-visible opacity-100">
-          {bestRepresentation ? (
+          {manifestation ? (
             <WorkCard
               className={cn("bg-background dark:bg-background-overlay-solid shadow-stacked-card")}
               workId={currentWork.workId}
               title={title}
-              bestRepresentation={bestRepresentation}
+              bestRepresentation={manifestation}
               manifestations={manifestations}
               isWithTilt
             />
