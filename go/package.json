@@ -84,7 +84,7 @@
   "devDependencies": {
     "@0no-co/graphqlsp": "^1.15.1",
     "@chromatic-com/storybook": "^3.2.7",
-    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.1",
     "@graphql-codegen/cli": "^6.1.0",
     "@graphql-codegen/client-preset": "^5.1.1",
