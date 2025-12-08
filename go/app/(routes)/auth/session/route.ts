@@ -1,6 +1,9 @@
+import { connection } from "next/server"
+
 import { defaultSession, getSession } from "@/lib/session/session"
 
 export async function GET() {
+  await connection() // Opt into dynamic rendering
   try {
     const session = await getSession()
 
@@ -27,5 +30,3 @@ export async function GET() {
     return Response.json({ error: e }, { status: 500 })
   }
 }
-
-export const dynamic = "force-dynamic"

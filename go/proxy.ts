@@ -25,7 +25,7 @@ import {
 // The user gets redirected to the front page if they are not logged in.
 const protectedPages = [`/${goConfig("routes.user-profile")}`]
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const currentPath = request.nextUrl.pathname
   const requestHeaders = new Headers(request.headers)
   const response = NextResponse.next({

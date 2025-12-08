@@ -42,6 +42,7 @@ export default function useSession() {
       params.delete("reload-session")
       router.replace(`${pathname}?${params.toString()}`)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reloadSession])
 
   return { session, isLoading }

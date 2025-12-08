@@ -74,6 +74,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     }) as ManifestationWorkPageFragment
 
     setSelectedManifestation(selectedManifestation)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, manifestations])
 
   if (isLoading && !data) {

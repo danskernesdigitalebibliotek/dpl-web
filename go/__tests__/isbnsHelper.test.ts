@@ -1,7 +1,6 @@
 import { expect, test } from "vitest"
 
 import {
-  Manifestation,
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
   WorkTeaserSearchPageFragment,
