@@ -1,6 +1,7 @@
 import { checkA11y, injectAxe } from "axe-playwright"
+import type { TestRunnerConfig } from "@storybook/test-runner"
 
-module.exports = {
+const config: TestRunnerConfig = {
   async preVisit(page) {
     await injectAxe(page)
     // Add a delay to wait for all animations to finish
@@ -20,3 +21,5 @@ module.exports = {
     })
   },
 }
+
+export default config
