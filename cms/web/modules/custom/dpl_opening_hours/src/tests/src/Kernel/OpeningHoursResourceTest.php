@@ -85,12 +85,13 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that an opening hours instance can be created.
    */
   public function testCreation(): void {
-    $responseData = $this->createOpeningHours(new DateTime(), "09:00", "17:00", "Open", 1);
+    $now = new DateTime();
+    $responseData = $this->createOpeningHours($now, "09:00", "17:00", "Open", 1);
     $this->assertCount(1, $responseData);
     $responseOpeningHours = reset($responseData);
     $this->assertNotEmpty($responseOpeningHours);
     $this->assertNotEmpty($responseOpeningHours->getId());
-    $this->assertDateEquals(new DateTime(), $responseOpeningHours->getDate());
+    $this->assertDateEquals($now, $responseOpeningHours->getDate());
     $this->assertEquals("09:00", $responseOpeningHours->getStartTime());
     $this->assertEquals("17:00", $responseOpeningHours->getEndTime());
     $this->assertEquals(1, $responseOpeningHours->getBranchId());
@@ -103,14 +104,15 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours can be listed.
    */
   public function testList(): void {
-    $this->createOpeningHours(new DateTime(), "09:00", "17:00", "Open", 1);
+    $now = new DateTime();
+    $this->createOpeningHours($now, "09:00", "17:00", "Open", 1);
 
     $openingHoursList = $this->listOpeningHours();
     $this->assertCount(1, $openingHoursList);
 
     $openingHours = reset($openingHoursList);
     $this->assertNotFalse($openingHours);
-    $this->assertDateEquals(new DateTime(), $openingHours->getDate());
+    $this->assertDateEquals($now, $openingHours->getDate());
     $this->assertEquals("09:00", $openingHours->getStartTime());
     $this->assertEquals("17:00", $openingHours->getEndTime());
     $this->assertEquals("Open", $openingHours->getCategory()?->getTitle());
@@ -122,20 +124,23 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours filters work.
    */
   public function testListFilters(): void {
-    $this->createOpeningHours(new DateTime("yesterday"), branchId: 1);
-    $this->createOpeningHours(new DateTime("now"), branchId: 1);
-    $this->createOpeningHours(new DateTime("tomorrow"), branchId: 1);
-    $this->createOpeningHours(new DateTime("tomorrow"), branchId: 2);
+    $now = new DateTime("now");
+    $tomorrow = (clone $now)->modify("+1 day");
+    $yesterday = (clone $now)->modify("-1 day");
+    $this->createOpeningHours($yesterday, branchId: 1);
+    $this->createOpeningHours($now, branchId: 1);
+    $this->createOpeningHours($tomorrow, branchId: 1);
+    $this->createOpeningHours($tomorrow, branchId: 2);
 
     $openingHoursByBranch = $this->listOpeningHours(branchId: 1);
     $this->assertCount(3, $openingHoursByBranch);
     $openingHoursByOtherBranch = $this->listOpeningHours(branchId: 2);
     $this->assertCount(1, $openingHoursByOtherBranch);
 
-    $openingHoursByDate = $this->listOpeningHours(fromDate: new DateTime("now"), toDate: new DateTime("tomorrow"));
+    $openingHoursByDate = $this->listOpeningHours(fromDate: $now, toDate: $tomorrow);
     $this->assertCount(3, $openingHoursByDate);
 
-    $openingHoursByBranchAndDate = $this->listOpeningHours(branchId: 1, fromDate: new DateTime("now"), toDate: new DateTime("tomorrow"));
+    $openingHoursByBranchAndDate = $this->listOpeningHours(branchId: 1, fromDate: $now, toDate: $tomorrow);
     $this->assertCount(2, $openingHoursByBranchAndDate);
   }
 
@@ -161,11 +166,11 @@ class OpeningHoursResourceTest extends KernelTestBase {
    */
   public function testCreateWeeklyRepetition(): void {
     $startDate = new DateTime('now');
-    $endDate = new DateTime("+2weeks");
+    $endDate = (clone $startDate)->modify('+2 weeks');
     $expectedDates = [
-      new DateTime('now'),
-      new DateTime('+1week'),
-      new DateTime('+2weeks'),
+      $startDate,
+      (clone $startDate)->modify('+1 week'),
+      $endDate,
     ];
 
     $createdOpeningHours = $this->createOpeningHours(
@@ -222,9 +227,10 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $id = $createdOpeningHours->getId();
     $this->assertNotNull($id);
 
+    $tomorrow = new DateTime("tomorrow");
     $updatedOpeningHours = $this->updateOpeningHours(
       $createdOpeningHours,
-      date: new DateTime("tomorrow"),
+      date: $tomorrow,
       startTime: "10:00",
       endTime: "18:00",
       branchId: 2,
@@ -233,7 +239,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $firstUpdatedOpeningHours = $updatedOpeningHours[0];
 
     $this->assertEquals($createdOpeningHours->getId(), $firstUpdatedOpeningHours->getId(), "Opening hour ids should not change across updates");
-    $this->assertDateEquals(new DateTime("tomorrow"), $firstUpdatedOpeningHours->getDate(), "Opening hour dates should change when updated");
+    $this->assertDateEquals($tomorrow, $firstUpdatedOpeningHours->getDate(), "Opening hour dates should change when updated");
     $this->assertEquals("10:00", $firstUpdatedOpeningHours->getStartTime());
     $this->assertEquals("18:00", $firstUpdatedOpeningHours->getEndTime());
     $this->assertEquals(2, $firstUpdatedOpeningHours->getBranchId());
@@ -245,7 +251,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    */
   public function testUpdateWithRepetition(): void {
     $startDate = new DateTime('now');
-    $endDate = new DateTime("+2weeks");
+    $endDate = (clone $startDate)->modify('+2 weeks');
 
     $createdOpeningHours = $this->createOpeningHours(
       date: $startDate,
@@ -281,7 +287,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    */
   public function testUpdateInstanceInWeeklyRepetition(): void {
     $startDate = new DateTime('now');
-    $endDate = new DateTime("+2weeks");
+    $endDate = (clone $startDate)->modify("+2 weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
       date: $startDate,
@@ -320,7 +326,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    */
   public function testUpdateNewWeeklyRepetition(): void {
     $startDate = new DateTime('now');
-    $endDate = new DateTime("+2weeks");
+    $endDate = (clone $startDate)->modify("+2 weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
       date: $startDate,
@@ -336,7 +342,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $extendedRepetition = (new OpeningHoursRepetitionRequest())
       ->setType(OpeningHoursRepetitionType::Weekly->value)
       ->setWeeklyData((new OpeningHoursWeeklyData())
-        ->setEndDate(new DateTime('+3weeks'))
+        ->setEndDate((clone $startDate)->modify('+3weeks'))
       );
     $updatedOpeningHours = $this->updateOpeningHours($createdOpeningHour, repetition: $extendedRepetition);
     $this->assertCount(3, $updatedOpeningHours);
@@ -379,7 +385,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    */
   public function testDeleteInstanceInWeeklyRepetition(): void {
     $startDate = new DateTime('now');
-    $endDate = new DateTime("+2weeks");
+    $endDate = (clone $startDate)->modify('+2 weeks');
 
     $createdOpeningHours = $this->createOpeningHours(
       $startDate,
@@ -411,7 +417,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    */
   public function testDeleteWeeklyRepetition(): void {
     $startDate = new DateTime('now');
-    $endDate = new DateTime("+2weeks");
+    $endDate = (clone $startDate)->modify("+2weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
       $startDate,
