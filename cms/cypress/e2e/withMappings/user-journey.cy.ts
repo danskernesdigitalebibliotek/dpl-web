@@ -7,9 +7,10 @@ describe('User journey', () => {
       .should('be.visible')
       .getBySel('autosuggest-text-item')
       .first()
+      .should('contain', 'Harry Potter (Topic)')
       .click()
       .url()
-      .should('include', 'search?q=Harry%2520Potter');
+      .should('include', 'search?q=*&subjects=harry%2520potter');
   });
 
   it('Shows search results & redirects to material page', () => {
