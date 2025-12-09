@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-12-09 10:44+0100\n"
-"PO-Revision-Date: 2025-12-09 10:44+0100\n"
+"POT-Creation-Date: 2025-12-09 11:13+0100\n"
+"PO-Revision-Date: 2025-12-09 11:13+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1572,6 +1572,342 @@ msgstr "Titel (A - Å)"
 msgctxt "advanced search"
 msgid "Title (descending)"
 msgstr "Titel (Å - A)"
+
+msgctxt "advanced search 2"
+msgid "CQL search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "By"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Part of series"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Loading..."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Showing @itemsShown of @hitcount results"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show more"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Loading results..."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "showing materials (@hitcount)"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "More filters"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Link copied to clipboard"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Add row"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "AND"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "OR"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "NOT"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Remove row @inputNumber"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Selected"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "All"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Search in all material…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter title…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter author or creator…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter subject…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter publisher…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter DK5 number…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter ISBN number…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter series title…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Free text search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Title"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Author / Creator"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Subject"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Publisher"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "DK5"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "ISBN"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Series title"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Fictional character"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Host publication"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter fictional character…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter host publication…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Edit search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "On shelf"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Only show results available at the library now."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Only \"Extra Titles\""
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Only show results not limited by digital loan quotas."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show all"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show less"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Reset"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Access Type"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Age"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Audience"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Chamber Music"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Choir"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Contributor"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Creator"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Fictional Character"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Format"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Genre and form"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Host Publication"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Instrument"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Language"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Let"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Level"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Lix"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Materialetype"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Score Type"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Source"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Year"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Refine your search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Search..."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "From"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "To"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Advanced search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "@age+ year olds"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "@age year olds"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "@from-@to year olds"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Filter materials (@hitcount)"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show results"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Relevance"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Publication date"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Newest first"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Oldest first"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Author"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "A-Z"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Z-A"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Already reserved"
