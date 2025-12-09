@@ -204,8 +204,8 @@ function _dpl_paragraphs_prepare_material_grid_render_array(ParagraphInterface $
     $description = $paragraph->get('field_material_grid_description')->getString();
   }
 
-  if ($paragraph->hasField('field_amount_of_materials')) {
-    $display_amount = (int) $paragraph->get('field_amount_of_materials')->getString();
+  if ($paragraph->hasField('field_material_amount')) {
+    $display_amount = (int) $paragraph->get('field_material_amount')->getString();
   }
 
   // Build configurations for blacklisted search branches and all branches.

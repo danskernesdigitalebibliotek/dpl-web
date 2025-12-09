@@ -41,20 +41,16 @@ jobs:
           exit 1
         if: ${{ env.PACKAGE_NAME_IS_VALID != 'true' }}
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - id: check_branch_exists
-        uses: GuillaumeFalourd/branch-exists@v1
-        with:
-          branch: ${{ env.PR_BRANCH }}
-
       - name: Stop workflow if branch already exists
         run: |
-          echo "::error::A branch with the same name as the requested branch name already exists."
-          exit 1
-        if: ${{ steps.check_branch_exists.outputs.exists == 'true' }}
+          if git ls-remote --exit-code --heads origin "${{ env.PR_BRANCH }}"; then
+            echo "::error::A branch with the same name as the requested branch name already exists."
+            exit 1
+          fi
 
       - name: Resolve composer task command
         id: resolve_composer_task_command
@@ -89,6 +85,7 @@ jobs:
         with:
           branch: ${{ env.PR_BRANCH }}
           commit_message: "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"
+          create_branch: "true"
         if: ${{ steps.manipulate_composer.outcome == 'success' }}
 
       - name: Create PR

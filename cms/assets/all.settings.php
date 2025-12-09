@@ -13,6 +13,20 @@
 
 use Drupal\Core\Installer\InstallerKernel;
 
+// Disable the APCu class cache. This is needed in order to move the
+// asset_injector module from local to contrib modules. The APCu class cache
+// keeps track of which classes exists and where, and need to be flushed when
+// we move the module to avoid fatal errors. But the APCu cache exists within
+// the PHP process, so there's no way to clear the cache in the PHP-FPM
+// processes serving the sites from the Drush command doing the update. So we
+// disable the cache for as long as the local version exists. As the cache is
+// obviously cleared at deploy time, this keeps the cache out of the game
+// until the deploy hook has had time to get rid of it.
+// See dpl_webmaster.install/deploy.php.
+if (file_exists('modules/local/asset_injector')) {
+  $settings['class_loader_auto_detect'] = FALSE;
+}
+
 // Hardcode a Site UUID to enable sharing of configuration between sites beyond
 // site install.
 $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
@@ -72,6 +86,7 @@ $settings['config_exclude_modules'] = [
   'uuid_url',
   // These are enabled as needed, so exclude them from export.
   'bnf_client',
+  'queue_ui',
   'bnf_server',
 ];
 

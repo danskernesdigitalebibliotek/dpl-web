@@ -13,12 +13,19 @@ export class AdminModulesPage extends PageObject {
     };
   }
 
-  enableModule(module: string) {
+  enableModule(module: string, confirm_dependencies: boolean) {
     // If the module has dependencies that needs to be enabled, this
     // needs to be extended to click confirm (see
     // AdminModulesUninstallPage.uninstallModule() for an example).
     this.elements.moduleCheckbox(module).check();
     this.elements.submit().click();
+
+    if (confirm_dependencies) {
+      // Technically another page, but we'll handle it.
+      cy.get('#system-modules-confirm-form').then(() =>
+        cy.findByRole('button', { name: /Continue/i }).click(),
+      );
+    }
   }
 
   /**

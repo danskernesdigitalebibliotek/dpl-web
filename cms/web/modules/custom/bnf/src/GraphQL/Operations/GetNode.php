@@ -219,11 +219,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                   }
                   materialGridDescription
                   materialGridTitle
-                  amountOfMaterials
+                  materialAmount
                 }
                 ... on ParagraphMaterialGridLinkAutomatic {
                   id
-                  amountOfMaterials
+                  materialAmount
                   materialGridDescription
                   materialGridLink
                   materialGridTitle
@@ -486,11 +486,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                   }
                   materialGridDescription
                   materialGridTitle
-                  amountOfMaterials
+                  materialAmount
                 }
                 ... on ParagraphMaterialGridLinkAutomatic {
                   id
-                  amountOfMaterials
+                  materialAmount
                   materialGridDescription
                   materialGridLink
                   materialGridTitle

@@ -9,7 +9,7 @@ describe('User journey', () => {
     cy.get('a.header__advanced-desktop').should('not.be.visible');
     cy.getBySel('search-header-dropdown-icon').click();
     cy.getBySel('search-header-dropdown').click();
-    cy.url().should('include', 'advanced-search');
+    cy.url().should('include', 'advancedsearch');
     cy.contains('h1', /advanced search|Avanceret søgning/i);
   });
 

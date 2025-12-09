@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-11-25 14:20+0100\n"
-"PO-Revision-Date: 2025-11-25 14:20+0100\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-11-25 14:21+0100\n"
-"PO-Revision-Date: 2025-11-25 14:21+0100\n"
+"POT-Creation-Date: 2025-12-09 13:34+0100\n"
+"PO-Revision-Date: 2025-12-09 13:34+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1585,6 +1573,342 @@ msgctxt "advanced search"
 msgid "Title (descending)"
 msgstr "Titel (Å - A)"
 
+msgctxt "advanced search 2"
+msgid "CQL search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "By"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Part of series"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Loading..."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Showing @itemsShown of @hitcount results"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show more"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Loading results..."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "showing materials (@hitcount)"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "More filters"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Link copied to clipboard"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Add row"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "AND"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "OR"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "NOT"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Remove row @inputNumber"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Selected"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "All"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Search in all material…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter title…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter author or creator…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter subject…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter publisher…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter DK5 number…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter ISBN number…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter series title…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Free text search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Title"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Author / Creator"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Subject"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Publisher"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "DK5"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "ISBN"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Series title"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Fictional character"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Host publication"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter fictional character…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Enter host publication…"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Edit search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "On shelf"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Only show results available at the library now."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Only \"Extra Titles\""
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Only show results not limited by digital loan quotas."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show all"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show less"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Reset"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Access Type"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Age"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Audience"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Chamber Music"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Choir"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Contributor"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Creator"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Fictional Character"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Format"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Genre and form"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Host Publication"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Instrument"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Language"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Let"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Level"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Lix"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Materialetype"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Score Type"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Source"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Year"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Refine your search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Search..."
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "From"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "To"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Advanced search"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "@age+ year olds"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "@age year olds"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "@from-@to year olds"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Filter materials (@hitcount)"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Show results"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Relevance"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Publication date"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Newest first"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Oldest first"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Author"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "A-Z"
+msgstr ""
+
+msgctxt "advanced search 2"
+msgid "Z-A"
+msgstr ""
+
 msgctxt "Work Page"
 msgid "Already reserved"
 msgstr "Allerede reserveret"
@@ -2886,6 +3210,14 @@ msgctxt "List size (settings)"
 msgid "Reservations list size on mobile"
 msgstr "Antal elementer der vises i en liste på mobil"
 
+msgctxt "Reservation list"
+msgid "We have 1 copy of the material in stock"
+msgstr "Biblioteket har 1 eksemplar."
+
+msgctxt "Reservation list"
+msgid "We have @count copies of the material in stock"
+msgstr "Biblioteket har @count eksemplarer."
+
 msgid "Updated @count automatic paragraphs, setting 'article' as CT default."
 msgstr ""
 "Opdateret @count automatiske afsnit, indstillet 'artikel' som CT standard."
@@ -3111,6 +3443,10 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
+msgctxt "dpl_classes"
+msgid "Custom CSS classes"
+msgstr ""
+
 msgctxt "dpl_library_agency"
 msgid "This agency branch ID is already in use by @title"
 msgstr "Dette agency branch ID er allerede i brug af @title."
@@ -3136,7 +3472,7 @@ msgstr ""
 "Hvis dette slås til, kan brugerne finde deres nærmeste bibliotek eller "
 "afhentningssted med søgning på deres adresse. Bemærk, at dette virker kun "
 "for biblioteker, der har adresse i Danmark.<br />\n"
-"                                         <strong>Og det er vigtigt, at få<a "
+"                                         <strong>Og det er vigtigt, at få <a "
 "href=\"@edit_url\">redigeret alle biblioteker og tilføjet et agency ID fra "
 "FBS sammen med adressen.</a></strong> <br />\n"
 "                                         \"Find nærmeste bibliotek\" kan ses "
@@ -5558,6 +5894,12 @@ msgstr "Webmaster"
 
 msgid "Webmaster library support functionality"
 msgstr "Webmaster library support functionality"
+
+msgid "Classes for paragraphs/nodes"
+msgstr ""
+
+msgid "Add custom CSS classes to paragraphs and nodes on webmaster."
+msgstr ""
 
 msgid "Library Agency"
 msgstr "Biblioteksindstillinger"
@@ -21921,7 +22263,7 @@ msgid "Title"
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:label"
-msgid "Amount of materials"
+msgid "Amount of materials (Deprecated - will be deleted!)"
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:description"
@@ -21941,6 +22283,14 @@ msgid ""
 "including the quotations. i.e: ( 'harry potter')<br /><br />A valid CQL "
 "search string can be generated, by performing a query through the advanced "
 "search, and copying the CQL string from there. "
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_material_amount:label"
+msgid "Amount of materials"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_material_amount:settings:suffix"
+msgid " materials"
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_grid_description:label"
@@ -21964,7 +22314,7 @@ msgid ""
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_amount_of_materials:label"
-msgid "Amount of materials"
+msgid "Amount of materials (Deprecated - will be deleted!)"
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_amount_of_materials:description"
@@ -21973,6 +22323,14 @@ msgid ""
 "string. <br /><br />Obs: If for example a CQL string has 11 results, and an "
 "editor chooses 12. The list will display 8 instead of 11, since the grid "
 "should be able to increment by 4. "
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_amount:label"
+msgid "Amount of materials"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_amount:settings:suffix"
+msgid " materials"
 msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_grid_description:label"

@@ -12,6 +12,13 @@ dpl_react_apps.advanced_search:
   requirements:
     _permission: 'access content'
 
+dpl_react_apps.advancedsearch:
+  path: '/advancedsearch'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearchV2'
+  requirements:
+    _permission: 'access content'
+
 dpl_react_apps.work:
   path: '/work/{wid}'
   defaults:

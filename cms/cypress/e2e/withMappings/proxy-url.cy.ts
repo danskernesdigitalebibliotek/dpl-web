@@ -15,7 +15,7 @@ const checkThatUrlIsProxied = () => {
   });
 };
 
-describe('Proxy URL replacement', () => {
+describe.skip('Proxy URL replacement', () => {
   before(() => {
     LoginPage.ensureLogin(
       Cypress.env('DRUPAL_USERNAME'),

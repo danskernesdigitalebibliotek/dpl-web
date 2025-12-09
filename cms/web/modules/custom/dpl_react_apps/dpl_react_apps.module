@@ -378,7 +378,7 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
       Url::fromRoute('dpl_react_apps.search_result')->toString()
     ),
     'advanced-search' => dpl_react_apps_ensure_url_is_string(
-      Url::fromRoute('dpl_react_apps.advanced_search')->toString()
+      Url::fromRoute('dpl_react_apps.advancedsearch')->toString()
     ),
     // React applications support variable replacement where variables are
     // prefixed with :. Specify the variable :workid as a parameter to let the
