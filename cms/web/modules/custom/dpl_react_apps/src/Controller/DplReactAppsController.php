@@ -291,6 +291,132 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
+   * Render advanced search app v2.
+   *
+   * @return mixed[]
+   *   Render array.
+   */
+  public function advancedSearchV2(): array {
+    $data = [
+    // Cql link (Should maybe be removed later).
+      'advanced-search-v2-cql-search-url' => '/advanced-search',
+      'advanced-search-v2-to-cql-search-button-text' => $this->t('CQL search', [], ['context' => 'advanced search 2']),
+
+      // Config.
+      'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+      'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
+      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+
+      // Texts - AdvancedSearchEntryTextProps.
+      'by-author-text' => $this->t('By', [], ['context' => 'advanced search 2']),
+      'in-series-text' => $this->t('Part of series', [], ['context' => 'advanced search 2']),
+      'loading-text' => $this->t('Loading...', [], ['context' => 'advanced search 2']),
+      'result-pager-status-text' => $this->t('Showing @itemsShown of @hitcount results', [], ['context' => 'advanced search 2']),
+      'show-more-text' => $this->t('Show more', [], ['context' => 'advanced search 2']),
+      'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search 2']),
+      'showing-materials-text' => $this->t('showing materials (@hitcount)', [], ['context' => 'advanced search 2']),
+      'add-more-filters-text' => $this->t('More filters', [], ['context' => 'advanced search 2']),
+      'copy-link-success-text' => $this->t('Link copied to clipboard', [], ['context' => 'advanced search 2']),
+
+      // Texts - AdvancedSearchV2Args.
+      'advanced-search-add-row-text' => $this->t('Add row', [], ['context' => 'advanced search 2']),
+      'advanced-search-search-button-text' => $this->t('Search', [], ['context' => 'advanced search 2']),
+      'clause-and-text' => $this->t('AND', [], ['context' => 'advanced search 2']),
+      'clause-or-text' => $this->t('OR', [], ['context' => 'advanced search 2']),
+      'clause-not-text' => $this->t('NOT', [], ['context' => 'advanced search 2']),
+      'advanced-search-remove-row-text' => $this->t('Remove row @inputNumber', [], ['context' => 'advanced search 2']),
+      'advanced-search-selected-text' => $this->t('Selected', [], ['context' => 'advanced search 2']),
+      'advanced-search-all-text' => $this->t('All', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-default-text' => $this->t('Search in all material…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-title-text' => $this->t('Enter title…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-creator-text' => $this->t('Enter author or creator…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-subject-text' => $this->t('Enter subject…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-publisher-text' => $this->t('Enter publisher…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-dk5-text' => $this->t('Enter DK5 number…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-isbn-text' => $this->t('Enter ISBN number…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-series-text' => $this->t('Enter series title…', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-default-text' => $this->t('Free text search', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-title-text' => $this->t('Title', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-creator-text' => $this->t('Author / Creator', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-subject-text' => $this->t('Subject', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-publisher-text' => $this->t('Publisher', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-dk5-text' => $this->t('DK5', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-isbn-text' => $this->t('ISBN', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-series-text' => $this->t('Series title', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-fictional-character-text' => $this->t('Fictional character', [], ['context' => 'advanced search 2']),
+      'advanced-search-label-host-publication-text' => $this->t('Host publication', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-fictional-character-text' => $this->t('Enter fictional character…', [], ['context' => 'advanced search 2']),
+      'advanced-search-placeholder-host-publication-text' => $this->t('Enter host publication…', [], ['context' => 'advanced search 2']),
+      'advanced-search-edit-search-text' => $this->t('Edit search', [], ['context' => 'advanced search 2']),
+      'advanced-search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'advanced search 2']),
+      'advanced-search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'advanced search 2']),
+      'advanced-search-only-extra-titles-text' => $this->t('Only "Extra Titles"', [], ['context' => 'advanced search 2']),
+      'advanced-search-only-extra-titles-description-text' => $this->t('Only show results not limited by digital loan quotas.', [], ['context' => 'advanced search 2']),
+      'advanced-search-show-all-text' => $this->t('Show all', [], ['context' => 'advanced search 2']),
+      'advanced-search-show-less-text' => $this->t('Show less', [], ['context' => 'advanced search 2']),
+      'advanced-search-reset-text' => $this->t('Reset', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-access-type-text' => $this->t('Access Type', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-age-text' => $this->t('Age', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-audience-text' => $this->t('Audience', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-chamber-music-text' => $this->t('Chamber Music', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-choir-text' => $this->t('Choir', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-contributor-text' => $this->t('Contributor', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-creator-text' => $this->t('Creator', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-fictional-character-text' => $this->t('Fictional Character', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-format-text' => $this->t('Format', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-genre-and-form-text' => $this->t('Genre and form', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-host-publication-text' => $this->t('Host Publication', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-instrument-text' => $this->t('Instrument', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-language-text' => $this->t('Language', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-let-text' => $this->t('Let', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-level-text' => $this->t('Level', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-lix-text' => $this->t('Lix', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-material-type-text' => $this->t('Materialetype', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-score-type-text' => $this->t('Score Type', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-source-text' => $this->t('Source', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-subject-text' => $this->t('Subject', [], ['context' => 'advanced search 2']),
+      'advanced-search-facet-year-text' => $this->t('Year', [], ['context' => 'advanced search 2']),
+      'advanced-search-limit-search-text' => $this->t('Refine your search', [], ['context' => 'advanced search 2']),
+      'advanced-search-multiselect-search-placeholder-text' => $this->t('Search...', [], ['context' => 'advanced search 2']),
+      'advanced-search-range-from-text' => $this->t('From', [], ['context' => 'advanced search 2']),
+      'advanced-search-range-to-text' => $this->t('To', [], ['context' => 'advanced search 2']),
+      'advanced-search-title-text' => $this->t('Advanced search', [], ['context' => 'advanced search 2']),
+      'advanced-search-age-badge-open-ended-text' => $this->t('@age+ year olds', [], ['context' => 'advanced search 2']),
+      'advanced-search-age-badge-single-text' => $this->t('@age year olds', [], ['context' => 'advanced search 2']),
+      'advanced-search-age-badge-range-text' => $this->t('@from-@to year olds', [], ['context' => 'advanced search 2']),
+      'advanced-search-filter-materials-text' => $this->t('Filter materials (@hitcount)', [], ['context' => 'advanced search 2']),
+      'advanced-search-show-results-text' => $this->t('Show results', [], ['context' => 'advanced search 2']),
+
+      // Sort.
+      'advanced-search-sort-label-text' => $this->t('Sort by', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-relevance-text' => $this->t('Relevance', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-latest-pub-date-text' => $this->t('Publication date', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-latest-pub-date-desc-text' => $this->t('Newest first', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-latest-pub-date-asc-text' => $this->t('Oldest first', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-creator-text' => $this->t('Author', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-title-text' => $this->t('Title', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-asc-text' => $this->t('A-Z', [], ['context' => 'advanced search 2']),
+      'advanced-search-sort-desc-text' => $this->t('Z-A', [], ['context' => 'advanced search 2']),
+
+      // Mapp.
+      'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
+      'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+
+      // Add external API base urls.
+    ] + self::externalApiBaseUrls();
+
+    $app = [
+      '#theme' => 'dpl_react_app',
+      "#name" => 'advanced-search-v2',
+      '#data' => $data,
+    ];
+
+    $this->renderer->addCacheableDependency($app, $this->branchSettings);
+
+    return $app;
+  }
+
+  /**
    * Title for work page.
    */
   public function workTitle(string $wid): string {
