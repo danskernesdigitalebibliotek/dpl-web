@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-12-09 07:28+0100\n"
-"PO-Revision-Date: 2025-12-09 07:28+0100\n"
+"POT-Creation-Date: 2025-12-09 07:45+0100\n"
+"PO-Revision-Date: 2025-12-09 07:45+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3107,6 +3107,10 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
+msgctxt "dpl_classes"
+msgid "Custom CSS classes"
+msgstr ""
+
 msgctxt "dpl_library_agency"
 msgid "This agency branch ID is already in use by @title"
 msgstr "Dette agency branch ID er allerede i brug af @title."
@@ -5554,6 +5558,12 @@ msgstr "Webmaster"
 
 msgid "Webmaster library support functionality"
 msgstr "Webmaster library support functionality"
+
+msgid "Classes for paragraphs/nodes"
+msgstr ""
+
+msgid "Add custom CSS classes to paragraphs and nodes on webmaster."
+msgstr ""
 
 msgid "Library Agency"
 msgstr "Biblioteksindstillinger"
