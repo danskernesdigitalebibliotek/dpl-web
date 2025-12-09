@@ -132,7 +132,16 @@ class ConfigIgnore {
     $unused_items = [];
 
     foreach ($items as $item) {
-      if ($this->configSyncStorage->read($item) === $this->configStorage->read($item)) {
+      $item_sync = $this->configSyncStorage->read($item);
+      $item_stored = $this->configStorage->read($item);
+
+      // Sometimes, we want to add items ahead of time, for upcoming features
+      // or add wildcard options. These items should not be removed.
+      if (!$item_sync && !$item_stored) {
+        continue;
+      }
+
+      if ($item_sync === $item_stored) {
         $unused_items[] = $item;
       }
     }
