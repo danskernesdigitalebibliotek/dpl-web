@@ -24,3 +24,17 @@ function dpl_webmaster_update_10101(): string {
 
   return implode("\n", $feedback);
 }
+
+/**
+ * Activate dpl_classes on all webmaster libraries.
+ */
+function dpl_webmaster_update_10102(): string {
+  $feedback = [];
+  $moduleHandler = DrupalTyped::service(ModuleHandlerInterface::class);
+
+  $moduleHandler->loadInclude('dpl_update', 'install');
+
+  $feedback[] = _dpl_update_install_modules(['dpl_classes']);
+
+  return implode("\n", $feedback);
+}

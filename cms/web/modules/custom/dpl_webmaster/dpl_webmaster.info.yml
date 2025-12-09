@@ -8,4 +8,5 @@ dependencies:
   - drupal:update
   - drupal:file
   - dpl_update:dpl_update
+  - dpl_webmaster:dpl_classes
   - asset_injector:asset_injector
