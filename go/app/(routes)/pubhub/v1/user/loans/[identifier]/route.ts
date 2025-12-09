@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, connection } from "next/server"
 
 import { withAuth } from "@/app/(routes)/pubhub/(lib)/helper"
 import { TUserInfo } from "@/app/(routes)/pubhub/(lib)/types"
@@ -27,6 +27,7 @@ async function createdigitalLoan(
   request: NextRequest,
   context: { uniLoginUserInfo: TUserInfo; params: { identifier: string } }
 ) {
+  await connection() // Opt into dynamic rendering
   const { identifier } = await context.params
 
   try {
@@ -47,5 +48,3 @@ async function createdigitalLoan(
 }
 
 export const POST = withAuth(createdigitalLoan)
-
-export const dynamic = "force-dynamic"

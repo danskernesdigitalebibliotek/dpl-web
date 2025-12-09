@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (tags) {
-      tags.split(",").forEach(tag => revalidateTag(tag))
+      tags.split(",").forEach(tag => revalidateTag(tag, "default"))
     }
 
     return NextResponse.json({ message: "Revalidation successful" })

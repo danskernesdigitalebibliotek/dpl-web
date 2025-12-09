@@ -4,7 +4,6 @@
 import { add, sub } from "date-fns"
 import * as headersFunctions from "next/headers"
 import { NextRequest } from "next/server"
-import * as client from "openid-client"
 import { describe, it, vi } from "vitest"
 
 import goConfig from "@/lib/config/goConfig"
@@ -13,7 +12,7 @@ import * as libraryTokenFunctions from "@/lib/helpers/library-token"
 import * as userTokenFunctions from "@/lib/helpers/user-token"
 import * as uniloginClientConfigFunctions from "@/lib/session/oauth/uniloginClient"
 import * as sessionFunctions from "@/lib/session/session"
-import { middleware } from "@/middleware"
+import { proxy as middleware } from "@/proxy"
 
 vi.mock("next/headers", () => ({
   cookies: () => {

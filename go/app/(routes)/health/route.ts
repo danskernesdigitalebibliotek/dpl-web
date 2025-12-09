@@ -1,6 +1,6 @@
 import { promises as fs } from "fs"
 import { isEmpty } from "lodash"
-import { NextResponse } from "next/server"
+import { NextResponse, connection } from "next/server"
 
 import goConfig from "@/lib/config/goConfig"
 import { loadPageData } from "@/lib/helpers/dpl-cms-content"
@@ -20,6 +20,7 @@ type THealthStatusRequestBody = {
 }
 
 async function getHealthStatus() {
+  await connection() // Opt into dynamic rendering
   const requestBody: THealthStatusRequestBody = {
     version: "unknown",
     requests: {},
@@ -58,5 +59,3 @@ async function getHealthStatus() {
 }
 
 export const GET = getHealthStatus
-
-export const dynamic = "force-dynamic"

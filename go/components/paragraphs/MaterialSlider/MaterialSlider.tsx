@@ -10,7 +10,7 @@ import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
-  getBestRepresentationOrFallbackManifestation,
+  getEbookManifestationOrFallbackManifestation,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
 import { WheelControls, defaultSliderOptions } from "@/components/paragraphs/MaterialSlider/helper"
@@ -104,17 +104,17 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                     )
                   )
 
-                  const bestRepresentation = getBestRepresentationOrFallbackManifestation(
+                  const manifestation = getEbookManifestationOrFallbackManifestation(
                     work.manifestations.bestRepresentation,
                     manifestations
                   )
 
                   const title = work.titles.full[0]
-                  const url = bestRepresentation
+                  const url = manifestation
                     ? resolveUrl({
                         routeParams: { work: "work", wid: work.workId },
                         queryParams: {
-                          type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
+                          type: manifestation.materialTypes[0].materialTypeGeneral.code,
                         },
                       })
                     : ""
@@ -127,12 +127,12 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                       className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"
                       href={url || ""}>
                       <WorkCardWithCaption title={title} creators={work.creators || []}>
-                        {bestRepresentation ? (
+                        {manifestation ? (
                           <WorkCard
                             className="dark:bg-background-overlay !dark:bg-background"
                             workId={work.workId}
                             title={title}
-                            bestRepresentation={bestRepresentation}
+                            bestRepresentation={manifestation}
                             manifestations={manifestations}
                             isWithTilt={true}
                           />

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextResponse, connection } from "next/server"
 
 import { withAuth } from "@/app/(routes)/pubhub/(lib)/helper"
 
@@ -6,6 +6,7 @@ import { getLibraryProfileRequest } from "./(lib)/requests"
 import { getLibraryProfileSchema } from "./(lib)/schemas"
 
 async function getLibraryProfile() {
+  await connection() // Opt into dynamic rendering
   const libraryProfile = getLibraryProfileSchema.transform(libraryProfileData => {
     const libraryProfileResponse = libraryProfileData.response.data
     return {
@@ -40,5 +41,3 @@ async function getLibraryProfile() {
 }
 
 export const GET = withAuth(getLibraryProfile)
-
-export const dynamic = "force-dynamic"

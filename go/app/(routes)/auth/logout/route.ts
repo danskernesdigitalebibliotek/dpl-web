@@ -1,8 +1,11 @@
+import { connection } from "next/server"
+
 import { destroySessionAndRedirectToFrontPage, getSession } from "@/lib/session/session"
 
 import { handleAdgangsplatformenLogout, handleUniloginLogout } from "./helpers"
 
 export async function GET() {
+  await connection() // Opt into dynamic rendering
   const session = await getSession()
 
   if (session.type === "unilogin") {
@@ -15,5 +18,3 @@ export async function GET() {
 
   return destroySessionAndRedirectToFrontPage(session)
 }
-
-export const dynamic = "force-dynamic"
