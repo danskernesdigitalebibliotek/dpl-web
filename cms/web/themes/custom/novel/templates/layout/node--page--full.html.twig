@@ -1,4 +1,4 @@
-<article>
+<article  {{ attributes }}>
   {% set title = content.field_hero_title.0|default(label) %}
   {% if node.hasField('field_display_titles') and
         node.get('field_display_titles').getString() == '1' %}
