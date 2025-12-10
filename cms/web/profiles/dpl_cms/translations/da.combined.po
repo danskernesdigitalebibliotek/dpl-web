@@ -29842,463 +29842,463 @@ msgstr "Biblioteket har @count eksemplarer."
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:label"
 msgid "Amount of materials (Deprecated - will be deleted!)"
-msgstr ""
+msgstr "Antal materialer (Forældet – feltet fjernes!)"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_amount:label"
 msgid "Amount of materials"
-msgstr ""
+msgstr "Antal materialer"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_amount:settings:suffix"
 msgid " materials"
-msgstr ""
+msgstr " materialer"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_amount_of_materials:label"
 msgid "Amount of materials (Deprecated - will be deleted!)"
-msgstr ""
+msgstr "Antal materialer (Forældet – feltet fjernes!)"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_amount:label"
 msgid "Amount of materials"
-msgstr ""
+msgstr "Antal materialer"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_amount:settings:suffix"
 msgid " materials"
-msgstr ""
+msgstr " materialer"
 
 #: 
 msgctxt "dpl_classes"
 msgid "Custom CSS classes"
-msgstr ""
+msgstr "Custom CSS klasser"
 
 #: 
 msgid "Classes for paragraphs/nodes"
-msgstr ""
+msgstr "Klasser for paragpraphs og nodes"
 
 #: 
 msgid "Add custom CSS classes to paragraphs and nodes on webmaster."
-msgstr ""
+msgstr "Tilføj custom CSS klasser til paragprahs og nodes som webmaster."
 
 #: 
 msgctxt "advanced search 2"
 msgid "CQL search"
-msgstr ""
+msgstr "CQL-søgning"
 
 #: 
 msgctxt "advanced search 2"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Part of series"
-msgstr ""
+msgstr "i serien"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Loading..."
-msgstr ""
+msgstr "Indlæser..."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Showing @itemsShown of @hitcount results"
-msgstr ""
+msgstr "Viser @itemsShown af @hitcount resultater"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Show more"
-msgstr ""
+msgstr "Vis mere"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Loading results..."
-msgstr ""
+msgstr "Henter resultater..."
 
 #: 
 msgctxt "advanced search 2"
 msgid "showing materials (@hitcount)"
-msgstr ""
+msgstr "Din søgning har @hitcount resultater"
 
 #: 
 msgctxt "advanced search 2"
 msgid "More filters"
-msgstr ""
+msgstr "Flere filtre"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Link copied to clipboard"
-msgstr ""
+msgstr "Linket er kopieret til udklipsholder"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Add row"
-msgstr ""
+msgstr "Tilføj række"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "advanced search 2"
 msgid "AND"
-msgstr ""
+msgstr "OG"
 
 #: 
 msgctxt "advanced search 2"
 msgid "OR"
-msgstr ""
+msgstr "ELLER"
 
 #: 
 msgctxt "advanced search 2"
 msgid "NOT"
-msgstr ""
+msgstr "IKKE"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Remove row @inputNumber"
-msgstr ""
+msgstr "Fjern række @inputNumber"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Selected"
-msgstr ""
+msgstr "Valgt"
 
 #: 
 msgctxt "advanced search 2"
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Search in all material…"
-msgstr ""
+msgstr "Søg efter bøger, film, musik og mere"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter title…"
-msgstr ""
+msgstr "Søg på titler"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter author or creator…"
-msgstr ""
+msgstr "Søg på forfatter, komponist, kunstner og instruktør mv."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter subject…"
-msgstr ""
+msgstr "Søg på emner, sted, tidsperiode mv."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter publisher…"
-msgstr ""
+msgstr "Søg på forlag, udgiver, pladeselskab mv."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter DK5 number…"
-msgstr ""
+msgstr "Søg på DK5-nummer"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter ISBN number…"
-msgstr ""
+msgstr "Søg på ISBN-nummer"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter series title…"
-msgstr ""
+msgstr "Søg på bogserie, tv-serie mv."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Free text search"
-msgstr ""
+msgstr "Søg efter bøger, film, musik og mere"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Author / Creator"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Subject"
-msgstr ""
+msgstr "Emne"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Publisher"
-msgstr ""
+msgstr "Udgiver / forlag"
 
 #: 
 msgctxt "advanced search 2"
 msgid "DK5"
-msgstr ""
+msgstr "DK5"
 
 #: 
 msgctxt "advanced search 2"
 msgid "ISBN"
-msgstr ""
+msgstr "ISBN"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Series title"
-msgstr ""
+msgstr "Serie"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Fictional character"
-msgstr ""
+msgstr "Fiktiv karakter"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Host publication"
-msgstr ""
+msgstr "Værtspublikation"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter fictional character…"
-msgstr ""
+msgstr "Søg f.eks. på Batman, Dicte Svendsen eller Sallys far"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Enter host publication…"
-msgstr ""
+msgstr "Søg f.eks. på Kristeligt Dagblad, Illustreret Videnskab eller Filmmagasinet Ekko"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Edit search"
-msgstr ""
+msgstr "Rediger søgning"
 
 #: 
 msgctxt "advanced search 2"
 msgid "On shelf"
-msgstr ""
+msgstr "På hylden"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Only show results available at the library now."
-msgstr ""
+msgstr "Vis kun titler, som har eksemplarer hjemme på hylden."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Only \"Extra Titles\""
-msgstr ""
+msgstr "Lån udenfor kvoten"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Only show results not limited by digital loan quotas."
-msgstr ""
+msgstr "Vis kun digitale titler, der ikke tæller med i din månedlige lånekvote og altid er tilgængelige."
 
 #: 
 msgctxt "advanced search 2"
 msgid "Show all"
-msgstr ""
+msgstr "Vis alle"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Show less"
-msgstr ""
+msgstr "Vis færre"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Reset"
-msgstr ""
+msgstr "Nulstil"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Access Type"
-msgstr ""
+msgstr "Fysisk / online"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Age"
-msgstr ""
+msgstr "Aldersgruppe"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Audience"
-msgstr ""
+msgstr "Målgruppe"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Chamber Music"
-msgstr ""
+msgstr "Kammermusik"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Choir"
-msgstr ""
+msgstr "Kortype"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Contributor"
-msgstr ""
+msgstr "Oplæser / oversætter / bidrag"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Creator"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Fictional Character"
-msgstr ""
+msgstr "Fiktiv karakter"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Genre and form"
-msgstr ""
+msgstr "Genre og form"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Host Publication"
-msgstr ""
+msgstr "Værtspublikation"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Instrument"
-msgstr ""
+msgstr "Instrument"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Language"
-msgstr ""
+msgstr "Sprog"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Let"
-msgstr ""
+msgstr "Let"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Level"
-msgstr ""
+msgstr "Fagligt niveau"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Lix"
-msgstr ""
+msgstr "Lix"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Materialetype"
-msgstr ""
+msgstr "Materialetype"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Score Type"
-msgstr ""
+msgstr "Nodetype"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Source"
-msgstr ""
+msgstr "Kilde"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Year"
-msgstr ""
+msgstr "Udgivelsesår"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Refine your search"
-msgstr ""
+msgstr "Afgræns din søgning"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Search..."
-msgstr ""
+msgstr "Søg..."
 
 #: 
 msgctxt "advanced search 2"
 msgid "From"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "advanced search 2"
 msgid "To"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Advanced search"
-msgstr ""
+msgstr "Avanceret søgning"
 
 #: 
 msgctxt "advanced search 2"
 msgid "@age+ year olds"
-msgstr ""
+msgstr "For @age+-årige"
 
 #: 
 msgctxt "advanced search 2"
 msgid "@age year olds"
-msgstr ""
+msgstr "For @age-årige"
 
 #: 
 msgctxt "advanced search 2"
 msgid "@from-@to year olds"
-msgstr ""
+msgstr "For @from-@to-årige"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Filter materials (@hitcount)"
-msgstr ""
+msgstr "Filtrer resultater (@hitcount)"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Show results"
-msgstr ""
+msgstr "Vis resultater"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Sort by"
-msgstr ""
+msgstr "Sorter efter"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Relevance"
-msgstr ""
+msgstr "Bedste match"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Publication date"
-msgstr ""
+msgstr "Udgivelsesdato"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Newest first"
-msgstr ""
+msgstr "Nyeste først"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Oldest first"
-msgstr ""
+msgstr "Ældste først"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Author"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 #: 
 msgctxt "advanced search 2"
 msgid "A-Z"
-msgstr ""
+msgstr "Forfatter / ophav (A-Å)"
 
 #: 
 msgctxt "advanced search 2"
 msgid "Z-A"
-msgstr ""
+msgstr "Forfatter / ophav (Å-A)"
 
