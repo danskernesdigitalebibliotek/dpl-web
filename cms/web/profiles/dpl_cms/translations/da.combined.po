@@ -26201,7 +26201,9 @@ msgstr "Afpubliser serien, når alle instancer har været afholdt (anbefalet)"
 #: 
 msgctxt "DPL event"
 msgid "Notice - if series get unpublished, old instance links will no longer work. If you however keep the series published, expired instances will redirect to the associated series."
-msgstr "Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instans-links ikke virke længere. Borgerne kan møde døde links, som I har udsendt på fx sociale medier eller hvis hvis I har indsat instansen i en manuel paragraf. Hvis du vælger at bevare publiseringen, vil udløbne instanser blive henvist til de relaterede serier."
+msgstr "Vi anbefaler at I automatisk afpubliserer både serier og instanser. Hvis I har mange arrangementer kan det være en fordel at have kortere afpubliseringsperiode og omvendt - en længere periode, hvis I har få arrangementer. \n"
+"\n"
+"Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instans-links ikke virke længere. Borgerne kan møde døde links, som I har udsendt på fx sociale medier."
 
 #: 
 msgctxt "BNF"
