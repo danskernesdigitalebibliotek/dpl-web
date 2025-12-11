@@ -474,6 +474,11 @@ tasks:
 
   ci:cypress:unmapped:
     desc: Run Cypress functional tests
+    # Turns out that unmapped tests aren't completely detached from
+    # wiremock after all. adgangsplatformen.cy.ts fails without
+    # wiremock, but movning it to withMappings makes the other tests
+    # fail. So add in the mappings for the moment being.
+    deps: [ci:wiremock:create-mappings]
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
