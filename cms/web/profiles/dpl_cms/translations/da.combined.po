@@ -30015,7 +30015,7 @@ msgstr "Søg på bogserie, tv-serie mv."
 #: 
 msgctxt "advanced search 2"
 msgid "Free text search"
-msgstr "Søg efter bøger, film, musik og mere"
+msgstr "Fritekstsøgning"
 
 #: 
 msgctxt "advanced search 2"
