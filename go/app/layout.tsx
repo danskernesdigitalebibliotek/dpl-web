@@ -12,7 +12,6 @@ import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
-import { CookieInformation } from "@/lib/services/cookieInformation"
 import "@/styles/globals.css"
 
 import GlobalErrorBoundary from "./GlobalErrorBoundary"
@@ -64,9 +63,6 @@ export default function Layout({
   return (
     <html lang="da">
       <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
-        <Suspense>
-          <CookieInformation />
-        </Suspense>
         <GridHelper hideInProduction />
         <Suspense>
           <RootLayout>
