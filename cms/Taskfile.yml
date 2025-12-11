@@ -457,13 +457,26 @@ tasks:
 
   ci:cypress:
     desc: Run Cypress functional tests
+    deps: [ci:cypress:mapped, ci:cypress:unmapped]
+
+  ci:cypress:mapped:
+    desc: Run Cypress functional tests
     deps: [ci:wiremock:create-mappings]
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      # We make sure to run the tests that require mappings first.
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/withMappings/*.ts"
       # All tests that delete mappings and make their own run afterwards.
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
+
+  ci:cypress:unmapped:
+    desc: Run Cypress functional tests
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/*.ts"
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
