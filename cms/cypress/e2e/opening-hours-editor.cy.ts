@@ -43,15 +43,9 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
     force: true,
   });
   // Forcing is necessary because the fields are hidden by and shown in a "popup"
-  cy.get('#edit-field-address-0-address-address-line1')
-    .type('Example Street', { force: true })
-    .should('have.value', 'Example Street');
-  cy.get('#edit-field-address-0-address-postal-code')
-    .type('1234', { force: true })
-    .should('have.value', '1234');
-  cy.get('#edit-field-address-0-address-locality')
-    .type('Example City', { force: true })
-    .should('have.value', 'Example City');
+  cy.get('#edit-field-address-dawa-0-address')
+    .type('Suomisvej 2  1927 Frederiksberg C', { force: true })
+    .should('have.value', 'Suomisvej 2  1927 Frederiksberg C');
   cy.clickSaveButton();
   cy.get('a[href^="/node/"][href$="/edit"]').click({ force: true });
   cy.get('a[href*="/edit/opening-hours"]').click();
@@ -434,7 +428,7 @@ const deleteRestOfOpeningHoursSeries = ({
   confirmEditRepeatedOpeningHourForm('all');
 };
 
-describe.skip('Opening hours editor', () => {
+describe('Opening hours editor', () => {
   beforeEach(() => {
     cy.deleteEntitiesIfExists(branchTitle);
     createTestBranchAndVisitOpeningHoursAdmin();
