@@ -26181,29 +26181,27 @@ msgstr "Gendan adgangskode"
 #: 
 msgctxt "DPL event"
 msgid "Unpublish eventinstances when they have occured (recommended)"
-msgstr "Afpubliser arrangemenstinstancer når de har været afholdt (anbefalet)"
+msgstr "Afpublicer arrangemenstinstanser når de har været afholdt (anbefalet)"
 
 #: 
 msgctxt "DPL event"
 msgid "Notice - if you do not choose that eventinstances get unpublished, they may show up in automatic and manual lists, across the site."
-msgstr "Vær opmærksom på, at hvis du vælger IKKE at afpublisere udløbede arrangementsinstanser, er det muligt, at de vises i automatiske og manuelle lister rundt om på siden."
+msgstr "Vi anbefaler at I automatisk afpublicerer både serier og instanser. Vær opmærksom på, at hvis du vælger IKKE at afpublicere udløbede arrangementsinstanser, er det muligt, at de vises i automatiske og manuelle lister rundt om på siden."
 
 #: 
 msgctxt "DPL event"
 msgid "How much time should pass after an eventinstance has occurred before it should be unpublished?"
-msgstr "Hvor lang tid skal der gå efter at en arrangementsinstance har været afholdt til det skal afpubliseres?"
+msgstr "Hvor lang tid skal der gå efter at en arrangementsinstance har været afholdt til det skal afpubliceres?"
 
 #: 
 msgctxt "DPL event"
 msgid "Unpublish the series when all instances have occurred (not recommended)"
-msgstr "Afpubliser serien, når alle instancer har været afholdt (anbefalet)"
+msgstr "Afpublicer serien, når alle instanser har været afholdt (anbefalet)"
 
 #: 
 msgctxt "DPL event"
 msgid "Notice - if series get unpublished, old instance links will no longer work. If you however keep the series published, expired instances will redirect to the associated series."
-msgstr "Vi anbefaler at I automatisk afpubliserer både serier og instanser. Hvis I har mange arrangementer kan det være en fordel at have kortere afpubliseringsperiode og omvendt - en længere periode, hvis I har få arrangementer. \n"
-"\n"
-"Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instans-links ikke virke længere. Borgerne kan møde døde links, som I har udsendt på fx sociale medier."
+msgstr "Vi anbefaler at I automatisk afpubliserer både serier og instanser. Vær opmærksom på, at hvis du vælger IKKE at afpublisere udløbede arrangementsinstanser, er det muligt, at de vises i automatiske og manuelle lister rundt om på siden."
 
 #: 
 msgctxt "BNF"
