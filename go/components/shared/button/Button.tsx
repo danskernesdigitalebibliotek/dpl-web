@@ -62,8 +62,7 @@ const buttonVariants = cva(
 )
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
   ariaLabel?: string
   dataCy?: string
@@ -94,7 +93,8 @@ const ButtonSkeleton = ({ size, className }: ButtonSkeletonProps) => {
   return (
     <div
       className={cn(
-        "mb-grid-gap-half bg-background-skeleton w-full animate-pulse rounded-full lg:max-w-80 lg:min-w-72",
+        `mb-grid-gap-half bg-background-skeleton w-full animate-pulse rounded-full lg:max-w-80
+        lg:min-w-72`,
         size === "sm" ? "h-[32px]" : "",
         size === "md" || !size ? "h-[40px]" : "",
         size === "lg" ? "h-[48px]" : "",

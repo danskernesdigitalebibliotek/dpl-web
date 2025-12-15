@@ -64,7 +64,9 @@ const LoanMaterialModal = ({
     <ResponsiveDialog
       open={open}
       title={`Lån ${getManifestationMaterialTypeSpecific(manifestation) || "materialet"}`}>
-      <div className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center justify-center lg:aspect-4/5">
+      <div
+        className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
+          justify-center lg:aspect-4/5">
         <CoverPicture alt="Forsidebillede på værket" covers={manifestation.cover} />
         <MaterialTypeIconWrapper
           iconName={getManifestationMaterialTypeIcon(manifestation)}
@@ -79,7 +81,9 @@ const LoanMaterialModal = ({
         </p>
         {publizonError && (
           <div className="flex">
-            <div className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex items-center gap-4 p-4">
+            <div
+              className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex items-center
+                gap-4 p-4">
               <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
               <p className="text-typo-link">{publizonErrorMessageMap[publizonError.code]}</p>
             </div>

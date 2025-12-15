@@ -13583,10 +13583,12 @@ prepend-file@^2.0.1:
   dependencies:
     temp-write "^4.0.0"
 
-prettier-plugin-classnames@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.npmjs.org/prettier-plugin-classnames/-/prettier-plugin-classnames-0.7.3.tgz"
-  integrity sha512-pl7RENikiCq0FpjyO/7XayLV49VXPGyBkbPnEmEkaicGweOnO0GrUaCeo2GvqB/rzERGvBRurB6/yQPF70WPTQ==
+prettier-plugin-classnames@^0.8.6:
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-classnames/-/prettier-plugin-classnames-0.8.6.tgz#13ae00baa95b0ea8f8f9fb9c72a2092160127773"
+  integrity sha512-OE5Q7uBenITenecnbbtX/RAzFSMI9ES0xcizeIIdBkG4IKQ1NoTROf164wXkkG7WbShsU+IcuimzIOd9men9QQ==
+  dependencies:
+    zod "3.22.4"
 
 prettier-plugin-merge@^0.8.0:
   version "0.8.0"
@@ -16704,6 +16706,11 @@ yoctocolors-cjs@^2.1.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-4.0.2.tgz#bc605eba49ce0fcd598c127fee1c236be3f22918"
   integrity sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==
+
+zod@3.22.4:
+  version "3.22.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
+  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
 
 "zod@^3.25.0 || ^4.0.0":
   version "4.1.13"

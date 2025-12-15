@@ -124,7 +124,8 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                       prefetch={false}
                       key={work.workId}
                       aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
-                      className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"
+                      className="keen-slider__slide focus-visible outline-accent-foreground
+                        focus:outline-offset-2"
                       href={url || ""}>
                       <WorkCardWithCaption title={title} creators={work.creators || []}>
                         {manifestation ? (
@@ -158,22 +159,29 @@ export const MaterialSliderSkeleton = () => {
       data-cy={cyKeys["material-slider-skeleton"]}>
       <div className="content-container gap-paragraph-spacing py-paragraph-spacing flex flex-col">
         <div className="flex items-center justify-between">
-          <div className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse rounded-full" />
+          <div
+            className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse
+              rounded-full"
+          />
           <div className="flex gap-x-4">
             <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
             <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
           </div>
         </div>
         <div className="grid-go flex flex-row">
-          <div className="col-span-full min-w-[calc(90%+6px)] md:min-w-[calc(100%/2-28px)] lg:min-w-[calc(100%/3-16px)]">
-            <WorkCardSkeleton />
-          </div>
-          <div className="col-span-full block min-w-[calc(90%+6px)] md:min-w-[calc(100%/2-28px)] lg:min-w-[calc(100%/3-16px)]">
+          <div
+            className="col-span-full min-w-[calc(90%+6px)] md:min-w-[calc(100%/2-28px)]
+              lg:min-w-[calc(100%/3-16px)]">
             <WorkCardSkeleton />
           </div>
           <div
-            className="col-span-full hidden w-full md:col-span-2 md:block md:min-w-[calc(100%/2-28px)]
+            className="col-span-full block min-w-[calc(90%+6px)] md:min-w-[calc(100%/2-28px)]
               lg:min-w-[calc(100%/3-16px)]">
+            <WorkCardSkeleton />
+          </div>
+          <div
+            className="col-span-full hidden w-full md:col-span-2 md:block
+              md:min-w-[calc(100%/2-28px)] lg:min-w-[calc(100%/3-16px)]">
             <WorkCardSkeleton />
           </div>
         </div>

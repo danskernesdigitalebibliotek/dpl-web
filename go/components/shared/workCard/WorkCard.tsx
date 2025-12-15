@@ -82,8 +82,8 @@ const WorkCard = ({
       key={workId}
       data-cy={cyKeys["work-card"]}
       className={cn(
-        `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col overflow-hidden
-        px-[15%] pt-[15%]`,
+        `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col
+        overflow-hidden px-[15%] pt-[15%]`,
         className
       )}>
       {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
@@ -145,7 +145,8 @@ export const WorkCardEmpty = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "rounded-base bg-background-overlay flex aspect-5/7 h-full w-full flex-col space-y-3 lg:space-y-5",
+        `rounded-base bg-background-overlay flex aspect-5/7 h-full w-full flex-col space-y-3
+        lg:space-y-5`,
         className
       )}>
       <div className="flex w-full flex-1 flex-col items-center justify-center gap-y-4">
