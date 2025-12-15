@@ -14,7 +14,9 @@ describe("Config test suite", () => {
   test("That the client hook returns configuration as expected", async () => {
     const { result } = renderHook(() => useGoConfig(["search.item.limit", "search.branch.ids"]))
 
-    await waitFor(() => {})
+    await waitFor(() => {
+      expect(result.current).not.toBeNull()
+    })
     expect(result.current).toEqual({
       "search.item.limit": 12,
       "search.branch.ids": [
