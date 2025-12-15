@@ -142,7 +142,7 @@
     "tailwindcss": "^4.0.7",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vite-tsconfig-paths": "^5.1.4",
+    "vite-tsconfig-paths": "^6.0.1",
     "vitest": "^4.0.15",
     "@storybook/addon-docs": "^10.1.4"
   },
