@@ -241,17 +241,21 @@ class OpeningHoursRepository {
     }
     $numRowsAffected = $deleteQuery->execute();
 
-    $remainingInstances = $this->loadMultiple(repetitionId: $repetitionId);
-    if (count($remainingInstances) === 0) {
-      // If there are no remaining instances for the repetition then delete it.
-      $this->repetitionRepository->delete($instance->repetition);
-    }
-    elseif ($instance->repetition::class == WeeklyRepetition::class) {
-      // Use the date of the last remaining repetition as the new end date.
-      $remainingDates = array_map(fn (OpeningHoursInstance $instance) => $instance->startTime, $remainingInstances);
-      $lastDate = max($remainingDates);
-      $newRepetition = new WeeklyRepetition($instance->repetition->id, $lastDate);
-      $this->repetitionRepository->updateWeekly($newRepetition);
+    if ($repetitionId) {
+      $remainingInstances = [];
+      $remainingInstances = $this->loadMultiple(repetitionId: $repetitionId);
+      if (count($remainingInstances) === 0) {
+        // If there are no remaining instances for the repetition then delete
+        // it.
+        $this->repetitionRepository->delete($instance->repetition);
+      }
+      elseif ($instance->repetition::class == WeeklyRepetition::class) {
+        // Use the date of the last remaining repetition as the new end date.
+        $remainingDates = array_map(fn (OpeningHoursInstance $instance) => $instance->startTime, $remainingInstances);
+        $lastDate = max($remainingDates);
+        $newRepetition = new WeeklyRepetition($instance->repetition->id, $lastDate);
+        $this->repetitionRepository->updateWeekly($newRepetition);
+      }
     }
 
     // If a row was affected then the operation had an effect. That is a
