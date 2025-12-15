@@ -79,18 +79,6 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "zod"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "next-drupal"
-        versions: [">=2.0.0-beta.0"]
-      - dependency-name: "prettier-plugin-classnames"
-        versions: [">=0.7.3"]
-      - dependency-name: "sharp"
-        versions: [">=0.33.5"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "orval"
-        versions: [">=7.13"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
