@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import React from "react"
+import React, { useOptimistic, useTransition } from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { cyKeys } from "@/cypress/support/constants"
@@ -21,8 +21,11 @@ export type SlideSelectProps = {
 }
 
 const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) => {
+  // useOptimistic to immediately reflect the selected option in the UI
+  const [optimisticSelected, setOptimisticSelected] = useOptimistic(selected)
+  const [, startTransition] = useTransition()
   // find the index of the selected option
-  const selectedOptionIndex = options.findIndex(option => option.code === selected)
+  const selectedOptionIndex = options.findIndex(option => option.code === optimisticSelected)
 
   return (
     <div
@@ -57,7 +60,12 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
                 : `Skift til visning af ${option.display}`
             }
             onClick={() => {
-              onOptionSelect(option)
+              startTransition(() => {
+                onOptionSelect(option)
+                // Use optimistic update to immediately reflect the selection
+                // in the UI while the actual state update happens
+                setOptimisticSelected(option.code)
+              })
             }}
             variant="transparent"
             classNames={cn(
