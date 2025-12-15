@@ -51,7 +51,9 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
         <div className="py-paragraph-spacing w-full text-center">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
           <div className="grid-go items-start">
-            <div className="rounded-base relative col-span-full aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">
+            <div
+              className="rounded-base relative col-span-full aspect-16/9 overflow-hidden
+                lg:col-span-9 lg:mb-0">
               <iframe
                 title={title || "Video"}
                 aria-label={title || "Video"}
@@ -63,7 +65,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
               />
             </div>
             <div
-              className="grid-go mt-paragraph-spacing col-span-full items-center lg:col-span-3 lg:hidden"
+              className="grid-go mt-paragraph-spacing col-span-full items-center lg:col-span-3
+                lg:hidden"
               data-cy={cyKeys["video-bundle-slider"]}>
               <div className="col-span-1">
                 <Button
@@ -94,7 +97,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
               </div>
             </div>
             <div
-              className="col-span-full hidden flex-col items-center justify-center text-left lg:col-span-3 lg:flex"
+              className="col-span-full hidden flex-col items-center justify-center text-left
+                lg:col-span-3 lg:flex"
               data-cy={cyKeys["video-bundle-slider"]}>
               <div className="pl-grid-gap-half flex w-full flex-col gap-y-8">
                 <div className="relative w-full">
@@ -148,21 +152,21 @@ export const VideoBundleSkeleton = () => {
       <div className="content-container">
         <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
           <div
-            className="bg-background-skeleton mr-auto mb-4 ml-auto block h-10 w-36 animate-pulse rounded-full md:mb-10
-              lg:w-72"
+            className="bg-background-skeleton mr-auto mb-4 ml-auto block h-10 w-36 animate-pulse
+              rounded-full md:mb-10 lg:w-72"
           />
           <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
             <div
-              className="rounded-base bg-background-skeleton relative aspect-16/9 w-full animate-pulse overflow-hidden
-                lg:w-[75%]"
+              className="rounded-base bg-background-skeleton relative aspect-16/9 w-full
+                animate-pulse overflow-hidden lg:w-[75%]"
             />
             <div
-              className="gap-grid-gap flex w-full flex-row flex-wrap items-center justify-center lg:w-[25%] lg:justify-end
-                lg:pl-4">
+              className="gap-grid-gap flex w-full flex-row flex-wrap items-center justify-center
+                lg:w-[25%] lg:justify-end lg:pl-4">
               <div className="md:ml-grid-column-2 mr-auto h-[24px] w-[24px] rounded-full lg:hidden" />
               <div
-                className="bg-background-skeleton rounded-base relative aspect-4/9 h-[250px] w-[177px] animate-pulse
-                  md:aspect-3/5 md:w-[300px] lg:h-[450px]"
+                className="bg-background-skeleton rounded-base relative aspect-4/9 h-[250px]
+                  w-[177px] animate-pulse md:aspect-3/5 md:w-[300px] lg:h-[450px]"
               />
               <div className="md:mr-grid-column-2 ml-auto h-[24px] w-[24px] rounded-full lg:hidden" />
             </div>

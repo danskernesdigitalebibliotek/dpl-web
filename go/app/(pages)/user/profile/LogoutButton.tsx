@@ -10,8 +10,8 @@ import useSession from "@/hooks/useSession"
 
 export const LogoutButtonSkeleton = () => (
   <div
-    className={`bg-background-skeleton mb-grid-gap-half ml-auto h-8 w-44 animate-pulse justify-end rounded-full
-      lg:order-2`}
+    className={`bg-background-skeleton mb-grid-gap-half ml-auto h-8 w-44 animate-pulse justify-end
+      rounded-full lg:order-2`}
   />
 )
 
