@@ -119,9 +119,13 @@ export const WorkPageSkeleton = () => {
       </div>
       <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">
         <div className="bg-background-skeleton h-[46px] w-full animate-pulse rounded-md lg:mt-0" />
-        <div className="mt-grid-gap-2 bg-background-skeleton h-[13px] w-[50%] animate-pulse rounded-md lg:mt-7" />
+        <div
+          className="mt-grid-gap-2 bg-background-skeleton h-[13px] w-[50%] animate-pulse rounded-md
+            lg:mt-7"
+        />
       </div>
-      <div className="mt-grid-gap-3 col-span-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+      <div
+        className="mt-grid-gap-3 col-span-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
         <ButtonSkeleton />
         <ButtonSkeleton />
       </div>

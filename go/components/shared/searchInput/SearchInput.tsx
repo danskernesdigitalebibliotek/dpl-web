@@ -67,7 +67,8 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
         data-cy={cyKeys["search-input"]}
       />
       <button
-        className="focus-visible absolute top-[50%] right-3 translate-y-[-50%] rounded-full md:right-[24px]"
+        className="focus-visible absolute top-[50%] right-3 translate-y-[-50%] rounded-full
+          md:right-[24px]"
         onClick={() => searchAndNavigate(currentQuery)}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
