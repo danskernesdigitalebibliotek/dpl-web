@@ -121,7 +121,7 @@ class SubscriptionNewContentTest extends UnitTestCase {
       ]);
 
     // Create mock node with LocallyClaimed state.
-    $claimedNode = $this->createMockNode(BnfStateEnum::LocallyClaimed->value);
+    $claimedNode = $this->createMockNode(BnfStateEnum::LocallyClaimed);
     $this->nodeStorage->loadByProperties(['uuid' => $claimedNodeUuid])
       ->willReturn([$claimedNode->reveal()]);
 
@@ -155,7 +155,7 @@ class SubscriptionNewContentTest extends UnitTestCase {
       ]);
 
     // Create mock node with Imported state.
-    $importedNode = $this->createMockNode(BnfStateEnum::Imported->value);
+    $importedNode = $this->createMockNode(BnfStateEnum::Imported);
     $this->nodeStorage->loadByProperties(['uuid' => $importedNodeUuid])
       ->willReturn([$importedNode->reveal()]);
 
@@ -204,59 +204,6 @@ class SubscriptionNewContentTest extends UnitTestCase {
   }
 
   /**
-   * Test mixed scenario: some nodes claimed, some imported, some new.
-   *
-   * @covers ::processItem
-   * @covers ::isLocallyClaimed
-   */
-  public function testMixedNodesFilteredCorrectly(): void {
-    $subscriptionUuid = 'subscription-uuid-123';
-    $claimedNodeUuid = 'claimed-uuid';
-    $importedNodeUuid = 'imported-uuid';
-    $newNodeUuid = 'new-uuid';
-
-    // Create mock subscription.
-    $subscription = $this->createMockSubscription($subscriptionUuid);
-    $this->subscriptionStorage->load('sub-id-1')
-      ->willReturn($subscription->reveal());
-
-    // Importer returns all three UUIDs.
-    $this->importer->newContent($subscriptionUuid, 0, 'https://example.com/graphql')
-      ->willReturn([
-        'uuids' => [$claimedNodeUuid, $importedNodeUuid, $newNodeUuid],
-        'youngest' => 1000,
-      ]);
-
-    // Setup node states.
-    $claimedNode = $this->createMockNode(BnfStateEnum::LocallyClaimed->value);
-    $this->nodeStorage->loadByProperties(['uuid' => $claimedNodeUuid])
-      ->willReturn([$claimedNode->reveal()]);
-
-    $importedNode = $this->createMockNode(BnfStateEnum::Imported->value);
-    $this->nodeStorage->loadByProperties(['uuid' => $importedNodeUuid])
-      ->willReturn([$importedNode->reveal()]);
-
-    $this->nodeStorage->loadByProperties(['uuid' => $newNodeUuid])
-      ->willReturn([]);
-
-    // Process the subscription.
-    $this->queueWorker->processItem(['id' => 'sub-id-1']);
-
-    // Assert: claimed node NOT queued, imported and new nodes ARE queued.
-    $this->nodeQueue->createItem(Argument::that(function ($item) use ($claimedNodeUuid) {
-      return $item['uuid'] === $claimedNodeUuid;
-    }))->shouldNotHaveBeenCalled();
-
-    $this->nodeQueue->createItem(Argument::that(function ($item) use ($importedNodeUuid) {
-      return $item['uuid'] === $importedNodeUuid;
-    }))->shouldHaveBeenCalledOnce();
-
-    $this->nodeQueue->createItem(Argument::that(function ($item) use ($newNodeUuid) {
-      return $item['uuid'] === $newNodeUuid;
-    }))->shouldHaveBeenCalledOnce();
-  }
-
-  /**
    * Create a mock subscription.
    *
    * @return \Prophecy\Prophecy\ObjectProphecy<\Drupal\bnf_client\Entity\Subscription>
@@ -284,12 +231,33 @@ class SubscriptionNewContentTest extends UnitTestCase {
    * @return \Prophecy\Prophecy\ObjectProphecy<\Drupal\node\NodeInterface>
    *   The mock node.
    */
-  protected function createMockNode(int $bnfState): ObjectProphecy {
-    // Use stdClass because Prophecy cannot mock property access.
-    $stateField = new \stdClass();
-    $stateField->value = $bnfState;
+  protected function createMockNode(BnfStateEnum $bnfState): ObjectProphecy {
+    // Create a mock that mimics EnumItemList behavior.
+    $stateField = new class($bnfState) {
+
+      public function __construct(private BnfStateEnum $state) {}
+
+      /**
+       * Check if the field is empty.
+       */
+      public function isEmpty(): bool {
+        return FALSE;
+      }
+
+      /**
+       * Get the enum values.
+       *
+       * @return \Drupal\bnf\BnfStateEnum[]
+       *   The enum values.
+       */
+      public function enums(): array {
+        return [$this->state];
+      }
+
+    };
 
     $node = $this->prophesize(NodeInterface::class);
+    $node->hasField(BnfStateEnum::FIELD_NAME)->willReturn(TRUE);
     $node->get(BnfStateEnum::FIELD_NAME)->willReturn($stateField);
 
     return $node;

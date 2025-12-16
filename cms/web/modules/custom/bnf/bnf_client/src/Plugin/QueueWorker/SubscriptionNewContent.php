@@ -136,9 +136,16 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
       return FALSE;
     }
 
-    $state = (int) $node->get(BnfStateEnum::FIELD_NAME)->value;
+    if (!$node->hasField(BnfStateEnum::FIELD_NAME) || $node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
+      return FALSE;
+    }
 
-    return $state === BnfStateEnum::LocallyClaimed->value;
+    /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $stateField */
+    $stateField = $node->get(BnfStateEnum::FIELD_NAME);
+    $states = $stateField->enums();
+    $state = reset($states);
+
+    return $state === BnfStateEnum::LocallyClaimed;
   }
 
 }
