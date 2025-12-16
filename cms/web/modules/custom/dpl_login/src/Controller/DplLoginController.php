@@ -16,6 +16,9 @@ use Drupal\dpl_login\User;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
+use Drupal\dpl_login\AuthenticationType;
+use Drupal\dpl_login\DplLoginSession;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,8 +44,23 @@ class DplLoginController extends ControllerBase {
     protected OpenIDConnectClaims $claims,
     protected OpenIDConnectSessionInterface $session,
     protected User $user,
+    protected DplLoginSession $dplLoginSession,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): static {
+    return new static(
+      $container->get('dpl_login.user_tokens'),
+      $container->get('dpl_login.adgangsplatformen.config'),
+      $container->get('openid_connect.claims'),
+      $container->get('openid_connect.session'),
+      $container->get('dpl_login.user'),
+      $container->get('dpl_login.session'),
+    );
   }
 
   /**
@@ -134,6 +152,10 @@ class DplLoginController extends ControllerBase {
     if ($current_path = (string) $request->query->get('current-path')) {
       $this->session->saveTargetLinkUri($current_path);
     }
+
+    // Set the authentication type in session. We use this later to
+    // distinguish between login and registration.
+    $this->dplLoginSession->setAuthenticationType(AuthenticationType::Login);
 
     $client_name = 'adgangsplatformen';
     /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
