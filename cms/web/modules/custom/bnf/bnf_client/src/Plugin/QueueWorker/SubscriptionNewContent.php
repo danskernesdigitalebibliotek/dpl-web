@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\bnf_client\Plugin\QueueWorker;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
-use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -15,7 +14,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\QueueInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\node\NodeInterface;
 
 /**
  * Check for new content on subscription and queue fetching.
@@ -39,11 +37,6 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
    * Subscription storage.
    */
   protected EntityStorageInterface $storage;
-
-  /**
-   * Node storage.
-   */
-  protected EntityStorageInterface $nodeStorage;
 
   /**
    * Node update queue.
@@ -105,11 +98,6 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
     );
 
     foreach ($newContent['uuids'] as $uuid) {
-      // Skip nodes that are locally claimed (editor opted out of updates).
-      if ($this->isLocallyClaimed($uuid)) {
-        continue;
-      }
-
       $this->nodeQueue->createItem([
         'uuid' => $uuid,
         'subscription_id' => $subscription->id(),
@@ -123,29 +111,6 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
       $subscription->setLast($newContent['youngest']);
       $subscription->save();
     }
-  }
-
-  /**
-   * Check if a node with the given UUID is locally claimed.
-   */
-  protected function isLocallyClaimed(string $uuid): bool {
-    $nodes = $this->nodeStorage->loadByProperties(['uuid' => $uuid]);
-    $node = reset($nodes);
-
-    if (!$node instanceof NodeInterface) {
-      return FALSE;
-    }
-
-    if (!$node->hasField(BnfStateEnum::FIELD_NAME) || $node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
-      return FALSE;
-    }
-
-    /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $stateField */
-    $stateField = $node->get(BnfStateEnum::FIELD_NAME);
-    $states = $stateField->enums();
-    $state = reset($states);
-
-    return $state === BnfStateEnum::LocallyClaimed;
   }
 
 }
