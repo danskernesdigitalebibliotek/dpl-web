@@ -6,8 +6,10 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\dpl_admin\Hook\ContentLockHooks;
 use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
@@ -350,6 +352,38 @@ function dpl_admin_menu_link_content_presave(MenuLinkContent $entity): void {
  */
 function dpl_admin_dpl_protected_nodes_get_protected_nodes(): array {
   return dpl_protected_nodes_get_context(SiteInformationForm::class, 'system.site_information_settings');
+}
+
+/*
+ * The following hook function is for Drupal 10, it can be removed, together
+ * with the hook class service in `dpl_admin.services.yml` when upgrading to
+ * Drupal 11.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Show warning for locked nodes on delete confirmation.
+ *
+ * @param array<mixed> $form
+ *   The form array.
+ */
+#[LegacyHook]
+function dpl_admin_form_node_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
+  \Drupal::service(ContentLockHooks::class)->nodeConfirmFormAlter($form, $form_state);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Show warning for locked taxonomy terms on delete confirmation.
+ *
+ * @param array<mixed> $form
+ *   The form array.
+ */
+#[LegacyHook]
+function dpl_admin_form_taxonomy_term_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
+  \Drupal::service(ContentLockHooks::class)->taxonomyTermConfirmFormAlter($form, $form_state);
 }
 
 /**
