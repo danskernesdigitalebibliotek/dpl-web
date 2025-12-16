@@ -67,7 +67,7 @@ describe('Adgangsplatformen', () => {
 
   // When a user comes back from authentication with MitID, the user should
   // not be able to do anything else other than registering or cancelling.
-  // Check that the header and footer sections is not vissible.
+  // Check that the header and footer sections is not visible.
   it('does not show header and footer section for unregistered user', () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: '7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc',
