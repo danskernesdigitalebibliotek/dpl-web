@@ -21,8 +21,6 @@ describe("Pubhub local API", () => {
     })
   })
 
-  // @todo Fix problem with cachelife not working in vitest environment
-  // The error is: "cacheLife() is only available with the experimental.useCache config"
   it("Returns authorized for logged in users at GET /v1/user/loans", async () => {
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
       // @ts-ignore
@@ -51,8 +49,6 @@ describe("Pubhub local API", () => {
     })
   })
 
-  // @todo Fix problem with cachelife not working in vitest environment
-  // The error is: "cacheLife() is only available with the experimental.useCache config"
   it("Returns same output from local & external GET /v1/user/loans", async () => {
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
       // @ts-ignore
