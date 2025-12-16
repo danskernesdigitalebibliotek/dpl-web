@@ -129,7 +129,7 @@ class ContentLockHooks implements ContainerInjectionInterface {
       '#markup' => $this->t('
         <div class="messages messages--warning">
           <strong>@title</strong> is currently being edited by <strong>@user</strong>.
-          Deleting it will discard their unsaved changes.
+          There is a risk of data loss if you proceed with deleting this content.
         </div>', [
           '@title' => $entity->label(),
           '@user' => $lock_user?->getDisplayName() ?? $this->t('another user'),
