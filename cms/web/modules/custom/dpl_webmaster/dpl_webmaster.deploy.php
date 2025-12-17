@@ -33,8 +33,9 @@ function dpl_webmaster_deploy_remove_locally_installed_asset_injector(): string 
 
     // We need to clear the cache in order for Drupal to fully discover the
     // module again, but doing it in this process will just fail again, so we
-    // explicitly run `drush cr` as a sub-process which does work.
-    // See also the `class_loader_auto_detect` setting in all.settings.php.
+    // explicitly run `drush cr` as a sub-process which does work. This was
+    // combined with temporarily setting `class_loader_auto_detect` to `false`
+    // while the module still existed in the filesystem in all.settings.php.
     $process = Drush::processManager()->drush(
       Drush::aliasManager()->getSelf(),
       CacheRebuildCommands::REBUILD,
