@@ -28,11 +28,11 @@ class DplLoginSession {
   public function getAuthenticationType(): ?AuthenticationType {
     $value = $this->session->get(self::KEY_AUTHENTICATION_TYPE);
 
-    return match ($value) {
-      AuthenticationType::Login->value => AuthenticationType::Login,
-      AuthenticationType::Registration->value => AuthenticationType::Registration,
-      default => NULL,
-    };
+    if (empty($value)) {
+      return NULL;
+    }
+
+    return AuthenticationType::tryFrom($value);
   }
 
   /**
