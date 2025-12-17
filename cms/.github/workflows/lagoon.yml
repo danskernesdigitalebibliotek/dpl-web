@@ -4,7 +4,7 @@ on:
 name: Lagoon integration
 
 env:
-  LAGOON_DOMAIN: "dplplat01.dpl.reload.dk"
+  LAGOON_DOMAIN: "dplplat02.dpl.reload.dk"
   LAGOON_ENVIRONMENT: "pr-${{github.event.number}}"
   GH_TOKEN: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
   OWNER: ${{ github.repository_owner }}
