@@ -164,6 +164,15 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
     $logger->info('Post authorize hook - Redirecting user to front page as they are not registered at this library.');
     $url = Url::fromRoute('<front>')->toString(TRUE);
     $openid_session->saveTargetLinkUri($url->getGeneratedUrl());
+    // And show a message to the unregistered user.
+    \Drupal::messenger()->addError(t(
+    'You are not registered at this library.<br />Please <a href=":sign_up">sign up</a> at this library or <a href=":log_out">log out</a> again.',
+    [
+      ':sign_up' => Url::fromRoute('dpl_patron_reg.create')->toString(),
+      ':log_out' => Url::fromRoute('dpl_login.logout')->toString(),
+    ],
+    ['context' => 'dpl_login']
+    ));
   }
 
   // Tidy up to not leave stale authentication type in session.
@@ -325,47 +334,4 @@ function dpl_login_preprocess_html(array &$variables): void {
   if (\Drupal::currentUser()->isAuthenticated()) {
     $variables['head_title'][] = t('Logged in', [], ['context' => 'dpl_login']);
   }
-}
-
-/**
- * Implements hook_page_attachments().
- *
- * @param array<string,mixed> $attachments
- *   The page attachments.
- */
-function dpl_login_page_attachments(array &$attachments): void {
-  // Avoid adding messages on AJAX / JSON / Graphql.
-  $request = \Drupal::requestStack()->getCurrentRequest();
-  if (!$request instanceof Request) {
-    return;
-  }
-  $is_graphql_request = (bool) $request->attributes->get('_graphql');
-  if ($request->isXmlHttpRequest() || $is_graphql_request) {
-    return;
-  }
-
-  // Do not show the message on the patron registration page.
-  $route_name = \Drupal::routeMatch()->getRouteName();
-  if ($route_name === 'dpl_patron_reg.create') {
-    return;
-  }
-
-  /** @var \Drupal\dpl_login\UserTokens $user_tokens */
-  $user_tokens = \Drupal::service('dpl_login.user_tokens');
-  $access_token = $user_tokens->getCurrent();
-
-  // Only show the message if there is a user token
-  // and it's for an unregistered user.
-  if (!$access_token || $access_token->type !== AccessTokenType::UnregisteredUser) {
-    return;
-  }
-
-  \Drupal::messenger()->addError(t(
-    'You are not registered at this library.<br />Please <a href=":sign_up">sign up</a> at this library or <a href=":log_out">log out</a> again.',
-    [
-      ':sign_up' => Url::fromRoute('dpl_patron_reg.create')->toString(),
-      ':log_out' => Url::fromRoute('dpl_login.logout')->toString(),
-    ],
-    ['context' => 'dpl_login']
-  ));
 }
