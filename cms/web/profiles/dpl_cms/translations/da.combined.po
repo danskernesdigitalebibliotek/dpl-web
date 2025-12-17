@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-12-15 11:42+0100\n"
-"PO-Revision-Date: 2025-12-15 11:42+0100\n"
+"POT-Creation-Date: 2025-12-17 12:45+0100\n"
+"PO-Revision-Date: 2025-12-17 12:45+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -10625,6 +10625,12 @@ msgstr "E-mail"
 
 msgid "Opens your mail client ready to e-mail @email"
 msgstr "Åbner din mail: Gør klar til at sende e-mail @email"
+
+msgid "Add matcher to profile"
+msgstr ""
+
+msgid "Set matcher configuration"
+msgstr ""
 
 msgid "No results"
 msgstr "Ingen resultater"
