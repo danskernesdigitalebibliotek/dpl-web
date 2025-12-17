@@ -14,7 +14,6 @@ use Drupal\dpl_login\User;
 use Drupal\dpl_login\DplLoginSession;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -37,18 +36,6 @@ class DplPatronRegController extends ControllerBase {
     protected DplLoginSession $dplLoginSession,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('openid_connect.session'),
-      $container->get('openid_connect.claims'),
-      $container->get('dpl_login.user'),
-      $container->get('dpl_login.session'),
-    );
   }
 
   /**

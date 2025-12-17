@@ -18,7 +18,6 @@ use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Drupal\dpl_login\AuthenticationType;
 use Drupal\dpl_login\DplLoginSession;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,20 +46,6 @@ class DplLoginController extends ControllerBase {
     protected DplLoginSession $dplLoginSession,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('dpl_login.user_tokens'),
-      $container->get('dpl_login.adgangsplatformen.config'),
-      $container->get('openid_connect.claims'),
-      $container->get('openid_connect.session'),
-      $container->get('dpl_login.user'),
-      $container->get('dpl_login.session'),
-    );
   }
 
   /**

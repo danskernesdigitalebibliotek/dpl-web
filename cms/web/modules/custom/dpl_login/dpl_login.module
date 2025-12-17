@@ -7,7 +7,6 @@
  * Handles authentication against Adgangsplatformen.
  */
 
-use Symfony\Component\HttpFoundation\Request;
 use DanskernesDigitaleBibliotek\FBS\ApiException;
 use DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8;
 use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
@@ -16,7 +15,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
-use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\AuthenticationType;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
