@@ -11,6 +11,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\Form\SettingsForm;
@@ -25,6 +26,10 @@ use Drupal\recurring_events\Entity\EventSeries;
  *
  * If the eventinstance is set to be an all-day, we want to ignore any times
  * set, and instead set them to 00:00 - 23:59.
+ *
+ * The majority of the logic here is taken from the contrib module date_all_day
+ * from DatetimeRangeAllDayWidget, as they appear to have figured out how
+ * to deal with the issues of timezones.
  */
 function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
   if (!$eventinstance->hasField('event_all_day')) {
@@ -37,11 +42,13 @@ function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
     return;
   }
 
-  $timezone = \Drupal::config('system.date')->get('timezone.default');
-  $timezone = new \DateTimeZone($timezone);
-  $timezone_utc = new \DateTimeZone('UTC');
-
   $dates = $eventinstance->get('date')->getValue();
+
+  $timezone = timezone_open(date_default_timezone_get());
+
+  if (!$timezone) {
+    return;
+  }
 
   foreach ($dates as &$date) {
     $start_date = $date['value'] ?? NULL;
@@ -51,26 +58,24 @@ function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
       continue;
     }
 
-    // First, we need to tell Drupal that the times we're giving are in the
-    // default timezone, and not UTC.
-    // This mimics how Drupal also would interpret it, if we were setting the
-    // times in the interface.
-    $start_date = new DrupalDateTime($start_date);
-    $end_date = new DrupalDateTime($end_date);
-    $start_date->setTimezone($timezone);
-    $end_date->setTimezone($timezone);
+    $start_date = new DrupalDateTime($start_date, DateTimeItemInterface::STORAGE_TIMEZONE);
+    $end_date = new DrupalDateTime($end_date, DateTimeItemInterface::STORAGE_TIMEZONE);
 
+    // All day fields start at midnight on the starting date, but are
+    // stored like datetime fields, so we need to adjust the time.
+    // This function is called twice, so to prevent a double conversion
+    // we need to explicitly set the timezone.
+    $start_date->setTimezone($timezone);
     $start_date->setTime(0, 0, 0);
+    $end_date->setTimezone($timezone);
     $end_date->setTime(23, 59, 59);
 
-    // Drupal does not save the timezone information in the database - it will
-    // be saved as UTC. So, we need to convert this back to UTC first.
-    $start_date->setTimezone($timezone_utc);
-    $end_date->setTimezone($timezone_utc);
-
-    $date['value'] = $start_date->format('Y-m-d\TH:i:s');
-    $date['end_value'] = $end_date->format('Y-m-d\TH:i:s');
-
+    $date['value'] = $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, [
+      'timezone' => DateTimeItemInterface::STORAGE_TIMEZONE,
+    ]);
+    $date['end_value'] = $end_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, [
+      'timezone' => DateTimeItemInterface::STORAGE_TIMEZONE,
+    ]);
   }
 
   $eventinstance->set('date', $dates);
