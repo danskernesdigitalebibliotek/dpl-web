@@ -1,10 +1,10 @@
-"use cache"
-
+"use server"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 
 import { useGetCategoriesQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 const loadCategories = async () => {
+  "use cache"
   const {
     go: { cacheTags },
     ...data
