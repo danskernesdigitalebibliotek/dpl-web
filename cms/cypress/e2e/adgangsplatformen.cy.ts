@@ -166,6 +166,31 @@ describe('Adgangsplatformen', () => {
     });
   });
 
+  it('after login sends unregistered user to the front page with an error', () => {
+    const authorizationCode = '7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc';
+    const accessToken = '447131b0a03fe0421204c54e5c21a60-new-user';
+
+    cy.setupAdgangsplatformenRegisterMappinngs({
+      authorizationCode,
+      accessToken,
+      userCPR: 1412749999,
+    });
+
+    cy.clearCookies();
+
+    // Let Drupal start the OpenID Connect flow
+    cy.visit('/login');
+
+    // After the full OpenID flow, an unregistered user should end up on front page
+    cy.url().should('match', /\/frontpage.*/);
+
+    // And see an error message
+    cy.get('.error-message__description').should(
+      'contain',
+      'You are not registered at this library',
+    );
+  });
+
   beforeEach(() => {
     cy.resetMappings();
   });
