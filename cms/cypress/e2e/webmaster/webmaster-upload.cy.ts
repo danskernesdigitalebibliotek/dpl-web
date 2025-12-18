@@ -1,23 +1,10 @@
-import { LoginPage } from '../pages/login-page';
-import { AdminModulesPage } from '../pages/admin-modules';
-import { AdminModulesUninstallPage } from '../pages/admin-modules-uninstall';
-import { InstallOrUpdatePage } from '../pages/install-or-update';
-import { TestModulePage } from '../pages/test-module-page';
+import { LoginPage } from '../../pages/login-page';
+import { AdminModulesPage } from '../../pages/admin-modules';
+import { AdminModulesUninstallPage } from '../../pages/admin-modules-uninstall';
+import { InstallOrUpdatePage } from '../../pages/install-or-update';
+import { TestModulePage } from '../../pages/test-module-page';
 
 describe('Webmaster', () => {
-  // Enable the module so we can test it. Ideally we'd disable it
-  // again afterwards, but there's no guarantees with after hooks.
-  before(() => {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
-
-    const adminModulesPage = new AdminModulesPage();
-    adminModulesPage.visit([]);
-    adminModulesPage.enableModule('dpl_webmaster', true);
-  });
-
   beforeEach(() => {
     // Obviously we need to be logged in to upload a module.
     LoginPage.ensureLogin(

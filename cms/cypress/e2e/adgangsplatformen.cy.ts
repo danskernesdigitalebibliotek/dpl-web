@@ -102,6 +102,23 @@ describe('Adgangsplatformen', () => {
       userCPR: 1412749999,
     });
 
+    cy.createMapping({
+      request: {
+        method: 'GET',
+        urlPattern: '/external/v1/agencyid/branches',
+      },
+      response: {
+        jsonBody: [
+          { branchId: 'FBS-751024', title: 'Fjernlånte materialer' },
+          { branchId: 'DK-775100', title: 'Hovedbiblioteket' },
+          { branchId: 'DK-775170', title: 'Trige' },
+          { branchId: 'DK-775150', title: 'Tilst' },
+          { branchId: 'DK-775130', title: 'Viby' },
+          { branchId: 'DK-775164', title: 'Egå' },
+        ],
+      },
+    });
+
     cy.clearCookies();
     cy.visit('/arrangementer');
     cy.getBySel('header-menu-profile-button').click();
