@@ -473,3 +473,15 @@ function dpl_update_deploy_clean_config(): string {
   $service = DrupalTyped::service(ConfigIgnore::class, 'dpl_update.config_ignore');
   return $service->cleanUnusedIgnores();
 }
+
+/**
+ * Disallow go_graphql_client to view unpublished content.
+ *
+ * This permission was added by mistake, and resulted in unpublished content
+ * showing up on the GO sites.
+ */
+function dpl_update_deploy_update_go_permissions_unpublished(): string {
+  _dpl_update_alter_permissions(['go_graphql_client'], ['view any unpublished content'], FALSE);
+
+  return 'Updated go_graphql_client role: removed "view any unpublished content".';
+}
