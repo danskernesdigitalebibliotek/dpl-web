@@ -30,6 +30,9 @@ updates:
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
+      # Our patches are not compatible with the latest version.
+      - dependency-name: "drupal/entity_reference_revisions"
+        versions: [">=1.13.0"]
     schedule:
       interval: weekly
       day: monday
