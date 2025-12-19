@@ -72,6 +72,10 @@ class ConfigIgnore {
   public function getWebmasterIgnores(): array {
     // Getting the whitelists from config_ignore and config_ignore_auto.
     $whitelist = $this->configIgnoreSettings->get('ignored_config_entities');
+    // Depending on which mode we're using, config_ignore might store the
+    // whitelist in an .import instead.
+    $whitelist_import = $whitelist['import'] ?? NULL;
+    $whitelist = (is_array($whitelist_import)) ? $whitelist['import'] : $whitelist;
     $whitelist = $whitelist + $this->configAutoIgnoreSettings->get('whitelist_config_entities');
 
     return array_filter($this->autoIgnoredItems, function ($item) use ($whitelist) {
