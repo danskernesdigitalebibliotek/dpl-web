@@ -106,6 +106,20 @@ tasks:
           drush locale-update
         service: cli
     - run:
+        name: Import config translations
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
+    - run:
+        name: Clear GraphQL AST cache
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush cc bin graphql.ast
+        service: cli
+    - run:
         name: Create test users
         command: |
           source dev-scripts/lagoon-error-handling.sh
