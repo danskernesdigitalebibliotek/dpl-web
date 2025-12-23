@@ -1,5 +1,5 @@
 enable_popup: true
-google_consent_mode: ''
+google_consent_mode: v2
 block_iframes: false
 block_iframes_category: functional
 enable_iab: false
