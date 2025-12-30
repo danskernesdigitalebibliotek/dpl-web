@@ -10,6 +10,9 @@ dependencies:
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_location
+    - field.field.eventinstance.default.field_event_location_type
+    - field.field.eventinstance.default.field_event_non_branch_location
     - field.field.eventinstance.default.field_event_paragraphs
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
@@ -28,6 +31,7 @@ dependencies:
     - dpl_event
     - entity_reference_revisions
     - link
+    - options
 _core:
   default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
 id: eventinstance.default.default
@@ -117,6 +121,31 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
+  event_location:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 59
+    region: content
+  event_location_type:
+    type: list_default
+    label: visible
+    settings: {  }
+    third_party_settings: {  }
+    weight: 60
+    region: content
+  event_non_branch_location:
+    type: boolean
+    label: visible
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 61
+    region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -199,6 +228,21 @@ content:
     third_party_settings: {  }
     weight: 15
     region: content
+  field_event_location:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_event_location_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
   title:
     type: string
     label: hidden
@@ -219,6 +263,7 @@ hidden:
   field_event_all_day: true
   field_event_image: true
   field_event_link: true
+  field_event_non_branch_location: true
   field_event_paragraphs: true
   field_event_partners: true
   field_event_place: true

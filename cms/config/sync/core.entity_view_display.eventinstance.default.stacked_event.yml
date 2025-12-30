@@ -121,6 +121,31 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  event_location:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 59
+    region: content
+  event_location_type:
+    type: list_default
+    label: visible
+    settings: {  }
+    third_party_settings: {  }
+    weight: 60
+    region: content
+  event_non_branch_location:
+    type: boolean
+    label: visible
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 61
+    region: content
   event_place:
     type: string
     label: hidden
@@ -212,6 +237,9 @@ hidden:
   field_event_all_day: true
   field_event_image: true
   field_event_link: true
+  field_event_location: true
+  field_event_location_type: true
+  field_event_non_branch_location: true
   field_event_paragraphs: true
   field_event_partners: true
   field_event_place: true

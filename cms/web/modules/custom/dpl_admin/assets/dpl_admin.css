@@ -208,6 +208,52 @@ body:has(.eventseries-form--confirm) .form-actions {
 }
 
 /**
+  Tweaking the design of the event edit forms.
+ */
+.dpl-event-locations {
+  padding: 10px 25px !important;
+
+  .form-item__description, .fieldset__description {
+    max-width: none;
+  }
+
+  .form-radios {
+    display: flex;
+    gap: 20px;
+  }
+
+  [data-drupal-selector="edit-field-event-address-wrapper"] {
+    .form-item {
+      margin-top: 0;
+    }
+  }
+
+  [data-drupal-selector="edit-field-event-location-type"] {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--gin-border-color);
+
+  }
+
+  [data-drupal-selector="edit-field-event-place"] {
+    position: relative;
+    padding: 20px;
+    border: 1px solid var(--gin-border-color);
+    border-radius: var(--gin-border-m);
+
+    .tabledrag-toggle-weight-wrapper {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
+
+    th {
+      padding: 0;
+      background: transparent;
+    }
+  }
+}
+
+/**
  Long URLs in the material grid automatic link field are breaking the layout.
 */
 .paragraph-type--material-grid-link-automatic {
