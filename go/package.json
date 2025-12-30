@@ -69,7 +69,7 @@
     "plaiceholder": "^3.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-error-boundary": "^6.0.0",
+    "react-error-boundary": "^6.0.1",
     "react-parallax-tilt": "^1.7.315",
     "replace-in-file": "^8.4.0",
     "sharp": "^0.34.5",
