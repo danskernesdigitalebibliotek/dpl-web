@@ -55,15 +55,7 @@ default:
       alias: /det-virtuelle-bibliotek
       langcode: und
       pathauto: 1
-  field_address:
-    -
-      langcode: en
-      country_code: DK
-      locality: ''
-      postal_code: ''
-      address_line1: ''
-      address_line2: ''
-      address_line3: ''
+
   field_promoted_on_lists:
     -
       value: false
