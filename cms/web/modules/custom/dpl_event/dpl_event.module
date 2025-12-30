@@ -118,7 +118,7 @@ function dpl_event_eventinstance_insert(EntityInterface $entity): void {
 }
 
 /**
- * Implements hook_node_update().
+ * Implements hook_ENTITY_TYPE_update().
  */
 function dpl_event_eventinstance_update(EntityInterface $entity): void {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
@@ -298,9 +298,17 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
+  $parent_set = FALSE;
 
   foreach ($event_instances as $event_instance) {
-    $variables['event_instances'][] = $viewBuilder->view($event_instance, 'stacked_event');
+    $view_mode = 'stacked_event';
+
+    if (!$parent_set) {
+      $view_mode = 'list_teaser_stacked_parent';
+      $parent_set = TRUE;
+    }
+
+    $variables['event_instances'][] = $viewBuilder->view($event_instance, $view_mode);
   }
 }
 
