@@ -1,40 +1,75 @@
-{%
-  set classes = [
+{% set classes = [
   'hero',
-  'hero-grid',
-  media ? '' : 'hero--has-no-media',
-]
-%}
+  not media ? 'hero--no-image',
+] %}
 
-    <section {{ attributes.addClass(classes) }}>
-        {% if link.0 %}
-            {% set url = link.0['#url'].external ? link.0['#url'].uri : link.0['#url'].toString() %}
-            {% set target = link.0['#url'].options.target|default('_self') %}
+{% set arrow_link = (url and not cta) %}
+{% set content_tag = arrow_link ? 'a' : 'div' %}
+{% set content_classes = [
+  'hero__content',
+  arrow_link ? 'arrow',
+  arrow_link ? 'arrow__hover--right-large',
+] %}
 
-            <a href="{{ url }}" target="{{ target }}" class="hero__content hero-grid__content arrow arrow__hover--right-large">
-                {{ include('@novel/components/hero-inner.html.twig') }}
+<div {{ attributes.addClass(classes) }}>
+  <div class="hero__image">
+    {{ include('@novel/components/media-container.html.twig', {
+      attributes: create_attribute(),
+      media: media,
+      has_media: media,
+      placeholder_text: placeholder_text,
+    }, false) }}
+  </div>
 
-                <div>
-                    {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
-                </div>
-            </a>
+  <{{ content_tag }} {% if arrow_link %}href="{{ url }}" target="{{ target|default('_self') }}"{% endif %}
+    class="{{ content_classes|join(' ') }}">
 
-        {% else %}
-            <div class="hero__content hero-grid__content">
-                {{ include('@novel/components/hero-inner.html.twig', {price: price}, true) }}
-            </div>
+    {{ categories }}
 
+    {% if content_type or date %}
+      <div class="hero__meta">
+        {% if type %}
+          <span class="hero__type">
+            {{ type }}
+            {% if date %} | {% endif %}
+          </span>
         {% endif %}
+        <time class="hero__date">{{ date }}</time>
+      </div>
+    {% endif %}
 
-        <div class="hero__visual hero-grid__visual">
-            <div class="hero__visual-inner">
-                {{ include('@novel/components/media-container.html.twig'
-        , {
-        attributes: create_attribute(),
-        media: media,
-        has_media: media,
-        placeholder_text: teaser_text,
-      }, false) }}
-            </div>
-        </div>
-    </section>
+    <h1 class="hero__title">{{ title }}</h1>
+
+    {% if description %}
+      <div>
+        {{ description }}
+      </div>
+    {% endif %}
+
+    {% if items %}
+      <dl class="hero__items">
+        {% for item in items %}
+          {% if item.values|filter(v => v)|length %}
+            <dt>{{ item.label }}</dt>
+            <dd>
+              {% for value in item.values %}
+                <span>{{ value }}</span>
+              {% endfor %}
+            </dd>
+          {% endif %}
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    {% if url or cta %}
+      <div class="hero__cta">
+        {% if cta %}
+          {{ cta }}
+        {% else %}
+          {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </{{ content_tag }}>
+</div>

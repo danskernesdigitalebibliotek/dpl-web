@@ -1,51 +1,26 @@
 <article {{ attributes.addClass('event-page') }}>
-  <header class="border-bottom">
-    {{ include('@novel/components/hero.html.twig', {
-      attributes: create_attribute(),
-      title: label,
-      teaser_text: teaser_text,
-      categories: categories,
-      date: expired ? 'Expired'|t({}, {context: 'DPL event'}) : date,
-      media: image.0,
-      baseIconPath: baseIconPath,
-      cta: cta,
-      price: price,
-    }, false) }}
-  </header>
+  {{ include('@novel/components/hero.html.twig', {
+    attributes: create_attribute(),
+    title: label,
+    categories: categories,
+    date: expired ? 'Expired'|t({}, {context: 'DPL event'}) : date,
+    media: image.0,
+    baseIconPath: baseIconPath,
+    cta: cta,
+    items: hero_items,
+    placeholder_text: teaser_text,
+  }, false) }}
 
-  <section class="border-bottom">
-  <div class="event-description hero-grid">
-    <div class="event-description__content  hero-grid__mixed-left">
-      <div class="event-description__description ">{{ description }}</div>
+  <div class="event-description">
+    <div class="event-description__content">
+      <div class="event-description__description">{{ description }}</div>
       <div class="event-description__links">
-        {% if tags.0 %}
-          {{ tags }}
-        {% endif %}
+        {{ tags }}
+        {{ branch }}
+        {{ partners }}
       </div>
     </div>
-
-    <div class="event-description__info hero-grid__mixed-right">
-      <div class="event-description__card">
-        {{ include('@novel/components/list-description.html.twig', {
-          attributes: create_attribute(),
-          type: 'event',
-          items: description_items,
-        }, false) }}
-
-         <div class="event-description__price">
-          {{ price }}
-        </div>
-      </div>
-
-      {{ include('@novel/components/list-description.html.twig', {
-        attributes: create_attribute(),
-        type: 'relations',
-        items: relations_items,
-      }, false) }}
-    </div>
-
   </div>
-  </section>
 
   {% if event_instances %}
     <section class="event-list-stacked">
