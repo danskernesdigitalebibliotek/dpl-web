@@ -9,3 +9,4 @@ tags:
   og_image_height: '[eventseries:field_teaser_image:entity:field_media_image:open_graph:height]'
   og_image_url: '[eventseries:field_teaser_image:entity:field_media_image:open_graph:url]'
   og_image_width: '[eventseries:field_teaser_image:entity:field_media_image:open_graph:width]'
+  title: '[eventseries:title] | [site:name]'
