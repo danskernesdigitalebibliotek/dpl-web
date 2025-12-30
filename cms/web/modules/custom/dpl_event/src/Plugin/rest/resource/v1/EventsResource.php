@@ -156,6 +156,10 @@ final class EventsResource extends EventResourceBase {
                         'type' => 'string',
                         'description' => 'Name of the location where the event occurs. This could be the name of a library branch.',
                       ],
+                      'locationAdditional' => [
+                        'type' => 'string',
+                        'description' => 'Expanded description of location.',
+                      ],
                       'street' => [
                         'type' => 'string',
                         'description' => 'Street name and number.',

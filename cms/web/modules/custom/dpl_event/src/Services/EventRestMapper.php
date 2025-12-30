@@ -247,6 +247,7 @@ class EventRestMapper {
   private function getAddress(): EventsGET200ResponseInnerAddress {
     $address = new EventsGET200ResponseInnerAddress();
     $address->setLocation($this->getValue('event_place'));
+    $address->setLocationAdditional($this->getValue('event_location'));
 
     // Loading the field, and rendering it, to let the BranchAddressFormatter
     // do the work of looking up a possible branch.

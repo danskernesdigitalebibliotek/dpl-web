@@ -56,6 +56,16 @@ class EventsGET200ResponseInnerAddress
     protected ?string $location = null;
 
     /**
+     * Expanded description of location.
+     *
+     * @var string|null
+     * @SerializedName("locationAdditional")
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $locationAdditional = null;
+
+    /**
      * Street name and number.
      *
      * @var string|null
@@ -107,6 +117,7 @@ class EventsGET200ResponseInnerAddress
     {
         if (is_array($data)) {
             $this->location = array_key_exists('location', $data) ? $data['location'] : $this->location;
+            $this->locationAdditional = array_key_exists('locationAdditional', $data) ? $data['locationAdditional'] : $this->locationAdditional;
             $this->street = array_key_exists('street', $data) ? $data['street'] : $this->street;
             $this->zipCode = array_key_exists('zipCode', $data) ? $data['zipCode'] : $this->zipCode;
             $this->city = array_key_exists('city', $data) ? $data['city'] : $this->city;
@@ -136,6 +147,32 @@ class EventsGET200ResponseInnerAddress
     public function setLocation(?string $location = null): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Gets locationAdditional.
+     *
+     * @return string|null
+     */
+    public function getLocationAdditional(): ?string
+    {
+        return $this->locationAdditional;
+    }
+
+
+
+    /**
+     * Sets locationAdditional.
+     *
+     * @param string|null $locationAdditional  Expanded description of location.
+     *
+     * @return $this
+     */
+    public function setLocationAdditional(?string $locationAdditional = null): self
+    {
+        $this->locationAdditional = $locationAdditional;
 
         return $this;
     }
