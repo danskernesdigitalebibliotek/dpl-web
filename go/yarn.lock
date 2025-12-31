@@ -6083,10 +6083,10 @@
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.13.0.tgz#108e177268e807a56010451bbef6672a25d68923"
-  integrity sha512-uZqacmcn1L4wZFeqSuQvUH2r18Vw31W+Ow0K1xz5CdbIZ9122o1BegaTLqUKHSk6YAYMs2zkcN6REeMAQLkKIA==
+"@xstate/store@^3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.14.0.tgz#fcdd9c26b168bbc37adc0e6bf13350f1061edff8"
+  integrity sha512-5IMQND3p7BfeckzYzBiDWGUa178jlodA4kB0jYp3xQOV6H1RtYGJx6v6LxAvDrOWTCzhXteEEw5hOBuNYkmUpw==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
