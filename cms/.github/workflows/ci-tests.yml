@@ -204,13 +204,13 @@ jobs:
         run: task ci:cypress:unmapped
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-unmapped-videos
           path: cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-unmapped-screenshots
           path: cypress/screenshots
@@ -234,13 +234,13 @@ jobs:
         run: task ci:cypress:webmaster
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-webmaster-videos
           path: cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-webmaster-screenshots
           path: cypress/screenshots
