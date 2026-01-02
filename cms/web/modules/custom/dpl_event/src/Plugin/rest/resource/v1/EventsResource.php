@@ -152,6 +152,14 @@ final class EventsResource extends EventResourceBase {
                     'type' => 'object',
                     'description' => 'Where the event occurs.',
                     'properties' => [
+                      'locationType' => [
+                        'type' => 'string',
+                        'description' => 'If an event is physical or not.',
+                        'enum' => [
+                          'physical',
+                          'online',
+                        ],
+                      ],
                       'location' => [
                         'type' => 'string',
                         'description' => 'Name of the location where the event occurs. This could be the name of a library branch.',

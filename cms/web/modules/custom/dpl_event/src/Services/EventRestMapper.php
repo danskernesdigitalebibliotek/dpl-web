@@ -247,6 +247,7 @@ class EventRestMapper {
   private function getAddress(): EventsGET200ResponseInnerAddress {
     $address = new EventsGET200ResponseInnerAddress();
     $address->setLocation($this->getValue('event_place'));
+    $address->setLocationType($this->getValue('event_location_type'));
     $address->setLocationAdditional($this->getValue('event_location'));
 
     // Loading the field, and rendering it, to let the BranchAddressFormatter
@@ -319,14 +320,19 @@ class EventRestMapper {
    * Get string value of a possible field (or fallback field).
    */
   private function getValue(string $field_name): ?string {
-
     $field = $this->event->getField($field_name);
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
     }
 
-    return $field->getString();
+    $value = $field->getString();
+
+    if (trim($value) == '') {
+      return NULL;
+    }
+
+    return $value;
   }
 
   /**

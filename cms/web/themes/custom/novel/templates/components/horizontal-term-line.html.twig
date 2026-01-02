@@ -4,9 +4,10 @@
   <{{ heading }} class="text-label-bold">
     {{ title }}
   </{{ heading }}>
+
   {% for item in items %}
     <span>
-      {{ item.content }}
+      {{ item.content|add_class('link-tag') }}
     </span>
   {% endfor %}
 </div>

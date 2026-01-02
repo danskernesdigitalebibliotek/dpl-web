@@ -42,6 +42,11 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
       $entity->set('field_event_non_branch_location', FALSE);
     }
 
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
     if ($entity->hasField('field_event_place')) {
       // We're adding an empty space to avoid field inheritance taking over.
       $entity->set('field_event_place', ' ');
@@ -51,8 +56,8 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     return;
   }
 
-  if ($entity->hasField('event_non_branch_location')) {
-    $non_branch_location = !empty($entity->get('event_non_branch_location')->getString());
+  if ($entity->hasField('field_event_non_branch_location')) {
+    $non_branch_location = !empty($entity->get('field_event_non_branch_location')->getString());
   }
 
   if (!$non_branch_location) {
@@ -62,7 +67,7 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     }
 
     if ($entity->hasField('field_event_address')) {
-      $entity->set('field_event_address', NULL);
+      $entity->set('field_event_address', []);
     }
   }
 }
@@ -499,29 +504,35 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
       ],
     ];
   }
+
   // PHPCS doesn't understand Drupal's weird way of doing states.
   // phpcs:disable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
-  if (isset($form['field_event_location'])) {
-    $form['field_event_location']['#states']['visible'] = [
-      ':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE],
-      'and',
-      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
-    ];
-  }
-
-  if (isset($form['field_event_address'])) {
-    $form['field_event_address']['#states']['visible'] = [
-      ':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE],
-      'and',
-      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
-    ];
-  }
-  // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+  $physical_state = [
+    ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+    'and',
+    [
+      [':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE]],
+      'or',
+      [':input[name="field_branch"]' => ['value' => '']],
+    ],
+  ];
 
   if (isset($form['field_event_non_branch_location'])) {
     $form['field_event_non_branch_location']['#states']['visible'] = [
       ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+      'and',
+      ':input[name="field_branch"]' => ['!value' => ''],
     ];
+  }
+  // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+
+  if (isset($form['field_event_location'])) {
+    $form['field_event_location']['#states']['visible'] = $physical_state;
+    $form['field_event_location']['widget'][0]['value']['#states']['required'] = $physical_state;
+  }
+
+  if (isset($form['field_event_address'])) {
+    $form['field_event_address']['#states']['visible'] = $physical_state;
   }
 
   if (isset($form['field_event_place'])) {

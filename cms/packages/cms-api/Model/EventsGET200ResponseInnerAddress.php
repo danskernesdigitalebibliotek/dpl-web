@@ -46,6 +46,17 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventsGET200ResponseInnerAddress 
 {
         /**
+     * If an event is physical or not.
+     *
+     * @var string|null
+     * @SerializedName("locationType")
+     * @Assert\Choice({ "physical", "online" })
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $locationType = null;
+
+    /**
      * Name of the location where the event occurs. This could be the name of a library branch.
      *
      * @var string|null
@@ -116,6 +127,7 @@ class EventsGET200ResponseInnerAddress
     public function __construct(array $data = null)
     {
         if (is_array($data)) {
+            $this->locationType = array_key_exists('locationType', $data) ? $data['locationType'] : $this->locationType;
             $this->location = array_key_exists('location', $data) ? $data['location'] : $this->location;
             $this->locationAdditional = array_key_exists('locationAdditional', $data) ? $data['locationAdditional'] : $this->locationAdditional;
             $this->street = array_key_exists('street', $data) ? $data['street'] : $this->street;
@@ -123,6 +135,32 @@ class EventsGET200ResponseInnerAddress
             $this->city = array_key_exists('city', $data) ? $data['city'] : $this->city;
             $this->country = array_key_exists('country', $data) ? $data['country'] : $this->country;
         }
+    }
+
+    /**
+     * Gets locationType.
+     *
+     * @return string|null
+     */
+    public function getLocationType(): ?string
+    {
+        return $this->locationType;
+    }
+
+
+
+    /**
+     * Sets locationType.
+     *
+     * @param string|null $locationType  If an event is physical or not.
+     *
+     * @return $this
+     */
+    public function setLocationType(?string $locationType = null): self
+    {
+        $this->locationType = $locationType;
+
+        return $this;
     }
 
     /**
