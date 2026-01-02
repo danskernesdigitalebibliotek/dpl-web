@@ -43,6 +43,10 @@ describe('Events', () => {
       force: true,
     });
     typeInCkEditor('Hello, world!');
+    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
+      // We have to use force when using Select2.
+      force: true,
+    });
 
     setDate('Start date', events.singleEvent.start);
     setDate('End date', events.singleEvent.end);
@@ -89,6 +93,10 @@ describe('Events', () => {
       force: true,
     });
     typeInCkEditor('Hello, world!');
+    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
+      // We have to use force when using Select2.
+      force: true,
+    });
 
     setDate('Start date', events.singleEvent.start);
     setDate('End date', events.singleEvent.end);
@@ -103,7 +111,7 @@ describe('Events', () => {
     cy.clickSaveButton();
 
     cy.contains(events.singleEvent.start.format('HH:mm')).should('not.exist');
-    cy.contains('All day').should('be.visible');
+    cy.contains(/All day|Hele dagen/g).should('be.visible');
   });
 
   it('copying all values from series to instance', () => {
@@ -137,6 +145,11 @@ describe('Events', () => {
     });
 
     typeInCkEditor('Hello from series!');
+    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
+      // We have to use force when using Select2.
+      force: true,
+    });
+
     cy.clickSaveButton();
 
     // Editing a single instance.
@@ -197,6 +210,55 @@ describe('Events', () => {
     cy.contains('Hello from series!').should('exist');
   });
 
+  it('Location field flow works', () => {
+    // Login as admin.
+    cy.drupalLogin('/events/add/default');
+
+    // Getting the relevant fields, we want to check.
+    cy.get('[data-drupal-selector="edit-field-event-location-0-value"]').as(
+      'location',
+    );
+    cy.get('[data-drupal-selector="edit-field-event-address-wrapper"]').as(
+      'address',
+    );
+    cy.get(
+      '[data-drupal-selector="edit-field-event-non-branch-location-value"]',
+    ).as('non_branch');
+    cy.get('[data-drupal-selector="edit-field-event-location-type-online"]').as(
+      'online',
+    );
+
+    // Initially, no branch has been selected, so location fields should be
+    // visible, and required.
+    cy.get('@location').should('be.visible');
+    cy.get('@location').should('have.attr', 'required');
+    cy.get('@address').should('be.visible');
+    cy.get('@non_branch').should('not.be.visible');
+
+    // Selecting a branch should make the fields optional and hidden.
+    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
+      // We have to use force when using Select2.
+      force: true,
+    });
+    cy.get('@location').should('not.be.visible');
+    cy.get('@location').should('not.have.attr', 'required');
+    cy.get('@address').should('not.be.visible');
+    cy.get('@non_branch').should('be.visible');
+
+    // Choosing to override the branch address should make the fields visible.
+    cy.get('@non_branch').click();
+    cy.get('@location').should('be.visible');
+    cy.get('@location').should('have.attr', 'required');
+    cy.get('@address').should('be.visible');
+
+    // Setting the event to online should mean all location fields are hidden.
+    cy.get('@online').click();
+    cy.get('@location').should('not.be.visible');
+    cy.get('@location').should('not.have.attr', 'required');
+    cy.get('@address').should('not.be.visible');
+    cy.get('@non_branch').should('not.be.visible');
+  });
+
   before(() => {
     cy.drupalLogin('/admin/content/eventseries');
     // Delete all preexisting instances of each event.
@@ -209,9 +271,9 @@ describe('Events', () => {
         cy.findAllByRole('link', { name: events.singleEvent.title })
           .first()
           .click();
-        cy.findByRole('link', {
-          name: `Edit ${events.singleEvent.title}`,
-        }).click();
+        cy.get('a[href^="/events/"][href$="/edit"]')
+          .contains(events.singleEvent.title)
+          .click();
         cy.findByRole('button', { name: 'More actions' })
           .click()
           .parent()

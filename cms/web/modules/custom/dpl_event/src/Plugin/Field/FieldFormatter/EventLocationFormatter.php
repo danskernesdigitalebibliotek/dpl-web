@@ -45,11 +45,11 @@ class EventLocationFormatter extends EntityReferenceLabelFormatter {
       }
     }
 
-    $return = [];
-
     if (!($items instanceof EntityReferenceFieldItemListInterface)) {
-      return NULL;
+      return [];
     }
+
+    $return = [];
 
     foreach ($this->getEntitiesToView($items, $langcode) as $entity) {
       $return[] = [
