@@ -172,7 +172,9 @@ function novel_preprocess_page(array &$variables): void {
  *   The variables for the theme hook.
  */
 function novel_preprocess_field(&$variables): void {
-  if ($variables['field_name'] == 'field_paragraphs') {
+  $field_name = $variables['field_name'] ?? NULL;
+
+  if (in_array($field_name, ['field_paragraphs', 'field_event_paragraphs'])) {
     foreach ($variables['items'] as &$item) {
       $item['attributes']['class'][] = 'paragraphs__item paragraphs';
       $item['attributes']['class'][] = 'paragraphs__item--' . $item['content']['#paragraph']->bundle();
