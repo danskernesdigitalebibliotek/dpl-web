@@ -33,6 +33,10 @@ updates:
       # Our patches are not compatible with the latest version.
       - dependency-name: "drupal/entity_reference_revisions"
         versions: [">=1.13.0"]
+      # Automated updates to paragraphs also trigger updates to
+      # entity_reference_revisions.
+      - dependency-name: "drupal/paragraphs"
+        versions: [">1.19.0"]
     schedule:
       interval: weekly
       day: monday
