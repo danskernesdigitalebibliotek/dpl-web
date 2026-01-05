@@ -71,7 +71,9 @@ content:
   event_address:
     type: dpl_branch_address
     label: hidden
-    settings: {  }
+    settings:
+      skip_domestic_country: '1'
+      domestic_country: site_default
     third_party_settings: {  }
     weight: 2
     region: content

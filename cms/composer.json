@@ -332,6 +332,9 @@
             }
         },
         "patches": {
+            "drupal/address": {
+                "2753899: Hide domestic country": "patches/2753899-address-hide-domestic.patch"
+            },
             "drupal/address_dawa": {
                 "3407189: Automated Drupal 10 compatibility fixes": "https://www.drupal.org/files/issues/2023-12-09/address_dawa.2.0.1.rector.patch",
                 "3550696: Update API endpoints.": "https://git.drupalcode.org/project/address_dawa/-/commit/330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
