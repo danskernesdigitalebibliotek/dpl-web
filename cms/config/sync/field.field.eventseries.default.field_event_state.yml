@@ -12,7 +12,7 @@ field_name: field_event_state
 entity_type: eventseries
 bundle: default
 label: State
-description: ''
+description: 'If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this state is ignored and the state provided from the ticket manager is used.'
 required: true
 translatable: false
 default_value:
