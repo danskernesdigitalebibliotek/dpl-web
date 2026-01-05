@@ -12,8 +12,10 @@ use DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV8;
 use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
+use Drupal\dpl_login\AuthenticationType;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
 use Drupal\dpl_login\UserTokensProviderInterface;
@@ -137,6 +139,11 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
   if ($context['plugin_id'] !== DplLoginInterface::PLUGIN_ID_ADGANGSPLATFORMEN) {
     return;
   }
+  /** @var \Drupal\dpl_login\DplLoginSession */
+  $dpl_login_session = \Drupal::service('dpl_login.session');
+  /** @var \Drupal\openid_connect\OpenIDConnectSessionInterface */
+  $openid_session = \Drupal::service('openid_connect.session');
+  $authentication_type = $dpl_login_session->getAuthenticationType();
   $access_token = AccessToken::createFromOpenidConnectContext($context);
   $token_provider = _dpl_login_get_access_token_provider($access_token);
   $logger = _dpl_login_get_authorization_logger($access_token);
@@ -148,6 +155,26 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
   else {
     $logger->error('Post authorize hook - Unable to delete previous user tokens.');
   }
+
+  // The user managed to login but is not registered at this library
+  // make sure that the user is redirected to the front page.
+  if ($authentication_type === AuthenticationType::Login && !_dpl_login_user_is_registered($access_token)) {
+    $logger->info('Post authorize hook - Redirecting user to front page as they are not registered at this library.');
+    $url = Url::fromRoute('<front>')->toString(TRUE);
+    $openid_session->saveTargetLinkUri($url->getGeneratedUrl());
+    // And show a message to the unregistered user.
+    \Drupal::messenger()->addError(t(
+    'You are not registered at this library.<br />Please <a href=":sign_up">sign up</a> at this library or <a href=":log_out">log out</a> again.',
+    [
+      ':sign_up' => Url::fromRoute('dpl_patron_reg.create')->toString(),
+      ':log_out' => Url::fromRoute('dpl_login.logout')->toString(),
+    ],
+    ['context' => 'dpl_login']
+    ));
+  }
+
+  // Tidy up to not leave stale authentication type in session.
+  $dpl_login_session->deletetAuthenticationType();
 }
 
 /**

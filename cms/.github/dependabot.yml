@@ -30,6 +30,9 @@ updates:
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
+      # Our patches are not compatible with the latest version.
+      - dependency-name: "drupal/entity_reference_revisions"
+        versions: [">=1.13.0"]
     schedule:
       interval: weekly
       day: monday
@@ -59,6 +62,9 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # Tests fail when running Cypress 15 using task cy:cypress:local.
+      - dependency-name: "cypress"
+        versions: [ ">=15" ]
     schedule:
       interval: weekly
       day: monday

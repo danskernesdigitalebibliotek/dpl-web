@@ -9,7 +9,9 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\dpl_login\AuthenticationType;
 use Drupal\dpl_login\User;
+use Drupal\dpl_login\DplLoginSession;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +33,7 @@ class DplPatronRegController extends ControllerBase {
     protected OpenIDConnectSessionInterface $session,
     protected OpenIDConnectClaims $claims,
     protected User $user,
+    protected DplLoginSession $dplLoginSession,
   ) {
     $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
   }
@@ -72,6 +75,9 @@ class DplPatronRegController extends ControllerBase {
     $plugin = $client->getPlugin();
     $scopes = $this->claims->getScopes($plugin);
     $this->session->saveOp('login');
+    // Set the authentication type in session. We use this later to
+    // distinguish between login and registration.
+    $this->dplLoginSession->setAuthenticationType(AuthenticationType::Registration);
 
     /** @var \Drupal\Core\Routing\TrustedRedirectResponse $response */
     $response = $plugin->authorize($scopes);

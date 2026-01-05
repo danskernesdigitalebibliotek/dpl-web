@@ -56,3 +56,34 @@ function _dpl_event_port_wysiwyg(string $entity_type, string $source_field, stri
     "@entity_type" => $entity_type,
   ])->render();
 }
+
+/**
+ * Update all eventinstances that are set to all day, to trigger time logic.
+ */
+function dpl_event_deploy_migrate_all_day_events(): string {
+  $series_ids = \Drupal::entityTypeManager()->getStorage('eventseries')->getQuery()
+    ->condition('field_event_all_day', '1')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (empty($series_ids)) {
+    return 'Found no relevant events to update.';
+  }
+
+  $instance_storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
+
+  $instance_ids = $instance_storage->getQuery()
+    ->condition('eventseries_id', $series_ids, 'IN')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  $instances = $instance_storage->loadMultiple($instance_ids);
+
+  foreach ($instances as $instance) {
+    $instance->save();
+  }
+
+  $count = count($instances);
+
+  return "Updated $count all-day events, to set 00:00 - 23:59 time.";
+}

@@ -17,6 +17,7 @@ use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Controller\DplLoginController;
+use Drupal\dpl_login\DplLoginSession;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\RegisteredUserTokensProvider;
 use Drupal\dpl_login\User;
@@ -99,6 +100,8 @@ class DplLoginControllerTest extends UnitTestCase {
 
     $user_service = $this->prophesize(User::class);
 
+    $dpl_login_session = $this->prophesize(DplLoginSession::class);
+
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
@@ -117,6 +120,8 @@ class DplLoginControllerTest extends UnitTestCase {
     $container->set('entity_type.manager', $entity_type_manager->reveal());
     $container->set('dpl_login.user', $user_service->reveal());
     $container->setAlias(User::class, 'dpl_login.user');
+    $container->set('dpl_login.session', $dpl_login_session->reveal());
+    $container->setAlias(DplLoginSession::class, 'dpl_login.session');
     \Drupal::setContainer($container);
   }
 

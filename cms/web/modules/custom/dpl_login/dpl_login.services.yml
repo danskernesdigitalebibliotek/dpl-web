@@ -51,3 +51,8 @@ services:
   dpl_login.user:
     class: Drupal\dpl_login\User
   Drupal\dpl_login\User: '@dpl_login.user'
+
+  dpl_login.session:
+    class: Drupal\dpl_login\DplLoginSession
+    arguments: ['@session']
+  Drupal\dpl_login\DplLoginSession: '@dpl_login.session'
