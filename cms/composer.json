@@ -257,6 +257,9 @@
             "oomphinc/composer-installers-extender": true,
             "phpstan/extension-installer": true,
             "zaporylie/composer-drupal-optimizations": true
+        },
+        "audit": {
+            "block-insecure": false
         }
     },
     "scripts": {
