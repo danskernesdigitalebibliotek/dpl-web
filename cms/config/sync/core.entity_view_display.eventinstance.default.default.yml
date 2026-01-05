@@ -122,8 +122,8 @@ content:
     weight: 5
     region: content
   event_location:
-    type: string
-    label: visible
+    type: dpl_event_location
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -131,14 +131,14 @@ content:
     region: content
   event_location_type:
     type: list_default
-    label: visible
+    label: above
     settings: {  }
     third_party_settings: {  }
     weight: 60
     region: content
   event_non_branch_location:
     type: boolean
-    label: visible
+    label: above
     settings:
       format: default
       format_custom_false: ''
@@ -229,7 +229,7 @@ content:
     weight: 15
     region: content
   field_event_location:
-    type: string
+    type: dpl_event_location
     label: hidden
     settings:
       link_to_entity: false

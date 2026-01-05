@@ -2,32 +2,22 @@
 
 namespace Drupal\dpl_event\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceLabelFormatter;
+use Drupal\Core\Field\Plugin\Field\FieldFormatter\StringFormatter;
 use Drupal\recurring_events\Entity\EventInstance;
 
 /**
- * Getting the list-oriented location string for events.
+ * Getting the most relevant location simple string for events.
  *
  * @FieldFormatter(
  *   id = "dpl_event_location",
  *   label = @Translation("DPL: Event Location Type"),
  *   field_types = {
- *     "entity_reference"
+ *     "string"
  *   }
  * )
  */
-class EventLocationFormatter extends EntityReferenceLabelFormatter {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsSummary() {
-    $summary = [];
-    $summary[] = $this->t('Most relevant location, for use in lists.', [], ['context' => 'DPL Event']);
-    return $summary;
-  }
+class EventLocationFormatter extends StringFormatter {
 
   /**
    * Getting relevant location field.
@@ -45,19 +35,30 @@ class EventLocationFormatter extends EntityReferenceLabelFormatter {
       }
     }
 
-    if (!($items instanceof EntityReferenceFieldItemListInterface)) {
-      return [];
+    $location_field_name = ($entity instanceof EventInstance) ?
+      'event_location' : 'field_event_location';
+
+    $default_return = parent::viewElements($items, $langcode);
+
+    if ($entity->hasField($location_field_name)) {
+      $location_field = $entity->get($location_field_name);
+      $location = $location_field->getString();
+
+      if (!empty($location) && !ctype_space($location)) {
+        return $default_return;
+      }
     }
 
-    $return = [];
+    $branch_field_name = ($entity instanceof EventInstance) ?
+      'branch' : 'field_branch';
 
-    foreach ($this->getEntitiesToView($items, $langcode) as $entity) {
-      $return[] = [
-        '#plain_text' => $entity->label(),
-      ];
+    if ($entity->hasField($branch_field_name)) {
+      $branch_field = $entity->get($branch_field_name);
+
+      return $branch_field->view('card');
     }
 
-    return $return;
+    return $default_return;
   }
 
 }

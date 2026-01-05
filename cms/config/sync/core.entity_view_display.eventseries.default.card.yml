@@ -36,6 +36,14 @@ targetEntityType: eventseries
 bundle: default
 mode: card
 content:
+  field_branch:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_teaser_image:
     type: entity_reference_entity_view
     label: hidden
@@ -76,7 +84,6 @@ hidden:
   event_instances: true
   event_registration: true
   field_automatic_list_hide: true
-  field_branch: true
   field_categories: true
   field_description: true
   field_event_address: true

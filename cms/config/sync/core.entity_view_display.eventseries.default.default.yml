@@ -90,7 +90,7 @@ content:
     weight: 4
     region: content
   field_event_location:
-    type: string
+    type: dpl_event_location
     label: hidden
     settings:
       link_to_entity: false

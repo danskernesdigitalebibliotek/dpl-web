@@ -11,6 +11,9 @@ dependencies:
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_location
+    - field.field.eventinstance.default.field_event_location_type
+    - field.field.eventinstance.default.field_event_non_branch_location
     - field.field.eventinstance.default.field_event_paragraphs
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
@@ -24,6 +27,9 @@ dependencies:
     - field.field.eventinstance.default.field_ticket_capacity
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
+  module:
+    - dpl_event
+    - options
 _core:
   default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
 id: eventinstance.default.nav_spot
@@ -33,7 +39,7 @@ mode: nav_spot
 content:
   branch:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -67,23 +73,23 @@ content:
     weight: 53
     region: content
   event_location:
-    type: string
-    label: visible
+    type: dpl_event_location
+    label: hidden
     settings:
-      link_to_entity: false
+      link: true
     third_party_settings: {  }
     weight: 59
     region: content
   event_location_type:
     type: list_default
-    label: visible
+    label: above
     settings: {  }
     third_party_settings: {  }
     weight: 60
     region: content
   event_non_branch_location:
     type: boolean
-    label: visible
+    label: above
     settings:
       format: default
       format_custom_false: ''

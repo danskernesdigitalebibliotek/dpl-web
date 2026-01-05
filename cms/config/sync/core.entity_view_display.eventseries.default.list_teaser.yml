@@ -76,6 +76,21 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_event_location:
+    type: dpl_event_location
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_event_location_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
   field_event_place:
     type: string
     label: hidden
@@ -134,8 +149,6 @@ hidden:
   field_automatic_list_hide: true
   field_event_all_day: true
   field_event_link: true
-  field_event_location: true
-  field_event_location_type: true
   field_event_non_branch_location: true
   field_event_paragraphs: true
   field_event_partners: true

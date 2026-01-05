@@ -53,7 +53,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
     if ($entity->hasField($location_type_field_name)) {
       $location_type_field = $entity->get($location_type_field_name);
       if ($location_type_field->getString() === 'online') {
-        return $location_type_field->view('full');
+        return [];
       }
     }
 
