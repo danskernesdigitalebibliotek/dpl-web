@@ -1,0 +1,19 @@
+uuid: 9b2dae2c-613c-4786-b43b-cda98a84f8f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_event_location
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_event_location
+field_name: field_event_location
+entity_type: eventinstance
+bundle: default
+label: Location
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -67,7 +67,7 @@ describe('Adgangsplatformen', () => {
 
   // When a user comes back from authentication with MitID, the user should
   // not be able to do anything else other than registering or cancelling.
-  // Check that the header and footer sections is not vissible.
+  // Check that the header and footer sections is not visible.
   it('does not show header and footer section for unregistered user', () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: '7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc',
@@ -100,6 +100,23 @@ describe('Adgangsplatformen', () => {
       authorizationCode: '7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc',
       accessToken: '447131b0a03fe0421204c54e5c21a60-new-user',
       userCPR: 1412749999,
+    });
+
+    cy.createMapping({
+      request: {
+        method: 'GET',
+        urlPattern: '/external/v1/agencyid/branches',
+      },
+      response: {
+        jsonBody: [
+          { branchId: 'FBS-751024', title: 'Fjernlånte materialer' },
+          { branchId: 'DK-775100', title: 'Hovedbiblioteket' },
+          { branchId: 'DK-775170', title: 'Trige' },
+          { branchId: 'DK-775150', title: 'Tilst' },
+          { branchId: 'DK-775130', title: 'Viby' },
+          { branchId: 'DK-775164', title: 'Egå' },
+        ],
+      },
     });
 
     cy.clearCookies();
@@ -164,6 +181,31 @@ describe('Adgangsplatformen', () => {
         'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")',
       );
     });
+  });
+
+  it('after login sends unregistered user to the front page with an error', () => {
+    const authorizationCode = '7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc';
+    const accessToken = '447131b0a03fe0421204c54e5c21a60-new-user';
+
+    cy.setupAdgangsplatformenRegisterMappinngs({
+      authorizationCode,
+      accessToken,
+      userCPR: 1412749999,
+    });
+
+    cy.clearCookies();
+
+    // Let Drupal start the OpenID Connect flow
+    cy.visit('/login');
+
+    // After the full OpenID flow, an unregistered user should end up on front page
+    cy.url().should('match', /\/frontpage.*/);
+
+    // And see an error message
+    cy.get('.error-message__description').should(
+      'contain',
+      'You are not registered at this library',
+    );
   });
 
   beforeEach(() => {

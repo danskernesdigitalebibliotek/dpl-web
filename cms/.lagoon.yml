@@ -3,7 +3,7 @@ docker-compose-yaml: docker-compose.yml
 project: dpl-cms-core
 
 ssh: 20.238.147.183:22
-api: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
+api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
 environment_variables:
   git_sha: 'true'
 
@@ -30,7 +30,7 @@ tasks:
           # file. Environment variables are killed between tasks, apart from
           # the global ones.
           echo "$GH_DEPLOYMENT_ID" > /tmp/GH_DEPLOYMENT_ID
-          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/$LAGOON_PROJECT-$LAGOON_ENVIRONMENT/deployments"
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat02.dpl.reload.dk/projects/$LAGOON_PROJECT/$LAGOON_PROJECT-$LAGOON_ENVIRONMENT/deployments"
           echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
 
           echo "Creating a initial pending deployment status."
@@ -104,6 +104,20 @@ tasks:
 
           drush locale-check
           drush locale-update
+        service: cli
+    - run:
+        name: Import config translations
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
+    - run:
+        name: Clear GraphQL AST cache
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush cc bin graphql.ast
         service: cli
     - run:
         name: Create test users
@@ -181,6 +195,12 @@ environments:
         command: drush cron
         service: cli
   pr-2822:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/30 * * * *"
+        command: drush cron
+        service: cli
+  pr-3009:
     cronjobs:
       - name: drush cron
         schedule: "M/30 * * * *"

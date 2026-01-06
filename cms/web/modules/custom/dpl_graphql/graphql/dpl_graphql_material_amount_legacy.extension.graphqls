@@ -1,0 +1,11 @@
+# Legacy support for amountOfMaterials field.
+# This field was renamed to materialAmount but the app still uses the old name.
+# See task DDFSAL-577.
+
+extend type ParagraphMaterialGridAutomatic {
+  amountOfMaterials: Int! @deprecated(reason: "Use materialAmount instead")
+}
+
+extend type ParagraphMaterialGridLinkAutomatic {
+  amountOfMaterials: Int! @deprecated(reason: "Use materialAmount instead")
+}

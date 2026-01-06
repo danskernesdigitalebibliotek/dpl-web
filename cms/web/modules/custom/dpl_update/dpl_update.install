@@ -1068,3 +1068,12 @@ function dpl_update_update_10065(): string {
 
   return $return;
 }
+
+/**
+ * Make sure cookieinformation settings are applied using config.
+ */
+function dpl_update_update_10066(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'cookieinformation.settings',
+  ]);
+}

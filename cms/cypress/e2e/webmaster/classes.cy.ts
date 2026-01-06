@@ -1,21 +1,7 @@
-import { AdminModulesPage } from '../pages/admin-modules';
-import { LoginPage } from '../pages/login-page';
-import { NodeAddArticlePage } from '../pages/node-add-article';
+import { LoginPage } from '../../pages/login-page';
+import { NodeAddArticlePage } from '../../pages/node-add-article';
 
 describe('Webmaster custom content CSS classes', () => {
-  // Enable the module so we can test it. Ideally we'd disable it
-  // again afterwards, but there's no guarantees with after hooks.
-  before(() => {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
-
-    const adminModulesPage = new AdminModulesPage();
-    adminModulesPage.visit([]);
-    adminModulesPage.enableModule('dpl_classes');
-  });
-
   beforeEach(() => {
     LoginPage.ensureLogin(
       Cypress.env('DRUPAL_USERNAME'),

@@ -48,7 +48,7 @@ needed to test certain functionalities. This can be achieved in two ways:
 
 1. Contact administrators of the DPL Platform Lagoon instance to apply for an
    user account.
-2. Access the URL for the UI of the instance e.g <https://ui.lagoon.dplplat01.dpl.reload.dk/>
+2. Access the URL for the UI of the instance e.g <https://ui.lagoon.dplplat02.dpl.reload.dk/>
 3. Log in with your user account (see above)
 4. Go to the dpl-cms project
 

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-12-09 13:34+0100\n"
-"PO-Revision-Date: 2025-12-09 13:34+0100\n"
+"POT-Creation-Date: 2026-01-06 16:56+0100\n"
+"PO-Revision-Date: 2026-01-06 16:56+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1575,339 +1575,343 @@ msgstr "Titel (Å - A)"
 
 msgctxt "advanced search 2"
 msgid "CQL search"
-msgstr ""
+msgstr "CQL-søgning"
 
 msgctxt "advanced search 2"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 msgctxt "advanced search 2"
 msgid "Part of series"
-msgstr ""
+msgstr "i serien"
 
 msgctxt "advanced search 2"
 msgid "Loading..."
-msgstr ""
+msgstr "Indlæser..."
 
 msgctxt "advanced search 2"
 msgid "Showing @itemsShown of @hitcount results"
-msgstr ""
+msgstr "Viser @itemsShown af @hitcount resultater"
 
 msgctxt "advanced search 2"
 msgid "Show more"
-msgstr ""
+msgstr "Vis mere"
 
 msgctxt "advanced search 2"
 msgid "Loading results..."
-msgstr ""
+msgstr "Henter resultater..."
 
 msgctxt "advanced search 2"
 msgid "showing materials (@hitcount)"
-msgstr ""
+msgstr "Din søgning har @hitcount resultater"
 
 msgctxt "advanced search 2"
 msgid "More filters"
-msgstr ""
+msgstr "Flere filtre"
 
 msgctxt "advanced search 2"
 msgid "Link copied to clipboard"
-msgstr ""
+msgstr "Linket er kopieret til udklipsholder"
 
 msgctxt "advanced search 2"
 msgid "Add row"
-msgstr ""
+msgstr "Tilføj række"
 
 msgctxt "advanced search 2"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 msgctxt "advanced search 2"
 msgid "AND"
-msgstr ""
+msgstr "OG"
 
 msgctxt "advanced search 2"
 msgid "OR"
-msgstr ""
+msgstr "ELLER"
 
 msgctxt "advanced search 2"
 msgid "NOT"
-msgstr ""
+msgstr "IKKE"
 
 msgctxt "advanced search 2"
 msgid "Remove row @inputNumber"
-msgstr ""
+msgstr "Fjern række @inputNumber"
 
 msgctxt "advanced search 2"
 msgid "Selected"
-msgstr ""
+msgstr "Valgt"
 
 msgctxt "advanced search 2"
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 msgctxt "advanced search 2"
 msgid "Search in all material…"
-msgstr ""
+msgstr "Søg efter bøger, film, musik og mere"
 
 msgctxt "advanced search 2"
 msgid "Enter title…"
-msgstr ""
+msgstr "Søg på titler"
 
 msgctxt "advanced search 2"
 msgid "Enter author or creator…"
-msgstr ""
+msgstr "Søg på forfatter, komponist, kunstner og instruktør mv."
 
 msgctxt "advanced search 2"
 msgid "Enter subject…"
-msgstr ""
+msgstr "Søg på emner, sted, tidsperiode mv."
 
 msgctxt "advanced search 2"
 msgid "Enter publisher…"
-msgstr ""
+msgstr "Søg på forlag, udgiver, pladeselskab mv."
 
 msgctxt "advanced search 2"
 msgid "Enter DK5 number…"
-msgstr ""
+msgstr "Søg på DK5-nummer"
 
 msgctxt "advanced search 2"
 msgid "Enter ISBN number…"
-msgstr ""
+msgstr "Søg på ISBN-nummer"
 
 msgctxt "advanced search 2"
 msgid "Enter series title…"
-msgstr ""
+msgstr "Søg på bogserie, tv-serie mv."
 
 msgctxt "advanced search 2"
 msgid "Free text search"
-msgstr ""
+msgstr "Fritekstsøgning"
 
 msgctxt "advanced search 2"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 msgctxt "advanced search 2"
 msgid "Author / Creator"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 msgctxt "advanced search 2"
 msgid "Subject"
-msgstr ""
+msgstr "Emne"
 
 msgctxt "advanced search 2"
 msgid "Publisher"
-msgstr ""
+msgstr "Udgiver / forlag"
 
 msgctxt "advanced search 2"
 msgid "DK5"
-msgstr ""
+msgstr "DK5"
 
 msgctxt "advanced search 2"
 msgid "ISBN"
-msgstr ""
+msgstr "ISBN"
 
 msgctxt "advanced search 2"
 msgid "Series title"
-msgstr ""
+msgstr "Serie"
 
 msgctxt "advanced search 2"
 msgid "Fictional character"
-msgstr ""
+msgstr "Fiktiv karakter"
 
 msgctxt "advanced search 2"
 msgid "Host publication"
-msgstr ""
+msgstr "Værtspublikation"
 
 msgctxt "advanced search 2"
 msgid "Enter fictional character…"
-msgstr ""
+msgstr "Søg f.eks. på Batman, Dicte Svendsen eller Sallys far"
 
 msgctxt "advanced search 2"
 msgid "Enter host publication…"
 msgstr ""
+"Søg f.eks. på Kristeligt Dagblad, Illustreret Videnskab eller Filmmagasinet "
+"Ekko"
 
 msgctxt "advanced search 2"
 msgid "Edit search"
-msgstr ""
+msgstr "Rediger søgning"
 
 msgctxt "advanced search 2"
 msgid "On shelf"
-msgstr ""
+msgstr "På hylden"
 
 msgctxt "advanced search 2"
 msgid "Only show results available at the library now."
-msgstr ""
+msgstr "Vis kun titler, som har eksemplarer hjemme på hylden."
 
 msgctxt "advanced search 2"
 msgid "Only \"Extra Titles\""
-msgstr ""
+msgstr "Lån udenfor kvoten"
 
 msgctxt "advanced search 2"
 msgid "Only show results not limited by digital loan quotas."
 msgstr ""
+"Vis kun digitale titler, der ikke tæller med i din månedlige lånekvote og "
+"altid er tilgængelige."
 
 msgctxt "advanced search 2"
 msgid "Show all"
-msgstr ""
+msgstr "Vis alle"
 
 msgctxt "advanced search 2"
 msgid "Show less"
-msgstr ""
+msgstr "Vis færre"
 
 msgctxt "advanced search 2"
 msgid "Reset"
-msgstr ""
+msgstr "Nulstil"
 
 msgctxt "advanced search 2"
 msgid "Access Type"
-msgstr ""
+msgstr "Fysisk / online"
 
 msgctxt "advanced search 2"
 msgid "Age"
-msgstr ""
+msgstr "Aldersgruppe"
 
 msgctxt "advanced search 2"
 msgid "Audience"
-msgstr ""
+msgstr "Målgruppe"
 
 msgctxt "advanced search 2"
 msgid "Chamber Music"
-msgstr ""
+msgstr "Kammermusik"
 
 msgctxt "advanced search 2"
 msgid "Choir"
-msgstr ""
+msgstr "Kortype"
 
 msgctxt "advanced search 2"
 msgid "Contributor"
-msgstr ""
+msgstr "Oplæser / oversætter / bidrag"
 
 msgctxt "advanced search 2"
 msgid "Creator"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 msgctxt "advanced search 2"
 msgid "Fictional Character"
-msgstr ""
+msgstr "Fiktiv karakter"
 
 msgctxt "advanced search 2"
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 msgctxt "advanced search 2"
 msgid "Genre and form"
-msgstr ""
+msgstr "Genre og form"
 
 msgctxt "advanced search 2"
 msgid "Host Publication"
-msgstr ""
+msgstr "Værtspublikation"
 
 msgctxt "advanced search 2"
 msgid "Instrument"
-msgstr ""
+msgstr "Instrument"
 
 msgctxt "advanced search 2"
 msgid "Language"
-msgstr ""
+msgstr "Sprog"
 
 msgctxt "advanced search 2"
 msgid "Let"
-msgstr ""
+msgstr "Let"
 
 msgctxt "advanced search 2"
 msgid "Level"
-msgstr ""
+msgstr "Fagligt niveau"
 
 msgctxt "advanced search 2"
 msgid "Lix"
-msgstr ""
+msgstr "Lix"
 
 msgctxt "advanced search 2"
 msgid "Materialetype"
-msgstr ""
+msgstr "Materialetype"
 
 msgctxt "advanced search 2"
 msgid "Score Type"
-msgstr ""
+msgstr "Nodetype"
 
 msgctxt "advanced search 2"
 msgid "Source"
-msgstr ""
+msgstr "Kilde"
 
 msgctxt "advanced search 2"
 msgid "Year"
-msgstr ""
+msgstr "Udgivelsesår"
 
 msgctxt "advanced search 2"
 msgid "Refine your search"
-msgstr ""
+msgstr "Afgræns din søgning"
 
 msgctxt "advanced search 2"
 msgid "Search..."
-msgstr ""
+msgstr "Søg..."
 
 msgctxt "advanced search 2"
 msgid "From"
-msgstr ""
+msgstr "Fra"
 
 msgctxt "advanced search 2"
 msgid "To"
-msgstr ""
+msgstr "Til"
 
 msgctxt "advanced search 2"
 msgid "Advanced search"
-msgstr ""
+msgstr "Avanceret søgning"
 
 msgctxt "advanced search 2"
 msgid "@age+ year olds"
-msgstr ""
+msgstr "For @age+-årige"
 
 msgctxt "advanced search 2"
 msgid "@age year olds"
-msgstr ""
+msgstr "For @age-årige"
 
 msgctxt "advanced search 2"
 msgid "@from-@to year olds"
-msgstr ""
+msgstr "For @from-@to-årige"
 
 msgctxt "advanced search 2"
 msgid "Filter materials (@hitcount)"
-msgstr ""
+msgstr "Filtrer resultater (@hitcount)"
 
 msgctxt "advanced search 2"
 msgid "Show results"
-msgstr ""
+msgstr "Vis resultater"
 
 msgctxt "advanced search 2"
 msgid "Sort by"
-msgstr ""
+msgstr "Sorter efter"
 
 msgctxt "advanced search 2"
 msgid "Relevance"
-msgstr ""
+msgstr "Bedste match"
 
 msgctxt "advanced search 2"
 msgid "Publication date"
-msgstr ""
+msgstr "Udgivelsesdato"
 
 msgctxt "advanced search 2"
 msgid "Newest first"
-msgstr ""
+msgstr "Nyeste først"
 
 msgctxt "advanced search 2"
 msgid "Oldest first"
-msgstr ""
+msgstr "Ældste først"
 
 msgctxt "advanced search 2"
 msgid "Author"
-msgstr ""
+msgstr "Forfatter / ophav"
 
 msgctxt "advanced search 2"
 msgid "A-Z"
-msgstr ""
+msgstr "Forfatter / ophav (A-Å)"
 
 msgctxt "advanced search 2"
 msgid "Z-A"
-msgstr ""
+msgstr "Forfatter / ophav (Å-A)"
 
 msgctxt "Work Page"
 msgid "Already reserved"
@@ -3445,7 +3449,7 @@ msgstr[1] ""
 
 msgctxt "dpl_classes"
 msgid "Custom CSS classes"
-msgstr ""
+msgstr "Custom CSS klasser"
 
 msgctxt "dpl_library_agency"
 msgid "This agency branch ID is already in use by @title"
@@ -3944,6 +3948,13 @@ msgstr "Pinkodelængde (minimumslængde)"
 msgctxt "Patron page settings form"
 msgid "Pincode length max"
 msgstr "Pinkodelængde (maksimumslængde)"
+
+msgctxt "dpl_login"
+msgid ""
+"You are not registered at this library.<br />Please <a "
+"href=\":sign_up\">sign up</a> at this library or <a href=\":log_out\">log "
+"out</a> again."
+msgstr ""
 
 msgctxt "dpl_login"
 msgid "Logged in"
@@ -5438,14 +5449,15 @@ msgstr "Automatisk afpublicering"
 
 msgctxt "DPL event"
 msgid "Unpublish eventinstances when they have occured (recommended)"
-msgstr "Afpubliser arrangemenstinstancer når de har været afholdt"
+msgstr "Afpublicer arrangemenstinstanser når de har været afholdt (anbefalet)"
 
 msgctxt "DPL event"
 msgid ""
 "Notice - if you do not choose that eventinstances get unpublished, they may "
 "show up in automatic and manual lists, across the site."
 msgstr ""
-"Vær opmærksom på, at hvis du vælger IKKE at afpublisere udløbede "
+"Vi anbefaler at I automatisk afpublicerer både serier og instanser. Vær "
+"opmærksom på, at hvis du vælger IKKE at afpublicere udløbede "
 "arrangementsinstanser, er det muligt, at de vises i automatiske og manuelle "
 "lister rundt om på siden."
 
@@ -5455,11 +5467,11 @@ msgid ""
 "should be unpublished?"
 msgstr ""
 "Hvor lang tid skal der gå efter at en arrangementsinstance har været afholdt "
-"til det skal afpubliseres?"
+"til det skal afpubliceres?"
 
 msgctxt "DPL event"
 msgid "Unpublish the series when all instances have occurred (not recommended)"
-msgstr "Afpubliser serien, når alle instancer har været afholdt"
+msgstr "Afpublicer serien, når alle instanser har været afholdt (anbefalet)"
 
 msgctxt "DPL event"
 msgid ""
@@ -5467,11 +5479,10 @@ msgid ""
 "If you however keep the series published, expired instances will redirect to "
 "the associated series."
 msgstr ""
-"Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instans-"
-"links ikke virke længere. Borgerne kan møde døde links, som I har udsendt på "
-"fx sociale medier eller hvis hvis I har indsat instansen i en manuel "
-"paragraf. Hvis du vælger at bevare publiseringen, vil udløbne instanser "
-"blive henvist til de relaterede serier."
+"Vi anbefaler at I automatisk afpubliserer både serier og instanser. Vær "
+"opmærksom på, at hvis du vælger IKKE at afpublisere udløbede "
+"arrangementsinstanser, er det muligt, at de vises i automatiske og manuelle "
+"lister rundt om på siden."
 
 msgctxt "dpl_event"
 msgid "Could not find event-instance"
@@ -5678,6 +5689,9 @@ msgstr "GO-token forhåndsvisning iframe"
 
 msgid "DPL event: Instance Creating logic."
 msgstr "DPL-hændelse: logik for oprettelse af forekomst."
+
+msgid "DPL: Event Location Type"
+msgstr ""
 
 msgid "DPL: Branch address fallback"
 msgstr "Adresse fallback på filial"
@@ -5896,10 +5910,10 @@ msgid "Webmaster library support functionality"
 msgstr "Webmaster library support functionality"
 
 msgid "Classes for paragraphs/nodes"
-msgstr ""
+msgstr "Klasser for paragpraphs og nodes"
 
 msgid "Add custom CSS classes to paragraphs and nodes on webmaster."
-msgstr ""
+msgstr "Tilføj custom CSS klasser til paragprahs og nodes som webmaster."
 
 msgid "Library Agency"
 msgstr "Biblioteksindstillinger"
@@ -6609,6 +6623,30 @@ msgstr "Pinkode"
 msgctxt "Address label"
 msgid "Zip code"
 msgstr "Postnummer"
+
+msgid "- Site default (@country) -"
+msgstr ""
+
+msgid "Skip country for domestic addresses"
+msgstr ""
+
+msgid "Domestic addresses country"
+msgstr ""
+
+msgid "Addresses within this country are considered domestic."
+msgstr ""
+
+msgid "<em><a href=\"@url\">Set the default country for your site</a></em>."
+msgstr ""
+
+msgid "Site default (@country)"
+msgstr ""
+
+msgid "Skip country for addresses in: @country"
+msgstr ""
+
+msgid "Always display country."
+msgstr ""
 
 msgid "Available countries"
 msgstr "Tilgængelige lande"
@@ -10621,6 +10659,12 @@ msgstr "E-mail"
 
 msgid "Opens your mail client ready to e-mail @email"
 msgstr "Åbner din mail: Gør klar til at sende e-mail @email"
+
+msgid "Add matcher to profile"
+msgstr ""
+
+msgid "Set matcher configuration"
+msgstr ""
 
 msgid "No results"
 msgstr "Ingen resultater"
@@ -20212,6 +20256,12 @@ msgstr "Scroll tilbage"
 msgid "Events in this series"
 msgstr "Arrangementer i denne serie"
 
+msgid "Branch"
+msgstr "Bibliotek"
+
+msgid "Partners"
+msgstr "I samarbejde med"
+
 msgid "To view this content, we need your consent to use marketing cookies."
 msgstr ""
 "For at se dette indhold, har vi brug for dit samtykke til at bruge marketing-"
@@ -20226,14 +20276,11 @@ msgstr "Telefon"
 msgid "Submitted by %author on %date"
 msgstr "Indsendt af %author den %date"
 
+msgid "Price"
+msgstr ""
+
 msgid "Place"
 msgstr "Sted"
-
-msgid "Branch"
-msgstr "Bibliotek"
-
-msgid "Partners"
-msgstr "I samarbejde med"
 
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
@@ -20535,6 +20582,26 @@ msgctxt "core.entity_form_display.eventinstance.default.default:third_party_sett
 msgid "Infoscreen"
 msgstr ""
 
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
+msgid "Library"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_tickets:label"
+msgid "Tickets"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_partners:label"
+msgid "Partners"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_dates:label"
+msgid "Dates"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_location:label"
+msgid "Locations"
+msgstr ""
+
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_paragraphs:settings:title"
 msgid "Paragraph"
 msgstr ""
@@ -20565,6 +20632,30 @@ msgstr ""
 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_infoscreen:label"
 msgid "Infoscreen"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
+msgid "Library"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_tickets:label"
+msgid "Tickets"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_partners:label"
+msgid "Partners"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_dates:label"
+msgid "Dates"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_location:label"
+msgid "Locations"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_location:settings:placeholder"
+msgid "E.g. “Museum of Architecture”, “The Student House”"
 msgstr ""
 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_paragraphs:settings:title"
@@ -21210,6 +21301,38 @@ msgctxt "field.field.eventinstance.default.field_event_link:description"
 msgid "Please enter the URL where attendees can buy tickets for this event."
 msgstr ""
 
+msgctxt "field.field.eventinstance.default.field_event_location:label"
+msgid "Location"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_location_type:label"
+msgid "In person or online?"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_location_type:description"
+msgid ""
+"Specify wether this is a physical or online event. If it’s both online and "
+"in person, please create two separate events."
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:label"
+msgid "Other location than branch"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:description"
+msgid ""
+"If you choose “other location” this will be show in the list and on the "
+"event as the location for the event."
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_event_paragraphs:label"
 msgid "Paragraphs"
 msgstr ""
@@ -21228,6 +21351,12 @@ msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_state:label"
 msgid "State"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_state:description"
+msgid ""
+"If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this "
+"state is ignored and the state provided from the ticket manager is used."
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_title:label"
@@ -21310,8 +21439,8 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_branch:description"
 msgid ""
-"When connecting a branch, it will also overwrite the event address with the "
-"address from the branch."
+"When selecting a branch, we will use the address from the branch, unless you "
+"select “Other location”."
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_categories:label"
@@ -21360,6 +21489,38 @@ msgid ""
 "Please enter the URL where attendees can buy/get tickets for this event."
 msgstr ""
 
+msgctxt "field.field.eventseries.default.field_event_location:label"
+msgid "Location"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_location_type:label"
+msgid "In person or online?"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_location_type:description"
+msgid ""
+"Specify wether this is a physical or online event. If it’s both online and "
+"in person, please create two separate events."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:label"
+msgid "Other location than branch"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:description"
+msgid ""
+"If you choose “other location” this will be show in the list and on the "
+"event as the location for the event."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.eventseries.default.field_event_paragraphs:label"
 msgid "Paragraphs"
 msgstr ""
@@ -21378,6 +21539,12 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_state:label"
 msgid "State"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_state:description"
+msgid ""
+"If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this "
+"state is ignored and the state provided from the ticket manager is used."
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_relevant_ticket_manager:label"
@@ -22685,6 +22852,22 @@ msgid ""
 "Whether an email notifying of a pending password expiration has been sent"
 msgstr ""
 
+msgctxt "field.storage.eventinstance.field_event_location_type:settings:allowed_values:0:label"
+msgid "In person"
+msgstr ""
+
+msgctxt "field.storage.eventinstance.field_event_location_type:settings:allowed_values:1:label"
+msgid "Online"
+msgstr ""
+
+msgctxt "field.storage.eventseries.field_event_location_type:settings:allowed_values:0:label"
+msgid "In person"
+msgstr ""
+
+msgctxt "field.storage.eventseries.field_event_location_type:settings:allowed_values:1:label"
+msgid "Online"
+msgstr ""
+
 msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
 msgid "AND"
 msgstr ""
@@ -23237,6 +23420,10 @@ msgctxt "metatag.metatag_defaults.eventinstance__default:tags:og_image_width"
 msgid "[eventinstance:event_teaser_image:entity:field_media_image:open_graph:width]"
 msgstr ""
 
+msgctxt "metatag.metatag_defaults.eventinstance__default:tags:title"
+msgid "[eventinstance:title] | [site:name]"
+msgstr ""
+
 msgctxt "metatag.metatag_defaults.eventseries__default:label"
 msgid "Event series entity: Default"
 msgstr ""
@@ -23255,6 +23442,10 @@ msgstr ""
 
 msgctxt "metatag.metatag_defaults.eventseries__default:tags:og_image_width"
 msgid "[eventseries:field_teaser_image:entity:field_media_image:open_graph:width]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventseries__default:tags:title"
+msgid "[eventseries:title] | [site:name]"
 msgstr ""
 
 msgctxt "metatag.metatag_defaults.front:label"
@@ -25058,6 +25249,26 @@ msgstr ""
 
 msgctxt "views.view.entity_reference_content:display:default:display_options:arguments:type:exception:title"
 msgid "All"
+msgstr ""
+
+msgctxt "views.view.entity_reference_content:display:branch_addresses:display_title"
+msgid "Branches and addresses"
+msgstr ""
+
+msgctxt "views.view.entity_reference_content:display:branch_addresses:display_options:fields:field_address_dawa:alter:text"
+msgid "{{ field_address_dawa__value }}"
+msgstr ""
+
+msgctxt "views.view.entity_reference_content:display:branch_addresses:display_options:fields:title:alter:text"
+msgid ""
+"<div>\r\n"
+"<strong>{{ title }}</strong>\r\n"
+"{% if field_address_dawa %}\r\n"
+"<br/>­\r\n"
+"\r\n"
+" ({{ field_address_dawa }})\r\n"
+"{% endif %}\r\n"
+"</div>"
 msgstr ""
 
 msgctxt "views.view.entity_reference_content:display:entity_reference_1:display_title"

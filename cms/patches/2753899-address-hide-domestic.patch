@@ -1,0 +1,478 @@
+From 8fa7c7f8775f71603e76034cc80186a3c0ba8f76 Mon Sep 17 00:00:00 2001
+From: Lucas D Hedding <lucashedding@1463982.no-reply.drupal.org>
+Date: Fri, 29 Dec 2023 08:15:53 -0600
+Subject: [PATCH 1/4] Rebase patch into an MR
+
+---
+ config/schema/address.schema.yml              |  11 ++
+ .../AddressDefaultFormatter.php               | 147 ++++++++++++++++--
+ ...view_display.node.address_test.default.yml |  29 ++++
+ .../AddressDefaultFormatterTest.php           | 108 +++++++++++++
+ 4 files changed, 279 insertions(+), 16 deletions(-)
+ create mode 100644 tests/modules/address_test/config/install/core.entity_view_display.node.address_test.default.yml
+ create mode 100644 tests/src/FunctionalJavascript/AddressDefaultFormatterTest.php
+
+diff --git a/config/schema/address.schema.yml b/config/schema/address.schema.yml
+index e706c72..a903f96 100644
+--- a/config/schema/address.schema.yml
++++ b/config/schema/address.schema.yml
+@@ -144,6 +144,17 @@ field.field_settings.address_zone:
+       sequence:
+         type: string
+ 
++field.formatter.settings.address_default:
++  type: mapping
++  label: 'Address field display format settings'
++  mapping:
++    skip_domestic_country:
++      type: boolean
++      label: 'Skip country for domestic addresses'
++    domestic_country:
++      type: string
++      label: 'Domestic addresses country'
++
+ field.widget.settings.address_default:
+   type: mapping
+   label: 'Default address widget settings'
+diff --git a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+index c76aa60..d6dc93f 100644
+--- a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+@@ -11,9 +11,11 @@ use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
+ use Drupal\address\AddressInterface;
+ use Drupal\address\FieldHelper;
+ use Drupal\Component\Utility\Html;
++use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\Core\Field\FieldDefinitionInterface;
+ use Drupal\Core\Field\FieldItemListInterface;
+ use Drupal\Core\Field\FormatterBase;
++use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\Language\LanguageInterface;
+ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+ use Drupal\Core\Render\Element;
+@@ -33,6 +35,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  */
+ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface, TrustedCallbackInterface {
+ 
++  /**
++   * Site default country.
++   */
++  const SITE_DEFAULT = 'site_default';
++
+   /**
+    * The address format repository.
+    *
+@@ -54,6 +61,13 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+    */
+   protected $subdivisionRepository;
+ 
++  /**
++   * The configuration factory.
++   *
++   * @var \Drupal\Core\Config\ConfigFactoryInterface
++   */
++  protected $configFactory;
++
+   /**
+    * Constructs an AddressDefaultFormatter object.
+    *
+@@ -77,13 +91,23 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+    *   The country repository.
+    * @param \CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface $subdivision_repository
+    *   The subdivision repository.
++   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
++   *   The config factory.
+    */
+-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, AddressFormatRepositoryInterface $address_format_repository, CountryRepositoryInterface $country_repository, SubdivisionRepositoryInterface $subdivision_repository) {
++  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, AddressFormatRepositoryInterface $address_format_repository, CountryRepositoryInterface $country_repository, SubdivisionRepositoryInterface $subdivision_repository, ConfigFactoryInterface $config_factory = NULL) {
+     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+ 
+     $this->addressFormatRepository = $address_format_repository;
+     $this->countryRepository = $country_repository;
+     $this->subdivisionRepository = $subdivision_repository;
++
++    if (!$config_factory instanceof ConfigFactoryInterface) {
++      @trigger_error('AddressDefaultFormatter now takes an additional argument ConfigFactoryInterface $config_factory. Use without $config_factory is deprecated. Classes extending this formatter will fail starting with address 9.x-1.x.', E_USER_DEPRECATED);
++      $this->configFactory = \Drupal::configFactory();
++    }
++    else {
++      $this->configFactory = $config_factory;
++    }
+   }
+ 
+   /**
+@@ -101,10 +125,88 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+       $configuration['third_party_settings'],
+       $container->get('address.address_format_repository'),
+       $container->get('address.country_repository'),
+-      $container->get('address.subdivision_repository')
++      $container->get('address.subdivision_repository'),
++      $container->get('config.factory')
+     );
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  public static function defaultSettings() {
++    return [
++      'skip_domestic_country' => FALSE,
++      'domestic_country' => self::SITE_DEFAULT,
++    ] + parent::defaultSettings();
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function settingsForm(array $form, FormStateInterface $form_state) {
++    $country_list = $this->countryRepository->getList();
++    $site_default = $this->t('- Site default (@country) -', [
++      '@country' => $country_list[$this->configFactory->get('system.date')->get('country.default')] ?? 'NONE',
++    ]);
++
++    $element = [];
++    $element['skip_domestic_country'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Skip country for domestic addresses'),
++      '#default_value' => $this->getSetting('skip_domestic_country'),
++    ];
++
++    $states_prefix = 'fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings]';
++    $element['domestic_country'] = [
++      '#type' => 'select',
++      '#title' => $this->t('Domestic addresses country'),
++      '#options' => [self::SITE_DEFAULT => $site_default] + $country_list,
++      '#default_value' => $this->getSetting('domestic_country'),
++      '#empty_value' => NULL,
++      '#description' => $this->t("Addresses within this country are considered domestic."),
++      '#states' => [
++        'visible' => [
++          ':input[name="' . $states_prefix . '[skip_domestic_country]"]' => ['checked' => TRUE],
++        ],
++      ],
++    ];
++
++    // Add helper text for setting the site's default country.
++    if (empty($this->configFactory->get('system.date')->get('country.default'))) {
++      $element['domestic_country']['#description'] .= $this->t('<em><a href="@url">Set the default country for your site</a></em>.', [
++        '@url' => '/admin/config/regional/settings',
++      ]);
++    }
++
++    return $element;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function settingsSummary() {
++    $summary = parent::settingsSummary();
++
++    if (!empty($this->getSetting('skip_domestic_country'))) {
++      $domestic_country = $this->getSetting('domestic_country');
++      $country_list = $this->countryRepository->getList();
++      if ($domestic_country === self::SITE_DEFAULT) {
++        $domestic_country = $this->t('Site default (@country)', [
++          '@country' => $country_list[$this->configFactory->get('system.date')->get('country.default')] ?? 'NONE',
++        ]);
++      }
++      else {
++        $domestic_country = $country_list[$domestic_country];
++      }
++      $summary['domestic_country'] = $this->t('Skip country for addresses in: @country', ['@country' => $domestic_country]);
++    }
++    else {
++      $summary['domestic_country'] = $this->t('Always display country.');
++    }
++
++    return $summary;
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+@@ -155,13 +257,22 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+       '#address_format' => $address_format,
+       '#locale' => $address->getLocale(),
+     ];
+-    $element['country'] = [
+-      '#type' => 'html_tag',
+-      '#tag' => 'span',
+-      '#attributes' => ['class' => ['country']],
+-      '#value' => Html::escape($countries[$country_code]),
+-      '#placeholder' => '%country',
+-    ];
++    if ($this->getSetting('skip_domestic_country')) {
++      $domestic_country = $this->getSetting('domestic_country');
++      if ($domestic_country == self::SITE_DEFAULT) {
++        $domestic_country = $this->configFactory->get('system.date')->get('country.default');
++      }
++    }
++    if (!isset($domestic_country) || $country_code != $domestic_country) {
++      $countries = $this->countryRepository->getList();
++      $element['country'] = [
++        '#type' => 'html_tag',
++        '#tag' => 'span',
++        '#attributes' => ['class' => ['country']],
++        '#value' => Html::escape($countries[$country_code]),
++        '#placeholder' => '%country',
++      ];
++    }
+     foreach ($address_format->getUsedFields() as $field) {
+       $property = FieldHelper::getPropertyName($field);
+       $class = str_replace('_', '-', $property);
+@@ -194,13 +305,17 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+     /** @var \CommerceGuys\Addressing\AddressFormat\AddressFormat $address_format */
+     $address_format = $element['#address_format'];
+     $locale = $element['#locale'];
+-    // Add the country to the bottom or the top of the format string,
+-    // depending on whether the format is minor-to-major or major-to-minor.
+-    if (Locale::matchCandidates($address_format->getLocale(), $locale)) {
+-      $format_string = '%country' . "\n" . $address_format->getLocalFormat();
+-    }
+-    else {
+-      $format_string = $address_format->getFormat() . "\n" . '%country';
++
++    $format_string = $address_format->getFormat();
++    if (!empty($element['country'])) {
++      // Add the country to the bottom or the top of the format string,
++      // depending on whether the format is minor-to-major or major-to-minor.
++      if (Locale::matchCandidates($address_format->getLocale(), $locale)) {
++        $format_string = '%country' . "\n" . $address_format->getLocalFormat();
++      }
++      else {
++        $format_string = $address_format->getFormat() . "\n" . '%country';
++      }
+     }
+ 
+     $replacements = [];
+diff --git a/tests/modules/address_test/config/install/core.entity_view_display.node.address_test.default.yml b/tests/modules/address_test/config/install/core.entity_view_display.node.address_test.default.yml
+new file mode 100644
+index 0000000..432ef88
+--- /dev/null
++++ b/tests/modules/address_test/config/install/core.entity_view_display.node.address_test.default.yml
+@@ -0,0 +1,29 @@
++langcode: en
++status: true
++dependencies:
++  config:
++    - field.field.node.address_test.field_address_test
++    - node.type.address_test
++  module:
++    - address
++    - user
++id: node.address_test.default
++targetEntityType: node
++bundle: address_test
++mode: default
++content:
++  field_address_test:
++    type: address_default
++    label: above
++    settings:
++      skip_domestic_country: true
++      domestic_country: US
++    third_party_settings: {  }
++    weight: 1
++    region: content
++  links:
++    settings: {  }
++    third_party_settings: {  }
++    weight: 0
++    region: content
++hidden: {  }
+diff --git a/tests/src/FunctionalJavascript/AddressDefaultFormatterTest.php b/tests/src/FunctionalJavascript/AddressDefaultFormatterTest.php
+new file mode 100644
+index 0000000..a29feb0
+--- /dev/null
++++ b/tests/src/FunctionalJavascript/AddressDefaultFormatterTest.php
+@@ -0,0 +1,108 @@
++<?php
++
++namespace Drupal\Tests\address\FunctionalJavascript;
++
++use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
++use Drupal\node\Entity\Node;
++
++/**
++ * Tests the address default formatter.
++ *
++ * @group address
++ */
++class AddressDefaultFormatterTest extends WebDriverTestBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = ['address', 'address_test', 'node'];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected $defaultTheme = 'stark';
++
++  /**
++   * The test node with address filled.
++   *
++   * @var \Drupal\node\NodeInterface
++   */
++  protected $testNode;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    // Create test user and node with address field.
++    $testUser = $this->drupalCreateUser([
++      'access content',
++    ]);
++    $this->testNode = Node::create([
++      'uid' => $testUser->id(),
++      'type' => 'address_test',
++      'title' => 'Test node',
++      'status' => TRUE,
++      'field_address_test' => [
++        [
++          'given_name' => 'John',
++          'family_name' => 'Smith',
++          'country_code' => 'US',
++          'address_line1' => '123 Main St.',
++          'locality' => 'Anytown',
++          'administrative_area' => 'CA',
++          'postal_code' => '12345',
++        ],
++      ],
++    ]);
++    $this->testNode->save();
++
++    $this->drupalLogin($testUser);
++  }
++
++  /**
++   * Tests the default formatter with same country as in test node.
++   */
++  public function testDomesticAddressSameCountry() {
++    $display = \Drupal::configFactory()
++      ->getEditable('core.entity_view_display.node.address_test.default');
++    $display
++      ->set('content.field_address_test.type', 'address_default')
++      ->set('content.field_address_test.settings.skip_domestic_country', 1)
++      ->set('content.field_address_test.settings.domestic_country', 'US')->save();
++
++    $this->drupalGet($this->testNode->toUrl());
++    $this->assertSession()->elementNotExists('css', '.address .country');
++  }
++
++  /**
++   * Tests the default formatter with different country as in test node.
++   */
++  public function testDomesticAddressOtherCountry() {
++    $display = \Drupal::configFactory()
++      ->getEditable('core.entity_view_display.node.address_test.default');
++    $display
++      ->set('content.field_address_test.type', 'address_default')
++      ->set('content.field_address_test.settings.skip_domestic_country', 1)
++      ->set('content.field_address_test.settings.domestic_country', 'UA')->save();
++
++    $this->drupalGet($this->testNode->toUrl());
++    $this->assertSession()->elementTextContains('css', '.country', 'United States');
++  }
++
++  /**
++   * Tests the default formatter with disabled domestic country.
++   */
++  public function testDomesticAddressDisabled() {
++    $display = \Drupal::configFactory()
++      ->getEditable('core.entity_view_display.node.address_test.default');
++    $display
++      ->set('content.field_address_test.type', 'address_default')
++      ->set('content.field_address_test.settings.skip_domestic_country', 0)->save();
++
++    $this->drupalGet($this->testNode->toUrl());
++    $this->assertSession()->elementTextContains('css', '.country', 'United States');
++  }
++
++}
+-- 
+GitLab
+
+
+From 7eee4ce4e2ebef4795df8a23396b3a71fad82cc8 Mon Sep 17 00:00:00 2001
+From: Marc-Oliver Teschke <teschke@publicplan.de>
+Date: Mon, 22 Jan 2024 13:15:09 +0100
+Subject: [PATCH 2/4] We already have the country list loaded-up, no need to
+ load it again.
+
+---
+ src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+index d6dc93f..97397af 100644
+--- a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+@@ -264,7 +264,6 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+       }
+     }
+     if (!isset($domestic_country) || $country_code != $domestic_country) {
+-      $countries = $this->countryRepository->getList();
+       $element['country'] = [
+         '#type' => 'html_tag',
+         '#tag' => 'span',
+-- 
+GitLab
+
+
+From 26b89312fa7893e1ffd23a27d18e51828436f702 Mon Sep 17 00:00:00 2001
+From: Marc-Oliver Teschke <teschke@publicplan.de>
+Date: Wed, 7 Feb 2024 14:58:53 +0100
+Subject: [PATCH 3/4] Coding standards for the deprecation message
+
+---
+ src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+index 97397af..f025631 100644
+--- a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+@@ -102,7 +102,7 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+     $this->subdivisionRepository = $subdivision_repository;
+ 
+     if (!$config_factory instanceof ConfigFactoryInterface) {
+-      @trigger_error('AddressDefaultFormatter now takes an additional argument ConfigFactoryInterface $config_factory. Use without $config_factory is deprecated. Classes extending this formatter will fail starting with address 9.x-1.x.', E_USER_DEPRECATED);
++      @trigger_error('Using AddressDefaultFormatter without the argument ConfigFactoryInterface $config_factory is deprecated in address:2.1.0 and will start failing in address:3.0.0. See https://www.drupal.org/project/address/issues/2753899', E_USER_DEPRECATED);
+       $this->configFactory = \Drupal::configFactory();
+     }
+     else {
+-- 
+GitLab
+
+
+From cd096034b9604106c9ae874755f68864d1dcb9a9 Mon Sep 17 00:00:00 2001
+From: Marc-Oliver Teschke <teschke@publicplan.de>
+Date: Wed, 7 Feb 2024 15:05:25 +0100
+Subject: [PATCH 4/4] phpstan: Ignore the offending line, as it is a fallback
+ that will be removed in an upcoming release
+
+---
+ src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+index f025631..91385cb 100644
+--- a/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/AddressDefaultFormatter.php
+@@ -103,6 +103,7 @@ class AddressDefaultFormatter extends FormatterBase implements ContainerFactoryP
+ 
+     if (!$config_factory instanceof ConfigFactoryInterface) {
+       @trigger_error('Using AddressDefaultFormatter without the argument ConfigFactoryInterface $config_factory is deprecated in address:2.1.0 and will start failing in address:3.0.0. See https://www.drupal.org/project/address/issues/2753899', E_USER_DEPRECATED);
++      /* @phpstan-ignore-next-line */
+       $this->configFactory = \Drupal::configFactory();
+     }
+     else {
+-- 
+GitLab
+

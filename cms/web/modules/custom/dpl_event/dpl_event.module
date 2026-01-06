@@ -11,6 +11,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\Form\SettingsForm;
@@ -21,10 +22,74 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventSeries;
 
 /**
+ * Implements hook_entity_presave().
+ *
+ * Unset values when choosing 'online' location for event series or instances.
+ */
+function dpl_event_entity_presave(EntityInterface $entity): void {
+  if (!($entity instanceof EventInstance) && !($entity instanceof EventSeries)) {
+    return;
+  }
+
+  $location_type = 'physical';
+  $non_branch_location = TRUE;
+
+  if ($entity->hasField('field_event_location_type')) {
+    $location_type = $entity->get('field_event_location_type')->getString();
+  }
+
+  if ($location_type === 'online') {
+    if ($entity->hasField('field_event_non_branch_location')) {
+      $entity->set('field_event_non_branch_location', FALSE);
+    }
+
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
+    if ($entity->hasField('field_event_place')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_place', ' ');
+    }
+  }
+  elseif (empty($location_type)) {
+    return;
+  }
+
+  if ($entity->hasField('field_event_non_branch_location')) {
+    $non_branch_location = !empty($entity->get('field_event_non_branch_location')->getString());
+  }
+
+  $branch_field_name = ($entity instanceof EventInstance) ?
+    'branch' : 'field_branch';
+  $branch = NULL;
+
+  if ($entity->hasField($branch_field_name)) {
+    $branch = $entity->get($branch_field_name)->getString();
+  }
+
+  if (!$non_branch_location && !empty($branch)) {
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
+    if ($entity->hasField('field_event_address')) {
+      $entity->set('field_event_address', []);
+    }
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave().
  *
  * If the eventinstance is set to be an all-day, we want to ignore any times
  * set, and instead set them to 00:00 - 23:59.
+ *
+ * The majority of the logic here is taken from the contrib module date_all_day
+ * from DatetimeRangeAllDayWidget, as they appear to have figured out how
+ * to deal with the issues of timezones.
  */
 function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
   if (!$eventinstance->hasField('event_all_day')) {
@@ -37,11 +102,13 @@ function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
     return;
   }
 
-  $timezone = \Drupal::config('system.date')->get('timezone.default');
-  $timezone = new \DateTimeZone($timezone);
-  $timezone_utc = new \DateTimeZone('UTC');
-
   $dates = $eventinstance->get('date')->getValue();
+
+  $timezone = timezone_open(date_default_timezone_get());
+
+  if (!$timezone) {
+    return;
+  }
 
   foreach ($dates as &$date) {
     $start_date = $date['value'] ?? NULL;
@@ -51,26 +118,24 @@ function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
       continue;
     }
 
-    // First, we need to tell Drupal that the times we're giving are in the
-    // default timezone, and not UTC.
-    // This mimics how Drupal also would interpret it, if we were setting the
-    // times in the interface.
-    $start_date = new DrupalDateTime($start_date);
-    $end_date = new DrupalDateTime($end_date);
-    $start_date->setTimezone($timezone);
-    $end_date->setTimezone($timezone);
+    $start_date = new DrupalDateTime($start_date, DateTimeItemInterface::STORAGE_TIMEZONE);
+    $end_date = new DrupalDateTime($end_date, DateTimeItemInterface::STORAGE_TIMEZONE);
 
+    // All day fields start at midnight on the starting date, but are
+    // stored like datetime fields, so we need to adjust the time.
+    // This function is called twice, so to prevent a double conversion
+    // we need to explicitly set the timezone.
+    $start_date->setTimezone($timezone);
     $start_date->setTime(0, 0, 0);
+    $end_date->setTimezone($timezone);
     $end_date->setTime(23, 59, 59);
 
-    // Drupal does not save the timezone information in the database - it will
-    // be saved as UTC. So, we need to convert this back to UTC first.
-    $start_date->setTimezone($timezone_utc);
-    $end_date->setTimezone($timezone_utc);
-
-    $date['value'] = $start_date->format('Y-m-d\TH:i:s');
-    $date['end_value'] = $end_date->format('Y-m-d\TH:i:s');
-
+    $date['value'] = $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, [
+      'timezone' => DateTimeItemInterface::STORAGE_TIMEZONE,
+    ]);
+    $date['end_value'] = $end_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, [
+      'timezone' => DateTimeItemInterface::STORAGE_TIMEZONE,
+    ]);
   }
 
   $eventinstance->set('date', $dates);
@@ -118,7 +183,7 @@ function dpl_event_eventinstance_insert(EntityInterface $entity): void {
 }
 
 /**
- * Implements hook_node_update().
+ * Implements hook_ENTITY_TYPE_update().
  */
 function dpl_event_eventinstance_update(EntityInterface $entity): void {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
@@ -298,9 +363,17 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
+  $parent_set = FALSE;
 
   foreach ($event_instances as $event_instance) {
-    $variables['event_instances'][] = $viewBuilder->view($event_instance, 'stacked_event');
+    $view_mode = 'stacked_event';
+
+    if (!$parent_set) {
+      $view_mode = 'list_teaser_stacked_parent';
+      $parent_set = TRUE;
+    }
+
+    $variables['event_instances'][] = $viewBuilder->view($event_instance, $view_mode);
   }
 }
 
@@ -442,6 +515,42 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
       'message' => [
         '#markup' => t('Any specific times below will be ignored when "All day" is enabled', [], ['context' => 'dpl_event']),
       ],
+    ];
+  }
+
+  // PHPCS doesn't understand Drupal's weird way of doing states.
+  // phpcs:disable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+  $physical_state = [
+    ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+    'and',
+    [
+      [':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE]],
+      'or',
+      [':input[name="field_branch"]' => ['value' => '']],
+    ],
+  ];
+
+  if (isset($form['field_event_non_branch_location'])) {
+    $form['field_event_non_branch_location']['#states']['visible'] = [
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+      'and',
+      ':input[name="field_branch"]' => ['!value' => ''],
+    ];
+  }
+  // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+
+  if (isset($form['field_event_location'])) {
+    $form['field_event_location']['#states']['visible'] = $physical_state;
+    $form['field_event_location']['widget'][0]['value']['#states']['required'] = $physical_state;
+  }
+
+  if (isset($form['field_event_address'])) {
+    $form['field_event_address']['#states']['visible'] = $physical_state;
+  }
+
+  if (isset($form['field_event_place'])) {
+    $form['field_event_place']['#states']['visible'] = [
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
     ];
   }
 

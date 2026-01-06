@@ -1,0 +1,21 @@
+uuid: 8e461740-2d9e-451f-ae51-ea82a3844c7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_non_branch_location
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_event_non_branch_location
+field_name: field_event_non_branch_location
+entity_type: eventseries
+bundle: default
+label: 'Other location than branch'
+description: 'If you choose “other location” this will be show in the list and on the event as the location for the event.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -126,7 +126,7 @@ jobs:
       - name: Run Lighthouse test
         run: task ci:lighthouse
       - name: Archive logs
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: lighthouse-results
           path: .lighthouseci
@@ -150,13 +150,13 @@ jobs:
         run: task ci:pa11y
       - name: Archive screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: pa11y-screenshots
           path: pa11y/screenshots
 
-  Cypress:
-    name: Run Cypress functional tests
+  CypressMapped:
+    name: Run Cypress mapped functional tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -171,18 +171,78 @@ jobs:
       - name: Setup site
         run: task ci:reset
       - name: Run Cypress
-        run: task ci:cypress
+        run: task ci:cypress:mapped
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
-          name: cypress-videos
+          name: cypress-mapped-videos
           path: cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
-          name: cypress-screenshots
+          name: cypress-mapped-screenshots
+          path: cypress/screenshots
+
+  CypressUnmapped:
+    name: Run Cypress unmapped functional tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Cypress
+        run: task ci:cypress:unmapped
+      - name: Archive videoes
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: cypress-unmapped-videos
+          path: cypress/videos
+      - name: Archive screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: cypress-unmapped-screenshots
+          path: cypress/screenshots
+
+  CypressWebmaster:
+    name: Run Cypress webmaster functional tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Cypress
+        run: task ci:cypress:webmaster
+      - name: Archive videoes
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: cypress-webmaster-videos
+          path: cypress/videos
+      - name: Archive screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: cypress-webmaster-screenshots
           path: cypress/screenshots
 
   MarkdownLint:

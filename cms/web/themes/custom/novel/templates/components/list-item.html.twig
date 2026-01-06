@@ -44,11 +44,11 @@
     </div>
 
     <div class="content-list-item__content-bottom-container">
-      {% if branch %}
+      {% if location %}
         <div class="content-list-item__content-bottom-container__item">
           {{ source(baseIconPath ~ '/collection/icon-pin.svg') }}
 
-          {{ branch }}
+          {{ location }}
         </div>
       {% endif %}
       {% if publication_date %}
