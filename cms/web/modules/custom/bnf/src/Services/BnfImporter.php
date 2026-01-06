@@ -80,19 +80,24 @@ class BnfImporter {
       }
 
       $existingNodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $nodeData->id]);
+      $existingNode = reset($existingNodes);
+
+      // Skip import if  node is locally claimed (editor opted out of updates).
+      if ($existingNode instanceof NodeInterface && $this->isLocallyClaimed($existingNode)) {
+        $this->logger->info("Skipped BNF import of locally claimed node {$uuid}.");
+        return NULL;
+      }
 
       // If the node we're looking to import is unpublished, we want to see
       // if it already exists. If not, we want to ignore it.
       if (!$nodeData->status) {
-        if (empty($existingNodes)) {
+        if (!$existingNode instanceof NodeInterface) {
           $this->logger->info("Skipped BNF import of unpublished, unknown node {$uuid}.");
           return NULL;
         }
       }
 
       $newSourceChanged = (string) $nodeData->changed->timestamp;
-
-      $existingNode = reset($existingNodes);
 
       // If we already know about this Node locally, we want to check if it has
       // actually been updated since last time we checked.
@@ -192,6 +197,22 @@ class BnfImporter {
       'uuids' => [],
       'youngest' => $since,
     ];
+  }
+
+  /**
+   * Check if a node is locally claimed.
+   */
+  protected function isLocallyClaimed(NodeInterface $node): bool {
+    if (!$node->hasField(BnfStateEnum::FIELD_NAME) || $node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
+      return FALSE;
+    }
+
+    /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $stateField */
+    $stateField = $node->get(BnfStateEnum::FIELD_NAME);
+    $states = $stateField->enums();
+    $state = reset($states);
+
+    return $state === BnfStateEnum::LocallyClaimed;
   }
 
   /**
