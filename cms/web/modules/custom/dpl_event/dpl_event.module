@@ -61,7 +61,15 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     $non_branch_location = !empty($entity->get('field_event_non_branch_location')->getString());
   }
 
-  if (!$non_branch_location) {
+  $branch_field_name = ($entity instanceof EventInstance) ?
+    'branch' : 'field_branch';
+  $branch = NULL;
+
+  if ($entity->hasField($branch_field_name)) {
+    $branch = $entity->get($branch_field_name)->getString();
+  }
+
+  if (!$non_branch_location && !empty($branch)) {
     if ($entity->hasField('field_event_location')) {
       // We're adding an empty space to avoid field inheritance taking over.
       $entity->set('field_event_location', ' ');
