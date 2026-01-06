@@ -35,7 +35,8 @@ export default function ImageBase({
       {imageSizing === "fillParent" && (
         <Image
           className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-all duration-500 will-change-transform",
+            `absolute inset-0 h-full w-full object-cover transition-all duration-500
+            will-change-transform`,
             imageLoaded ? "" : "blur-sm",
             className
           )}

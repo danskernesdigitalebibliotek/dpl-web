@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
@@ -32,8 +32,8 @@ export const Default: Story = {
   args: defaultArgs,
   render: args => (
     <div
-      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
-        lg:w-[33vw]">
+      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center
+        lg:aspect-4/5 lg:w-[33vw]">
       <CoverPicture {...args} />
     </div>
   ),
@@ -44,8 +44,8 @@ export const DarkMode: Story = {
   decorators: [darkModeDecorator],
   render: args => (
     <div
-      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
-        lg:w-[33vw]">
+      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center
+        lg:aspect-4/5 lg:w-[33vw]">
       <CoverPicture {...args} />
     </div>
   ),
@@ -55,8 +55,8 @@ export const WithTilt: Story = {
   args: { ...defaultArgs, withTilt: true },
   render: args => (
     <div
-      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
-        lg:w-[33vw]">
+      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center
+        lg:aspect-4/5 lg:w-[33vw]">
       <CoverPicture {...args} />
     </div>
   ),
@@ -67,8 +67,8 @@ export const WithTiltDarkMode: Story = {
   decorators: [darkModeDecorator],
   render: args => (
     <div
-      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
-        lg:w-[33vw]">
+      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center
+        lg:aspect-4/5 lg:w-[33vw]">
       <CoverPicture {...args} />
     </div>
   ),
@@ -78,8 +78,8 @@ export const WithoutCover: Story = {
   args: { ...defaultArgs, covers: {} },
   render: args => (
     <div
-      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
-        lg:w-[33vw]">
+      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center
+        lg:aspect-4/5 lg:w-[33vw]">
       <CoverPicture {...args} />
     </div>
   ),
@@ -90,8 +90,8 @@ export const WithoutCoverDarkMode: Story = {
   decorators: [darkModeDecorator],
   render: args => (
     <div
-      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center lg:aspect-4/5
-        lg:w-[33vw]">
+      className="rounded-base flex aspect-1/1 h-auto w-[90vw] flex-col items-center justify-center
+        lg:aspect-4/5 lg:w-[33vw]">
       <CoverPicture {...args} />
     </div>
   ),

@@ -54,8 +54,8 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               sizes="20px"
               loading="lazy"
               className={cn(
-                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain transition-all duration-500
-                  will-change-transform`,
+                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain
+                  transition-all duration-500 will-change-transform`,
                 imageLoaded ? "shadow-none" : "shadow-cover-picture"
               )}
             />
@@ -68,8 +68,8 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               alt={alt}
               loading="lazy"
               className={cn(
-                `shadow-cover-picture absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain
-                  transition-all duration-500 will-change-transform`,
+                `shadow-cover-picture absolute inset-0 h-auto w-full overflow-hidden rounded-sm
+                  object-contain transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
               onLoad={() => {

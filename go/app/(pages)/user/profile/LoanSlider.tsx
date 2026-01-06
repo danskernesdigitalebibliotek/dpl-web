@@ -65,7 +65,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   }
 
   return (
-    <div className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden py-10">
+    <div
+      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
+        py-10">
       <div className="col-span-full flex items-center justify-between px-10">
         <h2 className="text-typo-heading-4">Mine lån ({loanData.loans?.length})</h2>
         {!!loanData.loans?.length && (
@@ -103,8 +105,8 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                 key={loanManifestation.pid}
                 aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
                 className={cn(
-                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base !overflow-visible
-                  focus:outline-offset-2`
+                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base
+                  !overflow-visible focus:outline-offset-2`
                 )}
                 href={resolveUrl({
                   routeParams: { work: "work", wid: work.workId },
@@ -133,9 +135,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   <div
                     key={index}
                     className={cn(
-                      `border-foreground h-[300px] w-[250px] shrink-0 rounded-sm border-2 border-dashed opacity-10
-                      sm:h-[450px] sm:w-[280px] md:h-[350px] md:w-[250px] lg:block lg:h-[300px] lg:w-[200px] xl:block
-                      xl:h-[400px] xl:w-[280px]`,
+                      `border-foreground h-[300px] w-[250px] shrink-0 rounded-sm border-2
+                      border-dashed opacity-10 sm:h-[450px] sm:w-[280px] md:h-[350px] md:w-[250px]
+                      lg:block lg:h-[300px] lg:w-[200px] xl:block xl:h-[400px] xl:w-[280px]`,
                       (works.length + index) % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5"
                     )}
                   />
@@ -143,7 +145,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               })}
               {/* If user doesn't have any loans - lead them to find their first material. */}
               {works.length === 0 && (
-                <div className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center gap-5">
+                <div
+                  className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col
+                    items-center justify-center gap-5">
                   <p className="text-typo-heading-3">Du har ikke lånt noget endnu</p>
                   <FindBookButton />
                 </div>
@@ -161,10 +165,15 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
 
 export const LoanSliderSkeleton = () => {
   return (
-    <div className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden py-10">
+    <div
+      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
+        py-10">
       <div className="col-span-full flex items-center justify-between px-10">
         {/* Headline */}
-        <div className="text-typo-heading-4 bg-background-skeleton h-[27px] w-xl animate-pulse rounded-sm" />
+        <div
+          className="text-typo-heading-4 bg-background-skeleton h-[27px] w-xl animate-pulse
+            rounded-sm"
+        />
         {/* Buttons */}
         <div className="flex flex-row justify-end gap-x-4">
           <div className="bg-background-skeleton h-10 w-10 animate-pulse rounded-full" />

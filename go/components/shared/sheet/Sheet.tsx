@@ -31,8 +31,9 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      `z-sheet data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-      data-[state=open]:fade-in-0 fixed inset-0 bg-black/80 dark:bg-black/50`,
+      `z-sheet data-[state=open]:animate-in data-[state=closed]:animate-out
+      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 bg-black/80
+      dark:bg-black/50`,
       className
     )}
     {...props}
@@ -59,17 +60,18 @@ const SheetContent = React.forwardRef<
       className={cn(
         `z-sheet bg-background data-[state=open]:animate-in data-[state=closed]:animate-out
         max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom
-        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right p-grid-edge fixed
-        inset-y-0 bottom-0 h-full w-full max-w-[560px] overflow-scroll pb-24 shadow-lg transition
-        ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 sm:right-0 lg:p-8`,
+        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right
+        p-grid-edge fixed inset-y-0 bottom-0 h-full w-full max-w-[560px] overflow-scroll pb-24
+        shadow-lg transition ease-in-out data-[state=closed]:duration-300
+        data-[state=open]:duration-500 sm:right-0 lg:p-8`,
         className
       )}
       {...props}
       data-cy={cyKeys["global-sheet"]}>
       <SheetPrimitive.Close
-        className="focus-visible right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-secondary
-          absolute rounded-sm transition-opacity hover:cursor-pointer hover:opacity-100
-          disabled:pointer-events-none lg:top-8 lg:right-8"
+        className="focus-visible right-grid-edge top-grid-edge ring-offset-background
+          data-[state=open]:bg-secondary absolute rounded-sm transition-opacity hover:cursor-pointer
+          hover:opacity-100 disabled:pointer-events-none lg:top-8 lg:right-8"
         data-cy={cyKeys["global-sheet-close-button"]}>
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Luk</span>

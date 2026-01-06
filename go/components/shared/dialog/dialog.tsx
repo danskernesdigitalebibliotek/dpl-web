@@ -21,8 +21,8 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      `z-dialog data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-      data-[state=open]:fade-in-0 bg-foreground/50 fixed inset-0`,
+      `z-dialog data-[state=open]:animate-in data-[state=closed]:animate-out
+      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 bg-foreground/50 fixed inset-0`,
       className
     )}
     {...props}
@@ -41,17 +41,18 @@ const DialogContent = React.forwardRef<
       className={cn(
         `z-dialog gap-grid-edge bg-background p-grid-edge data-[state=closed]:animate-out
         data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-30 data-[state=open]:animate-in
-        data-[state=open]:fade-in-0 data-[state=open]:zoom-in-0 fixed top-[50%] left-[50%] m-auto grid
-        max-h-[95vh] w-[calc(100%-var(--grid-edge)*2)] max-w-[1000px] translate-x-[-50%] translate-y-[-50%]
-        overflow-y-scroll rounded-md shadow-lg duration-200 lg:gap-6 lg:px-6 lg:py-10`,
+        data-[state=open]:fade-in-0 data-[state=open]:zoom-in-0 fixed top-[50%] left-[50%] m-auto
+        grid max-h-[95vh] w-[calc(100%-var(--grid-edge)*2)] max-w-[1000px] translate-x-[-50%]
+        translate-y-[-50%] overflow-y-scroll rounded-md shadow-lg duration-200 lg:gap-6 lg:px-6
+        lg:py-10`,
         className
       )}
       {...props}>
       {children}
       <DialogPrimitive.Close
         className="right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-accent
-          data-[state=open]:text-muted-foreground focus-visible absolute rounded-full transition-opacity
-          hover:cursor-pointer disabled:pointer-events-none lg:top-6 lg:right-6">
+          data-[state=open]:text-muted-foreground focus-visible absolute rounded-full
+          transition-opacity hover:cursor-pointer disabled:pointer-events-none lg:top-6 lg:right-6">
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Luk</span>
       </DialogPrimitive.Close>

@@ -24,7 +24,9 @@ function LoginSheet({ open }: { open: boolean }) {
         </SheetHeader>
         <SheetDescription asChild>
           <div className="flex h-full flex-col justify-center space-y-8">
-            <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
+            <div
+              className="bg-background-overlay flex min-h-[300px] flex-col items-center
+                justify-center rounded-sm p-8">
               <div className="text-typo-heading-4 text-foreground mb-4 text-center">
                 Log ind med UNI•Login
               </div>
@@ -37,7 +39,9 @@ function LoginSheet({ open }: { open: boolean }) {
             </div>
             <>
               <hr className="mx-auto" />
-              <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
+              <div
+                className="bg-background-overlay flex min-h-[300px] flex-col items-center
+                  justify-center rounded-sm p-8">
                 <div className="mb-4">
                   <Icon name="adgangsplatformen" />
                 </div>

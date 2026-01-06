@@ -88,7 +88,7 @@ export function getServerEnv<T extends keyof EnvServerSchema>(
   return validateEnv(EnvServerSchema)[key]
 }
 
-function validateEnv<T extends typeof EnvSchema | typeof EnvServerSchema>(schema: T): z.infer<T> {
+function validateEnv<T extends z.ZodSchema>(schema: T): z.infer<T> {
   const result = schema.safeParse(getEnvs())
 
   if (result.success) return result.data

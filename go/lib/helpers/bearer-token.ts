@@ -78,6 +78,6 @@ export const refreshUniloginTokens = async (
     destroySession(session)
 
     const isZodError = error instanceof z.ZodError
-    console.error("refreshUniloginTokens error", isZodError ? JSON.stringify(error.errors) : error)
+    console.error("refreshUniloginTokens error", isZodError ? JSON.stringify(error.issues) : error)
   }
 }
