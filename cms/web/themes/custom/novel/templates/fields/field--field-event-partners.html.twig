@@ -1,1 +1,4 @@
-{{ include('@novel/fields/list-description-item.html.twig') }}
+{{ include('@novel/components/horizontal-term-line.html.twig', {
+  title: 'Partners'|trans(),
+  items: items,
+}, false) }}

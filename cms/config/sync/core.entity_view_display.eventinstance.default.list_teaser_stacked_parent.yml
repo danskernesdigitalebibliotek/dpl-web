@@ -11,6 +11,9 @@ dependencies:
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_location
+    - field.field.eventinstance.default.field_event_location_type
+    - field.field.eventinstance.default.field_event_non_branch_location
     - field.field.eventinstance.default.field_event_paragraphs
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
@@ -27,8 +30,10 @@ dependencies:
   module:
     - address
     - date_range_formatter
+    - dpl_event
     - entity_reference_revisions
     - link
+    - options
 _core:
   default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
 id: eventinstance.default.list_teaser_stacked_parent
@@ -80,7 +85,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 53
+    weight: 15
     region: content
   event_automatic_list_hide:
     type: boolean
@@ -90,7 +95,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 53
+    weight: 16
     region: content
   event_categories:
     type: entity_reference_label
@@ -127,6 +132,31 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 5
+    region: content
+  event_location:
+    type: dpl_event_location
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  event_location_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 18
+    region: content
+  event_non_branch_location:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 20
     region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -169,7 +199,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 60
+    weight: 19
     region: content
   event_tags:
     type: entity_reference_label
@@ -203,7 +233,7 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 64
+    weight: 21
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
@@ -233,6 +263,9 @@ hidden:
   field_event_all_day: true
   field_event_image: true
   field_event_link: true
+  field_event_location: true
+  field_event_location_type: true
+  field_event_non_branch_location: true
   field_event_paragraphs: true
   field_event_partners: true
   field_event_place: true

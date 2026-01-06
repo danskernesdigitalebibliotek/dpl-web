@@ -36,18 +36,29 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
 
   /**
    * Looking up connected branch(es) and pulling their addresses.
+   *
+   * Return a simple string if it is set to be an online event.
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $default_return = parent::viewElements($items, $langcode);
-
-    // We don't want to override if a custom address has been set.
-    if (!$items->isEmpty()) {
-      return $default_return;
-    }
-
     $entity = $items->getEntity();
 
     if (!($entity instanceof EventInstance) && !($entity instanceof EventSeries)) {
+      return $default_return;
+    }
+
+    $location_type_field_name = ($entity instanceof EventSeries) ?
+      'field_event_location_type' : 'event_location_type';
+
+    if ($entity->hasField($location_type_field_name)) {
+      $location_type_field = $entity->get($location_type_field_name);
+      if ($location_type_field->getString() === 'online') {
+        return [];
+      }
+    }
+
+    // We don't want to override if a custom address has been set.
+    if (!$items->isEmpty()) {
       return $default_return;
     }
 

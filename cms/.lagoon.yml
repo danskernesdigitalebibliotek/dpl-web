@@ -200,3 +200,9 @@ environments:
         schedule: "M/30 * * * *"
         command: drush cron
         service: cli
+  pr-3009:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/30 * * * *"
+        command: drush cron
+        service: cli
