@@ -473,3 +473,14 @@ function dpl_update_deploy_clean_config(): string {
   $service = DrupalTyped::service(ConfigIgnore::class, 'dpl_update.config_ignore');
   return $service->cleanUnusedIgnores();
 }
+
+/**
+ * Link new field inheritances on eventinstances.
+ */
+function dpl_update_deploy_event_field_inheritance(): string {
+  $return = _dpl_update_field_inheritance('event_location');
+  $return .= _dpl_update_field_inheritance('event_location_type');
+  $return .= _dpl_update_field_inheritance('event_non_branch_location');
+
+  return $return;
+}
