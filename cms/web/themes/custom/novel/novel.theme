@@ -173,8 +173,13 @@ function novel_preprocess_page(array &$variables): void {
  */
 function novel_preprocess_field(&$variables): void {
   $field_name = $variables['field_name'] ?? NULL;
+  $field_names = [
+    'field_paragraphs',
+    'field_event_paragraphs',
+    'event_paragraphs',
+  ];
 
-  if (in_array($field_name, ['field_paragraphs', 'field_event_paragraphs'])) {
+  if (in_array($field_name, $field_names)) {
     foreach ($variables['items'] as &$item) {
       $item['attributes']['class'][] = 'paragraphs__item paragraphs';
       $item['attributes']['class'][] = 'paragraphs__item--' . $item['content']['#paragraph']->bundle();
