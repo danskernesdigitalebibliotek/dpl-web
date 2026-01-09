@@ -3,6 +3,11 @@
   not media ? 'hero--no-image',
 ] %}
 
+{% if link %}
+  {% set url = link.0['#url'].external ? link.0['#url'].uri : link.0['#url'].toString() %}
+  {% set target = link.0['#url'].options.target|default('_self') %}
+{% endif %}
+
 {% set arrow_link = (url and not cta) %}
 {% set content_tag = arrow_link ? 'a' : 'div' %}
 {% set content_classes = [
@@ -63,10 +68,10 @@
 
     {% if url or cta %}
       <div class="hero__cta">
-        {% if cta %}
-          {{ cta }}
-        {% else %}
+        {% if arrow_link %}
           {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+        {% else %}
+          {{ cta }}
         {% endif %}
       </div>
     {% endif %}
