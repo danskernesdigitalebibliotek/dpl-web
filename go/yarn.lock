@@ -13580,10 +13580,10 @@ react-dom@19.2.3, "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-d
   dependencies:
     scheduler "^0.27.0"
 
-react-error-boundary@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-6.0.1.tgz#4f6c05ef27a05401b7b4f1422f36022f295085a2"
-  integrity sha512-zArgQpjJUN1ZLMEKWtifxQweW3yfvwL5j2nh3Pesze1qG6r5oCDMy/TA97bUF01wy4xCeeL4/pd8GHmvEsP3Bg==
+react-error-boundary@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-6.0.3.tgz#e84bb9e67e692f83d3ea0fc35612db68d7d804c6"
+  integrity sha512-5guqn2UYpCFjE8UDMA8J7Kke+YSGBFrKQRJb3XdcaGZXYINZfQXgBt3ifY6MvjkN7QROc5A8zclyoSCwrcRUKw==
 
 react-is@^16.13.1:
   version "16.13.1"
