@@ -79,7 +79,7 @@
     "ts-node": "^10.9.2",
     "vaul": "^1.1.2",
     "xstate": "^5.25.0",
-    "zod": "^4.2.1"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@0no-co/graphqlsp": "^1.15.2",
