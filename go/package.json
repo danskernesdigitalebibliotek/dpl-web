@@ -110,8 +110,8 @@
     "@tsconfig/create-react-app": "^2.0.10",
     "@types/jwt-simple": "^0.5.36",
     "@types/node": "^20.19.28",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@types/react": "19.2.3",
+    "@types/react-dom": "19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.52.0",
     "@vitejs/plugin-react": "^5.1.2",
     "axe-playwright": "^2.2.2",
@@ -146,13 +146,5 @@
     "vitest": "^4.0.16",
     "@storybook/addon-docs": "^10.1.11"
   },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
-  "resolutions": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
-  },
-  "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom"
-  }
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
