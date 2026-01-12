@@ -1,13 +1,9 @@
-{% set url = link.0['#url'].external ? link.0['#url'].uri : link.0['#url'].toString() %}
-{% set target = link.0['#url'].options.target|default('_self') %}
-
 {{ include('@novel/components/hero.html.twig', {
   attributes: attributes,
   title: content.field_hero_title,
   teaser_text: content.field_teaser_text.0,
   categories: content.field_hero_categories,
-  url: url,
-  target: target,
+  link: content.field_hero_link,
   content_type: content.field_hero_content_type.0,
   date: content.field_hero_date,
   description: content.field_hero_description,
