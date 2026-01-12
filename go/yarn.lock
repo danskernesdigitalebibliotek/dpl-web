@@ -5245,10 +5245,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/quickjs-emscripten/-/quickjs-emscripten-0.23.0.tgz#db4ecfd499a9765ab24002c3b696d02e6d32a12c"
   integrity sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==
 
-"@trivago/prettier-plugin-sort-imports@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@trivago/prettier-plugin-sort-imports/-/prettier-plugin-sort-imports-6.0.0.tgz#179dd4da55c6d055d76624bfe8b8be78ecddf014"
-  integrity sha512-Xarx55ow0R8oC7ViL5fPmDsg1EBa1dVhyZFVbFXNtPPJyW2w9bJADIla8YFSaNG9N06XfcklA9O9vmw4noNxkQ==
+"@trivago/prettier-plugin-sort-imports@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@trivago/prettier-plugin-sort-imports/-/prettier-plugin-sort-imports-6.0.2.tgz#b30948c4d22a84f00ae9133bcabd0603de3c0261"
+  integrity sha512-3DgfkukFyC/sE/VuYjaUUWoFfuVjPK55vOFDsxD56XXynFMCZDYFogH2l/hDfOsQAm1myoU/1xByJ3tWqtulXA==
   dependencies:
     "@babel/generator" "^7.28.0"
     "@babel/parser" "^7.28.0"
