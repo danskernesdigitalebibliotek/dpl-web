@@ -75,7 +75,7 @@ class ContentLockHooks implements ContainerInjectionInterface {
    * Alter delete confirmation form to show warning for locked content.
    *
    * Shows a warning message on the delete confirmation form when content
-   * is locked by another user.
+   * is locked.
    *
    * @param array<mixed> $form
    *   The form array.
@@ -116,24 +116,29 @@ class ContentLockHooks implements ContainerInjectionInterface {
       return;
     }
 
-    // If locked by current user, no warning needed.
-    if ((string) $this->currentUser->id() === (string) $lock_data->uid) {
-      return;
-    }
+    $locked_by_current_user = (string) $this->currentUser->id() === (string) $lock_data->uid;
 
     /** @var \Drupal\user\UserInterface|null $lock_user */
-    $lock_user = $this->entityTypeManager->getStorage('user')->load($lock_data->uid);
+    $lock_user = $locked_by_current_user
+      ? NULL
+      : $this->entityTypeManager->getStorage('user')->load($lock_data->uid);
 
-    // Add warning message explaining that content is locked.
+    if ($locked_by_current_user) {
+      // Warning when the current user holds the lock.
+      $message = $this->t('<div class="messages messages--warning">You currently have <strong>@title</strong> open in another window or tab. If you delete it now, you may lose changes that have not been saved.</div>', [
+        '@title' => $entity->label(),
+      ], ['context' => 'DPL admin UX']);
+    }
+    else {
+      // Warning when another user holds the lock.
+      $message = $this->t('<div class="messages messages--warning"><strong>@title</strong> is currently being edited by <strong>@user</strong>. There is a risk of data loss if you proceed with deleting this content.</div>', [
+        '@title' => $entity->label(),
+        '@user' => $lock_user?->getDisplayName() ?? $this->t('another user'),
+      ], ['context' => 'DPL admin UX']);
+    }
+
     $form['locked_content_warning'] = [
-      '#markup' => $this->t('
-        <div class="messages messages--warning">
-          <strong>@title</strong> is currently being edited by <strong>@user</strong>.
-          There is a risk of data loss if you proceed with deleting this content.
-        </div>', [
-          '@title' => $entity->label(),
-          '@user' => $lock_user?->getDisplayName() ?? $this->t('another user'),
-        ], ['context' => 'DPL admin UX']),
+      '#markup' => $message,
       '#weight' => -100,
     ];
 
