@@ -692,6 +692,8 @@ class DplReactAppsController extends ControllerBase {
       'edition-switch-modal-description-text' => $this->t('Select which edition you would like to reserve from the available options below.', [], ['context' => 'Work Page']),
       'edition-switch-modal-screen-reader-description-text' => $this->t('Edition switch modal', [], ['context' => 'Work Page']),
       'edition-switch-modal-title-text' => $this->t('Choose Edition', [], ['context' => 'Work Page']),
+      'material-contents-show-less-text' => $this->t('Show less', [], ['context' => 'Work Page']),
+      'material-contents-show-all-text' => $this->t('Show all (@count)', [], ['context' => 'Work Page']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
