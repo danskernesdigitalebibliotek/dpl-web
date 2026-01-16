@@ -1,11 +1,17 @@
 ---
 services:
+  # @todo Remove when upgrading to Drupal 11.
+  Drupal\dpl_admin\Hook\ContentLockHooks:
+    arguments:
+      - '@content_lock'
+      - '@current_user'
+      - '@entity_type.manager'
   dpl_admin.version_helper:
     class: Drupal\dpl_admin\Services\VersionHelper
   dpl_admin.bnf_server_access:
     class: Drupal\dpl_admin\Plugin\views\access\BnfServerEnabledAccess
     arguments:
-      $configuration: []
-      $plugin_id: 'dpl_admin.bnf_server_access'
-      $plugin_definition: []
-      $module_handler: '@module_handler'
+      - []
+      - 'dpl_admin.bnf_server_access'
+      - []
+      - '@module_handler'
