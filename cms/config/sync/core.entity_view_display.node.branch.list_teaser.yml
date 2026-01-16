@@ -27,7 +27,9 @@ content:
   field_address:
     type: address_default
     label: hidden
-    settings: {  }
+    settings:
+      skip_domestic_country: true
+      domestic_country: site_default
     third_party_settings: {  }
     weight: 2
     region: content

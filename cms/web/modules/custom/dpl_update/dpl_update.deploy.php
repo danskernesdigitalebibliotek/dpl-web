@@ -78,21 +78,21 @@ function _dpl_update_field_inheritance(string $field_inheritance_name): string {
     return 'No entities to update.';
   }
 
-  $entities =
-    \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($ids);
-
+  $storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
   $count = 0;
 
-  foreach ($entities as $entity) {
+  foreach ($ids as $id) {
     try {
+      $entity = $storage->load($id);
+
       if (!($entity instanceof EventInstance)) {
-        throw new Exception('Entity is not an expected EventInstance.');
+        throw new \Exception('Entity is not an expected EventInstance.');
       }
 
       $event_series = $entity->getEventSeries();
 
       if (!($event_series instanceof EventSeries)) {
-        throw new Exception('Entity parent is not an expected EventSeries.');
+        throw new \Exception('Entity parent is not an expected EventSeries.');
       }
 
       // This matches the key that is defined in field_inheritance.
@@ -108,15 +108,15 @@ function _dpl_update_field_inheritance(string $field_inheritance_name): string {
 
       \Drupal::keyValue('field_inheritance')->set($state_key, $field_inheritance);
 
-      $entity->save();
       $count++;
     }
     catch (\Throwable $e) {
       \Drupal::logger('dpl_update')->error('Could not update field_inheritance on eventinstance @id - Error: @message', [
         '@message' => $e->getMessage(),
-        '@id' => $entity->id(),
+        '@id' => $id,
       ]);
     }
+    $storage->resetCache([$id]);
   }
 
   return "Updated $count eventinstances, linking field  '$field_inheritance_name' to inherit from eventseries.";
@@ -484,4 +484,15 @@ function dpl_update_deploy_update_go_permissions_unpublished(): string {
   _dpl_update_alter_permissions(['go_graphql_client'], ['view any unpublished content'], FALSE);
 
   return 'Updated go_graphql_client role: removed "view any unpublished content".';
+}
+
+/**
+ * Link new field inheritances on eventinstances.
+ */
+function dpl_update_deploy_event_field_inheritance(): string {
+  $return = _dpl_update_field_inheritance('event_location');
+  $return .= _dpl_update_field_inheritance('event_location_type');
+  $return .= _dpl_update_field_inheritance('event_non_branch_location');
+
+  return $return;
 }

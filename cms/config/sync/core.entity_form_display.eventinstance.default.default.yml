@@ -10,6 +10,9 @@ dependencies:
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_location
+    - field.field.eventinstance.default.field_event_location_type
+    - field.field.eventinstance.default.field_event_non_branch_location
     - field.field.eventinstance.default.field_event_paragraphs
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
@@ -105,6 +108,99 @@ third_party_settings:
         description: ''
         required_fields: true
         weight: 0
+    group_library:
+      children:
+        - field_branch
+        - group_location
+      label: Library
+      region: content
+      parent_name: ''
+      weight: 4
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: false
+    group_tickets:
+      children:
+        - field_event_link
+        - field_ticket_capacity
+        - field_ticket_categories
+      label: Tickets
+      region: content
+      parent_name: ''
+      weight: 5
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: false
+        description: ''
+        required_fields: false
+    group_partners:
+      children:
+        - field_event_partners
+      label: Partners
+      region: content
+      parent_name: ''
+      weight: 6
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: false
+        description: ''
+        required_fields: false
+    group_dates:
+      children:
+        - field_event_all_day
+        - date
+      label: Dates
+      region: content
+      parent_name: ''
+      weight: 3
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: false
+    group_location:
+      children:
+        - field_event_location_type
+        - field_event_non_branch_location
+        - field_event_location
+        - field_event_address
+        - field_event_place
+      label: Locations
+      region: content
+      parent_name: group_library
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: dpl-event-locations
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: fieldset
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
 id: eventinstance.default.default
 targetEntityType: eventinstance
 bundle: default
@@ -146,7 +242,7 @@ content:
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 5
+    weight: 22
     region: content
     settings:
       wrapper_type: details
@@ -174,6 +270,27 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_event_location:
+    type: string_textfield
+    weight: 21
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_event_location_type:
+    type: options_buttons
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_event_non_branch_location:
+    type: boolean_checkbox
+    weight: 20
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
@@ -215,7 +332,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 9
+    weight: 23
     region: content
     settings:
       size: 60

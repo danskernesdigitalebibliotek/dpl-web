@@ -46,6 +46,17 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventsGET200ResponseInnerAddress 
 {
         /**
+     * If an event is physical or not.
+     *
+     * @var string|null
+     * @SerializedName("locationType")
+     * @Assert\Choice({ "physical", "online" })
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $locationType = null;
+
+    /**
      * Name of the location where the event occurs. This could be the name of a library branch.
      *
      * @var string|null
@@ -54,6 +65,16 @@ class EventsGET200ResponseInnerAddress
      * @Type("string")
      */
     protected ?string $location = null;
+
+    /**
+     * Expanded description of location.
+     *
+     * @var string|null
+     * @SerializedName("locationAdditional")
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $locationAdditional = null;
 
     /**
      * Street name and number.
@@ -106,12 +127,40 @@ class EventsGET200ResponseInnerAddress
     public function __construct(array $data = null)
     {
         if (is_array($data)) {
+            $this->locationType = array_key_exists('locationType', $data) ? $data['locationType'] : $this->locationType;
             $this->location = array_key_exists('location', $data) ? $data['location'] : $this->location;
+            $this->locationAdditional = array_key_exists('locationAdditional', $data) ? $data['locationAdditional'] : $this->locationAdditional;
             $this->street = array_key_exists('street', $data) ? $data['street'] : $this->street;
             $this->zipCode = array_key_exists('zipCode', $data) ? $data['zipCode'] : $this->zipCode;
             $this->city = array_key_exists('city', $data) ? $data['city'] : $this->city;
             $this->country = array_key_exists('country', $data) ? $data['country'] : $this->country;
         }
+    }
+
+    /**
+     * Gets locationType.
+     *
+     * @return string|null
+     */
+    public function getLocationType(): ?string
+    {
+        return $this->locationType;
+    }
+
+
+
+    /**
+     * Sets locationType.
+     *
+     * @param string|null $locationType  If an event is physical or not.
+     *
+     * @return $this
+     */
+    public function setLocationType(?string $locationType = null): self
+    {
+        $this->locationType = $locationType;
+
+        return $this;
     }
 
     /**
@@ -136,6 +185,32 @@ class EventsGET200ResponseInnerAddress
     public function setLocation(?string $location = null): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Gets locationAdditional.
+     *
+     * @return string|null
+     */
+    public function getLocationAdditional(): ?string
+    {
+        return $this->locationAdditional;
+    }
+
+
+
+    /**
+     * Sets locationAdditional.
+     *
+     * @param string|null $locationAdditional  Expanded description of location.
+     *
+     * @return $this
+     */
+    public function setLocationAdditional(?string $locationAdditional = null): self
+    {
+        $this->locationAdditional = $locationAdditional;
 
         return $this;
     }

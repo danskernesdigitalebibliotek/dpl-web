@@ -11,6 +11,9 @@ dependencies:
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_location
+    - field.field.eventinstance.default.field_event_location_type
+    - field.field.eventinstance.default.field_event_non_branch_location
     - field.field.eventinstance.default.field_event_paragraphs
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
@@ -27,8 +30,10 @@ dependencies:
   module:
     - address
     - datetime_range
+    - dpl_event
     - entity_reference_revisions
     - link
+    - options
     - text
 _core:
   default_config_hash: ynM97GAGTtZBjg1uuiiRFaP8WTq766yoANHsZJ41__4
@@ -124,6 +129,31 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 8
+    region: content
+  event_location:
+    type: dpl_event_location
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 59
+    region: content
+  event_location_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 60
+    region: content
+  event_non_branch_location:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 61
     region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -234,6 +264,9 @@ hidden:
   field_event_all_day: true
   field_event_image: true
   field_event_link: true
+  field_event_location: true
+  field_event_location_type: true
+  field_event_non_branch_location: true
   field_event_paragraphs: true
   field_event_partners: true
   field_event_place: true

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-01-05 13:31+0100\n"
-"PO-Revision-Date: 2026-01-05 13:31+0100\n"
+"POT-Creation-Date: 2026-01-16 13:29+0100\n"
+"PO-Revision-Date: 2026-01-16 13:29+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3955,6 +3955,9 @@ msgid ""
 "href=\":sign_up\">sign up</a> at this library or <a href=\":log_out\">log "
 "out</a> again."
 msgstr ""
+"Du er ikke oprettet som bruger ved dette bibliotek.<br />Du kan <a "
+"href=\":sign_up\">oprette dig som bruger</a> ved dette bibliotek eller <a "
+"href=\":log_out\">logge ud</a> igen."
 
 msgctxt "dpl_login"
 msgid "Logged in"
@@ -4084,11 +4087,11 @@ msgstr "Tilføj"
 
 msgctxt "List size (settings)"
 msgid "Patron menu list size settings"
-msgstr "Listestørrelse i gruppemodaler"
+msgstr "Listestørrelse i brugermenuen"
 
 msgctxt "List size (settings)"
 msgid "The number of items to display in the patron menu list."
-msgstr "Antal elementer der vises i brugermenuen"
+msgstr "Antal elementer der vises når man åbner en liste i brugermenuen"
 
 msgctxt "List size (settings)"
 msgid "Patron menu list size on desktop"
@@ -5262,11 +5265,11 @@ msgstr "Er GO-site"
 
 msgctxt "List size (settings)"
 msgid "Dashboard list size settings"
-msgstr "Listestørrelse i gruppemodaler"
+msgstr "Listestørrelse i Dit overblik"
 
 msgctxt "List size (settings)"
 msgid "The number of items to display in the dashboard list."
-msgstr "Antal elementer der vises i en gruppemodal"
+msgstr "Antal elementer der vises når man åbner en liste på Dit overblik"
 
 msgctxt "List size (settings)"
 msgid "Dashboard list size on desktop"
@@ -5624,6 +5627,23 @@ msgctxt "DPL admin UX"
 msgid "Create content from templates"
 msgstr "Opret indhold fra skabelon"
 
+msgctxt "DPL admin UX"
+msgid ""
+"<div class=\"messages messages--warning\">You currently have <strong>@title</"
+"strong> open in another window or tab. If you delete it now, you may lose "
+"changes that have not been saved.</div>"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid ""
+"<div class=\"messages messages--warning\"><strong>@title</strong> is "
+"currently being edited by <strong>@user</strong>. There is a risk of data "
+"loss if you proceed with deleting this content.</div>"
+msgstr ""
+
+msgid "another user"
+msgstr ""
+
 msgid "List all opening hours"
 msgstr "Vis alle åbningstider"
 
@@ -5689,6 +5709,9 @@ msgstr "GO-token forhåndsvisning iframe"
 
 msgid "DPL event: Instance Creating logic."
 msgstr "DPL-hændelse: logik for oprettelse af forekomst."
+
+msgid "DPL: Event Location Type"
+msgstr ""
 
 msgid "DPL: Branch address fallback"
 msgstr "Adresse fallback på filial"
@@ -6620,6 +6643,30 @@ msgstr "Pinkode"
 msgctxt "Address label"
 msgid "Zip code"
 msgstr "Postnummer"
+
+msgid "- Site default (@country) -"
+msgstr ""
+
+msgid "Skip country for domestic addresses"
+msgstr ""
+
+msgid "Domestic addresses country"
+msgstr ""
+
+msgid "Addresses within this country are considered domestic."
+msgstr ""
+
+msgid "<em><a href=\"@url\">Set the default country for your site</a></em>."
+msgstr ""
+
+msgid "Site default (@country)"
+msgstr ""
+
+msgid "Skip country for addresses in: @country"
+msgstr ""
+
+msgid "Always display country."
+msgstr ""
 
 msgid "Available countries"
 msgstr "Tilgængelige lande"
@@ -20229,6 +20276,12 @@ msgstr "Scroll tilbage"
 msgid "Events in this series"
 msgstr "Arrangementer i denne serie"
 
+msgid "Branch"
+msgstr "Bibliotek"
+
+msgid "Partners"
+msgstr "I samarbejde med"
+
 msgid "To view this content, we need your consent to use marketing cookies."
 msgstr ""
 "For at se dette indhold, har vi brug for dit samtykke til at bruge marketing-"
@@ -20243,14 +20296,11 @@ msgstr "Telefon"
 msgid "Submitted by %author on %date"
 msgstr "Indsendt af %author den %date"
 
+msgid "Price"
+msgstr "Pris"
+
 msgid "Place"
 msgstr "Sted"
-
-msgid "Branch"
-msgstr "Bibliotek"
-
-msgid "Partners"
-msgstr "I samarbejde med"
 
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
@@ -20552,6 +20602,26 @@ msgctxt "core.entity_form_display.eventinstance.default.default:third_party_sett
 msgid "Infoscreen"
 msgstr ""
 
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
+msgid "Library"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_tickets:label"
+msgid "Tickets"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_partners:label"
+msgid "Partners"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_dates:label"
+msgid "Dates"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_location:label"
+msgid "Locations"
+msgstr ""
+
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_paragraphs:settings:title"
 msgid "Paragraph"
 msgstr ""
@@ -20582,6 +20652,30 @@ msgstr ""
 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_infoscreen:label"
 msgid "Infoscreen"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
+msgid "Library"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_tickets:label"
+msgid "Tickets"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_partners:label"
+msgid "Partners"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_dates:label"
+msgid "Dates"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_location:label"
+msgid "Locations"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_location:settings:placeholder"
+msgid "E.g. “Museum of Architecture”, “The Student House”"
 msgstr ""
 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_paragraphs:settings:title"
@@ -21227,6 +21321,38 @@ msgctxt "field.field.eventinstance.default.field_event_link:description"
 msgid "Please enter the URL where attendees can buy tickets for this event."
 msgstr ""
 
+msgctxt "field.field.eventinstance.default.field_event_location:label"
+msgid "Location"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_location_type:label"
+msgid "In person or online?"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_location_type:description"
+msgid ""
+"Specify wether this is a physical or online event. If it’s both online and "
+"in person, please create two separate events."
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:label"
+msgid "Other location than branch"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:description"
+msgid ""
+"If you choose “other location” this will be show in the list and on the "
+"event as the location for the event."
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_non_branch_location:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_event_paragraphs:label"
 msgid "Paragraphs"
 msgstr ""
@@ -21245,6 +21371,12 @@ msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_state:label"
 msgid "State"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_state:description"
+msgid ""
+"If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this "
+"state is ignored and the state provided from the ticket manager is used."
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_title:label"
@@ -21327,8 +21459,8 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_branch:description"
 msgid ""
-"When connecting a branch, it will also overwrite the event address with the "
-"address from the branch."
+"When selecting a branch, we will use the address from the branch, unless you "
+"select “Other location”."
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_categories:label"
@@ -21377,6 +21509,38 @@ msgid ""
 "Please enter the URL where attendees can buy/get tickets for this event."
 msgstr ""
 
+msgctxt "field.field.eventseries.default.field_event_location:label"
+msgid "Location"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_location_type:label"
+msgid "In person or online?"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_location_type:description"
+msgid ""
+"Specify wether this is a physical or online event. If it’s both online and "
+"in person, please create two separate events."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:label"
+msgid "Other location than branch"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:description"
+msgid ""
+"If you choose “other location” this will be show in the list and on the "
+"event as the location for the event."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_non_branch_location:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.eventseries.default.field_event_paragraphs:label"
 msgid "Paragraphs"
 msgstr ""
@@ -21395,6 +21559,12 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_state:label"
 msgid "State"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_state:description"
+msgid ""
+"If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this "
+"state is ignored and the state provided from the ticket manager is used."
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_relevant_ticket_manager:label"
@@ -22700,6 +22870,22 @@ msgstr ""
 msgctxt "field.field.user.user.field_pending_expire_sent:description"
 msgid ""
 "Whether an email notifying of a pending password expiration has been sent"
+msgstr ""
+
+msgctxt "field.storage.eventinstance.field_event_location_type:settings:allowed_values:0:label"
+msgid "In person"
+msgstr ""
+
+msgctxt "field.storage.eventinstance.field_event_location_type:settings:allowed_values:1:label"
+msgid "Online"
+msgstr ""
+
+msgctxt "field.storage.eventseries.field_event_location_type:settings:allowed_values:0:label"
+msgid "In person"
+msgstr ""
+
+msgctxt "field.storage.eventseries.field_event_location_type:settings:allowed_values:1:label"
+msgid "Online"
 msgstr ""
 
 msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
@@ -25083,6 +25269,26 @@ msgstr ""
 
 msgctxt "views.view.entity_reference_content:display:default:display_options:arguments:type:exception:title"
 msgid "All"
+msgstr ""
+
+msgctxt "views.view.entity_reference_content:display:branch_addresses:display_title"
+msgid "Branches and addresses"
+msgstr ""
+
+msgctxt "views.view.entity_reference_content:display:branch_addresses:display_options:fields:field_address_dawa:alter:text"
+msgid "{{ field_address_dawa__value }}"
+msgstr ""
+
+msgctxt "views.view.entity_reference_content:display:branch_addresses:display_options:fields:title:alter:text"
+msgid ""
+"<div>\r\n"
+"<strong>{{ title }}</strong>\r\n"
+"{% if field_address_dawa %}\r\n"
+"<br/>­\r\n"
+"\r\n"
+" ({{ field_address_dawa }})\r\n"
+"{% endif %}\r\n"
+"</div>"
 msgstr ""
 
 msgctxt "views.view.entity_reference_content:display:entity_reference_1:display_title"

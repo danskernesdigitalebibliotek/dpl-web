@@ -1,0 +1,27 @@
+uuid: bbe19d48-3178-4ce1-af9a-0244253e8981
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - recurring_events
+id: eventinstance.field_event_location_type
+field_name: field_event_location_type
+entity_type: eventinstance
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: physical
+      label: 'In person'
+    -
+      value: online
+      label: Online
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

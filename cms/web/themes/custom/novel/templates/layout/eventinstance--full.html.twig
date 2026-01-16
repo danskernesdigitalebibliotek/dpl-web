@@ -1,24 +1,27 @@
 {% set date = eventinstance.get('date').get(0) %}
-{% set description_items = [
-  {
-    label: 'Date'|t({}, {context: 'DPL event'}),
-    value: content.date,
-    icon: '/themes/custom/novel/assets/dpl-design-system/icons/collection/Calendar.svg',
-  },
+
+{% set hero_items = [
   {
     label: 'Time'|trans,
-    value: time_combined,
-    icon: '/themes/custom/novel/assets/dpl-design-system/icons/collection/Opening hours.svg',
+    values: [time_combined],
+  },
+  {
+    label: 'Price'|trans,
+    values: [
+      content.event_ticket_categories.0 ? content.event_ticket_categories : null,
+    ],
   },
   {
     label: 'Place'|trans,
-    value: content.event_place.0 ? content.event_place : null,
-    icon: '/themes/custom/novel/assets/dpl-design-system/icons/collection/Location.svg',
+    values: [
+      content.event_location.0 ? content.event_location : null,
+      content.event_address.0 ? content.event_address : null,
+    ],
   },
   {
-    label: 'Address'|trans,
-    value: content.event_address.0 ? content.event_address : null,
-    noLabelOrIcon: true,
+    values: [
+      content.event_place.0 ? content.event_place : null,
+    ],
   },
 ] %}
 
@@ -40,12 +43,14 @@
   paragraphs: content.event_paragraphs,
   date: content.date,
   description: content.event_description,
-  description_items: description_items,
+  hero_items: hero_items,
   relations_items: relations_items,
   price: content.event_ticket_categories.0 ? content.event_ticket_categories : null,
+  branch: content.branch.0 ? content.branch : null,
+  partners: content.event_partners.0 ? content.event_partners : null,
   categories: content.event_categories,
   teaser_text: content.event_teaser_text,
-  tags: content.event_tags,
+  tags: content.event_tags.0 ? content.event_tags : null,
   event_instances: event_instances,
   expired: expired,
 }, false) }}

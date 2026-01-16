@@ -22,6 +22,66 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventSeries;
 
 /**
+ * Implements hook_entity_presave().
+ *
+ * Unset values when choosing 'online' location for event series or instances.
+ */
+function dpl_event_entity_presave(EntityInterface $entity): void {
+  if (!($entity instanceof EventInstance) && !($entity instanceof EventSeries)) {
+    return;
+  }
+
+  $location_type = 'physical';
+  $non_branch_location = TRUE;
+
+  if ($entity->hasField('field_event_location_type')) {
+    $location_type = $entity->get('field_event_location_type')->getString();
+  }
+
+  if ($location_type === 'online') {
+    if ($entity->hasField('field_event_non_branch_location')) {
+      $entity->set('field_event_non_branch_location', FALSE);
+    }
+
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
+    if ($entity->hasField('field_event_place')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_place', ' ');
+    }
+  }
+  elseif (empty($location_type)) {
+    return;
+  }
+
+  if ($entity->hasField('field_event_non_branch_location')) {
+    $non_branch_location = !empty($entity->get('field_event_non_branch_location')->getString());
+  }
+
+  $branch_field_name = ($entity instanceof EventInstance) ?
+    'branch' : 'field_branch';
+  $branch = NULL;
+
+  if ($entity->hasField($branch_field_name)) {
+    $branch = $entity->get($branch_field_name)->getString();
+  }
+
+  if (!$non_branch_location && !empty($branch)) {
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
+    if ($entity->hasField('field_event_address')) {
+      $entity->set('field_event_address', []);
+    }
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave().
  *
  * If the eventinstance is set to be an all-day, we want to ignore any times
@@ -123,7 +183,7 @@ function dpl_event_eventinstance_insert(EntityInterface $entity): void {
 }
 
 /**
- * Implements hook_node_update().
+ * Implements hook_ENTITY_TYPE_update().
  */
 function dpl_event_eventinstance_update(EntityInterface $entity): void {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
@@ -303,9 +363,17 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
+  $parent_set = FALSE;
 
   foreach ($event_instances as $event_instance) {
-    $variables['event_instances'][] = $viewBuilder->view($event_instance, 'stacked_event');
+    $view_mode = 'stacked_event';
+
+    if (!$parent_set) {
+      $view_mode = 'list_teaser_stacked_parent';
+      $parent_set = TRUE;
+    }
+
+    $variables['event_instances'][] = $viewBuilder->view($event_instance, $view_mode);
   }
 }
 
@@ -447,6 +515,42 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
       'message' => [
         '#markup' => t('Any specific times below will be ignored when "All day" is enabled', [], ['context' => 'dpl_event']),
       ],
+    ];
+  }
+
+  // PHPCS doesn't understand Drupal's weird way of doing states.
+  // phpcs:disable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+  $physical_state = [
+    ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+    'and',
+    [
+      [':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE]],
+      'or',
+      [':input[name="field_branch"]' => ['value' => '']],
+    ],
+  ];
+
+  if (isset($form['field_event_non_branch_location'])) {
+    $form['field_event_non_branch_location']['#states']['visible'] = [
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+      'and',
+      ':input[name="field_branch"]' => ['!value' => ''],
+    ];
+  }
+  // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+
+  if (isset($form['field_event_location'])) {
+    $form['field_event_location']['#states']['visible'] = $physical_state;
+    $form['field_event_location']['widget'][0]['value']['#states']['required'] = $physical_state;
+  }
+
+  if (isset($form['field_event_address'])) {
+    $form['field_event_address']['#states']['visible'] = $physical_state;
+  }
+
+  if (isset($form['field_event_place'])) {
+    $form['field_event_place']['#states']['visible'] = [
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
     ];
   }
 

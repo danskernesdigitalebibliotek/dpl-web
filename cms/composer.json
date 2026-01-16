@@ -56,10 +56,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.50.0",
+                "version": "2026.2.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.50.0/dist-2025-50-0-0b81b49ff44f3d26310e985273fe8e537881e481.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2026.2.0/dist-2026-2-0-8e695754c18be663b381ccc0217a9711ce3c5b86.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -72,9 +72,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.50.0",
+                "version": "2026.2.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.50.0/dist-2025-50-0-ecc2204b7bb8093ead809249237b2cfebccd895b.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2026.2.0/dist-2026-2-0-20a43bbf0070c1424b4d1b642d7a46ff22a64ba5.zip",
                     "type": "zip"
                 }
             }
@@ -107,8 +107,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.50.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.50.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2026.2.0",
+        "danskernesdigitalebibliotek/dpl-react": "2026.2.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -257,6 +257,9 @@
             "oomphinc/composer-installers-extender": true,
             "phpstan/extension-installer": true,
             "zaporylie/composer-drupal-optimizations": true
+        },
+        "audit": {
+            "block-insecure": false
         }
     },
     "scripts": {
@@ -332,6 +335,9 @@
             }
         },
         "patches": {
+            "drupal/address": {
+                "2753899: Hide domestic country": "patches/2753899-address-hide-domestic.patch"
+            },
             "drupal/address_dawa": {
                 "3407189: Automated Drupal 10 compatibility fixes": "https://www.drupal.org/files/issues/2023-12-09/address_dawa.2.0.1.rector.patch",
                 "3550696: Update API endpoints.": "https://git.drupalcode.org/project/address_dawa/-/commit/330964eb0004c59eb45d1ca5d038cd53024944c1.patch"

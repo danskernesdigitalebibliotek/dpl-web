@@ -1,0 +1,14 @@
+uuid: bd394cdc-04aa-4a40-81c9-ddf3cacc3d14
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_non_branch_location
+label: event_non_branch_location
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_non_branch_location
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_non_branch_location
+plugin: default_inheritance
