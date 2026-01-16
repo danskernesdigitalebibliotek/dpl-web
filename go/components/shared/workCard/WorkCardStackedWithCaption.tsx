@@ -92,7 +92,6 @@ const WorkCardStackedWithCaption = ({
               title={title}
               bestRepresentation={manifestation}
               manifestations={manifestations}
-              isWithTilt
             />
           ) : (
             <WorkCardEmpty

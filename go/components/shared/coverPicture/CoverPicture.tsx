@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from "framer-motion"
 import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
@@ -79,6 +81,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
     <div className={cn("flex h-full w-full items-center", className)} ref={ref}>
       {!imageError && covers.thumbnail ? (
         <CoverPictureTiltWrapper
+          key={covers.thumbnail}
           withTilt={withTilt}
           className={"relative m-auto"}
           style={coverWrapperStyle}>
