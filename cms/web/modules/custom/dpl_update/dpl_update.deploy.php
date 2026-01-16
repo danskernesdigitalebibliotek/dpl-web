@@ -475,6 +475,18 @@ function dpl_update_deploy_clean_config(): string {
 }
 
 /**
+ * Disallow go_graphql_client to view unpublished content.
+ *
+ * This permission was added by mistake, and resulted in unpublished content
+ * showing up on the GO sites.
+ */
+function dpl_update_deploy_update_go_permissions_unpublished(): string {
+  _dpl_update_alter_permissions(['go_graphql_client'], ['view any unpublished content'], FALSE);
+
+  return 'Updated go_graphql_client role: removed "view any unpublished content".';
+}
+
+/**
  * Link new field inheritances on eventinstances.
  */
 function dpl_update_deploy_event_field_inheritance(): string {

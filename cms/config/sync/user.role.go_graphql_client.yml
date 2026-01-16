@@ -8,7 +8,6 @@ dependencies:
     - graphql
     - graphql_compose_preview
     - paragraphs
-    - view_unpublished
 id: go_graphql_client
 label: 'GO GraphQL Client'
 weight: 10
@@ -17,6 +16,5 @@ permissions:
   - 'execute graphql_compose_server arbitrary graphql requests'
   - 'get dpl graphql cache tags'
   - 'use absolute cms urls'
-  - 'view any unpublished content'
   - 'view graphql_compose_preview entity'
   - 'view unpublished paragraphs'
