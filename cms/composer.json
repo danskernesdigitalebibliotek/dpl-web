@@ -220,7 +220,7 @@
         "symfony/property-access": "^7.3",
         "symfony/property-info": "^7.3",
         "thecodingmachine/safe": "^2.5.0",
-        "webmozart/assert": "^1.11",
+        "webmozart/assert": "^2.1",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
