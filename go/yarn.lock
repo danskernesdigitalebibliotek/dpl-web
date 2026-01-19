@@ -13489,10 +13489,10 @@ prettier-plugin-classnames@^0.8.6:
   dependencies:
     zod "3.22.4"
 
-prettier-plugin-merge@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-merge/-/prettier-plugin-merge-0.8.0.tgz#2d59550baba1ca726cf0ed23595409c107277a71"
-  integrity sha512-4ovlPwwsuKB+NyQNlXrt2P4I/4dx0P2w2iBkYpgjJHFqglMndYbzYWyY5hHTQj0WFhZYeUjsHKRGKxWsf6tvag==
+prettier-plugin-merge@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-merge/-/prettier-plugin-merge-0.9.0.tgz#783f0979036b3e3520611b65a624d3e53fc923d0"
+  integrity sha512-bWd9Gw05GC55wOiDL52CNM0GlvEww10oc+VhptbMhz091SrlM/F9M86WZ94VWnv732rUlu9i9FzZ4wWFzTYZsw==
   dependencies:
     diff "5.1.0"
 
