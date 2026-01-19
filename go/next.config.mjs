@@ -37,6 +37,7 @@ const nextConfig = {
     },
   },
   images: {
+    unoptimized: env.NODE_ENV !== "production",
     remotePatterns: [
       {
         protocol: "https",
