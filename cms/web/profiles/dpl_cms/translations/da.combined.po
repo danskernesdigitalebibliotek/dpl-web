@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-02-09 12:26+0100\n"
-"PO-Revision-Date: 2026-02-09 12:26+0100\n"
+"POT-Creation-Date: 2026-01-20 08:28+0100\n"
+"PO-Revision-Date: 2026-01-20 08:28+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1907,11 +1907,11 @@ msgstr "Forfatter / ophav"
 
 msgctxt "advanced search 2"
 msgid "A-Z"
-msgstr "A-Å"
+msgstr "Forfatter / ophav (A-Å)"
 
 msgctxt "advanced search 2"
 msgid "Z-A"
-msgstr "Å-A"
+msgstr "Forfatter / ophav (Å-A)"
 
 msgctxt "Work Page"
 msgid "Already reserved"
@@ -1987,7 +1987,7 @@ msgstr "Forfattere"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Nr."
+msgstr "Udgave"
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -2749,11 +2749,11 @@ msgstr "Vælg udgave"
 
 msgctxt "Work Page"
 msgid "Show less"
-msgstr "Vis færre"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Show all (@count)"
-msgstr "Vis alle (@count)"
+msgstr ""
 
 msgctxt "Opening Hours"
 msgid "Opening Hours"
