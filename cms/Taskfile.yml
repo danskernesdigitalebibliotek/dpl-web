@@ -124,6 +124,18 @@ tasks:
     cmds:
       - docker compose build
 
+  dev:build:bnf:
+    summary: Build docker containers
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+    # Ensure that we only rebuild if there are changes to Dockerfiles
+    # or the config files used.
+    sources:
+      - "{{ .LAGOON_DIR }}/**/*"
+      - "{{ .LAGOON_DIR }}/*"
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} build
+
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
     # This could have a dependency on dev:build but does not to avoid excessive
@@ -142,6 +154,7 @@ tasks:
     summary: Run docker compose
     deps:
       - dev:build
+      - dev:build:bnf
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
       - ./dev-scripts/add-to-etc-hosts.sh https dpl-cms.docker
@@ -171,6 +184,7 @@ tasks:
     deps:
       # Build new containers if necessary.
       - dev:build
+      - dev:build:bnf
       # Stop potential running environment.
       - dev:down
     cmds:
