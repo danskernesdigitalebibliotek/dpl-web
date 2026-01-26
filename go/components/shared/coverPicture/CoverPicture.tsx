@@ -1,4 +1,5 @@
-import { useWindowSize } from "@uidotdev/usehooks"
+"use client"
+
 import { motion } from "framer-motion"
 import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
@@ -14,38 +15,76 @@ type CoverPictureProps = {
   withTilt?: boolean
 }
 export const CoverPicture = ({ covers, alt, withTilt = false, className }: CoverPictureProps) => {
-  const size = useWindowSize()
   const imageAspectRatio = (covers.large?.width ?? 0) / (covers.large?.height ?? 0)
 
-  // get the container height
   const ref = useRef<HTMLDivElement>(null)
-  const containerHeight = ref.current?.getBoundingClientRect().height || 0
-  const containerWidth = ref.current?.getBoundingClientRect().width || 0
 
-  // calculate container aspect ratio
-  const containerAspectRatio = containerWidth / containerHeight
+  const [containerSize, setContainerSize] = useState<{ width: number; height: number } | null>(null)
 
-  // calculate the max width using image aspect ratio and container width
-  const imageWidthByContainerHeight = imageAspectRatio * containerHeight
-  const imageHeightByContainerWidth = containerWidth / imageAspectRatio
+  // Keep container size in sync with layout changes using ResizeObserver so we also react
+  // when Keen slider changes slide width (without requiring a window resize).
+  useEffect(() => {
+    if (!ref.current) return
 
-  useEffect(() => {}, [size.width])
+    const el = ref.current
+    const observer = new ResizeObserver(entries => {
+      const entry = entries[0]
+      if (!entry) return
+
+      const { width, height } = entry.contentRect
+      if (!width || !height) return
+
+      setContainerSize(prev => {
+        if (prev && prev.width === width && prev.height === height) return prev
+        return { width, height }
+      })
+    })
+
+    observer.observe(el)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  const containerHeight = containerSize?.height ?? 0
+  const containerWidth = containerSize?.width ?? 0
+
+  // Fallback to image aspect ratio if we don't yet know the container size to avoid NaN calculations
+  const hasContainerSize = containerHeight > 0 && containerWidth > 0 && imageAspectRatio > 0
+
+  // Calculate a width/height that fits INSIDE the container ("object-fit: contain" behavior)
+  let coverWidth = 0
+  let coverHeight = 0
+
+  if (hasContainerSize) {
+    // Start by filling the container width
+    coverWidth = containerWidth
+    coverHeight = coverWidth / imageAspectRatio
+
+    // If the result becomes taller than the container, constrain by height instead
+    if (coverHeight > containerHeight) {
+      coverHeight = containerHeight
+      coverWidth = coverHeight * imageAspectRatio
+    }
+  }
+
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
-  // adjust the padding top based on the image aspect ratio and the container width
-  const paddingTop =
-    containerHeight > imageHeightByContainerWidth
-      ? `${100 / imageAspectRatio}%`
-      : `${100 / containerAspectRatio}%`
+  // Use a style that either matches the calculated size or falls back to 100%
+  const coverWrapperStyle: React.CSSProperties = hasContainerSize
+    ? { width: `${coverWidth}px`, height: `${coverHeight}px` }
+    : { width: "100%", height: "100%" }
 
   return (
     <div className={cn("flex h-full w-full items-center", className)} ref={ref}>
       {!imageError && covers.thumbnail ? (
         <CoverPictureTiltWrapper
+          key={covers.thumbnail}
           withTilt={withTilt}
           className={"relative m-auto"}
-          style={{ paddingTop, width: `${imageWidthByContainerHeight}px` }}>
+          style={coverWrapperStyle}>
           {covers.thumbnail && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
