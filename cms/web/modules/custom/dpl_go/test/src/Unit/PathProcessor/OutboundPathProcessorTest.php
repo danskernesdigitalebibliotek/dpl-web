@@ -43,7 +43,8 @@ class OutboundPathProcessorTest extends UnitTestCase {
     parent::setUp();
 
     $this->goSite = $this->prophesize(GoSite::class);
-    $this->goSite->getGoBaseUrl();
+    $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
+    $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
 
     $this->adminContext = $this->prophesize(AdminContext::class);
     $this->adminContext->isAdminRoute()->willReturn(FALSE);
@@ -84,8 +85,6 @@ class OutboundPathProcessorTest extends UnitTestCase {
     $this->goSite->useAbsoluteUrls()->willReturn(FALSE);
     $this->goSite->isGoSite()->willReturn($isGo);
     $this->goSite->isGoNid($nid)->willReturn($isGoNode);
-    $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
-    $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
 
     $options = [];
     $newPath = $this->pathProcessor->processOutbound(
@@ -133,8 +132,6 @@ class OutboundPathProcessorTest extends UnitTestCase {
   ): void {
     $this->goSite->isGoSite()->willReturn($isGo);
     $this->goSite->isGoNid($nid)->willReturn($isGoNode);
-    $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
-    $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
     $this->adminContext->isAdminRoute()->willReturn(TRUE);
 
     $options = [];
@@ -166,8 +163,6 @@ class OutboundPathProcessorTest extends UnitTestCase {
     $this->goSite->useAbsoluteUrls()->willReturn(TRUE);
     $this->goSite->isGoSite()->willReturn(FALSE);
     $this->goSite->isGoNid($nid)->willReturn($isGoNode);
-    $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
-    $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
 
     $options = [];
     $newPath = $this->pathProcessor->processOutbound(
