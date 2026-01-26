@@ -35,6 +35,8 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
 
   const searchInfoBoxIndex = pageSize;
 
+  const showSkeletons = isLoading;
+
   return (
     <ContentList className={className} dataCy="search-result-list">
       {/*
@@ -51,38 +53,23 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
         resultItems.map((item, i) => {
           const isFirstNewItem = i === page * pageSize;
 
-          if (
-            i === searchInfoBoxIndex &&
-            infoBoxProps?.title &&
-            infoBoxProps?.html
-          ) {
-            return (
-              <Fragment key={item.workId}>
-                <MaterialListItem className="content-list__item content-list__item--info-box">
-                  <CardListInfoBox
-                    title={infoBoxProps?.title}
-                    html={infoBoxProps?.html}
-                    buttonLabel={infoBoxProps?.buttonLabel}
-                    buttonUrl={infoBoxProps?.buttonUrl}
-                  />
-                </MaterialListItem>
-                <MaterialListItem
-                  className="content-list__item"
-                  ref={isFirstNewItem ? lastItemRef : null}
-                >
-                  <CardListItem
-                    item={item}
-                    coverTint={getCoverTint(i)}
-                    resultNumber={i + 1}
-                  />
-                </MaterialListItem>
-              </Fragment>
-            );
-          } else {
-            return (
+        if (
+          i === searchInfoBoxIndex &&
+          infoBoxProps?.title &&
+          infoBoxProps?.html
+        ) {
+          return (
+            <Fragment key={item.workId}>
+              <MaterialListItem className="content-list__item content-list__item--info-box">
+                <CardListInfoBox
+                  title={infoBoxProps?.title}
+                  html={infoBoxProps?.html}
+                  buttonLabel={infoBoxProps?.buttonLabel}
+                  buttonUrl={infoBoxProps?.buttonUrl}
+                />
+              </MaterialListItem>
               <MaterialListItem
                 className="content-list__item"
-                key={item.workId}
                 ref={isFirstNewItem ? lastItemRef : null}
               >
                 <CardListItem
