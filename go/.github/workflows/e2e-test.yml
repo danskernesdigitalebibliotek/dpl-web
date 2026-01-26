@@ -35,7 +35,7 @@ jobs:
           envFile: ".env.test"
 
       - name: Build the Nextjs app and run Cypress tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         env:
           # A bug in the current version of Nextjs causes NODE_ENV=test to brick the build
           # By overridding the variables here we can ensure that the correct urls are set
