@@ -496,3 +496,18 @@ function dpl_update_deploy_event_field_inheritance(): string {
 
   return $return;
 }
+
+/**
+ * Make sure editors have access to use GO Text Body WYSIWYG format.
+ *
+ * This permission was missing for administrators on Roskilde, and might be
+ * missing on other sites, so it must have been forgotten in the past.
+ */
+function dpl_update_deploy_go_text_body_wysiwyg(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator', 'editor', 'mediator'],
+    ['use text format go_text_body'],
+  TRUE);
+
+  return 'Allow editors to use GO Text Body WYSIWYG format';
+}
