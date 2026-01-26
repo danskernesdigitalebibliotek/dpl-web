@@ -56,9 +56,18 @@ class OutboundPathProcessorTest extends UnitTestCase {
   }
 
   /**
-   * Test that non-node paths are passed through unmolested.
+   * Test that non-node paths are made absolute for external systems.
+   *
+   * @dataProvider nonNodeCases
    */
-  public function testNonNodesArePassedThrough(): void {
+  public function testNonNodesAreRewrittenForExternalSystems(
+    bool $isExternal,
+    bool $isGo,
+    ?string $expectedBaseUrl,
+  ): void {
+    $this->goSite->useAbsoluteUrls()->willReturn($isExternal);
+    $this->goSite->isGoSite()->willReturn($isGo);
+
     $options = [];
     $newPath = $this->pathProcessor->processOutbound(
       '/admin',
@@ -68,7 +77,27 @@ class OutboundPathProcessorTest extends UnitTestCase {
     );
 
     $this->assertEquals('/admin', $newPath);
-    $this->assertArrayNotHasKey('base_url', $options);
+    if ($expectedBaseUrl) {
+      $this->assertArrayHasKey('base_url', $options);
+      $this->assertEquals($expectedBaseUrl, $options['base_url']);
+    }
+    else {
+      $this->assertArrayNotHasKey('base_url', $options);
+    }
+  }
+
+  /**
+   * Test cases for testNonNodesAreRewrittenForExternalSystems.
+   *
+   * @return array<string, array<string|null|bool>>
+   *   Array of test cases.
+   */
+  public function nonNodeCases(): array {
+    return [
+      'No rewriting on CMS' => [FALSE, FALSE, NULL],
+      'Rewriting on GO' => [FALSE, TRUE, 'https://cms.site'],
+      'Rewriting for external systems' => [TRUE, FALSE, 'https://cms.site'],
+    ];
   }
 
   /**
