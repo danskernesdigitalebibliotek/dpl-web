@@ -9,7 +9,8 @@ import CardListInfoBox, { CardListInfoBoxProps } from "./CardListInfoBox";
 import ContentList from "../content-list/ContentList";
 
 export interface SearchResultListProps {
-  resultItems: Work[];
+  resultItems?: Work[];
+  isLoading?: boolean;
   page: number;
   pageSize: number;
   infoBoxProps?: CardListInfoBoxProps;
@@ -18,12 +19,12 @@ export interface SearchResultListProps {
 
 const SearchResultList: React.FC<SearchResultListProps> = ({
   resultItems,
+  isLoading,
   page,
   pageSize,
   infoBoxProps,
   className
 }) => {
-  const worksAreLoaded = !isEmpty(resultItems);
   const lastItemRef = React.useRef<HTMLLIElement>(null);
 
   useEffect(() => {
