@@ -15,19 +15,6 @@ export const getApServiceUrl = async (serviceType: TServiceType) => {
     throw new Error(`No url found for the ${serviceType} service`)
   }
 
-  if (serviceType === "fbi") {
-    const dplCmsConfig = await getDplCmsPublicConfig()
-
-    if (!dplCmsConfig.searchProfiles.local) {
-      throw new Error("DPL CMS searchProfiles.local is not defined")
-    }
-
-    return serviceSettings.url.replace(
-      "{search_profile_placeholder}",
-      dplCmsConfig.searchProfiles.local
-    )
-  }
-
   return serviceSettings.url
 }
 

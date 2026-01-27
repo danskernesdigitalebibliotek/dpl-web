@@ -80,9 +80,6 @@ const getDplCmsPublicConfigData = async () => {
   } catch {
     console.error("Failed to parse DPL CMS public config")
     return {
-      searchProfiles: {
-        local: null,
-      },
       loginUrls: {
         adgangsplatformen: null,
       },
