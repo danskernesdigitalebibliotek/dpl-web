@@ -46,7 +46,7 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
   /**
    * Importing nodes that have been referenced, with recursion limit.
    */
-  private function importReferencedNode(string $id): ?NodeInterface {
+  private function importReferencedNode(string $id): NodeInterface {
     if ($this->importContext->size() > $this::$recursionLimit) {
       throw new RecursionLimitExceededException();
     }
@@ -60,7 +60,11 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
       $node = $this->importer->importNode($id, $this->importContext->current());
     }
 
-    return ($node instanceof NodeInterface) ? $node : NULL;
+    if (!$node) {
+      throw new UnpublishedReferenceException();
+    }
+
+    return $node;
   }
 
   /**
@@ -78,10 +82,6 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
     foreach ($ids as $id) {
       $node = $this->importReferencedNode((string) $id);
 
-      if (!$node) {
-        continue;
-      }
-
       $referenceData[] = [
         'target_id' => $node->id(),
         'target_type' => 'node',
@@ -97,10 +97,6 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
   public function mapLink(BannerLink|GoLink|HeroLink|LinksLink|MoreLink $object): mixed {
     if ($object->internal && is_string($object->id)) {
       $node = $this->importReferencedNode($object->id);
-
-      if (!$node) {
-        throw new UnpublishedReferenceException();
-      }
 
       $linkValue = [
         'uri' => 'entity:node/' . $node->id(),
