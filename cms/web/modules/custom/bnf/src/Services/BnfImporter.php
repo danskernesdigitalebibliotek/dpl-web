@@ -93,7 +93,7 @@ class BnfImporter {
       // if it already exists. If not, we want to ignore it.
       if (!$nodeData->status) {
         if (!$existingNode instanceof NodeInterface) {
-          $this->logger->info("Skipped BNF import of unpublished, unknown node {$uuid}.");
+          $this->logger->info("Skipped BNF import of unpublished node {$uuid}.");
           return NULL;
         }
       }
