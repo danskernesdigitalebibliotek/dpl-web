@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
-use Drupal\bnf\Exception\UnpublishedReferenceException;
+use Drupal\bnf\Exception\RecursionLimitExceededException;
 use Drupal\bnf\Plugin\bnf_mapper\BnfMapperImportReferencePluginBase;
 use Drupal\bnf\Plugin\bnf_mapper\FieldGoLinkRequiredMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\LinkRequired\Link;
@@ -107,13 +107,9 @@ class FieldGoLinkRequiredMapperTest extends BnfMapperImportReferencePluginBaseTe
     $this->importContextStack->size()->willReturn($limit - 1);
     $this->assertNotNull($this->mapper->map($graphqlElement));
 
-    // This is wrong, but it's how it happens to work at the moment.
-    $this->expectException(UnpublishedReferenceException::class);
+    $this->expectException(RecursionLimitExceededException::class);
     $this->importContextStack->size()->willReturn($limit + 1);
     $this->mapper->map($graphqlElement);
-
-    // This is more what we'd like.
-    // $this->assertNull($this->mapper->map($graphqlElement));
   }
 
 }

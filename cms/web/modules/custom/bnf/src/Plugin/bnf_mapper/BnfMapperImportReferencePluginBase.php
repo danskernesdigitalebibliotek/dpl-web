@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
+use Drupal\bnf\Exception\RecursionLimitExceededException;
 use Drupal\bnf\Exception\UnpublishedReferenceException;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\bnf\Services\BnfImporter;
@@ -47,7 +48,7 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
    */
   private function importReferencedNode(string $id): ?NodeInterface {
     if ($this->importContext->size() > $this::$recursionLimit) {
-      return NULL;
+      throw new RecursionLimitExceededException();
     }
     /** @var \Drupal\node\Entity\Node[] $existing */
     $existing = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $id]);
