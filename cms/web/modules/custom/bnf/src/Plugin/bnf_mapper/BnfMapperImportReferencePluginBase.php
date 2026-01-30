@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
+use Drupal\bnf\Exception\UnpublishedReferenceException;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf\Services\ImportContextStack;
@@ -97,7 +98,7 @@ abstract class BnfMapperImportReferencePluginBase extends BnfMapperPluginBase {
       $node = $this->importReferencedNode($object->id);
 
       if (!$node) {
-        return NULL;
+        throw new UnpublishedReferenceException();
       }
 
       $linkValue = [

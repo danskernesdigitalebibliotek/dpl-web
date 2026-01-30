@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf;
 
 use Drupal\bnf\Attribute\BnfMapper;
+use Drupal\bnf\Exception\UnpublishedReferenceException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
@@ -81,7 +82,7 @@ class BnfMapperManager extends DefaultPluginManager {
         return $this->map($object);
       }
       catch (\Throwable $o_O) {
-        if (!$ignoreErrors) {
+        if (!$ignoreErrors || $o_O instanceof UnpublishedReferenceException) {
           throw $o_O;
         }
       }

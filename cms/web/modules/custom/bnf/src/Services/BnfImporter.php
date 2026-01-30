@@ -4,6 +4,7 @@ namespace Drupal\bnf\Services;
 
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\BnfStateEnum;
+use Drupal\bnf\Exception\UnpublishedReferenceException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\GraphQL\Operations\NewContent;
@@ -137,6 +138,14 @@ class BnfImporter {
       $node->set(BnfStateEnum::FIELD_NAME, $state);
 
       $node->save();
+    }
+    catch (UnpublishedReferenceException $e) {
+      $this->logger->error(
+        "Failed to import content {$uuid}. @message",
+        ['@message' => $e->getMessage() . ' ' . $e->getTraceAsString()]
+      );
+
+      throw new \RuntimeException("Could not import content, bad reference {$uuid}.", 0, $e);
     }
     catch (\Throwable $e) {
       $this->logger->error(
