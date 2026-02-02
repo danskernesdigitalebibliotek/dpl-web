@@ -34,7 +34,7 @@ content:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
+        show_edit: true
   field_banner_link:
     type: dpl_link_options
     weight: 0
