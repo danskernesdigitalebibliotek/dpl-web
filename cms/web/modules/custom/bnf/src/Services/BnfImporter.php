@@ -160,7 +160,7 @@ class BnfImporter {
     }
 
     if ($node) {
-      $this->logger->info('Created new @type node with BNF ID @uuid', [
+      $this->logger->info('Created or updated @type node with BNF ID @uuid', [
         '@uuid' => $uuid,
         '@type' => $node->bundle(),
       ]);
