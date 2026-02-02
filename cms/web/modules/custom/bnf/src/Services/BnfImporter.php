@@ -73,6 +73,8 @@ class BnfImporter {
 
     $this->importContext->push($importContext);
 
+    $node = NULL;
+
     try {
       $response = GetNode::execute($uuid);
       $nodeData = $response->errorFree()->data->node;
@@ -141,15 +143,13 @@ class BnfImporter {
     }
     catch (UnpublishedReferenceException $e) {
       $this->logger->error(
-        "Failed to import content {$uuid}. @message",
-        ['@message' => $e->getMessage() . ' ' . $e->getTraceAsString()]
+        "Failed to import content {$uuid}: @message",
+        ['@message' => $e->getMessage()]
       );
-
-      throw new \RuntimeException("Could not import content, bad reference {$uuid}.", 0, $e);
     }
     catch (\Throwable $e) {
       $this->logger->error(
-        "Failed to import content {$uuid}. @message",
+        "Failed to import content {$uuid}: @message",
         ['@message' => $e->getMessage() . ' ' . $e->getTraceAsString()]
       );
 
@@ -159,10 +159,12 @@ class BnfImporter {
       $this->importContext->pop();
     }
 
-    $this->logger->info('Created new @type node with BNF ID @uuid', [
-      '@uuid' => $uuid,
-      '@type' => $node->bundle(),
-    ]);
+    if ($node) {
+      $this->logger->info('Created new @type node with BNF ID @uuid', [
+        '@uuid' => $uuid,
+        '@type' => $node->bundle(),
+      ]);
+    }
 
     return $node;
   }
