@@ -80,7 +80,7 @@ updates:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
       - dependency-name: "orval"
-        update-types: ["version-update:semver-major"]
+        versions: ["^7.13.2"]
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
 
