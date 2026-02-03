@@ -163,6 +163,19 @@ class DplReactAppsController extends ControllerBase {
       'web-search-link-text' => $this->t('Switch to the results for the library content.', [], ['context' => 'Search Result']),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+
+      'search-show-all-text' => $this->t('Show all', [], ['context' => 'Search Result']),
+      'search-show-less-text' => $this->t('Show less', [], ['context' => 'Search Result']),
+      'search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'Search Result']),
+      'search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'Search Result']),
+      'search-can-always-be-loaned-text' => $this->t('Can always be loaned', [], ['context' => 'Search Result']),
+      'search-can-always-be-loaned-description-text' => $this->t('Only show results that can always be loaned.', [], ['context' => 'Search Result']),
+      'search-show-results-text' => $this->t('Show results', [], ['context' => 'Search Result']),
+      'search-showing-materials-text' => $this->t('@hitcount results', [], ['context' => 'Search Result']),
+      'search-showing-all-materials-text' => $this->t('Showing all materials', [], ['context' => 'Search Result']),
+      'search-showing-results-for-text' => $this->t('Showing results for', [], ['context' => 'Search Result']),
+      'search-dialog-filter-materials-text' => $this->t('Filter materials (@hitcount)', [], ['context' => 'Search Result']),
+
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -241,7 +254,7 @@ class DplReactAppsController extends ControllerBase {
       'cql-search-external-help-link-text' => $this->t('CQL search external help link text', [], ['context' => 'advanced search']),
       'cql-search-title-text' => $this->t('CQL search', [], ['context' => 'advanced search']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search']),
-      'showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
+      'search-showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
       'to-advanced-search-button-text' => $this->t('Back to advanced search', [], ['context' => 'advanced search']),
       'advanced-search-filter-location-text' => $this->t('location', [], ['context' => 'advanced search']),
       'advanced-search-filter-location-description-text' => $this->t('Add a comma separated list for multiple locations', [], ['context' => 'advanced search']),
@@ -309,7 +322,6 @@ class DplReactAppsController extends ControllerBase {
       'result-pager-status-text' => $this->t('Showing @itemsShown of @hitcount results', [], ['context' => 'advanced search 2']),
       'show-more-text' => $this->t('Show more', [], ['context' => 'advanced search 2']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search 2']),
-      'showing-materials-text' => $this->t('showing materials (@hitcount)', [], ['context' => 'advanced search 2']),
       'add-more-filters-text' => $this->t('More filters', [], ['context' => 'advanced search 2']),
       'copy-link-success-text' => $this->t('Link copied to clipboard', [], ['context' => 'advanced search 2']),
 
@@ -343,12 +355,6 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-placeholder-fictional-character-text' => $this->t('Enter fictional character…', [], ['context' => 'advanced search 2']),
       'advanced-search-placeholder-host-publication-text' => $this->t('Enter host publication…', [], ['context' => 'advanced search 2']),
       'advanced-search-edit-search-text' => $this->t('Edit search', [], ['context' => 'advanced search 2']),
-      'advanced-search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'advanced search 2']),
-      'advanced-search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'advanced search 2']),
-      'advanced-search-only-extra-titles-text' => $this->t('Only "Extra Titles"', [], ['context' => 'advanced search 2']),
-      'advanced-search-only-extra-titles-description-text' => $this->t('Only show results not limited by digital loan quotas.', [], ['context' => 'advanced search 2']),
-      'advanced-search-show-all-text' => $this->t('Show all', [], ['context' => 'advanced search 2']),
-      'advanced-search-show-less-text' => $this->t('Show less', [], ['context' => 'advanced search 2']),
       'advanced-search-reset-text' => $this->t('Reset', [], ['context' => 'advanced search 2']),
       'advanced-search-facet-access-type-text' => $this->t('Access Type', [], ['context' => 'advanced search 2']),
       'advanced-search-facet-age-text' => $this->t('Age', [], ['context' => 'advanced search 2']),
@@ -380,7 +386,6 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-age-badge-single-text' => $this->t('@age year olds', [], ['context' => 'advanced search 2']),
       'advanced-search-age-badge-range-text' => $this->t('@from-@to year olds', [], ['context' => 'advanced search 2']),
       'advanced-search-filter-materials-text' => $this->t('Filter materials (@hitcount)', [], ['context' => 'advanced search 2']),
-      'advanced-search-show-results-text' => $this->t('Show results', [], ['context' => 'advanced search 2']),
 
       // Sort.
       'advanced-search-sort-label-text' => $this->t('Sort by', [], ['context' => 'advanced search 2']),
@@ -396,6 +401,15 @@ class DplReactAppsController extends ControllerBase {
       // Mapp.
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+
+      'search-show-all-text' => $this->t('Show all', [], ['context' => 'advanced search 2']),
+      'search-show-less-text' => $this->t('Show less', [], ['context' => 'advanced search 2']),
+      'search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'advanced search 2']),
+      'search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'advanced search 2']),
+      'search-only-extra-titles-text' => $this->t('Only "Extra Titles"', [], ['context' => 'advanced search 2']),
+      'search-only-extra-titles-description-text' => $this->t('Only show results not limited by digital loan quotas.', [], ['context' => 'advanced search 2']),
+      'search-show-results-text' => $this->t('Show results', [], ['context' => 'advanced search 2']),
+      'search-showing-materials-text' => $this->t('@hitcount results', [], ['context' => 'advanced search 2']),
 
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
