@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d161a316ea161a865f8e69a5188c965",
+    "content-hash": "1ac49400c4aa1d9461197d81f6277fc0",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1107,19 +1107,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2026.4.0",
+            "version": "2026.6.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2026.4.0/dist-2026-4-0-b5efb31b539180ada87ede1e8b1a8c359d63ffe3.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2026.6.0/dist-2026-6-0-97350407d855567b5f0304e7a3c123d3e707ee6b.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2026.4.0",
+            "version": "2026.6.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2026.4.0/dist-2026-4-0-6777220bcc95704cc1604de87f87dc706e5d355f.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2026.6.0/dist-2026-6-0-eba8ce779427b8ef51457f223aa60b74fa50e073.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -21887,5 +21887,5 @@
         "ext-dom": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
