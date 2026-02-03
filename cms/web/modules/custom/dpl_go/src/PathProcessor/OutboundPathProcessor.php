@@ -50,6 +50,14 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
 
     $pathParts = explode('/', $path);
 
+    $baseUrl = NULL;
+
+    // Tell caching that this link depends on wether we're on the go site or
+    // using absolute urls, or not.
+    if ($bubbleableMetadata) {
+      $bubbleableMetadata->addCacheContexts(['dpl_is_go']);
+    }
+
     if (
       count($pathParts) == 3 &&
       $pathParts[1] == 'node' &&
@@ -57,21 +65,26 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
       // interested in supporting "1337e0" or " 24  ".
       preg_match('/^\d+$/', $pathParts[2])
     ) {
-      // Tell caching that this link depends on wether we're on the go site or
-      // not.
-      if ($bubbleableMetadata) {
-        $bubbleableMetadata->addCacheContexts(['dpl_is_go']);
-      }
-
       $isGoNode = $this->goSite->isGoNid($pathParts[2]);
       if (!is_null($isGoNode)) {
         if ($this->goSite->useAbsoluteUrls() || ($isGoNode xor $this->goSite->isGoSite())) {
-          $options['absolute'] = TRUE;
-          $options['base_url'] = $isGoNode ?
+          $baseUrl = $isGoNode ?
             $this->goSite->getGoBaseUrl() :
             $this->goSite->getCmsBaseUrl();
         }
       }
+    }
+    else {
+      // For non-node internal paths, make them absolute for Go and external
+      // clients.
+      if ($this->goSite->useAbsoluteUrls() || $this->goSite->isGoSite()) {
+        $baseUrl = $this->goSite->getCmsBaseUrl();
+      }
+    }
+
+    if ($baseUrl) {
+      $options['absolute'] = TRUE;
+      $options['base_url'] = $baseUrl;
     }
 
     return $path;
