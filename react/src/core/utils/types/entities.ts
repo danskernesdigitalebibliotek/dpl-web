@@ -7,6 +7,7 @@ import {
   InterLibraryLoan,
   ManifestationReviewFieldsFragment,
   ManifestationsSimpleFieldsFragment,
+  Publizon,
   Relations,
   WorkMediumFragment,
   WorkSmallFragment
