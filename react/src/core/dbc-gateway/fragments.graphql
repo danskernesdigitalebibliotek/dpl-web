@@ -67,7 +67,6 @@ fragment ManifestationsSimpleFields on Manifestation {
   }
   creators {
     display
-    nameSort
     __typename
   }
   publisher
@@ -94,14 +93,12 @@ fragment ManifestationsSimpleFields on Manifestation {
       creators {
         persons {
           display
-          nameSort
           firstName
           lastName
           attributeToName
         }
         corporations {
           display
-          nameSort
           main
         }
       }
@@ -312,9 +309,6 @@ fragment WorkMedium on Work {
     materialTypeSpecific {
       display
     }
-  }
-  creators {
-    nameSort
   }
   mainLanguages {
     display

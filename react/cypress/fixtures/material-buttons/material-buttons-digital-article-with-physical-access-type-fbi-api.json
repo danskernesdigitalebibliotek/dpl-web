@@ -10,8 +10,7 @@
       "creators": [
         {
           "display": "Leif Becker Jensen",
-          "__typename": "Person",
-          "nameSort": "becker jensen leif"
+          "__typename": "Person"
         }
       ],
       "series": [
@@ -97,7 +96,6 @@
             "creators": [
               {
                 "display": "Leif Becker Jensen",
-                "nameSort": "becker jensen leif",
                 "__typename": "Person"
               }
             ],
@@ -193,7 +191,6 @@
           "creators": [
             {
               "display": "Leif Becker Jensen",
-              "nameSort": "becker jensen leif",
               "__typename": "Person"
             }
           ],
@@ -288,7 +285,6 @@
           "creators": [
             {
               "display": "Leif Becker Jensen",
-              "nameSort": "becker jensen leif",
               "__typename": "Person"
             }
           ],
