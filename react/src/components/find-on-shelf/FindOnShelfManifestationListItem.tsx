@@ -26,7 +26,7 @@ const FindOnShelfManifestationListItem: FC<
   const t = useText();
 
   const shelfmarkFullText = shelfmark
-    ? `${shelfmark.shelfmark} ${shelfmark.postfix}`
+    ? [shelfmark.shelfmark, shelfmark.postfix].filter(Boolean).join(" · ")
     : undefined;
 
   const locationArrayWithShelfmark = [
