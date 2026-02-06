@@ -7,10 +7,16 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - 'go/**'
+      - '.github/workflows/go-*.yml'
   pull_request:
     branches:
       - main
       - develop
+    paths:
+      - 'go/**'
+      - '.github/workflows/go-*.yml'
 
 # List of jobs
 jobs:

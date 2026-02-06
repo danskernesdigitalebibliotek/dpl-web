@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - 'cms/**'
+      - '.github/workflows/cms-*.yml'
 
 jobs:
   SendToPoeditor:

@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - 'design-system/**'
+      - '.github/workflows/design-system-*.yml'
 
 jobs:
   github-pages:
