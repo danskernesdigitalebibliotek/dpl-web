@@ -1,0 +1,254 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: e68b90e6-cd35-44c6-9e32-c05c982ed315
+  bundle: page
+  default_langcode: da
+  depends:
+    4052479c-0f12-4a17-8466-dedd4409355a: node
+    f57e40b2-c113-49fa-a39b-dee7c3ed5ea4: node
+    e0850f71-b87a-4510-a612-6319e18a61b4: node
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Opret bruger'
+  created:
+    -
+      value: 1709035370
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Opret bruger | DPL CMS'
+  path:
+    -
+      alias: /opret-bruger
+      langcode: und
+      pathauto: 1
+  field_display_titles:
+    -
+      value: true
+  field_hero_title:
+    -
+      value: 'Opret bruger'
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: faa94b3f-ae3f-4898-aa01-f944b7f11364
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1709035438
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Du skal være oprettet som bruger for at kunne reservere, låne og anvende alle vores digitale tilbud. Vælg hvilken type biblioteksbruger du vil oprette. Du skal have dit MitID klar for at kunne gennemføre oprettelsen.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: fc02ecc4-782b-4ff9-ac68-0bc76271cd46
+          bundle: user_registration_linklist
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1713950229
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: fe70e854-3c88-41cf-bcec-952d4711c4ea
+          bundle: links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1709036205
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              target_uuid: 4052479c-0f12-4a17-8466-dedd4409355a
+              title: 'Læs reglement'
+              options:
+                href: /node/11
+                data-entity-type: node
+                data-entity-uuid: 4052479c-0f12-4a17-8466-dedd4409355a
+                data-entity-substitution: canonical
+            -
+              target_uuid: f57e40b2-c113-49fa-a39b-dee7c3ed5ea4
+              title: 'Se gebyr- og erstatningstakster'
+              options:
+                href: /node/9
+                data-entity-type: node
+                data-entity-uuid: f57e40b2-c113-49fa-a39b-dee7c3ed5ea4
+                data-entity-substitution: canonical
+            -
+              target_uuid: e0850f71-b87a-4510-a612-6319e18a61b4
+              title: 'Læs om hvordan vi behandler dine personoplysninger'
+              options:
+                href: /node/10
+                data-entity-type: node
+                data-entity-uuid: e0850f71-b87a-4510-a612-6319e18a61b4
+                data-entity-substitution: canonical
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 0d3c067e-538d-4543-9cff-b5d975b38386
+          bundle: user_registration_section
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1709035391
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_user_registration_items:
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: 1355276f-bd70-40c6-a329-f628c9f8ea8b
+                  bundle: user_registration_item
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1709035391
+                  behavior_settings:
+                    -
+                      value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
+                  field_body:
+                    -
+                      value: '<p>For at kunne oprette dig som bruger, skal du være fyldt 18 år. Du skal desuden have læst og accepteret vores reglement og takster og være informeret om, hvordan vi behandler dine personoplysninger.&nbsp;</p>'
+                      format: basic
+                  field_display_in_navigation:
+                    -
+                      value: true
+                  field_link_target:
+                    -
+                      value: _self
+                  field_navigation_title:
+                    -
+                      value: Voksen
+                  field_registration_link:
+                    -
+                      uri: 'internal:/user/registration/adgangsplatformen/auth'
+                      title: 'Opret dig som voksenbruger'
+                      options: {  }
+                  field_title:
+                    -
+                      value: Voksne
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: cdb360a6-a79a-4688-8d3b-2a2e2f6fdac8
+                  bundle: user_registration_item
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1709039137
+                  behavior_settings:
+                    -
+                      value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
+                  field_body:
+                    -
+                      value: '<p>For at kunne oprette dig som bruger, skal du være fyldt 18 år. Du skal desuden have læst og accepteret vores reglement og takster og være informeret om, hvordan vi behandler dine personoplysninger.&nbsp;</p>'
+                      format: basic
+                  field_display_in_navigation:
+                    -
+                      value: true
+                  field_link_target:
+                    -
+                      value: _self
+                  field_navigation_title:
+                    -
+                      value: Barn
+                  field_registration_link:
+                    -
+                      uri: 'internal:/'
+                      title: 'Opret dig som barn'
+                      options: {  }
+                  field_title:
+                    -
+                      value: 'Opret et barn under 18 år'

@@ -1,0 +1,344 @@
+From 0558c81c358c296b1990e07559578270a13c0297 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Tue, 9 Jan 2024 11:50:52 +0100
+Subject: [PATCH] Update with Rector
+
+This is the result of running Rector on an unpatched version of the
+module:
+vendor/bin/rector process web/modules/contrib/potion/
+---
+ src/Extractor/TwigExtractor.php               | 10 ++--
+ .../Extension/TransExtractorExtension.php     |  3 +-
+ .../NodeVisitor/TranslationNodeVisitor.php    | 46 +++++++++++--------
+ .../Extractor/AnnotationExtractorTest.php     |  2 +-
+ .../src/Kernel/Extractor/PhpExtractorTest.php |  2 +-
+ .../Kernel/Extractor/TwigExtractorTest.php    |  6 +--
+ .../Kernel/Extractor/YamlExtractorTest.php    |  2 +-
+ .../src/Kernel/TranslationsExtractorTest.php  |  2 +-
+ tests/src/Kernel/TranslationsFillTest.php     |  2 +-
+ tests/src/Kernel/TranslationsImportTest.php   |  2 +-
+ 10 files changed, 45 insertions(+), 32 deletions(-)
+
+diff --git a/src/Extractor/TwigExtractor.php b/src/Extractor/TwigExtractor.php
+index e8cffcc..fcb27f5 100644
+--- a/src/Extractor/TwigExtractor.php
++++ b/src/Extractor/TwigExtractor.php
+@@ -2,6 +2,8 @@
+
+ namespace Drupal\potion\Extractor;
+
++use Twig\Environment;
++use Twig\Error\Error;
+ use Twig\Source;
+ use Symfony\Component\Finder\Finder;
+ use Drupal\potion\Exception\ExtractorException;
+@@ -14,17 +16,17 @@ class TwigExtractor extends ExtractorBase implements ExtractableInterface {
+   /**
+    * The twig environment.
+    *
+-   * @var \Twig_Environment
++   * @var \Twig\Environment
+    */
+   private $twig;
+
+   /**
+    * Constructor.
+    *
+-   * @param \Twig_Environment $twig
++   * @param \Twig\Environment $twig
+    *   Twig Env.
+    */
+-  public function __construct(\Twig_Environment $twig) {
++  public function __construct(Environment $twig) {
+     parent::__construct();
+
+     $this->twig = $twig;
+@@ -41,7 +43,7 @@ class TwigExtractor extends ExtractorBase implements ExtractableInterface {
+         $file_catalogue = $this->extractFromTemplate($file->getContents());
+         $this->catalogue->merge($file_catalogue);
+       }
+-      catch (\Twig_Error $e) {
++      catch (Error $e) {
+         throw new ExtractorException($e->getMessage(), $e->getCode(), $e);
+       }
+     }
+diff --git a/src/Twig/Extension/TransExtractorExtension.php b/src/Twig/Extension/TransExtractorExtension.php
+index 0ba3e67..5f954ed 100644
+--- a/src/Twig/Extension/TransExtractorExtension.php
++++ b/src/Twig/Extension/TransExtractorExtension.php
+@@ -2,6 +2,7 @@
+
+ namespace Drupal\potion\Twig\Extension;
+
++use Twig\Extension\AbstractExtension;
+ use Drupal\potion\Twig\NodeVisitor\TranslationNodeVisitor;
+
+ /**
+@@ -12,7 +13,7 @@ use Drupal\potion\Twig\NodeVisitor\TranslationNodeVisitor;
+  *
+  * @see \Drupal\Core\CoreServiceProvider
+  */
+-class TransExtractorExtension extends \Twig_Extension {
++class TransExtractorExtension extends AbstractExtension {
+   /**
+    * The NodeVisitor to extracts translation messages from twig.
+    *
+diff --git a/src/Twig/NodeVisitor/TranslationNodeVisitor.php b/src/Twig/NodeVisitor/TranslationNodeVisitor.php
+index adb19ae..f8e3798 100644
+--- a/src/Twig/NodeVisitor/TranslationNodeVisitor.php
++++ b/src/Twig/NodeVisitor/TranslationNodeVisitor.php
+@@ -2,6 +2,16 @@
+
+ namespace Drupal\potion\Twig\NodeVisitor;
+
++use Twig\Node\Node;
++use Twig\Environment;
++use Twig\Node\Expression\FilterExpression;
++use Twig\Node\Expression\ConstantExpression;
++use Twig\Node\Expression\ArrayExpression;
++use Twig\Node\SetTempNode;
++use Twig\Node\PrintNode;
++use Twig\Node\Expression\FunctionExpression;
++use Twig\Node\Expression\GetAttrExpression;
++use Twig\Node\Expression\NameExpression;
+ use Drupal\Core\Template\TwigNodeTrans;
+ use Twig\NodeVisitor\AbstractNodeVisitor;
+ use Drupal\potion\MessageCatalogue;
+@@ -72,16 +82,16 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+   /**
+    * {@inheritdoc}
+    */
+-  protected function doEnterNode(\Twig_Node $node, \Twig_Environment $env) {
++  protected function doEnterNode(Node $node, Environment $env) {
+     if (!$this->enabled) {
+       return $node;
+     }
+
+     // If we are on a `|trans` or `|t`.
+     if (
+-      $node instanceof \Twig_Node_Expression_Filter &&
++      $node instanceof FilterExpression &&
+       in_array($node->getNode('filter')->getAttribute('value'), ['trans', 't']) &&
+-      $node->getNode('node') instanceof \Twig_Node_Expression_Constant
++      $node->getNode('node') instanceof ConstantExpression
+     ) {
+       // Save the extracted translations in the messages collection.
+       $this->catalogue->add($node->getNode('node')->getAttribute('value'));
+@@ -98,7 +108,7 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+     // Eg. `%trans%`, plural, multilines, ...
+     // Get context on non-filter case (`%trans%`, plural, multilines, ...).
+     $context = NULL;
+-    if ($node->hasNode('options') && $node->getNode('options') instanceof \Twig_Node_Expression_Array) {
++    if ($node->hasNode('options') && $node->getNode('options') instanceof ArrayExpression) {
+       $context = $this->getContext($node->getNode('options'));
+     }
+
+@@ -142,7 +152,7 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+      *      {% plural count %}Hello {{ count }} moons.{{ node.id }}
+      *      {% endtrans %}`.
+      */
+-    if ($node->hasNode('plural') && $node->getNode('plural') instanceof \Twig_Node) {
++    if ($node->hasNode('plural') && $node->getNode('plural') instanceof Node) {
+       $singular = '';
+       if ($node->getNode('body')->hasAttribute('data')) {
+         $singular .= $node->getNode('body')->getAttribute('data');
+@@ -161,7 +171,7 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+   /**
+    * {@inheritdoc}
+    */
+-  protected function doLeaveNode(\Twig_Node $node, \Twig_Environment $env) {
++  protected function doLeaveNode(Node $node, Environment $env) {
+     return $node;
+   }
+
+@@ -175,27 +185,27 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+   /**
+    * Extracts the text for complex form of "trans" tag.
+    *
+-   * @param \Twig_Node $body
++   * @param \Twig\Node\Node $body
+    *   The node to compile.
+    *
+    * @return string
+    *   The translations strings.
+    *
+-   * @throws \Twig_Error_Syntax
++   * @throws \Twig\Error\SyntaxError
+    *
+    * @see \Drupal\Core\Template\TwigNodeTrans::compileString
+    */
+-  protected function compileString(\Twig_Node $body) {
++  protected function compileString(Node $body) {
+     $message = '';
+
+     foreach ($body as $node) {
+-      if (get_class($node) === 'Twig_Node' && $node->getNode(0) instanceof \Twig_Node_SetTemp) {
++      if (get_class($node) === 'Twig_Node' && $node->getNode(0) instanceof SetTempNode) {
+         $node = $node->getNode(1);
+       }
+
+-      if ($node instanceof \Twig_Node_Print) {
++      if ($node instanceof PrintNode) {
+         $n = $node->getNode('expr');
+-        while ($n instanceof \Twig_Node_Expression_Filter) {
++        while ($n instanceof FilterExpression) {
+           $n = $n->getNode('node');
+         }
+
+@@ -205,7 +215,7 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+         $args = $n;
+
+         // Support TwigExtension->renderVar() function in chain.
+-        if ($args instanceof \Twig_Node_Expression_Function) {
++        if ($args instanceof FunctionExpression) {
+           $args = $n->getNode('arguments')->getNode(0);
+         }
+
+@@ -215,7 +225,7 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+         // safe for templates.
+         // @see TwigExtension::getFilters()
+         $argPrefix = '@';
+-        while ($args instanceof \Twig_Node_Expression_Filter) {
++        while ($args instanceof FilterExpression) {
+           switch ($args->getNode('filter')->getAttribute('value')) {
+             case 'placeholder':
+               $argPrefix = '%';
+@@ -226,13 +236,13 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+         if ($args instanceof CheckToStringNode) {
+           $args = $args->getNode('expr');
+         }
+-        if ($args instanceof \Twig_Node_Expression_GetAttr) {
++        if ($args instanceof GetAttrExpression) {
+           $argName = [];
+           // Assemble a valid argument name by walking through expression.
+           $argName[] = $args->getNode('attribute')->getAttribute('value');
+           while ($args->hasNode('node')) {
+             $args = $args->getNode('node');
+-            if ($args instanceof \Twig_Node_Expression_Name) {
++            if ($args instanceof NameExpression) {
+               $argName[] = $args->getAttribute('name');
+             }
+             else {
+@@ -263,13 +273,13 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+   /**
+    * Retrieive the context values from a NodeExpression array.
+    *
+-   * @param \Twig_Node_Expression_Array $options
++   * @param \Twig\Node\Expression\ArrayExpression $options
+    *   A collection of \Twig_Node_Expression_Constant.
+    *
+    * @return string
+    *   The context this translation belongs to.
+    */
+-  protected function getContext(\Twig_Node_Expression_Array $options) {
++  protected function getContext(ArrayExpression $options) {
+     $args = $options->getKeyValuePairs();
+     foreach ($args as $pair) {
+       if ($pair['key']->getAttribute('value') == 'context') {
+diff --git a/tests/src/Kernel/Extractor/AnnotationExtractorTest.php b/tests/src/Kernel/Extractor/AnnotationExtractorTest.php
+index cf8b146..dac22c2 100644
+--- a/tests/src/Kernel/Extractor/AnnotationExtractorTest.php
++++ b/tests/src/Kernel/Extractor/AnnotationExtractorTest.php
+@@ -55,7 +55,7 @@ class AnnotationExtractorTest extends KernelTestBase {
+     parent::setUp();
+
+     /** @var string $extractionPath */
+-    $this->extractionPath = drupal_get_path('module', 'potion_test');
++    $this->extractionPath = \Drupal::service('extension.list.module')->getPath('potion_test');
+
+     /** @var \Drupal\potion\Extractor\AnnotationExtractor $annotationExtractor */
+     $this->annotationExtractor = $this->container->get('potion.extractor.annotation');
+diff --git a/tests/src/Kernel/Extractor/PhpExtractorTest.php b/tests/src/Kernel/Extractor/PhpExtractorTest.php
+index fd819f6..9cb95d0 100644
+--- a/tests/src/Kernel/Extractor/PhpExtractorTest.php
++++ b/tests/src/Kernel/Extractor/PhpExtractorTest.php
+@@ -55,7 +55,7 @@ class PhpExtractorTest extends KernelTestBase {
+     parent::setUp();
+
+     /** @var string $extractionPath */
+-    $this->extractionPath = drupal_get_path('module', 'potion_test');
++    $this->extractionPath = \Drupal::service('extension.list.module')->getPath('potion_test');
+
+     /** @var \Drupal\potion\Extractor\PhpExtractor $phpExtractor */
+     $this->phpExtractor = $this->container->get('potion.extractor.php');
+diff --git a/tests/src/Kernel/Extractor/TwigExtractorTest.php b/tests/src/Kernel/Extractor/TwigExtractorTest.php
+index 2d26711..fdca155 100644
+--- a/tests/src/Kernel/Extractor/TwigExtractorTest.php
++++ b/tests/src/Kernel/Extractor/TwigExtractorTest.php
+@@ -35,7 +35,7 @@ class TwigExtractorTest extends KernelTestBase {
+   /**
+    * The Twig environment loaded with the sandbox extension.
+    *
+-   * @var \Twig_Environment
++   * @var \Twig\Environment
+    */
+   private $twig;
+
+@@ -55,11 +55,11 @@ class TwigExtractorTest extends KernelTestBase {
+   protected function setUp(): void {
+     parent::setUp();
+
+-    /** @var \Twig_Environment $twig */
++    /** @var \Twig\Environment $twig */
+     $this->twig = $this->container->get('twig');
+
+     /** @var string $extractionPath */
+-    $this->extractionPath = drupal_get_path('module', 'potion_test') . DIRECTORY_SEPARATOR . 'templates';
++    $this->extractionPath = \Drupal::service('extension.list.module')->getPath('potion_test') . DIRECTORY_SEPARATOR . 'templates';
+
+     $po_items = [
+       [
+diff --git a/tests/src/Kernel/Extractor/YamlExtractorTest.php b/tests/src/Kernel/Extractor/YamlExtractorTest.php
+index 412b3d6..00babe8 100644
+--- a/tests/src/Kernel/Extractor/YamlExtractorTest.php
++++ b/tests/src/Kernel/Extractor/YamlExtractorTest.php
+@@ -55,7 +55,7 @@ class YamlExtractorTest extends KernelTestBase {
+     parent::setUp();
+
+     /** @var string $extractionPath */
+-    $this->extractionPath = drupal_get_path('module', 'potion_test');
++    $this->extractionPath = \Drupal::service('extension.list.module')->getPath('potion_test');
+
+     /** @var \Drupal\potion\Extractor\YamlExtractor $yamlExtractor */
+     $this->yamlExtractor = $this->container->get('potion.extractor.yaml');
+diff --git a/tests/src/Kernel/TranslationsExtractorTest.php b/tests/src/Kernel/TranslationsExtractorTest.php
+index 137a01a..a9c6495 100644
+--- a/tests/src/Kernel/TranslationsExtractorTest.php
++++ b/tests/src/Kernel/TranslationsExtractorTest.php
+@@ -59,7 +59,7 @@ class TranslationsExtractorTest extends TranslationsTestsBase {
+     $this->fileSystem = $this->container->get('file_system');
+
+     /** @var string $extractionPath */
+-    $this->extractionPath = drupal_get_path('module', 'potion_test');
++    $this->extractionPath = \Drupal::service('extension.list.module')->getPath('potion_test');
+   }
+
+   /**
+diff --git a/tests/src/Kernel/TranslationsFillTest.php b/tests/src/Kernel/TranslationsFillTest.php
+index 6f1124d..4bfe1e0 100644
+--- a/tests/src/Kernel/TranslationsFillTest.php
++++ b/tests/src/Kernel/TranslationsFillTest.php
+@@ -48,7 +48,7 @@ class TranslationsFillTest extends TranslationsTestsBase {
+     $this->translationsFill = $this->container->get('potion.translations.fill');
+
+     /** @var string $translationsPath */
+-    $this->translationsPath = drupal_get_path('module', 'potion_test') . DIRECTORY_SEPARATOR . 'assets';
++    $this->translationsPath = \Drupal::service('extension.list.module')->getPath('potion_test') . DIRECTORY_SEPARATOR . 'assets';
+   }
+
+   /**
+diff --git a/tests/src/Kernel/TranslationsImportTest.php b/tests/src/Kernel/TranslationsImportTest.php
+index 61a4198..a777c1d 100644
+--- a/tests/src/Kernel/TranslationsImportTest.php
++++ b/tests/src/Kernel/TranslationsImportTest.php
+@@ -47,7 +47,7 @@ class TranslationsImportTest extends TranslationsTestsBase {
+     $this->translationsImport = $this->container->get('potion.translations.import');
+
+     /** @var string $translationsPath */
+-    $this->translationsPath = drupal_get_path('module', 'potion_test') . DIRECTORY_SEPARATOR . 'assets';
++    $this->translationsPath = \Drupal::service('extension.list.module')->getPath('potion_test') . DIRECTORY_SEPARATOR . 'assets';
+   }
+
+   /**
+--
+2.39.3 (Apple Git-145)+GitX

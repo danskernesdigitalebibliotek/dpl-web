@@ -1,0 +1,3 @@
+fix database collation:
+  title: 'Fix database collation'
+  description: 'Performs corrections of database collations.'

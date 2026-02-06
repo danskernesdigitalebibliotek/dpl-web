@@ -1,0 +1,15 @@
+uuid: 575eadf7-1b4d-4b80-bf4b-264fe644c632
+langcode: en
+status: true
+dependencies: {  }
+name: flag_icon
+label: 'Flag icon'
+effects:
+  060afe06-1bf3-4538-a28a-0372ca84b055:
+    uuid: 060afe06-1bf3-4538-a28a-0372ca84b055
+    id: image_scale
+    weight: 1
+    data:
+      width: 36
+      height: null
+      upscale: false

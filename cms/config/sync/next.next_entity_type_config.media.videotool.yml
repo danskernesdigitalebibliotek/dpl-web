@@ -1,0 +1,11 @@
+uuid: c272d50e-33dc-4ba3-944c-43b256046590
+langcode: en
+status: true
+dependencies: {  }
+id: media.videotool
+site_resolver: site_selector
+configuration:
+  sites:
+    go: go
+revalidator: cache_tag
+revalidator_configuration: {  }

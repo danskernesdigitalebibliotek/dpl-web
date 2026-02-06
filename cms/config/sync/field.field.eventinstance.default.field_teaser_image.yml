@@ -1,0 +1,29 @@
+uuid: f8f05b43-e3e3-4f88-b18c-d1c6785d4c63
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_teaser_image
+    - media.type.image
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_teaser_image
+field_name: field_teaser_image
+entity_type: eventinstance
+bundle: default
+label: 'Teaser image'
+description: 'The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src="/themes/custom/novel/images/teaser-text-image.jpg" /><br /><br /><hr/>'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

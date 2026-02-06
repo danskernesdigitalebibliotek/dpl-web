@@ -1,0 +1,36 @@
+uuid: aa779725-45a1-4198-accb-98faae8f3f47
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.breadcrumb_children.field_breadcrumb_target
+    - field.field.paragraph.breadcrumb_children.field_show_subtitles
+    - field.field.paragraph.breadcrumb_children.field_title
+    - paragraphs.paragraphs_type.breadcrumb_children
+id: paragraph.breadcrumb_children.preview
+targetEntityType: paragraph
+bundle: breadcrumb_children
+mode: preview
+content:
+  field_show_subtitles:
+    type: boolean
+    label: above
+    settings:
+      format: unicode-yes-no
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_breadcrumb_target: true
+  search_api_excerpt: true

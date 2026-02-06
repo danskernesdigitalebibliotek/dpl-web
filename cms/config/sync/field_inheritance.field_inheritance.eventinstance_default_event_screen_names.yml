@@ -1,0 +1,14 @@
+uuid: 96438ecf-b991-4e51-b0be-860c23dfc8cf
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_screen_names
+label: 'Event screen names'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_screen_names
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_screen_names
+plugin: entity_reference_inheritance

@@ -1,0 +1,29 @@
+uuid: b17675d6-e00f-43e6-8cc3-19e459becfae
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_go_article_image
+    - media.type.image
+    - node.type.go_article
+id: node.go_article.field_go_article_image
+field_name: field_go_article_image
+entity_type: node
+bundle: go_article
+label: Image
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

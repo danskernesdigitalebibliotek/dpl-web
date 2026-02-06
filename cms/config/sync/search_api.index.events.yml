@@ -1,0 +1,118 @@
+uuid: 6476ceb4-e4f9-4dbc-b13a-755c12251ab2
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.server.db_search
+  module:
+    - field_inheritance
+    - recurring_events
+id: events
+name: Events
+description: ''
+read_only: false
+field_settings:
+  branch:
+    label: 'Event Branch'
+    datasource_id: 'entity:eventinstance'
+    property_path: branch
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
+  date:
+    label: 'Event Date'
+    datasource_id: 'entity:eventinstance'
+    property_path: date
+    type: date
+    dependencies:
+      module:
+        - recurring_events
+  end_value:
+    label: 'Event Date » End date value'
+    datasource_id: 'entity:eventinstance'
+    property_path: 'date:end_value'
+    type: date
+    dependencies:
+      module:
+        - recurring_events
+  event_automatic_list_hide:
+    label: 'Event Hide in automatic lists'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_automatic_list_hide
+    type: boolean
+    dependencies:
+      module:
+        - field_inheritance
+  event_categories:
+    label: 'Event categories'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_categories
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
+  event_description:
+    label: 'Event description'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_description
+    type: text
+    dependencies:
+      module:
+        - field_inheritance
+  event_tags:
+    label: 'Event tags'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_tags
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
+  status:
+    label: Published
+    datasource_id: 'entity:eventinstance'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - recurring_events
+  title:
+    label: 'Event title'
+    datasource_id: 'entity:eventinstance'
+    property_path: title
+    type: text
+    dependencies:
+      module:
+        - field_inheritance
+datasource_settings:
+  'entity:eventinstance':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  ignorecase:
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+    all_fields: true
+    fields:
+      - event_description
+      - title
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  delete_on_fail: true
+  index_directly: true
+  track_changes_in_references: true
+server: db_search

@@ -1,0 +1,25 @@
+uuid: f6f9c46f-2511-4616-bea9-dab5db49f80a
+langcode: en
+status: true
+dependencies:
+  module:
+    - dynamic_entity_reference
+    - node
+    - paragraphs
+    - recurring_events
+id: paragraph.field_content_references
+field_name: field_content_references
+entity_type: paragraph
+type: dynamic_entity_reference
+settings:
+  exclude_entity_types: false
+  entity_type_ids:
+    node: node
+    eventseries: eventseries
+module: dynamic_entity_reference
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

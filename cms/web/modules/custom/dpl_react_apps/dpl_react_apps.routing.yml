@@ -1,0 +1,37 @@
+dpl_react_apps.search_result:
+  path: '/search'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::search'
+  requirements:
+    _permission: 'access content'
+
+dpl_react_apps.advanced_search:
+  path: '/advanced-search'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearch'
+  requirements:
+    _permission: 'access content'
+
+dpl_react_apps.advancedsearch:
+  path: '/advancedsearch'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::advancedSearchV2'
+  requirements:
+    _permission: 'access content'
+
+dpl_react_apps.work:
+  path: '/work/{wid}'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::work'
+    _title_callback: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::workTitle'
+  requirements:
+    _permission: 'access content'
+
+dpl_react_apps.reader:
+  path: '/reader'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::reader'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: true

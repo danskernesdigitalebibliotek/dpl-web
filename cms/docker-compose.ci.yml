@@ -1,0 +1,65 @@
+x-links: &links
+  - 'wiremock:fbi.dpl-cms.local'
+  - 'wiremock:fbs.dpl-cms.local'
+  - 'wiremock:adgangsplatformen.dpl-cms.local'
+  # For mapp-tracking.cy.ts
+  - 'wiremock:responder.wt-safetag.com'
+
+services:
+  node-chrome:
+    build:
+      context: .
+      dockerfile: docker/node-chromium.dockerfile
+    links: *links
+    volumes:
+      - 'projectroot:/app'
+    depends_on:
+      - wiremock
+    environment:
+      CYPRESS_INSTALL_BINARY: 0
+      YARN_CACHE_FOLDER: '/app/.cache/yarn'
+
+  cypress:
+    image: cypress/included:13.5.0
+    links: *links
+    volumes:
+      - 'projectroot:/app'
+      - './cypress/tsconfig.json:/app/tsconfig.json'
+    working_dir: '/app'
+    depends_on:
+      - wiremock
+    environment:
+      CYPRESS_BASE_URL: "http://varnish:8080"
+
+  wiremock:
+    image: wiremock/wiremock:2.32.0
+    # The following options are used:
+    # --local-response-templating lets WireMock transfer values from request
+    # to mocked response
+    # --enable-stub-cors is required to make a browser running React
+    # components request resources.
+    # --verbose makes it easier to see requests and whether they are matched
+    # or not.
+    command: "--port=80 --https-port=443 --local-response-templating --enable-stub-cors --verbose --disable-banner"
+    volumes:
+      - 'projectroot:/app'
+    ports:
+      - 80
+      - 443
+    environment:
+      VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+      VIRTUAL_PORT: 80
+
+  cli:
+    links: *links
+    environment:
+      CI: true
+      LAGOON_ENVIRONMENT_TYPE: ci
+
+  php:
+    depends_on:
+      - wiremock
+    links: *links
+    environment:
+      CI: true
+      LAGOON_ENVIRONMENT_TYPE: ci

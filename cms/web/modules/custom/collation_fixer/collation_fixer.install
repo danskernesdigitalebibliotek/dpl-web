@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the collation_fixer module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\collation_fixer\CollationMismatch;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_requirements().
+ *
+ * A 'runtime' phase check (admin/reports/status) for checking database
+ * collation status.
+ */
+function collation_fixer_requirements(string $phase): array {
+  if ($phase == 'runtime') {
+    /** @var \Drupal\collation_fixer\CollationFixer $collation_fixer */
+    $collation_fixer = \Drupal::service('collation_fixer.collation_fixer');
+    $wrong_collations = $collation_fixer->checkCollation();
+
+    if (empty($wrong_collations)) {
+      return [
+        'collation_fixer' => [
+          'title' => t('Database collation status'),
+          'value' => t('OK'),
+          'description' => t('All tables have the correct database collation.'),
+          'severity' => REQUIREMENT_OK,
+        ],
+      ];
+    }
+    else {
+      $description['status'] = [
+        '#markup' => t(
+          'The following %count tables do not have the correct database collation and/or charset:',
+          ['%count' => count($wrong_collations)],
+        ),
+      ];
+      $description['tables'] = [
+        '#type' => 'table',
+        '#header' => [
+          'table' => t('Fix table'),
+          'current_charset' => t('Current charset'),
+          'current_collation' => t('Current collation'),
+          'expected_charset' => t('Expected charset'),
+          'expected_collation' => t('Expected collation'),
+        ],
+      ];
+      $description['tables']['#rows'] = array_map(function (CollationMismatch $mismatch) {
+        return [
+          'table' => [
+            'data' => (new Link($mismatch->actual->table, Url::fromRoute('collation_fixer.confirm', ['table' => $mismatch->actual->table])))->toRenderable(),
+          ],
+          'current_charset' => $mismatch->actual->charset,
+          'current_collation' => $mismatch->actual->collation,
+          'expected_charset' => $mismatch->expected->charset,
+          'expected_collation' => $mismatch->expected->collation,
+        ];
+      }, $wrong_collations);
+      /** @var \Drupal\Core\Render\RendererInterface $renderer */
+      $renderer = \Drupal::service('renderer');
+      return [
+        'collation_fixer' => [
+          'title' => t('Database collation check'),
+          'value' => t('Error'),
+          'description' => $renderer->renderInIsolation($description),
+          'severity' => REQUIREMENT_ERROR,
+        ],
+      ];
+    }
+  }
+  else {
+    // Function must return an array.
+    return [];
+  }
+}

@@ -1,0 +1,24 @@
+uuid: 10cdf733-90b6-49db-bc0d-24da9ab8cbb2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_author_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
+  module:
+    - user
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content: {  }
+hidden:
+  field_author_name: true
+  field_last_password_reset: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
+  langcode: true
+  member_for: true
+  search_api_excerpt: true

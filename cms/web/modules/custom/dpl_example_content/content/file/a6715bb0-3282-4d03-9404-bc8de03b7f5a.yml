@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: a6715bb0-3282-4d03-9404-bc8de03b7f5a
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: logoeksempelbib.png
+  uri:
+    -
+      value: 'public://2024-07/logoeksempelbib.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 3387
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1719836437

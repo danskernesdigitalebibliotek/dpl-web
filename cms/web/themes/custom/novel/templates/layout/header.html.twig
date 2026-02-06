@@ -1,0 +1,84 @@
+{{ attach_library('novel/header') }}
+<header class="header">
+    <div class="header__logo-desktop">
+            {{ logo }}
+    </div>
+    <div class="header__menu">
+        <nav class="header__menu-first" aria-label="Primary site navigation">
+            <div>
+                <div class="header__menu-navigation-mobile">
+                  <button
+                  class="header__button header__button--right-border"
+                  id="header-sidebar-nav__toggle"
+                  aria-controls="sidebarNav"
+                  aria-expanded="false"
+                  >
+                    <div class="pagefold-parent--small
+                    header__menu-navigation-pagefold">
+                        <div class="pagefold-triangle--small"></div>
+                        <img width="20" height="14" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-menu.svg" alt="List of bookmarks"/>
+                    </div>
+                  </button>
+                  <div class="header__menu-navigation-logo">
+                    {{ logo }}
+                  </div>
+                </div>
+                {{ drupal_menu('main') }}
+            </div>
+      {{ patron_menu }}
+            <div class="header__button-responsive-switch">
+              {% if opening_hours_url %}
+                <a href="{{ opening_hours_url }}"
+                   class="header__button header__button--left-border">
+                  <img class="header__button-icon" loading="lazy" width="24"
+                       height="24"
+                       src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg"
+                       alt="clock icon"/>
+                  <span
+                    class="header__button-text">{{ 'Opening hours'|t }}</span>
+                </a>
+              {% else %}
+                {{ opening_hours_sidebar_small }}
+              {% endif %}
+                <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border">
+                    <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="{{ 'List of bookmarks'|t({}, {context: 'Header'}) }}"/>
+                    <span class="header__button-text">{{ 'Liked'|t({}, {context: 'Global'}) }}</span>
+                </a>
+            </div>
+        </nav>
+        {{ search_header }}
+    </div>
+  {% if opening_hours_url %}
+    <div class="header__clock">
+      <div class="pagefold-parent--medium">
+        <div class="pagefold-triangle--medium"></div>
+      </div>
+      <a href="{{ opening_hours_url }}" class="header__clock-items">
+        <img loading="lazy" width="58" height="58"
+             src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg"
+             class="mb-8" alt=""/>
+        <span class="text-small-caption link-tag">{{ 'Opening hours'|t }}</span>
+      </a>
+    </div>
+  {% else %}
+    {{ opening_hours_sidebar_large }}
+  {% endif %}
+</header>
+<div class="header-sidebar-nav" data-open="closed">
+    <div class="header-sidebar-nav__background-wrapper">
+      <div class="header-sidebar-nav__menu-wrapper">
+        <div
+          class="header-sidebar-nav__close-menu-button"
+          id="js-header-sidebar-nav__close-menu-button"
+          tabIndex="0"
+          role="button"
+          aria-label="Close menu"
+        >
+           {{ source(directory ~ '/themes/custom/novel/assets/dpl-design-system/icons/collection/CloseLarge.svg') }}
+        </div>
+        <nav aria-label="Sidebar site navigation">
+           {{ drupal_menu('main') }}
+        </nav>
+      </div>
+    </div>
+  </div>

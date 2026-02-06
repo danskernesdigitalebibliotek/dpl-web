@@ -1,0 +1,26 @@
+{% set publication_date = node.created.value %}
+
+{% if node.field_publication_date.value is not empty %}
+  {% set publication_date = node.field_publication_date.value|date('U') %}
+{% endif %}
+
+{% if node.bundle != 'page' %}
+  {% set date_tag = publication_date|format_date('date_full_month') %}
+{% endif %}
+
+{% if node.bundle == 'article' %}
+  {% set category_tag = content.field_categories.0 %}
+{% endif %}
+
+{{ include('@novel/components/card.html.twig'
+  , {
+  attributes: attributes,
+  media: content.field_teaser_image,
+  variant: 'x-large',
+  has_media: (content.field_teaser_image.0),
+  teaser_text: content.field_teaser_text,
+  type_tag: category_tag|default(node.type.entity.label()),
+  date_tag: date_tag,
+  title: label,
+  url: url,
+}, false) }}

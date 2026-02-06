@@ -1,0 +1,136 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Drupal\dpl_go;
+
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
+
+/**
+ * Ensures `www.` prefix is stripped from cookie_domain.
+ *
+ * On sites whose primary domain starts with `www`, Drupal sets the cookie
+ * domain to `.www.<site>` per default. This means that the cookie isn't shared
+ * with `www.go.<site>` and the login doesn't work. In these cases we set it
+ * explicitly without the `.www` prefix.
+ */
+class DplGoServiceProvider implements ServiceModifierInterface {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function alter(ContainerBuilder $container): void {
+    $this->configureCookieDomain($container);
+  }
+
+  /**
+   * Configure cookie domain for sites using www. prefix.
+   *
+   * Without this, Drupal will set the cookie domain to `.www.something.tld`,
+   * but the Go site is assigned the name `www.go.something.tld`, so the cookies
+   * Go site cannot see the main site cookies.
+   *
+   * So in this case, set the cookie domain to `.something.tld`.
+   */
+  public function configureCookieDomain(ContainerBuilder $container): void {
+    $parameter = 'session.storage.options';
+
+    if (!$container->getParameterBag()->has($parameter)) {
+      return;
+    }
+
+    /** @var array<string, string> $cookieSettings */
+    $cookieSettings = $container->getParameter($parameter);
+
+    // The cookie_domain shouldn't be set as this comes directly from the
+    // services.yml file, but for safety, use any configured value.
+    if (isset($cookieSettings['cookie_domain'])) {
+      $cookieDomain = $cookieSettings['cookie_domain'];
+    }
+    else {
+      ['host' => $cookieDomain] = $this->getLagoonRouteSchemeAndHost();
+
+      // Add the dot to mimic how Drupal generates it.
+      $cookieDomain = '.' . $cookieDomain;
+    }
+
+    // If there's no www prefix, we don't need to do anything.
+    if (!str_starts_with($cookieDomain, '.www.')) {
+      return;
+    }
+
+    $cookieDomain = substr($cookieDomain, 4);
+
+    $cookieSettings['cookie_domain'] = $cookieDomain;
+
+    $container->setParameter($parameter, $cookieSettings);
+  }
+
+  /**
+   * Configure CORS.
+   *
+   * The next module pre-2.0.1 automatically set allowedOrigins to `*` and
+   * enabled CORS, which is a gaping security hole. 2.0.1 doesn't anymore, so we
+   * need to configure CORS ourselves.
+   */
+  public function configureCors(ContainerBuilder $container): void {
+    /** @var array{'enabled': bool, 'allowedOrigin': string[]} $corsConfig */
+    $corsConfig = $container->getParameter('cors.config');
+    if (!$corsConfig['enabled']) {
+      // When running locally, allow any origin, as there's no accounting for
+      // local setups.
+      if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'local') {
+        $allowedOrigin = '*';
+      }
+      else {
+        ['scheme' => $scheme, 'host' => $host] = $this->getLagoonRouteSchemeAndHost();
+        if (str_starts_with($host, 'www.')) {
+          $host = 'www.go.' . substr($host, 4);
+        }
+        else {
+          $host = 'go.' . $host;
+        }
+
+        $allowedOrigin = $scheme . '//' . $host;
+      }
+
+      $corsConfig['allowedOrigins'] = [$allowedOrigin];
+      $corsConfig['enabled'] = TRUE;
+      $container->setParameter('cors.config', $corsConfig);
+    }
+  }
+
+  /**
+   * Return the Lagoon route split into scheme and host.
+   *
+   * We can't use the service from `dpl_lagoon` for this, as obviously we
+   * can't use the container while building it.
+   *
+   * @return array{'scheme': string, 'host': string}
+   *   Scheme and host from LAGOON_ROUTE, or null if unset.
+   */
+  protected function getLagoonRouteSchemeAndHost(): array {
+    // We can't use the service from `dpl_lagoon` for this, as obviously we
+    // can't use the container while building it.
+    $route = getenv('LAGOON_ROUTE');
+
+    if (!$route) {
+      // Without a route, we can't do much.
+      throw new \RuntimeException('No LAGOON_ROUTE variable');
+    }
+
+    // Split off the scheme.
+    $parts = explode('//', $route, 2);
+
+    if (!isset($parts[1]) || !$parts[1]) {
+      throw new \RuntimeException('LAGOON_ROUTE variable corrupted');
+    }
+
+    return [
+      'scheme' => $parts[0],
+      'host' => $parts[1],
+    ];
+  }
+
+}

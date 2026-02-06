@@ -1,0 +1,11 @@
+name: DPL Login
+description: Handles authentication/login via Adgangsplatformen
+package: DPL
+
+type: module
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - dpl_fbs:dpl_fbs
+  - openid_connect:openid_connect
+  - dpl_library_token:dpl_library_token

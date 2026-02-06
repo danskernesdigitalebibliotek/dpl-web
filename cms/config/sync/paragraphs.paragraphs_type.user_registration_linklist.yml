@@ -1,0 +1,16 @@
+uuid: 8c053dc3-0393-4391-acce-33491b320300
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      user_creation: user_creation
+id: user_registration_linklist
+label: 'User registration linklist'
+icon_uuid: null
+icon_default: null
+description: 'This paragraph determines the placement of shortcuts to individual User Registration Section paragraphs. It allows administrators to specify where these shortcuts should appear.'
+behavior_plugins: {  }

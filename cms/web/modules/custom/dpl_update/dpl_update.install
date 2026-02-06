@@ -1,0 +1,1088 @@
+<?php
+
+/**
+ * @file
+ * Base update hooks.
+ *
+ * These get run BEFORE config-import.
+ * This is where you enable/disable modules, as core.extension.yml is in
+ * config_ignore as library administrators can add their own modules.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleInstallerInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_library_token\LibraryTokenHandler;
+use Drupal\dpl_login\Adgangsplatformen\Config;
+use Drupal\dpl_update\Services\ConfigIgnore;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\locale\SourceString;
+use Drupal\locale\StringDatabaseStorage;
+use Drupal\next\Entity\NextSite;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
+
+/**
+ * Helper function to install modules.
+ *
+ * @param string[] $modules
+ *   The modules to install.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_install_modules(array $modules): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->install($modules);
+  $modules_string = implode(', ', $modules);
+  return "Enabled modules: {$modules_string}.";
+}
+
+/**
+ * Helper function to uninstall modules.
+ *
+ * @param string[] $modules
+ *   The modules to install.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_uninstall_modules(array $modules): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->uninstall($modules);
+  $modules_string = implode(', ', $modules);
+  return "Uninstalled modules: {$modules_string}.";
+}
+
+/**
+ * Remove elements from the list of automatically ignored config entities.
+ *
+ * The elements have been added because an administrative user have updated the
+ * configuration. This may only be a temporary measure. Unignoring entities will
+ * bring them back to following the default of the project.
+ *
+ * @param string[] $entities
+ *   The names of the entities which should no longer be ignored.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_config_auto_unignore_entites(array $entities): string {
+  $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore_auto.settings');
+  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
+
+  $updated_ignored_configs = array_diff($ignored_configs, $entities);
+  $config_ignore_settings->set('ignored_config_entities', $updated_ignored_configs)->save();
+  $removed_ignored_entities_string = implode(', ', array_intersect($ignored_configs, $entities));
+  if ($removed_ignored_entities_string) {
+    return "Removed $removed_ignored_entities_string from config_ignore_auto.ignored_config_entities.";
+  }
+  else {
+    return "No entities removed from config_ignore_auto.ignored_config_entities.";
+  }
+}
+
+/**
+ * Helper function, for adding translations.
+ *
+ * Generally speaking, this should be avoided, as it is DDF's responsibility
+ * to add translations. That also means that this function may overwrite
+ * translations made by DDF, or these translations may be overwritten in the
+ * future.
+ */
+function _dpl_update_update_translation(string $english, string $danish, ?string $context = NULL): string {
+  $translator = DrupalTyped::service(StringDatabaseStorage::class, 'locale.storage');
+
+  $string = $translator->findString(['source' => $english]);
+
+  if (is_null($string)) {
+    $string = new SourceString();
+    $string->setString($english);
+    $string->setStorage($translator);
+    $string->save();
+  }
+
+  $translator->createTranslation([
+    'lid' => $string->lid,
+    'language' => 'da',
+    'translation' => $danish,
+    'context' => $context,
+  ])->save();
+
+  return "'$english' has been translated to '$danish'";
+}
+
+/**
+ * Adds new data column to field storages.
+ *
+ * This update function alters the schema for custom field storage
+ * to include a new column for material type. It handles both the
+ * base table and the revision table for the field.
+ *
+ * @param string $field_type
+ *   The field type that we are updating.
+ * @param array<string> $fields
+ *   The new fields that we are adding.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_add_field_columns(string $field_type, array $fields): string {
+  // This part of the function is taken from drupal stackexchange:
+  // https://drupal.stackexchange.com/questions/255495/add-column-to-custom-field-schema
+  if (!$field_storage_configs = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->loadByProperties(['type' => $field_type])
+  ) {
+    throw new \Exception('Unable to find field type ' . $field_type);
+  }
+
+  // Get schema handler to alter table with.
+  $schema_handler = Database::getConnection()->schema();
+
+  // Loop through all configs.
+  foreach ($field_storage_configs as $field_storage) {
+
+    // Just to play safe.
+    if (!($field_storage instanceof FieldStorageDefinitionInterface)) {
+      throw new \Exception('Unexpected entity type loaded: ' . get_class($field_storage));
+    }
+
+    // Get the most updated schema from field stroage.
+    $schema = $field_storage->getSchema();
+    $table_name = str_replace('.', '__', (string) $field_storage->id());
+    $revision_table_name = str_replace('.', '_revision__', (string) $field_storage->id());
+
+    // Loop through the fields to alter the schema of table.
+    foreach ($fields as $field) {
+      $column_name = "{$field_storage->getName()}_{$field}";
+      if (!$schema_handler->fieldExists($table_name, $column_name)) {
+        $schema_handler->addField(
+          $table_name,
+          $column_name,
+          $schema['columns'][$field]
+        );
+      }
+      else {
+        // Show some warning message or error.
+        throw new \Exception(sprintf('Field %s already exists in table %s',
+          $column_name, $table_name));
+      }
+      if (!$schema_handler->fieldExists($revision_table_name, $column_name)) {
+        $schema_handler->addField(
+          $revision_table_name,
+          $column_name,
+          $schema['columns'][$field]
+        );
+      }
+      else {
+        // Show some warning message or error.
+        throw new \Exception(sprintf('Field %s already exists in table %s',
+          $column_name, $revision_table_name));
+      }
+    }
+  }
+
+  return sprintf(
+    "Added columns %s to field type %s",
+    implode(", ", $fields),
+    $field_type
+  );
+}
+
+/**
+ * Helper function to add a BNF subscription.
+ *
+ * @param string $uuid
+ *   The UUID of the subscription to add.
+ * @param string $label
+ *   The label for the subscription.
+ * @param string|null $tag_name
+ *   Optional tag name to create and associate with the subscription.
+ *   If provided, a taxonomy term will be created in the 'tags' vocabulary
+ *   and the subscription will be configured to automatically tag all
+ *   imported content with this term.
+ *
+ * @return string
+ *   Feedback message.
+ */
+function _dpl_update_add_bnf_subscription(string $uuid, string $label, ?string $tag_name = NULL): string {
+  $feedback = [];
+
+  if (!\Drupal::moduleHandler()->moduleExists('bnf_client')) {
+    return 'The bnf_client module is not enabled. Subscription could not be created.';
+  }
+
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $subscription_storage = $entity_type_manager->getStorage('bnf_subscription');
+
+  /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
+  $existing = $subscription_storage->loadByProperties([
+    'subscription_uuid' => $uuid,
+  ]);
+
+  if ($existing) {
+    return "The subscription '$label' ($uuid) already exists. Skipping creation.";
+  }
+
+  // Create the subscription.
+  $subscription_data = [
+    'subscription_uuid' => $uuid,
+    'label' => $label,
+  ];
+
+  // Create and associate taxonomy term if tag name is provided.
+  if (!empty($tag_name)) {
+    $term_storage = $entity_type_manager->getStorage('taxonomy_term');
+
+    // Check if tag already exists.
+    $existing_terms = $term_storage->loadByProperties([
+      'name' => $tag_name,
+      'vid' => 'tags',
+    ]);
+
+    if ($existing_terms) {
+      $tag_term = reset($existing_terms);
+      $feedback[] = "Found existing tag '$tag_name' (ID: {$tag_term->id()}).";
+    }
+    else {
+      // Create new taxonomy term.
+      $tag_term = Term::create([
+        'name' => $tag_name,
+        'vid' => 'tags',
+      ]);
+      $tag_term->save();
+      $feedback[] = "Created new tag '$tag_name' (ID: {$tag_term->id()}).";
+    }
+
+    // Add the tag to the subscription data.
+    $subscription_data['tags'] = [['target_id' => $tag_term->id()]];
+  }
+
+  $subscription = $subscription_storage->create($subscription_data);
+  $subscription->save();
+
+  $feedback[] = "Successfully created subscription for '$label' ($uuid).";
+
+  if (!empty($tag_name)) {
+    $feedback[] = "Subscription configured to automatically tag imported content with '$tag_name'.";
+  }
+
+  return implode("\n", $feedback);
+}
+
+/**
+ * Implements hook_requirements().
+ *
+ * Display a notice on /admin/reports/status if unsupported config is ignored.
+ *
+ * @return array<mixed>
+ *   Render array.
+ */
+function dpl_update_requirements(string $phase): array {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  $service = DrupalTyped::service(ConfigIgnore::class, 'dpl_update.config_ignore');
+  $unsupported_items = $service->getOverridenConfig();
+
+  if (empty($unsupported_items)) {
+    return [];
+  }
+
+  // Build a simple item list of the unsupported entries.
+  $list_build = [
+    '#theme' => 'item_list',
+    '#items' => array_map(static function ($item) {
+      // Cast to string just in case the service returns objects/arrays.
+      return (string) $item;
+    }, $unsupported_items),
+  ];
+
+  // Render to plain markup for the 'description' field.
+  // Status report expects a string/Markup, not a render array.
+  $renderer = DrupalTyped::service(RendererInterface::class, 'renderer');
+  $items = $renderer->renderInIsolation($list_build);
+
+  return [
+    'dpl_update_unsupported_config_ignores' => [
+      'title' => t('Unsupported configuration ignores', [], ['context' => 'dpl_update']),
+      'value' => t('Overriden configuration, that is not supported by DPL-CMS. These items will be ignored by future DPL releases, and may result in broken functionality.', [], ['context' => 'dpl_update']),
+      'description' => Markup::create($items),
+      'severity' => REQUIREMENT_WARNING,
+      'weight' => -999,
+    ],
+  ];
+}
+
+/**
+ * Run on the initial site setup.
+ *
+ * Remember to references to individual update hooks, as these updates probably
+ * will want to happen both on new and existing sites.
+ */
+function dpl_update_install(): string {
+  $messages[] = dpl_update_update_10001();
+  $messages[] = dpl_update_update_10002();
+  $messages[] = dpl_update_update_10003();
+  $messages[] = dpl_update_update_10004();
+  $messages[] = dpl_update_update_10005();
+  $messages[] = dpl_update_update_10006();
+  $messages[] = dpl_update_update_10008();
+  $messages[] = dpl_update_update_10009();
+  $messages[] = dpl_update_update_10010();
+  $messages[] = dpl_update_update_10011();
+  $messages[] = dpl_update_update_10012();
+  $messages[] = dpl_update_update_10013();
+  $messages[] = dpl_update_update_10014();
+  $messages[] = dpl_update_update_10015();
+  $messages[] = dpl_update_update_10016();
+  $messages[] = dpl_update_update_10017();
+  $messages[] = dpl_update_update_10018();
+  $messages[] = dpl_update_update_10019();
+  $messages[] = dpl_update_update_10020();
+  $messages[] = dpl_update_update_10021();
+  $messages[] = dpl_update_update_10022();
+  $messages[] = dpl_update_update_10023();
+  $messages[] = dpl_update_update_10024();
+
+  // Do not uninstall dblog module on install. It is not installed by default.
+  // $messages[] = dpl_update_update_10025()
+  $messages[] = dpl_update_update_10026();
+  $messages[] = dpl_update_update_10027();
+  $messages[] = dpl_update_update_10028();
+  $messages[] = dpl_update_update_10029();
+  $messages[] = dpl_update_update_10030();
+  $messages[] = dpl_update_update_10031();
+  $messages[] = dpl_update_update_10034();
+  $messages[] = dpl_update_update_10035();
+  $messages[] = dpl_update_update_10037();
+  $messages[] = dpl_update_update_10039();
+  $messages[] = dpl_update_update_10040();
+  $messages[] = dpl_update_update_10042();
+  $messages[] = dpl_update_update_10043();
+  $messages[] = dpl_update_update_10047();
+  $messages[] = dpl_update_update_10051();
+  $messages[] = dpl_update_update_10061();
+
+  /*
+   * dpl_update_update_10050 is not needed, when installing from scratch the
+   * deploy hook that enables bnf_client is used, which properly installs
+   * dependencies.
+   */
+
+  return implode('\r\n', $messages);
+}
+
+/**
+ * Installing config_ignore_auto module.
+ *
+ * This is mostly here as an example for how to enable modules in the future.
+ */
+function dpl_update_update_10001(): string {
+  return _dpl_update_install_modules(['config_ignore_auto']);
+}
+
+/**
+ * Install collation_fixer module.
+ */
+function dpl_update_update_10002(): string {
+  return _dpl_update_install_modules(['collation_fixer']);
+}
+
+/**
+ * Installing config_perms module.
+ */
+function dpl_update_update_10003(): string {
+  return _dpl_update_install_modules(['config_perms']);
+}
+
+/**
+ * Installing dpl_filter_paragraphs and dpl_related_content modules.
+ */
+function dpl_update_update_10004(): string {
+  return _dpl_update_install_modules(['dpl_filter_paragraphs', 'dpl_related_content']);
+}
+
+/**
+ * Installing dpl_publication.
+ */
+function dpl_update_update_10005(): string {
+  return _dpl_update_install_modules(['dpl_publication']);
+}
+
+/**
+ * Installing verf module.
+ */
+function dpl_update_update_10006(): string {
+  return _dpl_update_install_modules(['verf']);
+}
+
+/**
+ * Installing JSNLog module.
+ */
+function dpl_update_update_10008(): string {
+  return _dpl_update_install_modules(['jsnlog']);
+}
+
+/**
+ * Installing dpl_cookies.
+ */
+function dpl_update_update_10009(): string {
+  return _dpl_update_install_modules(['dpl_cookies']);
+}
+
+/**
+ * Uninstall the dpl_breadcrumb_example module if it is installed.
+ */
+function dpl_update_update_10010() : string {
+  if (\Drupal::moduleHandler()->moduleExists('dpl_example_breadcrumb')) {
+    \Drupal::service('module_installer')->uninstall(['dpl_example_breadcrumb']);
+    return "Uninstalled dpl_example_breadcrumb module.";
+  }
+  return "dpl_example_breadcrumb module was not located. Skipped removal";
+}
+
+/**
+ * Installing antibot module.
+ */
+function dpl_update_update_10011(): string {
+  return _dpl_update_install_modules(['antibot']);
+}
+
+/**
+ * Install health check module.
+ */
+function dpl_update_update_10012(): string {
+  return _dpl_update_install_modules(['health_check']);
+}
+
+/**
+ * Add translation of DKK currency suffix, for displaying event prices.
+ */
+function dpl_update_update_10013(): string {
+  return _dpl_update_update_translation(' DKK', ' kr.', 'DPL event');
+}
+
+/**
+ * Install password policy modules.
+ */
+function dpl_update_update_10014(): string {
+  return _dpl_update_install_modules([
+    'password_policy',
+    'password_policy_length',
+    'password_policy_characters',
+    'password_policy_character_types',
+  ]);
+}
+
+/**
+ * Installing editor_advanced_link.
+ */
+function dpl_update_update_10015(): string {
+  return _dpl_update_install_modules(['editor_advanced_link']);
+}
+
+/**
+ * Installing dpl_link.
+ */
+function dpl_update_update_10016(): string {
+  return _dpl_update_install_modules(['dpl_link']);
+}
+
+/**
+ * Install dpl_search module.
+ */
+function dpl_update_update_10017(): string {
+  return _dpl_update_install_modules(['dpl_search']);
+}
+
+/**
+ * Install dpl_redia_legacy module.
+ */
+function dpl_update_update_10018(): string {
+  return _dpl_update_install_modules(['dpl_redia_legacy']);
+}
+
+/**
+ * Add initial translation for paragraph error messages.
+ */
+function dpl_update_update_10019(): string {
+  $return = _dpl_update_update_translation(
+    'Error in field %field #@position (@bundle): @message',
+    'Fejl i feltet "%field" nr. #@position ("@bundle"): @message'
+  );
+
+  $return .= _dpl_update_update_translation(
+    'Error in field %field #@position (@bundle), %subfield : @message',
+    'Fejl i feltet "%field" nr. #@position ("@bundle"), %subfield : @message'
+  );
+
+  $return .= _dpl_update_update_translation(
+    'The referenced entity (%type: %id) does not exist.',
+    'Det refererede indhold (%type: %id) findes ikke, og er muligvis blevet slettet.'
+  );
+
+  return $return;
+}
+
+/**
+ * Uninstall devel_generate module.
+ */
+function dpl_update_update_10020(): string {
+  return _dpl_update_uninstall_modules(['devel_generate']);
+}
+
+/**
+ * Install typed_data, graphql, graphql_compose and consumers modules.
+ */
+function dpl_update_update_10021(): string {
+  return _dpl_update_install_modules(['typed_data', 'graphql', 'graphql_compose', 'consumers']);
+}
+
+/**
+ * Install dpl_unilogin module.
+ */
+function dpl_update_update_10022(): string {
+  return _dpl_update_install_modules(['dpl_unilogin']);
+}
+
+/**
+ * Install dpl_graphql module.
+ */
+function dpl_update_update_10023(): string {
+  return _dpl_update_install_modules(['dpl_graphql']);
+}
+
+/**
+ * Install dpl_consumers.
+ */
+function dpl_update_update_10024(): string {
+  return _dpl_update_install_modules(['dpl_consumers']);
+}
+
+/**
+ * Uninstall dblog module.
+ */
+function dpl_update_update_10025(): string {
+  return _dpl_update_uninstall_modules(['dblog']);
+}
+
+/**
+ * Install dpl_webmaster.
+ */
+function dpl_update_update_10026(): string {
+  return _dpl_update_install_modules(['dpl_webmaster']);
+}
+
+/**
+ * Install simple_oauth.
+ */
+function dpl_update_update_10027(): string {
+  return _dpl_update_install_modules(['simple_oauth']);
+}
+
+/**
+ * Uninstall config_filter.
+ */
+function dpl_update_update_10028(): string {
+  return _dpl_update_uninstall_modules(['config_filter']);
+}
+
+/**
+ * Installing dpl_logging.
+ */
+function dpl_update_update_10029(): string {
+  return _dpl_update_install_modules(['dpl_logging']);
+}
+
+/**
+ * Add initial translation for event display.
+ */
+function dpl_update_update_10030(): string {
+  $return = _dpl_update_update_translation('Expired', 'Afholdt', 'DPL event');
+
+  $return .= _dpl_update_update_translation(
+    'Date',
+    'Dato',
+    'DPL event'
+  );
+
+  return $return;
+}
+
+/**
+ * Installing simple sitemap.
+ */
+function dpl_update_update_10031(): string {
+  return _dpl_update_install_modules(['simple_sitemap']);
+}
+
+/**
+ * Installing purge queues.
+ */
+function dpl_update_update_10032(): string {
+  return _dpl_update_install_modules(['purge_queues']);
+}
+
+/**
+ * Use alternate database backend for purge queue.
+ */
+function dpl_update_update_10033(): string {
+  // @see https://git.drupalcode.org/project/purge_queues/-/blob/2.0.x/src/Plugin/Purge/Queue/AltDatabaseQueue.php?ref_type=heads#L12
+  \Drupal::configFactory()->getEditable('purge.plugins')->set('queue', 'database_alt')->save();
+  return 'Configured purge queue to use database_alt.';
+}
+
+/**
+ * Installing graphql_compose_routes.
+ */
+function dpl_update_update_10034(): string {
+  return _dpl_update_install_modules(['graphql_compose_routes']);
+}
+
+/**
+ * Introducing a two module for the Go project and Lagoon handling.
+ */
+function dpl_update_update_10035(): string {
+  return _dpl_update_install_modules(['dpl_go', 'dpl_lagoon']);
+}
+
+/**
+ * Install state log.
+ */
+function dpl_update_update_10036(): string {
+  return _dpl_update_install_modules(['state_log']);
+}
+
+/**
+ * Installing Media VideoTool.
+ */
+function dpl_update_update_10037(): string {
+  return _dpl_update_install_modules(['media_videotool']);
+}
+
+/**
+ * Adding autowire_plugin_trait for BNF.
+ */
+function dpl_update_update_10038(): string {
+  return _dpl_update_install_modules(['autowire_plugin_trait']);
+}
+
+/**
+ * Remove old field instances and storage for paragraph fields.
+ */
+function dpl_update_update_10039(): string {
+  $messages = [];
+
+  $instance = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('paragraph.go_linkbox.field_go_link');
+  if ($instance) {
+    $instance->delete();
+    $messages[] = 'Deleted field.instance: paragraph.go_linkbox.field_go_link';
+  }
+
+  $instance = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('paragraph.go_link.field_link');
+  if ($instance) {
+    $instance->delete();
+    $messages[] = 'Deleted field.instance: paragraph.go_link.field_link';
+  }
+
+  $storage = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->load('paragraph.field_go_link');
+  if ($storage) {
+    $storage->delete();
+    $messages[] = 'Deleted field.storage: paragraph.field_go_link';
+  }
+
+  return $messages
+    ? implode('; ', $messages)
+    : 'No stale paragraph field configs found.';
+}
+
+/**
+ * Installing External Auth module.
+ */
+function dpl_update_update_10040(): string {
+  return _dpl_update_install_modules(['externalauth']);
+}
+
+/**
+ * Install HTTP cache control module.
+ */
+function dpl_update_update_10041(): string {
+  return _dpl_update_install_modules(['http_cache_control']);
+}
+
+/**
+ * Uninstall JSNLog module.
+ */
+function dpl_update_update_10042(): string {
+  return _dpl_update_uninstall_modules(['jsnlog']);
+}
+
+/**
+ * Remove old ereolen config settings from both agency and patron configs.
+ */
+function dpl_update_update_10043(): string {
+  \Drupal::configFactory()
+    ->getEditable('dpl_library_agency.settings')
+    ->clear('ereolen_my_page_url')
+    ->clear('ereolen_homepage_url')
+    ->save();
+
+  \Drupal::configFactory()
+    ->getEditable('dpl_patron_page.settings')
+    ->clear('always_available_ereolen')
+    ->save();
+
+  return 'Removed old ereolen config keys from dpl_library_agency.settings and dpl_patron_page.settings.';
+}
+
+/**
+ * Unignore system.performance configuration.
+ */
+function dpl_update_update_10044(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'system.performance',
+    // We need to unignore this as well as it is handled on the same config
+    // form as system.performance.
+    'http_cache_control.settings',
+  ]);
+}
+
+/**
+ * Install BNF base module.
+ *
+ * Notice - this is ONLY the base module. The client and server modules get
+ * enabled separately.
+ */
+function dpl_update_update_10045(): string {
+  return _dpl_update_install_modules(['bnf']);
+}
+
+/**
+ * Half-ignore and un-auto-ignore core.extension.
+ */
+function dpl_update_update_10046(): string {
+  // Bring active version of `config_ignore.settings` in line with exported
+  // config right away. Might not be necessary if no modules are enabled before
+  // the next config import, but to be safe.
+  $config = \Drupal::configFactory()->getEditable('config_ignore.settings');
+  $ignored_config_entities = $config->get('ignored_config_entities') ?: [];
+
+  $import = $ignored_config_entities;
+  $import[] = 'core.extension';
+
+  $export = $ignored_config_entities;
+
+  $config->set('mode', 'intermediate');
+  $config->set('ignored_config_entities', ['import' => $import, 'export' => $export]);
+  $config->save();
+
+  return _dpl_update_config_auto_unignore_entites(['core.extension']);
+}
+
+/**
+ * Install graphql_compose_views module.
+ */
+function dpl_update_update_10047(): string {
+  return _dpl_update_install_modules(['graphql_compose_views']);
+}
+
+/**
+ * Force a new library token to be fetched because token signature has changed.
+ */
+function dpl_update_update_10048(): string {
+  $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
+  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
+  $oldToken = $handler->getToken();
+  $success_output = [];
+
+  if ($oldToken) {
+    $success_output[] = t('Old token that was not deleted: Token: @token, properties: @props', [
+      '@token' => $oldToken->token,
+      '@props' => implode(', ', array_keys((array) $oldToken)),
+    ]);
+  }
+
+  if (!$newToken = $handler->fetchToken(
+    $config->getAgencyId(),
+    $config->getClientId(),
+    $config->getClientSecret(),
+    $config->getTokenEndpoint()
+  )) {
+    return 'Failed to fetch new library token.';
+  }
+  $handler->setToken(token: $newToken);
+
+  $success_output[] = t('New token: Token: @token, properties: @props', [
+    '@token' => $newToken->token,
+    '@props' => implode(', ', array_keys((array) $newToken)),
+  ]);
+
+  return implode(' | ', $success_output);
+}
+
+/**
+ * Install drupal/next modules for cache revalidation.
+ */
+function dpl_update_update_10049(): string {
+  return _dpl_update_install_modules(['next', 'next_graphql']);
+}
+
+/**
+ * Enable queue_ui for bnf_client.
+ */
+function dpl_update_update_10050(): string {
+  if (\Drupal::moduleHandler()->moduleExists('bnf_client')) {
+    return _dpl_update_install_modules(['queue_ui']);
+  }
+
+  return "bnf_client not enabled, not enabling queue_ui";
+}
+
+/**
+ * Install graphql_compose_preview module.
+ */
+function dpl_update_update_10051(): string {
+  return _dpl_update_install_modules(['graphql_compose_preview']);
+}
+
+/**
+ * Update passwords for the go_graphql and bnf_graphql users.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10052(): string {
+
+  $update_password = function (string $user_name, string | false $password): string {
+    if (!$password) {
+      throw new \Exception(sprintf("Password for user '%s' is not set.", $user_name));
+    }
+
+    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+    $users = $entity_type_manager->getStorage('user')->loadByProperties(['name' => $user_name]);
+    $user = reset($users);
+
+    if (!($user instanceof User)) {
+      throw new \Exception(sprintf("No user found with the name: '%s'", $user_name));
+    }
+
+    $user->setPassword($password);
+    $user->save();
+
+    return sprintf("Password for user '%s' has been updated.", $user_name);
+  };
+
+  $feedback = [];
+  $feedback[] = $update_password('bnf_graphql', getenv('BNF_GRAPHQL_CONSUMER_USER_PASSWORD'));
+  $feedback[] = $update_password('go_graphql', getenv('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD'));
+
+  return implode("\n", $feedback);
+}
+
+/**
+ * Make sure to set DRUPAL_REVALIDATE_SECRET in the database.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10053(): string {
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $next_site = $entity_type_manager->getStorage('next_site')->load('go');
+
+  $revalidate_secret = getenv('DRUPAL_REVALIDATE_SECRET');
+
+  if (!$revalidate_secret) {
+    throw new \Exception('DRUPAL_REVALIDATE_SECRET environment variable is not set.');
+  }
+
+  if (!$next_site instanceof NextSite) {
+    throw new \Exception("No next site found with ID 'go'.");
+  }
+
+  $next_site->setRevalidateSecret($revalidate_secret);
+  $next_site->save();
+
+  return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
+}
+
+/**
+ * Set sites to automatically be subscribed to the GO basic subscription.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10054(): string {
+  return _dpl_update_add_bnf_subscription(
+    '4669c003-5673-46eb-9950-aa62ca4b4a2f',
+    'GO: Formidling til børn'
+  );
+}
+
+/**
+ * Add new data columns to dpl_fbi_cql_search custom field.
+ */
+function dpl_update_update_10055(): string {
+  _dpl_update_add_field_columns('dpl_fbi_cql_search', [
+    'location', 'sublocation', 'onshelf', 'sort',
+  ]);
+
+  return 'New field columns added.';
+}
+
+/**
+ * Unignore GraphQL roles.
+ */
+function dpl_update_update_10056(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'user.role.go_graphql_client',
+    'user.role.bnf_graphql_client',
+  ]);
+}
+
+/**
+ * Add first_accession_date data columns to dpl_fbi_cql_search custom field.
+ */
+function dpl_update_update_10057(): string {
+  return _dpl_update_add_field_columns('dpl_fbi_cql_search', [
+    'first_accession_date_value', 'first_accession_date_operator',
+  ]);
+}
+
+/**
+ * Update DRUPAL_REVALIDATE_SECRET in the database.
+ *
+ * @throws \Exception
+ */
+function dpl_update_update_10058(): string {
+  $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+  $next_site = $entity_type_manager->getStorage('next_site')->load('go');
+
+  $revalidate_secret = getenv('DRUPAL_REVALIDATE_SECRET');
+
+  if (!$revalidate_secret) {
+    throw new \Exception('DRUPAL_REVALIDATE_SECRET environment variable is not set.');
+  }
+
+  if (!$next_site instanceof NextSite) {
+    throw new \Exception("No next site found with ID 'go'.");
+  }
+
+  $next_site->setRevalidateSecret($revalidate_secret);
+  $next_site->save();
+
+  return "DRUPAL_REVALIDATE_SECRET environment variable set successfully.";
+}
+
+/**
+ * Add new data columns to dpl_fbi_cql_search custom field.
+ */
+function dpl_update_update_10059(): string {
+  _dpl_update_add_field_columns('dpl_fbi_cql_search', [
+    'branch',
+    'department',
+  ]);
+
+  return 'New field columns added.';
+}
+
+/**
+ * Unignore system.performance configuration.
+ *
+ * It has been ignored, as we had to disable CSS and JS aggregration with
+ * a custom script, to avoid a full on release.
+ *
+ * We also want to do this specifically *before* the config is imported,
+ * as we have added these changes to system.performance.yml, just incase
+ * something has gone wrong with the semi-manual script solution.
+ */
+function dpl_update_update_10060(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'system.performance',
+    // We need to unignore this as well as it is handled on the same config
+    // form as system.performance.
+    'http_cache_control.settings',
+  ]);
+}
+
+/**
+ * Install EVAC module for enhanced email validation.
+ */
+function dpl_update_update_10061(): string {
+  return _dpl_update_install_modules(['evac']);
+}
+
+/**
+ * Add the "Om eReolen" subscription to BNF with automatic tagging.
+ */
+function dpl_update_update_10062(): string {
+  return _dpl_update_add_bnf_subscription(
+    '6f204837-ed6f-4683-b8c9-4200005ac1ae',
+    'Om eReolen',
+    'Om eReolen'
+  );
+}
+
+/**
+ * Remove unsupported items in config_ignore_auto, if not webmaster library.
+ */
+function dpl_update_update_10063(): string {
+  if (\Drupal::moduleHandler()->moduleExists('dpl_webmaster')) {
+    return "Webmaster library detected - no items removed.";
+  }
+
+  // If not webmaster, remove offending items from config_ignore_auto.
+  // These are items that have been handpicked after brief analysis.
+  // We could also just pass all items using ->getOverridenConfig(), but
+  // once 2025.48.X has been released, we will do a new report, and then we have
+  // a better idea of whether it's safe to do.
+  return _dpl_update_config_auto_unignore_entites([
+    'core.date_format.date_full_month',
+    'scheduler.settings',
+    'openid_connect.settings',
+  ]);
+}
+
+/**
+ * Install address_dawa module.
+ */
+function dpl_update_update_10064(): string {
+  return _dpl_update_install_modules(['address_dawa']);
+}
+
+/**
+ * Adding default translations for 'Find Bibliotek'.
+ */
+function dpl_update_update_10065(): string {
+  $return = _dpl_update_update_translation('Choose library', 'Vælg bibliotek', 'Create patron');
+  $return .= _dpl_update_update_translation('Collection library', 'Afhentningsbibliotek', 'Create patron');
+  $return .= _dpl_update_update_translation('Find nearest library', 'Find nærmeste bibliotek', 'Create patron');
+  $return .= _dpl_update_update_translation('Find nearest library using your location', 'Find nærmeste bibliotek ud fra din lokation', 'Create patron');
+  $return .= _dpl_update_update_translation('Enter your address', 'Indtast din adresse', 'Create patron');
+
+  return $return;
+}
+
+/**
+ * Make sure cookieinformation settings are applied using config.
+ */
+function dpl_update_update_10066(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'cookieinformation.settings',
+  ]);
+}
+
+/**
+ * Make sure graphql compose settings are applied using config.
+ */
+function dpl_update_update_10067(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'graphql_compose.settings',
+  ]);
+}

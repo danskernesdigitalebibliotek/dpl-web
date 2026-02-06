@@ -1,0 +1,20 @@
+uuid: 458275c0-5704-46f4-8eb4-937d5273f21d
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_campaign_rule_ranking_max
+field_name: field_campaign_rule_ranking_max
+entity_type: paragraph
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

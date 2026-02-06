@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\drupal_typed\DrupalTyped;
+
+/**
+ * Implements hook_modules_installed().
+ *
+ * @param string[] $modules
+ *   The names of the modules that were installed.
+ */
+function bnf_example_content_modules_installed(array $modules): void {
+  // Only react to our own installation.
+  if (!in_array('bnf_example_content', $modules)) {
+    return;
+  }
+
+  $logger = DrupalTyped::service(LoggerChannelFactoryInterface::class, LoggerChannelFactoryInterface::class)->get('bnf_example_content');
+
+  // Set page.front link to /delingstjenesten, our front page stand-in.
+  $config_site = DrupalTyped::service(ConfigFactoryInterface::class, ConfigFactoryInterface::class)->getEditable('system.site');
+  $front_page = '/delingstjenesten';
+  $config_site->set('page.front', $front_page)->save();
+  $logger->info("Update frontpage link to {$front_page}, as part of Delingstjenesten dev content installation.");
+}

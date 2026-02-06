@@ -1,0 +1,52 @@
+diff --git a/modules/update/src/Form/UpdateReady.php b/modules/update/src/Form/UpdateReady.php
+index 779ad5b5a1..f02098037b 100644
+--- a/modules/update/src/Form/UpdateReady.php
++++ b/modules/update/src/Form/UpdateReady.php
+@@ -145,12 +145,9 @@ class UpdateReady extends FormBase {
+         ];
+       }
+ 
+-      // If the owner of the last directory we extracted is the same as the
+-      // owner of our configuration directory (e.g. sites/default) where we're
+-      // trying to install the code, there's no need to prompt for FTP/SSH
+-      // credentials. Instead, we instantiate a Drupal\Core\FileTransfer\Local
+-      // and invoke update_authorize_run_update() directly.
+-      if (fileowner($project_real_location) == fileowner($this->sitePath)) {
++      // Modified for DPL. The file owner check didn't work for us as owners
++      // doesn't match in our case, but the files can be moved just fine.
++      if (TRUE) {
+         $this->moduleHandler->loadInclude('update', 'inc', 'update.authorize');
+         $filetransfer = new Local($this->root, \Drupal::service('file_system'));
+         $response = update_authorize_run_update($filetransfer, $updates);
+diff --git a/modules/update/update.manager.inc b/modules/update/update.manager.inc
+index 97333a0825..fe5ec5f02f 100644
+--- a/modules/update/update.manager.inc
++++ b/modules/update/update.manager.inc
+@@ -325,17 +325,14 @@ function update_manager_batch_project_get($project, $url, &$context) {
+  * @see install_check_requirements()
+  */
+ function update_manager_local_transfers_allowed() {
+-  $file_system = \Drupal::service('file_system');
+-  // Compare the owner of a webserver-created temporary file to the owner of
+-  // the configuration directory to determine if local transfers will be
+-  // allowed.
+-  $temporary_file = \Drupal::service('file_system')->tempnam('temporary://', 'update_');
+-  $site_path = \Drupal::getContainer()->getParameter('site.path');
+-  $local_transfers_allowed = fileowner($temporary_file) === fileowner($site_path);
+-
+-  // Clean up. If this fails, we can ignore it (since this is just a temporary
+-  // file anyway).
+-  @$file_system->unlink($temporary_file);
+-
+-  return $local_transfers_allowed;
++  // Patch for DPL. Normally this checks if a temporary file created is owned by
++  // the same user as `sites/<current site>`, but that's pretty simplistic and
++  // will fail in quite valid cases (for instance if the webserver has write
++  // access through group permissions). In our case, we know that uploaded
++  // modules can be moved to our `sites/default/files/modules_local` (which is
++  // symlinked from `modules/`), but we can't really fix this properly as this
++  // function doesn't know whether it's a module, theme or something else
++  // entirely that we're checking for. So rather than trying to cook up some
++  // generic solution that'll fail in some cases anyway, we just return true.
++  return TRUE;
+ }

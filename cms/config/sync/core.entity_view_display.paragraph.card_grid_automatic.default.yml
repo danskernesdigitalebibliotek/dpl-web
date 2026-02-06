@@ -1,0 +1,40 @@
+uuid: ed5598e5-ef61-49bc-a7cc-31031cdb5662
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.card_grid_automatic.field_filter_branches
+    - field.field.paragraph.card_grid_automatic.field_filter_categories
+    - field.field.paragraph.card_grid_automatic.field_filter_cond_type
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
+    - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
+    - field.field.paragraph.card_grid_automatic.field_title
+    - paragraphs.paragraphs_type.card_grid_automatic
+  module:
+    - link
+id: paragraph.card_grid_automatic.default
+targetEntityType: paragraph
+bundle: card_grid_automatic
+mode: default
+content:
+  field_more_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_filter_branches: true
+  field_filter_categories: true
+  field_filter_cond_type: true
+  field_filter_content_types: true
+  field_filter_tags: true
+  field_title: true
+  search_api_excerpt: true

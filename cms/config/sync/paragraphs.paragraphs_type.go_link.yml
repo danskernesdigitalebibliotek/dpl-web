@@ -1,0 +1,15 @@
+uuid: 1a589c1b-3439-4296-8167-f0fe72444234
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories: {  }
+id: go_link
+label: 'GO Link'
+icon_uuid: null
+icon_default: null
+description: 'This link paragraph is used for links in GO, as it requires additional fields such as aria-label and ‘Open link in new window.’ These fields could not be exported in GraphQL when using a Linkit widget.'
+behavior_plugins: {  }

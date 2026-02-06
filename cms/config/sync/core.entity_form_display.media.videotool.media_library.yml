@@ -1,0 +1,37 @@
+uuid: 0df3f36d-b107-4e99-a810-eb2b0c773b10
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.videotool.field_media_videotool
+    - media.type.videotool
+  module:
+    - path
+id: media.videotool.media_library
+targetEntityType: media
+bundle: videotool
+mode: media_library
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_media_videotool: true
+  langcode: true
+  publish_on: true
+  status: true
+  uid: true
+  unpublish_on: true

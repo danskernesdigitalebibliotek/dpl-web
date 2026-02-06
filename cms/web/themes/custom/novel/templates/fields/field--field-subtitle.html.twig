@@ -1,0 +1,5 @@
+{% for item in items %}
+    <p{{ item.attributes.addClass('article-header__subtitle') }}>
+        {{ item.content }}
+    </p>
+{% endfor %}

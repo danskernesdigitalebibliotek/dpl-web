@@ -1,0 +1,241 @@
+<?php
+
+/**
+ * @file
+ * DPL Search drupal module file.
+ */
+
+use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\dpl_search\DplSearchSettings;
+use Drupal\taxonomy\TermInterface;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Views;
+
+/**
+ * Implements hook_preprocess().
+ *
+ * Add a link to the editorial web search, on the material search page,
+ * if we find any results from the search string query.
+ */
+function dpl_search_preprocess_dpl_react_app(array &$variables): void {
+  $name = $variables['name'] ?? NULL;
+
+  if ($name !== 'search-result') {
+    return;
+  }
+
+  $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
+
+  if (empty($input) || !is_string($input)) {
+    return;
+  }
+
+  $input = urldecode($input);
+
+  // For creator, subject, or dk5 searches, use the filter value instead of "*".
+  if ($input === '*') {
+    $creator = \Drupal::request()->query->get('creators');
+    $subject = \Drupal::request()->query->get('subjects');
+    $dk5 = \Drupal::request()->query->get('dk5');
+
+    if ($creator) {
+      $input = $creator;
+    }
+    elseif ($subject) {
+      $input = $subject;
+    }
+    elseif ($dk5) {
+      $input = $dk5;
+    }
+  }
+
+  $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
+
+  if (!($view instanceof ViewExecutable)) {
+    return;
+  }
+
+  $view->setDisplay('page');
+  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => (string) $input]);
+  $view->execute();
+  if (empty($view->total_rows)) {
+    return;
+  }
+
+  $url = Url::fromRoute(
+    'view.' . DplSearchSettings::EDITORIAL_VIEW_ID . '.page',
+    [],
+    ['query' => [DplSearchSettings::EDITORIAL_QUERY_KEY => $input]]
+  )->setAbsolute(TRUE)->toString();
+
+  $config = [
+    'webSearchText' => $input,
+    'webSearchTotal' => $view->total_rows,
+    'webSearchUrl' => $url,
+    'hasWebSearchResults' => TRUE,
+  ];
+
+  $variables['attributes']['data-web-search-config'] = Safe\json_encode($config);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Altering the editorial view, to show dynamic links and title.
+ */
+function dpl_search_preprocess_views_view(array &$variables): void {
+  $view = $variables['view'] ?? NULL;
+  $id = $variables['id'] ?? NULL;
+  if ($id !== DplSearchSettings::EDITORIAL_VIEW_ID || !$view instanceof ViewExecutable) {
+    return;
+  }
+
+  if ($view->current_display !== 'page') {
+    return;
+  }
+
+  // Hiding the exposed search filter, as we display it in the header.
+  unset($variables['exposed']);
+
+  $exposed_inputs = $view->getExposedInput();
+  $search_input = $exposed_inputs[DplSearchSettings::EDITORIAL_QUERY_KEY] ?? NULL;
+
+  if ($search_input) {
+    $title = t(
+      'Showing web results for "@input" (@total_results)',
+      ['@input' => $search_input, '@total_results' => $view->total_rows],
+      ['context' => 'dpl_search']
+    );
+
+    $material_url = Url::fromRoute('dpl_react_apps.search_result', [], ['query' => [DplSearchSettings::MATERIAL_QUERY_KEY => $search_input]])->toString();
+
+    $variables['header']['description'] = [
+      '#prefix' => '<h2 class="content-list-page__subheading">' . t('Switch to results for the', [], ['context' => 'dpl_search']) . ' <a href="' . $material_url . '">',
+      '#suffix' => '</a></h2>',
+      '#markup' => t('library materials.', [], ['context' => 'dpl_search']),
+    ];
+
+  }
+  else {
+    $title = t(
+      'Showing web results (@total_results)',
+      ['@total_results' => $view->total_rows],
+      ['context' => 'dpl_search']
+    );
+  }
+
+  $view->setTitle($title);
+}
+
+/**
+ * Implements template_preprocess_page().
+ *
+ * If we are on the editorial search view, we replace the material search
+ * toolbar with a custom form that leads to the editorial search.
+ * That way, the user can see and change their fulltext search in the header.
+ */
+function dpl_search_preprocess_page(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $view_route_name = 'view.' . DplSearchSettings::EDITORIAL_VIEW_ID . '.page';
+  if ($route_name === $view_route_name) {
+    $variables['search']['header'] = [
+      '#theme' => 'dpl_search_header',
+      '#form_route' => $view_route_name,
+      '#default_input' => \Drupal::request()->query->get(DplSearchSettings::EDITORIAL_QUERY_KEY),
+    ];
+
+    return;
+  }
+
+  // We are not on the editorial search page - Let's just add the standard
+  // material search header, powered by react.
+  $variables['search']['header'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'search-header',
+    '#data' => [
+        // Add external API base urls.
+      ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}
+
+/**
+ * Implements theme_preprocess_taxonomy_term().
+ *
+ * Show a view of tagged content on terms of certain vocabularies.
+ * The view is identical to the editorial view on /search/web, but with
+ * contextual filters applied.
+ */
+function dpl_search_preprocess_taxonomy_term(array &$variables): void {
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  // If we're not on the full display, we don't want to load the search view.
+  if ($view_mode !== 'full') {
+    return;
+  }
+
+  $term = $variables['term'] ?? NULL;
+  $bundle = $term?->bundle();
+
+  // The vocabularies we allow as contextual filters in the embedded view.
+  // ! IMPORTANT ! - The order in this array matters, as views does not allow
+  // for named contextual filters - it MUST match the order that is set in
+  // the Views UI.
+  $allowed_contextual_vocabularies = [
+    'categories',
+    'tags',
+  ];
+
+  if (!($term instanceof TermInterface) ||
+      !in_array($bundle, $allowed_contextual_vocabularies)) {
+    return;
+  }
+
+  $contextual_filters = [];
+
+  // Looping through the allowed vocabularies, and setting the current
+  // term as a contextual filter, if the term is in that vocabulary.
+  foreach ($allowed_contextual_vocabularies as $vocabulary) {
+    if ($vocabulary === $bundle) {
+      $contextual_filters[] = $term->id();
+    }
+    else {
+      $contextual_filters[] = 'all';
+    }
+  }
+
+  $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
+
+  if (!($view instanceof ViewExecutable)) {
+    return;
+  }
+
+  $view->setDisplay('term_page');
+  $view->setArguments($contextual_filters);
+  $view->execute();
+  $view->setTitle(t(
+    'Showing web results related to "@term" (@total_results)',
+    ['@term' => $term->label(), '@total_results' => $view->total_rows],
+    ['context' => 'dpl_search']
+  ));
+
+  // We only want the view to show up - not the title, which cannot be removed
+  // through the Drupal admin UI.
+  unset($variables['content']);
+
+  $variables['content']['view'] = $view->buildRenderable('term_page');
+}
+
+/**
+ * Implements hook_theme().
+ */
+function dpl_search_theme(): array {
+  return [
+    'dpl_search_header' => [
+      'variables' => [
+        'form_route' => NULL,
+        'default_input' => NULL,
+      ],
+    ],
+  ];
+}

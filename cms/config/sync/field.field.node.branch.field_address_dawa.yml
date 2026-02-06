@@ -1,0 +1,24 @@
+uuid: 004cabed-eb62-4ad6-a988-b0df08625a9d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_address_dawa
+    - node.type.branch
+  module:
+    - address_dawa
+id: node.branch.field_address_dawa
+field_name: field_address_dawa
+entity_type: node
+bundle: branch
+label: Address
+description: 'Start typing to look up addresses in Denmark.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  address_type: adresse
+  allow_non_unique_address: true
+  allow_non_danish_address: true
+field_type: address_dawa

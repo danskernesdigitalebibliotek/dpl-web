@@ -1,0 +1,20 @@
+uuid: 70427b90-5c2a-42c6-9d98-38e58bc2b91c
+langcode: en
+status: true
+dependencies:
+  module:
+    - enum_field
+    - recurring_events
+id: eventinstance.field_event_state
+field_name: field_event_state
+entity_type: eventinstance
+type: enum_string
+settings:
+  enum_class: \Drupal\dpl_event\EventState
+module: enum_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,14 @@
+{{ include('@novel/components/list-item-stacked.html.twig'
+  , {
+  attributes: attributes,
+  url: eventinstance_url,
+  baseIconPath: baseIconPath,
+  title: content.title,
+  datetime_attribute: datetime_attribute,
+  date: content.date,
+  location: content.event_location,
+  start_date: start_time,
+  end_date: end_time,
+  status: status,
+  status_value: status_value,
+}, false) }}

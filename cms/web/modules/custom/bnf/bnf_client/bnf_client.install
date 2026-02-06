@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the bnf module.
+ */
+
+use Drupal\bnf_client\Entity\Subscription;
+
+/**
+ * Implements hook_install().
+ */
+function bnf_client_install(): void {
+  // Rebuild scheduler info so it notices our periodic job.
+  job_scheduler_rebuild_all();
+}
+
+/**
+ * Add the last field to subscriptions.
+ */
+function bnf_client_update_10101(): void {
+  $entity_type = \Drupal::service('entity_type.manager')->getDefinition('bnf_subscription');
+  \Drupal::entityDefinitionUpdateManager()->updateEntityType($entity_type);
+}
+
+/**
+ * Trigger job_scheduler rebuild.
+ */
+function bnf_client_update_10102(): void {
+  // Rebuild scheduler info so it notices our new periodic job.
+  job_scheduler_rebuild_all();
+}
+
+/**
+ * Install bnf_subscription fields 'last', 'categories', 'tags'.
+ */
+function bnf_client_update_10103(): string {
+  $fields = Subscription::getBaseFields();
+
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach ($fields as $key => $field) {
+    if (!in_array($key, ['last', 'categories', 'tags'])) {
+      continue;
+    }
+
+    $definition_manager->installFieldStorageDefinition($key, 'bnf_subscription', 'bnf_subscription', $field);
+  }
+
+  return 'bnf_subscription.last, bnf_subscription.categories, bnf_subscription.tags installed.';
+}
+
+/**
+ * Install bnf_subscription field 'label'.
+ */
+function bnf_client_update_10104(): string {
+  $fields = Subscription::getBaseFields();
+
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $field = $fields['label'] ?? NULL;
+
+  if (!empty($field)) {
+    $definition_manager->installFieldStorageDefinition('label', 'bnf_subscription', 'bnf_subscription', $field);
+    return 'Field bnf_subscription.label installed.';
+  }
+
+  return 'Could not install field bnf_subscription.label.';
+}
+
+/**
+ * Install node field 'bnf_source_subscriptions'.
+ */
+function bnf_client_update_10105(): string {
+  $fields = _bnf_client_node_field_definitions();
+
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $key = 'bnf_source_subscriptions';
+  $field = $fields[$key] ?? NULL;
+
+  if (!empty($field)) {
+    $definition_manager->installFieldStorageDefinition($key, 'node', 'node', $field);
+    return "Field node.$key installed.";
+  }
+
+  return "Could not install field node.$key.";
+}

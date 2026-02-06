@@ -1,0 +1,16 @@
+uuid: 2cfb555b-239a-45e0-a720-45e78928116f
+langcode: en
+status: true
+dependencies:
+  module:
+    - bnf
+    - dpl_admin
+id: bnf_pilot
+label: 'BNF Pilot'
+weight: 12
+is_admin: null
+permissions:
+  - 'bnf export nodes'
+  - 'bnf import nodes'
+  - 'bnf manage subscriptions'
+  - 'dpl admin access pages'

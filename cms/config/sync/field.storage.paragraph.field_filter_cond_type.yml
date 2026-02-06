@@ -1,0 +1,30 @@
+uuid: cc607c37-5ca7-4e54-93f8-d9690884608f
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_filter_cond_type
+field_name: field_filter_cond_type
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: or
+      label: 'Must match on ANY filter - "OR"'
+    -
+      value: and
+      label: 'Must match on ALL filters - "AND"'
+    -
+      value: outer_and
+      label: 'Must match in each filter-category - "OUTER-AND"'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

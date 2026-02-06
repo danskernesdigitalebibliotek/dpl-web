@@ -1,0 +1,21 @@
+uuid: 6c59ab79-31e8-40d0-ae67-534b9c2a866c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_agency_branch_id
+field_name: field_agency_branch_id
+entity_type: node
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: dpl_library_agency_field_agency_branch_id_options
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

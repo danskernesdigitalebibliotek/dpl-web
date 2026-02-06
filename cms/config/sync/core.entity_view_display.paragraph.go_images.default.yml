@@ -1,0 +1,23 @@
+uuid: 3c8897ea-cd59-4044-bc5f-fba35b1213be
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_images.field_go_images
+    - paragraphs.paragraphs_type.go_images
+id: paragraph.go_images.default
+targetEntityType: paragraph
+bundle: go_images
+mode: default
+content:
+  field_go_images:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

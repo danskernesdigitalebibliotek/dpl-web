@@ -1,0 +1,58 @@
+services:
+  dpl_login.logout_expired_tokens:
+    class: Drupal\dpl_login\EventSubscriber\LogoutExpiredTokensSubscriber
+    tags:
+      - { name: event_subscriber }
+    autowire: true
+
+  dpl_login.route_rewire_logout:
+    class: Drupal\dpl_login\Routing\RewireLogoutSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  dpl_login.registered_user_tokens:
+    class: Drupal\dpl_login\RegisteredUserTokensProvider
+    arguments: ['@tempstore.private']
+
+  dpl_login.unregistered_user_tokens:
+    class: Drupal\dpl_login\UnregisteredUserTokensProvider
+    arguments: ['@tempstore.private']
+
+  dpl_login.user_tokens:
+    class: Drupal\dpl_login\UserTokens
+    arguments:
+      - '@dpl_login.registered_user_tokens'
+      - '@dpl_login.unregistered_user_tokens'
+  Drupal\dpl_login\UserTokens: '@dpl_login.user_tokens'
+
+  dpl_login.library_agency_id_provider:
+    class: Drupal\dpl_login\LibraryAgencyIdProvider
+    arguments: ['@dpl_login.adgangsplatformen.config']
+
+  dpl_login.adgangsplatformen.client:
+    class: Drupal\dpl_login\Plugin\OpenIDConnectClient\Adgangsplatformen
+    factory: ['@dpl_login.adgangsplatformen.factory', 'createInstance']
+
+  dpl_login.adgangsplatformen.factory:
+    class: Drupal\dpl_login\Adgangsplatformen\Factory
+    arguments:
+      - '@plugin.manager.openid_connect_client'
+      - '@dpl_login.adgangsplatformen.config'
+
+  dpl_login.adgangsplatformen.config:
+    class: Drupal\dpl_login\Adgangsplatformen\Config
+    arguments: ['@config.manager']
+  Drupal\dpl_login\Adgangsplatformen\Config: '@dpl_login.adgangsplatformen.config'
+
+  dpl_login.openid_user_info:
+    class: Drupal\dpl_login\OpenIdUserInfoService
+    arguments: ['@settings', '@config.factory']
+
+  dpl_login.user:
+    class: Drupal\dpl_login\User
+  Drupal\dpl_login\User: '@dpl_login.user'
+
+  dpl_login.session:
+    class: Drupal\dpl_login\DplLoginSession
+    arguments: ['@session']
+  Drupal\dpl_login\DplLoginSession: '@dpl_login.session'

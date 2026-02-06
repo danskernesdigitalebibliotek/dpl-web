@@ -1,0 +1,10 @@
+purgers:
+  -
+    instance_id: 65fc931232
+    plugin_id: varnishbundled
+    order_index: 2
+  -
+    instance_id: 30cd45a1b1
+    plugin_id: varnishbundled
+    order_index: 3
+queue: database_alt

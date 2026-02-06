@@ -1,0 +1,21 @@
+uuid: 5e60b032-ef58-4190-a1ff-c983722f4f3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_campaign_rule_facet
+    - paragraphs.paragraphs_type.campaign_rule
+  module:
+    - options
+id: paragraph.campaign_rule.field_campaign_rule_facet
+field_name: field_campaign_rule_facet
+entity_type: paragraph
+bundle: campaign_rule
+label: Facet
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

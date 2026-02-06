@@ -1,0 +1,11 @@
+uuid: 1775adfc-d12c-49ab-964a-71e30d949c91
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.screen_name
+id: taxonomy_term.screen_name
+target_entity_type_id: taxonomy_term
+target_bundle: screen_name
+default_langcode: da
+language_alterable: false

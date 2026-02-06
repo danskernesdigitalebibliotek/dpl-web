@@ -1,0 +1,89 @@
+<?php
+
+namespace Drupal\dpl_redia_legacy;
+
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_event\PriceFormatter;
+use Drupal\node\NodeInterface;
+
+/**
+ * An event object, containing the properties the RSS feed needs.
+ */
+class RediaEvent extends ControllerBase {
+  // We'll disable the documentation rules for the member properties, as
+  // they are pretty self-explanatory.
+  // phpcs:disable
+  public ?string $title;
+  public ?string $description;
+  public ?string $author;
+  public string|int|null $id;
+  public ?string $date;
+  public ?string $subtitle;
+  public ?string $startTime;
+  public ?string $endTime;
+  public ?NodeInterface $branch;
+  public ?RediaEventMedia $media;
+  public ?RediaEventMedia $mediaThumbnail;
+  public ?string $bookingUrl;
+  public ?string $prices;
+  // phpcs:enable
+
+  /**
+   * Promoted value.
+   *
+   * @var "Falsk"|"Sandt"
+   *  The promoted value, that Redia understands
+   */
+  public string $promoted;
+
+  public function __construct(EventInstance $event_instance, PriceFormatter $price_formatter) {
+    $branch = $event_instance->getBranches()[0] ?? NULL;
+    $start_date = $event_instance->getStartDate();
+    $end_date = $event_instance->getEndDate();
+
+    $changed_date = DrupalDateTime::createFromFormat('U', strval($event_instance->getChangedTime()));
+
+    $media = NULL;
+    $media_field = $event_instance->get('event_image');
+
+    if (($media_field instanceof FieldItemListInterface)) {
+      $media = $media_field->referencedEntities()[0] ?? NULL;
+    }
+
+    $this->title = $event_instance->label();
+    $this->description = $event_instance->getDescription();
+    $this->author = $event_instance->getOwner()->get('field_author_name')->getString();
+    $this->id = $event_instance->id();
+    $this->date = $changed_date->format('r');
+    $this->subtitle = $event_instance->getField('event_description')?->getString();
+    $this->startTime = $start_date->format('U');
+    $this->endTime = $end_date->format('U');
+    $this->media = NULL;
+    $this->mediaThumbnail = NULL;
+
+    if ($media) {
+      $this->media = new RediaEventMedia($media, 'redia_feed_large');
+      $this->mediaThumbnail = new RediaEventMedia($media, 'redia_feed_small');
+    }
+
+    $this->branch = $branch;
+    $this->bookingUrl = $event_instance->getLink();
+
+    if (!$event_instance->isFreeToAttend()) {
+      $prices = $event_instance->getTicketPrices();
+      $this->prices = $price_formatter->formatRawPriceRange($prices);
+    }
+    else {
+      $this->prices = NULL;
+    }
+
+    // In the old system, there was a way for editors to mark content a
+    // promoted. However, this does not exist in the new CMS, so we wil
+    // just hardcode it.
+    $this->promoted = 'Falsk';
+  }
+
+}

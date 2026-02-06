@@ -1,0 +1,36 @@
+uuid: 3784e48f-e99f-4231-9314-c1a5e54e7b71
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.nav_spot
+    - field.field.media.image.field_byline
+    - field.field.media.image.field_media_image
+    - image.style.nav_spot
+    - media.type.image
+  module:
+    - image
+id: media.image.nav_spot
+targetEntityType: media
+bundle: image
+mode: nav_spot
+content:
+  field_media_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: nav_spot
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  field_byline: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

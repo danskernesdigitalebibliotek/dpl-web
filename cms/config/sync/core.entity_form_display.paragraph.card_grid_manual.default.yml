@@ -1,0 +1,49 @@
+uuid: 366afed0-c8ff-40eb-a8b6-afd371c7c8f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.card_grid_manual.field_grid_content
+    - field.field.paragraph.card_grid_manual.field_more_link
+    - field.field.paragraph.card_grid_manual.field_title
+    - paragraphs.paragraphs_type.card_grid_manual
+  module:
+    - dpl_link
+    - dynamic_entity_reference
+id: paragraph.card_grid_manual.default
+targetEntityType: paragraph
+bundle: card_grid_manual
+mode: default
+content:
+  field_grid_content:
+    type: dynamic_entity_reference_default
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 40
+      placeholder: 'Search content..'
+    third_party_settings: {  }
+  field_more_link:
+    type: dpl_link_options
+    weight: 10
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      target_blank: 0
+      linkit_profile: default
+      linkit_auto_link_text: false
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

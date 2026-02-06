@@ -1,0 +1,139 @@
+{
+  "data": {
+    "manifestations": [
+      {
+        "pid": "870970-basis:134693959",
+        "cover": {
+          "xSmall": {
+            "url": "https://fbiinfo-present.dbc.dk/images/ya_tuimVRnuHc1l2eH2vUA/120px!AS3TSsr7HCcO5GuB3jV_gl2WUNst6wd1yyk-F9nzJozN7g",
+            "width": 120,
+            "height": 145
+          },
+          "small": {
+            "url": "https://fbiinfo-present.dbc.dk/images/ya_tuimVRnuHc1l2eH2vUA/240px!AS1G2fuTze74ROgWmDi78q9mmC-8PIAhdySFt9JJ6mV2Cw",
+            "width": 240,
+            "height": 290
+          },
+          "medium": {
+            "url": "https://fbiinfo-present.dbc.dk/images/ya_tuimVRnuHc1l2eH2vUA/480px!AS0fu78l1tRKjq7Q_0i3di73uTFbgAyhyeGhHrUtcWVrYA",
+            "width": 480,
+            "height": 580
+          },
+          "large": {
+            "url": "https://fbiinfo-present.dbc.dk/images/ya_tuimVRnuHc1l2eH2vUA/960px!AS1feHpZnlyMsocNdLM6q8_AHoZS4pjGO9sLylzRuK8fsg",
+            "width": 500,
+            "height": 604
+          }
+        }
+      },
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      {
+        "pid": "870970-basis:26167663",
+        "cover": {
+          "xSmall": {
+            "url": "https://fbiinfo-present.dbc.dk/images/amofSD59Tr2SDbjs4Ljgjg/120px!AS1jozJTME4GaHQyixx0oA_MWty4JBulyOG35sx71eYlTg",
+            "width": 120,
+            "height": 119
+          },
+          "small": {
+            "url": "https://fbiinfo-present.dbc.dk/images/amofSD59Tr2SDbjs4Ljgjg/240px!AS3pIts8VLi0IB8Ll5Z25BvZM_8KKSYTEWNIFPDroonT6g",
+            "width": 240,
+            "height": 238
+          },
+          "medium": {
+            "url": "https://fbiinfo-present.dbc.dk/images/amofSD59Tr2SDbjs4Ljgjg/480px!AS0lznlut6qzmRNXKXt0x0-Uy_5yeKe5jC8symYY9eQrtg",
+            "width": 480,
+            "height": 475
+          },
+          "large": {
+            "url": "https://fbiinfo-present.dbc.dk/images/amofSD59Tr2SDbjs4Ljgjg/960px!AS3uzs6oWReXmuqZiRPmNyhVVNC10VqOwDyTNmg1r-J3gQ",
+            "width": 500,
+            "height": 495
+          }
+        }
+      },
+      null,
+      null,
+      {
+        "pid": "870970-basis:29368872",
+        "cover": {
+          "xSmall": {
+            "url": "https://fbiinfo-present.dbc.dk/images/RXbqcv1TSM-0EqjEADxKNw/120px!AS0CGiaxSUO8te6SwswEz2L1De1TFdDwXY-V9FAMNHlJcw",
+            "width": 120,
+            "height": 176
+          },
+          "small": {
+            "url": "https://fbiinfo-present.dbc.dk/images/RXbqcv1TSM-0EqjEADxKNw/240px!AS14ZFnEHjcpP0xnR8HQDXV7_YRFVNiA2Pakc-yCVtVn8Q",
+            "width": 240,
+            "height": 351
+          },
+          "medium": {
+            "url": "https://fbiinfo-present.dbc.dk/images/RXbqcv1TSM-0EqjEADxKNw/480px!AS1SQDYfkUQNLBNu3SEk_Gprr2dVRNwgaJ4NqRYtAbxg1w",
+            "width": 480,
+            "height": 703
+          },
+          "large": {
+            "url": "https://fbiinfo-present.dbc.dk/images/RXbqcv1TSM-0EqjEADxKNw/960px!AS2xr25u2FQE6LPv0CFcxUXd10e-2cXDZtvFk3QDIa0PTw",
+            "width": 500,
+            "height": 732
+          }
+        }
+      },
+      {
+        "pid": "870970-basis:51980204",
+        "cover": {
+          "xSmall": {
+            "url": "https://fbiinfo-present.dbc.dk/images/qArESJWQRrajvOwiruAA8w/120px!AS2CytGGSXyNNWusUzrItEWSSEb32UF0YQYryJilcxls4A",
+            "width": 120,
+            "height": 185
+          },
+          "small": {
+            "url": "https://fbiinfo-present.dbc.dk/images/qArESJWQRrajvOwiruAA8w/240px!AS1IOhP8SD9DwflrjjV-9ZZtAioPFqijC0PMNCWJt-je8Q",
+            "width": 240,
+            "height": 370
+          },
+          "medium": {
+            "url": "https://fbiinfo-present.dbc.dk/images/qArESJWQRrajvOwiruAA8w/480px!AS0edOlBkNb5T3vKWZ1mJxWyuOgoPwqswfda75DzIr7A9Q",
+            "width": 480,
+            "height": 739
+          },
+          "large": {
+            "url": "https://fbiinfo-present.dbc.dk/images/qArESJWQRrajvOwiruAA8w/960px!AS3nHRYBm8l-80sFVmPIrXb4kDcaRkG_vi2BE0PU7ZfEvw",
+            "width": 500,
+            "height": 770
+          }
+        }
+      },
+      {
+        "pid": "870970-basis:54871996",
+        "cover": {
+          "xSmall": {
+            "url": "https://fbiinfo-present.dbc.dk/images/iuevQL8qQ6Ct_ypnL5X3DQ/120px!AS27NSPvkVLJS9tPTvLbia6wjW_s1v48vZzOSpSjgyrWuw",
+            "width": 120,
+            "height": 193
+          },
+          "small": {
+            "url": "https://fbiinfo-present.dbc.dk/images/iuevQL8qQ6Ct_ypnL5X3DQ/240px!AS2DOMwUuYryq4TezGdZKj9KUGDgM9O32fUycyxQbRyENw",
+            "width": 240,
+            "height": 386
+          },
+          "medium": {
+            "url": "https://fbiinfo-present.dbc.dk/images/iuevQL8qQ6Ct_ypnL5X3DQ/480px!AS2iNW_59EPw9Htfh9rJXdA7qIpvelK3KJ1v1MC0GEj8Dw",
+            "width": 480,
+            "height": 772
+          },
+          "large": {
+            "url": "https://fbiinfo-present.dbc.dk/images/iuevQL8qQ6Ct_ypnL5X3DQ/960px!AS2x4Ukwc-9ks3kzTEoa_u_tunCdxe2H9O3VFqXtNZWGEw",
+            "width": 500,
+            "height": 804
+          }
+        }
+      }
+    ]
+  }
+}

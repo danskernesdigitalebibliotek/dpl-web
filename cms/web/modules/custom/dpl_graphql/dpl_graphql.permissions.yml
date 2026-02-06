@@ -1,0 +1,3 @@
+get dpl graphql cache tags:
+  title: 'Get the dpl graphql cache tags header'
+  description: 'With this permission the cache tags are returned in the response header'

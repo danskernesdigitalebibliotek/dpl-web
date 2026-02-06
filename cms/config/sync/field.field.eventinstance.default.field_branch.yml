@@ -1,0 +1,25 @@
+uuid: 52b2d061-b684-4716-b248-0e5cbf4a4a38
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_branch
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_branch
+field_name: field_branch
+entity_type: eventinstance
+bundle: default
+label: Branch
+description: 'When connecting a branch, it will also use the address of this branch as the event address. If you want to use another address then provide an event address.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: entity_reference_content
+      display_name: branch_addresses
+      arguments: {  }
+field_type: entity_reference

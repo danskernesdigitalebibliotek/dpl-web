@@ -1,0 +1,52 @@
+uuid: 4c53e1e6-c743-4edd-8d0a-24341371c9f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.material_grid_automatic.field_amount_of_materials
+    - field.field.paragraph.material_grid_automatic.field_cql_search
+    - field.field.paragraph.material_grid_automatic.field_material_amount
+    - field.field.paragraph.material_grid_automatic.field_material_grid_description
+    - field.field.paragraph.material_grid_automatic.field_material_grid_title
+    - paragraphs.paragraphs_type.material_grid_automatic
+  module:
+    - dpl_fbi
+id: paragraph.material_grid_automatic.default
+targetEntityType: paragraph
+bundle: material_grid_automatic
+mode: default
+content:
+  field_cql_search:
+    type: cql_search_formatter
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_material_amount:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_material_grid_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_material_grid_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_amount_of_materials: true
+  search_api_excerpt: true

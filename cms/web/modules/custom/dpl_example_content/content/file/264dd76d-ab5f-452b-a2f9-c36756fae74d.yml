@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 264dd76d-ab5f-452b-a2f9-c36756fae74d
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: kids-with-medal.jpg
+  uri:
+    -
+      value: 'public://2025-02/kids-with-medal_1.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 1041132
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1739798339

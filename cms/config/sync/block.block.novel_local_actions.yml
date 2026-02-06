@@ -1,0 +1,20 @@
+uuid: f455087f-4cf8-4011-952f-be8a1a1cb897
+langcode: en
+status: true
+dependencies:
+  theme:
+    - novel
+_core:
+  default_config_hash: PffmQ-ABSz5tFjWmVsR7NesunDnEivvopnJnBjl8KNE
+id: novel_local_actions
+theme: novel
+region: content
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

@@ -1,0 +1,10 @@
+uuid: 33eced4c-baa9-49ab-ae88-a19568e258ce
+langcode: en
+status: true
+dependencies: {  }
+id: material_dissemination
+label: 'Material Dissemination'
+description:
+  value: ''
+  format: basic
+weight: 0

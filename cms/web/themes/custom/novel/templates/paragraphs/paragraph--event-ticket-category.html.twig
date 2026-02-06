@@ -1,0 +1,10 @@
+{# Structure is based rendering being embedded in field--node--field-ticket-categories--event.html.twig #}
+{% set label = content.field_ticket_category_name|render|striptags|trim %}
+{% set price = content.field_ticket_category_price|render|striptags|trim %}
+
+<div class="ticket-category" data-ticket-label="{{ label }}" data-ticket-price="{{ price }}">
+  {% if label %}
+    {{ label }}:
+  {% endif %}
+  {{ price }}
+</div>

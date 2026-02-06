@@ -1,0 +1,20 @@
+uuid: b56885e7-70a1-4449-af48-edd59248dc55
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+    - taxonomy
+id: eventinstance.field_screen_names
+field_name: field_screen_names
+entity_type: eventinstance
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

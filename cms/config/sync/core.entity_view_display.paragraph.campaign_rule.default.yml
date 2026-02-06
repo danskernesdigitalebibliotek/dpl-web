@@ -1,0 +1,42 @@
+uuid: 6f3deef8-efd1-4b3a-8366-63a48ec1a85b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.campaign_rule.field_campaign_rule_facet
+    - field.field.paragraph.campaign_rule.field_campaign_rule_ranking_max
+    - field.field.paragraph.campaign_rule.field_campaign_rule_term
+    - paragraphs.paragraphs_type.campaign_rule
+  module:
+    - options
+id: paragraph.campaign_rule.default
+targetEntityType: paragraph
+bundle: campaign_rule
+mode: default
+content:
+  field_campaign_rule_facet:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_campaign_rule_ranking_max:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_campaign_rule_term:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+hidden:
+  search_api_excerpt: true

@@ -1,0 +1,18 @@
+uuid: 03b9f7d4-cb47-4e82-bf1f-91cca0fd722e
+langcode: da
+status: true
+dependencies: {  }
+id: go_graphql_client
+name: go_graphql_client
+description: 'GO GraphQL Client'
+grant_types:
+  authorization_code:
+    status: true
+  client_credentials:
+    status: true
+  refresh_token:
+    status: true
+umbrella: false
+parent: null
+granularity_id: null
+granularity_configuration: {  }

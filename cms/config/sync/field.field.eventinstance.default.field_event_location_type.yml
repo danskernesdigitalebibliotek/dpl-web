@@ -1,0 +1,21 @@
+uuid: ea62b8ef-fe58-49d8-9dd1-4cb29c23e101
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_event_location_type
+    - recurring_events.eventinstance_type.default
+  module:
+    - options
+id: eventinstance.default.field_event_location_type
+field_name: field_event_location_type
+entity_type: eventinstance
+bundle: default
+label: 'In person or online?'
+description: 'Specify wether this is a physical or online event. If it’s both online and in person, please create two separate events.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

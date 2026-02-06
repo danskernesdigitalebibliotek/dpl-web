@@ -1,0 +1,6 @@
+mutation Import($uuid: String!, $callbackUrl: String!) {
+  import(uuid: $uuid, callbackUrl: $callbackUrl) {
+    status
+    message
+  }
+}

@@ -1,0 +1,17 @@
+{% set item_classes = [
+  'tag',
+  'tag--large',
+  'tag--fill',
+] %}
+
+{% for item in items %}
+  {% if item.content['#url'] %}
+    <a href="{{ item.content['#url'].toString() }}" class="{{ item_classes|join(' ') }}">
+      {{ item.content['#title'] }}
+    </a>
+  {% elseif item.content['#plain_text'] %}
+    <span class="{{ item_classes|join(' ') }}">
+      {{ item.content['#plain_text'] }}
+    </span>
+  {% endif %}
+{% endfor %}

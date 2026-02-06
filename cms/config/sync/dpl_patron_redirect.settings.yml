@@ -1,0 +1,1 @@
+pages: "/user/me\r\n/user/me/*\r\n/user/registration/create"

@@ -1,0 +1,35 @@
+<article {{ attributes.addClass('event-page') }}>
+  {{ include('@novel/components/hero.html.twig', {
+    attributes: create_attribute(),
+    title: label,
+    categories: categories,
+    date: expired ? 'Expired'|t({}, {context: 'DPL event'}) : date,
+    media: image.0,
+    baseIconPath: baseIconPath,
+    cta: cta,
+    items: hero_items,
+    placeholder_text: teaser_text,
+  }, false) }}
+
+  <div class="event-description">
+    <div class="event-description__content">
+      <div class="event-description__description">{{ description }}</div>
+      <div class="event-description__links">
+        {{ tags }}
+        {{ branch }}
+        {{ partners }}
+      </div>
+    </div>
+  </div>
+
+  {% if event_instances %}
+    <section class="event-list-stacked">
+      <h2 class="event-list-stacked__heading">{{ 'Upcoming events'|t }}</h2>
+      {% for instance in event_instances %}
+          {{ instance }}
+      {% endfor %}
+    </section>
+  {% endif %}
+
+    {{ paragraphs }}
+</article>

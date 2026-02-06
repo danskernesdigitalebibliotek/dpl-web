@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the dpl_webmaster module.
+ */
+
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\drupal_typed\DrupalTyped;
+
+/**
+ * Activate asset_injector on all webmaster libraries.
+ */
+function dpl_webmaster_update_10101(): string {
+  $feedback = [];
+  $moduleHandler = DrupalTyped::service(ModuleHandlerInterface::class);
+  $isEnabled = $moduleHandler->moduleExists('asset_injector');
+
+  $moduleHandler->loadInclude('dpl_update', 'install');
+
+  if (!$isEnabled) {
+    $feedback[] = _dpl_update_install_modules(['asset_injector']);
+  }
+
+  return implode("\n", $feedback);
+}
+
+/**
+ * Activate dpl_classes on all webmaster libraries.
+ */
+function dpl_webmaster_update_10102(): string {
+  $feedback = [];
+  $moduleHandler = DrupalTyped::service(ModuleHandlerInterface::class);
+
+  $moduleHandler->loadInclude('dpl_update', 'install');
+
+  $feedback[] = _dpl_update_install_modules(['dpl_classes']);
+
+  return implode("\n", $feedback);
+}

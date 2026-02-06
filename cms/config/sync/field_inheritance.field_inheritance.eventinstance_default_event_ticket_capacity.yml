@@ -1,0 +1,14 @@
+uuid: 1346bb54-d751-43c9-bccf-da7c483a961a
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_ticket_capacity
+label: 'Event ticket capacity'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_ticket_capacity
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_ticket_capacity
+plugin: default_inheritance

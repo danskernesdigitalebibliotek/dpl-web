@@ -1,0 +1,95 @@
+uuid: c101b9e5-2f43-4cd3-94e1-05cd68b5c243
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.filtered_event_list.field_amount_of_events
+    - field.field.paragraph.filtered_event_list.field_filter_branches
+    - field.field.paragraph.filtered_event_list.field_filter_categories
+    - field.field.paragraph.filtered_event_list.field_filter_cond_type
+    - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_max_item_amount
+    - field.field.paragraph.filtered_event_list.field_title
+    - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - field_group
+    - select2
+third_party_settings:
+  field_group:
+    group_filters:
+      children:
+        - field_filter_cond_type
+        - field_filter_tags
+        - field_filter_categories
+        - field_max_item_amount
+      label: 'Grouped filters'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: 'Choose the filters, that defines what content is shown. These filters can have their conditions defined.'
+        required_fields: true
+id: paragraph.filtered_event_list.default
+targetEntityType: paragraph
+bundle: filtered_event_list
+mode: default
+content:
+  field_filter_branches:
+    type: select2_entity_reference
+    weight: 1
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_filter_categories:
+    type: select2_entity_reference
+    weight: 15
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_filter_cond_type:
+    type: options_select
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_filter_tags:
+    type: select2_entity_reference
+    weight: 14
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_max_item_amount:
+    type: select2
+    weight: 17
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_amount_of_events: true
+  status: true

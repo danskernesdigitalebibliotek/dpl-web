@@ -1,0 +1,25 @@
+uuid: 5ec7591d-717f-4ae8-a4a1-445b29131799
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.go_material_slider_manual.field_material_slider_work_ids
+    - field.field.paragraph.go_material_slider_manual.field_title
+    - paragraphs.paragraphs_type.go_material_slider_manual
+id: paragraph.go_material_slider_manual.preview
+targetEntityType: paragraph
+bundle: go_material_slider_manual
+mode: preview
+content:
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_material_slider_work_ids: true
+  search_api_excerpt: true

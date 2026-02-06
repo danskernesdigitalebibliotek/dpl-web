@@ -1,0 +1,6 @@
+name: Configuration Import
+type: module
+description: Import configuration from YAML files.
+package: DPL
+core_version_requirement: ^10 || ^11
+configure: dpl_config_upload.upload_form

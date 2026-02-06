@@ -1,0 +1,10 @@
+dpl_webmaster.install_or_update:
+  path: '/admin/modules/install-or-update'
+  defaults:
+    _form: '\Drupal\dpl_webmaster\Form\InstallOrUpdateModule'
+    _title: 'Install or update module'
+  requirements:
+    _permission: 'administer software updates'
+    # Respect the allow_authorize_operations settings from
+    # settings.php. See default.settings.php for details.
+    _access_update_manager: 'TRUE'

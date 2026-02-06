@@ -1,0 +1,9 @@
+_core:
+  default_config_hash: s2rKO-wXqIkVbzZgmSGZGBSZTnvTUEwKZ3158TVXcaw
+status: true
+whitelist_config_entities:
+  - bnf_client.settings.yml
+direction_operations:
+  - import_create
+  - import_update
+  - import_delete

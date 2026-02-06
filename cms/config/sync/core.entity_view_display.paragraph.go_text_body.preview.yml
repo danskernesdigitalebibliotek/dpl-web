@@ -1,0 +1,25 @@
+uuid: 939df3ed-1a78-44e5-9232-22d6859e5e71
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.go_text_body.field_body
+    - paragraphs.paragraphs_type.go_text_body
+  module:
+    - text
+id: paragraph.go_text_body.preview
+targetEntityType: paragraph
+bundle: go_text_body
+mode: preview
+content:
+  field_body:
+    type: text_trimmed
+    label: above
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

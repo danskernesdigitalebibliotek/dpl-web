@@ -1,0 +1,5 @@
+services:
+  dpl_webmaster.route_subscriber:
+    class: Drupal\dpl_webmaster\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

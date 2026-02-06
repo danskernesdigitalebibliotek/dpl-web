@@ -1,0 +1,23 @@
+uuid: ef12242f-1f45-4fca-a5b3-c075cb6c0404
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_link_language
+    - paragraphs.paragraphs_type.language_selector
+  module:
+    - link
+id: paragraph.language_selector.field_link_language
+field_name: field_link_language
+entity_type: paragraph
+bundle: language_selector
+label: 'Link to a different language'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 1
+field_type: link

@@ -1,0 +1,13 @@
+uuid: 1ba000f3-a530-4186-bc17-1dee263efd2e
+langcode: en
+status: true
+dependencies: {  }
+id: node.go_page
+site_resolver: site_selector
+configuration:
+  sites:
+    go: go
+revalidator: cache_tag
+revalidator_configuration:
+  revalidate_page: 0
+  additional_paths: ''

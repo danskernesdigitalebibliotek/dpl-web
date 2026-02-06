@@ -1,0 +1,11 @@
+uuid: 3cd843bd-c566-4948-94fc-12d524d23b40
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.nav_spot
+label: 'Nav spot'
+description: ''
+targetEntityType: media
+cache: true

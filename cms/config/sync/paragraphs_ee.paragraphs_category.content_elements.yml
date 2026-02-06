@@ -1,0 +1,10 @@
+uuid: cfa1a419-9c11-45d1-9ce5-a0a67986546d
+langcode: en
+status: true
+dependencies: {  }
+id: content_elements
+label: 'Content elements'
+description:
+  value: ''
+  format: basic
+weight: 0

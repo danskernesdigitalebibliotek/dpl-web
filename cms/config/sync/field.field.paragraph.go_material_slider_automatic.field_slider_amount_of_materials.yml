@@ -1,0 +1,25 @@
+uuid: 106e4e13-320a-49ae-9b8a-6ba6ca0fc407
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_slider_amount_of_materials
+    - paragraphs.paragraphs_type.go_material_slider_automatic
+id: paragraph.go_material_slider_automatic.field_slider_amount_of_materials
+field_name: field_slider_amount_of_materials
+entity_type: paragraph
+bundle: go_material_slider_automatic
+label: 'Amount of materials'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 8
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

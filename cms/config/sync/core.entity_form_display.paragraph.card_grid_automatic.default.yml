@@ -1,0 +1,105 @@
+uuid: 23a6b999-5184-4d4e-beb1-29752b66ce08
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.card_grid_automatic.field_filter_branches
+    - field.field.paragraph.card_grid_automatic.field_filter_categories
+    - field.field.paragraph.card_grid_automatic.field_filter_cond_type
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
+    - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
+    - field.field.paragraph.card_grid_automatic.field_title
+    - paragraphs.paragraphs_type.card_grid_automatic
+  module:
+    - dpl_link
+    - field_group
+    - select2
+third_party_settings:
+  field_group:
+    group_filters:
+      children:
+        - field_filter_cond_type
+        - field_filter_tags
+        - field_filter_categories
+      label: 'Grouped filters'
+      region: content
+      parent_name: ''
+      weight: 3
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        description: 'Choose the filters, that defines what content is shown. These filters can have their conditions defined.'
+        required_fields: true
+id: paragraph.card_grid_automatic.default
+targetEntityType: paragraph
+bundle: card_grid_automatic
+mode: default
+content:
+  field_filter_branches:
+    type: select2_entity_reference
+    weight: 2
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_filter_categories:
+    type: select2_entity_reference
+    weight: 19
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_filter_cond_type:
+    type: options_select
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_filter_content_types:
+    type: select2
+    weight: 1
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
+  field_filter_tags:
+    type: select2_entity_reference
+    weight: 18
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_more_link:
+    type: dpl_link_options
+    weight: 4
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      target_blank: 0
+      linkit_profile: default
+      linkit_auto_link_text: false
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

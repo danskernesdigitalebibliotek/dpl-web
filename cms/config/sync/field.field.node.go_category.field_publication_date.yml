@@ -1,0 +1,24 @@
+uuid: ed35886b-4b55-4f61-acff-c4b7cb45fd34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_publication_date
+    - node.type.go_category
+  module:
+    - datetime
+id: node.go_category.field_publication_date
+field_name: field_publication_date
+entity_type: node
+bundle: go_category
+label: 'Publication date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

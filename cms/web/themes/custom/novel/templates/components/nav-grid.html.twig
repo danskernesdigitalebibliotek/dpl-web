@@ -1,0 +1,33 @@
+{{ attach_library('novel/nav-grid') }}
+
+{% set has_many = items|length > 6 %}
+{% set foldable = (not show_all) and has_many %}
+
+{%
+  set classes = [
+    'nav-grid',
+    show_subtitles ? 'nav-grid--expanded' : 'nav-grid--simple',
+    has_many ? 'nav-grid--has-many' : '',
+    foldable ? 'nav-grid--folded' : '',
+  ]
+%}
+
+<div {{ attributes.addClass(classes) }}>
+    <div class="nav-grid__header">
+        {% if title %}
+            <h2 class="nav-grid__title">{{ title }}</h2>
+        {% endif %}
+    </div>
+    <ul class="nav-grid__items">
+        {% for item in items %}
+            <li class="nav-grid__item">
+                {{- item.content|default(item) -}}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if foldable %}
+        <button class="nav-grid__controller btn-primary btn-outline btn-medium">
+            {{ 'Show all'|trans }}
+        </button>
+    {% endif %}
+</div>

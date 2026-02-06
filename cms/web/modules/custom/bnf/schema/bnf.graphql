@@ -1,0 +1,1526 @@
+type Address {
+  langcode: String
+  country: AddressCountry
+  givenName: String
+  additionalName: String
+  familyName: String
+  organization: String
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  sortingCode: String
+  dependentLocality: String
+  locality: String
+  administrativeArea: String
+}
+
+type AddressCountry {
+  name: String
+
+  code: String
+}
+
+type AdgangsplatformenLibraryToken {
+  token: String
+  expire: DateTime
+}
+
+type AdgangsplatformenTokens {
+  user: AdgangsplatformenUserToken
+  library: AdgangsplatformenLibraryToken
+}
+
+type AdgangsplatformenUserToken {
+  token: String
+  expire: DateTime
+}
+
+input BetweenFloatInput {
+  min: Float
+
+  max: Float
+}
+
+input BetweenStringInput {
+  min: String
+
+  max: String
+}
+
+type CQLSearch {
+  value: String
+}
+
+type Color {
+  color: String
+
+  opacity: Float
+}
+
+type DateRange {
+  start: DateTime
+
+  end: DateTime
+}
+
+type DateTime {
+  timestamp: Timestamp!
+
+  timezone: TimeZone!
+
+  offset: UtcOffset!
+
+  time: Time!
+}
+
+type DplTokens {
+  adgangsplatformen: AdgangsplatformenTokens
+}
+
+scalar Email
+
+type Error {
+  message: String!
+}
+
+type File {
+  name: String
+
+  url: String!
+
+  size: Int!
+
+  mime: String
+
+  description: String
+}
+
+type GoCategoriesResult implements View {
+  id: ID!
+
+  view: String!
+
+  display: String!
+
+  langcode: String
+
+  label: String
+
+  description: String
+
+  pageInfo: ViewPageInfo!
+
+  results: [NodeUnion!]!
+}
+
+type GoConfiguration {
+  public: GoConfigurationPublic
+  private: GoConfigurationPrivate
+}
+
+type GoConfigurationPrivate {
+  unilogin: UniloginConfigurationPrivate
+}
+
+type GoConfigurationPublic {
+  libraryInfo: GoLibraryInfo
+  loginUrls: GoLoginUrls
+  logoutUrls: GoLogoutUrls
+  searchProfiles: SearchProfiles
+  unilogin: UniloginConfigurationPublic
+}
+
+type GoLibraryInfo {
+  name: String
+  cmsUrl: String!
+}
+
+type GoLoginUrls {
+  adgangsplatformen: String
+}
+
+type GoLogoutUrls {
+  adgangsplatformen: String
+}
+
+scalar Html
+
+type Image {
+  url: String!
+
+  width: Int!
+
+  height: Int!
+
+  alt: String
+
+  title: String
+
+  size: Int!
+
+  mime: String
+}
+
+type ImportResponse {
+  status: ImportStatus!
+  message: String!
+}
+
+enum ImportStatus {
+  success
+  failure
+}
+
+input KeyValueInput {
+  key: String!
+  value: String
+}
+
+type Language {
+  id: ID
+
+  name: String
+
+  direction: String
+}
+
+type Link {
+  title: String
+
+  url: String
+
+  internal: Boolean!
+  id: String
+}
+
+type MediaAudio implements MediaInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  mediaAudioFile: File!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
+}
+
+type MediaDocument implements MediaInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  mediaFile: File!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
+}
+
+type MediaImage implements MediaInterface {
+  id: ID!
+
+  byline: String
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  mediaImage: Image!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
+}
+
+interface MediaInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
+}
+
+union MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool
+
+type MediaVideo implements MediaInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  mediaOembedVideo: String!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
+  thumbnail: String!
+}
+
+type MediaVideotool implements MediaInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  mediaVideotool: String!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
+  thumbnail: String!
+}
+
+type Mutation {
+  _: Boolean!
+  import(uuid: String!, callbackUrl: String!): ImportResponse!
+}
+
+type NewContentResponse {
+  uuids: [String!]!
+  youngest: Time!
+  errors: [Error!]!
+}
+
+type NodeArticle implements NodeInterface {
+  id: ID!
+
+  branch: NodeUnion
+
+  canonicalUrl: Link
+
+  categories: TermUnion
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  overrideAuthor: String
+
+  paragraphs: [ParagraphUnion!]
+
+  path: String
+
+  promote: Boolean!
+
+  publicationDate: DateTime!
+
+  showOverrideAuthor: Boolean
+
+  status: Boolean!
+
+  sticky: Boolean!
+
+  subtitle: String
+
+  tags: [TermUnion!]
+
+  teaserImage: MediaUnion
+
+  teaserText: String
+
+  title: String!
+  url: String!
+}
+
+type NodeGoArticle implements NodeInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  goArticleImage: MediaUnion
+
+  langcode: Language!
+
+  overrideAuthor: String
+
+  paragraphs: [ParagraphUnion!]
+
+  path: String
+
+  promote: Boolean!
+
+  publicationDate: DateTime!
+
+  showOverrideAuthor: Boolean
+
+  status: Boolean!
+
+  sticky: Boolean!
+
+  subtitle: String
+
+  teaserImage: MediaUnion!
+
+  teaserText: String
+
+  title: String!
+  url: String!
+}
+
+type NodeGoCategory implements NodeInterface {
+  id: ID!
+
+  categoryMenuImage: MediaUnion!
+
+  categoryMenuSound: MediaUnion
+
+  categoryMenuTitle: String!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  goColor: String
+
+  langcode: Language!
+
+  paragraphs: [ParagraphUnion!]
+
+  path: String
+
+  promote: Boolean!
+
+  publicationDate: DateTime!
+
+  status: Boolean!
+
+  sticky: Boolean!
+
+  title: String!
+  url: String!
+}
+
+type NodeGoPage implements NodeInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  paragraphs: [ParagraphUnion!]
+
+  path: String
+
+  promote: Boolean!
+
+  publicationDate: DateTime!
+
+  status: Boolean!
+
+  sticky: Boolean!
+
+  title: String!
+  url: String!
+}
+
+interface NodeInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  path: String
+
+  promote: Boolean!
+
+  status: Boolean!
+
+  sticky: Boolean!
+
+  title: String!
+  url: String!
+}
+
+type NodePage implements NodeInterface {
+  id: ID!
+
+  branch: NodeUnion
+
+  breadcrumbParent: TermUnion
+
+  canonicalUrl: Link
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  displayTitles: Boolean
+
+  heroTitle: String
+
+  langcode: Language!
+
+  paragraphs: [ParagraphUnion!]
+
+  path: String
+
+  promote: Boolean!
+
+  publicationDate: DateTime!
+
+  status: Boolean!
+
+  sticky: Boolean!
+
+  subtitle: String
+
+  teaserImage: MediaUnion
+
+  teaserText: String
+
+  title: String!
+  url: String!
+}
+
+union NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+
+type ParagraphAccordion implements ParagraphInterface {
+  id: ID!
+
+  accordionDescription: Text
+
+  accordionTitle: Text!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphBanner implements ParagraphInterface {
+  id: ID!
+
+  bannerDescription: String
+
+  bannerImage: MediaUnion
+
+  bannerLink: Link!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  underlinedTitle: Text
+}
+
+type ParagraphBreadcrumbChildren implements ParagraphInterface {
+  id: ID!
+
+  breadcrumbTarget: TermUnion
+
+  created: DateTime!
+
+  langcode: Language!
+
+  showSubtitles: Boolean
+
+  status: Boolean!
+}
+
+type ParagraphCampaignRule implements ParagraphInterface {
+  id: ID!
+
+  campaignRuleFacet: String!
+
+  campaignRuleTerm: String!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphCardGridAutomatic implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  filterBranches: [NodeUnion!]
+
+  filterCategories: [TermUnion!]
+
+  filterCondType: String!
+
+  filterContentTypes: [String!]
+
+  filterTags: [TermUnion!]
+
+  langcode: Language!
+
+  moreLink: Link
+
+  status: Boolean!
+
+  title: String
+}
+
+type ParagraphCardGridManual implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  gridContent: [ParagraphCardGridManualGridContentUnion!]
+
+  langcode: Language!
+
+  moreLink: Link
+
+  status: Boolean!
+
+  title: String
+  gridContentUuids: [String]
+}
+
+union ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+
+type ParagraphContentSlider implements ParagraphInterface {
+  id: ID!
+
+  contentReferences: [ParagraphContentSliderContentReferencesUnion!]
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  title: String
+
+  underlinedTitle: Text
+}
+
+type ParagraphContentSliderAutomatic implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  filterBranches: [NodeUnion!]
+
+  filterCategories: [TermUnion!]
+
+  filterCondType: String!
+
+  filterContentTypes: [String!]
+
+  filterTags: [TermUnion!]
+
+  langcode: Language!
+
+  status: Boolean!
+
+  title: String
+
+  underlinedTitle: Text
+}
+
+union ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+
+type ParagraphEventTicketCategory implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  ticketCategoryName: String!
+}
+
+type ParagraphFiles implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  files: [MediaUnion!]
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphFilteredEventList implements ParagraphInterface {
+  id: ID!
+
+  amountOfEvents: Int
+
+  created: DateTime!
+
+  filterBranches: [NodeUnion!]
+
+  filterCategories: [TermUnion!]
+
+  filterCondType: String!
+
+  filterTags: [TermUnion!]
+
+  langcode: Language!
+
+  maxItemAmount: String!
+
+  status: Boolean!
+
+  title: String
+}
+
+type ParagraphGoImages implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  goImages: [MediaUnion!]!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphGoLink implements ParagraphInterface {
+  id: ID!
+
+  ariaLabel: String
+
+  created: DateTime!
+
+  langcode: Language!
+
+  link: Link!
+
+  status: Boolean!
+
+  targetBlank: Boolean
+}
+
+type ParagraphGoLinkbox implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  goColor: String
+
+  goDescription: String!
+
+  goImage: MediaUnion
+
+  goLinkParagraph: ParagraphUnion!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  title: String!
+}
+
+type ParagraphGoMaterialSliderAutomatic implements ParagraphInterface {
+  id: ID!
+
+  cqlSearch: CQLSearch
+
+  created: DateTime!
+
+  langcode: Language!
+
+  sliderAmountOfMaterials: Int!
+
+  status: Boolean!
+
+  title: String!
+}
+
+type ParagraphGoMaterialSliderManual implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  materialSliderWorkIds: [WorkId!]!
+
+  status: Boolean!
+
+  title: String!
+}
+
+type ParagraphGoTextBody implements ParagraphInterface {
+  id: ID!
+
+  body: Text!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphGoVideo implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  embedVideo: MediaUnion!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  title: String!
+}
+
+type ParagraphGoVideoBundleAutomatic implements ParagraphInterface {
+  id: ID!
+
+  cqlSearch: CQLSearch
+
+  created: DateTime!
+
+  embedVideo: MediaUnion!
+
+  goVideoTitle: String!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  videoAmountOfMaterials: Int!
+}
+
+type ParagraphGoVideoBundleManual implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  embedVideo: MediaUnion!
+
+  goVideoTitle: String!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  videoBundleWorkIds: [WorkId!]
+}
+
+type ParagraphHero implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  heroCategories: TermUnion
+
+  heroContentType: String
+
+  heroDate: DateTime
+
+  heroDescription: Text
+
+  heroImage: MediaUnion
+
+  heroLink: Link
+
+  heroTitle: String!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+interface ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphLanguageSelector implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  languageIcon: Image!
+
+  status: Boolean!
+}
+
+type ParagraphLinks implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  link: [Link!]!
+
+  status: Boolean!
+}
+
+type ParagraphManualEventList implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  events: [UnsupportedType!]
+
+  langcode: Language!
+
+  status: Boolean!
+
+  title: String
+}
+
+type ParagraphMaterialGridAutomatic implements ParagraphInterface {
+  id: ID!
+
+  cqlSearch: CQLSearch
+
+  created: DateTime!
+
+  langcode: Language!
+
+  materialAmount: Int!
+
+  materialGridDescription: String
+
+  materialGridTitle: String
+
+  status: Boolean!
+}
+
+type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  materialAmount: Int!
+
+  materialGridDescription: String
+
+  materialGridLink: String!
+
+  materialGridTitle: String
+
+  status: Boolean!
+}
+
+type ParagraphMaterialGridManual implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  materialGridDescription: String
+
+  materialGridTitle: String
+
+  materialGridWorkIds: [WorkId!]
+
+  status: Boolean!
+
+  workId: [WorkId!]
+}
+
+type ParagraphMedias implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  medias: [MediaUnion!]!
+
+  status: Boolean!
+}
+
+type ParagraphNavGridManual implements ParagraphInterface {
+  id: ID!
+
+  contentReferences: [ParagraphNavGridManualContentReferencesUnion!]
+
+  created: DateTime!
+
+  langcode: Language!
+
+  showSubtitles: Boolean
+
+  status: Boolean!
+
+  title: String
+  contentReferenceUuids: [String]
+}
+
+union ParagraphNavGridManualContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+
+type ParagraphNavSpotsManual implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  navSpotsContent: [ParagraphNavSpotsManualNavSpotsContentUnion!]
+
+  status: Boolean!
+  navSpotsContentUuids: [String]
+}
+
+union ParagraphNavSpotsManualNavSpotsContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+
+type ParagraphOpeningHours implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphRecommendation implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  imagePositionRight: Boolean
+
+  langcode: Language!
+
+  recommendationDescription: String
+
+  recommendationTitle: Text
+
+  recommendationWorkId: WorkId
+
+  status: Boolean!
+}
+
+type ParagraphSimpleLinks implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  link: [Link!]!
+
+  status: Boolean!
+}
+
+type ParagraphTextBody implements ParagraphInterface {
+  id: ID!
+
+  body: Text!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
+
+type ParagraphUserRegistrationItem implements ParagraphInterface {
+  id: ID!
+
+  anchor: String
+
+  body: Text!
+
+  created: DateTime!
+
+  displayInNavigation: Boolean
+
+  langcode: Language!
+
+  linkTarget: String!
+
+  navigationTitle: String
+
+  registrationLink: Link
+
+  status: Boolean!
+}
+
+type ParagraphUserRegistrationLinklist implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphUserRegistrationSection implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphVideo implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  embedVideo: MediaUnion!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+type ParagraphWebform implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
+scalar PhoneNumber
+
+type Query {
+  newContent(uuid: String!, since: Time!): NewContentResponse!
+  goConfiguration: GoConfiguration
+  dplTokens: DplTokens
+
+  paragraph(
+    id: ID!
+
+    langcode: String
+
+    revision: ID
+  ): ParagraphUnion
+
+  node(
+    id: ID!
+
+    langcode: String
+
+    revision: ID
+  ): NodeUnion
+
+  info: SchemaInformation!
+
+  preview(
+    id: ID!
+
+    token: String
+
+    langcode: String
+  ): NodeUnion
+
+  route(
+    path: String!
+
+    revision: ID
+
+    langcode: String
+  ): RouteUnion
+
+  goCategories(
+    page: Int = 0
+  ): GoCategoriesResult
+}
+
+interface Route {
+  url: String!
+
+  internal: Boolean!
+}
+
+union RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+
+type RouteExternal implements Route {
+  url: String!
+
+  internal: Boolean!
+}
+
+type RouteInternal implements Route {
+  url: String!
+
+  internal: Boolean!
+
+  breadcrumbs: [Link!]
+
+  entity: RouteEntityUnion
+}
+
+type RouteRedirect implements Route {
+  url: String!
+
+  internal: Boolean!
+
+  status: Int!
+
+  redirect: Boolean!
+}
+
+union RouteUnion = RouteInternal | RouteExternal | RouteRedirect
+
+type SchemaInformation {
+  description: String
+
+  home: String
+
+  name: String
+  url: String!
+
+  version: String
+
+  languages: [Language!]!
+}
+
+type SearchProfiles {
+  default: String
+
+  local: String
+
+  global: String
+}
+
+enum SortDirection {
+  ASC
+
+  DESC
+}
+
+type Subscription {
+  _: Boolean!
+}
+
+type TermBreadcrumbStructure implements TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  childrenTitle: String
+
+  content: NodeUnion!
+
+  description: Text!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  showChildren: Boolean
+
+  showChildrenSubtitles: Boolean
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+type TermCategories implements TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  description: Text!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+interface TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  description: Text!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+type TermOpeningHoursCategories implements TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  description: Text!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+type TermScreenName implements TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  description: Text!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+type TermTags implements TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  description: Text!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+union TermUnion = TermBreadcrumbStructure | TermCategories | TermOpeningHoursCategories | TermScreenName | TermTags | TermWebformEmailCategories
+
+type TermWebformEmailCategories implements TermInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  description: Text!
+
+  email: Email!
+
+  langcode: Language!
+
+  name: String!
+
+  parent: TermUnion
+
+  path: String
+
+  status: Boolean!
+
+  weight: Int!
+}
+
+type Text {
+  value: String
+
+  processed: Html
+
+  format: String
+}
+
+type TextSummary {
+  value: String
+
+  processed: Html
+
+  format: String
+
+  summary: Html
+}
+
+scalar Time
+
+scalar TimeZone
+
+scalar Timestamp
+
+type Translation {
+  title: String
+
+  langcode: Language!
+
+  path: String
+}
+
+type UniloginConfigurationPrivate {
+  clientSecret: String
+  webServiceUsername: String
+  webServicePassword: String
+  pubHubRetailerKeyCode: String
+}
+
+type UniloginConfigurationPublic {
+  municipalityId: String
+}
+
+type UnsupportedType {
+  unsupported: Boolean
+}
+
+scalar UntypedStructuredData
+
+scalar UtcOffset
+
+interface View {
+  id: ID!
+
+  view: String!
+
+  display: String!
+
+  langcode: String
+
+  label: String
+
+  description: String
+
+  pageInfo: ViewPageInfo!
+}
+
+type ViewFilter {
+  id: ID!
+
+  plugin: String!
+
+  type: String!
+
+  operator: String!
+
+  label: String
+
+  description: String
+
+  required: Boolean!
+
+  multiple: Boolean!
+
+  value: UntypedStructuredData
+
+  options: UntypedStructuredData
+
+  attributes: UntypedStructuredData!
+}
+
+type ViewPageInfo {
+  offset: Int!
+
+  page: Int!
+
+  pageSize: Int!
+
+  total: Int!
+}
+
+type ViewReference {
+  view: String!
+
+  display: String!
+
+  contextualFilter: [String!]
+
+  pageSize: Int
+
+  query: String
+}
+
+union ViewResultUnion = GoCategoriesResult
+
+type WorkId {
+  work_id: String
+
+  material_type: String
+}

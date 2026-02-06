@@ -1,0 +1,7 @@
+<section {{ attributes.addClass('paragraphs') }}>
+  {% for item in items %}
+    <div {{ item.attributes }}>
+      {{ item.content }}
+    </div>
+  {% endfor %}
+</section>

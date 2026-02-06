@@ -1,0 +1,14 @@
+uuid: 4889fe1c-3d62-4194-bf17-18bbd7c09457
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_location
+label: 'Event location'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_location
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_location
+plugin: default_inheritance

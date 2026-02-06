@@ -1,0 +1,56 @@
+{% set date = eventinstance.get('date').get(0) %}
+
+{% set hero_items = [
+  {
+    label: 'Time'|trans,
+    values: [time_combined],
+  },
+  {
+    label: 'Price'|trans,
+    values: [
+      content.event_ticket_categories.0 ? content.event_ticket_categories : null,
+    ],
+  },
+  {
+    label: 'Place'|trans,
+    values: [
+      content.event_location.0 ? content.event_location : null,
+      content.event_address.0 ? content.event_address : null,
+    ],
+  },
+  {
+    values: [
+      content.event_place.0 ? content.event_place : null,
+    ],
+  },
+] %}
+
+{% set relations_items = [
+  {
+    label: 'Branch'|trans,
+    value: content.branch.0 ? content.branch : null,
+  },
+  {
+    label: 'Partners'|trans,
+    value: content.event_partners.0 ? content.event_partners : null,
+  },
+] %}
+
+{{ include('@novel/components/full-event.html.twig', {
+  label: content.title,
+  image: content.event_image,
+  cta: content.event_link,
+  paragraphs: content.event_paragraphs,
+  date: content.date,
+  description: content.event_description,
+  hero_items: hero_items,
+  relations_items: relations_items,
+  price: content.event_ticket_categories.0 ? content.event_ticket_categories : null,
+  branch: content.branch.0 ? content.branch : null,
+  partners: content.event_partners.0 ? content.event_partners : null,
+  categories: content.event_categories,
+  teaser_text: content.event_teaser_text,
+  tags: content.event_tags.0 ? content.event_tags : null,
+  event_instances: event_instances,
+  expired: expired,
+}, false) }}

@@ -1,0 +1,13 @@
+_core:
+  default_config_hash: UiTY9bhUKWJOIWDlOKM3akeeyHuJJRspXETsv3SY6jw
+roles:
+  administrator: unsafe
+  local_administrator: safe
+  editor: safe
+  mediator: safe
+  patron: unsafe
+  external_system: safe
+  bnf_graphql_client: unsafe
+  go_graphql_client: unsafe
+  bnf_pilot: unsafe
+  external_graphql_client: unsafe

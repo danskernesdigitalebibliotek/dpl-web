@@ -1,0 +1,14 @@
+uuid: 46930fbe-3dbb-4b82-8608-d46e17b11b29
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_teaser_text
+label: 'Event teaser text'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_teaser_text
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_teaser_text
+plugin: default_inheritance

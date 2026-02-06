@@ -1,0 +1,215 @@
+From 3bd89234ce7f316c801d9d061c1ddb0400ffb5ab Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Mon, 24 Oct 2022 02:55:25 +0200
+Subject: [PATCH] Applied openapi_rest-parameter_description-3116760-14.patch
+
+---
+ .../OpenApiGenerator/RestGenerator.php        | 74 +++++++++++++++----
+ 1 file changed, 60 insertions(+), 14 deletions(-)
+
+diff --git a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
+index e3fae55..1d71b81 100644
+--- a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
++++ b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
+@@ -12,6 +12,7 @@ use Drupal\Core\Config\Entity\ConfigEntityTypeInterface;
+ use Drupal\Core\Entity\EntityTypeInterface;
+ use Drupal\Core\Entity\FieldableEntityInterface;
+ use Drupal\openapi_rest\RestInspectionTrait;
++use Drupal\rest\Plugin\ResourceInterface;
+ use Drupal\rest\RestResourceConfigInterface;
+ use Drupal\schemata\SchemaFactory;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+@@ -38,6 +39,9 @@ class RestGenerator extends OpenApiGeneratorBase {
+    */
+   protected $schemaFactory;
+
++  /**
++   * {@inheritdoc}
++   */
+   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, RouteProviderInterface $routing_provider, EntityFieldManagerInterface $field_manager, SerializerInterface $serializer, RequestStack $request_stack, ConfigFactoryInterface $config_factory, AuthenticationCollectorInterface $authentication_collector, SchemaFactory $schema_factory) {
+     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $routing_provider, $field_manager, $serializer, $request_stack, $config_factory, $authentication_collector);
+     $this->schemaFactory = $schema_factory;
+@@ -193,7 +197,7 @@ class RestGenerator extends OpenApiGeneratorBase {
+     }
+     $api_paths = [];
+     foreach ($resource_configs as $resource_config) {
+-      /** @var \Drupal\rest\Plugin\ResourceBase $plugin */
++      /** @var \Drupal\rest\Plugin\ResourceInterface $resource_plugin */
+       $resource_plugin = $resource_config->getResourcePlugin();
+       foreach ($resource_config->getMethods() as $method) {
+         if ($route = $this->getRouteForResourceMethod($resource_config, $method)) {
+@@ -231,8 +235,8 @@ class RestGenerator extends OpenApiGeneratorBase {
+               'description' => 'successful operation',
+             ];
+             $path_method_spec['summary'] = $resource_plugin->getPluginDefinition()['label'];
+-            $path_method_spec['parameters'] = array_merge($path_method_spec['parameters'], $this->getRouteParameters($route));
+-
++            $path_method_spec['parameters'] = array_merge($path_method_spec['parameters'], $this->getPayload($resource_plugin));
++            $path_method_spec['parameters'] = array_merge($path_method_spec['parameters'], $this->getRouteParameters($route, $resource_plugin));
+           }
+
+           $path_method_spec['operationId'] = $resource_plugin->getPluginId() . ":" . $method;
+@@ -380,25 +384,67 @@ class RestGenerator extends OpenApiGeneratorBase {
+   }
+
+   /**
+-   * Get OpenAPI parameters for a route.
++   * Get the payload from the REST resource plugin.
++   *
++   * @param \Drupal\rest\Plugin\ResourceInterface $resource_plugin
++   *   The REST resource plugin.
++   *
++   * @return array
++   *   The payload if present, empty array otherwise.
++   */
++  protected function getPayload(ResourceInterface $resource_plugin) {
++    $definitions = $resource_plugin->getPluginDefinition();
++    if (isset($definitions['payload']['in']) && $definitions['payload']['in'] === 'body') {
++      return [$definitions['payload']];
++    }
++
++    return [];
++  }
++
++  /**
++   * Get parameters of the route.
+    *
+    * @param \Symfony\Component\Routing\Route $route
+    *   The route.
+    *
++   * @param \Drupal\rest\Plugin\ResourceInterface $resource_plugin
++   *   The REST resource plugin.
++   *
+    * @return array
+-   *   The resource parameters.
++   *   The route parameters if present, empty array otherwise.
+    */
+-  protected function getRouteParameters(Route $route) {
++  protected function getRouteParameters(Route $route, ResourceInterface $resource_plugin) {
+     $parameters = [];
+-    $vars = $route->compile()->getPathVariables();
+-    foreach ($vars as $var) {
+-      $parameters[] = [
+-        'name' => $var,
+-        'type' => 'string',
+-        'in' => 'path',
+-        'required' => TRUE,
+-      ];
++    $definitions = $resource_plugin->getPluginDefinition();
++    $path_variables = $route->compile()->getPathVariables();
++    // Each route from a REST resource has only one method (one method per route).
++    $method = current($route->getMethods());
++
++    foreach ($path_variables as $path_variable) {
++      if(isset($definitions['route_parameters'][$method]) && isset($definitions['route_parameters'][$method][$path_variable])) {
++        $parameters[] = $definitions['route_parameters'][$method][$path_variable];
++      }
++      else {
++        $parameters[] = [
++          'name' => $path_variable,
++          'type' => 'string',
++          'in' => 'path',
++          'required' => TRUE,
++        ];
++      }
+     }
++
++    $query_route_parameters = array_filter(
++        $definitions['route_parameters'][$method] ?? [],
++        function($parameter) {
++            return $parameter['in'] == "query";
++        }
++    );
++
++    // Parameters must be a standard array with numeric values to be
++    // represented by an array as required by the OpenAPI spec.
++    $parameters = array_values(array_merge($parameters, $query_route_parameters));
++
+     return $parameters;
+   }
+
+--
+2.37.3+GitX
+
+
+From e670e2e8a732f2f562253fabf9f3dd8b52e5238e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Mon, 24 Oct 2022 02:57:35 +0200
+Subject: [PATCH] Applied response_description_functionality-3171530-3.patch
+
+---
+ .../OpenApiGenerator/RestGenerator.php        | 43 ++++++++++++++++---
+ 1 file changed, 38 insertions(+), 5 deletions(-)
+
+diff --git a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
+index 1d71b81..aa5fa21 100644
+--- a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
++++ b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
+@@ -218,7 +218,8 @@ class RestGenerator extends OpenApiGeneratorBase {
+           }
+           $path_method_spec['parameters'][] = $format_parameter;
+
+-          $path_method_spec['responses'] = $this->getErrorResponses();
++          // Get the responses from the REST resource plugin.
++          $path_method_spec['responses'] = $this->getResponses($resource_plugin);
+
+           if ($this->isEntityResource($resource_config)) {
+             $entity_type = $this->getEntityType($resource_config);
+@@ -228,12 +229,19 @@ class RestGenerator extends OpenApiGeneratorBase {
+               '@entity_type' => $entity_type->getLabel(),
+             ]);
+             $path_method_spec['parameters'] = array_merge($path_method_spec['parameters'], $this->getEntityParameters($entity_type, $method, $bundle_name));
+-            $path_method_spec['responses'] = $this->getEntityResponses($entity_type->id(), $method, $bundle_name) + $path_method_spec['responses'];
++
++            if (empty($path_method_spec['responses'])) {
++              $path_method_spec['responses'] = $this->getEntityResponses($entity_type->id(), $method, $bundle_name) + $path_method_spec['responses'];
++              $path_method_spec['responses'] += $this->getErrorResponses();
++            }
+           }
+           else {
+-            $path_method_spec['responses']['200'] = [
+-              'description' => 'successful operation',
+-            ];
++            if (empty($path_method_spec['responses'])) {
++              $path_method_spec['responses']['200'] = [
++                'description' => 'successful operation',
++              ];
++              $path_method_spec['responses'] += $this->getErrorResponses();
++            }
+             $path_method_spec['summary'] = $resource_plugin->getPluginDefinition()['label'];
+             $path_method_spec['parameters'] = array_merge($path_method_spec['parameters'], $this->getPayload($resource_plugin));
+             $path_method_spec['parameters'] = array_merge($path_method_spec['parameters'], $this->getRouteParameters($route, $resource_plugin));
+@@ -291,6 +299,31 @@ class RestGenerator extends OpenApiGeneratorBase {
+     throw new \Exception("No route found for REST resource, {$resource_config->id()}, for method $method");
+   }
+
++  /**
++   * Get the responses from the REST resource plugin.
++   *
++   * @param \Drupal\rest\Plugin\ResourceInterface $resource_plugin
++   *   The REST resource plugin.
++   *
++   * @return array
++   *   The responses.
++   */
++  protected function getResponses(ResourceInterface $resource_plugin) {
++    $responses = [];
++
++    $definitions = $resource_plugin->getPluginDefinition();
++    if (isset($definitions['responses'])) {
++      foreach ($definitions['responses'] as $status_code => $response) {
++        // The description value is required.
++        if (isset($response['description'])) {
++          $responses[$status_code] = $response;
++        }
++      }
++    }
++
++    return $responses;
++  }
++
+   /**
+    * Get the error responses.
+    *
+--
+2.37.3+GitX

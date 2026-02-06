@@ -1,0 +1,17 @@
+uuid: fe28a735-7d65-4a02-9904-25a72982b0e1
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: paragraph_squared
+label: 'Paragraph, Squared (1:1 / 496x496px)'
+effects:
+  5e30c738-9948-46ce-9cb2-6890ed071d26:
+    uuid: 5e30c738-9948-46ce-9cb2-6890ed071d26
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 496
+      height: 496
+      crop_type: focal_point

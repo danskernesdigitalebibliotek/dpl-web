@@ -1,0 +1,17 @@
+globs:
+  - './**/*.{md,markdown}'
+  - 'web/modules/custom'
+  - 'web/themes/custom'
+
+ignores:
+  - 'node_modules'
+  - 'vendor'
+  - 'web'
+  - 'assets'
+  - 'drush'
+  - 'packages/fbs-client'
+  - 'packages/cms-api'
+  - 'dev-scripts/dpl-react'
+  - './.github/**/*'
+  - '.cache'
+  - '.history'

@@ -1,0 +1,19 @@
+uuid: c0521cf7-6819-45f9-9628-a9838990fb19
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hero_title
+    - node.type.page
+id: node.page.field_hero_title
+field_name: field_hero_title
+entity_type: node
+bundle: page
+label: 'Hero title'
+description: 'The title that is shown at the top of the page.<br /><br /><strong>If this is empty, the standard page title will be used instead.</strong>'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

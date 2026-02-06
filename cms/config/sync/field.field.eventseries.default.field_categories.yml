@@ -1,0 +1,29 @@
+uuid: 4e10dab0-b170-4ec9-a55d-338d03a4d95c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_categories
+    - recurring_events.eventseries_type.default
+    - taxonomy.vocabulary.categories
+id: eventseries.default.field_categories
+field_name: field_categories
+entity_type: eventseries
+bundle: default
+label: Categories
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories: categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

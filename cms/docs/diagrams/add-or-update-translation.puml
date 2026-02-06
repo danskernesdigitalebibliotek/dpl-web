@@ -1,0 +1,6 @@
+@startuml
+Translator -> Poeditor: Translates strings
+Translator -> Poeditor: Pushes button to export strings to GitHub
+Poeditor -> GitHub: Commits translations to GitHub (develop)
+DplCms -> GitHub: By manually requesting or by a cron job translations are imported to DPL CMS.
+@enduml

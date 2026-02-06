@@ -1,0 +1,44 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: 780e5367-e5b7-4dab-a2c3-9b24c7af90f8
+  bundle: menu_link_content
+  default_langcode: en
+  depends:
+    c3e4fa51-c4f9-4e60-abc6-829826949307: node
+default:
+  enabled:
+    -
+      value: true
+  title:
+    -
+      value: Brødkrumme
+  menu_name:
+    -
+      value: main
+  link:
+    -
+      target_uuid: c3e4fa51-c4f9-4e60-abc6-829826949307
+      title: ''
+      options: {  }
+  external:
+    -
+      value: false
+  rediscover:
+    -
+      value: false
+  weight:
+    -
+      value: -45
+  expanded:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'

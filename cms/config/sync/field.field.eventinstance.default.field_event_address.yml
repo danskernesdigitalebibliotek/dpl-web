@@ -1,0 +1,45 @@
+uuid: 3c0e7cc0-bd67-4871-b74f-8d5c8f146ef7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_event_address
+    - recurring_events.eventinstance_type.default
+  module:
+    - address
+id: eventinstance.default.field_event_address
+field_name: field_event_address
+entity_type: eventinstance
+bundle: default
+label: Address
+description: 'Use this value to specific a different address than the event branch.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries:
+    DK: DK
+    FO: FO
+    DE: DE
+    GL: GL
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+    sortingCode:
+      override: hidden
+    dependentLocality:
+      override: hidden
+    administrativeArea:
+      override: hidden
+  fields: {  }
+field_type: address

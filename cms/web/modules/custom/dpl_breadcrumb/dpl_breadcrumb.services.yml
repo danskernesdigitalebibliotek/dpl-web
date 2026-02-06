@@ -1,0 +1,17 @@
+---
+services:
+  _defaults:
+    autowire: true
+  dpl_breadcrumb.logger:
+    parent: logger.channel_base
+    arguments: ['dpl_breadcrumb']
+  dpl_breadcrumb.breadcrumb_helper:
+    class: Drupal\dpl_breadcrumb\Services\BreadcrumbHelper
+    arguments:
+      - '@dpl_breadcrumb.logger'
+      - '@pathauto.alias_cleaner'
+  dpl_breadcrumb.redirect_structure_term:
+    class: Drupal\dpl_breadcrumb\EventSubscriber\StructureTermRedirect
+    arguments: ['@dpl_breadcrumb.breadcrumb_helper']
+    tags:
+      - { name: event_subscriber }

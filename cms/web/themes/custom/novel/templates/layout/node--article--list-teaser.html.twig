@@ -1,0 +1,18 @@
+{% set publication_date = node.created.value %}
+
+{% if node.field_publication_date.value is not empty %}
+  {% set publication_date = node.field_publication_date.value|date('U') %}
+{% endif %}
+
+{{ include('@novel/components/list-item.html.twig'
+  , {
+  attributes: attributes,
+  url: url,
+  baseIconPath: baseIconPath,
+  title: label.0,
+  image: content.field_teaser_image.0,
+  categories: content.field_categories,
+  publication_date: publication_date|format_date('date_full_month'),
+  description: content.field_teaser_text.0|default(content.field_subtitle),
+  bottom: content.field_branch,
+}, false) }}

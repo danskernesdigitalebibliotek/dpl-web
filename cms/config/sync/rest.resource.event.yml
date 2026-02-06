@@ -1,0 +1,18 @@
+uuid: 88171ba7-afd6-4410-ba08-603af4c80ae8
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - dpl_event
+    - serialization
+id: event
+plugin_id: event
+granularity: resource
+configuration:
+  methods:
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - basic_auth

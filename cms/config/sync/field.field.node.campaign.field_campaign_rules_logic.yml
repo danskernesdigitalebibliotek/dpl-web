@@ -1,0 +1,23 @@
+uuid: 22b7fced-a765-41cc-9c03-66289b324424
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campaign_rules_logic
+    - node.type.campaign
+  module:
+    - options
+id: node.campaign.field_campaign_rules_logic
+field_name: field_campaign_rules_logic
+entity_type: node
+bundle: campaign
+label: 'Trigger Logic'
+description: 'Choose if all triggers should match (AND) for a campaign to be displayed or just one of them (OR).'
+required: true
+translatable: false
+default_value:
+  -
+    value: OR
+default_value_callback: ''
+settings: {  }
+field_type: list_string

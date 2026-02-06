@@ -1,0 +1,17 @@
+uuid: f8e42c30-b5c5-4171-83ab-ba9646c90899
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: card_medium
+label: 'Card - Medium - 551×731'
+effects:
+  744cf13a-8bbe-48fb-bb3d-b0eb15a69472:
+    uuid: 744cf13a-8bbe-48fb-bb3d-b0eb15a69472
+    id: focal_point_scale_and_crop
+    weight: -10
+    data:
+      width: 551
+      height: 731
+      crop_type: focal_point

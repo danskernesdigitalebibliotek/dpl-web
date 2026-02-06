@@ -1,0 +1,16 @@
+{% for i, item in items %}
+  {% set start_date = element['#items'][i].start_date %}
+  {% set end_date = element['#items'][i].end_date %}
+
+  {#
+    Creating a datetime attribute, if dates are available.
+    If both start and end date are available, we display the whole range,
+    seperated by a /.
+  #}
+  <time {% if start_date %}datetime="{{ start_date|date('Y-m-d H:i:sP') }}
+      {% if end_date %}/{{ end_date|date('Y-m-d H:i:sP') }}{% endif %}
+    "{% endif %}>
+
+    {{ item.content }}
+  </time>
+{% endfor %}

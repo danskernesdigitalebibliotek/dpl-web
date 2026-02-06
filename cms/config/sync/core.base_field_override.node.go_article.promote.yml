@@ -1,0 +1,22 @@
+uuid: 9812730d-add8-47fa-aa7f-411e844a39ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.go_article
+id: node.go_article.promote
+field_name: promote
+entity_type: node
+bundle: go_article
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

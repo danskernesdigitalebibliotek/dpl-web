@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Theme override to display a /reader page.
+ *
+ * This template is a variant of the page.html.twig template used for rendering
+ * the user registration page. As we don't want the user accessing things outside
+ * of the registration form, we have removed the header and footer regions for this
+ * page.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ */
+#}
+
+  <main id="main-content" role="main">
+    {{ page.content }}
+  </main>

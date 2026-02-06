@@ -1,0 +1,93 @@
+parameters:
+  level: 8
+  paths:
+    - web/modules/custom
+    - web/profiles/dpl_cms
+    - web/themes/custom
+  excludePaths:
+    - **/tests/src/Unit/*
+    - **/tests/src/Kernel/*
+    - web/modules/custom/*/src/GraphQL/*
+  ignoreErrors:
+    - '#Unsafe usage of new static\(\).#'
+    - '#Method .*\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
+    - '#Method .*\(\) return type with generic interface Drupal\\Core\\Field\\FieldItemListInterface does not specify its types: T#'
+    - '#PHPDoc tag @var for variable \$.* contains generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
+    - '#Call to deprecated method legacyConfig\(\) of class Drupal\\dpl_react\\DplReactConfigBase.#'
+    # Drupal Form API makes extensive use for arrays which we cannot provide
+    # more detailed typing of.
+    - '#.*\:\:(addButtonSubmit|buildConfigurationForm|buildForm|buildInputElement|defaultConfiguration|getEditableConfigNames|getMetadataAttributes|submitForm|validateElement|validateForm)\(\) .* no value type specified in iterable type array\.#'
+    - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
+    - '#_form_submit\(\) has parameter \$form with no value type specified in iterable type array\.#'
+    # Drupal *_theme() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_theme\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal *_theme() uses arrays which we cannot provide more detailed typing of.
+    - '#Function .*_theme\(\) has parameter .* with no value type specified in iterable type array\.#'
+    # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
+    - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
+    # Drupal theme suggestions uses arrays which we cannot provide more detailed typing of.
+    - '#Function .*_theme_suggestions_.*\(\) has parameter .* with no value type specified in iterable type array\.#'
+    # Drupal hook_page_attachments functions uses page array which we cannot provide more detailed typing of.
+    - '#Function .*_page_attachments\(\) has parameter \$page with no value type specified in iterable type array\.#'
+    # Drupal hook_module_implements_alter functions uses implementations array which we cannot provide more detailed typing of.
+    - '#Function .*_module_implements_alter\(\) has parameter \$implementations with no value type specified in iterable type array\.#'
+    # Drupal hook_requirements() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_requirements\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_schema() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_schema\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_update() sandbox which we cannot provide more detailed typing of.
+    - '#Function .*_update_\d+\(\) has parameter \$sandbox with no value type specified in iterable type array\.#'
+    # Ignore Plugin configuration parameter.
+    - '#Drupal\\.*\\Plugin\\.*::__construct\(\) .* no value type specified in iterable type array\.#'
+    - '#Drupal\\.*\\Plugin\\.*::create\(\) .* no value type specified in iterable type array\.#'
+    # Ignore Plugin definitions parameter.
+    - '#Drupal\\.*\\Plugin\\.*::getPluginDefinition\(\) return type has no value type specified in iterable type array\.#'
+    # Ignore iterable types for FieldItemListInterface.
+    - '#no value type specified in iterable type Drupal\\Core\\Field\\FieldItemListInterface#'
+    # Allow no doc block details in HOOK_dpl_react_apps_data() functions
+    - '#Function .*_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
+    - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
+    # Allow no doc block details in hook_dpl_protected_nodes_get_protected_nodes() functions
+    - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
+    # Field formatters return render arrays which we cannot provide more detailed typing of.
+    - '#Method Drupal\\.*\\Plugin\\Field\\FieldFormatter\\.*\:\:viewElements\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
+    - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
+    # Since methods are defined in interface there is no need to document signatures.
+    - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::.* no value type specified in iterable type array\.#'
+    -
+      message: '#While loop condition is always true\.#'
+      path: web/modules/custom/dpl_po/src/Commands/DplPoCommands.php
+    # This is an error caused byt the former error which is a false negative.
+    -
+      message: '#Unreachable statement - code above always terminates\.#'
+      path: web/modules/custom/dpl_po/src/Commands/DplPoCommands.php
+    # We are extending existing code. It does not make sense to address the errors coming from a contrib module.
+    - '#Method Drupal\\dpl_po\\Services\\CtpConfigManager::processTranslatableData\(\).*#'
+    - '#Method Drupal\\dpl_po\\Services\\CtpConfigManager::preparePoItem\(\).*#'
+    -
+      message: "#Call to function .* with .* will always evaluate to false.#"
+      path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
+    # Drupal field widget formElement() method has parameters and return type which we cannot provide more detailed typing of.
+    - '#Method Drupal\\.*\\Plugin\\Field\\FieldWidget\\.*::formElement\(\) .* no value type specified in iterable type array\.#'
+    -
+      message: "#Variable .* might not be defined#"
+      path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
+    # Ignore options for Drush commands. These are specified using specialized annotations.
+    - '#Method Drupal\\.*\Commands\\.* has parameter \$options with no value type specified in iterable type array\.#'
+    # These attributes is Drupal 11, but PHP ignores unknown
+    # attributes by design. So tell phpstan these are okay.
+    - '#Attribute class Drupal\\Core\\Hook\\Attribute\\(Legacy)?Hook does not exist\.#'
+
+  scanFiles:
+    # Needed to make locale_translation_batch_fetch_finished() discoverable.
+    # We use this, as part of DplPoCommands.php.
+    - web/core/modules/locale/locale.batch.inc
+    - web/core/modules/locale/locale.bulk.inc
+    - web/core/modules/locale/locale.translation.inc
+    - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
+    # Drupal\dpl_webmaster\Form\InstallOrUpdateModule uses this.
+    - web/core/modules/update/update.authorize.inc
+
+  scanDirectories:
+    - vendor/drush/drush/src-symfony-compatibility

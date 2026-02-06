@@ -1,0 +1,5 @@
+{% for item in items %}
+  {% set url = item.content['#url'] %}
+  {% set target = url.options.target|default('_self') %}
+  <a href="{{ url }}" target="{{ target }}" class="card-grid__link link-tag">{{ item.content['#title'] }}</a>
+{% endfor %}

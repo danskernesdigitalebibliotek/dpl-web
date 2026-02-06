@@ -1,0 +1,45 @@
+uuid: 7df05e1d-14b6-4f24-b2df-75a2b6ad4a05
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_address
+    - recurring_events.eventseries_type.default
+  module:
+    - address
+id: eventseries.default.field_event_address
+field_name: field_event_address
+entity_type: eventseries
+bundle: default
+label: Address
+description: 'Use this value to specific a different address than the event branch.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries:
+    DK: DK
+    FO: FO
+    DE: DE
+    GL: GL
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+    sortingCode:
+      override: hidden
+    dependentLocality:
+      override: hidden
+    administrativeArea:
+      override: hidden
+  fields: {  }
+field_type: address

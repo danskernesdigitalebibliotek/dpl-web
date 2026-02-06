@@ -1,0 +1,579 @@
+<?php
+
+/**
+ * @file
+ * Module file for DPL Event.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_event\EventState;
+use Drupal\dpl_event\Form\SettingsForm;
+use Drupal\dpl_event\ReoccurringDateFormatter;
+use Drupal\dpl_event\Workflows\OccurredSchedule;
+use Drupal\dpl_event\Workflows\UnpublishSchedule;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\recurring_events\Entity\EventSeries;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Unset values when choosing 'online' location for event series or instances.
+ */
+function dpl_event_entity_presave(EntityInterface $entity): void {
+  if (!($entity instanceof EventInstance) && !($entity instanceof EventSeries)) {
+    return;
+  }
+
+  $location_type = 'physical';
+  $non_branch_location = TRUE;
+
+  if ($entity->hasField('field_event_location_type')) {
+    $location_type = $entity->get('field_event_location_type')->getString();
+  }
+
+  if ($location_type === 'online') {
+    if ($entity->hasField('field_event_non_branch_location')) {
+      $entity->set('field_event_non_branch_location', FALSE);
+    }
+
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
+    if ($entity->hasField('field_event_place')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_place', ' ');
+    }
+  }
+  elseif (empty($location_type)) {
+    return;
+  }
+
+  if ($entity->hasField('field_event_non_branch_location')) {
+    $non_branch_location = !empty($entity->get('field_event_non_branch_location')->getString());
+  }
+
+  $branch_field_name = ($entity instanceof EventInstance) ?
+    'branch' : 'field_branch';
+  $branch = NULL;
+
+  if ($entity->hasField($branch_field_name)) {
+    $branch = $entity->get($branch_field_name)->getString();
+  }
+
+  if (!$non_branch_location && !empty($branch)) {
+    if ($entity->hasField('field_event_location')) {
+      // We're adding an empty space to avoid field inheritance taking over.
+      $entity->set('field_event_location', ' ');
+    }
+
+    if ($entity->hasField('field_event_address')) {
+      $entity->set('field_event_address', []);
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * If the eventinstance is set to be an all-day, we want to ignore any times
+ * set, and instead set them to 00:00 - 23:59.
+ *
+ * The majority of the logic here is taken from the contrib module date_all_day
+ * from DatetimeRangeAllDayWidget, as they appear to have figured out how
+ * to deal with the issues of timezones.
+ */
+function dpl_event_eventinstance_presave(EventInstance $eventinstance): void {
+  if (!$eventinstance->hasField('event_all_day')) {
+    return;
+  }
+
+  $all_day = $eventinstance->get('event_all_day')->getString();
+
+  if (empty($all_day)) {
+    return;
+  }
+
+  $dates = $eventinstance->get('date')->getValue();
+
+  $timezone = timezone_open(date_default_timezone_get());
+
+  if (!$timezone) {
+    return;
+  }
+
+  foreach ($dates as &$date) {
+    $start_date = $date['value'] ?? NULL;
+    $end_date = $date['end_value'] ?? NULL;
+
+    if (!($start_date) || (!($end_date))) {
+      continue;
+    }
+
+    $start_date = new DrupalDateTime($start_date, DateTimeItemInterface::STORAGE_TIMEZONE);
+    $end_date = new DrupalDateTime($end_date, DateTimeItemInterface::STORAGE_TIMEZONE);
+
+    // All day fields start at midnight on the starting date, but are
+    // stored like datetime fields, so we need to adjust the time.
+    // This function is called twice, so to prevent a double conversion
+    // we need to explicitly set the timezone.
+    $start_date->setTimezone($timezone);
+    $start_date->setTime(0, 0, 0);
+    $end_date->setTimezone($timezone);
+    $end_date->setTime(23, 59, 59);
+
+    $date['value'] = $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, [
+      'timezone' => DateTimeItemInterface::STORAGE_TIMEZONE,
+    ]);
+    $date['end_value'] = $end_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, [
+      'timezone' => DateTimeItemInterface::STORAGE_TIMEZONE,
+    ]);
+  }
+
+  $eventinstance->set('date', $dates);
+}
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_event_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['eventinstance']['default'])) {
+    $bundles['eventinstance']['default']['class'] = EventInstance::class;
+  }
+}
+
+/**
+ * Implements hook_cron_job_scheduler_info().
+ *
+ * @return non-empty-array<string, array{'worker callback': callable}>
+ *   Job scheduler information.
+ */
+function dpl_event_cron_job_scheduler_info(): array {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  return array_merge(
+    $occurred_schedule->getSchedule(),
+    $unpublish_schedule->getSchedule()
+  );
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function dpl_event_eventinstance_insert(EntityInterface $entity): void {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
+  }
+
+  $entity->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function dpl_event_eventinstance_update(EntityInterface $entity): void {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
+  }
+
+  if (isset($entity->original) && $entity->original instanceof EventInstance) {
+    // If there are no changes to the date then skip updating schedules.
+    if ($entity->hasSameDate($entity->original)) {
+      return;
+    }
+  }
+
+  $entity->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for field templates.
+ *
+ * Preprocesses the 'field_event_link' for Drupal entities to alter its display
+ * based on the event's state. It updates the button title and sets an
+ * 'event_is_active' flag depending on the event state.
+ */
+function dpl_event_preprocess_field(array &$variables): void {
+  // Get the field name from the variables array. Default to NULL if not set.
+  $field_name = $variables['field_name'] ?? NULL;
+
+  if (!in_array($field_name, ['field_event_link', 'event_link']) ||
+    empty($variables['items'][0]['content']['#title'])) {
+    return;
+  }
+
+  $entity = $variables['element']['#object'] ?? NULL;
+
+  $variables['has_event_link'] = FALSE;
+
+  if (!($entity instanceof EventInstance)) {
+    return;
+  }
+
+  $event_state = $entity->getState();
+
+  // Check if the event state is valid. If not, return early.
+  if (!($event_state instanceof EventState)) {
+    return;
+  }
+
+  $variables['has_event_link'] = TRUE;
+
+  // Set 'event_is_active' flag if event state is neither of the following.
+  $variables['event_is_active'] = !in_array($event_state, [
+    EventState::Occurred,
+    EventState::Cancelled,
+    EventState::SoldOut,
+    EventState::TicketSaleNotOpen,
+  ]);
+
+  // After determining the 'event_is_active' flag, check if the event is active.
+  if ($variables['event_is_active']) {
+    // If active, set a translatable string as the title.
+    $has_free_tickets = dpl_event_has_free_tickets($entity);
+
+    $variables['items'][0]['content']['#title'] = $has_free_tickets ? t('Get tickets') : t('Buy tickets');
+    return;
+  }
+  else {
+    // Update the title of the button to the label of the current event state.
+    $variables['items'][0]['content']['#title'] = $event_state->label();
+  }
+}
+
+/**
+ * Check if the event has free tickets.
+ *
+ * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+ *   The event entity.
+ *
+ * @return bool
+ *   True if the event has free tickets, false otherwise.
+ */
+function dpl_event_has_free_tickets(FieldableEntityInterface $entity): bool {
+  $price_formatter = \Drupal::service('dpl_event.price_formatter');
+  $categories_fields_to_check = ['event_ticket_categories', 'field_ticket_categories'];
+
+  // Use categories_fields_to_check because the categories field name is
+  // different for event series and instances.
+  foreach ($categories_fields_to_check as $field) {
+    if ($entity->hasField($field)) {
+      $ticket_categories = $entity->get($field)->referencedEntities();
+      foreach ($ticket_categories as $ticket_category) {
+        $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
+          ->getValue();
+        foreach ($ticket_category_price_fields as $ticket_price) {
+          if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
+            return TRUE;
+          }
+        }
+      }
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_preprocess_field__field_ticket_category_price().
+ *
+ * Adds an array of formatted prices.
+ */
+function dpl_event_preprocess_field__field_ticket_category_price(array &$variables) : void {
+  /** @var \Drupal\dpl_event\PriceFormatter $price_formatter */
+  $price_formatter = \Drupal::service('dpl_event.price_formatter');
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $variables['element']['#items'];
+  $prices = array_map(function (array $price) use ($price_formatter): string {
+    return $price_formatter->formatPrice($price["value"]);
+  }, $items->getValue());
+  $variables['prices'] = $prices;
+}
+
+/**
+ * Implement hook_preprocess() for event series.
+ */
+function dpl_event_preprocess_eventseries(array &$variables): void {
+  $event_series = $variables['eventseries'] ?? NULL;
+
+  if (!($event_series instanceof EventSeries)) {
+    return;
+  }
+
+  $service = DrupalTyped::service(ReoccurringDateFormatter::class, 'dpl_event.reoccurring_date_formatter');
+
+  // Use different date formatters based on view mode.
+  $view_mode = $variables['view_mode'] ?? 'default';
+  if ($view_mode === 'list_teaser') {
+    // For list teaser view, use date without time.
+    $variables['formatted_date'] = $service->getSeriesDateString($event_series, FALSE);
+  }
+  else {
+    // For full view and other views, use date with time.
+    $variables['formatted_date'] = $service->getSeriesDateString($event_series);
+  }
+
+  $upcoming_event_details = $service->getUpcomingEventDetails($event_series);
+  $upcoming_ids = $upcoming_event_details['upcoming_ids'] ?? [];
+
+  if ($service->isAllDay($event_series)) {
+    $variables['start_time'] = t('All day');
+  }
+  else {
+    $start_date = $upcoming_event_details['start'] ?? NULL;
+    $end_date = $upcoming_event_details['end'] ?? NULL;
+
+    if ($start_date instanceof DrupalDateTime) {
+      $variables['start_time'] = $service->formatDate($start_date, 'H:i');
+      $variables['datetime_attribute'] = $service->formatDate($start_date, DATE_ATOM);
+    }
+
+    if ($end_date instanceof DrupalDateTime) {
+      $variables['end_time'] = $service->formatDate($end_date, 'H:i');
+    }
+  }
+
+  // Add cache tags and 12-hours max-age fallback.
+  $variables['#cache'] = [
+    '#max-age' => (60 * 60 * 12),
+    '#tags' => ['eventinstance_list', 'eventseries_list'],
+  ];
+
+  if (count($upcoming_ids) < 2 || $view_mode !== 'full') {
+    return;
+  }
+
+  // Adding a list of upcoming eventinstances, displayed on the full series.
+  $event_instances = \Drupal::entityTypeManager()->getStorage('eventinstance')->loadMultiple($upcoming_ids);
+  $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
+  $variables['event_instances'] = [];
+  $parent_set = FALSE;
+
+  foreach ($event_instances as $event_instance) {
+    $view_mode = 'stacked_event';
+
+    if (!$parent_set) {
+      $view_mode = 'list_teaser_stacked_parent';
+      $parent_set = TRUE;
+    }
+
+    $variables['event_instances'][] = $viewBuilder->view($event_instance, $view_mode);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ *
+ * Preprocesses variables for the eventinstance.
+ * - Generating ticket pricing display.
+ * - Generating the URL for the full view of the event instance.
+ * - Extracting image URL and alt text from the 'event_image' field.
+ * - Processing start and end dates from the 'date' field and formatting them
+ *   in the site's timezone.
+ *
+ * Includes generating ticket pricing display in 'event_list_teaser' view mode.
+ *
+ * @param mixed[] $variables
+ *   The variables array for the node template.
+ *
+ * @throws \Safe\Exceptions\ArrayException
+ */
+function dpl_event_preprocess_eventinstance(array &$variables): void {
+  $eventInstance = $variables['eventinstance'];
+
+  $state = $eventInstance->getState();
+  if ($state instanceof EventState) {
+    $variables['status'] = $state->label();
+    $variables['status_value'] = $state->value;
+  }
+
+  if ($eventInstance->hasField('event_ticket_categories')) {
+    $ticket_categories = $eventInstance->get('event_ticket_categories')->referencedEntities();
+    $prices = [];
+    // Collect prices from ticket categories.
+    foreach ($ticket_categories as $category) {
+      if ($category->hasField('field_ticket_category_price') && !$category->get('field_ticket_category_price')->isEmpty()) {
+        $prices[] = $category->get('field_ticket_category_price')->value;
+      }
+    }
+
+    // Get the PriceFormatter service.
+    $price_formatter = \Drupal::service('dpl_event.price_formatter');
+    $variables['ticket_price_display'] = $price_formatter->formatPriceRange($prices);
+  }
+  $date_formatter = \Drupal::service('date.formatter');
+
+  $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
+
+  // Extract start_time, end_time and datetime attributes.
+  if (!$eventInstance->get('date')->isEmpty()) {
+    $date_field = $eventInstance->get('date')->first();
+
+    $start_time = $date_field->start_date;
+    $end_time = $date_field->end_date;
+
+    if ($start_time instanceof DrupalDateTime) {
+      $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
+      $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
+    }
+    if ($end_time instanceof DrupalDateTime) {
+      $variables['expired'] = ($end_time->getTimestamp() < \Drupal::time()->getCurrentTime());
+      $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
+    }
+  }
+
+  if ($eventInstance->hasField('event_all_day') &&
+    !empty($eventInstance->get('event_all_day')->getString())) {
+    $variables['start_time'] = t('All day');
+    if (isset($variables['end_time'])) {
+      unset($variables['end_time']);
+    }
+  }
+
+  $variables['time_combined'] = $variables['start_time'];
+
+  if (!empty($variables['end_time'])) {
+    $variables['time_combined'] .= " - {$variables['end_time']}";
+  }
+}
+
+/**
+ * Implements hook_gin_content_form_routes().
+ *
+ * @return string[] An array of event-related routes which should be managed as
+ *   content forms by the Gin theme.
+ */
+function dpl_event_gin_content_form_routes() : array {
+  return [
+    'entity.eventseries.add_form',
+    'entity.eventseries.edit_form',
+    // There is no direct add form for instances. They are always created in
+    // relation to series.
+    'entity.eventseries.add_instance_form',
+    'entity.eventinstance.edit_form',
+  ];
+}
+
+/**
+ * Implements hook_entity_query_TAG_alter().
+ *
+ * Deny access to the screen name vocabulary when the feature is disabled.
+ *
+ * This is to totally hide the vocabulary when the feature is disabled.
+ *
+ * hook_entity_query_TAG_alter() is the way to hook into `accessCheck(TRUE)`.
+ */
+function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query): void {
+  if (!\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
+    $query->condition('vid', 'screen_name', '<>');
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * - Move the "Published" checkbox gin sticky action header.
+ * - Hide screen names if the feature is disabled.
+ */
+function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $forms = [
+    'eventseries_default_edit_form',
+    'eventseries_default_add_form',
+    'eventinstance_default_edit_form',
+    'eventinstance_default_add_form',
+  ];
+
+  if (!in_array($form_id, $forms)) {
+    return;
+  }
+
+  if (isset($form['field_event_all_day'])) {
+    $form['field_event_all_day']['warning'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['dpl-form-warning']],
+      '#states' => [
+        'visible' => [
+          ':input[name="field_event_all_day[value]"]' => ['checked' => TRUE],
+        ],
+      ],
+      'message' => [
+        '#markup' => t('Any specific times below will be ignored when "All day" is enabled', [], ['context' => 'dpl_event']),
+      ],
+    ];
+  }
+
+  // PHPCS doesn't understand Drupal's weird way of doing states.
+  // phpcs:disable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+  $physical_state = [
+    ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+    'and',
+    [
+      [':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE]],
+      'or',
+      [':input[name="field_branch"]' => ['value' => '']],
+    ],
+  ];
+
+  if (isset($form['field_event_non_branch_location'])) {
+    $form['field_event_non_branch_location']['#states']['visible'] = [
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+      'and',
+      ':input[name="field_branch"]' => ['!value' => ''],
+    ];
+  }
+  // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+
+  if (isset($form['field_event_location'])) {
+    $form['field_event_location']['#states']['visible'] = $physical_state;
+    $form['field_event_location']['widget'][0]['value']['#states']['required'] = $physical_state;
+  }
+
+  if (isset($form['field_event_address'])) {
+    $form['field_event_address']['#states']['visible'] = $physical_state;
+  }
+
+  if (isset($form['field_event_place'])) {
+    $form['field_event_place']['#states']['visible'] = [
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
+    ];
+  }
+
+  // Move the "Published" checkbox to the gin sticky action header.
+  if (isset($form['status'])) {
+    $form['status']['#group'] = 'status';
+  }
+
+  if (!isset($form['field_screen_names'])) {
+    return;
+  }
+
+  // Undo select2s adding of help text.
+  if (isset($form['field_screen_names']['widget']['#description']) &&
+      is_array($form['field_screen_names']['widget']['#description']) &&
+      is_array($form['field_screen_names']['widget']['#description']['#items'])) {
+    $form['field_screen_names']['widget']['#description'] =
+      $form['field_screen_names']['widget']['#description']['#items'][0];
+  }
+
+  if (\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
+    return;
+  }
+
+  $form['field_screen_names']['#access'] = FALSE;
+}

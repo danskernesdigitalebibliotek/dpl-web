@@ -1,0 +1,25 @@
+uuid: c4e1a667-54b2-4ff4-bad7-dc1549e7d793
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - novel
+_core:
+  default_config_hash: fRKXNB91UxDvEMkzCR8ZBsawfC6Fqbme2gtobei3gu4
+id: novel_branding
+theme: novel
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

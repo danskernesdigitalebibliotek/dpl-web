@@ -1,0 +1,21 @@
+uuid: 14fce304-c0f6-4fd6-82b1-4b732f045097
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_event_all_day
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_event_all_day
+field_name: field_event_all_day
+entity_type: eventinstance
+bundle: default
+label: 'All day'
+description: 'If the event is not limited to a certain time of day, you can enable it here.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,29 @@
+uuid: d2bd6a0c-57ee-4630-afab-990e68fee696
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_branches
+    - node.type.branch
+    - paragraphs.paragraphs_type.content_slider_automatic
+id: paragraph.content_slider_automatic.field_filter_branches
+field_name: field_filter_branches
+entity_type: paragraph
+bundle: content_slider_automatic
+label: 'Filter by branches'
+description: 'If nothing is selected, all will be chosen.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      branch: branch
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

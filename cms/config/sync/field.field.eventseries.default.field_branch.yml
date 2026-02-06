@@ -1,0 +1,25 @@
+uuid: ac1292e7-b4c6-4967-8a7e-621e8863297f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_branch
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_branch
+field_name: field_branch
+entity_type: eventseries
+bundle: default
+label: Branch
+description: 'When selecting a branch, we will use the address from the branch, unless you select “Other location”.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: entity_reference_content
+      display_name: branch_addresses
+      arguments: {  }
+field_type: entity_reference

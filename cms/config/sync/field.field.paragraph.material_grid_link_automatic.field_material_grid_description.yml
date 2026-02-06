@@ -1,0 +1,19 @@
+uuid: 5cf2d54e-5b2a-472e-832b-77f815fd2078
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_material_grid_description
+    - paragraphs.paragraphs_type.material_grid_link_automatic
+id: paragraph.material_grid_link_automatic.field_material_grid_description
+field_name: field_material_grid_description
+entity_type: paragraph
+bundle: material_grid_link_automatic
+label: 'Material grid description'
+description: 'This is the optional description for the material grid. <br />Leave blank if you do not want a description.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

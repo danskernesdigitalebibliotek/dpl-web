@@ -1,0 +1,21 @@
+uuid: d12184b1-d336-497e-9171-871e3783214a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_work_id
+    - paragraphs.paragraphs_type.recommendation
+  module:
+    - dpl_fbi
+id: paragraph.recommendation.field_work_id
+field_name: field_work_id
+entity_type: paragraph
+bundle: recommendation
+label: 'Work ID (DEPRECATED)'
+description: 'This field will be deleted in the future. Please use another work id field.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: dpl_fbi_work_id

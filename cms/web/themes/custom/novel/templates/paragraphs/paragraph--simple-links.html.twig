@@ -1,0 +1,10 @@
+{% for item in content.field_link %}
+  {% if item['#type'] == 'link' %}
+    {% set url = item['#url'].external ? item['#url'].uri : item['#url'].toString() %}
+    {% set target = item['#url'].options.target|default('_self') %}
+    <a href="{{ url }}" target="{{ target }}" class="simple-link arrow__hover--right-small">
+      {{ item['#title'] }}
+      {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+    </a>
+  {% endif %}
+{% endfor %}

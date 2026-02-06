@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Dpl_po.
+ *
+ * Module file for handling translations.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function dpl_po_entity_presave(EntityInterface $entity): void {
+  // Make sure that exported configuration descriptions
+  // are displayed with br tags as line breaks.
+  if ($entity instanceof FieldConfig) {
+    $description = $entity->getDescription();
+    $updated_description = str_replace(["\r\n", "\r", "\n"], "<br />", (string ) $description);
+    $entity->setDescription($updated_description);
+  }
+}

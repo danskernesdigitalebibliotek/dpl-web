@@ -1,0 +1,11 @@
+uuid: b4d7a0c7-fa44-4c07-888f-3834556a0ee4
+langcode: en
+status: true
+dependencies: {  }
+id: paragraph.go_linkbox
+site_resolver: site_selector
+configuration:
+  sites:
+    go: go
+revalidator: cache_tag
+revalidator_configuration: {  }

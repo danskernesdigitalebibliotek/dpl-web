@@ -1,0 +1,7 @@
+---
+services:
+  cache_context.bnf_library_session:
+    class: Drupal\bnf_server\Cache\Context\BnfLibrarySessionCacheContext
+    arguments: ['@request_stack']
+    tags:
+      - { name: cache.context }

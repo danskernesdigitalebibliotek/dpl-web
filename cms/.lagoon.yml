@@ -1,0 +1,183 @@
+docker-compose-yaml: docker-compose.yml
+
+project: dpl-cms-core
+
+ssh: 20.238.147.183:22
+api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
+environment_variables:
+  git_sha: 'true'
+
+tasks:
+  post-rollout:
+    - run:
+        name: Create new GH deployment
+        command: |
+          ENVIRONMENT=$LAGOON_ENVIRONMENT
+
+          # We want BNF to show up as a separate environment.
+          if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+            ENVIRONMENT=$LAGOON_ENVIRONMENT-bnf
+          fi
+
+          GH_DEPLOYMENTS=$(curl -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
+          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$ENVIRONMENT")
+          GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENTS" | grep '"id":' | head -n 1 | sed 's/[^0-9]*\([0-9]*\).*/\1/')
+
+          echo "$GH_DEPLOYMENTS"
+          echo "Found GH deployment with ID '$GH_DEPLOYMENT_ID'"
+
+          # The only way to keep a value between tasks, is saving it in a
+          # file. Environment variables are killed between tasks, apart from
+          # the global ones.
+          echo "$GH_DEPLOYMENT_ID" > /tmp/GH_DEPLOYMENT_ID
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat02.dpl.reload.dk/projects/$LAGOON_PROJECT/$LAGOON_PROJECT-$LAGOON_ENVIRONMENT/deployments"
+          echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
+
+          echo "Creating a initial pending deployment status."
+          ./dev-scripts/lagoon-set-gh-deploy-status.sh "in_progress"
+        service: cli
+    - run:
+        name: If drupal is not installed
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
+            # Install and set the admin password to a Lagoon variable if it exists.
+            if [[ -n $PR_DRUPAL_PWD ]]; then
+              drush si --existing-config -y --account-pass=$PR_DRUPAL_PWD
+            else
+            # Otherwise install and let drush generate a password.
+              drush si --existing-config -y
+            fi
+          fi
+        service: cli
+        shell: bash
+    - run:
+        name: Add BNF overrides
+        command: |
+          if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+            # Make it a bit more obvious that this is the BNF site.
+            drush config:set --yes system.site name "Delingstjenesten (test)"
+            drush config:set --yes novel.settings logo_title "Delingstjenesten"
+            drush config:set --yes novel.settings logo_place "test"
+            drush config:set --yes novel.settings logo_img_enable "0"
+            drush config:set --yes gin.settings logo.use_default "0"
+            drush config:set --yes gin.settings logo.path "themes/custom/novel/images/delingstjenesten.png"
+          fi
+        service: cli
+        shell: bash
+    - run:
+        name: drush deploy
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          if [[ -f config/sync/system.site.yml ]]; then
+            echo "Config detected, doing a drush deploy"
+            drush deploy
+
+          # Purge all varnish cache to make sure
+          # that new changes will come through
+          # eg. js assets.
+          echo "...and clearing the external cache."
+          drush cache:rebuild-external -y || true
+          else
+            echo "No config detected, clearing cache"
+            drush cr
+          fi
+        service: cli
+    - run:
+        # We need this because if we create the directory before volume mount
+        # it will be gone.
+        name: Create module upload directory in public files
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          if [[ ! -d "web/sites/default/files/modules_local" ]]; then
+            echo "Creating directory for module uploads"
+            mkdir web/sites/default/files/modules_local
+          fi
+        service: cli
+    - run:
+        name: Import translations
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush locale-check
+          drush locale-update
+        service: cli
+    - run:
+        name: Import config translations
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
+    - run:
+        name: Clear GraphQL AST cache
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush cc bin graphql.ast
+        service: cli
+    - run:
+        name: Create test users
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          # Only create test users if they do not exist already.
+          if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
+            drush user:create editor --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'editor' editor
+
+            drush user:create administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'administrator' administrator
+
+            drush user:create mediator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'mediator' mediator
+
+            drush user:create local_administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'local_administrator' local_administrator
+
+            drush user:create patron --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'patron' patron
+          else
+            echo "Test users already exist. Skipping creation..."
+          fi
+        service: cli
+    - run:
+        name: Enable example content
+        command: |
+          source dev-scripts/lagoon-error-handling.sh
+
+          drush en -y dpl_example_content
+        service: cli
+    - run:
+        name: Setting Deployment status success
+        command: |
+          DRUPAL_URL=$(drush browse)
+
+          ./dev-scripts/lagoon-set-gh-deploy-status.sh "success" "$DRUPAL_URL"
+        service: cli
+
+environments:
+  main:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import translations
+        schedule: "M H(2-5) * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import danish config translations
+        schedule: "M H(2-5) * * *"
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli

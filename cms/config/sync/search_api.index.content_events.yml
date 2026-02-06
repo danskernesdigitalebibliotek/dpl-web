@@ -1,0 +1,183 @@
+uuid: 916f7e48-7edf-48cf-b61d-b2ad4c6c1116
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_automatic_list_hide
+    - field.storage.eventseries.field_description
+    - field.storage.eventseries.field_event_place
+    - field.storage.eventseries.field_teaser_text
+    - field.storage.node.field_branch
+    - field.storage.node.field_hero_title
+    - field.storage.node.field_subtitle
+    - field.storage.node.field_teaser_text
+    - search_api.server.db_search
+  module:
+    - node
+    - recurring_events
+id: content_events
+name: 'Content + Events'
+description: ''
+read_only: false
+field_settings:
+  categories:
+    label: 'Categories (Aggregrated)'
+    property_path: aggregated_field
+    type: string
+    configuration:
+      type: union
+      separator: '-not used-'
+      fields:
+        - 'entity:eventseries/field_categories'
+        - 'entity:node/field_categories'
+  field_automatic_list_hide:
+    label: 'Hide in automatic lists'
+    datasource_id: 'entity:eventseries'
+    property_path: field_automatic_list_hide
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.eventseries.field_automatic_list_hide
+  field_branch:
+    label: Branch
+    datasource_id: 'entity:node'
+    property_path: field_branch
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_branch
+  field_description_event:
+    label: Subtitle
+    datasource_id: 'entity:eventseries'
+    property_path: field_description
+    type: text
+    dependencies:
+      config:
+        - field.storage.eventseries.field_description
+  field_event_place_event:
+    label: Place
+    datasource_id: 'entity:eventseries'
+    property_path: field_event_place
+    type: string
+    dependencies:
+      config:
+        - field.storage.eventseries.field_event_place
+  field_hero_title:
+    label: 'Hero title'
+    datasource_id: 'entity:node'
+    property_path: field_hero_title
+    type: text
+    boost: 1.2
+    dependencies:
+      config:
+        - field.storage.node.field_hero_title
+  field_subtitle:
+    label: Subtitle
+    datasource_id: 'entity:node'
+    property_path: field_subtitle
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subtitle
+  field_teaser_text:
+    label: 'Teaser text'
+    datasource_id: 'entity:node'
+    property_path: field_teaser_text
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_teaser_text
+  field_teaser_text_event:
+    label: 'Teaser text'
+    datasource_id: 'entity:eventseries'
+    property_path: field_teaser_text
+    type: string
+    dependencies:
+      config:
+        - field.storage.eventseries.field_teaser_text
+  status:
+    label: 'Status (Aggregrated)'
+    property_path: aggregated_field
+    type: boolean
+    configuration:
+      type: union
+      fields:
+        - 'entity:eventseries/status'
+        - 'entity:node/status'
+  tags:
+    label: 'Tags (Aggregrated)'
+    property_path: aggregated_field
+    type: string
+    configuration:
+      type: union
+      separator: '-not used-'
+      fields:
+        - 'entity:eventseries/field_tags'
+        - 'entity:node/field_tags'
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: 1.2
+    dependencies:
+      module:
+        - node
+  title_event:
+    label: Title
+    datasource_id: 'entity:eventseries'
+    property_path: title
+    type: text
+    boost: 1.2
+    dependencies:
+      module:
+        - recurring_events
+datasource_settings:
+  'entity:eventseries':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+  'entity:node':
+    bundles:
+      default: true
+      selected:
+        - branch
+        - campaign
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  ignorecase:
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+    all_fields: true
+    fields:
+      - categories
+      - field_description_event
+      - field_event_place_event
+      - field_hero_title
+      - field_subtitle
+      - field_teaser_text
+      - field_teaser_text_event
+      - tags
+      - title
+      - title_event
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  delete_on_fail: true
+  index_directly: true
+  track_changes_in_references: true
+server: db_search

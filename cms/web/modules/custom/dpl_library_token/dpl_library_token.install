@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * DPL Library Token install procedures.
+ */
+
+use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
+use Drupal\Core\Url;
+use Drupal\dpl_library_token\LibraryTokenHandler;
+use Drupal\dpl_login\Adgangsplatformen\Config;
+use Drupal\drupal_typed\DrupalTyped;
+
+/**
+ * Implements hook_requirements().
+ *
+ * @param string $phase
+ *   The phase for checking requirements.
+ *
+ * @return array[]
+ *   Any requirements for the module.
+ */
+function dpl_library_token_requirements($phase) : array {
+  if ($phase != "runtime") {
+    return [];
+  }
+
+  $context = ['context' => "Library Token"];
+  $requirement = [
+    'title' => t('Library token', [], $context),
+    'severity' => REQUIREMENT_OK,
+    'value' => t('Token available', [], $context),
+  ];
+
+  /** @var \Drupal\dpl_library_token\LibraryTokenHandler $handler */
+  $handler = \Drupal::service('dpl_library_token.handler');
+  if (!$handler->getToken()) {
+    $requirement['severity'] = REQUIREMENT_WARNING;
+    $requirement['value'] = t('No valid token available. <a href=":url">Run cron</a> to retrieve a new token.', [
+      ':url' => Url::fromRoute('system.cron_settings')->toString(),
+    ], $context);
+  }
+
+  return ['dpl_library_token' => $requirement];
+}
+
+/**
+ * Delete LibraryToken if it is invalid and retrieve a new one.
+ *
+ * If the LibraryToken is not in the correct format (string), it is considered
+ * invalid. If this is the case, we delete the token and retrieve a new one.
+ */
+function dpl_library_token_update_10000(): string {
+  $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
+  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
+  $keyValueFactory = DrupalTyped::service(KeyValueExpirableFactoryInterface::class, 'keyvalue.expirable');
+
+  $tokenCollection = $keyValueFactory->get(LibraryTokenHandler::TOKEN_COLLECTION_KEY);
+  $token = $tokenCollection->get(LibraryTokenHandler::LIBRARY_TOKEN_KEY);
+
+  if (is_string($token)) {
+    $tokenCollection->delete('library_token');
+
+    $handler->retrieveAndStoreToken(
+      $config->getAgencyId(),
+      $config->getClientId(),
+      $config->getClientSecret(),
+      $config->getTokenEndpoint()
+    );
+
+    return "Invalid token deleted and new token retrieved.";
+  }
+
+  return "Token already valid. No action taken.";
+}

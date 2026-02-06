@@ -1,0 +1,30 @@
+uuid: abb96c6a-fd90-4a3e-bae3-f3c6032ac359
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.audio.field_media_audio_file
+    - media.type.audio
+id: media.audio.media_library
+targetEntityType: media
+bundle: audio
+mode: media_library
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_media_audio_file: true
+  langcode: true
+  path: true
+  publish_on: true
+  status: true
+  uid: true
+  unpublish_on: true

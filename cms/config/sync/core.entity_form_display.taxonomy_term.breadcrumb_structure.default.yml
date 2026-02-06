@@ -1,0 +1,89 @@
+uuid: f2778610-d8b4-4b36-971c-0611265cc876
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.breadcrumb_structure.field_children_title
+    - field.field.taxonomy_term.breadcrumb_structure.field_content
+    - field.field.taxonomy_term.breadcrumb_structure.field_show_children
+    - field.field.taxonomy_term.breadcrumb_structure.field_show_children_subtitles
+    - taxonomy.vocabulary.breadcrumb_structure
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_related_children:
+      children:
+        - field_show_children
+        - field_children_title
+        - field_show_children_subtitles
+      label: 'Related children'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+id: taxonomy_term.breadcrumb_structure.default
+targetEntityType: taxonomy_term
+bundle: breadcrumb_structure
+mode: default
+content:
+  field_children_title:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Related content for "@title"'
+    third_party_settings: {  }
+  field_content:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_show_children:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_show_children_subtitles:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 99
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true
+  publish_on: true
+  unpublish_on: true

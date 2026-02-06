@@ -1,0 +1,10 @@
+uuid: 8fb2fce6-6c69-4c88-bd2e-f6ee8eb3006e
+langcode: en
+status: true
+dependencies: {  }
+id: go_paragraphs
+label: 'GO paragraphs'
+description:
+  value: '<p>Paragraphs used in GO context</p>'
+  format: basic
+weight: 0

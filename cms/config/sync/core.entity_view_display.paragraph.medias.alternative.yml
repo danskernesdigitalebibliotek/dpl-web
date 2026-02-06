@@ -1,0 +1,24 @@
+uuid: dab9cab1-01ba-4554-94cb-8a78366ae10b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.alternative
+    - field.field.paragraph.medias.field_medias
+    - paragraphs.paragraphs_type.medias
+id: paragraph.medias.alternative
+targetEntityType: paragraph
+bundle: medias
+mode: alternative
+content:
+  field_medias:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: paragraph_squared
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

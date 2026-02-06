@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: ea00fafa-9c57-42fc-98f1-21d95dd0b5cf
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: go-category-example-image.png
+  uri:
+    -
+      value: 'public://2025-05/go-category-example-image.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 39298
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1746516963
