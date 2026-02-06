@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - name: Send webpack stats to RelativeCI
         uses: relative-ci/agent-action@v3

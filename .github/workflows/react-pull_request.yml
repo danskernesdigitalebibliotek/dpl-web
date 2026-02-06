@@ -7,6 +7,9 @@ jobs:
     name: Lint .scss
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node
@@ -31,6 +34,9 @@ jobs:
   typescript:
     name: Typescript compile check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node
@@ -50,6 +56,9 @@ jobs:
     name: Lint .js and .jsx
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node
@@ -76,6 +85,9 @@ jobs:
     name: Lint markdown
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node

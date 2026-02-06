@@ -19,6 +19,9 @@ concurrency:
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-system
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

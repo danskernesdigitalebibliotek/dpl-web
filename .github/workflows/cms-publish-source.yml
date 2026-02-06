@@ -4,6 +4,9 @@ on: create
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
     steps:
       - uses: actions/checkout@v6
         with:
