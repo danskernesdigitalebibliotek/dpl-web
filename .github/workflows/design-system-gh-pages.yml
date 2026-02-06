@@ -38,4 +38,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
+          publish_dir: ./design-system/storybook-static
+          destination_dir: design-system
+          # Don't wipe out other projects folder when deploying this.
+          keep_files: true
