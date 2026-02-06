@@ -1,0 +1,4 @@
+
+/** GetLibraryProfileResult */
+export interface GetLibraryProfileResult {
+}

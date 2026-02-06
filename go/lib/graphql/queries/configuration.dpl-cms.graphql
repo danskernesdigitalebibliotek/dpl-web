@@ -1,0 +1,34 @@
+query getDplCmsPrivateConfiguration {
+  goConfiguration {
+    private {
+      unilogin {
+        clientSecret
+        pubHubRetailerKeyCode
+        webServicePassword
+        webServiceUsername
+      }
+    }
+  }
+}
+
+query getDplCmsPublicConfiguration {
+  goConfiguration {
+    public {
+      searchProfiles {
+        local
+      }
+      libraryInfo {
+        name
+      }
+      loginUrls {
+        adgangsplatformen
+      }
+      logoutUrls {
+        adgangsplatformen
+      }
+      unilogin {
+        municipalityId
+      }
+    }
+  }
+}

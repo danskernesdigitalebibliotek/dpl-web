@@ -1,0 +1,46 @@
+{
+  "extends": "@tsconfig/create-react-app/tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "cypress"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "target": "es6",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      },
+      {
+        "name": "@0no-co/graphqlsp",
+        "schema": "graphql/generated/dpl-cms/graphql.schema.json"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "add-operation-suffix.js"
+  ],
+  "exclude": [
+    ".next",
+    ".history",
+    "node_modules",
+    "lib/graphql/generated/**/*.ts",
+    "lib/soap/publizon/v2_7/generated/getlibraryuserorderlist/index.ts"
+  ]
+}

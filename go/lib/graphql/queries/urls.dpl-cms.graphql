@@ -1,0 +1,19 @@
+query getLoginUrls {
+  goConfiguration {
+    public {
+      loginUrls {
+        adgangsplatformen
+      }
+    }
+  }
+}
+
+query getLogoutUrls {
+  goConfiguration {
+    public {
+      logoutUrls {
+        adgangsplatformen
+      }
+    }
+  }
+}

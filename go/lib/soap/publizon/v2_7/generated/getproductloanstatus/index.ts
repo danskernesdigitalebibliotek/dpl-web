@@ -1,0 +1,12 @@
+export type { GetProductLoanStatus } from "./definitions/GetProductLoanStatus";
+export type { GetProductLoanStatusResponse } from "./definitions/GetProductLoanStatusResponse";
+export type { GetProductLoanStatusResult } from "./definitions/GetProductLoanStatusResult";
+export type { GetProductLoanStatusList } from "./definitions/GetProductLoanStatusList";
+export type { Ebookids } from "./definitions/Ebookids";
+export type { GetProductLoanStatusListResponse } from "./definitions/GetProductLoanStatusListResponse";
+export type { GetProductLoanStatusListResult } from "./definitions/GetProductLoanStatusListResult";
+export { createClientAsync } from "./client";
+export type { GetproductloanstatusClient } from "./client";
+export type { Getproductloanstatus } from "./services/Getproductloanstatus";
+export type { GetproductloanstatusSoap } from "./ports/GetproductloanstatusSoap";
+export type { GetproductloanstatusSoap12 } from "./ports/GetproductloanstatusSoap12";

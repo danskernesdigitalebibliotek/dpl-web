@@ -1,0 +1,102 @@
+# Dependabot configuration files that automate our dependency updates by creating pull requests.
+# The PRs are labeled and grouped by package ecosystem and semver update type.
+# We intentionally use grouping and pull request limits to avoid creating too many PRs and
+# exhausting the number of available pull requests in Lagoon.
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: "/"
+    # The maximum number of pull requests for version updates
+    open-pull-requests-limit: 20
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+    groups:
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      graphql-codegen:
+        patterns:
+          - "@graphql-codegen/*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "tsx"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      next:
+        patterns:
+          - "next"
+          - "@next/env"
+          - "eslint-config-next"
+          - "@next/eslint-plugin-next"
+      tailwindcss:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "tailwindcss-animate"
+      prettier:
+        patterns:
+          - "prettier"
+          - "eslint-config-prettier"
+      cva:
+        patterns:
+          - "class-variance-authority"
+          - "clsx"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+          - "eslint-plugin-storybook"
+      xstate:
+        patterns:
+          - "xstate"
+          - "@xstate/*"
+      react-query:
+        patterns:
+          - "@tanstack/react-query"
+          - "@tanstack/react-query-devtools"
+      jwt-simple:
+        patterns:
+          - "jwt-simple"
+          - "@types/jwt-simple"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/js"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "orval"
+        versions: ["^7.13.2"]
+      - dependency-name: "cypress"
+        update-types: ["version-update:semver-major"]
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    # Workflow files stored in the default location of `.github/workflows`
+    # You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.
+    directory: "/"
+    # The maximum number of pull requests for version updates
+    open-pull-requests-limit: 20
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: "weekly"
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - dependencies
+      - github_actions

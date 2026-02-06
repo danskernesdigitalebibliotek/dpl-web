@@ -1,0 +1,4 @@
+
+/** GetFriendlyCardnumberResult */
+export interface GetFriendlyCardnumberResult {
+}

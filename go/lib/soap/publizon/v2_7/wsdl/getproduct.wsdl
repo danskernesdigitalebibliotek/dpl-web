@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://pubhub.dk/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://pubhub.dk/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://pubhub.dk/">
+      <s:element name="GetProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="retailerid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="retailerkeycode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ebookid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="languagecode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetProductSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProduct" />
+  </wsdl:message>
+  <wsdl:message name="GetProductSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductResponse" />
+  </wsdl:message>
+  <wsdl:portType name="getproductSoap">
+    <wsdl:operation name="GetProduct">
+      <wsdl:input message="tns:GetProductSoapIn" />
+      <wsdl:output message="tns:GetProductSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="getproductSoap" type="tns:getproductSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetProduct">
+      <soap:operation soapAction="http://pubhub.dk/GetProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="getproductSoap12" type="tns:getproductSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetProduct">
+      <soap12:operation soapAction="http://pubhub.dk/GetProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="getproduct">
+    <wsdl:port name="getproductSoap" binding="tns:getproductSoap">
+      <soap:address location="https://libraryservices.pubhub.dk/v2_7/getproduct.asmx" />
+    </wsdl:port>
+    <wsdl:port name="getproductSoap12" binding="tns:getproductSoap12">
+      <soap12:address location="https://libraryservices.pubhub.dk/v2_7/getproduct.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

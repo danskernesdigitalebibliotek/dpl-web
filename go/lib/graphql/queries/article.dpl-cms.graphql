@@ -1,0 +1,33 @@
+query getArticleByPath($path: String!) {
+  route(path: $path) {
+    __typename
+    ...routeRedirect
+    ... on RouteInternal {
+      url
+      entity {
+        ... on NodeGoArticle {
+          __typename
+          id
+          title
+          subtitle
+          goArticleImage {
+            ...imageFragment
+          }
+          publicationDate {
+            timestamp
+          }
+          paragraphs {
+            ...goVideo
+            ...goVideoBundleAutomatic
+            ...goVideoBundleManual
+            ...goMaterialSliderAutomatic
+            ...goMaterialSliderManual
+            ...goLinkbox
+            ...goTextBody
+            ...goImages
+          }
+        }
+      }
+    }
+  }
+}

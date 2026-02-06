@@ -1,0 +1,4 @@
+
+/** GetProductResult */
+export interface GetProductResult {
+}

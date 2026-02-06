@@ -1,0 +1,78 @@
+# Smaller fragments for specific use cases -------------------------------------
+
+fragment WorkAccess on Work {
+  workId
+  manifestations {
+    all {
+      ...ManifestationAccess
+    }
+  }
+}
+
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+  }
+}
+
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+
+fragment WorkDescription on Work {
+  abstract
+}
+
+# Bigger chunks for specific pages ---------------------------------------------
+
+fragment WorkTeaserSearchPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  manifestations {
+    all {
+      ...ManifestationSearchPageTeaser
+    }
+    bestRepresentation {
+      ...ManifestationSearchPageTeaser
+    }
+  }
+}
+
+fragment WorkFullWorkPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  ...WorkDescription
+  manifestations {
+    all {
+      ...ManifestationWorkPage
+    }
+    bestRepresentation {
+      ...ManifestationWorkPage
+    }
+  }
+}

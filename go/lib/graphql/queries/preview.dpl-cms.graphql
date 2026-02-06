@@ -1,0 +1,9 @@
+query getPreviewPageByIdd($id: ID!, $token: String!) {
+  __typename
+  preview(id: $id, token: $token) {
+    __typename
+    ...nodeGoPage
+    ...nodeGoArticle
+    ...nodeGoCategory
+  }
+}

@@ -1,0 +1,49 @@
+# Workflow name
+name: "Chromatic"
+
+# Event for the workflow
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+# List of jobs
+jobs:
+  chromatic-deployment:
+    name: Chromatic
+
+    if: github.event.pull_request.draft == false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          # Make sure the actual branch is checked out when running on pull requests.
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0 # 👈 Required to retrieve git history
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: ".env.test"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v13
+        # Chromatic GitHub Action options
+        with:
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

@@ -1,0 +1,25 @@
+query getAdgangsplatformenLibraryToken {
+  dplTokens {
+    adgangsplatformen {
+      library {
+        token
+        expire {
+          timestamp
+        }
+      }
+    }
+  }
+}
+
+query getAdgangsplatformenUserToken {
+  dplTokens {
+    adgangsplatformen {
+      user {
+        expire {
+          timestamp
+        }
+        token
+      }
+    }
+  }
+}

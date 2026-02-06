@@ -1,0 +1,76 @@
+# This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
+name: Publish source
+on: create
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v5
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      # Validate the format of the tag. We only want to react on a precise pattern.
+      - name: Detect release tag
+        id: detect_tag
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs\/tags\/([0-9]+\.[0-9]+\.[0-9]+|[a-zA-Z]+-[0-9]+\.[0-9]+)$ ]]
+          then
+            echo ::set-output name=IS_RELEASE_TAG::true
+          else
+            echo ::set-output name=IS_RELEASE_TAG::false
+          fi
+
+      - uses: actions/setup-node@v5
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+
+      - name: Install dependencies
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        run: yarn install --frozen-lockfile
+
+      - name: Run CI checks
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        run: |
+          yarn ci-check
+          if [ $? -ne 0 ]; then
+            echo "Code quality checks failed"
+            exit 1
+          fi
+
+      # Extract version from tag.
+      - name: Get version
+        id: get_version
+        run: |
+          echo ::set-output name=RELEASE_TAG::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+      # Write version to .version file.
+      - name: Create .version file
+        run: |
+          echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+      # Install go-task since we need it for building the source package.
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+      - name: Build and publish source
+        run: |
+          echo "Publishing tag: $RELEASE_TAG"
+          RELEASE_IMAGE_TAG=$RELEASE_TAG RELEASE_IMAGE_REGISTRY=ghcr.io/${{ github.repository_owner}} task source:deploy
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+
+      - name: Adding summary
+        run: |
+          echo "Source image was successfully build (version: ${{ github.ref }}) 🚀😎" >> $GITHUB_STEP_SUMMARY

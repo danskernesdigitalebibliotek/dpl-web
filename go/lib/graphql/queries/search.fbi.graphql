@@ -1,0 +1,40 @@
+query searchWithPagination(
+  $q: SearchQueryInput!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: SearchFiltersInput
+) {
+  search(q: $q, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+    }
+  }
+}
+
+query searchFacets(
+  $q: SearchQueryInput!
+  $facets: [FacetFieldEnum!]!
+  $facetLimit: Int!
+  $filters: SearchFiltersInput
+) {
+  search(q: $q, filters: $filters) {
+    facets(facets: $facets) {
+      ...SearchFacet
+    }
+  }
+}
+
+query complexSearchForWorkTeaser(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+    }
+  }
+}
