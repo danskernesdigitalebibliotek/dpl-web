@@ -1,5 +1,5 @@
 ---
-name: Check that webmaster-controlled config has been updated using hooks.
+name: CMS / Webmaster config check
 on:
   pull_request:
     paths:

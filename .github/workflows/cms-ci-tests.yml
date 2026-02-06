@@ -4,7 +4,7 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
-name: CI Tests
+name: CMS / CI Tests
 env:
   PHP_VERSION: 8.3
   COMPOSER_VERSION: v2

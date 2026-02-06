@@ -1,4 +1,4 @@
-name: Accessibility
+name: Design / Accessibility
 
 on:
   pull_request:

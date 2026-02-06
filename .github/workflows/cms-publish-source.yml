@@ -1,5 +1,5 @@
 # This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
-name: Publish source
+name: CMS / Publish source
 on:
   create:
     tags:

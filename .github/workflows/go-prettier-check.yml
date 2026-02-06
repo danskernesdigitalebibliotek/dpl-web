@@ -1,4 +1,4 @@
-name: Prettier check
+name: "Go / Prettier check"
 
 on:
   push:

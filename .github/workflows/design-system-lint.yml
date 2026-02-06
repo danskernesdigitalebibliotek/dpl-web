@@ -1,4 +1,4 @@
-name: Lint and format
+name: Design / Lint
 
 on:
   pull_request:

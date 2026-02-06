@@ -1,4 +1,4 @@
-name: Create release on branch changes
+name: Design / Create release
 
 on:
   push:

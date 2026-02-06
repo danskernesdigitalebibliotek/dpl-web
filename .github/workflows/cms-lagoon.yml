@@ -4,7 +4,7 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
-name: Lagoon integration
+name: CMS / Lagoon integration
 
 env:
   LAGOON_DOMAIN: "dplplat02.dpl.reload.dk"

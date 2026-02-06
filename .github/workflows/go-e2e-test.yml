@@ -1,4 +1,4 @@
-name: Next.js E2E Tests
+name: "Go / E2E tests"
 
 on:
   push:
