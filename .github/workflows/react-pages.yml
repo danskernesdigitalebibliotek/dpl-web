@@ -8,6 +8,9 @@ on:
 jobs:
   github-pages:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
     - uses: actions/checkout@v6
 

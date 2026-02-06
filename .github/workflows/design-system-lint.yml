@@ -10,6 +10,9 @@ jobs:
   css-lint:
     name: CSS Linter
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-system
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v5
@@ -23,6 +26,9 @@ jobs:
   js-lint:
     name: JS Linter
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-system
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v5
@@ -37,6 +43,9 @@ jobs:
     name: Markdown Linter
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-system
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v5

@@ -9,6 +9,9 @@ jobs:
     name: Build artifacts
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - uses: actions/checkout@v6
         with:

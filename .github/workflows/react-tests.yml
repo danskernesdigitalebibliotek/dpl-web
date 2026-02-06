@@ -7,6 +7,9 @@ jobs:
     name: Integration test
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     env:
       TZ: Europe/Copenhagen
     strategy:
@@ -70,6 +73,9 @@ jobs:
     name: Unit test
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node

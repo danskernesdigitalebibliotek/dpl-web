@@ -10,6 +10,9 @@ jobs:
   create_release_on_branch_changes:
     name: "Create release on branch changes"
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-system
     steps:
       - name: Set release variables
         id: resolve-release-vars

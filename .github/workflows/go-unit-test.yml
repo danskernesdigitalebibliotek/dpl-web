@@ -17,6 +17,11 @@ jobs:
   unit:
     name: Unit test
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: go
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
