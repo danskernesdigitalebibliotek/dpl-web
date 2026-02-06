@@ -1,5 +1,5 @@
 # Workflow name
-name: "Accessibility Test"
+name: "Go / Accessibility test"
 
 # Event for the workflow
 on:

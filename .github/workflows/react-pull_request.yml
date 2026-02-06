@@ -1,4 +1,4 @@
-name: Build and test
+name: "React / Build and test"
 
 on:
   pull_request:

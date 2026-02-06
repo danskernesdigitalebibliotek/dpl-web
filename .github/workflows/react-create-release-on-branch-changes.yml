@@ -1,4 +1,4 @@
-name: Create release on branch changes
+name: "React / Create release on branch changes"
 
 on:
   push:

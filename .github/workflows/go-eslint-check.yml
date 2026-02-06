@@ -1,4 +1,4 @@
-name: Eslint check
+name: "Go / ESLint check"
 
 on:
   push:

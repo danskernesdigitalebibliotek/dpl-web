@@ -1,5 +1,5 @@
 # Workflow name
-name: "Unit test"
+name: "Go / Unit test"
 
 # Event for the workflow
 on:

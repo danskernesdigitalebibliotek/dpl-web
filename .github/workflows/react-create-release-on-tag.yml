@@ -1,4 +1,4 @@
-name: Create release on tag
+name: "React / Create release on tag"
 
 on:
   push:

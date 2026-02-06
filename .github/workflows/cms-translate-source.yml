@@ -1,5 +1,5 @@
 # This workflow takes care of sending translations to POEditor or Github Pages.
-name: Translate source
+name: CMS / Translate source
 on:
   push:
     branches:
