@@ -1,0 +1,42 @@
+query searchWithPagination(
+  $q: SearchQueryInput!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: SearchFiltersInput
+) {
+  search(q: $q, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkSmall
+    }
+  }
+}
+
+query complexSearchWithPaginationWorkAccess(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkAccess
+    }
+  }
+}
+
+query complexSearchWithPagination(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+  $sort: [SortInput!]
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      ...WorkSmall
+    }
+  }
+}

@@ -1,0 +1,1654 @@
+[
+  {
+    "recordId": "134015012",
+    "reservable": true,
+    "reservations": 4,
+    "holdings": [
+      {
+        "branch": {
+          "dev_comment": "The branchID is manually added to have a branchId that is whitelisted",
+          "branchId": "DK-775147",
+          "title": "Ørestad"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Ørestad",
+          "Stuen",
+          "Voksen",
+          "Krimi & Spænding"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5385205173",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205262",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710116",
+          "title": "Tingbjerg"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387825284",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710115",
+          "title": "Sydhavn"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385204975",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710105",
+          "title": "Brønshøj"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205289",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Vanløse", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205017",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710110",
+          "title": "Biblioteket Rentemestervej"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205130",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710115",
+          "title": "Sydhavn"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Sydhavn", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205025",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710104",
+          "title": "Blågården"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Blågården",
+          "Stuen > Voksen",
+          "Krimi & Spænding"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5385205335",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710119",
+          "title": "Vesterbro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Vesterbro",
+          "Stuen",
+          "Voksen",
+          "Krimi & Spænding"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5385205009",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710100",
+          "title": "Hovedbiblioteket"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Hovedbiblioteket",
+          "1. sal > LITT",
+          "Krimi og spænding"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5385204940",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385204959",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205157",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205165",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710100",
+          "title": "Hovedbiblioteket"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385204932",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710113",
+          "title": "Sundby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205378",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710117",
+          "title": "Valby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205092",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710109",
+          "title": "Øbro Jagtvej"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385204991",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710106",
+          "title": "Christianshavn"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205114",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101003",
+          "title": "Fjernlager (cso)"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205041",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710114",
+          "title": "Bibliotekshuset"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": {
+            "locationId": "mordsg",
+            "title": "Nye mordsager og nervepirrende thrillers"
+          },
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385197146",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Udstilling",
+              "description": "voksen udstilling"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101010",
+          "title": "Fjernlager 3"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": {
+            "locationId": "mordsg",
+            "title": "Nye mordsager og nervepirrende thrillers"
+          },
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385197030",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Udstilling",
+              "description": "voksen udstilling"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710117",
+          "title": "Valby"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Valby", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205300",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710104",
+          "title": "Blågården"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205327",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205394",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710114",
+          "title": "Bibliotekshuset"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385204983",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205211",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205270",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710108",
+          "title": "Islands Brygge"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Islands Brygge", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205203",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205106",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710121",
+          "title": "Østerbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205254",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710120",
+          "title": "Vigerslev"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Vigerslev", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385204967",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205343",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710119",
+          "title": "Vesterbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205351",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710107",
+          "title": "Husum"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205246",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205033",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205068",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205122",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710108",
+          "title": "Islands Brygge"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205319",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710111",
+          "title": "Nørrebro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Nørrebro", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205149",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101009",
+          "title": "Fjernlager 2"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "spænd",
+            "title": "Krimi og Spænding"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385205408",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205416",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825292",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825306",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825314",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205386",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005104",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005112",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005120",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005139",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005147",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005155",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005163",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005171",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005198",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005201",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005228",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005236",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005244",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005252",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005260",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005279",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005287",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005295",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005309",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005317",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005325",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005333",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005341",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005368",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005376",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005384",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005392",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005406",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005414",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005422",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005430",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005449",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005457",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005465",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387005473",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385349",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385357",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385365",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385373",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385381",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385403",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385411",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385438",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385446",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5344537072",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385462",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385470",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385489",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385497",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385500",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385519",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385527",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385535",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385543",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387385551",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825101",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825128",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825136",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825144",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825152",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825160",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825179",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825187",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825195",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825209",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825217",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825225",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825233",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825241",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825268",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387825276",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710121",
+          "title": "Østerbro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Østerbro", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205297",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385205076",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710112",
+          "title": "Solvang"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Solvang Centret", "Voksen", "Krimi & Spænding"],
+        "materials": [
+          {
+            "itemNumber": "5385205181",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

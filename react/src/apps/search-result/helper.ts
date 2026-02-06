@@ -1,0 +1,61 @@
+import { head } from "lodash";
+import { Filter } from "../../core/filter.slice";
+import { getMaterialTypes } from "../../core/utils/helpers/general";
+import { Manifestation } from "../../core/utils/types/entities";
+import { ManifestationMaterialType } from "../../core/utils/types/material-type";
+import { FacetFieldEnum } from "../../core/dbc-gateway/generated/graphql";
+
+export const mapFacetToFilter = (facet: FacetFieldEnum) => {
+  switch (facet) {
+    case FacetFieldEnum.Materialtypesspecific:
+      return "materialTypesSpecific";
+    case FacetFieldEnum.Worktypes:
+      return "workTypes";
+    case FacetFieldEnum.Creators:
+      return "creators";
+    case FacetFieldEnum.Subjects:
+      return "subjects";
+    case FacetFieldEnum.Dk5:
+      return "dk5";
+    default:
+      return "invalid";
+  }
+};
+
+export const getFirstMaterialTypeFromFilters = (
+  filters: Filter,
+  manifestations: Manifestation[]
+) => {
+  const materialTypeFilter = head(
+    Object.keys(filters[FacetFieldEnum.Materialtypesspecific] || {}).sort()
+  ) as ManifestationMaterialType;
+  const allMaterialTypes = getMaterialTypes(manifestations);
+  return materialTypeFilter && allMaterialTypes.includes(materialTypeFilter)
+    ? materialTypeFilter
+    : undefined;
+};
+
+export const formatSearchDisplayQuery = ({
+  q,
+  creator,
+  subject,
+  dk5,
+  t
+}: {
+  q?: string;
+  creator?: string | null;
+  subject?: string | null;
+  dk5?: string | null;
+  t: (key: string) => string;
+}): string => {
+  return [
+    q && q !== "*" ? q : null,
+    creator ? `${t("byAuthorText")}: ${creator}` : null,
+    subject ? `${t("facetSubjectsText")}: ${subject}` : null,
+    dk5 ? `${t("facetDk5Text")}: ${dk5}` : null
+  ]
+    .filter(Boolean)
+    .join("; ");
+};
+
+export default {};

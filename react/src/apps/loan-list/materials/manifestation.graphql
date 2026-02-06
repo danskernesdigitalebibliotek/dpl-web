@@ -1,0 +1,45 @@
+fragment ManifestationBasicDetails on Manifestation {
+  ...WithLanguages
+  pid
+  titles {
+    full
+  }
+  abstract
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+    }
+  }
+  series {
+    title
+    members {
+      numberInSeries
+    }
+  }
+}
+
+query getManifestationViaMaterialByFaust($faust: String!) {
+  manifestation(faust: $faust) {
+    ...ManifestationBasicDetails
+  }
+}
+
+query getManifestationViaBestRepresentationByFaust($faust: String!) {
+  manifestation(faust: $faust) {
+    ownerWork {
+      manifestations {
+        bestRepresentation {
+          ...ManifestationBasicDetails
+        }
+      }
+    }
+  }
+}

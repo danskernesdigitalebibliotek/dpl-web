@@ -1,0 +1,191 @@
+import React, { useId } from "react";
+import { useDispatch } from "react-redux";
+import { useDeepCompareEffect } from "react-use";
+import { guardedRequest } from "../../core/guardedRequests.slice";
+import { TypedDispatch } from "../../core/store";
+import {
+  convertPostIdToFaustId,
+  getManifestationsPids,
+  getMaterialTypes,
+  getWorkPid
+} from "../../core/utils/helpers/general";
+import { WorkId } from "../../core/utils/types/ids";
+import { AvailabilityLabels } from "../availability-label/availability-labels";
+import ButtonFavourite, {
+  ButtonFavouriteId
+} from "../button-favourite/button-favourite";
+import { Cover } from "../cover/cover";
+import MaterialAvailabilityText from "./MaterialAvailabilityText/MaterialAvailabilityText";
+import MaterialHeaderText from "./MaterialHeaderText";
+import MaterialButtons from "./material-buttons/MaterialButtons";
+import MaterialPeriodical from "./periodical/MaterialPeriodical";
+import { Manifestation, Work } from "../../core/utils/types/entities";
+import { PeriodicalEdition } from "./periodical/helper";
+import { useCollectPageStatistics } from "../../core/statistics/useStatistics";
+import { statistics } from "../../core/statistics/statistics";
+import {
+  getManifestationLanguageIsoCode,
+  getWorkTitle
+} from "../../apps/material/helper";
+import { isPeriodical, shouldShowMaterialAvailabilityText } from "./helper";
+import { first } from "lodash";
+import { hasCorrectMaterialType } from "./material-buttons/helper";
+import { ManifestationMaterialType } from "../../core/utils/types/material-type";
+
+interface MaterialHeaderProps {
+  wid: WorkId;
+  work: Work;
+  selectedManifestations: Manifestation[];
+  setSelectedManifestations: (manifestations: Manifestation[]) => void;
+  selectedPeriodical: PeriodicalEdition | null;
+  selectPeriodicalHandler: (selectedPeriodical: PeriodicalEdition) => void;
+  children: React.ReactNode;
+  isGlobalMaterial: boolean;
+  isAvailable: boolean | null;
+}
+
+const MaterialHeader: React.FC<MaterialHeaderProps> = ({
+  work: {
+    creators,
+    manifestations: { all: manifestations, bestRepresentation },
+    workId: wid
+  },
+  work,
+  selectedManifestations,
+  setSelectedManifestations,
+  selectedPeriodical,
+  selectPeriodicalHandler,
+  children,
+  isGlobalMaterial = false,
+  isAvailable
+}) => {
+  const materialTitleId = useId();
+  const dispatch = useDispatch<TypedDispatch>();
+  const addToListRequest = (id: ButtonFavouriteId) => {
+    dispatch(
+      guardedRequest({
+        type: "addFavorite",
+        args: { id },
+        app: "material"
+      })
+    );
+  };
+  const title = getWorkTitle(work);
+  const pid = getWorkPid(work);
+  const coverPids = getManifestationsPids(selectedManifestations);
+  const { collectPageStatistics } = useCollectPageStatistics();
+  // This is used to track whether the user is changing between material types or just clicking the same button over
+  const manifestationMaterialTypes = getMaterialTypes(selectedManifestations);
+
+  const languageIsoCode = getManifestationLanguageIsoCode(
+    selectedManifestations
+  );
+
+  const isYearbook =
+    hasCorrectMaterialType(
+      ManifestationMaterialType.yearBook,
+      manifestations
+    ) ||
+    hasCorrectMaterialType(
+      ManifestationMaterialType.yearBookOnline,
+      manifestations
+    );
+
+  useDeepCompareEffect(() => {
+    collectPageStatistics({
+      ...statistics.materialType,
+      trackedData: manifestationMaterialTypes.join(", ")
+    });
+    collectPageStatistics({
+      ...statistics.materialSource,
+      trackedData: first(first(selectedManifestations)?.source) ?? "No source"
+    });
+    // We just want to track if the currently selected manifestation changes (which should be once - on initial render)
+    // and when the currently selected manifestation's material type changes - on availability button click.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [manifestationMaterialTypes]);
+
+  return (
+    <header className="border-bottom">
+      <div className="material-header">
+        <div className="material-header__cover">
+          <Cover
+            ids={coverPids}
+            bestRepresentation={bestRepresentation}
+            size="large"
+            displaySize="xlarge"
+            animate
+            shadow="small"
+          />
+        </div>
+        <div
+          data-cy="material-header-content"
+          className="material-header__content"
+        >
+          <ButtonFavourite
+            title={String(title)}
+            id={wid}
+            addToListRequest={addToListRequest}
+          />
+          <MaterialHeaderText
+            title={String(title)}
+            creators={creators}
+            languageIsoCode={languageIsoCode}
+            materialTitleId={materialTitleId}
+          />
+          <div className="material-header__availability-label">
+            {!isGlobalMaterial && (
+              <AvailabilityLabels
+                cursorPointer
+                workId={wid}
+                manifestations={manifestations}
+                selectedManifestations={selectedManifestations}
+                setSelectedManifestations={setSelectedManifestations}
+              />
+            )}
+          </div>
+          {/* The CTA buttons apparently only make sense on a global work */}
+          {!isGlobalMaterial && (
+            <>
+              {isPeriodical(selectedManifestations) && (
+                <MaterialPeriodical
+                  faustId={convertPostIdToFaustId(pid)}
+                  selectedPeriodical={selectedPeriodical}
+                  selectPeriodicalHandler={selectPeriodicalHandler}
+                  isYearbook={isYearbook}
+                />
+              )}
+              {selectedManifestations && (
+                <>
+                  <div className="material-header__button">
+                    <MaterialButtons
+                      manifestations={selectedManifestations}
+                      workId={wid}
+                      dataCy="material-header-buttons"
+                      materialTitleId={materialTitleId}
+                    />
+                  </div>
+                  {/* MaterialAvailabilityText is only shown for:
+                    - Online manifestations
+                    - physical manifestations
+                    - that are not periodical or articles
+                    - that are available in at least one local library branch
+                */}
+                  {shouldShowMaterialAvailabilityText(selectedManifestations) &&
+                    isAvailable && (
+                      <MaterialAvailabilityText
+                        manifestations={selectedManifestations}
+                      />
+                    )}
+                </>
+              )}
+              {children}
+            </>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default MaterialHeader;

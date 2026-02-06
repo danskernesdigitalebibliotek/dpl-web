@@ -1,0 +1,248 @@
+{
+  "data": {
+    "localSuggest": {
+      "result": [
+        {
+          "type": "TITLE",
+          "term": "Harry Potter og De Vises Sten",
+          "work": {
+            "workId": "work-of:870970-basis:22629344",
+            "titles": {
+              "main": ["Harry Potter og de vises sten"]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:38289977"
+              },
+              "all": [
+                {
+                  "pid": "870970-basis:22629344"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "SUBJECT",
+          "term": "Harry Potter",
+          "work": {
+            "workId": "work-of:870970-basis:22677780",
+            "titles": {
+              "main": ["Harry Potter og Hemmelighedernes Kammer"]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:61636935"
+              },
+              "all": [
+                {
+                  "pid": "870970-basis:22629344"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "TITLE",
+          "term": "Har døden taget noget fra dig så giv det tilbage",
+          "work": {
+            "workId": "work-of:870970-basis:53053149",
+            "titles": {
+              "main": ["Har døden taget noget fra dig så giv det tilbage"]
+            },
+            "creators": [
+              {
+                "display": "Naja Marie Aidt"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:53111203"
+              },
+              "all": [
+                {
+                  "pid": "870970-basis:22629344"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "CREATOR",
+          "term": "Hartmut Rosa",
+          "work": {
+            "workId": "work-of:870970-basis:50999335",
+            "titles": {
+              "main": ["Fremmedgørelse og acceleration"]
+            },
+            "creators": [
+              {
+                "display": "Hartmut Rosa"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:50999335"
+              }
+            }
+          }
+        },
+        {
+          "type": "SUBJECT",
+          "term": "Harry Hole",
+          "work": {
+            "workId": "work-of:870970-basis:53045650",
+            "titles": {
+              "main": ["Tørst"]
+            },
+            "creators": [
+              {
+                "display": "Jo Nesbø"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:54215797"
+              }
+            }
+          }
+        },
+        {
+          "type": "CREATOR",
+          "term": "Haruki Murakami",
+          "work": {
+            "workId": "work-of:870970-basis:54103581",
+            "titles": {
+              "main": ["Mordet på kommandanten. Bog 1 : En ide viser sig"]
+            },
+            "creators": [
+              {
+                "display": "Haruki Murakami"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:54936508"
+              }
+            }
+          }
+        },
+        {
+          "type": "SUBJECT",
+          "term": "Harry Dresden",
+          "work": {
+            "workId": "work-of:870970-basis:53182623",
+            "titles": {
+              "main": ["The Dresden files"]
+            },
+            "creators": [],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:53182623"
+              }
+            }
+          }
+        },
+        {
+          "type": "COMPOSIT",
+          "term": "Joanne K. Rowling Harry Potter og fangen fra Azkaban",
+          "work": {
+            "workId": "work-of:870970-basis:22995154",
+            "titles": {
+              "main": ["Harry Potter og fangen fra Azkaban"]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:54871945"
+              },
+              "all": [
+                {
+                  "pid": "870970-basis:22629344"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                },
+                {
+                  "pid": "870970-basis:38289977"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "TITLE",
+          "term": "Harry Potter and the philosopher's stone",
+          "work": {
+            "workId": "work-of:870970-basis:42042455",
+            "titles": {
+              "main": ["Harry Potter and the philosopher's stone"]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:134987766"
+              }
+            }
+          }
+        },
+        {
+          "type": "CREATOR",
+          "term": "Stephen Harper",
+          "work": {
+            "workId": "work-of:870970-basis:28813597",
+            "titles": {
+              "main": ["Enigma"]
+            },
+            "creators": [
+              {
+                "display": "Stephen Harper"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:28813597"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
