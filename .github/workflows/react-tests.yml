@@ -1,6 +1,14 @@
 name: Integration test
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'react/**'
+      - '.github/workflows/react-*.yml'
+  pull_request:
+    paths:
+      - 'react/**'
+      - '.github/workflows/react-*.yml'
 
 jobs:
   integration:

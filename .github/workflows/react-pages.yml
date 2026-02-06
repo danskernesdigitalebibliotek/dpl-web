@@ -4,6 +4,9 @@ on:
   push:
     branches:
     - develop
+    paths:
+      - 'react/**'
+      - '.github/workflows/react-*.yml'
 
 jobs:
   github-pages:

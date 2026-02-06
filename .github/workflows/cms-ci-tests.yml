@@ -1,5 +1,9 @@
 # These workflows takes care of various CI tests.
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - 'cms/**'
+      - '.github/workflows/cms-*.yml'
 name: CI Tests
 env:
   PHP_VERSION: 8.3
