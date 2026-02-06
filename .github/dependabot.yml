@@ -1,0 +1,281 @@
+# Unified Dependabot configuration for DPL Web monorepo
+# This configuration manages dependency updates for all four projects:
+# - cms (Drupal CMS with Composer and npm)
+# - design-system (React/Storybook with npm)
+# - go (Next.js with npm)
+# - react (React components with npm)
+version: 2
+updates:
+  # GitHub Actions - applies to all workflows in .github/workflows
+  - package-ecosystem: github-actions
+    directory: "/"
+    open-pull-requests-limit: 20
+    schedule:
+      interval: weekly
+      day: monday
+      time: '04:00'
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "github_actions"
+
+  # CMS - Composer dependencies
+  - package-ecosystem: composer
+    directory: "/cms"
+    open-pull-requests-limit: 20
+    groups:
+      drupal-core-minor-major-releases:
+        patterns:
+          - "drupal/core*"
+        update-types:
+          - "major"
+          - "minor"
+      drupal-core-patch-releases:
+        patterns:
+          - "drupal/core*"
+        update-types:
+          - "patch"
+    ignore:
+      - dependency-name: "drupal/potion"
+      - dependency-name: "spawnia/sailor"
+        versions: [">1.1.0"]
+      # Our patches are not compatible with the latest version.
+      - dependency-name: "drupal/entity_reference_revisions"
+        versions: [">=1.13.0"]
+      # Automated updates to paragraphs also trigger updates to
+      # entity_reference_revisions.
+      - dependency-name: "drupal/paragraphs"
+        versions: [">1.19.0"]
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "cms"
+      - "drupal"
+
+  # CMS dev-scripts - Composer dependencies
+  - package-ecosystem: composer
+    directory: "/cms/dev-scripts"
+    open-pull-requests-limit: 20
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "cms"
+      - "dev-scripts"
+
+  # CMS - npm dependencies
+  - package-ecosystem: npm
+    directory: "/cms"
+    open-pull-requests-limit: 20
+    groups:
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
+    ignore:
+      # @types/node are linked to the Node version used within the project.
+      # Bump the package manually when upgrading to a new Node version.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # Tests fail when running Cypress 15 using task cy:cypress:local.
+      - dependency-name: "cypress"
+        versions: [ ">=15" ]
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "cms"
+      - "js-dependencies"
+
+  # Design System - npm dependencies
+  - package-ecosystem: npm
+    directory: "/design-system"
+    open-pull-requests-limit: 20
+    versioning-strategy: increase
+    schedule:
+      interval: weekly
+      day: monday
+      time: '04:00'
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "design-system"
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "@types/react"
+          - "react-dom"
+          - "@types/react-dom"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        versions: [">=18"]
+      - dependency-name: "@types/react"
+        versions: [">=18"]
+      - dependency-name: "react-dom"
+        versions: [">=18"]
+      - dependency-name: "@types/react-dom"
+        versions: [">=18"]
+      - dependency-name: "stylelint-config-recommended-scss"
+        versions: [">=16"]
+      - dependency-name: "storybook"
+        versions: [">=10"]
+      - dependency-name: "@storybook/*"
+        versions: [">=10"]
+
+  # Go (Next.js) - npm dependencies
+  - package-ecosystem: npm
+    directory: "/go"
+    open-pull-requests-limit: 20
+    versioning-strategy: increase
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "go"
+    groups:
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      graphql-codegen:
+        patterns:
+          - "@graphql-codegen/*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "tsx"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      next:
+        patterns:
+          - "next"
+          - "@next/env"
+          - "eslint-config-next"
+          - "@next/eslint-plugin-next"
+      tailwindcss:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "tailwindcss-animate"
+      prettier:
+        patterns:
+          - "prettier"
+          - "eslint-config-prettier"
+      cva:
+        patterns:
+          - "class-variance-authority"
+          - "clsx"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+          - "eslint-plugin-storybook"
+      xstate:
+        patterns:
+          - "xstate"
+          - "@xstate/*"
+      react-query:
+        patterns:
+          - "@tanstack/react-query"
+          - "@tanstack/react-query-devtools"
+      jwt-simple:
+        patterns:
+          - "jwt-simple"
+          - "@types/jwt-simple"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/js"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "orval"
+        versions: ["^7.13.2"]
+      - dependency-name: "cypress"
+        update-types: ["version-update:semver-major"]
+
+  # React - npm dependencies
+  - package-ecosystem: npm
+    directory: "/react"
+    open-pull-requests-limit: 20
+    versioning-strategy: increase
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "react"
+    groups:
+      babel:
+        patterns:
+          - "@babel/*"
+      fullcalendar:
+        patterns:
+          - "@fullcalendar/*"
+      graphql-codegen:
+        patterns:
+          - "@graphql-codegen/*"
+          - "@graphql-typed-document-node/core"
+          - "replace-in-file"
+          - "typescript-graphql-typed-files-modules"
+      react:
+        patterns:
+          - "react"
+          - "@types/react"
+          - "react-dom"
+          - "@types/react-dom"
+      redux:
+        patterns:
+          - "@reduxjs/toolkit"
+          - "@types/react-redux"
+          - "react-redux"
+          - "redux"
+          - "redux-persist"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+      testing-library:
+        patterns:
+          - "@testing-library/*"
+      cypress:
+        patterns:
+          - "cypress"
+          - "@cypress/*"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "storybook"
+        versions: [">=9"]
+      - dependency-name: "@storybook/react-webpack5"
+        versions: [">=9"]
+      - dependency-name: "@chromatic-com/storybook"
+        versions: [">=4"]
+      - dependency-name: "dotenv"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint-plugin-react-hooks"
+        update-types: ["version-update:semver-major"]
