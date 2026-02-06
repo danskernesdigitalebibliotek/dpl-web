@@ -1,0 +1,24 @@
+.material-description {
+  max-width: 750px;
+  padding: $hero-padding-small;
+
+  @include media-query__small {
+    padding: $hero-padding-large-content;
+  }
+}
+
+.material-description__heading {
+  @include typography($typo__h4);
+  margin-bottom: $s-md;
+}
+
+.material-description__content {
+  @include typography($typo__body-large);
+  line-height: 160%;
+  margin-bottom: $s-md;
+}
+
+// spacing between the description links
+.material-description__links > * + * {
+  margin-top: $s-md;
+}

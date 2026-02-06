@@ -1,0 +1,54 @@
+.event-description {
+  @include layout-container($layout__max-width--medium);
+  @include block-spacing("small");
+}
+
+.event-description__title {
+  @include typography($typo__h4);
+  margin-bottom: $s-md;
+
+  @include media-query__small {
+    grid-column: 1 / -1;
+    margin-bottom: $s-lg;
+  }
+}
+
+.event-description__info {
+  display: grid;
+  gap: $s-2xl;
+}
+
+.event-description__card,
+.list-description--relations {
+  @include media-query__small {
+    width: 50%;
+    min-width: $s-7xl;
+    place-self: end;
+  }
+}
+
+.event-description__description {
+  @include typography($typo__subtitle);
+  @include block-spacing("small");
+
+  @include media-query__medium {
+    margin-top: $_block-vertical-spacing--large;
+  }
+}
+
+.event-description__links {
+  @include block-spacing("small");
+}
+
+.event-description__card {
+  background-color: $color__global-secondary;
+  padding: $s-lg;
+}
+
+.event-description__price {
+  @include typography($typo__h4);
+
+  .ticket-category {
+    text-align: end;
+  }
+}

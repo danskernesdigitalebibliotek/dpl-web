@@ -1,0 +1,34 @@
+.status-label {
+  @include typography($typo__label);
+  padding: $s-sm $s-md;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+
+  &--danger {
+    background-color: $color__signal-alert;
+    color: $color__text-primary-white;
+  }
+
+  &--warning {
+    background-color: $color__signal-aware;
+    color: $color__text-secondary-gray;
+  }
+
+  &--info {
+    background-color: $color__signal-success;
+    color: $color__text-primary-white;
+  }
+
+  &--neutral {
+    background-color: $color__global-primary;
+    color: $color__text-secondary-gray;
+  }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid #dbdbdb;
+    color: $color__text-secondary-gray;
+  }
+}

@@ -1,0 +1,134 @@
+// Icons
+.internal-container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  grid-gap: 20px;
+}
+
+// Colors
+.internal-colors-container {
+  margin-top: 20px;
+}
+
+.internal-colors-wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.internal-colors-box {
+  width: 150px;
+  height: 150px;
+}
+
+.internal-colors-code {
+  pre {
+    display: grid;
+    grid-template-columns: min-content;
+  }
+}
+
+// Spacing
+.internal-spacing-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  column-gap: 30px;
+}
+
+.internal-spacing-scale-inner {
+  display: grid;
+  grid-template-columns: 60px 350px;
+}
+
+.internal-spacing-scale-box {
+  background-color: #c96fe6;
+  opacity: 0.1;
+}
+
+.internal-spacing-css-inner-prefix {
+  border: 1px solid $color__global-tertiary-1;
+  width: 200px;
+  height: 60px;
+}
+
+.internal-spacing-css-inner-property {
+  border: 1px solid $color__global-tertiary-1;
+  width: 250px;
+  height: 60px;
+}
+
+.internal-spacing-css-inner {
+  display: flex;
+}
+
+// Breakpoints
+.internal-breakpoints-css-inner-prefix {
+  border: 1px solid $color__global-tertiary-1;
+  width: 250px;
+  height: 60px;
+}
+
+.internal-breakpoints-css-inner-property {
+  border: 1px solid $color__global-tertiary-1;
+  width: 90px;
+  height: 60px;
+}
+
+.internal-breakpoints-css-inner {
+  display: flex;
+}
+
+// Code tag
+code {
+  font-family: monospace;
+  background-color: #f5f8fa;
+  padding: $s-xs;
+  border-radius: 2px;
+  font-size: 90%;
+  line-height: 1.45;
+}
+
+.internal-pagefold-parent {
+  width: 300px;
+  height: 300px;
+  background: #eee9e5;
+  padding: 50px;
+}
+
+.internal-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+// Arrow box
+.internal-arrow-box {
+  width: 300px;
+  height: 300px;
+  border: 1px solid;
+  margin: 10px 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.internal-arrow-box:hover {
+  background-color: #f5f8fa;
+}
+
+// Shadows
+.shadow-box-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.shadow-box-item {
+  padding: 24px;
+}

@@ -1,0 +1,24 @@
+.create-patron-page {
+  @include layout-container($block-max-width__large);
+  background: $color__global-primary;
+  margin: $s-3xl auto $s-lg auto;
+  gap: $s-3xl;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: calc(555px + ($layout__edge-spacing * 2));
+}
+
+.create-patron-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: $s-xl;
+}
+
+.create-patron-page__title {
+  @include typography($typo__h1);
+}
+
+.create-patron-page__buttons {
+  display: flex;
+}

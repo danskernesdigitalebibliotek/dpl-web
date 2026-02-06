@@ -1,0 +1,40 @@
+name: 'Chromatic'
+
+on:
+  push:
+    branches:
+      # Required for creating baselines
+      - main
+      - develop
+      - release/*
+  pull_request:
+    types: [ready_for_review, opened, synchronize]
+
+# Detect if this action is already running, and cancel it.
+# This most likely happened because a second push has been made to a branch.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: '.nvmrc'
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn css:build
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v13.3.5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: c6b96f9648b6

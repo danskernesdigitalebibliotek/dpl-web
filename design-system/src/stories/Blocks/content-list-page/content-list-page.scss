@@ -1,0 +1,46 @@
+.content-list-page {
+  @include block-spacing();
+  background-color: $color__global-primary;
+}
+
+.content-list-page__heading {
+  @include layout-container($block-max-width__large);
+  @include typography($typo__h2);
+}
+
+.content-list-page__subheading {
+  @include layout-container($block-max-width__large);
+  @include typography($typo__body-small);
+  color: $color__global-grey;
+  margin-top: $s-lg;
+
+  a {
+    @include link-tag;
+  }
+}
+
+//  Todo should be merged with .facet-line
+.content-list-page__filters {
+  @include layout-container($block-max-width__large);
+
+  display: flex;
+  flex-direction: column;
+  gap: $s-sm;
+  margin-top: $s-lg;
+  margin-bottom: $s-lg;
+
+  @include media-query__small {
+    flex-direction: row;
+  }
+}
+
+.content-list-page__filter--right {
+  @include media-query__small {
+    margin-left: auto;
+  }
+}
+
+// Modifier to remove top margin (e.g., when used in grid layouts)
+.content-list-page--no-top-margin {
+  margin-top: 0;
+}
