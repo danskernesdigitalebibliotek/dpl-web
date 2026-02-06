@@ -36,4 +36,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dev
+        publish_dir: ./react/dev
+        destination_dir: react
+        # Don't wipe out other projects folder when deploying this.
+        keep_files: true
