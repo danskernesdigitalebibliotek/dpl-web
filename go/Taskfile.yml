@@ -49,3 +49,10 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
+
+  dev:reset:
+    desc: Install development environment and clean up
+    cmds:
+      - rm -rf node_modules .next
+      - yarn
+      - yarn dev:https
