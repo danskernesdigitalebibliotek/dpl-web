@@ -1,6 +1,6 @@
 name: 'Event'
 type: module
-description: 'Custom handling related to events.'
+description: 'Custom handling related to Events.'
 package: DPL
 core_version_requirement: ^10 || ^11
 
