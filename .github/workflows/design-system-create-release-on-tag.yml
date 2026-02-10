@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Set release variables
         id: resolve-release-vars
+        working-directory: .
         run: |
           RELEASE_NAME=${{ github.ref_name }}
           RELEASE_NAME_SLUGGED=$(echo $RELEASE_NAME | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
@@ -32,7 +33,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v5
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'design-system/.nvmrc'
 
       - name: Create NPMRC
         run: |
@@ -59,7 +60,7 @@ jobs:
         id: create-release
         uses: softprops/action-gh-release@v2.5.0
         with:
-          files: ${{ env.DIST_FILENAME }}
+          files: design-system/${{ env.DIST_FILENAME }}
 
       - name: Adding summary
         run: |

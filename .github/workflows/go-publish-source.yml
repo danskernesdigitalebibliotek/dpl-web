@@ -1,5 +1,5 @@
 # This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
-name: "Go / Publish source"
+name: Go / Publish source
 on:
   create:
     tags:
@@ -44,6 +44,7 @@ jobs:
         with:
           node-version-file: "go/.nvmrc"
           cache: "yarn"
+          cache-dependency-path: "go/yarn.lock"
 
       - name: Install dependencies
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}

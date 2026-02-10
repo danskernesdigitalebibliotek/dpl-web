@@ -1,5 +1,5 @@
 # Workflow name
-name: "Go / Chromatic"
+name: Go / Chromatic
 
 # Event for the workflow
 on:
@@ -21,7 +21,7 @@ on:
 # List of jobs
 jobs:
   chromatic-deployment:
-    name: Chromatic
+    name: Go / Chromatic
 
     if: github.event.pull_request.draft == false
 
@@ -46,7 +46,7 @@ jobs:
       - name: Load environment variables
         uses: cardinalby/export-env-action@v2
         with:
-          envFile: ".env.test"
+          envFile: "go/.env.test"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -57,3 +57,4 @@ jobs:
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: go

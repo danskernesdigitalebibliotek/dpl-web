@@ -1,4 +1,4 @@
-name: "React / GitHub pages"
+name: React / GitHub pages
 
 on:
   push:
@@ -22,6 +22,7 @@ jobs:
       with:
         node-version-file: 'react/.nvmrc'
         cache: 'yarn'
+        cache-dependency-path: 'react/yarn.lock'
         registry-url: 'https://npm.pkg.github.com'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

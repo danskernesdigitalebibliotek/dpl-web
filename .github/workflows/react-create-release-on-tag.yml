@@ -1,4 +1,4 @@
-name: "React / Create release on tag"
+name: React / Create release on tag
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   create_release_on_tag:
-    name: "Create release on tag"
+    name: React / Create release on tag
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Set release variables
         id: resolve-release-vars
+        working-directory: .
         run: |
           RELEASE_NAME=${{ github.ref_name }}
           RELEASE_NAME_SLUGGED=$(echo $RELEASE_NAME | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
@@ -30,6 +31,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,7 +53,7 @@ jobs:
         id: create-release
         uses: softprops/action-gh-release@v2.5.0
         with:
-          files: ${{ env.DIST_FILENAME }}
+          files: react/${{ env.DIST_FILENAME }}
 
       - name: Adding summary
         run: |

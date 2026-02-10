@@ -1,4 +1,4 @@
-name: "Go / E2E tests"
+name: Go / E2E tests
 
 on:
   push:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   check:
-    name: E2E job with Cypress
+    name: Go / E2E job with Cypress
     runs-on: ubuntu-latest
 
     defaults:
@@ -43,7 +43,7 @@ jobs:
       - name: Load environment variables
         uses: cardinalby/export-env-action@v2
         with:
-          envFile: ".env.test"
+          envFile: "go/.env.test"
 
       - name: Build the Nextjs app and run Cypress tests
         uses: cypress-io/github-action@v7
@@ -64,3 +64,4 @@ jobs:
           start: yarn start
           command: yarn cypress:run
           browser: chrome
+          working-directory: go

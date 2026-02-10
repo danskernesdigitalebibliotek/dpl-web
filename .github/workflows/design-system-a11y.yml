@@ -25,11 +25,11 @@ jobs:
           node-version-file: 'design-system/.nvmrc'
       - run: yarn install --frozen-lockfile
 
-      - name: Install Playwright Browsers
+      - name: Design / Install Playwright Browsers
         run: yarn playwright install --with-deps
 
-      - name: Compile styles
+      - name: Design / Compile styles
         run: yarn css:build
 
-      - name: Run accessibility tests
+      - name: Design / Run accessibility tests
         run: yarn storybook:axe

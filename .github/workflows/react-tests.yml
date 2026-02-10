@@ -1,4 +1,4 @@
-name: "React / Integration test"
+name: React / Integration test
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   integration:
-    name: Integration test
+    name: React / Integration test
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:
@@ -35,6 +35,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,13 +60,13 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.containers }}
-          path: cypress/screenshots
+          path: react/cypress/screenshots
       - name: Upload videos
         uses: actions/upload-artifact@v6
         if: always()
         with:
           name: cypress-videos-${{ matrix.containers }}
-          path: cypress/videos
+          path: react/cypress/videos
       - run: mkdir -p .nyc_output
       - name: Generate code coverage report
         run: yarn run nyc report --reporter=clover --reporter=text --report-dir=./coverage
@@ -73,12 +74,12 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage/
+          directory: react/coverage/
           flags: integration
           fail_ci_if_error: false
 
   unit:
-    name: Unit test
+    name: React / Unit test
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:
@@ -91,6 +92,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

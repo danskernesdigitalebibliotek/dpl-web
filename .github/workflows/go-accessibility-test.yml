@@ -1,5 +1,5 @@
 # Workflow name
-name: "Go / Accessibility test"
+name: Go / Accessibility test
 
 # Event for the workflow
 on:
@@ -22,7 +22,7 @@ on:
 jobs:
   # Run interaction and accessibility tests
   accessibility:
-    name: Accessibility tests
+    name: Go / Accessibility tests
 
     runs-on: ubuntu-latest
 
@@ -49,7 +49,7 @@ jobs:
       - name: Load environment variables
         uses: cardinalby/export-env-action@v2
         with:
-          envFile: ".env.test"
+          envFile: "go/.env.test"
 
       - name: Install Playwright
         run: npx playwright install --with-deps

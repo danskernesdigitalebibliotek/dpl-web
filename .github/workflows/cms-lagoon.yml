@@ -14,7 +14,7 @@ env:
   REPO: ${{ github.event.repository.name }}
 jobs:
   BranchNameLength:
-    name: Check branch length
+    name: CMS / Check branch length
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -32,7 +32,7 @@ jobs:
 
   # Creating the deployment that Lagoon will look for, and add status to.
   CreateDeployment:
-    name: Create deployment
+    name: CMS / Create deployment
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -56,7 +56,7 @@ jobs:
           echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_OUTPUT
 
   CreateDeploymentBNF:
-    name: Create BNF deployment
+    name: CMS / Create BNF deployment
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -81,7 +81,7 @@ jobs:
 
   # When we close the pull request, we want to set the environment as inactive.
   CloseEnvironment:
-    name: Close environment
+    name: CMS / Close environment
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -97,7 +97,7 @@ jobs:
   # The integration is controlled by creating synthetic events related to select
   # pull-request events, and send them to Lagoon.
   InformLagoon:
-    name: Send synthetic event to Lagoon
+    name: CMS / Send synthetic event to Lagoon
     runs-on: ubuntu-latest
     defaults:
       run:

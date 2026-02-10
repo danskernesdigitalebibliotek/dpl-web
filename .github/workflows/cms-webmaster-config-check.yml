@@ -7,14 +7,14 @@ on:
       - 'cms/config/sync/user.role.*.yml'
 jobs:
   checkRoles:
-    name: Check roles has been updated correctly
+    name: CMS / Check roles has been updated correctly
     uses: ./.github/workflows/cms-webmaster-config-workflow.yml
     with:
       trigger-path: 'cms/config/sync/user.role.*.yml'
       target-code: '_dpl_update_alter_permissions'
 
   checkModules:
-    name: Check roles has been updated correctly
+    name: CMS / Check roles has been updated correctly
     uses: ./.github/workflows/cms-webmaster-config-workflow.yml
     with:
       trigger-path: 'cms/config/sync/core.extension.yml'

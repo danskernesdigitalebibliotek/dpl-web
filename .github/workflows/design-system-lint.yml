@@ -14,7 +14,7 @@ on:
 
 jobs:
   css-lint:
-    name: CSS Linter
+    name: Design / CSS Linter
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,7 +30,7 @@ jobs:
         run: yarn css:lint
 
   js-lint:
-    name: JS Linter
+    name: Design / JS Linter
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -46,7 +46,7 @@ jobs:
         run: yarn js:lint
 
   markdown-linkt:
-    name: Markdown Linter
+    name: Design / Markdown Linter
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:

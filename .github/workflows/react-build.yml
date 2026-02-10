@@ -1,4 +1,4 @@
-name: "React / Build"
+name: React / Build
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Build artifacts
+    name: React / Build artifacts
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:
@@ -28,6 +28,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -43,8 +44,8 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: dist
-          path: dist
+          path: react/dist
       - name: Upload webpack stats artifact
         uses: relative-ci/agent-upload-artifact-action@v2
         with:
-          webpackStatsFile: ./webpack-stats.json
+          webpackStatsFile: react/webpack-stats.json

@@ -1,4 +1,4 @@
-name: "React / Create release on branch changes"
+name: React / Create release on branch changes
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   create_release_on_branch_changes:
-    name: "Create release on branch changes"
+    name: React / Create release on branch changes
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Set release variables
         id: resolve-release-vars
+        working-directory: .
         # Version 0.0.0-SHA is a schema that supports semantic versioning but
         # should sink below proper versions.
         # Output package.json to provide insight and help debugging
@@ -49,6 +50,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -87,7 +89,7 @@ jobs:
           target_commitish: ${{ env.RELEASE_SHA }}
           tag_name: ${{ env.TAG_NAME }}
           body: ${{ env.RELEASE_DESCRIPTION }}
-          files: ${{ env.DIST_FILENAME }}
+          files: react/${{ env.DIST_FILENAME }}
 
       - name: Dispatch CMS PR creation workflow
         run: |

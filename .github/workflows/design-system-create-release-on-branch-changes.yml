@@ -11,7 +11,7 @@ on:
 
 jobs:
   create_release_on_branch_changes:
-    name: "Create release on branch changes"
+    name: Design / Create release on branch changes
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Set release variables
         id: resolve-release-vars
+        working-directory: .
         # Version 0.0.0-SHA is a schema that supports semantic versioning but
         # should sink below proper versions.
         # Output package.json to provide insight and help debugging
@@ -90,7 +91,7 @@ jobs:
           target_commitish: ${{ env.RELEASE_SHA }}
           tag_name: ${{ env.TAG_NAME }}
           body: ${{ env.RELEASE_DESCRIPTION }}
-          files: ${{ env.DIST_FILENAME }}
+          files: design-system/${{ env.DIST_FILENAME }}
 
       - name: Dispatch CMS PR creation workflow
         run: |

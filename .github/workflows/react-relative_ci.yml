@@ -1,4 +1,4 @@
-name: "React / RelativeCI"
+name: React / RelativeCI
 
 on:
   workflow_run:
@@ -18,3 +18,4 @@ jobs:
         with:
           key: ${{ secrets.RELATIVE_CI_KEY }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          webpackStatsFile: react/webpack-stats.json

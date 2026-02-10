@@ -1,4 +1,4 @@
-name: "React / Build and test"
+name: React / Build and test
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   stylelint:
-    name: Lint .scss
+    name: React / Lint .scss
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:
@@ -21,6 +21,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,12 +32,13 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-          stylelint_input: './src/**/*.scss'
+          stylelint_input: 'src/**/*.scss'
+          workdir: 'react'
       - name: Lint SCSS
         run: yarn lint:scss
 
   typescript:
-    name: Typescript compile check
+    name: React / Typescript compile check
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -48,6 +50,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,7 +60,7 @@ jobs:
         run: npx tsc --noEmit
 
   eslint:
-    name: Lint .js and .jsx
+    name: React / Lint .js and .jsx
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:
@@ -70,6 +73,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -81,12 +85,13 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-          eslint_flags: './src/'
+          eslint_flags: '.'
+          workdir: react
       - name: Lint Javascript
         run: yarn lint:js
 
   markdownlint:
-    name: Lint markdown
+    name: React / Lint markdown
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     defaults:
@@ -99,6 +104,7 @@ jobs:
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
