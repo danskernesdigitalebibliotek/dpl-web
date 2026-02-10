@@ -93,14 +93,6 @@ jobs:
           body: ${{ env.RELEASE_DESCRIPTION }}
           files: design-system/${{ env.DIST_FILENAME }}
 
-      - name: Dispatch CMS PR creation workflow
-        run: |
-          gh workflow run create-cms-pr.yml \
-          -f releaseBranch=${{ env.RELEASE_BRANCH }} \
-          -f dependencyPackage=danskernesdigitalebibliotek/dpl-design-system
-        env:
-          GH_TOKEN: ${{ github.token }}
-
       - name: Adding summary
         run: |
           echo "Release created 🚀😎 at: ${{ steps.create-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
