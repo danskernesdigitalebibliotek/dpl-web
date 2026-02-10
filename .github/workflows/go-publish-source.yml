@@ -42,7 +42,7 @@ jobs:
       - uses: actions/setup-node@v5
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "go/.nvmrc"
           cache: "yarn"
 
       - name: Install dependencies

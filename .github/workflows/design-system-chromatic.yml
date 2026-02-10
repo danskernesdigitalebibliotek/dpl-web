@@ -36,7 +36,7 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'design-system/.nvmrc'
 
       - run: yarn install --frozen-lockfile
 
