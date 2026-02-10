@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: write-all
 
     defaults:
       run:
@@ -31,9 +32,9 @@ jobs:
         run: |
           if [[ "${{ github.ref }}" =~ ^refs\/tags\/([0-9]+\.[0-9]+\.[0-9]+|[a-zA-Z]+-[0-9]+\.[0-9]+)$ ]]
           then
-            echo ::set-output name=IS_RELEASE_TAG::true
+            echo "IS_RELEASE_TAG=true" >> "$GITHUB_OUTPUT"
           else
-            echo ::set-output name=IS_RELEASE_TAG::false
+            echo "IS_RELEASE_TAG=false" >> "$GITHUB_OUTPUT"
           fi
 
       - uses: actions/setup-node@v5
@@ -60,7 +61,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          echo ::set-output name=RELEASE_TAG::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
+          echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
       # Write version to .version file.
       - name: Create .version file
@@ -79,6 +80,31 @@ jobs:
         env:
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+
+      - name: Update GitHub release with package link
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          IMAGE_NAME: dpl-go-node
+          PKG_URL: https://github.com/${{ github.repository }}/pkgs/container/dpl-go-node
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" >/dev/null; then
+            echo "No release found for tag $TAG, skipping release update"
+            exit 0
+          fi
+          BODY=$(gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" --json body -q .body || echo "")
+          if echo "$BODY" | grep -q "dpl-go-node"; then
+            echo "Release already links to Go package, skipping"
+            exit 0
+          fi
+          if echo "$BODY" | grep -q "## Container images"; then
+            NEW_BODY="$BODY"$'\n'"- **Go source:** [\`$IMAGE_NAME:$TAG\`]($PKG_URL?tag=$TAG)"
+          else
+            NEW_BODY="$BODY"$'\n\n'"## Container images"$'\n\n'"- **Go source:** [\`$IMAGE_NAME:$TAG\`]($PKG_URL?tag=$TAG)"
+          fi
+          echo "$NEW_BODY" | gh release edit "$TAG" --repo "${GITHUB_REPOSITORY}" --notes-file -
 
       - name: Adding summary
         run: |
