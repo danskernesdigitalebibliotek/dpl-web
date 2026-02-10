@@ -23,7 +23,7 @@ jobs:
           echo "RELEASE_NAME=$RELEASE_NAME" >> "$GITHUB_ENV"
           echo "RELEASE_SHA=$RELEASE_SHA" >> "$GITHUB_ENV"
           echo "BUILD_VERSION=${RELEASE_NAME}-${RELEASE_SHA}" >> "$GITHUB_ENV"
-          echo "DIST_FILENAME=dist-${RELEASE_NAME_SLUGGED}-${RELEASE_SHA}.zip" >> "$GITHUB_ENV"
+          echo "DIST_FILENAME=react-dist-${RELEASE_NAME_SLUGGED}-${RELEASE_SHA}.zip" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v6
       - name: Setup Node

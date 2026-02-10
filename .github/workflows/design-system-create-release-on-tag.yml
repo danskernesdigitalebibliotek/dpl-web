@@ -23,7 +23,7 @@ jobs:
           echo "RELEASE_NAME=$RELEASE_NAME" >> "$GITHUB_ENV"
           echo "RELEASE_SHA=$RELEASE_SHA" >> "$GITHUB_ENV"
           echo "NPM_VERSION=${RELEASE_NAME}-${RELEASE_SHA}" >> "$GITHUB_ENV"
-          echo "DIST_FILENAME=dist-${RELEASE_NAME_SLUGGED}-${RELEASE_SHA}.zip" >> "$GITHUB_ENV"
+          echo "DIST_FILENAME=design-system-dist-${RELEASE_NAME_SLUGGED}-${RELEASE_SHA}.zip" >> "$GITHUB_ENV"
 
      # Validate/parse version tag.
      # If it is not a version tag it is ok, we just need to know it.
@@ -68,10 +68,8 @@ jobs:
 
       - name: Modify package.json for local context
         if: steps.version.outputs.is_valid == 'true'
-        # Values in package.json must match the current GitHub repository to
-        # publish to it.
+        # Keep package name as dpl-design-system; set repository to current repo.
         run: |
-          npm exec -- json -I -f package.json -e "this.name='@$GITHUB_REPOSITORY'"
           npm exec -- json -I -f package.json -e "this.repository='https://github.com/$GITHUB_REPOSITORY'"
 
       - name: Release NPM package
