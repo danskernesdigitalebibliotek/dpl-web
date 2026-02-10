@@ -1,9 +1,6 @@
 # This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
 name: CMS / Publish source
 on:
-  create:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
   push:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
