@@ -2,6 +2,9 @@ name: React / Integration test
 
 on:
   push:
+    branches:
+      - main
+      - develop
     paths:
       - 'react/**'
       - '.github/workflows/react-*.yml'
