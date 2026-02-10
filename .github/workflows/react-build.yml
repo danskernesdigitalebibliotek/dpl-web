@@ -45,7 +45,9 @@ jobs:
         with:
           name: dist
           path: react/dist
-      - name: Upload webpack stats artifact
-        uses: relative-ci/agent-upload-artifact-action@v2
+      - name: Send webpack stats to RelativeCI
+        uses: relative-ci/agent-action@v3
         with:
-          webpackStatsFile: react/webpack-stats.json
+          key: ${{ secrets.RELATIVE_CI_KEY_REACT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          webpackStatsFile: ./react/webpack-stats.json
