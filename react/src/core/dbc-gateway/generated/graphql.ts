@@ -2357,6 +2357,19 @@ export type GetSmallWorkQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -2526,6 +2539,19 @@ export type GetSmallWorkQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -2695,6 +2721,19 @@ export type GetSmallWorkQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -3119,6 +3158,19 @@ export type GetMaterialQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -3288,6 +3340,19 @@ export type GetMaterialQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -3457,6 +3522,19 @@ export type GetMaterialQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -3735,6 +3813,19 @@ export type GetMaterialGloballyQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -3904,6 +3995,19 @@ export type GetMaterialGloballyQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -4073,6 +4177,19 @@ export type GetMaterialGloballyQuery = {
         genreAndForm: Array<string>;
         source: Array<string>;
         publisher: Array<string>;
+        subjects: {
+          __typename?: "SubjectContainer";
+          all: Array<
+            | { __typename?: "Corporation"; display: string }
+            | { __typename?: "Mood"; display: string }
+            | { __typename?: "NarrativeTechnique"; display: string }
+            | { __typename?: "Person"; display: string }
+            | { __typename?: "Setting"; display: string }
+            | { __typename?: "SubjectText"; display: string }
+            | { __typename?: "SubjectWithRating"; display: string }
+            | { __typename?: "TimePeriod"; display: string }
+          >;
+        };
         titles: {
           __typename?: "ManifestationTitles";
           main: Array<string>;
@@ -4396,6 +4513,19 @@ export type RecommendFromFaustQuery = {
             genreAndForm: Array<string>;
             source: Array<string>;
             publisher: Array<string>;
+            subjects: {
+              __typename?: "SubjectContainer";
+              all: Array<
+                | { __typename?: "Corporation"; display: string }
+                | { __typename?: "Mood"; display: string }
+                | { __typename?: "NarrativeTechnique"; display: string }
+                | { __typename?: "Person"; display: string }
+                | { __typename?: "Setting"; display: string }
+                | { __typename?: "SubjectText"; display: string }
+                | { __typename?: "SubjectWithRating"; display: string }
+                | { __typename?: "TimePeriod"; display: string }
+              >;
+            };
             titles: {
               __typename?: "ManifestationTitles";
               main: Array<string>;
@@ -4568,6 +4698,19 @@ export type RecommendFromFaustQuery = {
             genreAndForm: Array<string>;
             source: Array<string>;
             publisher: Array<string>;
+            subjects: {
+              __typename?: "SubjectContainer";
+              all: Array<
+                | { __typename?: "Corporation"; display: string }
+                | { __typename?: "Mood"; display: string }
+                | { __typename?: "NarrativeTechnique"; display: string }
+                | { __typename?: "Person"; display: string }
+                | { __typename?: "Setting"; display: string }
+                | { __typename?: "SubjectText"; display: string }
+                | { __typename?: "SubjectWithRating"; display: string }
+                | { __typename?: "TimePeriod"; display: string }
+              >;
+            };
             titles: {
               __typename?: "ManifestationTitles";
               main: Array<string>;
@@ -4740,6 +4883,19 @@ export type RecommendFromFaustQuery = {
             genreAndForm: Array<string>;
             source: Array<string>;
             publisher: Array<string>;
+            subjects: {
+              __typename?: "SubjectContainer";
+              all: Array<
+                | { __typename?: "Corporation"; display: string }
+                | { __typename?: "Mood"; display: string }
+                | { __typename?: "NarrativeTechnique"; display: string }
+                | { __typename?: "Person"; display: string }
+                | { __typename?: "Setting"; display: string }
+                | { __typename?: "SubjectText"; display: string }
+                | { __typename?: "SubjectWithRating"; display: string }
+                | { __typename?: "TimePeriod"; display: string }
+              >;
+            };
             titles: {
               __typename?: "ManifestationTitles";
               main: Array<string>;
@@ -4974,6 +5130,19 @@ export type SearchWithPaginationQuery = {
           genreAndForm: Array<string>;
           source: Array<string>;
           publisher: Array<string>;
+          subjects: {
+            __typename?: "SubjectContainer";
+            all: Array<
+              | { __typename?: "Corporation"; display: string }
+              | { __typename?: "Mood"; display: string }
+              | { __typename?: "NarrativeTechnique"; display: string }
+              | { __typename?: "Person"; display: string }
+              | { __typename?: "Setting"; display: string }
+              | { __typename?: "SubjectText"; display: string }
+              | { __typename?: "SubjectWithRating"; display: string }
+              | { __typename?: "TimePeriod"; display: string }
+            >;
+          };
           titles: {
             __typename?: "ManifestationTitles";
             main: Array<string>;
@@ -5143,6 +5312,19 @@ export type SearchWithPaginationQuery = {
           genreAndForm: Array<string>;
           source: Array<string>;
           publisher: Array<string>;
+          subjects: {
+            __typename?: "SubjectContainer";
+            all: Array<
+              | { __typename?: "Corporation"; display: string }
+              | { __typename?: "Mood"; display: string }
+              | { __typename?: "NarrativeTechnique"; display: string }
+              | { __typename?: "Person"; display: string }
+              | { __typename?: "Setting"; display: string }
+              | { __typename?: "SubjectText"; display: string }
+              | { __typename?: "SubjectWithRating"; display: string }
+              | { __typename?: "TimePeriod"; display: string }
+            >;
+          };
           titles: {
             __typename?: "ManifestationTitles";
             main: Array<string>;
@@ -5312,6 +5494,19 @@ export type SearchWithPaginationQuery = {
           genreAndForm: Array<string>;
           source: Array<string>;
           publisher: Array<string>;
+          subjects: {
+            __typename?: "SubjectContainer";
+            all: Array<
+              | { __typename?: "Corporation"; display: string }
+              | { __typename?: "Mood"; display: string }
+              | { __typename?: "NarrativeTechnique"; display: string }
+              | { __typename?: "Person"; display: string }
+              | { __typename?: "Setting"; display: string }
+              | { __typename?: "SubjectText"; display: string }
+              | { __typename?: "SubjectWithRating"; display: string }
+              | { __typename?: "TimePeriod"; display: string }
+            >;
+          };
           titles: {
             __typename?: "ManifestationTitles";
             main: Array<string>;
@@ -5592,6 +5787,19 @@ export type ComplexSearchWithPaginationQuery = {
           genreAndForm: Array<string>;
           source: Array<string>;
           publisher: Array<string>;
+          subjects: {
+            __typename?: "SubjectContainer";
+            all: Array<
+              | { __typename?: "Corporation"; display: string }
+              | { __typename?: "Mood"; display: string }
+              | { __typename?: "NarrativeTechnique"; display: string }
+              | { __typename?: "Person"; display: string }
+              | { __typename?: "Setting"; display: string }
+              | { __typename?: "SubjectText"; display: string }
+              | { __typename?: "SubjectWithRating"; display: string }
+              | { __typename?: "TimePeriod"; display: string }
+            >;
+          };
           titles: {
             __typename?: "ManifestationTitles";
             main: Array<string>;
@@ -5761,6 +5969,19 @@ export type ComplexSearchWithPaginationQuery = {
           genreAndForm: Array<string>;
           source: Array<string>;
           publisher: Array<string>;
+          subjects: {
+            __typename?: "SubjectContainer";
+            all: Array<
+              | { __typename?: "Corporation"; display: string }
+              | { __typename?: "Mood"; display: string }
+              | { __typename?: "NarrativeTechnique"; display: string }
+              | { __typename?: "Person"; display: string }
+              | { __typename?: "Setting"; display: string }
+              | { __typename?: "SubjectText"; display: string }
+              | { __typename?: "SubjectWithRating"; display: string }
+              | { __typename?: "TimePeriod"; display: string }
+            >;
+          };
           titles: {
             __typename?: "ManifestationTitles";
             main: Array<string>;
@@ -5930,6 +6151,19 @@ export type ComplexSearchWithPaginationQuery = {
           genreAndForm: Array<string>;
           source: Array<string>;
           publisher: Array<string>;
+          subjects: {
+            __typename?: "SubjectContainer";
+            all: Array<
+              | { __typename?: "Corporation"; display: string }
+              | { __typename?: "Mood"; display: string }
+              | { __typename?: "NarrativeTechnique"; display: string }
+              | { __typename?: "Person"; display: string }
+              | { __typename?: "Setting"; display: string }
+              | { __typename?: "SubjectText"; display: string }
+              | { __typename?: "SubjectWithRating"; display: string }
+              | { __typename?: "TimePeriod"; display: string }
+            >;
+          };
           titles: {
             __typename?: "ManifestationTitles";
             main: Array<string>;
@@ -6300,6 +6534,19 @@ export type ManifestationsSimpleFragment = {
     genreAndForm: Array<string>;
     source: Array<string>;
     publisher: Array<string>;
+    subjects: {
+      __typename?: "SubjectContainer";
+      all: Array<
+        | { __typename?: "Corporation"; display: string }
+        | { __typename?: "Mood"; display: string }
+        | { __typename?: "NarrativeTechnique"; display: string }
+        | { __typename?: "Person"; display: string }
+        | { __typename?: "Setting"; display: string }
+        | { __typename?: "SubjectText"; display: string }
+        | { __typename?: "SubjectWithRating"; display: string }
+        | { __typename?: "TimePeriod"; display: string }
+      >;
+    };
     titles: {
       __typename?: "ManifestationTitles";
       main: Array<string>;
@@ -6463,6 +6710,19 @@ export type ManifestationsSimpleFragment = {
     genreAndForm: Array<string>;
     source: Array<string>;
     publisher: Array<string>;
+    subjects: {
+      __typename?: "SubjectContainer";
+      all: Array<
+        | { __typename?: "Corporation"; display: string }
+        | { __typename?: "Mood"; display: string }
+        | { __typename?: "NarrativeTechnique"; display: string }
+        | { __typename?: "Person"; display: string }
+        | { __typename?: "Setting"; display: string }
+        | { __typename?: "SubjectText"; display: string }
+        | { __typename?: "SubjectWithRating"; display: string }
+        | { __typename?: "TimePeriod"; display: string }
+      >;
+    };
     titles: {
       __typename?: "ManifestationTitles";
       main: Array<string>;
@@ -6626,6 +6886,19 @@ export type ManifestationsSimpleFragment = {
     genreAndForm: Array<string>;
     source: Array<string>;
     publisher: Array<string>;
+    subjects: {
+      __typename?: "SubjectContainer";
+      all: Array<
+        | { __typename?: "Corporation"; display: string }
+        | { __typename?: "Mood"; display: string }
+        | { __typename?: "NarrativeTechnique"; display: string }
+        | { __typename?: "Person"; display: string }
+        | { __typename?: "Setting"; display: string }
+        | { __typename?: "SubjectText"; display: string }
+        | { __typename?: "SubjectWithRating"; display: string }
+        | { __typename?: "TimePeriod"; display: string }
+      >;
+    };
     titles: {
       __typename?: "ManifestationTitles";
       main: Array<string>;
@@ -6822,6 +7095,19 @@ export type ManifestationsSimpleFieldsFragment = {
   genreAndForm: Array<string>;
   source: Array<string>;
   publisher: Array<string>;
+  subjects: {
+    __typename?: "SubjectContainer";
+    all: Array<
+      | { __typename?: "Corporation"; display: string }
+      | { __typename?: "Mood"; display: string }
+      | { __typename?: "NarrativeTechnique"; display: string }
+      | { __typename?: "Person"; display: string }
+      | { __typename?: "Setting"; display: string }
+      | { __typename?: "SubjectText"; display: string }
+      | { __typename?: "SubjectWithRating"; display: string }
+      | { __typename?: "TimePeriod"; display: string }
+    >;
+  };
   titles: {
     __typename?: "ManifestationTitles";
     main: Array<string>;
@@ -7126,6 +7412,19 @@ export type WorkSmallFragment = {
       genreAndForm: Array<string>;
       source: Array<string>;
       publisher: Array<string>;
+      subjects: {
+        __typename?: "SubjectContainer";
+        all: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Mood"; display: string }
+          | { __typename?: "NarrativeTechnique"; display: string }
+          | { __typename?: "Person"; display: string }
+          | { __typename?: "Setting"; display: string }
+          | { __typename?: "SubjectText"; display: string }
+          | { __typename?: "SubjectWithRating"; display: string }
+          | { __typename?: "TimePeriod"; display: string }
+        >;
+      };
       titles: {
         __typename?: "ManifestationTitles";
         main: Array<string>;
@@ -7295,6 +7594,19 @@ export type WorkSmallFragment = {
       genreAndForm: Array<string>;
       source: Array<string>;
       publisher: Array<string>;
+      subjects: {
+        __typename?: "SubjectContainer";
+        all: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Mood"; display: string }
+          | { __typename?: "NarrativeTechnique"; display: string }
+          | { __typename?: "Person"; display: string }
+          | { __typename?: "Setting"; display: string }
+          | { __typename?: "SubjectText"; display: string }
+          | { __typename?: "SubjectWithRating"; display: string }
+          | { __typename?: "TimePeriod"; display: string }
+        >;
+      };
       titles: {
         __typename?: "ManifestationTitles";
         main: Array<string>;
@@ -7464,6 +7776,19 @@ export type WorkSmallFragment = {
       genreAndForm: Array<string>;
       source: Array<string>;
       publisher: Array<string>;
+      subjects: {
+        __typename?: "SubjectContainer";
+        all: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Mood"; display: string }
+          | { __typename?: "NarrativeTechnique"; display: string }
+          | { __typename?: "Person"; display: string }
+          | { __typename?: "Setting"; display: string }
+          | { __typename?: "SubjectText"; display: string }
+          | { __typename?: "SubjectWithRating"; display: string }
+          | { __typename?: "TimePeriod"; display: string }
+        >;
+      };
       titles: {
         __typename?: "ManifestationTitles";
         main: Array<string>;
@@ -7735,6 +8060,19 @@ export type WorkMediumFragment = {
       genreAndForm: Array<string>;
       source: Array<string>;
       publisher: Array<string>;
+      subjects: {
+        __typename?: "SubjectContainer";
+        all: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Mood"; display: string }
+          | { __typename?: "NarrativeTechnique"; display: string }
+          | { __typename?: "Person"; display: string }
+          | { __typename?: "Setting"; display: string }
+          | { __typename?: "SubjectText"; display: string }
+          | { __typename?: "SubjectWithRating"; display: string }
+          | { __typename?: "TimePeriod"; display: string }
+        >;
+      };
       titles: {
         __typename?: "ManifestationTitles";
         main: Array<string>;
@@ -7904,6 +8242,19 @@ export type WorkMediumFragment = {
       genreAndForm: Array<string>;
       source: Array<string>;
       publisher: Array<string>;
+      subjects: {
+        __typename?: "SubjectContainer";
+        all: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Mood"; display: string }
+          | { __typename?: "NarrativeTechnique"; display: string }
+          | { __typename?: "Person"; display: string }
+          | { __typename?: "Setting"; display: string }
+          | { __typename?: "SubjectText"; display: string }
+          | { __typename?: "SubjectWithRating"; display: string }
+          | { __typename?: "TimePeriod"; display: string }
+        >;
+      };
       titles: {
         __typename?: "ManifestationTitles";
         main: Array<string>;
@@ -8073,6 +8424,19 @@ export type WorkMediumFragment = {
       genreAndForm: Array<string>;
       source: Array<string>;
       publisher: Array<string>;
+      subjects: {
+        __typename?: "SubjectContainer";
+        all: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Mood"; display: string }
+          | { __typename?: "NarrativeTechnique"; display: string }
+          | { __typename?: "Person"; display: string }
+          | { __typename?: "Setting"; display: string }
+          | { __typename?: "SubjectText"; display: string }
+          | { __typename?: "SubjectWithRating"; display: string }
+          | { __typename?: "TimePeriod"; display: string }
+        >;
+      };
       titles: {
         __typename?: "ManifestationTitles";
         main: Array<string>;
@@ -8409,6 +8773,11 @@ export const ManifestationsSimpleFieldsFragmentDoc = `
   pid
   genreAndForm
   source
+  subjects {
+    all {
+      display
+    }
+  }
   ...WithLanguages
   titles {
     main
