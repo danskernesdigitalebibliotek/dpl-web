@@ -156,6 +156,13 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
     ];
 
+    $form['general']['local_subjects_agency_ids'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Local subjects agency IDs', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('A comma-separated list of agency IDs whose local subjects should be displayed on the work page alongside the standard subjects. E.g. "911116-katalog,911130-katalog".', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('local_subjects_agency_ids') ?? GeneralSettings::LOCAL_SUBJECTS_AGENCY_IDS,
+    ];
+
     $form['reservations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
@@ -429,6 +436,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('enable_branch_address_search', $form_state->getValue('enable_branch_address_search'))
+      ->set('local_subjects_agency_ids', $form_state->getValue('local_subjects_agency_ids'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('find_on_shelf_hide_unavailable_holdings', $form_state->getValue('find_on_shelf_hide_unavailable_holdings'))
       ->set('fbi_profiles', [

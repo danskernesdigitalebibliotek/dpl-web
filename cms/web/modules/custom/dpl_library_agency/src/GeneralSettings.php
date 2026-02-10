@@ -31,6 +31,7 @@ class GeneralSettings extends DplReactConfigBase {
   const SEARCH_INFOBOX_BUTTON_LABEL = '';
   const SEARCH_INFOBOX_BUTTON_URL = '';
   const ENABLE_BRANCH_ADDRESS_SEARCH = FALSE;
+  const LOCAL_SUBJECTS_AGENCY_IDS = '';
 
   /**
    * Gets the configuration key for general settings.
@@ -193,6 +194,17 @@ class GeneralSettings extends DplReactConfigBase {
       $this->loadConfig()->get('pause_reservation_info_url'),
       self::PAUSE_RESERVATION_INFO_URL
     );
+  }
+
+  /**
+   * Get the local subjects agency IDs configuration.
+   *
+   * @return string
+   *   A comma-separated string of agency IDs for local subjects.
+   */
+  public function getLocalSubjectsAgencyIds(): string {
+    return $this->loadConfig()->get('local_subjects_agency_ids')
+      ?? self::LOCAL_SUBJECTS_AGENCY_IDS;
   }
 
   /**
