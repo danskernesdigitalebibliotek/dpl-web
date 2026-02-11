@@ -710,6 +710,10 @@ class DplReactAppsController extends ControllerBase {
       'edition-switch-modal-title-text' => $this->t('Choose Edition', [], ['context' => 'Work Page']),
       'material-contents-show-less-text' => $this->t('Show less', [], ['context' => 'Work Page']),
       'material-contents-show-all-text' => $this->t('Show all (@count)', [], ['context' => 'Work Page']),
+      'share-on-facebook-text' => $this->t('Share on Facebook', [], ['context' => 'Work Page']),
+      'share-on-facebook-aria-label-text' => $this->t('Share this page on Facebook', [], ['context' => 'Work Page']),
+      'copy-link-text' => $this->t('Copy link', [], ['context' => 'Work Page']),
+      'copy-link-aria-label-text' => $this->t('Copy link to this page', [], ['context' => 'Work Page']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
