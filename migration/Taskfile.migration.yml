@@ -1,0 +1,98 @@
+version: '3'
+
+vars:
+  ORG: danskernesdigitalebibliotek
+  MIGRATION_FILE: migration/.migration-info
+
+tasks:
+  # --------------------------------------------------------------------------
+  # Public Tasks (Entry Points)
+  # --------------------------------------------------------------------------
+
+  mono:cms:migrate:commits:
+    desc: "Migrate new commits from dpl-cms/develop based on .migration-info"
+    silent: true
+    vars: { PROJECT: cms, REPO: dpl-cms }
+    cmds:
+      - task: internal:migrate
+        vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
+
+  mono:go:migrate:commits:
+    desc: "Migrate new commits from dpl-go/develop based on .migration-info"
+    silent: true
+    vars: { PROJECT: go, REPO: dpl-go }
+    cmds:
+      - task: internal:migrate
+        vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
+
+  mono:react:migrate:commits:
+    desc: "Migrate new commits from dpl-react/develop based on .migration-info"
+    silent: true
+    vars: { PROJECT: react, REPO: dpl-react }
+    cmds:
+      - task: internal:migrate
+        vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
+
+  mono:design-system:migrate:commits:
+    desc: "Migrate new commits from dpl-design-system/develop based on .migration-info"
+    silent: true
+    vars: { PROJECT: design-system, REPO: dpl-design-system }
+    cmds:
+      - task: internal:migrate
+        vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
+
+  # --------------------------------------------------------------------------
+  # Internal Implementation
+  # --------------------------------------------------------------------------
+
+  internal:migrate:
+    internal: true
+    silent: true
+    requires:
+      vars: [PROJECT, REPO]
+    cmds:
+      - |
+        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
+          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+          exit 1
+        fi
+
+        # Get Current SHA
+        CURRENT_SHA=$(grep "^{{.REPO}}:" {{.MIGRATION_FILE}} | cut -d':' -f2 | tr -d '[:space:]')
+        if [ -z "$CURRENT_SHA" ]; then
+          echo "❌ Error: No entry for '{{.REPO}}' in {{.MIGRATION_FILE}}"
+          exit 1
+        fi
+
+        echo "🔍 Checking {{.REPO}} from $CURRENT_SHA..."
+
+        # Get Commits
+        COMMITS=$(gh api "repos/{{.ORG}}/{{.REPO}}/compare/$CURRENT_SHA...develop" --jq '.commits[].sha')
+
+        if [ -z "$COMMITS" ]; then
+          echo "✅ No new commits found."
+          exit 0
+        fi
+
+        # Update latest SHA in the .migration-info file.
+        TARGET_SHA=$(echo "$COMMITS" | tail -n 1)
+
+        echo "💾 Optimistically updating {{.MIGRATION_FILE}} to target: $TARGET_SHA"
+
+        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
+        echo "{{.REPO}}:$TARGET_SHA" >> {{.MIGRATION_FILE}}.tmp
+        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
+        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+
+        echo "----------------------------------------"
+
+        # Apply Patches
+        for COMMIT in $COMMITS; do
+          echo "🚀 Migrating $COMMIT..."
+
+          PATCH_URL="https://github.com/{{.ORG}}/{{.REPO}}/commit/$COMMIT.patch"
+
+          curl -sL "$PATCH_URL" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date
+        done
+
+        echo "🎉 All commits migrated successfully!"
