@@ -499,6 +499,31 @@ function dpl_paragraphs_preprocess_paragraph__manual_event_list(array &$variable
 }
 
 /**
+ * Implements hook_preprocess_paragraph__TYPE() for share_buttons paragraphs.
+ *
+ * Renders the share buttons React app within the paragraph.
+ */
+function dpl_paragraphs_preprocess_paragraph__share_buttons(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  if ($view_mode === 'preview' || !($paragraph instanceof ParagraphInterface)) {
+    return;
+  }
+
+  $variables['content']['react_app'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'share-buttons',
+    '#data' => [
+      'share-on-facebook-text' => t('Share on Facebook', [], ['context' => 'Share buttons']),
+      'share-on-facebook-aria-label-text' => t('Share this page on Facebook', [], ['context' => 'Share buttons']),
+      'copy-link-text' => t('Copy link', [], ['context' => 'Share buttons']),
+      'copy-link-aria-label-text' => t('Copy link to this page', [], ['context' => 'Share buttons']),
+    ],
+  ];
+}
+
+/**
  * Implements hook_form_alter().
  *
  * Prefills hero paragraph fields with default values from the parent node
