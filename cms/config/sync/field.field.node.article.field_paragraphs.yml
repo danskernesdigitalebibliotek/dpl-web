@@ -25,6 +25,7 @@ dependencies:
     - paragraphs.paragraphs_type.nav_grid_manual
     - paragraphs.paragraphs_type.nav_spots_manual
     - paragraphs.paragraphs_type.recommendation
+    - paragraphs.paragraphs_type.share_buttons
     - paragraphs.paragraphs_type.simple_links
     - paragraphs.paragraphs_type.text_body
     - paragraphs.paragraphs_type.user_registration_item
@@ -75,6 +76,7 @@ settings:
       material_grid_link_automatic: material_grid_link_automatic
       user_registration_linklist: user_registration_linklist
       webform: webform
+      share_buttons: share_buttons
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -172,6 +174,9 @@ settings:
         enabled: false
       recommendation:
         weight: 38
+        enabled: true
+      share_buttons:
+        weight: 73
         enabled: true
       simple_links:
         weight: 60
