@@ -1,0 +1,16 @@
+uuid: d4943a14-bbda-45e5-92ad-e47f8617f288
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      structural_elements: structural_elements
+id: share_buttons
+label: 'Share buttons'
+icon_uuid: null
+icon_default: null
+description: 'Displays share buttons for content, allowing users to share via social media or email.'
+behavior_plugins: {  }
