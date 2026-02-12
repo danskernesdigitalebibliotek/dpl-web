@@ -8,6 +8,7 @@ import {
   Publizon,
   ManifestationReviewFieldsFragment,
   ManifestationsSimpleFieldsFragment,
+  Publizon,
   Relations,
   WorkMediumFragment,
   WorkSmallFragment
