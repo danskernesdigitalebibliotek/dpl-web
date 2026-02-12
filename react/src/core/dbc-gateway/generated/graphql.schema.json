@@ -987,6 +987,12 @@
             "deprecationReason": null
           },
           {
+            "name": "DATEFIRSTEDITION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "FICTIONALCHARACTER",
             "description": null,
             "isDeprecated": false,
@@ -6764,7 +6770,7 @@
           },
           {
             "name": "bestRepresentation",
-            "description": null,
+            "description": "The best representation of all manifestations. Corresponds to the first element in the bestRepresentations list.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -6780,7 +6786,7 @@
           },
           {
             "name": "bestRepresentations",
-            "description": null,
+            "description": "All manifestations sorted after best representation. Newer is better. Records from DBC or KB are considered better. MaterialType.specific 'bog', 'music (cd)', and 'film (dvd)' are also considered better",
             "args": [],
             "type": {
               "kind": "NON_NULL",

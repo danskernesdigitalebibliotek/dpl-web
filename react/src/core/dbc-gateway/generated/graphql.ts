@@ -195,6 +195,7 @@ export enum ComplexSearchFacetsEnum {
   Creatorcontributor = "CREATORCONTRIBUTOR",
   Creatorcontributorfunction = "CREATORCONTRIBUTORFUNCTION",
   Creatorfunction = "CREATORFUNCTION",
+  Datefirstedition = "DATEFIRSTEDITION",
   Fictionalcharacter = "FICTIONALCHARACTER",
   Filmnationality = "FILMNATIONALITY",
   Gameplatform = "GAMEPLATFORM",
@@ -1059,7 +1060,9 @@ export type ManifestationTitles = {
 export type Manifestations = {
   __typename?: "Manifestations";
   all: Array<Manifestation>;
+  /** The best representation of all manifestations. Corresponds to the first element in the bestRepresentations list. */
   bestRepresentation: Manifestation;
+  /** All manifestations sorted after best representation. Newer is better. Records from DBC or KB are considered better. MaterialType.specific 'bog', 'music (cd)', and 'film (dvd)' are also considered better */
   bestRepresentations: Array<Manifestation>;
   first: Manifestation;
   latest: Manifestation;
@@ -2905,6 +2908,7 @@ export type ManifestationBasicDetailsFragment = {
   __typename?: "Manifestation";
   pid: string;
   abstract: Array<string>;
+  ownerWork: { __typename?: "Work"; workId: string };
   titles: { __typename?: "ManifestationTitles"; full: Array<string> };
   materialTypes: Array<{
     __typename?: "MaterialType";
@@ -2930,6 +2934,7 @@ export type ManifestationBasicDetailsFragment = {
     members: Array<{
       __typename?: "SerieWork";
       numberInSeries?: string | null;
+      work: { __typename?: "Work"; workId: string };
     }>;
   }>;
   languages?: {
@@ -2952,6 +2957,7 @@ export type GetManifestationViaMaterialByFaustQuery = {
     __typename?: "Manifestation";
     pid: string;
     abstract: Array<string>;
+    ownerWork: { __typename?: "Work"; workId: string };
     titles: { __typename?: "ManifestationTitles"; full: Array<string> };
     materialTypes: Array<{
       __typename?: "MaterialType";
@@ -2977,6 +2983,7 @@ export type GetManifestationViaMaterialByFaustQuery = {
       members: Array<{
         __typename?: "SerieWork";
         numberInSeries?: string | null;
+        work: { __typename?: "Work"; workId: string };
       }>;
     }>;
     languages?: {
@@ -3006,6 +3013,7 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
           __typename?: "Manifestation";
           pid: string;
           abstract: Array<string>;
+          ownerWork: { __typename?: "Work"; workId: string };
           titles: { __typename?: "ManifestationTitles"; full: Array<string> };
           materialTypes: Array<{
             __typename?: "MaterialType";
@@ -3031,6 +3039,7 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
             members: Array<{
               __typename?: "SerieWork";
               numberInSeries?: string | null;
+              work: { __typename?: "Work"; workId: string };
             }>;
           }>;
           languages?: {
@@ -8629,6 +8638,9 @@ export const ManifestationBasicDetailsFragmentDoc = `
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
+  ownerWork {
+    workId
+  }
   titles {
     full
   }
@@ -8650,6 +8662,9 @@ export const ManifestationBasicDetailsFragmentDoc = `
     title
     members {
       numberInSeries
+      work {
+        workId
+      }
     }
   }
 }
