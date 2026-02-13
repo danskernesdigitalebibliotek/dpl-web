@@ -1,20 +1,18 @@
-name: Design / Create release on branch changes
+---
+name: Design / Tag-release workflow
 
 on:
-  push:
-    branches-ignore:
-      # Dependabot does not have permissions to create releases
-      - 'dependabot/**'
+  workflow_call:
 
 jobs:
   create_release:
     name: Design / Create release on branch changes
-    uses: ./.github/workflows/common-create-release-workflow.yml
+    uses: ./.github/workflows/common-release-workflow.yml
     with:
       project: 'design-system'
       sha: ${{ github.sha }}
       branch: ${{ github.ref_name }}
-      dev_release: true
+      dev_release: false
 
   create_npm_package:
     name: Design / Create and Release NPM package
@@ -25,9 +23,13 @@ jobs:
 
     env:
       NPM_VERSION: "0.0.0-${{ github.sha }}"
-      TAG_NAME: ${{ needs.create_release.outputs.tag_name }}
 
     steps:
+      # Validate/parse version tag.
+      # If it is not a version tag it is ok, we just need to know it.
+      - uses: nowsprinting/check-version-format-action@v4
+        id: version
+
       - name: Create NPMRC
         run: |
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
@@ -35,19 +37,28 @@ jobs:
           echo "always-auth=true" >> ~/.npmrc
           echo 'registry "https://registry.yarnpkg.com"' >> ~/.yarnrc      
 
+      - name: Modify package.json for local context
+        if: steps.version.outputs.is_valid == 'true'
+        # Keep package name as dpl-design-system; set repository to current repo.
+        run: |
+          npm exec -- json -I -f package.json -e "this.repository='https://github.com/$GITHUB_REPOSITORY'"
+
       - name: Release NPM package
+        if: steps.version.outputs.is_valid == 'true'
+        # The latest tag follows tagged versions to follow NPM conventions.
         run: |
           npm version ${{ env.NPM_VERSION }} --no-git-tag-version
-          echo ${{ env.TAG_NAME }}
           cat package.json
-          npm publish --tag ${{ env.TAG_NAME }}
+          npm publish --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Adding summary
+      - name: If created add NPM created summary
+        if: steps.version.outputs.is_valid == 'true'
         run: |
           echo "Npm package created 🚀. Version: ${{ env.NPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
 
-
-
-
+      - name: If created add NPM NOT created summary
+        if: steps.version.outputs.is_valid != 'true'
+        run: |
+          echo "No npm package created... Just so you know it." >> $GITHUB_STEP_SUMMARY

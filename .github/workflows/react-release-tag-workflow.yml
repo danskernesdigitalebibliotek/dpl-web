@@ -1,14 +1,13 @@
-name: React / Create release on tag
+---
+name: React / Tag-release (workflow)
 
 on:
-  push:
-    tags:
-      - "*"
+  workflow_call:
 
 jobs:
   create_release:
     name: React / Create release on branch changes
-    uses: ./.github/workflows/common-create-release-workflow.yml
+    uses: ./.github/workflows/common-release-workflow.yml
     with:
       project: 'react'
       sha: ${{ github.sha }}

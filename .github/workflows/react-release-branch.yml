@@ -1,4 +1,5 @@
-name: React / Create release on branch changes
+---
+name: React / Branch Release
 
 on:
   push:
@@ -9,7 +10,7 @@ on:
 jobs:
   create_release:
     name: React / Create release on branch changes
-    uses: ./.github/workflows/common-create-release-workflow.yml
+    uses: ./.github/workflows/common-release-workflow.yml
     with:
       project: 'react'
       sha: ${{ github.sha }}

@@ -5,9 +5,20 @@ on:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
 jobs:
+  design_create_release:
+    name: CMS / Prepare design-release
+    uses: ./.github/workflows/design-system-release-tag-workflow.yml
+
+  react_create_release:
+    name: CMS / Prepare react-release
+    uses: ./.github/workflows/react-release-tag-workflow.yml
+
   build:
     runs-on: ubuntu-latest
     permissions: write-all
+    # We need to wait for design/react releases to finish building, so we can
+    # composer require them as part of building the CMS package.
+    needs: [design_create_release, react_create_release]
 
     defaults:
       run:
@@ -41,14 +52,23 @@ jobs:
       - name: Install go-task
         uses: arduino/setup-task@v2
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+      # Setup composer.json to target our built design-system-dist.zip and
+      # react-dist.zip files, and build + publish the source.
       - name: Build and publish source
-        run: |
-          echo "Publishing tag: $RELEASE_TAG"
-          RELEASE_IMAGE_TAG=$RELEASE_TAG RELEASE_IMAGE_REGISTRY=ghcr.io/${{ github.repository_owner}} task source:deploy
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         env:
+          GH_TOKEN: ${{ github.token }}
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
+          echo "Publishing tag: $RELEASE_TAG"
+          task dev:composer:update-design-system
+          task dev:composer:update-react
+          task source:deploy
 
       - name: Update GitHub release with package link
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}

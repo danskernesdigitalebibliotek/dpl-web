@@ -75,7 +75,7 @@ jobs:
       - name: Upload release artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-dist
+          name: release-dist-${{inputs.project}}
           path: "${{inputs.project}}/dist.zip"
 
   upsert-prerelease:
@@ -88,7 +88,7 @@ jobs:
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: release-dist
+          name: release-dist-${{inputs.project}}
 
       - name: Rename assets
         run: |
@@ -147,7 +147,7 @@ jobs:
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: release-dist
+          name: release-dist-${{inputs.project}}
 
       - name: Rename assets
         run: |
