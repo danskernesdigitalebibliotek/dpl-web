@@ -1,4 +1,8 @@
 #!/bin/bash
+
+yarn install
+yarn build
+
 rm -rf ./build
 mkdir ./build
 mkdir ./build/js
