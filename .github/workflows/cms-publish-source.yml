@@ -1,4 +1,4 @@
-# This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
+---
 name: CMS / Publish source
 on:
   push:
@@ -27,35 +27,24 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      # Validate the format of the tag. We only want to react on a precise pattern.
-      - name: Detect release tag
-        id: detect_tag
-        run: |
-          if [[ "${{ github.ref }}" =~ ^refs/tags/[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          then
-            echo "IS_RELEASE_TAG=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "IS_RELEASE_TAG=false" >> "$GITHUB_OUTPUT"
-          fi
+
       # Extract version from tag.
       - name: Get version
         id: get_version
         run: |
           echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
-        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
-      # Write version to .version file.
+
       - name: Create .version file
         run: |
           echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
-        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
-      # Install go-task since we need it for building the source package.
+
+      # Install go-test, as we will use Taskfile.yml
       - name: Install go-task
         uses: arduino/setup-task@v2
-        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+
       # Setup composer.json to target our built design-system-dist.zip and
       # react-dist.zip files, and build + publish the source.
       - name: Build and publish source
-        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -70,8 +59,8 @@ jobs:
           task dev:composer:update-react
           task source:deploy
 
+      # This is not strictly necessary, but useful for browsing GH releases.
       - name: Update GitHub release with package link
-        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
