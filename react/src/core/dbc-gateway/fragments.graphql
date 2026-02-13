@@ -277,6 +277,15 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    tvSeries {
+      title
+      season {
+        display
+      }
+      disc {
+        display
+      }
+    }
   }
   abstract
   creators {
