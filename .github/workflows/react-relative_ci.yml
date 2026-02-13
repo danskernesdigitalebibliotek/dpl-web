@@ -1,4 +1,4 @@
-name: React / Build
+name: React / RelativeCI
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - '.github/workflows/react-*.yml'
 
 jobs:
-  build:
+  build-and-send:
     name: React / Build artifacts
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
@@ -23,6 +23,7 @@ jobs:
         with:
           # Required to fetch all commits and tags
           fetch-depth: 0
+
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
@@ -32,19 +33,15 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+
       - name: Build artifacts
         run: |
+          yarn install
           yarn build:css:prod
           VERSION_FILE_NAME=$GITHUB_REPOSITORY \
           VERSION_FILE_VERSION=$(git describe --tags --exclude=latest) \
           yarn build:js:prod --json webpack-stats.json
-      - name: Upload build
-        uses: actions/upload-artifact@v6
-        with:
-          name: dist
-          path: react/dist
+
       - name: Send webpack stats to RelativeCI
         uses: relative-ci/agent-action@v3
         with:
