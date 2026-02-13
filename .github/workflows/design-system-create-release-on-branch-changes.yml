@@ -1,4 +1,4 @@
-name: Design / Create release
+name: Design / Create release on branch changes
 
 on:
   push:
@@ -7,96 +7,35 @@ on:
       - 'dependabot/**'
 
 jobs:
-  create_release_on_branch_changes:
+  create_release:
     name: Design / Create release on branch changes
+    uses: ./.github/workflows/common-create-release-workflow.yml
+    with:
+      project: 'design-system'
+      sha: ${{ github.sha }}
+      branch: ${{ github.ref_name }}
+      dev_release: true
+
+  create_npm_package:
+    name: Design / Create and Release NPM package
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: design-system
+    needs: create_release
+    # Temporarily disabled, whilst we're working in the wrong ORG.
+    if: false
+
+    env:
+      NPM_VERSION: "0.0.0-${{ github.sha }}"
+      TAG_NAME: ${{ needs.create_release.outputs.tag_name }}
+
     steps:
-      - name: Set release variables
-        id: resolve-release-vars
-        working-directory: .
-        # Version 0.0.0-SHA is a schema that supports semantic versioning but
-        # should sink below proper versions.
-        # Output package.json to provide insight and help debugging
-        # Using branch names as tags allows other projects to track unreleased
-        # development.
-        run: |
-          RELEASE_BRANCH=$(echo ${GITHUB_REF#refs/heads/})
-          RELEASE_BRANCH_SLUGGED=$(echo $RELEASE_BRANCH | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
-          RELEASE_SHA=${{ github.sha }}
-          TAG_NAME=$(echo "branch-${RELEASE_BRANCH}")
-          echo "RELEASE_BRANCH=$RELEASE_BRANCH" >> "$GITHUB_ENV"
-          echo "RELEASE_SHA=$RELEASE_SHA" >> "$GITHUB_ENV"
-          echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_ENV"
-          echo "NPM_VERSION=0.0.0-${RELEASE_SHA}" >> "$GITHUB_ENV"
-          echo "DIST_FILENAME=design-system-dist-${RELEASE_BRANCH_SLUGGED}.zip" >> "$GITHUB_ENV"
-
-      # Checkout the HEAD of the PR branch to get the latest commit message.
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Get release description
-        run: |
-          echo "RELEASE_DESCRIPTION=$(git show -s --format=%s)" >> "$GITHUB_ENV"
-
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: 'design-system/.nvmrc'
-
       - name: Create NPMRC
         run: |
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
           echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com" >> ~/.npmrc
           echo "always-auth=true" >> ~/.npmrc
-          echo 'registry "https://registry.yarnpkg.com"' >> ~/.yarnrc
-
-      - run: yarn install --frozen-lockfile
-
-      - name: Building
-        run: yarn css:build
-
-      - name: Bundling assets
-        run: ./bundle.sh
-        env:
-          VERSION: ${{ env.TAG_NAME }}-${{ env.RELEASE_SHA }}
-
-      - name: Rename assets
-        run: |
-          mv dist.zip $DIST_FILENAME
-
-      - name: Delete existing releases
-        run: gh release delete ${{ env.TAG_NAME }} --cleanup-tag -y
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # The step will fail if the release does not exist.
-        continue-on-error: true
-
-      - name: Create or update tag
-        uses: EndBug/latest-tag@v1.6.2
-        with:
-          ref: ${{ env.TAG_NAME }}
-
-      - name: Create release
-        id: create-release
-        uses: softprops/action-gh-release@v2.5.0
-        with:
-          prerelease: true
-          draft: false
-          target_commitish: ${{ env.RELEASE_SHA }}
-          tag_name: ${{ env.TAG_NAME }}
-          body: ${{ env.RELEASE_DESCRIPTION }}
-          files: design-system/${{ env.DIST_FILENAME }}
-
-      - name: Adding summary
-        run: |
-          echo "Release created 🚀😎 at: ${{ steps.create-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo 'registry "https://registry.yarnpkg.com"' >> ~/.yarnrc      
 
       - name: Release NPM package
-        # Temporarily disabled, whilst we're working in the wrong ORG.
-        if: false
         run: |
           npm version ${{ env.NPM_VERSION }} --no-git-tag-version
           echo ${{ env.TAG_NAME }}
@@ -106,7 +45,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Adding summary
-        # Temporarily disabled, whilst we're working in the wrong ORG.
-        if: false
         run: |
           echo "Npm package created 🚀. Version: ${{ env.NPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
+
+
+
+

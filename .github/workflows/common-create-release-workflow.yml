@@ -1,0 +1,164 @@
+---
+name: Release Creation
+on:
+  workflow_call:
+    inputs:
+      # "design-system" / "react"
+      project:
+        required: true
+        type: string
+
+      # ${{ github.sha }}
+      sha:
+        required: true
+        type: string
+
+      # ${{ github.ref_name }}
+      branch:
+        required: true
+        type: string
+
+      dev_release:
+        type: boolean
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.project }}
+    outputs:
+      tag_name: ${{ steps.build-variables.outputs.tag_name }}
+      dist_filename: ${{ steps.build-variables.outputs.dist_filename }}
+    steps:
+      - name: Build Variables
+        id: build-variables
+        working-directory: .
+        # Version 0.0.0-SHA is a schema that supports semantic versioning but
+        # should sink below proper versions.
+        # Output package.json to provide insight and help debugging
+        # Using branch names as tags allows other projects to track unreleased
+        # development.
+        # In the past we made the dist files include the branch name.
+        # I don't think we'll need this now, but I'll leave this here for now.
+        # RELEASE_BRANCH_SLUGGED=$(echo ${{ inputs.branch }} | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
+        # DIST_FILENAME="${{ inputs.project }}-${RELEASE_BRANCH_SLUGGED}.zip"
+        run: |
+          TAG_NAME=$(echo "branch-${{ inputs.branch }}")
+          DIST_FILENAME="dist-${{ inputs.project }}.zip"
+          echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_ENV"
+          echo "BUILD_VERSION=${{ inputs.branch }}-${{ inputs.sha }}" >> "$GITHUB_ENV"
+          echo "DIST_FILENAME=$DIST_FILENAME" >> "$GITHUB_ENV"
+          echo "NPM_VERSION=0.0.0-${{ inputs.sha }}" >> "$GITHUB_ENV"
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "dist_filename=$DIST_FILENAME" >> $GITHUB_OUTPUT
+
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.sha }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: '${{ inputs.project }}/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '${{ inputs.project }}/yarn.lock'
+          registry-url: 'https://npm.pkg.github.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bundling assets
+        run: ./bundle.sh
+        env:
+          VERSION: ${{ env.TAG_NAME }}-${{ inputs.sha }}
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-dist
+          path: "${{inputs.project}}/dist.zip"
+
+  upsert-prerelease:
+    runs-on: ubuntu-latest
+    needs: build-release
+    if: ${{ inputs.dev_release }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download release artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-dist
+
+      - name: Rename assets
+        run: |
+          mv dist.zip ${{ needs.build-release.outputs.dist_filename }}
+
+      - name: Delete existing releases
+        run: |
+          TAG_NAME="${{ needs.build-release.outputs.tag_name }}"
+          CURRENT_SHA="${{ inputs.sha }}"
+
+          # Check if release exists and get its target commitish
+          if RELEASE_INFO=$(gh release view "$TAG_NAME" --json targetCommitish 2>/dev/null); then
+            EXISTING_SHA=$(echo "$RELEASE_INFO" | jq -r '.targetCommitish')
+
+            # Only delete if the SHA doesn't match
+            if [ "$EXISTING_SHA" != ${{ inputs.sha }} ]; then
+              echo "Deleting existing release $TAG_NAME with old SHA."
+              gh release delete "$TAG_NAME" --cleanup-tag -y
+            else
+              echo "Release $TAG_NAME already exists with the same SHA, skipping deletion"
+            fi
+          else
+            echo "No existing release found for tag $TAG_NAME"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create or update tag
+        uses: EndBug/latest-tag@v1.6.2
+        with:
+          ref: ${{ needs.build-release.outputs.tag_name }}
+
+      - name: Create pre-release
+        id: create-release
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          prerelease: true
+          draft: false
+          target_commitish: ${{ inputs.sha }}
+          tag_name: ${{ needs.build-release.outputs.tag_name }}
+          files: ${{ needs.build-release.outputs.dist_filename }}
+          fail_on_unmatched_files: true
+          body: "Triggered by branch change."
+
+      - name: Adding summary
+        run: |
+          echo "🛠️ Dev-release created at: ${{ steps.create-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: build-release
+    if: ${{ !inputs.dev_release }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download release artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-dist
+
+      - name: Rename assets
+        run: |
+          mv dist.zip ${{ needs.build-release.outputs.dist_filename }}
+
+      - name: Create Release
+        id: create-release
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          files: ${{ needs.build-release.outputs.dist_filename }}
+
+      - name: Adding summary
+        run: |
+          echo "🚀 Tag-release created: ${{ steps.create-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
