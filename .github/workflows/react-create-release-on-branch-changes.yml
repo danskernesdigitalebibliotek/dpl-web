@@ -5,9 +5,6 @@ on:
     branches-ignore:
       # Dependabot does not have permissions to create releases
       - 'dependabot/**'
-    paths:
-      - 'react/**'
-      - '.github/workflows/react-*.yml'
 
 jobs:
   create_release_on_branch_changes:
