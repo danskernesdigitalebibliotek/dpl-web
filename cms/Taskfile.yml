@@ -393,7 +393,7 @@ tasks:
           VERSION:
             sh: "echo ${VERSION:-0.0.0-dev}"
           DOWNLOAD_URL:
-            sh: gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-design-system --json assets | jq -r '.assets[].url'
+            sh: gh release view ${RELEASE:-branch-$BRANCH} --json assets | jq -r '.assets[] | select(.name == "dist-design-system.zip") | .url'
     preconditions:
       - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
         msg: Please provide a BRANCH or RELEASE environment variable with the name of the design system branch/release to use
@@ -418,7 +418,7 @@ tasks:
           VERSION:
             sh: "echo ${VERSION:-0.0.0-dev}"
           DOWNLOAD_URL:
-            sh: gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-react --json assets | jq -r '.assets[].url'
+            sh: gh release view ${RELEASE:-branch-$BRANCH} --json assets | jq -r '.assets[] | select(.name == "dist-react.zip") | .url'
     preconditions:
       - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
         msg: Please provide a BRANCH or RELEASE environment variable with the name of the React components branch/release to use
