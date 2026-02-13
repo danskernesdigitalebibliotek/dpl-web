@@ -2304,6 +2304,10 @@ export type GetSmallWorkQuery = {
           __typename?: "TvSeriesDetails";
           display?: string | null;
         } | null;
+        disc?: {
+          __typename?: "TvSeriesDetails";
+          display?: string | null;
+        } | null;
       } | null;
     };
     creators: Array<
@@ -3112,6 +3116,10 @@ export type GetMaterialQuery = {
           __typename?: "TvSeriesDetails";
           display?: string | null;
         } | null;
+        disc?: {
+          __typename?: "TvSeriesDetails";
+          display?: string | null;
+        } | null;
       } | null;
     };
     series: Array<{
@@ -3767,6 +3775,10 @@ export type GetMaterialGloballyQuery = {
         __typename?: "TvSeries";
         title?: string | null;
         season?: {
+          __typename?: "TvSeriesDetails";
+          display?: string | null;
+        } | null;
+        disc?: {
           __typename?: "TvSeriesDetails";
           display?: string | null;
         } | null;
@@ -4465,6 +4477,10 @@ export type RecommendFromFaustQuery = {
               __typename?: "TvSeriesDetails";
               display?: string | null;
             } | null;
+            disc?: {
+              __typename?: "TvSeriesDetails";
+              display?: string | null;
+            } | null;
           } | null;
         };
         creators: Array<
@@ -5082,6 +5098,10 @@ export type SearchWithPaginationQuery = {
           __typename?: "TvSeries";
           title?: string | null;
           season?: {
+            __typename?: "TvSeriesDetails";
+            display?: string | null;
+          } | null;
+          disc?: {
             __typename?: "TvSeriesDetails";
             display?: string | null;
           } | null;
@@ -5741,6 +5761,10 @@ export type ComplexSearchWithPaginationQuery = {
           __typename?: "TvSeries";
           title?: string | null;
           season?: {
+            __typename?: "TvSeriesDetails";
+            display?: string | null;
+          } | null;
+          disc?: {
             __typename?: "TvSeriesDetails";
             display?: string | null;
           } | null;
@@ -7376,6 +7400,7 @@ export type WorkSmallFragment = {
         __typename?: "TvSeriesDetails";
         display?: string | null;
       } | null;
+      disc?: { __typename?: "TvSeriesDetails"; display?: string | null } | null;
     } | null;
   };
   creators: Array<
@@ -8031,6 +8056,7 @@ export type WorkMediumFragment = {
         __typename?: "TvSeriesDetails";
         display?: string | null;
       } | null;
+      disc?: { __typename?: "TvSeriesDetails"; display?: string | null } | null;
     } | null;
   };
   series: Array<{
@@ -8945,6 +8971,9 @@ export const WorkSmallFragmentDoc = `
     tvSeries {
       title
       season {
+        display
+      }
+      disc {
         display
       }
     }
