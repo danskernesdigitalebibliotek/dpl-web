@@ -660,6 +660,12 @@ export const getWorkTitle = (work: Work): string => {
 
   // If the work is a TV series, show "Title - Season X, Disc Y" if available,
   // or just the series title if the season is missing.
+  if (titles.tvSeries?.title && titles.tvSeries?.season?.display) {
+    const { title, season, disc } = titles.tvSeries;
+    const discSuffix = disc?.display ? `, ${disc.display}` : "";
+    return `${title} - ${season.display}${discSuffix}`;
+  }
+
   if (titles.tvSeries?.title) {
     const { title, season, disc } = titles.tvSeries;
     const seasonPart = season?.display ? ` - ${season.display}` : "";
