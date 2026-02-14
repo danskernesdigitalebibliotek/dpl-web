@@ -21,6 +21,14 @@ on:
       dev_release:
         type: boolean
 
+    outputs:
+      tag_name:
+        description: "The release tag name"
+        value: ${{ jobs.build-release.outputs.tag_name }}
+      dist_filename:
+        description: "The release dist filename"
+        value: ${{ jobs.build-release.outputs.dist_filename }}
+
 jobs:
   build-release:
     runs-on: ubuntu-latest

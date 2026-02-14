@@ -1,0 +1,69 @@
+---
+name: Design / Create and Release NPM package
+
+on:
+  workflow_call:
+    inputs:
+      latest:
+        required: true
+        type: boolean
+      tag_name:
+        required: true
+        type: string
+      sha:
+        required: true
+        type: string
+
+jobs:
+  create_npm_package:
+    name: Design / Create and Release NPM package
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: design-system
+
+    env:
+      NPM_VERSION: "0.0.0-${{ inputs.sha }}"
+      TAG_NAME: ${{ inputs.tag_name }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.sha }}
+
+      - name: Create NPMRC
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+          echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "always-auth=true" >> ~/.npmrc
+          echo 'registry "https://registry.yarnpkg.com"' >> ~/.yarnrc
+
+      - name: Release NPM package (non-latest)
+        if: ${{ !inputs.latest }}
+        run: |
+          npm version ${{ env.NPM_VERSION }} --no-git-tag-version
+          echo ${{ env.TAG_NAME }}
+          cat package.json
+          npm publish --tag ${{ env.TAG_NAME }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Modify package.json for local context (latest)
+        if: ${{ inputs.latest }}
+        # Keep package name, set repository to current repo.
+        run: |
+          npm exec -- json -I -f package.json -e "this.repository='https://github.com/$GITHUB_REPOSITORY'"
+
+      - name: Release NPM package (latest)
+        if: ${{ inputs.latest }}
+        run: |
+          npm version ${{ env.NPM_VERSION }} --no-git-tag-version
+          cat package.json
+          npm publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Adding summary
+        run: |
+          echo "Npm package created 🚀. Version: ${{ env.NPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
