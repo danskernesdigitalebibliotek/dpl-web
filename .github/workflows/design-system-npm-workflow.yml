@@ -10,7 +10,7 @@ on:
       tag_name:
         required: true
         type: string
-      sha:
+      npm_version:
         required: true
         type: string
 
@@ -24,13 +24,11 @@ jobs:
         working-directory: design-system
 
     env:
-      NPM_VERSION: "0.0.0-${{ inputs.sha }}"
+      NPM_VERSION: ${{ inputs.npm_version }}
       TAG_NAME: ${{ inputs.tag_name }}
 
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ inputs.sha }}
 
       - name: Create NPMRC
         run: |
