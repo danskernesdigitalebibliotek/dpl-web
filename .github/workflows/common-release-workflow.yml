@@ -66,7 +66,7 @@ jobs:
           ref: ${{ inputs.sha }}
 
       - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: '${{ inputs.project }}/.nvmrc'
           cache: 'yarn'

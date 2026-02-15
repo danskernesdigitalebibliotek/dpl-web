@@ -31,7 +31,7 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0 # 👈 Required to retrieve git history
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version-file: "go/.nvmrc"
 
