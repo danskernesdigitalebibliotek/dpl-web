@@ -5300,10 +5300,10 @@
     path-browserify "^1.0.1"
     tinyglobby "^0.2.14"
 
-"@tsconfig/create-react-app@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/@tsconfig/create-react-app/-/create-react-app-2.0.10.tgz#7e55475c4ee8ac26e6c6ff4ac09881d27f2eca8f"
-  integrity sha512-cdQ7qpcYokWyAVVTOGR0Mnqss+ei/nOSUU0xrAmXyWl2pnnnDLFGyJ9i5nxEpRBgHxt9W+nNwLmpvVA2yR0hZQ==
+"@tsconfig/create-react-app@^2.0.11":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@tsconfig/create-react-app/-/create-react-app-2.0.11.tgz#876935aa647f9dabcc5b278052bed5a007afadbb"
+  integrity sha512-vvIx+rDshVTVyA0l8OAjt8LCFUX0xhp6I5me1ggoQCg4Lny0xLG2Y1aXC7b76TCAq5hbUwTRhKF1RR33Yl7mkA==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
