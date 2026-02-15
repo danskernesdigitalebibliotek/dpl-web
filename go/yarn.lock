@@ -8321,10 +8321,10 @@ dezalgo@^1.0.4:
     asap "^2.0.0"
     wrappy "1"
 
-diff@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/diff/-/diff-5.1.0.tgz"
-  integrity sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==
+diff@5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-5.2.2.tgz#0a4742797281d09cfa699b79ea32d27723623bad"
+  integrity sha512-vtcDfH3TOjP8UekytvnHH1o1P4FcUdt4eQ1Y+Abap1tk/OB2MWQvcwS2ClCd1zuIhc3JKOx6p3kod8Vfys3E+A==
 
 diff@^4.0.1:
   version "4.0.2"
@@ -13464,12 +13464,12 @@ prettier-plugin-classnames@^0.9.0:
   dependencies:
     zod "3.22.4"
 
-prettier-plugin-merge@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-merge/-/prettier-plugin-merge-0.9.0.tgz#783f0979036b3e3520611b65a624d3e53fc923d0"
-  integrity sha512-bWd9Gw05GC55wOiDL52CNM0GlvEww10oc+VhptbMhz091SrlM/F9M86WZ94VWnv732rUlu9i9FzZ4wWFzTYZsw==
+prettier-plugin-merge@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-merge/-/prettier-plugin-merge-0.9.1.tgz#5e231cd31df12e3f5a3383e9ac4d61d341b2b1de"
+  integrity sha512-xD10WwAIzwDWipGRNO6Yxo3QfpgoUqSUPmxZafgI/4dgns52/4+L6aOj76LTjN2VEFdfahYnLD8aUp0g2JjdQg==
   dependencies:
-    diff "5.1.0"
+    diff "5.2.2"
 
 prettier-plugin-tailwindcss@^0.7.2:
   version "0.7.2"
