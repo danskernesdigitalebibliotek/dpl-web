@@ -3,7 +3,7 @@
 
 [![codecov](https://codecov.io/gh/danskernesdigitalebibliotek/dpl-react/branch/master/graph/badge.svg)](https://codecov.io/gh/danskernesdigitalebibliotek/dpl-react)
 
-A set of React components and applications providing self-service features for
+A set of React components & applications providing self-service features for
 Danish public libraries implemented in TypeScript.
 
 Read more about DPL React by visiting our
