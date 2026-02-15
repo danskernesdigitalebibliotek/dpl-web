@@ -4412,15 +4412,10 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-axe-core@^4.10.0:
+axe-core@^4.10.0, axe-core@^4.2.0:
   version "4.10.2"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.10.2.tgz#85228e3e1d8b8532a27659b332e39b7fa0e022df"
   integrity sha512-RE3mdQ7P3FRSe7eqCWoeQ/Z9QXrtniSjp1wUjt5nRC3WIpz5rSCve6o3fsZ2aCpJtrZjSZgjwXAoTO5k4tEI0w==
-
-axe-core@^4.2.0:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.8.2.tgz#2f6f3cde40935825cf4465e3c1c9e77b240ff6ae"
-  integrity sha512-/dlp0fxyM3R8YW7MFzaHWXrf4zzbr0vaYb23VBFCl83R7nWNPg/yaQw2Dc8jzCMmDVLhSdzH8MjrsuIUuvX+6g==
 
 axobject-query@^4.1.0:
   version "4.1.0"
@@ -6249,7 +6244,7 @@ es-get-iterator@^1.1.3:
     isarray "^2.0.5"
     stop-iteration-iterator "^1.0.0"
 
-es-iterator-helpers@^1.1.0, es-iterator-helpers@^1.2.1:
+es-iterator-helpers@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/es-iterator-helpers/-/es-iterator-helpers-1.2.1.tgz#d1dd0f58129054c0ad922e6a9a1e65eef435fe75"
   integrity sha512-uDn+FE1yrDzyC0pCo961B2IHbdM8y/ACZsKD4dG6WqrjV53BADjwa7D+1aom2rsNVfLyDgU/eigvlJGJ08OQ4w==
@@ -6534,29 +6529,7 @@ eslint-plugin-jest@^25.3.0:
   dependencies:
     "@typescript-eslint/experimental-utils" "^5.0.0"
 
-eslint-plugin-jsx-a11y@^6.10.0:
-  version "6.10.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.10.1.tgz#87003835bad8875e023aa5db26f41a0c9e6a8fa9"
-  integrity sha512-zHByM9WTUMnfsDTafGXRiqxp6lFtNoSOWBY6FonVRn3A+BUwN1L/tdBXT40BcBJi0cZjOGTXZ0eD/rTG9fEJ0g==
-  dependencies:
-    aria-query "^5.3.2"
-    array-includes "^3.1.8"
-    array.prototype.flatmap "^1.3.2"
-    ast-types-flow "^0.0.8"
-    axe-core "^4.10.0"
-    axobject-query "^4.1.0"
-    damerau-levenshtein "^1.0.8"
-    emoji-regex "^9.2.2"
-    es-iterator-helpers "^1.1.0"
-    hasown "^2.0.2"
-    jsx-ast-utils "^3.3.5"
-    language-tags "^1.0.9"
-    minimatch "^3.1.2"
-    object.fromentries "^2.0.8"
-    safe-regex-test "^1.0.3"
-    string.prototype.includes "^2.0.1"
-
-eslint-plugin-jsx-a11y@^6.5.1:
+eslint-plugin-jsx-a11y@^6.10.2, eslint-plugin-jsx-a11y@^6.5.1:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.10.2.tgz#d2812bb23bf1ab4665f1718ea442e8372e638483"
   integrity sha512-scB3nz4WmG75pV8+3eRUQOHZlNSUhFNq37xnpgRkCCELU3XMvXAxLk1eqWWyE22Ki4Q01Fnsw9BA3cJHDPgn2Q==
@@ -11673,16 +11646,7 @@ safe-push-apply@^1.0.0:
     es-errors "^1.3.0"
     isarray "^2.0.5"
 
-safe-regex-test@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/safe-regex-test/-/safe-regex-test-1.0.3.tgz#a5b4c0f06e0ab50ea2c395c14d8371232924c377"
-  integrity sha512-CdASjNJPvRa7roO6Ra/gLYBTzYzzPyyBXxIMdGW3USQLyjWEls2RgW5UBTXaQVp+OrpeCK3bLem8smtmheoRuw==
-  dependencies:
-    call-bind "^1.0.6"
-    es-errors "^1.3.0"
-    is-regex "^1.1.4"
-
-safe-regex-test@^1.1.0:
+safe-regex-test@^1.0.3, safe-regex-test@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/safe-regex-test/-/safe-regex-test-1.1.0.tgz#7f87dfb67a3150782eaaf18583ff5d1711ac10c1"
   integrity sha512-x/+Cz4YrimQxQccJf5mKEbIa1NzeCRNI5Ecl/ekmlYaampdNLPalVyIcCZNNH3MvmqBugV5TMYZXv0ljslUlaw==
