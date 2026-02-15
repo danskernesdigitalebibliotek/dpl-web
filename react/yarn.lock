@@ -3484,10 +3484,10 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@tsconfig/create-react-app@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/@tsconfig/create-react-app/-/create-react-app-2.0.5.tgz"
-  integrity sha512-NiXzSMJabQtVTPwFmBWX+eyee2dfhRSnQ6NNbtCZfXemGxOq+N0+RMPVYu+sz6riUZANHTnvvHoS1k87ksyDXg==
+"@tsconfig/create-react-app@^2.0.11":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@tsconfig/create-react-app/-/create-react-app-2.0.11.tgz#876935aa647f9dabcc5b278052bed5a007afadbb"
+  integrity sha512-vvIx+rDshVTVyA0l8OAjt8LCFUX0xhp6I5me1ggoQCg4Lny0xLG2Y1aXC7b76TCAq5hbUwTRhKF1RR33Yl7mkA==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"
