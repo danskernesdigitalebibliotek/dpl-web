@@ -61,7 +61,7 @@
     "@whitespace/storybook-addon-html": "^8.0.2",
     "chokidar-cli": "^3.0.0",
     "clsx": "^2.1.1",
-    "concurrently": "^9.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
