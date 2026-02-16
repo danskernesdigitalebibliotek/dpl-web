@@ -17,6 +17,8 @@ vars:
   #   - ghcr.io/danskernesdigitalebibliotek
   #   - docker.io/someregistry
   RELEASE_IMAGE_REGISTRY: '{{.RELEASE_IMAGE_REGISTRY | default "ghcr.io/danskernesdigitalebibliotek"}}'
+  # Registry host used for docker login (must not include namespace/path).
+  RELEASE_IMAGE_REGISTRY_HOST: '{{ index (splitList "/" .RELEASE_IMAGE_REGISTRY) 0 }}'
   # Get total amount of commits on the main branch. Used as build number.
   COMMIT_COUNT:
     sh: git rev-list --count origin/main
@@ -61,7 +63,7 @@ tasks:
   ghcr:login:
     summary: Login into Github Container Registry
     cmds:
-      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY }} -u username-not-used --password-stdin
+      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY_HOST }} -u "${GITHUB_ACTOR:-github-actions[bot]}" --password-stdin
     preconditions:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
