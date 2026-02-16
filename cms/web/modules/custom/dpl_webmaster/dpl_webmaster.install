@@ -38,3 +38,15 @@ function dpl_webmaster_update_10102(): string {
 
   return implode("\n", $feedback);
 }
+
+/**
+ * Delete translated assets.
+ */
+function dpl_webmaster_update_10103(): string {
+  \Drupal::database()->delete('config')
+    ->condition('name', 'asset_injector.%', 'LIKE')
+    ->condition('collection', 'language.da')
+    ->execute();
+
+  return "Asset translations deleted";
+}
