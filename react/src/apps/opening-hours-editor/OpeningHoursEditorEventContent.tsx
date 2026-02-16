@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/logo/reload_logo_black.svg";
+import logo from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/logo/reload_logo_black.svg";
 import { EventInput } from "@fullcalendar/core";
 import { isOpeningHourWeeklyRepetition } from "./helper";
 import { extractTime } from "../../core/utils/helpers/date";

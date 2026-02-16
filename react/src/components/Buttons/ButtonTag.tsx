@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import iconCross from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-cross.svg";
+import iconCross from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-cross.svg";
 
 type ButtonTagProps = {
   children: React.ReactNode;

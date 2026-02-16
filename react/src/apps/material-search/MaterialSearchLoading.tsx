@@ -1,5 +1,5 @@
 import React from "react";
-import LoadingLogo from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/logo/reload_logo_black.svg";
+import LoadingLogo from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/logo/reload_logo_black.svg";
 
 interface ReloadLoadingIconProps {
   loadingText: string;

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import iconCloseLarge from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/CloseLarge.svg";
+import iconCloseLarge from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/CloseLarge.svg";
 import { useText } from "../../core/utils/text";
 import IconWarning from "../icon-warning/icon-warning";
 

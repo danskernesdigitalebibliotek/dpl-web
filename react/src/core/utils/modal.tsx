@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CloseIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/CloseLarge.svg";
+import CloseIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/CloseLarge.svg";
 import clsx from "clsx";
 import { FocusTrap } from "focus-trap-react";
 import {

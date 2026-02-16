@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import check from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-check.svg";
+import check from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-check.svg";
 import { useDeepCompareEffect } from "react-use";
 import { useText } from "../../../core/utils/text";
 import { ReservationType } from "../../../core/utils/types/reservation-type";

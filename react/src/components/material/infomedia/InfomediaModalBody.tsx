@@ -1,5 +1,5 @@
 import React from "react";
-import InfomediaLogo from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/logo/infomedia-logo.svg";
+import InfomediaLogo from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/logo/infomedia-logo.svg";
 import { useText } from "../../../core/utils/text";
 
 export interface InfomediaModalBodyProps {

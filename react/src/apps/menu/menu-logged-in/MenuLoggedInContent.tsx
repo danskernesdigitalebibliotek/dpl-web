@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import profileIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-profile.svg";
+import profileIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-profile.svg";
 import Link from "../../../components/atoms/links/Link";
 import MenuNavigationItem, {
   MenuNavigationDataType

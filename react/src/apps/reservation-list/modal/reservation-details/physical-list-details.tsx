@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
-import EbookIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Ebook.svg";
-import LocationIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Location.svg";
-import LoanHistoryIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/LoanHistory.svg";
-import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reservations.svg";
-import LoansIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Loans.svg";
+import EbookIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Ebook.svg";
+import LocationIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Location.svg";
+import LoanHistoryIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/LoanHistory.svg";
+import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Reservations.svg";
+import LoansIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Loans.svg";
 import { useQueryClient } from "react-query";
 import { useText } from "../../../../core/utils/text";
 import { ReservationType } from "../../../../core/utils/types/reservation-type";

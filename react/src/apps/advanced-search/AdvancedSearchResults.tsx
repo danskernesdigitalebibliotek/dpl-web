@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { isEqual } from "lodash";
 import { useCopyToClipboard, usePrevious } from "react-use";
-import CheckIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Check.svg";
+import CheckIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Check.svg";
 import clsx from "clsx";
 import { useText } from "../../core/utils/text";
 import useGetSearchBranches from "../../core/utils/branches";

@@ -8,7 +8,7 @@ import { useSearchQueries } from "../hooks/use-search-queries";
 import { usePaginatedResults } from "../hooks/use-paginated-results";
 import { useFormVisibility } from "../hooks/use-form-visibility";
 import CopyLink from "../../../components/copy-link/CopyLink";
-import IconFilter from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-filter.svg";
+import IconFilter from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-filter.svg";
 import useDialog from "../../../components/dialog/useDialog";
 import Dialog from "../../../components/dialog/Dialog";
 import { Button } from "../../../components/Buttons/Button";

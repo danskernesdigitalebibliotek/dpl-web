@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import ExpandMore from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import ExpandMore from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import clsx from "clsx";
 import { useGetBranches } from "../../../core/utils/branches";
 import { useText } from "../../../core/utils/text";

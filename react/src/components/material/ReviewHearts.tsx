@@ -1,6 +1,6 @@
 import React from "react";
-import HeartIconFilled from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-heart-filled.svg";
-import HeartIconGrey from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-heart-grey.svg";
+import HeartIconFilled from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-heart-filled.svg";
+import HeartIconGrey from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-heart-grey.svg";
 import { useText } from "../../core/utils/text";
 
 export interface ReviewHeartsProps {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { first } from "lodash";
-import Various from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Various.svg";
+import Various from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Various.svg";
 import { useQueryClient } from "react-query";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import {

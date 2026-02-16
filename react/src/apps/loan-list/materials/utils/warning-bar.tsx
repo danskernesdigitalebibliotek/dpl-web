@@ -1,5 +1,5 @@
 import React, { FC, useId } from "react";
-import IconWarning from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-warning.svg";
+import IconWarning from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-warning.svg";
 import Link from "../../../../components/atoms/links/Link";
 import LinkButton from "../../../../components/Buttons/LinkButton";
 import { Button } from "../../../../components/Buttons/Button";

@@ -1,5 +1,5 @@
 import React from "react";
-import IconExpand from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import IconExpand from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import { useText } from "../../core/utils/text";
 import { AdvancedSortMapStrings } from "./types";
 

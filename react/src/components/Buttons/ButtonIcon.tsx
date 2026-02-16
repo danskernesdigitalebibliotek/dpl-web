@@ -1,6 +1,6 @@
 import React from "react";
-import ArrowSmallRight from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/arrow-ui/icon-arrow-ui-small-right.svg";
-import ExternalLinkIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/buttons/icon-btn-external-link.svg";
+import ArrowSmallRight from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/arrow-ui/icon-arrow-ui-small-right.svg";
+import ExternalLinkIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/buttons/icon-btn-external-link.svg";
 import clsx from "clsx";
 import { ButtonType } from "../../core/utils/types/button";
 

@@ -139,7 +139,7 @@ git tag -a v*.*.* && git push origin v*.*.*
 In the consuming project update usage to the new release:
 
 ```shell
-npm install @danskernesdigitalebibliotek/dpl-design-system@*.*.*
+npm install @danskernesdigitalebibliotek/dpl-web-design@*.*.*
 ```
 
 #### Usage: Release file
@@ -170,7 +170,7 @@ Updating the branch will update all parts accordingly.
 In the consuming project update usage to the new release:
 
 ```shell
-npm install @danskernesdigitalebibliotek/dpl-design-system@feature-reservation-modal
+npm install @danskernesdigitalebibliotek/dpl-web-design@feature-reservation-modal
 ```
 
 If your release belongs to a fork you can use [aliasing](https://docs.npmjs.com/cli/v8/commands/npm-install)
@@ -178,7 +178,7 @@ to point to the release of the package in the npm repository for the fork:
 
 ```shell
 npm config set @my-fork:registry=https://npm.pkg.github.com
-npm install @danskernesdigitalebibliotek/dpl-design-system@npm:@my-fork/dpl-design-system@feature-reservation-modal
+npm install @danskernesdigitalebibliotek/dpl-web-design@npm:@my-fork/dpl-design-system@feature-reservation-modal
 ```
 
 This will update your `package.json` and lock files accordingly. Note that
@@ -189,7 +189,7 @@ If you push new code to the branch you have to update the version used in the
 consuming project:
 
 ```shell
-npm update @danskernesdigitalebibliotek/dpl-design-system
+npm update @danskernesdigitalebibliotek/dpl-web-design
 ```
 
 [Aliasing](https://classic.yarnpkg.com/lang/en/docs/cli/add/#toc-yarn-add-alias),

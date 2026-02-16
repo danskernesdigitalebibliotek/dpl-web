@@ -6,9 +6,9 @@ import {
 } from "../../../core/dbc-gateway/generated/graphql";
 import { useText } from "../../../core/utils/text";
 import CheckBox from "../../../components/checkbox/Checkbox";
-import iconExpandMore from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
-import iconPlus from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Plus.svg";
-import iconMinus from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Minus.svg";
+import iconExpandMore from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
+import iconPlus from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Plus.svg";
+import iconMinus from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Minus.svg";
 
 interface AdvancedSearchFilterGroupProps {
   facetField: ComplexSearchFacetsEnum;

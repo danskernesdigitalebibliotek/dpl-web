@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import SubtitlesIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Subtitles.svg";
-import MessageIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Message.svg";
+import SubtitlesIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Subtitles.svg";
+import MessageIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Message.svg";
 import { useText } from "../../core/utils/text";
 import ReservationFormListItem from "./ReservationFormListItem";
 import { PatronV5 } from "../../core/fbs/model";

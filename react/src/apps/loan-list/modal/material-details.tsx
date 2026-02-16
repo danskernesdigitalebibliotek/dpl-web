@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
-import ReservationIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reservations.svg";
-import LoansIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Loans.svg";
-import EbookIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Ebook.svg";
+import ReservationIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Reservations.svg";
+import LoansIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Loans.svg";
+import EbookIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Ebook.svg";
 import { useText } from "../../../core/utils/text";
 import { isDigital } from "../utils/helpers";
 import { materialIsOverdue } from "../../../core/utils/helpers/general";

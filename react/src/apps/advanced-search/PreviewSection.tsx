@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useCopyToClipboard } from "react-use";
-import CheckIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Check.svg";
+import CheckIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Check.svg";
 import { useText } from "../../core/utils/text";
 
 export type PreviewSectionProps = {

@@ -309,7 +309,7 @@ To update the design system to the latest stable release of the design system
 run:
 
 ```bash
-yarn add @danskernesdigitalebibliotek/dpl-design-system@latest
+yarn add @danskernesdigitalebibliotek/dpl-web-design@latest
 ```
 
 This command installs the latest released version of the package. Whenever a
@@ -328,7 +328,7 @@ Example: To use the latest styling from a branch in the design system called
 `feature/availability-label`, run:
 
 ```bash
-yarn add @danskernesdigitalebibliotek/dpl-design-system@feature-availability-label
+yarn add @danskernesdigitalebibliotek/dpl-web-design@feature-availability-label
 ```
 
 If the branch resides in a fork (usually before a pull request is merged) you
@@ -337,14 +337,14 @@ and run:
 
 ```bash
 yarn config set "@my-fork:registry" "https://npm.pkg.github.com"
-yarn add @danskernesdigitalebibliotek/dpl-design-system@npm:@my-fork/dpl-design-system@feature-availability-label
+yarn add @danskernesdigitalebibliotek/dpl-web-design@npm:@my-fork/dpl-design-system@feature-availability-label
 ```
 
 If the branch is updated and you want the latest changes to take effect locally
 update the release used:
 
 ```bash
-yarn upgrade @danskernesdigitalebibliotek/dpl-design-system
+yarn upgrade @danskernesdigitalebibliotek/dpl-web-design
 ```
 
 Note that references to unreleased code should never make it into official

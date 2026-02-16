@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import LocationIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Location.svg";
-import SubtitlesIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Subtitles.svg";
-import MessageIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Message.svg";
-import LoanHistoryIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/LoanHistory.svg";
+import LocationIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Location.svg";
+import SubtitlesIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Subtitles.svg";
+import MessageIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Message.svg";
+import LoanHistoryIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/LoanHistory.svg";
 import { useText } from "../../core/utils/text";
 import ReservationFormListItem from "./ReservationFormListItem";
 import { AgencyBranch, PatronV5 } from "../../core/fbs/model";

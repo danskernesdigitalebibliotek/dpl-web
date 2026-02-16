@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { EntryItem } from "./EntryItem";
-import ExpandIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import ExpandIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import { ContentsArray } from "./types";
 import { useText } from "../../../core/utils/text";
 

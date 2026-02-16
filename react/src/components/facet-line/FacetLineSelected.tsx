@@ -3,7 +3,7 @@ import useFilterHandler from "../../apps/search-result/useFilterHandler";
 import ButtonTag from "../Buttons/ButtonTag";
 import { useText } from "../../core/utils/text";
 import { FacetBrowserModalId } from "../facet-browser/helper";
-import IconFilter from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-filter.svg";
+import IconFilter from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-filter.svg";
 import { useModalButtonHandler } from "../../core/utils/modal";
 
 const FacetLineSelected = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AdvancedSearchFilterRow from "./AdvancedSearchFilterRow";
-import PlusButtonIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/PlusButton.svg";
+import PlusButtonIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/PlusButton.svg";
 import { useText } from "../../../core/utils/text";
 import { SEARCH_TERM_OPTIONS } from "../lib/search-fields-config";
 import { INITIAL_PRE_SEARCH_FACETS_STATE } from "../lib/initial-state";

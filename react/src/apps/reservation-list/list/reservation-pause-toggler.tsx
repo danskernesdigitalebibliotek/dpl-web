@@ -1,5 +1,5 @@
 import React, { useState, FC, useEffect } from "react";
-import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reservations.svg";
+import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Reservations.svg";
 import { useModalButtonHandler } from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
 import { PatronV5 } from "../../../core/fbs/model";

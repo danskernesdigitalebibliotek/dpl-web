@@ -1,6 +1,6 @@
 import * as React from "react";
-import searchIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-search.svg";
-import expandIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import searchIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-search.svg";
+import expandIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import { UseComboboxPropGetters } from "downshift";
 import clsx from "clsx";
 import { useText } from "../../core/utils/text";

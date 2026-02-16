@@ -1,5 +1,5 @@
 import React from "react";
-import ExpandMoreIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import ExpandMoreIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import clsx from "clsx";
 import Heading, { HeadingLevelType } from "../Heading/Heading";
 import Pagefold from "../pagefold/Pagefold";

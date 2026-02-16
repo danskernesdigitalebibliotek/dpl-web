@@ -1,6 +1,6 @@
 import React from "react";
-import iconTriangle from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-triangle.svg";
-import iconExpandMore from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import iconTriangle from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-triangle.svg";
+import iconExpandMore from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 
 const DropdownIcon = ({
   arrowIcon

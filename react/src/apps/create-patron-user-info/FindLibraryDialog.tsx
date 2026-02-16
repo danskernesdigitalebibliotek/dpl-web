@@ -1,5 +1,5 @@
-import LocationIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Location.svg";
-import WarningIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-warning.svg";
+import LocationIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Location.svg";
+import WarningIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-warning.svg";
 import React, { useState, useMemo } from "react";
 import clsx from "clsx";
 import { useText } from "../../core/utils/text";

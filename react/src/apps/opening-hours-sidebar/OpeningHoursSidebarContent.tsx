@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import iconWatch from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-watch-static.svg";
+import iconWatch from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-watch-static.svg";
 import DisclosureControllable from "../../components/Disclosures/DisclosureControllable";
 import OpeningHoursSidebarSummary from "./OpeningHoursSidebarSummary";
 import OpeningHoursSidebarDetails from "./OpeningHoursSidebarDetails";

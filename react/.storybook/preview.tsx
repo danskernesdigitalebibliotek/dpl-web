@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "../src/components/components.scss";
-import "@danskernesdigitalebibliotek/dpl-design-system/build/css/base.css";
+import "@danskernesdigitalebibliotek/dpl-web-design/build/css/base.css";
 import { setToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../src/core/token";
 import "../src/core/mount";
 import React from "react";

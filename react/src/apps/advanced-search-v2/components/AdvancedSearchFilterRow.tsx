@@ -4,7 +4,7 @@ import {
   ComplexSuggestionTypeEnum,
   useComplexSuggestQuery
 } from "../../../core/dbc-gateway/generated/graphql";
-import MinusButtonIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/MinusButton.svg";
+import MinusButtonIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/MinusButton.svg";
 import OperatorButtons from "./OperatorButtons";
 import { useText } from "../../../core/utils/text";
 import { Operator } from "../types";

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import ExternalLinkIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/buttons/icon-btn-external-link.svg";
+import ExternalLinkIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/buttons/icon-btn-external-link.svg";
 import Modal, { useModalButtonHandler } from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
 import Link from "../../../components/atoms/links/Link";

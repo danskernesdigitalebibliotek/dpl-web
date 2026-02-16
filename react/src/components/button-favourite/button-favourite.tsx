@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import LoadIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reload.svg";
+import LoadIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Reload.svg";
 import { useQueryClient } from "react-query";
 import { IconFavourite } from "../icon-favourite/icon-favourite";
 import {

@@ -13,7 +13,7 @@ import DialogFormAdd from "./DialogFormAdd";
 import { OpeningHoursCategoriesType } from "./types";
 import { useConfig } from "../../core/utils/config";
 import { useText } from "../../core/utils/text";
-import watchIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-watch-static.svg";
+import watchIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-watch-static.svg";
 
 export type OpeningHoursEditorType = {
   initialDate?: Date;

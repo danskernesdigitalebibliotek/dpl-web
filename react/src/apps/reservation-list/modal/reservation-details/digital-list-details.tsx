@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reservations.svg";
-import LoansIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Loans.svg";
+import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Reservations.svg";
+import LoansIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Loans.svg";
 import { useText } from "../../../../core/utils/text";
 import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import { MaterialProps } from "../../../loan-list/materials/utils/material-fetch-hoc";

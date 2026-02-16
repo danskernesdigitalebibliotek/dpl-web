@@ -1,5 +1,5 @@
 import React from "react";
-import IconInfo from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-info.svg";
+import IconInfo from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-info.svg";
 
 export type PromoBarIconType = "info";
 

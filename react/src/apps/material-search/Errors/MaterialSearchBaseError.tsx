@@ -1,4 +1,4 @@
-import WarningIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-warning.svg";
+import WarningIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-warning.svg";
 import React from "react";
 
 interface MaterialSearchBaseErrorProps {

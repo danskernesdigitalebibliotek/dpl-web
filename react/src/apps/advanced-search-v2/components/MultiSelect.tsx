@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import IconExpand from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import IconExpand from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import clsx from "clsx";
 import {
   Popover,

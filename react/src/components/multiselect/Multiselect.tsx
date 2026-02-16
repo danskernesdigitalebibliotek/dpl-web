@@ -1,5 +1,5 @@
 import React, { FC, useId, useRef, useState } from "react";
-import IconExpand from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import IconExpand from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import { useMultipleSelection } from "downshift";
 import clsx from "clsx";
 import { useClickAway, useDeepCompareEffect } from "react-use";

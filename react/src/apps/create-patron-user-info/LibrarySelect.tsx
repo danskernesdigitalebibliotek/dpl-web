@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import ExpandIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import ExpandIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import { TBranch } from "../../core/utils/branches";
 
 export type InputProps = {

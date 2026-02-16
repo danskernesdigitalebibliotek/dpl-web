@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { FC } from "react";
-import ExpandMoreIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ExpandMore.svg";
+import ExpandMoreIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ExpandMore.svg";
 import { useText } from "../../core/utils/text";
 
 export type ButtonExpandProps = {

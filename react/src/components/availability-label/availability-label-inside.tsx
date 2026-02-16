@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import CheckIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Check.svg";
+import CheckIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Check.svg";
 import TextLineSkeleton from "../skeletons/TextLineSkeleton";
 
 type Props = {

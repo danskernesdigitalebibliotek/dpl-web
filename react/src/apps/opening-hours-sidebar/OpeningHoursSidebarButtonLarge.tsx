@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import iconWatch from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-watch-static.svg";
+import iconWatch from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-watch-static.svg";
 import { useText } from "../../core/utils/text";
 
 type ButtonLargeProps = {

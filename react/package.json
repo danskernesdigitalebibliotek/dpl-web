@@ -149,7 +149,7 @@
     "webpack-version-file-plugin": "0.5.0"
   },
   "//dependencies": {
-    "@danskernesdigitalebibliotek/dpl-design-system": "Is being used for being able to see the dpl-design-system styling in Storybook and potentially use icons",
+    "@danskernesdigitalebibliotek/dpl-web-design": "Is being used for being able to see the dpl-design-system styling in Storybook and potentially use icons",
     "prop-types": "Since we use former ddb-react components that depend on prop-types we keep this. Should be removed when usage of prop-types is deprecated."
   },
   "dependencies": {

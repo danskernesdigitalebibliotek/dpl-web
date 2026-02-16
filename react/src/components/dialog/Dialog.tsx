@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import clsx from "clsx";
-import iconCross from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/CloseLarge.svg";
+import iconCross from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/CloseLarge.svg";
 import useEscapeKey from "./useEscapeKey";
 
 type DialogType = {

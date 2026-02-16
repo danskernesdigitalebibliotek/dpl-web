@@ -1,5 +1,5 @@
-import ArrowLeft from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ArrowLeft.svg";
-import ArrowRight from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/ArrowRight.svg";
+import ArrowLeft from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ArrowLeft.svg";
+import ArrowRight from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/ArrowRight.svg";
 import * as React from "react";
 import { useText } from "../../core/utils/text";
 import OpeningHoursWeekList from "./OpeningHourWeekList";

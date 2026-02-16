@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import profileIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-profile.svg";
+import profileIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-profile.svg";
 import MenuNotLoggedInContent from "./menu-not-logged-in/menu-not-logged-in";
 import { isAnonymous, isUnregistered } from "../../core/utils/helpers/user";
 import MenuLoggedIn from "./menu-logged-in/menu-logged-in";

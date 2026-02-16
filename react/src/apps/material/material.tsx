@@ -1,6 +1,6 @@
-import CreateIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Create.svg";
-import Receipt from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Receipt.svg";
-import VariousIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Various.svg";
+import CreateIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Create.svg";
+import Receipt from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Receipt.svg";
+import VariousIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/collection/Various.svg";
 import React, { useEffect, useState } from "react";
 import { useDeepCompareEffect, useUpdateEffect } from "react-use";
 import DisclosureControllable from "../../components/Disclosures/DisclosureControllable";

@@ -1,9 +1,9 @@
 import * as React from "react";
-import menuIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-menu.svg";
-import profileIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-profile.svg";
-import heartIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-heart.svg";
-import watchIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-watch-static.svg";
-import crossIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-cross-medium.svg";
+import menuIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-menu.svg";
+import profileIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-profile.svg";
+import heartIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-heart.svg";
+import watchIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-watch-static.svg";
+import crossIcon from "@danskernesdigitalebibliotek/dpl-web-design/build/icons/basic/icon-cross-medium.svg";
 
 export interface StoryHeaderProps {
   search?: React.ReactNode;
