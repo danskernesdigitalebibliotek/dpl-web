@@ -23,6 +23,12 @@ tasks:
     cmds:
       - task dev:cli -- yarn install
 
+  dev:build:
+    cmds:
+      # TO-DO: Run this using docker. Why doesn't it work?
+      - yarn install
+      - yarn build
+
   dev:start:
     summary: Install and run docker compose
     cmds:

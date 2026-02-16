@@ -1,0 +1,22 @@
+---
+services:
+  node:
+    build:
+      context: .
+      dockerfile: dev/Dockerfile-node
+      args:
+        # Defaults to 22 - Uses .nvmrc when possible, in Taskfile.
+        - NODE_VERSION=${NODE_VERSION:-22}
+    volumes:
+      - .:/var/www/
+      - yarn-cache:/usr/local/share/.cache/yarn
+    environment:
+      - HOME=/var/www
+      - YARN_CACHE_FOLDER=/usr/local/share/.cache/yarn
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    working_dir: /var/www/
+    user: '${UID:-501}:${GID:-20}'
+    tty: true
+
+volumes:
+  yarn-cache:

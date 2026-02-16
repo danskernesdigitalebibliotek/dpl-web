@@ -1,5 +1,48 @@
+---
 version: '3'
 
 includes:
   migration: ./migration/Taskfile.migration.yml
 
+vars:
+  # This reads the .nvmrc file and strips the 'v' if present
+  NODE_VER: {sh: "cat .nvmrc | tr -d 'v'"}
+
+tasks:
+  dev:bundle:
+    desc: "Bundle dev changes, and make accessible for CMS and React. Requires a running site. (task dev:reset)"
+    cmds:
+      - NODE_VERSION={{.NODE_VER}} docker compose build node
+      - docker compose run --rm --workdir /var/www/design-system node sh -c ./bundle.sh
+      - docker compose run --rm --workdir /var/www/react node sh -c "yarn add '@danskernesdigitalebibliotek/dpl-web-design@file:../design-system'"
+      - docker compose run --rm --workdir /var/www/react node sh -c ./bundle.sh
+
+      - mv design-system/dist.zip cms/packages/dpl-design-system.zip
+      - mv react/dist.zip cms/packages/dpl-react.zip
+
+      - (cd cms && task dev:cli -- "dev-scripts/install-local-design-system.sh")
+      - (cd cms && task dev:cli -- "dev-scripts/install-local-react.sh")
+
+  cms:bundles:
+    desc: "Bundle local changes, and make accessible for CMS."
+    cmds:
+      - task: dev:design:bundle
+      - task: dev:react:bundle
+
+  design:bundle:
+    desc: "Bundle local design changes, and make accessible for CMS and React."
+    silent: true
+    cmds:
+      - nvm use
+      - (cd design-system && ./bundle.sh)
+      - mv design-system/dist.zip cms/packages/dpl-design-system.zip
+      - (cd cms && dev-scripts/install-local-design-system.sh)
+
+  react:bundle:
+    desc: "Bundle local react changes, and make accessible for CMS."
+    silent: true
+    cmds:
+      - nvm use
+      - (cd react && ./bundle.sh)
+      - mv react/dist.zip cms/packages/dpl-react.zip
+      - (cd cms && dev-scripts/install-local-react.sh)

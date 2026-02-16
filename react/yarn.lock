@@ -1304,10 +1304,8 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@danskernesdigitalebibliotek/dpl-web-design@0.0.0-branch-develop":
-  version "0.0.0-branch-develop"
-  resolved "https://npm.pkg.github.com/download/@danskernesdigitalebibliotek/dpl-web-design/0.0.0-branch-develop/69d3057a3c5b6657a791e6c834b14a13d7cc79cd#69d3057a3c5b6657a791e6c834b14a13d7cc79cd"
-  integrity sha512-fMBqOVlYCfbQvRJqYi/1T+chjw1cr39qv1ac/Ypvuxr/MHy2xhIqilk1sqnmXzVF9nkg621QOuboC+70I+fzeQ==
+"@danskernesdigitalebibliotek/dpl-web-design@file:../design-system":
+  version "0.1.0"
 
 "@discoveryjs/json-ext@^0.6.1":
   version "0.6.3"
