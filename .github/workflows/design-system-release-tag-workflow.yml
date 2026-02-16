@@ -20,5 +20,5 @@ jobs:
     needs: create_release
     with:
       tag_name: ${{ github.ref_name }}
-      npm_version: ${{ github.ref_name }}-${{ github.sha }}
+      npm_version: ${{ github.ref_name }}
       latest: true

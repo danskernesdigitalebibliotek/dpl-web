@@ -22,6 +22,6 @@ jobs:
     uses: ./.github/workflows/design-system-npm-workflow.yml
     needs: create_release
     with:
-      npm_version: 0.0.0-${{ github.sha }}
+      npm_version: 0.0.0-${{ needs.create_release.outputs.tag_name }}
       tag_name: ${{ needs.create_release.outputs.tag_name }}
       latest: false
