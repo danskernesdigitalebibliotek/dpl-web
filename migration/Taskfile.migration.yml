@@ -57,6 +57,15 @@ tasks:
           exit 1
         fi
 
+        if [ -d ".git/rebase-apply" ]; then
+          echo "❌ Error: An existing 'git am' session is in progress."
+          echo ""
+          echo "Finish or cancel it before running migration again:"
+          echo "  - Resolve conflicts, then run: git am --continue"
+          echo "  - Or cancel the session with:  git am --abort"
+          exit 1
+        fi
+
         # Get Current SHA
         CURRENT_SHA=$(grep "^{{.REPO}}:" {{.MIGRATION_FILE}} | cut -d':' -f2 | tr -d '[:space:]')
         if [ -z "$CURRENT_SHA" ]; then
@@ -74,15 +83,14 @@ tasks:
           exit 0
         fi
 
-        # Update latest SHA in the .migration-info file.
-        TARGET_SHA=$(echo "$COMMITS" | tail -n 1)
-
-        echo "💾 Optimistically updating {{.MIGRATION_FILE}} to target: $TARGET_SHA"
-
-        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
-        echo "{{.REPO}}:$TARGET_SHA" >> {{.MIGRATION_FILE}}.tmp
-        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
-        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+        update_migration_marker() {
+          REPO_NAME="$1"
+          SHA="$2"
+          grep -v "^$REPO_NAME:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
+          echo "$REPO_NAME:$SHA" >> {{.MIGRATION_FILE}}.tmp
+          mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
+          sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+        }
 
         echo "----------------------------------------"
 
@@ -91,8 +99,56 @@ tasks:
           echo "🚀 Migrating $COMMIT..."
 
           PATCH_URL="https://github.com/{{.ORG}}/{{.REPO}}/commit/$COMMIT.patch"
+          AM_LOG=$(mktemp)
+          SKIP_COMMIT=0
 
-          curl -sL "$PATCH_URL" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date
+          if ! curl -sL "$PATCH_URL" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
+            if [ -s "$AM_LOG" ]; then
+              cat "$AM_LOG"
+            fi
+
+            if grep -q "sha1 information is lacking or useless" "$AM_LOG" || grep -q "could not build fake ancestor" "$AM_LOG"; then
+              echo ""
+              echo "⚠️ Auto-skipping commit $COMMIT due to missing patch ancestor context."
+              if ! git am --skip; then
+                rm -f "$AM_LOG"
+                echo "❌ Failed to auto-skip. Resolve manually with: git am --continue, git am --skip, or git am --abort"
+                exit 1
+              fi
+
+              echo "💾 Updating {{.MIGRATION_FILE}} to skipped commit: $COMMIT"
+              update_migration_marker "{{.REPO}}" "$COMMIT"
+              SKIP_COMMIT=1
+            else
+              rm -f "$AM_LOG"
+              echo ""
+              echo "❌ Conflict while applying commit $COMMIT from {{.REPO}}."
+              echo ""
+              echo "Recovery steps:"
+              echo "  1) Resolve conflicts shown by: git status"
+              echo "  2) Stage resolved files:      git add <files>"
+              echo "  3) Continue apply:            git am --continue (or git am --skip)"
+              echo "  4) Update migration marker in {{.MIGRATION_FILE}}:"
+              echo "     {{.REPO}}:$COMMIT"
+              echo "  5) Re-run the migration task to continue with remaining commits."
+              echo ""
+              echo "To cancel instead, run: git am --abort"
+              exit 1
+            fi
+          fi
+
+          if [ "$SKIP_COMMIT" -eq 1 ]; then
+            rm -f "$AM_LOG"
+            continue
+          fi
+
+          if [ -s "$AM_LOG" ]; then
+            cat "$AM_LOG"
+          fi
+          rm -f "$AM_LOG"
+
+          echo "💾 Updating {{.MIGRATION_FILE}} to latest successful commit: $COMMIT"
+          update_migration_marker "{{.REPO}}" "$COMMIT"
         done
 
         echo "🎉 All commits migrated successfully!"
