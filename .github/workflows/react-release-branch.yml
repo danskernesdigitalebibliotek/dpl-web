@@ -7,6 +7,11 @@ on:
       # Dependabot does not have permissions to create releases
       - 'dependabot/**'
 
+concurrency:
+  # Serialize branch-release writes shared with design branch workflow.
+  group: branch-release-${{ github.repository }}-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   create_release:
     name: React / Create release on branch changes
