@@ -11,6 +11,7 @@ jobs:
 
   react_create_release:
     name: CMS / Prepare react-release
+    needs: [design_create_release]
     uses: ./.github/workflows/react-release-tag-workflow.yml
 
   build:
