@@ -37,7 +37,7 @@ jobs:
             echo "IS_RELEASE_TAG=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         with:
           node-version-file: "go/.nvmrc"

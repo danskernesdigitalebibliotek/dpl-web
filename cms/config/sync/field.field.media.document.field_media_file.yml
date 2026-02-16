@@ -22,6 +22,6 @@ settings:
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
   file_extensions: 'jpg jpeg png pdf mp3 mov mp4 mpeg'
-  max_filesize: ''
+  max_filesize: 8mb
   description_field: true
 field_type: file
