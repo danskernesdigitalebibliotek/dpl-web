@@ -7,6 +7,7 @@ use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\file\FileInterface;
 use Drupal\image\ImageStyleInterface;
 use Drupal\media\MediaInterface;
+use Drupal\address_dawa\AddressDawaItemInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -57,6 +58,11 @@ class BranchService {
       $address = $this->getAddress($node);
       if (!empty($address)) {
         $branch += $address;
+      }
+
+      $coordinates = $this->getCoordinates($node);
+      if (!empty($coordinates)) {
+        $branch += $coordinates;
       }
 
       $branches[] = $branch;
@@ -126,6 +132,38 @@ class BranchService {
     return [
       'address' => $address['address_line1'] ?? '',
       'city' => trim("$postal_code $locality"),
+    ];
+  }
+
+  /**
+   * Get GPS coordinates from a branch node's DAWA address field.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   The branch node.
+   *
+   * @return array{lat: string, lng: string}|array{}
+   *   Lat/lng coordinates, or empty array if not available.
+   */
+  private function getCoordinates(NodeInterface $node): array {
+    if (!$node->hasField('field_address_dawa') || $node->get('field_address_dawa')->isEmpty()) {
+      return [];
+    }
+
+    $dawa_item = $node->get('field_address_dawa')->first();
+    if (!($dawa_item instanceof AddressDawaItemInterface)) {
+      return [];
+    }
+
+    $lat = $dawa_item->getLat();
+    $lng = $dawa_item->getLng();
+
+    if (empty($lat) || empty($lng)) {
+      return [];
+    }
+
+    return [
+      'lat' => $lat,
+      'lng' => $lng,
     ];
   }
 
