@@ -725,6 +725,15 @@ class DplReactAppsController extends ControllerBase {
     $data = [
       'branches-config' => json_encode($this->branchService->getBranchListData()),
       'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
+      'branch-list-address-search-label-text' => $this->t('Sort by distance - enter your address', [], ['context' => 'Branch List']),
+      'branch-list-address-search-placeholder-text' => $this->t('Enter your address', [], ['context' => 'Branch List']),
+      'branch-list-geo-location-button-text' => $this->t('Find nearest library from your location', [], ['context' => 'Branch List']),
+      'geo-location-error-not-supported-text' => $this->t('Geolocation is not supported by your browser.', [], ['context' => 'Branch List']),
+      'geo-location-error-permission-denied-text' => $this->t('You have denied access to your location.', [], ['context' => 'Branch List']),
+      'geo-location-error-position-unavailable-text' => $this->t('Your location is not available at the moment.', [], ['context' => 'Branch List']),
+      'geo-location-error-timeout-text' => $this->t('The request for your location timed out. Please try again.', [], ['context' => 'Branch List']),
+      'geo-location-error-default-text' => $this->t('An error occurred while fetching your location.', [], ['context' => 'Branch List']),
+      'reverse-geocode-error-default-text' => $this->t('Could not find address for your location.', [], ['context' => 'Branch List']),
     ];
 
     return [
