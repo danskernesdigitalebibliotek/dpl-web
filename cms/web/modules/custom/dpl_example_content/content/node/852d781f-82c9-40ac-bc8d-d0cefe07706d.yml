@@ -57,15 +57,14 @@ default:
       pathauto: 1
   field_address_gsearch:
     -
-      type: adresse
       id: cc837fd3-6496-4225-8437-18a2d7c7eb2f
       user_input: 'Suomisvej 2, kl., 1927 Frederiksberg C'
       value: 'Suomisvej 2, kl., 1927 Frederiksberg C'
       address: 'Suomisvej 2, kl.'
       postal_code: '1927'
       postal_name: 'Frederiksberg C'
-      lat: '55.6794'
-      lng: '12.5551'
+      latitude: '55.6794'
+      longitude: '12.5551'
 
   field_address:
     -

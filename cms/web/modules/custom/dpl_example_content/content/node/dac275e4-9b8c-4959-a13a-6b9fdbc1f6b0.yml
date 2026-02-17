@@ -84,8 +84,8 @@ default:
       address: 'Krystalgade 15'
       postal_code: '1172'
       postal_name: 'København K'
-      lat: '55.6809'
-      lng: '12.5737'
+      latitude: '55.6809'
+      longitude: '12.5737'
 
   field_address:
     -
