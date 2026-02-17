@@ -67,6 +67,11 @@ class BranchService {
         $branch['lng'] = $coordinates['lng'];
       }
 
+      $coordinates = $this->getCoordinates($node);
+      if (!empty($coordinates)) {
+        $branch += $coordinates;
+      }
+
       $branches[] = $branch;
     }
 
