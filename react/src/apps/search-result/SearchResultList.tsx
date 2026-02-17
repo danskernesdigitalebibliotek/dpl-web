@@ -35,8 +35,6 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
 
   const searchInfoBoxIndex = pageSize;
 
-  const showSkeletons = isLoading;
-
   return (
     <ContentList className={className} dataCy="search-result-list">
       {/*
