@@ -5226,6 +5226,57 @@
             }
         },
         {
+            "name": "drupal/gsearch",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/gsearch.git",
+                "reference": "1.0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/gsearch-1.0.4.zip",
+                "reference": "1.0.4",
+                "shasum": "14aab4bf68f9a1c5c25e08ba9c209ce79e2500c4"
+            },
+            "require": {
+                "drupal/core": "^10.5 || ^11",
+                "drupal/select2": "^2",
+                "ext-json": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.4",
+                    "datestamp": "1771358694",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "rasben",
+                    "homepage": "https://www.drupal.org/u/ras-ben"
+                },
+                {
+                    "name": "Reload",
+                    "homepage": "https://reload.dk"
+                }
+            ],
+            "description": "Field widgets/types etc. for Danish addresses, provided by GSearch by Dataforsyningen",
+            "homepage": "https://www.drupal.org/project/gsearch",
+            "support": {
+                "source": "https://git.drupalcode.org/project/gsearch",
+                "issues": "https://www.drupal.org/project/issues/gsearch"
+            }
+        },
+        {
             "name": "drupal/handy_cache_tags",
             "version": "1.5.0",
             "source": {

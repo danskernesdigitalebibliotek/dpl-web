@@ -21,6 +21,9 @@ $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
 // The email needs to match what is setup in Azure Communication Services.
 $config['system.site']['mail'] = 'mail@folkebibliotekernescms.dk';
 
+// Configure GSearch to use our supplied Dataforsyningen token.
+$config['gsearch.settings']['token'] = getenv('DATAFORSYNINGEN_TOKEN');
+
 // Configure logging using the project name and environment from the Lagoon
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
