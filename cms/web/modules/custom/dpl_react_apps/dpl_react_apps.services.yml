@@ -1,4 +1,3 @@
 services:
-  dpl_react_apps.branch_list:
-    class: Drupal\dpl_react_apps\Services\BranchListService
+  Drupal\dpl_react_apps\Services\BranchListService:
     autowire: true
