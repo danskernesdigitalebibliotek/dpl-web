@@ -5,7 +5,7 @@ namespace Drupal\dpl_react_apps\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\Fbi;
-use Drupal\dpl_react_apps\Services\BranchListService;
+use Drupal\dpl_react_apps\Services\BranchService;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
@@ -35,7 +35,7 @@ class DplReactAppsController extends ControllerBase {
     protected GeneralSettings $generalSettings,
     protected Config $adgangsplatformenConfig,
     protected Fbi $fbi,
-    protected BranchListService $branchListService,
+    protected BranchService $branchService,
   ) {}
 
   /**
@@ -723,7 +723,7 @@ class DplReactAppsController extends ControllerBase {
    */
   public function branches(): array {
     $data = [
-      'branches-config' => json_encode($this->branchListService->getBranchListData()),
+      'branches-config' => json_encode($this->branchService->getBranchListData()),
       'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
     ];
 

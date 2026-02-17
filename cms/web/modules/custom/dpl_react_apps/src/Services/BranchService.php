@@ -12,7 +12,7 @@ use Drupal\node\NodeInterface;
 /**
  * Service for building branch list data for the React branch-list app.
  */
-class BranchListService {
+class BranchService {
 
   /**
    * Constructor.
