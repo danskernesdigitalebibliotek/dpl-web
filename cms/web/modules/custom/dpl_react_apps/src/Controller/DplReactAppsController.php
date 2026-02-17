@@ -3,7 +3,13 @@
 namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\file\FileInterface;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\media\MediaInterface;
+use Drupal\node\NodeInterface;
 use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
@@ -34,7 +40,11 @@ class DplReactAppsController extends ControllerBase {
     protected GeneralSettings $generalSettings,
     protected Config $adgangsplatformenConfig,
     protected Fbi $fbi,
-  ) {}
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+    EntityTypeManagerInterface $entityTypeManager,
+  ) {
+    $this->entityTypeManager = $entityTypeManager;
+  }
 
   /**
    * Build a string of JSON data containing information about branches.
@@ -709,6 +719,74 @@ class DplReactAppsController extends ControllerBase {
     $this->renderer->addCacheableDependency($app, $this->instantLoanSettings);
 
     return $app;
+  }
+
+  /**
+   * Render branch list app.
+   *
+   * @return mixed[]
+   *   Render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
+   */
+  public function branches(): array {
+    $storage = $this->entityTypeManager->getStorage('node');
+
+    $query = $storage->getQuery()
+      ->condition('type', 'branch')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->sort('field_promoted_on_lists', 'DESC')
+      ->sort('title', 'ASC')
+      ->accessCheck(TRUE);
+
+    $nids = $query->execute();
+    $nodes = $storage->loadMultiple($nids);
+
+    $branches_data = [];
+    foreach ($nodes as $node) {
+      /** @var \Drupal\node\NodeInterface $node */
+      $branch = [
+        'title' => $node->label(),
+        'url' => $node->toUrl()->toString(),
+      ];
+
+      // Get image URL from field_main_media.
+      if ($node->hasField('field_main_media') && !$node->get('field_main_media')->isEmpty()) {
+        $media = $node->get('field_main_media')->referencedEntities()[0] ?? NULL;
+        if ($media instanceof MediaInterface && $media->hasField('field_media_image')) {
+          $file = $media->get('field_media_image')->referencedEntities()[0] ?? NULL;
+          if ($file instanceof FileInterface) {
+            $file_uri = $file->getFileUri();
+            $image_style = ImageStyle::load('list_teaser_4_3');
+            $branch['image'] = $image_style
+              ? $image_style->buildUrl($file_uri)
+              : $this->fileUrlGenerator->generateAbsoluteString($file_uri);
+          }
+        }
+      }
+
+      // Get address from field_address.
+      if ($node->hasField('field_address') && !$node->get('field_address')->isEmpty()) {
+        $address = $node->get('field_address')->first()->getValue();
+        $branch['address'] = $address['address_line1'] ?? '';
+        $postal_code = $address['postal_code'] ?? '';
+        $locality = $address['locality'] ?? '';
+        $branch['city'] = trim("$postal_code $locality");
+      }
+
+      $branches_data[] = $branch;
+    }
+
+    $data = [
+      'branches-config' => json_encode($branches_data),
+      'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
+    ];
+
+    return [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'branch-list',
+      '#data' => $data,
+    ];
   }
 
   /**

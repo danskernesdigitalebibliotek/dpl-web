@@ -35,3 +35,10 @@ dpl_react_apps.reader:
     _permission: 'access content'
   options:
     no_cache: true
+
+dpl_react_apps.branches:
+  path: '/branches'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::branches'
+  requirements:
+    _permission: 'access content'
