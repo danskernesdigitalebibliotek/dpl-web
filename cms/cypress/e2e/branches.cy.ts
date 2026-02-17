@@ -16,8 +16,8 @@ describe('Testing branch functionality', () => {
     cy.get('[name="field_phone[0][value]"]').type(branchPhone);
     cy.get('.meta-sidebar__close').click();
 
-    cy.get('[name="field_address_dawa[0][address]"]').type(branchAddress);
-    // Finding the full address using DAWA.
+    cy.get('[name="field_address_gsearch[0][address]"]').type(branchAddress);
+    // Finding the full address using GSearch.
     cy.get('a').contains(branchAddressFull).first().click();
     cy.clickSaveButton();
 

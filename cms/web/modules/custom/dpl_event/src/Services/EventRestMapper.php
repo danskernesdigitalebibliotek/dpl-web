@@ -255,11 +255,11 @@ class EventRestMapper {
     $rendered = $this->event->get('event_address')->view('full');
     $street = NULL;
 
-    if ($rendered['#field_type'] === 'address_dawa') {
-      $zip = $rendered[0]['postal_code'] ?? NULL;
-      $city = $rendered[0]['city'] ?? NULL;
-      $street = $rendered[0]['address'] ?? NULL;
-      $country = $rendered[0]['country'] ?? NULL;
+    if ($rendered['#field_type'] === 'address_gsearch') {
+      $zip = $rendered[0]['#content']['postal_code'] ?? NULL;
+      $city = $rendered[0]['#content']['postal_name'] ?? NULL;
+      $street = $rendered[0]['#content']['address'] ?? NULL;
+      $country = $rendered[0]['#content']['country'] ?? 'DK';
     }
     else {
       $country = $rendered[0]['country_code']['#value'] ?? NULL;

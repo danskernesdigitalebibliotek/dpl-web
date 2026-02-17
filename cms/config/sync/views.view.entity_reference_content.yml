@@ -3,10 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_address_dawa
+    - field.storage.node.field_address_gsearch
     - node.type.branch
   module:
-    - address_dawa
+    - gsearch
     - node
     - user
 id: entity_reference_content
@@ -425,10 +425,10 @@ display:
     position: 2
     display_options:
       fields:
-        field_address_dawa:
-          id: field_address_dawa
-          table: node__field_address_dawa
-          field: field_address_dawa
+        field_address_gsearch:
+          id: field_address_gsearch
+          table: node__field_address_gsearch
+          field: field_address_gsearch
           relationship: none
           group_type: group
           admin_label: ''
@@ -437,7 +437,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '{{ field_address_dawa__value }}'
+            text: '{{ field_address_gsearch__value }}'
             make_link: false
             path: ''
             absolute: false
@@ -474,8 +474,8 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: id
-          type: address_dawa
+          click_sort_column: value
+          type: address_gsearch
           settings: {  }
           group_column: value
           group_columns: {  }
@@ -501,7 +501,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div>\r\n<strong>{{ title }}</strong>\r\n{% if field_address_dawa %}\r\n<br/>­\r\n\r\n ({{ field_address_dawa }})\r\n{% endif %}\r\n</div>"
+            text: "<div>\r\n<strong>{{ title }}</strong>\r\n{% if field_address_gsearch %}\r\n<br/>­\r\n\r\n ({{ field_address_gsearch }})\r\n{% endif %}\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -620,7 +620,7 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.field_address_dawa'
+        - 'config:field.storage.node.field_address_gsearch'
   entity_reference_1:
     id: entity_reference_1
     display_title: 'Entity Reference'

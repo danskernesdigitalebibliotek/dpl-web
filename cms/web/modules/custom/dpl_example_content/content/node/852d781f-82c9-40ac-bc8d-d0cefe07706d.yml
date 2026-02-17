@@ -55,22 +55,25 @@ default:
       alias: /bronshoj-bibliotek
       langcode: und
       pathauto: 1
-  field_address_dawa:
+  field_address_gsearch:
     -
       type: adresse
-      id: e32e912f-0f5a-4b40-8358-01d41a181b63
-      status: '1'
-      value: Krystalgade 15 1172 København K
-      lat: '55.6809'
-      lng: '12.5737'
+      id: cc837fd3-6496-4225-8437-18a2d7c7eb2f
+      user_input: 'Suomisvej 2, kl., 1927 Frederiksberg C'
+      value: 'Suomisvej 2, kl., 1927 Frederiksberg C'
+      address: 'Suomisvej 2, kl.'
+      postal_code: '1927'
+      postal_name: 'Frederiksberg C'
+      lat: '55.6794'
+      lng: '12.5551'
 
   field_address:
     -
       langcode: da
       country_code: DK
-      locality: Brønshøj-Husum
-      postal_code: '2700'
-      address_line1: 'Krabbesholmvej 3'
+      locality: Frederiksberg
+      postal_code: '1927'
+      address_line1: 'Suomisvej 2, kl.'
       address_line2: ''
       address_line3: ''
   field_email:

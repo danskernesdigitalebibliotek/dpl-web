@@ -109,7 +109,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
       return NULL;
     }
 
-    $branch_address_field = 'field_address_dawa';
+    $branch_address_field = 'field_address_gsearch';
     $branch = $branch_field->referencedEntities()[0] ?? NULL;
 
     if (!($branch instanceof NodeInterface) || !$branch->hasField($branch_address_field)) {
