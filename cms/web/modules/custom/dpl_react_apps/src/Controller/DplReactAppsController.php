@@ -717,6 +717,7 @@ class DplReactAppsController extends ControllerBase {
   public function branches(): array {
     $data = [
       'branches-config' => json_encode($this->branchService->getBranchListData()),
+      'dataforsyningen-token-config' => getenv('DATAFORSYNINGEN_TOKEN') ?: '',
       'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
       'branch-list-address-search-label-text' => $this->t('Sort by distance - enter your address', [], ['context' => 'Branch List']),
       'branch-list-address-search-placeholder-text' => $this->t('Enter your address', [], ['context' => 'Branch List']),
