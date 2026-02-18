@@ -110,6 +110,9 @@ class BranchService {
   /**
    * Get address data from a branch node.
    *
+   * Tries field_address_dawa first (primary), then falls back to the
+   * deprecated field_address for older branches.
+   *
    * @param \Drupal\node\NodeInterface $node
    *   The branch node.
    *
@@ -117,22 +120,40 @@ class BranchService {
    *   Address and city, or empty array if not available.
    */
   private function getAddress(NodeInterface $node): array {
-    if (!$node->hasField('field_address') || $node->get('field_address')->isEmpty()) {
-      return [];
+    // Try field_address_dawa first (primary address field).
+    if ($node->hasField('field_address_dawa') && !$node->get('field_address_dawa')->isEmpty()) {
+      $dawa_item = $node->get('field_address_dawa')->first();
+      if ($dawa_item instanceof AddressDawaItemInterface) {
+        $dawa_data = $dawa_item->getData()['adgangsadresse'] ?? NULL;
+        if ($dawa_data) {
+          $postal_city = trim(($dawa_data->postnummer->nr ?? '') . ' ' . ($dawa_data->postnummer->navn ?? ''));
+          $text_value = $dawa_item->getTextValue();
+          $address = $postal_city ? str_replace(" $postal_city", '', $text_value) : $text_value;
+
+          return [
+            'address' => $address,
+            'city' => $postal_city,
+          ];
+        }
+      }
     }
 
-    $address_item = $node->get('field_address')->first();
-    if (!$address_item) {
-      return [];
-    }
-    $address = $address_item->getValue();
-    $postal_code = $address['postal_code'] ?? '';
-    $locality = $address['locality'] ?? '';
+    // Fall back to deprecated field_address.
+    if ($node->hasField('field_address') && !$node->get('field_address')->isEmpty()) {
+      $address_item = $node->get('field_address')->first();
+      if ($address_item) {
+        $address = $address_item->getValue();
+        $postal_code = $address['postal_code'] ?? '';
+        $locality = $address['locality'] ?? '';
 
-    return [
-      'address' => $address['address_line1'] ?? '',
-      'city' => trim("$postal_code $locality"),
-    ];
+        return [
+          'address' => $address['address_line1'] ?? '',
+          'city' => trim("$postal_code $locality"),
+        ];
+      }
+    }
+
+    return [];
   }
 
   /**
