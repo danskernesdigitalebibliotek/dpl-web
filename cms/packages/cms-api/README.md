@@ -150,6 +150,8 @@ Class | Method | HTTP request | Description
  - [DplOpeningHoursListGET200ResponseInnerCategory](docs/Model/DplOpeningHoursListGET200ResponseInnerCategory.md)
  - [DplOpeningHoursListGET200ResponseInnerRepetition](docs/Model/DplOpeningHoursListGET200ResponseInnerRepetition.md)
  - [DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData](docs/Model/DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData.md)
+ - [DplOpeningHoursUpdatePATCH200ResponseInner](docs/Model/DplOpeningHoursUpdatePATCH200ResponseInner.md)
+ - [DplOpeningHoursUpdatePATCHRequest](docs/Model/DplOpeningHoursUpdatePATCHRequest.md)
  - [EventPATCHRequest](docs/Model/EventPATCHRequest.md)
  - [EventPATCHRequestExternalData](docs/Model/EventPATCHRequestExternalData.md)
  - [EventsGET200ResponseInner](docs/Model/EventsGET200ResponseInner.md)

@@ -1,6 +1,6 @@
 <?php
 /**
- * DplOpeningHoursCreatePOSTRequest
+ * DplOpeningHoursUpdatePATCH200ResponseInner
  *
  * PHP version 8.1.1
  *
@@ -35,19 +35,20 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\SerializedName;
 
 /**
- * Class representing the DplOpeningHoursCreatePOSTRequest model.
+ * Class representing the DplOpeningHoursUpdatePATCH200ResponseInner model.
  *
  * @package DanskernesDigitaleBibliotek\CMS\Api\Model
  * @author  OpenAPI Generator team
  */
 
-class DplOpeningHoursCreatePOSTRequest 
+class DplOpeningHoursUpdatePATCH200ResponseInner 
 {
         /**
      * An serial unique id of the opening hours instance.
      *
      * @var int|null
      * @SerializedName("id")
+     * @Assert\NotNull()
      * @Assert\Type("int")
      * @Type("int")
      */
@@ -109,24 +110,14 @@ class DplOpeningHoursCreatePOSTRequest
     protected ?int $branchId = null;
 
     /**
-     * External branch id (ISIL) from the branch node field_agency_branch_id
-     *
-     * @var string|null
-     * @SerializedName("branch_isil_id")
-     * @Assert\Type("string")
-     * @Type("string")
-     */
-    protected ?string $branchIsilId = null;
-
-    /**
-     * @var DplOpeningHoursCreatePOSTRequestRepetition|null
+     * @var DplOpeningHoursListGET200ResponseInnerRepetition|null
      * @SerializedName("repetition")
      * @Assert\NotNull()
      * @Assert\Valid()
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition")
-     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition")
+     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")
+     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")
      */
-    protected ?DplOpeningHoursCreatePOSTRequestRepetition $repetition = null;
+    protected ?DplOpeningHoursListGET200ResponseInnerRepetition $repetition = null;
 
     /**
      * Constructor
@@ -141,7 +132,6 @@ class DplOpeningHoursCreatePOSTRequest
             $this->startTime = array_key_exists('startTime', $data) ? $data['startTime'] : $this->startTime;
             $this->endTime = array_key_exists('endTime', $data) ? $data['endTime'] : $this->endTime;
             $this->branchId = array_key_exists('branchId', $data) ? $data['branchId'] : $this->branchId;
-            $this->branchIsilId = array_key_exists('branchIsilId', $data) ? $data['branchIsilId'] : $this->branchIsilId;
             $this->repetition = array_key_exists('repetition', $data) ? $data['repetition'] : $this->repetition;
         }
     }
@@ -165,7 +155,7 @@ class DplOpeningHoursCreatePOSTRequest
      *
      * @return $this
      */
-    public function setId(?int $id = null): self
+    public function setId(?int $id): self
     {
         $this->id = $id;
 
@@ -303,37 +293,11 @@ class DplOpeningHoursCreatePOSTRequest
     }
 
     /**
-     * Gets branchIsilId.
-     *
-     * @return string|null
-     */
-    public function getBranchIsilId(): ?string
-    {
-        return $this->branchIsilId;
-    }
-
-
-
-    /**
-     * Sets branchIsilId.
-     *
-     * @param string|null $branchIsilId  External branch id (ISIL) from the branch node field_agency_branch_id
-     *
-     * @return $this
-     */
-    public function setBranchIsilId(?string $branchIsilId = null): self
-    {
-        $this->branchIsilId = $branchIsilId;
-
-        return $this;
-    }
-
-    /**
      * Gets repetition.
      *
-     * @return DplOpeningHoursCreatePOSTRequestRepetition|null
+     * @return DplOpeningHoursListGET200ResponseInnerRepetition|null
      */
-    public function getRepetition(): ?DplOpeningHoursCreatePOSTRequestRepetition
+    public function getRepetition(): ?DplOpeningHoursListGET200ResponseInnerRepetition
     {
         return $this->repetition;
     }
@@ -343,11 +307,11 @@ class DplOpeningHoursCreatePOSTRequest
     /**
      * Sets repetition.
      *
-     * @param DplOpeningHoursCreatePOSTRequestRepetition|null $repetition
+     * @param DplOpeningHoursListGET200ResponseInnerRepetition|null $repetition
      *
      * @return $this
      */
-    public function setRepetition(?DplOpeningHoursCreatePOSTRequestRepetition $repetition): self
+    public function setRepetition(?DplOpeningHoursListGET200ResponseInnerRepetition $repetition): self
     {
         $this->repetition = $repetition;
 

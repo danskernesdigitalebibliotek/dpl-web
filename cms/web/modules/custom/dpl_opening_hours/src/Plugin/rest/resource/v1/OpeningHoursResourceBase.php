@@ -112,6 +112,11 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
           "type" => "integer",
           "description" => "The id for the branch the instance belongs to",
         ],
+        "branch_isil_id" => [
+          "type" => "string",
+          "description" => "External branch id (ISIL) from the branch node field_agency_branch_id",
+          "example" => "DK-710100",
+        ],
         "repetition" => [
           "type" => "object",
           "properties" => [
