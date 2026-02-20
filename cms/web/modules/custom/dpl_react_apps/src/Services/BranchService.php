@@ -7,7 +7,7 @@ use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\file\FileInterface;
 use Drupal\image\ImageStyleInterface;
 use Drupal\media\MediaInterface;
-use Drupal\address_dawa\AddressDawaItemInterface;
+use Drupal\gsearch\AddressGsearchItemInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -110,9 +110,6 @@ class BranchService {
   /**
    * Get address data from a branch node.
    *
-   * Tries field_address_dawa first (primary), then falls back to the
-   * deprecated field_address for older branches.
-   *
    * @param \Drupal\node\NodeInterface $node
    *   The branch node.
    *
@@ -120,44 +117,23 @@ class BranchService {
    *   Address and city, or empty array if not available.
    */
   private function getAddress(NodeInterface $node): array {
-    // Try field_address_dawa first (primary address field).
-    if ($node->hasField('field_address_dawa') && !$node->get('field_address_dawa')->isEmpty()) {
-      $dawa_item = $node->get('field_address_dawa')->first();
-      if ($dawa_item instanceof AddressDawaItemInterface) {
-        $dawa_data = $dawa_item->getData()['adgangsadresse'] ?? NULL;
-        if ($dawa_data) {
-          $postal_city = trim(($dawa_data->postnummer->nr ?? '') . ' ' . ($dawa_data->postnummer->navn ?? ''));
-          $text_value = $dawa_item->getTextValue();
-          $address = $postal_city ? str_replace(" $postal_city", '', $text_value) : $text_value;
-
-          return [
-            'address' => $address,
-            'city' => $postal_city,
-          ];
-        }
-      }
+    if (!$node->hasField('field_address_gsearch') || $node->get('field_address_gsearch')->isEmpty()) {
+      return [];
     }
 
-    // Fall back to deprecated field_address.
-    if ($node->hasField('field_address') && !$node->get('field_address')->isEmpty()) {
-      $address_item = $node->get('field_address')->first();
-      if ($address_item) {
-        $address = $address_item->getValue();
-        $postal_code = $address['postal_code'] ?? '';
-        $locality = $address['locality'] ?? '';
-
-        return [
-          'address' => $address['address_line1'] ?? '',
-          'city' => trim("$postal_code $locality"),
-        ];
-      }
+    $item = $node->get('field_address_gsearch')->first();
+    if (!($item instanceof AddressGsearchItemInterface)) {
+      return [];
     }
 
-    return [];
+    return [
+      'address' => $item->getValue(),
+      'city' => $item->getPostalName(),
+    ];
   }
 
   /**
-   * Get GPS coordinates from a branch node's DAWA address field.
+   * Get GPS coordinates from a branch node's address field.
    *
    * @param \Drupal\node\NodeInterface $node
    *   The branch node.
@@ -166,17 +142,17 @@ class BranchService {
    *   Lat/lng coordinates, or empty array if not available.
    */
   private function getCoordinates(NodeInterface $node): array {
-    if (!$node->hasField('field_address_dawa') || $node->get('field_address_dawa')->isEmpty()) {
+    if (!$node->hasField('field_address_gsearch') || $node->get('field_address_gsearch')->isEmpty()) {
       return [];
     }
 
-    $dawa_item = $node->get('field_address_dawa')->first();
-    if (!($dawa_item instanceof AddressDawaItemInterface)) {
+    $item = $node->get('field_address_gsearch')->first();
+    if (!($item instanceof AddressGsearchItemInterface)) {
       return [];
     }
 
-    $lat = $dawa_item->getLat();
-    $lng = $dawa_item->getLng();
+    $lat = $item->getLatitude();
+    $lng = $item->getLongitude();
 
     if (empty($lat) || empty($lng)) {
       return [];
