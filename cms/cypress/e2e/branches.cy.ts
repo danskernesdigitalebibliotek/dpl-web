@@ -2,8 +2,8 @@ describe('Testing branch functionality', () => {
   const branchTitle = 'test-branch';
   const branchEmail = 'info+ddf@reload.dk';
   const branchPhone = '88 88 88 88';
-  const branchAddress = 'Krystalgade 15 1172';
-  const branchAddressFull = 'Krystalgade 15 st. 1172 København K';
+  const branchAddress = 'Suomisvej 2, 2.';
+  const branchAddressFull = 'Suomisvej 2, 2., 1927 Frederiksberg C';
 
   it('Check that contact info show up on branches', () => {
     cy.deleteEntitiesIfExists(branchTitle);
@@ -16,9 +16,16 @@ describe('Testing branch functionality', () => {
     cy.get('[name="field_phone[0][value]"]').type(branchPhone);
     cy.get('.meta-sidebar__close').click();
 
-    cy.get('[name="field_address_gsearch[0][address]"]').type(branchAddress);
+    cy.get(
+      '[data-drupal-selector="edit-field-address-gsearch-wrapper"] .select2-selection',
+    )
+      .click()
+      .type(' ' + branchAddress);
     // Finding the full address using GSearch.
-    cy.get('a').contains(branchAddressFull).first().click();
+    cy.get('.select2-results__option')
+      .contains(branchAddressFull)
+      .first()
+      .click();
     cy.clickSaveButton();
 
     cy.get('.hero').contains(branchTitle).should('be.visible');
