@@ -717,6 +717,7 @@ class DplReactAppsController extends ControllerBase {
   public function branches(): array {
     $data = [
       'branches-config' => json_encode($this->branchService->getBranchListData()),
+      'branch-address-search-enabled-config' => (int) $this->config('dpl_library_agency.general_settings')->get('enable_branch_address_search'),
       'dataforsyningen-token-config' => $this->config('gsearch.settings')->get('token') ?: '',
       'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
       'branch-list-address-search-label-text' => $this->t('Sort by distance - enter your address', [], ['context' => 'Branch List']),
