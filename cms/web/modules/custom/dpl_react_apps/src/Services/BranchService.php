@@ -113,7 +113,7 @@ class BranchService {
    * @param \Drupal\node\NodeInterface $node
    *   The branch node.
    *
-   * @return array{address: string, city: string}|array{}
+   * @return array{address: string, city: ?string}|array{}
    *   Address and city, or empty array if not available.
    */
   private function getAddress(NodeInterface $node): array {
