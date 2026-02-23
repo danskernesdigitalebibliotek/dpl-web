@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_event;
 
+use Brick\Math\BigDecimal;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\dpl_event\Form\SettingsForm;
@@ -55,14 +56,16 @@ class PriceFormatter {
   /**
    * Format a single price with currency.
    */
-  public function formatPriceWithCurrency(int|float $price): string {
-    if ($price == 0) {
+  public function formatPriceWithCurrency(string $price_string): string {
+    $price = BigDecimal::of($price_string);
+
+    if ($price->isEqualTo(0)) {
       // Events with 0 cost should show "Free" instead of a numeric price.
       return $this->translation->translate("Free");
     }
     else {
       // Format the numeric part of the price using formatRawPrice.
-      $formatted_price = $this->formatRawPrice($price);
+      $formatted_price = $this->formatRawPrice($price_string);
 
       return "{$this->currencyPrefix}$formatted_price{$this->currencySuffix}";
     }
@@ -98,7 +101,7 @@ class PriceFormatter {
     // Construct the price range string.
     if ($has_free_price) {
       // Get the price, with prefix and suffix, as we only use this one.
-      $highest_price_formatted = $this->formatPriceWithCurrency($highest_price_raw);
+      $highest_price_formatted = $this->formatPriceWithCurrency((string) $highest_price_raw);
 
       // Only display "Free" and the highest price.
       return $this->translation->translate("Free") . " - $highest_price_formatted";
@@ -111,14 +114,14 @@ class PriceFormatter {
       // We get the prices without prefix and suffix, as we only want one
       // prefix in the beginning of the whole string, and one suffix in the end
       // of the string.
-      $lowest_price = $this->formatRawPrice($lowest_price_raw);
-      $highest_price = $this->formatRawPrice($highest_price_raw);
+      $lowest_price = $this->formatRawPrice((string) $lowest_price_raw);
+      $highest_price = $this->formatRawPrice((string) $highest_price_raw);
 
       return "{$this->currencyPrefix}$lowest_price - $highest_price{$this->currencySuffix}";
     }
 
     // Get the price, with prefix and suffix, as we only use this one.
-    return $this->formatPriceWithCurrency($lowest_price_raw);
+    return $this->formatPriceWithCurrency((string) $lowest_price_raw);
   }
 
   /**
@@ -127,20 +130,22 @@ class PriceFormatter {
    * If the price has a fractional part, it will format to two decimal places,
    * if not, it is converted to an integer.
    *
-   * @param int|float $price
-   *   Raw price.
+   * @param string $price_string
+   *   Raw price string.
    *
    * @return string
    *   Formatted price number without currency suffix.
    */
-  public function formatRawPrice(int|float $price): string {
-    if ($price != round($price)) {
+  public function formatRawPrice(string $price_string): string {
+    $price = BigDecimal::of($price_string);
+
+    if ($price->hasNonZeroFractionalPart()) {
       // Format the price with two decimal places.
-      return number_format($price, 2, ',', '.');
+      return number_format($price->toFloat(), 2, ',', '.');
     }
     else {
       // Convert the price to an integer string.
-      return (string) $price;
+      return (string) $price->toInt();
     }
   }
 
@@ -162,13 +167,13 @@ class PriceFormatter {
     $highest_price = max($prices);
 
     if ($lowest_price != $highest_price) {
-      $lowest_price = $this->formatRawPrice($lowest_price);
-      $highest_price = $this->formatRawPrice($highest_price);
+      $lowest_price = $this->formatRawPrice((string) $lowest_price);
+      $highest_price = $this->formatRawPrice((string) $highest_price);
 
       return "$lowest_price - $highest_price";
     }
 
-    return $this->formatRawPrice($lowest_price);
+    return $this->formatRawPrice((string) $lowest_price);
   }
 
 }
