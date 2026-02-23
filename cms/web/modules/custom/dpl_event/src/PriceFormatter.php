@@ -62,7 +62,7 @@ class PriceFormatter {
     }
     else {
       // Format the numeric part of the price using formatRawPrice.
-      $formatted_price = $this->formatRawPrice((string) $price);
+      $formatted_price = $this->formatRawPrice($price);
 
       return "{$this->currencyPrefix}$formatted_price{$this->currencySuffix}";
     }
