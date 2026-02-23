@@ -69,17 +69,17 @@ class PriceFormatterTest extends UnitTestCase {
    */
   public function rawPriceProvider(): array {
     return [
-          // Whole number.
-          ["20", "20"],
-          // Number with fractional part.
-          ["20.50", "20,50"],
-          // Number with zero fractional part.
-          ["20.00", "20"],
-          // Number with non-zero fractional part.
-          ["20.99", "20,99"],
-          // Larger whole number.
-          ["1000", "1000"],
-          // Small fractional number.
+      // Whole number.
+      [20, "20"],
+      // Number with fractional part.
+      [20.50, "20,50"],
+      // Number with zero fractional part.
+      [20.00, "20"],
+      // Number with non-zero fractional part.
+      [20.99, "20,99"],
+      // Larger whole number.
+      [1000, "1000"],
+      // Small fractional number.
     ];
   }
 
@@ -89,14 +89,14 @@ class PriceFormatterTest extends UnitTestCase {
    * @dataProvider rawPriceProvider
    */
   public function testRawPriceFormatting(
-    string $raw_price,
+    int|float $price,
     string $expected,
   ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub(), $this->getConfigFactoryStub($this->mockConfig));
     $this->assertSame(
           $expected,
-          $priceFormatter->formatRawPrice($raw_price)
-      );
+          $priceFormatter->formatRawPrice($price)
+    );
   }
 
   /**
