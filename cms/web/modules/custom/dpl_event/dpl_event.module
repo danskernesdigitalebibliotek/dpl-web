@@ -300,7 +300,7 @@ function dpl_event_preprocess_field__field_ticket_category_price(array &$variabl
   /** @var \Drupal\Core\Field\FieldItemListInterface $items */
   $items = $variables['element']['#items'];
   $prices = array_map(function (array $price) use ($price_formatter): string {
-    return $price_formatter->formatPrice($price["value"]);
+    return $price_formatter->formatPriceWithCurrency($price["value"]);
   }, $items->getValue());
   $variables['prices'] = $prices;
 }
