@@ -56,7 +56,7 @@ class PriceFormatterTest extends UnitTestCase {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub(), $this->getConfigFactoryStub($this->mockConfig));
     $this->assertSame(
           $formatted_price,
-          $priceFormatter->formatPriceWithCurrency($price_string)
+          $priceFormatter->formatPriceWithCurrency($price)
     );
   }
 
