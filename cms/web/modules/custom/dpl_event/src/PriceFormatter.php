@@ -98,7 +98,7 @@ class PriceFormatter {
     // Construct the price range string.
     if ($has_free_price) {
       // Get the price, with prefix and suffix, as we only use this one.
-      $highest_price_formatted = $this->formatPriceWithCurrency($highest_price_raw);
+      $highest_price_formatted = $this->formatPriceWithCurrency((string) $highest_price_raw);
 
       // Only display "Free" and the highest price.
       return $this->translation->translate("Free") . " - $highest_price_formatted";
@@ -118,7 +118,7 @@ class PriceFormatter {
     }
 
     // Get the price, with prefix and suffix, as we only use this one.
-    return $this->formatPriceWithCurrency($lowest_price_raw);
+    return $this->formatPriceWithCurrency((string) $lowest_price_raw);
   }
 
   /**
