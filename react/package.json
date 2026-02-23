@@ -165,7 +165,7 @@
     "@types/lodash": "^4.17.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
-    "downshift": "^9.0.8",
+    "downshift": "^9.3.2",
     "fishery": "^2.4.0",
     "focus-trap-react": "^12.0.0",
     "graphql": "^16.12.0",
