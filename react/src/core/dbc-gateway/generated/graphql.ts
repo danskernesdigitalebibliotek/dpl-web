@@ -3009,6 +3009,10 @@ export type GetMaterialQuery = {
     genreAndForm: Array<string>;
     materialTypes: Array<{
       __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
       materialTypeSpecific: {
         __typename?: "SpecificMaterialType";
         display: string;
@@ -3656,6 +3660,10 @@ export type GetMaterialGloballyQuery = {
     genreAndForm: Array<string>;
     materialTypes: Array<{
       __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
       materialTypeSpecific: {
         __typename?: "SpecificMaterialType";
         display: string;
@@ -7863,6 +7871,10 @@ export type WorkMediumFragment = {
   genreAndForm: Array<string>;
   materialTypes: Array<{
     __typename?: "MaterialType";
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
+    };
     materialTypeSpecific: {
       __typename?: "SpecificMaterialType";
       display: string;
@@ -8860,6 +8872,9 @@ export const WorkMediumFragmentDoc = `
     fragment WorkMedium on Work {
   ...WorkSmall
   materialTypes {
+    materialTypeGeneral {
+      code
+    }
     materialTypeSpecific {
       display
     }
