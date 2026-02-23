@@ -24,23 +24,23 @@ class PriceFormatterTest extends UnitTestCase {
   /**
    * Provides examples of price strings and how they should be formatted.
    *
-   * @return array<array{string, string}>
+   * @return array<array{int|float, string}>
    *   Array of examples. Each example contains a price string and how it
    *   should be formatted. This matches signature of testPriceFormatting().
    */
   public function priceProvider(): array {
     return [
-          ["0", "Free"],
-          ["0.0", "Free"],
-          ["0.00", "Free"],
-          ["10.0", "€ 10"],
-          ["10.00", "€ 10"],
-          ["10.01", "€ 10,01"],
-          ["10.1", "€ 10,10"],
-          ["10.100", "€ 10,10"],
-          // We are currently rounding any fractional digits beyond 2.
-          ["10.101", "€ 10,10"],
-          ["10.109", "€ 10,11"],
+      [0, "Free"],
+      [0.0, "Free"],
+      [0.00, "Free"],
+      [10.0, "€ 10"],
+      [10.00, "€ 10"],
+      [10.01, "€ 10,01"],
+      [10.1, "€ 10,10"],
+      [10.100, "€ 10,10"],
+      // We are currently rounding any fractional digits beyond 2.
+      [10.101, "€ 10,10"],
+      [10.109, "€ 10,11"],
     ];
   }
 
@@ -50,13 +50,13 @@ class PriceFormatterTest extends UnitTestCase {
    * @dataProvider priceProvider
    */
   public function testPriceFormatting(
-    string $price_string,
+    int|float $price,
     string $formatted_price,
   ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub(), $this->getConfigFactoryStub($this->mockConfig));
     $this->assertSame(
           $formatted_price,
-          $priceFormatter->formatPriceWithCurrency($price_string)
+          $priceFormatter->formatPriceWithCurrency($price)
     );
   }
 
