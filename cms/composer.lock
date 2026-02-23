@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "096ea386e4e994a98b2db83d5021b675",
+    "content-hash": "c8ee082ab8ea4a80a9dacfb76e157c3b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -136,16 +136,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.14.7",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "07ff363b16ef8aca9692bba3be9e73fe63f34e50"
+                "reference": "3903230959c97217826e5d8948d2e0fbc86a2ccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/07ff363b16ef8aca9692bba3be9e73fe63f34e50",
-                "reference": "07ff363b16ef8aca9692bba3be9e73fe63f34e50",
+                "url": "https://api.github.com/repos/brick/math/zipball/3903230959c97217826e5d8948d2e0fbc86a2ccf",
+                "reference": "3903230959c97217826e5d8948d2e0fbc86a2ccf",
                 "shasum": ""
             },
             "require": {
@@ -184,7 +184,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.7"
+                "source": "https://github.com/brick/math/tree/0.15.0"
             },
             "funding": [
                 {
@@ -192,7 +192,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-07T10:57:35+00:00"
+            "time": "2026-02-20T15:19:18+00:00"
         },
         {
             "name": "chi-teck/drupal-code-generator",
@@ -21887,5 +21887,5 @@
         "ext-dom": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
