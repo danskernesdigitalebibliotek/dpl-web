@@ -2,7 +2,6 @@
 
 namespace Drupal\dpl_event\Entity;
 
-use Brick\Math\BigDecimal;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\dpl_event\EventState;
 use Drupal\drupal_typed\DrupalTyped;
@@ -194,8 +193,7 @@ class EventInstance extends RecurringEventInstance {
    */
   public function isFreeToAttend(): bool {
     $nonFreePrice = array_filter($this->getTicketPrices(), function (int|float $price) {
-      $price = BigDecimal::of($price);
-      return !$price->isZero();
+      return ($price != 0);
     });
     return empty($nonFreePrice);
   }
