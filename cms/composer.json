@@ -103,7 +103,6 @@
         "ext-dom": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
-        "brick/math": "^0.14.0",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
@@ -215,7 +214,7 @@
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "spatie/color": "^1.5",
+        "spatie/color": "^2.0",
         "spawnia/sailor": "^1.1.0",
         "symfony/property-access": "^7.3",
         "symfony/property-info": "^7.3",
@@ -355,6 +354,9 @@
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch",
                 "Don't check for file owner in update": "patches/dont-check-fileowner.patch"
+            },
+            "drupal/config_translation_po": {
+                "3426797: Problem: Untranslated string used as source": "https://git.drupalcode.org/project/config_translation_po/-/merge_requests/5.patch"
             },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
