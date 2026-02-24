@@ -200,7 +200,7 @@ tasks:
           if ! cat "$PATCH_FILE" | git am --directory="$PROJECT" -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
             [ -s "$AM_LOG" ] && cat "$AM_LOG"
 
-            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor" "$AM_LOG"; then
+            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor|missing patch ancestor context" "$AM_LOG"; then
               echo ""
               echo "⚠️ Auto-skipping commit $COMMIT due to missing patch ancestor context."
               if ! git am --skip; then
@@ -211,46 +211,45 @@ tasks:
               echo "💾 Updating $MIGRATION_FILE to skipped commit: $COMMIT"
               update_migration_marker "$REPO" "$COMMIT"
               rm -f "$AM_LOG" "$PATCH_FILE"
-              continue
-            fi
+            else
+              UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+              AUTO_SKIP=0
+              if [ -n "$UNMERGED" ]; then
+                AUTO_SKIP=1
+                while IFS= read -r p; do
+                  [ -z "$p" ] && continue
+                  echo "$p" | grep -qE "$SKIP_FILES_PATTERN" || { AUTO_SKIP=0; break; }
+                done <<< "$UNMERGED"
+              fi
 
-            UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
-            AUTO_SKIP=0
-            if [ -n "$UNMERGED" ]; then
-              AUTO_SKIP=1
-              while IFS= read -r p; do
-                [ -z "$p" ] && continue
-                echo "$p" | grep -qE "$SKIP_FILES_PATTERN" || { AUTO_SKIP=0; break; }
-              done <<< "$UNMERGED"
-            fi
-
-            if [ "$AUTO_SKIP" -eq 1 ]; then
-              echo ""
-              echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
-              if ! git am --skip; then
+              if [ "$AUTO_SKIP" -eq 1 ]; then
+                echo ""
+                echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
+                if ! git am --skip; then
+                  rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
+                  echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                  exit 1
+                fi
+                echo "💾 Updating $MIGRATION_FILE to commit: $COMMIT"
+                update_migration_marker "$REPO" "$COMMIT"
+                rm -f "$AM_LOG" "$PATCH_FILE"
+              else
                 rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
-                echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                echo ""
+                echo "❌ Conflict while applying commit $COMMIT from $REPO."
+                echo ""
+                echo "Recovery steps:"
+                echo "  1) Resolve conflicts shown by: git status"
+                echo "  2) Stage resolved files:      git add <files>"
+                echo "  3) Continue apply:            git am --continue (or git am --skip)"
+                echo "  4) Update migration marker:   task migration:mono:migration:update-marker REPO=$REPO COMMIT=$COMMIT"
+                echo "  5) Re-run the migration task to continue."
+                echo ""
+                echo "To cancel: git am --abort"
                 exit 1
               fi
-              echo "💾 Updating $MIGRATION_FILE to commit: $COMMIT"
-              update_migration_marker "$REPO" "$COMMIT"
-              rm -f "$AM_LOG" "$PATCH_FILE"
-              continue
             fi
-
-            rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
-            echo ""
-            echo "❌ Conflict while applying commit $COMMIT from $REPO."
-            echo ""
-            echo "Recovery steps:"
-            echo "  1) Resolve conflicts shown by: git status"
-            echo "  2) Stage resolved files:      git add <files>"
-            echo "  3) Continue apply:            git am --continue (or git am --skip)"
-            echo "  4) Update migration marker:   task migration:mono:migration:update-marker REPO=$REPO COMMIT=$COMMIT"
-            echo "  5) Re-run the migration task to continue."
-            echo ""
-            echo "To cancel: git am --abort"
-            exit 1
+            continue
           fi
 
           [ -s "$AM_LOG" ] && cat "$AM_LOG"
