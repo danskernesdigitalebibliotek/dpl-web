@@ -195,6 +195,7 @@ fragment ManifestationsSimpleFields on Manifestation {
 
 fragment ManifestationReviewFields on Manifestation {
   pid
+  recordCreationDate
   creators {
     display
   }
