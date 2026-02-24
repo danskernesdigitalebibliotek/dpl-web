@@ -7,7 +7,7 @@ export const initialContext = {
   searchPageSize: 0,
   facetLimit: 0,
   currentQuery: "",
-  submittedQuery: "",
+  submittedQuery: undefined,
   searchData: undefined,
   facetData: undefined,
   selectedFilters: {},
@@ -104,10 +104,6 @@ export default searchMachineSetup.createMachine({
           actions: ["resetSearchData", "resetFilters", "setSubmittedQueryInContext", "resetOffset"],
           target: "bootstrap",
         },
-        RESET_CURRENT_QUERY: {
-          actions: ["resetCurrentQuery"],
-          target: "idle",
-        },
       },
     },
     filteringAndSearching: {
@@ -135,10 +131,6 @@ export default searchMachineSetup.createMachine({
             target: "idle",
           },
         ],
-        RESET_CURRENT_QUERY: {
-          actions: ["resetCurrentQuery"],
-          target: "idle",
-        },
       },
       states: {
         search: {

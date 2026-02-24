@@ -55,9 +55,6 @@ export default setup({
     resetFilters: assign(() => ({
       selectedFilters: initialContext.selectedFilters,
     })),
-    resetCurrentQuery: assign(() => ({
-      currentQuery: initialContext.currentQuery,
-    })),
     resetSearchData: assign(() => ({
       searchData: initialContext.searchData,
     })),
