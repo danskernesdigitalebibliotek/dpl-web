@@ -41,7 +41,7 @@ jobs:
     needs: [BranchNameLength]
     steps:
       - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-cms/dpl-cms-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/${{ env.REPO }}/${{ env.REPO }}-${{ env.LAGOON_ENVIRONMENT }}/deployments")
 
           DEPLOYMENT_ID=$(echo '{
             "ref": "${{ github.head_ref || github.ref_name }}",
