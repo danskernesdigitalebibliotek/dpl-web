@@ -74,7 +74,8 @@ tasks:
         ORG="{{.ORG}}"
         REPO="{{.REPO}}"
         PROJECT="{{.PROJECT}}"
-        CMS_SKIP_PATTERN="^(composer\.json|composer\.lock|yarn\.lock|web/profiles/dpl_cms/translations/da\.combined\.po)$"
+        # Skip-list: any path ending with these filenames (all projects)
+        SKIP_FILES_PATTERN="/(composer\.json|composer\.lock|yarn\.lock|da\.combined\.po)$|^(composer\.json|composer\.lock|package\.json|yarn\.lock|da\.combined\.po)$"
 
         if [ ! -f "$MIGRATION_FILE" ]; then
           echo "❌ Error: $MIGRATION_FILE not found."
@@ -146,20 +147,18 @@ tasks:
             exit 1
           fi
 
-          if [ "$PROJECT" = "cms" ]; then
-            COMMIT_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
-            if [ -n "$COMMIT_FILES" ]; then
-              SKIP_THIS=1
-              while IFS= read -r f; do
-                [ -z "$f" ] && continue
-                echo "$f" | grep -qE "$CMS_SKIP_PATTERN" || { SKIP_THIS=0; break; }
-              done <<< "$COMMIT_FILES"
-              if [ "$SKIP_THIS" -eq 1 ]; then
-                rm -f "$PATCH_FILE"
-                echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, yarn.lock, or da.combined.po; will handle manually)."
-                update_migration_marker "$REPO" "$COMMIT"
-                continue
-              fi
+          COMMIT_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+          if [ -n "$COMMIT_FILES" ]; then
+            SKIP_THIS=1
+            while IFS= read -r f; do
+              [ -z "$f" ] && continue
+              echo "$f" | grep -qE "$SKIP_FILES_PATTERN" || { SKIP_THIS=0; break; }
+            done <<< "$COMMIT_FILES"
+            if [ "$SKIP_THIS" -eq 1 ]; then
+              rm -f "$PATCH_FILE"
+              echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, yarn.lock, or da.combined.po; will handle manually)."
+              update_migration_marker "$REPO" "$COMMIT"
+              continue
             fi
           fi
 
@@ -184,12 +183,11 @@ tasks:
 
             UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
             AUTO_SKIP=0
-            if [ "$PROJECT" = "cms" ] && [ -n "$UNMERGED" ]; then
+            if [ -n "$UNMERGED" ]; then
               AUTO_SKIP=1
               while IFS= read -r p; do
                 [ -z "$p" ] && continue
-                rel="${p#$PROJECT/}"
-                echo "$rel" | grep -qE "$CMS_SKIP_PATTERN" || { AUTO_SKIP=0; break; }
+                echo "$p" | grep -qE "$SKIP_FILES_PATTERN" || { AUTO_SKIP=0; break; }
               done <<< "$UNMERGED"
             fi
 
