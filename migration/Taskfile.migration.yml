@@ -58,6 +58,39 @@ tasks:
         mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
         sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
 
+  mono:migration:fetch-skip-files:
+    desc: "Download and overwrite lock/translation files from each repo's develop branch"
+    silent: true
+    cmds:
+      - |
+        set -e
+        ORG="{{.ORG}}"
+        BRANCH="develop"
+        BASE="https://raw.githubusercontent.com/$ORG"
+
+        fetch() {
+          REPO="$1"
+          SRC="$2"
+          DST="$3"
+          mkdir -p "$(dirname "$DST")"
+          echo "Fetching $DST from $REPO..."
+          curl -sLf "$BASE/$REPO/$BRANCH/$SRC" -o "$DST" || { echo "❌ Failed: $REPO $SRC"; exit 1; }
+        }
+
+        fetch dpl-cms composer.json cms/composer.json
+        fetch dpl-cms composer.lock cms/composer.lock
+        fetch dpl-cms yarn.lock cms/yarn.lock
+        fetch dpl-cms package.json cms/package.json
+        fetch dpl-cms web/profiles/dpl_cms/translations/da.combined.po cms/web/profiles/dpl_cms/translations/da.combined.po
+        fetch dpl-go package.json go/package.json
+        fetch dpl-go yarn.lock go/yarn.lock
+        fetch dpl-design-system package.json design-system/package.json
+        fetch dpl-design-system yarn.lock design-system/yarn.lock
+        fetch dpl-react package.json react/package.json
+        fetch dpl-react yarn.lock react/yarn.lock
+
+        echo "✅ All files updated."
+
   # --------------------------------------------------------------------------
   # Internal Implementation
   # --------------------------------------------------------------------------
