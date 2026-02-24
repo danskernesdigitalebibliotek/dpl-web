@@ -41,6 +41,23 @@ tasks:
       - task: internal:migrate
         vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
 
+  mono:migration:update-marker:
+    desc: "Update migration marker entry in .migration-info"
+    silent: true
+    requires:
+      vars: [REPO, COMMIT]
+    cmds:
+      - |
+        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
+          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+          exit 1
+        fi
+
+        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
+        echo "{{.REPO}}:{{.COMMIT}}" >> {{.MIGRATION_FILE}}.tmp
+        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
+        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+
   # --------------------------------------------------------------------------
   # Internal Implementation
   # --------------------------------------------------------------------------
@@ -52,8 +69,15 @@ tasks:
       vars: [PROJECT, REPO]
     cmds:
       - |
-        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
-          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+        set -u
+        MIGRATION_FILE="{{.MIGRATION_FILE}}"
+        ORG="{{.ORG}}"
+        REPO="{{.REPO}}"
+        PROJECT="{{.PROJECT}}"
+        CMS_SKIP_PATTERN="^(composer\.json|composer\.lock|yarn\.lock|web/profiles/dpl_cms/translations/da\.combined\.po)$"
+
+        if [ ! -f "$MIGRATION_FILE" ]; then
+          echo "❌ Error: $MIGRATION_FILE not found."
           exit 1
         fi
 
@@ -66,19 +90,16 @@ tasks:
           exit 1
         fi
 
-        # Get Current SHA
-        CURRENT_SHA=$(grep "^{{.REPO}}:" {{.MIGRATION_FILE}} | cut -d':' -f2 | tr -d '[:space:]')
+        CURRENT_SHA=$(grep "^$REPO:" "$MIGRATION_FILE" | head -1 | cut -d':' -f2 | tr -d '[:space:]')
         if [ -z "$CURRENT_SHA" ]; then
-          echo "❌ Error: No entry for '{{.REPO}}' in {{.MIGRATION_FILE}}"
+          echo "❌ Error: No entry for '$REPO' in $MIGRATION_FILE"
           exit 1
         fi
 
-        echo "🔍 Checking {{.REPO}} from $CURRENT_SHA..."
+        echo "🔍 Checking $REPO from $CURRENT_SHA..."
 
-        # Get Commits
-        COMMITS=$(gh api "repos/{{.ORG}}/{{.REPO}}/compare/$CURRENT_SHA...develop" --jq '.commits[].sha')
-
-        if [ -z "$COMMITS" ]; then
+        COMMITS_DATA=$(gh api "repos/$ORG/$REPO/compare/$CURRENT_SHA...develop" --jq '[.commits[]] | sort_by(.commit.author.date) | .[] | "\(.sha) \(.parents | length)"')
+        if [ -z "$COMMITS_DATA" ]; then
           echo "✅ No new commits found."
           exit 0
         fi
@@ -86,69 +107,127 @@ tasks:
         update_migration_marker() {
           REPO_NAME="$1"
           SHA="$2"
-          grep -v "^$REPO_NAME:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
-          echo "$REPO_NAME:$SHA" >> {{.MIGRATION_FILE}}.tmp
-          mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
-          sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+          grep -v "^$REPO_NAME:" "$MIGRATION_FILE" > "$MIGRATION_FILE.tmp"
+          echo "$REPO_NAME:$SHA" >> "$MIGRATION_FILE.tmp"
+          mv "$MIGRATION_FILE.tmp" "$MIGRATION_FILE"
+          sort -o "$MIGRATION_FILE" "$MIGRATION_FILE"
         }
 
         echo "----------------------------------------"
 
-        # Apply Patches
-        for COMMIT in $COMMITS; do
+        COMMITS_LIST=$(mktemp)
+        echo "$COMMITS_DATA" > "$COMMITS_LIST"
+
+        while IFS= read -r line; do
+          COMMIT="${line%% *}"
+          PARENT_COUNT=$(echo "$line" | awk '{print $2}')
+          [ -z "$COMMIT" ] && continue
+
           echo "🚀 Migrating $COMMIT..."
 
-          PATCH_URL="https://github.com/{{.ORG}}/{{.REPO}}/commit/$COMMIT.patch"
-          AM_LOG=$(mktemp)
-          SKIP_COMMIT=0
-
-          if ! curl -sL "$PATCH_URL" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
-            if [ -s "$AM_LOG" ]; then
-              cat "$AM_LOG"
-            fi
-
-            if grep -q "sha1 information is lacking or useless" "$AM_LOG" || grep -q "could not build fake ancestor" "$AM_LOG"; then
-              echo ""
-              echo "⚠️ Auto-skipping commit $COMMIT due to missing patch ancestor context."
-              if ! git am --skip; then
-                rm -f "$AM_LOG"
-                echo "❌ Failed to auto-skip. Resolve manually with: git am --continue, git am --skip, or git am --abort"
-                exit 1
-              fi
-
-              echo "💾 Updating {{.MIGRATION_FILE}} to skipped commit: $COMMIT"
-              update_migration_marker "{{.REPO}}" "$COMMIT"
-              SKIP_COMMIT=1
-            else
-              rm -f "$AM_LOG"
-              echo ""
-              echo "❌ Conflict while applying commit $COMMIT from {{.REPO}}."
-              echo ""
-              echo "Recovery steps:"
-              echo "  1) Resolve conflicts shown by: git status"
-              echo "  2) Stage resolved files:      git add <files>"
-              echo "  3) Continue apply:            git am --continue (or git am --skip)"
-              echo "  4) Update migration marker in {{.MIGRATION_FILE}}:"
-              echo "     {{.REPO}}:$COMMIT"
-              echo "  5) Re-run the migration task to continue with remaining commits."
-              echo ""
-              echo "To cancel instead, run: git am --abort"
-              exit 1
-            fi
-          fi
-
-          if [ "$SKIP_COMMIT" -eq 1 ]; then
-            rm -f "$AM_LOG"
+          if [ -n "$PARENT_COUNT" ] && [ "$PARENT_COUNT" -gt 1 ] 2>/dev/null; then
+            echo "⏭️ Skipping merge commit $COMMIT"
+            update_migration_marker "$REPO" "$COMMIT"
             continue
           fi
 
-          if [ -s "$AM_LOG" ]; then
-            cat "$AM_LOG"
+          PATCH_URL="https://github.com/$ORG/$REPO/commit/$COMMIT.patch"
+          PATCH_FILE=$(mktemp)
+          if ! curl -sLf "$PATCH_URL" > "$PATCH_FILE" || [ ! -s "$PATCH_FILE" ]; then
+            rm -f "$PATCH_FILE"
+            echo "❌ Failed to fetch patch for $COMMIT"
+            rm -f "$COMMITS_LIST"
+            exit 1
           fi
-          rm -f "$AM_LOG"
+          if ! grep -qE '^diff --git |^From ' "$PATCH_FILE"; then
+            rm -f "$PATCH_FILE"
+            echo "❌ Invalid patch content for $COMMIT"
+            rm -f "$COMMITS_LIST"
+            exit 1
+          fi
 
-          echo "💾 Updating {{.MIGRATION_FILE}} to latest successful commit: $COMMIT"
-          update_migration_marker "{{.REPO}}" "$COMMIT"
-        done
+          if [ "$PROJECT" = "cms" ]; then
+            COMMIT_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+            if [ -n "$COMMIT_FILES" ]; then
+              SKIP_THIS=1
+              while IFS= read -r f; do
+                [ -z "$f" ] && continue
+                echo "$f" | grep -qE "$CMS_SKIP_PATTERN" || { SKIP_THIS=0; break; }
+              done <<< "$COMMIT_FILES"
+              if [ "$SKIP_THIS" -eq 1 ]; then
+                rm -f "$PATCH_FILE"
+                echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, yarn.lock, or da.combined.po; will handle manually)."
+                update_migration_marker "$REPO" "$COMMIT"
+                continue
+              fi
+            fi
+          fi
 
+          AM_LOG=$(mktemp)
+
+          if ! cat "$PATCH_FILE" | git am --directory="$PROJECT" -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
+            [ -s "$AM_LOG" ] && cat "$AM_LOG"
+
+            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor" "$AM_LOG"; then
+              echo ""
+              echo "⚠️ Auto-skipping commit $COMMIT due to missing patch ancestor context."
+              if ! git am --skip; then
+                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
+                echo "❌ Failed to auto-skip. Resolve manually with: git am --continue, git am --skip, or git am --abort"
+                exit 1
+              fi
+              echo "💾 Updating $MIGRATION_FILE to skipped commit: $COMMIT"
+              update_migration_marker "$REPO" "$COMMIT"
+              rm -f "$AM_LOG" "$PATCH_FILE"
+              continue
+            fi
+
+            UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+            AUTO_SKIP=0
+            if [ "$PROJECT" = "cms" ] && [ -n "$UNMERGED" ]; then
+              AUTO_SKIP=1
+              while IFS= read -r p; do
+                [ -z "$p" ] && continue
+                rel="${p#$PROJECT/}"
+                echo "$rel" | grep -qE "$CMS_SKIP_PATTERN" || { AUTO_SKIP=0; break; }
+              done <<< "$UNMERGED"
+            fi
+
+            if [ "$AUTO_SKIP" -eq 1 ]; then
+              echo ""
+              echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
+              if ! git am --skip; then
+                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
+                echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                exit 1
+              fi
+              echo "💾 Updating $MIGRATION_FILE to commit: $COMMIT"
+              update_migration_marker "$REPO" "$COMMIT"
+              rm -f "$AM_LOG" "$PATCH_FILE"
+              continue
+            fi
+
+            rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
+            echo ""
+            echo "❌ Conflict while applying commit $COMMIT from $REPO."
+            echo ""
+            echo "Recovery steps:"
+            echo "  1) Resolve conflicts shown by: git status"
+            echo "  2) Stage resolved files:      git add <files>"
+            echo "  3) Continue apply:            git am --continue (or git am --skip)"
+            echo "  4) Update migration marker:   task migration:mono:migration:update-marker REPO=$REPO COMMIT=$COMMIT"
+            echo "  5) Re-run the migration task to continue."
+            echo ""
+            echo "To cancel: git am --abort"
+            exit 1
+          fi
+
+          [ -s "$AM_LOG" ] && cat "$AM_LOG"
+          rm -f "$AM_LOG" "$PATCH_FILE"
+
+          echo "💾 Updating $MIGRATION_FILE to latest successful commit: $COMMIT"
+          update_migration_marker "$REPO" "$COMMIT"
+        done < "$COMMITS_LIST"
+
+        rm -f "$COMMITS_LIST"
         echo "🎉 All commits migrated successfully!"
