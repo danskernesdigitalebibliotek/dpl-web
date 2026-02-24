@@ -26,7 +26,7 @@ class BranchService {
   /**
    * Get branch list data for the React app.
    *
-   * @return array<int, array{title: string, url: string, image?: string, address?: string, city?: ?string, lat?: string, lng?: string}>
+   * @return array<int, array{title: ?string, url: string, image?: string, address?: string, city?: ?string, lat?: string, lng?: string}>
    *   Array of branch data.
    */
   public function getBranchListData(): array {
