@@ -64,11 +64,13 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
    * @param bool $require_id
    *   Whether the schema should specify the id as required. This is useful for
    *   situations where the id is not known or provided through other means.
+   * @param bool $include_isil
+   *   Whether to include the branch_isil_id property in the schema.
    *
    * @return mixed[]
    *   OpenAPI schema for a single opening hours instance.
    */
-  protected function openingHoursInstanceSchema(bool $require_id = TRUE): array {
+  protected function openingHoursInstanceSchema(bool $require_id = TRUE, bool $include_isil = FALSE): array {
     return [
       "type" => "object",
       "properties" => [
@@ -112,11 +114,13 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
           "type" => "integer",
           "description" => "The id for the branch the instance belongs to",
         ],
-        "branch_isil_id" => [
-          "type" => "string",
-          "description" => "External branch id (ISIL) from the branch node field_agency_branch_id",
-          "example" => "DK-710100",
-        ],
+        ...($include_isil ? [
+          "branch_isil_id" => [
+            "type" => "string",
+            "description" => "External branch id (ISIL)",
+            "example" => "DK-710100",
+          ],
+        ] : []),
         "repetition" => [
           "type" => "object",
           "properties" => [

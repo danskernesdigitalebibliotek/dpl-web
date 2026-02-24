@@ -28,10 +28,10 @@
   "security": [
     {
       "basic_auth": []
-    }, 
+    },
     {
       "oauth2": []
-    }, 
+    },
     {
       "csrf_token": []
     }
@@ -50,7 +50,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "facets",
             "description": "A facet to match against",
@@ -159,7 +159,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "opening_hours_instance",
             "description": "The opening hours instance to manage",
@@ -205,10 +205,6 @@
                   "type": "integer",
                   "description": "The id for the branch the instance belongs to"
                 },
-                "branch_isil_id": {
-                  "type": "string",
-                  "description": "External branch id (ISIL) from the branch node field_agency_branch_id"
-                },
                 "repetition": {
                   "type": "object",
                   "properties": {
@@ -236,7 +232,14 @@
                   "required": ["type"]
                 }
               },
-              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              "required": [
+                "category",
+                "date",
+                "start_time",
+                "end_time",
+                "branch_id",
+                "repetition"
+              ]
             }
           }
         ],
@@ -285,10 +288,6 @@
                     "type": "integer",
                     "description": "The id for the branch the instance belongs to"
                   },
-                  "branch_isil_id": {
-                    "type": "string",
-                    "description": "External branch id (ISIL) from the branch node field_agency_branch_id"
-                  },
                   "repetition": {
                     "type": "object",
                     "properties": {
@@ -316,7 +315,15 @@
                     "required": ["id", "type"]
                   }
                 },
-                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                "required": [
+                  "id",
+                  "category",
+                  "date",
+                  "start_time",
+                  "end_time",
+                  "branch_id",
+                  "repetition"
+                ]
               }
             }
           },
@@ -346,14 +353,14 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "branch_id",
             "type": "integer",
             "description": "The id of the branch for which to retrieve opening hours.",
             "in": "query",
             "required": false
-          }, 
+          },
           {
             "name": "from_date",
             "type": "string",
@@ -361,7 +368,7 @@
             "description": "Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.",
             "in": "query",
             "required": false
-          }, 
+          },
           {
             "name": "to_date",
             "type": "string",
@@ -418,7 +425,7 @@
                   },
                   "branch_isil_id": {
                     "type": "string",
-                    "description": "External branch id (ISIL) from the branch node field_agency_branch_id"
+                    "description": "External branch id (ISIL)"
                   },
                   "repetition": {
                     "type": "object",
@@ -447,7 +454,15 @@
                     "required": ["id", "type"]
                   }
                 },
-                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                "required": [
+                  "id",
+                  "category",
+                  "date",
+                  "start_time",
+                  "end_time",
+                  "branch_id",
+                  "repetition"
+                ]
               }
             }
           },
@@ -479,13 +494,13 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "id",
             "type": "string",
             "in": "path",
             "required": true
-          }, 
+          },
           {
             "name": "repetition_id",
             "type": "integer",
@@ -524,7 +539,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "opening_hours_instance",
             "description": "The opening hours instance to manage",
@@ -597,9 +612,16 @@
                   "required": ["type"]
                 }
               },
-              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              "required": [
+                "category",
+                "date",
+                "start_time",
+                "end_time",
+                "branch_id",
+                "repetition"
+              ]
             }
-          }, 
+          },
           {
             "name": "id",
             "type": "string",
@@ -679,7 +701,15 @@
                     "required": ["id", "type"]
                   }
                 },
-                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                "required": [
+                  "id",
+                  "category",
+                  "date",
+                  "start_time",
+                  "end_time",
+                  "branch_id",
+                  "repetition"
+                ]
               }
             }
           },
@@ -711,7 +741,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "from_date",
             "type": "string",
@@ -719,7 +749,7 @@
             "description": "Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.",
             "in": "query",
             "required": true
-          }, 
+          },
           {
             "name": "to_date",
             "type": "string",
@@ -727,7 +757,7 @@
             "description": "Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.",
             "in": "query",
             "required": true
-          }, 
+          },
           {
             "name": "nid",
             "type": "array",
@@ -777,7 +807,14 @@
                     "nullable": true
                   }
                 },
-                "required": ["nid", "category_tid", "date", "start_time", "end_time", "notice"]
+                "required": [
+                  "nid",
+                  "category_tid",
+                  "date",
+                  "start_time",
+                  "end_time",
+                  "notice"
+                ]
               }
             }
           },
@@ -809,7 +846,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "event",
             "description": "Data to update the event with.",
@@ -821,7 +858,13 @@
                 "state": {
                   "type": "string",
                   "description": "The state of the event.",
-                  "enum": ["TicketSaleNotOpen", "Active", "SoldOut", "Cancelled", "Occurred"]
+                  "enum": [
+                    "TicketSaleNotOpen",
+                    "Active",
+                    "SoldOut",
+                    "Cancelled",
+                    "Occurred"
+                  ]
                 },
                 "external_data": {
                   "type": "object",
@@ -841,7 +884,7 @@
                 }
               }
             }
-          }, 
+          },
           {
             "name": "uuid",
             "type": "string",
@@ -887,7 +930,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "from_date",
             "type": "string",
@@ -964,7 +1007,13 @@
                   "state": {
                     "type": "string",
                     "description": "The state of the event.",
-                    "enum": ["TicketSaleNotOpen", "Active", "SoldOut", "Cancelled", "Occurred"]
+                    "enum": [
+                      "TicketSaleNotOpen",
+                      "Active",
+                      "SoldOut",
+                      "Cancelled",
+                      "Occurred"
+                    ]
                   },
                   "all_day": {
                     "type": "boolean",
@@ -1134,7 +1183,15 @@
                     }
                   }
                 },
-                "required": ["uuid", "title", "created_at", "updated_at", "url", "state", "date_time"]
+                "required": [
+                  "uuid",
+                  "title",
+                  "created_at",
+                  "updated_at",
+                  "url",
+                  "state",
+                  "date_time"
+                ]
               }
             }
           },
@@ -1148,7 +1205,7 @@
         "security": [
           {
             "basic_auth": []
-          }, 
+          },
           {
             "cookie": []
           }
@@ -1166,7 +1223,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "url",
             "description": "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",

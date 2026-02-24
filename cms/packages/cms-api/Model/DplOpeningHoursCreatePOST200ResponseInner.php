@@ -1,6 +1,6 @@
 <?php
 /**
- * DplOpeningHoursListGET200ResponseInner
+ * DplOpeningHoursCreatePOST200ResponseInner
  *
  * PHP version 8.1.1
  *
@@ -35,13 +35,13 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\SerializedName;
 
 /**
- * Class representing the DplOpeningHoursListGET200ResponseInner model.
+ * Class representing the DplOpeningHoursCreatePOST200ResponseInner model.
  *
  * @package DanskernesDigitaleBibliotek\CMS\Api\Model
  * @author  OpenAPI Generator team
  */
 
-class DplOpeningHoursListGET200ResponseInner 
+class DplOpeningHoursCreatePOST200ResponseInner 
 {
         /**
      * An serial unique id of the opening hours instance.
@@ -110,16 +110,6 @@ class DplOpeningHoursListGET200ResponseInner
     protected ?int $branchId = null;
 
     /**
-     * External branch id (ISIL)
-     *
-     * @var string|null
-     * @SerializedName("branch_isil_id")
-     * @Assert\Type("string")
-     * @Type("string")
-     */
-    protected ?string $branchIsilId = null;
-
-    /**
      * @var DplOpeningHoursListGET200ResponseInnerRepetition|null
      * @SerializedName("repetition")
      * @Assert\NotNull()
@@ -142,7 +132,6 @@ class DplOpeningHoursListGET200ResponseInner
             $this->startTime = array_key_exists('startTime', $data) ? $data['startTime'] : $this->startTime;
             $this->endTime = array_key_exists('endTime', $data) ? $data['endTime'] : $this->endTime;
             $this->branchId = array_key_exists('branchId', $data) ? $data['branchId'] : $this->branchId;
-            $this->branchIsilId = array_key_exists('branchIsilId', $data) ? $data['branchIsilId'] : $this->branchIsilId;
             $this->repetition = array_key_exists('repetition', $data) ? $data['repetition'] : $this->repetition;
         }
     }
@@ -299,32 +288,6 @@ class DplOpeningHoursListGET200ResponseInner
     public function setBranchId(?int $branchId): self
     {
         $this->branchId = $branchId;
-
-        return $this;
-    }
-
-    /**
-     * Gets branchIsilId.
-     *
-     * @return string|null
-     */
-    public function getBranchIsilId(): ?string
-    {
-        return $this->branchIsilId;
-    }
-
-
-
-    /**
-     * Sets branchIsilId.
-     *
-     * @param string|null $branchIsilId  External branch id (ISIL)
-     *
-     * @return $this
-     */
-    public function setBranchIsilId(?string $branchIsilId = null): self
-    {
-        $this->branchIsilId = $branchIsilId;
 
         return $this;
     }
