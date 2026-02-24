@@ -98,4 +98,3 @@ function dpl_library_agency_deploy_migrate_addresses_gsearch(): string {
 
   return "Migrated $updated_count/$total_count branch addresses to GSearch field.";
 }
-
