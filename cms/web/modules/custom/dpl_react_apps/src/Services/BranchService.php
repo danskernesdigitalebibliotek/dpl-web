@@ -26,8 +26,8 @@ class BranchService {
   /**
    * Get branch list data for the React app.
    *
-   * @return mixed[]
-   *   Array of branch data with title, url, image, address, and city.
+   * @return array<int, array{title: string, url: string, image?: string, address?: string, city?: ?string, lat?: string, lng?: string}>
+   *   Array of branch data.
    */
   public function getBranchListData(): array {
     $storage = $this->entityTypeManager->getStorage('node');
@@ -57,12 +57,14 @@ class BranchService {
 
       $address = $this->getAddress($node);
       if (!empty($address)) {
-        $branch += $address;
+        $branch['address'] = $address['address'];
+        $branch['city'] = $address['city'];
       }
 
       $coordinates = $this->getCoordinates($node);
       if (!empty($coordinates)) {
-        $branch += $coordinates;
+        $branch['lat'] = $coordinates['lat'];
+        $branch['lng'] = $coordinates['lng'];
       }
 
       $branches[] = $branch;
@@ -127,7 +129,7 @@ class BranchService {
     }
 
     return [
-      'address' => $item->getValue(),
+      'address' => $item->getAddress() ?? $item->getValue(),
       'city' => $item->getPostalName(),
     ];
   }
