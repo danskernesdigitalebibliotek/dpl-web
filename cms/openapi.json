@@ -410,7 +410,8 @@
                   },
                   "branch_isil_id": {
                     "type": "string",
-                    "description": "External branch id (ISIL)"
+                    "description": "External branch id (ISIL)",
+                    "example": "DK-710100"
                   },
                   "repetition": {
                     "type": "object",
