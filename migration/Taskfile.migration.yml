@@ -41,6 +41,23 @@ tasks:
       - task: internal:migrate
         vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
 
+  mono:migration:update-marker:
+    desc: "Update migration marker entry in .migration-info"
+    silent: true
+    requires:
+      vars: [REPO, COMMIT]
+    cmds:
+      - |
+        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
+          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+          exit 1
+        fi
+
+        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
+        echo "{{.REPO}}:{{.COMMIT}}" >> {{.MIGRATION_FILE}}.tmp
+        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
+        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+
   # --------------------------------------------------------------------------
   # Internal Implementation
   # --------------------------------------------------------------------------
@@ -92,6 +109,41 @@ tasks:
           sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
         }
 
+        auto_continue_am_preferring_theirs() {
+          FORCED_THEIRS=0
+          while true; do
+            if git am --continue >"$AM_LOG" 2>&1; then
+              return 0
+            fi
+
+            # Include add/add and other unmerged; git diff -U can miss some
+            UNMERGED_FILES=$( ( git diff --name-only --diff-filter=U; git ls-files -u | cut -f2 ) | sort -u )
+            if [ -n "$UNMERGED_FILES" ]; then
+              echo "↪ Taking incoming changes (theirs) for conflicted files..."
+              for FILE in $UNMERGED_FILES; do
+                git checkout --theirs -- "$FILE"
+                git add "$FILE"
+              done
+              FORCED_THEIRS=0
+              continue
+            fi
+
+            # No unmerged: skip empty patch, or once force patch to win over whole project dir
+            if git am --skip >"$AM_LOG" 2>&1; then
+              echo "↪ Skipped empty or inapplicable patch; continuing..."
+              FORCED_THEIRS=0
+              continue
+            fi
+            if [ "$FORCED_THEIRS" -eq 1 ]; then
+              return 1
+            fi
+            echo "↪ Forcing incoming changes (theirs) for {{.PROJECT}}/ and continuing..."
+            git checkout --theirs -- {{.PROJECT}}/
+            git add {{.PROJECT}}/
+            FORCED_THEIRS=1
+          done
+        }
+
         echo "----------------------------------------"
 
         # Apply Patches
@@ -120,20 +172,29 @@ tasks:
               update_migration_marker "{{.REPO}}" "$COMMIT"
               SKIP_COMMIT=1
             else
-              rm -f "$AM_LOG"
               echo ""
-              echo "❌ Conflict while applying commit $COMMIT from {{.REPO}}."
-              echo ""
-              echo "Recovery steps:"
-              echo "  1) Resolve conflicts shown by: git status"
-              echo "  2) Stage resolved files:      git add <files>"
-              echo "  3) Continue apply:            git am --continue (or git am --skip)"
-              echo "  4) Update migration marker in {{.MIGRATION_FILE}}:"
-              echo "     {{.REPO}}:$COMMIT"
-              echo "  5) Re-run the migration task to continue with remaining commits."
-              echo ""
-              echo "To cancel instead, run: git am --abort"
-              exit 1
+              echo "⚠️ Conflict while applying commit $COMMIT from {{.REPO}}."
+              echo "↪ Attempting auto-resolve by preferring incoming changes (theirs)..."
+
+              if ! auto_continue_am_preferring_theirs; then
+                if [ -s "$AM_LOG" ]; then
+                  cat "$AM_LOG"
+                fi
+                rm -f "$AM_LOG"
+                echo ""
+                echo "❌ Auto-resolve failed for commit $COMMIT."
+                echo ""
+                echo "Recovery steps:"
+                echo "  1) Resolve conflicts shown by: git status"
+                echo "  2) Stage resolved files:      git add <files>"
+                echo "  3) Continue apply:            git am --continue (or git am --skip)"
+                echo "  4) Update migration marker with:"
+                echo "     task migration:mono:migration:update-marker REPO={{.REPO}} COMMIT=$COMMIT"
+                echo "  5) Re-run the migration task to continue with remaining commits."
+                echo ""
+                echo "To cancel instead, run: git am --abort"
+                exit 1
+              fi
             fi
           fi
 
