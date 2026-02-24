@@ -16,12 +16,7 @@ jobs:
   BranchNameLength:
     name: CMS / Check branch length
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
       - name: Ensure branch name length
         uses: lekterable/branchlint-action@2.1.0
         if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
@@ -34,9 +29,6 @@ jobs:
   CreateDeployment:
     name: CMS / Create deployment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
     needs: [BranchNameLength]
     steps:
@@ -58,9 +50,6 @@ jobs:
   CreateDeploymentBNF:
     name: CMS / Create BNF deployment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     if: ${{ (startsWith(github.event.pull_request.title, 'bnf:')) && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
     needs: [BranchNameLength]
     steps:
@@ -83,9 +72,6 @@ jobs:
   CloseEnvironment:
     name: CMS / Close environment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     if: ${{ github.event.action == 'closed' }}
     needs: [BranchNameLength]
     steps:
@@ -99,9 +85,6 @@ jobs:
   InformLagoon:
     name: CMS / Send synthetic event to Lagoon
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     needs: [BranchNameLength]
     steps:
       - name: Send pull request event
