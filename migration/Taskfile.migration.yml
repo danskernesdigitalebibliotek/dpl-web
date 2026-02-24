@@ -41,6 +41,23 @@ tasks:
       - task: internal:migrate
         vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
 
+  mono:migration:update-marker:
+    desc: "Update migration marker entry in .migration-info"
+    silent: true
+    requires:
+      vars: [REPO, COMMIT]
+    cmds:
+      - |
+        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
+          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+          exit 1
+        fi
+
+        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
+        echo "{{.REPO}}:{{.COMMIT}}" >> {{.MIGRATION_FILE}}.tmp
+        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
+        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+
   # --------------------------------------------------------------------------
   # Internal Implementation
   # --------------------------------------------------------------------------
@@ -75,10 +92,10 @@ tasks:
 
         echo "🔍 Checking {{.REPO}} from $CURRENT_SHA..."
 
-        # Get Commits
-        COMMITS=$(gh api "repos/{{.ORG}}/{{.REPO}}/compare/$CURRENT_SHA...develop" --jq '.commits[].sha')
+        # Get Commits (oldest first; each line: sha parent_count)
+        COMMITS_DATA=$(gh api "repos/{{.ORG}}/{{.REPO}}/compare/$CURRENT_SHA...develop" --jq '.commits | reverse | .[] | "\(.sha) \(.parents | length)"')
 
-        if [ -z "$COMMITS" ]; then
+        if [ -z "$COMMITS_DATA" ]; then
           echo "✅ No new commits found."
           exit 0
         fi
@@ -95,14 +112,50 @@ tasks:
         echo "----------------------------------------"
 
         # Apply Patches
-        for COMMIT in $COMMITS; do
+        echo "$COMMITS_DATA" | while IFS= read -r line; do
+          COMMIT="${line%% *}"
+          PARENT_COUNT="${line##* }"
+          [ -z "$COMMIT" ] && continue
+
           echo "🚀 Migrating $COMMIT..."
 
+          # Skip merge commits (multiple parents)
+          if [ "$PARENT_COUNT" -gt 1 ] 2>/dev/null; then
+            echo "⏭️ Skipping merge commit $COMMIT"
+            update_migration_marker "{{.REPO}}" "$COMMIT"
+            continue
+          fi
+
           PATCH_URL="https://github.com/{{.ORG}}/{{.REPO}}/commit/$COMMIT.patch"
+          PATCH_FILE=$(mktemp)
+          curl -sL "$PATCH_URL" > "$PATCH_FILE"
+
+          # Skip commits that only touch manual-handled files (cms only)
+          if [ "{{.PROJECT}}" = "cms" ] && [ -s "$PATCH_FILE" ]; then
+            COMMIT_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+            SKIP_ONLY_PATTERN="^(composer\.json|composer\.lock|yarn\.lock|web/profiles/dpl_cms/translations/da\.combined\.po)$"
+            if [ -n "$COMMIT_FILES" ]; then
+              SKIP_THIS=1
+              while IFS= read -r f; do
+                [ -z "$f" ] && continue
+                if ! echo "$f" | grep -qE "$SKIP_ONLY_PATTERN"; then
+                  SKIP_THIS=0
+                  break
+                fi
+              done <<< "$COMMIT_FILES"
+              if [ "$SKIP_THIS" -eq 1 ]; then
+                rm -f "$PATCH_FILE"
+                echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, yarn.lock, or da.combined.po; will handle manually)."
+                update_migration_marker "{{.REPO}}" "$COMMIT"
+                continue
+              fi
+            fi
+          fi
+
           AM_LOG=$(mktemp)
           SKIP_COMMIT=0
 
-          if ! curl -sL "$PATCH_URL" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
+          if ! cat "$PATCH_FILE" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
             if [ -s "$AM_LOG" ]; then
               cat "$AM_LOG"
             fi
@@ -111,7 +164,7 @@ tasks:
               echo ""
               echo "⚠️ Auto-skipping commit $COMMIT due to missing patch ancestor context."
               if ! git am --skip; then
-                rm -f "$AM_LOG"
+                rm -f "$AM_LOG" "$PATCH_FILE"
                 echo "❌ Failed to auto-skip. Resolve manually with: git am --continue, git am --skip, or git am --abort"
                 exit 1
               fi
@@ -120,7 +173,37 @@ tasks:
               update_migration_marker "{{.REPO}}" "$COMMIT"
               SKIP_COMMIT=1
             else
-              rm -f "$AM_LOG"
+              # On conflict: if this patch segment only touches skip-list files (cms), auto-skip it
+              AUTO_SKIP_CONFLICT=0
+              if [ "{{.PROJECT}}" = "cms" ]; then
+                UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+                if [ -n "$UNMERGED" ]; then
+                  SKIP_ONLY_PATTERN="^(composer\.json|composer\.lock|yarn\.lock|web/profiles/dpl_cms/translations/da\.combined\.po)$"
+                  AUTO_SKIP_CONFLICT=1
+                  while IFS= read -r p; do
+                    [ -z "$p" ] && continue
+                    rel="${p#{{.PROJECT}}/}"
+                    if ! echo "$rel" | grep -qE "$SKIP_ONLY_PATTERN"; then
+                      AUTO_SKIP_CONFLICT=0
+                      break
+                    fi
+                  done <<< "$UNMERGED"
+                fi
+              fi
+              if [ "$AUTO_SKIP_CONFLICT" -eq 1 ]; then
+                echo ""
+                echo "⏭️ Conflict only in skip-list files (composer.*, yarn.lock, da.combined.po); skipping this patch segment."
+                if ! git am --skip; then
+                  rm -f "$AM_LOG" "$PATCH_FILE"
+                  echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                  exit 1
+                fi
+                echo "💾 Updating {{.MIGRATION_FILE}} to commit: $COMMIT"
+                update_migration_marker "{{.REPO}}" "$COMMIT"
+                rm -f "$AM_LOG" "$PATCH_FILE"
+                continue
+              fi
+              rm -f "$AM_LOG" "$PATCH_FILE"
               echo ""
               echo "❌ Conflict while applying commit $COMMIT from {{.REPO}}."
               echo ""
@@ -128,8 +211,8 @@ tasks:
               echo "  1) Resolve conflicts shown by: git status"
               echo "  2) Stage resolved files:      git add <files>"
               echo "  3) Continue apply:            git am --continue (or git am --skip)"
-              echo "  4) Update migration marker in {{.MIGRATION_FILE}}:"
-              echo "     {{.REPO}}:$COMMIT"
+              echo "  4) Update migration marker with:"
+              echo "     task migration:mono:migration:update-marker REPO={{.REPO}} COMMIT=$COMMIT"
               echo "  5) Re-run the migration task to continue with remaining commits."
               echo ""
               echo "To cancel instead, run: git am --abort"
@@ -138,14 +221,14 @@ tasks:
           fi
 
           if [ "$SKIP_COMMIT" -eq 1 ]; then
-            rm -f "$AM_LOG"
+            rm -f "$AM_LOG" "$PATCH_FILE"
             continue
           fi
 
           if [ -s "$AM_LOG" ]; then
             cat "$AM_LOG"
           fi
-          rm -f "$AM_LOG"
+          rm -f "$AM_LOG" "$PATCH_FILE"
 
           echo "💾 Updating {{.MIGRATION_FILE}} to latest successful commit: $COMMIT"
           update_migration_marker "{{.REPO}}" "$COMMIT"
