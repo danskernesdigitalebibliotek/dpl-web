@@ -1,7 +1,7 @@
 {
-  "name": "@danskernesdigitalebibliotek/dpl-web-design",
+  "name": "@danskernesdigitalebibliotek/dpl-design-system",
   "version": "0.1.0",
-  "repository": "https://github.com/danskernesdigitalebibliotek/dpl-web",
+  "repository": "https://github.com/danskernesdigitalebibliotek/dpl-design-system",
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:axe": "storybook build && axe-storybook",
