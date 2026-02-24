@@ -29,6 +29,9 @@ describe('Testing branch functionality', () => {
       .contains('Krystalgade 15, 1172 København K')
       .first()
       .click();
+    cy.get('.select2-search__field').type(branchAddress);
+    // Finding the full address using GSearch.
+    cy.get('.select2-results__option').contains(branchAddressSelect).click();
     cy.clickSaveButton();
 
     cy.get('.hero').contains(branchTitle).should('be.visible');
