@@ -54,11 +54,17 @@ jobs:
       - name: Make Poeditor look for changes in translation strings
         uses: distributhor/workflow-webhook@v3
         env:
-          webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+          # Temporarily use the POC POEditor project.
+          # When we are ready to switch to the proper one, we can change this.
+          # webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+          webhook_url: https://api.poeditor.com/webhooks/87b62d02aa
           # POEditor webhooks to not use secrets but the action requires a value.
           webhook_secret: "xxxx"
         with:
-          webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+          # Temporarily use the POC POEditor project.
+          # When we are ready to switch to the proper one, we can change this.
+          # webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+          webhook_url: https://api.poeditor.com/webhooks/87b62d02aa
 
   # Publish translations to GitHub Pages to support consumption by Drupal.
   # The localization system requires translation files to be served with a
