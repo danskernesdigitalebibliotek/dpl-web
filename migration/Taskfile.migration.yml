@@ -200,6 +200,21 @@ tasks:
           if ! cat "$PATCH_FILE" | git am --directory="$PROJECT" -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
             [ -s "$AM_LOG" ] && cat "$AM_LOG"
 
+            # Missing patch context (no conflict markers; git can't build 3-way merge). Skip and continue so we don't loop.
+            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor|missing patch ancestor context" "$AM_LOG"; then
+              echo ""
+              echo "⚠️ Skipping $COMMIT (patch context missing – no conflict markers; apply manually from source repo if needed)."
+              if ! git am --skip; then
+                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
+                echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                exit 1
+              fi
+              echo "💾 Updating $MIGRATION_FILE to skipped commit: $COMMIT"
+              update_migration_marker "$REPO" "$COMMIT"
+              rm -f "$AM_LOG" "$PATCH_FILE"
+              continue
+            fi
+
             # Auto-skip only if this patch touches ONLY skip-list files and conflict is only in those files
             PATCH_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
             PATCH_ONLY_SKIP=1
