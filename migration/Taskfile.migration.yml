@@ -212,9 +212,19 @@ tasks:
               update_migration_marker "$REPO" "$COMMIT"
               rm -f "$AM_LOG" "$PATCH_FILE"
             else
+              # Auto-skip conflict only if this patch touches ONLY skip-list files (same rule as pre-apply skip)
+              PATCH_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+              PATCH_ONLY_SKIP=1
+              if [ -n "$PATCH_FILES" ]; then
+                while IFS= read -r f; do
+                  [ -z "$f" ] && continue
+                  echo "$f" | grep -qE "$SKIP_FILES_PATTERN" || { PATCH_ONLY_SKIP=0; break; }
+                done <<< "$PATCH_FILES"
+              fi
+
               UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
               AUTO_SKIP=0
-              if [ -n "$UNMERGED" ]; then
+              if [ "$PATCH_ONLY_SKIP" -eq 1 ] && [ -n "$UNMERGED" ]; then
                 AUTO_SKIP=1
                 while IFS= read -r p; do
                   [ -z "$p" ] && continue
