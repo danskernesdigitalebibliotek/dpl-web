@@ -1,0 +1,2119 @@
+# LANGUAGE translation of PROJECT
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-02-25 10:00+0100\n"
+"PO-Revision-Date: 2026-02-25 10:00+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "React DDB Library"
+msgstr "React DPL Library - Benjamin tester"
+
+msgid "Library is present"
+msgstr "Library er "
+
+msgid "DDB React library is missing (@dir)"
+msgstr "DPL React library mangler (@dir) "
+
+msgid "Configuration file"
+msgstr "Konfigurationsfil"
+
+msgctxt "DPL Config Import"
+msgid "Select a configuration file in YAML format to upload."
+msgstr "Vælg en konfigurationsfil i YAML til upload."
+
+msgid "Upload"
+msgstr "John"
+
+msgctxt "DPL Config Import"
+msgid "Unable to handle the uploaded file"
+msgstr "Ude af stand til at indlæse den uploadede fil"
+
+msgctxt "DPL Config Import"
+msgid "Unable to parse YAML file: %reason"
+msgstr "Ude af stand til at parse YAML fil: %reason"
+
+msgctxt "DPL Config Import"
+msgid "Installed modules: %modules_list"
+msgstr "Alakazam 13.20-poeditor"
+
+msgctxt "DPL Config Import"
+msgid "Failed to install modules: @reason"
+msgstr "Kunne ikke installere modul: @reason"
+
+msgctxt "DPL Config Import"
+msgid "Uninstalled modules: %modules_list"
+msgstr "Ikke-installerede moduler: %modules_list"
+
+msgctxt "DPL Config Import"
+msgid "Failed to uninstall modules: @reason"
+msgstr "Kunne ikke installere modul: @reason"
+
+msgctxt "Search Result"
+msgid "+ more filters"
+msgstr "Flere filtre"
+
+msgctxt "Search Result"
+msgid "Clear all"
+msgstr "Ryd alle"
+
+msgctxt "Search Result"
+msgid "Access types"
+msgstr "Fysisk/digital"
+
+msgctxt "Search Result"
+msgid "Close facet browser modal"
+msgstr "Luk pop-up"
+
+msgctxt "Search Result"
+msgid "Modal for facet browser"
+msgstr "Pop-up med facetbrowser"
+
+msgctxt "Search Result"
+msgid "Can always be loaned"
+msgstr "Kan altid lånes"
+
+msgctxt "Search Result"
+msgid "Children or adults"
+msgstr "Børn/voksen"
+
+msgctxt "Search Result"
+msgid "Creators"
+msgstr "Forfatter"
+
+msgctxt "Search Result"
+msgid "Dk5"
+msgstr "Emnetal"
+
+msgctxt "Search Result"
+msgid "Fiction or non-fiction"
+msgstr "Skøn-/faglitteratur"
+
+msgid "Search content"
+msgstr "Søg indhold"
+
+msgid "Search the website"
+msgstr "Search the website"
+
+msgid "Search"
+msgstr "Søg"
+
+msgid "BNF cannot send you to your library"
+msgstr "Delingstjenesten kan ikke sende dig til dit bibliotek"
+
+msgid ""
+"It would appear that you have not logged in to BNF through your origin "
+"library."
+msgstr ""
+"Det ser ud til, at du ikke er logget ind på Delingstjenesten via dit "
+"bibliotek"
+
+msgid "To import this content, you can either:"
+msgstr "For at hente dette indhold kan du enten:"
+
+msgid ""
+"Go back to your library site, and choose \"log in to BNF\", and try "
+"again"
+msgstr ""
+"Prøv igen: Gå tilbage til dit site og vælg \"Login i "
+"Delingstjenesten\" i dropdown-menu \"Indhold\"."
+
+msgid "Or:"
+msgstr "Eller: "
+
+msgid "Go back to your library site, and press import at:"
+msgstr "Gå tilbage til dit site og tryk på hent:"
+
+msgid ""
+"Please return to your library site, and choose \"log in to BNF\", and "
+"try again"
+msgstr ""
+"Gå tilbage til dit bibliotekssite og vælg \"Login i "
+"Delingstjenesten\" i dropdown-menuen \"Indhold\", og prøv igen"
+
+msgid "Find content for @name"
+msgstr "Find indhold til @name"
+
+msgctxt "DPL logging"
+msgid "New roles added to user: @roles"
+msgstr "Nye roller tilføjet til bruger: @roles"
+
+msgctxt "DPL logging"
+msgid "Old roles removed from user: @roles"
+msgstr "Gamle roller fjernet fra bruger: @roles"
+
+msgctxt "DPL logging"
+msgid "Password was updated"
+msgstr "Adgangskoden blev opdateret"
+
+msgctxt "DPL logging"
+msgid "@label (@key): @original_value changed to @value"
+msgstr "@label (@key): @original_value ændret til @value"
+
+msgid ""
+"<br /><br />\"@title\" is being used in configuration. Before you can "
+"delete it, you need to remove it from the following configuration "
+"fields:"
+msgstr ""
+"<br /><br />\"@title\" anvendes i konfigurationen. Før du kan slette "
+"den, skal du fjerne den fra følgende konfigurationsfelter:"
+
+msgid "<br /><a href=\":url\">@title</a>"
+msgstr "<br /><a href=\":url\">@title</a>"
+
+msgctxt "Global (Aria)"
+msgid "Close blocked patron modal"
+msgstr "Luk pop-up til blokeret bruger"
+
+msgctxt "Global"
+msgid "Blocked patron body text (d)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information "
+
+msgctxt "Global"
+msgid "Blocked patron title text (d)"
+msgstr "Din bruger er blokeret"
+
+msgctxt "Global"
+msgid ""
+"You are therefore not able to borrow or reserve materials from the "
+"library"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information"
+
+msgctxt "Global"
+msgid "Pay your fees here"
+msgstr "Betal dine gebyrer og erstatninger her"
+
+msgctxt "Global"
+msgid "You have exceeded your fee limit"
+msgstr "Du har overskredet gebyrgrænsen"
+
+msgctxt "Global"
+msgid "Blocked patron body text (f)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information "
+
+msgctxt "Global"
+msgid "Blocked patron title text (f)"
+msgstr "Din bruger er blokeret"
+
+msgctxt "Global (Aria)"
+msgid "This modal alerts you, that your patron has been blocked"
+msgstr "Denne pop-up advarer dig om at din bruger er blokeret"
+
+msgctxt "Global"
+msgid "Blocked patron body text (o)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information "
+
+msgctxt "Global"
+msgid "Blocked reason modal title (o)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information "
+
+msgctxt "Global"
+msgid "Blocked patron body text (s)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information "
+
+msgctxt "Global"
+msgid "Blocked patron title text (s)"
+msgstr "Din bruger er blokeret"
+
+msgctxt "Global"
+msgid ""
+"You therefore cannot reserve, borrow or renew loans. Please contact "
+"the library for further information (u)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information"
+
+msgctxt "Global"
+msgid "Your user is blocked (u)"
+msgstr "Din bruger er blokeret"
+
+msgctxt "Global"
+msgid ""
+"You therefore cannot reserve, borrow or renew loans. Please contact "
+"the library for further information (w)"
+msgstr ""
+"Du kan derfor ikke reservere, låne eller forny lån. Kontakt "
+"biblioteket for yderligere information."
+
+msgctxt "Global"
+msgid "Your user is blocked (w)"
+msgstr "Din bruger er blokeret"
+
+msgctxt "Global"
+msgid "Yes, renew"
+msgstr "Ja, forny"
+
+msgctxt "Global"
+msgid "Are you sure you want to renew?"
+msgstr "Er du sikker på at du vil forny?"
+
+msgctxt "Global"
+msgid "accept modal aria description text"
+msgstr "Accepter"
+
+msgctxt "Global"
+msgid "accept modal aria label text"
+msgstr "Accepter"
+
+msgctxt "Global"
+msgid "If you renew your fee will be raised"
+msgstr ""
+"Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr "
+"bliver forhøjet, fordi dine lån opsplittes i flere"
+
+msgctxt "Global"
+msgid "Cancel renewal"
+msgstr "Forny ikke"
+
+msgctxt "Global"
+msgid "Your fee is raised"
+msgstr "Dit gebyr kan blive forhøjet"
+
+msgctxt "Global"
+msgid "add @title to favorites list"
+msgstr "tilføj @title til huskelisten"
+
+msgctxt "React apps (Global error handling)"
+msgid "Close"
+msgstr "Luk"
+
+msgctxt "React apps (Global error handling)"
+msgid "An error occurred"
+msgstr ""
+"Der opstod en uventet fejl - du kan prøve at opdatere siden, prøve "
+"igen senere eller kontakte biblioteket."
+
+msgctxt "Global"
+msgid "Animated series"
+msgstr "Animeret serie"
+
+msgctxt "Global"
+msgid "Audio books"
+msgstr "Lydbøger"
+
+msgctxt "Global"
+msgid "Books"
+msgstr "Bøger"
+
+msgctxt "Global"
+msgid "E-books"
+msgstr "E-bøger"
+
+msgctxt "Global"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "Global"
+msgid "Games"
+msgstr "Spil"
+
+msgctxt "Global"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "Global"
+msgid "Available"
+msgstr "Tilgængelig"
+
+msgctxt "Global"
+msgid "Unavailable"
+msgstr "Udlånt"
+
+msgctxt "Global"
+msgid "by"
+msgstr "af"
+
+msgctxt "Global"
+msgid "Change interest period"
+msgstr "Skift interesseperiode"
+
+msgctxt "Global"
+msgid "Change pickup location"
+msgstr "Skift afhentningsbibliotek"
+
+msgctxt "Global"
+msgid "Choose one"
+msgstr "Vælg"
+
+msgctxt "Global"
+msgid "Close change email modal"
+msgstr "Luk pop-up til at skifte email"
+
+msgctxt "Global"
+msgid "Close interest period modal"
+msgstr "Luk pop-up til at skifte interesseperiode"
+
+msgctxt "Global"
+msgid "Close pickup location modal"
+msgstr "Luk pop-up til at skifte afhentningssted"
+
+msgctxt "Global"
+msgid "Close modal aria-label sms"
+msgstr "Luk pop-up"
+
+msgctxt "Global"
+msgid "Number @count in line"
+msgstr "Nummer @count i køen"
+
+msgctxt "Global"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to delete a selected reservation, or multiple selected "
+"reservations"
+msgstr ""
+"Denne knap åbner en pop-up som gør det muligt at slette en eller "
+"flere reserveringer"
+
+msgctxt "Global"
+msgid "Cancel"
+msgstr "OK"
+
+msgctxt "Global"
+msgid "Close delete reservation modal"
+msgstr "Luk pop-up til at slette reservering"
+
+msgctxt "Global"
+msgid "Cancel reservation"
+msgstr "Slet reservering"
+
+msgctxt "Global"
+msgid "Cancel reservations"
+msgstr "Slet reserveringer"
+
+msgctxt "Global"
+msgid "Processing..."
+msgstr "Indlæser..."
+
+msgctxt "Global"
+msgid "Do you want to cancel your reservation?"
+msgstr "Vil du slette din reservering?"
+
+msgctxt "Global"
+msgid "Do you want to cancel your reservations?"
+msgstr "Ønsker du at annullere dine reservationer?"
+
+msgctxt "Global"
+msgid "Something went wrong deleting your reservation. Please try again."
+msgstr "Noget gik galt. Prøv igen senere"
+
+msgctxt "Global"
+msgid "Deleting your reservation failed"
+msgstr "Din reservering kunne ikke slettes"
+
+msgctxt "Global"
+msgid "One reservation was deleted"
+msgstr "En reservering blev slettet"
+
+msgctxt "Global"
+msgid "@count reservations were deleted"
+msgstr "@count reserveringer blev slettet"
+
+msgctxt "Global"
+msgid "Reservation deleted"
+msgstr "Din reservering er slettet"
+
+msgctxt "Global"
+msgid "Reservations deleted"
+msgstr "Dine reserveringer er slettet"
+
+msgctxt "Global"
+msgid "You cannot regret this action"
+msgstr "Du kan ikke fortryde"
+
+msgctxt "Global"
+msgid "Digital reservations"
+msgstr "Digitale reserveringer"
+
+msgctxt "Global"
+msgid "et al."
+msgstr "et al."
+
+msgctxt "React apps (Global error handling)"
+msgid "Close error message"
+msgstr "Luk fejlbesked"
+
+msgctxt "Global"
+msgid "Find on shelf expand button explanation"
+msgstr "Forklarende tekst til Find på hylden-knap"
+
+msgctxt "Global"
+msgid "Find @work on shelf in the @branch branch"
+msgstr ""
+"\n"
+"Find @work på hylden i @branch"
+
+msgctxt "Global"
+msgid "Renewable (@count)"
+msgstr "Forny (@count)"
+
+msgctxt "Global"
+msgid "Choose all"
+msgstr "Vælg alle"
+
+msgctxt "Global"
+msgid ""
+"This modal groups loans after due date and makes it possible to renew "
+"said loans"
+msgstr ""
+"Denne pop-up grupperer lån efter afleveringsdato og gør det muligt "
+"at forny disse lån"
+
+msgctxt "Global"
+msgid "Due date @date"
+msgstr "Afleveringsfrist @date"
+
+msgctxt "Global"
+msgid "Read more about fees"
+msgstr "Se vores takster"
+
+msgctxt "Global"
+msgid "Expires @date"
+msgstr "Udløber automatisk @date"
+
+msgctxt "Global"
+msgid "Close renew loans modal"
+msgstr "Luk pop-up til at forny lån"
+
+msgctxt "Global"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr ""
+"Afleveringsfristen er overskredet, du vil derfor blive pålagt et "
+"gebyr når du afleverer"
+
+msgctxt "Global"
+msgid "Go to material details"
+msgstr "Se detaljer"
+
+msgctxt "Global"
+msgid "Select @label for renewal"
+msgstr "Vælg @label til fornyelse"
+
+msgctxt "Global"
+msgid "This modal makes it possible to renew materials"
+msgstr "Denne pop-up gør det muligt at forny dine lån"
+
+msgctxt "Global"
+msgid "Close modal with grouped loans"
+msgstr "Luk pop-up med grupperede lån"
+
+msgctxt "Global"
+msgid "Lent by another library"
+msgstr "Udlånt af et andet bibliotek"
+
+msgctxt "Global"
+msgid "Can't be renewed further"
+msgstr "Kan ikke fornyes yderligere"
+
+msgctxt "Global"
+msgid "Reserved by another patron"
+msgstr "Reserveret af en anden låner"
+
+msgctxt "Global"
+msgid "Go to @label material details"
+msgstr "Gå til detaljer for @label"
+
+msgctxt "Global"
+msgid "Close modal with grouped reservations"
+msgstr "Luk pop-up med grupperede reserveringer"
+
+msgctxt "Global"
+msgid "This modal makes it possible to delete reservations"
+msgstr "Denne pop-up gør det muligt at slette reserveringer"
+
+msgctxt "Global"
+msgid "Advanced search"
+msgstr "Avanceret søgning"
+
+msgctxt "Global"
+msgid "in series"
+msgstr "i serien"
+
+msgctxt "Global"
+msgid "in"
+msgstr "i"
+
+msgctxt "Global"
+msgid "Start typing in order to search"
+msgstr "Søg efter bøger, film, musik og mere"
+
+msgctxt "Global"
+msgid "Loading"
+msgstr "Indlæser..."
+
+msgctxt "Global"
+msgid "loading"
+msgstr "henter"
+
+msgctxt "Loan list"
+msgid "+ 1 other material"
+msgstr "+ 1 andet materiale"
+
+msgctxt "Loan list"
+msgid "+ @count other materials"
+msgstr "+ @count flere materialer"
+
+msgctxt "Global"
+msgid "Longer return time"
+msgstr "Længere afleveringstid"
+
+msgctxt "Global"
+msgid "Returned too late"
+msgstr "Overskredne lån"
+
+msgctxt "Global"
+msgid "To be returned soon"
+msgstr "Skal snart afleveres"
+
+msgctxt "Global"
+msgid "and"
+msgstr "og"
+
+msgctxt "Global"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Global"
+msgid "Close material details modal"
+msgstr "Luk pop-up med detaljevisning af materiale"
+
+msgctxt "Global"
+msgid "Expires"
+msgstr "Udløber automatisk"
+
+msgctxt "Global"
+msgid "View material"
+msgstr "Se materiale"
+
+msgctxt "Global"
+msgid "Loan date"
+msgstr "Udlånsdato"
+
+msgctxt "Global"
+msgid "Material Item Number"
+msgstr "Materialenummer"
+
+msgctxt "Global"
+msgid ""
+"This modal shows material details, and makes it possible to renew a "
+"material, of that material is renewable"
+msgstr ""
+"Denne pop-up viser detaljer for materialet og gør det muligt at "
+"slette en reservering"
+
+msgctxt "Global"
+msgid "Expired"
+msgstr "Udløbet"
+
+msgctxt "Global"
+msgid "Afleveres"
+msgstr "Afleveres"
+
+msgctxt "Global"
+msgid "Renew your loans"
+msgstr "Forny dine lån"
+
+msgctxt "Global"
+msgid "Set date for when your interest for the material will expire."
+msgstr "Indstil interesseperiode"
+
+msgctxt "Global"
+msgid "Change interest deadline"
+msgstr "Skift udløbsdato for interesseperiode"
+
+msgctxt "Global"
+msgid ""
+"Change the amount of time after which you're no longer interested in "
+"this material."
+msgstr "Skift interesseperiode"
+
+msgctxt "Global"
+msgid "Choose pickup library"
+msgstr "Vælg afhentningsbibliotek"
+
+msgctxt "Global"
+msgid "Decide at which library you want to pickup the material."
+msgstr "Vælg hvor du vil afhente dine reserveringer"
+
+msgctxt "Global"
+msgid "Change pickup location for your reservation."
+msgstr "Skift afhentningssted for din reservering"
+
+msgctxt "Global"
+msgid "Multiselect - all option"
+msgstr "Vælg alle"
+
+msgctxt "Global"
+msgid "Your search has 0 results"
+msgstr "Din søgning har 0 resultater"
+
+msgctxt "Global"
+msgid "nr."
+msgstr "nr. "
+
+msgctxt "Global"
+msgid "1 month"
+msgstr "1 måned"
+
+msgctxt "Global"
+msgid "1 year"
+msgstr "1 år"
+
+msgctxt "Global"
+msgid "Borchk user blocked by agency text"
+msgstr "Borchk-bruger blokeret af agenturtekst"
+
+msgctxt "Global"
+msgid "Borchk user no longer exists on agency"
+msgstr "Borchk-bruger findes ikke længere hos agentur"
+
+msgctxt "Global"
+msgid "Borchk user not verified"
+msgstr "Borchk-bruger ikke verificeret"
+
+msgctxt "Global"
+msgid "Close"
+msgstr "Luk"
+
+msgctxt "Global"
+msgid ""
+"The agency is not subscribed to the service. You can order the digital "
+"copy by contacting the agency."
+msgstr ""
+"Biblioteket abonnerer ikke på tjenesten. Du kan bestille den digitale "
+"kopi ved at kontakte biblioteket."
+
+msgctxt "Global"
+msgid ""
+"The pickup branch is not valid. You can order the digital copy by "
+"contacting the agency."
+msgstr ""
+"Afhentningsfilialen er ikke gyldig. Du kan bestille den digitale kopi "
+"ved at kontakte biblioteket."
+
+msgctxt "Global"
+msgid ""
+"The client configuration is missing. You can order the digital copy by "
+"contacting the agency."
+msgstr ""
+"Klientkonfigurationen mangler. Du kan bestille den digitale kopi ved "
+"at kontakte biblioteket."
+
+msgctxt "Global"
+msgid "Error missing municipality agency ID"
+msgstr "Fejl - mangler kommunal agentur-ID"
+
+msgctxt "Global"
+msgid "Error municipality agency ID not found"
+msgstr "Fejl - kommunal agentur-ID blev ikke fundet"
+
+msgctxt "Global"
+msgid ""
+"The material is not reservable. You can order the digital copy by "
+"contacting the agency."
+msgstr ""
+"Materialet kan ikke reserveres. Du kan bestille den digitale kopi ved "
+"at kontakte biblioteket."
+
+msgctxt "Global"
+msgid ""
+"You are not logged in. You can order the digital copy by contacting "
+"the agency."
+msgstr ""
+"Du er ikke logget ind. Du kan bestille en digital kopi ved at kontakte "
+"institutionen."
+
+msgctxt "Global"
+msgid ""
+"The digital copy has been ordered. You will receive an email when the "
+"digital copy is ready."
+msgstr ""
+"Den digitale kopi er bestilt. Du vil modtage en email, når den "
+"digitale kopi er klar."
+
+msgctxt "Global"
+msgid "Digital copy receipt"
+msgstr "Digital kopi kvittering"
+
+msgctxt "Global"
+msgid "Unknown user"
+msgstr "Ukendt bruger"
+
+msgctxt "Global"
+msgid "out of"
+msgstr "ud af"
+
+msgctxt "Global"
+msgid "Receive emails about your loans, reservations, and so forth"
+msgstr "Modtag e-mails om dine lån, reserveringer osv."
+
+msgctxt "Global"
+msgid "E-mail"
+msgstr "E-mail"
+
+msgctxt "Global"
+msgid "patron page contact info body text"
+msgstr ""
+"Husk at opdatere dine oplysninger, hvis du skifter mobilnummer "
+"eller\n"
+"e-mail."
+
+msgctxt "Global"
+msgid "CONTACT INFORMATION"
+msgstr "KONTAKTOPLYSNINGER"
+
+msgctxt "Global"
+msgid "Receive text messages about your loans, reservations, and so forth"
+msgstr "Modtag sms om dine lån, reserveringer osv."
+
+msgctxt "Global"
+msgid "Phone number"
+msgstr "Mobilnummer"
+
+msgctxt "Global"
+msgid "Change current pin by entering a new pin and saving"
+msgstr "Skift nuværende kode ved at indtaste en ny kode og gem"
+
+msgctxt "Global"
+msgid "PINCODE"
+msgstr "PINKODE"
+
+msgctxt "Global"
+msgid "Confirm new pin"
+msgstr "Bekræft ny pinkode"
+
+msgctxt "Global"
+msgid ""
+"The phone number must be 6 to 15 characters in length and should be "
+"comprised solely of numbers or begin with a +"
+msgstr "Mobilnummeret skal være mellem 6 og 15 cifre "
+
+msgctxt "Global"
+msgid "This modal makes it possible to pause your physical reservations"
+msgstr ""
+"Denne pop-up gør det muligt at sætte dine fysiske reserveringer på "
+"pause"
+
+msgctxt "Global"
+msgid "Pause reservation below inputs text"
+msgstr ""
+"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
+"ferie."
+
+msgctxt "Global"
+msgid ""
+"Pause your reservations early, since reservations that are already "
+"being processed, will not be paused."
+msgstr ""
+"Sæt dine reserveringer på fysiske materialer på pause i god tid, da "
+"reserveringer som allerede er i proces ikke kan sættes på hold."
+
+msgctxt "Global"
+msgid "Cancel pause"
+msgstr "Fjern pause"
+
+msgctxt "Global"
+msgid "Close pause reservations modal"
+msgstr "Luk pop-up til at sætte reserveringer på pause"
+
+msgctxt "Global"
+msgid "Pause period"
+msgstr "Pauseperiode"
+
+msgctxt "Global"
+msgid "Choose pause period"
+msgstr "Vælg pauseperiode"
+
+msgctxt "Global"
+msgid "Pause reservations on physical items"
+msgstr "Sæt dine reserveringer på pause"
+
+msgctxt "Global"
+msgid "Read more"
+msgstr "Læs mere om pausefunktionen"
+
+msgctxt "Global"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "Global"
+msgid "Physical reservations"
+msgstr "Reserveringer på fysiske materialer"
+
+msgctxt "Global"
+msgid "Pick up before @date"
+msgstr "Hent senest @date"
+
+msgctxt "Global"
+msgid "Choose pickup branch"
+msgstr "Vælg afhentningssted"
+
+msgctxt "Global"
+msgid "Nothing selected"
+msgstr "Intet valgt"
+
+msgctxt "Global"
+msgid "New pin"
+msgstr "Ny pinkode"
+
+msgctxt "Global"
+msgid ""
+"The pincode should be minimum @pincodeLengthMin and maximum "
+"@pincodeLengthMax characters long"
+msgstr "Pinkoden skal være på @pincodeLengthMin cifre"
+
+msgctxt "Global"
+msgid "The pincodes are not the same"
+msgstr "Pinkoderne er ikke identiske"
+
+msgctxt "Global"
+msgid "Length of 4 characters"
+msgstr "Pinkode skal være 4 cifre"
+
+msgctxt "Global"
+msgid "Audiobook"
+msgstr "Lydbog"
+
+msgctxt "Global"
+msgid "E-book"
+msgstr "E-bog"
+
+msgctxt "Global"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "Global"
+msgid "Ready"
+msgstr "Klar"
+
+msgctxt "Global"
+msgid "Ready for pickup"
+msgstr "Klar til lån"
+
+msgctxt "Global"
+msgid "Remove reservation (@amount)"
+msgstr "Fjern reservering (@amount)"
+
+msgctxt "Global"
+msgid "Remove reservations (@amount)"
+msgstr "Slet reserveringer (@amount)"
+
+msgctxt "Global"
+msgid "remove @title from favorites list"
+msgstr "fjern @title fra huskelisten"
+
+msgctxt "Renew loan"
+msgid "Renew"
+msgstr "Forny"
+
+msgctxt "Renew loan"
+msgid "Cannot be renewed"
+msgstr "Kan ikke fornyes"
+
+msgctxt "Global"
+msgid "Ok"
+msgstr "Ok"
+
+msgctxt "Global"
+msgid "Something went wrong renewing your loans. Please try again."
+msgstr "Noget gik galt. Prøv igen senere."
+
+msgctxt "Global"
+msgid "Renewing your loans failed"
+msgstr "Dine lån kunne ikke fornyes"
+
+msgctxt "Global"
+msgid "For some reason, no one of your loans could be renewed."
+msgstr "Ingen af dine lån kunne fornyes. Kontakt evt. biblioteket."
+
+msgctxt "Global"
+msgid "No loans could be renewed"
+msgstr "Ingen lån kunne fornyes"
+
+msgctxt "Global"
+msgid ""
+"{\"type\":\"plural\",\"text\":[\"1 loan has been renewed.\",\"@count "
+"loans have been renewed.\"]}"
+msgstr ""
+"{\"type\":\"plural\",\"text\":[\"1 lån blev fornyet.\",\"@count lån "
+"blev fornyet.\"]}"
+
+msgctxt "Global"
+msgid "You have renewed your loans"
+msgstr "Du har fornyet de lån, der kunne fornys"
+
+msgctxt "Global"
+msgid "Something went wrong renewing your loan. Please try again."
+msgstr "Noget gik galt. Prøv venligst igen senere."
+
+msgctxt "Global"
+msgid "Renewal of your loan failed"
+msgstr "Dine lån kunne ikke fornyes"
+
+msgctxt "Global"
+msgid "For some reason, your loan could not be renewed."
+msgstr "Dit lån kunne ikke fornyes. Kontakt evt. biblioteket."
+
+msgctxt "Global"
+msgid "The loan could not be renewed"
+msgstr "Lånet kunne ikke fornyes"
+
+msgctxt "Global"
+msgid "1 loan was renewed."
+msgstr "1 lån blev fornyet"
+
+msgctxt "Global"
+msgid "You have renewed your loan"
+msgstr "Du har fornyet dit lån"
+
+msgctxt "Renew loan"
+msgid "Processing..."
+msgstr "Indlæser..."
+
+msgctxt "Global"
+msgid "Borrow before @date"
+msgstr "Lån før @date"
+
+msgctxt "Global"
+msgid "Remove your reservation"
+msgstr "Slet din reservering"
+
+msgctxt "Global"
+msgid "Apply changes"
+msgstr "Gem ændringer"
+
+msgctxt "Global"
+msgid "Date of reservation"
+msgstr "Reserveringsdato"
+
+msgctxt "Global"
+msgid "Borrow before"
+msgstr "Lån før"
+
+msgctxt "Global"
+msgid "Your reservation expires @date!"
+msgstr "Din reservering udløber @date!"
+
+msgctxt "Global"
+msgid "Pickup deadline"
+msgstr "Afhentningsfrist"
+
+msgctxt "Global"
+msgid "Not interested after"
+msgstr "Ikke interesseret efter"
+
+msgctxt "Global"
+msgid "@count queued"
+msgstr "@count i køen"
+
+msgctxt "Global"
+msgid "Others are queueing for this material"
+msgstr "Andre står i kø til dette materiale"
+
+msgctxt "Global"
+msgid "Pickup branch"
+msgstr "Afhentningssted"
+
+msgctxt "Global"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "Global"
+msgid "At the moment you have 0 reservations"
+msgstr "Du har i øjeblikket 0 reserveringer"
+
+msgctxt "Global"
+msgid "day"
+msgstr "dag"
+
+msgctxt "Global"
+msgid "Online access"
+msgstr "Online"
+
+msgctxt "Global"
+msgid "At the moment you have 0 reservations on digital items"
+msgstr "Du har i øjeblikket 0 reserveringer på digitale materialer"
+
+msgctxt "Global"
+msgid "You are at the front of the queue"
+msgstr "Du er forrest i køen"
+
+msgctxt "Global"
+msgid "Your reservations"
+msgstr "Dine reserveringer"
+
+msgctxt "Global"
+msgid "Reservations have been paused in the following time span:"
+msgstr "Reserveringer er sat på pause:"
+
+msgctxt "Global"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to pause physical reservations"
+msgstr "Denne knap åbner en pop-up hvor du kan sætte reserveringer på pause"
+
+msgctxt "Global"
+msgid "Settings"
+msgstr "Indstillinger"
+
+msgctxt "Global"
+msgid "Your reservations are paused"
+msgstr "Dine fysiske reserveringer er sat på pause"
+
+msgctxt "Global"
+msgid "At the moment you have 0 physical reservations"
+msgstr "Du har i øjeblikket 0 reserveringer på fysiske materialer"
+
+msgctxt "Global"
+msgid "At the moment you have 0 reservations ready for pickup"
+msgstr "Du har ingen reserveringer klar til afhentning"
+
+msgctxt "Global"
+msgid "This material is ready for pickup"
+msgstr "Materialet er klar til lån"
+
+msgctxt "Global"
+msgid "You are the only person queued for this material"
+msgstr "Du er den eneste i kø til dette materiale"
+
+msgctxt "Global"
+msgid "This material has @count people in queue before you"
+msgstr "Der står @count i kø foran dig"
+
+msgctxt "Global"
+msgid "This material is ready in 1 day"
+msgstr "Materialet er klar til lån om en dag"
+
+msgctxt "Global"
+msgid "This material is ready in @count days"
+msgstr "Materialet er klar om @count dage"
+
+msgctxt "Global"
+msgid "You are in the reservation queue"
+msgstr "Du er i reserveringskø"
+
+msgctxt "Global"
+msgid "Available in @count days"
+msgstr "Klar til lån om @count dage"
+
+msgctxt "Global"
+msgid "days"
+msgstr "dage"
+
+msgctxt "Global"
+msgid "queued"
+msgstr "I kø"
+
+msgctxt "Global"
+msgid "There are @count people in the queue before you"
+msgstr "Der er @count i kø før dig"
+
+msgctxt "Global"
+msgid "Still in queue"
+msgstr "Stadig i kø"
+
+msgctxt "Global"
+msgid "Ready for you"
+msgstr "Klar til dig"
+
+msgctxt "Global"
+msgid "Showing @itemsShown out of @hitcount items"
+msgstr "Viser @itemsShown ud af @hitcount elementer"
+
+msgctxt "Global"
+msgid "Click the button below to close this window"
+msgstr "Klik på knappen for at lukke vinduet"
+
+msgctxt "Global"
+msgid "Your reservation has been changed"
+msgstr "Din reservering er blevet ændret"
+
+msgctxt "Global"
+msgid "Dropdown with additional search functions"
+msgstr "Dropdown med yderligere søgefunktioner"
+
+msgctxt "Global"
+msgid "Liked"
+msgstr "Husk"
+
+msgctxt "Global"
+msgid "Login"
+msgstr "Log ind"
+
+msgctxt "Global"
+msgid "Screen reader modal description for email"
+msgstr "Skærmlæser modulbeskrivelse for email"
+
+msgctxt "Global"
+msgid "Screen reader modal description for interest period"
+msgstr "Beskrivelse til skærmlæser af pop-up vedr. interesseperiode"
+
+msgctxt "Global"
+msgid "Screen reader modal description for pickup"
+msgstr ""
+"Beskrivelse til skærmlæser af pop-up vedr. valg af "
+"afhentningsbibliotek"
+
+msgctxt "Global"
+msgid "Screen reader modal description for sms"
+msgstr "Skærmlæser modulbeskrivelse til sms"
+
+msgctxt "Global"
+msgid "Search button"
+msgstr "Søgeknap"
+
+msgctxt "Global"
+msgid "Search header input"
+msgstr "Søgeheader input"
+
+msgctxt "Global"
+msgid "Input must contain at least one non-whitespace character."
+msgstr "Input skal indeholde minimum ét tegn"
+
+msgctxt "Global"
+msgid "Shift"
+msgstr "Skift"
+
+msgctxt "Global"
+msgid "show more"
+msgstr "vis flere"
+
+msgctxt "Global"
+msgid "6 months"
+msgstr "6 måneder"
+
+msgctxt "Global"
+msgid "Expires soon"
+msgstr "Udløber snart"
+
+msgctxt "Global"
+msgid "Author"
+msgstr "Forfatter"
+
+msgctxt "Global"
+msgid "Topic"
+msgstr "Emne"
+
+msgctxt "Global"
+msgid "Work"
+msgstr "Titel"
+
+msgctxt "Global"
+msgid "Subject number"
+msgstr "Emnetal"
+
+msgctxt "Global"
+msgid "3 months"
+msgstr "3 måneder"
+
+msgctxt "Global"
+msgid "2 months"
+msgstr "2 måneder"
+
+msgctxt "Search Result"
+msgid "Fictional characters"
+msgstr "Fiktive personer"
+
+msgctxt "Search Result"
+msgid "Game platform"
+msgstr "Spilplatform"
+
+msgctxt "Search Result"
+msgid "Genre and form"
+msgstr "Genre"
+
+msgctxt "Search Result"
+msgid "Main languages"
+msgstr "Sprog"
+
+msgctxt "Search Result"
+msgid "Material types"
+msgstr "Materialetyper"
+
+msgctxt "Search Result"
+msgid "Material types general"
+msgstr "Materialetype"
+
+msgctxt "Search Result"
+msgid "Material types specific"
+msgstr "Format"
+
+msgctxt "Search Result"
+msgid "Subjects"
+msgstr "Emner"
+
+msgctxt "Search Result"
+msgid "Work types"
+msgstr "Materialetype"
+
+msgctxt "Search Result"
+msgid "Year"
+msgstr "År"
+
+msgctxt "Search Result"
+msgid "Filter list"
+msgstr "Flere filtre"
+
+msgctxt "Search Result"
+msgid "Available filters"
+msgstr "Tilgængelige filtre"
+
+msgctxt "Search Result"
+msgid "Selected filters"
+msgstr "Valgte filtre"
+
+msgctxt "Search Result"
+msgid "Invalid search"
+msgstr "Ugyldig søgning"
+
+msgctxt "Search Result"
+msgid ""
+"Your search is invalid. Please try again. In order to perform a valid "
+"search, you need to include at least three letters."
+msgstr ""
+"Din søgning virkede ikke. Prøv igen. For at foretage en søgning, "
+"skal der søges på minimum 3 tegn."
+
+msgctxt "Search Result"
+msgid "results"
+msgstr "resultater"
+
+msgctxt "Search Result"
+msgid "Show results"
+msgstr "Vis resultater"
+
+msgctxt "Search Result"
+msgid "Showing results for \"@query\""
+msgstr "Viser resultater for \"@query\""
+
+msgctxt "Search Result"
+msgid "Showing"
+msgstr "Viser"
+
+msgctxt "Search Result"
+msgid "Switch to the results for the library content."
+msgstr "Vis i stedet resultater fra bibliotekets hjemmeside for"
+
+msgctxt "advanced search"
+msgid "source"
+msgstr "Kilde"
+
+msgctxt "advanced search"
+msgid "add row"
+msgstr "Tilføj række"
+
+msgctxt "advanced search"
+msgid "all indexes"
+msgstr "Søgning i"
+
+msgctxt "advanced search"
+msgid "audience"
+msgstr "Målgruppe"
+
+msgctxt "advanced search"
+msgid "copy string"
+msgstr "Kopier søgestreng"
+
+msgctxt "advanced search"
+msgid "creator"
+msgstr "Bidragyder"
+
+msgctxt "advanced search"
+msgid "edition"
+msgstr "Udgave"
+
+msgctxt "advanced search"
+msgid "date"
+msgstr "Dato"
+
+msgctxt "advanced search"
+msgid "dk5"
+msgstr "DK5"
+
+msgctxt "advanced search"
+msgid "edit cql"
+msgstr "Rediger CQL"
+
+msgctxt "advanced search"
+msgid "accessibility"
+msgstr "Fysisk/online"
+
+msgctxt "advanced search"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "advanced search"
+msgid "article"
+msgstr "Artikel"
+
+msgctxt "advanced search"
+msgid "audio book"
+msgstr "Lydbog"
+
+msgctxt "advanced search"
+msgid "book"
+msgstr "Bog"
+
+msgctxt "advanced search"
+msgid "ebook"
+msgstr "Ebog"
+
+msgctxt "advanced search"
+msgid "fiction"
+msgstr "Skønlitteratur"
+
+msgctxt "advanced search"
+msgid "holding"
+msgstr "På hylden"
+
+msgctxt "advanced search"
+msgid "literature form"
+msgstr "Skøn/faglitteratur"
+
+msgctxt "advanced search"
+msgid "material type"
+msgstr "Materialetype"
+
+msgctxt "advanced search"
+msgid "movie"
+msgstr "Film"
+
+msgctxt "advanced search"
+msgid "music"
+msgstr "Musik"
+
+msgctxt "advanced search"
+msgid "Non-fiction"
+msgstr "Faglitteratur"
+
+msgctxt "advanced search"
+msgid "online"
+msgstr "Online"
+
+msgctxt "advanced search"
+msgid "physical"
+msgstr "Fysisk"
+
+msgctxt "advanced search"
+msgid "genre"
+msgstr "Genre"
+
+msgctxt "advanced search"
+msgid "identifier"
+msgstr "ID"
+
+msgctxt "advanced search"
+msgid "Input field @inputNumber"
+msgstr "Inputfelt @inputNumber"
+
+msgctxt "advanced search"
+msgid "search term"
+msgstr "Søg på titel, forfatter mv."
+
+msgctxt "advanced search"
+msgid "language"
+msgstr "Sprog"
+
+msgctxt "advanced search"
+msgid "link to this search"
+msgstr "Link til denne søgning"
+
+msgctxt "advanced search"
+msgid "main creator"
+msgstr "Forfatter"
+
+msgctxt "advanced search"
+msgid "main title"
+msgstr "Hovedtitel"
+
+msgctxt "advanced search"
+msgid "-"
+msgstr "-"
+
+msgctxt "advanced search"
+msgid "CQL search string"
+msgstr "CQL søgestreng"
+
+msgctxt "advanced search"
+msgid "publisher"
+msgstr "Udgiver"
+
+msgctxt "advanced search"
+msgid "remove row @inputNumber"
+msgstr "Fjern række @inputNumber"
+
+msgctxt "advanced search"
+msgid "reset"
+msgstr "Nulstil"
+
+msgctxt "advanced search"
+msgid "search"
+msgstr "Søg"
+
+msgctxt "advanced search"
+msgid "subject"
+msgstr "Emne"
+
+msgctxt "advanced search"
+msgid "advanced search"
+msgstr "Avanceret søgning"
+
+msgctxt "advanced search"
+msgid "type"
+msgstr "Type"
+
+msgctxt "advanced search"
+msgid "and"
+msgstr "og"
+
+msgctxt "advanced search"
+msgid "not"
+msgstr "ikke"
+
+msgctxt "advanced search"
+msgid "or"
+msgstr "eller"
+
+msgctxt "advanced search"
+msgid "Link copied to clipboard"
+msgstr "Link kopieret til udklipsholder"
+
+msgctxt "advanced search"
+msgid "Copied"
+msgstr "Kopieret"
+
+msgctxt "advanced search"
+msgid "CQL search external help link text"
+msgstr "Find søgekoder til brug ved CQL-søgning"
+
+msgctxt "advanced search"
+msgid "CQL search"
+msgstr "CQL søgning"
+
+msgctxt "advanced search"
+msgid "Loading results..."
+msgstr "Henter resultater..."
+
+msgctxt "advanced search"
+msgid "showing materials"
+msgstr "Viser materialer"
+
+msgctxt "advanced search"
+msgid "Back to advanced search"
+msgstr "Tilbage til avanceret søgning"
+
+msgctxt "advanced search"
+msgid "location"
+msgstr "Opstilling"
+
+msgctxt "advanced search"
+msgid "Add a comma separated list for multiple locations"
+msgstr "Sæt komma mellem opstillinger for at filtrere på flere"
+
+msgctxt "advanced search"
+msgid "sublocation"
+msgstr "Delopstilling"
+
+msgctxt "advanced search"
+msgid "Add a comma separated list for multiple sublocations"
+msgstr "Sæt komma mellem delopstillinger for at filtrere på flere"
+
+msgctxt "advanced search"
+msgid "Branch"
+msgstr "Bibliotek"
+
+msgctxt "advanced search"
+msgid "Add a comma separated list for multiple branches"
+msgstr "Sæt komma mellem biblioteker for at filtrere på flere"
+
+msgctxt "advanced search"
+msgid "Department"
+msgstr "Afdeling"
+
+msgctxt "advanced search"
+msgid "E.g. \"Adult\" or \"Children\""
+msgstr "F.eks. \"Børn\" eller \"Voksen\""
+
+msgctxt "advanced search"
+msgid "Date for first accession date"
+msgstr "Filtrering på opr. indkøbsdato"
+
+msgctxt "advanced search"
+msgid "Choose operator"
+msgstr "Vælg operator"
+
+msgctxt "advanced search"
+msgid ""
+"The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, "
+"”DAYS” and ”MONTHS” can also be used. For example ”NOW - 90 "
+"DAYS”. Remember to add a space on both sides of the plus and minus "
+"symbols."
+msgstr ""
+"Datoformatet for \"firstaccessiondateitem\" skal være YYYY-MM-DD, "
+"f.eks. 2024-12-24. Termerne \"NOW\", \"DAYS\" og \"MONTHS\" kan også "
+"bruges til at angive interval, f.eks. \"NOW - 90 DAYS\". HUSK at lave "
+"mellemrum på begge sider af plus- og minussymboler."
+
+msgctxt "advanced search"
+msgid "Input desired date in format ”YYYY-MM-DD”"
+msgstr "Indtast ønsket dato i formatet ”ÅÅÅÅ-MM-DD”"
+
+msgctxt "advanced search"
+msgid "Sort by"
+msgstr "Sorter efter"
+
+msgctxt "advanced search"
+msgid "Relevance"
+msgstr "Bedste match"
+
+msgctxt "advanced search"
+msgid "Latest publication date"
+msgstr "Udgivelsesdato"
+
+msgctxt "advanced search"
+msgid "Latest publication date (descending)"
+msgstr "Nyeste først"
+
+msgctxt "advanced search"
+msgid "Latest publication date (ascending)"
+msgstr "Ældste først"
+
+msgctxt "advanced search"
+msgid "Author"
+msgstr "Forfatter / ophav"
+
+msgctxt "advanced search"
+msgid "Author (ascending)"
+msgstr "Forfatter / ophav (A - Å)"
+
+msgctxt "advanced search"
+msgid "Author (descending)"
+msgstr "Forfatter / ophav (Å - A)"
+
+msgctxt "advanced search"
+msgid "Title"
+msgstr "Titel"
+
+msgctxt "advanced search"
+msgid "Title (ascending)"
+msgstr "Titel (A - Å)"
+
+msgctxt "advanced search"
+msgid "Title (descending)"
+msgstr "Titel (Å - A)"
+
+msgctxt "advanced search 2"
+msgid "CQL search"
+msgstr "CQL-søgning"
+
+msgctxt "advanced search 2"
+msgid "By"
+msgstr "Af"
+
+msgctxt "advanced search 2"
+msgid "Part of series"
+msgstr "i serien"
+
+msgctxt "advanced search 2"
+msgid "Loading..."
+msgstr "Indlæser..."
+
+msgctxt "advanced search 2"
+msgid "Showing @itemsShown of @hitcount results"
+msgstr "Viser @itemsShown af @hitcount resultater"
+
+msgctxt "advanced search 2"
+msgid "Show more"
+msgstr "Vis mere"
+
+msgctxt "advanced search 2"
+msgid "Loading results..."
+msgstr "Henter resultater..."
+
+msgctxt "advanced search 2"
+msgid "showing materials (@hitcount)"
+msgstr "Din søgning har @hitcount resultater"
+
+msgctxt "advanced search 2"
+msgid "More filters"
+msgstr "Flere filtre"
+
+msgctxt "advanced search 2"
+msgid "Link copied to clipboard"
+msgstr "Linket er kopieret til udklipsholder"
+
+msgctxt "advanced search 2"
+msgid "Add row"
+msgstr "Tilføj række"
+
+msgctxt "advanced search 2"
+msgid "Search"
+msgstr "Søg"
+
+msgctxt "advanced search 2"
+msgid "AND"
+msgstr "OG"
+
+msgctxt "advanced search 2"
+msgid "OR"
+msgstr "ELLER"
+
+msgctxt "advanced search 2"
+msgid "NOT"
+msgstr "IKKE"
+
+msgctxt "advanced search 2"
+msgid "Remove row @inputNumber"
+msgstr "Fjern række @inputNumber"
+
+msgctxt "advanced search 2"
+msgid "Selected"
+msgstr "Valgt"
+
+msgctxt "advanced search 2"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "advanced search 2"
+msgid "Search in all material…"
+msgstr "Søg efter bøger, film, musik og mere"
+
+msgctxt "advanced search 2"
+msgid "Enter title…"
+msgstr "Søg på titler"
+
+msgctxt "advanced search 2"
+msgid "Enter author or creator…"
+msgstr "Søg på forfatter, komponist, kunstner og instruktør mv."
+
+msgctxt "advanced search 2"
+msgid "Enter subject…"
+msgstr "Søg på emner, sted, tidsperiode mv."
+
+msgctxt "advanced search 2"
+msgid "Enter publisher…"
+msgstr "Søg på forlag, udgiver, pladeselskab mv."
+
+msgctxt "advanced search 2"
+msgid "Enter DK5 number…"
+msgstr "Søg på DK5-nummer"
+
+msgctxt "advanced search 2"
+msgid "Enter ISBN number…"
+msgstr "Søg på ISBN-nummer"
+
+msgctxt "advanced search 2"
+msgid "Enter series title…"
+msgstr "Søg på bogserie, tv-serie mv."
+
+msgctxt "advanced search 2"
+msgid "Free text search"
+msgstr "Fritekstsøgning"
+
+msgctxt "advanced search 2"
+msgid "Title"
+msgstr "Titel"
+
+msgctxt "advanced search 2"
+msgid "Author / Creator"
+msgstr "Forfatter / ophav"
+
+msgctxt "advanced search 2"
+msgid "Subject"
+msgstr "Emne"
+
+msgctxt "advanced search 2"
+msgid "Publisher"
+msgstr "Udgiver / forlag"
+
+msgctxt "advanced search 2"
+msgid "DK5"
+msgstr "DK5"
+
+msgctxt "advanced search 2"
+msgid "ISBN"
+msgstr "ISBN"
+
+msgctxt "advanced search 2"
+msgid "Series title"
+msgstr "Serie"
+
+msgctxt "advanced search 2"
+msgid "Fictional character"
+msgstr "Fiktiv karakter"
+
+msgctxt "advanced search 2"
+msgid "Host publication"
+msgstr "Værtspublikation"
+
+msgctxt "advanced search 2"
+msgid "Enter fictional character…"
+msgstr "Søg f.eks. på Batman, Dicte Svendsen eller Sallys far"
+
+msgctxt "advanced search 2"
+msgid "Enter host publication…"
+msgstr ""
+"Søg f.eks. på Kristeligt Dagblad, Illustreret Videnskab eller "
+"Filmmagasinet Ekko"
+
+msgctxt "advanced search 2"
+msgid "Edit search"
+msgstr "Rediger søgning"
+
+msgctxt "advanced search 2"
+msgid "On shelf"
+msgstr "På hylden"
+
+msgctxt "advanced search 2"
+msgid "Only show results available at the library now."
+msgstr "Vis kun titler, som har eksemplarer hjemme på hylden."
+
+msgctxt "advanced search 2"
+msgid "Only \"Extra Titles\""
+msgstr "Lån udenfor kvoten"
+
+msgctxt "advanced search 2"
+msgid "Only show results not limited by digital loan quotas."
+msgstr ""
+"Vis kun digitale titler, der ikke tæller med i din månedlige "
+"lånekvote og altid er tilgængelige."
+
+msgctxt "advanced search 2"
+msgid "Show all"
+msgstr "Vis alle"
+
+msgctxt "advanced search 2"
+msgid "Show less"
+msgstr "Vis færre"
+
+msgctxt "advanced search 2"
+msgid "Reset"
+msgstr "Nulstil"
+
+msgctxt "advanced search 2"
+msgid "Access Type"
+msgstr "Fysisk / online"
+
+msgctxt "advanced search 2"
+msgid "Age"
+msgstr "Aldersgruppe"
+
+msgctxt "advanced search 2"
+msgid "Audience"
+msgstr "Målgruppe"
+
+msgctxt "advanced search 2"
+msgid "Chamber Music"
+msgstr "Kammermusik"
+
+msgctxt "advanced search 2"
+msgid "Choir"
+msgstr "Kortype"
+
+msgctxt "advanced search 2"
+msgid "Contributor"
+msgstr "Oplæser / oversætter / bidrag"
+
+msgctxt "advanced search 2"
+msgid "Creator"
+msgstr "Forfatter / ophav"
+
+msgctxt "advanced search 2"
+msgid "Fictional Character"
+msgstr "Fiktiv karakter"
+
+msgctxt "advanced search 2"
+msgid "Format"
+msgstr "Format"
+
+msgctxt "advanced search 2"
+msgid "Genre and form"
+msgstr "Genre og form"
+
+msgctxt "advanced search 2"
+msgid "Host Publication"
+msgstr "Værtspublikation"
+
+msgctxt "advanced search 2"
+msgid "Instrument"
+msgstr "Instrument"
+
+msgctxt "advanced search 2"
+msgid "Language"
+msgstr "Sprog"
+
+msgctxt "advanced search 2"
+msgid "Let"
+msgstr "Let"
+
+msgctxt "advanced search 2"
+msgid "Level"
+msgstr "Fagligt niveau"
+
+msgctxt "advanced search 2"
+msgid "Lix"
+msgstr "Lix"
+
+msgctxt "advanced search 2"
+msgid "Materialetype"
+msgstr "Materialetype"
+
+msgctxt "advanced search 2"
+msgid "Score Type"
+msgstr "Nodetype"
+
+msgctxt "advanced search 2"
+msgid "Source"
+msgstr "Kilde"
+
+msgctxt "advanced search 2"
+msgid "Year"
+msgstr "Udgivelsesår"
+
+msgctxt "advanced search 2"
+msgid "Refine your search"
+msgstr "Afgræns din søgning"
+
+msgctxt "advanced search 2"
+msgid "Search..."
+msgstr "Søg..."
+
+msgctxt "advanced search 2"
+msgid "From"
+msgstr "Fra"
+
+msgctxt "advanced search 2"
+msgid "To"
+msgstr "Til"
+
+msgctxt "advanced search 2"
+msgid "Advanced search"
+msgstr "Avanceret søgning"
+
+msgctxt "advanced search 2"
+msgid "@age+ year olds"
+msgstr "For @age+-årige"
+
+msgctxt "advanced search 2"
+msgid "@age year olds"
+msgstr "For @age-årige"
+
+msgctxt "advanced search 2"
+msgid "@from-@to year olds"
+msgstr "For @from-@to-årige"
+
+msgctxt "advanced search 2"
+msgid "Filter materials (@hitcount)"
+msgstr "Filtrer resultater (@hitcount)"
+
+msgctxt "advanced search 2"
+msgid "Show results"
+msgstr "Vis resultater"
+
+msgctxt "advanced search 2"
+msgid "Sort by"
+msgstr "Sorter efter"
+
+msgctxt "advanced search 2"
+msgid "Relevance"
+msgstr "Bedste match"
+
+msgctxt "advanced search 2"
+msgid "Publication date"
+msgstr "Udgivelsesdato"
+
+msgctxt "advanced search 2"
+msgid "Newest first"
+msgstr "Nyeste først"
+
+msgctxt "advanced search 2"
+msgid "Oldest first"
+msgstr "Ældste først"
+
+msgctxt "advanced search 2"
+msgid "Author"
+msgstr "Forfatter / ophav"
+
+msgctxt "advanced search 2"
+msgid "A-Z"
+msgstr "A-Å"
+
+msgctxt "advanced search 2"
+msgid "Z-A"
+msgstr "Å-A"
+
+msgctxt "Work Page"
+msgid "Already reserved"
+msgstr "Allerede reserveret"
+
+msgctxt "Work Page"
+msgid "Approve loan"
+msgstr "Godkend lån"
+
+msgctxt "Work Page"
+msgid "Approve reservation"
+msgstr "Godkend reservering"
+
+msgctxt "Work Page"
+msgid "Audience"
+msgstr "Målgruppe"
+
+msgctxt "Work Page"
+msgid "Blocked"
+msgstr "Din låner er blokeret"
+
+msgctxt "Work Page"
+msgid "The review is not accessible"
+msgstr "Anmeldelsen er ikke tilgængelig"
+
+msgctxt "Work Page"
+msgid "Can't be reserved"
+msgstr "Kan ikke reserveres"
+
+msgctxt "Work Page"
+msgid "Cannot view review"
+msgstr "Kan ikke vise anmeldelse"
+
+msgctxt "Work Page"
+msgid "Can't be viewed"
+msgstr "Kan ikke vises"
+
+msgctxt "Work Page"
+msgid "Change email"
+msgstr "Skift e-mail"
+
+msgctxt "Work Page"
+msgid "Change SMS number"
+msgstr "Skift mobilnummer"
+
+msgctxt "Work Page"
+msgid "Close"
+msgstr "Luk"
+
+msgctxt "Work Page"
+msgid "Contributors"
+msgstr "Bidragydere"
+
+msgctxt "Work Page"
+msgid "copies there is"
+msgstr "kopier der er"
+
+msgctxt "Work Page"
+msgid "Creators are missing"
+msgstr "Ophav mangler"
+
+msgctxt "Work Page"
+msgid "Days"
+msgstr "Dage"
+
+msgctxt "Work Page"
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgctxt "Work Page"
+msgid "Authors"
+msgstr "Forfattere"
+
+msgctxt "Work Page"
+msgid "Edition"
+msgstr "Nr."
+
+msgctxt "Work Page"
+msgid "Edition year"
+msgstr "Udgivelsesår"
+
+msgctxt "Work Page"
+msgid "Unknown"
+msgstr "Ukendt"
+
+msgctxt "Work Page"
+msgid "Genre and form"
+msgstr "Genre og form"
+
+msgctxt "Work Page"
+msgid "Isbn"
+msgstr "ISBN"
+
+msgctxt "Work Page"
+msgid "Language"
+msgstr "Sprog"
+
+msgctxt "Work Page"
+msgid "Original title"
+msgstr "Original titel"
+
+msgctxt "Work Page"
+msgid "Play time"
+msgstr "Spilletid"
+
+msgctxt "Work Page"
+msgid "Publisher"
+msgstr "Forlag"
+
+msgctxt "Work Page"
+msgid "Scope"
+msgstr "Sidetal"
+
+msgctxt "Work Page"
+msgid "Type"
+msgstr "Type"
+
+msgctxt "Work Page"
+msgid "Age range"
+msgstr "Til @ageRange år"
+
+msgctxt "Work Page"
+msgid "Notes"
+msgstr "Noter"
+
+msgctxt "Work Page"
+msgid "Dimensions"
+msgstr "Omfang"
+
+msgctxt "Work Page"
+msgid "Host Publication"
+msgstr "Findes i"
+
+msgctxt "Work Page"
+msgid "Source"
+msgstr "Kilde"
+
+msgctxt "Work Page"
+msgid "Contents"
+msgstr "Indhold"
+
+msgctxt "Work Page"
+msgid "Details of the material"
+msgstr "Detaljer om materialet"
+
+msgctxt "Work Page"
+msgid "Details"
+msgstr "Detaljer"
+
+msgctxt "Work Page"
+msgid "Editions"
+msgstr "Udgaver"
+
+msgctxt "Work Page"
+msgid "Expand more"
+msgstr "Udvid"
+
