@@ -81,8 +81,10 @@ export default (baseUri?: string, options?: Options) => {
 
   // Mapping for GSearch / Dataforsyningen address API.
   // The GSearch module calls this server-side when resolving addresses.
+  // Persistent so it survives cy.resetMappings() from other Cypress specs.
   import("./data/gsearch/getAddress.json").then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
+      persistent: true,
       request: {
         method: "GET",
         urlPattern: "/adresse.*",

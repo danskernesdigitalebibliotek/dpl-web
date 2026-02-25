@@ -17,10 +17,8 @@ describe('Testing branch functionality', () => {
     cy.get('[name="field_phone[0][value]"]').type(branchPhone);
     cy.get('.meta-sidebar__close').click();
 
-    // The GSearch field uses Select2 with AJAX autocomplete.
-    // We must wait for the API response before clicking, because Select2's
-    // tags:true creates a temporary option from the typed text immediately.
-    // Clicking that tag instead of a real result loses structured address data.
+    // Wait for the GSearch API response before clicking, otherwise Select2's
+    // tags:true may create a tag from typed text instead of a real result.
     cy.intercept('/gsearch/address/select2*').as('gsearchResults');
     cy.get('[name="field_address_gsearch[0][user_input]"]')
       .siblings('.select2-container')
@@ -28,7 +26,7 @@ describe('Testing branch functionality', () => {
     cy.get('.select2-search__field').type(branchAddress);
     cy.wait('@gsearchResults');
     cy.get('.select2-results__option')
-      .contains('Krystalgade 15')
+      .contains('Krystalgade 15, 1172 København K')
       .first()
       .click();
     cy.clickSaveButton();
