@@ -17,13 +17,16 @@ describe('Testing branch functionality', () => {
     cy.get('[name="field_phone[0][value]"]').type(branchPhone);
     cy.get('.meta-sidebar__close').click();
 
-    // The GSearch field uses Select2 with autocomplete.
+    // The GSearch field uses Select2 with AJAX autocomplete.
+    // We must wait for the API response before clicking, because Select2's
+    // tags:true creates a temporary option from the typed text immediately.
+    // Clicking that tag instead of a real result loses structured address data.
+    cy.intercept('/gsearch/address/select2*').as('gsearchResults');
     cy.get('[name="field_address_gsearch[0][user_input]"]')
       .siblings('.select2-container')
       .click();
     cy.get('.select2-search__field').type(branchAddress);
-    // Select the first result containing the street name from GSearch.
-    // The page assertions below verify the full address including postal code.
+    cy.wait('@gsearchResults');
     cy.get('.select2-results__option')
       .contains('Krystalgade 15')
       .first()
