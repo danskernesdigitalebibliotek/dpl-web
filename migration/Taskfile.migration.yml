@@ -149,8 +149,13 @@ tasks:
 
         echo "----------------------------------------"
 
-        COMMITS_LIST=$(mktemp)
+        MIGRATION_TMP_DIR="migration/.tmp.$$"
+        mkdir -p "$MIGRATION_TMP_DIR"
+        COMMITS_LIST="$MIGRATION_TMP_DIR/commits-list"
         echo "$COMMITS_DATA" > "$COMMITS_LIST"
+
+        cleanup_migration_tmp() { rm -rf "$MIGRATION_TMP_DIR"; }
+        trap cleanup_migration_tmp EXIT
 
         while IFS= read -r line; do
           COMMIT="${line%% *}"
@@ -166,17 +171,13 @@ tasks:
           fi
 
           PATCH_URL="https://github.com/$ORG/$REPO/commit/$COMMIT.patch"
-          PATCH_FILE=$(mktemp)
+          PATCH_FILE="$MIGRATION_TMP_DIR/patch"
           if ! curl -sLf "$PATCH_URL" > "$PATCH_FILE" || [ ! -s "$PATCH_FILE" ]; then
-            rm -f "$PATCH_FILE"
             echo "❌ Failed to fetch patch for $COMMIT"
-            rm -f "$COMMITS_LIST"
             exit 1
           fi
           if ! grep -qE '^diff --git |^From ' "$PATCH_FILE"; then
-            rm -f "$PATCH_FILE"
             echo "❌ Invalid patch content for $COMMIT"
-            rm -f "$COMMITS_LIST"
             exit 1
           fi
 
@@ -195,7 +196,7 @@ tasks:
             fi
           fi
 
-          AM_LOG=$(mktemp)
+          AM_LOG="$MIGRATION_TMP_DIR/am-log"
 
           if ! cat "$PATCH_FILE" | git am --directory="$PROJECT" -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
             [ -s "$AM_LOG" ] && cat "$AM_LOG"
@@ -205,13 +206,11 @@ tasks:
               echo ""
               echo "⚠️ Skipping $COMMIT (patch context missing – no conflict markers; apply manually from source repo if needed)."
               if ! git am --skip; then
-                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
                 echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
                 exit 1
               fi
               echo "💾 Updating $MIGRATION_FILE to skipped commit: $COMMIT"
               update_migration_marker "$REPO" "$COMMIT"
-              rm -f "$AM_LOG" "$PATCH_FILE"
               continue
             fi
 
@@ -239,15 +238,12 @@ tasks:
               echo ""
               echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
               if ! git am --skip; then
-                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
                 echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
                 exit 1
               fi
               echo "💾 Updating $MIGRATION_FILE to commit: $COMMIT"
               update_migration_marker "$REPO" "$COMMIT"
-              rm -f "$AM_LOG" "$PATCH_FILE"
             else
-              rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
               echo ""
               echo "❌ Patch failed (commit $COMMIT from $REPO)."
               echo ""
@@ -266,11 +262,9 @@ tasks:
           fi
 
           [ -s "$AM_LOG" ] && cat "$AM_LOG"
-          rm -f "$AM_LOG" "$PATCH_FILE"
 
           echo "💾 Updating $MIGRATION_FILE to latest successful commit: $COMMIT"
           update_migration_marker "$REPO" "$COMMIT"
         done < "$COMMITS_LIST"
 
-        rm -f "$COMMITS_LIST"
         echo "🎉 All commits migrated successfully!"
