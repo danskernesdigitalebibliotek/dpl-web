@@ -99,5 +99,5 @@ Run  `drush dpl_po:import-remote-config-po [LANGUAGE_CODE] [CONFIGURATION_PO_FIL
 Example:
 
 ```bash
-drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
 ```
