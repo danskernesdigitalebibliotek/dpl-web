@@ -180,6 +180,7 @@ class DplReactAppsController extends ControllerBase {
       'search-showing-all-materials-text' => $this->t('Showing all materials', [], ['context' => 'Search Result']),
       'search-showing-results-for-text' => $this->t('Showing results for', [], ['context' => 'Search Result']),
       'search-dialog-filter-materials-text' => $this->t('Filter materials (@hitcount)', [], ['context' => 'Search Result']),
+      'showing-all-materials-text' => $this->t('Showing all materials', [], ['context' => 'Search Result']),
 
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
