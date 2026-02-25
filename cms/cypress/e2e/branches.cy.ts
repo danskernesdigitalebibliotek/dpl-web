@@ -3,8 +3,7 @@ describe('Testing branch functionality', () => {
   const branchEmail = 'info+ddf@reload.dk';
   const branchPhone = '88 88 88 88';
   const branchAddress = 'Krystalgade 15 1172';
-  const branchAddressSelect = 'Krystalgade 15, st., 1172 København K';
-  const branchAddressStreet = 'Krystalgade 15, st.';
+  const branchAddressStreet = 'Krystalgade 15';
   const branchAddressPostal = '1172 København K';
 
   it('Check that contact info show up on branches', () => {
@@ -23,8 +22,12 @@ describe('Testing branch functionality', () => {
       .siblings('.select2-container')
       .click();
     cy.get('.select2-search__field').type(branchAddress);
-    // Finding the full address using GSearch.
-    cy.get('.select2-results__option').contains(branchAddressSelect).click();
+    // Select the first result containing the street name from GSearch.
+    // The page assertions below verify the full address including postal code.
+    cy.get('.select2-results__option')
+      .contains('Krystalgade 15')
+      .first()
+      .click();
     cy.clickSaveButton();
 
     cy.get('.hero').contains(branchTitle).should('be.visible');
