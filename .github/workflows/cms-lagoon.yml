@@ -33,7 +33,7 @@ jobs:
     needs: [BranchNameLength]
     steps:
       - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/${{ env.REPO }}/${{ env.REPO }}-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web/dpl-web-${{ env.LAGOON_ENVIRONMENT }}/deployments")
 
           DEPLOYMENT_ID=$(echo '{
             "ref": "${{ github.head_ref || github.ref_name }}",
@@ -54,7 +54,7 @@ jobs:
     needs: [BranchNameLength]
     steps:
       - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-bnf/dpl-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web-bnf/dpl-web-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments")
 
           DEPLOYMENT_ID=$(echo '{
             "ref": "${{ github.head_ref || github.ref_name }}",
