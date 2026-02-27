@@ -15,7 +15,7 @@ LAGOON_DEPLOYS_LOG_URL=$(cat /tmp/LAGOON_DEPLOYS_LOG_URL)
 ENVIRONMENT=$LAGOON_ENVIRONMENT
 
 # We want BNF to show up as a separate environment.
-if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+if [[ "$LAGOON_PROJECT" == "dpl-web-bnf" ]]; then
   ENVIRONMENT=$LAGOON_ENVIRONMENT-bnf
 fi
 
