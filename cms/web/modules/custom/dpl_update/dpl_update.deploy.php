@@ -321,7 +321,7 @@ function dpl_update_deploy_bnf(): string {
   // setup.
   $project = getenv('LAGOON_PROJECT');
 
-  if (in_array($project, ['bnf', 'dpl-bnf'])) {
+  if (in_array($project, ['bnf', 'dpl-bnf', 'dpl-web-bnf'])) {
     return _dpl_update_install_modules(['bnf_server']);
   }
 
