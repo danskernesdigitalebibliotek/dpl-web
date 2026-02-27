@@ -1,6 +1,6 @@
 # DPL Web Monorepo
 
-Monorepo for the Danish Public Libraries (DPL) web platform, containing four interconnected projects.
+Monorepo for the Danish Public Libraries (DPL) web platform, containing four interconnected projects
 
 ## Projects
 
