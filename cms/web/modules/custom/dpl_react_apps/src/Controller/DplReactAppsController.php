@@ -477,6 +477,9 @@ class DplReactAppsController extends ControllerBase {
       'find-on-shelf-hide-unavailable-holdings-config' => (int) $this->generalSettings->getFindOnShelfHideUnavailableHoldings(),
       'agency-id-config' => $this->adgangsplatformenConfig->getAgencyId(),
       'local-subjects-agency-ids-config' => $this->generalSettings->getLocalSubjectsAgencyIds(),
+      'share-config' => json_encode([
+        'enabled' => $this->generalSettings->getShareButtonsEnabled(),
+      ]),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
 

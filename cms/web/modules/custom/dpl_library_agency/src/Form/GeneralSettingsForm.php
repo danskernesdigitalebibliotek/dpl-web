@@ -171,6 +171,20 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('local_subjects_agency_ids') ?? GeneralSettings::LOCAL_SUBJECTS_AGENCY_IDS,
     ];
 
+    $form['share_buttons'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Share buttons', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['share_buttons']['enable_share_buttons'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable share buttons on material pages', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('enable_share_buttons') ?? GeneralSettings::ENABLE_SHARE_BUTTONS,
+      '#description' => $this->t('If checked, share buttons (Facebook, copy link) will be shown on material/work pages.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
     $form['reservations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
@@ -446,6 +460,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('local_subjects_agency_ids', $form_state->getValue('local_subjects_agency_ids'))
       ->set('enable_address_search_branch', $form_state->getValue('enable_address_search_branch'))
       ->set('enable_address_search_patron', $form_state->getValue('enable_address_search_patron'))
+      ->set('enable_share_buttons', $form_state->getValue('enable_share_buttons'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('find_on_shelf_hide_unavailable_holdings', $form_state->getValue('find_on_shelf_hide_unavailable_holdings'))
       ->set('fbi_profiles', [
