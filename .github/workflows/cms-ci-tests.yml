@@ -148,7 +148,7 @@ jobs:
       - name: Run Lighthouse test
         run: task ci:lighthouse
       - name: Archive logs
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse-results
           path: cms/.lighthouseci
@@ -175,7 +175,7 @@ jobs:
         run: task ci:pa11y
       - name: Archive screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: pa11y-screenshots
           path: cms/pa11y/screenshots
@@ -202,13 +202,13 @@ jobs:
         run: task ci:cypress:mapped
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-mapped-videos
           path: cms/cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-mapped-screenshots
           path: cms/cypress/screenshots
@@ -235,13 +235,13 @@ jobs:
         run: task ci:cypress:unmapped
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-unmapped-videos
           path: cms/cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-unmapped-screenshots
           path: cms/cypress/screenshots
@@ -268,13 +268,13 @@ jobs:
         run: task ci:cypress:webmaster
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-webmaster-videos
           path: cms/cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-webmaster-screenshots
           path: cms/cypress/screenshots
