@@ -6239,18 +6239,18 @@
   resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.10.tgz#a1337ca426aa61cef9fe15b5b28e340a72f6fa99"
   integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
 
-"@xstate/react@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-6.0.0.tgz#c103e0afb8da8b21c9b83338f37258946853e35d"
-  integrity sha512-xXlLpFJxqLhhmecAXclBECgk+B4zYSrDTl8hTfPZBogkn82OHKbm9zJxox3Z/YXoOhAQhKFTRLMYGdlbhc6T9A==
+"@xstate/react@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-6.1.0.tgz#d6d318cb2cb861f7fa9c00f75feae5f783afbad3"
+  integrity sha512-ep9F0jGTI63B/jE8GHdMpUqtuz7yRebNaKv8EMUaiSi29NOglywc2X2YSOV/ygbIK+LtmgZ0q9anoEA2iBSEOw==
   dependencies:
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.15.0":
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.15.0.tgz#c069ef30f0461683c414fcea2217ead91291d52c"
-  integrity sha512-1V4/5D55zvJz3inEbAH+pqrAy2xhb2d8OKC1fZcBwWmr51VpxTOCNgf9ma4fa/seUfpQPjRf9wxBSyfcTKtUbQ==
+"@xstate/store@^3.16.0":
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.16.0.tgz#828c6bce811dab398539491cffd064a8ecfddfda"
+  integrity sha512-FWIapfCeTN99Nrhwe/r5qABcyDdeGM6gZ+SNL5IF50a2vgtEzhYthS9MYEz4HXjqxXdGN+WaMb+CIzv62jGRbA==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
