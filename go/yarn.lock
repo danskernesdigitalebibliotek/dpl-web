@@ -4257,15 +4257,15 @@
     "@babel/runtime" "^7.23.2"
     immutable "^4.3.4"
 
-"@reloaddk/wsdl-tsclient@^1.8.14":
-  version "1.8.14"
-  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.8.14.tgz#57ae3ae2f17646a6faea71b0e874931359e3fcea"
-  integrity sha512-uXonXUpcFwTBTrtZ6MgqgqtsOrtlgPuuF+2Oa77kkYNoY0JOSjSxdFtLd1p/z2OQXE2VyNlwfHKIXFQbJweF9w==
+"@reloaddk/wsdl-tsclient@^1.9.2":
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.9.2.tgz#1667fd92554b3a7d5638288026f2a30c4baff481"
+  integrity sha512-vN3N5sXUyvhxcHJdm6nHeEmqJseHxryMYyjZCiVJPzjkK228a5eaDRbc6O/J47Ris6ACHw3DA3k74BNL8GvY8Q==
   dependencies:
     camelcase "^9.0.0"
     chalk "^5.6.2"
     sanitize-filename "^1.6.3"
-    soap "^1.6.2"
+    soap "^1.7.1"
     supports-color "^10.2.2"
     ts-morph "^27.0.2"
     yargs "^18.0.0"
@@ -6775,10 +6775,19 @@ axios-ntlm@^1.4.6:
     dev-null "^0.1.1"
     js-md4 "^0.3.2"
 
-axios@^1.12.2, axios@^1.13.1, axios@^1.6.1:
+axios@^1.12.2, axios@^1.6.1:
   version "1.13.5"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.13.5.tgz#5e464688fa127e11a660a2c49441c009f6567a43"
   integrity sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==
+  dependencies:
+    follow-redirects "^1.15.11"
+    form-data "^4.0.5"
+    proxy-from-env "^1.1.0"
+
+axios@^1.13.5:
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.13.6.tgz#c3f92da917dc209a15dd29936d20d5089b6b6c98"
+  integrity sha512-ChTCHMouEe2kn713WHbQGcuYrr6fXTBiu460OTwWrWob16g1bXn4vtz07Ope7ewMozJAnEquLk5lWQWtBig9DQ==
   dependencies:
     follow-redirects "^1.15.11"
     form-data "^4.0.5"
@@ -10000,7 +10009,7 @@ get-stream@^5.0.0, get-stream@^5.1.0:
   dependencies:
     pump "^3.0.0"
 
-get-stream@^6.0.0, get-stream@^6.0.1:
+get-stream@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
   integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
@@ -14731,19 +14740,17 @@ snake-case@^3.0.4:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
-soap@^1.6.2:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/soap/-/soap-1.6.3.tgz#64084587aabb7a9354a2f94590441b8c981376cf"
-  integrity sha512-wCjtSXdpGXKd4okKwS34ZCXkhBXAdRPRVelSoNm1a/mo53P6Z1MWLfdkaas67seBw/JHB1i755BzbUXU6SPmmQ==
+soap@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/soap/-/soap-1.7.1.tgz#01a81247babbf821ae84fd2b610bd538cc258a40"
+  integrity sha512-PYDzr2F0eb0cpyTB+hg21rzj5/wfo1AeKy3HnOVx65+eFDUUY1FOtqC/ev0pwW5Y9UcvHWJ5egr8HQsCzE92Ig==
   dependencies:
-    axios "^1.13.1"
+    axios "^1.13.5"
     axios-ntlm "^1.4.6"
     debug "^4.4.3"
+    follow-redirects "^1.15.11"
     formidable "^3.5.4"
-    get-stream "^6.0.1"
-    lodash "^4.17.21"
     sax "^1.4.1"
-    strip-bom "^3.0.0"
     whatwg-mimetype "4.0.0"
     xml-crypto "^6.1.2"
 
