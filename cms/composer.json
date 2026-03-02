@@ -450,10 +450,6 @@
                 "3504806: Clean up orphaned eventinstances automatically": "https://www.drupal.org/files/issues/2025-02-06/reccuring_events_auto_delete_orphaned.patch",
                 "3515976: EventUserTrait may return NULL if owner has been deleted": "https://git.drupalcode.org/issue/recurring_events-3515976/-/commit/4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch"
             },
-            "drupal/state_log": {
-                "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch",
-                "3505648: var_export does not handle circular references": "https://git.drupalcode.org/project/state_log/-/commit/707c51dff86a0ccb8cb1b0923c4ff9dbfab8bb8d.patch"
-            },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
             }
