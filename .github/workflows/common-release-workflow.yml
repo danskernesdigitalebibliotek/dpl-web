@@ -81,7 +81,7 @@ jobs:
           VERSION: ${{ env.TAG_NAME }}-${{ inputs.sha }}
 
       - name: Upload release artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-dist-${{inputs.project}}
           path: "${{inputs.project}}/dist.zip"
