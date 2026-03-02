@@ -162,7 +162,7 @@
     "@hammzj/cypress-page-object": "^2.3.0",
     "@headlessui/react": "^2.2.9",
     "@reduxjs/toolkit": "^2.5.0",
-    "@types/lodash": "^4.17.5",
+    "@types/lodash": "^4.17.24",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "downshift": "^9.0.8",
