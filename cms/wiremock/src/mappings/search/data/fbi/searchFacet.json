@@ -4,6 +4,7 @@
       "facets": [
         {
           "name": "mainLanguages",
+          "type": "MAINLANGUAGES",
           "values": [
             { "key": "eng", "term": "Engelsk", "score": 374 },
             { "key": "dan", "term": "Dansk", "score": 331 },
@@ -19,6 +20,7 @@
         },
         {
           "name": "accessTypes",
+          "type": "ACCESSTYPES",
           "values": [
             { "key": "physical", "term": "Fysisk", "score": 587 },
             { "key": "online", "term": "Digital", "score": 369 }
@@ -26,6 +28,7 @@
         },
         {
           "name": "childrenOrAdults",
+          "type": "CHILDRENORADULTS",
           "values": [
             {
               "key": "voksenmaterialer",
@@ -41,6 +44,7 @@
         },
         {
           "name": "creators",
+          "type": "CREATORS",
           "values": [
             {
               "key": "Joanne K. Rowling",
@@ -68,14 +72,16 @@
         },
         {
           "name": "fictionNonfiction",
+          "type": "FICTIONNONFICTION",
           "values": [
             { "key": "nonfiktion", "term": "Faglitteratur", "score": 493 },
             { "key": "fiktion", "term": "Skønlitteratur", "score": 215 }
           ]
         },
-        { "name": "fictionalCharacter", "values": [] },
+        { "name": "fictionalCharacters", "type": "FICTIONALCHARACTERS", "values": [] },
         {
           "name": "genreAndForm",
+          "type": "GENREANDFORM",
           "values": [
             {
               "key": "eventyrlige fortællinger",
@@ -98,7 +104,8 @@
           ]
         },
         {
-          "name": "materialTypes",
+          "name": "materialTypesSpecific",
+          "type": "MATERIALTYPESSPECIFIC",
           "values": [
             { "key": "bog", "term": "bog", "score": 304 },
             { "key": "dvd", "term": "dvd", "score": 23 },
@@ -114,6 +121,7 @@
         },
         {
           "name": "subjects",
+          "type": "SUBJECTS",
           "values": [
             { "key": "Harry Potter", "term": "Harry Potter", "score": 399 },
             { "key": "magi", "term": "magi", "score": 306 },
@@ -149,6 +157,7 @@
         },
         {
           "name": "workTypes",
+          "type": "WORKTYPES",
           "values": [
             { "key": "literature", "term": "Bøger", "score": 353 },
             { "key": "article", "term": "Artikler", "score": 240 },

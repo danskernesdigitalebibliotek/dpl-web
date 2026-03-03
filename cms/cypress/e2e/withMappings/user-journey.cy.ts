@@ -10,7 +10,9 @@ describe('User journey', () => {
       .should('contain', 'Harry Potter (Topic)')
       .click()
       .url()
-      .should('include', 'search?q=*&subjects=harry%2520potter');
+      .should('include', 'search?q=*&facets=')
+      .and('include', 'subjects')
+      .and('include', 'harry+potter');
   });
 
   it('Shows search results & redirects to material page', () => {
