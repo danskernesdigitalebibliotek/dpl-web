@@ -10,6 +10,8 @@ namespace Drupal\dpl_library_agency\Branch;
  */
 class IdBranchRepository implements BranchRepositoryInterface {
 
+  use CacheableDependencyTrait;
+
   /**
    * Constructor.
    *

@@ -7,6 +7,8 @@ namespace Drupal\dpl_library_agency\Branch;
  */
 class EmptyBranchRepository implements BranchRepositoryInterface {
 
+  use CacheableDependencyTrait;
+
   /**
    * {@inheritdoc}
    */

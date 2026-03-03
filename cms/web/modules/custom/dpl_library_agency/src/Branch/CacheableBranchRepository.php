@@ -4,11 +4,14 @@ namespace Drupal\dpl_library_agency\Branch;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Cache\CacheableDependencyTrait;
 
 /**
  * Retrieves and caches agency branch information.
  */
 class CacheableBranchRepository implements BranchRepositoryInterface {
+
+  use CacheableDependencyTrait;
 
   /**
    * Constructor.

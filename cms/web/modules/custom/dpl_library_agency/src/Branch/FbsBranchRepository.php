@@ -11,6 +11,8 @@ use Drupal\dpl_library_token\LibraryTokenHandler;
  */
 class FbsBranchRepository implements BranchRepositoryInterface {
 
+  use CacheableDependencyTrait;
+
   /**
    * External branch API constructor.
    *
