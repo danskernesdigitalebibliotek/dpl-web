@@ -99,7 +99,8 @@ System temporary directory, standard Unix variable.
 - `AZURE_MAIL_CONNECTION_STRING`
 
 Connection string for Azure Communication Services (mailing). Added in
-via configuration override (`AzureMailerConfigOverrides`).
+via configuration override (`AzureMailerConfigOverrides`). Shouldn't
+be set in development environment.
 
 - `BNF_GRAPHQL_CONSUMER_SECRET`
 
@@ -138,10 +139,17 @@ Set by update hooks.
 These are read by the `cli-set-openid-settings.sh` and
 `cli-set-unilogin-settings.sh` scripts and are deprecated.
 
+If these are needed for development, proper values can be found in
+1Password.
+
 - `OPENID_CLIENT_ID`: Client ID for Adgangsplatformen OIDC.
 - `OPENID_CLIENT_SECRET`: Client secret for Adgangsplatformen OIDC.
 - `OPENID_AGENCY_ID`: Agency ID for Adgangsplatformen OIDC.
 - `UNILOGIN_CLIENT_SECRET`: Client secret for UniLogin API.
+
+And if you need these, grab someone that's worked in the area before
+and ask them.
+
 - `UNILOGIN_WEBSERVICE_USERNAME`: Webservice username for UniLogin.
 - `UNILOGIN_WEBSERVICE_PASSWORD`: Webservice password for UniLogin.
 - `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`: Retailer key for PubHub.
