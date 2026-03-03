@@ -3,6 +3,7 @@
 namespace Drupal\dpl_library_agency\Branch;
 
 use DanskernesDigitaleBibliotek\FBS\Model\AgencyBranch;
+use Drupal\Core\Cache\CacheableDependencyTrait;
 use Drupal\dpl_fbs\FbsApiFactory;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 
