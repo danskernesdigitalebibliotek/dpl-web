@@ -1,36 +1,40 @@
 <div class="dpl-react-app-container--page">
-
   {#
     Everything inside this div will be replaced by the react app.
     That means that all of this content is just skeleton, to avoid a brief
     blank page whilst React is booting up.
   #}
   <div{{ attributes }}>
-    <div class="content-list-page">
-      {% if showing_results_for_text %}
-        {# Todo: use content-list-page__heading #}
-        <h1 class="content-list-page__heading">
-          {{ showing_results_for_text }}
-        </h1>
-      {% endif %}
-
-      <div class="card-list-page__skeleton-facet-line--mobile">
-        <div class="ssc mt-48">
-          <div class="ssc-head-line mb"></div>
-          <div class="ssc-head-line mb"></div>
-          <div class="ssc-head-line mb"></div>
+    <div class="search">
+      <div class="search__header">
+        {% if showing_results_for_text %}
+          <h1 class="search__header__title">{{ showing_results_for_text }}</h1>
+        {% endif %}
+      </div>
+      <div class="search__results">
+        <div class="search__grid">
+          <aside class="search-facets">
+            {# Placeholder for desktop 2-column grid layout #}
+          </aside>
+          <section>
+            <div class="search__results-top-bar">
+              <div class="search__results-top-bar__left">
+                <h2 class="search__results-heading">&nbsp;</h2>
+              </div>
+              <div class="search__results-top-bar__right">
+                <button class="search__modify-filters-button" disabled>
+                  <span>{{ add_more_filters_text|default('Flere filtre') }}</span>
+                </button>
+              </div>
+            </div>
+            <ul class="content-list">
+              {% for i in 1..number_of_fake_result_items %}
+                <li class="content-list__item">{{ include('search-result-item.html.twig') }}</li>
+              {% endfor %}
+            </ul>
+          </section>
         </div>
       </div>
-      <div class="card-list-page__skeleton-facet-line--desktop">
-        <div class="ssc mt-48">
-          <div class="ssc-head-line mb"></div>
-        </div>
-      </div>
-      <ul class="content-list">
-        {% for i in 1..number_of_fake_result_items %}
-          <li class="content-list__item">{{ include('search-result-item.html.twig') }}</li>
-        {% endfor %}
-      </ul>
     </div>
   </div>
 </div>
