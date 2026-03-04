@@ -519,6 +519,7 @@ function dpl_paragraphs_preprocess_paragraph__share_buttons(array &$variables): 
       'share-on-facebook-aria-label-text' => t('Share this page on Facebook', [], ['context' => 'Share buttons']),
       'copy-link-text' => t('Copy link', [], ['context' => 'Share buttons']),
       'copy-link-aria-label-text' => t('Copy link to this page', [], ['context' => 'Share buttons']),
+      'copy-link-success-text' => t('Link copied', [], ['context' => 'Share buttons']),
     ],
   ];
 }
