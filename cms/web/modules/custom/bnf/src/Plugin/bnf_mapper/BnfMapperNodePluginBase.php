@@ -110,7 +110,7 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
    *   NOTICE: Unsupported paragraphs are skipped.
    */
   private function getParagraphs(NodeArticle|NodePage|NodeGoArticle|NodeGoCategory|NodeGoPage $object): array {
-    return $this->manager->mapAll($object->paragraphs ?? [], TRUE);
+    return $this->manager->mapAll($object->paragraphs ?? []);
   }
 
 }

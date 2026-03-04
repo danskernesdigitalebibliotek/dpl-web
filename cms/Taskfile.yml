@@ -123,18 +123,7 @@ tasks:
     sources:
       - "{{ .LAGOON_DIR }}/**/*"
       - "{{ .LAGOON_DIR }}/*"
-    cmds:
-      - docker compose build
-
-  dev:build:bnf:
-    summary: Build docker containers
-    status:
-      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
-    # Ensure that we only rebuild if there are changes to Dockerfiles
-    # or the config files used.
-    sources:
-      - "{{ .LAGOON_DIR }}/**/*"
-      - "{{ .LAGOON_DIR }}/*"
+      - "web/sites/sites.php"
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} build
 
@@ -156,7 +145,6 @@ tasks:
     summary: Run docker compose
     deps:
       - dev:build
-      - dev:build:bnf
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
       - ./dev-scripts/add-to-etc-hosts.sh https dpl-cms.docker
@@ -186,7 +174,6 @@ tasks:
     deps:
       # Build new containers if necessary.
       - dev:build
-      - dev:build:bnf
       # Stop potential running environment.
       - dev:down
     cmds:
@@ -353,7 +340,7 @@ tasks:
     desc: Generate CMS API package from OpenAPI specification
     cmds:
       - cmd: |
-          cd packages/cms-api && find . ! -name '.' ! -name '..' ! -name '.openapi-generator-ignore' -type d -type f -exec rm -rf {} +
+          cd packages/cms-api && find . -mindepth 1 ! -name '.openapi-generator-ignore' -exec rm -rf {} +
       - cmd: |
           docker run --rm \
           -v ${PWD}:/local \

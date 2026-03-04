@@ -1,5 +1,9 @@
 FROM uselagoon/php-8.3-cli-drupal:latest
 
+# NOTE Changes to this file should be reflected in php.dockerfile and
+# nginx.dockerfile. See DDFNEXT-1368 as to why we ended up here rather
+# than the standard Lagoon way of doing things.
+
 # Make sure that every build has unique assets.
 # By setting the build name as an ARG the following layers are not cached.
 ARG LAGOON_BUILD_NAME

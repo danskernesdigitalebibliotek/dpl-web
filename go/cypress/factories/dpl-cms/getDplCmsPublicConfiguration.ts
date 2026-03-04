@@ -10,9 +10,6 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
     go: defaultGoResponse.build(),
     goConfiguration: {
       public: {
-        searchProfiles: {
-          local: "next",
-        },
         loginUrls: {
           adgangsplatformen: "/mocked/login",
         },

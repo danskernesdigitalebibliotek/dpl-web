@@ -11,7 +11,7 @@ id: node.branch.field_address_dawa
 field_name: field_address_dawa
 entity_type: node
 bundle: branch
-label: Address
+label: 'Address (Deprecated - will be removed)'
 description: 'Start typing to look up addresses in Denmark.'
 required: false
 translatable: false

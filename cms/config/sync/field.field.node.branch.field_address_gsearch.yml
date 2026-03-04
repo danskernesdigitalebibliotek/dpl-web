@@ -1,0 +1,22 @@
+uuid: ba005288-ab9d-4e69-8665-29cb2c87ee2f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_address_gsearch
+    - node.type.branch
+  module:
+    - gsearch
+id: node.branch.field_address_gsearch
+field_name: field_address_gsearch
+entity_type: node
+bundle: branch
+label: Address
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_freetext: true
+field_type: address_gsearch

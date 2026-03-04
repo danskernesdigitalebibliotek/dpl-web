@@ -143,6 +143,7 @@ Class | Method | HTTP request | Description
  - [CampaignMatchPOST200ResponseDataImage](docs/Model/CampaignMatchPOST200ResponseDataImage.md)
  - [CampaignMatchPOSTRequestInner](docs/Model/CampaignMatchPOSTRequestInner.md)
  - [CampaignMatchPOSTRequestInnerValuesInner](docs/Model/CampaignMatchPOSTRequestInnerValuesInner.md)
+ - [DplOpeningHoursCreatePOST200ResponseInner](docs/Model/DplOpeningHoursCreatePOST200ResponseInner.md)
  - [DplOpeningHoursCreatePOSTRequest](docs/Model/DplOpeningHoursCreatePOSTRequest.md)
  - [DplOpeningHoursCreatePOSTRequestRepetition](docs/Model/DplOpeningHoursCreatePOSTRequestRepetition.md)
  - [DplOpeningHoursLegacyListGET200ResponseInner](docs/Model/DplOpeningHoursLegacyListGET200ResponseInner.md)

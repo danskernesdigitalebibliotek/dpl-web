@@ -4,6 +4,7 @@ namespace Drupal\bnf\Services;
 
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\BnfStateEnum;
+use Drupal\bnf\Exception\UnpublishedReferenceException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\GraphQL\Operations\NewContent;
@@ -72,6 +73,8 @@ class BnfImporter {
 
     $this->importContext->push($importContext);
 
+    $node = NULL;
+
     try {
       $response = GetNode::execute($uuid);
       $nodeData = $response->errorFree()->data->node;
@@ -92,7 +95,7 @@ class BnfImporter {
       // if it already exists. If not, we want to ignore it.
       if (!$nodeData->status) {
         if (!$existingNode instanceof NodeInterface) {
-          $this->logger->info("Skipped BNF import of unpublished, unknown node {$uuid}.");
+          $this->logger->info("Skipped BNF import of unpublished node {$uuid}.");
           return NULL;
         }
       }
@@ -138,9 +141,15 @@ class BnfImporter {
 
       $node->save();
     }
+    catch (UnpublishedReferenceException $e) {
+      $this->logger->error(
+        "Failed to import content {$uuid}: @message",
+        ['@message' => $e->getMessage()]
+      );
+    }
     catch (\Throwable $e) {
       $this->logger->error(
-        "Failed to import content {$uuid}. @message",
+        "Failed to import content {$uuid}: @message",
         ['@message' => $e->getMessage() . ' ' . $e->getTraceAsString()]
       );
 
@@ -150,10 +159,12 @@ class BnfImporter {
       $this->importContext->pop();
     }
 
-    $this->logger->info('Created new @type node with BNF ID @uuid', [
-      '@uuid' => $uuid,
-      '@type' => $node->bundle(),
-    ]);
+    if ($node) {
+      $this->logger->info('Created or updated @type node with BNF ID @uuid', [
+        '@uuid' => $uuid,
+        '@type' => $node->bundle(),
+      ]);
+    }
 
     return $node;
   }

@@ -41,7 +41,7 @@ class ParagraphSimpleLinksMapper extends BnfMapperParagraphPluginBase {
 
     return $this->paragraphStorage->create([
       'type' => 'simple_links',
-      'field_link' => $this->mapper->mapAll($object->link, TRUE),
+      'field_link' => $this->mapper->mapAll($object->link),
     ]);
 
   }

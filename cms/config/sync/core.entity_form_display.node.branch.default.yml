@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.branch.field_address
     - field.field.node.branch.field_address_dawa
+    - field.field.node.branch.field_address_gsearch
     - field.field.node.branch.field_agency_branch_id
     - field.field.node.branch.field_email
     - field.field.node.branch.field_main_media
@@ -16,6 +17,7 @@ dependencies:
     - address
     - address_dawa
     - field_group
+    - gsearch
     - media_library
     - media_library_edit
     - paragraphs
@@ -62,6 +64,14 @@ content:
     settings:
       size: 120
       placeholder: 'Search for address..'
+    third_party_settings: {  }
+  field_address_gsearch:
+    type: address_gsearch
+    weight: 26
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Type to search..'
     third_party_settings: {  }
   field_agency_branch_id:
     type: select2

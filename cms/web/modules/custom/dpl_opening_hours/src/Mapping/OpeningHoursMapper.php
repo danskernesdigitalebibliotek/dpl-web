@@ -89,9 +89,15 @@ class OpeningHoursMapper {
 
     $repetitionResponse = $this->repetitionMapper->toResponse($instance->repetition);
 
+    $branchIsilId = NULL;
+    if ($instance->branch->hasField('field_agency_branch_id') && !$instance->branch->get('field_agency_branch_id')->isEmpty()) {
+      $branchIsilId = (string) $instance->branch->get('field_agency_branch_id')->value;
+    }
+
     return (new OpeningHoursResponse())
       ->setId($instance->id)
       ->setBranchId(intval($instance->branch->id()))
+      ->setBranchIsilId($branchIsilId)
       ->setCategory($category)
       ->setDate(new DateTime($instance->startTime->format('Y-m-d')))
       ->setStartTime($instance->startTime->format("H:i"))

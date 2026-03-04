@@ -1086,3 +1086,10 @@ function dpl_update_update_10067(): string {
     'graphql_compose.settings',
   ]);
 }
+
+/**
+ * Install gsearch module, for DAWA-replacement.
+ */
+function dpl_update_update_10068(): string {
+  return _dpl_update_install_modules(['gsearch']);
+}

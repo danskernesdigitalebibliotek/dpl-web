@@ -1,3 +1,4 @@
+Model/DplOpeningHoursCreatePOST200ResponseInner.php
 Model/DplOpeningHoursCreatePOSTRequest.php
 Model/DplOpeningHoursCreatePOSTRequestRepetition.php
 Model/DplOpeningHoursLegacyListGET200ResponseInner.php

@@ -1,0 +1,3 @@
+services:
+  Drupal\dpl_react_apps\Services\BranchService:
+    autowire: true

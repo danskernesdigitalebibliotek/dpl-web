@@ -132,6 +132,7 @@ tasks:
 
         echo "🔍 Checking $REPO from $CURRENT_SHA..."
 
+        # Oldest first (ascending author date) so patches apply in order
         COMMITS_DATA=$(gh api "repos/$ORG/$REPO/compare/$CURRENT_SHA...develop" --jq '[.commits[]] | sort_by(.commit.author.date) | .[] | "\(.sha) \(.parents | length)"')
         if [ -z "$COMMITS_DATA" ]; then
           echo "✅ No new commits found."
@@ -149,8 +150,13 @@ tasks:
 
         echo "----------------------------------------"
 
-        COMMITS_LIST=$(mktemp)
+        MIGRATION_TMP_DIR="migration/.tmp.$$"
+        mkdir -p "$MIGRATION_TMP_DIR"
+        COMMITS_LIST="$MIGRATION_TMP_DIR/commits-list"
         echo "$COMMITS_DATA" > "$COMMITS_LIST"
+
+        cleanup_migration_tmp() { rm -rf "$MIGRATION_TMP_DIR"; }
+        trap cleanup_migration_tmp EXIT
 
         while IFS= read -r line; do
           COMMIT="${line%% *}"
@@ -166,17 +172,13 @@ tasks:
           fi
 
           PATCH_URL="https://github.com/$ORG/$REPO/commit/$COMMIT.patch"
-          PATCH_FILE=$(mktemp)
+          PATCH_FILE="$MIGRATION_TMP_DIR/patch"
           if ! curl -sLf "$PATCH_URL" > "$PATCH_FILE" || [ ! -s "$PATCH_FILE" ]; then
-            rm -f "$PATCH_FILE"
             echo "❌ Failed to fetch patch for $COMMIT"
-            rm -f "$COMMITS_LIST"
             exit 1
           fi
           if ! grep -qE '^diff --git |^From ' "$PATCH_FILE"; then
-            rm -f "$PATCH_FILE"
             echo "❌ Invalid patch content for $COMMIT"
-            rm -f "$COMMITS_LIST"
             exit 1
           fi
 
@@ -195,70 +197,77 @@ tasks:
             fi
           fi
 
-          AM_LOG=$(mktemp)
+          AM_LOG="$MIGRATION_TMP_DIR/am-log"
 
           if ! cat "$PATCH_FILE" | git am --directory="$PROJECT" -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
             [ -s "$AM_LOG" ] && cat "$AM_LOG"
 
-            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor" "$AM_LOG"; then
+            PATCH_SKIPPED=0
+            # Missing patch context (no conflict markers; git can't build 3-way merge).
+            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor|missing patch ancestor context" "$AM_LOG"; then
               echo ""
-              echo "⚠️ Auto-skipping commit $COMMIT due to missing patch ancestor context."
+              echo "⚠️ Skipping $COMMIT (patch context missing – no conflict markers; apply manually from source repo if needed)."
               if ! git am --skip; then
-                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
-                echo "❌ Failed to auto-skip. Resolve manually with: git am --continue, git am --skip, or git am --abort"
+                echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
                 exit 1
               fi
               echo "💾 Updating $MIGRATION_FILE to skipped commit: $COMMIT"
               update_migration_marker "$REPO" "$COMMIT"
-              rm -f "$AM_LOG" "$PATCH_FILE"
-              continue
-            fi
+              PATCH_SKIPPED=1
+            else
+              # Auto-skip only if this patch touches ONLY skip-list files and conflict is only in those files
+              PATCH_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+              PATCH_ONLY_SKIP=1
+              if [ -n "$PATCH_FILES" ]; then
+                while IFS= read -r f; do
+                  [ -z "$f" ] && continue
+                  echo "$f" | grep -qE "$SKIP_FILES_PATTERN" || { PATCH_ONLY_SKIP=0; break; }
+                done <<< "$PATCH_FILES"
+              fi
 
-            UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
-            AUTO_SKIP=0
-            if [ -n "$UNMERGED" ]; then
-              AUTO_SKIP=1
-              while IFS= read -r p; do
-                [ -z "$p" ] && continue
-                echo "$p" | grep -qE "$SKIP_FILES_PATTERN" || { AUTO_SKIP=0; break; }
-              done <<< "$UNMERGED"
-            fi
+              UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+              AUTO_SKIP=0
+              if [ "$PATCH_ONLY_SKIP" -eq 1 ] && [ -n "$UNMERGED" ]; then
+                AUTO_SKIP=1
+                while IFS= read -r p; do
+                  [ -z "$p" ] && continue
+                  echo "$p" | grep -qE "$SKIP_FILES_PATTERN" || { AUTO_SKIP=0; break; }
+                done <<< "$UNMERGED"
+              fi
 
-            if [ "$AUTO_SKIP" -eq 1 ]; then
-              echo ""
-              echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
-              if ! git am --skip; then
-                rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
-                echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+              if [ "$AUTO_SKIP" -eq 1 ]; then
+                echo ""
+                echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
+                if ! git am --skip; then
+                  echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                  exit 1
+                fi
+                echo "💾 Updating $MIGRATION_FILE to commit: $COMMIT"
+                update_migration_marker "$REPO" "$COMMIT"
+                PATCH_SKIPPED=1
+              else
+                echo ""
+                echo "❌ Patch failed (commit $COMMIT from $REPO)."
+                echo ""
+                echo "This can be a merge conflict or missing patch context (e.g. sha1 information is lacking)."
+                echo ""
+                echo "Recovery options:"
+                echo "  1) Resolve conflicts (if any):  git status, edit files, git add <files>, git am --continue"
+                echo "  2) Skip this patch and move on:  git am --skip"
+                echo "     Then update marker:          task migration:mono:migration:update-marker REPO=$REPO COMMIT=$COMMIT"
+                echo "  3) Abort and retry later:       git am --abort"
+                echo ""
+                echo "After 1 or 2, re-run the migration task to continue."
                 exit 1
               fi
-              echo "💾 Updating $MIGRATION_FILE to commit: $COMMIT"
-              update_migration_marker "$REPO" "$COMMIT"
-              rm -f "$AM_LOG" "$PATCH_FILE"
-              continue
             fi
-
-            rm -f "$AM_LOG" "$PATCH_FILE" "$COMMITS_LIST"
-            echo ""
-            echo "❌ Conflict while applying commit $COMMIT from $REPO."
-            echo ""
-            echo "Recovery steps:"
-            echo "  1) Resolve conflicts shown by: git status"
-            echo "  2) Stage resolved files:      git add <files>"
-            echo "  3) Continue apply:            git am --continue (or git am --skip)"
-            echo "  4) Update migration marker:   task migration:mono:migration:update-marker REPO=$REPO COMMIT=$COMMIT"
-            echo "  5) Re-run the migration task to continue."
-            echo ""
-            echo "To cancel: git am --abort"
-            exit 1
+            [ "$PATCH_SKIPPED" -eq 1 ] && continue
           fi
 
           [ -s "$AM_LOG" ] && cat "$AM_LOG"
-          rm -f "$AM_LOG" "$PATCH_FILE"
 
           echo "💾 Updating $MIGRATION_FILE to latest successful commit: $COMMIT"
           update_migration_marker "$REPO" "$COMMIT"
         done < "$COMMITS_LIST"
 
-        rm -f "$COMMITS_LIST"
         echo "🎉 All commits migrated successfully!"

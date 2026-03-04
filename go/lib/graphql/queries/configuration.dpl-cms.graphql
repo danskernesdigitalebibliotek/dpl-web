@@ -14,9 +14,6 @@ query getDplCmsPrivateConfiguration {
 query getDplCmsPublicConfiguration {
   goConfiguration {
     public {
-      searchProfiles {
-        local
-      }
       libraryInfo {
         name
       }
