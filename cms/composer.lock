@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8bc76a9a2e0403067e41c9128d009e3",
+    "content-hash": "f08a45febbcd29c6c58fffc0e5aa1823",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -5227,17 +5227,17 @@
         },
         {
             "name": "drupal/gsearch",
-            "version": "1.0.5",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/gsearch.git",
-                "reference": "1.0.5"
+                "reference": "1.0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/gsearch-1.0.5.zip",
-                "reference": "1.0.5",
-                "shasum": "3cdb8daaeaa0fba56d2e1c5cf637601028fb8e19"
+                "url": "https://ftp.drupal.org/files/projects/gsearch-1.0.7.zip",
+                "reference": "1.0.7",
+                "shasum": "beec65279629641924ace22ceca90e69acbb3711"
             },
             "require": {
                 "drupal/core": "^10.5 || ^11",
@@ -5247,8 +5247,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.5",
-                    "datestamp": "1771360395",
+                    "version": "1.0.7",
+                    "datestamp": "1771672436",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
