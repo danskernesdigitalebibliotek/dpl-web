@@ -4123,7 +4123,7 @@ msgstr "DPL PO"
 
 #: 
 msgid "PO file handling. Export/import, splitting etc."
-msgstr "PO filhåndtering. Export/Import, opdeling etc."
+msgstr "PO filhåndtering. Export/Import, opdeling osv."
 
 #: 
 msgctxt "block.block.claro_breadcrumbs:settings:label"
