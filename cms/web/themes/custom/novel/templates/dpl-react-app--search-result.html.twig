@@ -14,7 +14,38 @@
       <div class="search__results">
         <div class="search__grid">
           <aside class="search-facets">
-            {# Placeholder for desktop 2-column grid layout #}
+            <div class="search-facets__container ssc">
+              {# Skeleton for toggle switches #}
+              <div class="search-facets__toggles">
+                <div><div class="ssc-head-line w-70">&nbsp;</div></div>
+                <div><div class="ssc-head-line w-70">&nbsp;</div></div>
+              </div>
+              {# Skeleton for radio button groups #}
+              <div class="search-radio-button-group-wrapper">
+                <div class="search-radio-button-group">
+                  <div class="ssc-line w-30">&nbsp;</div>
+                  <div class="ssc-line w-30">&nbsp;</div>
+                </div>
+                <div class="search-radio-button-group">
+                  <div class="ssc-line w-30">&nbsp;</div>
+                  <div class="ssc-line w-30">&nbsp;</div>
+                </div>
+                <div class="search-radio-button-group">
+                  <div class="ssc-line w-30">&nbsp;</div>
+                  <div class="ssc-line w-30">&nbsp;</div>
+                </div>
+              </div>
+              {# Skeleton for facet groups #}
+              <ul class="search-facets__groups">
+                {% for i in 1..10 %}
+                  <li class="search-facet-group">
+                    <div class="search-facet-group__header">
+                      <div class="ssc-line w-40">&nbsp;</div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
           </aside>
           <section>
             <div class="search__results-top-bar">
