@@ -70,18 +70,6 @@ const meta: Meta<typeof BranchListEntry> = {
     branchListTitleText: {
       name: "Page title",
       control: { type: "text" }
-    },
-    branchListAddressSearchLabelText: {
-      name: "Address search label",
-      control: { type: "text" }
-    },
-    branchListAddressSearchPlaceholderText: {
-      name: "Address search placeholder",
-      control: { type: "text" }
-    },
-    branchListGeoLocationButtonText: {
-      name: "Geolocation button text",
-      control: { type: "text" }
     }
   },
   args: {

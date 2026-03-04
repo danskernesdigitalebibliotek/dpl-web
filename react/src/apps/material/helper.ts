@@ -652,6 +652,7 @@ export const getWorkTitle = (work: Work): string => {
   // and matches what the grid/card views display.
   const isMovieOrTvSeries = work.materialTypes?.some(
     ({ materialTypeGeneral }) =>
+      materialTypeGeneral &&
       [
         GeneralMaterialTypeCodeEnum.Films,
         GeneralMaterialTypeCodeEnum.TvSeries
@@ -664,18 +665,6 @@ export const getWorkTitle = (work: Work): string => {
     if (titles.original?.length) {
       return titles.original.join(", ");
     }
-  }
-
-  // If the work is a TV series, show "Title - Season X, Disc Y" if available,
-  // or just the series title if the season is missing.
-  if (titles.tvSeries?.title && titles.tvSeries?.season?.display) {
-    const { title, season, disc } = titles.tvSeries;
-    const discSuffix = disc?.display ? `, ${disc.display}` : "";
-    return `${title} - ${season.display}${discSuffix}`;
-  }
-
-  if (titles.tvSeries?.title) {
-    return titles.tvSeries.title;
   }
 
   // If Danish is among the main languages and a full title exists,

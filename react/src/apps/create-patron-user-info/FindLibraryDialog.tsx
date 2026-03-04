@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React from "react";
 import clsx from "clsx";
 import { useText } from "../../core/utils/text";
-import useAddressSorting from "../../core/address-lookup/useAddressSorting";
+import useAddressSearch from "../../core/address-lookup/useAddressSearch";
+import sortByDistance from "../../core/address-lookup/sortByDistance";
 import {
   formatDistance,
   parseCoordinates
@@ -22,20 +23,21 @@ function FindLibraryDialog({
 }: FindLibraryDialogProps) {
   const t = useText();
 
-  const getCoordinates = useCallback(
-    (branch: TBranch) =>
-      parseCoordinates(branch.location?.lat, branch.location?.lng),
-    []
-  );
-
   const {
     query,
     geoLocationError,
     handleQueryChange,
     handleAddressSelect,
     handleGetUserLocation,
-    sortedItems: sortedBranches
-  } = useAddressSorting(branches || [], getCoordinates);
+    selectedAddress
+  } = useAddressSearch();
+
+  const sortedBranches = sortByDistance(
+    branches || [],
+    selectedAddress,
+    (branch: TBranch) =>
+      parseCoordinates(branch.location?.lat, branch.location?.lng)
+  );
 
   const handleOnClick = (branchId: string) => {
     if (handleBranchSelect) {
@@ -59,10 +61,17 @@ function FindLibraryDialog({
         onGetUserLocation={handleGetUserLocation}
         geoLocationError={geoLocationError}
       />
-      <div className="find-library-dialog__location-list">
-        <p className="find-library-dialog__location-list__title">
+      <div
+        className="find-library-dialog__location-list"
+        role="group"
+        aria-labelledby="find-library-dialog-pickup-heading"
+      >
+        <h3
+          id="find-library-dialog-pickup-heading"
+          className="find-library-dialog__location-list__title"
+        >
           {t("findLibraryDialogSuggestionsListLabelText")}
-        </p>
+        </h3>
 
         {sortedBranches.map(({ item: branch, distance }) => {
           const isSelected = branch.branchId === selectedBranchId;
