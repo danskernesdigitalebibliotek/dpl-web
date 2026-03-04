@@ -128,17 +128,25 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#collapsed' => FALSE,
     ];
 
-    $form['general']['enable_branch_address_search'] = [
+    $address_search_description = $this->t(
+      'If enabled, the user will be able to find their nearest library branch, using an address field. <br />
+                                         <strong>For the best experience, make sure to <a href="@edit_url">edit all branches and assign an agency ID and address.</a></strong>',
+      ['@edit_url' => Url::fromRoute('system.admin_content', ['type' => 'branch'])->toString()],
+      ['context' => 'Library Agency Configuration']
+    );
+
+    $form['general']['enable_address_search_branch'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Enable "Find nearest branch"', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t(
-        'If enabled, the user will be able to find their nearest library branch, using an address field. <br />
-                                         <strong>For the best experience, make sure to <a href="@edit_url">edit all branches and assign an agency ID and address.</a></strong> <br />
-                                         You can, for example, see this new functionality on the patron registration page.',
-        ['@edit_url' => Url::fromRoute('system.admin_content', ['type' => 'branch'])->toString()],
-        ['context' => 'Library Agency Configuration']
-      ),
-      '#default_value' => $config->get('enable_branch_address_search') ?? GeneralSettings::ENABLE_BRANCH_ADDRESS_SEARCH,
+      '#title' => $this->t('Enable "Find nearest branch" on the branch list page /biblioteker', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $address_search_description,
+      '#default_value' => $config->get('enable_address_search_branch') ?? GeneralSettings::ENABLE_ADDRESS_SEARCH_BRANCH,
+    ];
+
+    $form['general']['enable_address_search_patron'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable "Find nearest branch" on the patron registration page', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $address_search_description,
+      '#default_value' => $config->get('enable_address_search_patron') ?? GeneralSettings::ENABLE_ADDRESS_SEARCH_PATRON,
     ];
 
     $form['general']['opening_hours_url'] = [
@@ -435,8 +443,9 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
-      ->set('enable_branch_address_search', $form_state->getValue('enable_branch_address_search'))
       ->set('local_subjects_agency_ids', $form_state->getValue('local_subjects_agency_ids'))
+      ->set('enable_address_search_branch', $form_state->getValue('enable_address_search_branch'))
+      ->set('enable_address_search_patron', $form_state->getValue('enable_address_search_patron'))
       ->set('find_on_shelf_disclosures_default_open', $form_state->getValue('find_on_shelf_disclosures_default_open'))
       ->set('find_on_shelf_hide_unavailable_holdings', $form_state->getValue('find_on_shelf_hide_unavailable_holdings'))
       ->set('fbi_profiles', [

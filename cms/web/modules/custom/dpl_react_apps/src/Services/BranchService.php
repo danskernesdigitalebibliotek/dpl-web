@@ -67,11 +67,6 @@ class BranchService {
         $branch['lng'] = $coordinates['lng'];
       }
 
-      $coordinates = $this->getCoordinates($node);
-      if (!empty($coordinates)) {
-        $branch += $coordinates;
-      }
-
       $branches[] = $branch;
     }
 
@@ -116,9 +111,6 @@ class BranchService {
 
   /**
    * Get address data from a branch node.
-   *
-   * Tries field_address_dawa first (primary), then falls back to the
-   * deprecated field_address for older branches.
    *
    * @param \Drupal\node\NodeInterface $node
    *   The branch node.

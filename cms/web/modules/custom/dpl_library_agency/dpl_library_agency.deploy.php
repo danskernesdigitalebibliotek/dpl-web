@@ -18,7 +18,7 @@ use Drupal\node\NodeInterface;
 function dpl_library_agency_deploy_set_address_search(): string {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('dpl_library_agency.general_settings');
-  $config->set('enable_branch_address_search', GeneralSettings::ENABLE_BRANCH_ADDRESS_SEARCH);
+  $config->set('enable_branch_address_search', GeneralSettings::ENABLE_ADDRESS_SEARCH_BRANCH);
   $config->save(TRUE);
 
   return "Default config value for branch address search set.";
@@ -97,4 +97,18 @@ function dpl_library_agency_deploy_migrate_addresses_gsearch(): string {
   $total_count = count($branches);
 
   return "Migrated $updated_count/$total_count branch addresses to GSearch field.";
+}
+
+/**
+ * Migrate branch address search setting to separate branch/patron toggles.
+ */
+function dpl_library_agency_deploy_split_address_search(): string {
+  $config = \Drupal::configFactory()->getEditable('dpl_library_agency.general_settings');
+  $old_value = $config->get('enable_branch_address_search') ?? GeneralSettings::ENABLE_ADDRESS_SEARCH_BRANCH;
+  $config->set('enable_address_search_branch', $old_value);
+  $config->set('enable_address_search_patron', $old_value);
+  $config->clear('enable_branch_address_search');
+  $config->save(TRUE);
+
+  return "Migrated branch address search setting to separate branch/patron toggles.";
 }

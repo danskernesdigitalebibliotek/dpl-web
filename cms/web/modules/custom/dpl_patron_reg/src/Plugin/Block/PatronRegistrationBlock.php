@@ -114,7 +114,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
-      'branch-address-search-enabled-config' => (int) $this->configFactory->getEditable('dpl_library_agency.general_settings')->get('enable_branch_address_search'),
+      'branch-address-search-enabled-config' => (int) $this->configFactory->getEditable('dpl_library_agency.general_settings')->get('enable_address_search_patron'),
       'dataforsyningen-token-config' => getenv('DATAFORSYNINGEN_TOKEN') ?: '',
       // Texts.
       'create-patron-branch-dropdown-note-text' => $this->t("Choose preferred library for pickup of your future reservations.", [], ['context' => 'Create patron']),

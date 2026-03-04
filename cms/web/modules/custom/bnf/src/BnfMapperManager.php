@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\bnf;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\Exception\UnpublishedReferenceException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
