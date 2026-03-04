@@ -3,7 +3,7 @@ langcode: da
 status: true
 dependencies:
   module:
-    - dpl_graphql
+    - dpl_go
     - graphql
 id: mobile_graphql_client
 label: 'Mobile GraphQL Client'
