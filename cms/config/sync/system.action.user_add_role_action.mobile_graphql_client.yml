@@ -1,0 +1,14 @@
+uuid: 3b203d78-03c0-482d-aba8-6d40742dfeab
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.mobile_graphql_client
+  module:
+    - user
+id: user_add_role_action.mobile_graphql_client
+label: 'Add the Mobile GraphQL Client role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: mobile_graphql_client

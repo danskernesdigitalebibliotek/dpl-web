@@ -1,0 +1,14 @@
+uuid: 59ccd786-c1a2-458a-aecc-9bb5a79940cb
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.mobile_graphql_client
+  module:
+    - user
+id: user_remove_role_action.mobile_graphql_client
+label: 'Remove the Mobile GraphQL Client role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: mobile_graphql_client

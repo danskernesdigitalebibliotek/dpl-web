@@ -511,3 +511,18 @@ function dpl_update_deploy_go_text_body_wysiwyg(): string {
 
   return 'Allow editors to use GO Text Body WYSIWYG format';
 }
+
+/**
+ * Add permissions to the mobile_graphql_client role.
+ */
+function dpl_update_deploy_create_mobile_graphqlpremisions(): string {
+  _dpl_update_alter_permissions(
+    ['mobile_graphql_client'],
+    [
+      'execute graphql_compose_server arbitrary graphql requests',
+      'use absolute cms urls',
+    ],
+    TRUE);
+
+  return 'Added relevant permissions to the new mobile_graphql_client role.';
+}

@@ -1,0 +1,14 @@
+uuid: d4873164-abe3-40cb-899f-1040505eb05a
+langcode: da
+status: true
+dependencies:
+  module:
+    - dpl_graphql
+    - graphql
+id: mobile_graphql_client
+label: 'Mobile GraphQL Client'
+weight: 11
+is_admin: null
+permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'
+  - 'use absolute cms urls'
