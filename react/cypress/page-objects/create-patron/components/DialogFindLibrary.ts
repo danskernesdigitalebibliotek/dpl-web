@@ -5,8 +5,7 @@ export class DialogFindLibrary extends ComponentObject {
     super(() => cy.get(".find-library-dialog"));
     this.addElements = {
       title: () => this.container().find(".find-library-dialog__title"),
-      geoLocationGroup: () =>
-        this.container().find(".address-search-bar"),
+      geoLocationGroup: () => this.container().find(".address-search-bar"),
       locationList: () =>
         this.container().find(".find-library-dialog__location-list"),
       locationListItems: () =>
