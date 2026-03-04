@@ -729,6 +729,7 @@ class DplReactAppsController extends ControllerBase {
     $this->renderer->addCacheableDependency($app, $this->reservationSettings);
     $this->renderer->addCacheableDependency($app, $this->branchSettings);
     $this->renderer->addCacheableDependency($app, $this->instantLoanSettings);
+    $this->renderer->addCacheableDependency($app, $this->generalSettings);
 
     return $app;
   }
