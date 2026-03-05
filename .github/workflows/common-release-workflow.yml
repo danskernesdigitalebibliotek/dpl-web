@@ -47,12 +47,8 @@ jobs:
         # Output package.json to provide insight and help debugging
         # Using branch names as tags allows other projects to track unreleased
         # development.
-        # In the past we made the dist files include the branch name.
-        # I don't think we'll need this now, but I'll leave this here for now.
-        # RELEASE_BRANCH_SLUGGED=$(echo ${{ inputs.branch }} | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
-        # DIST_FILENAME="${{ inputs.project }}-${RELEASE_BRANCH_SLUGGED}.zip"
         run: |
-          TAG_NAME=$(echo "branch-${{ inputs.branch }}")
+          TAG_NAME=$(echo branch-${{ inputs.branch }} | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
           DIST_FILENAME="dist-${{ inputs.project }}.zip"
           echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_ENV"
           echo "BUILD_VERSION=${{ inputs.branch }}-${{ inputs.sha }}" >> "$GITHUB_ENV"
