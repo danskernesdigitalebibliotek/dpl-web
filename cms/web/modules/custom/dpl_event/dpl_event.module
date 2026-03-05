@@ -18,6 +18,7 @@ use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\dpl_event\ReoccurringDateFormatter;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
+use Drupal\dpl_event\Workflows\UnpublishSeriesSchedule;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventSeries;
 
@@ -162,9 +163,11 @@ function dpl_event_entity_bundle_info_alter(array &$bundles): void {
 function dpl_event_cron_job_scheduler_info(): array {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
   $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  $unpublish_series_schedule = DrupalTyped::service(UnpublishSeriesSchedule::class, 'dpl_event.unpublish_series_schedule');
   return array_merge(
     $occurred_schedule->getSchedule(),
-    $unpublish_schedule->getSchedule()
+    $unpublish_schedule->getSchedule(),
+    $unpublish_series_schedule->getSchedule()
   );
 }
 
