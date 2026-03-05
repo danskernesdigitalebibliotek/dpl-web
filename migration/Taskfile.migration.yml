@@ -59,6 +59,68 @@ tasks:
         mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
         sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
 
+  mono:migration:sync-marker-by-author-date:
+    desc: "Sync marker by author date (DATE=... or inferred from local project history)"
+    silent: true
+    requires:
+      vars: [REPO, PROJECT]
+    cmds:
+      - |
+        set -eu
+        MIGRATION_FILE="{{.MIGRATION_FILE}}"
+        ORG="{{.ORG}}"
+        REPO="{{.REPO}}"
+        PROJECT="{{.PROJECT}}"
+        INPUT_DATE="{{.DATE}}"
+
+        if [ ! -f "$MIGRATION_FILE" ]; then
+          echo "❌ Error: $MIGRATION_FILE not found."
+          exit 1
+        fi
+
+        CUTOFF_DATE="$INPUT_DATE"
+        if [ -z "$CUTOFF_DATE" ]; then
+          CUTOFF_DATE=$(git log --format='%aI' -- "$PROJECT" | head -1 || true)
+        fi
+        if [ -z "$CUTOFF_DATE" ]; then
+          echo "❌ Could not infer a local author date from path '$PROJECT'."
+          echo "   Provide one explicitly, e.g. DATE=2026-03-05T00:00:00Z"
+          exit 1
+        fi
+
+        echo "🔎 Syncing $REPO marker using author-date cutoff: $CUTOFF_DATE"
+
+        TMP_DIR="migration/.tmp-sync-marker.$$"
+        mkdir -p "$TMP_DIR"
+        cleanup_tmp() { rm -rf "$TMP_DIR"; }
+        trap cleanup_tmp EXIT
+
+        HISTORY_REPO="$TMP_DIR/$REPO-history"
+        git init -q "$HISTORY_REPO"
+        git -C "$HISTORY_REPO" remote add origin "https://github.com/$ORG/$REPO.git"
+        if ! git -C "$HISTORY_REPO" fetch --quiet origin develop; then
+          echo "❌ Failed to fetch $REPO/develop history"
+          exit 1
+        fi
+
+        TARGET_SHA=$(git -C "$HISTORY_REPO" log --first-parent --format='%H %aI' origin/develop | awk -v cutoff="$CUTOFF_DATE" '
+          $2 <= cutoff { print $1; exit }
+        ')
+        if [ -z "$TARGET_SHA" ]; then
+          echo "❌ No commit found on $REPO/develop at or before $CUTOFF_DATE"
+          exit 1
+        fi
+
+        PREV_SHA=$(grep "^$REPO:" "$MIGRATION_FILE" | head -1 | cut -d':' -f2 | tr -d '[:space:]')
+        grep -v "^$REPO:" "$MIGRATION_FILE" > "$MIGRATION_FILE.tmp"
+        echo "$REPO:$TARGET_SHA" >> "$MIGRATION_FILE.tmp"
+        mv "$MIGRATION_FILE.tmp" "$MIGRATION_FILE"
+        sort -o "$MIGRATION_FILE" "$MIGRATION_FILE"
+
+        echo "✅ Updated $REPO marker:"
+        echo "   previous: ${PREV_SHA:-<none>}"
+        echo "   current:  $TARGET_SHA"
+
   mono:migration:mark-processed:
     desc: "Mark one commit as processed in migration progress cache"
     silent: true
@@ -118,7 +180,7 @@ tasks:
       vars: [PROJECT, REPO]
     cmds:
       - |
-        set -u
+        set -eu
         MIGRATION_FILE="{{.MIGRATION_FILE}}"
         MIGRATION_PROGRESS_DIR="{{.MIGRATION_PROGRESS_DIR}}"
         ORG="{{.ORG}}"
@@ -159,7 +221,7 @@ tasks:
         HISTORY_REPO="$MIGRATION_TMP_DIR/$REPO-history"
         git init -q "$HISTORY_REPO"
         git -C "$HISTORY_REPO" remote add origin "https://github.com/$ORG/$REPO.git"
-        if ! git -C "$HISTORY_REPO" fetch --quiet --depth=5000 origin develop; then
+        if ! git -C "$HISTORY_REPO" fetch --quiet origin develop; then
           echo "❌ Failed to fetch $REPO/develop history"
           exit 1
         fi
@@ -203,12 +265,19 @@ tasks:
           sort -u -o "$PROGRESS_FILE" "$PROGRESS_FILE"
         }
 
-        COMMITS_DATA=$(git -C "$HISTORY_REPO" rev-list --ancestry-path --reverse "$RANGE_START..$TARGET_HEAD" | while IFS= read -r sha; do
+        REV_LIST_FILE="$MIGRATION_TMP_DIR/rev-list"
+        if ! git -C "$HISTORY_REPO" rev-list --ancestry-path --reverse "$RANGE_START..$TARGET_HEAD" > "$REV_LIST_FILE"; then
+          echo "❌ Failed to generate commit list for range $RANGE_START..$TARGET_HEAD"
+          exit 1
+        fi
+
+        COMMITS_DATA=$(while IFS= read -r sha; do
           [ -z "$sha" ] && continue
           PARENT_COUNT=$(git -C "$HISTORY_REPO" show -s --format='%P' "$sha" | awk '{print NF}')
           echo "$sha $PARENT_COUNT"
-        done)
+        done < "$REV_LIST_FILE")
         if [ -z "$COMMITS_DATA" ]; then
+          rm -f "$PROGRESS_FILE" "$PROGRESS_STATE_FILE"
           echo "✅ No new commits found."
           exit 0
         fi
