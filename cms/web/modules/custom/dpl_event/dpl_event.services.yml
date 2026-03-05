@@ -28,6 +28,12 @@ services:
       - '@job_scheduler.manager'
       - '@dpl_event.event_instance_storage'
       - '@config.factory'
+  dpl_event.unpublish_series_schedule:
+    class: Drupal\dpl_event\Workflows\UnpublishSeriesSchedule
+    arguments:
+      - '@dpl_event.event_instance_storage'
+      - '@entity_type.manager'
+      - '@config.factory'
   dpl_event.event_rest_mapper:
     class: Drupal\dpl_event\Services\EventRestMapper
     autowire: true
