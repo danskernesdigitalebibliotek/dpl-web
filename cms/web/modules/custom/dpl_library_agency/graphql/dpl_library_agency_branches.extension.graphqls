@@ -1,0 +1,23 @@
+
+extend type Query {
+  """
+  Retrieve library branches with optional filtering.
+  """
+  getBranches(
+    "Filter by a specific ISIL branch ID, e.g. DK-710111."
+    isilId: String
+    """
+    Filter to branches whitelisted for all of the given purposes.
+    Accepted values: "search", "availability", "reservations".
+    Multiple values are combined with AND logic — only branches whitelisted
+    for every specified purpose are returned.
+    """
+    availabilityContexts: [String!]
+    """
+    When true, only return branches that have a corresponding node configured
+    in the CMS. When false, only return branches without CMS configuration.
+    Omit to return all branches regardless of CMS configuration.
+    """
+    cmsConfigured: Boolean
+  ): [Branch!]!
+}

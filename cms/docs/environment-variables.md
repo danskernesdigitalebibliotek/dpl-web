@@ -134,6 +134,16 @@ Secret for the Go GraphQL consumer. Set via update hook. Not used.
 Password for the GO GraphQL consumer user. Must match the one Go uses.
 Set by update hooks.
 
+- `MOBILE_GRAPHQL_CONSUMER_SECRET`
+
+Secret for the Mobile GraphQL consumer. Set via update hook. Not used.
+
+- `MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD`
+
+Password for the Mobile GraphQL consumer user. Used for runtime
+validation of authorization of mobile clients querying the graphql
+API.
+
 ## Authentication (Adgangsplatformen & UniLogin)
 
 These are read by the `cli-set-openid-settings.sh` and

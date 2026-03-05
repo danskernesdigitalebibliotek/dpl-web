@@ -1,0 +1,18 @@
+uuid: 90c6858a-f36b-4cfb-a944-49c96c4264a6
+langcode: da
+status: true
+dependencies: {  }
+id: mobile_graphql_client
+name: mobile_graphql_client
+description: 'Mobile GraphQL Client'
+grant_types:
+  authorization_code:
+    status: true
+  client_credentials:
+    status: true
+  refresh_token:
+    status: true
+umbrella: false
+parent: null
+granularity_id: null
+granularity_configuration: {  }

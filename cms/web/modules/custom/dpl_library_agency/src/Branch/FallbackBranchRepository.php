@@ -13,20 +13,29 @@ use Psr\Log\LoggerInterface;
 class FallbackBranchRepository implements BranchRepositoryInterface {
 
   /**
+   * The repository that was last used to retrieve branches.
+   */
+  private BranchRepositoryInterface $usedRepository;
+
+  /**
    * Constructor.
    */
   public function __construct(
     private BranchRepositoryInterface $primaryRepository,
     private BranchRepositoryInterface $secondaryRepository,
     private LoggerInterface $logger,
-  ) {}
+  ) {
+    $this->usedRepository = $primaryRepository;
+  }
 
   /**
    * {@inheritdoc}
    */
   public function getBranches(): array {
     try {
-      return $this->primaryRepository->getBranches();
+      $branches = $this->primaryRepository->getBranches();
+      $this->usedRepository = $this->primaryRepository;
+      return $branches;
     }
     catch (\Exception $e) {
       $this->logger->warning('Unable to retrieve branches from %primary: %message. Falling back to %secondary',
@@ -35,8 +44,30 @@ class FallbackBranchRepository implements BranchRepositoryInterface {
           '%message' => $e->getMessage(),
           '%secondary' => $this->secondaryRepository::class,
         ]);
+      $this->usedRepository = $this->secondaryRepository;
       return $this->secondaryRepository->getBranches();
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts(): array {
+    return $this->usedRepository->getCacheContexts();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags(): array {
+    return $this->usedRepository->getCacheTags();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge(): int {
+    return $this->usedRepository->getCacheMaxAge();
   }
 
 }
