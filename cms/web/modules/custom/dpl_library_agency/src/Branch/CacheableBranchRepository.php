@@ -52,4 +52,12 @@ class CacheableBranchRepository implements BranchRepositoryInterface {
     return $branches;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge(): int {
+    // Return the lifetime the service was told to use.
+    return $this->lifetime;
+  }
+
 }

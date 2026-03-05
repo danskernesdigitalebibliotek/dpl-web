@@ -49,4 +49,13 @@ class FbsBranchRepository implements BranchRepositoryInterface {
     return $branches;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge(): int {
+    // The FBS repository itself has no caching — it always fetches live data.
+    // Caching is handled by the wrapping CacheableBranchRepository.
+    return 0;
+  }
+
 }
