@@ -141,30 +141,13 @@ final class SettingsForm extends ConfigFormBase {
 
     $form['unpublish']['unpublish_series_enable'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Unpublish the series when all instances have occurred (not recommended)', [], ['context' => "DPL event"]),
+      '#title' => $this->t('Unpublish the series when all instances have occurred', [], ['context' => "DPL event"]),
+      '#description' => $this->t('Will happen within 30 mins of the last instance being unpublished. Unpublished series will instead redirect to the events overview page.', [], ['context' => "DPL event"]),
       '#default_value' => $config->get('unpublish_series_enable'),
       // Only display the field when unpublish schedule has a non-0 value.
       '#states' => [
         'visible' => [
           ':input[name="unpublish_enable"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['unpublish']['unpublish_series_enable_warning'] = [
-      '#type' => 'container',
-      // js-form-wrapper is important - otherwise, Drupal states will not work.
-      '#prefix' => '<div class="dpl-form-warning js-form-wrapper">',
-      '#markup' => $this->t('Notice - if series get unpublished, old instance links will no longer work. If you however keep the series published, expired instances will redirect to the associated series.', [], ['context' => 'DPL event']),
-      '#suffix' => '</div>',
-      '#states' => [
-        'visible' => [
-          ':input[name="unpublish_enable"]' => ['checked' => TRUE],
-          // PHPCS doesn't understand Drupal's weird way of doing states.
-          // phpcs:disable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
-          'and',
-          // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
-          ':input[name="unpublish_series_enable"]' => ['checked' => TRUE],
         ],
       ],
     ];
