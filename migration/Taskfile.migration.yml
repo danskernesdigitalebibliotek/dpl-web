@@ -154,7 +154,8 @@ tasks:
         cleanup_migration_tmp() { rm -rf "$MIGRATION_TMP_DIR"; }
         trap cleanup_migration_tmp EXIT
 
-        # Build commit list from first-parent develop history to avoid compare-graph loops.
+        # Build commit list from ancestry path (all descendants between range bounds)
+        # to avoid compare-graph loops while still including merged PR commits.
         HISTORY_REPO="$MIGRATION_TMP_DIR/$REPO-history"
         git init -q "$HISTORY_REPO"
         git -C "$HISTORY_REPO" remote add origin "https://github.com/$ORG/$REPO.git"
@@ -202,13 +203,11 @@ tasks:
           sort -u -o "$PROGRESS_FILE" "$PROGRESS_FILE"
         }
 
-        COMMITS_DATA=$(git -C "$HISTORY_REPO" log --first-parent --reverse --format='%H %P' "$RANGE_START..$TARGET_HEAD" | awk '
-          NF == 0 { next }
-          {
-            parent_count = NF - 1
-            print $1 " " parent_count
-          }
-        ')
+        COMMITS_DATA=$(git -C "$HISTORY_REPO" rev-list --ancestry-path --reverse "$RANGE_START..$TARGET_HEAD" | while IFS= read -r sha; do
+          [ -z "$sha" ] && continue
+          PARENT_COUNT=$(git -C "$HISTORY_REPO" show -s --format='%P' "$sha" | awk '{print NF}')
+          echo "$sha $PARENT_COUNT"
+        done)
         if [ -z "$COMMITS_DATA" ]; then
           echo "✅ No new commits found."
           exit 0
