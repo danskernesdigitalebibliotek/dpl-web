@@ -1093,3 +1093,10 @@ function dpl_update_update_10067(): string {
 function dpl_update_update_10068(): string {
   return _dpl_update_install_modules(['gsearch']);
 }
+
+/**
+ * Add translation for logo aria-label.
+ */
+function dpl_update_update_10069(): string {
+  return _dpl_update_update_translation('@site_title: frontpage', '@site_title: forside');
+}
