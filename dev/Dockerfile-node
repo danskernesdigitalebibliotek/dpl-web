@@ -1,0 +1,10 @@
+# We use a build-arg so the version isn't hardcoded
+ARG NODE_VERSION=22
+FROM node:${NODE_VERSION}
+
+RUN apt-get update && apt-get install -y zip && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /usr/local/share/.cache/yarn && chmod -R 777 /usr/local/share/.cache/yarn
+RUN mkdir -p /.cache/yarn && chmod -R 777 /.cache/
+RUN mkdir -p /.yarn && chmod -R 777 /.yarn/
+
+WORKDIR /var/www

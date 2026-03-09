@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f08a45febbcd29c6c58fffc0e5aa1823",
+    "content-hash": "e26d929aefc680e025281b6a493f702b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
