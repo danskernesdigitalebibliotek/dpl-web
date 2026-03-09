@@ -1,12 +1,13 @@
 import React, { Fragment, memo, useEffect } from "react";
-import { isEmpty } from "lodash";
+import clsx from "clsx";
 import { getCoverTint } from "../../core/utils/helpers/general";
 import { Work } from "../../core/utils/types/entities";
-import CardListItem from "./card-list-item/card-list-item";
-import CardListItemSkeleton from "./card-list-item/card-list-item-skeleton";
-import MaterialListItem from "./MaterialListItem";
-import CardListInfoBox, { CardListInfoBoxProps } from "./CardListInfoBox";
-import ContentList from "../content-list/ContentList";
+import CardListItem from "../../components/card-item-list/card-list-item/card-list-item";
+import CardListItemSkeleton from "../../components/card-item-list/card-list-item/card-list-item-skeleton";
+import MaterialListItem from "../../components/card-item-list/MaterialListItem";
+import CardListInfoBox, {
+  CardListInfoBoxProps
+} from "../../components/card-item-list/CardListInfoBox";
 
 export interface SearchResultListProps {
   resultItems?: Work[];
@@ -36,20 +37,12 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
   const searchInfoBoxIndex = pageSize;
 
   return (
-    <ContentList className={className} dataCy="search-result-list">
-      {/*
-          Show skeleton search result items if no data is available yet.
-          We'll show 5 items which should cover most screens.
-        */}
-      {!worksAreLoaded &&
-        [...Array(5)].map((_, index) => (
-          <li key={index} className="content-list__item">
-            <CardListItemSkeleton />
-          </li>
-        ))}
-      {worksAreLoaded &&
-        resultItems.map((item, i) => {
-          const isFirstNewItem = i === page * pageSize;
+    <ul
+      className={clsx("content-list", className)}
+      data-cy="search-result-list"
+    >
+      {resultItems?.map((item, i) => {
+        const isFirstNewItem = i === page * pageSize;
 
         if (
           i === searchInfoBoxIndex &&
@@ -76,10 +69,40 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
                   resultNumber={i + 1}
                 />
               </MaterialListItem>
-            );
-          }
-        })}
-    </ContentList>
+            </Fragment>
+          );
+        } else {
+          return (
+            <MaterialListItem
+              className="content-list__item"
+              key={item.workId}
+              ref={isFirstNewItem ? lastItemRef : null}
+            >
+              <CardListItem
+                item={item}
+                coverTint={getCoverTint(i)}
+                resultNumber={i + 1}
+              />
+            </MaterialListItem>
+          );
+        }
+      })}
+
+      {isLoading && (
+        <>
+          {/*
+            Show skeleton search result items if no data is available yet or
+            while loading additional pages. We'll show 5 items which should
+            cover most screens.
+          */}
+          {[...Array(5)].map((_, index) => (
+            <li key={index} className="content-list__item">
+              <CardListItemSkeleton />
+            </li>
+          ))}
+        </>
+      )}
+    </ul>
   );
 };
 
