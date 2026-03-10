@@ -34,12 +34,14 @@ class PageTest extends EntityConverterTestBase {
     $node = $this->prophesize(NodeInterface::class);
     $this->mockFieldAndConverter($node, 'title', 'string');
     $this->mockFieldAndConverter($node, 'uuid', 'string');
+    $this->mockFieldAndConverter($node, 'field_paragraphs', 'entity_reference');
 
     $data = $this->converter->normalize($node->reveal());
 
     $this->assertEquals([
       'title' => 'field title mock',
       'uuid' => 'field uuid mock',
+      'field_paragraphs' => 'field field_paragraphs mock',
     ], $data);
   }
 
@@ -52,6 +54,7 @@ class PageTest extends EntityConverterTestBase {
     $incoming_data = [
       'uuid' => ['1234-5678-9012-3456'],
       'title' => ['Test Page'],
+      'field_paragraphs' => ['mock paragraph']
     ];
 
     $nodeStorage = $this->prophesize(EntityStorageInterface::class);
@@ -64,15 +67,21 @@ class PageTest extends EntityConverterTestBase {
       'uuid' => '1234-5678-9012-3456',
     ])->willReturn($nodeMock);
 
-    $this->fieldConverterManager->denormalize('string', ['Test Page'])
-      ->willReturn([['value' => 'Test Page']]);
+    // This needs to match the format that the format that the real field
+    // converter returns as EntityConverterBase extracts the UUID from it. The
+    // rest don't as we're not testing the field converters here.
     $this->fieldConverterManager->denormalize('string', ['1234-5678-9012-3456'])
       ->willReturn([['value' => '1234-5678-9012-3456']]);
+    $this->fieldConverterManager->denormalize('string', ['Test Page'])
+      ->willReturn('Test Page');
+    $this->fieldConverterManager->denormalize('entity_reference', ['mock paragraph'])
+      ->willReturn('mock paragraph');
 
     $this->converter->denormalize($incoming_data);
 
-    $nodeMock->set('title', [['value' => 'Test Page']])->shouldHaveBeenCalled();
+    $nodeMock->set('title', 'Test Page')->shouldHaveBeenCalled();
     $nodeMock->set('uuid', [['value' => '1234-5678-9012-3456']])->shouldHaveBeenCalled();
+    $nodeMock->set('field_paragraphs', 'mock paragraph')->shouldHaveBeenCalled();
   }
 
 }

@@ -21,7 +21,9 @@ class Article extends Node {
    * {@inheritdoc}
    */
   public function fields(): array {
-    return parent::fields() + [];
+    return parent::fields() + [
+      'field_paragraphs' => 'entity_reference',
+    ];
   }
 
 }
