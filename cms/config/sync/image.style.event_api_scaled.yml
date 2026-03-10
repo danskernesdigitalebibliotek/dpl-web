@@ -1,0 +1,15 @@
+uuid: 0474a103-4e71-4ee0-99af-55354fe503fa
+langcode: en
+status: true
+dependencies: {  }
+name: event_api_scaled
+label: 'Event API scaled (1920x?)'
+effects:
+  e7d131d5-e6a9-42b5-ac48-078f6e3c0382:
+    uuid: e7d131d5-e6a9-42b5-ac48-078f6e3c0382
+    id: image_scale
+    weight: 1
+    data:
+      width: 1920
+      height: null
+      upscale: true
