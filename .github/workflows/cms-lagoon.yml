@@ -4,6 +4,13 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - 'cms/**'
+      - '.github/workflows/cms-*.yml'
 name: CMS / Lagoon integration
 
 env:
