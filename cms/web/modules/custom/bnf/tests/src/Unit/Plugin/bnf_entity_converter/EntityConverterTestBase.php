@@ -86,9 +86,9 @@ abstract class EntityConverterTestBase extends UnitTestCase {
    * Set up a node field mock and corresponding converter mock.
    */
   protected function mockFieldAndConverter(ObjectProphecy $node, string $field, string $type): void {
-    $titleMock = $this->prophesize(FieldItemListInterface::class);
-    $node->get($field)->willReturn($titleMock);
-    $this->fieldConverterManager->normalize($type, $titleMock)
+    $fieldMock = $this->prophesize(FieldItemListInterface::class);
+    $node->get($field)->willReturn($fieldMock);
+    $this->fieldConverterManager->normalize($type, $fieldMock)
       ->willReturn('field ' . $field . ' mock');
   }
 
