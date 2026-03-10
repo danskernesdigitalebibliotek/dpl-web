@@ -321,7 +321,7 @@ function dpl_update_deploy_bnf(): string {
   // setup.
   $project = getenv('LAGOON_PROJECT');
 
-  if (in_array($project, ['bnf', 'dpl-bnf'])) {
+  if (in_array($project, ['bnf', 'dpl-bnf', 'dpl-web-bnf'])) {
     return _dpl_update_install_modules(['bnf_server']);
   }
 
@@ -495,4 +495,34 @@ function dpl_update_deploy_event_field_inheritance(): string {
   $return .= _dpl_update_field_inheritance('event_non_branch_location');
 
   return $return;
+}
+
+/**
+ * Make sure editors have access to use GO Text Body WYSIWYG format.
+ *
+ * This permission was missing for administrators on Roskilde, and might be
+ * missing on other sites, so it must have been forgotten in the past.
+ */
+function dpl_update_deploy_go_text_body_wysiwyg(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator', 'editor', 'mediator'],
+    ['use text format go_text_body'],
+  TRUE);
+
+  return 'Allow editors to use GO Text Body WYSIWYG format';
+}
+
+/**
+ * Add permissions to the mobile_graphql_client role.
+ */
+function dpl_update_deploy_create_mobile_graphql_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['mobile_graphql_client'],
+    [
+      'execute graphql_compose_server arbitrary graphql requests',
+      'use absolute cms urls',
+    ],
+    TRUE);
+
+  return 'Added relevant permissions to the new mobile_graphql_client role.';
 }

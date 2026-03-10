@@ -37,7 +37,7 @@ use JMS\Serializer\Annotation\SerializedName;
 /**
  * Class representing the EventsGET200ResponseInnerImage model.
  *
- * The main image for the event.
+ * The main image for the event. (Scaled)
  *
  * @package DanskernesDigitaleBibliotek\CMS\Api\Model
  * @author  OpenAPI Generator team
@@ -46,7 +46,7 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventsGET200ResponseInnerImage 
 {
         /**
-     * An absolute URL for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event.
+     * An absolute URL for the image. This is a link to a scaled version of the original image - the width will always be 1920px, but height/aspect ratio will vary.
      *
      * @var string|null
      * @SerializedName("url")
@@ -82,7 +82,7 @@ class EventsGET200ResponseInnerImage
     /**
      * Sets url.
      *
-     * @param string|null $url  An absolute URL for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event.
+     * @param string|null $url  An absolute URL for the image. This is a link to a scaled version of the original image - the width will always be 1920px, but height/aspect ratio will vary.
      *
      * @return $this
      */

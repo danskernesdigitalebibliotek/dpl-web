@@ -41,7 +41,7 @@ class ParagraphLinksMapper extends BnfMapperParagraphPluginBase {
 
     return $this->paragraphStorage->create([
       'type' => 'links',
-      'field_link' => $this->mapper->mapAll($object->link, TRUE),
+      'field_link' => $this->mapper->mapAll($object->link),
     ]);
 
   }

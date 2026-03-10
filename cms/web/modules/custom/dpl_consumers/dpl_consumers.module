@@ -66,6 +66,12 @@ function dpl_consumers_known_consumers_settings(): array {
   if (!$go_consumer_user_password = getenv('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD')) {
     throw new \Exception('NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD not found.');
   }
+  if (!$mobile_consumer_secret = getenv('MOBILE_GRAPHQL_CONSUMER_SECRET')) {
+    throw new \Exception('MOBILE_GRAPHQL_CONSUMER_SECRET not found.');
+  }
+  if (!$mobile_consumer_user_password = getenv('MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD')) {
+    throw new \Exception('MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD not found.');
+  }
 
   return [
     [
@@ -77,6 +83,11 @@ function dpl_consumers_known_consumers_settings(): array {
       'consumer' => new Consumer('go_graphql', \Drupal::entityTypeManager(), 'GO GraphQL', $go_consumer_secret),
       'user' => new ConsumerUser('go_graphql', \Drupal::entityTypeManager(), $go_consumer_user_password),
       'role' => new ConsumerRole('go_graphql_client'),
+    ],
+    [
+      'consumer' => new Consumer('mobile_graphql', \Drupal::entityTypeManager(), 'Mobile GraphQL', $mobile_consumer_secret),
+      'user' => new ConsumerUser('mobile_graphql', \Drupal::entityTypeManager(), $mobile_consumer_user_password),
+      'role' => new ConsumerRole('mobile_graphql_client'),
     ],
   ];
 }

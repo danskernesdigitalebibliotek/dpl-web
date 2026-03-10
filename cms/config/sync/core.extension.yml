@@ -113,6 +113,7 @@ module:
   graphql_compose_preview: 0
   graphql_compose_routes: 0
   graphql_compose_views: 0
+  gsearch: 0
   handy_cache_tags: 0
   health_check: 0
   honeypot: 0

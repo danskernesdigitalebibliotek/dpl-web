@@ -3,6 +3,7 @@ version: '3'
 vars:
   ORG: danskernesdigitalebibliotek
   MIGRATION_FILE: migration/.migration-info
+  MIGRATION_PROGRESS_DIR: migration/.migration-progress
 
 tasks:
   # --------------------------------------------------------------------------
@@ -41,6 +42,133 @@ tasks:
       - task: internal:migrate
         vars: { PROJECT: "{{.PROJECT}}", REPO: "{{.REPO}}" }
 
+  mono:migration:update-marker:
+    desc: "Update migration marker entry in .migration-info"
+    silent: true
+    requires:
+      vars: [REPO, COMMIT]
+    cmds:
+      - |
+        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
+          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+          exit 1
+        fi
+
+        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
+        echo "{{.REPO}}:{{.COMMIT}}" >> {{.MIGRATION_FILE}}.tmp
+        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
+        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+
+  mono:migration:sync-marker-by-author-date:
+    desc: "Sync marker by author date (DATE=... or inferred from local project history)"
+    silent: true
+    requires:
+      vars: [REPO, PROJECT]
+    cmds:
+      - |
+        set -eu
+        MIGRATION_FILE="{{.MIGRATION_FILE}}"
+        ORG="{{.ORG}}"
+        REPO="{{.REPO}}"
+        PROJECT="{{.PROJECT}}"
+        INPUT_DATE="{{.DATE}}"
+
+        if [ ! -f "$MIGRATION_FILE" ]; then
+          echo "❌ Error: $MIGRATION_FILE not found."
+          exit 1
+        fi
+
+        CUTOFF_DATE="$INPUT_DATE"
+        if [ -z "$CUTOFF_DATE" ]; then
+          CUTOFF_DATE=$(git log --format='%aI' -- "$PROJECT" | head -1 || true)
+        fi
+        if [ -z "$CUTOFF_DATE" ]; then
+          echo "❌ Could not infer a local author date from path '$PROJECT'."
+          echo "   Provide one explicitly, e.g. DATE=2026-03-05T00:00:00Z"
+          exit 1
+        fi
+
+        echo "🔎 Syncing $REPO marker using author-date cutoff: $CUTOFF_DATE"
+
+        TMP_DIR="migration/.tmp-sync-marker.$$"
+        mkdir -p "$TMP_DIR"
+        cleanup_tmp() { rm -rf "$TMP_DIR"; }
+        trap cleanup_tmp EXIT
+
+        HISTORY_REPO="$TMP_DIR/$REPO-history"
+        git init -q "$HISTORY_REPO"
+        git -C "$HISTORY_REPO" remote add origin "https://github.com/$ORG/$REPO.git"
+        if ! git -C "$HISTORY_REPO" fetch --quiet origin develop; then
+          echo "❌ Failed to fetch $REPO/develop history"
+          exit 1
+        fi
+
+        TARGET_SHA=$(git -C "$HISTORY_REPO" log --first-parent --format='%H %aI' origin/develop | awk -v cutoff="$CUTOFF_DATE" '
+          $2 <= cutoff { print $1; exit }
+        ')
+        if [ -z "$TARGET_SHA" ]; then
+          echo "❌ No commit found on $REPO/develop at or before $CUTOFF_DATE"
+          exit 1
+        fi
+
+        PREV_SHA=$(grep "^$REPO:" "$MIGRATION_FILE" | head -1 | cut -d':' -f2 | tr -d '[:space:]')
+        grep -v "^$REPO:" "$MIGRATION_FILE" > "$MIGRATION_FILE.tmp"
+        echo "$REPO:$TARGET_SHA" >> "$MIGRATION_FILE.tmp"
+        mv "$MIGRATION_FILE.tmp" "$MIGRATION_FILE"
+        sort -o "$MIGRATION_FILE" "$MIGRATION_FILE"
+
+        echo "✅ Updated $REPO marker:"
+        echo "   previous: ${PREV_SHA:-<none>}"
+        echo "   current:  $TARGET_SHA"
+
+  mono:migration:mark-processed:
+    desc: "Mark one commit as processed in migration progress cache"
+    silent: true
+    requires:
+      vars: [REPO, COMMIT]
+    cmds:
+      - |
+        PROGRESS_DIR="{{.MIGRATION_PROGRESS_DIR}}"
+        PROGRESS_FILE="$PROGRESS_DIR/{{.REPO}}.done"
+        mkdir -p "$PROGRESS_DIR"
+        touch "$PROGRESS_FILE"
+        echo "{{.COMMIT}}" >> "$PROGRESS_FILE"
+        sort -u -o "$PROGRESS_FILE" "$PROGRESS_FILE"
+        echo "✅ Marked {{.COMMIT}} as processed for {{.REPO}}"
+
+  mono:migration:fetch-skip-files:
+    desc: "Download and overwrite lock/translation files from each repo's develop branch"
+    silent: true
+    cmds:
+      - |
+        set -e
+        ORG="{{.ORG}}"
+        BRANCH="develop"
+        BASE="https://raw.githubusercontent.com/$ORG"
+
+        fetch() {
+          REPO="$1"
+          SRC="$2"
+          DST="$3"
+          mkdir -p "$(dirname "$DST")"
+          echo "Fetching $DST from $REPO..."
+          curl -sLf "$BASE/$REPO/$BRANCH/$SRC" -o "$DST" || { echo "❌ Failed: $REPO $SRC"; exit 1; }
+        }
+
+        fetch dpl-cms composer.json cms/composer.json
+        fetch dpl-cms composer.lock cms/composer.lock
+        fetch dpl-cms yarn.lock cms/yarn.lock
+        fetch dpl-cms package.json cms/package.json
+        fetch dpl-cms web/profiles/dpl_cms/translations/da.combined.po cms/web/profiles/dpl_cms/translations/da.combined.po
+        fetch dpl-go package.json go/package.json
+        fetch dpl-go yarn.lock go/yarn.lock
+        fetch dpl-design-system package.json design-system/package.json
+        fetch dpl-design-system yarn.lock design-system/yarn.lock
+        fetch dpl-react package.json react/package.json
+        fetch dpl-react yarn.lock react/yarn.lock
+
+        echo "✅ All files updated."
+
   # --------------------------------------------------------------------------
   # Internal Implementation
   # --------------------------------------------------------------------------
@@ -52,47 +180,238 @@ tasks:
       vars: [PROJECT, REPO]
     cmds:
       - |
-        if [ ! -f "{{.MIGRATION_FILE}}" ]; then
-          echo "❌ Error: {{.MIGRATION_FILE}} not found."
+        set -eu
+        MIGRATION_FILE="{{.MIGRATION_FILE}}"
+        MIGRATION_PROGRESS_DIR="{{.MIGRATION_PROGRESS_DIR}}"
+        ORG="{{.ORG}}"
+        REPO="{{.REPO}}"
+        PROJECT="{{.PROJECT}}"
+        # Skip-list: any path ending with these filenames (all projects)
+        SKIP_FILES_PATTERN="/(composer\.json|composer\.lock|yarn\.lock|da\.combined\.po)$|^(composer\.json|composer\.lock|package\.json|yarn\.lock|da\.combined\.po)$"
+
+        if [ ! -f "$MIGRATION_FILE" ]; then
+          echo "❌ Error: $MIGRATION_FILE not found."
           exit 1
         fi
 
-        # Get Current SHA
-        CURRENT_SHA=$(grep "^{{.REPO}}:" {{.MIGRATION_FILE}} | cut -d':' -f2 | tr -d '[:space:]')
+        if [ -d ".git/rebase-apply" ]; then
+          echo "❌ Error: An existing 'git am' session is in progress."
+          echo ""
+          echo "Finish or cancel it before running migration again:"
+          echo "  - Resolve conflicts, then run: git am --continue"
+          echo "  - Or cancel the session with:  git am --abort"
+          exit 1
+        fi
+
+        CURRENT_SHA=$(grep "^$REPO:" "$MIGRATION_FILE" | head -1 | cut -d':' -f2 | tr -d '[:space:]')
         if [ -z "$CURRENT_SHA" ]; then
-          echo "❌ Error: No entry for '{{.REPO}}' in {{.MIGRATION_FILE}}"
+          echo "❌ Error: No entry for '$REPO' in $MIGRATION_FILE"
           exit 1
         fi
 
-        echo "🔍 Checking {{.REPO}} from $CURRENT_SHA..."
+        echo "🔍 Checking $REPO from checkpoint $CURRENT_SHA..."
 
-        # Get Commits
-        COMMITS=$(gh api "repos/{{.ORG}}/{{.REPO}}/compare/$CURRENT_SHA...develop" --jq '.commits[].sha')
+        MIGRATION_TMP_DIR="migration/.tmp.$$"
+        mkdir -p "$MIGRATION_TMP_DIR"
+        cleanup_migration_tmp() { rm -rf "$MIGRATION_TMP_DIR"; }
+        trap cleanup_migration_tmp EXIT
 
-        if [ -z "$COMMITS" ]; then
+        # Build commit list from ancestry path (all descendants between range bounds)
+        # to avoid compare-graph loops while still including merged PR commits.
+        HISTORY_REPO="$MIGRATION_TMP_DIR/$REPO-history"
+        git init -q "$HISTORY_REPO"
+        git -C "$HISTORY_REPO" remote add origin "https://github.com/$ORG/$REPO.git"
+        if ! git -C "$HISTORY_REPO" fetch --quiet origin develop; then
+          echo "❌ Failed to fetch $REPO/develop history"
+          exit 1
+        fi
+
+        TARGET_HEAD=$(git -C "$HISTORY_REPO" rev-parse --verify origin/develop)
+
+        if ! git -C "$HISTORY_REPO" rev-parse --verify --quiet "$CURRENT_SHA^{commit}" >/dev/null; then
+          echo "❌ Error: marker $CURRENT_SHA was not found in fetched $REPO/develop history."
+          echo "   Increase fetch depth or set marker to an existing develop commit."
+          exit 1
+        fi
+
+        RANGE_START="$CURRENT_SHA"
+        if ! git -C "$HISTORY_REPO" merge-base --is-ancestor "$CURRENT_SHA" "$TARGET_HEAD"; then
+          RANGE_START=$(git -C "$HISTORY_REPO" merge-base "$CURRENT_SHA" "$TARGET_HEAD")
+          echo "⚠️ Checkpoint is not an ancestor of current develop head."
+          echo "   Falling back to merge-base $RANGE_START to compute a safe range."
+        fi
+
+        PROGRESS_DIR="$MIGRATION_PROGRESS_DIR"
+        PROGRESS_FILE="$PROGRESS_DIR/$REPO.done"
+        PROGRESS_STATE_FILE="$PROGRESS_DIR/$REPO.state"
+        mkdir -p "$PROGRESS_DIR"
+        RUN_STATE="$RANGE_START..$TARGET_HEAD"
+        PREV_STATE=""
+        if [ -f "$PROGRESS_STATE_FILE" ]; then
+          PREV_STATE=$(tr -d '\n' < "$PROGRESS_STATE_FILE")
+        fi
+        if [ "$PREV_STATE" != "$RUN_STATE" ]; then
+          : > "$PROGRESS_FILE"
+          printf "%s\n" "$RUN_STATE" > "$PROGRESS_STATE_FILE"
+          echo "🆕 Starting new migration window: $RUN_STATE"
+        else
+          touch "$PROGRESS_FILE"
+          echo "↩️ Resuming migration window: $RUN_STATE"
+        fi
+
+        append_processed() {
+          SHA="$1"
+          echo "$SHA" >> "$PROGRESS_FILE"
+          sort -u -o "$PROGRESS_FILE" "$PROGRESS_FILE"
+        }
+
+        REV_LIST_FILE="$MIGRATION_TMP_DIR/rev-list"
+        if ! git -C "$HISTORY_REPO" rev-list --ancestry-path --reverse "$RANGE_START..$TARGET_HEAD" > "$REV_LIST_FILE"; then
+          echo "❌ Failed to generate commit list for range $RANGE_START..$TARGET_HEAD"
+          exit 1
+        fi
+
+        COMMITS_DATA=$(while IFS= read -r sha; do
+          [ -z "$sha" ] && continue
+          PARENT_COUNT=$(git -C "$HISTORY_REPO" show -s --format='%P' "$sha" | awk '{print NF}')
+          echo "$sha $PARENT_COUNT"
+        done < "$REV_LIST_FILE")
+        if [ -z "$COMMITS_DATA" ]; then
+          rm -f "$PROGRESS_FILE" "$PROGRESS_STATE_FILE"
           echo "✅ No new commits found."
           exit 0
         fi
 
-        # Update latest SHA in the .migration-info file.
-        TARGET_SHA=$(echo "$COMMITS" | tail -n 1)
-
-        echo "💾 Optimistically updating {{.MIGRATION_FILE}} to target: $TARGET_SHA"
-
-        grep -v "^{{.REPO}}:" {{.MIGRATION_FILE}} > {{.MIGRATION_FILE}}.tmp
-        echo "{{.REPO}}:$TARGET_SHA" >> {{.MIGRATION_FILE}}.tmp
-        mv {{.MIGRATION_FILE}}.tmp {{.MIGRATION_FILE}}
-        sort -o {{.MIGRATION_FILE}} {{.MIGRATION_FILE}}
+        update_migration_marker() {
+          REPO_NAME="$1"
+          SHA="$2"
+          grep -v "^$REPO_NAME:" "$MIGRATION_FILE" > "$MIGRATION_FILE.tmp"
+          echo "$REPO_NAME:$SHA" >> "$MIGRATION_FILE.tmp"
+          mv "$MIGRATION_FILE.tmp" "$MIGRATION_FILE"
+          sort -o "$MIGRATION_FILE" "$MIGRATION_FILE"
+        }
 
         echo "----------------------------------------"
 
-        # Apply Patches
-        for COMMIT in $COMMITS; do
+        COMMITS_LIST="$MIGRATION_TMP_DIR/commits-list"
+        echo "$COMMITS_DATA" > "$COMMITS_LIST"
+
+        while IFS= read -r line; do
+          COMMIT="${line%% *}"
+          PARENT_COUNT=$(echo "$line" | awk '{print $2}')
+          [ -z "$COMMIT" ] && continue
+
+          if grep -qxF "$COMMIT" "$PROGRESS_FILE"; then
+            echo "⏭️ Already processed in current window: $COMMIT"
+            continue
+          fi
+
           echo "🚀 Migrating $COMMIT..."
 
-          PATCH_URL="https://github.com/{{.ORG}}/{{.REPO}}/commit/$COMMIT.patch"
+          if [ -n "$PARENT_COUNT" ] && [ "$PARENT_COUNT" -gt 1 ] 2>/dev/null; then
+            echo "⏭️ Skipping merge commit $COMMIT"
+            append_processed "$COMMIT"
+            continue
+          fi
 
-          curl -sL "$PATCH_URL" | git am --directory={{.PROJECT}} -3 --committer-date-is-author-date
-        done
+          PATCH_URL="https://github.com/$ORG/$REPO/commit/$COMMIT.patch"
+          PATCH_FILE="$MIGRATION_TMP_DIR/patch"
+          if ! curl -sLf "$PATCH_URL" > "$PATCH_FILE" || [ ! -s "$PATCH_FILE" ]; then
+            echo "❌ Failed to fetch patch for $COMMIT"
+            exit 1
+          fi
+          if ! grep -qE '^diff --git |^From ' "$PATCH_FILE"; then
+            echo "❌ Invalid patch content for $COMMIT"
+            exit 1
+          fi
+
+          COMMIT_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+          if [ -n "$COMMIT_FILES" ]; then
+            SKIP_THIS=1
+            while IFS= read -r f; do
+              [ -z "$f" ] && continue
+              echo "$f" | grep -qE "$SKIP_FILES_PATTERN" || { SKIP_THIS=0; break; }
+            done <<< "$COMMIT_FILES"
+            if [ "$SKIP_THIS" -eq 1 ]; then
+              rm -f "$PATCH_FILE"
+              echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, yarn.lock, or da.combined.po; will handle manually)."
+              append_processed "$COMMIT"
+              continue
+            fi
+          fi
+
+          AM_LOG="$MIGRATION_TMP_DIR/am-log"
+
+          if ! cat "$PATCH_FILE" | git am --directory="$PROJECT" -3 --committer-date-is-author-date >"$AM_LOG" 2>&1; then
+            [ -s "$AM_LOG" ] && cat "$AM_LOG"
+
+            PATCH_SKIPPED=0
+            # Missing patch context (no conflict markers; git can't build 3-way merge).
+            if grep -qE "sha1 information is lacking or useless|could not build fake ancestor|missing patch ancestor context" "$AM_LOG"; then
+              echo ""
+              echo "⚠️ Skipping $COMMIT (patch context missing – no conflict markers; apply manually from source repo if needed)."
+              if ! git am --skip; then
+                echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                exit 1
+              fi
+              append_processed "$COMMIT"
+              PATCH_SKIPPED=1
+            else
+              # Auto-skip only if this patch touches ONLY skip-list files and conflict is only in those files
+              PATCH_FILES=$(sed -n 's/^diff --git a\/\(.*\) b\/.*/\1/p' < "$PATCH_FILE" | sort -u)
+              PATCH_ONLY_SKIP=1
+              if [ -n "$PATCH_FILES" ]; then
+                while IFS= read -r f; do
+                  [ -z "$f" ] && continue
+                  echo "$f" | grep -qE "$SKIP_FILES_PATTERN" || { PATCH_ONLY_SKIP=0; break; }
+                done <<< "$PATCH_FILES"
+              fi
+
+              UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+              AUTO_SKIP=0
+              if [ "$PATCH_ONLY_SKIP" -eq 1 ] && [ -n "$UNMERGED" ]; then
+                AUTO_SKIP=1
+                while IFS= read -r p; do
+                  [ -z "$p" ] && continue
+                  echo "$p" | grep -qE "$SKIP_FILES_PATTERN" || { AUTO_SKIP=0; break; }
+                done <<< "$UNMERGED"
+              fi
+
+              if [ "$AUTO_SKIP" -eq 1 ]; then
+                echo ""
+                echo "⏭️ Conflict only in skip-list files; skipping this patch segment."
+                if ! git am --skip; then
+                  echo "❌ Failed to skip. Resolve manually: git am --skip or git am --abort"
+                  exit 1
+                fi
+                append_processed "$COMMIT"
+                PATCH_SKIPPED=1
+              else
+                echo ""
+                echo "❌ Patch failed (commit $COMMIT from $REPO)."
+                echo ""
+                echo "This can be a merge conflict or missing patch context (e.g. sha1 information is lacking)."
+                echo ""
+                echo "Recovery options:"
+                echo "  1) Resolve conflicts (if any):  git status, edit files, git add <files>, git am --continue"
+                echo "  2) Skip this patch and move on:  git am --skip"
+                echo "     Then mark processed:         task migration:mono:migration:mark-processed REPO=$REPO COMMIT=$COMMIT"
+                echo "  3) Abort and retry later:       git am --abort"
+                echo ""
+                echo "After 1 or 2, re-run the migration task to continue."
+                exit 1
+              fi
+            fi
+            [ "$PATCH_SKIPPED" -eq 1 ] && continue
+          fi
+
+          [ -s "$AM_LOG" ] && cat "$AM_LOG"
+
+          append_processed "$COMMIT"
+        done < "$COMMITS_LIST"
+
+        echo "💾 Updating $MIGRATION_FILE to new develop checkpoint: $TARGET_HEAD"
+        update_migration_marker "$REPO" "$TARGET_HEAD"
+        rm -f "$PROGRESS_FILE" "$PROGRESS_STATE_FILE"
 
         echo "🎉 All commits migrated successfully!"

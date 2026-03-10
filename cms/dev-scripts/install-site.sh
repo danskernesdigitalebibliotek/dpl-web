@@ -22,7 +22,7 @@ if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then
 else
   drush locale-check
   drush locale-update
-  drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+  drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/translations/da.config.po
 fi
 
 # Run deploy hooks.

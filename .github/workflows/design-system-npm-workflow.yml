@@ -30,12 +30,65 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: 'design-system/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'design-system/yarn.lock'
+          registry-url: 'https://npm.pkg.github.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create NPMRC
         run: |
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
           echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com" >> ~/.npmrc
           echo "always-auth=true" >> ~/.npmrc
           echo 'registry "https://registry.yarnpkg.com"' >> ~/.yarnrc
+
+      - name: Build package files for npm publish
+        run: |
+          bash ./bundle.sh
+          npm pack --dry-run
+
+      - name: Delete any existing package version (non-latest)
+        if: ${{ !inputs.latest }}
+        run: |
+          PACKAGE_NAME=$(npm pkg get name | tr -d '"')
+          PACKAGE_NAME_ENCODED=$(jq -rn --arg value "$PACKAGE_NAME" '$value|@uri')
+          PACKAGE_BASENAME="${PACKAGE_NAME##*/}"
+
+          declare -a PACKAGE_IDENTIFIERS=("$PACKAGE_NAME_ENCODED" "$PACKAGE_BASENAME")
+          declare -a OWNER_PREFIXES=("/orgs/${GITHUB_REPOSITORY_OWNER}" "/users/${GITHUB_REPOSITORY_OWNER}")
+
+          FOUND_ENDPOINT=""
+          for OWNER_PREFIX in "${OWNER_PREFIXES[@]}"; do
+            for PACKAGE_IDENTIFIER in "${PACKAGE_IDENTIFIERS[@]}"; do
+              VERSIONS_ENDPOINT="${OWNER_PREFIX}/packages/npm/${PACKAGE_IDENTIFIER}/versions?per_page=100"
+              if gh api "$VERSIONS_ENDPOINT" > package_versions.json; then
+                FOUND_ENDPOINT="${OWNER_PREFIX}/packages/npm/${PACKAGE_IDENTIFIER}/versions"
+                break 2
+              fi
+            done
+          done
+
+          if [ -z "$FOUND_ENDPOINT" ]; then
+            echo "Could not read package versions for ${PACKAGE_NAME} (scoped or unscoped API path)."
+            exit 1
+          fi
+
+          VERSION_ID=$(jq -r --arg version "$NPM_VERSION" 'map(select(.name == $version)) | first | .id // empty' package_versions.json)
+
+          if [ -z "$VERSION_ID" ]; then
+            echo "No existing ${PACKAGE_NAME}@${NPM_VERSION}, continuing."
+            exit 0
+          fi
+
+          echo "Deleting existing ${PACKAGE_NAME}@${NPM_VERSION} (id: ${VERSION_ID})."
+          gh api -X DELETE "${FOUND_ENDPOINT}/${VERSION_ID}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release NPM package (non-latest)
         if: ${{ !inputs.latest }}

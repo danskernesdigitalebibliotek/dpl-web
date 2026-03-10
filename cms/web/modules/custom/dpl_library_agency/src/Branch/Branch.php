@@ -2,9 +2,9 @@
 
 namespace Drupal\dpl_library_agency\Branch;
 
-use Drupal\address_dawa\AddressDawaItemInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\gsearch\AddressGsearchItemInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -76,15 +76,15 @@ class Branch {
   /**
    * Getting address data of a branch, set on a possible Drupal node.
    *
-   * @return \Drupal\address_dawa\AddressDawaItemInterface|null
+   * @return \Drupal\gsearch\AddressGsearchItemInterface|null
    *   The address field, along with metadata such as GPS coordinates.
    */
-  public function getAddressData(): ?AddressDawaItemInterface {
-    if (!($this->node) || !$this->node->hasField('field_address_dawa')) {
+  public function getAddressData(): ?AddressGsearchItemInterface {
+    if (!($this->node) || !$this->node->hasField('field_address_gsearch')) {
       return NULL;
     }
 
-    $field = $this->node->get('field_address_dawa');
+    $field = $this->node->get('field_address_gsearch');
 
     if ($field->isEmpty()) {
       return NULL;
@@ -92,7 +92,7 @@ class Branch {
 
     $value = $field->first();
 
-    return ($value instanceof AddressDawaItemInterface) ? $value : NULL;
+    return ($value instanceof AddressGsearchItemInterface) ? $value : NULL;
   }
 
 }

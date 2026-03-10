@@ -408,6 +408,11 @@
                     "type": "integer",
                     "description": "The id for the branch the instance belongs to"
                   },
+                  "branch_isil_id": {
+                    "type": "string",
+                    "description": "External branch id (ISIL)",
+                    "example": "DK-710100"
+                  },
                   "repetition": {
                     "type": "object",
                     "properties": {
@@ -927,7 +932,19 @@
                   },
                   "image": {
                     "type": "object",
-                    "description": "The main image for the event.",
+                    "description": "The main image for the event. (Scaled)",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "An absolute URL for the image. This is a link to a scaled version of the original image - the width will always be 1920px, but height/aspect ratio will vary."
+                      }
+                    },
+                    "required": ["url"]
+                  },
+                  "originalImage": {
+                    "type": "object",
+                    "description": "The main image for the event. (Original source)",
                     "properties": {
                       "url": {
                         "type": "string",

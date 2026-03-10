@@ -1,0 +1,85 @@
+# Lagoon-only compose: used when building from repo root (all branches and PRs).
+# Extends cms/docker-compose.yml and overrides build context/dockerfile so
+# Lagoon finds Dockerfiles under cms/lagoon/ without per-environment overrides.
+# Set in .lagoon.yml: docker-compose-yaml: docker-compose.lagoon.yml
+
+services:
+  # Lagoon's scripts read this file with shyaml and do not resolve "extends",
+  # so image-only services need image + lagoon labels here explicitly.
+  https:
+    image: ghcr.io/reload/https-proxy:proxy
+    labels:
+      lagoon.type: none
+    extends:
+      file: cms/docker-compose.yml
+      service: https
+
+  varnish:
+    build:
+      context: cms
+      dockerfile: lagoon/varnish.dockerfile
+    labels:
+      lagoon.type: varnish
+    extends:
+      file: cms/docker-compose.yml
+      service: varnish
+
+  cli:
+    build:
+      context: cms
+      dockerfile: lagoon/cli.dockerfile
+    labels:
+      lagoon.type: cli-persistent
+      lagoon.persistent.name: nginx
+      lagoon.persistent: /app/web/sites/default/files/
+    extends:
+      file: cms/docker-compose.yml
+      service: cli
+
+  nginx:
+    build:
+      context: cms
+      dockerfile: lagoon/nginx.dockerfile
+    labels:
+      lagoon.type: nginx-php-persistent
+      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.persistent.size: 10Gi
+    extends:
+      file: cms/docker-compose.yml
+      service: nginx
+
+  php:
+    build:
+      context: cms
+      dockerfile: lagoon/php.dockerfile
+    labels:
+      lagoon.type: nginx-php-persistent
+      lagoon.name: nginx
+      lagoon.persistent: /app/web/sites/default/files/
+    extends:
+      file: cms/docker-compose.yml
+      service: php
+
+  mariadb:
+    image: uselagoon/mariadb-10.6-drupal:latest
+    labels:
+      lagoon.type: mariadb
+    extends:
+      file: cms/docker-compose.yml
+      service: mariadb
+
+  redis:
+    image: uselagoon/redis-6:latest
+    labels:
+      lagoon.type: redis
+    extends:
+      file: cms/docker-compose.yml
+      service: redis
+
+volumes:
+  projectroot:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}
+      o: bind

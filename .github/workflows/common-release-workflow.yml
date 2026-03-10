@@ -47,12 +47,8 @@ jobs:
         # Output package.json to provide insight and help debugging
         # Using branch names as tags allows other projects to track unreleased
         # development.
-        # In the past we made the dist files include the branch name.
-        # I don't think we'll need this now, but I'll leave this here for now.
-        # RELEASE_BRANCH_SLUGGED=$(echo ${{ inputs.branch }} | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
-        # DIST_FILENAME="${{ inputs.project }}-${RELEASE_BRANCH_SLUGGED}.zip"
         run: |
-          TAG_NAME=$(echo "branch-${{ inputs.branch }}")
+          TAG_NAME=$(echo branch-${{ inputs.branch }} | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
           DIST_FILENAME="dist-${{ inputs.project }}.zip"
           echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_ENV"
           echo "BUILD_VERSION=${{ inputs.branch }}-${{ inputs.sha }}" >> "$GITHUB_ENV"
@@ -66,7 +62,7 @@ jobs:
           ref: ${{ inputs.sha }}
 
       - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: '${{ inputs.project }}/.nvmrc'
           cache: 'yarn'
@@ -81,7 +77,7 @@ jobs:
           VERSION: ${{ env.TAG_NAME }}-${{ inputs.sha }}
 
       - name: Upload release artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: release-dist-${{inputs.project}}
           path: "${{inputs.project}}/dist.zip"
@@ -90,11 +86,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-release
     if: ${{ inputs.dev_release }}
+    concurrency:
+      # Serialize release API writes per ref to avoid cross-workflow races.
+      group: release-write-${{ github.repository }}-${{ github.ref_name }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v6
 
       - name: Download release artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: release-dist-${{inputs.project}}
 
@@ -102,58 +102,55 @@ jobs:
         run: |
           mv dist.zip ${{ needs.build-release.outputs.dist_filename }}
 
-      - name: Delete existing releases
-        run: |
-          TAG_NAME="${{ needs.build-release.outputs.tag_name }}"
-          CURRENT_SHA="${{ inputs.sha }}"
-
-          # Check if release exists and get its target commitish
-          if RELEASE_INFO=$(gh release view "$TAG_NAME" --json targetCommitish 2>/dev/null); then
-            EXISTING_SHA=$(echo "$RELEASE_INFO" | jq -r '.targetCommitish')
-
-            # Only delete if the SHA doesn't match
-            if [ "$EXISTING_SHA" != ${{ inputs.sha }} ]; then
-              echo "Deleting existing release $TAG_NAME with old SHA."
-              gh release delete "$TAG_NAME" --cleanup-tag -y
-            else
-              echo "Release $TAG_NAME already exists with the same SHA, skipping deletion"
-            fi
-          else
-            echo "No existing release found for tag $TAG_NAME"
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Create or update tag
         uses: EndBug/latest-tag@v1.6.2
         with:
           ref: ${{ needs.build-release.outputs.tag_name }}
 
-      - name: Create pre-release
-        id: create-release
-        uses: softprops/action-gh-release@v2.5.0
-        with:
-          prerelease: true
-          draft: false
-          target_commitish: ${{ inputs.sha }}
-          tag_name: ${{ needs.build-release.outputs.tag_name }}
-          files: ${{ needs.build-release.outputs.dist_filename }}
-          fail_on_unmatched_files: true
-          body: "Triggered by branch change."
+      - name: Create or update pre-release (no delete, assets replaced in place)
+        id: upsert-release
+        run: |
+          TAG_NAME="${{ needs.build-release.outputs.tag_name }}"
+          CURRENT_SHA="${{ inputs.sha }}"
+          DIST_FILE="${{ needs.build-release.outputs.dist_filename }}"
+
+          if RELEASE_INFO=$(gh release view "$TAG_NAME" --json url 2>/dev/null); then
+            RELEASE_URL=$(echo "$RELEASE_INFO" | jq -r '.url')
+
+            echo "Release exists for $TAG_NAME, updating in place (no downtime)."
+            # Tag already points to CURRENT_SHA (updated by Create or update tag step). Only replace assets.
+            gh release upload "$TAG_NAME" "$DIST_FILE" --clobber
+            echo "url=$RELEASE_URL" >> "$GITHUB_OUTPUT"
+          else
+            echo "No existing release for $TAG_NAME, creating."
+            gh release create "$TAG_NAME" \
+              --prerelease \
+              --target "$CURRENT_SHA" \
+              --notes "Triggered by branch change."
+            RELEASE_URL=$(gh release view "$TAG_NAME" --json url -q '.url')
+            gh release upload "$TAG_NAME" "$DIST_FILE" --clobber
+            echo "url=$RELEASE_URL" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Adding summary
         run: |
-          echo "🛠️ Dev-release created at: ${{ steps.create-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "🛠️ Dev-release created at: ${{ steps.upsert-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
 
   create-release:
     runs-on: ubuntu-latest
     needs: build-release
     if: ${{ !inputs.dev_release }}
+    concurrency:
+      # Serialize release API writes per ref to avoid cross-workflow races.
+      group: release-write-${{ github.repository }}-${{ github.ref_name }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v6
 
       - name: Download release artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: release-dist-${{inputs.project}}
 

@@ -4,11 +4,18 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - 'cms/**'
+      - '.github/workflows/cms-*.yml'
 name: CMS / Lagoon integration
 
 env:
   LAGOON_DOMAIN: "dplplat02.dpl.reload.dk"
-  LAGOON_ENVIRONMENT: "pr-${{github.event.number}}"
+  LAGOON_ENVIRONMENT: "${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.ref_name }}"
   GH_TOKEN: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
   OWNER: ${{ github.repository_owner }}
   REPO: ${{ github.event.repository.name }}
@@ -16,32 +23,24 @@ jobs:
   BranchNameLength:
     name: CMS / Check branch length
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
       - name: Ensure branch name length
-        uses: lekterable/branchlint-action@2.1.0
-        if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
-        with:
-          allowed: |
-            /^.{1,100}$/
-          errorMessage: 'Branch name too long. This cannot be deployed to Lagoon.'
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          if [ "${#BRANCH_NAME}" -gt 100 ]; then
+            echo "Branch name too long. This cannot be deployed to Lagoon."
+            exit 1
+          fi
 
   # Creating the deployment that Lagoon will look for, and add status to.
   CreateDeployment:
     name: CMS / Create deployment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')) }}
     needs: [BranchNameLength]
     steps:
       - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-cms/dpl-cms-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web/dpl-web-${{ env.LAGOON_ENVIRONMENT }}/deployments")
 
           DEPLOYMENT_ID=$(echo '{
             "ref": "${{ github.head_ref || github.ref_name }}",
@@ -58,14 +57,11 @@ jobs:
   CreateDeploymentBNF:
     name: CMS / Create BNF deployment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    if: ${{ (startsWith(github.event.pull_request.title, 'bnf:')) && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
+    if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'bnf:') && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
     needs: [BranchNameLength]
     steps:
       - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-bnf/dpl-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web-bnf/dpl-web-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments")
 
           DEPLOYMENT_ID=$(echo '{
             "ref": "${{ github.head_ref || github.ref_name }}",
@@ -83,10 +79,7 @@ jobs:
   CloseEnvironment:
     name: CMS / Close environment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    if: ${{ github.event.action == 'closed' }}
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
     needs: [BranchNameLength]
     steps:
       - run: gh api --method DELETE "/repos/${{ env.OWNER }}/${{ env.REPO }}/environments/${{ env.LAGOON_ENVIRONMENT }}"
@@ -99,9 +92,6 @@ jobs:
   InformLagoon:
     name: CMS / Send synthetic event to Lagoon
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     needs: [BranchNameLength]
     steps:
       - name: Send pull request event

@@ -46,3 +46,24 @@ function dpl_consumers_deploy_10002(): void {
     $consumer_handler->create($consumer['consumer'], $consumer['user'], $consumer['role']);
   }
 }
+
+/**
+ * Create mobile_graphql consumer, user and role.
+ */
+function dpl_consumers_deploy_create_mobile_consumer(): void {
+  /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $consumer_handler */
+  $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
+
+  // Delete existing mobile_graphql consumer and user before creating new ones.
+  // This ensures idempotency - deploy_10002 may have already created them on
+  // a fresh install since mobile_graphql is now part of known_consumers.
+  $consumer_handler->getConsumer('mobile_graphql')->delete();
+  $consumer_handler->getConsumerUser('mobile_graphql')->delete();
+
+  $settings = dpl_consumers_known_consumers_settings();
+  $mobile_settings = array_filter($settings, fn(array $s) => $s['consumer']->clientId === 'mobile_graphql');
+
+  foreach ($mobile_settings as $consumer) {
+    $consumer_handler->create($consumer['consumer'], $consumer['user'], $consumer['role']);
+  }
+}

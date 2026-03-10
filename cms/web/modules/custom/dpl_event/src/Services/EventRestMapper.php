@@ -7,6 +7,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
@@ -58,6 +59,7 @@ class EventRestMapper {
       'body' => $this->event->getDescription(),
       'state' => $this->event->getState()?->value,
       'image' => $this->getImage(),
+      'originalImage' => $this->getOriginalImage(),
       'teaserImage' => $this->getTeaserImage(),
       'branches' => $this->getBranches(),
       'address' => $this->getAddress(),
@@ -255,11 +257,11 @@ class EventRestMapper {
     $rendered = $this->event->get('event_address')->view('full');
     $street = NULL;
 
-    if ($rendered['#field_type'] === 'address_dawa') {
-      $zip = $rendered[0]['postal_code'] ?? NULL;
-      $city = $rendered[0]['city'] ?? NULL;
-      $street = $rendered[0]['address'] ?? NULL;
-      $country = $rendered[0]['country'] ?? NULL;
+    if ($rendered['#field_type'] === 'address_gsearch') {
+      $zip = $rendered[0]['#content']['postal_code'] ?? NULL;
+      $city = $rendered[0]['#content']['postal_name'] ?? NULL;
+      $street = $rendered[0]['#content']['address'] ?? NULL;
+      $country = $rendered[0]['#content']['country'] ?? 'DK';
     }
     else {
       $country = $rendered[0]['country_code']['#value'] ?? NULL;
@@ -372,16 +374,29 @@ class EventRestMapper {
   }
 
   /**
-   * Getting the main, original image.
+   * Getting the main image (scaled).
    */
   private function getImage(): ?EventsGET200ResponseInnerImage {
-    $url = $this->getImageUrl('event_image', 'paragraph_wide');
+    $url = $this->getImageUrl('event_image', 'event_api_scaled');
 
     if (empty($url)) {
       return NULL;
     }
 
     return new EventsGET200ResponseInnerImage(['url' => $url]);
+  }
+
+  /**
+   * Getting the main image (original).
+   */
+  private function getOriginalImage(): ?EventsGET200ResponseInnerOriginalImage {
+    $url = $this->getImageUrl('event_image');
+
+    if (empty($url)) {
+      return NULL;
+    }
+
+    return new EventsGET200ResponseInnerOriginalImage(['url' => $url]);
   }
 
   /**

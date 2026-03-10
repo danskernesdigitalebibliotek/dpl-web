@@ -11,6 +11,8 @@ vars:
   #   - ghcr.io/danskernesdigitalebibliotek
   #   - docker.io/someregistry
   RELEASE_IMAGE_REGISTRY: '{{.RELEASE_IMAGE_REGISTRY | default "ghcr.io/danskernesdigitalebibliotek"}}'
+  # Registry host used for docker login (must not include namespace/path).
+  RELEASE_IMAGE_REGISTRY_HOST: '{{ index (splitList "/" .RELEASE_IMAGE_REGISTRY) 0 }}'
   # Get total amount of commits on the main branch. Used as build number.
   COMMIT_COUNT:
     sh: git rev-list --count origin/main
@@ -19,16 +21,22 @@ vars:
   # Otherwise it will default to the COMMIT_COUNT variable.
   RELEASE_IMAGE_TAG: "{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}"
   # Constructing docker image name.
-  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-go-node"}}'
+  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-web-go-node"}}'
   RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
 
 tasks:
+  dev:nvm:use:
+    summary: Use project Node.js version with nvm
+    silent: true
+    cmds:
+      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm use'
+
   ghcr:login:
     summary: Login into Github Container Registry
     cmds:
-      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY }} -u username-not-used --password-stdin
+      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY_HOST }} -u "${GITHUB_ACTOR:-github-actions[bot]}" --password-stdin
     preconditions:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
@@ -53,6 +61,6 @@ tasks:
   dev:reset:
     desc: Install development environment and clean up
     cmds:
-      - rm -rf node_modules .next
+      - task dev:nvm:use
       - yarn
       - yarn dev:https

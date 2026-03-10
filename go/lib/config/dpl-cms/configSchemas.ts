@@ -1,9 +1,6 @@
 import { z } from "zod"
 
 export const publicConfigSchema = z.object({
-  searchProfiles: z.object({
-    local: z.string().nullable(),
-  }),
   loginUrls: z.object({
     adgangsplatformen: z.string().nullable(),
   }),

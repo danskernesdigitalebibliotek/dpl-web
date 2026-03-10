@@ -76,13 +76,16 @@ default:
       alias: /hovedbiblioteket
       langcode: und
       pathauto: 1
-  field_address_dawa:
-    - type: adresse
+  field_address_gsearch:
+    -
       id: e32e912f-0f5a-4b40-8358-01d41a181b63
-      status: '1'
-      value: Krystalgade 15 1172 København K
-      lat: '55.6809'
-      lng: '12.5737'
+      user_input: 'Krystalgade 15, 1172 København K'
+      value: 'Krystalgade 15, 1172 København K'
+      address: 'Krystalgade 15'
+      postal_code: '1172'
+      postal_name: 'København K'
+      latitude: '55.6809'
+      longitude: '12.5737'
 
   field_address:
     -

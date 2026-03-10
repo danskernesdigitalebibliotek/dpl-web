@@ -232,7 +232,7 @@ export type Language = {
   direction?: Maybe<Scalars['String']['output']>;
   /** Sprogkoden. */
   id?: Maybe<Scalars['ID']['output']>;
-  /** Sprogets navn. */
+  /** Navnet på sproget. */
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -358,6 +358,7 @@ export type MediaVideo = MediaInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
+  thumbnail: Scalars['String']['output'];
 };
 
 /** Entity type media. */
@@ -379,6 +380,7 @@ export type MediaVideotool = MediaInterface & {
   path?: Maybe<Scalars['String']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
+  thumbnail: Scalars['String']['output'];
 };
 
 /** The schema's entry-point for mutations. */
@@ -768,6 +770,7 @@ export type ParagraphCardGridManual = ParagraphInterface & {
   created: DateTime;
   /** Content */
   gridContent?: Maybe<Array<ParagraphCardGridManualGridContentUnion>>;
+  gridContentUuids?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -964,7 +967,7 @@ export type ParagraphGoMaterialSliderAutomatic = ParagraphInterface & {
    * generated, by performing a query through the advanced search, and copying the
    * CQL string from there.
    */
-  cqlSearch: CqlSearch;
+  cqlSearch?: Maybe<CqlSearch>;
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
@@ -1052,7 +1055,7 @@ export type ParagraphGoVideoBundleAutomatic = ParagraphInterface & {
    * generated, by performing a query through the advanced search, and copying the
    * CQL string from there.
    */
-  cqlSearch: CqlSearch;
+  cqlSearch?: Maybe<CqlSearch>;
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** Embed video */
@@ -1181,18 +1184,10 @@ export type ParagraphManualEventList = ParagraphInterface & {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-/**
- * Please use the "Material grid link automatically" instead! This paragraph will be deprecated in the future.
- * A grid representation of recommended materials, based on a CQL search string.
- */
+/** A grid representation of recommended materials, based on a CQL string and filters. */
 export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridAutomatic';
-  /**
-   * Determines the amount of materials that will be shown, based on the CQL
-   * string. <br /><br />Obs: If for example a CQL string has 11 results, and an
-   * editor chooses 12. The list will display 8 instead of 11, since the grid
-   * should be able to increment by 4.
-   */
+  /** @deprecated Use materialAmount instead */
   amountOfMaterials: Scalars['Int']['output'];
   /**
    * This field is for inserting a CQL string based on a search. <br /><br />Please
@@ -1201,13 +1196,15 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
    * generated, by performing a query through the advanced search, and copying the
    * CQL string from there.
    */
-  cqlSearch: CqlSearch;
+  cqlSearch?: Maybe<CqlSearch>;
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** Amount of materials */
+  materialAmount: Scalars['Int']['output'];
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /** The title for the material grid. Leave this blank if you do not want a title.  */
@@ -1219,12 +1216,7 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
 /** A grid representation of recommended materials, based on a link search string.  */
 export type ParagraphMaterialGridLinkAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridLinkAutomatic';
-  /**
-   * Determines the amount of materials that will be shown, based on the CQL
-   * string. <br /><br />Obs: If for example a CQL string has 11 results, and an
-   * editor chooses 12. The list will display 8 instead of 11, since the grid
-   * should be able to increment by 4.
-   */
+  /** @deprecated Use materialAmount instead */
   amountOfMaterials: Scalars['Int']['output'];
   /** The time that the Paragraph was created. */
   created: DateTime;
@@ -1232,6 +1224,8 @@ export type ParagraphMaterialGridLinkAutomatic = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** Amount of materials */
+  materialAmount: Scalars['Int']['output'];
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /**
@@ -1261,10 +1255,10 @@ export type ParagraphMaterialGridManual = ParagraphInterface & {
   /** The title for the material grid. Leave this blank if you do not want a title.  */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
   /**
-   * The grid will only display materials in internvals of 4. <br /><br />Example
-   * work ID: work-of:870970-basis:136336282.<br /><br />If you need to link to a
-   * specific type, select it from the dropdown and the system will display that,
-   * if it is available.
+   * Example work ID: work-of:870970-basis:136336282.<br /><br />If you need to
+   * link to a specific type, select it from the dropdown and the system will
+   * display that, if it is available. <strong>Supports a maximum of 32
+   * items.</strong>
    */
   materialGridWorkIds?: Maybe<Array<WorkId>>;
   /** Published */
@@ -1291,6 +1285,7 @@ export type ParagraphMedias = ParagraphInterface & {
 /** Entity type paragraph. */
 export type ParagraphNavGridManual = ParagraphInterface & {
   __typename?: 'ParagraphNavGridManual';
+  contentReferenceUuids?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** Contents */
   contentReferences?: Maybe<Array<ParagraphNavGridManualContentReferencesUnion>>;
   /** The time that the Paragraph was created. */
@@ -1303,6 +1298,8 @@ export type ParagraphNavGridManual = ParagraphInterface & {
   showSubtitles?: Maybe<Scalars['Boolean']['output']>;
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** Title */
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Contents */
@@ -1317,9 +1314,15 @@ export type ParagraphNavSpotsManual = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** Content */
+  navSpotsContent?: Maybe<Array<ParagraphNavSpotsManualNavSpotsContentUnion>>;
+  navSpotsContentUuids?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** Published */
   status: Scalars['Boolean']['output'];
 };
+
+/** Content */
+export type ParagraphNavSpotsManualNavSpotsContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage;
 
 /**
  * This is a paragraph for displaying the opening hours for the branch it is applied to.
@@ -1953,7 +1956,7 @@ export type WorkId = {
   __typename?: 'WorkId';
   /** Materialetype (fx bog, film, lydbog) */
   material_type?: Maybe<Scalars['String']['output']>;
-  /** The WorkID value */
+  /** Værk-ID */
   work_id?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1961,27 +1964,433 @@ export type ImageFragmentFragment = { __typename?: 'MediaImage', name: string, b
 
 export type MediaVideotoolFragmentFragment = { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string };
 
-export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null };
+export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
+    | { __typename?: 'ParagraphAccordion' }
+    | { __typename?: 'ParagraphBanner' }
+    | { __typename?: 'ParagraphBreadcrumbChildren' }
+    | { __typename?: 'ParagraphCampaignRule' }
+    | { __typename?: 'ParagraphCardGridAutomatic' }
+    | { __typename?: 'ParagraphCardGridManual' }
+    | { __typename?: 'ParagraphContentSlider' }
+    | { __typename?: 'ParagraphContentSliderAutomatic' }
+    | { __typename?: 'ParagraphEventTicketCategory' }
+    | { __typename?: 'ParagraphFiles' }
+    | { __typename?: 'ParagraphFilteredEventList' }
+    | { __typename: 'ParagraphGoImages', goImages: Array<
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+      > }
+    | { __typename?: 'ParagraphGoLink' }
+    | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+       | null, goLinkParagraph:
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename?: 'ParagraphGoImages' }
+        | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+        | { __typename?: 'ParagraphGoLinkbox' }
+        | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+        | { __typename?: 'ParagraphGoMaterialSliderManual' }
+        | { __typename?: 'ParagraphGoTextBody' }
+        | { __typename?: 'ParagraphGoVideo' }
+        | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+        | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
+       }
+    | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+    | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+    | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+    | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+       }
+    | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+       }
+    | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
+  > | null };
 
-export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null };
+export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?:
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool' }
+   | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<
+    | { __typename?: 'ParagraphAccordion' }
+    | { __typename?: 'ParagraphBanner' }
+    | { __typename?: 'ParagraphBreadcrumbChildren' }
+    | { __typename?: 'ParagraphCampaignRule' }
+    | { __typename?: 'ParagraphCardGridAutomatic' }
+    | { __typename?: 'ParagraphCardGridManual' }
+    | { __typename?: 'ParagraphContentSlider' }
+    | { __typename?: 'ParagraphContentSliderAutomatic' }
+    | { __typename?: 'ParagraphEventTicketCategory' }
+    | { __typename?: 'ParagraphFiles' }
+    | { __typename?: 'ParagraphFilteredEventList' }
+    | { __typename: 'ParagraphGoImages', goImages: Array<
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+      > }
+    | { __typename?: 'ParagraphGoLink' }
+    | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+       | null, goLinkParagraph:
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename?: 'ParagraphGoImages' }
+        | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+        | { __typename?: 'ParagraphGoLinkbox' }
+        | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+        | { __typename?: 'ParagraphGoMaterialSliderManual' }
+        | { __typename?: 'ParagraphGoTextBody' }
+        | { __typename?: 'ParagraphGoVideo' }
+        | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+        | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
+       }
+    | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+    | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+    | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+    | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+       }
+    | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+       }
+    | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
+  > | null };
 
-export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null };
+export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<
+    | { __typename?: 'ParagraphAccordion' }
+    | { __typename?: 'ParagraphBanner' }
+    | { __typename?: 'ParagraphBreadcrumbChildren' }
+    | { __typename?: 'ParagraphCampaignRule' }
+    | { __typename?: 'ParagraphCardGridAutomatic' }
+    | { __typename?: 'ParagraphCardGridManual' }
+    | { __typename?: 'ParagraphContentSlider' }
+    | { __typename?: 'ParagraphContentSliderAutomatic' }
+    | { __typename?: 'ParagraphEventTicketCategory' }
+    | { __typename?: 'ParagraphFiles' }
+    | { __typename?: 'ParagraphFilteredEventList' }
+    | { __typename: 'ParagraphGoImages', goImages: Array<
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+      > }
+    | { __typename?: 'ParagraphGoLink' }
+    | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+       | null, goLinkParagraph:
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename?: 'ParagraphGoImages' }
+        | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+        | { __typename?: 'ParagraphGoLinkbox' }
+        | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+        | { __typename?: 'ParagraphGoMaterialSliderManual' }
+        | { __typename?: 'ParagraphGoTextBody' }
+        | { __typename?: 'ParagraphGoVideo' }
+        | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+        | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
+       }
+    | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+    | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+    | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+    | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+       }
+    | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+       }
+    | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
+  > | null };
 
-export type GoVideoFragment = { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } };
+export type GoVideoFragment = { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage' }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+   };
 
-export type GoVideoBundleAutomaticFragment = { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } };
+export type GoVideoBundleAutomaticFragment = { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage' }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+   };
 
-export type GoVideoBundleManualFragment = { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null };
+export type GoVideoBundleManualFragment = { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage' }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+  , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null };
 
-export type GoMaterialSliderAutomaticFragment = { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } };
+export type GoMaterialSliderAutomaticFragment = { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null };
 
 export type GoMaterialSliderManualFragment = { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> };
 
-export type GoLinkboxFragment = { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } };
+export type GoLinkboxFragment = { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool' }
+   | null, goLinkParagraph:
+    | { __typename?: 'ParagraphAccordion' }
+    | { __typename?: 'ParagraphBanner' }
+    | { __typename?: 'ParagraphBreadcrumbChildren' }
+    | { __typename?: 'ParagraphCampaignRule' }
+    | { __typename?: 'ParagraphCardGridAutomatic' }
+    | { __typename?: 'ParagraphCardGridManual' }
+    | { __typename?: 'ParagraphContentSlider' }
+    | { __typename?: 'ParagraphContentSliderAutomatic' }
+    | { __typename?: 'ParagraphEventTicketCategory' }
+    | { __typename?: 'ParagraphFiles' }
+    | { __typename?: 'ParagraphFilteredEventList' }
+    | { __typename?: 'ParagraphGoImages' }
+    | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+    | { __typename?: 'ParagraphGoLinkbox' }
+    | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+    | { __typename?: 'ParagraphGoMaterialSliderManual' }
+    | { __typename?: 'ParagraphGoTextBody' }
+    | { __typename?: 'ParagraphGoVideo' }
+    | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+    | { __typename?: 'ParagraphGoVideoBundleManual' }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
+   };
 
 export type GoTextBodyFragment = { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } };
 
-export type GoImagesFragment = { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> };
+export type GoImagesFragment = { __typename: 'ParagraphGoImages', goImages: Array<
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool' }
+  > };
 
 export type RouteRedirectFragment = { __typename: 'RouteRedirect', url: string };
 
@@ -1990,19 +2399,275 @@ export type GetArticleByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage' } | { __typename?: 'NodePage' } | null } | { __typename: 'RouteRedirect', url: string } | null };
+export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
+    | { __typename: 'RouteExternal' }
+    | { __typename: 'RouteInternal', url: string, entity?:
+        | { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+           | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename: 'ParagraphGoImages', goImages: Array<
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+              > }
+            | { __typename?: 'ParagraphGoLink' }
+            | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+               | null, goLinkParagraph:
+                | { __typename?: 'ParagraphAccordion' }
+                | { __typename?: 'ParagraphBanner' }
+                | { __typename?: 'ParagraphBreadcrumbChildren' }
+                | { __typename?: 'ParagraphCampaignRule' }
+                | { __typename?: 'ParagraphCardGridAutomatic' }
+                | { __typename?: 'ParagraphCardGridManual' }
+                | { __typename?: 'ParagraphContentSlider' }
+                | { __typename?: 'ParagraphContentSliderAutomatic' }
+                | { __typename?: 'ParagraphEventTicketCategory' }
+                | { __typename?: 'ParagraphFiles' }
+                | { __typename?: 'ParagraphFilteredEventList' }
+                | { __typename?: 'ParagraphGoImages' }
+                | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+                | { __typename?: 'ParagraphGoLinkbox' }
+                | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+                | { __typename?: 'ParagraphGoMaterialSliderManual' }
+                | { __typename?: 'ParagraphGoTextBody' }
+                | { __typename?: 'ParagraphGoVideo' }
+                | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+                | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphHero' }
+                | { __typename?: 'ParagraphLanguageSelector' }
+                | { __typename?: 'ParagraphLinks' }
+                | { __typename?: 'ParagraphManualEventList' }
+                | { __typename?: 'ParagraphMaterialGridAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridManual' }
+                | { __typename?: 'ParagraphMedias' }
+                | { __typename?: 'ParagraphNavGridManual' }
+                | { __typename?: 'ParagraphNavSpotsManual' }
+                | { __typename?: 'ParagraphOpeningHours' }
+                | { __typename?: 'ParagraphRecommendation' }
+                | { __typename?: 'ParagraphSimpleLinks' }
+                | { __typename?: 'ParagraphTextBody' }
+                | { __typename?: 'ParagraphUserRegistrationItem' }
+                | { __typename?: 'ParagraphUserRegistrationLinklist' }
+                | { __typename?: 'ParagraphUserRegistrationSection' }
+                | { __typename?: 'ParagraphVideo' }
+                | { __typename?: 'ParagraphWebform' }
+               }
+            | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+            | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+            | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+            | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+               }
+            | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+               }
+            | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
+          > | null }
+        | { __typename?: 'NodeGoCategory' }
+        | { __typename?: 'NodeGoPage' }
+        | { __typename?: 'NodePage' }
+       | null }
+    | { __typename: 'RouteRedirect', url: string }
+   | null };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goCategories?: { __typename?: 'GoCategoriesResult', results: Array<{ __typename?: 'NodeArticle' } | { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory', id: string, path?: string | null, categoryMenuTitle: string, categoryMenuImage: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }, changed: { __typename?: 'DateTime', timestamp: unknown } } | { __typename?: 'NodeGoPage' } | { __typename?: 'NodePage' }> } | null };
+export type GetCategoriesQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goCategories?: { __typename?: 'GoCategoriesResult', results: Array<
+      | { __typename?: 'NodeArticle' }
+      | { __typename?: 'NodeGoArticle' }
+      | { __typename?: 'NodeGoCategory', id: string, path?: string | null, categoryMenuTitle: string, categoryMenuImage:
+          | { __typename?: 'MediaAudio' }
+          | { __typename?: 'MediaDocument' }
+          | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+          | { __typename?: 'MediaVideo' }
+          | { __typename?: 'MediaVideotool' }
+        , changed: { __typename?: 'DateTime', timestamp: unknown } }
+      | { __typename?: 'NodeGoPage' }
+      | { __typename?: 'NodePage' }
+    > } | null };
 
 export type GetCategoryPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
 }>;
 
 
-export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | { __typename?: 'NodeGoPage' } | { __typename?: 'NodePage' } | null } | { __typename: 'RouteRedirect', url: string } | null };
+export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
+    | { __typename: 'RouteExternal' }
+    | { __typename: 'RouteInternal', url: string, entity?:
+        | { __typename?: 'NodeGoArticle' }
+        | { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename: 'ParagraphGoImages', goImages: Array<
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+              > }
+            | { __typename?: 'ParagraphGoLink' }
+            | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+               | null, goLinkParagraph:
+                | { __typename?: 'ParagraphAccordion' }
+                | { __typename?: 'ParagraphBanner' }
+                | { __typename?: 'ParagraphBreadcrumbChildren' }
+                | { __typename?: 'ParagraphCampaignRule' }
+                | { __typename?: 'ParagraphCardGridAutomatic' }
+                | { __typename?: 'ParagraphCardGridManual' }
+                | { __typename?: 'ParagraphContentSlider' }
+                | { __typename?: 'ParagraphContentSliderAutomatic' }
+                | { __typename?: 'ParagraphEventTicketCategory' }
+                | { __typename?: 'ParagraphFiles' }
+                | { __typename?: 'ParagraphFilteredEventList' }
+                | { __typename?: 'ParagraphGoImages' }
+                | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+                | { __typename?: 'ParagraphGoLinkbox' }
+                | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+                | { __typename?: 'ParagraphGoMaterialSliderManual' }
+                | { __typename?: 'ParagraphGoTextBody' }
+                | { __typename?: 'ParagraphGoVideo' }
+                | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+                | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphHero' }
+                | { __typename?: 'ParagraphLanguageSelector' }
+                | { __typename?: 'ParagraphLinks' }
+                | { __typename?: 'ParagraphManualEventList' }
+                | { __typename?: 'ParagraphMaterialGridAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridManual' }
+                | { __typename?: 'ParagraphMedias' }
+                | { __typename?: 'ParagraphNavGridManual' }
+                | { __typename?: 'ParagraphNavSpotsManual' }
+                | { __typename?: 'ParagraphOpeningHours' }
+                | { __typename?: 'ParagraphRecommendation' }
+                | { __typename?: 'ParagraphSimpleLinks' }
+                | { __typename?: 'ParagraphTextBody' }
+                | { __typename?: 'ParagraphUserRegistrationItem' }
+                | { __typename?: 'ParagraphUserRegistrationLinklist' }
+                | { __typename?: 'ParagraphUserRegistrationSection' }
+                | { __typename?: 'ParagraphVideo' }
+                | { __typename?: 'ParagraphWebform' }
+               }
+            | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+            | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+            | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+            | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+               }
+            | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+               }
+            | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
+          > | null }
+        | { __typename?: 'NodeGoPage' }
+        | { __typename?: 'NodePage' }
+       | null }
+    | { __typename: 'RouteRedirect', url: string }
+   | null };
 
 export type GetDplCmsPrivateConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2012,14 +2677,133 @@ export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } }
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', searchProfiles?: { __typename?: 'SearchProfiles', local?: string | null } | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
 }>;
 
 
-export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | { __typename?: 'NodePage' } | null } | { __typename: 'RouteRedirect', url: string } | null };
+export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
+    | { __typename: 'RouteExternal' }
+    | { __typename: 'RouteInternal', url: string, entity?:
+        | { __typename?: 'NodeGoArticle' }
+        | { __typename?: 'NodeGoCategory' }
+        | { __typename: 'NodeGoPage', paragraphs?: Array<
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename: 'ParagraphGoImages', goImages: Array<
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+              > }
+            | { __typename?: 'ParagraphGoLink' }
+            | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+               | null, goLinkParagraph:
+                | { __typename?: 'ParagraphAccordion' }
+                | { __typename?: 'ParagraphBanner' }
+                | { __typename?: 'ParagraphBreadcrumbChildren' }
+                | { __typename?: 'ParagraphCampaignRule' }
+                | { __typename?: 'ParagraphCardGridAutomatic' }
+                | { __typename?: 'ParagraphCardGridManual' }
+                | { __typename?: 'ParagraphContentSlider' }
+                | { __typename?: 'ParagraphContentSliderAutomatic' }
+                | { __typename?: 'ParagraphEventTicketCategory' }
+                | { __typename?: 'ParagraphFiles' }
+                | { __typename?: 'ParagraphFilteredEventList' }
+                | { __typename?: 'ParagraphGoImages' }
+                | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+                | { __typename?: 'ParagraphGoLinkbox' }
+                | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+                | { __typename?: 'ParagraphGoMaterialSliderManual' }
+                | { __typename?: 'ParagraphGoTextBody' }
+                | { __typename?: 'ParagraphGoVideo' }
+                | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+                | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphHero' }
+                | { __typename?: 'ParagraphLanguageSelector' }
+                | { __typename?: 'ParagraphLinks' }
+                | { __typename?: 'ParagraphManualEventList' }
+                | { __typename?: 'ParagraphMaterialGridAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridManual' }
+                | { __typename?: 'ParagraphMedias' }
+                | { __typename?: 'ParagraphNavGridManual' }
+                | { __typename?: 'ParagraphNavSpotsManual' }
+                | { __typename?: 'ParagraphOpeningHours' }
+                | { __typename?: 'ParagraphRecommendation' }
+                | { __typename?: 'ParagraphSimpleLinks' }
+                | { __typename?: 'ParagraphTextBody' }
+                | { __typename?: 'ParagraphUserRegistrationItem' }
+                | { __typename?: 'ParagraphUserRegistrationLinklist' }
+                | { __typename?: 'ParagraphUserRegistrationSection' }
+                | { __typename?: 'ParagraphVideo' }
+                | { __typename?: 'ParagraphWebform' }
+               }
+            | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+            | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+            | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+            | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+               }
+            | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+               }
+            | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
+          > | null }
+        | { __typename?: 'NodePage' }
+       | null }
+    | { __typename: 'RouteRedirect', url: string }
+   | null };
 
 export type GetPreviewPageByIddQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -2027,7 +2811,349 @@ export type GetPreviewPageByIddQueryVariables = Exact<{
 }>;
 
 
-export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typename: 'Query', preview?: { __typename: 'NodeArticle' } | { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | { __typename: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoImages', goImages: Array<{ __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' }> } | { __typename?: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool' } | null, goLinkParagraph: { __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoImages' } | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename?: 'ParagraphGoTextBody' } | { __typename?: 'ParagraphGoVideo' } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' } } | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null } } | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> } | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridLinkAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | { __typename: 'NodePage' } | null };
+export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typename: 'Query', preview?:
+    | { __typename: 'NodeArticle' }
+    | { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+       | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename: 'ParagraphGoImages', goImages: Array<
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+          > }
+        | { __typename?: 'ParagraphGoLink' }
+        | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+           | null, goLinkParagraph:
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename?: 'ParagraphGoImages' }
+            | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+            | { __typename?: 'ParagraphGoLinkbox' }
+            | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+            | { __typename?: 'ParagraphGoMaterialSliderManual' }
+            | { __typename?: 'ParagraphGoTextBody' }
+            | { __typename?: 'ParagraphGoVideo' }
+            | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+            | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
+           }
+        | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+        | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+        | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+        | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+           }
+        | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+           }
+        | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
+      > | null }
+    | { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename: 'ParagraphGoImages', goImages: Array<
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+          > }
+        | { __typename?: 'ParagraphGoLink' }
+        | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+           | null, goLinkParagraph:
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename?: 'ParagraphGoImages' }
+            | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+            | { __typename?: 'ParagraphGoLinkbox' }
+            | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+            | { __typename?: 'ParagraphGoMaterialSliderManual' }
+            | { __typename?: 'ParagraphGoTextBody' }
+            | { __typename?: 'ParagraphGoVideo' }
+            | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+            | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
+           }
+        | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+        | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+        | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+        | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+           }
+        | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+           }
+        | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
+      > | null }
+    | { __typename: 'NodeGoPage', paragraphs?: Array<
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename: 'ParagraphGoImages', goImages: Array<
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+          > }
+        | { __typename?: 'ParagraphGoLink' }
+        | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+           | null, goLinkParagraph:
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename?: 'ParagraphGoImages' }
+            | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+            | { __typename?: 'ParagraphGoLinkbox' }
+            | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+            | { __typename?: 'ParagraphGoMaterialSliderManual' }
+            | { __typename?: 'ParagraphGoTextBody' }
+            | { __typename?: 'ParagraphGoVideo' }
+            | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+            | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
+           }
+        | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null }
+        | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> }
+        | { __typename: 'ParagraphGoTextBody', body: { __typename?: 'Text', processed?: unknown | null } }
+        | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+           }
+        | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+           }
+        | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
+      > | null }
+    | { __typename: 'NodePage' }
+   | null };
 
 export type GetAdgangsplatformenLibraryTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2512,9 +3638,6 @@ export const GetDplCmsPublicConfigurationDocument = `
     query getDplCmsPublicConfiguration {
   goConfiguration {
     public {
-      searchProfiles {
-        local
-      }
       libraryInfo {
         name
       }

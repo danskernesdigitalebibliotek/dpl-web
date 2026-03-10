@@ -63,8 +63,5 @@ docker-compose.override.yml
 # Module upload folder
 /web/modules/local
 
-# Danish translations folder
-/config/sync/language/da
-
 # We use this in the BNF setup, it should never be committed.
 /web/sites/sites.php

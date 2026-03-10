@@ -24,23 +24,23 @@ class PriceFormatterTest extends UnitTestCase {
   /**
    * Provides examples of price strings and how they should be formatted.
    *
-   * @return array<array{string, string}>
+   * @return array<array{int|float, string}>
    *   Array of examples. Each example contains a price string and how it
    *   should be formatted. This matches signature of testPriceFormatting().
    */
   public function priceProvider(): array {
     return [
-          ["0", "Free"],
-          ["0.0", "Free"],
-          ["0.00", "Free"],
-          ["10.0", "€ 10"],
-          ["10.00", "€ 10"],
-          ["10.01", "€ 10,01"],
-          ["10.1", "€ 10,10"],
-          ["10.100", "€ 10,10"],
-          // We are currently rounding any fractional digits beyond 2.
-          ["10.101", "€ 10,10"],
-          ["10.109", "€ 10,11"],
+      [0, "Free"],
+      [0.0, "Free"],
+      [0.00, "Free"],
+      [10.0, "€ 10"],
+      [10.00, "€ 10"],
+      [10.01, "€ 10,01"],
+      [10.1, "€ 10,10"],
+      [10.100, "€ 10,10"],
+      // We are currently rounding any fractional digits beyond 2.
+      [10.101, "€ 10,10"],
+      [10.109, "€ 10,11"],
     ];
   }
 
@@ -50,14 +50,14 @@ class PriceFormatterTest extends UnitTestCase {
    * @dataProvider priceProvider
    */
   public function testPriceFormatting(
-    string $price_string,
+    int|float $price,
     string $formatted_price,
   ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub(), $this->getConfigFactoryStub($this->mockConfig));
     $this->assertSame(
           $formatted_price,
-          $priceFormatter->formatPrice($price_string)
-      );
+          $priceFormatter->formatPriceWithCurrency($price)
+    );
   }
 
   /**
@@ -69,17 +69,17 @@ class PriceFormatterTest extends UnitTestCase {
    */
   public function rawPriceProvider(): array {
     return [
-          // Whole number.
-          ["20", "20"],
-          // Number with fractional part.
-          ["20.50", "20,50"],
-          // Number with zero fractional part.
-          ["20.00", "20"],
-          // Number with non-zero fractional part.
-          ["20.99", "20,99"],
-          // Larger whole number.
-          ["1000", "1000"],
-          // Small fractional number.
+      // Whole number.
+      [20, "20"],
+      // Number with fractional part.
+      [20.50, "20,50"],
+      // Number with zero fractional part.
+      [20.00, "20"],
+      // Number with non-zero fractional part.
+      [20.99, "20,99"],
+      // Larger whole number.
+      [1000, "1000"],
+      // Small fractional number.
     ];
   }
 
@@ -89,14 +89,14 @@ class PriceFormatterTest extends UnitTestCase {
    * @dataProvider rawPriceProvider
    */
   public function testRawPriceFormatting(
-    string $raw_price,
+    int|float $price,
     string $expected,
   ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub(), $this->getConfigFactoryStub($this->mockConfig));
     $this->assertSame(
           $expected,
-          $priceFormatter->formatRawPrice($raw_price)
-      );
+          $priceFormatter->formatRawPrice($price)
+    );
   }
 
   /**

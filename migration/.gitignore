@@ -1,0 +1,3 @@
+# Temp dirs used by migration tasks (migration:mono:*:migrate:commits)
+.tmp.*
+.migration-progress/

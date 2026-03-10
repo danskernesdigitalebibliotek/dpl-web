@@ -1,0 +1,39 @@
+"""
+A library branch (physical location) within the library organization.
+"""
+type Branch {
+  "The ISIL branch identifier, e.g. DK-710111."
+  isilId: String!
+  "The human-readable name of the branch."
+  title: String!
+  "The physical address of the branch. Only available for CMS-configured branches."
+  address: BranchAddress
+  "Indicates which contexts this branch is available in."
+  availabilityContext: BranchAvailabilityContext!
+}
+
+"""
+In which contexts this branch is available.
+"""
+type BranchAvailabilityContext {
+  "Whether this branch is used in the search (i.e. not excluded from search results)."
+  search: Boolean!
+  "Whether this branch is used when requesting availability."
+  availability: Boolean!
+  "Whether this branch is used when requesting reservations."
+  reservations: Boolean!
+}
+
+"""
+Physical address of a branch.
+"""
+type BranchAddress {
+  "Street name and house number."
+  street: String
+  "Postal/ZIP code."
+  postalCode: String
+  "City name."
+  city: String
+  "ISO 3166-1 alpha-2 country code."
+  country: String
+}

@@ -5,6 +5,7 @@ namespace Drupal\dpl_react_apps\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\Fbi;
+use Drupal\dpl_react_apps\Services\BranchService;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
@@ -34,6 +35,7 @@ class DplReactAppsController extends ControllerBase {
     protected GeneralSettings $generalSettings,
     protected Config $adgangsplatformenConfig,
     protected Fbi $fbi,
+    protected BranchService $branchService,
   ) {}
 
   /**
@@ -74,19 +76,12 @@ class DplReactAppsController extends ControllerBase {
         $location = $branch->getAddressData();
 
         if (!empty($location)) {
-          $dawa_data = $location->getData()['adgangsadresse'] ?? NULL;
-
-          $postal_city = "{$dawa_data?->postnummer?->nr} {$dawa_data?->postnummer?->navn}";
-          // Rather than building the whole address string ourselves, we'll
-          // just take the pre-built one, and remove the city info.
-          $address = str_replace(" $postal_city", '', $location->getTextValue());
-
           $branch_output['location'] = [
-            'address' => $address,
-            'city' => $postal_city,
-            'value' => $location->getTextValue(),
-            'lat' => $location->getLat(),
-            'lng' => $location->getLng(),
+            'city' => $location->getPostalName(),
+            'value' => $location->getValue(),
+            'address' => $location->getValue(),
+            'lat' => $location->getLatitude(),
+            'lng' => $location->getLongitude(),
           ];
         }
       }
@@ -156,6 +151,11 @@ class DplReactAppsController extends ControllerBase {
       'facet-subjects-text' => $this->t('Subjects', [], ['context' => 'Search Result']),
       'facet-work-types-text' => $this->t('Work types', [], ['context' => 'Search Result']),
       'facet-year-text' => $this->t('Year', [], ['context' => 'Search Result']),
+      'facet-age-text' => $this->t('Age', [], ['context' => 'Search Result']),
+      'facet-general-audience-text' => $this->t('General audience', [], ['context' => 'Search Result']),
+      'facet-lix-text' => $this->t('Lix', [], ['context' => 'Search Result']),
+      'facet-let-text' => $this->t('Let', [], ['context' => 'Search Result']),
+      'facet-library-recommendation-text' => $this->t('Library recommendation', [], ['context' => 'Search Result']),
       'filter-list-text' => $this->t('Filter list', [], ['context' => 'Search Result']),
       'intelligent-filters-accessible-headline-text' => $this->t('Available filters', [], ['context' => 'Search Result']),
       'intelligent-filters-selected-accessible-headline-text' => $this->t('Selected filters', [], ['context' => 'Search Result']),
@@ -168,6 +168,20 @@ class DplReactAppsController extends ControllerBase {
       'web-search-link-text' => $this->t('Switch to the results for the library content.', [], ['context' => 'Search Result']),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+
+      'search-show-all-text' => $this->t('Show all', [], ['context' => 'Search Result']),
+      'search-show-less-text' => $this->t('Show less', [], ['context' => 'Search Result']),
+      'search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'Search Result']),
+      'search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'Search Result']),
+      'search-can-always-be-loaned-text' => $this->t('Can always be loaned', [], ['context' => 'Search Result']),
+      'search-can-always-be-loaned-description-text' => $this->t('Only show results that can always be loaned.', [], ['context' => 'Search Result']),
+      'search-show-results-text' => $this->t('Show results', [], ['context' => 'Search Result']),
+      'search-showing-materials-text' => $this->t('@hitcount results', [], ['context' => 'Search Result']),
+      'search-showing-all-materials-text' => $this->t('Showing all materials', [], ['context' => 'Search Result']),
+      'search-showing-results-for-text' => $this->t('Showing results for', [], ['context' => 'Search Result']),
+      'search-dialog-filter-materials-text' => $this->t('Filter materials (@hitcount)', [], ['context' => 'Search Result']),
+      'showing-all-materials-text' => $this->t('Showing all materials', [], ['context' => 'Search Result']),
+
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -246,7 +260,7 @@ class DplReactAppsController extends ControllerBase {
       'cql-search-external-help-link-text' => $this->t('CQL search external help link text', [], ['context' => 'advanced search']),
       'cql-search-title-text' => $this->t('CQL search', [], ['context' => 'advanced search']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search']),
-      'showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
+      'search-showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
       'to-advanced-search-button-text' => $this->t('Back to advanced search', [], ['context' => 'advanced search']),
       'advanced-search-filter-location-text' => $this->t('location', [], ['context' => 'advanced search']),
       'advanced-search-filter-location-description-text' => $this->t('Add a comma separated list for multiple locations', [], ['context' => 'advanced search']),
@@ -314,7 +328,6 @@ class DplReactAppsController extends ControllerBase {
       'result-pager-status-text' => $this->t('Showing @itemsShown of @hitcount results', [], ['context' => 'advanced search 2']),
       'show-more-text' => $this->t('Show more', [], ['context' => 'advanced search 2']),
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search 2']),
-      'showing-materials-text' => $this->t('showing materials (@hitcount)', [], ['context' => 'advanced search 2']),
       'add-more-filters-text' => $this->t('More filters', [], ['context' => 'advanced search 2']),
       'copy-link-success-text' => $this->t('Link copied to clipboard', [], ['context' => 'advanced search 2']),
 
@@ -348,12 +361,6 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-placeholder-fictional-character-text' => $this->t('Enter fictional character…', [], ['context' => 'advanced search 2']),
       'advanced-search-placeholder-host-publication-text' => $this->t('Enter host publication…', [], ['context' => 'advanced search 2']),
       'advanced-search-edit-search-text' => $this->t('Edit search', [], ['context' => 'advanced search 2']),
-      'advanced-search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'advanced search 2']),
-      'advanced-search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'advanced search 2']),
-      'advanced-search-only-extra-titles-text' => $this->t('Only "Extra Titles"', [], ['context' => 'advanced search 2']),
-      'advanced-search-only-extra-titles-description-text' => $this->t('Only show results not limited by digital loan quotas.', [], ['context' => 'advanced search 2']),
-      'advanced-search-show-all-text' => $this->t('Show all', [], ['context' => 'advanced search 2']),
-      'advanced-search-show-less-text' => $this->t('Show less', [], ['context' => 'advanced search 2']),
       'advanced-search-reset-text' => $this->t('Reset', [], ['context' => 'advanced search 2']),
       'advanced-search-facet-access-type-text' => $this->t('Access Type', [], ['context' => 'advanced search 2']),
       'advanced-search-facet-age-text' => $this->t('Age', [], ['context' => 'advanced search 2']),
@@ -385,7 +392,6 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-age-badge-single-text' => $this->t('@age year olds', [], ['context' => 'advanced search 2']),
       'advanced-search-age-badge-range-text' => $this->t('@from-@to year olds', [], ['context' => 'advanced search 2']),
       'advanced-search-filter-materials-text' => $this->t('Filter materials (@hitcount)', [], ['context' => 'advanced search 2']),
-      'advanced-search-show-results-text' => $this->t('Show results', [], ['context' => 'advanced search 2']),
 
       // Sort.
       'advanced-search-sort-label-text' => $this->t('Sort by', [], ['context' => 'advanced search 2']),
@@ -401,6 +407,15 @@ class DplReactAppsController extends ControllerBase {
       // Mapp.
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+
+      'search-show-all-text' => $this->t('Show all', [], ['context' => 'advanced search 2']),
+      'search-show-less-text' => $this->t('Show less', [], ['context' => 'advanced search 2']),
+      'search-on-shelf-text' => $this->t('On shelf', [], ['context' => 'advanced search 2']),
+      'search-on-shelf-description-text' => $this->t('Only show results available at the library now.', [], ['context' => 'advanced search 2']),
+      'search-only-extra-titles-text' => $this->t('Only "Extra Titles"', [], ['context' => 'advanced search 2']),
+      'search-only-extra-titles-description-text' => $this->t('Only show results not limited by digital loan quotas.', [], ['context' => 'advanced search 2']),
+      'search-show-results-text' => $this->t('Show results', [], ['context' => 'advanced search 2']),
+      'search-showing-materials-text' => $this->t('@hitcount results', [], ['context' => 'advanced search 2']),
 
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
@@ -461,6 +476,7 @@ class DplReactAppsController extends ControllerBase {
       'find-on-shelf-disclosures-default-open-config' => (int) $this->generalSettings->getFindOnShelfDisclosuresDefaultOpen(),
       'find-on-shelf-hide-unavailable-holdings-config' => (int) $this->generalSettings->getFindOnShelfHideUnavailableHoldings(),
       'agency-id-config' => $this->adgangsplatformenConfig->getAgencyId(),
+      'local-subjects-agency-ids-config' => $this->generalSettings->getLocalSubjectsAgencyIds(),
       'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
       'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
 
@@ -708,6 +724,38 @@ class DplReactAppsController extends ControllerBase {
     $this->renderer->addCacheableDependency($app, $this->instantLoanSettings);
 
     return $app;
+  }
+
+  /**
+   * Render branch list app.
+   *
+   * @return mixed[]
+   *   Render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
+   */
+  public function branches(): array {
+    $data = [
+      'branches-config' => json_encode($this->branchService->getBranchListData()),
+      'branch-address-search-enabled-config' => (int) $this->config('dpl_library_agency.general_settings')->get('enable_address_search_branch'),
+      'dataforsyningen-token-config' => $this->config('gsearch.settings')->get('token') ?: '',
+      'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
+      'address-search-label-text' => $this->t('See libraries near an address', [], ['context' => 'Branch List']),
+      'address-search-placeholder-text' => $this->t('Enter an address e.g. Torvegade 1, 1401 København K', [], ['context' => 'Branch List']),
+      'address-search-geo-location-button-text' => $this->t('See libraries close to you', [], ['context' => 'Branch List']),
+      'geo-location-error-not-supported-text' => $this->t('Geolocation is not supported by your browser.', [], ['context' => 'Branch List']),
+      'geo-location-error-permission-denied-text' => $this->t('You have denied access to your location.', [], ['context' => 'Branch List']),
+      'geo-location-error-position-unavailable-text' => $this->t('Your location is not available at the moment.', [], ['context' => 'Branch List']),
+      'geo-location-error-timeout-text' => $this->t('The request for your location timed out. Please try again.', [], ['context' => 'Branch List']),
+      'geo-location-error-default-text' => $this->t('An error occurred while fetching your location.', [], ['context' => 'Branch List']),
+      'reverse-geocode-error-default-text' => $this->t('Could not find address for your location.', [], ['context' => 'Branch List']),
+    ];
+
+    return [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'branch-list',
+      '#data' => $data,
+    ];
   }
 
   /**

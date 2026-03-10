@@ -41,7 +41,7 @@ class ParagraphLinksMapperTest extends EntityMapperTestBase {
   public function setUp(): void {
     parent::setUp();
     $manager = $this->prophesize(BnfMapperManager::class);
-    $manager->mapAll(Argument::any(), TRUE)->willReturn([['fake' => 'link mapper']]);
+    $manager->mapAll(Argument::any())->willReturn([['fake' => 'link mapper']]);
 
     $this->mapper = new ParagraphLinksMapper(
       [],

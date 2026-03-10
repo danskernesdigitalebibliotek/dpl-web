@@ -4,11 +4,14 @@ namespace Drupal\dpl_library_agency\Branch;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Cache\CacheableDependencyTrait;
 
 /**
  * Retrieves and caches agency branch information.
  */
 class CacheableBranchRepository implements BranchRepositoryInterface {
+
+  use CacheableDependencyTrait;
 
   /**
    * Constructor.
@@ -47,6 +50,14 @@ class CacheableBranchRepository implements BranchRepositoryInterface {
     $this->cache->set($cid, $branches, $expire);
 
     return $branches;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge(): int {
+    // Return the lifetime the service was told to use.
+    return $this->lifetime;
   }
 
 }
