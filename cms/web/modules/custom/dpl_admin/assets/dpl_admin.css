@@ -16,6 +16,11 @@
   padding: calc(var(--gin-spacing-m) - 2px) calc(var(--gin-spacing-l) - 2px);
 }
 
+/* Make text visible when hovering over paragraph selections. */
+.paragraphs-button--add-more:hover {
+  color: var(--gin-color-button-text) !important;
+}
+
 /* Display medias more compact in paragraph preview. */
 .paragraph--view-mode--preview .field--name-field-medias {
   .field__items {

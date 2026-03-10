@@ -127,6 +127,14 @@ class EventsGET200ResponseInner
     protected ?EventsGET200ResponseInnerImage $image = null;
 
     /**
+     * @var EventsGET200ResponseInnerOriginalImage|null
+     * @SerializedName("originalImage")
+     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage")
+     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage")
+     */
+    protected ?EventsGET200ResponseInnerOriginalImage $originalImage = null;
+
+    /**
      * @var EventsGET200ResponseInnerTeaserImage|null
      * @SerializedName("teaserImage")
      * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage")
@@ -297,6 +305,7 @@ class EventsGET200ResponseInner
             $this->updatedAt = array_key_exists('updatedAt', $data) ? $data['updatedAt'] : $this->updatedAt;
             $this->ticketManagerRelevance = array_key_exists('ticketManagerRelevance', $data) ? $data['ticketManagerRelevance'] : $this->ticketManagerRelevance;
             $this->image = array_key_exists('image', $data) ? $data['image'] : $this->image;
+            $this->originalImage = array_key_exists('originalImage', $data) ? $data['originalImage'] : $this->originalImage;
             $this->teaserImage = array_key_exists('teaserImage', $data) ? $data['teaserImage'] : $this->teaserImage;
             $this->state = array_key_exists('state', $data) ? $data['state'] : $this->state;
             $this->allDay = array_key_exists('allDay', $data) ? $data['allDay'] : $this->allDay;
@@ -519,6 +528,32 @@ class EventsGET200ResponseInner
     public function setImage(?EventsGET200ResponseInnerImage $image = null): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Gets originalImage.
+     *
+     * @return EventsGET200ResponseInnerOriginalImage|null
+     */
+    public function getOriginalImage(): ?EventsGET200ResponseInnerOriginalImage
+    {
+        return $this->originalImage;
+    }
+
+
+
+    /**
+     * Sets originalImage.
+     *
+     * @param EventsGET200ResponseInnerOriginalImage|null $originalImage
+     *
+     * @return $this
+     */
+    public function setOriginalImage(?EventsGET200ResponseInnerOriginalImage $originalImage = null): self
+    {
+        $this->originalImage = $originalImage;
 
         return $this;
     }
