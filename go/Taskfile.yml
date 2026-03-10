@@ -27,6 +27,12 @@ vars:
   LAGOON_DIR: "lagoon"
 
 tasks:
+  dev:nvm:use:
+    summary: Use project Node.js version with nvm
+    silent: true
+    cmds:
+      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm use'
+
   ghcr:login:
     summary: Login into Github Container Registry
     cmds:
@@ -55,6 +61,6 @@ tasks:
   dev:reset:
     desc: Install development environment and clean up
     cmds:
-      - rm -rf node_modules .next
+      - task dev:nvm:use
       - yarn
       - yarn dev:https

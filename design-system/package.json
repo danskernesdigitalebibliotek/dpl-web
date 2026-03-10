@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "repository": "https://github.com/danskernesdigitalebibliotek/dpl-design-system",
   "scripts": {
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
     "storybook:axe": "storybook build && axe-storybook",
     "build-storybook": "storybook build",
     "js:eslint": "eslint 'src/**/*.{js,ts,tsx}' --max-warnings=0",

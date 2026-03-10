@@ -18,9 +18,16 @@ vars:
   DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
 
 tasks:
+  dev:nvm:use:
+    summary: Use project Node.js version with nvm
+    silent: true
+    cmds:
+      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm use'
+
   dev:install:
     summary: Install packages
     cmds:
+      - task dev:nvm:use
       - yarn install
 
   dev:start:
@@ -28,6 +35,8 @@ tasks:
     cmds:
       - task dev:install
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
+      - task dev:nvm:use
+      - echo "React app is starting. This can take a moment."
       - yarn dev
 
   dev:stop:
@@ -64,24 +73,27 @@ tasks:
   dev:storybook:
     summary: Run storybook in development mode
     cmds:
+      - task dev:nvm:use
       - yarn start:storybook:dev
 
   dev:reset:
     summary: Install development environment and clean up.
     cmds:
       - task dev:down
+      - task dev:nvm:use
       - yarn clean
-      - rm -rf node_modules
-      - task dev:up
+      - task dev:start
 
   dev:test:
     summary: Run tests
     cmds:
+      - task dev:nvm:use
       - yarn test
 
   dev:format:
     summary: Run linters
     cmds:
+      - task dev:nvm:use
       - yarn lint:js --fix
       - yarn lint:scss --fix
       - yarn lint:markdown --fix
@@ -89,6 +101,7 @@ tasks:
   dev:lint:
     summary: Run linters
     cmds:
+      - task dev:nvm:use
       - yarn lint:js
       - yarn lint:scss
       - yarn lint:markdown
@@ -96,6 +109,7 @@ tasks:
   dev:format:
     summary: Run linters, and auto-fix
     cmds:
+      - task dev:nvm:use
       - yarn lint:js --fix
       - yarn lint:scss --fix
       - yarn lint:markdown --fix

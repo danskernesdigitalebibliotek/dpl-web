@@ -31,7 +31,7 @@
     "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"yarn lint:js\"",
     "build:storybook": "storybook build -c .storybook -o dev",
     "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --quiet --ci",
-    "start:storybook:dev": "NODE_ENV=development  storybook dev --port 80",
+    "start:storybook:dev": "NODE_ENV=development storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
     "dev": "npx concurrently --raw \"yarn start:storybook:dev\" \"yarn watch\"",
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest",

@@ -28,11 +28,18 @@ tasks:
     cmds:
       - task dev:install
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
+      - echo "Design System is starting. It can take a while before Storybook is ready."
+      - echo "https://${COMPOSE_PROJECT_NAME:-design-system}.local will shotly be available."
 
   dev:stop:
     summary: Stop docker compose environment
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} stop
+
+  dev:up:
+    summary: Run docker compose
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
 
   dev:down:
     summary: Stop and remove docker compose environment
@@ -55,8 +62,7 @@ tasks:
     summary: Install development environment and clean up.
     cmds:
       - task dev:down
-      - rm -rf node_modules
-      - task dev:up
+      - task dev:start
 
   dev:test:
     summary: Run tests

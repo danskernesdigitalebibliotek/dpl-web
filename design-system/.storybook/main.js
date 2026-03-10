@@ -26,4 +26,7 @@ module.exports = {
     name: "@storybook/react-webpack5",
     options: {},
   },
+  core: {
+    allowedHosts: ["localhost", ".local"],
+  },
 };
