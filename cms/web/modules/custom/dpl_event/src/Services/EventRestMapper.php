@@ -7,6 +7,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
@@ -58,6 +59,7 @@ class EventRestMapper {
       'body' => $this->event->getDescription(),
       'state' => $this->event->getState()?->value,
       'image' => $this->getImage(),
+      'originalImage' => $this->getOriginalImage(),
       'teaserImage' => $this->getTeaserImage(),
       'branches' => $this->getBranches(),
       'address' => $this->getAddress(),
@@ -372,16 +374,29 @@ class EventRestMapper {
   }
 
   /**
-   * Getting the main, original image.
+   * Getting the main image (scaled).
    */
   private function getImage(): ?EventsGET200ResponseInnerImage {
-    $url = $this->getImageUrl('event_image', 'paragraph_wide');
+    $url = $this->getImageUrl('event_image', 'event_api_scaled');
 
     if (empty($url)) {
       return NULL;
     }
 
     return new EventsGET200ResponseInnerImage(['url' => $url]);
+  }
+
+  /**
+   * Getting the main image (original).
+   */
+  private function getOriginalImage(): ?EventsGET200ResponseInnerOriginalImage {
+    $url = $this->getImageUrl('event_image');
+
+    if (empty($url)) {
+      return NULL;
+    }
+
+    return new EventsGET200ResponseInnerOriginalImage(['url' => $url]);
   }
 
   /**
