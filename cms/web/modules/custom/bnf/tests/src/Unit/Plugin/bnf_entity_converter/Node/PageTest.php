@@ -26,6 +26,13 @@ class PageTest extends EntityConverterTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function ignoredFields(): array {
+    return ['field_branch'];
+  }
+
+  /**
    * Tests normalizing an Page entity.
    *
    * @covers ::normalize

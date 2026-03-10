@@ -47,6 +47,19 @@ abstract class EntityConverterTestBase extends UnitTestCase {
    */
   protected $converter;
 
+  protected string $entityType;
+  protected string $bundle;
+
+  /**
+   * Fields in configuration that's not synchronized.
+   *
+   * @return string[]
+   *   Array of field names.
+   */
+  public function ignoredFields(): array {
+    return [];
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -63,6 +76,9 @@ abstract class EntityConverterTestBase extends UnitTestCase {
    * Setup the converter for testing.
    */
   protected function setupConverter(string $class, string $entityType, string $bundle): void {
+    $this->entityType = $entityType;
+    $this->bundle = $bundle;
+
     $configuration = [];
     $plugin_id = 'test_converter';
     $plugin_definition = [
@@ -80,6 +96,35 @@ abstract class EntityConverterTestBase extends UnitTestCase {
       $this->logger->reveal()
     );
 
+  }
+
+  /**
+   * Test that all configured fields has been handled.
+   *
+   * Inspects the site configuration to find configured fields. Doesn't check if
+   * the field converter type is appropriate, just that there is one for the
+   * field.
+   */
+  public function testAllFieldsHandled(): void {
+    $fileBase = sprintf('field.field.%s.%s', $this->entityType, $this->bundle);
+    $configFiles = glob(sprintf('../config/sync/%s.*', $fileBase));
+
+    $fields = [];
+    foreach ($configFiles as $file) {
+      $filename = basename($file, '.yml');
+      $fields[] = substr($filename, strlen($fileBase) + 1);
+
+    }
+
+    $handledFields = array_merge(array_keys($this->converter->fields()), $this->ignoredFields());
+    $unhandledFields = array_diff($fields, $handledFields);
+
+    $this->assertEmpty(
+      $unhandledFields,
+      'All configured fields should be handled, these are not: ' .
+      implode(', ', $unhandledFields) . PHP_EOL .
+      'Either ensure all fields are mapped, or add them to ingoredFields() in the test'
+    );
   }
 
   /**
