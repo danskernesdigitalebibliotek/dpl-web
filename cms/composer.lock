@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "446cc591f2f2dca76fb8ab41a3cbc6d0",
+    "content-hash": "b47921b7c1a5085bd376fab039ca6833",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1050,7 +1050,7 @@
             "version": "0.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-37-migration/dist-design-system.zip"
             },
             "type": "drupal-library"
         },
@@ -1059,7 +1059,7 @@
             "version": "0.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-react.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-37-migration/dist-react.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
