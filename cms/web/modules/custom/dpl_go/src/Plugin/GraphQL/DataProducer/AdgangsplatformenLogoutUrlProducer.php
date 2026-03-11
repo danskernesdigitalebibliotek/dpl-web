@@ -54,7 +54,10 @@ class AdgangsplatformenLogoutUrlProducer extends DataProducerPluginBase implemen
         'dpl_login.logout',
         [
           'current-path' => $this->urlGenerator->generateFromRoute(
-            'dpl_go.post_adgangsplatformen_logout'
+            'dpl_go.post_adgangsplatformen_logout',
+            [],
+            // Skip OutboundPathProcessor here.
+            ['path_processing' => FALSE],
           ),
         ],
         ['absolute' => TRUE]

@@ -54,7 +54,10 @@ class AdgangsplatformenLoginUrlProducer extends DataProducerPluginBase implement
         'dpl_login.login',
         [
           'current-path' => $this->urlGenerator->generateFromRoute(
-            'dpl_go.post_adgangsplatformen_login'
+            'dpl_go.post_adgangsplatformen_login',
+            [],
+            // Skip OutboundPathProcessor here.
+            ['path_processing' => FALSE],
           ),
         ],
         ['absolute' => TRUE]
