@@ -1,6 +1,6 @@
 # This is the version of the Dpl Go application:
 # In PR environments this should be updated whenever testing a new version:
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-web-go-node:1337.0.1 as builder
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:2026.10.0 as builder
 
 # This is an important variable.
 # It is used both to resolve the url for the DPL CMS, the DPL CMS Graphql endpoint, and the Next.js app URL.
