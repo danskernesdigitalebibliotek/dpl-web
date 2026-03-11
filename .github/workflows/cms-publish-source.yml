@@ -65,8 +65,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
-          IMAGE_NAME: dpl-web-cms-source
-          PKG_URL: https://github.com/${{ github.repository }}/pkgs/container/dpl-web-cms-source
+          IMAGE_NAME: dpl-cms-source
+          PKG_URL: https://github.com/${{ github.repository }}/pkgs/container/dpl-cms-source
         run: |
           set -euo pipefail
           if ! gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" >/dev/null; then
@@ -74,7 +74,7 @@ jobs:
             exit 0
           fi
           BODY=$(gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" --json body -q .body || echo "")
-          if echo "$BODY" | grep -q "dpl-web-cms-source"; then
+          if echo "$BODY" | grep -q "dpl-cms-source"; then
             echo "Release already links to CMS package, skipping"
             exit 0
           fi
