@@ -10,7 +10,7 @@ vars:
   DOCKER_IMAGE_PREFIX: '{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}'
 
   # Constructing docker image name.
-  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-web-cms-source"}}'
+  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
   RELEASE_FULL_NAME: '{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}'
 
   # Docker file selection

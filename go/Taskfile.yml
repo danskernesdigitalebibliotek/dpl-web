@@ -21,7 +21,7 @@ vars:
   # Otherwise it will default to the COMMIT_COUNT variable.
   RELEASE_IMAGE_TAG: "{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}"
   # Constructing docker image name.
-  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-web-go-node"}}'
+  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-go-node"}}'
   RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
