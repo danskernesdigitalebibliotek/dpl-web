@@ -50,7 +50,7 @@ jobs:
       - name: Commit all combined translations
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          file_pattern: ".cms/web/profiles/dpl_cms/translations/*.combined.po"
+          file_pattern: "./cms/web/profiles/dpl_cms/translations/*.combined.po"
           commit_message: New translations were found
       - name: Make Poeditor look for changes in translation strings
         uses: distributhor/workflow-webhook@v3
