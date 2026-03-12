@@ -43,6 +43,8 @@ jobs:
       # Install go-test, as we will use Taskfile.yml
       - name: Install go-task
         uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Setup composer.json to target our built design-system-dist.zip and
       # react-dist.zip files, and build + publish the source.
@@ -84,6 +86,8 @@ jobs:
 
       - name: Install go-task
         uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and publish database snapshot
         env:
