@@ -30625,7 +30625,7 @@ msgstr "Vis kun digitale titler, der ikke tæller med i din månedlige lånekvot
 #: 
 msgctxt "Search Result"
 msgid "@hitcount results"
-msgstr "@hitcount results"
+msgstr "@hitcount resultater"
 
 #: 
 msgctxt "Search Result"
