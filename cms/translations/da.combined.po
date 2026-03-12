@@ -143,7 +143,7 @@ msgstr "Børn/voksen"
 #: 
 msgctxt "Search Result"
 msgid "Creators"
-msgstr "Forfatter"
+msgstr "Forfatter / ophav"
 
 #: 
 msgctxt "Search Result"
@@ -1781,7 +1781,7 @@ msgid "Queued reservations"
 msgstr "Reserveringer i kø"
 
 #: 
-msgctxt "Dashboard (aria)"
+msgctxt "Dashboard (Aria)"
 msgid "This modal makes it possible to renew materials"
 msgstr "Denne pop-up gør det muligt at forny materialer"
 
@@ -29823,11 +29823,6 @@ msgstr "Henter resultater..."
 
 #: 
 msgctxt "advanced search 2"
-msgid "showing materials (@hitcount)"
-msgstr "Din søgning har @hitcount resultater"
-
-#: 
-msgctxt "advanced search 2"
 msgid "More filters"
 msgstr "Flere filtre"
 
@@ -30592,4 +30587,99 @@ msgstr "<div>\n"
 " ({{ field_address_gsearch }})\n"
 "{% endif %}\n"
 "</div>"
+
+#: 
+msgctxt "Search Result"
+msgid "Age"
+msgstr "Alder"
+
+#: 
+msgctxt "Search Result"
+msgid "General audience"
+msgstr "Målgruppe"
+
+#: 
+msgctxt "Search Result"
+msgid "Lix"
+msgstr "Lix"
+
+#: 
+msgctxt "Search Result"
+msgid "Let"
+msgstr "Let"
+
+#: 
+msgctxt "Search Result"
+msgid "Library recommendation"
+msgstr "Anbefalet alder"
+
+#: 
+msgctxt "Search Result"
+msgid "Show all"
+msgstr "Vis alle"
+
+#: 
+msgctxt "Search Result"
+msgid "Show less"
+msgstr "Vis færre"
+
+#: 
+msgctxt "Search Result"
+msgid "On shelf"
+msgstr "På hylden"
+
+#: 
+msgctxt "Search Result"
+msgid "Only show results available at the library now."
+msgstr "Vis kun titler, som har eksemplarer hjemme på hylden."
+
+#: 
+msgctxt "Search Result"
+msgid "Only show results that can always be loaned."
+msgstr "Vis kun digitale titler, der ikke tæller med i din månedlige lånekvote og altid er tilgængelige."
+
+#: 
+msgctxt "Search Result"
+msgid "@hitcount results"
+msgstr "@hitcount results"
+
+#: 
+msgctxt "Search Result"
+msgid "Showing all materials"
+msgstr "Viser alle materialer"
+
+#: 
+msgctxt "Search Result"
+msgid "Showing results for"
+msgstr "Viser resultater for"
+
+#: 
+msgctxt "Search Result"
+msgid "Filter materials (@hitcount)"
+msgstr ""
+
+#: 
+msgctxt "advanced search 2"
+msgid "@hitcount results"
+msgstr ""
+
+#: 
+msgctxt "simple_oauth.oauth2_scope.mobile_graphql_client:description"
+msgid "Mobile GraphQL Client"
+msgstr "Mobile GraphQL Client"
+
+#: 
+msgctxt "system.action.user_add_role_action.mobile_graphql_client:label"
+msgid "Add the Mobile GraphQL Client role to the selected user(s)"
+msgstr "Add the Mobile GraphQL Client role to the selected user(s)"
+
+#: 
+msgctxt "system.action.user_remove_role_action.mobile_graphql_client:label"
+msgid "Remove the Mobile GraphQL Client role from the selected user(s)"
+msgstr "Remove the Mobile GraphQL Client role from the selected user(s)"
+
+#: 
+msgctxt "user.role.mobile_graphql_client:label"
+msgid "Mobile GraphQL Client"
+msgstr "Mobile GraphQL Client"
 
