@@ -100,6 +100,7 @@ jobs:
           RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
         run: |
           echo "Publishing database snapshot for tag: $RELEASE_TAG"
+          task dev:start
           task dev:composer:update-design-system
           task dev:composer:update-react
           task dev:cli -- composer install
