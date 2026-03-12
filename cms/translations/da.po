@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-12 10:49+0100\n"
-"PO-Revision-Date: 2026-03-12 10:49+0100\n"
+"POT-Creation-Date: 2026-03-12 10:58+0100\n"
+"PO-Revision-Date: 2026-03-12 10:58+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -138,7 +138,7 @@ msgstr "Skøn-/faglitteratur"
 
 msgctxt "Search Result"
 msgid "Genre and form"
-msgstr "Genre"
+msgstr "Genre og form"
 
 msgctxt "Search Result"
 msgid "Main languages"
@@ -2659,7 +2659,7 @@ msgstr "Format"
 
 msgctxt "Search Result"
 msgid "Year"
-msgstr "År"
+msgstr "Udgivelsesår"
 
 msgctxt "Work Page"
 msgid "Expand more"
@@ -21188,7 +21188,7 @@ msgstr ""
 
 msgctxt "advanced search 2"
 msgid "@hitcount results"
-msgstr ""
+msgstr "@hitcount resultater"
 
 msgctxt "simple_oauth.oauth2_scope.mobile_graphql_client:description"
 msgid "Mobile GraphQL Client"
