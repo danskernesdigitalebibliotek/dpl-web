@@ -89,7 +89,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and publish database snapshot
+      - name: Install site
         env:
           GH_TOKEN: ${{ github.token }}
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -105,7 +105,33 @@ jobs:
           task dev:composer:update-react
           task dev:cli -- composer install
           task dev:cli -- ./dev-scripts/install-site.sh --install-only
+
+      - name: Generate and publish database snapshot image
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
           task database-snapshot:deploy
+
+      - name: Upload database snapshot artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+        run: |
+          SNAPSHOT_SQL_ASSET="dpl-cms-database-snapshot.sql.gz"
+
+          if ! gh release view "$RELEASE_TAG" --repo "${GITHUB_REPOSITORY}" >/dev/null; then
+            echo "No release found for tag $RELEASE_TAG, skipping SQL asset upload"
+            exit 0
+          fi
+
+          gzip -c .build/dpl-cms-default.sql > .build/${SNAPSHOT_SQL_ASSET}
+          gh release upload "$RELEASE_TAG" ".build/${SNAPSHOT_SQL_ASSET}" --repo "${GITHUB_REPOSITORY}" --clobber
 
   update_release_notes:
     name: CMS / Update release notes
