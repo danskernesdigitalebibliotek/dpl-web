@@ -9,7 +9,7 @@ tasks:
     cmds:
       - mkdir -p .build
       - rm -f .build/dpl-cms-default.sql
-      - task dev:cli -- drush sql:dump --result-file=/app/.build/dpl-cms-default.sql
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} exec -T mariadb sh -c 'mariadb-dump -u"${MARIADB_USER:-drupal}" -p"${MARIADB_PASSWORD:-drupal}" "${MARIADB_DATABASE:-drupal}"' > .build/dpl-cms-default.sql
 
   build:
     desc: Build the database snapshot image.
