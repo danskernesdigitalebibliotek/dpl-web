@@ -30203,21 +30203,21 @@ msgstr "Å-A"
 
 #: 
 msgid "Add matcher to profile"
-msgstr ""
+msgstr "Tilføj matcher til profil"
 
 #: 
 msgid "Set matcher configuration"
-msgstr ""
+msgstr "Sæt matcher konfiguration"
 
 #: 
 msgctxt "metatag.metatag_defaults.eventinstance__default:tags:title"
 msgid "[eventinstance:title] | [site:name]"
-msgstr ""
+msgstr "[eventinstance:title] | [site:name]"
 
 #: 
 msgctxt "metatag.metatag_defaults.eventseries__default:tags:title"
 msgid "[eventseries:title] | [site:name]"
-msgstr ""
+msgstr "[eventseries:title] | [site:name]"
 
 #: 
 msgctxt "dpl_login"
@@ -30226,39 +30226,39 @@ msgstr "Du er ikke oprettet som bruger ved dette bibliotek.<br />Du kan <a href=
 
 #: 
 msgid "DPL: Event Location Type"
-msgstr ""
+msgstr "Arrangementslokationstype"
 
 #: 
 msgid "- Site default (@country) -"
-msgstr ""
+msgstr "- Sidens standardværdi (@country) -"
 
 #: 
 msgid "Skip country for domestic addresses"
-msgstr ""
+msgstr "Skip land for indenrigs adresser"
 
 #: 
 msgid "Domestic addresses country"
-msgstr ""
+msgstr "Indenrigs adresser land"
 
 #: 
 msgid "Addresses within this country are considered domestic."
-msgstr ""
+msgstr "Adresser inden for dette land er indenrigs."
 
 #: 
 msgid "<em><a href=\"@url\">Set the default country for your site</a></em>."
-msgstr ""
+msgstr "<em><a href=\"@url\">Sæt standardværdi for land på din hjemmeside</a></em>."
 
 #: 
 msgid "Site default (@country)"
-msgstr ""
+msgstr "Siden standardværdi for land"
 
 #: 
 msgid "Skip country for addresses in: @country"
-msgstr ""
+msgstr "Skip land for adresser i: @country"
 
 #: 
 msgid "Always display country."
-msgstr ""
+msgstr "Vis altid land."
 
 #: 
 msgid "Price"
@@ -30357,7 +30357,7 @@ msgstr "Fra"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_state:description"
 msgid "If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this state is ignored and the state provided from the ticket manager is used."
-msgstr ""
+msgstr "Hvis 'Opret billet i billetsysten' under 'Billetter' er slået til, så vil denne status bliver ignoreret, og status fra billetsystemet vil blive brugt."
 
 #: 
 msgctxt "field.field.eventseries.default.field_branch:description"
@@ -30402,7 +30402,7 @@ msgstr "Fra"
 #: 
 msgctxt "field.field.eventseries.default.field_event_state:description"
 msgid "If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this state is ignored and the state provided from the ticket manager is used."
-msgstr ""
+msgstr "Hvis 'Opret billet i billetsysten' under 'Billetter' er slået til, så vil denne status bliver ignoreret, og status fra billetsystemet vil blive brugt."
 
 #: 
 msgctxt "field.storage.eventinstance.field_event_location_type:settings:allowed_values:0:label"
@@ -30432,16 +30432,16 @@ msgstr "Biblioteker og adresser"
 #: 
 msgctxt "DPL admin UX"
 msgid "<div class=\"messages messages--warning\">You currently have <strong>@title</strong> open in another window or tab. If you delete it now, you may lose changes that have not been saved.</div>"
-msgstr ""
+msgstr "<div class=\"messages messages--warning\">Du har <strong>@title</strong> åbent i et andet vindue eller fane. Hvis du sletter den nu, vil du miste alle ændringer.</div>"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "<div class=\"messages messages--warning\"><strong>@title</strong> is currently being edited by <strong>@user</strong>. There is a risk of data loss if you proceed with deleting this content.</div>"
-msgstr ""
+msgstr "<div class=\"messages messages--warning\"><strong>@title</strong> bliver lige nu redigeret af <strong>@user</strong>. Der er en risiko for at miste det, som den bruger laver.</div>"
 
 #: 
 msgid "another user"
-msgstr ""
+msgstr "anden bruger"
 
 #: 
 msgctxt "Work Page"
@@ -30455,7 +30455,7 @@ msgstr "Vis alle (@count)"
 
 #: 
 msgid "Custom handling related to Events."
-msgstr ""
+msgstr "Tilpas håndtering relateret til arrangementer"
 
 #: 
 msgid "Functionality related to the admin/editor experience."
@@ -30656,7 +30656,7 @@ msgstr "Viser resultater for"
 #: 
 msgctxt "Search Result"
 msgid "Filter materials (@hitcount)"
-msgstr ""
+msgstr "Filtrer materialer (@hitcount)"
 
 #: 
 msgctxt "advanced search 2"

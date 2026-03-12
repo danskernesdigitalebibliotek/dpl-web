@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-12 10:58+0100\n"
-"PO-Revision-Date: 2026-03-12 10:58+0100\n"
+"POT-Creation-Date: 2026-03-12 11:48+0100\n"
+"PO-Revision-Date: 2026-03-12 11:48+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -20953,10 +20953,10 @@ msgid "Z-A"
 msgstr "Å-A"
 
 msgid "Add matcher to profile"
-msgstr ""
+msgstr "Tilføj matcher til profil"
 
 msgid "Set matcher configuration"
-msgstr ""
+msgstr "Sæt matcher konfiguration"
 
 msgctxt "dpl_login"
 msgid ""
@@ -20969,31 +20969,33 @@ msgstr ""
 "<a href=\":log_out\">logge ud</a> igen."
 
 msgid "DPL: Event Location Type"
-msgstr ""
+msgstr "Arrangementslokationstype"
 
 msgid "- Site default (@country) -"
-msgstr ""
+msgstr "- Sidens standardværdi (@country) -"
 
 msgid "Skip country for domestic addresses"
-msgstr ""
+msgstr "Skip land for indenrigs adresser"
 
 msgid "Domestic addresses country"
-msgstr ""
+msgstr "Indenrigs adresser land"
 
 msgid "Addresses within this country are considered domestic."
-msgstr ""
+msgstr "Adresser inden for dette land er indenrigs."
 
 msgid "<em><a href=\"@url\">Set the default country for your site</a></em>."
 msgstr ""
+"<em><a href=\"@url\">Sæt standardværdi for land på din "
+"hjemmeside</a></em>."
 
 msgid "Site default (@country)"
-msgstr ""
+msgstr "Siden standardværdi for land"
 
 msgid "Skip country for addresses in: @country"
-msgstr ""
+msgstr "Skip land for adresser i: @country"
 
 msgid "Always display country."
-msgstr ""
+msgstr "Vis altid land."
 
 msgid "Price"
 msgstr "Pris"
@@ -21004,6 +21006,9 @@ msgid ""
 "<strong>@title</strong> open in another window or tab. If you delete "
 "it now, you may lose changes that have not been saved.</div>"
 msgstr ""
+"<div class=\"messages messages--warning\">Du har "
+"<strong>@title</strong> åbent i et andet vindue eller fane. Hvis du "
+"sletter den nu, vil du miste alle ændringer.</div>"
 
 msgctxt "DPL admin UX"
 msgid ""
@@ -21011,9 +21016,12 @@ msgid ""
 "currently being edited by <strong>@user</strong>. There is a risk of "
 "data loss if you proceed with deleting this content.</div>"
 msgstr ""
+"<div class=\"messages messages--warning\"><strong>@title</strong> "
+"bliver lige nu redigeret af <strong>@user</strong>. Der er en risiko "
+"for at miste det, som den bruger laver.</div>"
 
 msgid "another user"
-msgstr ""
+msgstr "anden bruger"
 
 msgctxt "Work Page"
 msgid "Show less"
@@ -21024,7 +21032,7 @@ msgid "Show all (@count)"
 msgstr "Vis alle (@count)"
 
 msgid "Custom handling related to Events."
-msgstr ""
+msgstr "Tilpas håndtering relateret til arrangementer"
 
 msgid "Functionality related to the admin/editor experience."
 msgstr "Funktionalitet, der relaterer sig til redaktøroplevelsen."
@@ -21184,7 +21192,7 @@ msgstr "Viser resultater for"
 
 msgctxt "Search Result"
 msgid "Filter materials (@hitcount)"
-msgstr ""
+msgstr "Filtrer materialer (@hitcount)"
 
 msgctxt "advanced search 2"
 msgid "@hitcount results"
