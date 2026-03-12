@@ -4122,10 +4122,6 @@ msgid "DPL PO"
 msgstr "DPL PO"
 
 #: 
-msgid "PO file handling. Export/import, splitting etc."
-msgstr "PO filhåndtering. Export/Import, opdeling osv."
-
-#: 
 msgctxt "block.block.claro_breadcrumbs:settings:label"
 msgid "Breadcrumbs"
 msgstr "Brødkrummer"
@@ -16030,10 +16026,6 @@ msgid "Replace"
 msgstr "Erstat"
 
 #: 
-msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form."
-msgstr "Ændr brugerloginformularen for at vise OpenID login knapperne. Hvis 'Erstat' muligheden er valgt, vil kun OpenID-knapperne blive vist. I dette tilfælde, send 'showcore' URL-parameteren for at vende tilbage til en adgangskode-baseret loginform."
-
-#: 
 msgid "User claims mapping"
 msgstr "Kortlægning af brugerkrav"
 
@@ -24147,10 +24139,6 @@ msgid "A base module for providing shared functionality between modules exposing
 msgstr "En grundmodul til at tilbyde fælles funktionalitet mellem moduler, der eksponerer REST-tjenester."
 
 #: 
-msgid "Go to frontpage"
-msgstr "Gå til forsiden"
-
-#: 
 msgctxt "paragraphs_ee.paragraphs_category.content_elements:label"
 msgid "Content elements"
 msgstr "Indholdselementer"
@@ -27255,10 +27243,6 @@ msgstr "Pending name input"
 #: 
 msgid "OpenID Connect Client"
 msgstr "OpenID Connect Client"
-
-#: 
-msgid "@provider does not support log out. You are logged out of this site but not out of the OpenID Connect provider."
-msgstr "@provider does not support log out. You are logged out of this site but not out of the OpenID Connect provider."
 
 #: 
 msgid "The %label client has been enabled."
@@ -30682,4 +30666,69 @@ msgstr "Remove the Mobile GraphQL Client role from the selected user(s)"
 msgctxt "user.role.mobile_graphql_client:label"
 msgid "Mobile GraphQL Client"
 msgstr "Mobile GraphQL Client"
+
+#: 
+msgid "PO file handling."
+msgstr ""
+
+#: 
+msgid "Client \"prompt\" may be misconfigured"
+msgstr ""
+
+#: 
+msgid "At least one OpenID Connect client is configured with the \"prompt\" parameter set to \"none\" or without a \"prompt\". This can lead to security vulnerabilities. It is <strong>highly recommended</strong> to change this setting unless you are aware of the risks."
+msgstr ""
+
+#: 
+msgid "The OpenID Connect module settings have been updated. Administrators should review the OpenID Connect configuration, particularly the prompt settings for all enabled providers."
+msgstr ""
+
+#: 
+msgid "Account registration failed. The email address may already be in use or is invalid."
+msgstr ""
+
+#: 
+msgid "Autostart login process"
+msgstr ""
+
+#: 
+msgid "Auto start login process when login, register or password reset page was requested as anonymous."
+msgstr ""
+
+#: 
+msgid "Force replace"
+msgstr ""
+
+#: 
+msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form. The 'Force replace' option behaves like the 'Replace' option but cannot be overridden with the 'showcore' URL parameter."
+msgstr ""
+
+#: 
+msgid "Prompt"
+msgstr ""
+
+#: 
+msgid "Consent"
+msgstr ""
+
+#: 
+msgid "Select account"
+msgstr ""
+
+#: 
+msgid "<strong><em>Please note:</em> This option has security implications.</strong><br />While valid, not selecting a prompt could lead to security issues and is discouraged in most use cases."
+msgstr ""
+
+#: 
+msgid "The \"None\" option cannot be selected with other values."
+msgstr ""
+
+#: 
+msgid "@site_title: frontpage"
+msgstr ""
+
+#: 
+msgctxt "image.style.event_api_scaled:label"
+msgid "Event API scaled (1920x?)"
+msgstr ""
 
