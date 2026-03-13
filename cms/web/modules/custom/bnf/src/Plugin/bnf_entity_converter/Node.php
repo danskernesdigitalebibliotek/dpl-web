@@ -15,6 +15,9 @@ class Node extends EntityConverterBase {
   public function fields(): array {
     return [
       'title' => 'string',
+      'status' => 'boolean',
+      'field_publication_date' => 'datetime',
+      'field_canonical_url' => 'link',
     ];
   }
 

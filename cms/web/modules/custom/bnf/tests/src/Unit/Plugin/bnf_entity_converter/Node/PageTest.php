@@ -27,7 +27,7 @@ class PageTest extends EntityConverterTestBase {
    * {@inheritdoc}
    */
   public function ignoredFields(): array {
-    return ['field_branch'];
+    return ['field_branch', 'field_breadcrumb_parent', 'field_tags'];
   }
 
 }

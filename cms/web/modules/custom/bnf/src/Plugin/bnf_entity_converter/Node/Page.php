@@ -23,6 +23,11 @@ class Page extends Node {
   public function fields(): array {
     return parent::fields() + [
       'field_paragraphs' => 'entity_reference',
+      'field_subtitle' => 'string',
+      'field_teaser_text' => 'string',
+      'field_teaser_image' => 'image',
+      'field_hero_title' => 'string',
+      'field_display_titles' => 'boolean',
     ];
   }
 

@@ -23,4 +23,12 @@ class ArticleTest extends EntityConverterTestBase {
     $this->setupConverter(Article::class, 'node', 'article');
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function ignoredFields(): array {
+    return ['field_branch', 'field_categories', 'field_tags'];
+  }
+
 }
+

@@ -23,6 +23,11 @@ class Article extends Node {
   public function fields(): array {
     return parent::fields() + [
       'field_paragraphs' => 'entity_reference',
+      'field_show_override_author' => 'boolean',
+      'field_override_author' => 'string',
+      'field_subtitle' => 'string',
+      'field_teaser_text' => 'string',
+      'field_teaser_image' => 'image',
     ];
   }
 
