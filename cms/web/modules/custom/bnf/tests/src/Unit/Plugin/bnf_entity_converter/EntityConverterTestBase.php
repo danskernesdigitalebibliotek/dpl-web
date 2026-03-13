@@ -14,6 +14,17 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Base class for entity converter plugin tests.
+ *
+ * As entity converter classes should implement `fields()` and rely on
+ * `EntityConverterBase`s implementation of normalize/denormalize, there's no
+ * reason to test field handling for each entity type. So most entity converters
+ * tests can just extend this class, implement `setUp()` to call
+ * `$this->setupConverter` and leave it at that.
+ *
+ * This class will take care of testing that all fields configured in the
+ * configuration in `config/sync` is accounted for, either by the converter
+ * returning it it `fields()`, or the test explicitly marking it as ingored in
+ * `ignoredFields()`.
  */
 abstract class EntityConverterTestBase extends UnitTestCase {
 
