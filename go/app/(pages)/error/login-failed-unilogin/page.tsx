@@ -13,7 +13,10 @@ const descriptionComponent = (
     </p>
     <p>
       Hvis du bliver ved at opleve fejl, må du meget gerne kontakte vores{" "}
-      <a href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support">support</a>.
+      <a href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/6">
+        support
+      </a>
+      .
     </p>
   </>
 )
