@@ -419,7 +419,7 @@ jobs:
       - name: Enable BNF for site
         run: task dev:bnf:enable
       - name: Setup site
-        run: task ci:reset
+        run: task ci:reset:clean
       - name: Extract GraphQL schema and generate client
         run: task dev:codegen:bnf-graphql
       - name: Ensure GraphQL client code has not drifted
