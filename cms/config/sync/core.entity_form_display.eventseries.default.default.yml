@@ -363,7 +363,7 @@ content:
     region: content
     settings:
       size: 60
-      placeholder: ''
+      placeholder: 'E.g. a specific room such as “meeting room 1” or “4. floor”.'
     third_party_settings: {  }
   field_event_state:
     type: select2
