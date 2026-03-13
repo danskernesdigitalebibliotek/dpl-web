@@ -10,6 +10,7 @@ interval: 500ms
 includes:
   translations: ./task/Taskfile.translations.yml
   lagoon: ./task/Taskfile.lagoon.yml
+  database-snapshot: ./task/Taskfile.database-snapshot.yml
 
 vars:
   # Docker image registry.
@@ -31,6 +32,9 @@ vars:
   # Constructing docker image name.
   RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
   RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
+  DB_SNAPSHOT_IMAGE_NAME: '{{.DB_SNAPSHOT_IMAGE_NAME | default "dpl-cms-database-snapshot"}}'
+  DB_SNAPSHOT_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.DB_SNAPSHOT_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
+  DB_SNAPSHOT_LATEST_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.DB_SNAPSHOT_IMAGE_NAME}}:latest-default"
 
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
