@@ -36,6 +36,12 @@ React component library for self-service features.
 
 ---
 
+## Cross-Project Development
+
+For developing across CMS, React, and Design System together (building, linking assets, watch mode), see **[Cross-Project Development](./development.md)**.
+
+---
+
 ## Getting Started
 
 ### Prerequisites
