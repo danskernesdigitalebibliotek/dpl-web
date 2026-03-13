@@ -1,5 +1,198 @@
 version: '3'
 
-includes:
-  migration: ./migration/Taskfile.migration.yml
+output: prefixed
 
+# Sub-project Taskfiles have dotenv declarations which Task v3
+# does not allow in included files. We only include migration
+# (no dotenv) and use `task -d <dir>` for sub-project tasks.
+includes:
+  migration:
+    taskfile: ./migration/Taskfile.migration.yml
+
+vars:
+  CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
+  CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
+  DESIGN_SYSTEM_BUILD: ./design-system/build
+
+tasks:
+  # ---------------------------------------------------------------------------
+  # Sub-project starters (delegates to each project's own Taskfile)
+  # ---------------------------------------------------------------------------
+
+  cms:reset:
+    desc: "Start CMS dev environment (runs cms/Taskfile.yml dev:reset)"
+    cmds:
+      - task -d cms dev:reset
+
+  cms:watch:
+    desc: "Watch CMS source for changes and clear cache"
+    cmds:
+      - task -d cms dev:watch
+
+  react:start:
+    desc: "Start React dev environment (runs react/Taskfile.yml dev:start)"
+    cmds:
+      - task -d react dev:start
+
+  design-system:start:
+    desc: "Start design-system dev environment (runs design-system/Taskfile.yml dev:start)"
+    cmds:
+      - task -d design-system dev:start
+
+  go:reset:
+    desc: "Start Go dev environment (runs go/Taskfile.yml dev:reset)"
+    cmds:
+      - task -d go dev:reset
+
+  # ---------------------------------------------------------------------------
+  # Init (yarn install for all JS projects)
+  # ---------------------------------------------------------------------------
+
+  init:
+    desc: "Install dependencies for design-system, react, and go"
+    deps:
+      - init:design-system
+      - init:react
+      - init:go
+
+  init:design-system:
+    desc: "yarn install in design-system/"
+    dir: ./design-system
+    status:
+      - test -d node_modules
+    cmds:
+      - yarn install --ignore-engines
+
+  init:react:
+    desc: "yarn install in react/"
+    dir: ./react
+    status:
+      - test -d node_modules
+    cmds:
+      - yarn install --ignore-engines
+
+  init:go:
+    desc: "yarn install in go/"
+    dir: ./go
+    status:
+      - test -d node_modules
+    cmds:
+      - yarn install --ignore-engines
+
+  # ---------------------------------------------------------------------------
+  # Main orchestration
+  # ---------------------------------------------------------------------------
+
+  dev:cms-react:
+    desc: "Full CMS + React dev setup: builds design-system + React, copies assets into CMS. Use --watch for live-reload."
+    deps:
+      - dev:react:setup
+    cmds:
+      - task: dev:cms:link
+      - task -d cms dev:cli -- drush user-login
+
+  # ---------------------------------------------------------------------------
+  # Design-system
+  # ---------------------------------------------------------------------------
+
+  dev:design-system:build:
+    desc: "Build design-system (sass + bundle into build/)"
+    deps:
+      - init:design-system
+    dir: ./design-system
+    sources:
+      - 'src/**/*.scss'
+      - 'src/**/*.js'
+      - 'public/icons/**/*.svg'
+      - 'base.scss'
+      - 'wysiwyg.scss'
+      - 'admin-base.scss'
+    generates:
+      - 'build/**/*.*'
+    cmds:
+      - yarn build
+      - rm -rf ./build
+      - mkdir -p ./build/js
+      - cp -r ./public/icons ./build/icons
+      - cp -r ./src/styles/css ./build/css
+      - cp -r ./src/styles/fonts ./build/fonts
+      - find ./src -name "*.js" -exec cp {} ./build/js \;
+
+  dev:design-system:link:
+    desc: "Register design-system as a yarn link source"
+    dir: ./design-system
+    cmds:
+      - yarn link
+
+  # ---------------------------------------------------------------------------
+  # React
+  # ---------------------------------------------------------------------------
+
+  dev:react:link:
+    desc: "Link the local design-system package into React via yarn link"
+    dir: ./react
+    cmds:
+      - yarn link @danskernesdigitalebibliotek/dpl-design-system
+
+  dev:react:install:
+    desc: "Install React dependencies"
+    deps:
+      - init:react
+
+  dev:react:setup:
+    desc: "Build design-system, yarn-link it, and install React deps"
+    cmds:
+      - task: dev:design-system:build
+      - task: dev:design-system:link
+      - task: dev:react:install
+      - task: dev:react:link
+      - task: dev:react:build
+
+  dev:react:build:
+    desc: "Build React (yarn build → dist/)"
+    deps:
+      - init:react
+    dir: ./react
+    sources:
+      - 'src/**/*.ts'
+      - 'src/**/*.tsx'
+      - 'src/**/*.js'
+      - 'src/**/*.jsx'
+      - 'src/**/*.scss'
+      - 'webpack.config.js'
+      - 'webpack.helpers.js'
+    generates:
+      - 'dist/**/*.*'
+    cmds:
+      - yarn build
+
+  # ---------------------------------------------------------------------------
+  # Copy assets into CMS
+  # ---------------------------------------------------------------------------
+
+  dev:cms:link:
+    desc: "Copy design-system + React build artifacts into CMS directories and clear cache"
+    deps:
+      - dev:design-system:build
+      - dev:react:build
+    cmds:
+      - task: dev:cms:link:design-system
+      - task: dev:cms:link:react
+      - task -d cms dev:cache:clear:all
+
+  dev:cms:link:design-system:
+    desc: "Copy design-system build into CMS theme assets"
+    cmds:
+      - rm -rf {{ .CMS_DESIGN_SYSTEM_ASSETS }}
+      - mkdir -p {{ .CMS_DESIGN_SYSTEM_ASSETS }}
+      - cp -r {{ .DESIGN_SYSTEM_BUILD }}/css {{ .CMS_DESIGN_SYSTEM_ASSETS }}/css
+      - cp -r {{ .DESIGN_SYSTEM_BUILD }}/js {{ .CMS_DESIGN_SYSTEM_ASSETS }}/js
+      - cp -r {{ .DESIGN_SYSTEM_BUILD }}/icons {{ .CMS_DESIGN_SYSTEM_ASSETS }}/icons
+      - cp -r {{ .DESIGN_SYSTEM_BUILD }}/fonts {{ .CMS_DESIGN_SYSTEM_ASSETS }}/fonts
+
+  dev:cms:link:react:
+    desc: "Copy React dist into CMS libraries"
+    cmds:
+      - rm -rf {{ .CMS_REACT_LIBRARY }}
+      - mkdir -p {{ .CMS_REACT_LIBRARY }}
+      - cp -r ./react/dist/* {{ .CMS_REACT_LIBRARY }}/
