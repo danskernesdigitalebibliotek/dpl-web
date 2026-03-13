@@ -19,8 +19,13 @@ tasks:
   # Sub-project starters (delegates to each project's own Taskfile)
   # ---------------------------------------------------------------------------
 
+  cms:start:
+    desc: "Start CMS Docker containers (without resetting)"
+    cmds:
+      - task -d cms dev:start
+
   cms:reset:
-    desc: "Start CMS dev environment (runs cms/Taskfile.yml dev:reset)"
+    desc: "Reset CMS dev environment from scratch (runs cms/Taskfile.yml dev:reset)"
     cmds:
       - task -d cms dev:reset
 
@@ -84,8 +89,9 @@ tasks:
   # ---------------------------------------------------------------------------
 
   dev:cms-react:
-    desc: "Full CMS + React dev setup: builds design-system + React, copies assets into CMS. Use --watch for live-reload."
+    desc: "Build design-system + React, copy into CMS. Use --watch for live-reload."
     deps:
+      - cms:start
       - dev:react:setup
     cmds:
       - task: dev:cms:link
@@ -173,15 +179,15 @@ tasks:
   dev:cms:link:
     desc: "Copy design-system + React build artifacts into CMS directories and clear cache"
     deps:
-      - dev:design-system:build
-      - dev:react:build
+      - dev:cms:link:design-system
+      - dev:cms:link:react
     cmds:
-      - task: dev:cms:link:design-system
-      - task: dev:cms:link:react
       - task -d cms dev:cache:clear:all
 
   dev:cms:link:design-system:
     desc: "Copy design-system build into CMS theme assets"
+    deps:
+      - dev:design-system:build
     cmds:
       - rm -rf {{ .CMS_DESIGN_SYSTEM_ASSETS }}
       - mkdir -p {{ .CMS_DESIGN_SYSTEM_ASSETS }}
@@ -192,6 +198,8 @@ tasks:
 
   dev:cms:link:react:
     desc: "Copy React dist into CMS libraries"
+    deps:
+      - dev:react:build
     cmds:
       - rm -rf {{ .CMS_REACT_LIBRARY }}
       - mkdir -p {{ .CMS_REACT_LIBRARY }}
