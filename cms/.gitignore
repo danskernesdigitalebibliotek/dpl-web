@@ -51,6 +51,7 @@ drush/sites/lagoon.site.yml
 
 # Cache folder
 .cache
+.build
 .drush-lock-update
 .twig-cs-fixer.cache
 

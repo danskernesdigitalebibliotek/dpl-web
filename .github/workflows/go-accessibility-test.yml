@@ -3,17 +3,7 @@ name: Go / Accessibility test
 
 # Event for the workflow
 on:
-  push:
-    branches:
-      - main
-      - develop
-    paths:
-      - 'go/**'
-      - '.github/workflows/go-*.yml'
   pull_request:
-    branches:
-      - main
-      - develop
     paths:
       - 'go/**'
       - '.github/workflows/go-*.yml'
@@ -33,9 +23,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-        # Make sure the actual branch is checked out when running on pull requests.
         with:
-          ref: ${{ github.head_ref }}
           fetch-depth: 0 # 👈 Required to retrieve git history
 
       - name: Setup Node.js
