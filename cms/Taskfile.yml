@@ -455,9 +455,17 @@ tasks:
       - cmd: task dev:cli -- drush dpl_consumers:consumer-credentials
 
   ci:reset:
-    desc: Create CI setup in a clean state
+    desc: Create CI setup
     cmds:
       - task dev:reset
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      SKIP_LANGUAGE_IMPORT: "true"
+
+  ci:reset:clean:
+    desc: Create CI setup with a clean database
+    cmds:
+      - task dev:reset:clean
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       SKIP_LANGUAGE_IMPORT: "true"
