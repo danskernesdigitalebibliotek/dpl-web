@@ -25,7 +25,7 @@ class Page extends Node {
       'field_paragraphs' => 'entity_reference',
       'field_subtitle' => 'string',
       'field_teaser_text' => 'string',
-      'field_teaser_image' => 'image',
+      'field_teaser_image' => 'entity_reference',
       'field_hero_title' => 'string',
       'field_display_titles' => 'boolean',
     ];

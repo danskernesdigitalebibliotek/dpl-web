@@ -27,7 +27,7 @@ class Article extends Node {
       'field_override_author' => 'string',
       'field_subtitle' => 'string',
       'field_teaser_text' => 'string',
-      'field_teaser_image' => 'image',
+      'field_teaser_image' => 'entity_reference',
     ];
   }
 
