@@ -24,7 +24,7 @@ export default function Footer() {
               </li>
               <li>
                 <SmartLink
-                  href="https://www.detdigitalefolkebibliotek.dk/ereolen-go-support"
+                  href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/6"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Kontakt og support
@@ -32,7 +32,7 @@ export default function Footer() {
               </li>
               <li>
                 <SmartLink
-                  href="https://www.detdigitalefolkebibliotek.dk/om-uni-login"
+                  href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/6/article/301826049"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Skoler og UNI-login
