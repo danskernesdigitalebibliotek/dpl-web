@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Attributes\Argument;
 use Drush\Attributes\Command;
 use Drush\Attributes\Help;
+use Drush\Attributes\Usage;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Yaml\Yaml;
@@ -44,6 +45,30 @@ class SerializationCommands extends DrushCommands {
     $data = $this->serializer->serialize($entity);
 
     echo Yaml::dump($data, 5, 2);
+  }
+
+  /**
+   * Unserialize an entity from YAML and save it.
+   */
+  #[Command(name: 'bnf:unserialize')]
+  #[Help(description: 'Unserialize YAML from stdin and save the resulting entity.')]
+  #[Usage(
+    name: 'cat entity.yml | drush bnf:unserialize',
+    description: 'Unserialize and save entity from YAML on stdin.'
+  )]
+  public function unserialize(): void {
+    $yaml = file_get_contents('php://stdin');
+
+    if (!$yaml) {
+      $this->logger()->error('No input provided.');
+      return;
+    }
+
+    $data = Yaml::parse($yaml);
+    $entity = $this->serializer->deserialize($data);
+    $entity->save();
+
+    $this->logger()->success(sprintf('Successfully saved %s entity %s.', $entity->getEntityTypeId(), $entity->id()));
   }
 
 }
