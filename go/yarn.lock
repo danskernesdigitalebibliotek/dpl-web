@@ -5719,10 +5719,10 @@
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.16.0.tgz#828c6bce811dab398539491cffd064a8ecfddfda"
-  integrity sha512-FWIapfCeTN99Nrhwe/r5qABcyDdeGM6gZ+SNL5IF50a2vgtEzhYthS9MYEz4HXjqxXdGN+WaMb+CIzv62jGRbA==
+"@xstate/store@^3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.17.0.tgz#30d7c3059ad027015ca6f9c99e0405db9f775edf"
+  integrity sha512-IITUYhK1e8cqs9NyzmS3Y8cuZq7lz5gWnX9TMHnVNvMVRAGLzNN8vUqnv/v/6jgdo2e9pzmMRSM8rkHPUPg81g==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
