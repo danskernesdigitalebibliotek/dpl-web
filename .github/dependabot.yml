@@ -214,6 +214,9 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # The Go lint stack still depends on packages that only support ESLint 8/9.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
       - dependency-name: "orval"
         versions: ["^7.13.2"]
       - dependency-name: "cypress"
