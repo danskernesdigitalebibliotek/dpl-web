@@ -3,10 +3,29 @@
 /**
  * @file
  * Install, update and uninstall functions for the dpl_cms install profile.
- *
- * Disable coding standards due to the currently empty content of this file.
- * @phpcs:disable DrupalPractice.Commenting.CommentEmptyLine.SpacingAfter
  */
 
-// Do not implement dpl_cms_install(). We run site installs with existing
-// configuration. This explicitly does not support install hooks in profiles.
+/**
+ * Rebuild locale project metadata after translation server URL change.
+ *
+ * The metadata was saved in the key_value table, meaning existing sites still
+ * called the old endpoint for the da.po file.
+ */
+function dpl_cms_update_10001(): string {
+  $project_name = 'dpl_cms';
+
+  if (!\Drupal::moduleHandler()->moduleExists('locale')) {
+    return 'Locale module not enabled. Skipped locale translation metadata refresh.';
+  }
+
+  // Remove only the stale dpl_cms entries.
+  $locale_project_storage = \Drupal::service('locale.project');
+  $locale_project_storage->delete($project_name);
+  \Drupal::keyValue('locale.translation_status')->delete($project_name);
+
+  // Let Drupal core rebuild project metadata from extension info.
+  \Drupal::moduleHandler()->loadInclude('locale', 'inc', 'locale.compare');
+  locale_translation_build_projects();
+
+  return "Locale translation metadata refreshed for '{$project_name}'.";
+}
