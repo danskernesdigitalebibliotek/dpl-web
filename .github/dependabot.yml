@@ -283,5 +283,8 @@ updates:
         versions: [">=4"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
