@@ -302,8 +302,9 @@ updates:
         versions: [">=4.0.0"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      # Vitest 3 changes unit-test asset rendering and timer behavior in the React snapshot suite.
       - dependency-name: "vitest"
-        versions: [">=4.0.0"]
+        versions: [">=3.0.0"]
       # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
