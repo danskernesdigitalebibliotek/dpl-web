@@ -221,6 +221,9 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # @vitejs/plugin-react 6 expects a newer Vite major than the current Go frontend uses.
+      - dependency-name: "@vitejs/plugin-react"
+        versions: [">=6.0.0"]
       # The Go lint stack still depends on packages that only support ESLint 8/9.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
