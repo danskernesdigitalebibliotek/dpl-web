@@ -302,6 +302,8 @@ updates:
         versions: [">=4.0.0"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "vitest"
+        versions: [">=4.0.0"]
       # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
