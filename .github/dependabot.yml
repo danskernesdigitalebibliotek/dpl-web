@@ -277,8 +277,12 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "storybook"
         versions: [">=9"]
+      - dependency-name: "@storybook/react"
+        versions: [">=9.0.0"]
       - dependency-name: "@storybook/react-webpack5"
         versions: [">=9"]
+      - dependency-name: "@storybook/addon-queryparams"
+        versions: [">=9.0.0"]
       - dependency-name: "@chromatic-com/storybook"
         versions: [">=4"]
       - dependency-name: "dotenv"
