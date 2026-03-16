@@ -277,5 +277,8 @@ updates:
         versions: [">=4"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      # eslint-plugin-cypress v6 uses a flat-config shape that the current ESLint setup rejects.
+      - dependency-name: "eslint-plugin-cypress"
+        versions: [">=6.0.0"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
