@@ -26,12 +26,14 @@ updates:
     groups:
       drupal-core-minor-major-releases:
         patterns:
+          - "drupal/core"
           - "drupal/core*"
         update-types:
           - "major"
           - "minor"
       drupal-core-patch-releases:
         patterns:
+          - "drupal/core"
           - "drupal/core*"
         update-types:
           - "patch"
