@@ -24,18 +24,22 @@ updates:
     directory: "/cms"
     open-pull-requests-limit: 20
     groups:
-      drupal-core-minor-major-releases:
+      drupal-core-minor-releases:
         patterns:
+          - "drupal/core"
           - "drupal/core*"
         update-types:
-          - "major"
           - "minor"
       drupal-core-patch-releases:
         patterns:
+          - "drupal/core"
           - "drupal/core*"
         update-types:
           - "patch"
     ignore:
+      # Never attempt automated updates to major Drupal releases.
+      - dependency-name: "drupal/core*"
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
