@@ -72,6 +72,8 @@ jobs:
       - name: Install go-task
         uses: arduino/setup-task@v2
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and publish source
         run: |
           echo "Publishing tag: $RELEASE_TAG"
