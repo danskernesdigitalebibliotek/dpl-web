@@ -24229,7 +24229,7 @@ msgstr "DPL opdatering"
 
 #: 
 msgid "Generalized update logic, such as enabling modules."
-msgstr "Generaliseret opdateringslogik, såsom aktivering af moduler"
+msgstr "Generaliseret opdateringslogik, såsom aktivering af moduler."
 
 #: 
 msgid "Other (revisions)"
@@ -30680,10 +30680,6 @@ msgid "At least one OpenID Connect client is configured with the \"prompt\" para
 msgstr ""
 
 #: 
-msgid "The OpenID Connect module settings have been updated. Administrators should review the OpenID Connect configuration, particularly the prompt settings for all enabled providers."
-msgstr ""
-
-#: 
 msgid "Account registration failed. The email address may already be in use or is invalid."
 msgstr ""
 
@@ -30730,5 +30726,9 @@ msgstr ""
 #: 
 msgctxt "image.style.event_api_scaled:label"
 msgid "Event API scaled (1920x?)"
+msgstr ""
+
+#: 
+msgid "OpenID Connect client plugins updated: @plugins"
 msgstr ""
 

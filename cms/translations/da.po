@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-12 14:28+0100\n"
-"PO-Revision-Date: 2026-03-12 14:28+0100\n"
+"POT-Creation-Date: 2026-03-16 15:05+0100\n"
+"PO-Revision-Date: 2026-03-16 15:05+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -17600,7 +17600,7 @@ msgid "DPL Update"
 msgstr "DPL opdatering"
 
 msgid "Generalized update logic, such as enabling modules."
-msgstr "Generaliseret opdateringslogik, såsom aktivering af moduler"
+msgstr "Generaliseret opdateringslogik, såsom aktivering af moduler."
 
 msgid "Other (revisions)"
 msgstr "Andre (revisioner)"
@@ -21192,12 +21192,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The OpenID Connect module settings have been updated. Administrators "
-"should review the OpenID Connect configuration, particularly the "
-"prompt settings for all enabled providers."
-msgstr ""
-
-msgid ""
 "Account registration failed. The email address may already be in use "
 "or is invalid."
 msgstr ""
@@ -21241,5 +21235,8 @@ msgid "The \"None\" option cannot be selected with other values."
 msgstr ""
 
 msgid "@site_title: frontpage"
+msgstr ""
+
+msgid "OpenID Connect client plugins updated: @plugins"
 msgstr ""
 
