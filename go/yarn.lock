@@ -11915,10 +11915,10 @@ netmask@^2.0.2:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-next-drupal@^2.0.0-beta.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/next-drupal/-/next-drupal-2.0.0.tgz#4b6791d8b2eed3897126f0c5d71b3ca47c7bf32b"
-  integrity sha512-cgkfdSe2iepaiJkG4586SyCrUoXNsCfj9r1CcChidDZN7iDPLSKIIq8i63Yf0lPzLz+amwVW9lhWwrErOy8OIA==
+next-drupal@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/next-drupal/-/next-drupal-2.0.1.tgz#e9a87e8984df6352dd79453bd2412a111bb7d402"
+  integrity sha512-HbewzlWKHrey8ncHvMlazVupByDxTS9JSOQRqnRpDcdIupO4g1jkvD0eL+042CYjcv/SKOBH3ARKc2EIO7oMRA==
   dependencies:
     jsona "^1.12.1"
     next "^14.2.21 || ^15.1.2"
