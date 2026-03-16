@@ -39,6 +39,9 @@ updates:
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
+      # drupal/next 2.1.0 adds draft_enabled to exported Next entity config.
+      - dependency-name: "drupal/next"
+        versions: [">=2.1.0"]
       # Our patches are not compatible with the latest version.
       - dependency-name: "drupal/entity_reference_revisions"
         versions: [">=1.13.0"]
