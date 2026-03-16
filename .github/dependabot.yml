@@ -53,6 +53,9 @@ updates:
       # entity_reference_revisions.
       - dependency-name: "drupal/paragraphs"
         versions: [">1.19.0"]
+      # Drupal 10.6.x breaks the CMS opening-hours Cypress flow.
+      - dependency-name: "drupal/core*"
+        versions: [">=10.6.0"]
     schedule:
       interval: weekly
       day: monday
