@@ -160,7 +160,7 @@ jobs:
 
       - name: Create Release
         id: create-release
-        uses: softprops/action-gh-release@v2.5.0
+        uses: softprops/action-gh-release@v2.6.1
         with:
           files: ${{ needs.build-release.outputs.dist_filename }}
 
