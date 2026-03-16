@@ -39,6 +39,9 @@ updates:
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
+      # drupal/next 2.1.0 adds draft_enabled to exported Next entity config.
+      - dependency-name: "drupal/next"
+        versions: [">=2.1.0"]
       # Our patches are not compatible with the latest version.
       - dependency-name: "drupal/entity_reference_revisions"
         versions: [">=1.13.0"]
@@ -211,6 +214,9 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # The Go lint stack still depends on packages that only support ESLint 8/9.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
       - dependency-name: "orval"
         versions: ["^7.13.2"]
       - dependency-name: "cypress"
@@ -277,6 +283,9 @@ updates:
         versions: [">=4"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
       # eslint-plugin-cypress v6 uses a flat-config shape that the current ESLint setup rejects.
       - dependency-name: "eslint-plugin-cypress"
         versions: [">=6.0.0"]
