@@ -285,6 +285,11 @@ updates:
         versions: [">=9.0.0"]
       - dependency-name: "@chromatic-com/storybook"
         versions: [">=4"]
+      # The current React Cypress stack is not compatible with the Cypress 15/code-coverage 4 group.
+      - dependency-name: "cypress"
+        versions: [">=15.0.0"]
+      - dependency-name: "@cypress/code-coverage"
+        versions: [">=4.0.0"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
       # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
