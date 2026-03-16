@@ -277,5 +277,8 @@ updates:
         versions: [">=4"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      # orval 8.5.3 requires Node >=22.18.0, while the React workflow currently runs Node 20.
+      - dependency-name: "orval"
+        versions: [">=8.5.3"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
