@@ -147,7 +147,7 @@ export const mapManifestationToBasicDetailsType = (
     series,
     languages
   } = material;
-  const isoCode = languages?.main?.[0]?.iso639Set1 ?? "";
+  const langCode = languages?.main?.[0]?.iso639Set1 ?? "";
   const description = abstract ? abstract[0] : "";
   const {
     full: [fullText]
@@ -159,7 +159,7 @@ export const mapManifestationToBasicDetailsType = (
   const firstAuthor = creators && creators.length ? creators[0].display : "";
 
   return {
-    lang: isoCode,
+    lang: langCode,
     authors: getContributors(false, inputContributorsArray),
     authorsShort: getContributors(true, inputContributorsArray),
     firstAuthor,

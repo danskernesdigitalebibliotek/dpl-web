@@ -10,7 +10,7 @@ import {
   getManifestationsPids
 } from "../../core/utils/helpers/general";
 import { WorkMediumFragment } from "../../core/dbc-gateway/generated/graphql";
-import { getManifestationLanguageIsoCode } from "../../apps/material/helper";
+import { getManifestationLanguageCode } from "../../apps/material/helper";
 import { Manifestation } from "../../core/utils/types/entities";
 
 export interface AutosuggestMaterialProps {
@@ -51,9 +51,9 @@ const AutosuggestMaterial: React.FC<AutosuggestMaterialProps> = ({
           creators as WorkMediumFragment["creators"]
         );
 
-        const manifestationLanguageIsoCode =
+        const manifestationLanguageCode =
           bestRepresentation &&
-          getManifestationLanguageIsoCode([bestRepresentation]);
+          getManifestationLanguageCode([bestRepresentation]);
         const coverPids = getManifestationsPids(
           (allManifestations ?? []) as Manifestation[]
         );
@@ -82,7 +82,7 @@ const AutosuggestMaterial: React.FC<AutosuggestMaterialProps> = ({
               />
               <div className="autosuggest__info">
                 <div
-                  lang={manifestationLanguageIsoCode}
+                  lang={manifestationLanguageCode}
                   className="text-body-medium-medium autosuggest__title"
                 >
                   {titles.main[0]}

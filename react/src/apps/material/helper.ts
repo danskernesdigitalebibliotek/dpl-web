@@ -172,24 +172,23 @@ export const getManifestationLanguages = (manifestation: Manifestation) => {
   return mainLanguages ?? "";
 };
 
-export const getManifestationLanguageIsoCode = (
+export const getManifestationLanguageCode = (
   manifestations: Pick<Manifestation, "languages">[]
 ) => {
   const mainLanguages = manifestations
     .map(({ languages }) => languages)
     .flatMap((language) => language?.main);
 
-  const uniqueLanguagesWithIsoCode = uniqBy(mainLanguages, "iso639Set1");
+  const uniqueLanguages = uniqBy(mainLanguages, "iso639Set1");
 
-  // We only want to set the lang attribute if there is only one isoCode
-  const uniqIsoCode =
-    uniqueLanguagesWithIsoCode.length === 1 &&
-    head(uniqueLanguagesWithIsoCode)?.iso639Set1;
+  // We only want to set the lang attribute if there is only one language code
+  const uniqLanguageCode =
+    uniqueLanguages.length === 1 && head(uniqueLanguages)?.iso639Set1;
 
-  if (uniqIsoCode) {
-    return uniqIsoCode;
+  if (uniqLanguageCode) {
+    return uniqLanguageCode;
   }
-  // if there is no isoCode it return undefined so that the lang attribute is not set
+  // if there is no language code it returns undefined so that the lang attribute is not set
   return undefined;
 };
 
