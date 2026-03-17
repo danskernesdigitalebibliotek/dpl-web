@@ -23,7 +23,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry"],
@@ -72,7 +72,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry"],
@@ -113,7 +113,7 @@
                 "genreAndForm": [],
                 "source": ["Netlydbog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry"],
@@ -165,7 +165,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry (mp3)"],
@@ -210,7 +210,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry (mp3)"],
@@ -254,7 +254,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Harry"], "original": ["Harry (engelsk)"] },
               "fictionNonfiction": {
@@ -415,7 +415,7 @@
                 "genreAndForm": ["roman", "fantasy", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
@@ -465,7 +465,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -506,7 +506,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -548,7 +548,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -592,7 +592,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -633,7 +633,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -680,7 +680,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -724,7 +724,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -769,7 +769,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -813,7 +813,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen (mp3)"],
@@ -854,7 +854,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -895,7 +895,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -936,7 +936,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -978,7 +978,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
@@ -1028,7 +1028,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
