@@ -42,10 +42,12 @@ jobs:
 
       - name: Create NPMRC
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
-          echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com" >> ~/.npmrc
-          echo "always-auth=true" >> ~/.npmrc
-          echo 'registry "https://registry.yarnpkg.com"' >> ~/.yarnrc
+          {
+            echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
+            echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com"
+            echo "always-auth=true"
+          } >> "$HOME/.npmrc"
+          echo 'registry "https://registry.yarnpkg.com"' >> "$HOME/.yarnrc"
 
       - name: Build package files for npm publish
         run: |
@@ -117,4 +119,4 @@ jobs:
 
       - name: Adding summary
         run: |
-          echo "Npm package created 🚀. Version: ${{ env.NPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "Npm package created 🚀. Version: ${{ env.NPM_VERSION }}" >> "$GITHUB_STEP_SUMMARY"
