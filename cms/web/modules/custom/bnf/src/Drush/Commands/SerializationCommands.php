@@ -65,10 +65,12 @@ class SerializationCommands extends DrushCommands {
     }
 
     $data = Yaml::parse($yaml);
-    $entity = $this->serializer->deserialize($data);
-    $entity->save();
+    $entities = $this->serializer->deserialize($data);
+    foreach ($entities as $id => $entity) {
+      $entity->save();
 
-    $this->logger()->success(sprintf('Successfully saved %s entity %s.', $entity->getEntityTypeId(), $entity->id()));
+      $this->logger()->success(sprintf('Successfully saved %s entity %s.', $entity->getEntityTypeId(), $entity->id()));
+    }
   }
 
 }

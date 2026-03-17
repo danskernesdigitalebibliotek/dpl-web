@@ -59,19 +59,31 @@ class ContentSerializer {
   /**
    * Deserializes a network array to an entity.
    */
-  public function deserialize(mixed $data): FieldableEntityInterface {
-    if (!isset($data['__type']) || !is_string($data['__type'])) {
-      throw new \RuntimeException('No entity type given');
+  public function deserialize(mixed $data): array {
+    // Dependees comes after dependents in the data, so work in reverse.
+    $data = array_reverse($data);
+
+    $entities = [];
+    foreach ($data as $id => $entityData) {
+      if ($id == '__content_map') {
+        continue;
+      }
+
+      if (!isset($entityData['__type']) || !is_string($entityData['__type'])) {
+        throw new \RuntimeException('No entity type given');
+      }
+
+      $type = $entityData['__type'];
+      $typeParts = explode(':', $type, 2);
+      $entityType = $typeParts[0];
+      $bundle = $typeParts[1] ?? $entityType;
+
+      unset($entityData['__type']);
+
+      $entities[$id] = $this->getConverterByTypeString($type)->denormalize($entityData);
     }
 
-    $typeParts = explode(':', $data['__type'], 2);
-    $entityType = $typeParts[0];
-    $bundle = $typeParts[1] ?? $entityType;
-
-    $payload = $data;
-    unset($payload['__type']);
-
-    return $this->getConverterByTypeString($data['__type'])->denormalize($payload);
+    return $entities;
   }
 
   /**
