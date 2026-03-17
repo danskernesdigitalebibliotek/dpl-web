@@ -30,9 +30,17 @@ class ContentSerializer {
         if (empty($definition['bundle']) || $definition['bundle'] === $entity->bundle()) {
           /** @var \Drupal\bnf\EntityConverterInterface $converter */
           $converter = $this->entityConverterManager->createInstance($definition['id']);
-          return [
-            $converter::class => $converter->normalize($entity),
-          ];
+
+          $data = $converter->normalize($entity);
+
+          if ($entity->getEntityTypeId() === $entity->bundle()) {
+            $data['__type'] = $entity->getEntityTypeId();
+          }
+          else {
+            $data['__type'] = $entity->getEntityTypeId() . ':' . $entity->bundle();
+          }
+
+          return $data;
         }
       }
     }
@@ -44,16 +52,34 @@ class ContentSerializer {
    * Deserializes a network array to an entity.
    */
   public function deserialize(mixed $data): FieldableEntityInterface {
-    $class = array_key_first($data);
-
-    if (!is_string($class)) {
+    if (!isset($data['__type']) || !is_string($data['__type'])) {
       throw new \RuntimeException('No entity type given');
     }
 
-    $payload = $data[$class];
+    $typeParts = explode(':', $data['__type'], 2);
+    $entityType = $typeParts[0];
+    $bundle = $typeParts[1] ?? $entityType;
+
+    $converters = $this->entityConverterManager->getDefinitions();
+    $converterId = NULL;
+    foreach ($converters as $definition) {
+      if ($definition['entity_type'] === $entityType) {
+        if (empty($definition['bundle']) || $definition['bundle'] === $bundle) {
+          $converterId = $definition['id'];
+          break;
+        }
+      }
+    }
+
+    if (!$converterId) {
+      throw new \RuntimeException(sprintf('No converter found for entity type "%s" and bundle "%s"', $entityType, $bundle));
+    }
+
+    $payload = $data;
+    unset($payload['__type']);
 
     /** @var \Drupal\bnf\EntityConverterInterface $converter */
-    $converter = $this->entityConverterManager->createInstance($class);
+    $converter = $this->entityConverterManager->createInstance($converterId);
     return $converter->denormalize($payload);
   }
 
