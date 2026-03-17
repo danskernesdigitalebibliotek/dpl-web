@@ -366,14 +366,13 @@ tasks:
     desc: Update the DPL design system package to a specific version or branch release.
     summary: |
       Environment variables:
-      - Required (one of):
-        BRANCH: The git branch to download the corresponding build for.
-        RELEASE: The release to download the corresponding build for
       - Optional:
+        BRANCH: The git branch to download the corresponding build for. Defaults to the current checked out git branch.
+        RELEASE: The release to download the corresponding build for.
         VERSION: The version to use for the package. Defaults to 0.0.0-dev
       Usage:
       - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-design-system
-      - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-design-system
+      - Update to a branch release (auto current branch if BRANCH is omitted): BRANCH=taxonomy_categories task dev:composer:update-design-system
     deps: ["deps:jq", "deps:gh"]
     cmds:
       - task: dev:composer:update-package
@@ -381,24 +380,22 @@ tasks:
           NAME: "danskernesdigitalebibliotek/dpl-design-system"
           VERSION:
             sh: "echo ${VERSION:-0.0.0-dev}"
-          DOWNLOAD_URL:
-            sh: gh release view ${RELEASE:-branch-$BRANCH} --json assets | jq -r '.assets[] | select(.name == "dist-design-system.zip") | .url'
+          DIST_FILENAME: "dist-design-system.zip"
     preconditions:
       - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
-        msg: Please provide a BRANCH or RELEASE environment variable with the name of the design system branch/release to use
+        msg: Please provide either BRANCH or RELEASE, not both
 
   dev:composer:update-react:
     desc: Update the DPL React package to a specific version or branch release.
     summary: |
       Environment variables:
-        - Required (one of):
-          BRANCH: The git branch to download the corresponding build for.
-          RELEASE: The release to download the corresponding build for
         - Optional:
+          BRANCH: The git branch to download the corresponding build for. Defaults to the current checked out git branch.
+          RELEASE: The release to download the corresponding build for.
           VERSION: The version to use for the package. Defaults to 0.0.0-dev
       Usage:
         - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-react
-        - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-react
+        - Update to a branch release (auto current branch if BRANCH is omitted): BRANCH=taxonomy_categories task dev:composer:update-react
     deps: ["deps:jq", "deps:gh"]
     cmds:
       - task: dev:composer:update-package
@@ -406,17 +403,38 @@ tasks:
           NAME: "danskernesdigitalebibliotek/dpl-react"
           VERSION:
             sh: "echo ${VERSION:-0.0.0-dev}"
-          DOWNLOAD_URL:
-            sh: gh release view ${RELEASE:-branch-$BRANCH} --json assets | jq -r '.assets[] | select(.name == "dist-react.zip") | .url'
+          DIST_FILENAME: "dist-react.zip"
     preconditions:
       - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
-        msg: Please provide a BRANCH or RELEASE environment variable with the name of the React components branch/release to use
+        msg: Please provide either BRANCH or RELEASE, not both
 
   dev:composer:update-package:
     deps: ["deps:jq", "deps:gh"]
     internal: true
+    silent: true
     cmds:
-      - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = "{{ .DOWNLOAD_URL }}"' composer.json > composer.temp.json && mv composer.temp.json composer.json
+      - cmd: |
+          release_name="$RELEASE"
+          if [ -z "$release_name" ]; then
+            effective_branch="${BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)}"
+            if [ -z "$effective_branch" ] || [ "$effective_branch" = "HEAD" ]; then
+              echo "Could not determine current git branch. Provide BRANCH or RELEASE explicitly." >&2
+              exit 1
+            fi
+            branch_slug="$(printf '%s' "branch-${effective_branch}" | tr '[:upper:]_' '[:lower:]-' | tr -cs '[:alnum:]-' '-')"
+            release_name="${branch_slug#-}"
+            release_name="${release_name%-}"
+          fi
+          if ! assets_json="$(gh release view "$release_name" --json assets 2>/dev/null)"; then
+            echo "Could not find GitHub release '$release_name'. If this is a development branch, make sure to push your branch first, and then try again." >&2
+            exit 1
+          fi
+          download_url="$(echo "$assets_json" | jq -r '.assets[] | select(.name == "{{ .DIST_FILENAME }}") | .url')"
+          if [ -z "$download_url" ] || [ "$download_url" = "null" ]; then
+            echo "Could not find asset '{{ .DIST_FILENAME }}' in release '$release_name'. It may still be building - try again in a few minutes." >&2
+            exit 1
+          fi
+          jq --indent {{ .JQ_INDENT }} -r --arg download_url "$download_url" '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = $download_url' composer.json > composer.temp.json && mv composer.temp.json composer.json
       - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name =="{{ .NAME }}").package.version) = ("{{ .VERSION }}")' composer.json > composer.temp.json && mv composer.temp.json composer.json
       - cmd: sleep 1
       - cmd: task dev:cli -- composer require {{ .NAME }}:{{ .VERSION }}
