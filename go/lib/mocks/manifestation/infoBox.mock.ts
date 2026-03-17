@@ -44,7 +44,7 @@ const manifestationMock = {
     main: [
       {
         display: "dansk",
-        isoCode: "dan",
+        iso639Set1: "da",
       },
     ],
   },
