@@ -59,6 +59,7 @@ abstract class EntityConverterBase extends PluginBase implements EntityConverter
     /** @var array{entity_type: string, bundle: string} $pluginDefinition */
     $pluginDefinition = $this->getPluginDefinition();
     $storage = $this->entityTypeManager->getStorage($pluginDefinition['entity_type']);
+    $bundleKey = $this->entityTypeManager->getDefinition($pluginDefinition['entity_type'])->getKey('bundle');
 
     $uuid = $this->fieldConverterManager->denormalize('string', $data['uuid']);
     $uuid = reset($uuid);
@@ -71,11 +72,17 @@ abstract class EntityConverterBase extends PluginBase implements EntityConverter
       $entity = reset($entities);
     }
     else {
-      /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
-      $entity = $storage->create([
-        'type' => $pluginDefinition['bundle'],
+      $values = [
         'uuid' => $uuid,
-      ]);
+      ];
+
+      if ($bundleKey) {
+        $values[$bundleKey] = $pluginDefinition['bundle'] ?
+          $pluginDefinition['bundle'] : $pluginDefinition['entity_type'];
+      }
+
+      /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
+      $entity = $storage->create($values);
     }
 
     foreach ($this->getFields() as $name => $type) {
