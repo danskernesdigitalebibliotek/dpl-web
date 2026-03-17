@@ -30,4 +30,15 @@ interface FieldConverterInterface {
    */
   public function denormalize(array $data): mixed;
 
+  /**
+   * Gets dependees for a field.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface<\Drupal\Core\Field\FieldItemInterface> $field_items
+   *   Field items to process.
+   *
+   * @return string[]
+   *   An array of dependees in the format "entity_type:uuid".
+   */
+  public function getDependees(FieldItemListInterface $field_items): array;
+
 }

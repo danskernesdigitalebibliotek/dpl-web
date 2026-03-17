@@ -53,4 +53,15 @@ interface EntityConverterInterface {
    */
   public function denormalize(array $data): FieldableEntityInterface;
 
+  /**
+   * Gets dependees for an entity.
+   *
+   * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+   *   The entity.
+   *
+   * @return string[]
+   *   An array of dependees in the format "entity_type:uuid".
+   */
+  public function getDependees(FieldableEntityInterface $entity): array;
+
 }

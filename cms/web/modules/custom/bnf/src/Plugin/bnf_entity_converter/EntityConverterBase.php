@@ -97,6 +97,26 @@ abstract class EntityConverterBase extends PluginBase implements EntityConverter
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getDependees(FieldableEntityInterface $entity): array {
+    $dependees = [];
+
+    foreach ($this->getFields() as $name => $type) {
+      $fieldData = $entity->get($name);
+
+      if ($fieldData instanceof FieldItemListInterface) {
+        $fieldDependees = $this->fieldConverterManager->getDependees($type, $fieldData);
+        foreach ($fieldDependees as $dependee) {
+          $dependees[] = $dependee;
+        }
+      }
+    }
+
+    return array_values(array_unique($dependees));
+  }
+
+  /**
    * Get fields, with required additions.
    *
    * @return array<string, string>

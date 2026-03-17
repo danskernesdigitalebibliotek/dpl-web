@@ -69,4 +69,18 @@ class EntityReferenceItem extends FieldConverterBase {
     return $field_values;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getDependees(FieldItemListInterface $field_items): array {
+    $dependees = [];
+    foreach ($field_items as $item) {
+      $entity = $item->get('entity')->getTarget()?->getEntity();
+      if ($entity) {
+        $dependees[] = $entity->getEntityTypeId() . ':' . $entity->uuid();
+      }
+    }
+    return $dependees;
+  }
+
 }

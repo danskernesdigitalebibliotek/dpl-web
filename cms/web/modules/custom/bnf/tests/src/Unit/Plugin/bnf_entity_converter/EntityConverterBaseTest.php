@@ -7,6 +7,7 @@ namespace Drupal\Tests\bnf\Unit\Plugin\bnf_entity_converter;
 use Drupal\bnf\FieldConverterManager;
 use Drupal\bnf\Plugin\bnf_entity_converter\EntityConverterBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\node\NodeInterface;
@@ -115,6 +116,9 @@ class EntityConverterBaseTest extends UnitTestCase {
 
     $nodeStorage = $this->prophesize(EntityStorageInterface::class);
     $this->entityTypeManager->getStorage('node')->willReturn($nodeStorage->reveal());
+    $entityDefinition = $this->prophesize(EntityTypeInterface::class);
+    $entityDefinition->getKey('bundle')->willReturn('type');
+    $this->entityTypeManager->getDefinition('node')->willReturn($entityDefinition);
 
     $nodeStorage->loadByProperties(['uuid' => '1234-5678-9012-3456'])->willReturn([]);
     $nodeMock = $this->prophesize(NodeInterface::class);

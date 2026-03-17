@@ -80,6 +80,22 @@ class FieldConverterManager extends DefaultPluginManager {
   }
 
   /**
+   * Gets field dependees.
+   *
+   * @param string $id
+   *   Type of field.
+   * @param \Drupal\Core\Field\FieldItemListInterface<\Drupal\Core\Field\FieldItemInterface> $itemList
+   *   Field items to process.
+   *
+   * @return string[]
+   *   An array of dependees.
+   */
+  public function getDependees(string $id, FieldItemListInterface $itemList): array {
+    $converter = $this->getConverter($id);
+    return $converter->getDependees($itemList);
+  }
+
+  /**
    * Get converter.
    *
    * Uses a static cache.
