@@ -15,10 +15,11 @@ CONTAINER_NAME=$1
 DOMAIN=$2
 DOCKER_COMPOSE_FILES=${DOCKER_COMPOSE_FILES:-}
 
+# shellcheck disable=SC2086 # Compose file flags must expand into separate args.
 CONTAINER_ID=$(docker compose $DOCKER_COMPOSE_FILES ps "$CONTAINER_NAME" --quiet --no-trunc)
 [[ -z "$CONTAINER_ID" ]] && exit
 
-IP_ADDRESS=$(docker inspect $DOCKER_COMPOSE_FILES "$CONTAINER_ID" --format '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}')
+IP_ADDRESS=$(docker inspect "$CONTAINER_ID" --format '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}')
 [[ -z "$IP_ADDRESS" ]] && exit
 
 # Check if the correct mapping already exists
