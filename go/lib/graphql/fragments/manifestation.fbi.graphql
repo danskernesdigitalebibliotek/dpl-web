@@ -75,7 +75,7 @@ fragment ManifestationLanguages on Manifestation {
   languages {
     main {
       display
-      isoCode
+      iso639Set1
     }
   }
 }
