@@ -179,12 +179,12 @@ export const getManifestationLanguageIsoCode = (
     .map(({ languages }) => languages)
     .flatMap((language) => language?.main);
 
-  const uniqueLanguagesWithIsoCode = uniqBy(mainLanguages, "isoCode");
+  const uniqueLanguagesWithIsoCode = uniqBy(mainLanguages, "iso639Set1");
 
   // We only want to set the lang attribute if there is only one isoCode
   const uniqIsoCode =
     uniqueLanguagesWithIsoCode.length === 1 &&
-    head(uniqueLanguagesWithIsoCode)?.isoCode;
+    head(uniqueLanguagesWithIsoCode)?.iso639Set1;
 
   if (uniqIsoCode) {
     return uniqIsoCode;
@@ -206,8 +206,8 @@ export const getManifestationOriginalTitle = (manifestation: Manifestation) => {
 };
 
 export const materialContainsDanish = (work: Work) => {
-  return work.mainLanguages?.some(({ isoCode }) =>
-    isoCode?.toLowerCase().includes("dan")
+  return work.mainLanguages?.some(
+    ({ iso639Set1 }) => iso639Set1?.toLowerCase() === "da"
   );
 };
 
@@ -729,7 +729,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "engelsk",
-            isoCode: "eng"
+            iso639Set1: "en"
           }
         ],
         materialTypes: [
@@ -774,7 +774,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "engelsk",
-            isoCode: "eng"
+            iso639Set1: "en"
           }
         ],
         materialTypes: [
@@ -799,7 +799,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "dansk",
-            isoCode: "dan"
+            iso639Set1: "da"
           }
         ],
         materialTypes: [
@@ -825,7 +825,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "dansk",
-            isoCode: "dan"
+            iso639Set1: "da"
           }
         ]
       } as unknown as Work;
@@ -844,11 +844,11 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "English",
-            isoCode: "eng"
+            iso639Set1: "en"
           },
           {
             display: "German",
-            isoCode: "ger"
+            iso639Set1: "de"
           }
         ]
       } as unknown as Work;

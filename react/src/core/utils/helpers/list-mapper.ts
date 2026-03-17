@@ -147,7 +147,7 @@ export const mapManifestationToBasicDetailsType = (
     series,
     languages
   } = material;
-  const isoCode = languages?.main?.[0]?.isoCode ?? "";
+  const isoCode = languages?.main?.[0]?.iso639Set1 ?? "";
   const description = abstract ? abstract[0] : "";
   const {
     full: [fullText]
