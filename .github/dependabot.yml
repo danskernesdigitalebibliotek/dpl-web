@@ -93,9 +93,9 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      # @typescript-eslint 8.57.0 pulls packages that require a newer Node in CMS CI.
+      # @typescript-eslint 8.56.0+ pulls eslint-visitor-keys 5.0.1, which breaks the current CMS CI flow.
       - dependency-name: "@typescript-eslint/*"
-        versions: [">=8.57.0"]
+        versions: [">=8.56.0"]
       # Tests fail when running Cypress 15 using task cy:cypress:local.
       - dependency-name: "cypress"
         versions: [ ">=15" ]
