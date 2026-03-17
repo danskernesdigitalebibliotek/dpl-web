@@ -15,7 +15,22 @@ label: Address
 description: 'Use this value to specific a different address than the event branch.'
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    langcode: en
+    country_code: DK
+    administrative_area: null
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: null
+    address_line3: ''
+    organization: null
+    given_name: null
+    additional_name: null
+    family_name: null
 default_value_callback: ''
 settings:
   available_countries:
@@ -33,12 +48,20 @@ settings:
       override: hidden
     organization:
       override: hidden
+    addressLine1:
+      override: optional
     addressLine2:
       override: hidden
+    addressLine3:
+      override: optional
+    postalCode:
+      override: optional
     sortingCode:
       override: hidden
     dependentLocality:
       override: hidden
+    locality:
+      override: optional
     administrativeArea:
       override: hidden
   fields: {  }
