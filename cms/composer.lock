@@ -3313,16 +3313,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "10.5.6",
+            "version": "10.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "b685b04acbae19cb4fda0a63822ff21e1f743f44"
+                "reference": "cbb75682c431418e35d14bd40be939fb433b2def"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/b685b04acbae19cb4fda0a63822ff21e1f743f44",
-                "reference": "b685b04acbae19cb4fda0a63822ff21e1f743f44",
+                "url": "https://api.github.com/repos/drupal/core/zipball/cbb75682c431418e35d14bd40be939fb433b2def",
+                "reference": "cbb75682c431418e35d14bd40be939fb433b2def",
                 "shasum": ""
             },
             "require": {
@@ -3472,9 +3472,9 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/10.5.6"
+                "source": "https://github.com/drupal/core/tree/10.5.8"
             },
-            "time": "2025-11-12T21:53:53+00:00"
+            "time": "2025-12-09T19:27:53+00:00"
         },
         {
             "name": "drupal/core-composer-scaffold",
@@ -3528,16 +3528,16 @@
         },
         {
             "name": "drupal/core-recommended",
-            "version": "10.5.6",
+            "version": "10.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-recommended.git",
-                "reference": "896d1384f1827532e4ea995003e17c94adfa446f"
+                "reference": "aa636a2d612926cc3f15879fb9abddf1b5aa4b15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/896d1384f1827532e4ea995003e17c94adfa446f",
-                "reference": "896d1384f1827532e4ea995003e17c94adfa446f",
+                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/aa636a2d612926cc3f15879fb9abddf1b5aa4b15",
+                "reference": "aa636a2d612926cc3f15879fb9abddf1b5aa4b15",
                 "shasum": ""
             },
             "require": {
@@ -3546,7 +3546,7 @@
                 "doctrine/annotations": "~1.14.4",
                 "doctrine/deprecations": "~1.1.5",
                 "doctrine/lexer": "~2.1.1",
-                "drupal/core": "10.5.6",
+                "drupal/core": "10.5.8",
                 "egulias/email-validator": "~4.0.4",
                 "guzzlehttp/guzzle": "~7.9.3",
                 "guzzlehttp/promises": "~2.2.0",
@@ -3607,9 +3607,9 @@
             ],
             "description": "Core and its dependencies with known-compatible minor versions. Require this project INSTEAD OF drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-recommended/tree/10.5.6"
+                "source": "https://github.com/drupal/core-recommended/tree/10.5.8"
             },
-            "time": "2025-11-12T21:53:53+00:00"
+            "time": "2025-12-09T19:27:53+00:00"
         },
         {
             "name": "drupal/crop",
@@ -11105,16 +11105,16 @@
         },
         {
             "name": "mck89/peast",
-            "version": "v1.17.4",
+            "version": "v1.17.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "c6a63f32410d2e4ee2cd20fe94b35af147fb852d"
+                "reference": "e19a8bd896b7f04941a38fd38a140c9a6531c84f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/c6a63f32410d2e4ee2cd20fe94b35af147fb852d",
-                "reference": "c6a63f32410d2e4ee2cd20fe94b35af147fb852d",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/e19a8bd896b7f04941a38fd38a140c9a6531c84f",
+                "reference": "e19a8bd896b7f04941a38fd38a140c9a6531c84f",
                 "shasum": ""
             },
             "require": {
@@ -11127,7 +11127,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17.4-dev"
+                    "dev-master": "1.17.5-dev"
                 }
             },
             "autoload": {
@@ -11148,9 +11148,9 @@
             "description": "Peast is PHP library that generates AST for JavaScript code",
             "support": {
                 "issues": "https://github.com/mck89/peast/issues",
-                "source": "https://github.com/mck89/peast/tree/v1.17.4"
+                "source": "https://github.com/mck89/peast/tree/v1.17.5"
             },
-            "time": "2025-10-10T12:53:17+00:00"
+            "time": "2026-03-15T10:47:07+00:00"
         },
         {
             "name": "mglaman/phpstan-drupal",
@@ -11868,7 +11868,6 @@
                 "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Console_Getopt",
                 "source": "https://github.com/pear/Console_Getopt"
             },
-            "abandoned": true,
             "time": "2019-11-20T18:27:48+00:00"
         },
         {
