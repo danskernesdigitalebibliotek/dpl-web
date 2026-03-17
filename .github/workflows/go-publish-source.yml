@@ -51,8 +51,7 @@ jobs:
       - name: Run CI checks
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         run: |
-          yarn ci-check
-          if [ $? -ne 0 ]; then
+          if ! yarn ci-check; then
             echo "Code quality checks failed"
             exit 1
           fi
@@ -108,4 +107,4 @@ jobs:
 
       - name: Adding summary
         run: |
-          echo "Source image was successfully build (version: ${{ github.ref }}) 🚀😎" >> $GITHUB_STEP_SUMMARY
+          echo "Source image was successfully build (version: ${{ github.ref }}) 🚀😎" >> "$GITHUB_STEP_SUMMARY"
