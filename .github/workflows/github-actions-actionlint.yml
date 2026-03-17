@@ -21,5 +21,14 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v6
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install actionlint problem matcher
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/actionlint-matcher.json" \
+            https://raw.githubusercontent.com/rhysd/actionlint/main/.github/actionlint-matcher.json
+          echo "::add-matcher::$RUNNER_TEMP/actionlint-matcher.json"
       - name: Run actionlint
-        uses: raven-actions/actionlint@v2
+        run: task ci:actionlint
