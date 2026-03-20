@@ -5735,7 +5735,7 @@ msgstr "Accordion"
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
 msgid "Campaign Rule"
-msgstr "Kampagneregel"
+msgstr "Søgeregel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:description"
@@ -30721,7 +30721,7 @@ msgstr ""
 
 #: 
 msgid "@site_title: frontpage"
-msgstr ""
+msgstr "@site_title: forside"
 
 #: 
 msgctxt "image.style.event_api_scaled:label"
@@ -30730,5 +30730,15 @@ msgstr ""
 
 #: 
 msgid "OpenID Connect client plugins updated: @plugins"
+msgstr ""
+
+#: 
+msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_place:settings:placeholder"
+msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
+msgstr ""
+
+#: 
+msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_place:settings:placeholder"
+msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
 msgstr ""
 
