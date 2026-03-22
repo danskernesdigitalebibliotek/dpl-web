@@ -30,7 +30,7 @@
               "main": [
                 {
                   "display": "engelsk",
-                  "isoCode": "eng"
+                  "iso639Set1": "en"
                 }
               ],
               "notes": []
@@ -115,7 +115,7 @@
             "main": [
               {
                 "display": "engelsk",
-                "isoCode": "eng"
+                "iso639Set1": "en"
               }
             ],
             "notes": []
@@ -199,7 +199,7 @@
             "main": [
               {
                 "display": "engelsk",
-                "isoCode": "eng"
+                "iso639Set1": "en"
               }
             ],
             "notes": []
@@ -289,7 +289,7 @@
       "mainLanguages": [
         {
           "display": "engelsk",
-          "isoCode": "eng"
+          "iso639Set1": "en"
         }
       ],
       "subjects": {

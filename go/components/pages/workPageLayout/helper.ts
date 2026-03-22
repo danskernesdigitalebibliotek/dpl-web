@@ -209,11 +209,11 @@ export const isManifestationPodcast = (
 export const getManifestationLanguageIsoCode = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return undefined
 
-  const uniqueLanguagesWithIsoCode = uniqBy(manifestation.languages?.main, "isoCode")
+  const uniqueLanguagesWithIsoCode = uniqBy(manifestation.languages?.main, "iso639Set1")
 
   // We only want to set the lang attribute if there is only one isoCode
   const uniqIsoCode =
-    uniqueLanguagesWithIsoCode.length === 1 && head(uniqueLanguagesWithIsoCode)?.isoCode
+    uniqueLanguagesWithIsoCode.length === 1 && head(uniqueLanguagesWithIsoCode)?.iso639Set1
 
   if (uniqIsoCode) {
     return uniqIsoCode
