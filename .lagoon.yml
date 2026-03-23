@@ -58,6 +58,7 @@ tasks:
               echo "Downloading latest database snapshot from ${SNAPSHOT_URL}"
               curl --fail --location --silent --show-error "${SNAPSHOT_URL}" --output "${SNAPSHOT_FILE}"
               drush sql:query --file="${SNAPSHOT_FILE}"
+              drush php:eval "\Drupal::moduleHandler()->loadInclude('locale', 'install'); locale_install()"
 
               if [[ -n $PR_DRUPAL_PWD ]]; then
                 drush user:password admin "$PR_DRUPAL_PWD"
