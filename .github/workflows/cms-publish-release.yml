@@ -67,7 +67,7 @@ jobs:
     name: CMS / Publish database snapshot
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     needs: [design_create_release, react_create_release]
 
