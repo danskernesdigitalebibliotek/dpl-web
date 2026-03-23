@@ -46,7 +46,7 @@ tasks:
       - task -d design-system dev:start
 
   go:reset:
-    desc: "Start Go dev environment (runs go/Taskfile.yml dev:reset)"
+    desc: "Reset Go dev environment (runs go/Taskfile.yml dev:reset)"
     cmds:
       - task -d go dev:reset
 
@@ -64,24 +64,33 @@ tasks:
   init:design-system:
     desc: "yarn install in design-system/"
     dir: ./design-system
-    status:
-      - test -d node_modules
+    sources:
+      - package.json
+      - yarn.lock
+    generates:
+      - node_modules/.yarn-integrity
     cmds:
       - yarn install
 
   init:react:
     desc: "yarn install in react/"
     dir: ./react
-    status:
-      - test -d node_modules
+    sources:
+      - package.json
+      - yarn.lock
+    generates:
+      - node_modules/.yarn-integrity
     cmds:
       - yarn install
 
   init:go:
     desc: "yarn install in go/"
     dir: ./go
-    status:
-      - test -d node_modules
+    sources:
+      - package.json
+      - yarn.lock
+    generates:
+      - node_modules/.yarn-integrity
     cmds:
       - yarn install
 
@@ -116,13 +125,15 @@ tasks:
     generates:
       - 'build/**/*.*'
     cmds:
+      # yarn build compiles SCSS into src/styles/css/.
+      # We then assemble a clean build/ directory with the assets CMS needs.
       - yarn build
       - rm -rf ./build
       - mkdir -p ./build/js
       - cp -r ./public/icons ./build/icons
       - cp -r ./src/styles/css ./build/css
       - cp -r ./src/styles/fonts ./build/fonts
-      - find ./src -name "*.js" -exec cp {} ./build/js \;
+      - find ./src -name "*.js" | while read -r f; do cp "$f" ./build/js/"$(basename "$f")"; done
 
   dev:design-system:link:
     desc: "Register design-system as a yarn link source"

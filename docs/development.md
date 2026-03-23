@@ -24,7 +24,7 @@ task dev:cms-react --watch
 
 ### What `dev:cms-react` does
 
-1. `yarn install` in design-system and react (skipped if already installed)
+1. `yarn install` in design-system and react (skipped if `package.json`/`yarn.lock` unchanged)
 2. Builds design-system (SCSS → CSS, bundles icons/fonts/JS into `build/`)
 3. Links design-system into React via `yarn link`
 4. Builds React (webpack → `dist/`)
@@ -46,7 +46,7 @@ react/dist/*                              →  cms/web/libraries/dpl-react/
 | `task cms:reset`           | Reset CMS Docker environment                             |
 | `task react:start`         | Start React dev server (Storybook)                       |
 | `task design-system:start` | Start design-system Storybook                            |
-| `task go:reset`            | Start Go dev environment                                 |
+| `task go:reset`            | Reset Go dev environment                                 |
 
 Each sub-project also works standalone: `cd cms && task dev:reset`, etc.
 
