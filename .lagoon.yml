@@ -39,17 +39,29 @@ tasks:
           ./dev-scripts/lagoon-set-gh-deploy-status.sh "in_progress"
         service: cli
     - run:
-        name: If drupal is not installed
+        name: Ensure Drupal is installed
         command: |
           source dev-scripts/lagoon-error-handling.sh
 
           if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
-            # Install and set the admin password to a Lagoon variable if it exists.
-            if [[ -n $PR_DRUPAL_PWD ]]; then
-              drush si --existing-config -y --account-pass=$PR_DRUPAL_PWD
+            if [[ "$LAGOON_PROJECT" == "dpl-web-bnf" ]]; then
+              # BNF still relies on a clean install until a dedicated snapshot exists.
+              if [[ -n $PR_DRUPAL_PWD ]]; then
+                drush si --existing-config -y --account-pass=$PR_DRUPAL_PWD
+              else
+                drush si --existing-config -y
+              fi
             else
-            # Otherwise install and let drush generate a password.
-              drush si --existing-config -y
+              SNAPSHOT_URL="https://github.com/danskernesdigitalebibliotek/dpl-web/releases/latest/download/dpl-cms-database-snapshot.sql.gz"
+              SNAPSHOT_FILE="/tmp/dpl-cms-database-snapshot.sql.gz"
+
+              echo "Downloading latest database snapshot from ${SNAPSHOT_URL}"
+              curl --fail --location --silent --show-error "${SNAPSHOT_URL}" --output "${SNAPSHOT_FILE}"
+              drush sql:query --file="${SNAPSHOT_FILE}"
+
+              if [[ -n $PR_DRUPAL_PWD ]]; then
+                drush user:password admin "$PR_DRUPAL_PWD"
+              fi
             fi
           fi
         service: cli

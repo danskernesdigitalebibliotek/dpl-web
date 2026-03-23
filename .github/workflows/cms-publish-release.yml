@@ -1,0 +1,173 @@
+---
+name: CMS / Publish release
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  design_create_release:
+    name: CMS / Prepare design-release
+    uses: ./.github/workflows/design-system-release-tag-workflow.yml
+
+  react_create_release:
+    name: CMS / Prepare react-release
+    needs: [design_create_release]
+    uses: ./.github/workflows/react-release-tag-workflow.yml
+
+  publish_source:
+    name: CMS / Publish source
+    runs-on: ubuntu-latest
+    permissions: write-all
+    # We need to wait for design/react releases to finish building, so we can
+    # composer require them as part of building the CMS package.
+    needs: [design_create_release, react_create_release]
+
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # Extract version from tag.
+      - name: Get version
+        id: get_version
+        run: |
+          echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Create .version file
+        run: |
+          echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
+
+      # Install go-task, as we will use Taskfile.yml
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Setup composer.json to target our built design-system-dist.zip and
+      # react-dist.zip files, and build + publish the source.
+      - name: Build and publish source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
+          echo "Publishing tag: $RELEASE_TAG"
+          task dev:composer:update-design-system
+          task dev:composer:update-react
+          task source:deploy
+
+  publish_db_snapshot:
+    name: CMS / Publish database snapshot
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [design_create_release, react_create_release]
+
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Get version
+        id: get_version
+        run: |
+          echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install site
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
+          echo "Publishing database snapshot for tag: $RELEASE_TAG"
+          task dev:start
+          task dev:composer:update-design-system
+          task dev:composer:update-react
+          task dev:cli -- composer install
+          task dev:cli -- ./dev-scripts/install-site.sh --install-only
+
+      - name: Generate and publish database snapshot image
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
+          task database-snapshot:deploy
+
+      - name: Upload database snapshot artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+        run: |
+          SNAPSHOT_SQL_ASSET="dpl-cms-database-snapshot.sql.gz"
+
+          if ! gh release view "$RELEASE_TAG" --repo "${GITHUB_REPOSITORY}" >/dev/null; then
+            echo "No release found for tag $RELEASE_TAG, skipping SQL asset upload"
+            exit 0
+          fi
+
+          gzip -c .build/dpl-cms-default.sql > .build/${SNAPSHOT_SQL_ASSET}
+          gh release upload "$RELEASE_TAG" ".build/${SNAPSHOT_SQL_ASSET}" --repo "${GITHUB_REPOSITORY}" --clobber
+
+  update_release_notes:
+    name: CMS / Update release notes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: [publish_source, publish_db_snapshot]
+    steps:
+      - name: Update GitHub release with package links
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          SOURCE_IMAGE_NAME: dpl-cms-source
+          SOURCE_PKG_URL: https://github.com/${{ github.repository }}/pkgs/container/dpl-cms-source
+          SNAPSHOT_IMAGE_NAME: dpl-cms-database-snapshot
+          SNAPSHOT_PKG_URL: https://github.com/${{ github.repository }}/pkgs/container/dpl-cms-database-snapshot
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" >/dev/null; then
+            echo "No release found for tag $TAG, skipping release update"
+            exit 0
+          fi
+
+          BODY=$(gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" --json body -q .body || echo "")
+          BODY=$(printf '%s\n' "$BODY" | sed '/^- \*\*CMS source:\*\* /d' | sed '/^- \*\*CMS database snapshot:\*\* /d')
+
+          LINKS=$(cat <<EOF
+          - **CMS source:** [\`$SOURCE_IMAGE_NAME:$TAG\`]($SOURCE_PKG_URL?tag=$TAG)
+          - **CMS database snapshot:** [\`$SNAPSHOT_IMAGE_NAME:$TAG\`]($SNAPSHOT_PKG_URL?tag=$TAG)
+          EOF
+          )
+
+          if echo "$BODY" | grep -q "## Container images"; then
+            NEW_BODY=$(printf '%s\n%s\n' "$BODY" "$LINKS")
+          else
+            NEW_BODY=$(printf '%s\n\n## Container images\n\n%s\n' "$BODY" "$LINKS")
+          fi
+
+          printf '%s\n' "$NEW_BODY" | gh release edit "$TAG" --repo "${GITHUB_REPOSITORY}" --notes-file -

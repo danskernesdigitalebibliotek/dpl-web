@@ -46,6 +46,20 @@ $ mkdir -p ~/.local/share && ln -s "$(mkcert -CAROOT)" ~/.local/share
 
 ## Howtos
 
+### Bootstrap the local site
+
+`task dev:reset` now starts the local environment with the latest published CMS
+database snapshot image. That snapshot is taken immediately after
+`drush site-install`, before the local post-install configuration is applied.
+
+`task dev:reset` applies the post-install configuration after startup, so the
+flow stays close to the previous local reset task. If you need to rerun the
+post-install steps manually, use `task dev:cli -- ./dev-scripts/install-site.sh
+--post-install-only`.
+
+Use `task dev:reset:clean` when you need a full local reinstall, or when
+working in BNF mode.
+
 ### Enable XDebug
 
 Prerequisites:
@@ -96,7 +110,7 @@ database, not any files from the site.
    database-dump.
 2. Place the dump in the [restore/database](../restore/database) directory, be aware
    that the directory is only allowed to contain a single `.sql` file.
-3. Start a local environment using `task dev:reset`
+3. Start a local environment using `task dev:reset:clean`
 4. Import the database by running `task dev:restore:database`
 
 #### Copy a specific snapshot of files from Lagoon environment to local setup
@@ -127,7 +141,7 @@ Replace files locally:
 
 1. Place the files dump in the [files-backup](../files-backup) directory, be aware
    that the directory is only allowed to contain a single `.tar.gz` file.
-2. Start a local environment using `task dev:reset`
+2. Start a local environment using `task dev:reset:clean`
 3. Restore the filesš by running `task dev:restore:files`
 
 ### Get a specific release of dpl-react - without using composer install

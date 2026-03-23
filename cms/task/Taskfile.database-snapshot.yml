@@ -1,0 +1,40 @@
+# This is a go-task file solely for database snapshot handling.
+# It is meant to be used in combination with the go-task file in the root of
+# the project.
+version: "3"
+
+tasks:
+  export:
+    desc: Export the current site-installed Drupal database for the snapshot image build.
+    cmds:
+      - mkdir -p .build
+      - rm -f .build/dpl-cms-default.sql
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} exec -T mariadb sh -c 'mariadb-dump -u"${MARIADB_USER:-drupal}" -p"${MARIADB_PASSWORD:-drupal}" "${MARIADB_DATABASE:-drupal}"' > .build/dpl-cms-default.sql
+
+  build:
+    desc: Build the database snapshot image.
+    cmds:
+      - docker build -f {{ .LAGOON_DIR }}/database-snapshot.dockerfile --tag {{ .DB_SNAPSHOT_FULL_NAME }} --tag {{ .DB_SNAPSHOT_LATEST_NAME }} .
+
+  push:
+    desc: Push the database snapshot image to container registry.
+    deps: [ghcr:login]
+    cmds:
+      - docker push {{ .DB_SNAPSHOT_FULL_NAME }}
+      - docker push {{ .DB_SNAPSHOT_LATEST_NAME }}
+
+  deploy:
+    desc: Export, build, and push the database snapshot image.
+    cmds:
+      - task: export
+      - task: build
+      - task: push
+
+  ghcr:login:
+    desc: Login into Github Container Registry
+    internal: true
+    cmds:
+      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY_HOST }} -u "${GITHUB_ACTOR:-github-actions[bot]}" --password-stdin
+    preconditions:
+      - sh: "[ ! -z {{.CR_PAT}} ]"
+        msg: "Env variable CR_PAT is not set or empty."

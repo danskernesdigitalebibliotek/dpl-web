@@ -10,6 +10,7 @@ interval: 500ms
 includes:
   translations: ./task/Taskfile.translations.yml
   lagoon: ./task/Taskfile.lagoon.yml
+  database-snapshot: ./task/Taskfile.database-snapshot.yml
 
 vars:
   # Docker image registry.
@@ -31,6 +32,9 @@ vars:
   # Constructing docker image name.
   RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
   RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
+  DB_SNAPSHOT_IMAGE_NAME: '{{.DB_SNAPSHOT_IMAGE_NAME | default "dpl-cms-database-snapshot"}}'
+  DB_SNAPSHOT_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.DB_SNAPSHOT_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
+  DB_SNAPSHOT_LATEST_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.DB_SNAPSHOT_IMAGE_NAME}}:latest-default"
 
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
@@ -171,6 +175,17 @@ tasks:
 
   dev:reset:
     desc: Create local development setup in a clean state
+    cmds:
+      - task: dev:reset:clean
+        vars:
+          MARIADB_IMAGE: "{{ .DB_SNAPSHOT_LATEST_NAME }}"
+          SKIP_SITE_INSTALL: "true"
+    preconditions:
+      - sh: '[[ -z "{{ .DOCKER_COMPOSE_FILES_BNF }}" ]]'
+        msg: "Snapshot-based reset currently supports the default CMS only. Use 'task dev:reset:clean' for BNF environments."
+
+  dev:reset:clean:
+    desc: Create local development setup in a clean state
     deps:
       # Build new containers if necessary.
       - dev:build
@@ -180,9 +195,9 @@ tasks:
       # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
       # Pull the images (necessary for the first reset)
-      - task dev:pull
+      - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:pull'
       # Start local environment.
-      - task dev:start
+      - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:start'
       # Build site.
       - task dev:cli -- composer install
       # Always reinstall packages tracking develop builds. The content of such
@@ -193,14 +208,14 @@ tasks:
       - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
       - task dev:cli -- composer -d dev-scripts/dpl-react install
-      # Install site.
-      - task dev:cli -- ./dev-scripts/install-site.sh {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      - '{{ if ne .SKIP_SITE_INSTALL "true" }}task dev:cli -- ./dev-scripts/install-site.sh --install-only{{ end }}'
+      - task dev:cli -- ./dev-scripts/install-site.sh --post-install-only {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       # Possibly install the BNF site.
-      - task dev:bnfcli -- ./dev-scripts/install-site.sh --bnf-content {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      - task dev:bnfcli -- ./dev-scripts/install-site.sh --bnf-content --install-only
+      - task dev:bnfcli -- ./dev-scripts/install-site.sh --bnf-content --post-install-only {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       - task dev:bnfcli -- drush --yes config:set system.site name BNF
       # Show a one-time login to the local site(s).
       - task dev:cli -- drush user-login
-
       - task dev:bnfcli -- drush user-login
 
   dev:openid:configure:
@@ -458,9 +473,17 @@ tasks:
       - cmd: task dev:cli -- drush dpl_consumers:consumer-credentials
 
   ci:reset:
-    desc: Create CI setup in a clean state
+    desc: Create CI setup
     cmds:
       - task dev:reset
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      SKIP_LANGUAGE_IMPORT: "true"
+
+  ci:reset:clean:
+    desc: Create CI setup with a clean database
+    cmds:
+      - task dev:reset:clean
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       SKIP_LANGUAGE_IMPORT: "true"
