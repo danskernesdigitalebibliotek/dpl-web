@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
 
-      # Install go-test, as we will use Taskfile.yml
+      # Install go-task, as we will use Taskfile.yml
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
