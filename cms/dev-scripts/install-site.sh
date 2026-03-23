@@ -43,6 +43,10 @@ if ! site_is_installed; then
   exit 1
 fi
 
+# Ensure translation path is available.
+# This is prepared in locale_install() so rerun it.
+drush php:eval "\Drupal::moduleHandler()->loadInclude('locale', 'install'); locale_install()"
+
 # Import translations.
 if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then
   echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
