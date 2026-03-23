@@ -15,6 +15,16 @@ const FacebookIcon = () => {
           fill="currentColor"
         />
       </g>
+      <defs>
+        <clipPath id="clip0">
+          <rect
+            width="16.5"
+            height="16.5"
+            fill="white"
+            transform="translate(3.75 3.75)"
+          />
+        </clipPath>
+      </defs>
     </svg>
   );
 };
