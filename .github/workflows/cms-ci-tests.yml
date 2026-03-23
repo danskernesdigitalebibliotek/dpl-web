@@ -42,58 +42,31 @@ jobs:
           composer -d dev-scripts/dpl-react install --no-interaction --no-progress
       - name: Ensure Composer setup does not modify VCS
         run: git diff --exit-code
-      - name: Package Composer dependencies
-        run: |
-          mapfile -t composer_targets < <(
-            jq -r '
-              [
-                (.extra["installer-paths"] | keys[] | sub("/\\{\\$name\\}$"; "")),
-                (
-                  .extra["drupal-scaffold"]["file-mapping"]
-                  | to_entries[]
-                  | select(.value != false)
-                  | .key
-                  | gsub("^\\[web-root\\]/"; "web/")
-                  | gsub("^\\[project-root\\]/"; "")
-                )
-              ] | .[]
-            ' composer.json
-          )
-
-          manual_targets=(
-            vendor
-            dev-scripts/dpl-react/vendor
-            web/modules/local
-          )
-
-          mapfile -t archive_targets < <(
-            printf '%s\n' "${composer_targets[@]}" "${manual_targets[@]}" \
-              | awk '!seen[$0]++'
-          )
-
-          existing_targets=()
-          for target in "${archive_targets[@]}"; do
-            if [ -e "$target" ]; then
-              existing_targets+=("$target")
-            fi
-          done
-
-          tar -czf cms-composer-dependencies.tar.gz "${existing_targets[@]}"
-      - name: Upload Composer dependencies
+      - name: Package Composer project
+        run: tar -czf "${{ runner.temp }}/cms-composer-project.tar.gz" .
+      - name: Upload Composer project
         uses: actions/upload-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms/cms-composer-dependencies.tar.gz
+          name: cms-composer-project
+          path: ${{ runner.temp }}/cms-composer-project.tar.gz
           retention-days: 1
 
-  PrepareNodeDependencies:
-    name: CMS / Prepare Node dependencies
+  PrepareNodeComposerDependencies:
+    name: CMS / Prepare Node Composer dependencies
+    needs: [PrepareComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: cms
     steps:
       - uses: actions/checkout@v6
+      - name: Download prepared Composer project
+        uses: actions/download-artifact@v7
+        with:
+          name: cms-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-composer-project.tar.gz" -C .
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - name: Setup Node
@@ -103,13 +76,13 @@ jobs:
           cache-dependency-path: 'cms/yarn.lock'
       - name: Install Node dependencies
         run: yarn install --frozen-lockfile
-      - name: Package Node dependencies
-        run: tar -czf cms-node-dependencies.tar.gz node_modules
-      - name: Upload Node dependencies
+      - name: Package Node Composer project
+        run: tar -czf "${{ runner.temp }}/cms-node-composer-project.tar.gz" .
+      - name: Upload Node Composer project
         uses: actions/upload-artifact@v7
         with:
-          name: cms-node-dependencies
-          path: cms/cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}/cms-node-composer-project.tar.gz
           retention-days: 1
 
   ValidateComposer:
@@ -146,13 +119,13 @@ jobs:
         tools: composer:${{ env.COMPOSER_VERSION }}, cs2pr
         coverage: none
         extensions: gd
-    - name: Download prepared Composer dependencies
+    - name: Download prepared Composer project
       uses: actions/download-artifact@v7
       with:
-        name: cms-composer-dependencies
-        path: cms
-    - name: Extract prepared Composer dependencies
-      run: tar -xzf cms-composer-dependencies.tar.gz
+        name: cms-composer-project
+        path: ${{ runner.temp }}
+    - name: Extract prepared Composer project
+      run: tar -xzf "${{ runner.temp }}/cms-composer-project.tar.gz" -C .
     - name: Run Twig CS Fixer
       run: |
         vendor/bin/phpcs -q --report=checkstyle | cs2pr
@@ -173,13 +146,13 @@ jobs:
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: none
           extensions: gd
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
+          name: cms-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-composer-project.tar.gz" -C .
       - name: Run Twig CS Fixer
         run: |
           vendor/bin/twig-cs-fixer lint --report=github
@@ -199,13 +172,13 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
           tools: composer:${{ env.COMPOSER_VERSION }}
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
+          name: cms-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-composer-project.tar.gz" -C .
       - name: Add vendor/bin to PATH
         run: composer config bin-dir --absolute >> "${GITHUB_PATH}"
       - name: PHPStan analyse
@@ -228,19 +201,19 @@ jobs:
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: xdebug
           extensions: gd
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
+          name: cms-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-composer-project.tar.gz" -C .
       - name: Run PhpUnit
         run: ./vendor/bin/phpunit --coverage-text
 
   LightHouse:
     name: CMS / Test site performance using Lighthouse
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -251,20 +224,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -281,7 +247,7 @@ jobs:
 
   Pa11y:
     name: CMS / Test accessibility using Pa11y
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -292,20 +258,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -323,7 +282,7 @@ jobs:
 
   CypressMapped:
     name: CMS / Run Cypress mapped functional tests
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -334,20 +293,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -371,7 +323,7 @@ jobs:
 
   CypressUnmapped:
     name: CMS / Run Cypress unmapped functional tests
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -382,20 +334,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -419,7 +364,7 @@ jobs:
 
   CypressWebmaster:
     name: CMS / Run Cypress webmaster functional tests
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -430,20 +375,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -467,7 +405,7 @@ jobs:
 
   MarkdownLint:
     name: CMS / Lint Markdown
-    needs: [PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -479,13 +417,13 @@ jobs:
         with:
           cache: 'yarn'
           cache-dependency-path: 'cms/yarn.lock'
-      - name: Download prepared Node dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
@@ -517,7 +455,7 @@ jobs:
 
   EslintDrupal:
     name: CMS / Lint Drupal assets
-    needs: [PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -529,19 +467,19 @@ jobs:
         with:
           cache: 'yarn'
           cache-dependency-path: 'cms/yarn.lock'
-      - name: Download prepared Node dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Run ESLint
         run: npx eslint web -c .eslintrc.json
 
   EslintCypress:
     name: CMS / Lint Cypress tests
-    needs: [PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -553,19 +491,19 @@ jobs:
         with:
           cache: 'yarn'
           cache-dependency-path: 'cms/yarn.lock'
-      - name: Download prepared Node dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Run ESLint
         run: npx eslint cypress -c cypress/.eslintrc.json
 
   CheckOpenApiSpec:
     name: CMS / Check OpenAPI specification
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -576,20 +514,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -609,7 +540,7 @@ jobs:
 
   CheckGraphQlSchema:
     name: CMS / Check GraphQL specification
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -620,20 +551,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -649,7 +573,7 @@ jobs:
 
   CheckDrupalConfig:
     name: CMS / Check Drupal Config
-    needs: [PrepareComposerDependencies, PrepareNodeDependencies]
+    needs: [PrepareNodeComposerDependencies]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -660,20 +584,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Download prepared Composer dependencies
+      - name: Download prepared Node Composer project
         uses: actions/download-artifact@v7
         with:
-          name: cms-composer-dependencies
-          path: cms
-      - name: Extract prepared Composer dependencies
-        run: tar -xzf cms-composer-dependencies.tar.gz
-      - name: Download prepared Node dependencies
-        uses: actions/download-artifact@v7
-        with:
-          name: cms-node-dependencies
-          path: cms
-      - name: Extract prepared Node dependencies
-        run: tar -xzf cms-node-dependencies.tar.gz
+          name: cms-node-composer-project
+          path: ${{ runner.temp }}
+      - name: Extract prepared Node Composer project
+        run: tar -xzf "${{ runner.temp }}/cms-node-composer-project.tar.gz" -C .
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
