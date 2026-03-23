@@ -3725,10 +3725,10 @@
   resolved "https://registry.yarnpkg.com/@redux-devtools/extension/-/extension-4.0.0.tgz#bd03401ff0f033350b1f0bfa9b210029c5450627"
   integrity sha512-pLIzgo5MvqdDLe5D1pzHLgmr8THra/DOyRf5MvOEPZnKKDn6RhFbNSS5oXZ3Cal0cpx08kx7sR6zD8QgoXEnZA==
 
-"@reloaddk/wsdl-tsclient@^1.9.2":
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.9.2.tgz#1667fd92554b3a7d5638288026f2a30c4baff481"
-  integrity sha512-vN3N5sXUyvhxcHJdm6nHeEmqJseHxryMYyjZCiVJPzjkK228a5eaDRbc6O/J47Ris6ACHw3DA3k74BNL8GvY8Q==
+"@reloaddk/wsdl-tsclient@^1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.9.3.tgz#5c0641e910c85dad4c9847356dd1a003c3185fc2"
+  integrity sha512-Ar0Akh5Qw1cLYPj/E6ypxcNnas/pKDq35gpVs71vsEkftNASfhNSExp/SJ4CwfWNEMKFdH7KoAd9J2U0pSZfCw==
   dependencies:
     camelcase "^9.0.0"
     chalk "^5.6.2"
