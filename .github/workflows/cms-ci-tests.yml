@@ -43,7 +43,42 @@ jobs:
       - name: Ensure Composer setup does not modify VCS
         run: git diff --exit-code
       - name: Package Composer dependencies
-        run: tar -czf cms-composer-dependencies.tar.gz vendor dev-scripts/dpl-react/vendor
+        run: |
+          mapfile -t composer_targets < <(
+            jq -r '
+              [
+                (.extra["installer-paths"] | keys[] | sub("/\\{\\$name\\}$"; "")),
+                (
+                  .extra["drupal-scaffold"]["file-mapping"]
+                  | to_entries[]
+                  | select(.value != false)
+                  | .key
+                  | gsub("^\\[web-root\\]/"; "web/")
+                  | gsub("^\\[project-root\\]/"; "")
+                )
+              ] | .[]
+            ' composer.json
+          )
+
+          manual_targets=(
+            vendor
+            dev-scripts/dpl-react/vendor
+            web/modules/local
+          )
+
+          mapfile -t archive_targets < <(
+            printf '%s\n' "${composer_targets[@]}" "${manual_targets[@]}" \
+              | awk '!seen[$0]++'
+          )
+
+          existing_targets=()
+          for target in "${archive_targets[@]}"; do
+            if [ -e "$target" ]; then
+              existing_targets+=("$target")
+            fi
+          done
+
+          tar -czf cms-composer-dependencies.tar.gz "${existing_targets[@]}"
       - name: Upload Composer dependencies
         uses: actions/upload-artifact@v7
         with:
