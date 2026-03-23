@@ -72,6 +72,10 @@ class LinkItemTest extends KernelTestBase {
     /** @var \Drupal\bnf\FieldConverterInterface $converter */
     $converter = $manager->createInstance('link');
 
+    // Create an entity to reference.
+    $referenced_entity = EntityTest::create([]);
+    $referenced_entity->save();
+
     // Setup an entity with field data.
     $entity = EntityTest::create([
       'field_test_link' => [
@@ -84,12 +88,16 @@ class LinkItemTest extends KernelTestBase {
           'uri' => 'internal:/node/1',
           'title' => 'Internal Node',
         ],
+        [
+          'uri' => 'entity:entity_test/' . $referenced_entity->id(),
+          'title' => 'Referenced Entity',
+        ],
       ],
     ]);
 
     // Test normalization.
     $normalized = $converter->normalize($entity->get('field_test_link'));
-    $this->assertSame([
+    $this->assertEquals([
       [
         'uri' => 'https://example.com',
         'title' => 'Example Website',
@@ -100,7 +108,19 @@ class LinkItemTest extends KernelTestBase {
         'title' => 'Internal Node',
         'options' => [],
       ],
+      [
+        'uuid' => $referenced_entity->uuid(),
+        'entity_type' => 'entity_test',
+        'title' => 'Referenced Entity',
+        'options' => [],
+      ],
     ], $normalized);
+
+    // Test getDependees.
+    $dependees = $converter->getDependees($entity->get('field_test_link'));
+    $this->assertSame([
+      'entity_test:' . $referenced_entity->uuid(),
+    ], $dependees);
 
     // Test empty value.
     $entity_empty = EntityTest::create([]);
@@ -119,6 +139,10 @@ class LinkItemTest extends KernelTestBase {
     /** @var \Drupal\bnf\FieldConverterInterface $converter */
     $converter = $manager->createInstance('link');
 
+    // Create an entity to be referenced by the normalized data.
+    $referenced_entity = EntityTest::create([]);
+    $referenced_entity->save();
+
     // Normalized data.
     $incoming_data = [
       [
@@ -129,6 +153,11 @@ class LinkItemTest extends KernelTestBase {
       [
         'uri' => 'internal:/contact',
         'title' => 'Contact Us',
+      ],
+      [
+        'uuid' => $referenced_entity->uuid(),
+        'entity_type' => 'entity_test',
+        'title' => 'Referenced Entity',
       ],
     ];
 
@@ -151,6 +180,13 @@ class LinkItemTest extends KernelTestBase {
     $this->assertEquals('Contact Us', $entity->get('field_test_link')->get(1)->title);
     // @phpstan-ignore property.nonObject (ditto)
     $this->assertEquals([], $entity->get('field_test_link')->get(1)->options);
+
+    // @phpstan-ignore property.nonObject (ditto)
+    $this->assertEquals('entity:entity_test/' . $referenced_entity->id(), $entity->get('field_test_link')->get(2)->uri);
+    // @phpstan-ignore property.nonObject (ditto)
+    $this->assertEquals('Referenced Entity', $entity->get('field_test_link')->get(2)->title);
+    // @phpstan-ignore property.nonObject (ditto)
+    $this->assertEquals([], $entity->get('field_test_link')->get(2)->options);
   }
 
 }
