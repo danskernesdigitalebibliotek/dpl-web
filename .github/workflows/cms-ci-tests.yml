@@ -9,7 +9,11 @@ env:
   PHP_VERSION: 8.3
   COMPOSER_VERSION: v2
   COMPOSER_CACHE_DIR: ${{ github.workspace }}/cms/.cache/composer
-  YARN_CACHE_DIR: ${{ github.workspace }}/cms/.cache/yarn
+  YARN_CACHE_FOLDER: ${{ github.workspace }}/cms/.cache/yarn
+  CACHE_ARTIFACTS_DIR: cms/.cache
+  CACHE_ARTIFACT_RETENTION_DAYS: 1
+  CACHE_COMPOSER_ARTIFACT_NAME: cms-composer-cache
+  CACHE_YARN_ARTIFACT_NAME: cms-yarn-cache
 
 # Detect if this action is already running, and cancel it.
 # This most likely happened because a second push has been made to a branch.
@@ -18,8 +22,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ValidateComposer:
-    name: CMS / Validate Composer
+  PrepareComposerCache:
+    name: CMS / Prepare Composer cache
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -32,13 +36,60 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
           tools: composer:${{ env.COMPOSER_VERSION }}
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Populate Composer cache
+        run: composer install --no-interaction --no-progress
+      - name: Upload Composer cache artifact
+        uses: actions/upload-artifact@v6
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: cms/.cache/composer
+          retention-days: ${{ env.CACHE_ARTIFACT_RETENTION_DAYS }}
+
+  PrepareYarnCache:
+    name: CMS / Prepare Yarn cache
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+      - name: Reconfigure git to use HTTP authentication
+        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: 'cms/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'cms/yarn.lock'
+      - name: Populate Yarn cache
+        run: yarn install --frozen-lockfile
+      - name: Upload Yarn cache artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: cms/.cache/yarn
+          retention-days: ${{ env.CACHE_ARTIFACT_RETENTION_DAYS }}
+
+  ValidateComposer:
+    name: CMS / Validate Composer
+    runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+          tools: composer:${{ env.COMPOSER_VERSION }}
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Validate composer.json
         run: |
           composer validate --no-check-all --no-check-publish
@@ -51,6 +102,7 @@ jobs:
   Phpcs:
     name: CMS / Check code style
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
     defaults:
       run:
         working-directory: cms
@@ -63,13 +115,11 @@ jobs:
         tools: composer:${{ env.COMPOSER_VERSION }}, cs2pr
         coverage: none
         extensions: gd
-    - name: Cache Composer downloads
-      uses: actions/cache@v5
+    - name: Download Composer cache artifact
+      uses: actions/download-artifact@v8
       with:
-        path: ${{ env.COMPOSER_CACHE_DIR }}
-        key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-cms-composer-
+        name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+        path: ${{ env.CACHE_ARTIFACTS_DIR }}
     - name: Install Dependencies
       run: |
         composer install --no-interaction --no-progress
@@ -80,6 +130,7 @@ jobs:
   TwigCsFixer:
     name: CMS / Check Twig code style
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
     defaults:
       run:
         working-directory: cms
@@ -92,13 +143,11 @@ jobs:
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: none
           extensions: gd
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install Dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -109,6 +158,7 @@ jobs:
   Phpstan:
     name: CMS / Analyse code using PHPStan
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
     defaults:
       run:
         working-directory: cms
@@ -120,13 +170,11 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
           tools: composer:${{ env.COMPOSER_VERSION }}
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install composer dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -139,6 +187,7 @@ jobs:
   PhpUnit:
     name: CMS / Run PHP unit tests
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
     defaults:
       run:
         working-directory: cms
@@ -151,13 +200,11 @@ jobs:
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: xdebug
           extensions: gd
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install Dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -167,6 +214,7 @@ jobs:
   LightHouse:
     name: CMS / Test site performance using Lighthouse
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache, PrepareYarnCache]
     defaults:
       run:
         working-directory: cms
@@ -176,20 +224,16 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
+      - name: Download Yarn cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -207,6 +251,7 @@ jobs:
   Pa11y:
     name: CMS / Test accessibility using Pa11y
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache, PrepareYarnCache]
     defaults:
       run:
         working-directory: cms
@@ -216,20 +261,16 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
+      - name: Download Yarn cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -248,6 +289,7 @@ jobs:
   CypressMapped:
     name: CMS / Run Cypress mapped functional tests
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache, PrepareYarnCache]
     defaults:
       run:
         working-directory: cms
@@ -257,20 +299,16 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
+      - name: Download Yarn cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -295,6 +333,7 @@ jobs:
   CypressUnmapped:
     name: CMS / Run Cypress unmapped functional tests
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache, PrepareYarnCache]
     defaults:
       run:
         working-directory: cms
@@ -304,20 +343,16 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
+      - name: Download Yarn cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -342,6 +377,7 @@ jobs:
   CypressWebmaster:
     name: CMS / Run Cypress webmaster functional tests
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache, PrepareYarnCache]
     defaults:
       run:
         working-directory: cms
@@ -351,20 +387,16 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
+      - name: Download Yarn cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -481,6 +513,7 @@ jobs:
   CheckOpenApiSpec:
     name: CMS / Check OpenAPI specification
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache, PrepareYarnCache]
     defaults:
       run:
         working-directory: cms
@@ -490,20 +523,16 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
+      - name: Download Yarn cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_YARN_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -524,6 +553,7 @@ jobs:
   CheckGraphQlSchema:
     name: CMS / Check GraphQL specification
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
     defaults:
       run:
         working-directory: cms
@@ -533,20 +563,11 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
-        with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -563,6 +584,7 @@ jobs:
   CheckDrupalConfig:
     name: CMS / Check Drupal Config
     runs-on: ubuntu-latest
+    needs: [PrepareComposerCache]
     defaults:
       run:
         working-directory: cms
@@ -572,20 +594,11 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-      - name: Cache Composer downloads
-        uses: actions/cache@v5
+      - name: Download Composer cache artifact
+        uses: actions/download-artifact@v8
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-composer-
-      - name: Cache Yarn downloads
-        uses: actions/cache@v5
-        with:
-          path: ${{ env.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cms-yarn-
+          name: ${{ env.CACHE_COMPOSER_ARTIFACT_NAME }}
+          path: ${{ env.CACHE_ARTIFACTS_DIR }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
