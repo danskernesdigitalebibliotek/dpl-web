@@ -16,8 +16,8 @@ const ButtonShare: React.FC<ButtonShareProps> = ({ className }) => {
   const facebookShareUrl = "https://www.facebook.com/sharer/sharer.php";
   const shareUrl = `${facebookShareUrl}?u=${encodeURIComponent(href)}`;
 
-  const shareButtonAreaLabel = t("shareOnFacebookAriaLabelText");
-  const copyButtonAreaLabel = t("copyLinkAriaLabelText");
+  const shareButtonAriaLabel = t("shareOnFacebookAriaLabelText");
+  const copyButtonAriaLabel = t("copyLinkAriaLabelText");
 
   const [showFixedButtons, setShowFixedButtons] = useState(true);
   const { isCopied, copyToClipboard } = useCopyToClipboard();
@@ -62,7 +62,7 @@ const ButtonShare: React.FC<ButtonShareProps> = ({ className }) => {
             href={shareUrl}
             target="_blank"
             rel="noreferrer"
-            aria-label={shareButtonAreaLabel}
+            aria-label={shareButtonAriaLabel}
             className="button-share__button button-share__button--fixed"
           >
             <FacebookIcon />
@@ -70,7 +70,7 @@ const ButtonShare: React.FC<ButtonShareProps> = ({ className }) => {
           <button
             type="button"
             onClick={onShareButtonClick}
-            aria-label={copyButtonAreaLabel}
+            aria-label={copyButtonAriaLabel}
             className="button-share__button button-share__button--fixed"
           >
             {copyIcon}
@@ -82,7 +82,7 @@ const ButtonShare: React.FC<ButtonShareProps> = ({ className }) => {
         href={shareUrl}
         target="_blank"
         rel="noreferrer"
-        aria-label={shareButtonAreaLabel}
+        aria-label={shareButtonAriaLabel}
         className="button-share__button"
       >
         <FacebookIcon />
@@ -91,7 +91,7 @@ const ButtonShare: React.FC<ButtonShareProps> = ({ className }) => {
       <button
         type="button"
         onClick={onShareButtonClick}
-        aria-label={copyButtonAreaLabel}
+        aria-label={copyButtonAriaLabel}
         className="button-share__button"
       >
         {copyIcon}
