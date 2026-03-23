@@ -66,7 +66,7 @@ tasks:
     status:
       - test -d node_modules
     cmds:
-      - yarn install --ignore-engines
+      - yarn install
 
   init:react:
     desc: "yarn install in react/"
@@ -74,7 +74,7 @@ tasks:
     status:
       - test -d node_modules
     cmds:
-      - yarn install --ignore-engines
+      - yarn install
 
   init:go:
     desc: "yarn install in go/"
@@ -82,7 +82,7 @@ tasks:
     status:
       - test -d node_modules
     cmds:
-      - yarn install --ignore-engines
+      - yarn install
 
   # ---------------------------------------------------------------------------
   # Main orchestration

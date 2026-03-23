@@ -58,10 +58,6 @@ Each sub-project also works standalone: `cd cms && task dev:reset`, etc.
 git fetch origin main:refs/remotes/origin/main
 ```
 
-### Node engine mismatch
-
-The `init` tasks use `--ignore-engines` to work around strict Node version checks.
-
 ### Task says "up to date" but assets are stale
 
 ```bash
