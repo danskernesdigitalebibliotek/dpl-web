@@ -23,6 +23,7 @@ tasks:
     desc: "Start CMS Docker containers (without resetting)"
     cmds:
       - task -d cms dev:start
+      - task -d cms dev:cli -- drush user-login
 
   cms:reset:
     desc: "Reset CMS dev environment from scratch (runs cms/Taskfile.yml dev:reset)"
@@ -95,7 +96,6 @@ tasks:
       - dev:react:setup
     cmds:
       - task: dev:cms:link
-      - task -d cms dev:cli -- drush user-login
 
   # ---------------------------------------------------------------------------
   # Design-system
