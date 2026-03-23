@@ -1,0 +1,76 @@
+{
+  "durations": [
+    {
+      "spec": "cypress/e2e/adgangsplatformen.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/admin-toolbar.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/branches.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/campaign.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/check-static-pages.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/content-lock.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/dpl-react-apps.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/events.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/facets.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/flat-taxonomies.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/mapp-tracking.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/opening-hours-editor.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/paragraphs.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/patron-collisions.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/smoke-test.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/varnish.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/webforms.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/wiremock.cy.ts",
+      "duration": 1
+    }
+  ]
+}

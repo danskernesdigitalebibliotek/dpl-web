@@ -1,0 +1,20 @@
+{
+  "durations": [
+    {
+      "spec": "cypress/e2e/withMappings/advanced-search.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/withMappings/proxy-url.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/withMappings/user-journey.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/withMappings/work.cy.ts",
+      "duration": 1
+    }
+  ]
+}

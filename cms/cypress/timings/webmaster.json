@@ -1,0 +1,12 @@
+{
+  "durations": [
+    {
+      "spec": "cypress/e2e/webmaster/classes.cy.ts",
+      "duration": 1
+    },
+    {
+      "spec": "cypress/e2e/webmaster/webmaster-upload.cy.ts",
+      "duration": 1
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+# These workflows take care of CMS Cypress CI tests.
+on:
+  pull_request:
+    paths:
+      - 'cms/**'
+      - '.github/workflows/cms-*.yml'
+name: CMS / Cypress Tests
+
+# Detect if this action is already running, and cancel it.
+# This most likely happened because a second push has been made to a branch.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  CypressMapped:
+    name: CMS / Run Cypress mapped functional tests (${{ matrix.containers }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Cypress
+        env:
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
+          SPLIT_FILE: cypress/timings/mapped.json
+        run: task ci:cypress:mapped
+      - name: Archive videoes
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-mapped-videos-${{ matrix.containers }}
+          path: cms/cypress/videos
+      - name: Archive screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-mapped-screenshots-${{ matrix.containers }}
+          path: cms/cypress/screenshots
+      - name: Archive timings
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-mapped-timings-${{ matrix.containers }}
+          path: cms/cypress/timings/mapped.json
+
+  CypressUnmapped:
+    name: CMS / Run Cypress unmapped functional tests (${{ matrix.containers }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Cypress
+        env:
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
+          SPLIT_FILE: cypress/timings/unmapped.json
+        run: task ci:cypress:unmapped
+      - name: Archive videoes
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-unmapped-videos-${{ matrix.containers }}
+          path: cms/cypress/videos
+      - name: Archive screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-unmapped-screenshots-${{ matrix.containers }}
+          path: cms/cypress/screenshots
+      - name: Archive timings
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-unmapped-timings-${{ matrix.containers }}
+          path: cms/cypress/timings/unmapped.json
+
+  CypressWebmaster:
+    name: CMS / Run Cypress webmaster functional tests (${{ matrix.containers }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Cypress
+        env:
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
+          SPLIT_FILE: cypress/timings/webmaster.json
+        run: task ci:cypress:webmaster
+      - name: Archive videoes
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-webmaster-videos-${{ matrix.containers }}
+          path: cms/cypress/videos
+      - name: Archive screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-webmaster-screenshots-${{ matrix.containers }}
+          path: cms/cypress/screenshots
+      - name: Archive timings
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-webmaster-timings-${{ matrix.containers }}
+          path: cms/cypress/timings/webmaster.json

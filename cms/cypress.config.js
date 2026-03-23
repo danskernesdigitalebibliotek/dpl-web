@@ -1,4 +1,6 @@
 const { defineConfig } = require("cypress");
+const cypressSplit = require("cypress-split");
+const installLogsPrinter = require("cypress-terminal-report/src/installLogsPrinter");
 
 module.exports = defineConfig({
   video: true,
@@ -10,8 +12,11 @@ module.exports = defineConfig({
       openMode: 0,
     },
     setupNodeEvents(on, config) {
-      require('cypress-terminal-report/src/installLogsPrinter')(on)
-    }
+      installLogsPrinter(on);
+      cypressSplit(on, config);
+
+      return config;
+    },
   },
   env: {
     // This is intentionally left empty.
