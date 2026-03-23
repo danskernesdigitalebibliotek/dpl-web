@@ -22,6 +22,8 @@ const useAddressSearch = () => {
   const handleQueryChange = useCallback(
     (q: string) => {
       setQuery(q);
+      // Dismiss any geolocation error once the user starts typing manually.
+      setGeoLocationError(null);
       if (selectedAddress && q !== selectedAddress.betegnelse) {
         setSelectedAddress(null);
       }
