@@ -8,6 +8,8 @@ name: CMS / CI Tests
 env:
   PHP_VERSION: 8.3
   COMPOSER_VERSION: v2
+  COMPOSER_CACHE_DIR: ${{ github.workspace }}/cms/.cache/composer
+  YARN_CACHE_DIR: ${{ github.workspace }}/cms/.cache/yarn
 
 # Detect if this action is already running, and cancel it.
 # This most likely happened because a second push has been made to a branch.
@@ -30,6 +32,13 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
           tools: composer:${{ env.COMPOSER_VERSION }}
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
       - name: Validate composer.json
         run: |
           composer validate --no-check-all --no-check-publish
@@ -54,6 +63,13 @@ jobs:
         tools: composer:${{ env.COMPOSER_VERSION }}, cs2pr
         coverage: none
         extensions: gd
+    - name: Cache Composer downloads
+      uses: actions/cache@v5
+      with:
+        path: ${{ env.COMPOSER_CACHE_DIR }}
+        key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cms-composer-
     - name: Install Dependencies
       run: |
         composer install --no-interaction --no-progress
@@ -76,6 +92,13 @@ jobs:
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: none
           extensions: gd
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
       - name: Install Dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -97,6 +120,13 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
           tools: composer:${{ env.COMPOSER_VERSION }}
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
       - name: Install composer dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -121,6 +151,13 @@ jobs:
           tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: xdebug
           extensions: gd
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
       - name: Install Dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -139,6 +176,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -165,6 +216,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -192,6 +257,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -225,6 +304,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -258,6 +351,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -383,6 +490,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -412,6 +533,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -437,6 +572,20 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - name: Cache Composer downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-composer-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-composer-
+      - name: Cache Yarn downloads
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.YARN_CACHE_DIR }}
+          key: ${{ runner.os }}-cms-yarn-${{ hashFiles('cms/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cms-yarn-
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:

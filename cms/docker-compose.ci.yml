@@ -55,6 +55,7 @@ services:
     links: *links
     environment:
       CI: true
+      COMPOSER_CACHE_DIR: "/app/.cache/composer"
       LAGOON_ENVIRONMENT_TYPE: ci
 
   php:

@@ -89,6 +89,7 @@ services:
     user: root
     environment:
       << : *default-environment # loads the defined environment variables from the top
+      COMPOSER_CACHE_DIR: /app/.cache/composer
       # Uncomment to enable xdebug for cli tools
       #XDEBUG_ENABLE: "true"
     labels:
