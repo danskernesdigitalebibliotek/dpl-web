@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-23 14:20+0100\n"
-"PO-Revision-Date: 2026-03-23 14:20+0100\n"
+"POT-Creation-Date: 2026-03-24 09:14+0100\n"
+"PO-Revision-Date: 2026-03-24 09:14+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -63,6 +63,26 @@ msgstr ""
 msgctxt "Material Grid"
 msgid "Show all"
 msgstr "Vis alle"
+
+msgctxt "Share buttons"
+msgid "Share on Facebook"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Share this page on Facebook"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Copy link"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Copy link to this page"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Link copied"
+msgstr ""
 
 msgid ""
 "Paragraph migration of @old_type to @new_type completed. @count / @total "
@@ -2753,6 +2773,18 @@ msgctxt "Work Page"
 msgid "Show all (@count)"
 msgstr "Vis alle (@count)"
 
+msgctxt "Work Page"
+msgid "Share on Facebook"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Share this page on Facebook"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Copy link to this page"
+msgstr ""
+
 msgctxt "Branch List"
 msgid "Branches"
 msgstr "Biblioteker"
@@ -3966,6 +3998,20 @@ msgstr ""
 "sammen med de alm. emneord. F.eks. \"911116-katalog,911130-katalog\". Typisk "
 "vil det her være nok blot at notere bibliotekets eget agency ID, f.eks. "
 "\"762100-katalog\"."
+
+msgctxt "Library Agency Configuration"
+msgid "Share buttons"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Enable share buttons on material pages"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"If checked, share buttons (Facebook, copy link) will be shown on material/"
+"work pages."
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
@@ -24022,6 +24068,16 @@ msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.recommendation:description"
 msgid "This paragraph is used to recommend a material. "
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.share_buttons:label"
+msgid "Share buttons"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.share_buttons:description"
+msgid ""
+"Displays share buttons for content, allowing users to share via social media "
+"or email."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.simple_links:label"
