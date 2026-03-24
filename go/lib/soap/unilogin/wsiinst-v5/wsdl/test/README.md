@@ -22,10 +22,10 @@ remote `schemaLocation` references replaced by local relative paths**:
 
 The following remote `schemaLocation` values in `ws.wsdl` are replaced in `ws.test.wsdl`:
 
-| Remote URL (production) | Local path (test) |
-| ----------------------------------------------------------------------- | ---------------------- |
-| `https://wsiinst.unilogin.dk/wsiinst-v5/ws?xsd=common/ws-common.xsd`  | `common/ws-common.xsd` |
-| `https://wsiinst.unilogin.dk/wsiinst-v5/ws?xsd=wsiinst-ws.xsd`        | `wsiinst-ws.xsd`       |
+| Remote URL (production)                                              | Local path (test)      |
+| -------------------------------------------------------------------- | ---------------------- |
+| `https://wsiinst.unilogin.dk/wsiinst-v5/ws?xsd=common/ws-common.xsd` | `common/ws-common.xsd` |
+| `https://wsiinst.unilogin.dk/wsiinst-v5/ws?xsd=wsiinst-ws.xsd`       | `wsiinst-ws.xsd`       |
 
 The remaining imports inside the vendored XSD files use relative local paths throughout.
 
