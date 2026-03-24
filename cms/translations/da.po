@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-20 09:19+0100\n"
-"PO-Revision-Date: 2026-03-20 09:19+0100\n"
+"POT-Creation-Date: 2026-03-24 09:31+0100\n"
+"PO-Revision-Date: 2026-03-24 09:31+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21241,5 +21241,51 @@ msgid "@site_title: frontpage"
 msgstr "@site_title: forside"
 
 msgid "OpenID Connect client plugins updated: @plugins"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Share on Facebook"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Share this page on Facebook"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Copy link"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Copy link to this page"
+msgstr ""
+
+msgctxt "Share buttons"
+msgid "Link copied"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Share on Facebook"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Share this page on Facebook"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Copy link to this page"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Share buttons"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Enable share buttons on material pages"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"If checked, share buttons (Facebook, copy link) will be shown on "
+"material/work pages."
 msgstr ""
 

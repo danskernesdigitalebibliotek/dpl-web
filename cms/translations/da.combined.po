@@ -30742,3 +30742,68 @@ msgctxt "core.entity_form_display.eventseries.default.default:content:field_even
 msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
 msgstr ""
 
+#: 
+msgctxt "Share buttons"
+msgid "Share on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Share this page on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Copy link"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Copy link to this page"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Link copied"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Share on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Share this page on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Copy link to this page"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "Share buttons"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "Enable share buttons on material pages"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "If checked, share buttons (Facebook, copy link) will be shown on material/work pages."
+msgstr ""
+
+#: 
+msgctxt "paragraphs.paragraphs_type.share_buttons:label"
+msgid "Share buttons"
+msgstr ""
+
+#: 
+msgctxt "paragraphs.paragraphs_type.share_buttons:description"
+msgid "Displays share buttons for content, allowing users to share via social media or email."
+msgstr ""
+
