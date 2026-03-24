@@ -115,7 +115,7 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
         {bestRepresentationContents && (
           <MaterialContents contents={bestRepresentationContents} />
         )}
-        <div className="material-description__links mt-32">
+        <div className="material-description__links">
           {shouldShowDk5 && dk5MainEntry && (
             <HorizontalTermLine
               title={t("subjectNumberText")}

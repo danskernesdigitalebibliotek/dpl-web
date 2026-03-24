@@ -7,19 +7,6 @@
     border-top: solid 1px $color__global-tertiary-1;
   }
 
-  @include media-query__small {
-    margin: 0 133px;
-  }
-
-  &.disclosure--full-width {
-    width: 100%;
-    margin: 0;
-
-    @include media-query__small {
-      margin: 0;
-    }
-  }
-
   &__headline {
     height: 88px;
     display: flex;

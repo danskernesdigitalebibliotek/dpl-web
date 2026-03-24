@@ -243,58 +243,53 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
           />
         </MaterialHeader>
         <MaterialDescription pid={pid} work={work} />
-        {/* Since we cannot trust the editions for global manifestations */}
-        {/* we limit them to only occur if the loaded work is global */}
-        {workType === "local" && (
+        <div className="disclosure-section">
+          {/* Since we cannot trust the editions for global manifestations */}
+          {/* we limit them to only occur if the loaded work is global */}
+          {workType === "local" && (
+            <MaterialDisclosure
+              title={`${t("editionsText")} (${manifestations.length})`}
+              icon={VariousIcon}
+              dataCy="material-editions-disclosure"
+              open={disclosureOpenStates.editions}
+            >
+              <>
+                {getManifestationsOrderByTypeAndYear(manifestations).map(
+                  (manifestation: Manifestation) => {
+                    return (
+                      <MaterialMainfestationItem
+                        key={manifestation.pid}
+                        manifestation={manifestation}
+                        workId={wid}
+                      />
+                    );
+                  }
+                )}
+              </>
+            </MaterialDisclosure>
+          )}
           <MaterialDisclosure
-            title={`${t("editionsText")} (${manifestations.length})`}
-            icon={VariousIcon}
-            dataCy="material-editions-disclosure"
-            open={disclosureOpenStates.editions}
+            dataCy="material-details-disclosure"
+            title={t("detailsText")}
+            icon={Receipt}
+            open={disclosureOpenStates.details}
           >
-            <>
-              {getManifestationsOrderByTypeAndYear(manifestations).map(
-                (manifestation: Manifestation) => {
-                  return (
-                    <MaterialMainfestationItem
-                      key={manifestation.pid}
-                      manifestation={manifestation}
-                      workId={wid}
-                    />
-                  );
-                }
-              )}
-            </>
+            <MaterialDetailsList
+              id={`material-details-${wid}`}
+              className="pl-80 pb-48"
+              data={detailsListData}
+            />
           </MaterialDisclosure>
-        )}
-        <MaterialDisclosure
-          dataCy="material-details-disclosure"
-          title={t("detailsText")}
-          icon={Receipt}
-          open={disclosureOpenStates.details}
-        >
-          <MaterialDetailsList
-            id={`material-details-${wid}`}
-            className="pl-80 pb-48"
-            data={detailsListData}
-          />
-        </MaterialDisclosure>
-        {hasReview && hasReview.length > 0 && (
-          <DisclosureControllable
-            detailsClassName="disclosure text-body-large"
-            id="reviews"
-            showContent={disclosureOpenStates.reviews}
-            cyData="material-reviews-disclosure"
-            summary={
-              <DisclosureSummary
-                title={t("reviewsText")}
-                mainIconPath={CreateIcon}
-              />
-            }
-          >
-            <MaterialReviews pids={hasReview.map((review) => review.pid)} />
-          </DisclosureControllable>
-        )}
+          {hasReview && hasReview.length > 0 && (
+            <MaterialDisclosure
+              dataCy="material-reviews-disclosure"
+              title={t("reviewsText")}
+              icon={CreateIcon}
+            >
+              <MaterialReviews pids={hasReview.map((review) => review.pid)} />
+            </MaterialDisclosure>
+          )}
+        </div>
       </section>
       {work && (
         <section>

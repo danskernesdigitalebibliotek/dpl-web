@@ -33,8 +33,6 @@ The file defines several variables for managing layout and spacing:
 aligned with breakpoints.
 - `block__max-width--*`: These variables store the maximum width values
 between block (paragraph) elements.
-- `$layout__edge-spacing`: This variable stores the edge spacing (padding)
-value for containers.
 
 All components that require a max-width should use the `block__max-width--*`
 variables along with layout-container.

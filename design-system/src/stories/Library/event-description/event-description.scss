@@ -32,7 +32,7 @@
   @include block-spacing("small");
 
   @include media-query__medium {
-    margin-top: $_block-vertical-spacing--large;
+    margin-top: 64px;
   }
 }
 
