@@ -33,6 +33,7 @@ class GeneralSettings extends DplReactConfigBase {
   const LOCAL_SUBJECTS_AGENCY_IDS = '';
   const ENABLE_ADDRESS_SEARCH_BRANCH = FALSE;
   const ENABLE_ADDRESS_SEARCH_PATRON = FALSE;
+  const ENABLE_SHARE_BUTTONS = FALSE;
 
   /**
    * Gets the configuration key for general settings.
@@ -195,6 +196,17 @@ class GeneralSettings extends DplReactConfigBase {
       $this->loadConfig()->get('pause_reservation_info_url'),
       self::PAUSE_RESERVATION_INFO_URL
     );
+  }
+
+  /**
+   * Get the setting for enabling share buttons.
+   *
+   * @return bool
+   *   True if share buttons should be shown, false otherwise.
+   */
+  public function getShareButtonsEnabled(): bool {
+    return $this->loadConfig()->get('enable_share_buttons')
+      ?? self::ENABLE_SHARE_BUTTONS;
   }
 
   /**

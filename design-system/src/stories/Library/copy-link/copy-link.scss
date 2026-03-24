@@ -8,14 +8,12 @@
     flex-shrink: 0;
     object-fit: contain;
     object-position: center;
-  }
-
-  &--success {
-    color: $color__copy-success;
-  }
-
-  img {
     width: 14px;
     height: 14px;
+  }
+
+  &--success,
+  &--success .link-tag {
+    color: $color__copy-success;
   }
 }

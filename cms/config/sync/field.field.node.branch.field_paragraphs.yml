@@ -26,6 +26,7 @@ dependencies:
     - paragraphs.paragraphs_type.nav_spots_manual
     - paragraphs.paragraphs_type.opening_hours
     - paragraphs.paragraphs_type.recommendation
+    - paragraphs.paragraphs_type.share_buttons
     - paragraphs.paragraphs_type.simple_links
     - paragraphs.paragraphs_type.text_body
     - paragraphs.paragraphs_type.user_registration_item
@@ -74,6 +75,7 @@ settings:
       opening_hours: opening_hours
       simple_links: simple_links
       user_registration_item: user_registration_item
+      share_buttons: share_buttons
       user_registration_linklist: user_registration_linklist
       user_registration_section: user_registration_section
       webform: webform
@@ -174,6 +176,9 @@ settings:
         enabled: true
       recommendation:
         weight: 28
+        enabled: true
+      share_buttons:
+        weight: 73
         enabled: true
       simple_links:
         weight: 70
