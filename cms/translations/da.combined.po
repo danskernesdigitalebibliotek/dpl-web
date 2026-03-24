@@ -22118,7 +22118,7 @@ msgstr "Dette felt er til indsættelse af en CQL-streng baseret på en søgning.
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:description"
 msgid "This determines whether the image should be positioned to the left or right. <br />If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
-msgstr "Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br />Hvis den ikke er slået til (standardadfærd), placeres billedet til venstre, hvis den er slået til, placeres billedet til højre.␣"
+msgstr "Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br />Hvis den ikke er slået til (standardadfærd), placeres billedet til venstre, hvis den er slået til, placeres billedet til højre."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_description:description"
