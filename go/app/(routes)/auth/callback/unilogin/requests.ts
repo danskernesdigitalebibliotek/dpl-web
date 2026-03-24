@@ -4,17 +4,13 @@ import { createClientAsync } from "@/lib/soap/unilogin/wsiinst-v5/generated/ws"
 
 import schemas from "./schemas"
 
-// In test mode, use local WSDL with vendored XSDs to avoid remote fetches
-const isTestMode = getEnv("TEST_MODE")
-const clientEndpoint = isTestMode
+// Set client to mocked endpoint in test mode
+const clientEndpoint = getEnv("TEST_MODE")
   ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/institution`
   : undefined
-const wsdlPath = isTestMode
-  ? "./lib/soap/unilogin/wsiinst-v5/wsdl/test/ws.test.wsdl"
-  : "./lib/soap/unilogin/wsiinst-v5/wsdl/ws.wsdl"
 
 export const getInstitutionRequest = async (institutionId: string) => {
-  const client = await createClientAsync(wsdlPath, {
+  const client = await createClientAsync("./lib/soap/unilogin/wsiinst-v5/wsdl/ws.wsdl", {
     forceSoap12Headers: true,
     endpoint: clientEndpoint,
   })
