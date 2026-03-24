@@ -3,18 +3,49 @@
 set -aeo pipefail
 
 SKIP_LANGUAGE_IMPORT=""
+INSTALL_ONLY=""
+POST_INSTALL_ONLY=""
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
     --skip-language-import) SKIP_LANGUAGE_IMPORT="true" ;;
     --bnf-content) BNF_CONTENT="true" ;;
+    --install-only) INSTALL_ONLY="true" ;;
+    --post-install-only) POST_INSTALL_ONLY="true" ;;
     *) echo "Unknown parameter passed: $1"; exit 1 ;;
   esac
   shift
 done
 
-# Install site.
-drush site-install --existing-config --account-mail="dev@folkebibliotekernescms.dk" --site-mail="dev@folkebibliotekernescms.dk" -y
+if [[ -n "$INSTALL_ONLY" && -n "$POST_INSTALL_ONLY" ]]; then
+  echo "Use either --install-only or --post-install-only, not both."
+  exit 1
+fi
+
+site_is_installed() {
+  drush status --fields=bootstrap --format=list 2>/dev/null | grep -qi "Successful"
+}
+
+if [[ -z "$POST_INSTALL_ONLY" ]]; then
+  if site_is_installed; then
+    echo "Drupal site already installed, skipping drush site-install"
+  else
+    drush site-install --existing-config --account-mail="dev@folkebibliotekernescms.dk" --site-mail="dev@folkebibliotekernescms.dk" -y
+  fi
+fi
+
+if [[ -n "$INSTALL_ONLY" ]]; then
+  exit 0
+fi
+
+if ! site_is_installed; then
+  echo "Drupal site is not installed. Run with --install-only first or import a snapshot."
+  exit 1
+fi
+
+# Ensure translation path is available.
+# This is prepared in locale_install() so rerun it.
+drush php:eval "\Drupal::moduleHandler()->loadInclude('locale', 'install'); locale_install()"
 
 # Import translations.
 if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then
@@ -22,7 +53,7 @@ if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then
 else
   drush locale-check
   drush locale-update
-  drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/translations/da.config.po
+  drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
 fi
 
 # Run deploy hooks.

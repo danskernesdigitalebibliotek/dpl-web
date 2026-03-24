@@ -52,6 +52,15 @@ jobs:
           bash ./bundle.sh
           npm pack --dry-run
 
+      - name: Set package metadata for current repository owner
+        run: |
+          PACKAGE_NAME=$(npm pkg get name | tr -d '"')
+          PACKAGE_BASENAME="${PACKAGE_NAME##*/}"
+          PACKAGE_OWNER=$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
+
+          npm pkg set "name=@${PACKAGE_OWNER}/${PACKAGE_BASENAME}"
+          npm pkg set "repository=https://github.com/$GITHUB_REPOSITORY"
+
       - name: Delete any existing package version (non-latest)
         if: ${{ !inputs.latest }}
         run: |
@@ -99,12 +108,6 @@ jobs:
           npm publish --tag ${{ env.TAG_NAME }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Modify package.json for local context (latest)
-        if: ${{ inputs.latest }}
-        # Keep package name, set repository to current repo.
-        run: |
-          npm exec -- json -I -f package.json -e "this.repository='https://github.com/$GITHUB_REPOSITORY'"
 
       - name: Release NPM package (latest)
         if: ${{ inputs.latest }}

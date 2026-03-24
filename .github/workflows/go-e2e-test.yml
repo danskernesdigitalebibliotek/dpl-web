@@ -1,17 +1,7 @@
 name: Go / E2E tests
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-    paths:
-      - 'go/**'
-      - '.github/workflows/go-*.yml'
   pull_request:
-    branches:
-      - main
-      - develop
     paths:
       - 'go/**'
       - '.github/workflows/go-*.yml'
@@ -29,7 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.head_ref }}
           fetch-depth: 0 # Required to retrieve git history
 
       - name: Setup Node.js

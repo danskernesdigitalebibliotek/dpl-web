@@ -143,7 +143,7 @@ msgstr "Børn/voksen"
 #: 
 msgctxt "Search Result"
 msgid "Creators"
-msgstr "Forfatter"
+msgstr "Forfatter / ophav"
 
 #: 
 msgctxt "Search Result"
@@ -153,7 +153,7 @@ msgstr "Skøn-/faglitteratur"
 #: 
 msgctxt "Search Result"
 msgid "Genre and form"
-msgstr "Genre"
+msgstr "Genre og form"
 
 #: 
 msgctxt "Search Result"
@@ -598,7 +598,7 @@ msgstr "ud af"
 #: 
 msgctxt "Work Page"
 msgid "Year"
-msgstr "År"
+msgstr "Din reservering kunne ikke gennemføres. Prøv at kontakte os, hvis du stadig ønsker at låne materialet. Bemærk, at nogle materialer kun kan lånes af bestemte lånergrupper."
 
 #: 
 msgctxt "Work Page"
@@ -1781,7 +1781,7 @@ msgid "Queued reservations"
 msgstr "Reserveringer i kø"
 
 #: 
-msgctxt "Dashboard (aria)"
+msgctxt "Dashboard (Aria)"
 msgid "This modal makes it possible to renew materials"
 msgstr "Denne pop-up gør det muligt at forny materialer"
 
@@ -3081,7 +3081,7 @@ msgstr "Format"
 #: 
 msgctxt "Search Result"
 msgid "Year"
-msgstr "År"
+msgstr "Udgivelsesår"
 
 #: 
 msgctxt "Work Page"
@@ -4120,10 +4120,6 @@ msgstr "Kunne ikke lokalisere midlertidig PO-fil."
 #: 
 msgid "DPL PO"
 msgstr "DPL PO"
-
-#: 
-msgid "PO file handling. Export/import, splitting etc."
-msgstr "PO filhåndtering. Export/Import, opdeling osv."
 
 #: 
 msgctxt "block.block.claro_breadcrumbs:settings:label"
@@ -5739,7 +5735,7 @@ msgstr "Accordion"
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
 msgid "Campaign Rule"
-msgstr "Kampagneregel"
+msgstr "Søgeregel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:description"
@@ -16030,10 +16026,6 @@ msgid "Replace"
 msgstr "Erstat"
 
 #: 
-msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form."
-msgstr "Ændr brugerloginformularen for at vise OpenID login knapperne. Hvis 'Erstat' muligheden er valgt, vil kun OpenID-knapperne blive vist. I dette tilfælde, send 'showcore' URL-parameteren for at vende tilbage til en adgangskode-baseret loginform."
-
-#: 
 msgid "User claims mapping"
 msgstr "Kortlægning af brugerkrav"
 
@@ -22126,7 +22118,7 @@ msgstr "Dette felt er til indsættelse af en CQL-streng baseret på en søgning.
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:description"
 msgid "This determines whether the image should be positioned to the left or right. <br />If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
-msgstr "Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br />Hvis den ikke er slået til (standardadfærd), placeres billedet til venstre, hvis den er slået til, placeres billedet til højre.␣"
+msgstr "Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br />Hvis den ikke er slået til (standardadfærd), placeres billedet til venstre, hvis den er slået til, placeres billedet til højre."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_description:description"
@@ -24147,10 +24139,6 @@ msgid "A base module for providing shared functionality between modules exposing
 msgstr "En grundmodul til at tilbyde fælles funktionalitet mellem moduler, der eksponerer REST-tjenester."
 
 #: 
-msgid "Go to frontpage"
-msgstr "Gå til forsiden"
-
-#: 
 msgctxt "paragraphs_ee.paragraphs_category.content_elements:label"
 msgid "Content elements"
 msgstr "Indholdselementer"
@@ -24241,7 +24229,7 @@ msgstr "DPL opdatering"
 
 #: 
 msgid "Generalized update logic, such as enabling modules."
-msgstr "Generaliseret opdateringslogik, såsom aktivering af moduler"
+msgstr "Generaliseret opdateringslogik, såsom aktivering af moduler."
 
 #: 
 msgid "Other (revisions)"
@@ -27257,10 +27245,6 @@ msgid "OpenID Connect Client"
 msgstr "OpenID Connect Client"
 
 #: 
-msgid "@provider does not support log out. You are logged out of this site but not out of the OpenID Connect provider."
-msgstr "@provider does not support log out. You are logged out of this site but not out of the OpenID Connect provider."
-
-#: 
 msgid "The %label client has been enabled."
 msgstr "%label-klienten er blevet aktiveret."
 
@@ -29823,11 +29807,6 @@ msgstr "Henter resultater..."
 
 #: 
 msgctxt "advanced search 2"
-msgid "showing materials (@hitcount)"
-msgstr "Din søgning har @hitcount resultater"
-
-#: 
-msgctxt "advanced search 2"
 msgid "More filters"
 msgstr "Flere filtre"
 
@@ -30208,21 +30187,21 @@ msgstr "Å-A"
 
 #: 
 msgid "Add matcher to profile"
-msgstr ""
+msgstr "Tilføj matcher til profil"
 
 #: 
 msgid "Set matcher configuration"
-msgstr ""
+msgstr "Sæt matcher konfiguration"
 
 #: 
 msgctxt "metatag.metatag_defaults.eventinstance__default:tags:title"
 msgid "[eventinstance:title] | [site:name]"
-msgstr ""
+msgstr "[eventinstance:title] | [site:name]"
 
 #: 
 msgctxt "metatag.metatag_defaults.eventseries__default:tags:title"
 msgid "[eventseries:title] | [site:name]"
-msgstr ""
+msgstr "[eventseries:title] | [site:name]"
 
 #: 
 msgctxt "dpl_login"
@@ -30231,39 +30210,39 @@ msgstr "Du er ikke oprettet som bruger ved dette bibliotek.<br />Du kan <a href=
 
 #: 
 msgid "DPL: Event Location Type"
-msgstr ""
+msgstr "Arrangementslokationstype"
 
 #: 
 msgid "- Site default (@country) -"
-msgstr ""
+msgstr "- Sidens standardværdi (@country) -"
 
 #: 
 msgid "Skip country for domestic addresses"
-msgstr ""
+msgstr "Skip land for indenrigs adresser"
 
 #: 
 msgid "Domestic addresses country"
-msgstr ""
+msgstr "Indenrigs adresser land"
 
 #: 
 msgid "Addresses within this country are considered domestic."
-msgstr ""
+msgstr "Adresser inden for dette land er indenrigs."
 
 #: 
 msgid "<em><a href=\"@url\">Set the default country for your site</a></em>."
-msgstr ""
+msgstr "<em><a href=\"@url\">Sæt standardværdi for land på din hjemmeside</a></em>."
 
 #: 
 msgid "Site default (@country)"
-msgstr ""
+msgstr "Siden standardværdi for land"
 
 #: 
 msgid "Skip country for addresses in: @country"
-msgstr ""
+msgstr "Skip land for adresser i: @country"
 
 #: 
 msgid "Always display country."
-msgstr ""
+msgstr "Vis altid land."
 
 #: 
 msgid "Price"
@@ -30362,7 +30341,7 @@ msgstr "Fra"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_state:description"
 msgid "If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this state is ignored and the state provided from the ticket manager is used."
-msgstr ""
+msgstr "Hvis 'Opret billet i billetsysten' under 'Billetter' er slået til, så vil denne status bliver ignoreret, og status fra billetsystemet vil blive brugt."
 
 #: 
 msgctxt "field.field.eventseries.default.field_branch:description"
@@ -30407,7 +30386,7 @@ msgstr "Fra"
 #: 
 msgctxt "field.field.eventseries.default.field_event_state:description"
 msgid "If ‘Relevant for ticket manager’ under ‘Tickets’ is turned on, then this state is ignored and the state provided from the ticket manager is used."
-msgstr ""
+msgstr "Hvis 'Opret billet i billetsysten' under 'Billetter' er slået til, så vil denne status bliver ignoreret, og status fra billetsystemet vil blive brugt."
 
 #: 
 msgctxt "field.storage.eventinstance.field_event_location_type:settings:allowed_values:0:label"
@@ -30437,16 +30416,16 @@ msgstr "Biblioteker og adresser"
 #: 
 msgctxt "DPL admin UX"
 msgid "<div class=\"messages messages--warning\">You currently have <strong>@title</strong> open in another window or tab. If you delete it now, you may lose changes that have not been saved.</div>"
-msgstr ""
+msgstr "<div class=\"messages messages--warning\">Du har <strong>@title</strong> åbent i et andet vindue eller fane. Hvis du sletter den nu, vil du miste alle ændringer.</div>"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "<div class=\"messages messages--warning\"><strong>@title</strong> is currently being edited by <strong>@user</strong>. There is a risk of data loss if you proceed with deleting this content.</div>"
-msgstr ""
+msgstr "<div class=\"messages messages--warning\"><strong>@title</strong> bliver lige nu redigeret af <strong>@user</strong>. Der er en risiko for at miste det, som den bruger laver.</div>"
 
 #: 
 msgid "another user"
-msgstr ""
+msgstr "anden bruger"
 
 #: 
 msgctxt "Work Page"
@@ -30460,7 +30439,7 @@ msgstr "Vis alle (@count)"
 
 #: 
 msgid "Custom handling related to Events."
-msgstr ""
+msgstr "Tilpas håndtering relateret til arrangementer"
 
 #: 
 msgid "Functionality related to the admin/editor experience."
@@ -30592,4 +30571,239 @@ msgstr "<div>\n"
 " ({{ field_address_gsearch }})\n"
 "{% endif %}\n"
 "</div>"
+
+#: 
+msgctxt "Search Result"
+msgid "Age"
+msgstr "Alder"
+
+#: 
+msgctxt "Search Result"
+msgid "General audience"
+msgstr "Målgruppe"
+
+#: 
+msgctxt "Search Result"
+msgid "Lix"
+msgstr "Lix"
+
+#: 
+msgctxt "Search Result"
+msgid "Let"
+msgstr "Let"
+
+#: 
+msgctxt "Search Result"
+msgid "Library recommendation"
+msgstr "Anbefalet alder"
+
+#: 
+msgctxt "Search Result"
+msgid "Show all"
+msgstr "Vis alle"
+
+#: 
+msgctxt "Search Result"
+msgid "Show less"
+msgstr "Vis færre"
+
+#: 
+msgctxt "Search Result"
+msgid "On shelf"
+msgstr "På hylden"
+
+#: 
+msgctxt "Search Result"
+msgid "Only show results available at the library now."
+msgstr "Vis kun titler, som har eksemplarer hjemme på hylden."
+
+#: 
+msgctxt "Search Result"
+msgid "Only show results that can always be loaned."
+msgstr "Vis kun digitale titler, der ikke tæller med i din månedlige lånekvote og altid er tilgængelige."
+
+#: 
+msgctxt "Search Result"
+msgid "@hitcount results"
+msgstr "@hitcount resultater"
+
+#: 
+msgctxt "Search Result"
+msgid "Showing all materials"
+msgstr "Viser alle materialer"
+
+#: 
+msgctxt "Search Result"
+msgid "Showing results for"
+msgstr "Viser resultater for"
+
+#: 
+msgctxt "Search Result"
+msgid "Filter materials (@hitcount)"
+msgstr "Filtrer materialer (@hitcount)"
+
+#: 
+msgctxt "advanced search 2"
+msgid "@hitcount results"
+msgstr "@hitcount resultater"
+
+#: 
+msgctxt "simple_oauth.oauth2_scope.mobile_graphql_client:description"
+msgid "Mobile GraphQL Client"
+msgstr "Mobile GraphQL Client"
+
+#: 
+msgctxt "system.action.user_add_role_action.mobile_graphql_client:label"
+msgid "Add the Mobile GraphQL Client role to the selected user(s)"
+msgstr "Add the Mobile GraphQL Client role to the selected user(s)"
+
+#: 
+msgctxt "system.action.user_remove_role_action.mobile_graphql_client:label"
+msgid "Remove the Mobile GraphQL Client role from the selected user(s)"
+msgstr "Remove the Mobile GraphQL Client role from the selected user(s)"
+
+#: 
+msgctxt "user.role.mobile_graphql_client:label"
+msgid "Mobile GraphQL Client"
+msgstr "Mobile GraphQL Client"
+
+#: 
+msgid "PO file handling."
+msgstr ""
+
+#: 
+msgid "Client \"prompt\" may be misconfigured"
+msgstr ""
+
+#: 
+msgid "At least one OpenID Connect client is configured with the \"prompt\" parameter set to \"none\" or without a \"prompt\". This can lead to security vulnerabilities. It is <strong>highly recommended</strong> to change this setting unless you are aware of the risks."
+msgstr ""
+
+#: 
+msgid "Account registration failed. The email address may already be in use or is invalid."
+msgstr ""
+
+#: 
+msgid "Autostart login process"
+msgstr ""
+
+#: 
+msgid "Auto start login process when login, register or password reset page was requested as anonymous."
+msgstr ""
+
+#: 
+msgid "Force replace"
+msgstr ""
+
+#: 
+msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form. The 'Force replace' option behaves like the 'Replace' option but cannot be overridden with the 'showcore' URL parameter."
+msgstr ""
+
+#: 
+msgid "Prompt"
+msgstr ""
+
+#: 
+msgid "Consent"
+msgstr ""
+
+#: 
+msgid "Select account"
+msgstr ""
+
+#: 
+msgid "<strong><em>Please note:</em> This option has security implications.</strong><br />While valid, not selecting a prompt could lead to security issues and is discouraged in most use cases."
+msgstr ""
+
+#: 
+msgid "The \"None\" option cannot be selected with other values."
+msgstr ""
+
+#: 
+msgid "@site_title: frontpage"
+msgstr "@site_title: forside"
+
+#: 
+msgctxt "image.style.event_api_scaled:label"
+msgid "Event API scaled (1920x?)"
+msgstr ""
+
+#: 
+msgid "OpenID Connect client plugins updated: @plugins"
+msgstr ""
+
+#: 
+msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_place:settings:placeholder"
+msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
+msgstr ""
+
+#: 
+msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_place:settings:placeholder"
+msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Share on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Share this page on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Copy link"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Copy link to this page"
+msgstr ""
+
+#: 
+msgctxt "Share buttons"
+msgid "Link copied"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Share on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Share this page on Facebook"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Copy link to this page"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "Share buttons"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "Enable share buttons on material pages"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "If checked, share buttons (Facebook, copy link) will be shown on material/work pages."
+msgstr ""
+
+#: 
+msgctxt "paragraphs.paragraphs_type.share_buttons:label"
+msgid "Share buttons"
+msgstr ""
+
+#: 
+msgctxt "paragraphs.paragraphs_type.share_buttons:description"
+msgid "Displays share buttons for content, allowing users to share via social media or email."
+msgstr ""
 

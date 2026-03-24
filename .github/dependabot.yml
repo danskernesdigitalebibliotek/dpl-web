@@ -24,21 +24,28 @@ updates:
     directory: "/cms"
     open-pull-requests-limit: 20
     groups:
-      drupal-core-minor-major-releases:
+      drupal-core-minor-releases:
         patterns:
+          - "drupal/core"
           - "drupal/core*"
         update-types:
-          - "major"
           - "minor"
       drupal-core-patch-releases:
         patterns:
+          - "drupal/core"
           - "drupal/core*"
         update-types:
           - "patch"
     ignore:
+      # Never attempt automated updates to major Drupal releases.
+      - dependency-name: "drupal/core*"
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
+      # drupal/next 2.1.0 adds draft_enabled to exported Next entity config.
+      - dependency-name: "drupal/next"
+        versions: [">=2.1.0"]
       # Our patches are not compatible with the latest version.
       - dependency-name: "drupal/entity_reference_revisions"
         versions: [">=1.13.0"]
@@ -46,6 +53,9 @@ updates:
       # entity_reference_revisions.
       - dependency-name: "drupal/paragraphs"
         versions: [">1.19.0"]
+      # Drupal 10.6.x breaks the CMS opening-hours Cypress flow.
+      - dependency-name: "drupal/core*"
+        versions: [">=10.6.0"]
     schedule:
       interval: weekly
       day: monday
@@ -83,6 +93,9 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # @typescript-eslint 8.56.0+ pulls eslint-visitor-keys 5.0.1, which breaks the current CMS CI flow.
+      - dependency-name: "@typescript-eslint/*"
+        versions: [">=8.56.0"]
       # Tests fail when running Cypress 15 using task cy:cypress:local.
       - dependency-name: "cypress"
         versions: [ ">=15" ]
@@ -211,6 +224,12 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # @vitejs/plugin-react 6 expects a newer Vite major than the current Go frontend uses.
+      - dependency-name: "@vitejs/plugin-react"
+        versions: [">=6.0.0"]
+      # The Go lint stack still depends on packages that only support ESLint 8/9.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
       - dependency-name: "orval"
         versions: ["^7.13.2"]
       - dependency-name: "cypress"
@@ -271,11 +290,29 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "storybook"
         versions: [">=9"]
+      - dependency-name: "@storybook/react"
+        versions: [">=9.0.0"]
       - dependency-name: "@storybook/react-webpack5"
         versions: [">=9"]
+      - dependency-name: "@storybook/addon-queryparams"
+        versions: [">=9.0.0"]
       - dependency-name: "@chromatic-com/storybook"
         versions: [">=4"]
+      # The current React Cypress stack is not compatible with Cypress 14.4+ or code-coverage 4.
+      - dependency-name: "cypress"
+        versions: [">=14.4.0"]
+      - dependency-name: "@cypress/code-coverage"
+        versions: [">=4.0.0"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
+      # Vitest 3 changes unit-test asset rendering and timer behavior in the React snapshot suite.
+      - dependency-name: "vitest"
+        versions: [">=3.0.0"]
+      # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
+      # eslint-plugin-cypress v6 uses a flat-config shape that the current ESLint setup rejects.
+      - dependency-name: "eslint-plugin-cypress"
+        versions: [">=6.0.0"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]

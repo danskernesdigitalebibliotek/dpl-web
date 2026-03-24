@@ -18,4 +18,4 @@ jobs:
     uses: ./.github/workflows/cms-webmaster-config-workflow.yml
     with:
       trigger-path: 'cms/config/sync/core.extension.yml'
-      target-code: '_dpl_update_install_modules'
+      target-code: '_dpl_update_(un)?install_modules'

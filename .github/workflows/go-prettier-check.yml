@@ -1,17 +1,7 @@
 name: Go / Prettier check
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-    paths:
-      - 'go/**'
-      - '.github/workflows/go-*.yml'
   pull_request:
-    branches:
-      - main
-      - develop
     paths:
       - 'go/**'
       - '.github/workflows/go-*.yml'
@@ -27,8 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          # Make sure the actual branch is checked out when running on pull requests.
-          ref: ${{ github.head_ref }}
           fetch-depth: 0 # 👈 Required to retrieve git history
 
       - uses: actions/setup-node@v6

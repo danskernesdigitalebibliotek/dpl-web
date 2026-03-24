@@ -1,4 +1,3 @@
-import { getDplCmsPublicConfig } from "../config/dpl-cms/dplCmsConfig"
 import { getEnv } from "../config/env"
 import goConfig from "../config/goConfig"
 

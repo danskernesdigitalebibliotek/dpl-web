@@ -1,3 +1,4 @@
+---
 # This workflow takes care of sending translations to POEditor or Github Pages.
 name: CMS / Translate source
 on:
@@ -30,7 +31,9 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # We have branch protection on. To get around it, we use a PAT,
+          # supplied by the DPL Platform Bot.
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -49,7 +52,7 @@ jobs:
       - name: Commit all combined translations
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          file_pattern: ".cms/web/profiles/dpl_cms/translations/*.combined.po"
+          file_pattern: "./cms/web/profiles/dpl_cms/translations/*.combined.po"
           commit_message: New translations were found
       - name: Make Poeditor look for changes in translation strings
         uses: distributhor/workflow-webhook@v3

@@ -3313,16 +3313,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "10.5.6",
+            "version": "10.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "b685b04acbae19cb4fda0a63822ff21e1f743f44"
+                "reference": "cbb75682c431418e35d14bd40be939fb433b2def"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/b685b04acbae19cb4fda0a63822ff21e1f743f44",
-                "reference": "b685b04acbae19cb4fda0a63822ff21e1f743f44",
+                "url": "https://api.github.com/repos/drupal/core/zipball/cbb75682c431418e35d14bd40be939fb433b2def",
+                "reference": "cbb75682c431418e35d14bd40be939fb433b2def",
                 "shasum": ""
             },
             "require": {
@@ -3472,13 +3472,13 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/10.5.6"
+                "source": "https://github.com/drupal/core/tree/10.5.8"
             },
-            "time": "2025-11-12T21:53:53+00:00"
+            "time": "2025-12-09T19:27:53+00:00"
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "10.5.6",
+            "version": "10.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -3522,22 +3522,22 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.5.6"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.6.0-rc1"
             },
             "time": "2024-08-22T14:31:30+00:00"
         },
         {
             "name": "drupal/core-recommended",
-            "version": "10.5.6",
+            "version": "10.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-recommended.git",
-                "reference": "896d1384f1827532e4ea995003e17c94adfa446f"
+                "reference": "aa636a2d612926cc3f15879fb9abddf1b5aa4b15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/896d1384f1827532e4ea995003e17c94adfa446f",
-                "reference": "896d1384f1827532e4ea995003e17c94adfa446f",
+                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/aa636a2d612926cc3f15879fb9abddf1b5aa4b15",
+                "reference": "aa636a2d612926cc3f15879fb9abddf1b5aa4b15",
                 "shasum": ""
             },
             "require": {
@@ -3546,7 +3546,7 @@
                 "doctrine/annotations": "~1.14.4",
                 "doctrine/deprecations": "~1.1.5",
                 "doctrine/lexer": "~2.1.1",
-                "drupal/core": "10.5.6",
+                "drupal/core": "10.5.8",
                 "egulias/email-validator": "~4.0.4",
                 "guzzlehttp/guzzle": "~7.9.3",
                 "guzzlehttp/promises": "~2.2.0",
@@ -3607,9 +3607,9 @@
             ],
             "description": "Core and its dependencies with known-compatible minor versions. Require this project INSTEAD OF drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-recommended/tree/10.5.6"
+                "source": "https://github.com/drupal/core-recommended/tree/10.5.8"
             },
-            "time": "2025-11-12T21:53:53+00:00"
+            "time": "2025-12-09T19:27:53+00:00"
         },
         {
             "name": "drupal/crop",
@@ -9165,17 +9165,17 @@
         },
         {
             "name": "drupal/webform",
-            "version": "6.2.9",
+            "version": "6.2.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/webform.git",
-                "reference": "6.2.9"
+                "reference": "6.2.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/webform-6.2.9.zip",
-                "reference": "6.2.9",
-                "shasum": "650752c3cc6d0144c6f378b8d25d45c083e23600"
+                "url": "https://ftp.drupal.org/files/projects/webform-6.2.10.zip",
+                "reference": "6.2.10",
+                "shasum": "82594fde5a3041867903a93f69f447b29bf3115f"
             },
             "require": {
                 "drupal/core": "^10.2",
@@ -9183,7 +9183,7 @@
             },
             "require-dev": {
                 "drupal/address": "1.x-dev",
-                "drupal/bootstrap": "3.x-dev",
+                "drupal/bootstrap": "^3.0",
                 "drupal/captcha": "^1 || ^2",
                 "drupal/chosen": "3.0.x-dev",
                 "drupal/ckeditor": "1.0.x-dev",
@@ -9225,8 +9225,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.2.9",
-                    "datestamp": "1733851063",
+                    "version": "6.2.10",
+                    "datestamp": "1773926566",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -11105,16 +11105,16 @@
         },
         {
             "name": "mck89/peast",
-            "version": "v1.17.4",
+            "version": "v1.17.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "c6a63f32410d2e4ee2cd20fe94b35af147fb852d"
+                "reference": "e19a8bd896b7f04941a38fd38a140c9a6531c84f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/c6a63f32410d2e4ee2cd20fe94b35af147fb852d",
-                "reference": "c6a63f32410d2e4ee2cd20fe94b35af147fb852d",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/e19a8bd896b7f04941a38fd38a140c9a6531c84f",
+                "reference": "e19a8bd896b7f04941a38fd38a140c9a6531c84f",
                 "shasum": ""
             },
             "require": {
@@ -11127,7 +11127,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17.4-dev"
+                    "dev-master": "1.17.5-dev"
                 }
             },
             "autoload": {
@@ -11148,9 +11148,9 @@
             "description": "Peast is PHP library that generates AST for JavaScript code",
             "support": {
                 "issues": "https://github.com/mck89/peast/issues",
-                "source": "https://github.com/mck89/peast/tree/v1.17.4"
+                "source": "https://github.com/mck89/peast/tree/v1.17.5"
             },
-            "time": "2025-10-10T12:53:17+00:00"
+            "time": "2026-03-15T10:47:07+00:00"
         },
         {
             "name": "mglaman/phpstan-drupal",
@@ -11868,7 +11868,6 @@
                 "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Console_Getopt",
                 "source": "https://github.com/pear/Console_Getopt"
             },
-            "abandoned": true,
             "time": "2019-11-20T18:27:48+00:00"
         },
         {
@@ -12138,16 +12137,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.6.6",
+            "version": "5.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "5cee1d3dfc2d2aa6599834520911d246f656bcb8"
+                "reference": "31a105931bc8ffa3a123383829772e832fd8d903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/5cee1d3dfc2d2aa6599834520911d246f656bcb8",
-                "reference": "5cee1d3dfc2d2aa6599834520911d246f656bcb8",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/31a105931bc8ffa3a123383829772e832fd8d903",
+                "reference": "31a105931bc8ffa3a123383829772e832fd8d903",
                 "shasum": ""
             },
             "require": {
@@ -12196,9 +12195,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.6"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.7"
             },
-            "time": "2025-12-22T21:13:58+00:00"
+            "time": "2026-03-18T20:47:46+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
