@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-24 14:07+0100\n"
-"PO-Revision-Date: 2026-03-24 14:07+0100\n"
+"POT-Creation-Date: 2026-03-25 12:53+0100\n"
+"PO-Revision-Date: 2026-03-25 12:53+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21182,7 +21182,7 @@ msgid "Mobile GraphQL Client"
 msgstr "Mobile GraphQL Client"
 
 msgid "PO file handling."
-msgstr ""
+msgstr "PO fil handling."
 
 msgid "Client \"prompt\" may be misconfigured"
 msgstr ""
@@ -21226,7 +21226,7 @@ msgid "Consent"
 msgstr ""
 
 msgid "Select account"
-msgstr ""
+msgstr "Vælg konto"
 
 msgid ""
 "<strong><em>Please note:</em> This option has security "
@@ -21235,7 +21235,7 @@ msgid ""
 msgstr ""
 
 msgid "The \"None\" option cannot be selected with other values."
-msgstr ""
+msgstr "Ingen kan ikke vælges med andre værdier."
 
 msgid "@site_title: frontpage"
 msgstr "@site_title: forside"
@@ -21245,47 +21245,49 @@ msgstr ""
 
 msgctxt "Share buttons"
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Del på Facebook"
 
 msgctxt "Share buttons"
 msgid "Share this page on Facebook"
-msgstr ""
+msgstr "Del denne side på Facebook"
 
 msgctxt "Share buttons"
 msgid "Copy link"
-msgstr ""
+msgstr "Kopier link"
 
 msgctxt "Share buttons"
 msgid "Copy link to this page"
-msgstr ""
+msgstr "Kopier link til denne side"
 
 msgctxt "Share buttons"
 msgid "Link copied"
-msgstr ""
+msgstr "Link er kopieret"
 
 msgctxt "Work Page"
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Del på Facebook"
 
 msgctxt "Work Page"
 msgid "Share this page on Facebook"
-msgstr ""
+msgstr "Del denne side på Facebook"
 
 msgctxt "Work Page"
 msgid "Copy link to this page"
-msgstr ""
+msgstr "Kopier link til denne side"
 
 msgctxt "Library Agency Configuration"
 msgid "Share buttons"
-msgstr ""
+msgstr "Deleknapper"
 
 msgctxt "Library Agency Configuration"
 msgid "Enable share buttons on material pages"
-msgstr ""
+msgstr "Tilføj deleknapper på værkvisningen"
 
 msgctxt "Library Agency Configuration"
 msgid ""
 "If checked, share buttons (Facebook, copy link) will be shown on "
 "material/work pages."
 msgstr ""
+"Hvis denne er slået til, så vil deleknapperne blive vist på "
+"værkvisningen."
 
