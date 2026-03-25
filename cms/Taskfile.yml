@@ -128,6 +128,8 @@ tasks:
       - "{{ .LAGOON_DIR }}/**/*"
       - "{{ .LAGOON_DIR }}/*"
       - "web/sites/sites.php"
+    status:
+      - '[ "${SKIP_DOCKER_BUILD}" = "true" ]'
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} build
 
