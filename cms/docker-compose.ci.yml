@@ -52,6 +52,11 @@ services:
 
   cli:
     links: *links
+    # Overlay vendor with a named volume so Docker initializes it from the
+    # pre-built image content. This avoids a runtime composer install since
+    # the image already contains all dependencies.
+    volumes:
+      - "vendor:/app/vendor"
     environment:
       CI: true
       LAGOON_ENVIRONMENT_TYPE: ci
@@ -60,6 +65,11 @@ services:
     depends_on:
       - wiremock
     links: *links
+    volumes:
+      - "vendor:/app/vendor"
     environment:
       CI: true
       LAGOON_ENVIRONMENT_TYPE: ci
+
+volumes:
+  vendor: {}

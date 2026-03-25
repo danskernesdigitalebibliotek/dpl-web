@@ -30,6 +30,11 @@ jobs:
           fetch-depth: 0
       - name: Build images
         run: docker compose -f docker-compose.yml -f docker-compose.ci.yml build
+      - name: Add dev dependencies to CLI image
+        run: |
+          docker run --name cli-dev cms-cli composer install --no-interaction --no-progress
+          docker commit cli-dev cms-cli
+          docker rm cli-dev
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -238,6 +243,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Run Lighthouse test
         run: task ci:lighthouse
       - name: Archive logs
@@ -282,6 +288,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Run Pa11y
         run: task ci:pa11y
       - name: Archive screenshots
@@ -327,6 +334,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Run Cypress
         run: task ci:cypress:mapped
       - name: Archive videoes
@@ -378,6 +386,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Run Cypress
         run: task ci:cypress:unmapped
       - name: Archive videoes
@@ -429,6 +438,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Run Cypress
         run: task ci:cypress:webmaster
       - name: Archive videoes
@@ -572,6 +582,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Validate specification
         run: task ci:openapi:validate
       - name: Download current specification
@@ -621,6 +632,7 @@ jobs:
         run: task ci:reset:clean
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Extract GraphQL schema and generate client
         run: task dev:codegen:bnf-graphql
       - name: Ensure GraphQL client code has not drifted
@@ -662,6 +674,7 @@ jobs:
         run: task ci:reset
         env:
           SKIP_DOCKER_BUILD: "true"
+          SKIP_COMPOSER_INSTALL: "true"
       - name: Export configuration
         run: task dev:cli -- drush config-export -y
       - name: Check for uncommited configuration after install

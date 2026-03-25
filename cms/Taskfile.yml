@@ -201,11 +201,11 @@ tasks:
       # Start local environment.
       - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:start'
       # Build site.
-      - task dev:cli -- composer install
+      - '{{ if ne .SKIP_COMPOSER_INSTALL "true" }}task dev:cli -- composer install{{ end }}'
       # Always reinstall packages tracking develop builds. The content of such
       # packages may change without composer package version changes so ensure
       # we have the latest version.
-      - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
+      - '{{ if ne .SKIP_COMPOSER_INSTALL "true" }}task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache{{ end }}'
       # (Re)run Drupal scaffolding.
       - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
