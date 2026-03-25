@@ -129,7 +129,7 @@ tasks:
       - "{{ .LAGOON_DIR }}/*"
       - "web/sites/sites.php"
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} build
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} build --build-arg SKIP_COMPOSER_INSTALL=true
 
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
