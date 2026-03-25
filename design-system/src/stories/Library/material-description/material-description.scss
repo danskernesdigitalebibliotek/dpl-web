@@ -15,17 +15,18 @@
 
 .material-description__heading {
   @include typography($typo__h4);
-  max-width: 800px;
+  max-width: $article-max-width;
 }
 
 .material-description__content {
   @include typography($typo__body-large);
   line-height: 160%;
-  max-width: 800px;
+  max-width: $article-max-width;
 }
 
 .material-description__links {
   display: flex;
   flex-direction: column;
   gap: $s-md;
+  max-width: $article-max-width;
 }
