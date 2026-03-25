@@ -30669,7 +30669,7 @@ msgstr "Mobile GraphQL Client"
 
 #: 
 msgid "PO file handling."
-msgstr ""
+msgstr "PO fil handling."
 
 #: 
 msgid "Client \"prompt\" may be misconfigured"
@@ -30709,7 +30709,7 @@ msgstr ""
 
 #: 
 msgid "Select account"
-msgstr ""
+msgstr "Vælg konto"
 
 #: 
 msgid "<strong><em>Please note:</em> This option has security implications.</strong><br />While valid, not selecting a prompt could lead to security issues and is discouraged in most use cases."
@@ -30717,7 +30717,7 @@ msgstr ""
 
 #: 
 msgid "The \"None\" option cannot be selected with other values."
-msgstr ""
+msgstr "Ingen kan ikke vælges med andre værdier."
 
 #: 
 msgid "@site_title: frontpage"
@@ -30735,75 +30735,75 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_place:settings:placeholder"
 msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
-msgstr ""
+msgstr "Fx et specifik lokale såsom 'Mødelokale 1' eller '4. sal'"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_place:settings:placeholder"
 msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
-msgstr ""
+msgstr "Fx et specifik lokale såsom 'Mødelokale 1' eller '4. sal'"
 
 #: 
 msgctxt "Share buttons"
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Del på Facebook"
 
 #: 
 msgctxt "Share buttons"
 msgid "Share this page on Facebook"
-msgstr ""
+msgstr "Del denne side på Facebook"
 
 #: 
 msgctxt "Share buttons"
 msgid "Copy link"
-msgstr ""
+msgstr "Kopier link"
 
 #: 
 msgctxt "Share buttons"
 msgid "Copy link to this page"
-msgstr ""
+msgstr "Kopier link til denne side"
 
 #: 
 msgctxt "Share buttons"
 msgid "Link copied"
-msgstr ""
+msgstr "Link er kopieret"
 
 #: 
 msgctxt "Work Page"
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Del på Facebook"
 
 #: 
 msgctxt "Work Page"
 msgid "Share this page on Facebook"
-msgstr ""
+msgstr "Del denne side på Facebook"
 
 #: 
 msgctxt "Work Page"
 msgid "Copy link to this page"
-msgstr ""
+msgstr "Kopier link til denne side"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Share buttons"
-msgstr ""
+msgstr "Deleknapper"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Enable share buttons on material pages"
-msgstr ""
+msgstr "Tilføj deleknapper på værkvisningen"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "If checked, share buttons (Facebook, copy link) will be shown on material/work pages."
-msgstr ""
+msgstr "Hvis denne er slået til, så vil deleknapperne blive vist på værkvisningen."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.share_buttons:label"
 msgid "Share buttons"
-msgstr ""
+msgstr "Deleknapper"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.share_buttons:description"
 msgid "Displays share buttons for content, allowing users to share via social media or email."
-msgstr ""
+msgstr "Viser deleknapper på indhold, så brugerne kan dele via sociale medier eller andre kanaler."
 
