@@ -10,6 +10,7 @@ import {
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
 import { modalStore } from "@/store/modal.store"
 import { sheetStore } from "@/store/sheet.store"
 
@@ -52,6 +53,7 @@ const WorkPageButtonsLoggedOut = ({
           theme={"primary"}
           disabled={!identifier}
           onClick={() => {
+            setLoginRedirectCookie(window.location.pathname)
             openSheet({
               sheetType: "LoginSheet",
             })
@@ -81,6 +83,7 @@ const WorkPageButtonsLoggedOut = ({
           theme={"primary"}
           disabled={!identifier}
           onClick={() => {
+            setLoginRedirectCookie(window.location.pathname)
             openSheet({
               sheetType: "LoginSheet",
             })
@@ -110,6 +113,7 @@ const WorkPageButtonsLoggedOut = ({
           theme={"primary"}
           disabled={!identifier}
           onClick={() => {
+            setLoginRedirectCookie(window.location.pathname)
             openSheet({
               sheetType: "LoginSheet",
             })

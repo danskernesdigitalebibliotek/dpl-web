@@ -4,6 +4,7 @@ import type { IntrospectionResponse } from "openid-client"
 
 import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
+import { getAndClearLoginRedirectUrl } from "@/lib/helpers/login-redirect"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
@@ -163,6 +164,10 @@ export async function GET(request: NextRequest) {
 
     await session.save()
     console.info(`unilogin success - uniid: ${introspect.uniid} logged in successfully`)
+    const loginRedirectUrl = await getAndClearLoginRedirectUrl()
+    if (loginRedirectUrl) {
+      return NextResponse.redirect(`${getEnv("APP_URL")}${loginRedirectUrl}`)
+    }
     return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
   } catch (error) {
     console.error("unilogin error", error, loginContext)
