@@ -52,12 +52,23 @@ services:
       VIRTUAL_PORT: 80
 
   cli:
+    build:
+      context: .
+      dockerfile: lagoon/cli.ci.dockerfile
     links: *links
     environment:
       CI: true
       LAGOON_ENVIRONMENT_TYPE: ci
 
+  nginx:
+    build:
+      context: .
+      dockerfile: lagoon/nginx.ci.dockerfile
+
   php:
+    build:
+      context: .
+      dockerfile: lagoon/php.ci.dockerfile
     depends_on:
       - wiremock
     links: *links
