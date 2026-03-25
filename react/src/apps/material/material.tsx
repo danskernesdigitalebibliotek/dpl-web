@@ -3,8 +3,6 @@ import Receipt from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/
 import VariousIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Various.svg";
 import React, { useEffect, useState } from "react";
 import { useDeepCompareEffect, useUpdateEffect } from "react-use";
-import DisclosureControllable from "../../components/Disclosures/DisclosureControllable";
-import DisclosureSummary from "../../components/Disclosures/DisclosureSummary";
 import DigitalModal from "../../components/material/digital-modal/DigitalModal";
 import InfomediaModal from "../../components/material/infomedia/InfomediaModal";
 import {
