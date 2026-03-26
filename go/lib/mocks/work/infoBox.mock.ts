@@ -19,11 +19,19 @@ const workMock = {
         display: "e-bøger",
         code: "EBOOKS",
       },
+      materialTypeSpecific: {
+        code: "EBOOK",
+        display: "e-bog",
+      },
     },
     {
       materialTypeGeneral: {
         display: "lydbøger",
         code: "AUDIO_BOOKS",
+      },
+      materialTypeSpecific: {
+        code: "AUDIO_BOOK_ONLINE",
+        display: "lydbog (online)",
       },
     },
   ],
@@ -52,6 +60,10 @@ const workMock = {
             materialTypeGeneral: {
               display: "lydbøger",
               code: "AUDIO_BOOKS",
+            },
+            materialTypeSpecific: {
+              code: "AUDIO_BOOK_ONLINE",
+              display: "lydbog (online)",
             },
           },
         ],
@@ -137,6 +149,10 @@ const workMock = {
               display: "e-bøger",
               code: "EBOOKS",
             },
+            materialTypeSpecific: {
+              code: "EBOOK",
+              display: "e-bog",
+            },
           },
         ],
         accessTypes: [],
@@ -194,6 +210,7 @@ const workMock = {
         },
         genreAndForm: ["roman", "fantasy"],
         publisher: ["Flachs"],
+        cover: coverFactory.build(),
         contributors: [
           {
             display: "Trine Bech",
@@ -222,6 +239,10 @@ const workMock = {
           materialTypeGeneral: {
             display: "lydbøger",
             code: "AUDIO_BOOKS",
+          },
+          materialTypeSpecific: {
+            code: "AUDIO_BOOK_ONLINE",
+            display: "lydbog (online)",
           },
         },
       ],

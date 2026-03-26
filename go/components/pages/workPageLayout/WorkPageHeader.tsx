@@ -10,7 +10,9 @@ import {
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
+import MaterialTypeSelect, {
+  MaterialTypeSelectOption,
+} from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
 import useSession from "@/hooks/useSession"
 import {
   ManifestationWorkPageFragment,
@@ -41,7 +43,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   // get the material types from the manifestations
   const materialTypes = sortedManifestations.map(manifestation => {
-    return manifestation.materialTypes[0].materialTypeGeneral
+    return manifestation.materialTypes[0].materialTypeSpecific
   })
 
   const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
@@ -60,7 +62,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const covers = selectedManifestation.cover
 
-  const onOptionSelect = (optionSelected: SlideSelectOption) => {
+  const onOptionSelect = (optionSelected: MaterialTypeSelectOption) => {
     const url = resolveUrl({
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
@@ -68,15 +70,14 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     router.push(url, { scroll: false })
   }
 
-  const slideSelectOptions = workMaterialTypesWithDisplayName
+  const materialTypeOptions = workMaterialTypesWithDisplayName
 
   const selectedManifestationMaterialTypeCode =
-    selectedManifestation?.materialTypes[0].materialTypeGeneral.code
+    selectedManifestation?.materialTypes[0].materialTypeSpecific.code
 
   const manifestationKey = selectedManifestation?.pid
 
-  const isSelectedManifestationPodcast =
-    selectedManifestationMaterialTypeCode === "PODCASTS" || false
+  const isSelectedManifestationPodcast = selectedManifestationMaterialTypeCode === "PODCAST"
 
   const isSelectedManifestationCostFree = !!publizonData?.product?.costFree
 
@@ -104,10 +105,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               <CoverPicture withTilt={true} alt="Forsidebillede på værket" covers={covers} />
             )}
           </motion.div>
-          {slideSelectOptions && (
+          {materialTypeOptions && (
             <div className="flex w-full justify-center pt-12">
-              <SlideSelect
-                options={slideSelectOptions}
+              <MaterialTypeSelect
+                options={materialTypeOptions}
                 selected={selectedManifestationMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
