@@ -3477,13 +3477,13 @@ export const useSuspenseGetArticleByPathQuery = <
     
     return useSuspenseQuery<GetArticleByPathQuery, TError, TData>(
       {
-    queryKey: ['getArticleByPathSuspense', variables],
+    queryKey: ['getArticleByPath', variables],
     queryFn: fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetArticleByPathQuery.getKey = (variables: GetArticleByPathQueryVariables) => ['getArticleByPathSuspense', variables];
+useSuspenseGetArticleByPathQuery.getKey = (variables: GetArticleByPathQueryVariables) => ['getArticleByPath', variables];
 
 
 useGetArticleByPathQuery.fetcher = (variables: GetArticleByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables, options);
@@ -3548,13 +3548,13 @@ export const useSuspenseGetCategoriesQuery = <
     
     return useSuspenseQuery<GetCategoriesQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getCategoriesSuspense'] : ['getCategoriesSuspense', variables],
+    queryKey: variables === undefined ? ['getCategories'] : ['getCategories', variables],
     queryFn: fetcher<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetCategoriesQuery.getKey = (variables?: GetCategoriesQueryVariables) => variables === undefined ? ['getCategoriesSuspense'] : ['getCategoriesSuspense', variables];
+useSuspenseGetCategoriesQuery.getKey = (variables?: GetCategoriesQueryVariables) => variables === undefined ? ['getCategories'] : ['getCategories', variables];
 
 
 useGetCategoriesQuery.fetcher = (variables?: GetCategoriesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, variables, options);
@@ -3613,13 +3613,13 @@ export const useSuspenseGetCategoryPageByPathQuery = <
     
     return useSuspenseQuery<GetCategoryPageByPathQuery, TError, TData>(
       {
-    queryKey: ['getCategoryPageByPathSuspense', variables],
+    queryKey: ['getCategoryPageByPath', variables],
     queryFn: fetcher<GetCategoryPageByPathQuery, GetCategoryPageByPathQueryVariables>(GetCategoryPageByPathDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetCategoryPageByPathQuery.getKey = (variables: GetCategoryPageByPathQueryVariables) => ['getCategoryPageByPathSuspense', variables];
+useSuspenseGetCategoryPageByPathQuery.getKey = (variables: GetCategoryPageByPathQueryVariables) => ['getCategoryPageByPath', variables];
 
 
 useGetCategoryPageByPathQuery.fetcher = (variables: GetCategoryPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetCategoryPageByPathQuery, GetCategoryPageByPathQueryVariables>(GetCategoryPageByPathDocument, variables, options);
@@ -3667,13 +3667,13 @@ export const useSuspenseGetDplCmsPrivateConfigurationQuery = <
     
     return useSuspenseQuery<GetDplCmsPrivateConfigurationQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getDplCmsPrivateConfigurationSuspense'] : ['getDplCmsPrivateConfigurationSuspense', variables],
+    queryKey: variables === undefined ? ['getDplCmsPrivateConfiguration'] : ['getDplCmsPrivateConfiguration', variables],
     queryFn: fetcher<GetDplCmsPrivateConfigurationQuery, GetDplCmsPrivateConfigurationQueryVariables>(GetDplCmsPrivateConfigurationDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetDplCmsPrivateConfigurationQuery.getKey = (variables?: GetDplCmsPrivateConfigurationQueryVariables) => variables === undefined ? ['getDplCmsPrivateConfigurationSuspense'] : ['getDplCmsPrivateConfigurationSuspense', variables];
+useSuspenseGetDplCmsPrivateConfigurationQuery.getKey = (variables?: GetDplCmsPrivateConfigurationQueryVariables) => variables === undefined ? ['getDplCmsPrivateConfiguration'] : ['getDplCmsPrivateConfiguration', variables];
 
 
 useGetDplCmsPrivateConfigurationQuery.fetcher = (variables?: GetDplCmsPrivateConfigurationQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetDplCmsPrivateConfigurationQuery, GetDplCmsPrivateConfigurationQueryVariables>(GetDplCmsPrivateConfigurationDocument, variables, options);
@@ -3727,13 +3727,13 @@ export const useSuspenseGetDplCmsPublicConfigurationQuery = <
     
     return useSuspenseQuery<GetDplCmsPublicConfigurationQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getDplCmsPublicConfigurationSuspense'] : ['getDplCmsPublicConfigurationSuspense', variables],
+    queryKey: variables === undefined ? ['getDplCmsPublicConfiguration'] : ['getDplCmsPublicConfiguration', variables],
     queryFn: fetcher<GetDplCmsPublicConfigurationQuery, GetDplCmsPublicConfigurationQueryVariables>(GetDplCmsPublicConfigurationDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetDplCmsPublicConfigurationQuery.getKey = (variables?: GetDplCmsPublicConfigurationQueryVariables) => variables === undefined ? ['getDplCmsPublicConfigurationSuspense'] : ['getDplCmsPublicConfigurationSuspense', variables];
+useSuspenseGetDplCmsPublicConfigurationQuery.getKey = (variables?: GetDplCmsPublicConfigurationQueryVariables) => variables === undefined ? ['getDplCmsPublicConfiguration'] : ['getDplCmsPublicConfiguration', variables];
 
 
 useGetDplCmsPublicConfigurationQuery.fetcher = (variables?: GetDplCmsPublicConfigurationQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetDplCmsPublicConfigurationQuery, GetDplCmsPublicConfigurationQueryVariables>(GetDplCmsPublicConfigurationDocument, variables, options);
@@ -3803,13 +3803,13 @@ export const useSuspenseGetPageByPathQuery = <
     
     return useSuspenseQuery<GetPageByPathQuery, TError, TData>(
       {
-    queryKey: ['getPageByPathSuspense', variables],
+    queryKey: ['getPageByPath', variables],
     queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPathSuspense', variables];
+useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPath', variables];
 
 
 useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
@@ -3866,13 +3866,13 @@ export const useSuspenseGetPreviewPageByIddQuery = <
     
     return useSuspenseQuery<GetPreviewPageByIddQuery, TError, TData>(
       {
-    queryKey: ['getPreviewPageByIddSuspense', variables],
+    queryKey: ['getPreviewPageByIdd', variables],
     queryFn: fetcher<GetPreviewPageByIddQuery, GetPreviewPageByIddQueryVariables>(GetPreviewPageByIddDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetPreviewPageByIddQuery.getKey = (variables: GetPreviewPageByIddQueryVariables) => ['getPreviewPageByIddSuspense', variables];
+useSuspenseGetPreviewPageByIddQuery.getKey = (variables: GetPreviewPageByIddQueryVariables) => ['getPreviewPageByIdd', variables];
 
 
 useGetPreviewPageByIddQuery.fetcher = (variables: GetPreviewPageByIddQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPreviewPageByIddQuery, GetPreviewPageByIddQueryVariables>(GetPreviewPageByIddDocument, variables, options);
@@ -3920,13 +3920,13 @@ export const useSuspenseGetAdgangsplatformenLibraryTokenQuery = <
     
     return useSuspenseQuery<GetAdgangsplatformenLibraryTokenQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getAdgangsplatformenLibraryTokenSuspense'] : ['getAdgangsplatformenLibraryTokenSuspense', variables],
+    queryKey: variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables],
     queryFn: fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetAdgangsplatformenLibraryTokenQuery.getKey = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenLibraryTokenSuspense'] : ['getAdgangsplatformenLibraryTokenSuspense', variables];
+useSuspenseGetAdgangsplatformenLibraryTokenQuery.getKey = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables];
 
 
 useGetAdgangsplatformenLibraryTokenQuery.fetcher = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables, options);
@@ -3974,13 +3974,13 @@ export const useSuspenseGetAdgangsplatformenUserTokenQuery = <
     
     return useSuspenseQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getAdgangsplatformenUserTokenSuspense'] : ['getAdgangsplatformenUserTokenSuspense', variables],
+    queryKey: variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables],
     queryFn: fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetAdgangsplatformenUserTokenQuery.getKey = (variables?: GetAdgangsplatformenUserTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenUserTokenSuspense'] : ['getAdgangsplatformenUserTokenSuspense', variables];
+useSuspenseGetAdgangsplatformenUserTokenQuery.getKey = (variables?: GetAdgangsplatformenUserTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables];
 
 
 useGetAdgangsplatformenUserTokenQuery.fetcher = (variables?: GetAdgangsplatformenUserTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables, options);
@@ -4025,13 +4025,13 @@ export const useSuspenseGetLoginUrlsQuery = <
     
     return useSuspenseQuery<GetLoginUrlsQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getLoginUrlsSuspense'] : ['getLoginUrlsSuspense', variables],
+    queryKey: variables === undefined ? ['getLoginUrls'] : ['getLoginUrls', variables],
     queryFn: fetcher<GetLoginUrlsQuery, GetLoginUrlsQueryVariables>(GetLoginUrlsDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetLoginUrlsQuery.getKey = (variables?: GetLoginUrlsQueryVariables) => variables === undefined ? ['getLoginUrlsSuspense'] : ['getLoginUrlsSuspense', variables];
+useSuspenseGetLoginUrlsQuery.getKey = (variables?: GetLoginUrlsQueryVariables) => variables === undefined ? ['getLoginUrls'] : ['getLoginUrls', variables];
 
 
 useGetLoginUrlsQuery.fetcher = (variables?: GetLoginUrlsQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetLoginUrlsQuery, GetLoginUrlsQueryVariables>(GetLoginUrlsDocument, variables, options);
@@ -4076,13 +4076,13 @@ export const useSuspenseGetLogoutUrlsQuery = <
     
     return useSuspenseQuery<GetLogoutUrlsQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['getLogoutUrlsSuspense'] : ['getLogoutUrlsSuspense', variables],
+    queryKey: variables === undefined ? ['getLogoutUrls'] : ['getLogoutUrls', variables],
     queryFn: fetcher<GetLogoutUrlsQuery, GetLogoutUrlsQueryVariables>(GetLogoutUrlsDocument, variables),
     ...options
   }
     )};
 
-useSuspenseGetLogoutUrlsQuery.getKey = (variables?: GetLogoutUrlsQueryVariables) => variables === undefined ? ['getLogoutUrlsSuspense'] : ['getLogoutUrlsSuspense', variables];
+useSuspenseGetLogoutUrlsQuery.getKey = (variables?: GetLogoutUrlsQueryVariables) => variables === undefined ? ['getLogoutUrls'] : ['getLogoutUrls', variables];
 
 
 useGetLogoutUrlsQuery.fetcher = (variables?: GetLogoutUrlsQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetLogoutUrlsQuery, GetLogoutUrlsQueryVariables>(GetLogoutUrlsDocument, variables, options);
