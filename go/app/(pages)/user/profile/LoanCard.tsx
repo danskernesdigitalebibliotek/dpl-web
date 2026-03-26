@@ -5,17 +5,14 @@ import { useEffect } from "react"
 
 import {
   getManifestationMaterialTypeIcon,
-  isManifestationAudioBook,
-  isManifestationEbook,
-  isManifestationPodcast,
+  isAudioMaterialType,
+  isEbookMaterialType,
+  isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
-import {
-  ManifestationSearchPageTeaserFragment,
-  ManifestationWorkPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
@@ -47,9 +44,9 @@ const LoanCard = ({
   const today = new Date()
   const daysUntil = differenceInDays(targetDate, today)
 
-  const isCostFree =
-    dataProducts?.product?.costFree ||
-    isManifestationPodcast(manifestation as ManifestationWorkPageFragment)
+  const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
+
+  const isCostFree = dataProducts?.product?.costFree || isPodcastMaterialType(materialTypeCode)
 
   useEffect(() => {
     // If products are not loaded yet, we don't want to set the loans
@@ -58,14 +55,14 @@ const LoanCard = ({
     }
     // TODO: Maybe we could move this logic to the parent component (?)
     if (!isCostFree) {
-      if (isManifestationAudioBook(manifestation as ManifestationWorkPageFragment)) {
+      if (isAudioMaterialType(materialTypeCode)) {
         setAudioLoans(prev =>
           prev.includes(String(manifestationIsbn))
             ? prev
             : [...prev, manifestationIsbn || "unknown isbn"]
         )
       }
-      if (isManifestationEbook(manifestation as ManifestationWorkPageFragment)) {
+      if (isEbookMaterialType(materialTypeCode)) {
         setEbookLoans(prev =>
           prev.includes(String(manifestationIsbn))
             ? prev
@@ -99,9 +96,7 @@ const LoanCard = ({
               className="select-none"
             />
             <MaterialTypeIconWrapper
-              iconName={getManifestationMaterialTypeIcon(
-                manifestation as ManifestationWorkPageFragment
-              )}
+              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
               className={cn(
                 "relative z-10 mx-auto -mt-14 outline-1",
                 isCostFree

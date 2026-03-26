@@ -55,8 +55,8 @@ describe("Create loan UI Tests", () => {
     // Click the second slide select option
     cy.get("[data-cy='slide-select-option']").eq(1).click()
 
-    // Find the loan ebook button using its text
-    cy.contains("Lån e-bog").click()
+    // Find the loan audiobook button using its text
+    cy.contains("Lån lydbog").click()
 
     const mockedCallbackUrl =
       "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
@@ -105,7 +105,7 @@ describe("Create loan UI Tests", () => {
     cy.wait(1000)
 
     // Return to material page
-    cy.visit("/work/work-of%3A800010-katalog%3A99122258315905763?type=EBOOKS")
+    cy.visit("/work/work-of%3A800010-katalog%3A99122258315905763?type=EBOOK")
 
     // Mock SOAP create loan call on unilogin client side
     cy.mockServerSoap({

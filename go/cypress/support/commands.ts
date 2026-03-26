@@ -12,7 +12,8 @@ type InterceptGraphqlParams = {
   /**
    * The fishery data to use for response
    */
-  data?: object
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: any
   /**
    * The status code to return (defaults to 200)
    */

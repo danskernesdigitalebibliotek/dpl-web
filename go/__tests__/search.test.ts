@@ -22,8 +22,8 @@ type Facets = {
 }
 
 export const facets: Facets = {
-  MATERIALTYPESGENERAL: {
-    filter: "materialTypesGeneral",
+  MATERIALTYPESSPECIFIC: {
+    filter: "materialTypesSpecific",
     translation: "Type",
   },
   MAINLANGUAGES: {
@@ -58,7 +58,7 @@ describe("Facet functionality", () => {
     goConfig.mockReturnValue(facets)
     const machineNames = getFacetMachineNames()
     expect(machineNames).toStrictEqual([
-      "MATERIALTYPESGENERAL",
+      "MATERIALTYPESSPECIFIC",
       "MAINLANGUAGES",
       "AGE",
       "LIX",
@@ -68,7 +68,7 @@ describe("Facet functionality", () => {
 
   it("transformSearchParamsIntoFilters should return an object with facet terms grouped by facet machine names", () => {
     const searchParams = new URLSearchParams()
-    searchParams.append("materialTypesGeneral", "Book")
+    searchParams.append("materialTypesSpecific", "Book")
     searchParams.append("mainLanguages", "Danish")
     searchParams.append("mainLanguages", "English")
     searchParams.append("age", "Adult")
@@ -78,7 +78,7 @@ describe("Facet functionality", () => {
     searchParams.append("subjects", "Math")
 
     const facetFilters = {
-      materialTypesGeneral: ["Book"],
+      materialTypesSpecific: ["Book"],
       mainLanguages: ["Danish", "English"],
       age: ["Adult"],
       lixRange: ["0-10", "11-20"],
@@ -97,14 +97,8 @@ describe("Facet functionality", () => {
   it("correctFacetNames should translate the facet names to input filter valid names", () => {
     const facets = [
       {
-        name: "materialTypesGeneral",
-        values: [
-          {
-            key: "podcasts",
-            term: "podcasts",
-            score: 179,
-          },
-        ],
+        name: "materialTypesSpecific",
+        values: [{ key: "podcast", term: "podcast", score: 500 }],
       },
       {
         name: "mainLanguages",
@@ -152,14 +146,8 @@ describe("Facet functionality", () => {
 
     expect(result).toStrictEqual([
       {
-        name: "materialTypesGeneral",
-        values: [
-          {
-            key: "podcasts",
-            term: "podcasts",
-            score: 179,
-          },
-        ],
+        name: "materialTypesSpecific",
+        values: [{ key: "podcast", term: "podcast", score: 500 }],
       },
       {
         name: "mainLanguages",

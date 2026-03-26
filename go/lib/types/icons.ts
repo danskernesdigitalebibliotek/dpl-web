@@ -7,5 +7,7 @@ export type MaterialTypeIconNamesType =
   | "controller"
   | "video"
   | "podcast"
-
-export type QuestionMarkIconType = "question-mark"
+  | "comic"
+  | "e-comic"
+  | "picturebook"
+  | "e-picturebook"
