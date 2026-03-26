@@ -14,26 +14,26 @@ describe("MaterialTypeSelect Tests", () => {
 
   it("Should render all material type options", () => {
     cy.dataCy("slide-select-option").should("have.length", 3)
-    cy.dataCy("slide-select-option").eq(0).should("contain.text", "Bog")
-    cy.dataCy("slide-select-option").eq(1).should("contain.text", "E-bog")
-    cy.dataCy("slide-select-option").eq(2).should("contain.text", "E-Lydbog")
+    cy.dataCy("slide-select-option").eq(0).should("contain.text", "E-bog")
+    cy.dataCy("slide-select-option").eq(1).should("contain.text", "Lydbog")
+    cy.dataCy("slide-select-option").eq(2).should("contain.text", "Bog")
   })
 
   it("Should have the ebook option selected by default", () => {
     // The work page defaults to the ebook manifestation when available
     cy.dataCy("slide-select-option")
-      .eq(1)
+      .eq(0)
       .should("have.attr", "aria-label")
       .and("contain", "Nu viser materialet som")
   })
 
   it("Should navigate to correct URL when selecting a different material type", () => {
     // Click the E-bog option
-    cy.dataCy("slide-select-option").eq(1).click()
+    cy.dataCy("slide-select-option").eq(0).click()
     cy.url().should("include", "type=EBOOK")
 
-    // Click the E-Lydbog option
-    cy.dataCy("slide-select-option").eq(2).click()
+    // Click the Lydbog option
+    cy.dataCy("slide-select-option").eq(1).click()
     cy.url().should("include", "type=AUDIO_BOOK_ONLINE")
   })
 
