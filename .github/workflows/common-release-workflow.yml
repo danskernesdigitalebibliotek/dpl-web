@@ -103,7 +103,7 @@ jobs:
           mv dist.zip ${{ needs.build-release.outputs.dist_filename }}
 
       - name: Create or update tag
-        uses: EndBug/latest-tag@v1.6.2
+        uses: EndBug/latest-tag@v1.6.3
         with:
           ref: ${{ needs.build-release.outputs.tag_name }}
 
