@@ -13108,10 +13108,10 @@ prepend-file@^2.0.1:
   dependencies:
     temp-write "^4.0.0"
 
-prettier-plugin-classnames@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-classnames/-/prettier-plugin-classnames-0.9.0.tgz#71c6b83583860550975b056630aee3e3944a6cf1"
-  integrity sha512-xTTKf/us7YMcY4tuoQq0/WaFJzc/ZA0pPpWGphV1noLHX19mIMAJgqmy6ByX6ksVPtmcPDuAF36XVGr3DZYh4g==
+prettier-plugin-classnames@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-classnames/-/prettier-plugin-classnames-0.10.0.tgz#de2c0d9a384f40f5fb08d96501f76bc6f2f34a4f"
+  integrity sha512-s6lBfiLW/f2pavoi8Aak91KN8Zx5cdN2GEAlzQ+hosPpwntxXRdrroPc+UZRjFm0gsGJe5+J0P5PwAShFa2a8g==
   dependencies:
     zod "3.22.4"
 
