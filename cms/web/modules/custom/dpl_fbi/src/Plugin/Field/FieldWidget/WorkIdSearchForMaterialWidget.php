@@ -22,6 +22,46 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'use_go_vip_profile' => FALSE,
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $elements = parent::settingsForm($form, $form_state);
+
+    $elements['use_go_vip_profile'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use GO VIP profile'),
+      '#default_value' => $this->getSetting('use_go_vip_profile'),
+    ];
+
+    return $elements;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = parent::settingsSummary();
+
+    if ($this->getSetting('use_go_vip_profile')) {
+      $summary[] = $this->t('Uses GO VIP profile');
+    }
+    else {
+      $summary[] = $this->t('Does not use GO VIP profile');
+    }
+
+    return $summary;
+  }
+
+  /**
+   * {@inheritdoc}
    *
    * @throws \Random\RandomException
    */
@@ -59,6 +99,7 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
       '#theme' => 'dpl_react_app',
       '#name' => 'material-search',
       '#data' => [
+        'use-go-vip-profile' => $this->getSetting('use_go_vip_profile') ? 'true' : 'false',
         'class' => ['react-app-container'],
         'unique-identifier' => $identifier,
         'material-search-search-input-text' => $this->t('Search for material', [], ['context' => 'Material search']),
