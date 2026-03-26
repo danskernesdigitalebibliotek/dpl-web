@@ -1,7 +1,7 @@
 import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 export const fetchData = <TData, TVariables>(
-  query: string,
+  query: string | { toString(): string },
   variables?: TVariables,
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {

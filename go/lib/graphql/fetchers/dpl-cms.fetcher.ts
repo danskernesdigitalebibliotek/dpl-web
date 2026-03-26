@@ -25,7 +25,7 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
 }
 
 export function fetcher<TData, TVariables>(
-  query: string,
+  query: string | { toString(): string },
   variables?: TVariables,
   options?: RequestInit & { next?: NextFetchRequestConfig }
 ) {

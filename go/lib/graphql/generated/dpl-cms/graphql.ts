@@ -1,5 +1,28 @@
 import { useQuery, useSuspenseQuery, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { fetcher } from '@/lib/graphql/fetchers/dpl-cms.fetcher';
+
+import type { DocumentTypeDecoration } from "@graphql-typed-document-node/core";
+/* eslint-disable @typescript-eslint/no-explicit-any, no-underscore-dangle */
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+/* eslint-enable @typescript-eslint/no-explicit-any, no-underscore-dangle */
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1385,7 +1408,7 @@ export type ParagraphRecommendation = ParagraphInterface & {
   /**
    * Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br
    * />Hvis den ikke er slået til (standardadfærd), placeres billedet til
-   * venstre, hvis den er slået til, placeres billedet til højre.␣
+   * venstre, hvis den er slået til, placeres billedet til højre.
    */
   imagePositionRight?: Maybe<Scalars['Boolean']['output']>;
   /** The paragraphs entity language code. */

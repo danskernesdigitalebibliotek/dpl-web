@@ -6,6 +6,33 @@ import { getDplcmsGraphqlBasicAuthToken } from "./lib/graphql/fetchers/dpl-cms.f
 
 loadEnvConfig(process.cwd())
 
+// The visitor-plugin-common (v6+) emits `new TypedDocumentString(...)` in string
+// document mode, but the typescript-react-query plugin does not include the class
+// definition. We prepend it via the "add" plugin so codegen is self-sufficient.
+const typedDocumentStringContent = `
+import type { DocumentTypeDecoration } from "@graphql-typed-document-node/core";
+/* eslint-disable @typescript-eslint/no-explicit-any, no-underscore-dangle */
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+/* eslint-enable @typescript-eslint/no-explicit-any, no-underscore-dangle */
+`
+
 const config: CodegenConfig = {
   overwrite: true,
   generates: {
@@ -20,6 +47,7 @@ const config: CodegenConfig = {
         },
       },
       plugins: [
+        { add: { content: typedDocumentStringContent } },
         "typescript",
         "typescript-operations",
         "typescript-react-query",
@@ -65,6 +93,7 @@ const config: CodegenConfig = {
         },
       ],
       plugins: [
+        { add: { content: typedDocumentStringContent } },
         "typescript",
         "typescript-operations",
         "typescript-react-query",
