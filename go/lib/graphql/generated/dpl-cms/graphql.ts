@@ -269,7 +269,7 @@ export type Language = {
   direction?: Maybe<Scalars['String']['output']>;
   /** Sprogkoden. */
   id?: Maybe<Scalars['ID']['output']>;
-  /** Navnet på sproget. */
+  /** Sprogets navn. */
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1385,7 +1385,7 @@ export type ParagraphRecommendation = ParagraphInterface & {
   /**
    * Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br
    * />Hvis den ikke er slået til (standardadfærd), placeres billedet til
-   * venstre, hvis den er slået til, placeres billedet til højre.␣
+   * venstre, hvis den er slået til, placeres billedet til højre.
    */
   imagePositionRight?: Maybe<Scalars['Boolean']['output']>;
   /** The paragraphs entity language code. */
