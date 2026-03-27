@@ -24,7 +24,7 @@ export const manifestationFactory = Factory.define<ManifestationForWorkMedium>(
       main: [
         {
           display: "dansk",
-          isoCode: "dan"
+          iso639Set1: "da"
         }
       ],
       notes: []

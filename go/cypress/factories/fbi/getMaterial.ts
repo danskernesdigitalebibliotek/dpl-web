@@ -107,7 +107,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               main: [
                 {
                   display: "dansk",
-                  isoCode: "dan",
+                  iso639Set1: "da",
                 },
               ],
             },
@@ -267,7 +267,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               main: [
                 {
                   display: "dansk",
-                  isoCode: "dan",
+                  iso639Set1: "da",
                 },
               ],
             },
@@ -401,7 +401,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               main: [
                 {
                   display: "dansk",
-                  isoCode: "dan",
+                  iso639Set1: "da",
                 },
               ],
             },
@@ -518,7 +518,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             main: [
               {
                 display: "dansk",
-                isoCode: "dan",
+                iso639Set1: "da",
               },
             ],
           },
