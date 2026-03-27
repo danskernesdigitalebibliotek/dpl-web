@@ -36,6 +36,15 @@ const WorkPageButtonsLoggedOut = ({
   const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
   const label = getManifestationLabel(selectedManifestation)
 
+  const getRedirectPath = () => {
+    const fullUrl = resolveUrl({
+      routeParams: { work: "work", wid: workId },
+      queryParams: materialTypeCode ? { type: materialTypeCode } : {},
+    })
+    const url = new URL(fullUrl)
+    return url.pathname + url.search
+  }
+
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
       <WorkPageInfoBox
@@ -62,9 +71,9 @@ const WorkPageButtonsLoggedOut = ({
           theme={"primary"}
           disabled={!identifier}
           onClick={() => {
-            setLoginRedirectCookie(window.location.pathname)
             openSheet({
               sheetType: "LoginSheet",
+              props: { onLogin: () => setLoginRedirectCookie(getRedirectPath()) },
             })
           }}>
           Lån {label}
@@ -92,9 +101,9 @@ const WorkPageButtonsLoggedOut = ({
           theme={"primary"}
           disabled={!identifier}
           onClick={() => {
-            setLoginRedirectCookie(window.location.pathname)
             openSheet({
               sheetType: "LoginSheet",
+              props: { onLogin: () => setLoginRedirectCookie(getRedirectPath()) },
             })
           }}>
           Lån {label}

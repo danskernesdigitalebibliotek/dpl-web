@@ -13,6 +13,13 @@ export const setLoginRedirectCookie = (path: string) => {
 }
 
 /**
+ * Delete the login redirect cookie from client-side code.
+ */
+export const deleteLoginRedirectCookie = () => {
+  cookieStore.delete(LOGIN_REDIRECT_COOKIE_NAME)
+}
+
+/**
  * Read and clear the login redirect cookie from the server side.
  * Returns the redirect URL if set, otherwise null.
  */
