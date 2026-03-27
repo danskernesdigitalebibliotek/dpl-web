@@ -2287,7 +2287,7 @@ export type ManifestationAccessFragment = { __typename?: 'Manifestation', access
 
 export type ManifestationTitlesFragment = { __typename?: 'Manifestation', titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> } };
 
-export type ManifestationLanguagesFragment = { __typename?: 'Manifestation', languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, isoCode: string }> | null } | null };
+export type ManifestationLanguagesFragment = { __typename?: 'Manifestation', languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null };
 
 export type ManifestationDescriptionFragment = { __typename?: 'Manifestation', audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
       | { __typename?: 'Corporation', display: string }
@@ -2326,7 +2326,7 @@ export type ManifestationWorkPageFragment = { __typename?: 'Manifestation', pid:
     | { __typename: 'InfomediaService', id: string }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
     | { __typename: 'Publizon' }
-  >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, isoCode: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
+  >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
       | { __typename?: 'Corporation', display: string }
       | { __typename?: 'Mood', display: string }
       | { __typename?: 'NarrativeTechnique', display: string }
@@ -2394,7 +2394,7 @@ export type WorkFullWorkPageFragment = { __typename?: 'Work', workId: string, ab
         | { __typename: 'InfomediaService', id: string }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
         | { __typename: 'Publizon' }
-      >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, isoCode: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
+      >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
           | { __typename?: 'Corporation', display: string }
           | { __typename?: 'Mood', display: string }
           | { __typename?: 'NarrativeTechnique', display: string }
@@ -2413,7 +2413,7 @@ export type WorkFullWorkPageFragment = { __typename?: 'Work', workId: string, ab
         | { __typename: 'InfomediaService', id: string }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
         | { __typename: 'Publizon' }
-      >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, isoCode: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
+      >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
           | { __typename?: 'Corporation', display: string }
           | { __typename?: 'Mood', display: string }
           | { __typename?: 'NarrativeTechnique', display: string }
@@ -2518,7 +2518,7 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
           | { __typename: 'InfomediaService', id: string }
           | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
           | { __typename: 'Publizon' }
-        >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, isoCode: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
+        >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Mood', display: string }
             | { __typename?: 'NarrativeTechnique', display: string }
@@ -2537,7 +2537,7 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
           | { __typename: 'InfomediaService', id: string }
           | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
           | { __typename: 'Publizon' }
-        >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, isoCode: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
+        >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Mood', display: string }
             | { __typename?: 'NarrativeTechnique', display: string }
@@ -2770,7 +2770,7 @@ export const ManifestationLanguagesFragmentDoc = `
   languages {
     main {
       display
-      isoCode
+      iso639Set1
     }
   }
 }
