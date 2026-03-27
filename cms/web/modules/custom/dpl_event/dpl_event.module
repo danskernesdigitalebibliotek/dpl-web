@@ -77,7 +77,7 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     }
 
     if ($entity->hasField('field_event_address')) {
-      $entity->set('field_event_address', ['country_code' => 'DK']);
+      $entity->set('field_event_address', []);
     }
   }
 }
