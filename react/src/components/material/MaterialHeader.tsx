@@ -24,7 +24,7 @@ import { PeriodicalEdition } from "./periodical/helper";
 import { useCollectPageStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 import {
-  getManifestationLanguageIsoCode,
+  getManifestationLanguageCode,
   getWorkTitle
 } from "../../apps/material/helper";
 import { isPeriodical, shouldShowMaterialAvailabilityText } from "./helper";
@@ -77,9 +77,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
   // This is used to track whether the user is changing between material types or just clicking the same button over
   const manifestationMaterialTypes = getMaterialTypes(selectedManifestations);
 
-  const languageIsoCode = getManifestationLanguageIsoCode(
-    selectedManifestations
-  );
+  const languageCode = getManifestationLanguageCode(selectedManifestations);
 
   const isYearbook =
     hasCorrectMaterialType(
@@ -130,7 +128,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
           <MaterialHeaderText
             title={String(title)}
             creators={creators}
-            languageIsoCode={languageIsoCode}
+            languageCode={languageCode}
             materialTitleId={materialTitleId}
           />
           <div className="material-header__availability-label">
