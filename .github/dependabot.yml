@@ -318,3 +318,5 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
