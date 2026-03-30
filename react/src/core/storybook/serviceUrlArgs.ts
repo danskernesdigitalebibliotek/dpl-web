@@ -81,6 +81,16 @@ export const argTypes = {
       }
     }
   },
+  [serviceUrlKeys.fbiGoVip]: {
+    description: "Base url for the FBI API (GO VIP profile)",
+    control: { type: "text" },
+    table: {
+      type: { summary: "text" },
+      defaultValue: {
+        summary: "https://fbi-api.dbc.dk/fbcms-go/graphql"
+      }
+    }
+  },
   userinfoUrl: {
     description: "Adgangsplatfomen userinfo url",
     control: { type: "text" },
@@ -105,5 +115,6 @@ export default {
   [serviceUrlKeys.fbiLocal]: "https://temp.fbi-api.dbc.dk/next/graphql",
   [serviceUrlKeys.fbiGlobal]:
     "https://temp.fbi-api.dbc.dk/next-present/graphql",
+  [serviceUrlKeys.fbiGoVip]: "https://fbi-api.dbc.dk/fbcms-go/graphql",
   userinfoUrl: "https://login.bib.dk/userinfo"
 };

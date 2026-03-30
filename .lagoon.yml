@@ -7,7 +7,7 @@ project: dpl-cms-core
 ssh: 20.238.147.183:22
 api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
 environment_variables:
-  git_sha: 'true'
+  git_sha: "true"
 
 tasks:
   post-rollout:
@@ -216,4 +216,10 @@ environments:
       - name: drush err:purge
         schedule: "M * * * *"
         command: drush err:purge paragraph
+        service: cli
+  pr-417:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
         service: cli

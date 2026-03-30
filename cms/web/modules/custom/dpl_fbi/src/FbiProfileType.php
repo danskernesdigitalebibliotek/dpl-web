@@ -14,4 +14,7 @@ enum FbiProfileType: string {
 
   // Profile name for FBI global profile.
   case Global = 'global';
+
+  // Profile name for the GO VIP profile.
+  case GoVip = 'go-vip';
 }

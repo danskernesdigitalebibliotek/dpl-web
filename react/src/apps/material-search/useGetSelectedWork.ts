@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
-import { useGetMaterialQuery } from "../../core/dbc-gateway/generated/graphql";
+import { useQuery } from "react-query";
+import {
+  GetMaterialDocument,
+  GetMaterialQuery,
+  GetMaterialQueryVariables
+} from "../../core/dbc-gateway/generated/graphql";
+import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
 import { getMaterialTypes } from "../../core/utils/helpers/general";
 import { Work } from "../../core/utils/types/entities";
 import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import ErrorState from "./Errors/errorState";
+
+interface UseGetSelectedWorkOptions {
+  useGoVipProfile?: boolean;
+}
 
 interface UseGetSelectedMaterialReturn {
   work: Work | null;
@@ -19,46 +29,54 @@ interface UseGetSelectedMaterialReturn {
   ) => void;
 }
 
-const useGetSelectedWork = (): UseGetSelectedMaterialReturn => {
+const useGetSelectedWork = ({
+  useGoVipProfile
+}: UseGetSelectedWorkOptions = {}): UseGetSelectedMaterialReturn => {
   const [selectedWorkId, setSelectedWorkId] = useState<string>("");
   const [selectedMaterialType, setSelectedMaterialType] =
     useState<ManifestationMaterialType | null>(null);
 
   const [errorState, setErrorState] = useState<ErrorState>(ErrorState.NoError);
 
+  const variables: GetMaterialQueryVariables = { wid: selectedWorkId };
+
+  const queryKey = useGoVipProfile ? "getMaterial-go" : "getMaterial";
+
+  const queryFn = fetcher<GetMaterialQuery, GetMaterialQueryVariables>(
+    GetMaterialDocument,
+    variables
+  );
+
   const {
     data,
     isLoading: isSelectedWorkLoading,
     refetch
-  } = useGetMaterialQuery(
-    { wid: selectedWorkId },
-    {
-      enabled: !!selectedWorkId && selectedWorkId.length > 0,
-      onSuccess: (responseData) => {
-        if (!responseData.work) {
-          setErrorState(ErrorState.WorkError);
+  } = useQuery<GetMaterialQuery>([queryKey, variables], queryFn, {
+    enabled: !!selectedWorkId && selectedWorkId.length > 0,
+    onSuccess: (responseData: GetMaterialQuery) => {
+      if (!responseData.work) {
+        setErrorState(ErrorState.WorkError);
+        return;
+      }
+
+      if (selectedMaterialType && responseData.work) {
+        const work = responseData.work as Work;
+
+        const availableMaterialTypes = work
+          ? getMaterialTypes(work.manifestations.all, false)
+          : null;
+
+        if (
+          availableMaterialTypes &&
+          !availableMaterialTypes.includes(selectedMaterialType)
+        ) {
+          setErrorState(ErrorState.MaterialTypeError);
           return;
         }
-
-        if (selectedMaterialType && responseData.work) {
-          const work = responseData.work as Work;
-
-          const availableMaterialTypes = work
-            ? getMaterialTypes(work.manifestations.all, false)
-            : null;
-
-          if (
-            availableMaterialTypes &&
-            !availableMaterialTypes.includes(selectedMaterialType)
-          ) {
-            setErrorState(ErrorState.MaterialTypeError);
-            return;
-          }
-        }
-        setErrorState(ErrorState.NoError);
       }
+      setErrorState(ErrorState.NoError);
     }
-  );
+  });
 
   useEffect(() => {
     if (selectedWorkId) {
