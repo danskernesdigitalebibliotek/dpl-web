@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import {
-  GetMaterialDocument,
   GetMaterialQuery,
-  GetMaterialQueryVariables
+  GetMaterialQueryVariables,
+  useGetMaterialQuery,
+  useGetMaterialGoVipQuery
 } from "../../core/dbc-gateway/generated/graphql";
-import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
 import { getMaterialTypes } from "../../core/utils/helpers/general";
 import { Work } from "../../core/utils/types/entities";
 import { WorkId } from "../../core/utils/types/ids";
@@ -39,44 +38,47 @@ const useGetSelectedWork = ({
   const [errorState, setErrorState] = useState<ErrorState>(ErrorState.NoError);
 
   const variables: GetMaterialQueryVariables = { wid: selectedWorkId };
+  const enabled = !!selectedWorkId && selectedWorkId.length > 0;
 
-  const queryKey = useGoVipProfile ? "getMaterial-go" : "getMaterial";
+  const onSuccess = (responseData: GetMaterialQuery) => {
+    if (!responseData.work) {
+      setErrorState(ErrorState.WorkError);
+      return;
+    }
 
-  const queryFn = fetcher<GetMaterialQuery, GetMaterialQueryVariables>(
-    GetMaterialDocument,
-    variables
-  );
+    if (selectedMaterialType && responseData.work) {
+      const work = responseData.work as Work;
+
+      const availableMaterialTypes = work
+        ? getMaterialTypes(work.manifestations.all, false)
+        : null;
+
+      if (
+        availableMaterialTypes &&
+        !availableMaterialTypes.includes(selectedMaterialType)
+      ) {
+        setErrorState(ErrorState.MaterialTypeError);
+        return;
+      }
+    }
+    setErrorState(ErrorState.NoError);
+  };
+
+  const regularQuery = useGetMaterialQuery(variables, {
+    enabled: enabled && !useGoVipProfile,
+    onSuccess
+  });
+
+  const goVipQuery = useGetMaterialGoVipQuery(variables, {
+    enabled: enabled && !!useGoVipProfile,
+    onSuccess
+  });
 
   const {
     data,
     isLoading: isSelectedWorkLoading,
     refetch
-  } = useQuery<GetMaterialQuery>([queryKey, variables], queryFn, {
-    enabled: !!selectedWorkId && selectedWorkId.length > 0,
-    onSuccess: (responseData: GetMaterialQuery) => {
-      if (!responseData.work) {
-        setErrorState(ErrorState.WorkError);
-        return;
-      }
-
-      if (selectedMaterialType && responseData.work) {
-        const work = responseData.work as Work;
-
-        const availableMaterialTypes = work
-          ? getMaterialTypes(work.manifestations.all, false)
-          : null;
-
-        if (
-          availableMaterialTypes &&
-          !availableMaterialTypes.includes(selectedMaterialType)
-        ) {
-          setErrorState(ErrorState.MaterialTypeError);
-          return;
-        }
-      }
-      setErrorState(ErrorState.NoError);
-    }
-  });
+  } = useGoVipProfile ? goVipQuery : regularQuery;
 
   useEffect(() => {
     if (selectedWorkId) {

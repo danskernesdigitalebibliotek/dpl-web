@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import {
-  SearchWithPaginationDocument,
   SearchWithPaginationQuery,
-  SearchWithPaginationQueryVariables
+  SearchWithPaginationQueryVariables,
+  useSearchWithPaginationQuery,
+  useSearchWithPaginationGoVipQuery
 } from "../../core/dbc-gateway/generated/graphql";
-import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
 
 interface UseGetMaterialListSearchOptions {
   useGoVipProfile?: boolean;
@@ -42,19 +41,15 @@ const useGetMaterialListSearch = ({
     limit: pageSize
   };
 
-  const queryKey = useGoVipProfile
-    ? "searchWithPagination-go"
-    : "searchWithPagination";
+  const regularQuery = useSearchWithPaginationQuery(queryVariables, {
+    enabled: !useGoVipProfile
+  });
 
-  const queryFn = fetcher<
-    SearchWithPaginationQuery,
-    SearchWithPaginationQueryVariables
-  >(SearchWithPaginationDocument, queryVariables);
+  const goVipQuery = useSearchWithPaginationGoVipQuery(queryVariables, {
+    enabled: !!useGoVipProfile
+  });
 
-  const { data, isLoading } = useQuery<SearchWithPaginationQuery>(
-    [queryKey, queryVariables],
-    queryFn
-  );
+  const { data, isLoading } = useGoVipProfile ? goVipQuery : regularQuery;
 
   useEffect(() => {
     if (data?.search?.works) {
