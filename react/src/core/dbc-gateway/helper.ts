@@ -91,8 +91,8 @@ if (import.meta.vitest) {
       );
       expect(resolveBaseUrl("getSmallWork")).toEqual("i-am-fbi-global-url");
       expect(resolveBaseUrl("openOrder")).toEqual("i-am-fbi-global-url");
-      expect(resolveBaseUrl("getMaterial-go")).toEqual("i-am-fbi-go-vip-url");
-      expect(resolveBaseUrl("searchWithPagination-go")).toEqual(
+      expect(resolveBaseUrl("getMaterialGoVip")).toEqual("i-am-fbi-go-vip-url");
+      expect(resolveBaseUrl("searchWithPaginationGoVip")).toEqual(
         "i-am-fbi-go-vip-url"
       );
     });

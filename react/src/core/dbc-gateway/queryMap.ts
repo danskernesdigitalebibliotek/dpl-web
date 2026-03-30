@@ -22,8 +22,8 @@ export default {
   getSmallWork: serviceUrlKeys.fbiGlobal,
   openOrder: serviceUrlKeys.fbiGlobal,
   // GO VIP profile requests.
-  "getMaterial-go": serviceUrlKeys.fbiGoVip,
-  "searchWithPagination-go": serviceUrlKeys.fbiGoVip,
+  getMaterialGoVip: serviceUrlKeys.fbiGoVip,
+  searchWithPaginationGoVip: serviceUrlKeys.fbiGoVip,
   // All other requests.
   default: serviceUrlKeys.fbi
 } as const;

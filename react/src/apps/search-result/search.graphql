@@ -12,6 +12,20 @@ query searchWithPagination(
   }
 }
 
+query searchWithPaginationGoVip(
+  $q: SearchQueryInput!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: SearchFiltersInput
+) {
+  search(q: $q, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkSmall
+    }
+  }
+}
+
 query complexSearchWithPaginationWorkAccess(
   $cql: String!
   $offset: Int!
