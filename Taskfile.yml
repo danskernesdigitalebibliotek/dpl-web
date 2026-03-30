@@ -3,3 +3,8 @@ version: '3'
 includes:
   migration: ./migration/Taskfile.migration.yml
 
+tasks:
+  ci:actionlint:
+    summary: Lint GitHub Actions workflows with actionlint
+    cmds:
+      - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color

@@ -306,26 +306,25 @@ jobs:
   Shellcheck:
     name: CMS / Shellcheck
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: cms
     steps:
       - uses: actions/checkout@v6
-      - name: shellcheck
-        uses: reviewdog/action-shellcheck@v1
         with:
-          github_token: ${{ secrets.github_token }}
-          fail_on_error: true
-          # Use the GitHub PullRequest review comment that reports findings
-          # as inlined comments in a PullRequest.
-          # Read more about reporters: https://github.com/reviewdog/reviewdog#reporters
-          reporter: github-pr-review
-          # We can exclude a single directory, so we go for .git.
-          path: cms/dev-scripts
-          # Set the default filter-mode which only reports violations caused by
-          # added/modified lines.
-          # Read more about filter-mode: https://github.com/reviewdog/reviewdog#filter-mode
-          filter_mode: nofilter
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install GCC problem matcher for Shellcheck
+        uses: ammaraskar/gcc-problem-matcher@0.3.0
+      - name: shellcheck
+        run: task ci:shellcheck
 
   EslintDrupal:
     name: CMS / Lint Drupal assets

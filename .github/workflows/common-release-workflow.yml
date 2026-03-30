@@ -50,12 +50,16 @@ jobs:
         run: |
           TAG_NAME=$(echo branch-${{ inputs.branch }} | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
           DIST_FILENAME="dist-${{ inputs.project }}.zip"
-          echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_ENV"
-          echo "BUILD_VERSION=${{ inputs.branch }}-${{ inputs.sha }}" >> "$GITHUB_ENV"
-          echo "DIST_FILENAME=$DIST_FILENAME" >> "$GITHUB_ENV"
-          echo "NPM_VERSION=0.0.0-${{ inputs.sha }}" >> "$GITHUB_ENV"
-          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
-          echo "dist_filename=$DIST_FILENAME" >> $GITHUB_OUTPUT
+          {
+            echo "TAG_NAME=$TAG_NAME"
+            echo "BUILD_VERSION=${{ inputs.branch }}-${{ inputs.sha }}"
+            echo "DIST_FILENAME=$DIST_FILENAME"
+            echo "NPM_VERSION=0.0.0-${{ inputs.sha }}"
+          } >> "$GITHUB_ENV"
+          {
+            echo "tag_name=$TAG_NAME"
+            echo "dist_filename=$DIST_FILENAME"
+          } >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v6
         with:
@@ -136,7 +140,7 @@ jobs:
 
       - name: Adding summary
         run: |
-          echo "🛠️ Dev-release created at: ${{ steps.upsert-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "🛠️ Dev-release created at: ${{ steps.upsert-release.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
 
   create-release:
     runs-on: ubuntu-latest
@@ -156,7 +160,7 @@ jobs:
 
       - name: Rename assets
         run: |
-          mv dist.zip ${{ needs.build-release.outputs.dist_filename }}
+          mv dist.zip "${{ needs.build-release.outputs.dist_filename }}"
 
       - name: Create Release
         id: create-release
@@ -166,4 +170,4 @@ jobs:
 
       - name: Adding summary
         run: |
-          echo "🚀 Tag-release created: ${{ steps.create-release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "🚀 Tag-release created: ${{ steps.create-release.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
