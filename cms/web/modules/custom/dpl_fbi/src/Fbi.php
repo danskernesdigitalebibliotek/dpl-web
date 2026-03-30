@@ -16,6 +16,7 @@ use function Safe\preg_replace;
 class Fbi {
 
   const FBI_PROFILE = 'next';
+  const FBI_GO_VIP_PROFILE = 'fbcms-go';
 
   /**
    * Configuration.
@@ -83,6 +84,9 @@ class Fbi {
         $base_url = preg_replace('/\[profile\]/', $profile, $baseUrl);
         $urls[$service_key] = $base_url;
       }
+
+      // The GO VIP profile uses a fixed profile name, not per-agency config.
+      $urls['fbi-go-vip'] = preg_replace('/\[profile\]/', self::FBI_GO_VIP_PROFILE, $baseUrl);
     }
 
     return $urls;
