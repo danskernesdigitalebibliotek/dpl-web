@@ -1,7 +1,7 @@
 // This component is used for WYSIWYG content.
 // E.g. we cannot control classes of the underlying elements, so in this case
 // we will target HTML tags instead.
-$_max-width-rich-text: $block-max-width__small;
+$_max-width-rich-text: $article-max-width;
 
 %rich-text {
   @include typography($typo__rich-text-body);

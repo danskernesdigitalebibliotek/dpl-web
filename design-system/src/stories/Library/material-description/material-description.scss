@@ -1,24 +1,32 @@
 .material-description {
-  max-width: 750px;
-  padding: $hero-padding-small;
+  max-width: $page-max-width;
+  display: flex;
+  flex-direction: column;
+  gap: $s-lg;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 $edge-spacing-mobile;
+  width: 100%;
 
   @include media-query__small {
-    padding: $hero-padding-large-content;
+    padding: 0 $edge-spacing-desktop;
   }
 }
 
 .material-description__heading {
   @include typography($typo__h4);
-  margin-bottom: $s-md;
+  max-width: $article-max-width;
 }
 
 .material-description__content {
   @include typography($typo__body-large);
   line-height: 160%;
-  margin-bottom: $s-md;
+  max-width: $article-max-width;
 }
 
-// spacing between the description links
-.material-description__links > * + * {
-  margin-top: $s-md;
+.material-description__links {
+  display: flex;
+  flex-direction: column;
+  gap: $s-md;
+  max-width: $article-max-width;
 }
