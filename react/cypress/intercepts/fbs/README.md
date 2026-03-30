@@ -48,7 +48,7 @@ manifestationScenarios.get("52557240")
 The intercepts automatically handle these default materials:
 
 | Material | PID | Scenario |
-|----------|-----|----------|
+| -------- | --- | -------- |
 | Original book (2016) | `52557240` | `unavailableEverywhere` |
 | New book (2017) | `53292968` | `default` |
 | Audiobook | `52643414` | `notAvailableAnywhere` |
