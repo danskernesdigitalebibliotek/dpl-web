@@ -86,7 +86,7 @@ class Fbi {
       }
 
       // The GO VIP profile uses a fixed profile name, not per-agency config.
-      $urls['fbi-go-vip'] = preg_replace('/\[profile\]/', self::FBI_GO_VIP_PROFILE, $baseUrl);
+      $urls[sprintf('fbi-%s', FbiProfileType::GoVip->value)] = preg_replace('/\[profile\]/', self::FBI_GO_VIP_PROFILE, $baseUrl);
     }
 
     return $urls;
