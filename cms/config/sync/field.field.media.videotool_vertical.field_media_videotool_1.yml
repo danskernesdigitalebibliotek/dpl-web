@@ -1,0 +1,19 @@
+uuid: 1da0a614-6a9f-44ba-815f-5bf4a45e8473
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_videotool_1
+    - media.type.videotool_vertical
+id: media.videotool_vertical.field_media_videotool_1
+field_name: field_media_videotool_1
+entity_type: media
+bundle: videotool_vertical
+label: VideoTool
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,34 @@
+uuid: e2c9c93f-41a0-4cdd-997e-5e88280439b4
+langcode: en
+status: true
+dependencies:
+  module:
+    - media_videotool
+    - scheduler
+third_party_settings:
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: false
+    publish_past_date: error
+    publish_past_date_created: false
+    publish_required: false
+    publish_revision: false
+    publish_touch: false
+    show_message_after_update: true
+    unpublish_enable: false
+    unpublish_required: false
+    unpublish_revision: false
+id: videotool_vertical
+label: 'VideoTool Vertical'
+description: ''
+source: videotool
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  thumbnails_directory: 'public://videotool_thumbnails'
+  height: ''
+  width: ''
+  generate_thumbnails: 1
+  source_field: field_media_videotool_1
+field_map: {  }
