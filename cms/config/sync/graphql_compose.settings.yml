@@ -97,6 +97,8 @@ entity_config:
     go_video_bundle_manual:
       enabled: true
       query_load_enabled: true
+    go_video_bundle_vertical_manual:
+      enabled: true
     hero:
       enabled: true
       query_load_enabled: true
@@ -132,6 +134,8 @@ entity_config:
     recommendation:
       enabled: true
       query_load_enabled: true
+    share_buttons:
+      enabled: false
     simple_links:
       enabled: true
       query_load_enabled: true
@@ -406,6 +410,13 @@ field_config:
       field_video_amount_of_materials:
         enabled: true
     go_video_bundle_manual:
+      field_embed_video:
+        enabled: true
+      field_go_video_title:
+        enabled: true
+      field_video_bundle_work_ids:
+        enabled: true
+    go_video_bundle_vertical_manual:
       field_embed_video:
         enabled: true
       field_go_video_title:
