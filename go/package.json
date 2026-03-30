@@ -137,7 +137,7 @@
     "prepend-file": "^2.0.1",
     "prettier": "^3.8.1",
     "prettier-plugin-classnames": "^0.9.0",
-    "prettier-plugin-merge": "^0.10.0",
+    "prettier-plugin-merge": "^0.10.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "storybook": "^10.2.19",
     "tailwindcss": "^4.0.7",
