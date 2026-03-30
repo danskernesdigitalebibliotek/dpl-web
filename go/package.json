@@ -56,7 +56,7 @@
     "cookies-next": "^6.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "12.38.0",
-    "graphql": "^16.13.1",
+    "graphql": "^16.13.2",
     "iron-session": "^8.0.4",
     "js-md5": "^0.8.3",
     "keen-slider": "^6.8.6",
