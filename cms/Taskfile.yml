@@ -586,6 +586,11 @@ tasks:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
 
+  ci:shellcheck:
+    desc: Run ShellCheck on CMS helper scripts
+    cmds:
+      - find dev-scripts -type f -name '*.sh' -print -exec docker run --rm -v "$(pwd):/mnt" koalaman/shellcheck:stable --format=gcc {} +
+
   source:build:
     summary: Build core source image.
     cmds:
