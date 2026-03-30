@@ -4,7 +4,7 @@ import usePager from "../../../components/result-pager/use-pager";
 import { Work } from "../../../core/utils/types/entities";
 import {
   useComplexSearchWithPaginationQuery,
-  HoldingsStatusEnum
+  CsHoldingsStatusEnum
 } from "../../../core/dbc-gateway/generated/graphql";
 import { SortOption } from "../types";
 import { getSortInput } from "../lib/sort-utils";
@@ -71,7 +71,7 @@ export const usePaginatedResults = ({
       limit: pageSize,
       filters: {
         ...(onShelf && {
-          status: [HoldingsStatusEnum.Onshelf],
+          status: [CsHoldingsStatusEnum.Onshelf],
           branchId: cleanBranches
         })
       },

@@ -12,7 +12,7 @@ import SearchFacetGroup from "../../search-result/SearchFacetGroup";
 import {
   ComplexSearchFacetsEnum,
   useComplexFacetSearchQuery,
-  HoldingsStatusEnum
+  CsHoldingsStatusEnum
 } from "../../../core/dbc-gateway/generated/graphql";
 import { FACETS_CONFIG, FACET_FIELDS } from "../lib/facet-configs";
 import { isValidFacetState } from "../lib/validation";
@@ -71,7 +71,7 @@ const AdvancedSearchFacets: React.FC<AdvancedSearchFacetsProps> = ({ cql }) => {
   const { data: facetData } = useComplexFacetSearchQuery({
     cql,
     facets: { facets: FACET_FIELDS, facetLimit: 50 },
-    ...(onShelf && { filters: { status: [HoldingsStatusEnum.Onshelf] } })
+    ...(onShelf && { filters: { status: [CsHoldingsStatusEnum.Onshelf] } })
   });
 
   const facetsResponse = facetData?.complexSearch?.facets ?? [];
