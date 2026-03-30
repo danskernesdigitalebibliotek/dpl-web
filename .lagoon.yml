@@ -217,3 +217,9 @@ environments:
         schedule: "M * * * *"
         command: drush err:purge paragraph
         service: cli
+  pr-378:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
