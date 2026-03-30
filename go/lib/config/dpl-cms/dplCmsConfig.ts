@@ -40,6 +40,10 @@ const getDplCmsPrivateConfigData = async () => {
   }
 }
 
+/**
+ * TODO: only use env variables for unilogin configuration, and remove the unilogin configuration from DPL CMS.
+ * This will simplify the configuration and make it more secure, as we won't be storing sensitive information in DPL CMS.
+ **/
 export const getDplCmsPrivateConfig = async () => {
   await connection()
   const data = await getDplCmsPrivateConfigData()
