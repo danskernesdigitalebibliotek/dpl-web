@@ -16047,10 +16047,10 @@ xpath@^0.0.33:
   resolved "https://registry.yarnpkg.com/xpath/-/xpath-0.0.33.tgz#5136b6094227c5df92002e7c3a13516a5074eb07"
   integrity sha512-NNXnzrkDrAzalLhIUc01jO2mOzXGXh1JwPgkihcLLzw98c0WgYDmmjSh1Kl3wzaxSVWMuA+fe0WTWOBDWCBmNA==
 
-xstate@^5.29.0:
-  version "5.29.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.29.0.tgz#32ea2615822a1e8b57e61b2317df97840d340755"
-  integrity sha512-p0hiOPhhBgXn29t18zDScaN95+y1MAu1Pz5Z2IduCuOUh+d3RqJO7fmexbuQ6rlwFNgYFeXvFsFeiuiAiH3mhg==
+xstate@^5.30.0:
+  version "5.30.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.30.0.tgz#00f47846d3c45409d6154c1ea96da046c4c151d1"
+  integrity sha512-mIzIuMjtYVkqXq9dUzYQoag7b/dF1CBS/yhliuPLfR0FwKPC18HiUivb/crcqY2gknhR8gJEhnppLg6ubQ0gGw==
 
 xtend@^4.0.0, xtend@^4.0.2:
   version "4.0.2"
