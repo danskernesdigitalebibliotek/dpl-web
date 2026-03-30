@@ -41,12 +41,14 @@ const useGetMaterialListSearch = ({
     limit: pageSize
   };
 
+  const hasSearchInput = searchInput.length > 0;
+
   const regularQuery = useSearchWithPaginationQuery(queryVariables, {
-    enabled: !useGoVipProfile
+    enabled: hasSearchInput && !useGoVipProfile
   });
 
   const goVipQuery = useSearchWithPaginationGoVipQuery(queryVariables, {
-    enabled: !!useGoVipProfile
+    enabled: hasSearchInput && !!useGoVipProfile
   });
 
   const { data, isLoading } = useGoVipProfile ? goVipQuery : regularQuery;
