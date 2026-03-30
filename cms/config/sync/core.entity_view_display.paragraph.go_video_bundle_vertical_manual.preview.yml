@@ -1,0 +1,27 @@
+uuid: 5daf16d9-6687-4755-b7d3-c9b74d9caebe
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.go_video_bundle_vertical_manual.field_embed_video
+    - field.field.paragraph.go_video_bundle_vertical_manual.field_go_video_title
+    - field.field.paragraph.go_video_bundle_vertical_manual.field_video_bundle_work_ids
+    - paragraphs.paragraphs_type.go_video_bundle_vertical_manual
+id: paragraph.go_video_bundle_vertical_manual.preview
+targetEntityType: paragraph
+bundle: go_video_bundle_vertical_manual
+mode: preview
+content:
+  field_embed_video:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_go_video_title: true
+  field_video_bundle_work_ids: true
+  search_api_excerpt: true

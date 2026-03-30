@@ -1,0 +1,19 @@
+uuid: ec6d43f2-734a-48bf-a271-845fd15017ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_go_video_title
+    - paragraphs.paragraphs_type.go_video_bundle_vertical_manual
+id: paragraph.go_video_bundle_vertical_manual.field_go_video_title
+field_name: field_go_video_title
+entity_type: paragraph
+bundle: go_video_bundle_vertical_manual
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
