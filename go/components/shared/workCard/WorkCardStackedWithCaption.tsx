@@ -52,7 +52,7 @@ const WorkCardStackedWithCaption = ({
     ? resolveUrl({
         routeParams: { work: "work", wid: currentWork.workId },
         queryParams: {
-          type: manifestation.materialTypes[0].materialTypeGeneral.code,
+          type: manifestation.materialTypes[0].materialTypeSpecific.code,
         },
       })
     : ""

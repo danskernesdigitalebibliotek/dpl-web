@@ -37,7 +37,7 @@ export const searchFilterFacetsMock = [
         score: 3,
       },
     ],
-    name: "materialTypesGeneral",
+    name: "materialTypesSpecific",
   },
   {
     values: [

@@ -7,7 +7,7 @@ import { facetsFactory } from "./factory-parts/facets"
 export default Factory.define<SearchFacetsQuery>(() => ({
   search: {
     facets: [
-      facetsFactory.transient({ name: "materialTypesGeneral", numValues: 3 }).build(),
+      facetsFactory.transient({ name: "materialTypesSpecific", numValues: 3 }).build(),
       facetsFactory.transient({ name: "mainLanguages", numValues: 2 }).build(),
       facetsFactory.transient({ name: "age", numValues: 10 }).build(),
       facetsFactory.transient({ name: "lix", numValues: 0 }).build(),
