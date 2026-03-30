@@ -150,6 +150,8 @@ updates:
         versions: [">=10"]
       - dependency-name: "@storybook/*"
         versions: [">=10"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # Go (Next.js) - npm dependencies
   - package-ecosystem: npm
@@ -236,6 +238,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # React - npm dependencies
   - package-ecosystem: npm
@@ -319,4 +323,6 @@ updates:
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
