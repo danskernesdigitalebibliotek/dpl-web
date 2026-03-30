@@ -1,12 +1,18 @@
 import {
   addAndSaveBannerParagraph,
   verifyBannerParagraph,
-} from '../helpers/helper-banner';
-import { typeInCkEditor } from '../helpers/helper-ckeditor';
-import { checkImageSrc, mediaLibrarySelect } from '../helpers/helper-media';
-import { createTestPageAndOpenParagraphModal } from '../helpers/helper-page';
-import { addAnotherParagraph, addParagraph } from '../helpers/helper-paragraph';
-import { addSimpleLink, verifySimpleLink } from '../helpers/helper-simplelink';
+} from '../../helpers/helper-banner';
+import { typeInCkEditor } from '../../helpers/helper-ckeditor';
+import { checkImageSrc, mediaLibrarySelect } from '../../helpers/helper-media';
+import { createTestPageAndOpenParagraphModal } from '../../helpers/helper-page';
+import {
+  addAnotherParagraph,
+  addParagraph,
+} from '../../helpers/helper-paragraph';
+import {
+  addSimpleLink,
+  verifySimpleLink,
+} from '../../helpers/helper-simplelink';
 
 const pageName = 'Test page';
 
