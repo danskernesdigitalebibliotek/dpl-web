@@ -11,6 +11,7 @@ interface GlobalUrlEntryPropsInterface {
   fbiBaseUrl: string;
   fbiLocalBaseUrl: string;
   fbiGlobalBaseUrl: string;
+  fbiGoVipBaseUrl: string;
   authUrl: string;
   materialListBaseUrl: string;
   zeroHitsSearchUrl: string;

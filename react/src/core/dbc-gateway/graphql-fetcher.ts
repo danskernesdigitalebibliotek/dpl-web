@@ -6,12 +6,11 @@ import { getQueryUrlFromContext } from "./helper";
 
 export const fetcher = <TData, TVariables>(
   query: string,
-  variables?: TVariables,
-  urlOverride?: string
+  variables?: TVariables
 ) => {
   return (context?: QueryFunctionContext): Promise<TData> => {
     // Resolve the url based on the query name if present.
-    const url = urlOverride ?? getQueryUrlFromContext(context);
+    const url = getQueryUrlFromContext(context);
 
     // The whole concept of agency id, profile and and bearer token needs to be refined.
     // First version is with a library token.

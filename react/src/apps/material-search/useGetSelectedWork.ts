@@ -11,7 +11,6 @@ import { Work } from "../../core/utils/types/entities";
 import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import ErrorState from "./Errors/errorState";
-import { GO_VIP_PROFILE_URL } from "./constants";
 
 interface UseGetSelectedWorkOptions {
   useGoVipProfile?: boolean;
@@ -41,46 +40,43 @@ const useGetSelectedWork = ({
 
   const variables: GetMaterialQueryVariables = { wid: selectedWorkId };
 
+  const queryKey = useGoVipProfile ? "getMaterial-go" : "getMaterial";
+
   const queryFn = fetcher<GetMaterialQuery, GetMaterialQueryVariables>(
     GetMaterialDocument,
-    variables,
-    useGoVipProfile ? GO_VIP_PROFILE_URL : undefined
+    variables
   );
 
   const {
     data,
     isLoading: isSelectedWorkLoading,
     refetch
-  } = useQuery<GetMaterialQuery>(
-    [useGoVipProfile ? "getMaterial-go" : "getMaterial", variables],
-    queryFn,
-    {
-      enabled: !!selectedWorkId && selectedWorkId.length > 0,
-      onSuccess: (responseData: GetMaterialQuery) => {
-        if (!responseData.work) {
-          setErrorState(ErrorState.WorkError);
+  } = useQuery<GetMaterialQuery>([queryKey, variables], queryFn, {
+    enabled: !!selectedWorkId && selectedWorkId.length > 0,
+    onSuccess: (responseData: GetMaterialQuery) => {
+      if (!responseData.work) {
+        setErrorState(ErrorState.WorkError);
+        return;
+      }
+
+      if (selectedMaterialType && responseData.work) {
+        const work = responseData.work as Work;
+
+        const availableMaterialTypes = work
+          ? getMaterialTypes(work.manifestations.all, false)
+          : null;
+
+        if (
+          availableMaterialTypes &&
+          !availableMaterialTypes.includes(selectedMaterialType)
+        ) {
+          setErrorState(ErrorState.MaterialTypeError);
           return;
         }
-
-        if (selectedMaterialType && responseData.work) {
-          const work = responseData.work as Work;
-
-          const availableMaterialTypes = work
-            ? getMaterialTypes(work.manifestations.all, false)
-            : null;
-
-          if (
-            availableMaterialTypes &&
-            !availableMaterialTypes.includes(selectedMaterialType)
-          ) {
-            setErrorState(ErrorState.MaterialTypeError);
-            return;
-          }
-        }
-        setErrorState(ErrorState.NoError);
       }
+      setErrorState(ErrorState.NoError);
     }
-  );
+  });
 
   useEffect(() => {
     if (selectedWorkId) {
