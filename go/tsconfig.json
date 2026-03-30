@@ -24,9 +24,9 @@
         "schema": "graphql/generated/dpl-cms/graphql.schema.json"
       }
     ],
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "*": ["./*"]
     }
   },
   "include": [
