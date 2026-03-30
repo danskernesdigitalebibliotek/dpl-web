@@ -134,10 +134,16 @@ updates:
           - "storybook"
           - "@storybook/*"
     ignore:
-      - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        versions: [">=18"]
+      - dependency-name: "@types/react"
+        versions: [">=18"]
+      - dependency-name: "react-dom"
+        versions: [">=18"]
+      - dependency-name: "@types/react-dom"
+        versions: [">=18"]
       - dependency-name: "stylelint-config-recommended-scss"
         versions: [">=16"]
       - dependency-name: "storybook"
@@ -229,6 +235,8 @@ updates:
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
 
   # React - npm dependencies
