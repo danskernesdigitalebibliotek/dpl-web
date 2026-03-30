@@ -22,6 +22,9 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<mixed>
+   *   The default settings.
    */
   public static function defaultSettings() {
     return [
@@ -31,6 +34,14 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param array<mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form_state object.
+   *
+   * @return array<mixed>
+   *   The altered form array.
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
@@ -46,6 +57,9 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array<string>
+   *   The summary strings.
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
