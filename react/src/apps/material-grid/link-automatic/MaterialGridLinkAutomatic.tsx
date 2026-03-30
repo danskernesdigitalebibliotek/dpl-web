@@ -2,7 +2,7 @@ import * as React from "react";
 import MaterialGrid from "../../../components/material-grid/MaterialGrid";
 import MaterialGridSkeleton from "../../../components/material-grid/MaterialGridSkeleton";
 import {
-  HoldingsStatusEnum,
+  CsHoldingsStatusEnum,
   useComplexSearchWithPaginationQuery
 } from "../../../core/dbc-gateway/generated/graphql";
 import useGetSearchBranches from "../../../core/utils/branches";
@@ -47,7 +47,9 @@ const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
         ...(sublocation
           ? { sublocation: commaSeparatedStringToArray(sublocation) }
           : {}),
-        ...(onshelf === "true" ? { status: [HoldingsStatusEnum.Onshelf] } : {})
+        ...(onshelf === "true"
+          ? { status: [CsHoldingsStatusEnum.Onshelf] }
+          : {})
       },
       ...(sort ? { sort: advancedSortMap[sort as AdvancedSortMapStrings] } : {})
     },

@@ -317,6 +317,30 @@
             "deprecationReason": null
           },
           {
+            "name": "audienceGeneral",
+            "description": "Appropriate audience for this manifestation",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AudienceGeneral",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "childrenOrAdults",
             "description": "Is this material for children or adults",
             "args": [],
@@ -503,6 +527,42 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "AudienceGeneral",
+        "description": "A single general audience object containing a subject word and a possible associated language",
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "display",
+            "description": "Appropriate audience for this manifestation",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "language",
+            "description": "The associated language of the audience term, if applicable",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Language",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
@@ -511,6 +571,54 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CSHoldingsStatusEnum",
+        "description": null,
+        "isOneOf": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DISCARDED",
+            "description": "Item is discarded by the branch",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LOST",
+            "description": "Item is lost by the branch and not available",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOTFORLOAN",
+            "description": "Item is not for loan by the branch",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ONLOAN",
+            "description": "Item is on loan and not available",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ONORDER",
+            "description": "Item is on order by the branch",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ONSHELF",
+            "description": "Item is physically available at the branch",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -1285,6 +1393,26 @@
             "deprecationReason": null
           },
           {
+            "name": "circulationRule",
+            "description": "The circulationrule of the item",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "department",
             "description": "Overall location in library (eg. Voksne).",
             "type": {
@@ -1387,7 +1515,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "ENUM",
-                  "name": "HoldingsStatusEnum",
+                  "name": "CSHoldingsStatusEnum",
                   "ofType": null
                 }
               }
@@ -1411,6 +1539,18 @@
                   "ofType": null
                 }
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "useOnlineHoldings",
+            "description": "Boolean to denote whether to include or exclude online holdingsitems",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -4163,6 +4303,42 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "GenreForm",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "display",
+            "description": "The genre/form term",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "language",
+            "description": "Language of the genre/form term, if applicable",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Language",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "HoldingsStatusEnum",
         "description": null,
@@ -5773,6 +5949,30 @@
             "deprecationReason": null
           },
           {
+            "name": "genreForm",
+            "description": "The genre and (literary) form of this manifestation",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "GenreForm",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "hostPublication",
             "description": "Details about the host publications of this manifestation",
             "args": [],
@@ -5916,6 +6116,18 @@
                 "name": "Work",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "periodicalType",
+            "description": "Code for type of periodical",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PeriodicalType",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -6107,6 +6319,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "Shelfmark",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "soundRecording",
+            "description": "The records type of sound recording - excluding music recordings and its material",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SoundRecording",
               "ofType": null
             },
             "isDeprecated": false,
@@ -8332,6 +8556,42 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PeriodicalType",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "A code for the type of periodical",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "display",
+            "description": "The code as displayable text",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -12391,6 +12651,18 @@
         "isOneOf": null,
         "fields": [
           {
+            "name": "creator",
+            "description": "The creator of the manifestation that the material can be located under on the shelf",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "postfix",
             "description": "A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935",
             "args": [],
@@ -12414,6 +12686,18 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "specialMaterialGroup",
+            "description": "Code for comics, children's picture books and drama",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SpecialMaterialGroup",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -12490,6 +12774,78 @@
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SoundRecording",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "A code for the type of sound recording",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "display",
+            "description": "The code as displayable text",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SpecialMaterialGroup",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "A code for the type of the special material group",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "display",
+            "description": "The code as displayable text",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -16231,6 +16587,15 @@
             "deprecationReason": null
           }
         ]
+      },
+      {
+        "name": "oneOf",
+        "description": "Indicates exactly one field must be supplied and this field must not be `null`.",
+        "isRepeatable": false,
+        "locations": [
+          "INPUT_OBJECT"
+        ],
+        "args": []
       },
       {
         "name": "skip",
