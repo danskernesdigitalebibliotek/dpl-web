@@ -6,7 +6,6 @@ import {
   SearchWithPaginationQueryVariables
 } from "../../core/dbc-gateway/generated/graphql";
 import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
-import { GO_VIP_PROFILE_URL } from "./constants";
 
 interface UseGetMaterialListSearchOptions {
   useGoVipProfile?: boolean;
@@ -43,18 +42,14 @@ const useGetMaterialListSearch = ({
     limit: pageSize
   };
 
-  const queryFn = fetcher<
-    SearchWithPaginationQuery,
-    SearchWithPaginationQueryVariables
-  >(
-    SearchWithPaginationDocument,
-    queryVariables,
-    useGoVipProfile ? GO_VIP_PROFILE_URL : undefined
-  );
-
   const queryKey = useGoVipProfile
     ? "searchWithPagination-go"
     : "searchWithPagination";
+
+  const queryFn = fetcher<
+    SearchWithPaginationQuery,
+    SearchWithPaginationQueryVariables
+  >(SearchWithPaginationDocument, queryVariables);
 
   const { data, isLoading } = useQuery<SearchWithPaginationQuery>(
     [queryKey, queryVariables],

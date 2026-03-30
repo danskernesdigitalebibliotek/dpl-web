@@ -40,7 +40,8 @@ if (import.meta.vitest) {
         const urls = {
           fbiBaseUrl: "i-am-fbi-url",
           fbiLocalBaseUrl: "i-am-fbi-local-url",
-          fbiGlobalBaseUrl: "i-am-fbi-global-url"
+          fbiGlobalBaseUrl: "i-am-fbi-global-url",
+          fbiGoVipBaseUrl: "i-am-fbi-go-vip-url"
         } as const;
 
         const actual = await vi.importActual(
@@ -90,6 +91,10 @@ if (import.meta.vitest) {
       );
       expect(resolveBaseUrl("getSmallWork")).toEqual("i-am-fbi-global-url");
       expect(resolveBaseUrl("openOrder")).toEqual("i-am-fbi-global-url");
+      expect(resolveBaseUrl("getMaterial-go")).toEqual("i-am-fbi-go-vip-url");
+      expect(resolveBaseUrl("searchWithPagination-go")).toEqual(
+        "i-am-fbi-go-vip-url"
+      );
     });
 
     it("should resolve default to the fbi base url if the query is unknown", () => {

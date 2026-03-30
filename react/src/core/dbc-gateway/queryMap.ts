@@ -21,6 +21,9 @@ export default {
   getReviewManifestations: serviceUrlKeys.fbiGlobal,
   getSmallWork: serviceUrlKeys.fbiGlobal,
   openOrder: serviceUrlKeys.fbiGlobal,
+  // GO VIP profile requests.
+  "getMaterial-go": serviceUrlKeys.fbiGoVip,
+  "searchWithPagination-go": serviceUrlKeys.fbiGoVip,
   // All other requests.
   default: serviceUrlKeys.fbi
 } as const;
