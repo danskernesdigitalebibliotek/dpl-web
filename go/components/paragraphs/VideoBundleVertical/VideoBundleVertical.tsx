@@ -23,10 +23,10 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
         <div className="py-paragraph-spacing w-full text-center">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
           <div className="grid-go items-start">
-            <div className="col-span-full flex justify-center lg:col-span-6">
+            <div className="grid-go col-span-full lg:col-span-6">
               <div
-                className="rounded-base relative aspect-9/16 w-full max-w-[225px] overflow-hidden
-                  lg:max-w-none">
+                className="rounded-base relative col-span-4 col-start-2 aspect-9/16 overflow-hidden
+                  lg:col-span-full">
                 <iframe
                   title={title || "Video"}
                   aria-label={title || "Video"}
