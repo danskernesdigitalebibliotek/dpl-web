@@ -1,16 +1,16 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
+import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
 import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
+import useCarouselMaterialOrder from "@/hooks/useCarouselMaterialOrder"
 import type {
   ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { WorkId } from "@/lib/types/ids"
 
 export type VideoBundleVerticalProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
@@ -19,29 +19,8 @@ export type VideoBundleVerticalProps = {
 }
 
 const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProps) => {
-  const [materialOrder, setMaterialOrder] = useState<WorkId[]>([])
-  const [currentItemNumber, setCurrentItemNumber] = useState<number>(1)
-  const resetTimerRef = useRef<
-    ((nextItemNumber?: number | ((prev: number) => number)) => void) | null
-  >(null)
-
-  const moveToNextMaterial = () => {
-    setMaterialOrder(prev => [...prev.slice(1), prev[0]])
-    setCurrentItemNumber(prev => (prev === materialOrder.length ? 1 : prev + 1))
-    resetTimerRef.current?.(prev => (prev % materialOrder.length) + 1)
-  }
-
-  const moveToPreviousMaterial = () => {
-    setMaterialOrder(prev => [prev[prev.length - 1], ...prev.slice(0, -1)])
-    setCurrentItemNumber(prev => (prev === 1 ? materialOrder.length : prev - 1))
-    resetTimerRef.current?.()
-  }
-
-  useEffect(() => {
-    if (!!works) {
-      setMaterialOrder(works.map(work => work.workId as WorkId))
-    }
-  }, [works])
+  const { materialOrder, currentItemNumber, resetTimerRef, moveToNextMaterial, moveToPreviousMaterial } =
+    useCarouselMaterialOrder(works)
 
   return (
     <div className="bg-background-overlay">
