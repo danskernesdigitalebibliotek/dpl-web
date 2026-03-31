@@ -190,7 +190,7 @@ field_config:
       field_media_videotool:
         enabled: true
     videotool_vertical:
-      field_media_videotool_1:
+      field_media_videotool_vertical:
         enabled: true
   node:
     article:

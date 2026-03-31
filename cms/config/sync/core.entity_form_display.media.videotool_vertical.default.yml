@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.videotool_vertical.field_media_videotool_1
+    - field.field.media.videotool_vertical.field_media_videotool_vertical
     - media.type.videotool_vertical
   module:
     - path
@@ -18,7 +18,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_videotool_1:
+  field_media_videotool_vertical:
     type: string_textfield
     weight: 0
     region: content

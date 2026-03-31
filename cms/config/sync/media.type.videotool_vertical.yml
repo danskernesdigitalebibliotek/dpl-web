@@ -30,5 +30,5 @@ source_configuration:
   height: ''
   width: ''
   generate_thumbnails: 1
-  source_field: field_media_videotool_1
+  source_field: field_media_videotool_vertical
 field_map: {  }

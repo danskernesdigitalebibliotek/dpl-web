@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.videotool_vertical.field_media_videotool_1
+    - field.field.media.videotool_vertical.field_media_videotool_vertical
     - media.type.videotool_vertical
   module:
     - media_videotool
@@ -12,7 +12,7 @@ targetEntityType: media
 bundle: videotool_vertical
 mode: default
 content:
-  field_media_videotool_1:
+  field_media_videotool_vertical:
     type: media_videotool_embed
     label: visually_hidden
     settings: {  }

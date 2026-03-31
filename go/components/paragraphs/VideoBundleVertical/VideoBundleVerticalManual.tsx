@@ -15,7 +15,7 @@ import { useParagraphDataLazyLoading } from "@/lib/helpers/paragraphs"
 export type VideoBundleVerticalManualProps = {
   goVideoTitle: ParagraphGoVideoBundleVerticalManual["goVideoTitle"]
   embedVideo: {
-    mediaVideotool1: MediaVideotoolVertical["mediaVideotool1"]
+    mediaVideotoolVertical: MediaVideotoolVertical["mediaVideotoolVertical"]
     name: MediaVideotoolVertical["name"]
   }
   videoBundleWorkIds: ParagraphGoVideoBundleVerticalManual["videoBundleWorkIds"]
@@ -46,7 +46,7 @@ const VideoBundleVerticalManual = ({
         <VideoBundleVertical
           works={data?.complexSearch.works}
           title={goVideoTitle}
-          videoUrl={embedVideo.mediaVideotool1}
+          videoUrl={embedVideo.mediaVideotoolVertical}
         />
       )}
     </div>

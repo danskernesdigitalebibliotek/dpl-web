@@ -3,10 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_media_videotool_1
+    - field.storage.media.field_media_videotool_vertical
     - media.type.videotool_vertical
-id: media.videotool_vertical.field_media_videotool_1
-field_name: field_media_videotool_1
+id: media.videotool_vertical.field_media_videotool_vertical
+field_name: field_media_videotool_vertical
 entity_type: media
 bundle: videotool_vertical
 label: VideoTool

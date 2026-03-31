@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.media_library
-    - field.field.media.videotool_vertical.field_media_videotool_1
+    - field.field.media.videotool_vertical.field_media_videotool_vertical
     - image.style.media_library
     - media.type.videotool_vertical
   module:
@@ -27,7 +27,7 @@ content:
     region: content
 hidden:
   created: true
-  field_media_videotool_1: true
+  field_media_videotool_vertical: true
   langcode: true
   name: true
   search_api_excerpt: true
