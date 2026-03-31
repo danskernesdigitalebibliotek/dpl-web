@@ -20,6 +20,7 @@ query getArticleByPath($path: String!) {
             ...goVideo
             ...goVideoBundleAutomatic
             ...goVideoBundleManual
+            ...goVideoBundleVerticalManual
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
             ...goLinkbox
