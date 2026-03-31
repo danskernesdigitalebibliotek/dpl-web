@@ -501,20 +501,25 @@ tasks:
 
   ci:cypress:
     desc: Run Cypress functional tests
-    deps: [ci:cypress:mapped, ci:cypress:unmapped, ci:cypress:webmaster]
+    deps:
+      - ci:cypress:mapped
+      - ci:cypress:unmapped
+      - ci:cypress:webmaster
+      - ci:cypress:opening-hours
+      - ci:cypress:paragraphs
 
-  ci:cypress:mapped:
-    desc: Run Cypress functional tests
-    deps: [ci:wiremock:create-mappings]
+  ci:cypress:run:
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/withMappings/*.ts"
-      # All tests that delete mappings and make their own run afterwards.
+      - task dev:cli -- drush pm:enable -y dpl_webmaster
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "$SPEC_PATH"
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
+      # To be overriden by the tasks that use this task.
+      SPEC_PATH: ""
 
   ci:cypress:unmapped:
     desc: Run Cypress functional tests
@@ -524,25 +529,44 @@ tasks:
     # fail. So add in the mappings for the moment being.
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/*.ts"
+      - task ci:cypress:run
     env:
-      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
-      CYPRESS_DRUPAL_USERNAME: admin
-      CYPRESS_DRUPAL_PASSWORD: admin
+      SPEC_PATH: "cypress/e2e/*.ts"
+
+  ci:cypress:mapped:
+    desc: Run Cypress functional tests
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/withMappings/*.ts"
 
   ci:cypress:webmaster:
-    desc: Run Cypress functional tests
+    desc: Run Cypress tests for webmaster functionality.
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - task dev:cli -- drush pm:enable -y dpl_webmaster
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/webmaster/*.ts"
+      - task ci:cypress:run
     env:
-      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
-      CYPRESS_DRUPAL_USERNAME: admin
-      CYPRESS_DRUPAL_PASSWORD: admin
+      SPEC_PATH: "cypress/e2e/webmaster/*.ts"
+
+  # The opening hours tests take an extraordinarly long time. To speed up the
+  # GitHub Actions, we've split these out to run in parallel.
+  ci:cypress:opening-hours:
+    desc: Run Cypress tests for opening hours.
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/openingHours/*.ts"
+
+  # The paragraphs tests take an extraordinarly long time. To speed up the
+  # GitHub Actions, we've split these out to run in parallel.
+  ci:cypress:paragraphs:
+    desc: Run Cypress tests for paragraphs.
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/paragraphs/*.ts"
 
   ci:cypress:local:
     desc: Run Cypress functional tests locally

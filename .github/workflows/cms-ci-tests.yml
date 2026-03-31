@@ -1,10 +1,12 @@
-# These workflows takes care of various CI tests.
+---
+name: CMS / CI Tests
+
 on:
   pull_request:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
-name: CMS / CI Tests
+
 env:
   PHP_VERSION: 8.3
   COMPOSER_VERSION: v2
@@ -180,104 +182,35 @@ jobs:
           name: pa11y-screenshots
           path: cms/pa11y/screenshots
 
-  CypressMapped:
-    name: CMS / Run Cypress mapped functional tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          # Our Taskfile requires a proper checkout to function because of
-          # certain vars.
-          fetch-depth: 0
-      - name: Install go-task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup site
-        run: task ci:reset
-      - name: Run Cypress
-        run: task ci:cypress:mapped
-      - name: Archive videoes
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: cypress-mapped-videos
-          path: cms/cypress/videos
-      - name: Archive screenshots
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: cypress-mapped-screenshots
-          path: cms/cypress/screenshots
-
   CypressUnmapped:
-    name: CMS / Run Cypress unmapped functional tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          # Our Taskfile requires a proper checkout to function because of
-          # certain vars.
-          fetch-depth: 0
-      - name: Install go-task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup site
-        run: task ci:reset
-      - name: Run Cypress
-        run: task ci:cypress:unmapped
-      - name: Archive videoes
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: cypress-unmapped-videos
-          path: cms/cypress/videos
-      - name: Archive screenshots
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: cypress-unmapped-screenshots
-          path: cms/cypress/screenshots
+    name: CMS / Cypress unmapped tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    with:
+      id: unmapped
+
+  CypressMapped:
+    name: CMS / Cypress mapped tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    with:
+      id: mapped
 
   CypressWebmaster:
-    name: CMS / Run Cypress webmaster functional tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          # Our Taskfile requires a proper checkout to function because of
-          # certain vars.
-          fetch-depth: 0
-      - name: Install go-task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup site
-        run: task ci:reset
-      - name: Run Cypress
-        run: task ci:cypress:webmaster
-      - name: Archive videoes
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: cypress-webmaster-videos
-          path: cms/cypress/videos
-      - name: Archive screenshots
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: cypress-webmaster-screenshots
-          path: cms/cypress/screenshots
+    name: CMS / Cypress webmaster tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    with:
+      id: webmaster
+
+  CypressOpeningHours:
+    name: CMS / Cypress opening hours tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    with:
+      id: opening-hours
+
+  CypressParagraphs:
+    name: CMS / Cypress paragraphs tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    with:
+      id: paragraphs
 
   MarkdownLint:
     name: CMS / Lint Markdown
