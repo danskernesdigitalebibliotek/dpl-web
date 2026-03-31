@@ -11,6 +11,7 @@ import ParagraphGoTextBody from "./TextBody/TextBody"
 import ParagraphGoVideo from "./Video/Video"
 import ParagraphGoVideoBundleAutomatic from "./VideoBundle/VideoBundleAutomatic"
 import ParagraphGoVideoBundleManual from "./VideoBundle/VideoBundleManual"
+import ParagraphGoVideoBundleVerticalManual from "./VideoBundleVertical/VideoBundleVerticalManual"
 
 function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
   const components = {
@@ -20,6 +21,7 @@ function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
     ParagraphGoMaterialSliderManual,
     ParagraphGoVideoBundleAutomatic,
     ParagraphGoVideoBundleManual,
+    ParagraphGoVideoBundleVerticalManual,
     ParagraphGoTextBody,
     ParagraphGoImages,
   }
