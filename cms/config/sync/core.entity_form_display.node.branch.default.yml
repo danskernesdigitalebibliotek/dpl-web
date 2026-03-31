@@ -14,8 +14,6 @@ dependencies:
     - field.field.node.branch.field_promoted_on_lists
     - node.type.branch
   module:
-    - address
-    - address_dawa
     - field_group
     - gsearch
     - media_library
@@ -50,24 +48,9 @@ targetEntityType: node
 bundle: branch
 mode: default
 content:
-  field_address:
-    type: address_default
-    weight: 11
-    region: content
-    settings:
-      wrapper_type: fieldset
-    third_party_settings: {  }
-  field_address_dawa:
-    type: address_dawa
-    weight: 10
-    region: content
-    settings:
-      size: 120
-      placeholder: 'Search for address..'
-    third_party_settings: {  }
   field_address_gsearch:
     type: address_gsearch
-    weight: 26
+    weight: 10
     region: content
     settings:
       size: 60
@@ -175,6 +158,8 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_address: true
+  field_address_dawa: true
   langcode: true
   promote: true
   publish_on: true
