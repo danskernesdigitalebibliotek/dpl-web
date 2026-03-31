@@ -12,7 +12,7 @@ field_name: field_event_address
 entity_type: eventseries
 bundle: default
 label: Address
-description: 'Use this value to specific a different address than the event branch.'
+description: 'Choose a country, to fill out the address of the event.'
 required: false
 translatable: false
 default_value: {  }
