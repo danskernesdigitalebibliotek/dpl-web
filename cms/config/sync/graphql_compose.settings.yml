@@ -137,7 +137,8 @@ entity_config:
       enabled: true
       query_load_enabled: true
     share_buttons:
-      enabled: false
+      enabled: true
+      query_load_enabled: true
     simple_links:
       enabled: true
       query_load_enabled: true
