@@ -1,39 +1,49 @@
-import { cn } from "@/lib/helpers/helper.cn"
+import { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
 import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
 import { cyKeys } from "@/cypress/support/constants"
-import type { CarouselMaterialOrder } from "@/hooks/useCarouselMaterialOrder"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
+import { WorkId } from "@/lib/types/ids"
 
 type CarouselSliderProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   className?: string
-} & Pick<
-  CarouselMaterialOrder,
-  | "currentItemNumber"
-  | "materialOrder"
-  | "moveToNextMaterial"
-  | "moveToPreviousMaterial"
-  | "resetTimerRef"
->
+}
 
-const CarouselSlider = ({
-  works,
-  currentItemNumber,
-  materialOrder,
-  moveToNextMaterial,
-  moveToPreviousMaterial,
-  resetTimerRef,
-  className,
-}: CarouselSliderProps) => {
+const CarouselSlider = ({ works, className }: CarouselSliderProps) => {
+  const [materialOrder, setMaterialOrder] = useState<WorkId[]>([])
+  const [currentItemNumber, setCurrentItemNumber] = useState<number>(1)
+  const resetTimerRef = useRef<
+    ((nextItemNumber?: number | ((prev: number) => number)) => void) | null
+  >(null)
+
+  const moveToNextMaterial = () => {
+    setMaterialOrder(prev => [...prev.slice(1), prev[0]])
+    setCurrentItemNumber(prev => (prev === materialOrder.length ? 1 : prev + 1))
+    resetTimerRef.current?.(prev => (prev % materialOrder.length) + 1)
+  }
+
+  const moveToPreviousMaterial = () => {
+    setMaterialOrder(prev => [prev[prev.length - 1], ...prev.slice(0, -1)])
+    setCurrentItemNumber(prev => (prev === 1 ? materialOrder.length : prev - 1))
+    resetTimerRef.current?.()
+  }
+
+  useEffect(() => {
+    if (!!works) {
+      setMaterialOrder(works.map(work => work.workId as WorkId))
+    }
+  }, [works])
+
   return (
     <div
-      className={cn("col-span-full mt-paragraph-spacing lg:mt-0", className)}
+      className={cn("mt-paragraph-spacing col-span-full lg:mt-0", className)}
       data-cy={cyKeys["video-bundle-slider"]}>
-      <div className="grid-go items-center lg:block lg:pl-grid-gap-half">
+      <div className="grid-go lg:pl-grid-gap-half items-center lg:block">
         {/* Mobile: prev button */}
         <div className="col-span-1 lg:hidden">
           <Button
