@@ -16,34 +16,26 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/shared/drawer/drawer"
-import { modalStore } from "@/store/modal.store"
 
 function ResponsiveDialog({
   title,
   description,
   children,
   open,
-  onOpenChange,
+  onClose,
 }: {
   title: string
   description?: string
   children: React.ReactNode
   open: boolean
-  onOpenChange?: () => void
+  onClose: () => void
 }) {
   const isDesktop = useMediaQuery("(min-width: 768px)")
-
-  const { closeModal } = modalStore.trigger
-  const onOpenChangeCallback =
-    onOpenChange ||
-    (() => {
-      closeModal()
-    })
 
   return (
     <div>
       {isDesktop && (
-        <Dialog open={open} onOpenChange={() => onOpenChangeCallback()}>
+        <Dialog open={open} onOpenChange={onClose}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{title}</DialogTitle>
@@ -56,7 +48,7 @@ function ResponsiveDialog({
       )}
 
       {!isDesktop && (
-        <Drawer open={open} onOpenChange={() => onOpenChangeCallback()}>
+        <Drawer open={open} onOpenChange={onClose}>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>{title}</DrawerTitle>

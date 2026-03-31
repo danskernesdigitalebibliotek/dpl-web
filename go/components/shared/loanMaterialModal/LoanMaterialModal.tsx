@@ -1,43 +1,47 @@
 import { useQueryClient } from "@tanstack/react-query"
 import React, { useState } from "react"
 
-import {
-  getManifestationLabel,
-  getManifestationMaterialTypeIcon,
-} from "@/components/pages/workPageLayout/helper"
+import { getManifestationLabel, getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
-import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
-import { modalStore } from "@/store/modal.store"
 
 import { publizonErrorMessageMap } from "./helper"
 
 const LoanMaterialModal = ({
   open,
-  manifestation,
+  onClose,
+  wid,
+  pid,
 }: {
   open: boolean
-  manifestation: ManifestationWorkPageFragment
+  onClose: () => void
+  wid: string
+  pid: string
 }) => {
   const queryClient = useQueryClient()
-
+  const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
+  const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
   const { mutate } = usePostV1UserLoansIdentifier()
-  const isbns = getIsbnsFromManifestation(manifestation)
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [publizonError, setPublizonError] = useState<{
     code: ApiResponseCode
     message: string
   } | null>(null)
-  const { closeModal } = modalStore.trigger
+
+  if (!manifestation) return null
+
+  const isbns = getIsbnsFromManifestation(manifestation)
+
   const handleLoanMaterial = () => {
     setIsHandlingLoan(true)
     mutate(
@@ -47,7 +51,7 @@ const LoanMaterialModal = ({
           // Refetch data to update the UI for WorkPageButtons
           queryClient.invalidateQueries({ queryKey: getGetV1UserLoansAdapterQueryKey() })
           setIsHandlingLoan(false)
-          closeModal()
+          onClose()
         },
         onError: error => {
           if (error instanceof Error) {
@@ -63,6 +67,7 @@ const LoanMaterialModal = ({
   return (
     <ResponsiveDialog
       open={open}
+      onClose={onClose}
       title={`Lån ${getManifestationLabel(manifestation) || "materialet"}`}>
       <div
         className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
@@ -110,7 +115,7 @@ const LoanMaterialModal = ({
             )}
           </Button>
         )}
-        <Button size={"lg"} disabled={isHandlingLoan} onClick={() => closeModal()}>
+        <Button size={"lg"} disabled={isHandlingLoan} onClick={() => onClose()}>
           {!isHandlingLoan && (publizonError ? "Luk" : "Nej")}
           {isHandlingLoan && (
             <Icon

@@ -1,4 +1,5 @@
 import { first } from "lodash"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React, { useMemo } from "react"
 
 import {
@@ -11,8 +12,8 @@ import {
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { buildModalSearchParams } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
-import { modalStore } from "@/store/modal.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -28,6 +29,9 @@ const WorkPageButtonsLoggedIn = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
@@ -37,8 +41,6 @@ const WorkPageButtonsLoggedIn = ({
     })
   }, [dataLoans?.loans, identifier])
   const isLoaned = !!loan
-
-  const { openModal } = modalStore.trigger
 
   if (isLoadingLoans) {
     return (
@@ -95,10 +97,9 @@ const WorkPageButtonsLoggedIn = ({
           theme={"primary"}
           disabled={isLoanButtonDisabled}
           onClick={() => {
-            openModal({
-              modalType: "LoanMaterialModal",
-              props: { manifestation: selectedManifestation },
-            })
+            router.push(
+              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`
+            )
           }}>
           Lån {label}
         </WorkPageButton>
@@ -115,10 +116,9 @@ const WorkPageButtonsLoggedIn = ({
             theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() =>
-              openModal({
-                modalType: "PlayerModal",
-                props: { manifestation: selectedManifestation, orderId: loan?.orderId },
-              })
+              router.push(
+                `${pathname}?${buildModalSearchParams(searchParams, "PlayerModal", { wid: workId, pid: selectedManifestation.pid })}`
+              )
             }>
             Lyt til {label}
           </WorkPageButton>
@@ -132,10 +132,9 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Prøv ${label}`}
           disabled={isLoanButtonDisabled}
           onClick={() =>
-            openModal({
-              modalType: "PlayerPreviewModal",
-              props: { manifestation: selectedManifestation },
-            })
+            router.push(
+              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`
+            )
           }>
           Prøv {label}
         </WorkPageButton>
@@ -144,10 +143,9 @@ const WorkPageButtonsLoggedIn = ({
           theme={"primary"}
           disabled={isLoanButtonDisabled}
           onClick={() => {
-            openModal({
-              modalType: "LoanMaterialModal",
-              props: { manifestation: selectedManifestation },
-            })
+            router.push(
+              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`
+            )
           }}>
           Lån {label}
         </WorkPageButton>

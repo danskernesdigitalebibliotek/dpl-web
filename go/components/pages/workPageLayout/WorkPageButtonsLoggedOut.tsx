@@ -1,4 +1,5 @@
 import { first } from "lodash"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React from "react"
 
 import {
@@ -12,7 +13,7 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
-import { modalStore } from "@/store/modal.store"
+import { buildModalSearchParams } from "@/lib/helpers/modal-url"
 import { sheetStore } from "@/store/sheet.store"
 
 import WorkPageButton from "./WorkPageButton"
@@ -29,20 +30,21 @@ const WorkPageButtonsLoggedOut = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   const { openSheet } = sheetStore.trigger
-  const { openModal } = modalStore.trigger
 
   const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
   const label = getManifestationLabel(selectedManifestation)
 
-  const getRedirectPath = () => {
-    const fullUrl = resolveUrl({
-      routeParams: { work: "work", wid: workId },
-      queryParams: materialTypeCode ? { type: materialTypeCode } : {},
+  const getLoanRedirectPath = () => {
+    const params = buildModalSearchParams(searchParams, "LoanMaterialModal", {
+      wid: workId,
+      pid: selectedManifestation.pid,
     })
-    const url = new URL(fullUrl)
-    return url.pathname + url.search
+    return `${pathname}?${params}`
   }
 
   if (isPhysicalMaterialType(materialTypeCode)) {
@@ -73,7 +75,7 @@ const WorkPageButtonsLoggedOut = ({
           onClick={() => {
             openSheet({
               sheetType: "LoginSheet",
-              props: { onLogin: () => setLoginRedirectCookie(getRedirectPath()) },
+              props: { onLogin: () => setLoginRedirectCookie(getLoanRedirectPath()) },
             })
           }}>
           Lån {label}
@@ -89,10 +91,9 @@ const WorkPageButtonsLoggedOut = ({
           ariaLabel={`Prøv ${label}`}
           disabled={!identifier}
           onClick={() =>
-            openModal({
-              modalType: "PlayerPreviewModal",
-              props: { manifestation: selectedManifestation },
-            })
+            router.push(
+              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`
+            )
           }>
           Prøv {label}
         </WorkPageButton>
@@ -103,7 +104,7 @@ const WorkPageButtonsLoggedOut = ({
           onClick={() => {
             openSheet({
               sheetType: "LoginSheet",
-              props: { onLogin: () => setLoginRedirectCookie(getRedirectPath()) },
+              props: { onLogin: () => setLoginRedirectCookie(getLoanRedirectPath()) },
             })
           }}>
           Lån {label}

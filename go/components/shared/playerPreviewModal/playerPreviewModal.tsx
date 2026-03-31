@@ -1,22 +1,29 @@
 import { first } from "lodash"
 
 import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
-import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-
+import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import Player from "../publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "../responsiveDialog/ResponsiveDialog"
 
 function PlayerPreviewModal({
   open,
-  manifestation,
+  onClose,
+  wid,
+  pid,
 }: {
   open: boolean
-  manifestation: ManifestationWorkPageFragment
+  onClose: () => void
+  wid: string
+  pid: string
 }) {
+  const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
+  const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
   const identifier = first(manifestation?.identifiers)?.value
 
+  if (!manifestation) return null
+
   return (
-    <ResponsiveDialog open={open} title={`Prøv ${getManifestationLabel(manifestation)}`}>
+    <ResponsiveDialog open={open} onClose={onClose} title={`Prøv ${getManifestationLabel(manifestation)}`}>
       <Player type="preview" identifier={identifier || ""} />
     </ResponsiveDialog>
   )
