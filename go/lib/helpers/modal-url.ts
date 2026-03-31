@@ -1,4 +1,4 @@
-const MODAL_PARAM_KEYS = ["modal", "modalProps"] as const
+import { createSerializer, parseAsJson, parseAsString } from "nuqs"
 
 export type TModalUrlParams = {
   LoanMaterialModal: { wid: string; pid: string }
@@ -8,38 +8,18 @@ export type TModalUrlParams = {
 
 export type TModalType = keyof TModalUrlParams
 
-const VALID_MODAL_TYPES = new Set<string>(["LoanMaterialModal", "PlayerPreviewModal", "PlayerModal"])
+export const VALID_MODAL_TYPES = new Set<string>(["LoanMaterialModal", "PlayerPreviewModal", "PlayerModal"])
 
-export function buildModalSearchParams(
-  existing: URLSearchParams,
-  modalType: TModalType,
-  params: TModalUrlParams[TModalType]
-): URLSearchParams {
-  const next = clearModalSearchParams(existing)
-  next.set("modal", modalType)
-  next.set("modalProps", JSON.stringify(params))
-  return next
+function validateModalProps(value: unknown): TModalUrlParams[TModalType] | null {
+  if (typeof value !== "object" || value === null) return null
+  const { wid, pid } = value as Record<string, unknown>
+  if (typeof wid !== "string" || typeof pid !== "string") return null
+  return { wid, pid }
 }
 
-export function clearModalSearchParams(existing: URLSearchParams): URLSearchParams {
-  const next = new URLSearchParams(existing.toString())
-  MODAL_PARAM_KEYS.forEach(key => next.delete(key))
-  return next
+export const modalParsers = {
+  modal: parseAsString,
+  modalProps: parseAsJson(validateModalProps),
 }
 
-export function parseModalSearchParams(searchParams: URLSearchParams): {
-  modalType: TModalType | null
-  modalProps: TModalUrlParams[TModalType] | null
-} {
-  const modal = searchParams.get("modal")
-  const modalType = modal && VALID_MODAL_TYPES.has(modal) ? (modal as TModalType) : null
-
-  if (!modalType) return { modalType: null, modalProps: null }
-
-  try {
-    const modalProps = JSON.parse(searchParams.get("modalProps") ?? "") as TModalUrlParams[TModalType]
-    return { modalType, modalProps }
-  } catch {
-    return { modalType, modalProps: null }
-  }
-}
+export const createModalUrl = createSerializer(modalParsers)

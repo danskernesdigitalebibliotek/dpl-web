@@ -1,5 +1,5 @@
 import { first } from "lodash"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useQueryStates } from "nuqs"
 import React, { useMemo } from "react"
 
 import {
@@ -12,7 +12,7 @@ import {
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { buildModalSearchParams } from "@/lib/helpers/modal-url"
+import { modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 import WorkPageButton from "./WorkPageButton"
@@ -29,9 +29,7 @@ const WorkPageButtonsLoggedIn = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
+  const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
@@ -96,12 +94,7 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={isLoanButtonDisabled}
-          onClick={() => {
-            router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`,
-              { scroll: false }
-            )
-          }}>
+          onClick={() => setModal({ modal: "LoanMaterialModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
@@ -116,12 +109,7 @@ const WorkPageButtonsLoggedIn = ({
             ariaLabel={`Lyt til ${label}`}
             theme={"primary"}
             disabled={isLoanButtonDisabled}
-            onClick={() =>
-              router.push(
-                `${pathname}?${buildModalSearchParams(searchParams, "PlayerModal", { wid: workId, pid: selectedManifestation.pid })}`,
-                { scroll: false }
-              )
-            }>
+            onClick={() => setModal({ modal: "PlayerModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
             Lyt til {label}
           </WorkPageButton>
         </WorkPageButtons>
@@ -133,24 +121,14 @@ const WorkPageButtonsLoggedIn = ({
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           disabled={isLoanButtonDisabled}
-          onClick={() =>
-            router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`,
-              { scroll: false }
-            )
-          }>
+          onClick={() => setModal({ modal: "PlayerPreviewModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
           Prøv {label}
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={isLoanButtonDisabled}
-          onClick={() => {
-            router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`,
-              { scroll: false }
-            )
-          }}>
+          onClick={() => setModal({ modal: "LoanMaterialModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>

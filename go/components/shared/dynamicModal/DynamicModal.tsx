@@ -1,25 +1,18 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useQueryStates } from "nuqs"
 import React, { useCallback, useEffect, useState } from "react"
 
-import {
-  TModalType,
-  TModalUrlParams,
-  clearModalSearchParams,
-  parseModalSearchParams,
-} from "@/lib/helpers/modal-url"
+import { modalParsers, TModalType, TModalUrlParams, VALID_MODAL_TYPES } from "@/lib/helpers/modal-url"
 
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
 
 export function DynamicModal() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+  const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, { scroll: false })
 
-  const { modalType, modalProps } = parseModalSearchParams(searchParams)
+  const modalType = modal && VALID_MODAL_TYPES.has(modal) ? (modal as TModalType) : null
   const wid = modalProps?.wid ?? null
   const pid = modalProps?.pid ?? null
 
@@ -40,10 +33,8 @@ export function DynamicModal() {
   }, [modalType, wid, pid])
 
   const closeModal = useCallback(() => {
-    const params = clearModalSearchParams(new URLSearchParams(searchParams.toString()))
-    const query = params.toString()
-    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
-  }, [router, pathname, searchParams])
+    setModal({ modal: null, modalProps: null })
+  }, [setModal])
 
   if (!activeModal || !activeParams) return null
 

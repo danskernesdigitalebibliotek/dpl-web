@@ -1,5 +1,6 @@
 import { first } from "lodash"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
+import { useQueryStates } from "nuqs"
 import React from "react"
 
 import {
@@ -13,7 +14,7 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
-import { buildModalSearchParams } from "@/lib/helpers/modal-url"
+import { createModalUrl, modalParsers } from "@/lib/helpers/modal-url"
 import { sheetStore } from "@/store/sheet.store"
 
 import WorkPageButton from "./WorkPageButton"
@@ -30,22 +31,20 @@ const WorkPageButtonsLoggedOut = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
-  const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
+  const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
   const { openSheet } = sheetStore.trigger
 
   const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
   const label = getManifestationLabel(selectedManifestation)
 
-  const getLoanRedirectPath = () => {
-    const params = buildModalSearchParams(searchParams, "LoanMaterialModal", {
-      wid: workId,
-      pid: selectedManifestation.pid,
+  const getLoanRedirectPath = () =>
+    createModalUrl(`${pathname}?${searchParams}`, {
+      modal: "LoanMaterialModal",
+      modalProps: { wid: workId, pid: selectedManifestation.pid },
     })
-    return `${pathname}?${params}`
-  }
 
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
@@ -91,10 +90,10 @@ const WorkPageButtonsLoggedOut = ({
           ariaLabel={`Prøv ${label}`}
           disabled={!identifier}
           onClick={() =>
-            router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`,
-              { scroll: false }
-            )
+            setModal({
+              modal: "PlayerPreviewModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
+            })
           }>
           Prøv {label}
         </WorkPageButton>
