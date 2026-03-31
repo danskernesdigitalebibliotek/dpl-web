@@ -65,6 +65,7 @@
     "next": "16.2.1",
     "next-drupal": "^2.0.1",
     "next-themes": "^0.4.6",
+    "nuqs": "^2.8.9",
     "openid-client": "^6.8.2",
     "plaiceholder": "^3.0.0",
     "react": "19.2.4",
