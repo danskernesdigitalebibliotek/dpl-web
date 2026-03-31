@@ -1,7 +1,6 @@
 "use client"
 
-import DesktopCarouselSlider from "@/components/shared/carouselSlider/DesktopCarouselSlider"
-import MobileCarouselSlider from "@/components/shared/carouselSlider/MobileCarouselSlider"
+import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import useCarouselMaterialOrder from "@/hooks/useCarouselMaterialOrder"
 import type {
   ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType,
@@ -39,14 +38,7 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
                 />
               </div>
             </div>
-            <MobileCarouselSlider
-              works={works}
-              currentItemNumber={currentItemNumber}
-              materialOrder={materialOrder}
-              moveToNextMaterial={moveToNextMaterial}
-              moveToPreviousMaterial={moveToPreviousMaterial}
-            />
-            <DesktopCarouselSlider
+            <CarouselSlider
               works={works}
               currentItemNumber={currentItemNumber}
               materialOrder={materialOrder}

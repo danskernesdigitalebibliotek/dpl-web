@@ -1,7 +1,6 @@
 "use client"
 
-import DesktopCarouselSlider from "@/components/shared/carouselSlider/DesktopCarouselSlider"
-import MobileCarouselSlider from "@/components/shared/carouselSlider/MobileCarouselSlider"
+import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import { cyKeys } from "@/cypress/support/constants"
 import useCarouselMaterialOrder from "@/hooks/useCarouselMaterialOrder"
 import type {
@@ -39,15 +38,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 loading="lazy"
               />
             </div>
-            <MobileCarouselSlider
-              works={works}
-              currentItemNumber={currentItemNumber}
-              materialOrder={materialOrder}
-              moveToNextMaterial={moveToNextMaterial}
-              moveToPreviousMaterial={moveToPreviousMaterial}
-              className="lg:col-span-3"
-            />
-            <DesktopCarouselSlider
+            <CarouselSlider
               works={works}
               currentItemNumber={currentItemNumber}
               materialOrder={materialOrder}

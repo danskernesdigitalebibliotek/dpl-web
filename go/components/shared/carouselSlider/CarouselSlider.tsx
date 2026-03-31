@@ -8,7 +8,7 @@ import { cyKeys } from "@/cypress/support/constants"
 import type { CarouselMaterialOrder } from "@/hooks/useCarouselMaterialOrder"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-type DesktopCarouselSliderProps = {
+type CarouselSliderProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   className?: string
 } & Pick<
@@ -20,7 +20,7 @@ type DesktopCarouselSliderProps = {
   | "resetTimerRef"
 >
 
-const DesktopCarouselSlider = ({
+const CarouselSlider = ({
   works,
   currentItemNumber,
   materialOrder,
@@ -28,20 +28,47 @@ const DesktopCarouselSlider = ({
   moveToPreviousMaterial,
   resetTimerRef,
   className,
-}: DesktopCarouselSliderProps) => {
+}: CarouselSliderProps) => {
   return (
     <div
-      className={cn("col-span-full hidden flex-col items-center justify-center text-left lg:flex", className)}
+      className={cn("col-span-full mt-paragraph-spacing lg:mt-0", className)}
       data-cy={cyKeys["video-bundle-slider"]}>
-      <div className="pl-grid-gap-half flex w-full flex-col gap-y-8">
-        <div className="relative w-full">
+      <div className="grid-go items-center lg:block lg:pl-grid-gap-half">
+        {/* Mobile: prev button */}
+        <div className="col-span-1 lg:hidden">
+          <Button
+            onClick={moveToPreviousMaterial}
+            variant="icon"
+            ariaLabel="Vis forrige værk"
+            disabled={!works}
+            data-cy={cyKeys["video-bundle-prev-button"]}>
+            <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+          </Button>
+        </div>
+
+        {/* Work card — rendered once, responsive */}
+        <div className="col-span-4 lg:relative lg:w-full">
           <WorkCardStackedWithCaption
             currentItemNumber={currentItemNumber}
             works={works || []}
             materialOrder={materialOrder}
           />
         </div>
-        <div className="hidden lg:flex lg:items-center">
+
+        {/* Mobile: next button */}
+        <div className="col-span-1 lg:hidden">
+          <Button
+            onClick={moveToNextMaterial}
+            variant="icon"
+            ariaLabel="Vis næste værk"
+            disabled={!works}
+            data-cy={cyKeys["video-bundle-next-button"]}>
+            <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+          </Button>
+        </div>
+
+        {/* Desktop: timer + nav buttons */}
+        <div className="hidden lg:mt-8 lg:flex lg:items-center">
           <Timer
             durationInSeconds={5}
             currentItemNumber={currentItemNumber}
@@ -75,4 +102,4 @@ const DesktopCarouselSlider = ({
   )
 }
 
-export default DesktopCarouselSlider
+export default CarouselSlider
