@@ -2,7 +2,6 @@
 
 import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import { cyKeys } from "@/cypress/support/constants"
-import useCarouselMaterialOrder from "@/hooks/useCarouselMaterialOrder"
 import type {
   ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
   ParagraphGoVideoBundleManual as VideoBundleManualType,
@@ -16,9 +15,6 @@ export type VideoBundleProps = {
 }
 
 const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
-  const { materialOrder, currentItemNumber, resetTimerRef, moveToNextMaterial, moveToPreviousMaterial } =
-    useCarouselMaterialOrder(works)
-
   return (
     <div className="bg-background-overlay" data-cy={cyKeys["video-bundle"]}>
       <div className="content-container">
@@ -38,15 +34,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 loading="lazy"
               />
             </div>
-            <CarouselSlider
-              works={works}
-              currentItemNumber={currentItemNumber}
-              materialOrder={materialOrder}
-              moveToNextMaterial={moveToNextMaterial}
-              moveToPreviousMaterial={moveToPreviousMaterial}
-              resetTimerRef={resetTimerRef}
-              className="lg:col-span-3"
-            />
+            <CarouselSlider works={works} className="lg:col-span-3" />
           </div>
         </div>
       </div>

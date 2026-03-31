@@ -1,10 +1,7 @@
 "use client"
 
 import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
-import useCarouselMaterialOrder from "@/hooks/useCarouselMaterialOrder"
-import type {
-  ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType,
-} from "@/lib/graphql/generated/dpl-cms/graphql"
+import type { ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 export type VideoBundleVerticalProps = {
@@ -14,9 +11,6 @@ export type VideoBundleVerticalProps = {
 }
 
 const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProps) => {
-  const { materialOrder, currentItemNumber, resetTimerRef, moveToNextMaterial, moveToPreviousMaterial } =
-    useCarouselMaterialOrder(works)
-
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
@@ -38,15 +32,7 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
                 />
               </div>
             </div>
-            <CarouselSlider
-              works={works}
-              currentItemNumber={currentItemNumber}
-              materialOrder={materialOrder}
-              moveToNextMaterial={moveToNextMaterial}
-              moveToPreviousMaterial={moveToPreviousMaterial}
-              resetTimerRef={resetTimerRef}
-              className="lg:col-span-5 lg:col-start-8"
-            />
+            <CarouselSlider works={works} className="lg:col-span-5 lg:col-start-8" />
           </div>
         </div>
       </div>
@@ -66,7 +52,7 @@ export const VideoBundleVerticalSkeleton = () => {
           <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
             <div
               className="rounded-base bg-background-skeleton relative aspect-9/16 w-full max-w-sm
-                self-center animate-pulse overflow-hidden lg:w-[50%] lg:max-w-none"
+                animate-pulse self-center overflow-hidden lg:w-[50%] lg:max-w-none"
             />
             <div
               className="gap-grid-gap flex w-full flex-row flex-wrap items-center justify-center
