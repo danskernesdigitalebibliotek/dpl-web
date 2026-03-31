@@ -12,6 +12,8 @@ entity_config:
       enabled: true
     videotool:
       enabled: true
+    videotool_vertical:
+      enabled: true
   node:
     article:
       enabled: true
@@ -186,6 +188,9 @@ field_config:
         enabled: true
     videotool:
       field_media_videotool:
+        enabled: true
+    videotool_vertical:
+      field_media_videotool_1:
         enabled: true
   node:
     article:
