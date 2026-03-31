@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { WorkId } from "@/lib/types/ids"
 
+export type CarouselMaterialOrder = ReturnType<typeof useCarouselMaterialOrder>
+
 export default function useCarouselMaterialOrder(
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
 ) {

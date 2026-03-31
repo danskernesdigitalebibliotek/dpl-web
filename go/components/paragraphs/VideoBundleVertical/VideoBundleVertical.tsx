@@ -1,11 +1,7 @@
 "use client"
 
-import React from "react"
-
-import { Button } from "@/components/shared/button/Button"
-import Icon from "@/components/shared/icon/Icon"
-import Timer from "@/components/shared/timer/Timer"
-import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
+import DesktopCarouselSlider from "@/components/shared/carouselSlider/DesktopCarouselSlider"
+import MobileCarouselSlider from "@/components/shared/carouselSlider/MobileCarouselSlider"
 import useCarouselMaterialOrder from "@/hooks/useCarouselMaterialOrder"
 import type {
   ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType,
@@ -43,75 +39,22 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
                 />
               </div>
             </div>
-            <div
-              className="grid-go mt-paragraph-spacing col-span-full items-center
-                lg:hidden">
-              <div className="col-span-1">
-                <Button
-                  onClick={moveToPreviousMaterial}
-                  variant="icon"
-                  ariaLabel="Vis forrige værk"
-                  disabled={!works}>
-                  <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-                </Button>
-              </div>
-              <div className="col-span-4">
-                <WorkCardStackedWithCaption
-                  currentItemNumber={currentItemNumber}
-                  works={works || []}
-                  materialOrder={materialOrder}
-                />
-              </div>
-              <div className="col-span-1">
-                <Button
-                  onClick={moveToNextMaterial}
-                  variant="icon"
-                  ariaLabel="Vis næste værk"
-                  disabled={!works}>
-                  <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-                </Button>
-              </div>
-            </div>
-            <div
-              className="col-span-full hidden flex-col items-center justify-center text-left
-                lg:col-span-5 lg:col-start-8 lg:flex">
-              <div className="pl-grid-gap-half flex w-full flex-col gap-y-8">
-                <div className="relative w-full">
-                  <WorkCardStackedWithCaption
-                    currentItemNumber={currentItemNumber}
-                    works={works || []}
-                    materialOrder={materialOrder}
-                  />
-                </div>
-                <div className="hidden lg:flex lg:items-center">
-                  <Timer
-                    durationInSeconds={5}
-                    currentItemNumber={currentItemNumber}
-                    totalItems={materialOrder.length}
-                    fullCircleAction={moveToNextMaterial}
-                    setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
-                    className="mr-auto"
-                    isStopped={!works?.length}
-                  />
-                  <div className="space-x-grid-gap-half">
-                    <Button
-                      onClick={moveToPreviousMaterial}
-                      variant="icon"
-                      ariaLabel="Vis forrige værk"
-                      disabled={!works?.length}>
-                      <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-                    </Button>
-                    <Button
-                      onClick={moveToNextMaterial}
-                      variant="icon"
-                      ariaLabel="Vis næste værk"
-                      disabled={!works?.length}>
-                      <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <MobileCarouselSlider
+              works={works}
+              currentItemNumber={currentItemNumber}
+              materialOrder={materialOrder}
+              moveToNextMaterial={moveToNextMaterial}
+              moveToPreviousMaterial={moveToPreviousMaterial}
+            />
+            <DesktopCarouselSlider
+              works={works}
+              currentItemNumber={currentItemNumber}
+              materialOrder={materialOrder}
+              moveToNextMaterial={moveToNextMaterial}
+              moveToPreviousMaterial={moveToPreviousMaterial}
+              resetTimerRef={resetTimerRef}
+              className="lg:col-span-5 lg:col-start-8"
+            />
           </div>
         </div>
       </div>
