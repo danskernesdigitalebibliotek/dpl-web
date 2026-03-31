@@ -269,7 +269,7 @@ export type Language = {
   direction?: Maybe<Scalars['String']['output']>;
   /** Sprogkoden. */
   id?: Maybe<Scalars['ID']['output']>;
-  /** Navnet på sproget. */
+  /** Sprogets navn. */
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -375,7 +375,7 @@ export type MediaInterface = {
 };
 
 /** Entity type media. */
-export type MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool;
+export type MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool | MediaVideotoolVertical;
 
 /** Entity type media. */
 export type MediaVideo = MediaInterface & {
@@ -419,6 +419,27 @@ export type MediaVideotool = MediaInterface & {
   /** Publiceret */
   status: Scalars['Boolean']['output'];
   thumbnail: Scalars['String']['output'];
+};
+
+/** Entity type media. */
+export type MediaVideotoolVertical = MediaInterface & {
+  __typename?: 'MediaVideotoolVertical';
+  /** The time the media item was last edited. */
+  changed: DateTime;
+  /** The time the media item was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** Language */
+  langcode: Language;
+  /** VideoTool */
+  mediaVideotool1: Scalars['String']['output'];
+  /** Navn */
+  name: Scalars['String']['output'];
+  /** Alternativ URL */
+  path?: Maybe<Scalars['String']['output']>;
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
 };
 
 /** The schema's entry-point for mutations. */
@@ -1127,6 +1148,29 @@ export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   videoBundleWorkIds?: Maybe<Array<WorkId>>;
 };
 
+/** Entity type paragraph. */
+export type ParagraphGoVideoBundleVerticalManual = ParagraphInterface & {
+  __typename?: 'ParagraphGoVideoBundleVerticalManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Embed video */
+  embedVideo: MediaUnion;
+  /** Title */
+  goVideoTitle: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
+  /**
+   * Here you can choose which materials to display. If you need to link to a
+   * specific type, select it from the dropdown and the system will display that,
+   * if it is available.<br />Example work ID: work-of:870970-basis:136336282
+   */
+  videoBundleWorkIds?: Maybe<Array<WorkId>>;
+};
+
 /** En Hero til placering øverst på forsiden med et billede, informativ tekst, kategori og et link til fremhævet indhold. */
 export type ParagraphHero = ParagraphInterface & {
   __typename?: 'ParagraphHero';
@@ -1385,7 +1429,7 @@ export type ParagraphRecommendation = ParagraphInterface & {
   /**
    * Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br
    * />Hvis den ikke er slået til (standardadfærd), placeres billedet til
-   * venstre, hvis den er slået til, placeres billedet til højre.␣
+   * venstre, hvis den er slået til, placeres billedet til højre.
    */
   imagePositionRight?: Maybe<Scalars['Boolean']['output']>;
   /** The paragraphs entity language code. */
@@ -1443,7 +1487,7 @@ export type ParagraphTextBody = ParagraphInterface & {
 };
 
 /** Entity type paragraph. */
-export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform;
+export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphGoVideoBundleVerticalManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform;
 
 /** "Brugerregistreringselement" anvendes til at vise relevant information om brugerregistreringsprocessen. */
 export type ParagraphUserRegistrationItem = ParagraphInterface & {
@@ -2008,6 +2052,8 @@ export type ImageFragmentFragment = { __typename?: 'MediaImage', name: string, b
 
 export type MediaVideotoolFragmentFragment = { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string };
 
+export type MediaVideotoolVerticalFragmentFragment = { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string };
+
 export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
     | { __typename?: 'ParagraphAccordion' }
     | { __typename?: 'ParagraphBanner' }
@@ -2026,6 +2072,7 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
       > }
     | { __typename?: 'ParagraphGoLink' }
     | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2034,6 +2081,7 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
        | null, goLinkParagraph:
         | { __typename?: 'ParagraphAccordion' }
         | { __typename?: 'ParagraphBanner' }
@@ -2055,6 +2103,7 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'ParagraphGoVideo' }
         | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
         | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
         | { __typename?: 'ParagraphHero' }
         | { __typename?: 'ParagraphLanguageSelector' }
         | { __typename?: 'ParagraphLinks' }
@@ -2084,6 +2133,7 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
        }
     | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
         | { __typename?: 'MediaAudio' }
@@ -2091,6 +2141,7 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
        }
     | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
         | { __typename?: 'MediaAudio' }
@@ -2098,6 +2149,15 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
       , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
     | { __typename?: 'ParagraphHero' }
     | { __typename?: 'ParagraphLanguageSelector' }
@@ -2126,6 +2186,7 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
     | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
     | { __typename?: 'MediaVideo' }
     | { __typename?: 'MediaVideotool' }
+    | { __typename?: 'MediaVideotoolVertical' }
    | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<
     | { __typename?: 'ParagraphAccordion' }
     | { __typename?: 'ParagraphBanner' }
@@ -2144,6 +2205,7 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
       > }
     | { __typename?: 'ParagraphGoLink' }
     | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2152,6 +2214,7 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
        | null, goLinkParagraph:
         | { __typename?: 'ParagraphAccordion' }
         | { __typename?: 'ParagraphBanner' }
@@ -2173,6 +2236,7 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'ParagraphGoVideo' }
         | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
         | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
         | { __typename?: 'ParagraphHero' }
         | { __typename?: 'ParagraphLanguageSelector' }
         | { __typename?: 'ParagraphLinks' }
@@ -2202,6 +2266,7 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
        }
     | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
         | { __typename?: 'MediaAudio' }
@@ -2209,6 +2274,7 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
        }
     | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
         | { __typename?: 'MediaAudio' }
@@ -2216,6 +2282,15 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
       , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
     | { __typename?: 'ParagraphHero' }
     | { __typename?: 'ParagraphLanguageSelector' }
@@ -2256,6 +2331,7 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
       > }
     | { __typename?: 'ParagraphGoLink' }
     | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2264,6 +2340,7 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
        | null, goLinkParagraph:
         | { __typename?: 'ParagraphAccordion' }
         | { __typename?: 'ParagraphBanner' }
@@ -2285,6 +2362,7 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'ParagraphGoVideo' }
         | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
         | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
         | { __typename?: 'ParagraphHero' }
         | { __typename?: 'ParagraphLanguageSelector' }
         | { __typename?: 'ParagraphLinks' }
@@ -2314,6 +2392,7 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
        }
     | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
         | { __typename?: 'MediaAudio' }
@@ -2321,6 +2400,7 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
        }
     | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
         | { __typename?: 'MediaAudio' }
@@ -2328,6 +2408,15 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'MediaImage' }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+        | { __typename?: 'MediaVideotoolVertical' }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
       , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
     | { __typename?: 'ParagraphHero' }
     | { __typename?: 'ParagraphLanguageSelector' }
@@ -2356,6 +2445,7 @@ export type GoVideoFragment = { __typename: 'ParagraphGoVideo', id: string, titl
     | { __typename?: 'MediaImage' }
     | { __typename?: 'MediaVideo' }
     | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+    | { __typename?: 'MediaVideotoolVertical' }
    };
 
 export type GoVideoBundleAutomaticFragment = { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
@@ -2364,6 +2454,7 @@ export type GoVideoBundleAutomaticFragment = { __typename: 'ParagraphGoVideoBund
     | { __typename?: 'MediaImage' }
     | { __typename?: 'MediaVideo' }
     | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+    | { __typename?: 'MediaVideotoolVertical' }
    };
 
 export type GoVideoBundleManualFragment = { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
@@ -2372,6 +2463,16 @@ export type GoVideoBundleManualFragment = { __typename: 'ParagraphGoVideoBundleM
     | { __typename?: 'MediaImage' }
     | { __typename?: 'MediaVideo' }
     | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+    | { __typename?: 'MediaVideotoolVertical' }
+  , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null };
+
+export type GoVideoBundleVerticalManualFragment = { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+    | { __typename?: 'MediaAudio' }
+    | { __typename?: 'MediaDocument' }
+    | { __typename?: 'MediaImage' }
+    | { __typename?: 'MediaVideo' }
+    | { __typename?: 'MediaVideotool' }
+    | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
   , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null };
 
 export type GoMaterialSliderAutomaticFragment = { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null };
@@ -2384,6 +2485,7 @@ export type GoLinkboxFragment = { __typename: 'ParagraphGoLinkbox', title: strin
     | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
     | { __typename?: 'MediaVideo' }
     | { __typename?: 'MediaVideotool' }
+    | { __typename?: 'MediaVideotoolVertical' }
    | null, goLinkParagraph:
     | { __typename?: 'ParagraphAccordion' }
     | { __typename?: 'ParagraphBanner' }
@@ -2405,6 +2507,7 @@ export type GoLinkboxFragment = { __typename: 'ParagraphGoLinkbox', title: strin
     | { __typename?: 'ParagraphGoVideo' }
     | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
     | { __typename?: 'ParagraphGoVideoBundleManual' }
+    | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
     | { __typename?: 'ParagraphHero' }
     | { __typename?: 'ParagraphLanguageSelector' }
     | { __typename?: 'ParagraphLinks' }
@@ -2434,6 +2537,7 @@ export type GoImagesFragment = { __typename: 'ParagraphGoImages', goImages: Arra
     | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
     | { __typename?: 'MediaVideo' }
     | { __typename?: 'MediaVideotool' }
+    | { __typename?: 'MediaVideotoolVertical' }
   > };
 
 export type RouteRedirectFragment = { __typename: 'RouteRedirect', url: string };
@@ -2452,6 +2556,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
            | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<
             | { __typename?: 'ParagraphAccordion' }
             | { __typename?: 'ParagraphBanner' }
@@ -2470,6 +2575,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical' }
               > }
             | { __typename?: 'ParagraphGoLink' }
             | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2478,6 +2584,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical' }
                | null, goLinkParagraph:
                 | { __typename?: 'ParagraphAccordion' }
                 | { __typename?: 'ParagraphBanner' }
@@ -2499,6 +2606,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'ParagraphGoVideo' }
                 | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
                 | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
                 | { __typename?: 'ParagraphHero' }
                 | { __typename?: 'ParagraphLanguageSelector' }
                 | { __typename?: 'ParagraphLinks' }
@@ -2528,6 +2636,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
                }
             | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
                 | { __typename?: 'MediaAudio' }
@@ -2535,6 +2644,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
                }
             | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
                 | { __typename?: 'MediaAudio' }
@@ -2542,6 +2652,15 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
               , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
             | { __typename?: 'ParagraphHero' }
             | { __typename?: 'ParagraphLanguageSelector' }
@@ -2582,6 +2701,7 @@ export type GetCategoriesQuery = { go: { cacheTags: string[] } } & { __typename?
           | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
           | { __typename?: 'MediaVideo' }
           | { __typename?: 'MediaVideotool' }
+          | { __typename?: 'MediaVideotoolVertical' }
         , changed: { __typename?: 'DateTime', timestamp: unknown } }
       | { __typename?: 'NodeGoPage' }
       | { __typename?: 'NodePage' }
@@ -2614,6 +2734,7 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical' }
               > }
             | { __typename?: 'ParagraphGoLink' }
             | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2622,6 +2743,7 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical' }
                | null, goLinkParagraph:
                 | { __typename?: 'ParagraphAccordion' }
                 | { __typename?: 'ParagraphBanner' }
@@ -2643,6 +2765,7 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'ParagraphGoVideo' }
                 | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
                 | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
                 | { __typename?: 'ParagraphHero' }
                 | { __typename?: 'ParagraphLanguageSelector' }
                 | { __typename?: 'ParagraphLinks' }
@@ -2672,6 +2795,7 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
                }
             | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
                 | { __typename?: 'MediaAudio' }
@@ -2679,6 +2803,7 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
                }
             | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
                 | { __typename?: 'MediaAudio' }
@@ -2686,6 +2811,15 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
               , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
             | { __typename?: 'ParagraphHero' }
             | { __typename?: 'ParagraphLanguageSelector' }
@@ -2751,6 +2885,7 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical' }
               > }
             | { __typename?: 'ParagraphGoLink' }
             | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2759,6 +2894,7 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical' }
                | null, goLinkParagraph:
                 | { __typename?: 'ParagraphAccordion' }
                 | { __typename?: 'ParagraphBanner' }
@@ -2780,6 +2916,7 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'ParagraphGoVideo' }
                 | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
                 | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
                 | { __typename?: 'ParagraphHero' }
                 | { __typename?: 'ParagraphLanguageSelector' }
                 | { __typename?: 'ParagraphLinks' }
@@ -2809,6 +2946,7 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
                }
             | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
                 | { __typename?: 'MediaAudio' }
@@ -2816,6 +2954,7 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
                }
             | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
                 | { __typename?: 'MediaAudio' }
@@ -2823,6 +2962,15 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'MediaImage' }
                 | { __typename?: 'MediaVideo' }
                 | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+                | { __typename?: 'MediaVideotoolVertical' }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
               , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
             | { __typename?: 'ParagraphHero' }
             | { __typename?: 'ParagraphLanguageSelector' }
@@ -2863,6 +3011,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
         | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
         | { __typename?: 'MediaVideo' }
         | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical' }
        | null, publicationDate: { __typename?: 'DateTime', timestamp: unknown }, paragraphs?: Array<
         | { __typename?: 'ParagraphAccordion' }
         | { __typename?: 'ParagraphBanner' }
@@ -2881,6 +3030,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
           > }
         | { __typename?: 'ParagraphGoLink' }
         | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -2889,6 +3039,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
            | null, goLinkParagraph:
             | { __typename?: 'ParagraphAccordion' }
             | { __typename?: 'ParagraphBanner' }
@@ -2910,6 +3061,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'ParagraphGoVideo' }
             | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
             | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
             | { __typename?: 'ParagraphHero' }
             | { __typename?: 'ParagraphLanguageSelector' }
             | { __typename?: 'ParagraphLinks' }
@@ -2939,6 +3091,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
            }
         | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
             | { __typename?: 'MediaAudio' }
@@ -2946,6 +3099,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
            }
         | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
             | { __typename?: 'MediaAudio' }
@@ -2953,6 +3107,15 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
           , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
         | { __typename?: 'ParagraphHero' }
         | { __typename?: 'ParagraphLanguageSelector' }
@@ -2992,6 +3155,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
           > }
         | { __typename?: 'ParagraphGoLink' }
         | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -3000,6 +3164,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
            | null, goLinkParagraph:
             | { __typename?: 'ParagraphAccordion' }
             | { __typename?: 'ParagraphBanner' }
@@ -3021,6 +3186,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'ParagraphGoVideo' }
             | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
             | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
             | { __typename?: 'ParagraphHero' }
             | { __typename?: 'ParagraphLanguageSelector' }
             | { __typename?: 'ParagraphLinks' }
@@ -3050,6 +3216,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
            }
         | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
             | { __typename?: 'MediaAudio' }
@@ -3057,6 +3224,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
            }
         | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
             | { __typename?: 'MediaAudio' }
@@ -3064,6 +3232,15 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
           , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
         | { __typename?: 'ParagraphHero' }
         | { __typename?: 'ParagraphLanguageSelector' }
@@ -3103,6 +3280,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
           > }
         | { __typename?: 'ParagraphGoLink' }
         | { __typename: 'ParagraphGoLinkbox', title: string, goColor?: string | null, goDescription: string, goImage?:
@@ -3111,6 +3289,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage', name: string, byline?: string | null, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number, mime?: string | null, size: number, title?: string | null } }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical' }
            | null, goLinkParagraph:
             | { __typename?: 'ParagraphAccordion' }
             | { __typename?: 'ParagraphBanner' }
@@ -3132,6 +3311,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'ParagraphGoVideo' }
             | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
             | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
             | { __typename?: 'ParagraphHero' }
             | { __typename?: 'ParagraphLanguageSelector' }
             | { __typename?: 'ParagraphLinks' }
@@ -3161,6 +3341,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
            }
         | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch?: { __typename?: 'CQLSearch', value?: string | null } | null, embedVideo:
             | { __typename?: 'MediaAudio' }
@@ -3168,6 +3349,7 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
            }
         | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo:
             | { __typename?: 'MediaAudio' }
@@ -3175,6 +3357,15 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'MediaImage' }
             | { __typename?: 'MediaVideo' }
             | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }
+            | { __typename?: 'MediaVideotoolVertical' }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotool1: string }
           , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
         | { __typename?: 'ParagraphHero' }
         | { __typename?: 'ParagraphLanguageSelector' }
@@ -3268,6 +3459,27 @@ export const GoVideoBundleManualFragmentDoc = `
   }
 }
     `;
+export const MediaVideotoolVerticalFragmentFragmentDoc = `
+    fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotool1
+}
+    `;
+export const GoVideoBundleVerticalManualFragmentDoc = `
+    fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+    `;
 export const GoMaterialSliderAutomaticFragmentDoc = `
     fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
   __typename
@@ -3347,6 +3559,7 @@ export const NodeGoPageFragmentDoc = `
     ...goVideo
     ...goVideoBundleAutomatic
     ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
     ...goMaterialSliderAutomatic
     ...goMaterialSliderManual
     ...goLinkbox
@@ -3371,6 +3584,7 @@ export const NodeGoArticleFragmentDoc = `
     ...goVideo
     ...goVideoBundleAutomatic
     ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
     ...goMaterialSliderAutomatic
     ...goMaterialSliderManual
     ...goLinkbox
@@ -3389,6 +3603,7 @@ export const NodeGoCategoryFragmentDoc = `
     ...goVideo
     ...goVideoBundleAutomatic
     ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
     ...goMaterialSliderAutomatic
     ...goMaterialSliderManual
     ...goLinkbox
@@ -3426,6 +3641,7 @@ export const GetArticleByPathDocument = `
             ...goVideo
             ...goVideoBundleAutomatic
             ...goVideoBundleManual
+            ...goVideoBundleVerticalManual
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
             ...goLinkbox
@@ -3443,6 +3659,8 @@ ${GoVideoFragmentDoc}
 ${MediaVideotoolFragmentFragmentDoc}
 ${GoVideoBundleAutomaticFragmentDoc}
 ${GoVideoBundleManualFragmentDoc}
+${GoVideoBundleVerticalManualFragmentDoc}
+${MediaVideotoolVerticalFragmentFragmentDoc}
 ${GoMaterialSliderAutomaticFragmentDoc}
 ${GoMaterialSliderManualFragmentDoc}
 ${GoLinkboxFragmentDoc}
@@ -3578,6 +3796,8 @@ ${GoVideoFragmentDoc}
 ${MediaVideotoolFragmentFragmentDoc}
 ${GoVideoBundleAutomaticFragmentDoc}
 ${GoVideoBundleManualFragmentDoc}
+${GoVideoBundleVerticalManualFragmentDoc}
+${MediaVideotoolVerticalFragmentFragmentDoc}
 ${GoMaterialSliderAutomaticFragmentDoc}
 ${GoMaterialSliderManualFragmentDoc}
 ${GoLinkboxFragmentDoc}
@@ -3752,6 +3972,7 @@ export const GetPageByPathDocument = `
             ...goVideo
             ...goVideoBundleAutomatic
             ...goVideoBundleManual
+            ...goVideoBundleVerticalManual
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
             ...goLinkbox
@@ -3768,6 +3989,8 @@ ${GoVideoFragmentDoc}
 ${MediaVideotoolFragmentFragmentDoc}
 ${GoVideoBundleAutomaticFragmentDoc}
 ${GoVideoBundleManualFragmentDoc}
+${GoVideoBundleVerticalManualFragmentDoc}
+${MediaVideotoolVerticalFragmentFragmentDoc}
 ${GoMaterialSliderAutomaticFragmentDoc}
 ${GoMaterialSliderManualFragmentDoc}
 ${GoLinkboxFragmentDoc}
@@ -3829,6 +4052,8 @@ ${GoVideoFragmentDoc}
 ${MediaVideotoolFragmentFragmentDoc}
 ${GoVideoBundleAutomaticFragmentDoc}
 ${GoVideoBundleManualFragmentDoc}
+${GoVideoBundleVerticalManualFragmentDoc}
+${MediaVideotoolVerticalFragmentFragmentDoc}
 ${GoMaterialSliderAutomaticFragmentDoc}
 ${GoMaterialSliderManualFragmentDoc}
 ${GoLinkboxFragmentDoc}
@@ -4104,12 +4329,14 @@ export const operationNames = {
   Fragment: {
     imageFragment: 'imageFragment',
     mediaVideotoolFragment: 'mediaVideotoolFragment',
+    mediaVideotoolVerticalFragment: 'mediaVideotoolVerticalFragment',
     nodeGoPage: 'nodeGoPage',
     nodeGoArticle: 'nodeGoArticle',
     nodeGoCategory: 'nodeGoCategory',
     goVideo: 'goVideo',
     goVideoBundleAutomatic: 'goVideoBundleAutomatic',
     goVideoBundleManual: 'goVideoBundleManual',
+    goVideoBundleVerticalManual: 'goVideoBundleVerticalManual',
     goMaterialSliderAutomatic: 'goMaterialSliderAutomatic',
     goMaterialSliderManual: 'goMaterialSliderManual',
     goLinkbox: 'goLinkbox',
