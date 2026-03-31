@@ -1,3 +1,5 @@
+"use client"
+
 import { useMediaQuery } from "@uidotdev/usehooks"
 import React from "react"
 
