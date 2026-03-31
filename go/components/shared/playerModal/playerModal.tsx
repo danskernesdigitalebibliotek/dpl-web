@@ -24,11 +24,12 @@ function PlayerModal({
   const identifier = first(manifestation?.identifiers)?.value
   const orderId = loansData?.loans?.find(loan => loan.libraryBook?.identifier === identifier)?.orderId
 
-  if (!manifestation || !orderId) return null
-
   return (
-    <ResponsiveDialog open={open} onClose={onClose} title={`Lyt til ${getManifestationLabel(manifestation)}`}>
-      <Player type="loan" orderId={orderId} />
+    <ResponsiveDialog
+      open={open}
+      onClose={onClose}
+      title={`Lyt til ${(manifestation && getManifestationLabel(manifestation)) || ""}`}>
+      {manifestation && orderId && <Player type="loan" orderId={orderId} />}
     </ResponsiveDialog>
   )
 }

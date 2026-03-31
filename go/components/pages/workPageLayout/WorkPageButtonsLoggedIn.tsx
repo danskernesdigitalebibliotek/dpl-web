@@ -98,7 +98,8 @@ const WorkPageButtonsLoggedIn = ({
           disabled={isLoanButtonDisabled}
           onClick={() => {
             router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`
+              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`,
+              { scroll: false }
             )
           }}>
           Lån {label}
@@ -117,7 +118,8 @@ const WorkPageButtonsLoggedIn = ({
             disabled={isLoanButtonDisabled}
             onClick={() =>
               router.push(
-                `${pathname}?${buildModalSearchParams(searchParams, "PlayerModal", { wid: workId, pid: selectedManifestation.pid })}`
+                `${pathname}?${buildModalSearchParams(searchParams, "PlayerModal", { wid: workId, pid: selectedManifestation.pid })}`,
+                { scroll: false }
               )
             }>
             Lyt til {label}
@@ -133,7 +135,8 @@ const WorkPageButtonsLoggedIn = ({
           disabled={isLoanButtonDisabled}
           onClick={() =>
             router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`
+              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`,
+              { scroll: false }
             )
           }>
           Prøv {label}
@@ -144,7 +147,8 @@ const WorkPageButtonsLoggedIn = ({
           disabled={isLoanButtonDisabled}
           onClick={() => {
             router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`
+              `${pathname}?${buildModalSearchParams(searchParams, "LoanMaterialModal", { wid: workId, pid: selectedManifestation.pid })}`,
+              { scroll: false }
             )
           }}>
           Lån {label}

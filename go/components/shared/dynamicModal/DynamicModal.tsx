@@ -3,7 +3,12 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React, { useCallback, useEffect, useState } from "react"
 
-import { clearModalSearchParams, parseModalSearchParams, TModalType, TModalUrlParams } from "@/lib/helpers/modal-url"
+import {
+  TModalType,
+  TModalUrlParams,
+  clearModalSearchParams,
+  parseModalSearchParams,
+} from "@/lib/helpers/modal-url"
 
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
@@ -37,21 +42,37 @@ export function DynamicModal() {
   const closeModal = useCallback(() => {
     const params = clearModalSearchParams(new URLSearchParams(searchParams.toString()))
     const query = params.toString()
-    router.replace(query ? `${pathname}?${query}` : pathname)
+    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
   }, [router, pathname, searchParams])
 
   if (!activeModal || !activeParams) return null
 
   if (activeModal === "LoanMaterialModal") {
-    return <LoanMaterialModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    return (
+      <LoanMaterialModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
   }
 
   if (activeModal === "PlayerPreviewModal") {
-    return <PlayerPreviewModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    return (
+      <PlayerPreviewModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
   }
 
   if (activeModal === "PlayerModal") {
-    return <PlayerModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    return (
+      <PlayerModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    )
   }
 
   return null

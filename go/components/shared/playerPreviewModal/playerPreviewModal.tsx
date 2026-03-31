@@ -20,11 +20,12 @@ function PlayerPreviewModal({
   const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
   const identifier = first(manifestation?.identifiers)?.value
 
-  if (!manifestation) return null
-
   return (
-    <ResponsiveDialog open={open} onClose={onClose} title={`Prøv ${getManifestationLabel(manifestation)}`}>
-      <Player type="preview" identifier={identifier || ""} />
+    <ResponsiveDialog
+      open={open}
+      onClose={onClose}
+      title={`Prøv ${(manifestation && getManifestationLabel(manifestation)) || ""}`}>
+      {manifestation && <Player type="preview" identifier={identifier || ""} />}
     </ResponsiveDialog>
   )
 }

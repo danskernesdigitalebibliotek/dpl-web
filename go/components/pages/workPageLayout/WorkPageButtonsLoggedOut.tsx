@@ -92,7 +92,8 @@ const WorkPageButtonsLoggedOut = ({
           disabled={!identifier}
           onClick={() =>
             router.push(
-              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`
+              `${pathname}?${buildModalSearchParams(searchParams, "PlayerPreviewModal", { wid: workId, pid: selectedManifestation.pid })}`,
+              { scroll: false }
             )
           }>
           Prøv {label}
