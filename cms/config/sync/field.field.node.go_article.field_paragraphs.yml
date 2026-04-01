@@ -13,6 +13,7 @@ dependencies:
     - paragraphs.paragraphs_type.go_video
     - paragraphs.paragraphs_type.go_video_bundle_automatic
     - paragraphs.paragraphs_type.go_video_bundle_manual
+    - paragraphs.paragraphs_type.go_video_bundle_vertical_auto
     - paragraphs.paragraphs_type.go_video_bundle_vertical_manual
   module:
     - entity_reference_revisions
@@ -39,6 +40,7 @@ settings:
       go_images: go_images
       go_text_body: go_text_body
       go_video_bundle_vertical_manual: go_video_bundle_vertical_manual
+      go_video_bundle_vertical_auto: go_video_bundle_vertical_auto
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -100,6 +102,9 @@ settings:
         enabled: true
       go_video_bundle_manual:
         weight: 48
+        enabled: true
+      go_video_bundle_vertical_auto:
+        weight: 63
         enabled: true
       go_video_bundle_vertical_manual:
         weight: 62

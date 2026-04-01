@@ -1,0 +1,16 @@
+uuid: ef6f9503-c719-4ab1-8671-cbaa6c688981
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      go_paragraphs: go_paragraphs
+id: go_video_bundle_vertical_auto
+label: 'Go Video Bundle Vertical Automatic'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
