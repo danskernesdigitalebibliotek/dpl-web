@@ -47,6 +47,34 @@ input BetweenStringInput {
   max: String
 }
 
+type Branch {
+  isilId: String!
+
+  title: String!
+
+  address: BranchAddress
+
+  availabilityContext: BranchAvailabilityContext!
+}
+
+type BranchAddress {
+  street: String
+
+  postalCode: String
+
+  city: String
+
+  country: String
+}
+
+type BranchAvailabilityContext {
+  search: Boolean!
+
+  availability: Boolean!
+
+  reservations: Boolean!
+}
+
 type CQLSearch {
   value: String
 }
@@ -265,7 +293,7 @@ interface MediaInterface {
   status: Boolean!
 }
 
-union MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool
+union MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool | MediaVideotoolVertical
 
 type MediaVideo implements MediaInterface {
   id: ID!
@@ -303,6 +331,24 @@ type MediaVideotool implements MediaInterface {
 
   status: Boolean!
   thumbnail: String!
+}
+
+type MediaVideotoolVertical implements MediaInterface {
+  id: ID!
+
+  changed: DateTime!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  mediaVideotoolVertical: String!
+
+  name: String!
+
+  path: String
+
+  status: Boolean!
 }
 
 type Mutation {
@@ -849,6 +895,22 @@ type ParagraphGoVideoBundleManual implements ParagraphInterface {
   videoBundleWorkIds: [WorkId!]
 }
 
+type ParagraphGoVideoBundleVerticalManual implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  embedVideo: MediaUnion!
+
+  goVideoTitle: String!
+
+  langcode: Language!
+
+  status: Boolean!
+
+  videoBundleWorkIds: [WorkId!]
+}
+
 type ParagraphHero implements ParagraphInterface {
   id: ID!
 
@@ -937,6 +999,7 @@ type ParagraphMaterialGridAutomatic implements ParagraphInterface {
   materialGridTitle: String
 
   status: Boolean!
+  amountOfMaterials: Int! @deprecated(reason: "Use materialAmount instead")
 }
 
 type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
@@ -955,6 +1018,7 @@ type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
   materialGridTitle: String
 
   status: Boolean!
+  amountOfMaterials: Int! @deprecated(reason: "Use materialAmount instead")
 }
 
 type ParagraphMaterialGridManual implements ParagraphInterface {
@@ -1049,6 +1113,16 @@ type ParagraphRecommendation implements ParagraphInterface {
   status: Boolean!
 }
 
+type ParagraphShareButtons implements ParagraphInterface {
+  id: ID!
+
+  created: DateTime!
+
+  langcode: Language!
+
+  status: Boolean!
+}
+
 type ParagraphSimpleLinks implements ParagraphInterface {
   id: ID!
 
@@ -1073,7 +1147,7 @@ type ParagraphTextBody implements ParagraphInterface {
   status: Boolean!
 }
 
-union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
+union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphGoVideoBundleVerticalManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphShareButtons | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
 
 type ParagraphUserRegistrationItem implements ParagraphInterface {
   id: ID!
@@ -1144,6 +1218,14 @@ scalar PhoneNumber
 type Query {
   newContent(uuid: String!, since: Time!): NewContentResponse!
   goConfiguration: GoConfiguration
+
+  getBranches(
+    isilId: String
+
+    availabilityContexts: [String!]
+
+    cmsConfigured: Boolean
+  ): [Branch!]!
   dplTokens: DplTokens
 
   paragraph(

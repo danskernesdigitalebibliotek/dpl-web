@@ -245,6 +245,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
         }
       }
@@ -487,6 +492,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
         }
       }
@@ -618,6 +628,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
           title
         }
@@ -637,6 +652,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
           goVideoTitle
           videoAmountOfMaterials
@@ -654,6 +674,11 @@ query GetNode($id: ID!) {
               id
               name
               mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
             }
           }
           videoBundleWorkIds {
@@ -787,6 +812,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
           title
         }
@@ -806,6 +836,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
           goVideoTitle
           videoAmountOfMaterials
@@ -823,6 +858,11 @@ query GetNode($id: ID!) {
               id
               name
               mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
             }
           }
           videoBundleWorkIds {
@@ -932,6 +972,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
           title
         }
@@ -951,6 +996,11 @@ query GetNode($id: ID!) {
               name
               mediaVideotool
             }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
           }
           goVideoTitle
           videoAmountOfMaterials
@@ -968,6 +1018,11 @@ query GetNode($id: ID!) {
               id
               name
               mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
             }
           }
           videoBundleWorkIds {

@@ -307,6 +307,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                 }
               }
@@ -574,6 +579,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                 }
               }
@@ -720,6 +730,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                   title
                 }
@@ -741,6 +756,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                   goVideoTitle
                   videoAmountOfMaterials
@@ -759,6 +779,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       id
                       name
                       mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
                     }
                   }
                   videoBundleWorkIds {
@@ -908,6 +933,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                   title
                 }
@@ -929,6 +959,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                   goVideoTitle
                   videoAmountOfMaterials
@@ -947,6 +982,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       id
                       name
                       mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
                     }
                   }
                   videoBundleWorkIds {
@@ -1067,6 +1107,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                   title
                 }
@@ -1088,6 +1133,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaVideotool
                     }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
                   }
                   goVideoTitle
                   videoAmountOfMaterials
@@ -1106,6 +1156,11 @@ class GetNode extends \Spawnia\Sailor\Operation
                       id
                       name
                       mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
                     }
                   }
                   videoBundleWorkIds {
