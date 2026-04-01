@@ -686,6 +686,31 @@ query GetNode($id: ID!) {
             work_id
           }
         }
+        ... on ParagraphGoVideoBundleVerticalAuto {
+          id
+          cqlSearch {
+            value
+          }
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
+          }
+          goVideoTitle
+          videoAmountOfMaterials
+        }
       }
 
     }
@@ -870,6 +895,31 @@ query GetNode($id: ID!) {
             work_id
           }
         }
+        ... on ParagraphGoVideoBundleVerticalAuto {
+          id
+          cqlSearch {
+            value
+          }
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
+          }
+          goVideoTitle
+          videoAmountOfMaterials
+        }
       }
 
 
@@ -1029,6 +1079,31 @@ query GetNode($id: ID!) {
             material_type
             work_id
           }
+        }
+        ... on ParagraphGoVideoBundleVerticalAuto {
+          id
+          cqlSearch {
+            value
+          }
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
+          }
+          goVideoTitle
+          videoAmountOfMaterials
         }
       }
 

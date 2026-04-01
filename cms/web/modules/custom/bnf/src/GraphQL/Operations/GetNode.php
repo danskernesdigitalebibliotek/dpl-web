@@ -792,6 +792,33 @@ class GetNode extends \Spawnia\Sailor\Operation
                     work_id
                   }
                 }
+                ... on ParagraphGoVideoBundleVerticalAuto {
+                  id
+                  cqlSearch {
+                    __typename
+                    value
+                  }
+                  embedVideo {
+                    __typename
+                    ... on MediaVideo {
+                      id
+                      name
+                      mediaOembedVideo
+                    }
+                    ... on MediaVideotool {
+                      id
+                      name
+                      mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
+                  }
+                  goVideoTitle
+                  videoAmountOfMaterials
+                }
               }
             }
             ... on NodeGoCategory {
@@ -995,6 +1022,33 @@ class GetNode extends \Spawnia\Sailor\Operation
                     work_id
                   }
                 }
+                ... on ParagraphGoVideoBundleVerticalAuto {
+                  id
+                  cqlSearch {
+                    __typename
+                    value
+                  }
+                  embedVideo {
+                    __typename
+                    ... on MediaVideo {
+                      id
+                      name
+                      mediaOembedVideo
+                    }
+                    ... on MediaVideotool {
+                      id
+                      name
+                      mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
+                  }
+                  goVideoTitle
+                  videoAmountOfMaterials
+                }
               }
             }
             ... on NodeGoPage {
@@ -1168,6 +1222,33 @@ class GetNode extends \Spawnia\Sailor\Operation
                     material_type
                     work_id
                   }
+                }
+                ... on ParagraphGoVideoBundleVerticalAuto {
+                  id
+                  cqlSearch {
+                    __typename
+                    value
+                  }
+                  embedVideo {
+                    __typename
+                    ... on MediaVideo {
+                      id
+                      name
+                      mediaOembedVideo
+                    }
+                    ... on MediaVideotool {
+                      id
+                      name
+                      mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
+                  }
+                  goVideoTitle
+                  videoAmountOfMaterials
                 }
               }
             }
