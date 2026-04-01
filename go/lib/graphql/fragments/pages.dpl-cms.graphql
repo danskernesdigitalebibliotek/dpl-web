@@ -5,6 +5,7 @@ fragment nodeGoPage on NodeGoPage {
     ...goVideoBundleAutomatic
     ...goVideoBundleManual
     ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
     ...goMaterialSliderAutomatic
     ...goMaterialSliderManual
     ...goLinkbox
@@ -29,6 +30,7 @@ fragment nodeGoArticle on NodeGoArticle {
     ...goVideoBundleAutomatic
     ...goVideoBundleManual
     ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
     ...goMaterialSliderAutomatic
     ...goMaterialSliderManual
     ...goLinkbox
@@ -47,6 +49,7 @@ fragment nodeGoCategory on NodeGoCategory {
     ...goVideoBundleAutomatic
     ...goVideoBundleManual
     ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
     ...goMaterialSliderAutomatic
     ...goMaterialSliderManual
     ...goLinkbox

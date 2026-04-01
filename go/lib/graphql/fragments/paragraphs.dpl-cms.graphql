@@ -49,6 +49,19 @@ fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
   }
 }
 
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+
 fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
   __typename
   cqlSearch {

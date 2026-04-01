@@ -21,6 +21,7 @@ query getArticleByPath($path: String!) {
             ...goVideoBundleAutomatic
             ...goVideoBundleManual
             ...goVideoBundleVerticalManual
+            ...goVideoBundleVerticalAutomatic
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
             ...goLinkbox
