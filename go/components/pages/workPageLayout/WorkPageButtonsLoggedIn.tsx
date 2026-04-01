@@ -94,7 +94,12 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={isLoanButtonDisabled}
-          onClick={() => setModal({ modal: "LoanMaterialModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
+          onClick={() =>
+            setModal({
+              modal: "LoanMaterialModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
+            })
+          }>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
@@ -109,7 +114,12 @@ const WorkPageButtonsLoggedIn = ({
             ariaLabel={`Lyt til ${label}`}
             theme={"primary"}
             disabled={isLoanButtonDisabled}
-            onClick={() => setModal({ modal: "PlayerModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
+            onClick={() =>
+              setModal({
+                modal: "PlayerModal",
+                modalProps: { wid: workId, pid: selectedManifestation.pid },
+              })
+            }>
             Lyt til {label}
           </WorkPageButton>
         </WorkPageButtons>
@@ -121,14 +131,24 @@ const WorkPageButtonsLoggedIn = ({
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           disabled={isLoanButtonDisabled}
-          onClick={() => setModal({ modal: "PlayerPreviewModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
+          onClick={() =>
+            setModal({
+              modal: "PlayerPreviewModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
+            })
+          }>
           Prøv {label}
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={isLoanButtonDisabled}
-          onClick={() => setModal({ modal: "LoanMaterialModal", modalProps: { wid: workId, pid: selectedManifestation.pid } })}>
+          onClick={() =>
+            setModal({
+              modal: "LoanMaterialModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
+            })
+          }>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>

@@ -22,7 +22,9 @@ function PlayerModal({
   const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
   const { data: loansData } = useGetV1UserLoans()
   const identifier = first(manifestation?.identifiers)?.value
-  const orderId = loansData?.loans?.find(loan => loan.libraryBook?.identifier === identifier)?.orderId
+  const orderId = loansData?.loans?.find(
+    loan => loan.libraryBook?.identifier === identifier
+  )?.orderId
 
   return (
     <ResponsiveDialog

@@ -3,7 +3,12 @@
 import { useQueryStates } from "nuqs"
 import React, { useCallback, useEffect, useState } from "react"
 
-import { modalParsers, TModalType, TModalUrlParams, VALID_MODAL_TYPES } from "@/lib/helpers/modal-url"
+import {
+  TModalType,
+  TModalUrlParams,
+  VALID_MODAL_TYPES,
+  modalParsers,
+} from "@/lib/helpers/modal-url"
 
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"

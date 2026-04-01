@@ -1,7 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query"
 import React, { useState } from "react"
 
-import { getManifestationLabel, getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import {
+  getManifestationLabel,
+  getManifestationMaterialTypeIcon,
+} from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
@@ -87,8 +90,8 @@ const LoanMaterialModal = ({
             {publizonError && (
               <div className="flex">
                 <div
-                  className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex items-center
-                    gap-4 p-4">
+                  className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex
+                    items-center gap-4 p-4">
                   <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
                   <p className="text-typo-link">{publizonErrorMessageMap[publizonError.code]}</p>
                 </div>

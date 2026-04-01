@@ -2,6 +2,7 @@ import { first } from "lodash"
 
 import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+
 import Player from "../publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "../responsiveDialog/ResponsiveDialog"
 

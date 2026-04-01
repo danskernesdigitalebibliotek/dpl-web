@@ -8,7 +8,11 @@ export type TModalUrlParams = {
 
 export type TModalType = keyof TModalUrlParams
 
-export const VALID_MODAL_TYPES = new Set<string>(["LoanMaterialModal", "PlayerPreviewModal", "PlayerModal"])
+export const VALID_MODAL_TYPES = new Set<string>([
+  "LoanMaterialModal",
+  "PlayerPreviewModal",
+  "PlayerModal",
+])
 
 function validateModalProps(value: unknown): TModalUrlParams[TModalType] | null {
   if (typeof value !== "object" || value === null) return null
