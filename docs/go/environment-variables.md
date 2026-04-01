@@ -161,7 +161,7 @@ Overrides the municipality ID from DPL CMS public config. Used for Unilogin inst
 ### `UNLILOGIN_PUBHUB_CLIENT_ID`
 
 - **Required:** Yes
-- **Example:** `EE939D96-702D-4BEE-AEB7-517B8BA18B15`
+- **Example:** `EE939D96-702D-1BEE-AEB2-517B8BA18B11`
 
 Client ID for Publizon/PubHub SOAP services. Passed as `clientid` in service requests (`publizon.ts`).
 
