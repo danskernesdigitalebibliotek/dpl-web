@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-03-31 12:51+0200\n"
-"PO-Revision-Date: 2026-03-31 12:51+0200\n"
+"POT-Creation-Date: 2026-04-01 12:49+0200\n"
+"PO-Revision-Date: 2026-04-01 12:49+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21448,7 +21448,7 @@ msgid "Address"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_address:description"
-msgid "Use this value to specific a different address than the event branch."
+msgid "Choose a country, to fill out the address of the event."
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_all_day:label"
@@ -21635,7 +21635,7 @@ msgid "Address"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_address:description"
-msgid "Use this value to specific a different address than the event branch."
+msgid "Choose a country, to fill out the address of the event."
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_all_day:label"
