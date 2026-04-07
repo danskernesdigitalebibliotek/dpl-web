@@ -7,7 +7,7 @@ project: dpl-cms-core
 ssh: 20.238.147.183:22
 api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
 environment_variables:
-  git_sha: 'true'
+  git_sha: "true"
 
 tasks:
   post-rollout:
@@ -175,6 +175,20 @@ tasks:
         service: cli
 
 environments:
+  # Matches all PR environments (pr-1, pr-42, etc.)
+  "pr-[0-9]+":
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+    post-rollout:
+      - run:
+          name: Set PR environment URL
+          command: |
+            PR_URL="https://go.varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
+            echo "PR environment available at: $PR_URL"
+          service: cli
   main:
     cronjobs:
       - name: drush cron
