@@ -819,6 +819,33 @@ class GetNode extends \Spawnia\Sailor\Operation
                   goVideoTitle
                   videoAmountOfMaterials
                 }
+                ... on ParagraphGoVideoBundleVerticalManual {
+                  id
+                  goVideoTitle
+                  embedVideo {
+                    __typename
+                    ... on MediaVideo {
+                      id
+                      name
+                      mediaOembedVideo
+                    }
+                    ... on MediaVideotool {
+                      id
+                      name
+                      mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
+                  }
+                  videoBundleWorkIds {
+                    __typename
+                    material_type
+                    work_id
+                  }
+                }
               }
             }
             ... on NodeGoCategory {
@@ -1049,6 +1076,33 @@ class GetNode extends \Spawnia\Sailor\Operation
                   goVideoTitle
                   videoAmountOfMaterials
                 }
+                ... on ParagraphGoVideoBundleVerticalManual {
+                  id
+                  goVideoTitle
+                  embedVideo {
+                    __typename
+                    ... on MediaVideo {
+                      id
+                      name
+                      mediaOembedVideo
+                    }
+                    ... on MediaVideotool {
+                      id
+                      name
+                      mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
+                  }
+                  videoBundleWorkIds {
+                    __typename
+                    material_type
+                    work_id
+                  }
+                }
               }
             }
             ... on NodeGoPage {
@@ -1249,6 +1303,33 @@ class GetNode extends \Spawnia\Sailor\Operation
                   }
                   goVideoTitle
                   videoAmountOfMaterials
+                }
+                ... on ParagraphGoVideoBundleVerticalManual {
+                  id
+                  goVideoTitle
+                  embedVideo {
+                    __typename
+                    ... on MediaVideo {
+                      id
+                      name
+                      mediaOembedVideo
+                    }
+                    ... on MediaVideotool {
+                      id
+                      name
+                      mediaVideotool
+                    }
+                    ... on MediaVideotoolVertical {
+                      id
+                      name
+                      mediaVideotoolVertical
+                    }
+                  }
+                  videoBundleWorkIds {
+                    __typename
+                    material_type
+                    work_id
+                  }
                 }
               }
             }

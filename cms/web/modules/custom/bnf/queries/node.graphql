@@ -711,6 +711,31 @@ query GetNode($id: ID!) {
           goVideoTitle
           videoAmountOfMaterials
         }
+        ... on ParagraphGoVideoBundleVerticalManual {
+          id
+          goVideoTitle
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
+          }
+          videoBundleWorkIds {
+            material_type
+            work_id
+          }
+        }
       }
 
     }
@@ -920,6 +945,31 @@ query GetNode($id: ID!) {
           goVideoTitle
           videoAmountOfMaterials
         }
+        ... on ParagraphGoVideoBundleVerticalManual {
+          id
+          goVideoTitle
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
+          }
+          videoBundleWorkIds {
+            material_type
+            work_id
+          }
+        }
       }
 
 
@@ -1104,6 +1154,31 @@ query GetNode($id: ID!) {
           }
           goVideoTitle
           videoAmountOfMaterials
+        }
+        ... on ParagraphGoVideoBundleVerticalManual {
+          id
+          goVideoTitle
+          embedVideo {
+            ... on MediaVideo {
+              id
+              name
+              mediaOembedVideo
+            }
+            ... on MediaVideotool {
+              id
+              name
+              mediaVideotool
+            }
+            ... on MediaVideotoolVertical {
+              id
+              name
+              mediaVideotoolVertical
+            }
+          }
+          videoBundleWorkIds {
+            material_type
+            work_id
+          }
         }
       }
 
