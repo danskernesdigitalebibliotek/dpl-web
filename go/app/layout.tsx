@@ -18,7 +18,7 @@ import GlobalErrorBoundary from "./GlobalErrorBoundary"
 
 export const metadata: Metadata = setLayoutMetadata()
 
-// When adding or changing fonts, remember to update the imports in .storybook/preview.tsx
+// When adding or changing fonts. Remember to update the imports in .storybook/preview.tsx
 const GTFlexa = localFont({
   src: [
     {
