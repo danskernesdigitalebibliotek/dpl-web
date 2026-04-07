@@ -132,6 +132,8 @@ entity_config:
     recommendation:
       enabled: true
       query_load_enabled: true
+    share_buttons:
+      enabled: false
     simple_links:
       enabled: true
       query_load_enabled: true
