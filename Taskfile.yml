@@ -1,5 +1,7 @@
 version: '3'
 
+output: prefixed
+
 includes:
   migration: ./migration/Taskfile.migration.yml
 
@@ -8,3 +10,66 @@ tasks:
     summary: Lint GitHub Actions workflows with actionlint
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
+
+  link:sync:design-system-to-cms:
+    desc: Copy design-system build output into the CMS theme assets
+    prefix: design-cms
+    deps: [deps:rsync]
+    sources:
+      - design-system/build/**/*
+    cmds:
+      - cmd: |
+          if [ ! -d design-system/build ]; then
+            echo "Skipping design-system sync because design-system/build is not available yet."
+            exit 0
+          fi
+          mkdir -p ./cms/web/themes/custom/novel/assets/dpl-design-system
+          rsync -a --delete design-system/build/ ./cms/web/themes/custom/novel/assets/dpl-design-system/
+          echo "Synchronized design to cms."
+        silent: true
+
+  link:sync:react-to-cms:
+    desc: Copy React dist output into the CMS library assets
+    prefix: react-cms
+    deps: [deps:rsync]
+    sources:
+      - react/dist/**/*
+    cmds:
+      - cmd: |
+          if [ ! -d react/dist ]; then
+            echo "Skipping react sync because react/dist is not available yet."
+            exit 0
+          fi
+          mkdir -p ./cms/web/libraries/dpl-react
+          rsync -a --delete react/dist/ ./cms/web/libraries/dpl-react/
+          echo "Synchronized react to cms."
+        silent: true
+
+  link:design-react:
+    desc: Link the local design-system package into React
+    prefix: design-react
+    cmds:
+      - cmd: yarn unlink
+        dir: ./design-system
+        ignore_error: true
+      - cmd: yarn link
+        dir: ./design-system
+      - cmd: yarn link "@danskernesdigitalebibliotek/dpl-design-system"
+        dir: ./react
+
+  link:design-react-cms:
+    desc: Bridge design-system and React outputs into CMS while the projects run separately
+    prefix: design-react-cms
+    deps:
+      #- link:design-react
+      - link:sync:design-system-to-cms
+      - link:sync:react-to-cms
+    cmds:
+      - cmd: |
+          task --watch --interval 500ms --parallel link:sync:design-system-to-cms link:sync:react-to-cms
+
+  deps:rsync:
+    internal: true
+    preconditions:
+      - sh: rsync --version
+        msg: rsync is not installed.
