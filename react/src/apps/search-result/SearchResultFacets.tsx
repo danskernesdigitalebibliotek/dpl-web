@@ -8,7 +8,7 @@ import {
 import { useFacetTracking } from "./useSearchResultTracking";
 import SearchFacetGroup from "./SearchFacetGroup";
 import SearchToggle from "../../components/search-toggle/SearchToggle";
-import { isValidFacetsState } from "./helpers";
+import { isValidFacetsState, resolveFilterFieldName } from "./helpers";
 import { sortSimpleSearchFacetValues } from "../advanced-search-v2/lib/facet-sort-utils";
 import SearchRadioButtonGroup from "../../components/search-radio-button-group/SearchRadioButtonGroup";
 import { getFacetFieldTranslation } from "./helper";
@@ -248,7 +248,7 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
         {/* Filter groups - dynamically rendered from API response */}
         <ul className="search-facets__groups">
           {availableFacets.map((facet) => {
-            const facetName = facet.name;
+            const facetName = resolveFilterFieldName(facet.name);
             const facetField = facet.type;
             const selectedValues = getSelectedValues(facetName);
             const selectedCount = getSelectedCount(facetName);
