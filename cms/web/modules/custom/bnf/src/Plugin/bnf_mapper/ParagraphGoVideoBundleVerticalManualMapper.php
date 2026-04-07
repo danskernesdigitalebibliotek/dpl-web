@@ -11,7 +11,7 @@ use Drupal\bnf\Plugin\Traits\EmbedVideoTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
- * Mapping ParagraphGoVideoBundleVerticalManual => go_video_bundle_vertical_manual.
+ * Mapper for go_video_bundle_vertical_manual.
  */
 #[BnfMapper(
   id: ParagraphGoVideoBundleVerticalManual::class,
