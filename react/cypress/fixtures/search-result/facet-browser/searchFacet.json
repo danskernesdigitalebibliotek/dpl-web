@@ -380,6 +380,58 @@
               "score": 25
             }
           ]
+        },
+        {
+          "name": "lix",
+          "type": "LIX",
+          "values": [
+            {
+              "key": "5",
+              "term": "5",
+              "score": 10
+            },
+            {
+              "key": "10",
+              "term": "10",
+              "score": 8
+            },
+            {
+              "key": "15",
+              "term": "15",
+              "score": 6
+            },
+            {
+              "key": "20",
+              "term": "20",
+              "score": 4
+            },
+            {
+              "key": "25",
+              "term": "25",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "name": "let",
+          "type": "LET",
+          "values": [
+            {
+              "key": "5",
+              "term": "5",
+              "score": 7
+            },
+            {
+              "key": "10",
+              "term": "10",
+              "score": 5
+            },
+            {
+              "key": "15",
+              "term": "15",
+              "score": 3
+            }
+          ]
         }
       ]
     }

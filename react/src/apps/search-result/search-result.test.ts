@@ -247,6 +247,27 @@ describe("Search Result", () => {
       });
     });
 
+    // The FBI API returns facet names "lix"/"let" but the GraphQL
+    // SearchFiltersInput expects "lixRange"/"letRange". Without this
+    // mapping the search query fails when these filters are selected.
+    [
+      { facetGroup: "LIX", expectedFilterName: "lixRange" },
+      { facetGroup: "LET", expectedFilterName: "letRange" }
+    ].forEach(({ facetGroup, expectedFilterName }) => {
+      it(`stores ${facetGroup} filter as ${expectedFilterName} in URL`, () => {
+        page.components.Filters((filters) => {
+          filters.toggleFilterGroup(facetGroup);
+          filters.selectFacetValue(facetGroup, "5");
+        });
+
+        cy.url().then((url) => {
+          const urlObj = new URL(url);
+          const facets = urlObj.searchParams.get("facets");
+          expect(facets).to.contain(expectedFilterName);
+        });
+      });
+    });
+
     it("supports selecting facets from multiple filter groups", () => {
       page.components.Filters((filters) => {
         // Select from Genre and form
