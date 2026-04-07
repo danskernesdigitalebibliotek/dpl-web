@@ -1,9 +1,10 @@
-# This is the version of the Dpl Go application:
-# In PR environments this should be updated whenever testing a new version:
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:lastest as builder
+# Lagoon injects LAGOON_ENVIRONMENT (e.g. "pr-459") as a build arg.
+# The go-publish-pr workflow pushes a matching pr-<number> tagged image.
+ARG LAGOON_ENVIRONMENT
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${LAGOON_ENVIRONMENT} AS builder
 
 # Lagoon injects these automatically during build.
-ARG LAGOON_ENVIRONMENT
+# LAGOON_ENVIRONMENT is declared before FROM for the image tag resolution.
 ARG LAGOON_PROJECT
 
 # Default CMS domain for non-PR environments.

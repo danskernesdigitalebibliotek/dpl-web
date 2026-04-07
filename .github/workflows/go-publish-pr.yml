@@ -1,0 +1,58 @@
+# Build and publish a PR-tagged dpl-go-node image so Lagoon PR environments
+# automatically use the Go source from the PR branch.
+name: Go / Publish PR source
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'go/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    defaults:
+      run:
+        working-directory: go
+
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+
+      - uses: actions/checkout@v6
+
+      - uses: actions/cache@v5
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: "go/.nvmrc"
+          cache: "yarn"
+          cache-dependency-path: "go/yarn.lock"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create .version file
+        run: |
+          echo "{\"version\": \"pr-${{ github.event.pull_request.number }}\"}" > .version
+
+      - name: Build and publish source
+        run: |
+          RELEASE_IMAGE_TAG=pr-${{ github.event.pull_request.number }} \
+          RELEASE_IMAGE_REGISTRY=ghcr.io/${{ github.repository_owner }} \
+          task source:deploy
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
