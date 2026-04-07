@@ -56,6 +56,26 @@ function _dpl_update_uninstall_modules(array $modules): string {
 }
 
 /**
+ * Add elements to the list of automatically ignored config entities.
+ *
+ * @param string[] $entities
+ *   The names of the entities which should be ignored.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_config_auto_ignore_entites(array $entities): string {
+  $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore_auto.settings');
+  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
+
+  $updated_ignored_configs = array_merge($ignored_configs, $entities);
+  $config_ignore_settings->set('ignored_config_entities', $updated_ignored_configs)->save();
+  $ignored_entities_string = implode(', ', $entities);
+
+  return "Added $ignored_entities_string to config_ignore_auto.ignored_config_entities.";
+}
+
+/**
  * Remove elements from the list of automatically ignored config entities.
  *
  * The elements have been added because an administrative user have updated the
