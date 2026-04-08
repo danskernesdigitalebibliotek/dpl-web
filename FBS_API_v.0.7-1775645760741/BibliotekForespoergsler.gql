@@ -1,0 +1,1104 @@
+###############################################################################################
+# x-svnRevision: "r6977
+# x-namespace: "http://www.kombit.dk/int/2022/01/01/
+# x-name: "BibliotekForespørgsler
+# x-source: "Fælles Bibliotekssystem
+# title: BibliotekForespørgsler
+# description: FBS API'et giver 3. parter adgang til det Fælles Bibliotekssystem (FBS), og er baseret på GraphQL over HTTP. API'et er designet til at blive brugt af slutbrugergrænsefladerne på biblioteksområdet, så bibliotekslånere kan tjekke deres lån, reservationer, mellemværender og mere. Integrationen må kun bruges i interaktion med en bibliotekslåner. Integrationen må ikke anvendes til hentning af store mængder informationer om f.eks. lånere eller biblioteker.
+# contact: {
+# name: Britt Montesinos
+# url: http://www.kombit.dk
+# email: bibsys@kombit.dk
+# license: "KOMBIT"
+# prod url: "https://{$service.location.prod}/services/BibliotekForespoergsler"
+# exttest url: "https://{$service.location.exttest}/services/BibliotekForespoergsler"
+# security: [ ]
+
+
+	
+# Angiver typen af reservationen. Kan antage følgende værdier: - NORMAL - SERIE - PARALLEL - FJERNLÅN
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: NORMAL;SERIE;PARALLEL;FJERNLÅN;
+enum TypeReservation {
+	NORMAL
+	SERIE
+	PARALLEL
+	FJERNLÅN
+	
+}
+
+# Heltal på max to cifre.
+# Int
+# OpenAPI type definition: 
+#   integer
+#   maximum: 99
+
+scalar TalHel2
+
+# Heltal på max 10 cifre.
+# Int
+# OpenAPI type definition: 
+#   integer
+#   maximum: 9999999999
+
+scalar TalHel10
+
+# Angiver dato og tidspunkt.
+# String
+# OpenAPI type definition: 
+#   string
+
+scalar DatoTid
+
+# Tekststreng på max ti karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 10
+
+scalar Tekst10
+
+# 
+# Boolean
+# OpenAPI type definition: 
+#   boolean
+
+scalar Markering
+
+# Angiver resultatet af opdatering af pinkode efter nulstillingsemail. Svaret kan være: - PINKODE_OPDATERET - AFVIST_UKENDT_UUID - AFVIST_PINKODE
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: PINKODE_OPDATERET;AFVIST_UKENDT_UUID;AFVIST_PINKODE
+enum SvarPinkodeOpdater {
+	PINKODE_OPDATERET
+	AFVIST_UKENDT_UUID
+	
+}
+
+# Tekststreng på max 250 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 250
+
+scalar Tekst250
+
+# Generel angivelse en dato.
+# String
+# OpenAPI type definition: 
+#   string
+
+scalar Dato
+
+# Heltal på max 3 cifre.
+# Int
+# OpenAPI type definition: 
+#   integer
+#   maximum: 999
+
+scalar TalHel3
+
+# Angiver resultatet af sletning af låner. Svarene kan være: - SLETTET - AFVIST_LÅN - AFVIST_MELLEMVÆRENDE - AFVIST_ANDET
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: SLETTET;AFVIST_LÅN;AFVIST_MELLEMVÆRENDE;AFVIST_ANDET
+enum SvarLaanerSlet {
+	SLETTET
+	AFVIST_LÅN
+	AFVIST_MELLEMVÆRENDE
+	
+}
+
+# Angiver et given årstal, fx 2017.
+# Int
+# OpenAPI type definition: 
+#   integer
+
+scalar AAr
+
+# Angiver de forskellige resultater, som et forsøg på sletning af en rekvisition, kan returnere. Resultatet på en sletning kan være: - SLETTET - UKENDT_LÅNER - IKKE_FUNDET - ANDET
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: SLETTET;UKENDT_LÅNER;IKKE_FUNDET;ANDET;
+enum SvarRekvisitionSlet {
+	SLETTET
+	UKENDT_LÅNER
+	IKKE_FUNDET
+	ANDET
+	
+}
+
+# Ugens forskellige dage.
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: MANDAG;TIRSDAG;ONSDAG;TORSDAG;FREDAG;LØRDAG;SØNDAG;
+enum Ugedag {
+	MANDAG
+	TIRSDAG
+	ONSDAG
+	TORSDAG
+	FREDAG
+	LØRDAG
+	SØNDAG
+	
+}
+
+# Tekststreng på max 50 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 50
+
+scalar Tekst50
+
+# Tekststreng på max 100 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 100
+
+scalar Tekst100
+
+# Angiver de forskellige status for en aktiv booking. Status kan være: - AKTIV - OPFYLDT - UNDER_OPFYLDELSE
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: AKTIV;OPFYLDT;UNDER_OPFYLDELSE;
+enum StatusBooking {
+	AKTIV
+	OPFYLDT
+	UNDER_OPFYLDELSE
+	
+}
+
+# Angiver typen af mellemværendet, der kan være enten GEBYR eller ERSTATNING
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: GEBYR;ERSTATNING;
+enum TypeMellemvaerende {
+	GEBYR
+	ERSTATNING
+	
+}
+
+# Heltal på max 4 cifre.
+# Int
+# OpenAPI type definition: 
+#   integer
+#   maximum: 9999
+
+scalar TalHel4
+
+# Belob angivet som decimaltal, fx. 1500,00
+# String
+# OpenAPI type definition: 
+#   number
+
+scalar Beloeb
+
+# Angiver resultatet af lånefornyelsen. Resultatet kan være: - FORNYET - AFVIST_RESERVERET - AFVIST_MAX_ANTAL_FORNYELSER - AFVIST_BLOKERET_lÅNER - AFVIST_MATERIALET_KAN_IKKE_LÅNES - AFVIST_ANDEN_GRUND
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: FORNYET;AFVIST_RESERVERET;AFVIST_MAX_ANTAL_FORNYELSER;AFVIST_BLOKERET_lÅNER;AFVIST_MATERIALET_KAN_IKKE_LÅNES;AFVIST_ANDEN_GRUND;
+enum FornyResultat {
+	FORNYET
+	AFVIST_RESERVERET
+	AFVIST_MAX_ANTAL_FORNYELSER
+	AFVIST_BLOKERET_lÅNER
+	AFVIST_MATERIALET_KAN_IKKE_LÅNES
+	AFVIST_ANDEN_GRUND
+	
+}
+
+# Angiver resultatet af nulstill pinkode. Svarene kan være: - EMAIL_SENDT - AFVIST_UKENDT_LÅNER - AFVIST_UKENDT_EMAILADRESSE
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: EMAIL_SENDT;AFVIST_UKENDT_LÅNER;AFVIST_UKENDT_EMAILADRESSE;
+enum SvarPinkodeNulstil {
+	EMAIL_SENDT
+	AFVIST_UKENDT_LÅNER
+	AFVIST_UKENDT_EMAILADRESSE
+	
+}
+
+# Tekststreng på max op til 500 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 500
+
+scalar Tekst500
+
+# Tekststreng på max 20 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 20
+
+scalar Tekst20
+
+# Tekststreng på max 255 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 255
+
+scalar Tekst255
+
+# Angiver et tidspunkt.
+# String
+# OpenAPI type definition: 
+#   string
+
+scalar Tid
+
+# UUID = Universally unique identifier. Et 128-bit nummer, som bruges til at identificere information i it-systemer.
+# String
+# OpenAPI type definition: 
+#   string
+#   pattern: [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}
+
+scalar UUID
+
+# International Standard Identifier for Libraries and Related Organisations (ISIL), ISO 15511. Alfanumerisk streng på maksimalt 16 tegn. De danske biblioteksnumre er 6-cifrede evt. med tilføjelse af et foranstillet 'DK'.
+# String
+# OpenAPI type definition: 
+#   string
+
+scalar ISIL
+
+# Tekststreng på max 30 karakterer.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 30
+
+scalar Tekst30
+
+# Tekststreng med 1000 alfanumeriske tegn.
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 1000
+
+scalar Tekst1000
+
+# Angiver tilstanden på en rekvisition. Værdierne kan være: - AKTIV - I_TRANSIT - KLAR_TIL_AFHENTNING - OPFYLDT - UDLØBET - PASSIV
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: AKTIV;I_TRANSIT;KLAR_TIL_AFHENTNING;OPFYLDT;UDLØBET;PASSIV;
+enum StatusRekvisition {
+	AKTIV
+	I_TRANSIT
+	KLAR_TIL_AFHENTNING
+	OPFYLDT
+	UDLØBET
+	PASSIV
+	
+}
+
+# Angiver de forskellige resultater, som et forsøg på at oprette en booking, kan returnere. Resultatet på en bookingforespørgsel kan være: - OPDATERET - BOOKING_IKKE_FUNDET - IKKE_NOK_MATERIALER - KAN_IKKE_OPDATERES - LÅNER_IKKE_TILLADELSE - ANDET
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: OPDATERET;BOOKING_IKKE_FUNDET;IKKE_NOK_MATERIALER;KAN_IKKE_OPDATERES;LÅNER_IKKE_TILLADELSE;ANDET;
+enum SvarBookingOpdater {
+	OPDATERET
+	BOOKING_IKKE_FUNDET
+	IKKE_NOK_MATERIALER
+	KAN_IKKE_OPDATERES
+	LÅNER_IKKE_TILLADELSE
+	ANDET
+	
+}
+
+# Angiver de forskellige resultater, som et forsøg på at oprette en booking, kan antage. Resultatet på en bookingforespørgsel kan være: - OPRETTET - IKKE_NOK_MATERIALER - KAN_IKKE_OPRETTES - LÅNER_IKKE_TILLADELSE - ANDET
+# String
+# OpenAPI type definition: 
+#   string
+#   enum: OPRETTET;IKKE_NOK_MATERIALER;KAN_IKKE_OPRETTES;LÅNER_IKKE_TILLADELSE;ANDET;
+enum SvarBookingOpret {
+	OPRETTET
+	IKKE_NOK_MATERIALER
+	KAN_IKKE_OPRETTES
+	LÅNER_IKKE_TILLADELSE
+	ANDET
+	
+}
+
+# Tekst på max 200 tegn
+# String
+# OpenAPI type definition: 
+#   string
+#   maxLength: 200
+
+scalar Tekst200
+
+# Heltal på op til 18 cifre.
+# Int
+# OpenAPI type definition: 
+#   integer
+#   maximum: 999999999999999999
+
+scalar TalHel18
+
+
+
+# Resultat over Liste over slettede rekvisitioner.
+
+type RekvisitionSlettetResultat {
+	slettetRekvisitionListe: [RekvisitionSlettetResultat_SlettetRekvisitionListe]!
+}
+
+type RekvisitionSlettetResultat_SlettetRekvisitionListe {
+	slettetRekvisition: RekvisitionSlettetResultat_SlettetRekvisitionListe_SlettetRekvisition!
+}
+
+type RekvisitionSlettetResultat_SlettetRekvisitionListe_SlettetRekvisition {
+	rekvisitionNummer: Tekst20!
+	rekvisitionSletStatus: SvarRekvisitionSlet!
+}
+
+# Resultatet af en reservationsoprettelse eller opdatering.
+
+type ReservationOpretOpdater {
+	reserveret: Markering!
+	reservationDetalje: ReservationDetalje
+}
+
+# Liste over oprettede bookinger foretaget af en specifik låner.
+
+type BookingOpretResultat {
+	bookingOprettetListe: [BookingOpretResultat_BookingOprettetListe]!
+}
+
+type BookingOpretResultat_BookingOprettetListe {
+	bookingOpret: BookingOpret!
+}
+
+# En oplistning af detaljerne på en reservation.
+
+type ReservationDetalje {
+	rekvisitionNummer: Tekst20!
+	manifestationFAUSTNummer: Tekst20!
+	rekvisitionAfhentningssted: Tekst30!
+	rekvisitionAfhentningsNummer: Tekst10
+	parallelTransaktionId: Tekst10
+	rekvisitionDato: DatoTid!
+	rekvisitionAfhentningsFrist: Dato
+	rekvisitionAktiveringsDato: Dato
+	rekvisitionEstimatAntalDage: TalHel3
+	fjernlaanManifestation: FjernlaanManifestation
+	rekvisitionKoeNummer: TalHel3
+	rekvisitionInteressefrist: Dato!
+	periodika: Periodika
+	rekvisitionReservationType: TypeReservation!
+	rekvisitionStatus: StatusRekvisition!
+}
+
+type Delopstilling {
+	placeringDelopstillingNummer: Tekst20!
+	placeringDelopstillingNavn: Tekst100!
+}
+
+type BookingDetalje {
+	manifestationFAUSTNummer: Tekst20!
+	bookingOEnsketAntal: TalHel3!
+	bookingMinimumAntal: TalHel3!
+	rekvisitionNote: Tekst250
+	bookingStartDato: Dato!
+	bookingSlutDato: Dato!
+	laanergruppeID: TalHel4!
+	rekvisitionAfhentningssted: Tekst30!
+	anmodetFraFilial: BookingDetalje_AnmodetFraFilial!
+}
+
+type BookingDetalje_AnmodetFraFilial {
+	filialISILNummer: ISIL!
+}
+
+# Returnerer en liste af afdelinger.
+
+type AfdelingHentResultat {
+	afdelingListe: [AfdelingHentResultat_AfdelingListe]!
+}
+
+type AfdelingHentResultat_AfdelingListe {
+	afdeling: Afdeling!
+}
+
+# Returnerer en låners informationer. En låner kan være af typerne Personlåner, Virksomhedslåner, Gruppelåner og Biblioteklåner.
+
+type LaanerHentResultat {
+	laanerValg: LaanerHentResultat_LaanerValg!
+	laanerDetaljer: LaanerDetaljer!
+}
+union LaanerHentResultat_LaanerValg = LaanerHentResultat_LaanerValg_PersonLaaner | LaanerHentResultat_LaanerValg_VirksomhedLaaner | LaanerHentResultat_LaanerValg_GruppeLaaner | LaanerHentResultat_LaanerValg_BibliotekLaaner
+
+type LaanerHentResultat_LaanerValg_PersonLaaner {
+	personLaaner: LaanerHentResultat_LaanerValg_PersonLaaner_PersonLaaner
+}
+
+
+type LaanerHentResultat_LaanerValg_PersonLaaner_PersonLaaner {
+	laanerFoedselsdato: Dato!
+	laanerBorKommunen: Markering!
+}
+type LaanerHentResultat_LaanerValg_VirksomhedLaaner {
+	virksomhedLaaner: LaanerHentResultat_LaanerValg_VirksomhedLaaner_VirksomhedLaaner
+}
+
+
+type LaanerHentResultat_LaanerValg_VirksomhedLaaner_VirksomhedLaaner {
+	virksomhedslaanerCvrNummer: !
+	virksomhedslaanerKontaktperson: Tekst500!
+}
+type LaanerHentResultat_LaanerValg_GruppeLaaner {
+	gruppeLaaner: LaanerHentResultat_LaanerValg_GruppeLaaner_GruppeLaaner
+}
+
+
+type LaanerHentResultat_LaanerValg_GruppeLaaner_GruppeLaaner {
+	ikkepersonliglaanerKontaktperson: Tekst500!
+}
+type LaanerHentResultat_LaanerValg_BibliotekLaaner {
+	bibliotekLaaner: LaanerHentResultat_LaanerValg_BibliotekLaaner_BibliotekLaaner
+}
+
+
+type LaanerHentResultat_LaanerValg_BibliotekLaaner_BibliotekLaaner {
+	filialISILNummer: ISIL!
+}
+
+
+
+# Liste over en specifik låners mellemværende med tilhørende materialer.
+
+type LaanerMellemvaerendeResultat {
+	mellemvaerendeListe: [LaanerMellemvaerendeResultat_MellemvaerendeListe]!
+}
+
+type LaanerMellemvaerendeResultat_MellemvaerendeListe {
+	mellemvaerende: Mellemvaerende!
+}
+
+# Liste over resultater af reservationsoprettelser.
+
+type ReservationOpretResultat {
+	reservationOpretListet: [ReservationOpretResultat_ReservationOpretListet]!
+}
+
+type ReservationOpretResultat_ReservationOpretListet {
+	reservationOpretOpdater: ReservationOpretOpdater!
+}
+
+# Returnerer en liste af filialer.
+
+type FilialHentResultat {
+	filialListe: [FilialHentResultat_FilialListe]!
+}
+
+type FilialHentResultat_FilialListe {
+	filial: Filial!
+}
+
+# Liste over materialer, som mellemværendet omhandler.
+
+type MellemvaerendeMateriale {
+	manifestationFAUSTNummer: Tekst20!
+	materialeGruppe: MaterialeGruppe!
+	periodika: Periodika
+	materialeNummer: Tekst20!
+}
+
+# Henter en liste af aktuelle lån, som en låner har.
+
+type MaterialeLaan {
+	laanListe: [MaterialeLaan_LaanListe]!
+}
+
+type MaterialeLaan_LaanListe {
+	laan: Laan!
+}
+
+# Liste over en specifik låners mellemværender
+
+type Mellemvaerende {
+	mellemvaerendeBeloeb: Beloeb!
+	betalingDato: DatoTid!
+	mellemvaerendeType: TypeMellemvaerende!
+	mellemvaerendeMaterialeListe: [Mellemvaerende_MellemvaerendeMaterialeListe]!
+	mellemvaerendeNoteTilLaaner: Tekst200!
+	mellemvaerendeForfaldsdato: Dato
+	mellemvaerendeDato: DatoTid!
+	mellemvaerendeID: TalHel10!
+}
+
+type Mellemvaerende_MellemvaerendeMaterialeListe {
+	mellemvaerendeMateriale: MellemvaerendeMateriale!
+}
+
+# Angiver årsag til blokering.
+
+type BlokeringAArsag {
+	blokeringAArsagKode: Tekst100!
+	blokeringAArsagBeskrivelse: !
+	blokeringDato: DatoTid!
+}
+
+# Materialegrupper anvendes til at gruppere materialer efter et formål, således at de kan behandles som en samlet enhed.
+
+type MaterialeGruppe {
+	materialegruppeNavn: Tekst100!
+	materialegruppeBeskrivelse: Tekst1000
+}
+
+type BookingOpdater {
+	rekvisitionNummer: Tekst20!
+	bookingOpdaterStatus: SvarBookingOpdater!
+	bookingDetalje: BookingDetalje!
+}
+
+# Periodika er publikationer, der udsendes successivt. Periodika omfatter bl.a. aviser, tidsskrifter og årspublikationer.
+
+type Periodika {
+	periodikaPublikationVolumen: Tekst50
+	periodikaPublikationAArgang: Tekst50
+	periodikaPublikationAAr: AAr
+	periodikaPublikationTekst: Tekst100!
+	periodikaPublikationNummer: Tekst100
+}
+
+# Lånergruppens basale informationer.
+
+type LaanerGruppe {
+	laanergruppeID: TalHel4!
+	laanergruppeNavn: Tekst50!
+	laanergruppeBeskrivelse: Tekst200!
+	undergruppeListe: [LaanerGruppe_UndergruppeListe]
+}
+
+type LaanerGruppe_UndergruppeListe {
+	laanergruppe: Laanergruppe!
+}
+
+type LaanerDetaljer {
+	laanerID: Tekst20!
+	laanerKaldenavn: Tekst50!
+	laanerSprog: Tekst10
+	laanerForetrukketAfhentningFilial: ISIL!
+	laanerFravaersperiodeFra: Dato
+	laanerFravaersperiodeTil: Dato
+	blokeringAArsagListe: [LaanerDetaljer_BlokeringAArsagListe]
+	telefonnummerListe: [LaanerDetaljer_TelefonnummerListe]
+	emailListe: [LaanerDetaljer_EmailListe]
+	laanerRettighedListe: [LaanerDetaljer_LaanerRettighedListe]
+	laanerFysiskPost: Markering!
+	laanerTilladBooking: Markering!
+	laanerNoteTilLaaner: Tekst500
+	filialStandardInteressePeriode: TalHel3!
+	notifikationKanalListe: [LaanerDetaljer_NotifikationKanalListe]
+	laanerInteresserListe: [LaanerDetaljer_LaanerInteresserListe]
+}
+
+type LaanerDetaljer_BlokeringAArsagListe {
+	blokeringAArsag: BlokeringAArsag!
+}
+
+type LaanerDetaljer_TelefonnummerListe {
+	telefonnummerDetalje: TelefonnummerDetalje!
+}
+
+type LaanerDetaljer_EmailListe {
+	emailDetalje: EmailDetalje!
+}
+
+type LaanerDetaljer_LaanerRettighedListe {
+	laanerRettighedNavn: !
+}
+
+type LaanerDetaljer_NotifikationKanalListe {
+	notifikationProtokolForkortelse: Tekst100!
+}
+
+type LaanerDetaljer_LaanerInteresserListe {
+	laanerInteresseNavnForkortet: !
+}
+
+# En oprettet booking.
+
+type BookingOpret {
+	rekvisitionNummer: Tekst20!
+	bookingOpretStatus: SvarBookingOpret!
+	bookingDetalje: BookingDetalje!
+}
+
+# Liste over opdaterede bookinger foretaget af en specifik låner.
+
+type BookingOpdaterResultat {
+	bookingOpdaterListe: [BookingOpdaterResultat_BookingOpdaterListe]!
+}
+
+type BookingOpdaterResultat_BookingOpdaterListe {
+	bookingOpdater: BookingOpdater!
+}
+
+# Returnerer svarene på opdatering af lånerinformationerne.
+
+type LaanerOpdaterResultat {
+	laanerOpdateretSvarListe: [LaanerOpdaterResultat_LaanerOpdateretSvarListe]!
+}
+
+type LaanerOpdaterResultat_LaanerOpdateretSvarListe {
+}
+
+type FornyLaanResultat {
+	fornyLaanListe: [FornyLaanResultat_FornyLaanListe]!
+}
+
+type FornyLaanResultat_FornyLaanListe {
+	fornyLaan: FornyLaan!
+}
+
+# Beksriver et aktivt lån. Anvendes i forbindelse med, at der hentes en liste over aktuelle lån, som en specifik låner har.
+
+type Laan {
+	laanDetaljer: LaanDetaljer!
+	kanFornys: Markering!
+	udlaansprofilFastAfleveringsdato: Dato!
+}
+
+# Beskriver beholdningerne inkl. placeringer for en given manifestation.
+
+type Beholdning {
+	materialeListe: [Beholdning_MaterialeListe]!
+	lMSPlacering: LMSPlacering!
+	cMS-delplaceringListe: Beholdning_CMS-delplaceringListe
+}
+
+type Beholdning_MaterialeListe {
+	materiale: Beholdning_MaterialeListe_Materiale!
+}
+
+type Beholdning_MaterialeListe_Materiale {
+	materialeNummer: Tekst20!
+	laanAfleveringsFrist: Dato!
+	materialegruppeNavn: Tekst100!
+	periodika: Periodika
+	tilgaengeligMarkering: Markering!
+}
+
+type Beholdning_CMS-delplaceringListe {
+	cMS-delplacering: [Beholdning_CMS-delplaceringListe_CMS-delplacering]!
+}
+
+type Beholdning_CMS-delplaceringListe_CMS-delplacering {
+	cMSPlaceringDelplacering: Tekst100!
+}
+
+type LaanDetaljer {
+	manifestationFAUSTNummer: Tekst20!
+	fjernlaantMaterialeMarkering: Markering!
+	materialeGruppe: MaterialeGruppe!
+	periodika: Periodika
+	laanAfleveringsfrist: Dato!
+	fjernlaanManifestation: FjernlaanManifestation
+	forventetGebyr: Beloeb!
+	laanUdlaansdato: DatoTid!
+	antalFornyelse: TalHel2!
+	materialeNummer: Tekst20!
+	laanID: Tekst30!
+}
+
+# Returnerer en liste manifestationer og informationer om deres tilgængelighed.
+
+type Tilgaengelighed {
+	tilgaengeligManifestationListe: [Tilgaengelighed_TilgaengeligManifestationListe]!
+}
+
+type Tilgaengelighed_TilgaengeligManifestationListe {
+	tilgaengeligManifestation: TilgaengeligManifestation!
+}
+
+# Returnerer roden af Lånergruppehierakiet for en specifik filial.
+
+type LaanerGruppeHentResultat {
+	laanerGruppeListe: [LaanerGruppeHentResultat_LaanerGruppeListe]!
+}
+
+type LaanerGruppeHentResultat_LaanerGruppeListe {
+	laanerGruppe: LaanerGruppe!
+}
+
+# Returnerer en liste af delopstillinger.
+
+type DelopstillingHentResultat {
+	delopstillingListe: [DelopstillingHentResultat_DelopstillingListe]!
+}
+
+type DelopstillingHentResultat_DelopstillingListe {
+	delopstilling: Delopstilling!
+}
+
+# Returnerer resultatet af slet-forespørgslen.
+
+type LaanerSletResultat {
+	laanerSletSvarListe: [LaanerSletResultat_LaanerSletSvarListe]!
+}
+
+type LaanerSletResultat_LaanerSletSvarListe {
+	laanerSletSvar: SvarLaanerSlet!
+}
+
+# Liste over resultater af reservationsopdateringer.
+
+type ReservationOpdaterResultat {
+	reservationOpdaterListe: [ReservationOpdaterResultat_ReservationOpdaterListe]!
+}
+
+type ReservationOpdaterResultat_ReservationOpdaterListe {
+	reservationOpretOpdater: ReservationOpretOpdater!
+}
+
+# En låners email, om den er verificeret samt der skal kunne modtages notifikationer via denne.
+
+type EmailDetalje {
+	modtagNotifikation: Markering!
+	laanerEmailAdresse: Tekst100!
+	verifiseretEmail: Markering!
+}
+
+# Liste over åbningstiderne for en specifik filial.
+
+type AAbningstiderHentResultat {
+	aabningstiderListe: [AAbningstiderHentResultat_AAbningstiderListe]!
+}
+
+type AAbningstiderHentResultat_AAbningstiderListe {
+	aabningstider: AAbningstider!
+}
+
+type Afdeling {
+	placeringAfdelingNummer: Tekst20!
+	placeringAfdelingNavn: Tekst100!
+}
+
+# Åbningstiden på en specifik dag.
+
+type AAbningstider {
+	filialISILNummer: ISIL!
+	objectNameStub: Tekst20!
+	aabningstidType: Tekst20!
+	aabningstidUgedag: Ugedag!
+	aabningstidStartTidspunkt: Tid!
+	aabningstidSlutTidspunkt: Tid!
+}
+
+# Informationer om en notifikationsprotokol.
+
+type NotifikationKanal {
+	notifikationProtokolForkortelse: Tekst100!
+	notifikationProtokolNavn: Tekst100!
+}
+
+# Returnerer en liste over de interesseområder biblioteket har opsat for deres lånere.
+
+type InteresseHentResultat {
+	laanerInteresseListe: [InteresseHentResultat_LaanerInteresseListe]!
+}
+
+type InteresseHentResultat_LaanerInteresseListe {
+	laanerInteresseNavnForkortet: !
+}
+
+# En liste over beholdninger for det forespurgte FAUST-nummer samt deres placering.
+
+type BeholdningManifestation {
+	manifestationFAUSTNummer: Tekst20!
+	antalReservationer: TalHel3!
+	kanReserveres: Markering!
+	beholdningListe: [BeholdningManifestation_BeholdningListe]!
+}
+
+type BeholdningManifestation_BeholdningListe {
+	beholdning: Beholdning!
+}
+
+# En låners telefonnummer samt om der skal kunne modtages notifikationer via denne.
+
+type TelefonnummerDetalje {
+	modtagNotifikation: Markering!
+	laanerTelefonnummer: Tekst20!
+}
+
+# Returnerer en liste af sektioner.
+
+type SektionHentResultat {
+	sektionListe: [SektionHentResultat_SektionListe]!
+}
+
+type SektionHentResultat_SektionListe {
+	sektion: Sektion!
+}
+
+# En liste over beholdninger for de forespurgte FAUST-numre samt deres placering.
+
+type Beholdninger {
+	beholdningManifestationListe: [Beholdninger_BeholdningManifestationListe]!
+}
+
+type Beholdninger_BeholdningManifestationListe {
+	beholdningManifestation: BeholdningManifestation!
+}
+
+# Relevante manifestationsinformationer for et fjernlån.
+
+type FjernlaanManifestation {
+	manifestationFAUSTNummer: Tekst20!
+	aktoerNavn: Tekst1000
+	iSBN: FjernlaanManifestation_ISBN
+	periodikaPublikationNummer: Tekst100
+	periodikaPublikationVolumen: Tekst50
+	udgaveBetegnelse: Tekst100
+	sprogSprogkode: Tekst10
+	manifestationKategori: Tekst100
+	titelNavn: Tekst1000
+	iSSN: FjernlaanManifestation_ISSN
+	materialetypeBeskrivelse: Tekst100!
+	manifestationUdgiver: Tekst1000
+	manifestationOriginalUdgivelseAAr: Dato
+	udgaveUdgivelsesaar: Tekst100
+}
+
+type FjernlaanManifestation_ISBN {
+	identifikationNummer: Tekst20!
+}
+
+type FjernlaanManifestation_ISSN {
+	identifikationNummer: Tekst20!
+}
+
+type Sektion {
+	placeringSektionNummer: Tekst20!
+	placeringSektionNavn: Tekst100!
+}
+
+# Returnerer en liste over kontaktinformationerne for de forespurgte filialer.
+
+type BibliotekKontaktInformationHentResultat {
+	kontaktInformationListe: [BibliotekKontaktInformationHentResultat_KontaktInformationListe]!
+}
+
+type BibliotekKontaktInformationHentResultat_KontaktInformationListe {
+	kontaktInformation: KontaktInformation!
+}
+
+# En filials kontaktinformationer.
+
+type KontaktInformation {
+	filialISILNummer: ISIL!
+	filialNavn: Tekst100!
+	cVRAdresseVejnavn: Tekst100!
+	cPRAdresseHusnummer: Tekst100!
+	cVRAdressePostnummer: Tekst100!
+	cVRAdressePostdistrikt: Tekst100!
+	filialKontaktTelefonnummer: TalHel18!
+	filialKontaktEmail: Tekst255!
+	filialHjemmeside: Tekst255!
+}
+
+# Liste over bookinger oprettet af en specifik låner.
+
+type BookingHentResultat {
+	bookingListe: [BookingHentResultat_BookingListe]!
+}
+
+type BookingHentResultat_BookingListe {
+	booking: BookingHentResultat_BookingListe_Booking!
+}
+
+type BookingHentResultat_BookingListe_Booking {
+	rekvisitionNummer: Tekst20!
+	bookingStatus: StatusBooking!
+	bookingDetalje: BookingDetalje!
+}
+
+type Opstilling {
+	placeringOpstillingNummer: Tekst20!
+	placeringOpstillingNavn: Tekst100!
+}
+
+# Returnerer en liste over de sprog, som biblioteket understøtter.
+
+type ForetrukketSprogHentResultat {
+	sprogListe: [ForetrukketSprogHentResultat_SprogListe]!
+}
+
+type ForetrukketSprogHentResultat_SprogListe {
+	laanerSprog: Tekst10!
+}
+
+# Returnerer en liste af opstillinger.
+
+type OpstillingHentResultat {
+	opstillingListe: [OpstillingHentResultat_OpstillingListe]!
+}
+
+type OpstillingHentResultat_OpstillingListe {
+	opstilling: Opstilling!
+}
+
+# Angivelse af filialinformationer
+
+type Filial {
+	filialISILNummer: ISIL!
+	filialNavn: Tekst100!
+}
+
+# Liste over reservationer foretaget af en specifik låner.
+
+type ReservationHentResultat {
+	reservationHentResultat: [ReservationHentResultat_ReservationHentResultat]!
+}
+
+type ReservationHentResultat_ReservationHentResultat {
+	reservationDetalje: ReservationDetalje!
+}
+
+# Placering for materiale.
+
+type LMSPlacering {
+	afdeling: Afdeling
+	sektion: Sektion
+	opstilling: Opstilling
+	delopstilling: Delopstilling
+}
+
+# Beskriver et aktivt lån samt resultatet af forespørgelsen på fornyelse, som en specifik låner foretaget.
+
+type FornyLaan {
+	laanDetaljer: LaanDetaljer!
+	fornyelsesStatusListe: [FornyLaan_FornyelsesStatusListe]!
+}
+
+type FornyLaan_FornyelsesStatusListe {
+	fornyelseStatus: FornyResultat!
+}
+
+# Returnerer en liste over de lukkedage, de er registreret for en specifik filial i et forespurgt tidsrum.
+
+type LukkedagHentResultat {
+	lukkedagListe: [LukkedagHentResultat_LukkedagListe]!
+}
+
+type LukkedagHentResultat_LukkedagListe {
+	lukkedag: LukkedagHentResultat_LukkedagListe_Lukkedag!
+}
+
+type LukkedagHentResultat_LukkedagListe_Lukkedag {
+	filialISILNummer: ISIL!
+	lukkedagBeskrivelse: Tekst255!
+	lukkedagDato: Dato!
+}
+
+# Liste over de notifikationsprotokoller et givet bibliotek tillader.
+
+type NotifikationKanalHentResultat {
+	notifikationKanalListe: [NotifikationKanalHentResultat_NotifikationKanalListe]!
+}
+
+type NotifikationKanalHentResultat_NotifikationKanalListe {
+	notifikationKanal: NotifikationKanal!
+}
+
+# Informationer om en manifestations tilgængelighed
+
+type TilgaengeligManifestation {
+	manifestationFAUSTNummer: Tekst20!
+	antalReservationer: TalHel3!
+	kanReserveres: Markering!
+	erTilgaengelig: Markering!
+}
+
+
+input PeriodikaReservation {
+	periodikaPublikationVolumen: Tekst50!
+	periodikaPublikationAArgang: Tekst50!
+	periodikaPublikationNummer: Tekst100
+}
+
+input BookingDetalje {
+	manifestationFAUSTNummer: Tekst20!
+	bookingOEnsketAntal: TalHel3!
+	bookingMinimumAntal: TalHel3!
+	rekvisitionNote: Tekst250
+	bookingStartDato: Dato!
+	bookingSlutDato: Dato!
+	laanergruppeID: TalHel4!
+	rekvisitionAfhentningssted: Tekst30!
+	anmodetFraFilial: BookingDetalje_AnmodetFraFilial!
+}
+
+input BookingDetalje_AnmodetFraFilial {
+	filialISILNummer: ISIL!
+}
+
+# En låners email, om den er verificeret samt der skal kunne modtages notifikationer via denne.
+
+input EmailDetalje {
+	modtagNotifikation: Markering!
+	laanerEmailAdresse: Tekst100!
+	verifiseretEmail: Markering!
+}
+
+# En låners telefonnummer samt om der skal kunne modtages notifikationer via denne.
+
+input TelefonnummerDetalje {
+	modtagNotifikation: Markering!
+	laanerTelefonnummer: Tekst20!
+}
+
+type Query {
+	laanerHent(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!):  LaanerHentResultat
+	laanerMellemvaerendeHent(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!):  LaanerMellemvaerendeResultat
+	pinkodeNulstil(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,laanerEmailAdresse: Tekst100!):  
+	laanHent(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!):  MaterialeLaan
+	reservationHent(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!):  ReservationHentResultat
+	bookingHent(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!):  BookingHentResultat
+	beholdningHent(bibliotekssektorISILNummer: ISIL!,fAUSTNummerListe: [Tekst20]!,udelukISILNumre: [ISIL]!):  Beholdninger
+	tilgaengelighedHent(bibliotekssektorISILNummer: ISIL!,fAUSTNummerListe: [Tekst20]!,udelukISILNumre: [ISIL]!):  Tilgaengelighed
+	filialHent(bibliotekssektorISILNummer: ISIL!,udelukISILNumre: [ISIL]!):  FilialHentResultat
+	afdelingHent(bibliotekssektorISILNummer: ISIL!):  AfdelingHentResultat
+	sektionerHent(bibliotekssektorISILNummer: ISIL!):  SektionHentResultat
+	opstillingHent(bibliotekssektorISILNummer: ISIL!):  OpstillingHentResultat
+	delopstillingHent(bibliotekssektorISILNummer: ISIL!):  DelopstillingHentResultat
+	notifikationKanalHent(bibliotekssektorISILNummer: ISIL!):  NotifikationKanalHentResultat
+	lukkedagHent(bibliotekssektorISILNummer: ISIL!,filialISILNummer: ISIL!,startDato: Dato!,slutDato: Dato!):  LukkedagHentResultat
+	aabningstidHent(bibliotekssektorISILNummer: ISIL!,filialISILNummer: ISIL!):  AAbningstiderHentResultat
+	bibliotekKontaktInformationHent(bibliotekssektorISILNummer: ISIL!,filialListe: [ISIL]!):  BibliotekKontaktInformationHentResultat
+	laanerGruppeHent(bibliotekssektorISILNummer: ISIL!):  LaanerGruppeHentResultat
+	interesseHent(bibliotekssektorISILNummer: ISIL!):  InteresseHentResultat
+	foretrukketSprogHent(bibliotekssektorISILNummer: ISIL!):  ForetrukketSprogHentResultat
+
+}
+
+type Mutation {
+	laanerOpdater(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,laanerPinkode: TalHel10,laanerForetrukketAfhentningFilial: ISIL,laanerFravaersperiodeFra: Dato,laanerFravaersperiodeTil: Dato,emailListe: [EmailDetalje],telefonnummerListe: [TelefonnummerDetalje],notifikationKanalListe: [Tekst100],laanerInteresserListe: []):  LaanerOpdaterResultat
+	pinkodeOpdater(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,laanerPinkode: TalHel10!,emailUUID: UUID!):  
+	laanForny(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,laanIdListe: [Tekst30]!):  FornyLaanResultat
+	reservationOpret(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,rekvisitionReservationType: TypeReservation,manifestationFAUSTNummer: Tekst20!,rekvisitionInteressefrist: Dato,rekvisitionAfhentningssted: Tekst30,periodikaReservation: PeriodikaReservation,rekvisitionAktiveringsDato: Dato):  ReservationOpretResultat
+	reservationOpdater(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,rekvisitionNummer: Tekst20!,rekvisitionAfhentningsFrist: Dato,rekvisitionAfhentningssted: Tekst30,rekvisitionAktiveringsDato: Dato):  ReservationOpdaterResultat
+	bookingOpret(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,bookingListe: [BookingDetalje]!):  BookingOpretResultat
+	bookingOpdater(bibliotekssektorISILNummer: ISIL!,laanerID: Tekst20!,rekvisitionNummer: Tekst20!,bookingDetalje: BookingDetalje!):  BookingOpdaterResultat
+
+}
