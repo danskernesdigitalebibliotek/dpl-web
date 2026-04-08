@@ -16,6 +16,13 @@ use Symfony\Component\Yaml\Yaml;
 class ParagraphsExposedTest extends UnitTestCase {
 
   /**
+   * Paragraph types that are not synchronized and should not be exposed.
+   */
+  const IGNORED_PARAGRAPH_TYPES = [
+    'share_buttons',
+  ];
+
+  /**
    * Test that all paragraph types is exposed in config.
    *
    * GraphQL compose throw a hard error when it encounters an unexposed
@@ -38,6 +45,10 @@ class ParagraphsExposedTest extends UnitTestCase {
     );
 
     foreach ($config['entity_config']['paragraph'] as $name => $paragraph) {
+      if (in_array($name, self::IGNORED_PARAGRAPH_TYPES, TRUE)) {
+        continue;
+      }
+
       $this->assertTrue($paragraph['enabled'], $name . ' paragraph is not enabled in graphql_compose settings');
     }
   }
