@@ -20,16 +20,13 @@ ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE=""
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# In PR environments, dynamically resolve URLs from Lagoon variables.
-# CMS: varnish.pr-<number>.<project>.dplplat02.dpl.reload.dk
-# Go:  node.pr-<number>.<project>.dplplat02.dpl.reload.dk
+# In PR environments, dynamically resolve GO_CMS_DOMAIN from Lagoon variables.
+# The Go app is always deployed at go.${GO_CMS_DOMAIN} for consistency.
 # For non-PR environments, the default GO_CMS_DOMAIN is used.
 RUN if [ -n "$LAGOON_ENVIRONMENT" ] && echo "$LAGOON_ENVIRONMENT" | grep -q "^pr-"; then \
       export GO_CMS_DOMAIN="varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"; \
-      export NEXT_PUBLIC_APP_URL="https://node.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"; \
-    else \
-      export NEXT_PUBLIC_APP_URL="https://go.${GO_CMS_DOMAIN}"; \
     fi && \
+    export NEXT_PUBLIC_APP_URL="https://go.${GO_CMS_DOMAIN}" && \
     export NEXT_PUBLIC_DPL_CMS_HOSTNAME="${GO_CMS_DOMAIN}" && \
     export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
     yarn run build

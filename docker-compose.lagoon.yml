@@ -76,7 +76,7 @@ services:
       file: cms/docker-compose.yml
       service: redis
 
-  node:
+  go:
     build:
       context: cms
       dockerfile: lagoon/node.dockerfile
