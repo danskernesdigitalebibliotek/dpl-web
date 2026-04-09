@@ -21,12 +21,17 @@ ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE=""
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # In PR environments, dynamically resolve GO_CMS_DOMAIN from Lagoon variables.
-# The Go app is always deployed at go.${GO_CMS_DOMAIN} for consistency.
+# The Go app is deployed at go.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}...
 # For non-PR environments, the default GO_CMS_DOMAIN is used.
 RUN if [ -n "$LAGOON_ENVIRONMENT" ] && echo "$LAGOON_ENVIRONMENT" | grep -q "^pr-"; then \
-      export GO_CMS_DOMAIN="varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"; \
+      GO_CMS_DOMAIN="varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"; \
+      NEXT_PUBLIC_APP_URL="https://go.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"; \
+    else \
+      GO_CMS_DOMAIN="${GO_CMS_DOMAIN}"; \
+      NEXT_PUBLIC_APP_URL="https://go.${GO_CMS_DOMAIN}"; \
     fi && \
-    export NEXT_PUBLIC_APP_URL="https://go.${GO_CMS_DOMAIN}" && \
+    export GO_CMS_DOMAIN && \
+    export NEXT_PUBLIC_APP_URL && \
     export NEXT_PUBLIC_DPL_CMS_HOSTNAME="${GO_CMS_DOMAIN}" && \
     export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
     yarn run build

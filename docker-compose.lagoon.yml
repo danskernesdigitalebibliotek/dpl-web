@@ -82,7 +82,6 @@ services:
       dockerfile: lagoon/node.dockerfile
     labels:
       lagoon.type: node
-      lagoon.autogenerate: false
 
 volumes:
   projectroot:
