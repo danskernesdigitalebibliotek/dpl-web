@@ -9,7 +9,6 @@ export type DisclosureProps = {
   children: React.ReactNode | string;
   icon?: "Various" | "Receipt" | "Create" | "Profile";
   withAvailability?: boolean;
-  fullWidth?: boolean;
   removeHeadlinePadding?: boolean;
   headingLevel: HeadingLevelType;
   contentPadding?: boolean;
@@ -21,7 +20,6 @@ const Disclosure: React.FC<DisclosureProps> = ({
   children,
   icon,
   withAvailability,
-  fullWidth = false,
   removeHeadlinePadding,
   headingLevel,
   contentPadding = false,
