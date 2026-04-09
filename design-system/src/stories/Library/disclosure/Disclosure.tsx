@@ -29,13 +29,7 @@ const Disclosure: React.FC<DisclosureProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
-    <details
-      className={clsx(
-        "disclosure text-body-large",
-        fullWidth && "disclosure--full-width",
-      )}
-      open={defaultOpen}
-    >
+    <details className={clsx("disclosure text-body-large")} open={defaultOpen}>
       <summary
         className={clsx(
           "disclosure__headline text-body-large",

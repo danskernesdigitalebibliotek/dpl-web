@@ -37,6 +37,9 @@
 }
 
 .event-description__links {
+  display: flex;
+  flex-direction: column;
+  gap: $s-sm;
   @include block-spacing("small");
 }
 
