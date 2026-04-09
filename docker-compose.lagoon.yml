@@ -80,6 +80,9 @@ services:
     build:
       context: cms
       dockerfile: lagoon/node.dockerfile
+      args:
+        LAGOON_ENVIRONMENT: ${LAGOON_ENVIRONMENT:-}
+        LAGOON_PROJECT: ${LAGOON_PROJECT:-}
     labels:
       lagoon.type: node
 
