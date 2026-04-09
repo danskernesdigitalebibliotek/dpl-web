@@ -44,7 +44,6 @@ export default {
     icon: "Various",
     contentPadding: false,
     withAvailability: false,
-    fullWidth: false,
   },
 } as Meta<typeof Disclosure>;
 
