@@ -20,11 +20,19 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           display: "e-bøger",
           code: "EBOOKS",
         },
+        materialTypeSpecific: {
+          code: "EBOOK",
+          display: "e-bog",
+        },
       },
       {
         materialTypeGeneral: {
           display: "bøger",
           code: "BOOKS",
+        },
+        materialTypeSpecific: {
+          code: "BOOK",
+          display: "bog",
         },
       },
     ],
@@ -49,6 +57,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "BOOKS",
                 display: "bøger",
+              },
+              materialTypeSpecific: {
+                code: "BOOK",
+                display: "bog",
               },
             },
           ],
@@ -104,6 +116,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "EBOOKS",
                 display: "e-bøger",
+              },
+              materialTypeSpecific: {
+                code: "EBOOK",
+                display: "e-bog",
               },
             },
           ],
@@ -163,6 +179,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               code: "BOOKS",
               display: "bøger",
             },
+            materialTypeSpecific: {
+              code: "BOOK",
+              display: "bog",
+            },
           },
         ],
         pid: "870970-basis:39018608",
@@ -217,6 +237,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           display: "bøger",
           code: "BOOKS",
         },
+        materialTypeSpecific: {
+          code: "BOOK",
+          display: "bog",
+        },
       },
     ],
     workYear: null,
@@ -240,6 +264,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "BOOKS",
                 display: "bøger",
+              },
+              materialTypeSpecific: {
+                code: "BOOK",
+                display: "bog",
               },
             },
           ],
@@ -291,6 +319,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               code: "BOOKS",
               display: "bøger",
             },
+            materialTypeSpecific: {
+              code: "BOOK",
+              display: "bog",
+            },
           },
         ],
         pid: "870970-basis:52144493",
@@ -341,17 +373,29 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           display: "e-bøger",
           code: "EBOOKS",
         },
+        materialTypeSpecific: {
+          code: "EBOOK",
+          display: "e-bog",
+        },
       },
       {
         materialTypeGeneral: {
           display: "lydbøger",
           code: "AUDIO_BOOKS",
         },
+        materialTypeSpecific: {
+          code: "AUDIO_BOOK_ONLINE",
+          display: "lydbog (online)",
+        },
       },
       {
         materialTypeGeneral: {
           display: "bøger",
           code: "BOOKS",
+        },
+        materialTypeSpecific: {
+          code: "BOOK",
+          display: "bog",
         },
       },
     ],
@@ -378,6 +422,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "EBOOKS",
                 display: "e-bøger",
+              },
+              materialTypeSpecific: {
+                code: "EBOOK",
+                display: "e-bog",
               },
             },
           ],
@@ -431,6 +479,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "BOOKS",
                 display: "bøger",
+              },
+              materialTypeSpecific: {
+                code: "BOOK",
+                display: "bog",
               },
             },
           ],
@@ -487,6 +539,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
                 code: "AUDIO_BOOKS",
                 display: "lydbøger",
               },
+              materialTypeSpecific: {
+                code: "AUDIO_BOOK_ONLINE",
+                display: "lydbog (online)",
+              },
             },
           ],
           pid: "870970-basis:62935537",
@@ -540,6 +596,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
             materialTypeGeneral: {
               code: "BOOKS",
               display: "bøger",
+            },
+            materialTypeSpecific: {
+              code: "BOOK",
+              display: "bog",
             },
           },
         ],
@@ -595,17 +655,29 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           display: "lydbøger",
           code: "AUDIO_BOOKS",
         },
+        materialTypeSpecific: {
+          code: "AUDIO_BOOK_ONLINE",
+          display: "lydbog (online)",
+        },
       },
       {
         materialTypeGeneral: {
           display: "e-bøger",
           code: "EBOOKS",
         },
+        materialTypeSpecific: {
+          code: "EBOOK",
+          display: "e-bog",
+        },
       },
       {
         materialTypeGeneral: {
           display: "bøger",
           code: "BOOKS",
+        },
+        materialTypeSpecific: {
+          code: "BOOK",
+          display: "bog",
         },
       },
     ],
@@ -638,6 +710,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "AUDIO_BOOKS",
                 display: "lydbøger",
+              },
+              materialTypeSpecific: {
+                code: "AUDIO_BOOK_ONLINE",
+                display: "lydbog (online)",
               },
             },
           ],
@@ -701,6 +777,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
                 code: "EBOOKS",
                 display: "e-bøger",
               },
+              materialTypeSpecific: {
+                code: "EBOOK",
+                display: "e-bog",
+              },
             },
           ],
           pid: "870970-basis:46313143",
@@ -756,6 +836,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
                 code: "BOOKS",
                 display: "bøger",
               },
+              materialTypeSpecific: {
+                code: "BOOK",
+                display: "bog",
+              },
             },
           ],
           pid: "870970-basis:46313151",
@@ -809,6 +893,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
             materialTypeGeneral: {
               code: "BOOKS",
               display: "bøger",
+            },
+            materialTypeSpecific: {
+              code: "BOOK",
+              display: "bog",
             },
           },
         ],
@@ -868,6 +956,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           display: "bøger",
           code: "BOOKS",
         },
+        materialTypeSpecific: {
+          code: "BOOK",
+          display: "bog",
+        },
       },
     ],
     workYear: null,
@@ -891,6 +983,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
               materialTypeGeneral: {
                 code: "BOOKS",
                 display: "bøger",
+              },
+              materialTypeSpecific: {
+                code: "BOOK",
+                display: "bog",
               },
             },
           ],
@@ -951,6 +1047,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
             materialTypeGeneral: {
               code: "BOOKS",
               display: "bøger",
+            },
+            materialTypeSpecific: {
+              code: "BOOK",
+              display: "bog",
             },
           },
         ],

@@ -3,10 +3,7 @@ import React from "react"
 
 import { translateMaterialTypesStringForRender } from "@/components/pages/workPageLayout/helper"
 import InfoBoxItem from "@/components/shared/infoBox/InfoBoxItem"
-import {
-  GeneralMaterialTypeCodeEnum,
-  ManifestationWorkPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 
 type InfoBoxDetailsProps = {
@@ -16,9 +13,7 @@ type InfoBoxDetailsProps = {
 const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
   // get selectedManifestation materialTypes and translate them for render
   const materialTypeDisplays = selectedManifestation.materialTypes.map(materialType => {
-    return translateMaterialTypesStringForRender(
-      materialType.materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
-    )
+    return translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code)
   })
 
   return (

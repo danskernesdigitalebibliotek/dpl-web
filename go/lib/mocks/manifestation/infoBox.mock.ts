@@ -20,6 +20,10 @@ const manifestationMock = {
         display: "e-bøger",
         code: "EBOOKS",
       },
+      materialTypeSpecific: {
+        code: "EBOOK",
+        display: "e-bog",
+      },
     },
   ],
   access: [

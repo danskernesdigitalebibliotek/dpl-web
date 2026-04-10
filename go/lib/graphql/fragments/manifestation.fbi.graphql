@@ -127,6 +127,10 @@ fragment ManifestationMaterialTypes on Manifestation {
       code
       display
     }
+    materialTypeSpecific {
+      code
+      display
+    }
   }
 }
 
