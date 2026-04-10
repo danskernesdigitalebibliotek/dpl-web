@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import {
+  SearchWithPaginationDocument,
   SearchWithPaginationQuery,
-  useSearchWithPaginationQuery
+  SearchWithPaginationQueryVariables
 } from "../../core/dbc-gateway/generated/graphql";
+import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
+import { GO_VIP_PROFILE_URL } from "./constants";
+
+interface UseGetMaterialListSearchOptions {
+  useGoVipProfile?: boolean;
+}
 
 interface UseGetMaterialListSearchReturn {
   searchListData: SearchWithPaginationQuery["search"]["works"];
@@ -13,7 +21,9 @@ interface UseGetMaterialListSearchReturn {
   hitCount: number;
 }
 
-const useGetMaterialListSearch = (): UseGetMaterialListSearchReturn => {
+const useGetMaterialListSearch = ({
+  useGoVipProfile
+}: UseGetMaterialListSearchOptions = {}): UseGetMaterialListSearchReturn => {
   const [state, setState] = useState({
     searchInput: "",
     page: 1
@@ -27,13 +37,29 @@ const useGetMaterialListSearch = (): UseGetMaterialListSearchReturn => {
 
   const pageSize = 10;
 
-  const queryVariables = {
+  const queryVariables: SearchWithPaginationQueryVariables = {
     q: { all: searchInput },
     offset: (page - 1) * pageSize,
     limit: pageSize
   };
 
-  const { data, isLoading } = useSearchWithPaginationQuery(queryVariables);
+  const queryFn = fetcher<
+    SearchWithPaginationQuery,
+    SearchWithPaginationQueryVariables
+  >(
+    SearchWithPaginationDocument,
+    queryVariables,
+    useGoVipProfile ? GO_VIP_PROFILE_URL : undefined
+  );
+
+  const queryKey = useGoVipProfile
+    ? "searchWithPagination-go"
+    : "searchWithPagination";
+
+  const { data, isLoading } = useQuery<SearchWithPaginationQuery>(
+    [queryKey, queryVariables],
+    queryFn
+  );
 
   useEffect(() => {
     if (data?.search?.works) {
