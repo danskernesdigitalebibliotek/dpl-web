@@ -17,10 +17,11 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
         <div className="py-paragraph-spacing w-full text-center">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
           <div className="grid-go items-start">
-            <div className="grid-go col-span-full lg:col-span-6">
-              <div
-                className="rounded-base relative col-span-4 col-start-2 aspect-9/16 overflow-hidden
-                  lg:col-span-full">
+            <div
+              className="xl:-translate-x-grid-column-quarter xl:ml-grid-column-half
+                lg:-translate-x-grid-column-quarter lg:ml-grid-column-half col-span-4 col-start-2
+                lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3">
+              <div className="rounded-base relative aspect-9/16 w-full overflow-hidden">
                 <iframe
                   title={title || "Video"}
                   aria-label={title || "Video"}
@@ -32,7 +33,11 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
                 />
               </div>
             </div>
-            <CarouselSlider works={works} className="lg:col-span-5 lg:col-start-8" />
+            <CarouselSlider
+              works={works}
+              className="xl:translate-x-grid-column-quarter lg:translate-x-grid-column-quarter
+                lg:col-span-4 lg:col-start-7 xl:col-span-3 xl:col-start-7"
+            />
           </div>
         </div>
       </div>
