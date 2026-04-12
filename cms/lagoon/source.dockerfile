@@ -5,7 +5,7 @@ FROM dpl-cms-cli:0.0.0 as built-cli
 RUN rm -fr /app/web/sites/default/files
 
 FROM scratch
-LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-cms
+LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/cms
 LABEL org.opencontainers.image.description="This package contains the source of the Danish Public Libraries Cms. NB: this is only the codebase and need other containers in order to run."
 
 COPY --from=built-cli /app /app
