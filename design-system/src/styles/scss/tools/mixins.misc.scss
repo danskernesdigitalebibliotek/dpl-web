@@ -44,3 +44,11 @@
     opacity: 1;
   }
 }
+
+@mixin teaser-hover-shadow {
+  transition: filter 0.4s ease-in-out;
+
+  &:hover {
+    filter: drop-shadow(0 $s-xs 20px rgb(72 72 72 / 20%));
+  }
+}

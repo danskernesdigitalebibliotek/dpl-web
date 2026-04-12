@@ -5,6 +5,7 @@ import { ReactComponent as CheckIcon } from "../../../public/icons/collection/Ch
 import { ReactComponent as FilterIcon } from "../../../public/icons/collection/Filter.svg";
 import { ReactComponent as ArrowSmallRight } from "../../Library/Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 import { IconFavourite } from "../../Library/Icons/icon-favourite/IconFavourite";
+import Campaign from "../../Library/campaign/Campaign";
 
 const AdvancedSearchSummary: React.FC = () => {
   return (
@@ -448,6 +449,13 @@ const AdvancedSearchSummary: React.FC = () => {
             </div>
           </div>
           <ul className="content-list" data-cy="search-result-list">
+            <li className="content-list__item">
+              <Campaign
+                url="#"
+                title="Bøger af folk der hedder Anders eller Heidi"
+                imageUrl="https://picsum.photos/id/777/300/100"
+              />
+            </li>
             <li className="content-list__item">
               <article
                 data-cy="card-list-item"
