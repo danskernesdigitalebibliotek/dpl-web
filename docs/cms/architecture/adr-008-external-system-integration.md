@@ -5,7 +5,7 @@
 DPL CMS is only intended to integrate with one external system:
 Adgangsplatformen. This integration is necessary to obtain patron and library
 tokens needed for authentication with other business systems. All these
-integrations should occur in the browser through [React components](https://github.com/danskernesdigitalebibliotek/dpl-react).
+integrations should occur in the browser through [React components](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/react).
 
 The purpose of this is to avoid having data passing through the CMS as an
 intermediary. This way the CMS avoids storing or transmitting sensitive data.

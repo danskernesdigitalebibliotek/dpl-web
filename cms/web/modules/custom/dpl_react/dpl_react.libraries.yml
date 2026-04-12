@@ -1,8 +1,8 @@
 hello-world:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/hello-world.js: { preprocess: false }
@@ -11,10 +11,10 @@ hello-world:
     - dpl_react/handler
 
 search-header:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/search-header.js: { preprocess: false }
@@ -23,10 +23,10 @@ search-header:
     - dpl_react/handler
 
 advanced-search:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/AdvancedSearch.js: {}
@@ -35,10 +35,10 @@ advanced-search:
     - dpl_react/handler
 
 advanced-search-v2:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/AdvancedSearchV2.js: {}
@@ -47,10 +47,10 @@ advanced-search-v2:
     - dpl_react/handler
 
 search-result:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/search-result.js: { preprocess: false }
@@ -59,10 +59,10 @@ search-result:
     - dpl_react/handler
 
 patron-page:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/PatronPage.js: { preprocess: false }
@@ -71,10 +71,10 @@ patron-page:
     - dpl_react/handler
 
 create-patron:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/CreatePatron.js: { preprocess: false }
@@ -83,10 +83,10 @@ create-patron:
     - dpl_react/handler
 
 material:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/material.js: { preprocess: false }
@@ -95,10 +95,10 @@ material:
     - dpl_react/handler
 
 loan-list:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/loan-list.js: { preprocess: false }
@@ -107,10 +107,10 @@ loan-list:
     - dpl_react/handler
 
 recommender:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/Recommender.js: { preprocess: false }
@@ -119,10 +119,10 @@ recommender:
     - dpl_react/handler
 
 something-similar:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/SomethingSimilar.js: { preprocess: false }
@@ -131,10 +131,10 @@ something-similar:
     - dpl_react/handler
 
 fee-list:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/FeeList.js: { preprocess: false }
@@ -143,10 +143,10 @@ fee-list:
     - dpl_react/handler
 
 favorites-list-material-component:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/FavoritesListMaterialComponent.js:
@@ -156,10 +156,10 @@ favorites-list-material-component:
     - dpl_react/handler
 
 reservation-list:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/reservation-list.js: { preprocess: false }
@@ -168,10 +168,10 @@ reservation-list:
     - dpl_react/handler
 
 DashBoard:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/dashboard.js: { preprocess: false }
@@ -180,10 +180,10 @@ DashBoard:
     - dpl_react/handler
 
 favorites-list:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/FavoritesList.js: { preprocess: false }
@@ -192,10 +192,10 @@ favorites-list:
     - dpl_react/handler
 
 recommended-material:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/RecommendedMaterial.js: {}
@@ -204,10 +204,10 @@ recommended-material:
     - dpl_react/handler
 
 recommendation:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/recommendation.js: {}
@@ -216,10 +216,10 @@ recommendation:
     - dpl_react/handler
 
 reader:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/Reader.js: {}
@@ -228,10 +228,10 @@ reader:
     - dpl_react/handler
 
 opening-hours:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/OpeningHours.js: {}
@@ -240,10 +240,10 @@ opening-hours:
     - dpl_react/handler
 
 material-grid-automatic:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/MaterialGridAutomatic.js: {}
@@ -252,10 +252,10 @@ material-grid-automatic:
     - dpl_react/handler
 
 material-grid-link-automatic:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/MaterialGridLinkAutomatic.js: {}
@@ -264,10 +264,10 @@ material-grid-link-automatic:
     - dpl_react/handler
 
 material-grid-manual:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/MaterialGridManual.js: {}
@@ -276,10 +276,10 @@ material-grid-manual:
     - dpl_react/handler
 
 material-search:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/MaterialSearch.js: {}
@@ -289,10 +289,10 @@ material-search:
     - dpl_react/handler
 
 opening-hours-editor:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/OpeningHoursEditor.js: {}
@@ -302,10 +302,10 @@ opening-hours-editor:
     - dpl_react/handler
 
 menu:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/menu.js: { preprocess: false }
@@ -314,10 +314,10 @@ menu:
     - dpl_react/handler
 
 opening-hours-sidebar:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/OpeningHoursSidebar.js: {}
@@ -326,10 +326,10 @@ opening-hours-sidebar:
     - dpl_react/handler
 
 branch-list:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/branch-list.js: { preprocess: false }
@@ -338,10 +338,10 @@ branch-list:
     - dpl_react/handler
 
 base:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/runtime.js: { preprocess: false, weight: -19 }
@@ -357,10 +357,10 @@ admin_base:
       /themes/custom/novel/assets/dpl-design-system/css/admin-base.css: {}
 
 share-buttons:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
   license:
     name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
     gpl-compatible: true
   js:
     /libraries/dpl-react/share-buttons.js: { preprocess: false }
