@@ -109,16 +109,7 @@ services:
       - "443"
       - "3001:3001"
     command: >
-      sh -lc "npx browser-sync@3.0.4 start
-      --proxy https://https
-      --cors
-      --files 'web/themes/custom/novel/assets/**/*.css,web/themes/custom/novel/assets/**/*.js,web/themes/custom/novel/css/**/*.css,web/libraries/dpl-react/**/*.css,web/libraries/dpl-react/**/*.js,web/themes/custom/novel/templates/**/*.twig'
-      --host 0.0.0.0
-      --port 443
-      --ui-port 3001
-      --no-open
-      --reload-debounce 300
-      --logLevel debug"
+      sh -lc "npx browser-sync@3.0.4 start --config docker/browsersync/bs-config.js"
 
   nginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
