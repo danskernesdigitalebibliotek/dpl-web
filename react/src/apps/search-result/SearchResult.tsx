@@ -17,7 +17,7 @@ import { cleanBranchesId, TBranch } from "../../core/utils/branches";
 import SearchResultInvalidSearch from "./search-result-not-valid-search";
 import { useUrls } from "../../core/utils/url";
 import { useConfig } from "../../core/utils/config";
-import SearchResultList from "./SearchResultList";
+import SearchResultList, { ResultItem } from "./SearchResultList";
 import SearchResultFacets from "./SearchResultFacets";
 import IconFilter from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-filter.svg";
 import useDialog from "../../components/dialog/useDialog";
@@ -26,6 +26,8 @@ import { Button } from "../../components/Buttons/Button";
 import { convertFacetsToFilters, isValidFacetsState } from "./helpers";
 import { isWildcardQuery } from "../advanced-search-v2/lib/query-builder";
 import { allFacetFields, createFilters } from "./helper";
+import { useCampaignMatchPOST } from "../../core/dpl-cms/dpl-cms";
+import { CampaignMatchPOSTBodyItem } from "../../core/dpl-cms/model";
 
 interface SearchResultProps {
   q: string;
@@ -97,6 +99,28 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   );
 
   const facets = facetData?.search.facets || [];
+
+  const campaignMutation = useCampaignMatchPOST();
+
+  useEffect(() => {
+    if (facets.length === 0) return;
+
+    const body: CampaignMatchPOSTBodyItem[] = facets.map((facet) => ({
+      name: facet.name,
+      values: facet.values.map((v) => ({
+        key: v.key,
+        term: v.term,
+        score: v.score ?? undefined
+      }))
+    }));
+
+    campaignMutation.mutate({
+      data: body,
+      params: { _format: "json" }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [facets]);
+
   const { data, isLoading } = useSearchWithPaginationQuery(
     {
       q: { all: q },
@@ -248,11 +272,17 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
                 </Dialog>
               </div>
             </div>
-
             {resultItems && (
               <>
                 <SearchResultList
-                  resultItems={resultItems}
+                  resultItems={
+                    [
+                      ...(campaignMutation.data?.data
+                        ? [campaignMutation.data.data]
+                        : []),
+                      ...resultItems
+                    ] as ResultItem[]
+                  }
                   isLoading={isLoading}
                   page={page}
                   pageSize={pageSize}
