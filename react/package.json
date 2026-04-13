@@ -161,7 +161,7 @@
     "@fullcalendar/react": "^6.1.20",
     "@fullcalendar/timegrid": "^6.1.20",
     "@hammzj/cypress-page-object": "^2.3.0",
-    "@headlessui/react": "^2.2.9",
+    "@headlessui/react": "^2.2.10",
     "@reduxjs/toolkit": "^2.11.2",
     "@types/lodash": "^4.17.5",
     "clsx": "^2.1.1",
