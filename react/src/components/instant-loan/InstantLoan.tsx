@@ -20,7 +20,7 @@ const InstantLoan: React.FunctionComponent<InstantLoanProps> = ({
   return (
     <DisclosureControllable
       id="instant-loan"
-      detailsClassName="disclosure text-body-large pagefold-parent--small disclosure--full-width"
+      detailsClassName="disclosure text-body-large pagefold-parent--small"
       summary={
         <InstantLoanSummary
           pid={pid}

@@ -27,11 +27,13 @@ const MaterialSkeleton: React.FC = () => {
         </div>
       </header>
       <section className="material-description">
-        <div className="ssc-head-line w-20 mb" />
-        <div className="ssc-line w-60 mbs" />
-        <div className="ssc-line w-60 mbs" />
-        <div className="ssc-line w-60 mbs" />
-        <div className="ssc-line w-60 mb" />
+        <div className="ssc-head-line w-20 mbs" />
+        <div>
+          <div className="ssc-line w-60 mbs" />
+          <div className="ssc-line w-60 mbs" />
+          <div className="ssc-line w-60 mbs" />
+          <div className="ssc-line w-60 mb" />
+        </div>
         <div className="scc-wrapper pt-16">
           <div className="ssc-head-line w-10 mt mb" />
           <div className="ssc-line w-70 mbs" />
