@@ -90,14 +90,6 @@ tasks:
       - task dev:nvm:use
       - yarn test
 
-  dev:format:
-    summary: Run linters
-    cmds:
-      - task dev:nvm:use
-      - yarn lint:js --fix
-      - yarn lint:scss --fix
-      - yarn lint:markdown --fix
-
   dev:lint:
     summary: Run linters
     cmds:
