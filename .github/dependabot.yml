@@ -327,4 +327,6 @@ updates:
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       - dependency-name: "orval"
+        versions: ["^7.2.0"]
+      - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]
