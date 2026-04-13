@@ -15,6 +15,6 @@ module.exports = async ({ config }) => {
       include: path.resolve(__dirname, "../")
     }
   ];
-  const plugins = [...config.plugins];
+  const plugins = [...config.plugins, ...custom.plugins];
   return { ...config, plugins, module: { ...config.module, rules } };
 };
