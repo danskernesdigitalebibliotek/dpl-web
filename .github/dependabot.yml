@@ -327,4 +327,4 @@ updates:
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       - dependency-name: "orval"
-        update-types: ["version-update:semver-major"]
+        versions: ["^7.2.0"]
