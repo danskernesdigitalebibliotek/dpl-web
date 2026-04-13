@@ -56,7 +56,7 @@ exports[`divideManifestationsByMaterialType > should divide manifestations by ma
         "main": [
           {
             "display": "engelsk",
-            "isoCode": "eng",
+            "iso639Set1": "en",
           },
         ],
         "notes": [],
@@ -155,7 +155,7 @@ exports[`divideManifestationsByMaterialType > should divide manifestations by ma
         "main": [
           {
             "display": "engelsk",
-            "isoCode": "eng",
+            "iso639Set1": "en",
           },
         ],
         "notes": [],
@@ -258,7 +258,7 @@ exports[`divideManifestationsByMaterialType > should divide manifestations by ma
         "main": [
           {
             "display": "engelsk",
-            "isoCode": "eng",
+            "iso639Set1": "en",
           },
         ],
         "notes": [],
@@ -366,7 +366,7 @@ exports[`divideManifestationsByMaterialType > should divide manifestations by ma
         "main": [
           {
             "display": "engelsk",
-            "isoCode": "eng",
+            "iso639Set1": "en",
           },
         ],
         "notes": [],

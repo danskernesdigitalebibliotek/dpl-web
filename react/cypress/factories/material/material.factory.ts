@@ -45,7 +45,7 @@ export const materialFactory = Factory.define<GetMaterialQuery>(() => ({
     mainLanguages: [
       {
         display: "dansk",
-        isoCode: "dan"
+        iso639Set1: "da"
       }
     ],
     subjects: {

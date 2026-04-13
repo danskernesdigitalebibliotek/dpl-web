@@ -1,0 +1,4 @@
+# Mark generated files so they are collapsed in GitHub pull requests.
+# See https://docs.github.com/en/repositories/working-with-files/managing-files/customizing-how-changed-files-appear-on-github
+go/lib/graphql/generated/** linguist-generated
+react/src/core/dbc-gateway/generated/** linguist-generated

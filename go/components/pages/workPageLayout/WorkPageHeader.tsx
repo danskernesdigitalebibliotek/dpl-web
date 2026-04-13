@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation"
 import React from "react"
 
 import {
-  getManifestationLanguageIsoCode,
+  getManifestationLanguageCode,
   slideSelectOptionsFromMaterialTypes,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
@@ -36,7 +36,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const selectedManifestationIsbns = selectedManifestation
     ? getIsbnsFromManifestation(selectedManifestation)
     : []
-  const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
+  const languageCode = getManifestationLanguageCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
 
   const sortedManifestations = sortManifestationsBySortPriority(manifestations)
@@ -121,9 +121,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               BLÅ
             </Badge>
           ) : null}
-          <h1
-            lang={languageIsoCode}
-            className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
+          <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />

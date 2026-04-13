@@ -193,19 +193,18 @@ export const getManifestationByMaterialType = (
   )
 }
 
-export const getManifestationLanguageIsoCode = (manifestation: ManifestationWorkPageFragment) => {
+export const getManifestationLanguageCode = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return undefined
 
-  const uniqueLanguagesWithIsoCode = uniqBy(manifestation.languages?.main, "isoCode")
+  const uniqueLanguages = uniqBy(manifestation.languages?.main, "iso639Set1")
 
-  // We only want to set the lang attribute if there is only one isoCode
-  const uniqIsoCode =
-    uniqueLanguagesWithIsoCode.length === 1 && head(uniqueLanguagesWithIsoCode)?.isoCode
+  // We only want to set the lang attribute if there is only one language code
+  const uniqLanguageCode = uniqueLanguages.length === 1 && head(uniqueLanguages)?.iso639Set1
 
-  if (uniqIsoCode) {
-    return uniqIsoCode
+  if (uniqLanguageCode) {
+    return uniqLanguageCode
   }
-  // if there is no isoCode it return undefined so that the lang attribute is not set
+  // if there is no language code it returns undefined so that the lang attribute is not set
   return undefined
 }
 

@@ -172,24 +172,23 @@ export const getManifestationLanguages = (manifestation: Manifestation) => {
   return mainLanguages ?? "";
 };
 
-export const getManifestationLanguageIsoCode = (
+export const getManifestationLanguageCode = (
   manifestations: Pick<Manifestation, "languages">[]
 ) => {
   const mainLanguages = manifestations
     .map(({ languages }) => languages)
     .flatMap((language) => language?.main);
 
-  const uniqueLanguagesWithIsoCode = uniqBy(mainLanguages, "isoCode");
+  const uniqueLanguages = uniqBy(mainLanguages, "iso639Set1");
 
-  // We only want to set the lang attribute if there is only one isoCode
-  const uniqIsoCode =
-    uniqueLanguagesWithIsoCode.length === 1 &&
-    head(uniqueLanguagesWithIsoCode)?.isoCode;
+  // We only want to set the lang attribute if there is only one language code
+  const uniqLanguageCode =
+    uniqueLanguages.length === 1 && head(uniqueLanguages)?.iso639Set1;
 
-  if (uniqIsoCode) {
-    return uniqIsoCode;
+  if (uniqLanguageCode) {
+    return uniqLanguageCode;
   }
-  // if there is no isoCode it return undefined so that the lang attribute is not set
+  // if there is no language code it returns undefined so that the lang attribute is not set
   return undefined;
 };
 
@@ -206,9 +205,7 @@ export const getManifestationOriginalTitle = (manifestation: Manifestation) => {
 };
 
 export const materialContainsDanish = (work: Work) => {
-  return work.mainLanguages?.some(({ isoCode }) =>
-    isoCode?.toLowerCase().includes("dan")
-  );
+  return work.mainLanguages?.some(({ iso639Set1 }) => iso639Set1 === "da");
 };
 
 export const getManifestationTitle = ({ titles }: Manifestation): string => {
@@ -729,7 +726,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "engelsk",
-            isoCode: "eng"
+            iso639Set1: "en"
           }
         ],
         materialTypes: [
@@ -774,7 +771,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "engelsk",
-            isoCode: "eng"
+            iso639Set1: "en"
           }
         ],
         materialTypes: [
@@ -799,7 +796,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "dansk",
-            isoCode: "dan"
+            iso639Set1: "da"
           }
         ],
         materialTypes: [
@@ -825,7 +822,7 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "dansk",
-            isoCode: "dan"
+            iso639Set1: "da"
           }
         ]
       } as unknown as Work;
@@ -844,11 +841,11 @@ if (import.meta.vitest) {
         mainLanguages: [
           {
             display: "English",
-            isoCode: "eng"
+            iso639Set1: "en"
           },
           {
             display: "German",
-            isoCode: "ger"
+            iso639Set1: "de"
           }
         ]
       } as unknown as Work;

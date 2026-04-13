@@ -127,7 +127,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "dan"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -216,7 +216,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "dan"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -312,7 +312,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "dan"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -422,7 +422,7 @@
             "main": [
               {
                 "display": "dansk",
-                "isoCode": "dan"
+                "iso639Set1": "da"
               }
             ],
             "notes": []
@@ -532,7 +532,7 @@
             "main": [
               {
                 "display": "dansk",
-                "isoCode": "dan"
+                "iso639Set1": "da"
               }
             ],
             "notes": []
@@ -664,7 +664,7 @@
       "mainLanguages": [
         {
           "display": "dansk",
-          "isoCode": "dan"
+          "iso639Set1": "da"
         }
       ],
       "subjects": {
