@@ -1,0 +1,18 @@
+{
+  "id": "391a6fe1-3c11-4d6c-a92f-cf980533b5ae",
+  "name": "Campaign match",
+  "request": {
+    "urlPathPattern": "/dpl_campaign/match.*",
+    "method": "POST"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"data\":{\"id\":\"1999\",\"title\":\"Campaign title\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\"image\":{\"url\":\"https://picsum.photos/id/777/300/200\",\"alt\":\"I am a campaign image.\"},\"url\":\"https://google.com\"}}",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  },
+  "uuid": "391a6fe1-3c11-4d6c-a92f-cf980533b5ae",
+  "persistent": true,
+  "priority": 5
+}
