@@ -97,6 +97,29 @@ services:
       lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
       lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
 
+  browsersync:
+    image: node:24-alpine
+    depends_on:
+      - https
+    << : *default-volumes
+    working_dir: /app
+    labels:
+      lagoon.type: none
+    ports:
+      - "443"
+      - "3001:3001"
+    command: >
+      sh -lc "npx browser-sync@3.0.4 start
+      --proxy https://https
+      --cors
+      --files 'web/themes/custom/novel/assets/**/*.css,web/themes/custom/novel/assets/**/*.js,web/themes/custom/novel/css/**/*.css,web/libraries/dpl-react/**/*.css,web/libraries/dpl-react/**/*.js,web/themes/custom/novel/templates/**/*.twig'
+      --host 0.0.0.0
+      --port 443
+      --ui-port 3001
+      --no-open
+      --reload-debounce 300
+      --logLevel debug"
+
   nginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
