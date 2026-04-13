@@ -2,6 +2,7 @@ import * as React from "react";
 import { FC } from "react";
 import { CampaignMatchPOST200Data } from "../../core/dpl-cms/model";
 import { useUrlStatistics } from "../../core/statistics/useStatistics";
+import Arrow from "../atoms/icons/arrow/arrow";
 
 export interface CampaignProps {
   campaignData: CampaignMatchPOST200Data;
@@ -12,13 +13,13 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
   if (!campaignData.title) {
     return null;
   }
-  // campaignData.title will always be defined because we exit the component if
-  // not, but Typescript still thinks it might so we assign it with "as string"
 
-  const onClick = () => {
+  const onClick = (event: React.MouseEvent<HTMLInputElement>) => {
     if (!campaignData.url) {
       return;
     }
+
+    event.preventDefault();
 
     redirectWithUrlTracking({
       campaignUrl: campaignData.url,
@@ -26,37 +27,25 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
     });
   };
 
-  const onKeyUp = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      onClick();
-    }
-  };
-
   return (
-    <section
-      className="campaign mt-35"
+    <a
+      className="campaign arrow arrow__hover--right-small"
+      href={campaignData.url}
       data-cy="campaign-body"
       onClick={onClick}
-      onKeyUp={onKeyUp}
-      role="link"
-      tabIndex={campaignData.url ? 0 : undefined}
     >
-      {campaignData.image && campaignData.image.url && (
+      {campaignData?.image?.url && (
         <img
-          data-cy="campaign-image"
-          className={`campaign__image ${
-            !campaignData.text ? "campaign__image--full-width" : ""
-          }`}
+          className="campaign__image"
           src={campaignData.image.url}
-          alt={campaignData.image.alt}
+          alt={campaignData?.image?.alt}
         />
       )}
       {campaignData.text && (
-        <h4 className="campaign__title campaign__title--ellipsis">
-          {campaignData.text}
-        </h4>
+        <h2 className="campaign__title">{campaignData.text}</h2>
       )}
-    </section>
+      <Arrow />
+    </a>
   );
 };
 
