@@ -53,7 +53,8 @@ export interface MenuProps {
 }
 
 export interface MenuEntryProps
-  extends MenuProps,
+  extends
+    MenuProps,
     GlobalUrlEntryPropsInterface,
     GroupModalProps,
     GroupModalLoansProps,

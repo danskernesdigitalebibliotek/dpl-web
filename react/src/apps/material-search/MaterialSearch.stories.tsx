@@ -22,7 +22,8 @@ const previouslySelectedWorkId = "work-of:800010-katalog:99122475830405763";
 const previouslySelectedMaterialType = "lydbog (cd-mp3)";
 
 interface MaterialSearchHiddenInputsProps
-  extends MaterialSearchEntryProps,
+  extends
+    MaterialSearchEntryProps,
     MaterialSearchEntryTextProps,
     GlobalEntryTextProps {
   defaultWorkId: string;

@@ -226,7 +226,8 @@ interface MaterialEntryConfigProps {
 }
 
 export interface MaterialEntryProps
-  extends GlobalUrlEntryPropsInterface,
+  extends
+    GlobalUrlEntryPropsInterface,
     MaterialEntryTextProps,
     GlobalEntryTextProps,
     MaterialEntryConfigProps,

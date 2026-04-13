@@ -24,7 +24,8 @@ interface FavoritesListTextEntryProps {
 }
 
 export interface FavoritesListEntryProps
-  extends FavoritesListConfigEntryProps,
+  extends
+    FavoritesListConfigEntryProps,
     FavoritesListTextEntryProps,
     GlobalEntryTextProps,
     GlobalUrlEntryPropsInterface {

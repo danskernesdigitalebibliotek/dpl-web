@@ -70,7 +70,8 @@ interface SearchResultEntryConfigProps {
 }
 
 export interface SearchResultEntryProps
-  extends GlobalUrlEntryPropsInterface,
+  extends
+    GlobalUrlEntryPropsInterface,
     SearchResultEntryConfigProps,
     GlobalEntryTextProps,
     SearchResultEntryTextProps,

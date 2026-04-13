@@ -14,8 +14,7 @@ interface MaterialGridLinkAutomaticEntryConfigProps {
 }
 
 export interface MaterialGridLinkAutomaticEntryProps
-  extends GlobalEntryTextProps,
-    MaterialGridLinkAutomaticEntryConfigProps {
+  extends GlobalEntryTextProps, MaterialGridLinkAutomaticEntryConfigProps {
   link: string;
   title?: string;
   description?: string;
