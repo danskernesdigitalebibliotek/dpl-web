@@ -15,7 +15,9 @@
     gap: 0;
     column-gap: $s-lg;
     padding: $s-lg;
-    grid-template-columns: min-content minmax(min-content, 407px) 1fr max-content;
+    grid-template-columns:
+      min-content minmax(min-content, 407px)
+      1fr max-content;
   }
 
   &:hover {
