@@ -66,6 +66,37 @@ function bnf_preprocess_html(array &$variables): void {
   $variables['page']['#attached']['html_head'][] = [$uuid_metatag, 'node-uuid'];
 }
 
+/**
+ * Implements hook_page_attachments().
+ *
+ * Setting the Mapp page parameter for BNF content, so we can track
+ * content from Delingstjenesten.
+ *
+ * @param array[] $page
+ *   The page render array.
+ */
+function bnf_page_attachments(array &$page): void {
+  $route = \Drupal::routeMatch();
+  $node = $route->getParameter('node');
+
+  if ($route->getRouteName() !== 'entity.node.canonical' || !($node instanceof NodeInterface)) {
+    return;
+  }
+
+  if (!$node->hasField(BnfStateEnum::FIELD_NAME) || $node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
+    return;
+  }
+
+  /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $state_field */
+  $state_field = $node->get(BnfStateEnum::FIELD_NAME);
+  $states = $state_field->enums();
+  $state = reset($states);
+
+  if (in_array($state, [BnfStateEnum::Imported, BnfStateEnum::LocallyClaimed])) {
+    $page['#attached']['drupalSettings']['dpl_mapp']['page_params']['p_deltj_uuid'] = $node->uuid();
+  }
+}
+
 /*
  * The following hook functions is for Drupal 10, they can be removed, together
  * with the hook class service in `bnf.services.yml` when upgrading to Drupal
