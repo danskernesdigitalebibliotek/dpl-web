@@ -2,7 +2,9 @@ describe('Webforms', () => {
   it('Go to the default contact webform page and fill it out successfully.', () => {
     cy.visit('/kontakt');
     cy.findByLabelText('Dit navn').type('John Doe');
-    cy.findByLabelText('Din e-mailadresse').type('john@doe.com');
+    cy.findByLabelText('Din e-mailadresse').type(
+      'testuser@folkebibliotekernescms.dk',
+    );
     cy.findByLabelText('Kategori').select(1);
     cy.findByLabelText('Emne').type('Test');
     cy.findByLabelText('Besked').type('Lorem ipsum');
@@ -40,8 +42,10 @@ describe('Webforms', () => {
 
   it('Check that the honeypot timer is working by submitting form before timer (5000ms) is up.', () => {
     cy.visit('/kontakt');
-    cy.findByLabelText('Dit navn').type('John Doe');
-    cy.findByLabelText('Din e-mailadresse').type('john@doe.com');
+    cy.findByLabelText('Dit navn').type('Tester Testersen');
+    cy.findByLabelText('Din e-mailadresse').type(
+      'testuser@folkebibliotekernescms.dk',
+    );
     cy.findByLabelText('Kategori').select(1);
     cy.findByLabelText('Emne').type('Test');
     cy.findByLabelText('Besked').type('Lorem ipsum');
@@ -53,12 +57,14 @@ describe('Webforms', () => {
 
   it('Check that the honeypot field is working by filling in hidden honeypot field.', () => {
     cy.visit('/kontakt');
-    cy.findByLabelText('Dit navn').type('John Doe');
-    cy.findByLabelText('Din e-mailadresse').type('john@doe.com');
+    cy.findByLabelText('Dit navn').type('Tester Testersen');
+    cy.findByLabelText('Din e-mailadresse').type(
+      'testuser@folkebibliotekernescms.dk',
+    );
     cy.findByLabelText('Kategori').select(1);
     cy.findByLabelText('Emne').type('Test');
     cy.findByLabelText('Besked').type('Lorem ipsum');
-    cy.findByLabelText('Leave this field blank').type('John Doe', {
+    cy.findByLabelText('Leave this field blank').type('Tester Testersen', {
       force: true,
     });
     // We bypass the linting here, as we need to force waiting as we need to
@@ -73,7 +79,7 @@ describe('Webforms', () => {
 
   it('Check that EVAC email validation rejects invalid email addresses.', () => {
     cy.visit('/kontakt');
-    cy.findByLabelText('Dit navn').type('John Doe');
+    cy.findByLabelText('Dit navn').type('Tester Testersen');
     // Test with an obviously invalid email that should fail EVAC validation
     cy.findByLabelText('Din e-mailadresse').type(
       'invalid.email@nonexistent-domain.invalid',

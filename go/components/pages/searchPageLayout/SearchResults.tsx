@@ -40,7 +40,7 @@ const SearchResults = ({ works }: SearchResultProps) => {
           ? resolveUrl({
               routeParams: { work: "work", wid: work.workId },
               queryParams: {
-                type: manifestation.materialTypes[0].materialTypeGeneral.code,
+                type: manifestation.materialTypes[0].materialTypeSpecific.code,
               },
             })
           : ""

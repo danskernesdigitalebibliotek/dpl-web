@@ -26,17 +26,29 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             display: "lydbøger",
             code: "AUDIO_BOOKS",
           },
+          materialTypeSpecific: {
+            code: "AUDIO_BOOK_ONLINE",
+            display: "lydbog (online)",
+          },
         },
         {
           materialTypeGeneral: {
             display: "e-bøger",
             code: "EBOOKS",
           },
+          materialTypeSpecific: {
+            code: "EBOOK",
+            display: "e-bog",
+          },
         },
         {
           materialTypeGeneral: {
             display: "bøger",
             code: "BOOKS",
+          },
+          materialTypeSpecific: {
+            code: "BOOK",
+            display: "bog",
           },
         },
       ],
@@ -54,6 +66,10 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
                 materialTypeGeneral: {
                   code: "BOOKS",
                   display: "bøger",
+                },
+                materialTypeSpecific: {
+                  code: "BOOK",
+                  display: "bog",
                 },
               },
             ],
@@ -107,7 +123,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               main: [
                 {
                   display: "dansk",
-                  isoCode: "dan",
+                  iso639Set1: "da",
                 },
               ],
             },
@@ -203,6 +219,10 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
                   code: "AUDIO_BOOKS",
                   display: "lydbøger",
                 },
+                materialTypeSpecific: {
+                  code: "AUDIO_BOOK_ONLINE",
+                  display: "lydbog (online)",
+                },
               },
             ],
             pid: "870970-basis:53322743",
@@ -267,7 +287,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               main: [
                 {
                   display: "dansk",
-                  isoCode: "dan",
+                  iso639Set1: "da",
                 },
               ],
             },
@@ -337,6 +357,10 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
                   code: "EBOOKS",
                   display: "e-bøger",
                 },
+                materialTypeSpecific: {
+                  code: "EBOOK",
+                  display: "e-bog",
+                },
               },
             ],
             pid: "870970-basis:52380235",
@@ -401,7 +425,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               main: [
                 {
                   display: "dansk",
-                  isoCode: "dan",
+                  iso639Set1: "da",
                 },
               ],
             },
@@ -466,6 +490,10 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
                 code: "BOOKS",
                 display: "bøger",
               },
+              materialTypeSpecific: {
+                code: "BOOK",
+                display: "bog",
+              },
             },
           ],
           pid: "870970-basis:52398517",
@@ -518,7 +546,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             main: [
               {
                 display: "dansk",
-                isoCode: "dan",
+                iso639Set1: "da",
               },
             ],
           },

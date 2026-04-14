@@ -8,7 +8,7 @@ import { ButtonSkeleton } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
-import { SlideSelectSkeleton } from "@/components/shared/slideSelect/SlideSelect"
+import { MaterialTypeSelectSkeleton } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
 import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
@@ -60,7 +60,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
       if (manifestation) {
         const url = resolveUrl({
           routeParams: { work: "work", wid: work.workId },
-          queryParams: { type: manifestation.materialTypes[0].materialTypeGeneral.code },
+          queryParams: { type: manifestation.materialTypes[0].materialTypeSpecific.code },
         })
         router.replace(url, { scroll: false })
       }
@@ -69,7 +69,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
     // Filter out manifestations that don't match the search params material type
     const selectedManifestation = manifestations.find(manifestation => {
       return !!manifestation?.materialTypes.find(
-        materialType => materialType.materialTypeGeneral.code === searchParamsMaterialType
+        materialType => materialType.materialTypeSpecific.code === searchParamsMaterialType
       )
     }) as ManifestationWorkPageFragment
 
@@ -114,7 +114,7 @@ export const WorkPageSkeleton = () => {
           <CoverPictureSkeleton />
         </div>
         <div className="flex w-full justify-center pt-12">
-          <SlideSelectSkeleton />
+          <MaterialTypeSelectSkeleton />
         </div>
       </div>
       <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">

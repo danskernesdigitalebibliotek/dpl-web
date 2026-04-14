@@ -14,7 +14,7 @@ export default {
           main: [
             {
               display: "engelsk",
-              isoCode: "eng"
+              iso639Set1: "en"
             }
           ],
           notes: []
@@ -120,7 +120,7 @@ export default {
           main: [
             {
               display: "engelsk",
-              isoCode: "eng"
+              iso639Set1: "en"
             }
           ],
           notes: []
@@ -215,7 +215,7 @@ export default {
           main: [
             {
               display: "engelsk",
-              isoCode: "eng"
+              iso639Set1: "en"
             }
           ],
           notes: []
@@ -310,7 +310,7 @@ export default {
           main: [
             {
               display: "engelsk",
-              isoCode: "eng"
+              iso639Set1: "en"
             }
           ],
           notes: []

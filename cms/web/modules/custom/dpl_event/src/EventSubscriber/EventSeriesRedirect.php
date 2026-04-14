@@ -37,12 +37,13 @@ class EventSeriesRedirect implements EventSubscriberInterface {
   public static function getSubscribedEvents(): array {
     return [
       KernelEvents::REQUEST => [
-        ['checkEventSeriesRedirect'],
+        ['eventSeriesRedirect'],
       ],
-      // Only target users that end up on an unpublished eventinstance page,
+      // Only target users that end up on an unpublished event page,
       // without being allowed to see it.
       KernelEvents::EXCEPTION => [
-        ['checkEventInstanceRedirect'],
+        ['eventInstanceExceptionRedirect'],
+        ['eventSeriesExceptionRedirect'],
       ],
     ];
   }
@@ -58,7 +59,7 @@ class EventSeriesRedirect implements EventSubscriberInterface {
    * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The request event.
    */
-  public function checkEventSeriesRedirect(RequestEvent $event): void {
+  public function eventSeriesRedirect(RequestEvent $event): void {
     $request = $event->getRequest();
     $route_name = $request->attributes->get('_route');
     $event_series = $request->attributes->get('eventseries');
@@ -90,7 +91,7 @@ class EventSeriesRedirect implements EventSubscriberInterface {
    * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The response event.
    */
-  public function checkEventInstanceRedirect(RequestEvent $event): void {
+  public function eventInstanceExceptionRedirect(RequestEvent $event): void {
     $request = $event->getRequest();
 
     if ($request->attributes->get('_route') !== 'entity.eventinstance.canonical') {
@@ -108,6 +109,31 @@ class EventSeriesRedirect implements EventSubscriberInterface {
     $event_series = $event_instance->getEventSeries();
 
     $response = new RedirectResponse($event_series->toUrl()->toString());
+    $event->setResponse($response);
+  }
+
+  /**
+   * Redirect unpublished eventseries to event overview.
+   *
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+   *   The response event.
+   */
+  public function eventSeriesExceptionRedirect(RequestEvent $event): void {
+    $request = $event->getRequest();
+
+    if ($request->attributes->get('_route') !== 'entity.eventseries.canonical') {
+      return;
+    }
+
+    $event_series = $request->attributes->get('eventseries');
+
+    if (!($event_series instanceof EventSeries) || $event_series->isPublished()) {
+      return;
+    }
+
+    // At this stage, we know we're on an unpublished eventseries.
+    // Redirect to the event overview page.
+    $response = new RedirectResponse('/events');
     $event->setResponse($response);
   }
 

@@ -66,29 +66,6 @@ final class UnpublishSchedule {
     }
 
     $event->setUnpublished()->save();
-
-    // Detect if site wishes series to be unpublished when all instances are
-    // unpublished.
-    $seriesUnpublishingEnabled = (boolean) $config->get('unpublish_series_enable');
-
-    if (!$seriesUnpublishingEnabled) {
-      return;
-    }
-
-    // Count the number of published eventinstances, and if it is 0, unpublish
-    // the series.
-    $eventSeries = $event->getEventSeries();
-
-    $publishedEventInstanceIds = ($this->eventInstanceStorage->getQuery())
-      ->accessCheck(FALSE)
-      ->condition('eventseries_id', $eventSeries->id())
-      ->condition('status', 1)
-      ->count()
-      ->execute();
-
-    if (empty($publishedEventInstanceIds)) {
-      $eventSeries->setUnpublished()->save();
-    }
   }
 
   /**

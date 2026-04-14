@@ -34,7 +34,8 @@ content:
     type: dpl_fbi_work_id_search_for_material
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      use_go_vip_profile: '1'
     third_party_settings: {  }
 hidden:
   created: true

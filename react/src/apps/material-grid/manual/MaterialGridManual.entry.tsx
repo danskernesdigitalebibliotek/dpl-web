@@ -15,8 +15,7 @@ interface MaterialGridManualEntryConfigProps {
 }
 
 export interface MaterialGridManualEntryProps
-  extends GlobalEntryTextProps,
-    MaterialGridManualEntryConfigProps {
+  extends GlobalEntryTextProps, MaterialGridManualEntryConfigProps {
   materials: string;
   title?: string;
   description?: string;

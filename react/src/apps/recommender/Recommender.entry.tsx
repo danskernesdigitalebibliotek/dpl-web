@@ -18,9 +18,7 @@ export interface RecommenderProps {
 }
 
 export interface ReccommenderPropsInterface
-  extends GlobalUrlEntryPropsInterface,
-    GlobalEntryTextProps,
-    RecommenderProps {
+  extends GlobalUrlEntryPropsInterface, GlobalEntryTextProps, RecommenderProps {
   q?: string;
   pageSizeDesktop?: number;
   pageSizeMobile?: number;

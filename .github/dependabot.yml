@@ -13,7 +13,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: '04:00'
+      time: "04:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -39,7 +39,7 @@ updates:
     ignore:
       # Never attempt automated updates to major Drupal releases.
       - dependency-name: "drupal/core*"
-        update-types: [ "version-update:semver-major" ]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
@@ -98,7 +98,7 @@ updates:
         versions: [">=8.56.0"]
       # Tests fail when running Cypress 15 using task cy:cypress:local.
       - dependency-name: "cypress"
-        versions: [ ">=15" ]
+        versions: [">=15"]
     schedule:
       interval: weekly
       day: monday
@@ -117,7 +117,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: '04:00'
+      time: "04:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -150,6 +150,8 @@ updates:
         versions: [">=10"]
       - dependency-name: "@storybook/*"
         versions: [">=10"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # Go (Next.js) - npm dependencies
   - package-ecosystem: npm
@@ -234,6 +236,10 @@ updates:
         versions: ["^7.13.2"]
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # React - npm dependencies
   - package-ecosystem: npm
@@ -315,4 +321,12 @@ updates:
       - dependency-name: "eslint-plugin-cypress"
         versions: [">=6.0.0"]
       - dependency-name: "eslint-plugin-react-hooks"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "orval"
+        versions: ["^7.2.0"]
+      - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]

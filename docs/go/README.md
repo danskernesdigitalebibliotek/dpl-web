@@ -355,4 +355,4 @@ Quality assurance (QA) is a critical aspect of our development process, ensuring
 [axe]: https://playwright.dev/docs/accessibility-testing
 [playwright]: https://playwright.dev/
 [cypress]: https://www.cypress.io/
-[dpl-cms]: https://github.com/danskernesdigitalebibliotek/dpl-cms
+[dpl-cms]: https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/cms

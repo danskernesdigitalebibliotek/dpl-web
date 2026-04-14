@@ -87,6 +87,8 @@ export type Audience = {
   __typename?: "Audience";
   /** Range of numbers with either beginning of range or end of range or both e.g. 6-10, 1980-1999 */
   ages: Array<Range>;
+  /** Appropriate audience for this manifestation */
+  audienceGeneral: Array<AudienceGeneral>;
   /** Is this material for children or adults */
   childrenOrAdults: Array<ChildOrAdult>;
   /** Appropriate audience for this manifestation */
@@ -110,6 +112,30 @@ export type Audience = {
   /** Is this material for use in schools (folkeskole/ungdomsuddannelse) or is this material for use in schools by the teacher (folkeskole only) */
   schoolUse: Array<SchoolUse>;
 };
+
+/** A single general audience object containing a subject word and a possible associated language */
+export type AudienceGeneral = {
+  __typename?: "AudienceGeneral";
+  /** Appropriate audience for this manifestation */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /** The associated language of the audience term, if applicable */
+  language?: Maybe<Language>;
+};
+
+export enum CsHoldingsStatusEnum {
+  /** Item is discarded by the branch */
+  Discarded = "DISCARDED",
+  /** Item is lost by the branch and not available */
+  Lost = "LOST",
+  /** Item is not for loan by the branch */
+  Notforloan = "NOTFORLOAN",
+  /** Item is on loan and not available */
+  Onloan = "ONLOAN",
+  /** Item is on order by the branch */
+  Onorder = "ONORDER",
+  /** Item is physically available at the branch */
+  Onshelf = "ONSHELF"
+}
 
 export type CatalogueCodes = {
   __typename?: "CatalogueCodes";
@@ -238,6 +264,8 @@ export type ComplexSearchFiltersInput = {
   branch?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** BranchId.  */
   branchId?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  /** The circulationrule of the item */
+  circulationRule?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Overall location in library (eg. Voksne). */
   department?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Date of first accession */
@@ -249,9 +277,11 @@ export type ComplexSearchFiltersInput = {
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Onloan or OnShelf. */
-  status?: InputMaybe<Array<HoldingsStatusEnum>>;
+  status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
   sublocation?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  /** Boolean to denote whether to include or exclude online holdingsitems */
+  useOnlineHoldings?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
 export type ComplexSearchIndex = {
@@ -685,6 +715,14 @@ export enum GeneralMaterialTypeCodeEnum {
   TvSeries = "TV_SERIES"
 }
 
+export type GenreForm = {
+  __typename?: "GenreForm";
+  /** The genre/form term */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /** Language of the genre/form term, if applicable */
+  language?: Maybe<Language>;
+};
+
 export enum HoldingsStatusEnum {
   /** Holding is on loan */
   Onloan = "ONLOAN",
@@ -923,6 +961,8 @@ export type Manifestation = {
   fictionNonfiction?: Maybe<FictionNonfiction>;
   /** The genre, (literary) form, type etc. of this manifestation */
   genreAndForm: Array<Scalars["String"]["output"]>;
+  /** The genre and (literary) form of this manifestation */
+  genreForm: Array<GenreForm>;
   /** Details about the host publications of this manifestation */
   hostPublication?: Maybe<HostPublication>;
   /** Identifiers for this manifestation - often used for search indexes */
@@ -941,6 +981,8 @@ export type Manifestation = {
   notes: Array<Note>;
   /** The work that this manifestation is part of */
   ownerWork: Work;
+  /** Code for type of periodical */
+  periodicalType?: Maybe<PeriodicalType>;
   /** Physical description  of this manifestation like extent (pages/minutes), illustrations etc. */
   physicalDescription?: Maybe<PhysicalUnitDescription>;
   /** Unique identification of the manifestation e.g 870970-basis:54029519 */
@@ -963,6 +1005,8 @@ export type Manifestation = {
   sheetMusicCategories?: Maybe<SheetMusicCategory>;
   /** Information about on which shelf in the library this manifestation can be found */
   shelfmark?: Maybe<Shelfmark>;
+  /** The records type of sound recording - excluding music recordings and its material */
+  soundRecording?: Maybe<SoundRecording>;
   /** The source of the manifestation, e.g. own library catalogue (Bibliotekskatalog) or online source e.g. Filmstriben, Ebook Central, eReolen Global etc. */
   source: Array<Scalars["String"]["output"]>;
   /** Subjects for this manifestation */
@@ -1278,6 +1322,14 @@ export type Pegi = {
   display?: Maybe<Scalars["String"]["output"]>;
   /** Minimum age to play the game. PEGI rating */
   minimumAge?: Maybe<Scalars["Int"]["output"]>;
+};
+
+export type PeriodicalType = {
+  __typename?: "PeriodicalType";
+  /** A code for the type of periodical */
+  code?: Maybe<Scalars["String"]["output"]>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type Person = CreatorInterface &
@@ -1804,10 +1856,14 @@ export type SheetMusicCategory = {
 
 export type Shelfmark = {
   __typename?: "Shelfmark";
+  /** The creator of the manifestation that the material can be located under on the shelf */
+  creator?: Maybe<Scalars["String"]["output"]>;
   /** A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935 */
   postfix?: Maybe<Scalars["String"]["output"]>;
   /** The actual shelfmark - e.g. information about on which shelf in the library this manifestation can be found, e.g. 99.4 */
   shelfmark: Scalars["String"]["output"];
+  /** Code for comics, children's picture books and drama */
+  specialMaterialGroup?: Maybe<SpecialMaterialGroup>;
 };
 
 export type SortInput = {
@@ -1819,6 +1875,22 @@ export enum SortOrderEnum {
   Asc = "ASC",
   Desc = "DESC"
 }
+
+export type SoundRecording = {
+  __typename?: "SoundRecording";
+  /** A code for the type of sound recording */
+  code?: Maybe<Scalars["String"]["output"]>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type SpecialMaterialGroup = {
+  __typename?: "SpecialMaterialGroup";
+  /** A code for the type of the special material group */
+  code?: Maybe<Scalars["String"]["output"]>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars["String"]["output"]>;
+};
 
 export type SpecificMaterialType = {
   __typename?: "SpecificMaterialType";
@@ -2426,7 +2498,7 @@ export type GetSmallWorkQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -2608,7 +2680,7 @@ export type GetSmallWorkQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -2790,7 +2862,7 @@ export type GetSmallWorkQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -2882,7 +2954,7 @@ export type ManifestationBasicDetailsFragment = {
     main?: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }> | null;
   } | null;
 };
@@ -2931,7 +3003,7 @@ export type GetManifestationViaMaterialByFaustQuery = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
   } | null;
@@ -2987,7 +3059,7 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
         };
@@ -3021,7 +3093,7 @@ export type GetMaterialQuery = {
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }>;
     subjects: {
       __typename?: "SubjectContainer";
@@ -3229,7 +3301,7 @@ export type GetMaterialQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -3411,7 +3483,7 @@ export type GetMaterialQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -3593,7 +3665,7 @@ export type GetMaterialQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -3672,7 +3744,7 @@ export type GetMaterialGloballyQuery = {
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }>;
     subjects: {
       __typename?: "SubjectContainer";
@@ -3880,7 +3952,7 @@ export type GetMaterialGloballyQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -4062,7 +4134,7 @@ export type GetMaterialGloballyQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -4244,7 +4316,7 @@ export type GetMaterialGloballyQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -4576,7 +4648,7 @@ export type RecommendFromFaustQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
             physicalDescription?: {
@@ -4761,7 +4833,7 @@ export type RecommendFromFaustQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
             physicalDescription?: {
@@ -4946,7 +5018,7 @@ export type RecommendFromFaustQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
             physicalDescription?: {
@@ -4998,6 +5070,32 @@ export type RecommendFromFaustQuery = {
           };
         };
       };
+    }>;
+  };
+};
+
+export type SearchFacetQueryVariables = Exact<{
+  q: SearchQueryInput;
+  facets: Array<FacetFieldEnum> | FacetFieldEnum;
+  facetLimit: Scalars["Int"]["input"];
+  filters?: InputMaybe<SearchFiltersInput>;
+}>;
+
+export type SearchFacetQuery = {
+  __typename?: "Query";
+  search: {
+    __typename?: "SearchResponse";
+    facets: Array<{
+      __typename?: "FacetResult";
+      name: string;
+      type: FacetFieldEnum;
+      values: Array<{
+        __typename?: "FacetValue";
+        key: string;
+        term: string;
+        score?: number | null;
+        traceId: string;
+      }>;
     }>;
   };
 };
@@ -5182,7 +5280,7 @@ export type SearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -5364,7 +5462,7 @@ export type SearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -5546,7 +5644,7 @@ export type SearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -5831,7 +5929,7 @@ export type ComplexSearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -6013,7 +6111,7 @@ export type ComplexSearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -6195,7 +6293,7 @@ export type ComplexSearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -6282,7 +6380,7 @@ export type SuggestionsFromQueryStringQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
           };
@@ -6349,32 +6447,6 @@ export type GetBestRepresentationPidByIsbnQuery = {
         __typename?: "Manifestations";
         bestRepresentation: { __typename?: "Manifestation"; pid: string };
       };
-    }>;
-  };
-};
-
-export type SearchFacetQueryVariables = Exact<{
-  q: SearchQueryInput;
-  facets: Array<FacetFieldEnum> | FacetFieldEnum;
-  facetLimit: Scalars["Int"]["input"];
-  filters?: InputMaybe<SearchFiltersInput>;
-}>;
-
-export type SearchFacetQuery = {
-  __typename?: "Query";
-  search: {
-    __typename?: "SearchResponse";
-    facets: Array<{
-      __typename?: "FacetResult";
-      name: string;
-      type: FacetFieldEnum;
-      values: Array<{
-        __typename?: "FacetValue";
-        key: string;
-        term: string;
-        score?: number | null;
-        traceId: string;
-      }>;
     }>;
   };
 };
@@ -6578,7 +6650,7 @@ export type ManifestationsSimpleFragment = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
     physicalDescription?: {
@@ -6754,7 +6826,7 @@ export type ManifestationsSimpleFragment = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
     physicalDescription?: {
@@ -6930,7 +7002,7 @@ export type ManifestationsSimpleFragment = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
     physicalDescription?: {
@@ -7139,7 +7211,7 @@ export type ManifestationsSimpleFieldsFragment = {
     main?: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }> | null;
   } | null;
   physicalDescription?: {
@@ -7449,7 +7521,7 @@ export type WorkSmallFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -7631,7 +7703,7 @@ export type WorkSmallFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -7813,7 +7885,7 @@ export type WorkSmallFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -7885,7 +7957,7 @@ export type WorkMediumFragment = {
   mainLanguages: Array<{
     __typename?: "Language";
     display: string;
-    isoCode: string;
+    iso639Set1: string;
   }>;
   subjects: {
     __typename?: "SubjectContainer";
@@ -8093,7 +8165,7 @@ export type WorkMediumFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -8275,7 +8347,7 @@ export type WorkMediumFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -8457,7 +8529,7 @@ export type WorkMediumFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -8517,7 +8589,7 @@ export type WithLanguagesFragment = {
     main?: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }> | null;
   } | null;
 };
@@ -8527,7 +8599,7 @@ export const WithLanguagesFragmentDoc = `
   languages {
     main {
       display
-      isoCode
+      iso639Set1
     }
   }
 }
@@ -8884,7 +8956,7 @@ export const WorkMediumFragmentDoc = `
   }
   mainLanguages {
     display
-    isoCode
+    iso639Set1
   }
   subjects {
     all {
@@ -9239,6 +9311,37 @@ export const useRecommendFromFaustQuery = <
   );
 };
 
+export const SearchFacetDocument = `
+    query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput) {
+  search(q: $q, filters: $filters) {
+    facets(facets: $facets) {
+      name
+      type
+      values(limit: $facetLimit) {
+        key
+        term
+        score
+        traceId
+      }
+    }
+  }
+}
+    `;
+
+export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
+  variables: SearchFacetQueryVariables,
+  options?: UseQueryOptions<SearchFacetQuery, TError, TData>
+) => {
+  return useQuery<SearchFacetQuery, TError, TData>(
+    ["searchFacet", variables],
+    fetcher<SearchFacetQuery, SearchFacetQueryVariables>(
+      SearchFacetDocument,
+      variables
+    ),
+    options
+  );
+};
+
 export const SearchWithPaginationDocument = `
     query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
@@ -9452,37 +9555,6 @@ export const useGetBestRepresentationPidByIsbnQuery = <
   );
 };
 
-export const SearchFacetDocument = `
-    query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput) {
-  search(q: $q, filters: $filters) {
-    facets(facets: $facets) {
-      name
-      type
-      values(limit: $facetLimit) {
-        key
-        term
-        score
-        traceId
-      }
-    }
-  }
-}
-    `;
-
-export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
-  variables: SearchFacetQueryVariables,
-  options?: UseQueryOptions<SearchFacetQuery, TError, TData>
-) => {
-  return useQuery<SearchFacetQuery, TError, TData>(
-    ["searchFacet", variables],
-    fetcher<SearchFacetQuery, SearchFacetQueryVariables>(
-      SearchFacetDocument,
-      variables
-    ),
-    options
-  );
-};
-
 export const IntelligentFacetsDocument = `
     query intelligentFacets($q: SearchQueryInput!, $facetsLimit: Int!, $valuesLimit: Int!, $filters: SearchFiltersInput!) {
   search(q: $q, filters: $filters) {
@@ -9600,6 +9672,7 @@ export const operationNames = {
     getInfomedia: "getInfomedia" as const,
     getReviewManifestations: "getReviewManifestations" as const,
     recommendFromFaust: "recommendFromFaust" as const,
+    searchFacet: "searchFacet" as const,
     searchWithPagination: "searchWithPagination" as const,
     complexSearchWithPaginationWorkAccess:
       "complexSearchWithPaginationWorkAccess" as const,
@@ -9607,7 +9680,6 @@ export const operationNames = {
     suggestionsFromQueryString: "suggestionsFromQueryString" as const,
     GetCoversByPids: "GetCoversByPids" as const,
     GetBestRepresentationPidByIsbn: "GetBestRepresentationPidByIsbn" as const,
-    searchFacet: "searchFacet" as const,
     intelligentFacets: "intelligentFacets" as const,
     WorkRecommendations: "WorkRecommendations" as const
   },

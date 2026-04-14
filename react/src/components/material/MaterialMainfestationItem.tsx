@@ -22,7 +22,7 @@ import {
   getManifestationEdition,
   getManifestationGenreAndForm,
   getManifestationIsbn,
-  getManifestationLanguageIsoCode,
+  getManifestationLanguageCode,
   getManifestationLanguages,
   getManifestationMaterialTypes,
   getManifestationNotes,
@@ -59,7 +59,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
   const faustId = convertPostIdToFaustId(pid);
   const author = creatorsToString(flattenCreators(creators), t);
 
-  const languageIsoCode = getManifestationLanguageIsoCode([manifestation]);
+  const languageCode = getManifestationLanguageCode([manifestation]);
 
   const detailsListData: ListData = [
     {
@@ -149,7 +149,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
       </div>
       <div className="material-manifestation-item__text">
         <h3
-          lang={languageIsoCode}
+          lang={languageCode}
           id={mainfestationTitleId}
           className="material-manifestation-item__title text-header-h4"
         >

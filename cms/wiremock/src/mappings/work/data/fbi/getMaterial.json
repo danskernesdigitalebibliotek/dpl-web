@@ -132,7 +132,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "da"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -226,7 +226,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "da"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -349,7 +349,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "da"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -444,7 +444,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "da"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -544,7 +544,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "da"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -644,7 +644,7 @@
               "main": [
                 {
                   "display": "dansk",
-                  "isoCode": "da"
+                  "iso639Set1": "da"
                 }
               ],
               "notes": []
@@ -740,7 +740,7 @@
             "main": [
               {
                 "display": "dansk",
-                "isoCode": "da"
+                "iso639Set1": "da"
               }
             ],
             "notes": []
@@ -863,7 +863,7 @@
             "main": [
               {
                 "display": "dansk",
-                "isoCode": "da"
+                "iso639Set1": "da"
               }
             ],
             "notes": []
@@ -994,7 +994,7 @@
       "mainLanguages": [
         {
           "display": "dansk",
-          "isoCode": "da"
+          "iso639Set1": "da"
         }
       ],
       "subjects": {

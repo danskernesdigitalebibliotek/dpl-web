@@ -76,7 +76,7 @@ look something like this:
 
 You first need to make sure to have a campaign set up in your locally running
 dpl-cms (
-[run this repo locally](https://github.com/danskernesdigitalebibliotek/dpl-cms))
+[run this repo locally](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/cms))
 Then, in order to see campaigns locally in dpl-react in development mode, you
 will most likely need a browser plugin such as Google Chrome's
 ["Allow CORS: Access-Control-Allow-Origin"](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en)

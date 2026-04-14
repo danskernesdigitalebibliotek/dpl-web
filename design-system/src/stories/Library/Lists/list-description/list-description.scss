@@ -98,8 +98,8 @@ dl.list-description {
   // Reduce margin-bottom if the next item’s key contains a visually hidden
   // element (e.g., hidden address label)
   .list-description__item:has(
-      + .list-description__item .list-description__key .hide-visually
-    ) {
+    + .list-description__item .list-description__key .hide-visually
+  ) {
     margin-bottom: 8px;
   }
 }
