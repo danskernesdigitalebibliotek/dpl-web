@@ -282,6 +282,7 @@ class MatchResource extends ResourceBase {
       ->condition('type', 'campaign')
       ->condition('status', 1)
       ->condition('field_campaign_rules_logic', $rules_logic)
+      ->sort('field_campaign_weight', 'DESC')
       ->execute();
 
     if (!is_array($entity_ids)) {
