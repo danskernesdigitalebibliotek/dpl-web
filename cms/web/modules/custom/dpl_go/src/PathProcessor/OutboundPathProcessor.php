@@ -51,6 +51,7 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
     $pathParts = explode('/', $path);
 
     $baseUrl = NULL;
+    $isGoNode = NULL;
 
     // Tell caching that this link depends on wether we're on the go site or
     // using absolute urls, or not.
@@ -85,6 +86,11 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
     if ($baseUrl) {
       $options['absolute'] = TRUE;
       $options['base_url'] = $baseUrl;
+    }
+
+    // Track CMS-to-Go navigation via Mapp URL parameter.
+    if ($isGoNode && $baseUrl && !$this->goSite->isGoSite()) {
+      $options['query']['u_cms_t_go'] = 'true';
     }
 
     return $path;
