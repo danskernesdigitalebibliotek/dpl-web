@@ -27,6 +27,8 @@ env:
   GH_TOKEN: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
   OWNER: ${{ github.repository_owner }}
   REPO: ${{ github.event.repository.name }}
+  DOCKER_REGISTRY: ghcr.io
+  GO_IMAGE_NAME: '${{ github.repository }}-go'
 jobs:
   BranchNameLength:
     name: Lagoon / Check branch name length
@@ -41,12 +43,68 @@ jobs:
             exit 1
           fi
 
+  BuildGoBaseImage:
+    name: Lagoon / Build Go base image
+    needs: [BranchNameLength]
+    # Narrow the main workflow conditions to only run when a PR is opened or updated, or when a push is made to the special branches.
+    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: "Re-use cached Node.js modules"
+        uses: actions/cache@v5
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: "Install Node.js modules"
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: "go/.nvmrc"
+          cache: "yarn"
+          cache-dependency-path: "go/yarn.lock"
+
+      - name: "Install Go dependencies"
+        run: "yarn --cwd=go install --frozen-lockfile"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_REGISTRY }}/${{ env.GO_IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          file: "go/lagoon/base.dockerfile"
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
   # Creating the deployment that Lagoon will look for, and add status to.
   CreateDeployment:
     name: Lagoon / Create deployment
     runs-on: ubuntu-latest
-    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
-    needs: [BranchNameLength]
+    needs: [BuildGoBaseImage]
     steps:
       - env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -70,7 +128,7 @@ jobs:
     name: Lagoon / Create BNF deployment
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'bnf:') && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
-    needs: [BranchNameLength]
+    needs: [BuildGoBaseImage]
     steps:
       - env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}

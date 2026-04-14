@@ -18,6 +18,7 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
         },
         libraryInfo: {
           name: "Test Library",
+          baseURL: "https://dpl-biblioteket.test",
         },
         mapp: {
           domain: "responder.wt-safetag.com",

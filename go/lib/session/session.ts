@@ -1,16 +1,18 @@
 import { add, isPast, sub } from "date-fns"
-import { IronSession, getIronSession } from "iron-session"
+import { IronSession, SessionOptions, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
 import { NextResponse, connection } from "next/server"
 
-import { getEnv, getServerEnv } from "../config/env"
+import { getEnv, getServerEnv } from "@/lib/config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
+
 import goConfig from "../config/goConfig"
 import { loadPatronServerSide } from "../helpers/fbs"
 import { isBuildingGoApp } from "../helpers/next-phase"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
-export const getSessionOptions = async () => {
+export const getSessionOptions = (): SessionOptions => {
   const sessionSecret = getServerEnv("GO_SESSION_SECRET")
 
   return {
@@ -290,9 +292,7 @@ export const destroySessionAndRedirectToFrontPage = async (session: IronSession<
 }
 
 export const redirectToFrontPageAndReloadSession = async () => {
-  const appUrl = new URL(getEnv("APP_URL"))
-
-  return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
+  return NextResponse.redirect(`${getBaseURL()}?reload-session=true`)
 }
 
 export const sessionHasPKCECodeVerifier = (session: IronSession<TSessionData>) => {

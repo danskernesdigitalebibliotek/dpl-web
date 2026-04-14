@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-import { getEnv } from "./lib/config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
+
 import goConfig from "./lib/config/goConfig"
 import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
@@ -50,7 +51,7 @@ export async function proxy(request: NextRequest) {
     // If the user is anonymous, we will redirect to the front page.
     // @todo Write a test in the middleware test suite to ensure this works.
     if (userIsAnonymous(session)) {
-      return NextResponse.redirect(getEnv("APP_URL"))
+      return NextResponse.redirect(getBaseURL())
     }
   }
 

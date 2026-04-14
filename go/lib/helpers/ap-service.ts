@@ -1,4 +1,5 @@
-import { getEnv } from "../config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
+
 import goConfig from "../config/goConfig"
 
 const serviceSettings = goConfig("services.ap-services")
@@ -18,4 +19,4 @@ export const getApServiceUrl = async (serviceType: TServiceType) => {
 }
 
 export const getAPServiceFetcherBaseUrl = (serviceType: TServiceType) =>
-  `${getEnv("APP_URL")}/${goConfig("routes.adgangsplatformen-service-proxy")}/${serviceType}`
+  `${getBaseURL()}/${goConfig("routes.adgangsplatformen-service-proxy")}/${serviceType}`

@@ -8,20 +8,20 @@ beforeEach(() => {
   vi.unstubAllEnvs()
 })
 
-test("That the env variable APP_URL defines the current app url", async () => {
-  vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://hellboy.the-movie.com")
-  const appUrl = getEnv("APP_URL")
+test("That the env variable DPL_GO_BASE_URL defines the current app url", async () => {
+  vi.stubEnv("DPL_GO_BASE_URL", "https://hellboy.the-movie.com")
+  const appUrl = getEnv("DPL_GO_BASE_URL")
 
   expect(appUrl).toBe("https://hellboy.the-movie.com")
 })
 
 // test that we validate incorrect urls
 // runs silently to avoid expected errors in the console
-testSilently("That the env variable APP_URL validates the url", async () => {
+testSilently("That the env variable DPL_GO_BASE_URL validates the url", async () => {
   // set the env variable to a non-url value
-  vi.stubEnv("NEXT_PUBLIC_APP_URL", "not-a-url")
+  vi.stubEnv("DPL_GO_BASE_URL", "not-a-url")
 
-  expect(() => getEnv("APP_URL")).toThrow()
+  expect(() => getEnv("DPL_GO_BASE_URL")).toThrow()
 })
 
 // test that we validate incorrect env length

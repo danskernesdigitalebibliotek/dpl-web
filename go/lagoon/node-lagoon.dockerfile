@@ -3,25 +3,19 @@
 # Used by Lagoon environments (PR, demo and playground).
 # Based on: https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM uselagoon/node-24-builder:latest AS base
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-COPY package.json yarn.lock* ./
-RUN yarn --frozen-lockfile
-
-# Build the application
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+# For pull requests, LAGOON_ENVIRONMENT will match our Docker image tags `pr-123`.
+# For branch environments (playground, demo), etc. it should match the branch
+# name itself, which should also match our Docker image tags.
+ARG LAGOON_ENVIRONMENT
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-web-go:$LAGOON_ENVIRONMENT AS builder
+WORKDIR /app/go
 
 # Lagoon injects these automatically during build.
 ARG LAGOON_ENVIRONMENT
 ARG LAGOON_PROJECT
+ARG LAGOON_ROUTE
+ARG LAGOON_ROUTES
 
 ARG DRUPAL_REVALIDATE_SECRET
 ARG GO_SESSION_SECRET
@@ -29,23 +23,26 @@ ARG NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD
 ARG UNLILOGIN_PUBHUB_RETAILER_ID=""
 ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE=""
 
+ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN BASE_DOMAIN="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk" && \
-    GO_CMS_DOMAIN="varnish.${BASE_DOMAIN}" && \
-    export NEXT_PUBLIC_APP_URL="https://node.${BASE_DOMAIN}" && \
-    export NEXT_PUBLIC_DPL_CMS_HOSTNAME="${GO_CMS_DOMAIN}" && \
-    export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
-    yarn run build
+RUN node ./scripts/prepare-docker-env-vars.mjs && \
+    yarn run build:stage2
 
 FROM uselagoon/node-24:latest AS runner
 # start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.
 RUN apk add --no-cache bash
-WORKDIR /app
+
+# Lagoon injects these automatically during build.
+ARG LAGOON_ENVIRONMENT
+ARG LAGOON_PROJECT
+ARG LAGOON_ROUTE
+ARG LAGOON_ROUTES
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=builder --chown=10000:10000 /app .
+COPY --from=builder --chown=10000:10000 /app /app
+WORKDIR /app/go
 
-CMD ["/app/lagoon/start.sh"]
+CMD ["lagoon/start.sh"]
