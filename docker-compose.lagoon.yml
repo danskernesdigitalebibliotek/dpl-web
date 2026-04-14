@@ -78,7 +78,7 @@ services:
 
   go:
     build:
-      context: cms
+      context: go
       dockerfile: lagoon/node.dockerfile
     labels:
       lagoon.type: node
