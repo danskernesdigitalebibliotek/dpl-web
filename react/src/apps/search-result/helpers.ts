@@ -1,3 +1,11 @@
+const FACET_NAME_TO_FILTER_FIELD: Record<string, string> = {
+  lix: "lixRange",
+  let: "letRange"
+};
+
+export const resolveFilterFieldName = (facetName: string): string =>
+  FACET_NAME_TO_FILTER_FIELD[facetName] ?? facetName;
+
 // Type for facet state stored in URL
 export type FacetState = {
   facetName: string;
