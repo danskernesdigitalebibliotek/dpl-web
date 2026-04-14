@@ -4,7 +4,9 @@ ARG LAGOON_ENVIRONMENT
 FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${LAGOON_ENVIRONMENT} AS builder
 
 # Lagoon injects these automatically during build.
-# LAGOON_ENVIRONMENT is declared before FROM for the image tag resolution.
+# LAGOON_ENVIRONMENT must be re-declared after FROM because pre-FROM ARGs
+# are only available in FROM instructions (the first declaration resolves the image tag).
+ARG LAGOON_ENVIRONMENT
 ARG LAGOON_PROJECT
 
 # Default CMS domain for non-PR environments.
