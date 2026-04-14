@@ -5,6 +5,7 @@ import { useFormVisibility } from "./hooks/use-form-visibility";
 import { useText } from "../../core/utils/text";
 import { useSearchFormState } from "./hooks/use-search-form-state";
 import { useCqlSearchUrl } from "./hooks/use-cql-search-url";
+import Link from "../../components/atoms/links/Link";
 import SearchResultHeader from "../../components/search-bar/search-result-header/SearchResultHeader";
 
 interface AdvancedSearchV2Props {
@@ -34,7 +35,14 @@ const AdvancedSearchV2: React.FC<AdvancedSearchV2Props> = ({ pageSize }) => {
 
   return (
     <div className="search">
-      <SearchResultHeader headerTitle={t("advancedSearchTitleText")} />
+      <div className="search__title-bar">
+        <SearchResultHeader headerTitle={t("advancedSearchTitleText")} />
+        {!showResults && customCqlUrl && (
+          <Link href={customCqlUrl} className="search__cql-link">
+            {t("advancedSearchV2ToCqlSearchButtonText")}
+          </Link>
+        )}
+      </div>
 
       {!showResults && (
         <AdvancedSearchForm
