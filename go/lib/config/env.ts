@@ -49,7 +49,7 @@ const EnvPublicSchema = z.object({
   TEST_MODE: z.coerce.boolean().default(false),
 })
 
-// Environment variables only available in Nodejs.
+// Environment variables only available in Node.js.
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
   DRUPAL_REVALIDATE_SECRET: z.string(),
