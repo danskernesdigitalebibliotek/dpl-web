@@ -1,0 +1,23 @@
+uuid: 5f95889f-3c8d-4c03-b43c-4f104e334106
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campaign_weight
+    - node.type.campaign
+  module:
+    - enum_field
+id: node.campaign.field_campaign_weight
+field_name: field_campaign_weight
+entity_type: node
+bundle: campaign
+label: Weight
+description: "If multiple campaigns matches a query, the one with the highest weight will be used. <br />If several matches have the same weight, we'll use alphabetical sorting.<br />Only one campaign will be shown."
+required: true
+translatable: false
+default_value:
+  -
+    value: '80'
+default_value_callback: ''
+settings: {  }
+field_type: enum_integer
