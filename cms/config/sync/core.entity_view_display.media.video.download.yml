@@ -1,0 +1,33 @@
+uuid: 390b3d55-3bf9-4854-8679-0171be15bfcd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.download
+    - field.field.media.video.field_media_oembed_video
+    - media.type.video
+  module:
+    - media
+id: media.video.download
+targetEntityType: media
+bundle: video
+mode: download
+content:
+  field_media_oembed_video:
+    type: oembed
+    label: visually_hidden
+    settings:
+      max_width: 0
+      max_height: 0
+      loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true
