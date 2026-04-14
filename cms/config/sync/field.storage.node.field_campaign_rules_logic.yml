@@ -13,10 +13,10 @@ settings:
   allowed_values:
     -
       value: AND
-      label: AND
+      label: 'Match all (AND)'
     -
       value: OR
-      label: OR
+      label: 'Match any (OR)'
   allowed_values_function: ''
 module: options
 locked: false

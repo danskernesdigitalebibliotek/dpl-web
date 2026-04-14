@@ -23,7 +23,7 @@ mode: default
 content:
   field_campaign_image:
     type: image
-    label: above
+    label: hidden
     settings:
       image_link: ''
       image_style: ''
@@ -34,45 +34,45 @@ content:
     region: content
   field_campaign_link:
     type: link
-    label: above
+    label: hidden
     settings:
-      trim_length: 80
+      trim_length: null
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
     weight: 1
     region: content
   field_campaign_rules:
     type: entity_reference_revisions_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   field_campaign_rules_logic:
     type: list_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_campaign_text:
     type: basic_string
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 2
     region: content
   field_campaign_weight:
     type: list_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   links:
     settings: {  }

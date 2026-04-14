@@ -1,10 +1,15 @@
 uuid: d2050f18-57d7-4791-ba90-a4e15399f0fb
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories: {  }
 id: campaign_rule
-label: 'Campaign Rule'
+label: 'Trigger Rule'
 icon_uuid: null
 icon_default: null
-description: 'A rule for selecting a matching campaign'
+description: 'Campaign trigger, based on the results of the users search.'
 behavior_plugins: {  }

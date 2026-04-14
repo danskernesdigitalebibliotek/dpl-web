@@ -12,7 +12,7 @@ field_name: field_campaign_rules_logic
 entity_type: node
 bundle: campaign
 label: 'Trigger Logic'
-description: 'Choose if all triggers should match (AND) for a campaign to be displayed or just one of them (OR).'
+description: 'How many triggers must match, for a campaign to show up'
 required: true
 translatable: false
 default_value:
