@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-04-13 12:09+0200\n"
-"PO-Revision-Date: 2026-04-13 12:09+0200\n"
+"POT-Creation-Date: 2026-04-14 13:47+0200\n"
+"PO-Revision-Date: 2026-04-14 13:47+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-04-14 13:48+0200\n"
+"PO-Revision-Date: 2026-04-14 13:48+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -415,23 +427,23 @@ msgstr "Vis alle"
 
 msgctxt "Share buttons"
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Del på Facebook"
 
 msgctxt "Share buttons"
 msgid "Share this page on Facebook"
-msgstr ""
+msgstr "Del denne side på Facebook"
 
 msgctxt "Share buttons"
 msgid "Copy link"
-msgstr ""
+msgstr "Kopier link"
 
 msgctxt "Share buttons"
 msgid "Copy link to this page"
-msgstr ""
+msgstr "Kopier link til denne side"
 
 msgctxt "Share buttons"
 msgid "Link copied"
-msgstr ""
+msgstr "Link er kopieret"
 
 msgctxt "BNF"
 msgid "The library"
@@ -966,17 +978,18 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Share buttons"
-msgstr ""
+msgstr "Deleknapper"
 
 msgctxt "Library Agency Configuration"
 msgid "Enable share buttons on material pages"
-msgstr ""
+msgstr "Tilføj deleknapper på værkvisningen"
 
 msgctxt "Library Agency Configuration"
 msgid ""
 "If checked, share buttons (Facebook, copy link) will be shown on material/"
 "work pages."
 msgstr ""
+"Hvis denne er slået til, så vil deleknapperne blive vist på værkvisningen."
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
@@ -3593,15 +3606,15 @@ msgstr "Vis alle (@count)"
 
 msgctxt "Work Page"
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Del på Facebook"
 
 msgctxt "Work Page"
 msgid "Share this page on Facebook"
-msgstr ""
+msgstr "Del denne side på Facebook"
 
 msgctxt "Work Page"
 msgid "Copy link to this page"
-msgstr ""
+msgstr "Kopier link til denne side"
 
 msgctxt "Branch List"
 msgid "Branches"
@@ -6323,7 +6336,7 @@ msgid "DPL PO"
 msgstr "DPL PO"
 
 msgid "PO file handling."
-msgstr ""
+msgstr "PO fil handling."
 
 msgid "DPL React Apps"
 msgstr "DPL React apps"
@@ -14913,7 +14926,7 @@ msgid "Consent"
 msgstr ""
 
 msgid "Select account"
-msgstr ""
+msgstr "Vælg konto"
 
 msgid ""
 "<strong><em>Please note:</em> This option has security implications.</"
@@ -14922,7 +14935,7 @@ msgid ""
 msgstr ""
 
 msgid "The \"None\" option cannot be selected with other values."
-msgstr ""
+msgstr "Ingen kan ikke vælges med andre værdier."
 
 msgid ""
 "Set up your app in <a href=\"@url\" target=\"_blank\">Google API Console</a>."
