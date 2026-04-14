@@ -1,0 +1,11 @@
+uuid: 5c93fd24-b0ac-45fe-9e52-9f0f915edd18
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.campaign
+label: Campaign
+description: ''
+targetEntityType: media
+cache: true

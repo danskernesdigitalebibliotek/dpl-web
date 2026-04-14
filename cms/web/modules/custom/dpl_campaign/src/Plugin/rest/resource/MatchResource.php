@@ -237,20 +237,23 @@ class MatchResource extends ResourceBase {
       $output['text'] = $campaign->get('field_campaign_text')->getValue()[0]['value'];
     }
 
-    if (!$campaign->get('field_campaign_image')->isEmpty()) {
-      /** @var \Drupal\image\Plugin\Field\FieldType\ImageItem $image_item */
-      $image_item = $campaign->get('field_campaign_image')->get(0);
-      /** @var \Drupal\file\FileInterface $image_file */
-      $image_file = $this->entityTypeManager->getStorage('file')->load($image_item->get('target_id')->getValue());
-      /** @var \Drupal\image\Entity\ImageStyle $image_style */
+    if ($campaign->hasField('field_campaign_media') && !$campaign->get('field_campaign_media')->isEmpty()) {
+      /** @var \Drupal\media\MediaInterface $media */
+      $media = $campaign->get('field_campaign_media')->entity;
+      $image_field = $media->get('field_media_image');
+      /** @var \Drupal\image\Plugin\Field\FieldType\ImageItem|NULL $image */
+      $image = $image_field->first();
+      $alt = $image?->get('alt')->getString();
+
+      /** @var \Drupal\file\FileInterface|NULL $image_entity */
+      $image_entity = $image?->entity;
       $image_style = $this->entityTypeManager->getStorage('image_style')->load('campaign_image');
-      $image_file_uri = $image_file->getFileUri();
-      if ($image_file_uri) {
-        $output['image'] = [
-          'url' => $image_style->buildUrl($image_file_uri),
-          'alt' => $image_item->get('alt')->getValue(),
-        ];
-      }
+      $file_uri = $image_entity?->getFileUri();
+
+      $output['image'] = [
+        'url' => $file_uri ? $image_style?->buildUrl($file_uri) : NULL,
+        'alt' => $alt,
+      ];
     }
 
     /** @var \Drupal\link\LinkItemInterface|null $link */
