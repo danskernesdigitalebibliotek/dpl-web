@@ -5,16 +5,19 @@ dependencies:
   config:
     - field.field.node.campaign.field_campaign_image
     - field.field.node.campaign.field_campaign_link
+    - field.field.node.campaign.field_campaign_media
     - field.field.node.campaign.field_campaign_rules
     - field.field.node.campaign.field_campaign_rules_logic
     - field.field.node.campaign.field_campaign_text
     - field.field.node.campaign.field_campaign_weight
-    - image.style.media_library
     - node.type.campaign
   module:
-    - image
     - link
+    - media_library
+    - media_library_edit
     - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
     - path
     - scheduler
 id: node.campaign.default
@@ -28,14 +31,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_campaign_image:
-    type: image_image
-    weight: 8
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: media_library
-    third_party_settings: {  }
   field_campaign_link:
     type: link_default
     weight: 6
@@ -44,9 +39,19 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
+  field_campaign_media:
+    type: media_library_widget
+    weight: 8
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: true
+        edit_form_mode: default
   field_campaign_rules:
     type: paragraphs
-    weight: 10
+    weight: 9
     region: content
     settings:
       title: Trigger
@@ -55,16 +60,30 @@ content:
       closed_mode: summary
       autocollapse: none
       closed_mode_threshold: 0
-      add_mode: dropdown
+      add_mode: button
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
       features:
+        add_above: '0'
         collapse_edit_all: collapse_edit_all
+        convert: '0'
         duplicate: duplicate
-    third_party_settings: {  }
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: false
+        add_in_between_link_count: 3
+        delete_confirmation: false
+        show_drag_and_drop: false
+        show_collapse_all: true
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+          drag_drop: false
+          sidebar_disabled: false
   field_campaign_rules_logic:
     type: options_select
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -91,23 +110,23 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 16
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  scheduler_settings:
     weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
+  scheduler_settings:
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   simple_sitemap:
-    weight: 12
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -138,15 +157,16 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 17
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 14
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_campaign_image: true
   promote: true
   sticky: true
