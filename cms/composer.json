@@ -56,10 +56,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "0.0.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-94-tilpasning-af-vaerkvisningsside-efter-aendringer-til-arrangementsside/dist-react.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-react.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -72,9 +72,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "0.0.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-94-tilpasning-af-vaerkvisningsside-efter-aendringer-til-arrangementsside/dist-design-system.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
                     "type": "zip"
                 }
             }
@@ -83,10 +83,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "0.0.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-94-tilpasning-af-vaerkvisningsside-efter-aendringer-til-arrangementsside/dist-react.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-react.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -99,9 +99,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "0.0.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-94-tilpasning-af-vaerkvisningsside-efter-aendringer-til-arrangementsside/dist-design-system.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
                     "type": "zip"
                 }
             }
@@ -133,8 +133,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0",
+        "danskernesdigitalebibliotek/dpl-react": "0.0.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
