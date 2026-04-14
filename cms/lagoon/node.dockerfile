@@ -19,7 +19,7 @@ ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE=""
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN yarn run build
+RUN yarn run build:stage2
 
 # Production image, copy all the files and run next
 FROM uselagoon/node-24:latest AS runner

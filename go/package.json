@@ -5,6 +5,8 @@
   "scripts": {
     "build-storybook": "storybook build",
     "build": "next build",
+    "build:stage1": "next build --experimental-build-mode=compile",
+    "build:stage2": "next build --experimental-build-mode=generate",
     "build:test": "NODE_ENV=test next build",
     "build:dev": "NEXT_PUBLIC_APP_URL=http://dpl-cms.local:3000 next build",
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",

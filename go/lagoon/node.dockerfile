@@ -13,10 +13,13 @@ WORKDIR /app
 # Install dependencies
 COPY package.json yarn.lock* ./
 
-RUN yarn --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Must be set at this stage, despite not being used in the build process.
+ENV GO_SESSION_SECRET=$GO_SESSION_SECRET
+RUN yarn run build:stage1

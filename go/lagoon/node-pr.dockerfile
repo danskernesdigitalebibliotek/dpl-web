@@ -17,18 +17,12 @@ WORKDIR /app
 
 COPY . .
 
+# Must be set at this stage, despite not being used.
+ENV GO_SESSION_SECRET=$GO_SESSION_SECRET
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN yarn --frozen-lockfile
-
-# In the build phase, we don't have access to the route yet, so we
-# have to construct the URL on our own.
-ENV BASE_URL="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
-ENV NEXT_PUBLIC_APP_URL="https://node.${BASE_URL}"
-ENV NEXT_PUBLIC_DPL_CMS_HOSTNAME="varnish.${BASE_URL}"
-ENV NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://varnish.${BASE_URL}/graphql"
-
-RUN yarn run build
+RUN yarn install --frozen-lockfile
+RUN yarn run build:stage1
 
 # Production image, copy all the files and run next
 FROM uselagoon/node-20:latest AS runner
@@ -48,5 +42,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=builder --chown=10000:10000 /app .
+
+RUN yarn run build:stage2
 
 CMD ["yarn", "start"]
