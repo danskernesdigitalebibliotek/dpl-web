@@ -14,21 +14,26 @@ tasks:
   build:
     desc: Build the database snapshot image.
     cmds:
-      - docker build -f {{ .LAGOON_DIR }}/database-snapshot.dockerfile --tag {{ .DB_SNAPSHOT_FULL_NAME }} --tag {{ .DB_SNAPSHOT_LATEST_NAME }} .
-
-  push:
-    desc: Push the database snapshot image to container registry.
-    deps: [ghcr:login]
-    cmds:
-      - docker push {{ .DB_SNAPSHOT_FULL_NAME }}
-      - docker push {{ .DB_SNAPSHOT_LATEST_NAME }}
+      # PLATFORMS: uses buildx with multi-platform support
+      # PUSH: pushes the image to the registry during build
+      - >-
+        docker {{ if .PLATFORMS }}buildx{{ end }} build
+        {{ if .PLATFORMS }}--platform {{ .PLATFORMS }}{{ end }}
+        {{ if .PUSH }}--push{{ end }}
+        -f {{ .LAGOON_DIR }}/database-snapshot.dockerfile
+        --tag {{ .DB_SNAPSHOT_FULL_NAME }}
+        --tag {{ .DB_SNAPSHOT_LATEST_NAME }}
+        .
 
   deploy:
     desc: Export, build, and push the database snapshot image.
     cmds:
+      - task: ghcr:login
       - task: export
       - task: build
-      - task: push
+        vars:
+          PLATFORMS: "linux/amd64,linux/arm64"
+          PUSH: "true"
 
   ghcr:login:
     desc: Login into Github Container Registry
