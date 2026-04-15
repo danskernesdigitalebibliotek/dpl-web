@@ -182,15 +182,6 @@ environments:
         schedule: "M/15 * * * *"
         command: drush cron
         service: cli
-    post-rollout:
-      - run:
-          name: Set PR environment URLs
-          command: |
-            CMS_URL="https://varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
-            GO_URL="https://node.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
-            echo "CMS available at: $CMS_URL"
-            echo "Go app available at: $GO_URL"
-          service: cli
   go-demo:
     cronjobs:
       - name: drush cron
