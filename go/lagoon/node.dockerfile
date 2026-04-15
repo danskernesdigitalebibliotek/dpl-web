@@ -30,8 +30,9 @@ ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE=""
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN GO_CMS_DOMAIN="varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk" && \
-    export NEXT_PUBLIC_APP_URL="https://node.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk" && \
+RUN BASE_DOMAIN="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk" && \
+    GO_CMS_DOMAIN="varnish.${BASE_DOMAIN}" && \
+    export NEXT_PUBLIC_APP_URL="https://node.${BASE_DOMAIN}" && \
     export NEXT_PUBLIC_DPL_CMS_HOSTNAME="${GO_CMS_DOMAIN}" && \
     export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
     yarn run build
