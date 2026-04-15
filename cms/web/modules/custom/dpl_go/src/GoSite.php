@@ -80,6 +80,14 @@ class GoSite {
    * Get the base URL for the Go site.
    */
   public function getGoBaseUrl(): string {
+    // As there's no way to inject dynamic variables in PR envs, we explicitly
+    // check here.
+    $env = getenv('LAGOON_ENVIRONMENT');
+
+    if ($env && str_starts_with($env, 'pr-')) {
+      return str_replace('varnish.', 'node.', $this->getCmsBaseUrl());
+    }
+
     // If the GO_DOMAIN environment variable is set,
     // it will override anything else.
     $goDomain = getenv('GO_DOMAIN') ?: NULL;

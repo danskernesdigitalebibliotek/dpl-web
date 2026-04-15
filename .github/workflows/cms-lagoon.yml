@@ -4,6 +4,9 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
+      - '.lagoon.*'
+      - 'docker-compose.lagoon.yml'
+      - 'lagoon/*'
   push:
     branches:
       - develop
@@ -11,6 +14,10 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
+      - '.lagoon.*'
+      - 'docker-compose.lagoon.yml'
+      - 'lagoon/*'
+
 name: CMS / Lagoon integration
 
 env:
