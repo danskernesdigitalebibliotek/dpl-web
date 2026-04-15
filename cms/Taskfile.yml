@@ -507,6 +507,7 @@ tasks:
       - ci:cypress:webmaster
       - ci:cypress:opening-hours
       - ci:cypress:paragraphs
+      - ci:cypress:campaigns
 
   ci:cypress:run:
     cmds:
@@ -567,6 +568,16 @@ tasks:
       - task ci:cypress:run
     env:
       SPEC_PATH: "cypress/e2e/paragraphs/*.ts"
+
+  # The campaign tests take an extraordinarly long time. To speed up the
+  # GitHub Actions, we've split these out to run in parallel.
+  ci:cypress:campaigns:
+    desc: Run Cypress tests for campaigns.
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/campaigns/*.ts"
 
   ci:cypress:local:
     desc: Run Cypress functional tests locally
