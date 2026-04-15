@@ -24,7 +24,7 @@ tasks:
             exit 0
           fi
           mkdir -p ./cms/web/themes/custom/novel/assets/dpl-design-system
-          rsync -a --delete design-system/build/ ./cms/web/themes/custom/novel/assets/dpl-design-system/
+          rsync -a --delete --checksum --no-times design-system/build/ ./cms/web/themes/custom/novel/assets/dpl-design-system/
           echo "Synchronized design to cms."
         silent: true
 
@@ -41,7 +41,7 @@ tasks:
             exit 0
           fi
           mkdir -p ./cms/web/libraries/dpl-react
-          rsync -a --delete react/dist/ ./cms/web/libraries/dpl-react/
+          rsync -a --delete --checksum --no-times react/dist/ ./cms/web/libraries/dpl-react/
           echo "Synchronized react to cms."
         silent: true
 

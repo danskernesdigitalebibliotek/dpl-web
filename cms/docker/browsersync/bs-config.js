@@ -26,9 +26,6 @@ module.exports = {
     port: 3001,
   },
   open: false,
-  // Always do a full page reload on file changes instead of injecting CSS (or
-  // other assets) in-place. It seems like we end up with a full reload anyway.
-  injectChanges: false,
   reloadDebounce: 300,
   watchOptions: {
     usePolling: true,
