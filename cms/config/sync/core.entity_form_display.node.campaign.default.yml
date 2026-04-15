@@ -12,7 +12,7 @@ dependencies:
     - field.field.node.campaign.field_campaign_weight
     - node.type.campaign
   module:
-    - link
+    - dpl_link
     - media_library
     - media_library_edit
     - paragraphs
@@ -32,12 +32,15 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_campaign_link:
-    type: link_default
+    type: dpl_link_options
     weight: 6
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      linkit_profile: default
+      linkit_auto_link_text: 0
+      target_blank: 0
     third_party_settings: {  }
   field_campaign_media:
     type: media_library_widget
