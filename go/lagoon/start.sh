@@ -14,12 +14,7 @@ if [[ "$LAGOON_ENVIRONMENT" == "main" || "$LAGOON_ENVIRONMENT" == "develop" ]]; 
   export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="${LAGOON_ROUTE}/graphql"
 else
   # Dynamic environments (PR, demo, playground, etc.): derive from Lagoon variables.
-  # go-demo/go-playground are routed without the "go." service prefix.
-  if [[ "$LAGOON_ENVIRONMENT" == "go-demo" || "$LAGOON_ENVIRONMENT" == "go-playground" ]]; then
-    export NEXT_PUBLIC_APP_URL="https://${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
-  else
-    export NEXT_PUBLIC_APP_URL="https://go.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
-  fi
+  export NEXT_PUBLIC_APP_URL="https://node.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
   export NEXT_PUBLIC_DPL_CMS_HOSTNAME="varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk"
   export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://varnish.${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk/graphql"
 fi

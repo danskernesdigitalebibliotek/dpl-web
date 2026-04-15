@@ -19,7 +19,7 @@ Every pull request that touches `cms/**`, `go/**`, `.lagoon.yml`, or
 
 | Service | URL                                                             |
 | ------- | --------------------------------------------------------------- |
-| Go app  | `https://go.pr-{number}.{project}.dplplat02.dpl.reload.dk`      |
+| Go app  | `https://node.pr-{number}.{project}.dplplat02.dpl.reload.dk`      |
 | CMS     | `https://varnish.pr-{number}.{project}.dplplat02.dpl.reload.dk` |
 
 The environment is destroyed when the PR is closed.
@@ -31,8 +31,8 @@ Each branch deploys a full stack (CMS + Go) with stable, predictable URLs.
 
 | Branch          | Go app URL                                                   | CMS URL                                                           |
 | --------------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
-| `go-demo`       | `https://go.go-demo.{project}.dplplat02.dpl.reload.dk`       | `https://varnish.go-demo.{project}.dplplat02.dpl.reload.dk`       |
-| `go-playground` | `https://go.go-playground.{project}.dplplat02.dpl.reload.dk` | `https://varnish.go-playground.{project}.dplplat02.dpl.reload.dk` |
+| `go-demo`       | `https://node.go-demo.{project}.dplplat02.dpl.reload.dk`       | `https://varnish.go-demo.{project}.dplplat02.dpl.reload.dk`       |
+| `go-playground` | `https://node.go-playground.{project}.dplplat02.dpl.reload.dk` | `https://varnish.go-playground.{project}.dplplat02.dpl.reload.dk` |
 
 **Only one deployment per branch can exist at a time.** Git branch names are
 unique, and Lagoon creates exactly one environment per branch. This prevents
