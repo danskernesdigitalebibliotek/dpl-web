@@ -192,12 +192,18 @@ environments:
             echo "Go app available at: $GO_URL"
           service: cli
   go-demo:
+    routes:
+      - go:
+          - go-demo.dpl-web.dplplat02.dpl.reload.dk
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
         command: drush cron
         service: cli
   go-playground:
+    routes:
+      - go:
+          - go-playground.dpl-web.dplplat02.dpl.reload.dk
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
