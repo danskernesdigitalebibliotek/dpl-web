@@ -56,7 +56,8 @@ interface LoanListEntryTextProps {
 }
 
 export interface LoanListEntryWithPageSizeProps
-  extends BlockedPatronEntryTextProps,
+  extends
+    BlockedPatronEntryTextProps,
     LoanListEntryTextProps,
     LoanListEntryConfigProps,
     GlobalEntryTextProps,

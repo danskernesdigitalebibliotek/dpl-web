@@ -97,7 +97,8 @@ interface AdvancedSearchEntryConfigProps {
 }
 
 export interface AdvancedSearchEntryProps
-  extends GlobalUrlEntryPropsInterface,
+  extends
+    GlobalUrlEntryPropsInterface,
     GlobalEntryTextProps,
     AdvancedSearchEntryConfigProps,
     AdvancedSearchEntryTextProps,

@@ -9,12 +9,7 @@ import {
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-import { TChildrenOrAdultsOption, TFilters } from "./types"
-
-const filtersHardcoded = {
-  childrenOrAdults: ["til børn"] as TChildrenOrAdultsOption[],
-  materialTypesSpecific: ["bog", "e-bog", "lydbog (online)", "podcast"],
-}
+import { TFilters } from "./types"
 
 export const performSearch = fromPromise(
   ({
@@ -26,7 +21,7 @@ export const performSearch = fromPromise(
       q: { all: q },
       offset: offset,
       limit,
-      filters: { ...filters, ...filtersHardcoded },
+      filters: { ...filters },
     }
 
     return queryClient.fetchQuery({
@@ -46,7 +41,7 @@ export const getFacets = fromPromise(
       q: { all: q },
       facets: getFacetMachineNames(),
       facetLimit,
-      filters: { ...filters, ...filtersHardcoded },
+      filters: { ...filters },
     }
 
     return queryClient.fetchQuery({

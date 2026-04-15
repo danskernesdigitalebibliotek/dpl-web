@@ -2498,7 +2498,7 @@ export type GetSmallWorkQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -2680,7 +2680,7 @@ export type GetSmallWorkQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -2862,7 +2862,7 @@ export type GetSmallWorkQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -2954,7 +2954,7 @@ export type ManifestationBasicDetailsFragment = {
     main?: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }> | null;
   } | null;
 };
@@ -3003,7 +3003,7 @@ export type GetManifestationViaMaterialByFaustQuery = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
   } | null;
@@ -3059,7 +3059,7 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
         };
@@ -3093,7 +3093,7 @@ export type GetMaterialQuery = {
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }>;
     subjects: {
       __typename?: "SubjectContainer";
@@ -3301,7 +3301,7 @@ export type GetMaterialQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -3483,7 +3483,7 @@ export type GetMaterialQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -3665,7 +3665,7 @@ export type GetMaterialQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -3744,7 +3744,7 @@ export type GetMaterialGloballyQuery = {
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }>;
     subjects: {
       __typename?: "SubjectContainer";
@@ -3952,7 +3952,7 @@ export type GetMaterialGloballyQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -4134,7 +4134,7 @@ export type GetMaterialGloballyQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -4316,7 +4316,7 @@ export type GetMaterialGloballyQuery = {
           main?: Array<{
             __typename?: "Language";
             display: string;
-            isoCode: string;
+            iso639Set1: string;
           }> | null;
         } | null;
         physicalDescription?: {
@@ -4648,7 +4648,7 @@ export type RecommendFromFaustQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
             physicalDescription?: {
@@ -4833,7 +4833,7 @@ export type RecommendFromFaustQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
             physicalDescription?: {
@@ -5018,7 +5018,7 @@ export type RecommendFromFaustQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
             physicalDescription?: {
@@ -5280,7 +5280,7 @@ export type SearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -5462,7 +5462,7 @@ export type SearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -5644,7 +5644,7 @@ export type SearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -5929,7 +5929,7 @@ export type ComplexSearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -6111,7 +6111,7 @@ export type ComplexSearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -6293,7 +6293,7 @@ export type ComplexSearchWithPaginationQuery = {
             main?: Array<{
               __typename?: "Language";
               display: string;
-              isoCode: string;
+              iso639Set1: string;
             }> | null;
           } | null;
           physicalDescription?: {
@@ -6380,7 +6380,7 @@ export type SuggestionsFromQueryStringQuery = {
               main?: Array<{
                 __typename?: "Language";
                 display: string;
-                isoCode: string;
+                iso639Set1: string;
               }> | null;
             } | null;
           };
@@ -6650,7 +6650,7 @@ export type ManifestationsSimpleFragment = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
     physicalDescription?: {
@@ -6826,7 +6826,7 @@ export type ManifestationsSimpleFragment = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
     physicalDescription?: {
@@ -7002,7 +7002,7 @@ export type ManifestationsSimpleFragment = {
       main?: Array<{
         __typename?: "Language";
         display: string;
-        isoCode: string;
+        iso639Set1: string;
       }> | null;
     } | null;
     physicalDescription?: {
@@ -7211,7 +7211,7 @@ export type ManifestationsSimpleFieldsFragment = {
     main?: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }> | null;
   } | null;
   physicalDescription?: {
@@ -7521,7 +7521,7 @@ export type WorkSmallFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -7703,7 +7703,7 @@ export type WorkSmallFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -7885,7 +7885,7 @@ export type WorkSmallFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -7957,7 +7957,7 @@ export type WorkMediumFragment = {
   mainLanguages: Array<{
     __typename?: "Language";
     display: string;
-    isoCode: string;
+    iso639Set1: string;
   }>;
   subjects: {
     __typename?: "SubjectContainer";
@@ -8165,7 +8165,7 @@ export type WorkMediumFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -8347,7 +8347,7 @@ export type WorkMediumFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -8529,7 +8529,7 @@ export type WorkMediumFragment = {
         main?: Array<{
           __typename?: "Language";
           display: string;
-          isoCode: string;
+          iso639Set1: string;
         }> | null;
       } | null;
       physicalDescription?: {
@@ -8589,7 +8589,7 @@ export type WithLanguagesFragment = {
     main?: Array<{
       __typename?: "Language";
       display: string;
-      isoCode: string;
+      iso639Set1: string;
     }> | null;
   } | null;
 };
@@ -8599,7 +8599,7 @@ export const WithLanguagesFragmentDoc = `
   languages {
     main {
       display
-      isoCode
+      iso639Set1
     }
   }
 }
@@ -8956,7 +8956,7 @@ export const WorkMediumFragmentDoc = `
   }
   mainLanguages {
     display
-    isoCode
+    iso639Set1
   }
   subjects {
     all {

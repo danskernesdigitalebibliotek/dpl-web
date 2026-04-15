@@ -29,7 +29,8 @@ export interface SearchHeaderTextProps {
 }
 
 export interface SearchHeaderEntryProps
-  extends SearchHeaderTextProps,
+  extends
+    SearchHeaderTextProps,
     GlobalEntryTextProps,
     GlobalConfigProps,
     GlobalUrlEntryPropsInterface {}

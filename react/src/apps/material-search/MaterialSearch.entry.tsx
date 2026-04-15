@@ -37,12 +37,16 @@ export interface MaterialSearchEntryTextProps {
 
 export interface MaterialSearchEntryProps {
   uniqueIdentifier: string;
+  useGoVipProfile?: string;
 }
 
 const MaterialSearchEntry: React.FC<
   MaterialSearchEntryProps & MaterialSearchEntryTextProps & GlobalEntryTextProps
-> = ({ uniqueIdentifier }) => (
-  <MaterialSearch uniqueIdentifier={uniqueIdentifier} />
+> = ({ uniqueIdentifier, useGoVipProfile }) => (
+  <MaterialSearch
+    uniqueIdentifier={uniqueIdentifier}
+    useGoVipProfile={useGoVipProfile === "true"}
+  />
 );
 
 export default withConfig(withUrls(withText(MaterialSearchEntry)));

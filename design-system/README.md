@@ -1,15 +1,4 @@
-# This repo will be archived soon
-
-All new pull requests should be instead opened in the new mono-repo:
-
-[danskernesdigitalebibliotek/dpl-web](https://github.com/danskernesdigitalebibliotek/dpl-web)
-
----
-
-<!-- markdownlint-disable-next-line first-line-h1 -->
-![https://detdigitalefolkebibliotek.dk/sites/default/files/ddf_logo_rgb_blue_web.png](https://detdigitalefolkebibliotek.dk/sites/default/files/ddf_logo_rgb_blue_web.png)
-
-## DPL Design System
+# Design components, used by React and CMS (formerly 'dpl-design-system')
 
 DPL Design System is a library of UI components that should be used as a common
 base system for "Danmarks Biblioteker" / "Det Digitale Folkebibliotek". The
@@ -22,4 +11,4 @@ The codebase follows the naming that designers have used in Figma closely to
 ensure consistency.
 
 Read more about the DPL Design System by visiting our
-[Documentation site](https://danskernesdigitalebibliotek.github.io/dpl-docs)
+[Documentation site](https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-Design-System/)

@@ -1,18 +1,7 @@
-# This repo will be archived soon
-
-All new pull requests should be instead opened in the new mono-repo:
-
-[danskernesdigitalebibliotek/dpl-web](https://github.com/danskernesdigitalebibliotek/dpl-web)
-
----
-
-## dpl-cms - The library CMS, powered by Drupal
+# The library CMS, powered by Drupal (formerly 'dpl-cms')
 
 This is the main repository used for building the core Drupal CMS which is used
-by the danish public libraries.
-
-This repo uses styling from the
-[dpl-design-system repo](https://github.com/danskernesdigitalebibliotek/dpl-design-system/).
+by the Danish Public Libraries.
 
 You can find the full documentation, along with setup instructions in either the
 [documentation site](https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-CMS/),

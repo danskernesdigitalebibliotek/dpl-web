@@ -39,40 +39,45 @@ const MaterialPage: React.FC<MaterialPageProps> = ({
         ctaText={ctaText}
       />
       <MaterialDescription description={description} contents={contents} />
-      <Disclosure
-        headline="Udgaver (2)"
-        icon="Various"
-        headingLevel="h2"
-        defaultOpen={editionsDisclosureOpen}
-      >
-        {amountOfRenders.map((item, index) => {
-          return (
-            <MaterialMainfestationItem
-              key={generateId(item)}
-              title="Title"
-              author="Author"
-              year="2022"
-              detailsData={fakeData as ListData}
-              defaultOpen={editionsDisclosureOpen && index === 0}
-              contents={contents}
-            />
-          );
-        })}
-      </Disclosure>
-      <Disclosure headline="Detaljer" icon="Receipt" headingLevel="h2">
-        <ListDescription data={fakeData as ListData} className="pl-80 pb-48" />
-      </Disclosure>
-      <Disclosure headline="Anmeldelser" icon="Create" headingLevel="h2">
-        <Review
-          numberOfReviews={1}
-          meta="Meta headline"
-          hearts={3}
-          headline="Headline"
-          body="Body text of the review..."
-          linkText="Link to review"
-          linkLink="/"
-        />
-      </Disclosure>
+      <div className="disclosure-section">
+        <Disclosure
+          headline="Udgaver (2)"
+          icon="Various"
+          headingLevel="h2"
+          defaultOpen={editionsDisclosureOpen}
+        >
+          {amountOfRenders.map((item, index) => {
+            return (
+              <MaterialMainfestationItem
+                key={generateId(item)}
+                title="Title"
+                author="Author"
+                year="2022"
+                detailsData={fakeData as ListData}
+                defaultOpen={editionsDisclosureOpen && index === 0}
+                contents={contents}
+              />
+            );
+          })}
+        </Disclosure>
+        <Disclosure headline="Detaljer" icon="Receipt" headingLevel="h2">
+          <ListDescription
+            data={fakeData as ListData}
+            className="pl-80 pb-48"
+          />
+        </Disclosure>
+        <Disclosure headline="Anmeldelser" icon="Create" headingLevel="h2">
+          <Review
+            numberOfReviews={1}
+            meta="Meta headline"
+            hearts={3}
+            headline="Headline"
+            body="Body text of the review..."
+            linkText="Link to review"
+            linkLink="/"
+          />
+        </Disclosure>
+      </div>
     </div>
   );
 };

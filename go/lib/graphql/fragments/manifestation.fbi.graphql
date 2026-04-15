@@ -75,7 +75,7 @@ fragment ManifestationLanguages on Manifestation {
   languages {
     main {
       display
-      isoCode
+      iso639Set1
     }
   }
 }
@@ -124,6 +124,10 @@ fragment ManifestationDetails on Manifestation {
 fragment ManifestationMaterialTypes on Manifestation {
   materialTypes {
     materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
       code
       display
     }

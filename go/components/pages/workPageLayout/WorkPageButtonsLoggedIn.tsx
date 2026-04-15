@@ -2,10 +2,11 @@ import { first } from "lodash"
 import React, { useMemo } from "react"
 
 import {
-  isManifestationAudioBook,
-  isManifestationBook,
-  isManifestationEbook,
-  isManifestationPodcast,
+  getManifestationLabel,
+  isAudioMaterialType,
+  isEbookMaterialType,
+  isPhysicalMaterialType,
+  isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -48,10 +49,18 @@ const WorkPageButtonsLoggedIn = ({
     )
   }
 
-  if (isManifestationBook(selectedManifestation))
-    return <WorkPageInfoBox text="Dette er en fysisk bog. Den kan lånes på dit lokale bibliotek" />
+  const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
+  const label = getManifestationLabel(selectedManifestation)
 
-  if (isManifestationEbook(selectedManifestation)) {
+  if (isPhysicalMaterialType(materialTypeCode)) {
+    return (
+      <WorkPageInfoBox
+        text={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+      />
+    )
+  }
+
+  if (isEbookMaterialType(materialTypeCode)) {
     const previewUrl = resolveUrl({
       routeParams: { work: "work", ":wid": workId, read: "read" },
       queryParams: { id: identifier || "" },
@@ -62,81 +71,47 @@ const WorkPageButtonsLoggedIn = ({
       queryParams: { orderId: loan?.orderId || "" },
     })
 
-    if (!isLoaned) {
-      return (
-        <WorkPageButtons>
-          <WorkPageButton ariaLabel="Prøv e-bog" asChild disabled={isLoanButtonDisabled}>
-            <SmartLink linkType="external" href={previewUrl}>
-              Prøv e-bog
-            </SmartLink>
-          </WorkPageButton>
-          <WorkPageButton
-            ariaLabel="Lån e-bog"
-            theme={"primary"}
-            disabled={isLoanButtonDisabled}
-            onClick={() => {
-              openModal({
-                modalType: "LoanMaterialModal",
-                props: {
-                  manifestation: selectedManifestation,
-                },
-              })
-            }}>
-            Lån e-bog
-          </WorkPageButton>
-        </WorkPageButtons>
-      )
-    }
     if (isLoaned) {
       return (
         <WorkPageButtons>
-          <WorkPageButton ariaLabel="Læs e-bog" theme={"primary"} asChild>
+          <WorkPageButton ariaLabel={`Læs ${label}`} theme={"primary"} asChild>
             <SmartLink linkType="external" href={loanUrl}>
-              Læs e-bog
+              Læs {label}
             </SmartLink>
           </WorkPageButton>
         </WorkPageButtons>
       )
     }
+
+    return (
+      <WorkPageButtons>
+        <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isLoanButtonDisabled}>
+          <SmartLink linkType="external" href={previewUrl}>
+            Prøv {label}
+          </SmartLink>
+        </WorkPageButton>
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme={"primary"}
+          disabled={isLoanButtonDisabled}
+          onClick={() => {
+            openModal({
+              modalType: "LoanMaterialModal",
+              props: { manifestation: selectedManifestation },
+            })
+          }}>
+          Lån {label}
+        </WorkPageButton>
+      </WorkPageButtons>
+    )
   }
 
-  if (isManifestationAudioBook(selectedManifestation)) {
-    if (!isLoaned) {
-      return (
-        <WorkPageButtons>
-          <WorkPageButton
-            ariaLabel="Prøv lydbog"
-            disabled={isLoanButtonDisabled}
-            onClick={() =>
-              openModal({
-                modalType: "PlayerPreviewModal",
-                props: { manifestation: selectedManifestation },
-              })
-            }>
-            Prøv lydbog
-          </WorkPageButton>
-          <WorkPageButton
-            ariaLabel="Lån lydbog"
-            theme={"primary"}
-            disabled={isLoanButtonDisabled}
-            onClick={() => {
-              openModal({
-                modalType: "LoanMaterialModal",
-                props: {
-                  manifestation: selectedManifestation,
-                },
-              })
-            }}>
-            Lån lydbog
-          </WorkPageButton>
-        </WorkPageButtons>
-      )
-    }
+  if (isAudioMaterialType(materialTypeCode) || isPodcastMaterialType(materialTypeCode)) {
     if (isLoaned) {
       return (
         <WorkPageButtons>
           <WorkPageButton
-            ariaLabel="Lyt til lydbog"
+            ariaLabel={`Lyt til ${label}`}
             theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() =>
@@ -145,60 +120,39 @@ const WorkPageButtonsLoggedIn = ({
                 props: { manifestation: selectedManifestation, orderId: loan?.orderId },
               })
             }>
-            Lyt til lydbog
+            Lyt til {label}
           </WorkPageButton>
         </WorkPageButtons>
       )
     }
-  }
 
-  if (isManifestationPodcast(selectedManifestation)) {
-    if (!isLoaned) {
-      return (
-        <WorkPageButtons>
-          <WorkPageButton
-            ariaLabel="Prøv podcast"
-            disabled={isLoanButtonDisabled}
-            onClick={() =>
-              openModal({
-                modalType: "PlayerPreviewModal",
-                props: { manifestation: selectedManifestation },
-              })
-            }>
-            Prøv podcast
-          </WorkPageButton>
-          <WorkPageButton
-            ariaLabel="Lån podcast"
-            theme={"primary"}
-            disabled={isLoanButtonDisabled}
-            onClick={() => {
-              openModal({
-                modalType: "LoanMaterialModal",
-                props: { manifestation: selectedManifestation },
-              })
-            }}>
-            Lån podcast
-          </WorkPageButton>
-        </WorkPageButtons>
-      )
-    } else {
-      return (
-        <WorkPageButtons>
-          <WorkPageButton
-            ariaLabel="Lyt til podcast"
-            theme={"primary"}
-            disabled={isLoanButtonDisabled}
-            onClick={() =>
-              openModal({
-                modalType: "PlayerModal",
-                props: { manifestation: selectedManifestation, orderId: loan?.orderId },
-              })
-            }>
-            Lyt til podcast
-          </WorkPageButton>
-        </WorkPageButtons>
-      )
-    }
+    return (
+      <WorkPageButtons>
+        <WorkPageButton
+          ariaLabel={`Prøv ${label}`}
+          disabled={isLoanButtonDisabled}
+          onClick={() =>
+            openModal({
+              modalType: "PlayerPreviewModal",
+              props: { manifestation: selectedManifestation },
+            })
+          }>
+          Prøv {label}
+        </WorkPageButton>
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme={"primary"}
+          disabled={isLoanButtonDisabled}
+          onClick={() => {
+            openModal({
+              modalType: "LoanMaterialModal",
+              props: { manifestation: selectedManifestation },
+            })
+          }}>
+          Lån {label}
+        </WorkPageButton>
+      </WorkPageButtons>
+    )
   }
 }
 

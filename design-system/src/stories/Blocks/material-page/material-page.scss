@@ -1,6 +1,24 @@
 .material-page {
+  display: flex;
+  flex-direction: column;
+  gap: $s-2xl;
   padding-bottom: $s-2xl;
+
   @include media-query__small {
     padding-bottom: $s-6xl;
+  }
+}
+
+.disclosure-section {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 $edge-spacing-mobile 0 $edge-spacing-mobile;
+  width: 100%;
+
+  @include media-query__small {
+    padding: 0 $edge-spacing-desktop 0 $edge-spacing-desktop;
   }
 }

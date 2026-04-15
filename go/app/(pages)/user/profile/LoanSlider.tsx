@@ -111,7 +111,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                 href={resolveUrl({
                   routeParams: { work: "work", wid: work.workId },
                   queryParams: {
-                    type: loanManifestation.materialTypes[0].materialTypeGeneral.code,
+                    type: loanManifestation.materialTypes[0].materialTypeSpecific.code,
                   },
                 })}>
                 <LoanCard

@@ -23,7 +23,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry"],
@@ -72,7 +72,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry"],
@@ -113,7 +113,7 @@
                 "genreAndForm": [],
                 "source": ["Netlydbog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry"],
@@ -165,7 +165,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry (mp3)"],
@@ -210,7 +210,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry (mp3)"],
@@ -254,7 +254,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Harry"], "original": ["Harry (engelsk)"] },
               "fictionNonfiction": {
@@ -468,7 +468,7 @@
                 "genreAndForm": ["roman", "fantasy", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
@@ -518,7 +518,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -559,7 +559,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -601,7 +601,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -645,7 +645,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -686,7 +686,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -733,7 +733,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -777,7 +777,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -822,7 +822,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -866,7 +866,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen (mp3)"],
@@ -907,7 +907,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -948,7 +948,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -989,7 +989,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -1031,7 +1031,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
@@ -1081,7 +1081,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
@@ -1308,7 +1308,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1349,7 +1349,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1390,7 +1390,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1431,7 +1431,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1475,7 +1475,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1522,7 +1522,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1564,7 +1564,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten (Ved Henrik Emmer)"],
@@ -1605,7 +1605,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1649,7 +1649,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten (2. udgave)"],
@@ -1694,7 +1694,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -1741,7 +1741,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -1788,7 +1788,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1829,7 +1829,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1873,7 +1873,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -1916,7 +1916,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -1957,7 +1957,7 @@
                 "genreAndForm": ["roman", "fantasy", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten (ill. MinaLima)"],
@@ -2006,7 +2006,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -2047,7 +2047,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og De Vises Sten"],
@@ -2088,7 +2088,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten (ill. Jim Kay)"],
@@ -2132,7 +2132,7 @@
                 "genreAndForm": ["roman", "fantasy", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -2174,7 +2174,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og de vises sten (ill. MinaLima)"],
@@ -2223,7 +2223,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og de vises sten (ill. MinaLima)"],
@@ -2443,7 +2443,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2488,7 +2488,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2529,7 +2529,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2578,7 +2578,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2625,7 +2625,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2667,7 +2667,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2708,7 +2708,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2752,7 +2752,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen (mp3)"],
@@ -2793,7 +2793,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2834,7 +2834,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2875,7 +2875,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -2917,7 +2917,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og halvblodsprinsen"],
@@ -2958,7 +2958,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og halvblodsprinsen"],
@@ -3170,7 +3170,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne"],
@@ -3211,7 +3211,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne"],
@@ -3256,7 +3256,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne"],
@@ -3297,7 +3297,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne (mp3)"],
@@ -3338,7 +3338,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne"],
@@ -3379,7 +3379,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne"],
@@ -3420,7 +3420,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og dødsregalierne"],
@@ -3462,7 +3462,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og dødsregalierne"],
@@ -3503,7 +3503,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og dødsregalierne"],
@@ -3721,7 +3721,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -3762,7 +3762,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -3806,7 +3806,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -3849,7 +3849,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -3890,7 +3890,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -3937,7 +3937,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -3981,7 +3981,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -4023,7 +4023,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -4064,7 +4064,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -4111,7 +4111,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -4155,7 +4155,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -4198,7 +4198,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -4239,7 +4239,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -4280,7 +4280,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -4326,7 +4326,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -4367,7 +4367,7 @@
                 "genreAndForm": ["roman", "fantasy", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -4414,7 +4414,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": [
@@ -4460,7 +4460,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": [
@@ -4524,7 +4524,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter"],
@@ -4578,7 +4578,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter"],
@@ -4631,7 +4631,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter"],
@@ -4860,7 +4860,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -4901,7 +4901,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -4942,7 +4942,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -4986,7 +4986,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5033,7 +5033,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5077,7 +5077,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban (I 1 mappe)"],
@@ -5118,7 +5118,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -5162,7 +5162,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5203,7 +5203,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5247,7 +5247,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -5294,7 +5294,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": [
@@ -5337,7 +5337,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5378,7 +5378,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5419,7 +5419,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban (ill. Jim Kay)"],
@@ -5463,7 +5463,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5505,7 +5505,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5546,7 +5546,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og fangen fra Azkaban"],
@@ -5763,7 +5763,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -5804,7 +5804,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -5846,7 +5846,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -5893,7 +5893,7 @@
                 "genreAndForm": ["eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -5937,7 +5937,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -5978,7 +5978,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6022,7 +6022,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6063,7 +6063,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6107,7 +6107,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6152,7 +6152,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal (mp3)"],
@@ -6193,7 +6193,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6234,7 +6234,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal (Ill. Jim Kay)"],
@@ -6278,7 +6278,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6319,7 +6319,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -6361,7 +6361,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og Flammernes Pokal (Ill. Jim Kay)"],
@@ -6405,7 +6405,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og Flammernes Pokal (Ill. Jim Kay)"],
@@ -6615,7 +6615,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Harry Potter"], "original": [] },
                 "fictionNonfiction": {
@@ -6657,7 +6657,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Harry Potter"], "original": [] },
               "fictionNonfiction": {
@@ -6698,7 +6698,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Harry Potter"], "original": [] },
               "fictionNonfiction": {
@@ -6757,7 +6757,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Styles"],
@@ -6804,7 +6804,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Styles"],
@@ -6866,7 +6866,7 @@
               "genreAndForm": ["biografier"],
               "source": ["eReolen"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Styles"],
@@ -6927,7 +6927,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Styles"],
@@ -7147,7 +7147,7 @@
                 "genreAndForm": ["dramatik", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og det forbandede barn"],
@@ -7194,7 +7194,7 @@
               "genreAndForm": ["dramatik", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og det forbandede barn"],
@@ -7240,7 +7240,7 @@
               "genreAndForm": ["dramatik", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og det forbandede barn"],
@@ -7454,7 +7454,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Harry Kane"], "original": [] },
                 "fictionNonfiction": {
@@ -7492,7 +7492,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Harry Kane"], "original": [] },
                 "fictionNonfiction": {
@@ -7545,7 +7545,7 @@
               "genreAndForm": ["biografier"],
               "source": ["eReolen"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Harry Kane"], "original": [] },
               "fictionNonfiction": {
@@ -7597,7 +7597,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Harry Kane"], "original": [] },
               "fictionNonfiction": {
@@ -7811,7 +7811,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -7852,7 +7852,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -7893,7 +7893,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -7935,7 +7935,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -7977,7 +7977,7 @@
                 "genreAndForm": ["eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8018,7 +8018,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8062,7 +8062,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8104,7 +8104,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8146,7 +8146,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8190,7 +8190,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8231,7 +8231,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8272,7 +8272,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8316,7 +8316,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -8364,7 +8364,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8405,7 +8405,7 @@
                 "genreAndForm": ["eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8446,7 +8446,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -8494,7 +8494,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8535,7 +8535,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -8579,7 +8579,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -8623,7 +8623,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the philosopher's stone"],
@@ -8664,7 +8664,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the philosopher's stone"],
@@ -8881,7 +8881,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -8923,7 +8923,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -8965,7 +8965,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9006,7 +9006,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9055,7 +9055,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Goblet of Fire"],
@@ -9099,7 +9099,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9141,7 +9141,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -9185,7 +9185,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -9229,7 +9229,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9270,7 +9270,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9314,7 +9314,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9358,7 +9358,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -9402,7 +9402,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9447,7 +9447,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9488,7 +9488,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -9537,7 +9537,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9578,7 +9578,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9619,7 +9619,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9663,7 +9663,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Goblet of fire"],
@@ -9707,7 +9707,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -9748,7 +9748,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -9792,7 +9792,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the goblet of fire (Ill. Jim Kay)"],
@@ -9833,7 +9833,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the goblet of fire (Ill. Jim Kay)"],
@@ -10048,7 +10048,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -10102,7 +10102,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -10156,7 +10156,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -10210,7 +10210,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Fønixordenen"],
@@ -10265,7 +10265,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og Fønixordenen"],
@@ -10316,7 +10316,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og Fønixordenen"],
@@ -10541,7 +10541,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -10597,7 +10597,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og halvblodsprinsen"],
@@ -10654,7 +10654,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og halvblodsprinsen"],
@@ -10707,7 +10707,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og halvblodsprinsen"],
@@ -10778,7 +10778,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry & Meghan"],
@@ -10830,7 +10830,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry & Meghan"],
@@ -10874,7 +10874,7 @@
                 "genreAndForm": [],
                 "source": ["Netlydbog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry & Meghan"],
@@ -10929,7 +10929,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry & Meghan (mp3)"],
@@ -10977,7 +10977,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry & Meghan (mp3)"],
@@ -11021,7 +11021,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry & Meghan"],
@@ -11080,7 +11080,7 @@
                 "genreAndForm": ["roman", "spænding", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11121,7 +11121,7 @@
                 "genreAndForm": ["roman", "spænding"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11160,7 +11160,7 @@
                 "genreAndForm": ["roman", "spænding"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11201,7 +11201,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11242,7 +11242,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11284,7 +11284,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen (mp3)"],
@@ -11328,7 +11328,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11372,7 +11372,7 @@
                 "genreAndForm": ["roman", "spænding"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11413,7 +11413,7 @@
                 "genreAndForm": ["roman", "spænding"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11454,7 +11454,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Netlydbog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11506,7 +11506,7 @@
                 "genreAndForm": ["roman", "spænding", "romaner"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11556,7 +11556,7 @@
               "genreAndForm": ["roman", "spænding", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11597,7 +11597,7 @@
               "genreAndForm": ["roman", "spænding", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Sandheden om Harry Quebert-sagen"],
@@ -11656,7 +11656,7 @@
                 "genreAndForm": ["litteraturanalyser", "analyser"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og filosofien"],
@@ -11702,7 +11702,7 @@
               "genreAndForm": ["litteraturanalyser", "analyser"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og filosofien"],
@@ -11747,7 +11747,7 @@
               "genreAndForm": ["litteraturanalyser", "analyser"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potter og filosofien"],
@@ -11960,7 +11960,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Anna og Harry"], "original": [] },
                 "fictionNonfiction": {
@@ -12002,7 +12002,7 @@
               "genreAndForm": ["roman"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Anna og Harry"], "original": [] },
               "fictionNonfiction": {
@@ -12043,7 +12043,7 @@
               "genreAndForm": ["roman"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Anna og Harry"], "original": [] },
               "fictionNonfiction": {
@@ -12261,7 +12261,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12303,7 +12303,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12345,7 +12345,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12390,7 +12390,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12434,7 +12434,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12479,7 +12479,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12523,7 +12523,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12565,7 +12565,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12607,7 +12607,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12648,7 +12648,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12698,7 +12698,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -12742,7 +12742,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12784,7 +12784,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -12828,7 +12828,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -12872,7 +12872,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -12915,7 +12915,7 @@
                 "genreAndForm": ["eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -12956,7 +12956,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -12997,7 +12997,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -13038,7 +13038,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -13082,7 +13082,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -13128,7 +13128,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -13172,7 +13172,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": [
@@ -13215,7 +13215,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": [
@@ -13276,7 +13276,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potters eventyrlige univers"],
@@ -13320,7 +13320,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potters eventyrlige univers"],
@@ -13364,7 +13364,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potters eventyrlige univers"],
@@ -13409,7 +13409,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potters eventyrlige univers"],
@@ -13453,7 +13453,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Potters eventyrlige univers"],
@@ -13666,7 +13666,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Efterlyst - Klamme Harry og mig"],
@@ -13707,7 +13707,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Efterlyst - Klamme Harry og mig"],
@@ -13760,7 +13760,7 @@
               "genreAndForm": ["roman"],
               "source": ["eReolen"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Efterlyst - Klamme Harry og mig"],
@@ -13812,7 +13812,7 @@
               "genreAndForm": ["roman"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Efterlyst - Klamme Harry og mig"],
@@ -14027,7 +14027,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14084,7 +14084,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14143,7 +14143,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14200,7 +14200,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14261,7 +14261,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14320,7 +14320,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14379,7 +14379,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og de vises sten"],
@@ -14439,7 +14439,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og de vises sten"],
@@ -14495,7 +14495,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og de vises sten"],
@@ -14727,7 +14727,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -14768,7 +14768,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -14810,7 +14810,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -14854,7 +14854,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -14898,7 +14898,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -14939,7 +14939,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -14981,7 +14981,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15025,7 +15025,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15067,7 +15067,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15113,7 +15113,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15157,7 +15157,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15198,7 +15198,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -15242,7 +15242,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15283,7 +15283,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15324,7 +15324,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -15372,7 +15372,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15413,7 +15413,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -15456,7 +15456,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -15503,7 +15503,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15544,7 +15544,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15585,7 +15585,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15629,7 +15629,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -15673,7 +15673,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -15717,7 +15717,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": [
@@ -15760,7 +15760,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": [
@@ -15977,7 +15977,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -16033,7 +16033,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -16089,7 +16089,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -16145,7 +16145,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og Flammernes Pokal"],
@@ -16202,7 +16202,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og Flammernes Pokal"],
@@ -16255,7 +16255,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og Flammernes Pokal"],
@@ -16482,7 +16482,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -16540,7 +16540,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -16598,7 +16598,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -16656,7 +16656,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -16714,7 +16714,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -16773,7 +16773,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -16828,7 +16828,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og hemmelighedernes kammer"],
@@ -17057,7 +17057,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17113,7 +17113,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17169,7 +17169,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17225,7 +17225,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17281,7 +17281,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17338,7 +17338,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17391,7 +17391,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter og fangen fra Azkaban"],
@@ -17622,7 +17622,7 @@
                 "genreAndForm": ["roman", "fantasy", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -17666,7 +17666,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17707,7 +17707,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17749,7 +17749,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17791,7 +17791,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17833,7 +17833,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17874,7 +17874,7 @@
                 "genreAndForm": ["eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the Phoenix"],
@@ -17915,7 +17915,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17956,7 +17956,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -17997,7 +17997,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the phoenix"],
@@ -18038,7 +18038,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -18080,7 +18080,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -18127,7 +18127,7 @@
                 "genreAndForm": ["eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the phoenix"],
@@ -18168,7 +18168,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the Phoenix"],
@@ -18209,7 +18209,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the Phoenix"],
@@ -18250,7 +18250,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the phoenix"],
@@ -18294,7 +18294,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the order of the Phoenix"],
@@ -18342,7 +18342,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -18384,7 +18384,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": [
@@ -18428,7 +18428,7 @@
               "genreAndForm": ["roman", "fantasy", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": [
@@ -18494,7 +18494,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18562,7 +18562,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18621,7 +18621,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18689,7 +18689,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18757,7 +18757,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18816,7 +18816,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18884,7 +18884,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -18952,7 +18952,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -19011,7 +19011,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -19079,7 +19079,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -19138,7 +19138,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -19206,7 +19206,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the philosopher's stone"],
@@ -19275,7 +19275,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the philosopher's stone"],
@@ -19340,7 +19340,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the philosopher's stone"],
@@ -19567,7 +19567,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19608,7 +19608,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19649,7 +19649,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19690,7 +19690,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19732,7 +19732,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19774,7 +19774,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19815,7 +19815,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19856,7 +19856,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the deathly hallows"],
@@ -19900,7 +19900,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -19950,7 +19950,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Deathly Hallows"],
@@ -19992,7 +19992,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the deathly hallows"],
@@ -20036,7 +20036,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the deathly hallows"],
@@ -20102,7 +20102,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20158,7 +20158,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20214,7 +20214,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20268,7 +20268,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20324,7 +20324,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20380,7 +20380,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20436,7 +20436,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20492,7 +20492,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20548,7 +20548,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20604,7 +20604,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the goblet of fire"],
@@ -20661,7 +20661,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the goblet of fire"],
@@ -20714,7 +20714,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the goblet of fire"],
@@ -20785,7 +20785,7 @@
                 "genreAndForm": ["biografier"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Kane"],
@@ -20827,7 +20827,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Kane"],
@@ -20868,7 +20868,7 @@
               "genreAndForm": ["biografier"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Kane"],
@@ -20935,7 +20935,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Lego Harry Potter collection (Nintendo Switch)"],
@@ -20980,7 +20980,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Lego Harry Potter collection (Xbox One)"],
@@ -21025,7 +21025,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Lego Harry Potter collection (Playstation 4)"],
@@ -21071,7 +21071,7 @@
               ],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Lego Harry Potter collection (Xbox One)"],
@@ -21116,7 +21116,7 @@
               ],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Lego Harry Potter collection (Xbox One)"],
@@ -21175,7 +21175,7 @@
                 "genreAndForm": ["dyrefortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Et hjem til Harry"],
@@ -21217,7 +21217,7 @@
               "genreAndForm": ["dyrefortællinger"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Et hjem til Harry"],
@@ -21258,7 +21258,7 @@
               "genreAndForm": ["dyrefortællinger"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Et hjem til Harry"],
@@ -21472,7 +21472,7 @@
                 "genreAndForm": ["dramatik", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the cursed child"],
@@ -21516,7 +21516,7 @@
               "genreAndForm": ["dramatik", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the cursed child"],
@@ -21559,7 +21559,7 @@
               "genreAndForm": ["dramatik", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the cursed child"],
@@ -21624,7 +21624,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Chamber of Secrets"],
@@ -21688,7 +21688,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -21746,7 +21746,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -21802,7 +21802,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -21866,7 +21866,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -21930,7 +21930,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -21988,7 +21988,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -22052,7 +22052,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -22110,7 +22110,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -22174,7 +22174,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the chamber of secrets"],
@@ -22239,7 +22239,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the Chamber of Secrets"],
@@ -22300,7 +22300,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the chamber of secrets"],
@@ -22532,7 +22532,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22573,7 +22573,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -22620,7 +22620,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": [
@@ -22663,7 +22663,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22704,7 +22704,7 @@
                 "genreAndForm": ["roman", "eventyrlige fortællinger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22745,7 +22745,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22786,7 +22786,7 @@
                 "genreAndForm": ["roman", "fantasy"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22830,7 +22830,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22874,7 +22874,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -22922,7 +22922,7 @@
                 ],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Half-Blood Prince"],
@@ -22964,7 +22964,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the half-blood prince"],
@@ -23008,7 +23008,7 @@
               "genreAndForm": ["roman", "fantasy"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the half-blood prince"],
@@ -23074,7 +23074,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23139,7 +23139,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23193,7 +23193,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23258,7 +23258,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23323,7 +23323,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23379,7 +23379,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23444,7 +23444,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23500,7 +23500,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23565,7 +23565,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23631,7 +23631,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23693,7 +23693,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the prisoner of Azkaban"],
@@ -23775,7 +23775,7 @@
                 "genreAndForm": ["roman", "chick lit"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Jagten på Harry Winston"],
@@ -23816,7 +23816,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Jagten på Harry Winston"],
@@ -23860,7 +23860,7 @@
                 "genreAndForm": ["roman", "chick lit"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Jagten på Harry Winston"],
@@ -23901,7 +23901,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Jagten på Harry Winston"],
@@ -23945,7 +23945,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Jagten på Harry Winston (mp3)"],
@@ -23990,7 +23990,7 @@
               "genreAndForm": ["roman"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Jagten på Harry Winston (mp3)"],
@@ -24034,7 +24034,7 @@
               "genreAndForm": ["roman", "chick lit"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Jagten på Harry Winston"],
@@ -24246,7 +24246,7 @@
                 "genreAndForm": ["roman", "gys", "humor"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Scary Harry - ikke til at spøge med"],
@@ -24293,7 +24293,7 @@
               "genreAndForm": ["roman", "gys", "humor"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Scary Harry - ikke til at spøge med"],
@@ -24337,7 +24337,7 @@
               "genreAndForm": ["roman", "gys", "humor"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Scary Harry - ikke til at spøge med"],
@@ -24403,7 +24403,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24457,7 +24457,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24511,7 +24511,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24563,7 +24563,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24617,7 +24617,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24671,7 +24671,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24725,7 +24725,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24779,7 +24779,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24833,7 +24833,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24887,7 +24887,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24942,7 +24942,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the Order of the Phoenix"],
@@ -24993,7 +24993,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the Order of the Phoenix"],
@@ -25210,7 +25210,7 @@
                 "genreAndForm": ["roman", "krimi", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25246,7 +25246,7 @@
                 "genreAndForm": ["roman", "krimi", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25282,7 +25282,7 @@
                 "genreAndForm": ["roman", "krimi"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25318,7 +25318,7 @@
                 "genreAndForm": ["roman", "krimi"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25352,7 +25352,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Kniv (mp3)"],
@@ -25394,7 +25394,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25433,7 +25433,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25469,7 +25469,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
                 "fictionNonfiction": {
@@ -25507,7 +25507,7 @@
               "genreAndForm": ["roman", "krimi", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
               "fictionNonfiction": {
@@ -25543,7 +25543,7 @@
               "genreAndForm": ["roman", "krimi", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Kniv"], "original": ["Kniv (norsk)"] },
               "fictionNonfiction": {
@@ -25748,7 +25748,7 @@
                 "genreAndForm": ["roman", "sjove bøger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Hammerhaj - hajstjerne"],
@@ -25793,7 +25793,7 @@
               "genreAndForm": ["roman", "sjove bøger"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Hammerhaj - hajstjerne"],
@@ -25835,7 +25835,7 @@
               "genreAndForm": ["roman", "sjove bøger"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Hammerhaj - hajstjerne"],
@@ -26046,7 +26046,7 @@
                 "genreAndForm": ["roman", "sjove bøger"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry Hammerhaj - hajskolen"],
@@ -26091,7 +26091,7 @@
               "genreAndForm": ["roman", "sjove bøger"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Hammerhaj - hajskolen"],
@@ -26133,7 +26133,7 @@
               "genreAndForm": ["roman", "sjove bøger"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry Hammerhaj - hajskolen"],
@@ -26341,7 +26341,7 @@
                 "genreAndForm": ["roman", "krimi"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26377,7 +26377,7 @@
                 "genreAndForm": ["roman", "krimi"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26411,7 +26411,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Tørst (mp3)"],
@@ -26453,7 +26453,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26490,7 +26490,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26529,7 +26529,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26565,7 +26565,7 @@
                 "genreAndForm": ["roman", "krimi"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26601,7 +26601,7 @@
                 "genreAndForm": ["roman", "krimi", "romaner"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
                 "fictionNonfiction": {
@@ -26638,7 +26638,7 @@
               "genreAndForm": ["roman", "krimi", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
               "fictionNonfiction": {
@@ -26674,7 +26674,7 @@
               "genreAndForm": ["roman", "krimi", "romaner"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": { "main": ["Tørst"], "original": ["Tørst (norsk)"] },
               "fictionNonfiction": {
@@ -26879,7 +26879,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Hemmeligt - Jørdis hjerte Harry"],
@@ -26920,7 +26920,7 @@
                 "genreAndForm": ["roman"],
                 "source": ["eReolen"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Hemmeligt - Jørdis hjerte Harry"],
@@ -26973,7 +26973,7 @@
               "genreAndForm": ["roman"],
               "source": ["eReolen"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Hemmeligt - Jørdis hjerte Harry"],
@@ -27025,7 +27025,7 @@
               "genreAndForm": ["roman"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Hemmeligt - Jørdis hjerte Harry"],
@@ -27235,7 +27235,7 @@
                 "genreAndForm": ["roman", "gys"],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "dansk", "isoCode": "dan" }]
+                  "main": [{ "display": "dansk", "iso639Set1": "da" }]
                 },
                 "titles": {
                   "main": ["Harry og Jønne og spøgelsesbilisten"],
@@ -27280,7 +27280,7 @@
               "genreAndForm": ["roman", "gys"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry og Jønne og spøgelsesbilisten"],
@@ -27324,7 +27324,7 @@
               "genreAndForm": ["roman", "gys"],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "dansk", "isoCode": "dan" }]
+                "main": [{ "display": "dansk", "iso639Set1": "da" }]
               },
               "titles": {
                 "main": ["Harry og Jønne og spøgelsesbilisten"],
@@ -27541,7 +27541,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27597,7 +27597,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27653,7 +27653,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27707,7 +27707,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27763,7 +27763,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27819,7 +27819,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27875,7 +27875,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27931,7 +27931,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -27987,7 +27987,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -28041,7 +28041,7 @@
                 "genreAndForm": [],
                 "source": ["Bibliotekskatalog"],
                 "languages": {
-                  "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                  "main": [{ "display": "engelsk", "iso639Set1": "en" }]
                 },
                 "titles": {
                   "main": ["Harry Potter and the half-blood prince"],
@@ -28098,7 +28098,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the half-blood prince"],
@@ -28151,7 +28151,7 @@
               "genreAndForm": [],
               "source": ["Bibliotekskatalog"],
               "languages": {
-                "main": [{ "display": "engelsk", "isoCode": "eng" }]
+                "main": [{ "display": "engelsk", "iso639Set1": "en" }]
               },
               "titles": {
                 "main": ["Harry Potter and the half-blood prince"],

@@ -20,6 +20,10 @@ const manifestationMock = {
         display: "e-bøger",
         code: "EBOOKS",
       },
+      materialTypeSpecific: {
+        code: "EBOOK",
+        display: "e-bog",
+      },
     },
   ],
   access: [
@@ -44,7 +48,7 @@ const manifestationMock = {
     main: [
       {
         display: "dansk",
-        isoCode: "dan",
+        iso639Set1: "da",
       },
     ],
   },

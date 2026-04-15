@@ -77,7 +77,8 @@ export interface ReservationListTextProps {
 }
 
 export interface ReservationListEntryWithPageSizeProps
-  extends ReservationListTextProps,
+  extends
+    ReservationListTextProps,
     BlockedPatronEntryTextProps,
     ReservationListConfigProps,
     ReservationListUrlProps,

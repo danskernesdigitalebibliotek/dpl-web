@@ -1,6 +1,6 @@
 import { first } from "lodash"
 
-import { isManifestationPodcast } from "@/components/pages/workPageLayout/helper"
+import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 import Player from "../publizonPlayer/PublizonPlayer"
@@ -16,9 +16,7 @@ function PlayerPreviewModal({
   const identifier = first(manifestation?.identifiers)?.value
 
   return (
-    <ResponsiveDialog
-      open={open}
-      title={`Prøv ${isManifestationPodcast(manifestation) ? "Podcast" : "Lydbog"}`}>
+    <ResponsiveDialog open={open} title={`Prøv ${getManifestationLabel(manifestation)}`}>
       <Player type="preview" identifier={identifier || ""} />
     </ResponsiveDialog>
   )

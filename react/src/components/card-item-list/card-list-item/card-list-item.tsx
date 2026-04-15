@@ -30,7 +30,7 @@ import { statistics } from "../../../core/statistics/statistics";
 import { useItemHasBeenVisible } from "../../../core/utils/helpers/lazy-load";
 import {
   getFirstBookManifestation,
-  getManifestationLanguageIsoCode
+  getManifestationLanguageCode
 } from "../../../apps/material/helper";
 import useFilterHandler from "../../../apps/search-result/useFilterHandler";
 import { getFirstMaterialTypeFromFilters } from "../../../apps/search-result/helper";
@@ -81,7 +81,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
     workId as WorkId,
     materialTypeFromFilters
   );
-  const languageIsoCode = getManifestationLanguageIsoCode(manifestations);
+  const languageCode = getManifestationLanguageCode(manifestations);
   const { shelfmark } = bestRepresentation;
   const { track } = useEventStatistics();
   // We use hasBeenVisible to determine if the search result
@@ -169,7 +169,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
         <h2
           className="card-list-item__title text-header-h4 mb-4"
           data-cy="card-list-item-title"
-          lang={languageIsoCode}
+          lang={languageCode}
           id={searchTitleId}
         >
           <Link href={materialFullUrl} stopPropagation>
