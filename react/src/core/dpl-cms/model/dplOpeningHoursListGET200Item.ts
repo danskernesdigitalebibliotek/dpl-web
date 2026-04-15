@@ -11,6 +11,8 @@ import type { DplOpeningHoursListGET200ItemRepetition } from "./dplOpeningHoursL
 export type DplOpeningHoursListGET200Item = {
   /** The id for the branch the instance belongs to */
   branch_id: number;
+  /** External branch id (ISIL) */
+  branch_isil_id?: string;
   category: DplOpeningHoursListGET200ItemCategory;
   /** The date which the opening hours applies to. In ISO 8601 format. */
   date: string;

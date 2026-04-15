@@ -7,9 +7,9 @@
  */
 
 /**
- * The main image for the event.
+ * The main image for the event. (Scaled)
  */
 export type EventsGET200ItemImage = {
-  /** An absolute URL for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event. */
+  /** An absolute URL for the image. This is a link to a scaled version of the original image - the width will always be 1920px, but height/aspect ratio will vary. */
   url: string;
 };
