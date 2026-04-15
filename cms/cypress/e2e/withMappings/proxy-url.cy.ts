@@ -15,7 +15,7 @@ const checkThatUrlIsProxied = () => {
   });
 };
 
-describe.skip('Proxy URL replacement', () => {
+describe('Proxy URL replacement', () => {
   before(() => {
     LoginPage.ensureLogin(
       Cypress.env('DRUPAL_USERNAME'),
@@ -38,11 +38,8 @@ describe.skip('Proxy URL replacement', () => {
   it('Returns the proxied URL for anonymous users', () => {
     LoginPage.anonymousUser();
 
-    cy.intercept('GET', '/dpl-url-proxy*').as('proxyUrlRequest');
     const workPage = new WorkPage();
-
     workPage.visit(['work-of:150060-pressdisp:9GVA']);
-    cy.wait('@proxyUrlRequest');
     workPage.gotoOnline();
 
     checkThatUrlIsProxied();
@@ -54,11 +51,8 @@ describe.skip('Proxy URL replacement', () => {
       Cypress.env('DRUPAL_PASSWORD'),
     );
 
-    cy.intercept('GET', '/dpl-url-proxy*').as('proxyUrlRequest');
-
     const workPage = new WorkPage();
     workPage.visit(['work-of:150060-pressdisp:9GVA']);
-    cy.wait('@proxyUrlRequest');
     workPage.gotoOnline();
 
     checkThatUrlIsProxied();
