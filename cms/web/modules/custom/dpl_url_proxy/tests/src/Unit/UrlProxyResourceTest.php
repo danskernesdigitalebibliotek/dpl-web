@@ -33,6 +33,7 @@ class UrlProxyResourceTest extends UnitTestCase {
       'prefix' => '',
       'hostnames' => [],
     ]);
+    $config->getCacheTags()->willReturn([]);
 
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config_factory->get(DplUrlProxyInterface::CONFIG_NAME)->willReturn($config->reveal());
@@ -86,21 +87,72 @@ class UrlProxyResourceTest extends UnitTestCase {
   }
 
   /**
-   * Exception should be thrown if the required prefix has not been configured.
+   * URL should not have a prefix applied when the prefix is not configured.
+   *
+   * @param mixed[] $input
+   *   The input from the request body.
+   * @param mixed[] $expected_output
+   *   The expected output from the endpoint.
+   * @param mixed[] $conf
+   *   The proxy url configuration to use.
+   *
+   * @dataProvider thatUrlIsReturnedWithoutPrefixWhenPrefixIsNotSetProvider
    */
-  public function testThatExceptionIsThrownIfPrefixIsNotSet(): void {
+  public function testThatUrlIsReturnedWithoutPrefixWhenPrefixIsNotSet(array $input, array $expected_output, array $conf): void {
+    $config = $this->prophesize(ImmutableConfig::class);
+    $config->getCacheTags()->willReturn([]);
+    $config->get(Argument::any(), Argument::any())->willReturn($conf);
+
+    $config_factory = $this->prophesize(ConfigFactoryInterface::class);
+    $config_factory->get(DplUrlProxyInterface::CONFIG_NAME)->willReturn($config->reveal());
+
+    $config_manager = $this->prophesize(ConfigManagerInterface::class);
+    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
+
     $container = \Drupal::getContainer();
+    $container->set('config.manager', $config_manager->reveal());
+
     $resource = UrlProxyResource::create($container, [], '', []);
+    $request = Request::create('/dpl-url-proxy', 'GET', $input);
+    $response = $resource->get($request);
 
-    $this->expectException(HttpException::class);
-    $this->expectExceptionMessage('Could not generate url. Insufficient configuration');
-
-    $request = Request::create(
-      '/dpl-url-proxy',
-      'GET',
-      ['url' => 'http://foo.bar']
+    $this->assertEquals(
+      $expected_output,
+      $response->getResponseData()
     );
-    $resource->get($request);
+  }
+
+  /**
+   * Data provider for testThatUrlIsReturnedWithoutPrefixWhenPrefixIsNotSet.
+   *
+   * @return mixed[]
+   *   The test data.
+   */
+  public function thatUrlIsReturnedWithoutPrefixWhenPrefixIsNotSetProvider(): array {
+    return [
+      'no configuration at all' => [
+        ['url' => 'http://foo.bar'],
+        ['data' => ['url' => 'http://foo.bar']],
+        ['prefix' => '', 'hostnames' => []],
+      ],
+      'matching hostname but no prefix' => [
+        ['url' => 'http://john.com'],
+        ['data' => ['url' => 'http://jane.com']],
+        [
+          'prefix' => '',
+          'hostnames' => [
+            [
+              'hostname' => 'john.com',
+              'expression' => [
+                'regex' => '/(.*)ohn(.*)/',
+                'replacement' => '$1ane$2',
+              ],
+              'disable_prefix' => 0,
+            ],
+          ],
+        ],
+      ],
+    ];
   }
 
   /**

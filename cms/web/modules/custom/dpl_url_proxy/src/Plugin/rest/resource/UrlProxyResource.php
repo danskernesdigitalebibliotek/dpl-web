@@ -150,9 +150,7 @@ class UrlProxyResource extends ResourceBase {
       throw new HttpException(400, "Url $url_param does not contain a host name. Urls to be proxied must contain a host name.");
     }
 
-    if (!$prefix = $conf['prefix'] ?? NULL) {
-      throw new HttpException(500, 'Could not generate url. Insufficient configuration');
-    }
+    $prefix = $conf['prefix'] ?? '';
 
     // Search host names.
     foreach ($conf['hostnames'] as $config) {
