@@ -118,7 +118,7 @@ tasks:
           source dev-scripts/lagoon-error-handling.sh
 
           drush locale-check
-          drush locale-update
+          drush locale-update || echo "Warning: locale-update had errors (non-fatal)"
         service: cli
     - run:
         name: Import config translations
@@ -175,6 +175,13 @@ tasks:
         service: cli
 
 environments:
+  # Matches all PR environments (pr-1, pr-42, etc.)
+  "pr-[0-9]+":
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
   main:
     cronjobs:
       - name: drush cron

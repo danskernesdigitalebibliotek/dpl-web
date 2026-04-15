@@ -76,6 +76,13 @@ services:
       file: cms/docker-compose.yml
       service: redis
 
+  node:
+    build:
+      context: go
+      dockerfile: lagoon/node.dockerfile
+    labels:
+      lagoon.type: node
+
 volumes:
   projectroot:
     driver: local

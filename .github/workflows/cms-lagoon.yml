@@ -3,6 +3,9 @@ on:
     types: [ opened, synchronize, reopened, closed, edited ]
     paths:
       - 'cms/**'
+      - 'go/**'
+      - '.lagoon.yml'
+      - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
   push:
     branches:
@@ -10,6 +13,9 @@ on:
       - main
     paths:
       - 'cms/**'
+      - 'go/**'
+      - '.lagoon.yml'
+      - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
 name: CMS / Lagoon integration
 
