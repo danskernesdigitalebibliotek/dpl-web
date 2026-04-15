@@ -11,6 +11,8 @@ on:
     branches:
       - develop
       - main
+      - go-demo
+      - go-playground
     paths:
       - 'cms/**'
       - 'go/**'
@@ -43,7 +45,7 @@ jobs:
   CreateDeployment:
     name: CMS / Create deployment
     runs-on: ubuntu-latest
-    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')) }}
+    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
     needs: [BranchNameLength]
     steps:
       - env:

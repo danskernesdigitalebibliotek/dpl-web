@@ -182,6 +182,18 @@ environments:
         schedule: "M/15 * * * *"
         command: drush cron
         service: cli
+  go-demo:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+  go-playground:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
   main:
     cronjobs:
       - name: drush cron
