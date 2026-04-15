@@ -17,7 +17,7 @@ class Facet {
   /**
    * The values which relate to the search result.
    *
-   * @var \Drupal\dpl_campaign\Input\Value[]
+   * @var \Drupal\dpl_campaign\Input\FacetValue[]
    */
   public array $values;
 
@@ -26,7 +26,7 @@ class Facet {
    *
    * @param string $name
    *   The name of the facet.
-   * @param \Drupal\dpl_campaign\Input\Value[] $values
+   * @param \Drupal\dpl_campaign\Input\FacetValue[] $values
    *   The values of the facet.
    */
   public function __construct(string $name, array $values) {

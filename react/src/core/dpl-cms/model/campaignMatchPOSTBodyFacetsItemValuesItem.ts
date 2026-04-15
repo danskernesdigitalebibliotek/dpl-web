@@ -6,7 +6,7 @@
  * OpenAPI spec version: Versioning not supported
  */
 
-export type CampaignMatchPOSTBodyItemValuesItem = {
+export type CampaignMatchPOSTBodyFacetsItemValuesItem = {
   key?: string;
   score?: number;
   term?: string;
