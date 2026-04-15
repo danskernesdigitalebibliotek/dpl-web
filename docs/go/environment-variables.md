@@ -226,6 +226,13 @@ Used by scripts and tooling, not by the running application.
 
 Provided by the Lagoon hosting environment and consumed in `lagoon/start.sh` to derive runtime env vars:
 
+### `LAGOON_ENVIRONMENT`
+
+Used to detect pull request environments. On PR environments,
+`NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_DPL_CMS_HOSTNAME` and
+`NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS` are set to PR specific
+values.
+
 ### `LAGOON_DOMAIN`
 
 The primary domain of the Lagoon environment. Used to derive:
