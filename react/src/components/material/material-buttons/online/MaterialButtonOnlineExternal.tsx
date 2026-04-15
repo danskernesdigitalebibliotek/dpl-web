@@ -66,12 +66,7 @@ const MaterialButtonOnlineExternal: FC<MaterialButtonOnlineExternalProps> = ({
 
   // Handle URL translation when data or error changes
   useEffect(() => {
-    if (urlWasTranslated !== null) return;
-
-    if (error) {
-      // On error, fall back to the original URL
-      setUrlWasTranslated(false);
-    } else if (data?.data?.url) {
+    if (!urlWasTranslated && !error && data?.data?.url) {
       setTranslatedUrl(new URL(data.data.url));
       setUrlWasTranslated(true);
     }
@@ -92,7 +87,7 @@ const MaterialButtonOnlineExternal: FC<MaterialButtonOnlineExternalProps> = ({
     }
   };
 
-  if (urlWasTranslated === null) {
+  if (urlWasTranslated === null && !error) {
     return <MaterialButtonLoading size={size || "large"} />;
   }
 
