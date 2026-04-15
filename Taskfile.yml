@@ -112,9 +112,13 @@ tasks:
             fi
           }
 
+          # cms is spawned first (when selected) so it becomes pane 0 and thus
+          # the "main" pane of the main-vertical layout below — it has no
+          # watcher of its own and benefits from the larger area for shells,
+          # drush, etc.
+          has cms    && spawn "cd cms && task dev:reset; exec \$SHELL"
           has design && spawn "cd design-system && task dev:start && task dev:logs; exec \$SHELL"
           has react  && spawn "cd react && task dev:start; exec \$SHELL"
-          has cms    && spawn "cd cms && task dev:reset; exec \$SHELL"
           has go     && spawn "cd go && task dev:reset; exec \$SHELL"
 
           # Rsync bridge only matters when cms receives output from design and/or react.
@@ -122,7 +126,16 @@ tasks:
             spawn "task link:design-react-cms; exec \$SHELL"
           fi
 
-          tmux select-layout -t "$SESSION" tiled
+          # main-vertical when cms is present (cms gets the large left column);
+          # tiled otherwise, since no pane has a clear "primary" role.
+          if has cms; then
+            tmux set-option -t "$SESSION" main-pane-width "60%"
+            tmux select-layout -t "$SESSION" main-vertical
+            # cms was spawned first (pane 0); focus it so attach lands there.
+            tmux select-pane -t "$SESSION":dpl.0
+          else
+            tmux select-layout -t "$SESSION" tiled
+          fi
           tmux attach -t "$SESSION"
         silent: true
 
