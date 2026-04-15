@@ -30,5 +30,9 @@ module.exports = {
   // other assets) in-place. It seems like we end up with a full reload anyway.
   injectChanges: false,
   reloadDebounce: 300,
+  watchOptions: {
+    usePolling: true,
+    interval: 500,
+  },
   logLevel: 'debug',
 };
