@@ -27,7 +27,7 @@ import { convertFacetsToFilters, isValidFacetsState } from "./helpers";
 import { isWildcardQuery } from "../advanced-search-v2/lib/query-builder";
 import { allFacetFields, createFilters } from "./helper";
 import { useCampaignMatchPOST } from "../../core/dpl-cms/dpl-cms";
-import { CampaignMatchPOSTBodyItem } from "../../core/dpl-cms/model";
+import { CampaignMatchPOSTBody } from "../../core/dpl-cms/model/campaignMatchPOSTBody";
 
 interface SearchResultProps {
   q: string;
@@ -105,14 +105,17 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   useEffect(() => {
     if (facets.length === 0) return;
 
-    const body: CampaignMatchPOSTBodyItem[] = facets.map((facet) => ({
-      name: facet.name,
-      values: facet.values.map((v) => ({
-        key: v.key,
-        term: v.term,
-        score: v.score ?? undefined
+    const body: CampaignMatchPOSTBody = {
+      queries: [{ text: q }],
+      facets: facets.map((facet) => ({
+        name: facet.name,
+        values: facet.values.map((v) => ({
+          key: v.key,
+          term: v.term,
+          score: v.score ?? undefined
+        }))
       }))
-    }));
+    };
 
     campaignMutation.mutate({
       data: body,

@@ -18,7 +18,7 @@ import type {
 
 import type {
   CampaignMatchPOST200,
-  CampaignMatchPOSTBodyItem,
+  CampaignMatchPOSTBody,
   CampaignMatchPOSTParams,
   DplOpeningHoursCreatePOST200Item,
   DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
@@ -45,7 +45,7 @@ import type { ErrorType, BodyType } from "./mutator/fetcher";
  * @summary Get campaign matching search result facets
  */
 export const campaignMatchPOST = (
-  campaignMatchPOSTBodyItem: BodyType<CampaignMatchPOSTBodyItem[]>,
+  campaignMatchPOSTBody: BodyType<CampaignMatchPOSTBody>,
   params: CampaignMatchPOSTParams,
   signal?: AbortSignal
 ) => {
@@ -53,7 +53,7 @@ export const campaignMatchPOST = (
     url: `/dpl_campaign/match`,
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    data: campaignMatchPOSTBodyItem,
+    data: campaignMatchPOSTBody,
     params,
     signal
   });
@@ -66,19 +66,13 @@ export const getCampaignMatchPOSTMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof campaignMatchPOST>>,
     TError,
-    {
-      data: BodyType<CampaignMatchPOSTBodyItem[]>;
-      params: CampaignMatchPOSTParams;
-    },
+    { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
     TContext
   >;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof campaignMatchPOST>>,
   TError,
-  {
-    data: BodyType<CampaignMatchPOSTBodyItem[]>;
-    params: CampaignMatchPOSTParams;
-  },
+  { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
   TContext
 > => {
   const mutationKey = ["campaignMatchPOST"];
@@ -92,10 +86,7 @@ export const getCampaignMatchPOSTMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof campaignMatchPOST>>,
-    {
-      data: BodyType<CampaignMatchPOSTBodyItem[]>;
-      params: CampaignMatchPOSTParams;
-    }
+    { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams }
   > = (props) => {
     const { data, params } = props ?? {};
 
@@ -108,9 +99,7 @@ export const getCampaignMatchPOSTMutationOptions = <
 export type CampaignMatchPOSTMutationResult = NonNullable<
   Awaited<ReturnType<typeof campaignMatchPOST>>
 >;
-export type CampaignMatchPOSTMutationBody = BodyType<
-  CampaignMatchPOSTBodyItem[]
->;
+export type CampaignMatchPOSTMutationBody = BodyType<CampaignMatchPOSTBody>;
 export type CampaignMatchPOSTMutationError = ErrorType<void>;
 
 /**
@@ -123,19 +112,13 @@ export const useCampaignMatchPOST = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof campaignMatchPOST>>,
     TError,
-    {
-      data: BodyType<CampaignMatchPOSTBodyItem[]>;
-      params: CampaignMatchPOSTParams;
-    },
+    { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
     TContext
   >;
 }): UseMutationResult<
   Awaited<ReturnType<typeof campaignMatchPOST>>,
   TError,
-  {
-    data: BodyType<CampaignMatchPOSTBodyItem[]>;
-    params: CampaignMatchPOSTParams;
-  },
+  { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
   TContext
 > => {
   const mutationOptions = getCampaignMatchPOSTMutationOptions(options);

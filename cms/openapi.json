@@ -52,31 +52,49 @@
             "default": "json"
           }, 
           {
-            "name": "facets",
-            "description": "A facet to match against",
+            "name": "triggers",
+            "description": "Triggers to match campaigns against",
             "in": "body",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "values": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "string"
-                        },
-                        "term": {
-                          "type": "string"
-                        },
-                        "score": {
-                          "type": "integer"
+              "type": "object",
+              "properties": {
+                "queries": {
+                  "type": "array",
+                  "description": "The users free-text queries, used in a fuzzy-search.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "facets": {
+                  "type": "array",
+                  "description": "A facet to match against",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "values": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string"
+                            },
+                            "term": {
+                              "type": "string"
+                            },
+                            "score": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     }
@@ -130,6 +148,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input"
           },
           "404": {
             "description": "No matching campaign found"

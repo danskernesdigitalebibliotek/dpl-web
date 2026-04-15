@@ -14,7 +14,7 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
     return null;
   }
 
-  const onClick = (event: React.MouseEvent<HTMLInputElement>) => {
+  const onClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!campaignData.url) {
       return;
     }

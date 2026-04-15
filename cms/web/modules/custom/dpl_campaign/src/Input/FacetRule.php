@@ -5,7 +5,7 @@ namespace Drupal\dpl_campaign\Input;
 /**
  * A rule represents the ranking of a term within a facet relating to a result.
  */
-class Rule {
+class FacetRule {
 
   /**
    * Construct a new rule.

@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_campaign_rules
     - node.type.campaign
     - paragraphs.paragraphs_type.campaign_rule
+    - paragraphs.paragraphs_type.campaign_trigger_query
   module:
     - entity_reference_revisions
 id: node.campaign.field_campaign_rules
@@ -23,6 +24,7 @@ settings:
   handler_settings:
     target_bundles:
       campaign_rule: campaign_rule
+      campaign_trigger_query: campaign_trigger_query
     negate: 0
     target_bundles_drag_drop:
       campaign_rule:
