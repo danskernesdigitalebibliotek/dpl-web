@@ -68,8 +68,93 @@ tasks:
       - cmd: |
           task --watch --interval 500ms --parallel link:sync:design-system-to-cms link:sync:react-to-cms
 
+  dev:up:
+    desc: 'Start all subprojects in parallel tmux panes (use dev:up:<combo> for subsets, e.g. dev:up:design-cms)'
+    deps: [deps:tmux]
+    cmds:
+      - cmd: |
+          SESSION="${DPL_DEV_SESSION:-dpl-web}"
+          if tmux has-session -t "$SESSION" 2>/dev/null; then
+            echo "tmux session '$SESSION' already exists."
+            echo "  Attach: tmux attach -t $SESSION"
+            echo "  Reset:  tmux kill-session -t $SESSION"
+            exit 1
+          fi
+
+          # Wildcard sibling dev:up:* passes SUBPROJECTS; bare dev:up gets all four.
+          ARGS="{{.SUBPROJECTS | default "design react cms go"}}"
+
+          for a in $ARGS; do
+            case "$a" in
+              design|react|cms|go) ;;
+              *) echo "Unknown subproject '$a'. Valid: design react cms go" >&2; exit 1 ;;
+            esac
+          done
+
+          has() { echo " $ARGS " | grep -q " $1 "; }
+
+          # Yarn-link design-system into react only when both are in play.
+          if has design && has react; then
+            task link:design-react
+          fi
+
+          # Kill the session (and every pane's process) whenever this task
+          # exits — via detach, Ctrl-C in the attach, or the terminal closing.
+          trap 'tmux kill-session -t "$SESSION" 2>/dev/null || true' EXIT
+
+          FIRST=1
+          spawn() {
+            if [ "$FIRST" = 1 ]; then
+              tmux new-session -d -s "$SESSION" -n dpl "$1"
+              FIRST=0
+            else
+              tmux split-window -t "$SESSION" "$1"
+            fi
+          }
+
+          has design && spawn "cd design-system && task dev:start && task dev:logs; exec \$SHELL"
+          has react  && spawn "cd react && task dev:start; exec \$SHELL"
+          has cms    && spawn "cd cms && task dev:reset; exec \$SHELL"
+          has go     && spawn "cd go && task dev:reset; exec \$SHELL"
+
+          # Rsync bridge only matters when cms receives output from design and/or react.
+          if has cms && { has design || has react; }; then
+            spawn "task link:design-react-cms; exec \$SHELL"
+          fi
+
+          tmux select-layout -t "$SESSION" tiled
+          tmux attach -t "$SESSION"
+        silent: true
+
+  dev:up:*:
+    desc: 'Start a named combination, e.g. task dev:up:design-cms or task dev:up:design-react-cms'
+    vars:
+      COMBO: '{{index .MATCH 0}}'
+    cmds:
+      - task: dev:up
+        vars:
+          SUBPROJECTS: '{{.COMBO | replace "-" " "}}'
+
+  dev:down:
+    desc: Stop everything dev:up may have left running (tmux session + docker in every subproject)
+    cmds:
+      - cmd: tmux kill-session -t "${DPL_DEV_SESSION:-dpl-web}" 2>/dev/null || true
+        silent: true
+      - cmd: cd design-system && task dev:down
+        ignore_error: true
+      - cmd: cd react && task dev:down
+        ignore_error: true
+      - cmd: cd cms && task dev:down
+        ignore_error: true
+
   deps:rsync:
     internal: true
     preconditions:
       - sh: rsync --version
         msg: rsync is not installed.
+
+  deps:tmux:
+    internal: true
+    preconditions:
+      - sh: command -v tmux >/dev/null
+        msg: 'tmux is required. Install it (e.g. "brew install tmux") and retry.'
