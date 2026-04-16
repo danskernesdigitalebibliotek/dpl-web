@@ -3822,17 +3822,17 @@
   resolved "https://registry.yarnpkg.com/@redux-devtools/extension/-/extension-4.0.0.tgz#bd03401ff0f033350b1f0bfa9b210029c5450627"
   integrity sha512-pLIzgo5MvqdDLe5D1pzHLgmr8THra/DOyRf5MvOEPZnKKDn6RhFbNSS5oXZ3Cal0cpx08kx7sR6zD8QgoXEnZA==
 
-"@reloaddk/wsdl-tsclient@^1.9.8":
-  version "1.9.8"
-  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.9.8.tgz#6f51ab3a53af335d649be2a188200d2a004cff0f"
-  integrity sha512-F/ls6Jfek7DO6fPO+OTMtEU1pOM4a5crmit9Mth359IbgsE8zDnZW3eylQIUyIu5eaJu1DEc9QsevKPEOmHgkw==
+"@reloaddk/wsdl-tsclient@^1.9.9":
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/@reloaddk/wsdl-tsclient/-/wsdl-tsclient-1.9.9.tgz#1567d272d992a2243a42f97ff9074c9a182bf282"
+  integrity sha512-HDb6GW3h/f4z3AXw4WfPP/tB/g6x8qQyLMPxredb8Go5BxExtAFmI5zn6ljHv/vrWVD9UwWGCITF7CuEgibmiA==
   dependencies:
     camelcase "^9.0.0"
     chalk "^5.6.2"
     sanitize-filename "^1.6.3"
     soap "^1.7.1"
     supports-color "^10.2.2"
-    ts-morph "^27.0.2"
+    ts-morph "^28.0.0"
     yargs "^18.0.0"
 
 "@repeaterjs/repeater@^3.0.4", "@repeaterjs/repeater@^3.0.6":
@@ -4890,10 +4890,10 @@
   resolved "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
-"@ts-morph/common@~0.28.1":
-  version "0.28.1"
-  resolved "https://registry.yarnpkg.com/@ts-morph/common/-/common-0.28.1.tgz#10ec52182d5c310832b669af7784a34fc3da3ca1"
-  integrity sha512-W74iWf7ILp1ZKNYXY5qbddNaml7e9Sedv5lvU1V8lftlitkc9Pq1A+jlH23ltDgWYeZFFEqGCD1Ies9hqu3O+g==
+"@ts-morph/common@~0.29.0":
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/@ts-morph/common/-/common-0.29.0.tgz#bb1ed737f309c8270bb2e92207066343c1302ae2"
+  integrity sha512-35oUmphHbJvQ/+UTwFNme/t2p3FoKiGJ5auTjjpNTop2dyREspirjMy82PLSC1pnDJ8ah1GU98hwpVt64YXQsg==
   dependencies:
     minimatch "^10.0.1"
     path-browserify "^1.0.1"
@@ -15158,12 +15158,12 @@ ts-log@^2.2.3:
   resolved "https://registry.npmjs.org/ts-log/-/ts-log-2.2.7.tgz"
   integrity sha512-320x5Ggei84AxzlXp91QkIGSw5wgaLT6GeAH0KsqDmRZdVWW2OiSeVvElVoatk3f7nicwXlElXsoFkARiGE2yg==
 
-ts-morph@^27.0.2:
-  version "27.0.2"
-  resolved "https://registry.yarnpkg.com/ts-morph/-/ts-morph-27.0.2.tgz#7b2fcce6822eeca3942fa6c601f159d5920b1422"
-  integrity sha512-fhUhgeljcrdZ+9DZND1De1029PrE+cMkIP7ooqkLRTrRLTqcki2AstsyJm0vRNbTbVCNJ0idGlbBrfqc7/nA8w==
+ts-morph@^28.0.0:
+  version "28.0.0"
+  resolved "https://registry.yarnpkg.com/ts-morph/-/ts-morph-28.0.0.tgz#cd3ebdf89742a32b06ea7327df6445364ee26631"
+  integrity sha512-Wp3tnZ2bzwxyTZMtgWVzXDfm7lB1Drz+y9DmmYH/L702PQhPyVrp3pkou3yIz4qjS14GY9kcpmLiOOMvl8oG1g==
   dependencies:
-    "@ts-morph/common" "~0.28.1"
+    "@ts-morph/common" "~0.29.0"
     code-block-writer "^13.0.3"
 
 ts-node@^10.9.2:
