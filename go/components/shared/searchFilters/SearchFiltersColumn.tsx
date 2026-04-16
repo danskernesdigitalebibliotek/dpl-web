@@ -7,6 +7,8 @@ import Icon from "@/components/shared/icon/Icon"
 import {
   createToggleFilterCallback,
   facetTermIsSelected,
+  getFacetTermSortPriority,
+  getFacetTermTranslations,
   getFacetTranslation,
   sortByActiveFacets,
 } from "@/components/shared/searchFilters/helper"
@@ -21,22 +23,6 @@ type SearchFiltersColumnProps = {
   isLast: boolean
 }
 
-const materialTypeFacetsTranslations: Record<string, string> = {
-  bog: "Bog",
-  "e-bog": "E-bog",
-  "graphic novel": "Graphic novel",
-  "graphic novel (elektronisk)": "E-Graphic novel",
-  "graphic novel (online)": "E-Graphic novel",
-  tegneserie: "Tegneserie",
-  "tegneserie (elektronisk)": "E-Tegneserie",
-  "tegneserie (online)": "E-Tegneserie",
-  billedbog: "Billedbog",
-  "billedbog (elektronisk)": "E-Billedbog",
-  "billedbog (online)": "E-Billedbog",
-  "lydbog (online)": "E-Lydbog",
-  podcast: "Podcast",
-}
-
 type FacetValue = SearchFacetFragment["values"][number]
 
 const sortByPriority =
@@ -47,22 +33,10 @@ const sortByPriority =
 const sortAlphabetically = (a: FacetValue, b: FacetValue): number =>
   a.term.localeCompare(b.term, "da", { numeric: true })
 
+const facetTermTranslations = getFacetTermTranslations()
+
 const facetSortStrategies: Partial<Record<string, (a: FacetValue, b: FacetValue) => number>> = {
-  materialTypesSpecific: sortByPriority([
-    "bog",
-    "e-bog",
-    "lydbog (online)",
-    "podcast",
-    "billedbog",
-    "billedbog (elektronisk)",
-    "billedbog (online)",
-    "tegneserie",
-    "tegneserie (elektronisk)",
-    "tegneserie (online)",
-    "graphic novel",
-    "graphic novel (elektronisk)",
-    "graphic novel (online)",
-  ]),
+  materialTypesSpecific: sortByPriority(getFacetTermSortPriority()),
   age: sortAlphabetically,
 }
 
@@ -138,7 +112,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
                 withAnimation
                 data-cy={cyKeys["filter-button"]}>
                 {facet.name === "materialTypesSpecific"
-                  ? materialTypeFacetsTranslations[value.term]
+                  ? (facetTermTranslations[value.term] ?? value.term)
                   : value.term}
               </BadgeButton>
             ))}

@@ -31,7 +31,22 @@ const materialTypes = {
     AUDIO_BOOK_ONLINE: "Lydbog",
     PODCAST: "Podcast",
   } as { [key: string]: string },
-
+  "materialtypes.facetTermMap": {
+    BOOK: "bog",
+    EBOOK: "e-bog",
+    BOOK_ELECTRONIC: "e-bog",
+    GRAPHIC_NOVEL: "graphic novel",
+    GRAPHIC_NOVEL_ELECTRONIC: "graphic novel (elektronisk)",
+    GRAPHIC_NOVEL_ONLINE: "graphic novel (online)",
+    COMIC: "tegneserie",
+    COMIC_ELECTRONIC: "tegneserie (elektronisk)",
+    COMIC_ONLINE: "tegneserie (online)",
+    PICTURE_BOOK: "billedbog",
+    PICTURE_BOOK_ELECTRONIC: "billedbog (elektronisk)",
+    PICTURE_BOOK_ONLINE: "billedbog (online)",
+    AUDIO_BOOK_ONLINE: "lydbog (online)",
+    PODCAST: "podcast",
+  } as { [key: string]: string },
   "materialtypes.icons": {
     book: ["BOOK"],
     ebook: ["EBOOK", "BOOK_ELECTRONIC"],

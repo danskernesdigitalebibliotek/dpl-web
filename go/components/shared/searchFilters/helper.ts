@@ -35,6 +35,36 @@ export const getFacetTranslation = (facetFilter: keyof TFilters) => {
   return translation || ""
 }
 
+export const getFacetTermTranslations = (): Record<string, string> => {
+  const facetTermMap = goConfig("materialtypes.facetTermMap")
+  const translations = goConfig("materialtypes.translations")
+
+  const result: Record<string, string> = {}
+  for (const [enumCode, facetTerm] of Object.entries(facetTermMap)) {
+    const displayName = translations[enumCode]
+    if (displayName && !result[facetTerm]) {
+      result[facetTerm] = displayName
+    }
+  }
+  return result
+}
+
+export const getFacetTermSortPriority = (): string[] => {
+  const sortPriority = goConfig("materialtypes.sortpriority")
+  const facetTermMap = goConfig("materialtypes.facetTermMap")
+
+  const seen = new Set<string>()
+  const result: string[] = []
+  for (const enumCode of sortPriority) {
+    const facetTerm = facetTermMap[enumCode]
+    if (facetTerm && !seen.has(facetTerm)) {
+      seen.add(facetTerm)
+      result.push(facetTerm)
+    }
+  }
+  return result
+}
+
 export const facetTermIsSelected = ({
   filters,
   facet,
