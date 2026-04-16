@@ -3,7 +3,7 @@
 # Used by Lagoon environments (PR, demo and playground).
 # Based on: https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM uselagoon/node-20-builder:latest AS base
+FROM uselagoon/node-24-builder:latest AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -38,7 +38,7 @@ RUN BASE_DOMAIN="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk
     export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
     yarn run build
 
-FROM uselagoon/node-20:latest AS runner
+FROM uselagoon/node-24:latest AS runner
 # start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.
 RUN apk add --no-cache bash
 WORKDIR /app
