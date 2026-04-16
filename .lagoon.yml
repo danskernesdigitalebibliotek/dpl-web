@@ -7,7 +7,7 @@ project: dpl-cms-core
 ssh: 20.238.147.183:22
 api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
 environment_variables:
-  git_sha: 'true'
+  git_sha: "true"
 
 tasks:
   post-rollout:
@@ -118,7 +118,7 @@ tasks:
           source dev-scripts/lagoon-error-handling.sh
 
           drush locale-check
-          drush locale-update || echo "Warning: locale-update had errors (non-fatal)"
+          drush locale-update
         service: cli
     - run:
         name: Import config translations
