@@ -1,0 +1,23 @@
+uuid: 09d43d4f-78cc-4741-8140-06dc0435d770
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.campaign_trigger_query.field_campaign_trigger_phrase
+    - paragraphs.paragraphs_type.campaign_trigger_query
+id: paragraph.campaign_trigger_query.default
+targetEntityType: paragraph
+bundle: campaign_trigger_query
+mode: default
+content:
+  field_campaign_trigger_phrase:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

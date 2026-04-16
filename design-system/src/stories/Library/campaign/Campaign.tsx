@@ -1,32 +1,27 @@
 import React from "react";
-import clsx from "clsx";
+import { ReactComponent as ArrowSmallRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 
 export type CampaignProps = {
-  reverse?: boolean;
-  ellipsis?: boolean;
   title?: string;
+  url: string;
   imageUrl?: string;
 };
 
 const Campaign: React.FunctionComponent<CampaignProps> = ({
-  reverse,
-  ellipsis,
   title,
+  url,
   imageUrl,
 }) => {
-  const classes = {
-    campaign: clsx(`campaign`, { "campaign--reverse": reverse }),
-    image: clsx("campaign__image", { "campaign__image--full-width": !title }),
-    title: clsx("campaign__title", {
-      "campaign__title--ellipsis": ellipsis,
-    }),
-  };
-
   return (
-    <section className={classes.campaign}>
-      {imageUrl && <img className={classes.image} src={imageUrl} alt="" />}
-      {title && <h4 className={classes.title}>{title}</h4>}
-    </section>
+    <a className="campaign arrow arrow__hover--right-small" href={url}>
+      {imageUrl && (
+        <div className="campaign__image">
+          <img src={imageUrl} alt="" />
+        </div>
+      )}
+      {title && <h2 className="campaign__title">{title}</h2>}
+      <ArrowSmallRight />
+    </a>
   );
 };
 
