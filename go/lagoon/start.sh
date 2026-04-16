@@ -4,6 +4,7 @@
 # (see node.dockerfile). These runtime exports only affect server-side
 # rendering — they ensure SSR uses the correct URLs for the environment.
 
+# "main" covers production sites, "develop" covers staging sites.
 if [[ "$LAGOON_ENVIRONMENT" == "main" || "$LAGOON_ENVIRONMENT" == "develop" ]]; then
   GO_SUB_DOMAIN="go."
   PRIMARY_GO_DOMAIN="${GO_SUB_DOMAIN}${LAGOON_DOMAIN}"
