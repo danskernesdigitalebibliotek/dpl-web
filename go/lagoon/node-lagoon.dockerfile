@@ -39,6 +39,8 @@ RUN BASE_DOMAIN="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk
     yarn run build
 
 FROM uselagoon/node-20:latest AS runner
+# start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.
+RUN apk add --no-cache bash
 WORKDIR /app
 
 ENV NODE_ENV=production
