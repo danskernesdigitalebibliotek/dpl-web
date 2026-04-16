@@ -1,8 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1
 # Full build for the Go (Next.js) application within Lagoon.
-# Used by all Lagoon environments (PR, test, and production).
-# node.dockerfile is a separate file used only for publishing the
-# source image to GHCR — it must not be confused with this file.
+# Used by Lagoon environments (PR, demo and playground).
 # Based on: https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
 FROM uselagoon/node-20-builder:latest AS base
@@ -40,7 +38,6 @@ RUN BASE_DOMAIN="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk
     export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
     yarn run build
 
-# Production image
 FROM uselagoon/node-20:latest AS runner
 WORKDIR /app
 
