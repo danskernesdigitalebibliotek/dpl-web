@@ -20,6 +20,10 @@ function getEnvs() {
     GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
     NODE_ENV: process.env.NODE_ENV,
     TEST_MODE: process.env.TEST_MODE,
+    WEDOBOOKS_APPLICATION_ID: process.env.NEXT_PUBLIC_WEDOBOOKS_APPLICATION_ID,
+    WEDOBOOKS_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_WEDOBOOKS_FIREBASE_API_KEY,
+    WEDOBOOKS_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_WEDOBOOKS_FIREBASE_APP_ID,
+    WEDOBOOKS_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_WEDOBOOKS_FIREBASE_PROJECT_ID,
 
     // Server-only env variables
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
@@ -34,6 +38,7 @@ function getEnvs() {
     UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE,
     UNLILOGIN_SERVICES_WS_PASSWORD: process.env.UNLILOGIN_SERVICES_WS_PASSWORD,
     UNLILOGIN_SERVICES_WS_USER: process.env.UNLILOGIN_SERVICES_WS_USER,
+    WEDOBOOKS_READER_API_KEY: process.env.WEDOBOOKS_READER_API_KEY,
   }
 }
 
@@ -47,6 +52,10 @@ const EnvSchema = z.object({
   GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
   TEST_MODE: z.coerce.boolean().default(false),
+  WEDOBOOKS_APPLICATION_ID: z.string().optional(),
+  WEDOBOOKS_FIREBASE_API_KEY: z.string().optional(),
+  WEDOBOOKS_FIREBASE_APP_ID: z.string().optional(),
+  WEDOBOOKS_FIREBASE_PROJECT_ID: z.string().optional(),
 })
 
 // Environment variables only available in Nodejs.
@@ -73,6 +82,7 @@ const EnvServerSchema = z.object({
   UNILOGIN_CLIENT_ID: z.string().optional(),
   UNILOGIN_CLIENT_SECRET: z.string().optional(),
   UNILOGIN_WELLKNOWN_URL: z.string().refine(validateUrl).optional(),
+  WEDOBOOKS_READER_API_KEY: z.string().optional(),
 })
 
 type EnvSchema = z.infer<typeof EnvSchema>
