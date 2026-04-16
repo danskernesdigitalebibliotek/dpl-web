@@ -79,7 +79,7 @@ services:
   node:
     build:
       context: go
-      dockerfile: lagoon/node.dockerfile
+      dockerfile: lagoon/node-lagoon.dockerfile
     labels:
       lagoon.type: node
 
