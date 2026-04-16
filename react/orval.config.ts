@@ -142,7 +142,7 @@ export default defineConfig({
     },
     input: {
       target:
-        "https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-web/develop/cms/openapi.json",
+        "../cms/openapi.json",
       converterOptions: {
         indent: 2
       }
