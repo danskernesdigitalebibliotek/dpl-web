@@ -118,7 +118,7 @@
     "eslint-webpack-plugin": "^6.0.0",
     "glob": "11.0.1",
     "globals": "^17.5.0",
-    "happy-dom": "^20.8.9",
+    "happy-dom": "^20.9.0",
     "istanbul-lib-coverage": "^3.2.2",
     "markdownlint-cli2": "^0.22.0",
     "mutationobserver-shim": "^0.3.7",
