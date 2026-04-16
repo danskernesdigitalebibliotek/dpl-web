@@ -50,6 +50,11 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const toggleFilter = createToggleFilterCallback(actor)
   const facetData = actor.getSnapshot().context.facetData
 
+  // Filter out materialTypesSpecific terms that are not in the defined facet term map
+  if (facet.name === "materialTypesSpecific") {
+    facet.values = facet.values.filter(value => value.term in facetTermTranslations)
+  }
+
   // Sort facet values using the facet-specific sort strategy if one exists
   const sortStrategy = facetSortStrategies[facet.name]
   if (sortStrategy) {
@@ -112,7 +117,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
                 withAnimation
                 data-cy={cyKeys["filter-button"]}>
                 {facet.name === "materialTypesSpecific"
-                  ? (facetTermTranslations[value.term] ?? value.term)
+                  ? facetTermTranslations[value.term]
                   : value.term}
               </BadgeButton>
             ))}

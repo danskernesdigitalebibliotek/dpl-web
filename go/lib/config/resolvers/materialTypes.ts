@@ -9,10 +9,10 @@ const materialTypes = {
     "COMIC_ELECTRONIC",
     "COMIC_ONLINE",
     "AUDIO_BOOK_ONLINE",
+    "BOOK",
     "PICTURE_BOOK",
     "COMIC",
     "GRAPHIC_NOVEL",
-    "BOOK",
     "PODCAST",
   ] as string[],
   "materialtypes.translations": {
