@@ -338,6 +338,7 @@
                 "amazeeio/drupal_integrations"
             ],
             "file-mapping": {
+                "[project-root]/.editorconfig": false,
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/all.services.yml": "assets/all.services.yml",
                 "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
