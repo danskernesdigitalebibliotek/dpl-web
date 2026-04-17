@@ -1,6 +1,6 @@
 # This file combines go/lagoon/node.dockerfile and the old
 # cms/lagoon/node.dockerfile.
-FROM uselagoon/node-20-builder:latest AS builder
+FROM uselagoon/node-24-builder:latest AS builder
 
 ARG LAGOON_ENVIRONMENT
 ARG LAGOON_PROJECT
@@ -25,7 +25,7 @@ RUN yarn install --frozen-lockfile
 RUN yarn run build:stage1
 
 # Production image, copy all the files and run next
-FROM uselagoon/node-20:latest AS runner
+FROM uselagoon/node-24:latest AS runner
 WORKDIR /app
 
 # Propagate the build arguments as env variables to the runtime.
