@@ -3,13 +3,21 @@ on:
     types: [ opened, synchronize, reopened, closed, edited ]
     paths:
       - 'cms/**'
+      - 'go/**'
+      - '.lagoon.yml'
+      - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
   push:
     branches:
       - develop
       - main
+      - go-demo
+      - go-playground
     paths:
       - 'cms/**'
+      - 'go/**'
+      - '.lagoon.yml'
+      - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
 name: CMS / Lagoon integration
 
@@ -25,8 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ensure branch name length
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
           if [ "${#BRANCH_NAME}" -gt 100 ]; then
             echo "Branch name too long. This cannot be deployed to Lagoon."
             exit 1
@@ -36,23 +45,26 @@ jobs:
   CreateDeployment:
     name: CMS / Create deployment
     runs-on: ubuntu-latest
-    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')) }}
+    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
     needs: [BranchNameLength]
     steps:
-      - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web/dpl-web-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+      - env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web/dpl-web-${{ env.LAGOON_ENVIRONMENT }}/deployments"
 
-          DEPLOYMENT_ID=$(echo '{
-            "ref": "${{ github.head_ref || github.ref_name }}",
-            "environment": "${{ env.LAGOON_ENVIRONMENT }}",
-            "auto_merge": false,
-            "required_contexts": []
-          }' | gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments" --input - --jq '.id')
+          DEPLOYMENT_ID="$(
+            jq -nc \
+              --arg ref "$BRANCH_NAME" \
+              --arg environment "${{ env.LAGOON_ENVIRONMENT }}" \
+              '{ref: $ref, environment: $environment, auto_merge: false, required_contexts: []}' \
+            | gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments" --input - --jq '.id'
+          )"
 
           gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments/$DEPLOYMENT_ID/statuses" \
             -f "state=in_progress" -f "log_url=$LAGOON_DEPLOYS_LOG_URL"
 
-          echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_OUTPUT
+          echo "deployment_id=$DEPLOYMENT_ID" >> "$GITHUB_OUTPUT"
 
   CreateDeploymentBNF:
     name: CMS / Create BNF deployment
@@ -60,20 +72,23 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'bnf:') && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
     needs: [BranchNameLength]
     steps:
-      - run: |
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web-bnf/dpl-web-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+      - env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.${{ env.LAGOON_DOMAIN }}/projects/dpl-web-bnf/dpl-web-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments"
 
-          DEPLOYMENT_ID=$(echo '{
-            "ref": "${{ github.head_ref || github.ref_name }}",
-            "environment": "${{ env.LAGOON_ENVIRONMENT }}-bnf",
-            "auto_merge": false,
-            "required_contexts": []
-          }' | gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments" --input - --jq '.id')
+          DEPLOYMENT_ID="$(
+            jq -nc \
+              --arg ref "$BRANCH_NAME" \
+              --arg environment "${{ env.LAGOON_ENVIRONMENT }}-bnf" \
+              '{ref: $ref, environment: $environment, auto_merge: false, required_contexts: []}' \
+            | gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments" --input - --jq '.id'
+          )"
 
           gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments/$DEPLOYMENT_ID/statuses" \
             -f "state=in_progress" -f "log_url=$LAGOON_DEPLOYS_LOG_URL"
 
-          echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_OUTPUT
+          echo "deployment_id=$DEPLOYMENT_ID" >> "$GITHUB_OUTPUT"
 
   # When we close the pull request, we want to set the environment as inactive.
   CloseEnvironment:

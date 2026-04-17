@@ -2,9 +2,11 @@ describe('Testing branch functionality', () => {
   const branchTitle = 'test-branch';
   const branchEmail = 'info+ddf@reload.dk';
   const branchPhone = '88 88 88 88';
-  const branchAddress = 'Krystalgade 15 1172';
-  const branchAddressStreet = 'Krystalgade 15';
-  const branchAddressPostal = '1172 København K';
+  // We use the Ishøj address, as it's one of the "strange" addresses that only
+  // show up in /husnummer of Dataforsyningen, but not in /adresse.
+  const branchAddressSearch = 'Ishøj Store Torv 1 2635';
+  const branchAddressStreet = 'Ishøj Store Torv 1';
+  const branchAddressPostal = '2635 Ishøj';
 
   it('Check that contact info show up on branches', () => {
     cy.deleteEntitiesIfExists(branchTitle);
@@ -23,10 +25,10 @@ describe('Testing branch functionality', () => {
     cy.get('[name="field_address_gsearch[0][user_input]"]')
       .siblings('.select2-container')
       .click();
-    cy.get('.select2-search__field').type(branchAddress);
+    cy.get('.select2-search__field').type(branchAddressSearch);
     cy.wait('@gsearchResults');
     cy.get('.select2-results__option')
-      .contains('Krystalgade 15, 1172 København K')
+      .contains(`${branchAddressStreet}, ${branchAddressPostal}`)
       .first()
       .click();
     cy.clickSaveButton();

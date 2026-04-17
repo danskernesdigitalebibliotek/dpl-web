@@ -57,4 +57,4 @@ configuration. Potential improvements going forward are:
    by the mounting application to provide configuration values and by the
    React application to validate the provided values. One format for doing so
    would be JSON Schema which is widely supported in JavaScript, TypeScript and
-   PHP (used by [DPL CMS](https://github.com/danskernesdigitalebibliotek/dpl-cms)).
+   PHP (used by [DPL CMS](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/cms)).

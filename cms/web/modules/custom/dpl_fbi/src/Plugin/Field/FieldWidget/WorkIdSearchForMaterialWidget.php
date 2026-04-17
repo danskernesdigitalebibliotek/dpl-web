@@ -23,6 +23,60 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    *
+   * @return array<mixed>
+   *   The default settings.
+   */
+  public static function defaultSettings() {
+    return [
+      'use_go_vip_profile' => FALSE,
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @param array<mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form_state object.
+   *
+   * @return array<mixed>
+   *   The altered form array.
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $elements = parent::settingsForm($form, $form_state);
+
+    $elements['use_go_vip_profile'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use GO VIP profile'),
+      '#default_value' => $this->getSetting('use_go_vip_profile'),
+    ];
+
+    return $elements;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @return array<string>
+   *   The summary strings.
+   */
+  public function settingsSummary() {
+    $summary = parent::settingsSummary();
+
+    if ($this->getSetting('use_go_vip_profile')) {
+      $summary[] = $this->t('Uses GO VIP profile');
+    }
+    else {
+      $summary[] = $this->t('Does not use GO VIP profile');
+    }
+
+    return $summary;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
    * @throws \Random\RandomException
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
@@ -59,6 +113,7 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
       '#theme' => 'dpl_react_app',
       '#name' => 'material-search',
       '#data' => [
+        'use-go-vip-profile' => $this->getSetting('use_go_vip_profile') ? 'true' : 'false',
         'class' => ['react-app-container'],
         'unique-identifier' => $identifier,
         'material-search-search-input-text' => $this->t('Search for material', [], ['context' => 'Material search']),

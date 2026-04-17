@@ -90,7 +90,7 @@ const workMock = {
           main: [
             {
               display: "dansk",
-              isoCode: "dan",
+              iso639Set1: "da",
             },
           ],
         },
@@ -178,7 +178,7 @@ const workMock = {
           main: [
             {
               display: "dansk",
-              isoCode: "dan",
+              iso639Set1: "da",
             },
           ],
         },
@@ -269,7 +269,7 @@ const workMock = {
         main: [
           {
             display: "dansk",
-            isoCode: "dan",
+            iso639Set1: "da",
           },
         ],
       },

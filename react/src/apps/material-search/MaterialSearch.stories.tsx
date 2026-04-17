@@ -22,7 +22,8 @@ const previouslySelectedWorkId = "work-of:800010-katalog:99122475830405763";
 const previouslySelectedMaterialType = "lydbog (cd-mp3)";
 
 interface MaterialSearchHiddenInputsProps
-  extends MaterialSearchEntryProps,
+  extends
+    MaterialSearchEntryProps,
     MaterialSearchEntryTextProps,
     GlobalEntryTextProps {
   defaultWorkId: string;
@@ -144,6 +145,10 @@ const meta: Meta<typeof MaterialSearchHiddenInputs> = {
     materialSearchAriaButtonSelectWorkWithText: {
       control: { type: "text" }
     },
+    useGoVipProfile: {
+      control: { type: "select" },
+      options: ["true", "false"]
+    },
     materialSearchSearchInputPlaceholderText: {
       control: { type: "text" }
     },
@@ -233,7 +238,15 @@ export const Primary: Story = {
     materialSearchErrorHiddenInputsNotFoundHeadingText:
       "Error retrieving saved data. Inputs not found.",
     materialSearchErrorHiddenInputsNotFoundDescriptionText:
-      "Something went wrong when trying to find the previously saved values. Please try again. If the problem persists, something could be wrong with the app."
+      "Something went wrong when trying to find the previously saved values. Please try again. If the problem persists, something could be wrong with the app.",
+    useGoVipProfile: "false"
+  }
+};
+
+export const WithGoVipProfile: Story = {
+  args: {
+    ...Primary.args,
+    useGoVipProfile: "true"
   }
 };
 

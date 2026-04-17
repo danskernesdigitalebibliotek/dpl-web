@@ -1,9 +1,9 @@
 .material-content {
-  margin-top: $s-lg;
   display: flex;
   flex-direction: column;
   gap: $s-md;
   @include typography($typo__body-small);
+  max-width: $article-max-width;
 }
 
 .material-content__heading {
@@ -63,14 +63,12 @@
 .material-content__raw {
   @include typography($typo__body-small);
   color: $color__global-black;
-  padding: $s-sm 0;
 }
 
 .material-content__show-more {
   display: flex;
   align-items: center;
   gap: $s-xs;
-  margin-top: $s-md;
 }
 
 .material-content__show-more-text {

@@ -9,14 +9,14 @@ import { cleanCreatorName } from "../../core/utils/helpers/material";
 interface MaterialHeaderTextProps {
   title: string;
   creators: WorkSmall["creators"];
-  languageIsoCode?: string;
+  languageCode?: string;
   materialTitleId?: string;
 }
 
 const MaterialHeaderText: React.FC<MaterialHeaderTextProps> = ({
   title,
   creators,
-  languageIsoCode,
+  languageCode,
   materialTitleId
 }) => {
   const t = useText();
@@ -27,7 +27,7 @@ const MaterialHeaderText: React.FC<MaterialHeaderTextProps> = ({
     <>
       <h1
         id={materialTitleId}
-        lang={languageIsoCode}
+        lang={languageCode}
         className="text-header-h1 mb-16"
       >
         {title}

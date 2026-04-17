@@ -32,7 +32,7 @@ We log the following events:
   - Execution of background processes
 
 The architecture of the system, where self-service actions carried out by
-patrons is handled by [JavaScript components running in the browser](https://github.com/danskernesdigitalebibliotek/dpl-react),
+patrons is handled by [JavaScript components running in the browser](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/react),
 means that searching for materials, management of reservations and updating
 patron information cannot be logged by the CMS.
 

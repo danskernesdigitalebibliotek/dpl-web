@@ -14,8 +14,6 @@ dependencies:
     - field.field.node.branch.field_promoted_on_lists
     - node.type.branch
   module:
-    - address
-    - address_dawa
     - entity_reference_revisions
     - gsearch
     - telephone_formatter
@@ -25,35 +23,19 @@ targetEntityType: node
 bundle: branch
 mode: default
 content:
-  field_address:
-    type: address_default
-    label: hidden
-    settings:
-      skip_domestic_country: true
-      domestic_country: site_default
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  field_address_dawa:
-    type: address_dawa
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_address_gsearch:
     type: address_gsearch
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 2
     region: content
   field_email:
     type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 5
+    weight: 3
     region: content
   field_main_media:
     type: entity_reference_entity_view
@@ -71,7 +53,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 7
+    weight: 5
     region: content
   field_phone:
     type: telephone_formatter
@@ -81,7 +63,7 @@ content:
       link: true
       default_country: DK
     third_party_settings: {  }
-    weight: 6
+    weight: 4
     region: content
   links:
     settings: {  }
@@ -89,6 +71,8 @@ content:
     weight: 0
     region: content
 hidden:
+  field_address: true
+  field_address_dawa: true
   field_agency_branch_id: true
   field_promoted_on_lists: true
   langcode: true

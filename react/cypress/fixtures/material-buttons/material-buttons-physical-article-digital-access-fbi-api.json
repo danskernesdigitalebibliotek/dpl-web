@@ -21,7 +21,7 @@
               "main": [
                 {
                   "display": "tysk",
-                  "isoCode": "ger"
+                  "iso639Set1": "de"
                 }
               ],
               "notes": []
@@ -128,7 +128,7 @@
             "main": [
               {
                 "display": "tysk",
-                "isoCode": "ger"
+                "iso639Set1": "de"
               }
             ],
             "notes": []
@@ -234,7 +234,7 @@
             "main": [
               {
                 "display": "tysk",
-                "isoCode": "ger"
+                "iso639Set1": "de"
               }
             ],
             "notes": []
@@ -346,7 +346,7 @@
       "mainLanguages": [
         {
           "display": "tysk",
-          "isoCode": "ger"
+          "iso639Set1": "de"
         }
       ],
       "subjects": {

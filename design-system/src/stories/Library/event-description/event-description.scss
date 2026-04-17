@@ -32,11 +32,14 @@
   @include block-spacing("small");
 
   @include media-query__medium {
-    margin-top: $_block-vertical-spacing--large;
+    margin-top: 64px;
   }
 }
 
 .event-description__links {
+  display: flex;
+  flex-direction: column;
+  gap: $s-sm;
   @include block-spacing("small");
 }
 

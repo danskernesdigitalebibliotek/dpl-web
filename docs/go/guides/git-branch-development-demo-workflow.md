@@ -1,127 +1,141 @@
-# Runbook: Git Branch Strategy and workflow for Development and Demoing
+# Runbook: Go Lagoon Deployment and Branch Environments
 
 ## Overview
 
-This runbook documents the feature development and demoing Git workflow for
-the GO project, including branch creation, pull request process, tagging,
-and deployment procedures for testing environments.
+The Go (Next.js) application is built and deployed entirely by Lagoon. When a
+PR is created or a dedicated branch is pushed, Lagoon checks out the code,
+builds all Docker images (including the Go app), and deploys the full stack
+(CMS + Go frontend).
 
-## When to Use This Runbook
+No separate GitHub Actions build or container registry image is needed for
+deployment — Lagoon handles the complete pipeline.
 
-- Starting work on a new feature or bug fix
-- Creating releases for customer testing
-- Deploying to test environments (playground, demo)
-- Managing feature integration back to develop branch
+## Environment Types
 
-## Prerequisites
+### PR Environments (automatic)
 
-- Access to GO repository
-- JIRA access for ticket creation/management
-- Access to DPL-CMS repository for deployment coordination
-- Lagoon CLI access for manual deployments
-- Understanding of Git branching workflows
+Every pull request that touches `cms/**`, `go/**`, `.lagoon.yml`, or
+`docker-compose.lagoon.yml` automatically gets a Lagoon environment:
 
-## Workflow Overview
+| Service | URL                                                              |
+| ------- | ---------------------------------------------------------------- |
+| Go app  | `https://node.pr-{number}.{project}.dplplat02.dpl.reload.dk`    |
+| CMS     | `https://varnish.pr-{number}.{project}.dplplat02.dpl.reload.dk` |
 
-1. Create JIRA task
-2. Create feature branch
-3. Develop
-4. Create PR
-5. Create release tag
-6. Update DPL-CMS
+The environment is destroyed when the PR is closed.
 
-## Step-by-Step Procedure
+### Dedicated Branch Environments
 
-### Step 1: Create JIRA Task
+Two long-lived branch environments are available for demos and testing.
+Each branch deploys a full stack (CMS + Go) with stable, predictable URLs.
 
-1. Navigate to JIRA project
-2. Create a new task with format: `DDF-[number]-[brief-description]`
-3. Fill in task details and acceptance criteria
-4. Assign to appropriate developer
+| Branch          | Go app URL                                                        | CMS URL                                                              |
+| --------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `go-demo`       | `https://node.go-demo.{project}.dplplat02.dpl.reload.dk`         | `https://varnish.go-demo.{project}.dplplat02.dpl.reload.dk`         |
+| `go-playground` | `https://node.go-playground.{project}.dplplat02.dpl.reload.dk`   | `https://varnish.go-playground.{project}.dplplat02.dpl.reload.dk`   |
 
-**Example**: `DDF-123-test-issue`
+**Only one deployment per branch can exist at a time.** Git branch names are
+unique, and Lagoon creates exactly one environment per branch. This prevents
+multiple developers from accidentally claiming the same domain.
 
-### Step 2: Create Feature Branch
+## How to Deploy to a Branch Environment
 
-1. Ensure you're on the latest develop branch:
+### 1. Check that no one else is using the environment
 
-   ```bash
-   git checkout develop
-   git pull origin develop
-   ```
+Coordinate with your team. The branch environment is shared — pushing to it
+will overwrite whatever is currently deployed.
 
-2. Create new feature branch from develop:
+### 2. Push your changes to the branch
 
-   ```bash
-   git checkout -b DDF-123-test-issue
-   ```
+```bash
+# Example: deploy your feature branch to the demo environment
+git push origin my-feature:go-demo --force
+```
 
-3. Push the new branch to remote:
+This force-pushes your feature branch content to `go-demo`. Lagoon detects
+the push and starts a new deployment.
 
-   ```bash
-   git push -u origin DDF-123-test-issue
-   ```
+### 3. Wait for the build
 
-### Step 3: Develop Feature
+Monitor the deployment in the Lagoon UI:
+`https://ui.lagoon.dplplat02.dpl.reload.dk/projects/{project}/{project}-go-demo/deployments`
 
-1. Implement the feature or fix
-2. Make regular commits with descriptive messages
-3. Follow existing code patterns and conventions
-4. Ensure code quality and testing standards
+The build installs dependencies, runs `yarn build` with the correct
+environment variables, and starts the Go app alongside the CMS.
 
-### Step 4: Create Pull Request
+### 4. Access the environment
 
-1. Push final changes to feature branch:
+Once deployed, visit the URLs listed above for the branch you deployed to.
 
-   ```bash
-   git push origin DDF-123-test-issue
-   ```
+## How It Works (Technical)
 
-2. Create pull request from feature branch to `develop`
-3. Fill in PR description with:
-   - Link to JIRA ticket
-   - Description of changes
-   - Testing instructions
-   - Any breaking changes or considerations
+### Build Pipeline
 
-4. Request code review from team members
-5. Wait for PR approval
+```
+Push to branch/PR
+       │
+       ▼
+Lagoon checks out repo
+       │
+       ▼
+Builds go/lagoon/node-lagoon.dockerfile
+  ┌─ Stage 1 (deps): install node_modules
+  ├─ Stage 2 (builder): copy source, resolve CMS domain, yarn build
+  └─ Stage 3 (runner): production image with start.sh
+       │
+       ▼
+Deploys all services (node, varnish, nginx, php, cli, mariadb, redis)
+```
 
-### Step 5: Create Release Tag for Testing
+### Environment Variable Resolution
 
-After PR approval, create a release tag for customer testing:
+The Go app needs to know the CMS domain at build time (for `NEXT_PUBLIC_*`
+variables baked into the client bundle) and at runtime (for SSR).
 
-1. **Tag Naming Convention**: `[environment]-[year][month][day].[sequence_number]`
+**Build time** (`go/lagoon/node-lagoon.dockerfile`):
 
-   **Available Test Environments:**
-   - `playground` - Playground testing environment
-   - `demo` - Demo testing environment
+- CMS domain is derived from `LAGOON_ENVIRONMENT` and `LAGOON_PROJECT`
+- Pattern: `varnish.{environment}.{project}.dplplat02.dpl.reload.dk`
 
-2. **Create the tag** from your feature branch:
+**Runtime** (`go/lagoon/start.sh`):
 
-   ```bash
-   git tag playground-20250829.1
-   git push origin playground-20250829.1
-   ```
+- For `main`/`develop`: uses `LAGOON_DOMAIN` and `LAGOON_ROUTE` (production domains)
+- For everything else (PR, go-demo, go-playground): derived from
+  `LAGOON_ENVIRONMENT` and `LAGOON_PROJECT`
 
-   **Examples:**
-   - `demo-20250701.1`
-   - `playground-20250701.1`
-   - `playground-20250701.2` (if second release same day)
+### Key Files
 
-### Step 6: Update DPL-CMS with Release Tag
+| File                               | Purpose                                                         |
+| ---------------------------------- | --------------------------------------------------------------- |
+| `go/lagoon/node-lagoon.dockerfile`  | Multi-stage Docker build for the Go app (used by Lagoon)        |
+| `go/lagoon/node.dockerfile`        | Source image dockerfile for GHCR publishing                     |
+| `go/lagoon/start.sh`               | Runtime startup script, sets env vars and runs `yarn start`     |
+| `docker-compose.lagoon.yml`        | Defines all Lagoon services including `node`                    |
+| `.lagoon.yml`                      | Lagoon project config, environment settings, post-rollout tasks |
+| `.github/workflows/cms-lagoon.yml` | Sends webhook to Lagoon on push/PR events                       |
 
-1. Navigate to DPL-CMS repository
-2. Switch to the appropriate environment branch:
-   - For playground: `dpl-go-reload-playground`
-   - For demo: `dpl-go-demo`
+## Resetting a Branch Environment
 
-3. Open `node.dockerfile`
-4. Update the `dpl-go-node` version number with your release tag
-5. Commit and push the change:
+To reset a branch environment to match `develop`:
 
-   ```bash
-   git add node.dockerfile
-   git commit -m "Update dpl-go-node to [tag-name]"
-   git push origin [environment-branch]
-   ```
+```bash
+git push origin develop:go-demo --force
+```
+
+## FAQ
+
+### Can I deploy any branch to go-demo or go-playground?
+
+Yes. Force-push any branch to `go-demo` or `go-playground` and Lagoon
+will build and deploy it.
+
+### What if two people push to the same branch at the same time?
+
+Lagoon queues builds. The last push wins — the most recent code is what
+gets deployed.
+
+### Do I need to configure anything in Lagoon?
+
+The branch must be allowed in the Lagoon project's branch deployment
+settings. Ask a Lagoon administrator to enable the `go-demo` and
+`go-playground` branches if they are not already configured.

@@ -69,7 +69,8 @@ interface CreatePatronTextProps {
 }
 
 export interface CreatePatronProps
-  extends CreatePatronConfigProps,
+  extends
+    CreatePatronConfigProps,
     GlobalEntryTextProps,
     DataforsyningenArgs,
     BranchAddressSearchArgs,

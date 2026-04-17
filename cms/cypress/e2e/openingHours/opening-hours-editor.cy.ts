@@ -42,10 +42,6 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
     multiple: true,
     force: true,
   });
-  // Forcing is necessary because the fields are hidden by and shown in a "popup"
-  cy.get('#edit-field-address-dawa-0-address')
-    .type('Suomisvej 2  1927 Frederiksberg C', { force: true })
-    .should('have.value', 'Suomisvej 2  1927 Frederiksberg C');
   cy.clickSaveButton();
   cy.get('a[href^="/node/"][href$="/edit"]').click({ force: true });
   cy.get('a[href*="/edit/opening-hours"]').click();

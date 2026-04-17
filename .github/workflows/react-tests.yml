@@ -46,6 +46,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Install Chrome
+        id: setup-chrome
         uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: stable
@@ -56,7 +57,7 @@ jobs:
           install: false
           start: yarn start:storybook:test
           wait-on: 'http://localhost:57021'
-          browser: chrome
+          browser: ${{ steps.setup-chrome.outputs.chrome-path }}
           group: 'Integration tests'
           parallel: true
           working-directory: react
@@ -81,7 +82,7 @@ jobs:
       - name: Generate code coverage report
         run: yarn run nyc report --reporter=clover --reporter=text --report-dir=./coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: react/coverage/
