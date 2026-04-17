@@ -1,0 +1,14 @@
+packages:
+  - cms
+  - design-system
+  - go
+  - react
+
+# To mitigate the risk of supply chain attacks, wait two days before accepting
+# a new version of a package.
+minimumReleaseAge: 2880
+
+# TODO: the current developer set-up doesn’t work with workspace hoisting, but
+# once we have a more unified set-up where the root folder is present inside the
+# images, we should enable it.
+hoistWorkspacePackages: false

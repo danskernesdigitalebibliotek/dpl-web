@@ -24,7 +24,7 @@ jobs:
           node-version-file: "go/.nvmrc"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Check Prettier formatting
-        run: yarn run format:check
+        run: pnpm run format:check

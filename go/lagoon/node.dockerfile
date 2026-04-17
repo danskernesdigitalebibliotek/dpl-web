@@ -13,7 +13,7 @@ WORKDIR /app
 # Install dependencies
 COPY package.json yarn.lock* ./
 
-RUN yarn --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder

@@ -38,9 +38,9 @@ jobs:
         with:
           node-version-file: 'design-system/.nvmrc'
 
-      - run: yarn install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
 
-      - run: yarn css:build
+      - run: pnpm run css:build
 
       - name: Publish to Chromatic
         uses: chromaui/action@v16

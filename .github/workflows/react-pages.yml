@@ -27,9 +27,9 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - run: yarn install --frozen-lockfile
+    - run: pnpm install --frozen-lockfile
 
-    - run: yarn build:storybook
+    - run: pnpm run build:storybook
       env:
         STORYBOOK_CLIENT_ID: ${{ secrets.STORYBOOK_CLIENT_ID }}
 

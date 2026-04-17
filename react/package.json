@@ -1,15 +1,14 @@
 {
   "name": "@danskernesdigitalebibliotek/dpl-react",
-  "version": "0.0.1-rc.2",
-  "license": "AGPL-3.0-only",
-  "repository": "git://github.com/danskernesdigitalebibliotek/dpl-react.git",
+  "version": "1.0.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "engines": {
-    "node": ">=12.13.0",
-    "yarn": ">=1.17.3"
+    "node": "24.15.0",
+    "pnpm": "10.33.0"
   },
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "fmt": "prettier --config ./.prettierrc --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:js": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --max-warnings 0 --cache  --cache-location \".cache/eslint/\"",
@@ -18,21 +17,21 @@
     "lint:markdown:fix": "markdownlint-cli2 --fix \"**/*.md'\"",
     "lint:scss": "stylelint \"./src/**/*.scss\"",
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
-    "lint": "yarn lint:js && yarn lint:scss && yarn lint:markdown",
+    "lint": "pnpm run lint:js && pnpm run lint:scss && pnpm run lint:markdown",
     "clean": "rm -r -f ./dist/* ./dev/* ./coverage/*",
-    "build": "npx concurrently --raw \"yarn clean\" \"yarn lint:scss:fix\" \"yarn build:js:prod\" \"yarn build:css:prod\"",
+    "build": "pnpm run clean ; pnpm run \"/^(lint:scss:fix|build:js:prod|build:css:prod)\\$/\"",
     "build:js:dev": "webpack --mode=development --config webpack.config.js",
     "build:js:prod": "NODE_ENV=production webpack --mode=production --config webpack.config.js",
     "build:css:dev": "postcss ./src/apps/**/*.scss ./src/components/components.scss --ext css --dir ./dist",
     "build:css:prod": "postcss ./src/apps/**/*.scss ./src/components/components.scss --no-map --ext css --dir ./dist --env production",
-    "watch": "npx concurrently --raw \"yarn watch:lint:js\" \"yarn watch:lint:scss\"",
+    "watch": "pnpm dlx concurrently --raw \"pnpm run watch:lint:js\" \"pnpm run watch:lint:scss\"",
     "watch:css": "postcss ./src/apps/**/*.scss ./src/components/components.scss --ext css --dir ./dist --watch",
-    "watch:lint:scss": "chokidar \"./src/**/*.scss\" -c \"yarn lint:scss:fix\"",
-    "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"yarn lint:js\"",
+    "watch:lint:scss": "chokidar \"./src/**/*.scss\" -c \"pnpm run lint:scss:fix\"",
+    "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"pnpm run lint:js\"",
     "build:storybook": "storybook build -c .storybook -o dev",
     "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --quiet --ci",
     "start:storybook:dev": "NODE_ENV=development storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
-    "dev": "npx concurrently --raw \"yarn start:storybook:dev\" \"yarn watch\"",
+    "dev": "pnpm dlx concurrently --raw \"pnpm run start:storybook:dev\" \"pnpm run watch\"",
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest",
     "test:integration": "cypress run",
@@ -149,12 +148,8 @@
     "webpack-cli": "^7.0.2",
     "webpack-version-file-plugin": "0.5.0"
   },
-  "//dependencies": {
-    "@danskernesdigitalebibliotek/dpl-design-system": "Is being used for being able to see the dpl-design-system styling in Storybook and potentially use icons",
-    "prop-types": "Since we use former ddb-react components that depend on prop-types we keep this. Should be removed when usage of prop-types is deprecated."
-  },
   "dependencies": {
-    "@danskernesdigitalebibliotek/dpl-design-system": "0.0.0-branch-ddf-37-migration",
+    "@danskernesdigitalebibliotek/dpl-design-system": "workspace:*",
     "@fullcalendar/core": "^6.1.20",
     "@fullcalendar/daygrid": "^6.1.20",
     "@fullcalendar/interaction": "^6.1.20",
@@ -189,8 +184,5 @@
   },
   "peerDependencies": {
     "postcss": "^8.5.9"
-  },
-  "resolutions": {
-    "@babel/runtime": "^7.26.0"
   }
 }

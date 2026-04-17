@@ -36,11 +36,11 @@ jobs:
 
       - name: Build artifacts
         run: |
-          yarn install
-          yarn build:css:prod
+          pnpm install
+          pnpm run build:css:prod
           VERSION_FILE_NAME=$GITHUB_REPOSITORY \
           VERSION_FILE_VERSION=$(git describe --tags --exclude=latest) \
-          yarn build:js:prod --json webpack-stats.json
+          pnpm run build:js:prod --json webpack-stats.json
 
       - name: Send webpack stats to RelativeCI
         uses: relative-ci/agent-action@v3

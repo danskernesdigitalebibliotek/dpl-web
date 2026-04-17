@@ -62,5 +62,5 @@ tasks:
     desc: Install development environment and clean up
     cmds:
       - task dev:nvm:use
-      - yarn
-      - yarn dev:https
+      - pnpm install
+      - pnpm run dev:https

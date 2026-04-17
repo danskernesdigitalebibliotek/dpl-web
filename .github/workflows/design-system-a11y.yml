@@ -23,13 +23,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
 
       - name: Design / Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: pnpm run playwright install --with-deps
 
       - name: Design / Compile styles
-        run: yarn css:build
+        run: pnpm run css:build
 
       - name: Design / Run accessibility tests
-        run: yarn storybook:axe
+        run: pnpm run storybook:axe

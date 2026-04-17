@@ -1,7 +1,7 @@
 #!/bin/bash
 
-yarn install
-yarn build
+pnpm install
+pnpm run build
 
 rm -rf ./build
 mkdir ./build

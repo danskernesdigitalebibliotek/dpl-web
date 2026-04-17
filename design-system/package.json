@@ -1,7 +1,11 @@
 {
   "name": "@danskernesdigitalebibliotek/dpl-design-system",
-  "version": "0.1.0",
-  "repository": "https://github.com/danskernesdigitalebibliotek/dpl-design-system",
+  "version": "1.0.0",
+  "engines": {
+    "node": "24.15.0",
+    "pnpm": "10.33.0"
+  },
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "storybook": "storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
     "storybook:axe": "storybook build && axe-storybook",
@@ -23,7 +27,7 @@
     "markdown:format": "markdownlint-cli2-fix",
     "watch": "concurrently 'yarn:js:lint:watch' 'yarn:css:lint:watch'",
     "dev": "concurrently --raw 'yarn storybook' 'yarn css:watch' 'yarn watch'",
-    "chromatic": "npx chromatic --exit-zero-on-changes",
+    "chromatic": "pnpm dlx chromatic --exit-zero-on-changes",
     "lint": "concurrently 'yarn:js:lint' 'yarn:css:lint' 'yarn:markdown:lint'",
     "format": "concurrently 'yarn:js:format' 'yarn:css:format' 'yarn:markdown:format'"
   },
@@ -99,6 +103,5 @@
   },
   "files": [
     "build/**/*"
-  ],
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  ]
 }

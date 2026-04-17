@@ -17,6 +17,10 @@ For detailed information about the projects, setup instructions, and development
 
 ## Quick Start
 
+First, install [pnpm](https://pnpm.io/), preferably via [mise](https://mise.jdx.dev/).
+
+Once it’s installed, run `pnpm install` in this folder to install JavaScript dependencies.
+
 Each project has a `task dev:reset` command to set up the development environment:
 
 - **CMS:** `cd cms && task dev:reset`

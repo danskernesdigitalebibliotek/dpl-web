@@ -43,7 +43,7 @@ CMS_BASEURL=http://cms-mock.docker
 ```
 
 <!-- markdownlint-disable-next-line MD029 -->
-4. Start Storybook: `yarn run dev`
+4. Start Storybook: `pnpm run dev`
 
 ### Set up a mocked response in Wiremock
 

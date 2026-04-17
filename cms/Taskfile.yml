@@ -116,9 +116,9 @@ tasks:
       - task dev:cli -- php vendor/bin/phpcs
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
       - task dev:cli -- php vendor/bin/phpstan
-      - task dev:cli -- yarn install --frozen-lockfile
-      - task dev:cli -- npx eslint web -c .eslintrc.json --fix
-      - task dev:cli -- npx eslint cypress -c cypress/.eslintrc.json --fix
+      - task dev:cli -- pnpm install --frozen-lockfile
+      - task dev:cli -- pnpm dlx eslint web -c .eslintrc.json --fix
+      - task dev:cli -- pnpm dlx eslint cypress -c cypress/.eslintrc.json --fix
 
   dev:build:
     summary: Build docker containers
@@ -369,7 +369,7 @@ tasks:
     cmds:
       - task dev:bnfcli -- drush sailor:introspect bnf
       - task dev:bnfcli -- drush sailor:codegen bnf
-      - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
+      - task dev:bnfcli -- pnpm dlx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
 
   dev:codegen:fbi-graphql:
     desc: Generate graphQL client classes for dpl_fbi.
@@ -510,7 +510,7 @@ tasks:
 
   ci:cypress:run:
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - task dev:cli -- drush pm:enable -y dpl_webmaster
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "$SPEC_PATH"
@@ -572,9 +572,9 @@ tasks:
     desc: Run Cypress functional tests locally
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - yarn install --frozen-lockfile
+      - pnpm install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - npx cypress open
+      - pnpm dlx cypress open
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
@@ -585,30 +585,30 @@ tasks:
     desc: Run Pa11y to test accessiblity
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn pa11y:ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm run pa11y:ci
 
   ci:wiremock:create-mappings:
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn wiremock:create-mappings
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm run wiremock:create-mappings
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx lhci autorun
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx lhci autorun
 
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | pnpm dlx jsome -r > openapi.json
 
   ci:shellcheck:
     desc: Run ShellCheck on CMS helper scripts

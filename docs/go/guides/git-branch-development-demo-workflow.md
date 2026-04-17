@@ -80,7 +80,7 @@ Lagoon checks out repo
        ▼
 Builds go/lagoon/node-lagoon.dockerfile
   ┌─ Stage 1 (deps): install node_modules
-  ├─ Stage 2 (builder): copy source, resolve CMS domain, yarn build
+  ├─ Stage 2 (builder): copy source, resolve CMS domain, pnpm run build
   └─ Stage 3 (runner): production image with start.sh
        │
        ▼
@@ -109,7 +109,7 @@ variables baked into the client bundle) and at runtime (for SSR).
 | ---------------------------------- | --------------------------------------------------------------- |
 | `go/lagoon/node-lagoon.dockerfile`  | Multi-stage Docker build for the Go app (used by Lagoon)        |
 | `go/lagoon/node.dockerfile`        | Source image dockerfile for GHCR publishing                     |
-| `go/lagoon/start.sh`               | Runtime startup script, sets env vars and runs `yarn start`     |
+| `go/lagoon/start.sh`               | Runtime startup script, sets env vars and runs `pnpm run start`     |
 | `docker-compose.lagoon.yml`        | Defines all Lagoon services including `node`                    |
 | `.lagoon.yml`                      | Lagoon project config, environment settings, post-rollout tasks |
 | `.github/workflows/cms-lagoon.yml` | Sends webhook to Lagoon on push/PR events                       |

@@ -37,7 +37,7 @@ task dev:install
 Use the node package manager to install project dependencies:
 
 ```shell
-yarn install
+pnpm install
 ```
 
 ## Development
@@ -65,7 +65,7 @@ task dev:[TAB]
 To start developing run:
 
 ```shell
-yarn dev
+pnpm run dev
 ```
 
 Components and CSS will be automatically recompiled when making changes in the
@@ -213,7 +213,7 @@ Repeat the process if you push new code to the branch.
 Spin up storybook by running this command in the terminal:
 
 ```shell
-yarn storybook
+pnpm run storybook
 ```
 
 When storybook is ready it automatically opens up in a browser with the
@@ -230,7 +230,7 @@ under the `danskernesdigitalebibliotek` (organisation) `dpl-design-system`
 You can deploy a version locally to Chromatic by running:
 
 ```shell
-yarn chromatic
+pnpm run chromatic
 ```
 
 Make sure to set the `CHROMATIC_PROJECT_TOKEN` environment variable is available

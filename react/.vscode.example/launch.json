@@ -5,7 +5,7 @@
       "name": "Storybook Debug",
       "type": "node-terminal",
       "request": "launch",
-      "command": "sudo yarn dev",
+      "command": "sudo pnpm run dev",
       "internalConsoleOptions": "openOnFirstSessionStart",
       "serverReadyAction": {
         "pattern": "Local:.+(https?://[^:]+:[0-9]+)",

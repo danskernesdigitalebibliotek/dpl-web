@@ -26,7 +26,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: stylelint
         uses: reviewdog/action-stylelint@v1
         with:
@@ -35,7 +35,7 @@ jobs:
           stylelint_input: 'src/**/*.scss'
           workdir: 'react'
       - name: Lint SCSS
-        run: yarn lint:scss
+        run: pnpm run lint:scss
 
   typescript:
     name: React / Typescript compile check
@@ -55,9 +55,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Run typescript compile check
-        run: npx tsc --noEmit
+        run: pnpm dlx tsc --noEmit
 
   eslint:
     name: React / Lint .js and .jsx
@@ -78,7 +78,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: eslint
         uses: reviewdog/action-eslint@v1
@@ -88,7 +88,7 @@ jobs:
           eslint_flags: '.'
           workdir: react
       - name: Lint Javascript
-        run: yarn lint:js
+        run: pnpm run lint:js
 
   markdownlint:
     name: React / Lint markdown
@@ -109,9 +109,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint markdown
-        run: yarn lint:markdown
+        run: pnpm run lint:markdown
 

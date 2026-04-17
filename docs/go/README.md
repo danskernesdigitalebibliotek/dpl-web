@@ -66,7 +66,7 @@ nvm use
 2. Install dependencies:
 
 ```bash
-yarn
+pnpm install
 ```
 
 3. Start the development server:
@@ -74,7 +74,7 @@ yarn
 We run the server in an [experimental https](https://nextjs.org/docs/pages/api-reference/cli/next#next-dev-options) state to not get blocked by CORS policy when developing locally.
 
 ```bash
-yarn dev:https
+pnpm run dev:https
 ```
 
 The application is now running at [https://localhost:3000](https://localhost:3000)
@@ -187,19 +187,19 @@ Codegen types are automatically generated TypeScript types based on the specific
 To generate the types, run the following command:
 
 ```bash
-yarn codegen:all-rest-services
+pnpm run codegen:all-rest-services
 ```
 
 The custom functions and configurations for these services are located in the `lib/rest` directory.
 
 ```bash
-yarn codegen:graphql
+pnpm run codegen:graphql
 ```
 
 This will create or update the types in the `lib/graphql/generated` directory.
 
 ```bash
-yarn codegen:publizon
+pnpm run codegen:publizon
 ```
 
 The `lib/rest/publizon-api` directory contains functions and configurations for interacting with the Publizon API. This API is used to manage and retrieve information about digital publications.
@@ -232,7 +232,7 @@ Storybook is an essential tool in our development workflow for several reasons:
 To start Storybook, run the following command:
 
 ```bash
-yarn storybook
+pnpm run storybook
 ```
 
 This will launch the Storybook server, and you can view the component library in your browser at [http://localhost:6006](http://localhost:6006).
@@ -246,8 +246,8 @@ Cypress is an end-to-end testing framework that allows us to write and run tests
 To start Cypress, run the following commands:
 
 ```bash
-yarn dev # Start the development server
-yarn cypress:run # Run all Cypress tests
+pnpm run dev # Start the development server
+pnpm run cypress:run # Run all Cypress tests
 ```
 
 ## Deployment
