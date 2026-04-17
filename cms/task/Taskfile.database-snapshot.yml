@@ -20,6 +20,7 @@ tasks:
         docker {{ if .PLATFORMS }}buildx{{ end }} build
         {{ if .PLATFORMS }}--platform {{ .PLATFORMS }}{{ end }}
         {{ if .PUSH }}--push{{ end }}
+        --provenance=false
         -f {{ .LAGOON_DIR }}/database-snapshot.dockerfile
         --tag {{ .DB_SNAPSHOT_FULL_NAME }}
         --tag {{ .DB_SNAPSHOT_LATEST_NAME }}
