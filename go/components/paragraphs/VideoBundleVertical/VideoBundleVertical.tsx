@@ -49,25 +49,46 @@ export const VideoBundleVerticalSkeleton = () => {
   return (
     <div className="bg-background-skeleton">
       <div className="content-container">
-        <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
+        <div className="py-paragraph-spacing w-full">
           <div
-            className="bg-background-skeleton mr-auto mb-4 ml-auto block h-10 w-36 animate-pulse
-              rounded-full md:mb-10 lg:w-72"
+            className="bg-background-skeleton mb-paragraph-spacing mx-auto block h-10 w-36
+              animate-pulse rounded-full lg:w-72"
           />
-          <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
+          <div className="grid-go items-start">
             <div
-              className="rounded-base bg-background-skeleton relative aspect-9/16 w-full max-w-sm
-                animate-pulse self-center overflow-hidden lg:w-[50%] lg:max-w-none"
-            />
-            <div
-              className="gap-grid-gap flex w-full flex-row flex-wrap items-center justify-center
-                lg:w-[50%] lg:justify-end lg:pl-4">
-              <div className="md:ml-grid-column-2 mr-auto h-[24px] w-[24px] rounded-full lg:hidden" />
+              className="xl:-translate-x-grid-column-quarter xl:ml-grid-column-half
+                lg:-translate-x-grid-column-quarter lg:ml-grid-column-half col-span-4 col-start-2
+                lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3">
               <div
-                className="bg-background-skeleton rounded-base relative aspect-5/7 w-[177px]
-                  animate-pulse md:w-[250px]"
+                className="rounded-base bg-background-skeleton relative aspect-9/16 w-full
+                  animate-pulse overflow-hidden"
               />
-              <div className="md:mr-grid-column-2 ml-auto h-[24px] w-[24px] rounded-full lg:hidden" />
+            </div>
+            <div
+              className="xl:translate-x-grid-column-quarter lg:translate-x-grid-column-quarter
+                mt-paragraph-spacing col-span-full lg:col-span-4 lg:col-start-7 lg:mt-0
+                xl:col-span-3 xl:col-start-7">
+              <div className="grid-go lg:pl-grid-gap-half items-center lg:block">
+                <div className="col-span-1 lg:hidden">
+                  <div className="bg-background-skeleton h-[24px] w-[24px] rounded-full" />
+                </div>
+                <div className="col-span-4 lg:relative lg:w-full">
+                  <div
+                    className="bg-background-skeleton rounded-base relative aspect-5/7 w-full
+                      animate-pulse md:w-[250px] lg:w-full"
+                  />
+                </div>
+                <div className="col-span-1 lg:hidden">
+                  <div className="bg-background-skeleton h-[24px] w-[24px] rounded-full" />
+                </div>
+                <div className="hidden lg:mt-8 lg:flex lg:items-center">
+                  <div className="bg-background-skeleton mr-auto h-9 w-9 animate-pulse rounded-full" />
+                  <div className="space-x-grid-gap-half flex">
+                    <div className="bg-background-skeleton h-[24px] w-[24px] rounded-full" />
+                    <div className="bg-background-skeleton h-[24px] w-[24px] rounded-full" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
