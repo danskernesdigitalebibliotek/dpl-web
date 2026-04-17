@@ -7,7 +7,7 @@ project: dpl-cms-core
 ssh: 20.238.147.183:22
 api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
 environment_variables:
-  git_sha: 'true'
+  git_sha: "true"
 
 tasks:
   post-rollout:
@@ -175,6 +175,70 @@ tasks:
         service: cli
 
 environments:
+  # Matches all PR environments (pr-1, pr-42, etc.)
+  "pr-[0-9]+":
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import translations
+        schedule: "M H(2-5) * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import danish config translations
+        schedule: "M H(2-5) * * *"
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
+        service: cli
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
+  go-demo:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import translations
+        schedule: "M H(2-5) * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import danish config translations
+        schedule: "M H(2-5) * * *"
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
+        service: cli
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
+  go-playground:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import translations
+        schedule: "M H(2-5) * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      # The cron schedule here, mirrors how we do it in production sites.
+      - name: import danish config translations
+        schedule: "M H(2-5) * * *"
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
+        service: cli
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
   main:
     cronjobs:
       - name: drush cron
