@@ -28,19 +28,19 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build artifacts
         run: |
-          yarn install
-          yarn build:css:prod
+          npm install --legacy-peer-deps
+          npm run build:css:prod
           VERSION_FILE_NAME=$GITHUB_REPOSITORY \
           VERSION_FILE_VERSION=$(git describe --tags --exclude=latest) \
-          yarn build:js:prod --json webpack-stats.json
+          npm run build:js:prod --json webpack-stats.json
 
       - name: Send webpack stats to RelativeCI
         uses: relative-ci/agent-action@v3

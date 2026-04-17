@@ -23,14 +23,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: Generate DPL CMS client code
         run: npm run codegen:client:dpl-cms

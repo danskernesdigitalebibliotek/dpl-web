@@ -24,4 +24,4 @@ fi
 
 cd /app || exit 1
 
-exec yarn start
+exec npm run start

@@ -227,10 +227,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'cms/package-lock.json'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
@@ -274,10 +274,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'cms/package-lock.json'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
       - name: Run ESLint
         run: npx eslint web -c .eslintrc.json
 
@@ -296,10 +296,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'cms/package-lock.json'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
       - name: Run ESLint
         run: npx eslint cypress -c cypress/.eslintrc.json
 

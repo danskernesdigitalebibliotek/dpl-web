@@ -1,7 +1,7 @@
 #!/bin/bash
 
-yarn install
-yarn build
+npm install --legacy-peer-deps
+npm run build
 
 rm -rf ./build
 mkdir ./build

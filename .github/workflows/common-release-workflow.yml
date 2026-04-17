@@ -69,8 +69,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: '${{ inputs.project }}/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: '${{ inputs.project }}/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: '${{ inputs.project }}/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

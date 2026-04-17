@@ -10,8 +10,8 @@ FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package.json yarn.lock* ./
-RUN yarn --frozen-lockfile
+COPY package.json package-lock.json* ./
+RUN npm ci --legacy-peer-deps
 
 # Build the application
 FROM base AS builder
@@ -36,7 +36,7 @@ RUN BASE_DOMAIN="${LAGOON_ENVIRONMENT}.${LAGOON_PROJECT}.dplplat02.dpl.reload.dk
     export NEXT_PUBLIC_APP_URL="https://node.${BASE_DOMAIN}" && \
     export NEXT_PUBLIC_DPL_CMS_HOSTNAME="${GO_CMS_DOMAIN}" && \
     export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${GO_CMS_DOMAIN}/graphql" && \
-    yarn run build
+    npm run build
 
 FROM uselagoon/node-24:latest AS runner
 # start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.

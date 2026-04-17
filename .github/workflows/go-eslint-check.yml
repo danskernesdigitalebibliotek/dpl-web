@@ -25,7 +25,7 @@ jobs:
           node-version-file: "go/.nvmrc"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: Lint Javascripts
-        run: yarn lint
+        run: npm run lint

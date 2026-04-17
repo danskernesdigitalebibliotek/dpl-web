@@ -7,7 +7,7 @@ The following guide will walk you through the process of creating a new Cypress 
 1. Create a new test file in the `cypress/e2e` directory and give it a descriptive name.
 2. Add a `describe` block with a descriptive name for the test section.
 3. Then add a `beforeEach` block to set up the test environment, this should include a `cy.visit` to the page you want to test.
-4. Run `yarn cypress:open` to open the Cypress test runner.
+4. Run `npm run cypress:open` to open the Cypress test runner.
 5. Select the test file you just created and run it.
 6. The chosen page path should load, but might fail, as it probably requires some mocking.
 7. Look in the terminal for any unhandled request thrown by MockTTP - these are the server side requests which needs to be mocked.

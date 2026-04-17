@@ -24,7 +24,7 @@ jobs:
       - uses: actions/cache@v5
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
       # Validate the format of the tag. We only want to react on a precise pattern.
       - name: Detect release tag
@@ -41,17 +41,17 @@ jobs:
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         with:
           node-version-file: "go/.nvmrc"
-          cache: "yarn"
-          cache-dependency-path: "go/yarn.lock"
+          cache: 'npm'
+          cache-dependency-path: "go/package-lock.json"
 
       - name: Install dependencies
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: Run CI checks
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         run: |
-          if ! yarn ci-check; then
+          if ! npm run ci-check; then
             echo "Code quality checks failed"
             exit 1
           fi

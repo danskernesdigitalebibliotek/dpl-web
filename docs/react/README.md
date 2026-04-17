@@ -9,7 +9,6 @@ Danish public libraries.
 
 - [go-task](https://github.com/go-task/task)
 - [nvm](https://github.com/nvm-sh/nvm)
-- [yarn 1.x](https://classic.yarnpkg.com/lang/en/)
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Dory](https://github.com/FreedomBen/dory)
 
@@ -179,13 +178,13 @@ export function WithoutData() {
   <summary>5. Run the development environment</summary>
 
 ```bash
-  yarn dev
+  npm run dev
 ```
 
 OR depending on your dev environment (docker or not)
 
 ```bash
-  sudo yarn dev
+  sudo npm run dev
 ```
 
 </details>
@@ -309,13 +308,13 @@ To update the design system to the latest stable release of the design system
 run:
 
 ```bash
-yarn add @danskernesdigitalebibliotek/dpl-design-system@latest
+npm add @danskernesdigitalebibliotek/dpl-design-system@latest
 ```
 
 This command installs the latest released version of the package. Whenever a
 new version of the design system package is released, it is necessary
 to reinstall the package in this project using the same command to get the
-newest styling, because yarn adds a specific version number to the package name
+newest styling, because npm adds a specific version number to the package name
 in package.json.
 
 #### Using unreleased design
@@ -328,23 +327,22 @@ Example: To use the latest styling from a branch in the design system called
 `feature/availability-label`, run:
 
 ```bash
-yarn add @danskernesdigitalebibliotek/dpl-design-system@feature-availability-label
+npm add @danskernesdigitalebibliotek/dpl-design-system@feature-availability-label
 ```
 
 If the branch resides in a fork (usually before a pull request is merged) you
-can use [aliasing](https://classic.yarnpkg.com/lang/en/docs/cli/add/#toc-yarn-add-alias)
-and run:
+can run:
 
 ```bash
-yarn config set "@my-fork:registry" "https://npm.pkg.github.com"
-yarn add @danskernesdigitalebibliotek/dpl-design-system@npm:@my-fork/dpl-design-system@feature-availability-label
+npm config set "@my-fork:registry" "https://npm.pkg.github.com"
+npm add @danskernesdigitalebibliotek/dpl-design-system@npm:@my-fork/dpl-design-system@feature-availability-label
 ```
 
 If the branch is updated and you want the latest changes to take effect locally
 update the release used:
 
 ```bash
-yarn upgrade @danskernesdigitalebibliotek/dpl-design-system
+npm update @danskernesdigitalebibliotek/dpl-design-system
 ```
 
 Note that references to unreleased code should never make it into official

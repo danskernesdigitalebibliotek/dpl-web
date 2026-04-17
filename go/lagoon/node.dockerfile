@@ -11,9 +11,9 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies
-COPY package.json yarn.lock* ./
+COPY package.json package-lock.json* ./
 
-RUN yarn --frozen-lockfile
+RUN npm ci --legacy-peer-deps
 
 # Rebuild the source code only when needed
 FROM base AS builder

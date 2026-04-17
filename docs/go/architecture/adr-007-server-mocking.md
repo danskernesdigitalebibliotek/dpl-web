@@ -19,7 +19,7 @@ While some tools listens for all requests in the mocked application, MockTTP rel
 Using the mock server directly (MockApiServer()) should not be needed, as a range custom Cypress commands has already been defined.
 These should cover most use cases when used together with Cypress.
 
-MockTTP will startup together with Cypress on `yarn cypress:open`, and any handled or unhandled request will be logged to the console.
+MockTTP will startup together with Cypress on `npm run cypress:open`, and any handled or unhandled request will be logged to the console.
 
 Example:
 

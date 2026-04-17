@@ -62,5 +62,5 @@ tasks:
     desc: Install development environment and clean up
     cmds:
       - task dev:nvm:use
-      - yarn
-      - yarn dev:https
+      - npm install --legacy-peer-deps
+      - npm run dev:https

@@ -37,13 +37,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: Install Chrome
         id: setup-chrome
@@ -55,7 +55,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           install: false
-          start: yarn start:storybook:test
+          start: npm run start:storybook:test
           wait-on: 'http://localhost:57021'
           browser: ${{ steps.setup-chrome.outputs.chrome-path }}
           group: 'Integration tests'
@@ -80,7 +80,7 @@ jobs:
           path: react/cypress/videos
       - run: mkdir -p .nyc_output
       - name: Generate code coverage report
-        run: yarn run nyc report --reporter=clover --reporter=text --report-dir=./coverage
+        run: npm run nyc report --reporter=clover --reporter=text --report-dir=./coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v6
         with:
@@ -102,14 +102,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: Run unit tests
-        run: yarn test:unit
+        run: npm run test:unit
 

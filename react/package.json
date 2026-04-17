@@ -1,14 +1,11 @@
 {
   "name": "@danskernesdigitalebibliotek/dpl-react",
-  "version": "0.0.1-rc.2",
-  "license": "AGPL-3.0-only",
-  "repository": "git://github.com/danskernesdigitalebibliotek/dpl-react.git",
+  "version": "1.0.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "engines": {
-    "node": ">=12.13.0",
-    "yarn": ">=1.17.3"
+    "node": "24.15.0"
   },
   "scripts": {
     "fmt": "prettier --config ./.prettierrc --write \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -18,21 +15,21 @@
     "lint:markdown:fix": "markdownlint-cli2 --fix \"**/*.md'\"",
     "lint:scss": "stylelint \"./src/**/*.scss\"",
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
-    "lint": "yarn lint:js && yarn lint:scss && yarn lint:markdown",
+    "lint": "npm run lint:js && npm run lint:scss && npm run lint:markdown",
     "clean": "rm -r -f ./dist/* ./dev/* ./coverage/*",
-    "build": "npx concurrently --raw \"yarn clean\" \"yarn lint:scss:fix\" \"yarn build:js:prod\" \"yarn build:css:prod\"",
+    "build": "npx concurrently --raw \"npm run clean\" \"npm run lint:scss:fix\" \"npm run build:js:prod\" \"npm run build:css:prod\"",
     "build:js:dev": "webpack --mode=development --config webpack.config.js",
     "build:js:prod": "NODE_ENV=production webpack --mode=production --config webpack.config.js",
     "build:css:dev": "postcss ./src/apps/**/*.scss ./src/components/components.scss --ext css --dir ./dist",
     "build:css:prod": "postcss ./src/apps/**/*.scss ./src/components/components.scss --no-map --ext css --dir ./dist --env production",
-    "watch": "npx concurrently --raw \"yarn watch:lint:js\" \"yarn watch:lint:scss\"",
+    "watch": "npx concurrently --raw \"npm run watch:lint:js\" \"npm run watch:lint:scss\"",
     "watch:css": "postcss ./src/apps/**/*.scss ./src/components/components.scss --ext css --dir ./dist --watch",
-    "watch:lint:scss": "chokidar \"./src/**/*.scss\" -c \"yarn lint:scss:fix\"",
-    "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"yarn lint:js\"",
+    "watch:lint:scss": "chokidar \"./src/**/*.scss\" -c \"npm run lint:scss:fix\"",
+    "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"npm run lint:js\"",
     "build:storybook": "storybook build -c .storybook -o dev",
     "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --quiet --ci",
     "start:storybook:dev": "NODE_ENV=development storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
-    "dev": "npx concurrently --raw \"yarn start:storybook:dev\" \"yarn watch\"",
+    "dev": "npx concurrently --raw \"npm run start:storybook:dev\" \"npm run watch\"",
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest",
     "test:integration": "cypress run",
@@ -189,8 +186,5 @@
   },
   "peerDependencies": {
     "postcss": "^8.5.10"
-  },
-  "resolutions": {
-    "@babel/runtime": "^7.26.0"
   }
 }

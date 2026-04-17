@@ -1,6 +1,10 @@
 {
-  "name": "dpl-cms",
+  "name": "@danskernesdigitalebibliotek/dpl-cms",
   "description": "Node.js tools for working with DPL CMS",
+  "version": "1.0.0",
+  "engines": {
+    "node": "24.15.0"
+  },
   "license": "AGPL-3.0",
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
@@ -29,10 +33,9 @@
     "wiremock-rest-client": "^1.11.0"
   },
   "scripts": {
-    "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",
+    "wiremock:create-mappings": "npm run wiremock:build && node wiremock/build/createMappings.js",
     "pa11y:ci": "pa11y-ci",
     "wiremock:dev:watch": "tsc -p wiremock -w",
     "wiremock:build": "tsc -p wiremock"
-  },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  }
 }

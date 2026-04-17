@@ -53,7 +53,6 @@
 
 - Use the node version registered in the [`.nvm`] file
 - Preferably managed by [`nvm`](https://github.com/nvm-sh/nvm)
-- This project uses [`yarn`](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) make sure to have this installed globally on your machine
 
 ### Setup
 
@@ -66,7 +65,7 @@ nvm use
 2. Install dependencies:
 
 ```bash
-yarn
+npm install --legacy-peer-deps
 ```
 
 3. Start the development server:
@@ -74,7 +73,7 @@ yarn
 We run the server in an [experimental https](https://nextjs.org/docs/pages/api-reference/cli/next#next-dev-options) state to not get blocked by CORS policy when developing locally.
 
 ```bash
-yarn dev:https
+npm run dev:https
 ```
 
 The application is now running at [https://localhost:3000](https://localhost:3000)
@@ -99,7 +98,7 @@ The application is now running at [https://localhost:3000](https://localhost:300
 In the project, you'll see the following folders and files:
 
 | File(s)                  | Description                                                                                                                                               |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | \_\_tests\_\_/\*         | Unit tests for the application components and utilities. Using [vitest][vitest]                                                                           |
 | .github/\*               | GitHub configuration files and workflows                                                                                                                  |
 | .storybook/\*            | Configuration files and stories for Storybook                                                                                                             |
@@ -148,7 +147,7 @@ In the project, you'll see the following folders and files:
 | Taskfile.yml             | Task automation file used to define and run tasks                                                                                                         |
 | tsconfig.json            | TypeScript configuration file                                                                                                                             |
 | vitest.config.ts         | Configuration file for [Vitest][vitest]                                                                                                                   |
-| yarn.lock                | Lockfile for Yarn, ensuring consistent installs across different environments                                                                             |
+| package-lock.json        | Lockfile for npm, ensuring consistent installs across different environments                                                                              |
 
 ### git workflows
 
@@ -187,19 +186,19 @@ Codegen types are automatically generated TypeScript types based on the specific
 To generate the types, run the following command:
 
 ```bash
-yarn codegen:all-rest-services
+npm run codegen:all-rest-services
 ```
 
 The custom functions and configurations for these services are located in the `lib/rest` directory.
 
 ```bash
-yarn codegen:graphql
+npm run codegen:graphql
 ```
 
 This will create or update the types in the `lib/graphql/generated` directory.
 
 ```bash
-yarn codegen:publizon
+npm run codegen:publizon
 ```
 
 The `lib/rest/publizon-api` directory contains functions and configurations for interacting with the Publizon API. This API is used to manage and retrieve information about digital publications.
@@ -232,7 +231,7 @@ Storybook is an essential tool in our development workflow for several reasons:
 To start Storybook, run the following command:
 
 ```bash
-yarn storybook
+npm run storybook
 ```
 
 This will launch the Storybook server, and you can view the component library in your browser at [http://localhost:6006](http://localhost:6006).
@@ -246,8 +245,8 @@ Cypress is an end-to-end testing framework that allows us to write and run tests
 To start Cypress, run the following commands:
 
 ```bash
-yarn dev # Start the development server
-yarn cypress:run # Run all Cypress tests
+npm run dev # Start the development server
+npm run cypress:run # Run all Cypress tests
 ```
 
 ## Deployment

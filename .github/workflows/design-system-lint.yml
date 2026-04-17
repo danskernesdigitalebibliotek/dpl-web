@@ -24,10 +24,10 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - run: npm ci --legacy-peer-deps
 
       - name: Run css:lint
-        run: yarn css:lint
+        run: npm run css:lint
 
   js-lint:
     name: Design / JS Linter
@@ -40,10 +40,10 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - run: npm ci --legacy-peer-deps
 
       - name: Run js:lint
-        run: yarn js:lint
+        run: npm run js:lint
 
   markdown-linkt:
     name: Design / Markdown Linter
@@ -57,7 +57,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - run: npm ci --legacy-peer-deps
 
       - name: Run markdown:lint
-        run: yarn markdown:lint
+        run: npm run markdown:lint

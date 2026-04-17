@@ -187,7 +187,7 @@ The project uses two package manages for this:
 * [Composer](https://getcomposer.org/) - primarily for managing PHP packages,
   Drupal modules and other code libraries which are executed at runtime in the
   production environment.
-* [Yarn](https://yarnpkg.com/) - primarily for managing code needed to establish
+* [npm](https://www.npmjs.com/) - primarily for managing code needed to establish
   the pipeline for managing frontend assets like linting, preprocessing and
   optimization of JavaScript, CSS and images.
 

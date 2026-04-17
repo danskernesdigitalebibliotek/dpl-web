@@ -146,7 +146,7 @@ the extensions defined here.
 
 ## Third party code
 
-The project uses [Yarn](https://classic.yarnpkg.com/lang/en/) as a package
+The project uses [npm](https://www.npmjs.com/) as a package
 manager to handle code which is developed outside the project repository. Such
 code must not be committed to the Core project repository.
 

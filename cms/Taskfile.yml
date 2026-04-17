@@ -116,7 +116,7 @@ tasks:
       - task dev:cli -- php vendor/bin/phpcs
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
       - task dev:cli -- php vendor/bin/phpstan
-      - task dev:cli -- yarn install --frozen-lockfile
+      - task dev:cli -- npm ci --legacy-peer-deps
       - task dev:cli -- npx eslint web -c .eslintrc.json --fix
       - task dev:cli -- npx eslint cypress -c cypress/.eslintrc.json --fix
 
@@ -510,7 +510,7 @@ tasks:
 
   ci:cypress:run:
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npm ci --legacy-peer-deps
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - task dev:cli -- drush pm:enable -y dpl_webmaster
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "$SPEC_PATH"
@@ -572,7 +572,7 @@ tasks:
     desc: Run Cypress functional tests locally
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - yarn install --frozen-lockfile
+      - npm ci --legacy-peer-deps
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - npx cypress open
     env:
@@ -585,12 +585,12 @@ tasks:
     desc: Run Pa11y to test accessiblity
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn pa11y:ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npm run pa11y:ci
 
   ci:wiremock:create-mappings:
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn wiremock:create-mappings
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npm ci --legacy-peer-deps
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npm run wiremock:create-mappings
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
@@ -601,13 +601,13 @@ tasks:
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npm ci --legacy-peer-deps
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npm ci --legacy-peer-deps
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
 
   ci:shellcheck:

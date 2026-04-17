@@ -20,13 +20,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
       - name: stylelint
         uses: reviewdog/action-stylelint@v1
         with:
@@ -35,7 +35,7 @@ jobs:
           stylelint_input: 'src/**/*.scss'
           workdir: 'react'
       - name: Lint SCSS
-        run: yarn lint:scss
+        run: npm run lint:scss
 
   typescript:
     name: React / Typescript compile check
@@ -49,13 +49,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
       - name: Run typescript compile check
         run: npx tsc --noEmit
 
@@ -72,13 +72,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: eslint
         uses: reviewdog/action-eslint@v1
@@ -88,7 +88,7 @@ jobs:
           eslint_flags: '.'
           workdir: react
       - name: Lint Javascript
-        run: yarn lint:js
+        run: npm run lint:js
 
   markdownlint:
     name: React / Lint markdown
@@ -103,15 +103,15 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint markdown
-        run: yarn lint:markdown
+        run: npm run lint:markdown
 

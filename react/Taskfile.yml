@@ -28,7 +28,7 @@ tasks:
     summary: Install packages
     cmds:
       - task dev:nvm:use
-      - yarn install
+      - npm install --legacy-peer-deps
 
   dev:start:
     summary: Install and run docker compose
@@ -37,7 +37,7 @@ tasks:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
       - task dev:nvm:use
       - echo "React app is starting. This can take a moment."
-      - yarn dev
+      - npm run dev
 
   dev:stop:
     summary: Stop docker compose environment
@@ -74,42 +74,42 @@ tasks:
     summary: Run storybook in development mode
     cmds:
       - task dev:nvm:use
-      - yarn start:storybook:dev
+      - npm run start:storybook:dev
 
   dev:reset:
     summary: Install development environment and clean up.
     cmds:
       - task dev:down
       - task dev:nvm:use
-      - yarn clean
+      - npm run clean
       - task dev:start
 
   dev:test:
     summary: Run tests
     cmds:
       - task dev:nvm:use
-      - yarn test
+      - npm run test
 
   dev:format:
     summary: Run linters
     cmds:
       - task dev:nvm:use
-      - yarn lint:js --fix
-      - yarn lint:scss --fix
-      - yarn lint:markdown --fix
+      - npm run lint:js --fix
+      - npm run lint:scss --fix
+      - npm run lint:markdown --fix
 
   dev:lint:
     summary: Run linters
     cmds:
       - task dev:nvm:use
-      - yarn lint:js
-      - yarn lint:scss
-      - yarn lint:markdown
+      - npm run lint:js
+      - npm run lint:scss
+      - npm run lint:markdown
 
   dev:format:
     summary: Run linters, and auto-fix
     cmds:
       - task dev:nvm:use
-      - yarn lint:js --fix
-      - yarn lint:scss --fix
-      - yarn lint:markdown --fix
+      - npm run lint:js --fix
+      - npm run lint:scss --fix
+      - npm run lint:markdown --fix

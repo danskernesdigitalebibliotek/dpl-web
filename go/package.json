@@ -1,13 +1,16 @@
 {
-  "name": "go-frontend",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@danskernesdigitalebibliotek/dpl-go",
+  "description": "Youth-oriented digital library site.",
+  "version": "1.0.0",
+  "engines": {
+    "node": "24.15.0"
+  },
   "scripts": {
     "build-storybook": "storybook build",
     "build": "next build",
     "build:test": "NODE_ENV=test next build",
     "build:dev": "NEXT_PUBLIC_APP_URL=http://dpl-cms.local:3000 next build",
-    "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
+    "ci-check": "npm run typecheck && npm run lint && npm run format:check && npm run test:unit:once",
     "codegen:all-rest-services": "orval",
     "codegen:fbs": "rm -rf src/lib/rest/fbs/generated/model/*.* && orval --project fbs",
     "codegen:graphql": "NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
@@ -31,7 +34,7 @@
     "typecheck": "tsc --noEmit",
     "cypress:open": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e",
     "cypress:open:mobile": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e --env viewport=mobile",
-    "cypress:run": "yarn cypress:run:mobile; yarn cypress:run:desktop",
+    "cypress:run": "npm run cypress:run:mobile; npm run cypress:run:desktop",
     "cypress:run:mobile": "NODE_ENV=test cypress run --env viewport=mobile",
     "cypress:run:desktop": "NODE_ENV=test cypress run --env viewport=desktop",
     "shadcn:add": "npx shadcn@canary add $MODULE",
@@ -145,6 +148,5 @@
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.0.4",
     "vitest": "^4.0.18"
-  },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  }
 }

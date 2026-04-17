@@ -24,7 +24,7 @@ jobs:
           node-version-file: "go/.nvmrc"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci --legacy-peer-deps
 
       - name: Check Prettier formatting
-        run: yarn run format:check
+        run: npm run format:check

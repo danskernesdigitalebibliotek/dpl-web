@@ -34,8 +34,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'design-system/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'design-system/package-lock.json'
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,7 +47,6 @@ jobs:
             echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com"
             echo "always-auth=true"
           } >> "$HOME/.npmrc"
-          echo 'registry "https://registry.yarnpkg.com"' >> "$HOME/.yarnrc"
 
       - name: Build package files for npm publish
         run: |
