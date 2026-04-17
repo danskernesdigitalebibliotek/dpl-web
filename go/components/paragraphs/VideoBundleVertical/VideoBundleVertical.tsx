@@ -14,8 +14,8 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
-        <div className="py-paragraph-spacing w-full text-center">
-          <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
+        <div className="py-paragraph-spacing w-full">
+          <h2 className="text-typo-heading-2 mb-paragraph-spacing text-center">{title}</h2>
           <div className="grid-go items-start">
             <div
               className="xl:-translate-x-grid-column-quarter xl:ml-grid-column-half
