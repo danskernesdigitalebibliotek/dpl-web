@@ -9,11 +9,19 @@ export const materialTypeEbookFactory = Factory.define<MaterialType>(() => ({
     display: "e-bøger",
     code: "EBOOKS",
   },
+  materialTypeSpecific: {
+    code: "EBOOK",
+    display: "e-bog",
+  },
 }))
 
 export const materialTypeAudioBookFactory = Factory.define<MaterialType>(() => ({
   materialTypeGeneral: {
     display: "lydbøger",
     code: "AUDIO_BOOKS",
+  },
+  materialTypeSpecific: {
+    code: "AUDIO_BOOK_ONLINE",
+    display: "lydbog (online)",
   },
 }))

@@ -7,8 +7,8 @@ want to document these in an established structured format.
 
 Documenting endpoints in a established structured format allows us to use tools
 to generate client code for these end points. This makes consumption easier and
-is a practice which is already used with [other](https://github.com/danskernesdigitalebibliotek/dpl-react/blob/main/dbc-gateway.codegen.yml)
-[services](https://github.com/danskernesdigitalebibliotek/dpl-react/blob/main/orval.config.ts)
+is a practice which is already used with [other](https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/dbc-gateway.codegen.yml)
+[services](https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/orval.config.ts)
 in the React components.
 
 Currently these end points expose business logic tied to configuration in the

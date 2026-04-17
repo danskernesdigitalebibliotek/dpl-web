@@ -346,7 +346,7 @@ tasks:
           docker run --rm \
           -v ${PWD}:/local \
           openapitools/openapi-generator-cli:v7.1.0 generate \
-          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/refs/heads/main/src/core/fbs/fbs-adapter.yaml \
+          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-web/refs/heads/main/react/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client \
           -c /local/.openapi-generator/fbs.config.yaml \
           --skip-validate-spec

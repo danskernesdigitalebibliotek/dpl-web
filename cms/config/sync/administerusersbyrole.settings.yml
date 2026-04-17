@@ -10,5 +10,4 @@ roles:
   bnf_graphql_client: unsafe
   go_graphql_client: unsafe
   mobile_graphql_client: unsafe
-  bnf_pilot: unsafe
   external_graphql_client: unsafe

@@ -15,8 +15,7 @@ interface MaterialGridAutomaticEntryConfigProps {
 }
 
 export interface MaterialGridAutomaticEntryProps
-  extends GlobalEntryTextProps,
-    MaterialGridAutomaticEntryConfigProps {
+  extends GlobalEntryTextProps, MaterialGridAutomaticEntryConfigProps {
   cql: string;
   location?: string;
   sublocation?: string;

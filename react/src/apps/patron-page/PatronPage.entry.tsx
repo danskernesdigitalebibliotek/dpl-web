@@ -76,7 +76,8 @@ interface PatronPageTextProps {
 }
 
 export interface PatronPageProps
-  extends PatronPageConfigProps,
+  extends
+    PatronPageConfigProps,
     BlockedPatronEntryTextProps,
     PatronPageTextProps,
     PatronPageUrlProps,

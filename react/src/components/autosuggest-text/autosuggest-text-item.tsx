@@ -3,7 +3,7 @@ import React from "react";
 import { useText } from "../../core/utils/text";
 import { SuggestionTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Suggestion } from "../../core/utils/types/autosuggest";
-import { getManifestationLanguageIsoCode } from "../../apps/material/helper";
+import { getManifestationLanguageCode } from "../../apps/material/helper";
 
 export interface AutosuggestTextItemProps {
   classes: {
@@ -22,11 +22,9 @@ const AutosuggestTextItem: React.FC<AutosuggestTextItemProps> = ({
   getItemProps,
   dataCy = "autosuggest-text-item"
 }) => {
-  const isoLang =
+  const langCode =
     item.work?.manifestations.bestRepresentation &&
-    getManifestationLanguageIsoCode([
-      item.work.manifestations.bestRepresentation
-    ]);
+    getManifestationLanguageCode([item.work.manifestations.bestRepresentation]);
 
   const t = useText();
   return (
@@ -36,7 +34,7 @@ const AutosuggestTextItem: React.FC<AutosuggestTextItemProps> = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...getItemProps({ item, index })}
       data-cy={dataCy}
-      lang={isoLang}
+      lang={langCode}
     >
       <p className="autosuggest__text text-body-medium-regular">
         {item.type === SuggestionTypeEnum.Creator

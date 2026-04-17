@@ -299,7 +299,7 @@ export function WithoutData() {
 ### Style using the DPL design system
 
 This project includes styling created by its sister repository -
-[the design system](https://github.com/danskernesdigitalebibliotek/dpl-design-system)
+[the design system](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/design-system)
 as a npm package.
 
 By default the project should include a release of the design system matching

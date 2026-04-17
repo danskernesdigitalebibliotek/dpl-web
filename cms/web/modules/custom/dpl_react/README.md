@@ -20,5 +20,5 @@ As it is now there is no concept of translating strings
 in the DDB React project.
 The strings are passed as data attributes as described [here][2].
 
-[1]: <https://github.com/danskernesdigitalebibliotek/dpl-react>
-[2]: <https://github.com/danskernesdigitalebibliotek/dpl-react#data-attributes-and-props>
+[1]: <https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/react>
+[2]: <https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/react#data-attributes-and-props>

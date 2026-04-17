@@ -7,6 +7,8 @@ import Icon from "@/components/shared/icon/Icon"
 import {
   createToggleFilterCallback,
   facetTermIsSelected,
+  getFacetTermSortPriority,
+  getFacetTermTranslations,
   getFacetTranslation,
   sortByActiveFacets,
 } from "@/components/shared/searchFilters/helper"
@@ -21,7 +23,22 @@ type SearchFiltersColumnProps = {
   isLast: boolean
 }
 
-const allowedFacetValues = ["bøger", "podcasts", "e-bøger", "lydbøger"]
+type FacetValue = SearchFacetFragment["values"][number]
+
+const sortByPriority =
+  (priority: string[]) =>
+  (a: FacetValue, b: FacetValue): number =>
+    priority.indexOf(a.term) - priority.indexOf(b.term)
+
+const sortAlphabetically = (a: FacetValue, b: FacetValue): number =>
+  a.term.localeCompare(b.term, "da", { numeric: true })
+
+const facetTermTranslations = getFacetTermTranslations()
+
+const facetSortStrategies: Partial<Record<string, (a: FacetValue, b: FacetValue) => number>> = {
+  materialTypesSpecific: sortByPriority(getFacetTermSortPriority()),
+  age: sortAlphabetically,
+}
 
 const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const actor = useSearchMachineActor()
@@ -33,9 +50,15 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const toggleFilter = createToggleFilterCallback(actor)
   const facetData = actor.getSnapshot().context.facetData
 
-  // Filter out the facet values that are not allowed if the facet is materialTypesGeneral
-  if (facet.name === "materialTypesGeneral") {
-    facet.values = facet.values.filter(value => allowedFacetValues.includes(value.term))
+  // Filter out materialTypesSpecific terms that are not in the defined facet term map
+  if (facet.name === "materialTypesSpecific") {
+    facet.values = facet.values.filter(value => value.term in facetTermTranslations)
+  }
+
+  // Sort facet values using the facet-specific sort strategy if one exists
+  const sortStrategy = facetSortStrategies[facet.name]
+  if (sortStrategy) {
+    facet.values = [...facet.values].sort(sortStrategy)
   }
 
   // We show the selected values first in the list
@@ -93,7 +116,9 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
                 })}
                 withAnimation
                 data-cy={cyKeys["filter-button"]}>
-                {value.term}
+                {facet.name === "materialTypesSpecific"
+                  ? facetTermTranslations[value.term]
+                  : value.term}
               </BadgeButton>
             ))}
           </div>

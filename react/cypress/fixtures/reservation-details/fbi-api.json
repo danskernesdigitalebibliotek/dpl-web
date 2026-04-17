@@ -5,7 +5,7 @@
         "main": [
           {
             "display": "engelsk",
-            "isoCode": "eng"
+            "iso639Set1": "en"
           }
         ]
       },

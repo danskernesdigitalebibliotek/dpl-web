@@ -1,0 +1,54 @@
+[
+  {
+    "id": "0a3f507a-b039-32b8-e044-0003ba298018",
+    "kommunenavn": "København",
+    "kommunekode": "0101",
+    "vejkode": "4016",
+    "vejnavn": "Krystalgade",
+    "husnummertekst": "15",
+    "supplerendebynavn": null,
+    "postnummer": "1172",
+    "postnummernavn": "København K",
+    "visningstekst": "Krystalgade 15, 1172 København K",
+    "vejpunkt_geometri": {
+      "type": "MultiPoint",
+      "coordinates": [[724657.53982324, 6176360.02949066]]
+    },
+    "geometri": {
+      "type": "MultiPoint",
+      "coordinates": [[724660.95, 6176352.52]]
+    },
+    "type": "husnummer",
+    "label": "Krystalgade 15, 1172 København K",
+    "geometry": {
+      "type": "MultiPoint",
+      "coordinates": [[724660.95, 6176352.52]]
+    }
+  },
+  {
+    "id": "0a3f507d-d12c-32b8-e044-0003ba298018",
+    "kommunenavn": "Ishøj",
+    "kommunekode": "0183",
+    "vejkode": "0318",
+    "vejnavn": "Ishøj Store Torv",
+    "husnummertekst": "1",
+    "supplerendebynavn": null,
+    "postnummer": "2635",
+    "postnummernavn": "Ishøj",
+    "visningstekst": "Ishøj Store Torv 1, 2635 Ishøj",
+    "vejpunkt_geometri": {
+      "type": "MultiPoint",
+      "coordinates": [[711385.26, 6168226.64]]
+    },
+    "geometri": {
+      "type": "MultiPoint",
+      "coordinates": [[711343.79, 6168203.78]]
+    },
+    "type": "husnummer",
+    "label": "Ishøj Store Torv 1, 2635 Ishøj",
+    "geometry": {
+      "type": "MultiPoint",
+      "coordinates": [[711343.79, 6168203.78]]
+    }
+  }
+]

@@ -39,15 +39,10 @@ const search = {
     "775130",
   ],
   "search.facets": {
-    MATERIALTYPESGENERAL: {
-      filter: "materialTypesGeneral",
+    MATERIALTYPESSPECIFIC: {
+      filter: "materialTypesSpecific",
       translation: "Type",
     },
-    // Keep this for debugging purposes. TODO: Remove this when not needed.
-    // MATERIALTYPESSPECIFIC: {
-    //   filter: "materialTypesSpecific",
-    //   translation: "Type",
-    // },
     MAINLANGUAGES: {
       filter: "mainLanguages",
       translation: "Sprog",

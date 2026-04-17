@@ -500,7 +500,6 @@ display:
               external_system: '0'
               bnf_graphql_client: '0'
               go_graphql_client: '0'
-              bnf_pilot: '0'
             placeholder: ''
           is_grouped: false
           group_info:

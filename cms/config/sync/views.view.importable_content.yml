@@ -975,7 +975,6 @@ display:
               bnf_graphql_client: '0'
               go_graphql_client: '0'
               go_editor: '0'
-              bnf_pilot: '0'
             placeholder: ''
           is_grouped: false
           group_info:

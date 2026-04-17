@@ -114,7 +114,7 @@ which support [both types of usage](#usage). This applies for the original
 repository on GitHub and all GitHub forks.
 
 You can follow the status of deployments in the [Actions list for the repository
-on GitHub](https://github.com/danskernesdigitalebibliotek/dpl-design-system/actions/workflows/deployment.yml).
+on GitHub](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/design-system/actions/workflows/deployment.yml).
 The action logs also contain additional details regarding the contents and
 publication of each release.  If using a fork then deployment actions can be
 seen on the corresponding list.

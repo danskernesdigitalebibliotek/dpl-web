@@ -1,23 +1,10 @@
 .disclosure {
-  width: auto;
+  width: 100%;
   border: solid 1px $color__global-tertiary-1;
   border-top: none;
 
   &:first-of-type {
     border-top: solid 1px $color__global-tertiary-1;
-  }
-
-  @include media-query__small {
-    margin: 0 133px;
-  }
-
-  &.disclosure--full-width {
-    width: 100%;
-    margin: 0;
-
-    @include media-query__small {
-      margin: 0;
-    }
   }
 
   &__headline {

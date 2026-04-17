@@ -69,7 +69,7 @@ const WorkCard = ({
   const covers = bestRepresentation.cover
 
   const isSomeMaterialTypePodcast = manifestationsWithPublizonData.some(
-    manifestation => manifestation.materialTypes[0].materialTypeGeneral.code === "PODCASTS"
+    manifestation => manifestation.materialTypes[0].materialTypeSpecific.code === "PODCAST"
   )
 
   const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
@@ -108,10 +108,10 @@ const WorkCard = ({
           {/* Loop through all manifestation types */}
           {manifestationsWithPublizonData.map(manifestation => {
             // find material type general material type
-            const materialType = manifestation.materialTypes[0].materialTypeGeneral.code
+            const materialType = manifestation.materialTypes[0].materialTypeSpecific.code
             const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
             const isCostFree = manifestation.publizonData?.costFree
-            const isPodcast = materialType === "PODCASTS"
+            const isPodcast = materialType === "PODCAST"
 
             return (
               <MaterialTypeIconWrapper

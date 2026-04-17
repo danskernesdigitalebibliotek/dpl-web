@@ -83,10 +83,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2026.8.0",
+                "version": "0.0.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2026.8.0/dist-2026-8-0-bc173de06457bd6aca426389f1a42aa4175714b9.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-react.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -99,9 +99,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2026.8.0",
+                "version": "0.0.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2026.8.0/dist-2026-8-0-ed2465a3ffeb72ea60a2efafd5fe7c5c5745eb23.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
                     "type": "zip"
                 }
             }

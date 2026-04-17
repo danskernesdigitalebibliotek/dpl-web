@@ -3,7 +3,6 @@ import { fn } from "storybook/test"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 
 const defaultArgs = {
   options: [
@@ -11,7 +10,7 @@ const defaultArgs = {
     { code: "EBOOKS", display: "E-book" },
     { code: "AUDIO_BOOKS", display: "Audiobook" },
   ] as SlideSelectOption[],
-  selected: "BOOKS" as GeneralMaterialTypeCodeEnum,
+  selected: "BOOKS",
   onOptionSelect: fn(),
 }
 

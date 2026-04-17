@@ -12,9 +12,13 @@ import useUpdateFields from "./useUpdateFields";
 
 type MaterialSearchProps = {
   uniqueIdentifier: string;
+  useGoVipProfile?: boolean;
 };
 
-const MaterialSearch: FC<MaterialSearchProps> = ({ uniqueIdentifier }) => {
+const MaterialSearch: FC<MaterialSearchProps> = ({
+  uniqueIdentifier,
+  useGoVipProfile
+}) => {
   const {
     availableMaterialTypes,
     work,
@@ -24,7 +28,7 @@ const MaterialSearch: FC<MaterialSearchProps> = ({ uniqueIdentifier }) => {
     selectedMaterialType,
     setSelectedMaterialType,
     errorState
-  } = useGetSelectedWork();
+  } = useGetSelectedWork({ useGoVipProfile });
 
   const {
     searchInput,
@@ -33,7 +37,7 @@ const MaterialSearch: FC<MaterialSearchProps> = ({ uniqueIdentifier }) => {
     isLoading: isSearchResultsLoading,
     hitCount,
     loadMore
-  } = useGetMaterialListSearch();
+  } = useGetMaterialListSearch({ useGoVipProfile });
 
   const { handleUpdateWorkId, handleUpdateMaterialType } = useUpdateFields({
     updateSelectedWorkId: setSelectedWorkId,

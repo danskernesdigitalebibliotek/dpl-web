@@ -51,6 +51,7 @@
   color: $color__text-primary-black;
   display: inline-block;
   width: fit-content;
+  line-height: normal;
 
   // Hide arrow
   &::after {
@@ -60,7 +61,6 @@
     transform: scaleX(1);
     transition: transform 300ms ease-in-out;
     transform-origin: 100% 50%;
-    padding-bottom: 2px;
   }
 
   // Show arrow on hover
