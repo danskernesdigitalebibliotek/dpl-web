@@ -21,12 +21,9 @@ jobs:
         with:
           fetch-depth: 0 # 👈 Required to retrieve git history
 
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: "go/.nvmrc"
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run typescript compile check
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit

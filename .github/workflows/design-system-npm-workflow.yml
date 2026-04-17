@@ -30,15 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: 'design-system/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'design-system/yarn.lock'
-          registry-url: 'https://npm.pkg.github.com'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create NPMRC
         run: |
@@ -47,7 +41,6 @@ jobs:
             echo "[@${{ github.repository_owner }}]:registry=https://npm.pkg.github.com"
             echo "always-auth=true"
           } >> "$HOME/.npmrc"
-          echo 'registry "https://registry.yarnpkg.com"' >> "$HOME/.yarnrc"
 
       - name: Build package files for npm publish
         # NPM publish does not require browsers.

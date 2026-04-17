@@ -33,17 +33,9 @@ jobs:
         containers: [1, 2, 3]
     steps:
       - uses: actions/checkout@v6
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
-          registry-url: 'https://npm.pkg.github.com'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Chrome
         id: setup-chrome
@@ -55,7 +47,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           install: false
-          start: yarn start:storybook:test
+          start: pnpm run start:storybook:test
           wait-on: 'http://localhost:57021'
           browser: ${{ steps.setup-chrome.outputs.chrome-path }}
           group: 'Integration tests'
@@ -80,7 +72,7 @@ jobs:
           path: react/cypress/videos
       - run: mkdir -p .nyc_output
       - name: Generate code coverage report
-        run: yarn run nyc report --reporter=clover --reporter=text --report-dir=./coverage
+        run: pnpm run nyc report --reporter=clover --reporter=text --report-dir=./coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7
         with:
@@ -98,18 +90,10 @@ jobs:
         working-directory: react
     steps:
       - uses: actions/checkout@v6
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
-          registry-url: 'https://npm.pkg.github.com'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run unit tests
-        run: yarn test:unit
+        run: pnpm run test:unit
 

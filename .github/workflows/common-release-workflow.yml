@@ -65,15 +65,9 @@ jobs:
         with:
           ref: ${{ inputs.sha }}
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: '${{ inputs.project }}/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: '${{ inputs.project }}/yarn.lock'
-          registry-url: 'https://npm.pkg.github.com'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bundling assets
         run: ./bundle.sh

@@ -6,7 +6,7 @@ How to develop across CMS, React, and design-system using the root `Taskfile.yml
 
 - [go-task](https://taskfile.dev)
 - Docker
-- Node.js + Yarn
+- Node.js + pnpm
 
 ## CMS + React Development
 
@@ -24,7 +24,7 @@ task dev:cms-react --watch
 
 ### What `dev:cms-react` does
 
-1. `yarn install` in design-system and react (skipped if `package.json`/`yarn.lock` unchanged)
+1. `pnpm install` in design-system and react (skipped if `package.json`/`pnpm-lock.yaml` unchanged)
 2. Builds design-system (SCSS → CSS, bundles icons/fonts/JS into `build/`)
 3. Links design-system into React via `yarn link`
 4. Builds React (webpack → `dist/`)

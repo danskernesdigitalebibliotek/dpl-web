@@ -10,7 +10,7 @@ export type DropdownWithLabelItem = {
 };
 
 export type DropdownWithLabelProps = {
-  label: ReturnType<typeof Label>;
+  label: React.ReactNode;
   list: DropdownWithLabelItem[];
   ariaLabel: string;
   arrowIcon: "triangles" | "chevron";

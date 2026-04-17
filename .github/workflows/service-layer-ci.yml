@@ -16,86 +16,72 @@ jobs:
   TypeCheck:
     name: Service Layer / Type check
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/service-layer
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: "packages/service-layer/.nvmrc"
-      - run: yarn install --frozen-lockfile
-      - run: yarn typecheck
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm run typecheck
+        working-directory: packages/service-layer
 
   UnitTest:
     name: Service Layer / Unit test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/service-layer
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: "packages/service-layer/.nvmrc"
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm run test
+        working-directory: packages/service-layer
 
   FormatCheck:
     name: Service Layer / Format check
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/service-layer
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: "packages/service-layer/.nvmrc"
-      - run: yarn install --frozen-lockfile
-      - run: yarn format:check
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm run format:check
+        working-directory: packages/service-layer
 
   LintCheck:
     name: Service Layer / Lint check
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/service-layer
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: "packages/service-layer/.nvmrc"
-      - run: yarn install --frozen-lockfile
-      - run: yarn lint
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm run lint
+        working-directory: packages/service-layer
 
   CodegenCheck:
     name: Service Layer / Codegen up to date
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/service-layer
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: "packages/service-layer/.nvmrc"
-      - run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Re-run FBS codegen
-        run: yarn codegen:fbs
+        working-directory: packages/service-layer
+        run: pnpm run codegen:fbs
       - name: Verify generated files match the spec
+        working-directory: packages/service-layer
         run: |
           if ! git diff --exit-code -- fbs/src/generated; then
-            echo "::error::Generated FBS files are out of date with fbs-adapter.yaml. Run 'yarn codegen:fbs' inside packages/service-layer and commit the result."
+            echo "::error::Generated FBS files are out of date with fbs-adapter.yaml. Run 'pnpm run codegen:fbs' inside packages/service-layer and commit the result."
             exit 1
           fi

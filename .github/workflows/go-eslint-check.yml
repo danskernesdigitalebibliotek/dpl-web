@@ -5,27 +5,18 @@ on:
     paths:
       - 'go/**'
       - '.github/workflows/go-*.yml'
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: go
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          fetch-depth: 0 # 👈 Required to retrieve git history
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: "go/.nvmrc"
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Lint Javascripts
-        run: yarn lint
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run linter
+        run: pnpm run lint
+        working-directory: go

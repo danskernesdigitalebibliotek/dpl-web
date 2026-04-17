@@ -23,15 +23,9 @@ jobs:
           # AUTOCOMMIT_GITHUB_TOKEN is a dpl-platform-bot PAT used to
           # bypass branch protection on develop.
           token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: 'react/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'react/yarn.lock'
-          registry-url: 'https://npm.pkg.github.com'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Re-resolve design system package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,5 +35,5 @@ jobs:
       - name: Commit refreshed package files
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          file_pattern: react/yarn.lock react/package.json
+          file_pattern: react/pnpm-lock.yaml react/package.json
           commit_message: Refreshed dpl-design-system package

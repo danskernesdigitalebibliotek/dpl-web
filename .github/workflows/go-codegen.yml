@@ -30,15 +30,9 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: 'go/.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: 'go/yarn.lock'
-
-      - name: Install dependencies
-        working-directory: go
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Codegen - REST services
         working-directory: go

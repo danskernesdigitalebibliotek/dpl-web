@@ -236,17 +236,13 @@ jobs:
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
-        run: npx markdownlint-cli2
+        run: pnpm dlx markdownlint-cli2
 
   Shellcheck:
     name: CMS / Shellcheck
@@ -283,15 +279,11 @@ jobs:
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ESLint
-        run: npx eslint web -c .eslintrc.json
+        run: pnpm exec eslint web -c .eslintrc.json
 
   EslintCypress:
     name: CMS / Lint Cypress tests
@@ -305,15 +297,11 @@ jobs:
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ESLint
-        run: npx eslint cypress -c cypress/.eslintrc.json
+        run: pnpm exec eslint cypress -c cypress/.eslintrc.json
 
   CheckDrupalConfig:
     name: CMS / Check Drupal Config

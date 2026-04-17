@@ -62,35 +62,35 @@ tasks:
     desc: Install development environment and clean up
     cmds:
       - task dev:nvm:use
-      - yarn
-      - yarn dev:https
+      - pnpm install
+      - pnpm run dev:https
 
   codegen:rest-services:
     desc: Regenerate REST service clients via orval.
     cmds:
       - task dev:nvm:use
-      - yarn codegen:all-rest-services
+      - pnpm run codegen:all-rest-services
 
   codegen:graphql:
     desc: Regenerate dpl-cms + FBI GraphQL clients from the committed SDL in /schemas/graphql/.
     cmds:
       - task dev:nvm:use
-      - yarn codegen:graphql
+      - pnpm run codegen:graphql
 
   codegen:publizon:
     desc: Regenerate Publizon REST client.
     cmds:
       - task dev:nvm:use
-      - yarn codegen:publizon
+      - pnpm run codegen:publizon
 
   codegen:pubhub:
     desc: Regenerate Pubhub SOAP client from WSDL.
     cmds:
       - task dev:nvm:use
-      - yarn codegen:pubhub
+      - pnpm run codegen:pubhub
 
   codegen:unilogin:
     desc: Regenerate Unilogin SOAP client from WSDL.
     cmds:
       - task dev:nvm:use
-      - yarn codegen:unilogin
+      - pnpm run codegen:unilogin

@@ -25,7 +25,7 @@ services:
       dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
     expose:
       - 80
-    command: 'yarn dev'
+    command: 'npm run dev'
     environment:
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.local
       VIRTUAL_PORT: 6006

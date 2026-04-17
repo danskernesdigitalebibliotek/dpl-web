@@ -17,26 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          node-version-file: 'design-system/.nvmrc'
-
-      - name: Cache dependencies
-        uses: actions/cache@v5
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        # Storybook build does not require browsers.
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-        run: yarn install --frozen-lockfile
-      - run: yarn css:build
-      - run: yarn build-storybook
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm run css:build
+      - run: pnpm run build-storybook
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

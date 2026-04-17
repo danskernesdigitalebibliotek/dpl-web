@@ -109,48 +109,17 @@ tasks:
       - task -d go dev:reset
 
   # ---------------------------------------------------------------------------
-  # Init (yarn install for all JS projects)
+  # Init (pnpm install for all JS projects)
   # ---------------------------------------------------------------------------
 
   init:
-    desc: "Install dependencies for design-system, react, and go"
-    deps:
-      - init:design-system
-      - init:react
-      - init:go
-
-  init:design-system:
-    desc: "yarn install in design-system/"
-    dir: ./design-system
+    desc: "Install dependencies with pnpm"
     sources:
-      - package.json
-      - yarn.lock
-    generates:
-      - node_modules/.yarn-integrity
+      - "**/package.json"
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
     cmds:
-      - yarn install
-
-  init:react:
-    desc: "yarn install in react/"
-    dir: ./react
-    sources:
-      - package.json
-      - yarn.lock
-    generates:
-      - node_modules/.yarn-integrity
-    cmds:
-      - yarn install
-
-  init:go:
-    desc: "yarn install in go/"
-    dir: ./go
-    sources:
-      - package.json
-      - yarn.lock
-    generates:
-      - node_modules/.yarn-integrity
-    cmds:
-      - yarn install
+      - corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration
@@ -183,9 +152,9 @@ tasks:
     generates:
       - 'build/**/*.*'
     cmds:
-      # yarn build compiles SCSS into src/styles/css/.
+      # pnpm run build compiles SCSS into src/styles/css/.
       # We then assemble a clean build/ directory with the assets CMS needs.
-      - yarn build
+      - pnpm run build
       - rm -rf ./build
       - mkdir -p ./build/js
       - cp -r ./public/icons ./build/icons
@@ -197,7 +166,7 @@ tasks:
     desc: "Register design-system as a yarn link source"
     dir: ./design-system
     cmds:
-      - yarn link
+      - pnpm link
 
   # ---------------------------------------------------------------------------
   # React
@@ -207,7 +176,7 @@ tasks:
     desc: "Link the local design-system package into React via yarn link"
     dir: ./react
     cmds:
-      - yarn link @danskernesdigitalebibliotek/dpl-design-system
+      - pnpm link @danskernesdigitalebibliotek/dpl-design-system
 
   dev:react:install:
     desc: "Install React dependencies"
@@ -239,7 +208,7 @@ tasks:
     generates:
       - 'dist/**/*.*'
     cmds:
-      - yarn build
+      - pnpm build
 
   # ---------------------------------------------------------------------------
   # Copy assets into CMS
@@ -273,6 +242,12 @@ tasks:
       - rm -rf {{ .CMS_REACT_LIBRARY }}
       - mkdir -p {{ .CMS_REACT_LIBRARY }}
       - cp -r ./react/dist/* {{ .CMS_REACT_LIBRARY }}/
+
+  dev:reset:node_modules:
+    desc: "Remove node_modules from all projects and reinstall with pnpm."
+    cmds:
+      - "rm -rf node_modules **/node_modules"
+      - pnpm install
 
   lagoon:run-on-projects:
     desc: Show how to run shell commands across many Lagoon projects in parallel
