@@ -4,9 +4,7 @@
 import "@cypress/code-coverage/support";
 import { hasOperationName } from "../utils/graphql-test-utils";
 import { Operations } from "../../src/core/dbc-gateway/types";
-
-// Install cypress-terminal-report logs collector
-require("cypress-terminal-report/src/installLogsCollector")();
+import "cypress-terminal-report/src/installLogsCollector";
 
 // Stub real FBI cover image bytes for every spec so tests never touch the live
 // network. Specs that need a different stub can override with their own
@@ -103,15 +101,25 @@ Cypress.Commands.add(
 
 // Data cy attribute selector helpers.
 const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
-Cypress.Commands.add("getBySel", (selector, checkVisible = false) => {
-  return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`);
-});
-Cypress.Commands.add("getBySelLike", (selector, checkVisible = false) => {
-  return cy.get(`[data-cy*="${selector}"]${visible(checkVisible)}`);
-});
+Cypress.Commands.add(
+  "getBySel",
+  (selector: string, checkVisible: boolean = false) => {
+    return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`);
+  }
+);
+Cypress.Commands.add(
+  "getBySelLike",
+  (selector: string, checkVisible: boolean = false) => {
+    return cy.get(`[data-cy*="${selector}"]${visible(checkVisible)}`);
+  }
+);
 Cypress.Commands.add(
   "getBySelStartEnd",
-  (startSelector, endSelector, checkVisible = false) => {
+  (
+    startSelector: string,
+    endSelector: string,
+    checkVisible: boolean = false
+  ) => {
     const v = visible(checkVisible);
     return cy.get(
       `[data-cy^="${startSelector}"]${v}[data-cy$="${endSelector}"]${v}`

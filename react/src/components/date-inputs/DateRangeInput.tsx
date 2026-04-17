@@ -3,9 +3,7 @@ import { FC } from "react";
 // Do not understand why eslint is complaining about this import
 // It is for sure listed in the dependencies of package.json.
 import Flatpickr from "react-flatpickr";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import "flatpickr/dist/flatpickr.css";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Danish } from "flatpickr/dist/l10n/da";
 import dayjs from "dayjs";
 import { dateFormatDayjs } from "../../core/configuration/date-format";
