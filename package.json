@@ -1,0 +1,14 @@
+{
+  "name": "@danskernesdigitalebibliotek/dpl-web",
+  "description": "Mono-repo for DPL apps. Actual dependencies are located in the individual packages.",
+  "version": "1.0.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "error",
+      "version": "^24.15.0"
+    }
+  },
+  "private": true,
+  "packageManager": "pnpm@11.5.2"
+}

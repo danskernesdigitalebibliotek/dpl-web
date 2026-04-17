@@ -1,0 +1,28 @@
+name: Common setup for JavaScript/Node.js
+description: Install pnpm and Node.js, then install dependencies.
+inputs:
+  token:
+    description: GitHub token for authenticating with the npm registry.
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v6
+      with:
+        # caching is done by pnpm/action-setup below.
+        package-manager-cache: false
+        node-version-file: '.nvmrc'
+        registry-url: 'https://npm.pkg.github.com'
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
+    - uses: pnpm/action-setup@v6
+      with:
+        # No version defined here, it is read from packageManager in the root package.json file.
+        cache: true
+        run_install: true
+        # Path relative to the repository root.
+        package_json_file: './package.json'
+      env:
+        CI: 1
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'

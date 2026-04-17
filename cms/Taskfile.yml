@@ -119,9 +119,9 @@ tasks:
       - task dev:cli -- php vendor/bin/phpcs
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
       - task dev:cli -- php vendor/bin/phpstan
-      - task dev:cli -- yarn install --frozen-lockfile
-      - task dev:cli -- npx eslint web -c .eslintrc.json --fix
-      - task dev:cli -- npx eslint cypress -c cypress/.eslintrc.json --fix
+      - task dev:cli -- corepack pnpm install --frozen-lockfile
+      - task dev:cli -- corepack pnpm exec eslint web -c .eslintrc.json --fix
+      - task dev:cli -- corepack pnpm exec eslint cypress -c cypress/.eslintrc.json --fix
 
   dev:build:
     summary: Build docker containers
@@ -203,14 +203,12 @@ tasks:
       - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:start'
       # Build site.
       - task dev:cli -- composer install
-      # Always reinstall packages tracking develop builds. The content of such
-      # packages may change without composer package version changes so ensure
-      # we have the latest version.
-      - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
       # (Re)run Drupal scaffolding.
       - task dev:cli -- composer drupal:scaffold
-      # Build dev scripts
-      - task dev:cli -- composer -d dev-scripts/dpl-react install
+      # Build the design-system + React from source and copy them into the CMS
+      # (theme assets + libraries). They are no longer Composer packages — they
+      # live in this monorepo and are built directly.
+      - task -d {{.TASKFILE_DIR}}/.. dev:cms:link:design-system dev:cms:link:react
       - '{{ if ne .SKIP_SITE_INSTALL "true" }}task dev:cli -- ./dev-scripts/install-site.sh --install-only{{ end }}'
       - task dev:cli -- ./dev-scripts/install-site.sh --post-install-only {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       # Possibly install the BNF site.
@@ -294,7 +292,7 @@ tasks:
   dev:restore:files:
     desc: "Restore files by overwriting existing with the ones from the Lagoon backup package"
     cmds:
-      - docker compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
+      - docker compose exec cli sh cms/dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
       - task dev:cache:clear:all
 
   dev:cache:clear:all:
@@ -312,23 +310,6 @@ tasks:
     summary: Purges the varnish cache
     cmds:
       - task dev:cli -- drush cache:rebuild-external -y
-
-  dev:dpl-react:get-asset-url:
-    summary: Outputs the url to the build in Github
-    cmds:
-      - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
-    preconditions:
-      - sh: "[ ! -z {{.BRANCH}} ]"
-        msg: "Env variable BRANCH is not set or empty."
-
-  dev:dpl-react:overwrite:
-    desc: Downloads assets from Github and overwrites existing dpl-react library
-    cmds:
-      - cmd: echo {{ .ASSET_URL }}
-      - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console download-and-overwrite-library {{ .ASSET_URL }}
-    vars:
-      ASSET_URL:
-        sh: task dev:dpl-react:get-asset-url
 
   dev:codegen:fbs:
     desc: Generate FBS client package from OpenAPI specification
@@ -385,86 +366,6 @@ tasks:
         cmd: |
           docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm --workdir /app/cms/web cli php core/scripts/generate-proxy-class.php '{{ splitList "|" .ITEM | first }}' {{ splitList "|" .ITEM | last }}
 
-  dev:composer:update-design-system:
-    desc: Update the DPL design system package to a specific version or branch release.
-    summary: |
-      Environment variables:
-      - Optional:
-        BRANCH: The git branch to download the corresponding build for. Defaults to the current checked out git branch.
-        RELEASE: The release to download the corresponding build for.
-        VERSION: The version to use for the package. Defaults to 0.0.0-dev
-      Usage:
-      - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-design-system
-      - Update to a branch release (auto current branch if BRANCH is omitted): BRANCH=taxonomy_categories task dev:composer:update-design-system
-    deps: ["deps:jq", "deps:gh"]
-    cmds:
-      - task: dev:composer:update-package
-        vars:
-          NAME: "danskernesdigitalebibliotek/dpl-design-system"
-          VERSION:
-            sh: "echo ${VERSION:-0.0.0-dev}"
-          DIST_FILENAME: "dist-design-system.zip"
-    preconditions:
-      - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
-        msg: Please provide either BRANCH or RELEASE, not both
-
-  dev:composer:update-react:
-    desc: Update the DPL React package to a specific version or branch release.
-    summary: |
-      Environment variables:
-        - Optional:
-          BRANCH: The git branch to download the corresponding build for. Defaults to the current checked out git branch.
-          RELEASE: The release to download the corresponding build for.
-          VERSION: The version to use for the package. Defaults to 0.0.0-dev
-      Usage:
-        - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-react
-        - Update to a branch release (auto current branch if BRANCH is omitted): BRANCH=taxonomy_categories task dev:composer:update-react
-    deps: ["deps:jq", "deps:gh"]
-    cmds:
-      - task: dev:composer:update-package
-        vars:
-          NAME: "danskernesdigitalebibliotek/dpl-react"
-          VERSION:
-            sh: "echo ${VERSION:-0.0.0-dev}"
-          DIST_FILENAME: "dist-react.zip"
-    preconditions:
-      - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
-        msg: Please provide either BRANCH or RELEASE, not both
-
-  dev:composer:update-package:
-    deps: ["deps:jq", "deps:gh"]
-    internal: true
-    silent: true
-    cmds:
-      - cmd: |
-          release_name="$RELEASE"
-          if [ -z "$release_name" ]; then
-            effective_branch="${BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)}"
-            if [ -z "$effective_branch" ] || [ "$effective_branch" = "HEAD" ]; then
-              echo "Could not determine current git branch. Provide BRANCH or RELEASE explicitly." >&2
-              exit 1
-            fi
-            branch_slug="$(printf '%s' "branch-${effective_branch}" | tr '[:upper:]_' '[:lower:]-' | tr -cs '[:alnum:]-' '-')"
-            release_name="${branch_slug#-}"
-            release_name="${release_name%-}"
-          fi
-          if ! assets_json="$(gh release view "$release_name" --json assets 2>/dev/null)"; then
-            echo "Could not find GitHub release '$release_name'. If this is a development branch, make sure to push your branch first, and then try again." >&2
-            exit 1
-          fi
-          download_url="$(echo "$assets_json" | jq -r '.assets[] | select(.name == "{{ .DIST_FILENAME }}") | .url')"
-          if [ -z "$download_url" ] || [ "$download_url" = "null" ]; then
-            echo "Could not find asset '{{ .DIST_FILENAME }}' in release '$release_name'. It may still be building - try again in a few minutes." >&2
-            exit 1
-          fi
-          jq --indent {{ .JQ_INDENT }} -r --arg download_url "$download_url" '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = $download_url' composer.json > composer.temp.json && mv composer.temp.json composer.json
-      - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name =="{{ .NAME }}").package.version) = ("{{ .VERSION }}")' composer.json > composer.temp.json && mv composer.temp.json composer.json
-      - cmd: sleep 1
-      - cmd: task dev:cli -- composer require {{ .NAME }}:{{ .VERSION }}
-    vars:
-      # This is what matches our composer.json file.
-      JQ_INDENT: 4
-
   dev:example-content:update:
     desc: Update the example content module with data from the current site
     cmds:
@@ -519,7 +420,6 @@ tasks:
 
   ci:cypress:run:
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - task dev:cli -- drush pm:enable -y dpl_webmaster
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "$SPEC_PATH"
@@ -601,9 +501,9 @@ tasks:
     desc: Run Cypress functional tests locally
     deps: [ci:wiremock:create-mappings, ci:local]
     cmds:
-      - yarn install --frozen-lockfile
+      - pnpm install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - npx cypress open
+      - pnpm exec cypress open
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
@@ -615,30 +515,26 @@ tasks:
     desc: Run Pa11y to test accessiblity
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn pa11y:ci
-
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm --config.verify-deps-before-run=false run pa11y:ci
   ci:wiremock:create-mappings:
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn wiremock:create-mappings
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm --config.verify-deps-before-run=false run wiremock:create-mappings
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx lhci autorun
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx lhci autorun
 
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | corepack pnpm dlx jsome -r > openapi.json
 
   ci:shellcheck:
     desc: Run ShellCheck on CMS helper scripts
@@ -662,15 +558,3 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
-
-  deps:jq:
-    internal: true
-    preconditions:
-      - sh: jq --version
-        msg: jq is not installed. Please check https://stedolan.github.io/jq/.
-
-  deps:gh:
-    internal: true
-    preconditions:
-      - sh: gh --version && gh auth status
-        msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.

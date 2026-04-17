@@ -144,26 +144,20 @@ Replace files locally:
 2. Start a local environment using `task dev:reset:clean`
 3. Restore the files by running `task dev:restore:files`
 
-### Get a specific release of dpl-react - without using composer install
+### Work against a specific branch of dpl-react / design-system
 
-In a development context it is not very handy only
-to be able to get the latest version of the main branch of dpl-react.
-
-So a command has been implemented that downloads the specific version
-of the assets and overwrites the existing library.
-
-You need to specify which branch you need to get the assets from.
-The latest HEAD of the given branch is automatically build by Github actions
-so you just need to specify the branch you want.
-
-It is used like this:
+`dpl-react` and `design-system` are no longer downloaded as prebuilt
+packages — they live in this monorepo and are built from source. To test
+the CMS against a specific branch of either project, check that branch out
+and rebuild the assets into the CMS:
 
 ```bash
-BRANCH=[BRANCH_FROM_DPL_REACT_REPOSITORY] task dev:dpl-react:overwrite
+git checkout <branch>
+# From the repository root: build design-system + React and copy the
+# artifacts into the CMS (theme assets + libraries).
+task dev:cms:link
 ```
 
-Example:
-
-```bash
-BRANCH=feature/more-releases task dev:dpl-react:overwrite
-```
+For an ongoing edit/rebuild loop while developing across the projects, use
+`task dev:cms-react --watch` from the repository root (see
+[docs/development.md](../development.md)).

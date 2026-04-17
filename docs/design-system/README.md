@@ -19,8 +19,8 @@ compose, hence the requirements are limited to having docker install and tasks.
 
 This project can be used outside docker with the following requirements:
 
-- `node 16`
-- `yarn`
+- `node 24`
+- `pnpm`
 
 Check in the terminal which versions you have installed with `node -v`.
 
@@ -37,7 +37,7 @@ task dev:install
 Use the node package manager to install project dependencies:
 
 ```shell
-yarn install
+pnpm install
 ```
 
 ## Development
@@ -65,7 +65,7 @@ task dev:[TAB]
 To start developing run:
 
 ```shell
-yarn dev
+pnpm run dev
 ```
 
 Components and CSS will be automatically recompiled when making changes in the
@@ -108,112 +108,29 @@ expires.
 
 ## Deployment and releases
 
-The project is [automatically built and deployed](.github/workflows/deployment.yml)
-on pushes to every branch and every tag and the result is available as releases
-which support [both types of usage](#usage). This applies for the original
-repository on GitHub and all GitHub forks.
+The design system lives in the [`dpl-web` monorepo](https://github.com/danskernesdigitalebibliotek/dpl-web)
+and is no longer published as a standalone npm package or release archive. It
+is built from source and consumed directly by the other projects in the
+monorepo:
 
-You can follow the status of deployments in the [Actions list for the repository
-on GitHub](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/design-system/actions/workflows/deployment.yml).
-The action logs also contain additional details regarding the contents and
-publication of each release.  If using a fork then deployment actions can be
-seen on the corresponding list.
+- **React** depends on it as a pnpm workspace package (`workspace:*`) and
+  imports its built assets from
+  `@danskernesdigitalebibliotek/dpl-design-system/build/*`.
+- **The CMS** bakes the built assets into its source image during the
+  `CMS / Publish release` workflow
+  (`.github/workflows/cms-publish-release.yml`), which builds the design
+  system from source and copies it into the CMS theme.
 
-In general consuming projects should prefer tagged releases as they are stable
-proper releases.
-
-During development where the design system is being updated in parallel with
-the implementation of a consuming project it may be advantageous to use a
-release tagging a branch.
-
-### Tagged releases
-
-Run the following to publish a tag and create a release:
-
-```shell
-git tag -a v*.*.* && git push origin v*.*.*
-```
-
-#### Usage: npm package
-
-In the consuming project update usage to the new release:
-
-```shell
-npm install @danskernesdigitalebibliotek/dpl-design-system@*.*.*
-```
-
-#### Usage: Release file
-
-Find the release for the tag on [the releases page on GitHub](https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases)
-and download the `dist.zip` file from there and use it as needed in the
-consuming project.
-
-### Branch releases
-
-The project automatically creates a release for each branch.
-
-Example: Pushing a commit to a new branch `feature/reservation-modal` will
-create the following parts:
-
-1. A git tag for the commit `release-feature/reservation-modal`. A tag is needed
-   to create a GitHub release.
-2. A GitHub release for the called *feature/reservation-modal*. The build is
-   attached here.
-3. A package in the local npm repository tagged `feature-reservation-modal`.
-   Special characters like `/` are not supported by npm tags and are converted
-   to `-`.
-
-Updating the branch will update all parts accordingly.
-
-#### Usage: npm package
-
-In the consuming project update usage to the new release:
-
-```shell
-npm install @danskernesdigitalebibliotek/dpl-design-system@feature-reservation-modal
-```
-
-If your release belongs to a fork you can use [aliasing](https://docs.npmjs.com/cli/v8/commands/npm-install)
-to point to the release of the package in the npm repository for the fork:
-
-```shell
-npm config set @my-fork:registry=https://npm.pkg.github.com
-npm install @danskernesdigitalebibliotek/dpl-design-system@npm:@my-fork/dpl-design-system@feature-reservation-modal
-```
-
-This will update your `package.json` and lock files accordingly. Note that
-branch releases use temporary versions in the format `0.0.0-[GIT-SHA]` and you
-may in practice see these referenced in both files.
-
-If you push new code to the branch you have to update the version used in the
-consuming project:
-
-```shell
-npm update @danskernesdigitalebibliotek/dpl-design-system
-```
-
-[Aliasing](https://classic.yarnpkg.com/lang/en/docs/cli/add/#toc-yarn-add-alias),
-[repository configuration](https://classic.yarnpkg.com/en/docs/cli/config) and
-[updating installed packages](https://classic.yarnpkg.com/en/docs/cli/upgrade)
-are also supported by Yarn.
-
-#### Usage: Release file
-
-Find the release for the branch on [the releases page on GitHub](https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases)
-and download the `dist.zip` file from there and use it as needed in the
-consuming project.
-
-If your branch belongs to a fork then you can find the release on the releases
-page for the fork.
-
-Repeat the process if you push new code to the branch.
+To work against a specific branch of the design system, check that branch out
+in the monorepo and rebuild — see
+[the cross-project development guide](../development.md).
 
 ## Storybook
 
 Spin up storybook by running this command in the terminal:
 
 ```shell
-yarn storybook
+pnpm run storybook
 ```
 
 When storybook is ready it automatically opens up in a browser with the
@@ -230,7 +147,7 @@ under the `danskernesdigitalebibliotek` (organisation) `dpl-design-system`
 You can deploy a version locally to Chromatic by running:
 
 ```shell
-yarn chromatic
+pnpm run chromatic
 ```
 
 Make sure to set the `CHROMATIC_PROJECT_TOKEN` environment variable is available
