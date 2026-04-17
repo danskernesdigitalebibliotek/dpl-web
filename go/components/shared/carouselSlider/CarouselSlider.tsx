@@ -45,7 +45,7 @@ const CarouselSlider = ({ works, className }: CarouselSliderProps) => {
       data-cy={cyKeys["video-bundle-slider"]}>
       <div className="grid-go lg:pl-grid-gap-half items-center lg:block">
         {/* Mobile: prev button */}
-        <div className="col-span-1 lg:hidden">
+        <div className="col-span-1 flex justify-center lg:hidden">
           <Button
             onClick={moveToPreviousMaterial}
             variant="icon"
@@ -66,7 +66,7 @@ const CarouselSlider = ({ works, className }: CarouselSliderProps) => {
         </div>
 
         {/* Mobile: next button */}
-        <div className="col-span-1 lg:hidden">
+        <div className="col-span-1 flex justify-center lg:hidden">
           <Button
             onClick={moveToNextMaterial}
             variant="icon"
