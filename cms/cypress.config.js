@@ -1,7 +1,8 @@
 const { defineConfig } = require('cypress');
 const { WireMockRestClient } = require('wiremock-rest-client');
 
-const wiremock = () => new WireMockRestClient('http://wiremock');
+const wiremockUrl = process.env.CYPRESS_WIREMOCK_URL || 'http://wiremock';
+const wiremock = () => new WireMockRestClient(wiremockUrl);
 
 module.exports = defineConfig({
   video: true,

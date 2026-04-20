@@ -62,6 +62,9 @@ vars:
   CYPRESS_BASE_PORT:
     sh: docker compose port varnish 8080 2>/dev/null | cut -d ":" -f2
   CYPRESS_HOST_LOCAL: "http://localhost:{{ .CYPRESS_BASE_PORT }}"
+  CYPRESS_WIREMOCK_PORT:
+    sh: docker compose port wiremock 80 2>/dev/null | cut -d ":" -f2
+  CYPRESS_WIREMOCK_LOCAL: "http://localhost:{{ .CYPRESS_WIREMOCK_PORT }}"
 
 tasks:
   ghcr:login:
@@ -578,6 +581,7 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
+      CYPRESS_WIREMOCK_URL: "{{ .CYPRESS_WIREMOCK_LOCAL }}"
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
 
