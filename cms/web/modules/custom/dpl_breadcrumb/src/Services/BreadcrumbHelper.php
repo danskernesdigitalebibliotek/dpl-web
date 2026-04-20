@@ -182,20 +182,27 @@ class BreadcrumbHelper {
   private function getBaseBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     if ($entity->bundle() === 'article') {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->t('Articles', [], ['context' => 'DPL Breadcrumbs']),
+        $this->t('Articles', [], [
+          // Use the language code of the node. Really, this should use the site
+          // language, but that's configured to english (for reasons), when
+          // running in cron and that wont do.
+          'langcode' => $entity->language()->getId(),
+          'context' => 'DPL Breadcrumbs',
+        ]),
         'view.articles.all'
       ));
-      $breadcrumb->addCacheTags(['locale']);
     }
 
     $entity_type_id = $entity->getEntityTypeId();
 
     if (in_array($entity_type_id, ['eventseries', 'eventinstance'])) {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->t('Events', [], ['context' => 'DPL Breadcrumbs']),
+        $this->t('Events', [], [
+          'langcode' => $entity->language()->getId(),
+          'context' => 'DPL Breadcrumbs',
+        ]),
         'view.events.all'
       ));
-      $breadcrumb->addCacheTags(['locale']);
     }
 
     $branch_field_id = $this->getBranchFieldId($entity);
