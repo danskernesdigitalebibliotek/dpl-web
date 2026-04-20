@@ -2,7 +2,12 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["es6", "dom"],
-    "types": ["cypress", "node", "@testing-library/cypress"]
+    "types": ["cypress", "node", "@testing-library/cypress"],
+    // Cypress's bundled webpack preprocessor injects the deprecated
+    // "downlevelIteration" option which we cannot remove. This suppresses
+    // the resulting TS5101 error. Can be removed once Cypress drops the
+    // option from its defaults.
+    "ignoreDeprecations": "6.0"
   },
   "include": ["**/*.ts"]
 }
