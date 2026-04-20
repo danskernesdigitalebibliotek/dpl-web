@@ -1,77 +1,63 @@
 import '@testing-library/cypress/add-commands';
-import { WireMockRestClient } from 'wiremock-rest-client';
-import { Options } from 'wiremock-rest-client/dist/model/options.model';
-import { StubMapping } from 'wiremock-rest-client/dist/model/stub-mapping.model';
-import { RequestPattern } from 'wiremock-rest-client/dist/model/request-pattern.model';
-
-const wiremock = (baseUri?: string, options?: Options) => {
-  return new WireMockRestClient('http://wiremock', options);
-};
+import type { StubMapping } from 'wiremock-rest-client/dist/model/stub-mapping.model';
+import type { RequestPattern } from 'wiremock-rest-client/dist/model/request-pattern.model';
 
 Cypress.Commands.add('createMapping', (stub: StubMapping) => {
-  cy.wrap(wiremock().mappings.createMapping(stub));
+  cy.task('createMapping', stub);
 });
 
 Cypress.Commands.add('resetMappings', () => {
-  cy.wrap(wiremock().mappings.resetAllMappings());
+  cy.task('resetMappings');
 });
 
 Cypress.Commands.add('logMappingRequests', () => {
-  cy.wrap(
-    wiremock()
-      .mappings.getAllMappings()
-      .then((mappings) => {
+  cy.task('getAllMappings').then((result) => {
+    const mappings = result as {
+      meta: { total: number };
+      mappings: StubMapping[];
+    };
+    Cypress.log({
+      name: 'Wiremock',
+      message: `Mappings: ${mappings.meta.total}`,
+    });
+    mappings.mappings.forEach((stub) => {
+      cy.task('getRequestCount', stub.request).then((countResult) => {
+        const { count } = countResult as { count: number };
+        const req = stub.request!;
+        const requestUrlPath =
+          req.url || req.urlPattern || req.urlPath || req.urlPathPattern;
         Cypress.log({
           name: 'Wiremock',
-          message: `Mappings: ${mappings.meta.total}`,
+          message: `${req.method}: ${requestUrlPath}: ${count} hit(s)`,
         });
-        mappings.mappings.forEach((stub) => {
-          wiremock()
-            .requests.getCount(stub.request)
-            .then((request: { count: number }) => {
-              const requestUrlPath =
-                stub.request.url ||
-                stub.request.urlPattern ||
-                stub.request.urlPath ||
-                stub.request.urlPathPattern;
-              Cypress.log({
-                name: 'Wiremock',
-                message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit(s)`,
-              });
-            });
-        });
-      }),
-  );
+      });
+    });
+  });
 });
 
 Cypress.Commands.add('getRequestCount', (request: RequestPattern) => {
-  cy.wrap(
-    wiremock()
-      .requests.getCount(request)
-      .then((response: { count: number }) => {
-        return response.count;
-      }),
+  cy.task('getRequestCount', request).then(
+    (result) => (result as { count: number }).count,
   );
 });
 
 Cypress.Commands.add('resetRequests', () => {
-  cy.wrap(wiremock().requests.resetAllRequests());
+  cy.task('resetRequests');
 });
 
 Cypress.Commands.add('logRequests', () => {
-  cy.wrap(
-    wiremock()
-      .requests.getAllRequests()
-      .then((data) => {
-        data.requests.forEach((requestResponse) => {
-          const request = requestResponse.request;
-          Cypress.log({
-            name: 'Wiremock',
-            message: `${request.method}: ${request.url}`,
-          });
-        });
-      }),
-  );
+  cy.task('getAllRequests').then((result) => {
+    const data = result as {
+      requests: { request: { method: string; url: string } }[];
+    };
+    data.requests.forEach((requestResponse) => {
+      const request = requestResponse.request;
+      Cypress.log({
+        name: 'Wiremock',
+        message: `${request.method}: ${request.url}`,
+      });
+    });
+  });
 });
 
 Cypress.Commands.add('drupalLogin', (url?: string) => {
