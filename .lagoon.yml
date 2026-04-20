@@ -198,6 +198,11 @@ environments:
         command: drush err:purge paragraph
         service: cli
   go-demo:
+    routes:
+      - node:
+        - "node.go-demo.dpl-web.dplplat02.dpl.reload.dk":
+            annotations:
+              nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
@@ -219,6 +224,11 @@ environments:
         command: drush err:purge paragraph
         service: cli
   go-playground:
+    routes:
+      - node:
+        - "node.go-playground.dpl-web.dplplat02.dpl.reload.dk":
+            annotations:
+              nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
