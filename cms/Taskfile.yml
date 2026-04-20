@@ -573,7 +573,7 @@ tasks:
 
   ci:cypress:local:
     desc: Run Cypress functional tests locally
-    deps: [ci:wiremock:create-mappings]
+    deps: [ci:wiremock:create-mappings, ci:local]
     cmds:
       - yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
