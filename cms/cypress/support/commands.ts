@@ -36,9 +36,9 @@ Cypress.Commands.add('logMappingRequests', () => {
 });
 
 Cypress.Commands.add('getRequestCount', (request: RequestPattern) => {
-  cy.task('getRequestCount', request).then(
-    (result) => (result as { count: number }).count,
-  );
+  return cy
+    .task('getRequestCount', request)
+    .then((result) => (result as { count: number }).count);
 });
 
 Cypress.Commands.add('resetRequests', () => {
