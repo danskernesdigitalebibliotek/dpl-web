@@ -70,7 +70,10 @@ export default function MappTracking() {
     }
 
     script.onerror = () => {
-      if (typeof window.wt_mcp_hide !== "undefined" && typeof window.wt_mcp_hide.show === "function") {
+      if (
+        typeof window.wt_mcp_hide !== "undefined" &&
+        typeof window.wt_mcp_hide.show === "function"
+      ) {
         window.wt_mcp_hide.show()
         window.wt_mcp_hide.show = () => {}
       }
