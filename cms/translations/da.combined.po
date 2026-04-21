@@ -22056,19 +22056,9 @@ msgid "When connecting a branch, it will also use the address of this branch as 
 msgstr "Når du tilknytter en filial, vil denne filials adresse blive vist på arrangementet. Hvis du ønsker kan du overskrive adressen på arrangementet."
 
 #: 
-msgctxt "field.field.eventinstance.default.field_event_address:description"
-msgid "Use this value to specific a different address than the event branch."
-msgstr "Brug dette felt til at angive en anden adresse end det tilknyttede bibliotek."
-
-#: 
 msgctxt "field.field.eventinstance.default.field_teaser_image:description"
 msgid "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
 msgstr "Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er valgt et teaserbillede, vil teksten vises i stedet."
-
-#: 
-msgctxt "field.field.eventseries.default.field_event_address:description"
-msgid "Use this value to specific a different address than the event branch."
-msgstr "Brug dette felt til at angive en anden adresse end det tilknyttede bibliotek."
 
 #: 
 msgctxt "field.field.eventseries.default.field_teaser_image:description"
@@ -26124,16 +26114,6 @@ msgid "How much time should pass after an eventinstance has occurred before it s
 msgstr "Hvor lang tid skal der gå efter at en arrangementsinstance har været afholdt til det skal afpubliceres?"
 
 #: 
-msgctxt "DPL event"
-msgid "Unpublish the series when all instances have occurred (not recommended)"
-msgstr "Afpublicer serien, når alle instanser har været afholdt (anbefalet)"
-
-#: 
-msgctxt "DPL event"
-msgid "Notice - if series get unpublished, old instance links will no longer work. If you however keep the series published, expired instances will redirect to the associated series."
-msgstr "Vi anbefaler at I automatisk afpubliserer både serier og instanser. Vær opmærksom på, at hvis du vælger IKKE at afpublisere udløbede arrangementsinstanser, er det muligt, at de vises i automatiske og manuelle lister rundt om på siden."
-
-#: 
 msgctxt "BNF"
 msgid "Could not publish node - will not send to BNF."
 msgstr "Det er ikke muligt at publicere noden og den vil ikke blive sendt til Delingstjenesten."
@@ -27838,21 +27818,6 @@ msgstr "Digitale lån"
 msgctxt "Work Page"
 msgid "You do not have access to digital materials from this library as you are not registered as a resident in the municipality. Contact the library."
 msgstr "Du har ikke adgang til lån af digitale materialer fra dette bibliotek, da du ikke har en registreret bopælsadresse i kommunen. Kontakt biblioteket for yderligere oplysninger."
-
-#: 
-msgctxt "system.action.user_add_role_action.bnf_pilot:label"
-msgid "Add the BNF Pilot role to the selected user(s)"
-msgstr "Tilføj BNF Pilot-rollen til den/de valgte bruger(e)"
-
-#: 
-msgctxt "system.action.user_remove_role_action.bnf_pilot:label"
-msgid "Remove the BNF Pilot role from the selected user(s)"
-msgstr "Fjern BNF Pilot-rollen fra den/de valgte bruger(e)"
-
-#: 
-msgctxt "user.role.bnf_pilot:label"
-msgid "BNF Pilot"
-msgstr "BNF Pilot"
 
 #: 
 msgctxt "BNF"
@@ -30806,4 +30771,36 @@ msgstr "Deleknapper"
 msgctxt "paragraphs.paragraphs_type.share_buttons:description"
 msgid "Displays share buttons for content, allowing users to share via social media or email."
 msgstr "Viser deleknapper på indhold, så brugerne kan dele via sociale medier eller andre kanaler."
+
+#: 
+msgctxt "DPL event"
+msgid "Unpublish the series when all instances have occurred"
+msgstr ""
+
+#: 
+msgctxt "DPL event"
+msgid "Will happen within 30 mins of the last instance being unpublished. Unpublished series will instead redirect to the events overview page."
+msgstr ""
+
+#: 
+msgctxt "field.field.eventinstance.default.field_event_address:description"
+msgid "Choose a country, to fill out the address of the event."
+msgstr "Vælg et land for at kunne udfylde arrangements adresse på anden lokation."
+
+#: 
+msgctxt "field.field.eventseries.default.field_event_address:description"
+msgid "Choose a country, to fill out the address of the event."
+msgstr "Vælg et land for at kunne udfylde arrangements adresse på anden lokation."
+
+#: 
+msgid "Use GO VIP profile"
+msgstr ""
+
+#: 
+msgid "Uses GO VIP profile"
+msgstr ""
+
+#: 
+msgid "Does not use GO VIP profile"
+msgstr ""
 
