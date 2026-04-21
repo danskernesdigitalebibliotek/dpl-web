@@ -217,6 +217,7 @@ export type GoConfigurationPublic = {
   libraryInfo?: Maybe<GoLibraryInfo>;
   loginUrls?: Maybe<GoLoginUrls>;
   logoutUrls?: Maybe<GoLogoutUrls>;
+  mapp?: Maybe<MappTracking>;
   searchProfiles?: Maybe<SearchProfiles>;
   unilogin?: Maybe<UniloginConfigurationPublic>;
 };
@@ -283,6 +284,12 @@ export type Link = {
   title?: Maybe<Scalars['String']['output']>;
   /** Linkets URL */
   url?: Maybe<Scalars['String']['output']>;
+};
+
+export type MappTracking = {
+  __typename?: 'MappTracking';
+  domain?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
 };
 
 /** Entity type media. */
@@ -2961,7 +2968,7 @@ export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } }
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
@@ -4080,6 +4087,10 @@ export const GetDplCmsPublicConfigurationDocument = `
       }
       logoutUrls {
         adgangsplatformen
+      }
+      mapp {
+        domain
+        id
       }
       unilogin {
         municipalityId
