@@ -598,7 +598,7 @@ msgstr "ud af"
 #: 
 msgctxt "Work Page"
 msgid "Year"
-msgstr "Din reservering kunne ikke gennemføres. Prøv at kontakte os, hvis du stadig ønsker at låne materialet. Bemærk, at nogle materialer kun kan lånes af bestemte lånergrupper."
+msgstr "År"
 
 #: 
 msgctxt "Work Page"
