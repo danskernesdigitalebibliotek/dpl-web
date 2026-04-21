@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!listElements.length) missingElements.push("listElements");
       if (!listId) missingElements.push("listId");
 
-      // eslint-disable-next-line no-console
       console.debug(
         `show-more.js: Missing required elements: ${missingElements.join(", ")}`,
       );

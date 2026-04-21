@@ -28,7 +28,6 @@ const Slider: FC<SliderProps> = ({ title, items }) => {
             <h2
               className="slider__title"
               // We need to be able to replicate our WYSIWYG field in Drupal that makes it possible to underline (<u>) words.
-              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: title }}
             />
           )}

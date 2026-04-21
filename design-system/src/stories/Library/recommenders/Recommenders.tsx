@@ -58,8 +58,9 @@ const Recommender: React.FC<RecommenderProps> = ({
           triple ? "recommender__triple-grid" : "recommender__grid"
         }`}
       >
-        {recommenderData.map(({ title: recTitle, filled, authors }) => (
+        {recommenderData.map(({ title: recTitle, filled, authors }, index) => (
           <li
+            key={index}
             className={`simple-material ${
               bright ? "`simple-material--bright" : ""
             }`}

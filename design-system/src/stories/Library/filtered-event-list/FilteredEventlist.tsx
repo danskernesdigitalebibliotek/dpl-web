@@ -31,8 +31,12 @@ const PromoteEventsList: React.FC<PromoteEventsListProps> = ({
         data-hide-list-button-after-expand="false"
         data-show-more-list-id="filtered-event-list"
       >
-        {events.map((event) => (
-          <li className="filtered-event-list__list-item" data-show-more-item>
+        {events.map((event, index) => (
+          <li
+            key={index}
+            className="filtered-event-list__list-item"
+            data-show-more-item
+          >
             <ContentListItem {...event} />
           </li>
         ))}

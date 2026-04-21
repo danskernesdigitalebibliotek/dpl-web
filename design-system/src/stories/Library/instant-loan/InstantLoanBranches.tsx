@@ -10,7 +10,7 @@ const InstantLoanBranches: React.FunctionComponent<
   return (
     <ul className="instant-loan-branches">
       {branches.map((branch) => (
-        <li>
+        <li key={branch}>
           <div className="instant-loan-branch cursor-pointer px-24">
             <p className="text-header-h5">{branch}</p>
             <AvailabilityLabel

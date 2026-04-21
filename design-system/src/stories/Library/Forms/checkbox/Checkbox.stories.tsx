@@ -64,7 +64,7 @@ const Several: StoryFn<typeof Checkbox> = (args) => (
       const { label } = args;
       // Append a number to make it easier to distinguish between each entry.
       const elementArgs = { ...args, label: `${label} ${value}` };
-      return <Checkbox {...elementArgs} />;
+      return <Checkbox key={value} {...elementArgs} />;
     })}
   </>
 );

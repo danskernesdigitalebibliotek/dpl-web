@@ -102,11 +102,11 @@ export const IdentityColor = ({ identityColor }: IdentityColorProps) => {
   return (
     <div>
       {colorClasses.map((color) => (
-        <div className="internal-colors-container">
+        <div key={color.colorTitle} className="internal-colors-container">
           <h1 className="text-header-h3">{color.colorTitle}</h1>
           <div className="internal-colors-wrapper">
             {color.colorItems.map((colorItem) => (
-              <div>
+              <div key={colorItem.className}>
                 <div
                   className={`internal-colors-box ${
                     colorItem.classNameBg || colorItem.className

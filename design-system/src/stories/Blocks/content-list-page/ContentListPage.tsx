@@ -43,9 +43,9 @@ const ContentListPage: React.FC = () => {
         <a href="/search?q=dans">library materials.</a>
       </h2>
       <ul className="content-list-page__filters">
-        {filters.map((filter) => {
+        {filters.map((filter, index) => {
           return (
-            <li className="content-list-page__filter">
+            <li key={index} className="content-list-page__filter">
               <InputLabel text={filter.label} />
               <Dropdown
                 classNames="dropdown--grey-borders"

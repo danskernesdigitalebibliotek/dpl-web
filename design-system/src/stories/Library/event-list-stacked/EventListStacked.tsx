@@ -14,6 +14,7 @@ const EventListStacked: React.FC<PromoteEventsListProps> = ({ title }) => {
       <ContentListItem {...contentListData[0]} />
       {contentListData.map((event) => (
         <ContentListItemStacked
+          key={event.title}
           title={event.title}
           href={event.href}
           time={event.time}

@@ -16,8 +16,9 @@ const ReservationListItem: React.FC<ReservationListItemProps> = ({
   const listItems = Array(amount).fill(0);
   return (
     <>
-      {listItems.map(() => (
+      {listItems.map((_item, index) => (
         <div
+          key={index}
           className={clsx(
             "list-reservation my-32 cursor-pointer arrow__hover--right-small",
             [{ "list-reservation--stacked": isStacked }],
