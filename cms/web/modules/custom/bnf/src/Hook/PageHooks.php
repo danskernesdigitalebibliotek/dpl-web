@@ -24,8 +24,7 @@ class PageHooks {
    *
    * So we can track content from Delingstjenesten.
    *
-   * @param array[] $page
-   *   The page render array.
+   * @phpstan-ignore missingType.iterableValue
    */
   #[Hook('page_attachments')]
   public function pageAttachments(array &$page): void {
