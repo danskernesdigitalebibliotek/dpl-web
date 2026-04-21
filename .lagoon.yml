@@ -117,6 +117,7 @@ tasks:
         command: |
           source dev-scripts/lagoon-error-handling.sh
 
+          mkdir -p web/sites/default/files/translations
           drush locale-check
           drush locale-update
         service: cli
