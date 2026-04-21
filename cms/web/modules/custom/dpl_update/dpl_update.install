@@ -1107,3 +1107,10 @@ function dpl_update_update_10069(): string {
 function dpl_update_update_10070(): string {
   return _dpl_update_uninstall_modules(['dpl_logging']);
 }
+
+/**
+ * Re-enable dpl_logging module.
+ */
+function dpl_update_update_10071(): string {
+  return _dpl_update_install_modules(['dpl_logging']);
+}
