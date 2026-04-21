@@ -41,6 +41,9 @@ Lagoon project name, set by Lagoon or locally in docker-compose.yml.
 Environment name, e.g. `master`, `develop`, `local`. This is mostly
 the branch name, except in the local development environment.
 
+`GoSite` checks this to set the Go site URL specifically on pull request
+environments.
+
 - `LAGOON_ENVIRONMENT_TYPE`
 
 Environment type (`development`, `production`, `ci`, `local`). Used
