@@ -54,6 +54,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
       $builder->produce('unilogin_public_producer')
     );
 
+    $registry->addFieldResolver('GoConfigurationPublic', 'mapp',
+      $builder->produce('mapp_tracking_producer')
+    );
+
     $registry->addFieldResolver('GoConfigurationPublic', 'searchProfiles',
       $builder->produce('search_profiles_producer')
     );
