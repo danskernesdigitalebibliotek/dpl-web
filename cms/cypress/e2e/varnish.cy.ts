@@ -3,7 +3,7 @@ import 'cypress-if';
 const node = {
   title: 'Varnish test',
   subtitle: 'A subtitle',
-  path: '/articles/varnish-test',
+  path: '/artikler/varnish-test',
 };
 
 const varnishCacheHeader = 'x-varnish-cache';
