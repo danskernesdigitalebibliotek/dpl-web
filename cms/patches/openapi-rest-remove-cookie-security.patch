@@ -1,0 +1,12 @@
+diff --git a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
+index abcdef1..1234567 100644
+--- a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
++++ b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
+@@ -501,7 +501,6 @@ public function getResourceSecurity(RestResourceConfigInterface $resource_config,
+     foreach ($resource_config->getAuthenticationProviders($method) as $auth) {
+       switch ($auth) {
+         case 'basic_auth':
+-        case 'cookie':
+         case 'oauth':
+         case 'oauth2':
+           // @TODO: #2977109 - Calculate oauth scopes required.

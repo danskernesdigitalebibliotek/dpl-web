@@ -140,12 +140,7 @@
         },
         "summary": "Get campaign matching search result facets",
         "operationId": "campaign:match:POST",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       }
     },
     "/api/v1/opening_hours": {
@@ -321,12 +316,7 @@
         },
         "summary": "Create individual opening hours",
         "operationId": "dpl_opening_hours_create:POST",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       },
       "get": {
         "parameters": [
@@ -453,12 +443,7 @@
         },
         "summary": "List all opening hours",
         "operationId": "dpl_opening_hours_list:GET",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       }
     },
     "/api/v1/opening_hours/{id}": {
@@ -500,12 +485,7 @@
         },
         "summary": "Delete individual opening hours",
         "operationId": "dpl_opening_hours_delete:DELETE",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       },
       "patch": {
         "parameters": [
@@ -685,12 +665,7 @@
         },
         "summary": "Update individual opening hours",
         "operationId": "dpl_opening_hours_update:PATCH",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       }
     },
     "/opening_hours/instances": {
@@ -766,8 +741,7 @@
                   },
                   "notice": {
                     "type": "string",
-                    "description": "Additional notice regarding the opening hours.",
-                    "nullable": true
+                    "description": "Additional notice regarding the opening hours."
                   }
                 },
                 "required": ["nid", "category_tid", "date", "start_time", "end_time", "notice"]
@@ -783,12 +757,7 @@
         },
         "summary": "List all opening hours for legacy API",
         "operationId": "dpl_opening_hours_legacy_list:GET",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       }
     },
     "/api/v1/events/{uuid}": {
@@ -1153,9 +1122,6 @@
         "security": [
           {
             "basic_auth": []
-          }, 
-          {
-            "cookie": []
           }
         ]
       }
@@ -1207,12 +1173,7 @@
         },
         "summary": "Generate proxy url",
         "operationId": "proxy-url:GET",
-        "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "schemes": ["http"]
       }
     }
   }
