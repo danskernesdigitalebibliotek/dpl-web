@@ -1,3 +1,5 @@
+const StylelintPlugin = require("stylelint-webpack-plugin");
+
 module.exports = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   staticDirs: ["../public"],
@@ -28,5 +30,14 @@ module.exports = {
   },
   core: {
     allowedHosts: ["localhost", ".local"],
+  },
+
+  webpackFinal: async (config) => {
+    config.plugins.push(
+      new StylelintPlugin({
+        files: "src/**/*.scss",
+      })
+    );
+    return config;
   },
 };
