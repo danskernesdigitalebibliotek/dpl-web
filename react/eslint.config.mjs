@@ -1,18 +1,19 @@
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import prettierRecommended from "eslint-plugin-prettier/recommended";
+import cypressPlugin from "eslint-plugin-cypress/flat";
+import importPlugin from "eslint-plugin-import";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
 
 export default [
   {
@@ -29,20 +30,17 @@ export default [
       "*.config.mjs"
     ]
   },
-  ...compat.extends(
-    "prettier",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:cypress/recommended",
-    "plugin:import/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "plugin:jsx-a11y/recommended"
-  ),
+  js.configs.recommended,
+  react.configs.flat.recommended,
+  reactHooks.configs["recommended-latest"],
+  ...tsPlugin.configs["flat/recommended"],
+  cypressPlugin.configs.recommended,
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.errors,
+  importPlugin.flatConfigs.warnings,
+  importPlugin.flatConfigs.typescript,
+  jsxA11y.flatConfigs.recommended,
+  prettierRecommended,
   {
     plugins: {
       "no-only-tests": noOnlyTests
@@ -58,8 +56,6 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        files: ["*.ts", "*.tsx", "*.js", "*.jsx"],
-
         allowImportExportEverywhere: false,
 
         ecmaFeatures: {
@@ -76,7 +72,7 @@ export default [
 
     settings: {
       react: {
-        version: "detect" // Automatically detect the React version
+        version: "detect"
       },
       "import/core-modules": ["vitest"],
       "import/resolver": [
