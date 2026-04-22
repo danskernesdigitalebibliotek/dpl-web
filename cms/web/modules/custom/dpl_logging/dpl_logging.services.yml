@@ -1,0 +1,14 @@
+---
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.dpl_logging:
+    parent: logger.channel_base
+    arguments: ['dpl_logging']
+
+  # These hook services definitions is only needed by Drupal 10, they
+  # can be removed when we upgrade to Drupal 11.
+  Drupal\dpl_logging\Hook\EntityHooks:
+    class: Drupal\dpl_logging\Hook\EntityHooks

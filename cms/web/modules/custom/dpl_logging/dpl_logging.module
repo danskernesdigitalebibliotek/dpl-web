@@ -1,6 +1,9 @@
 <?php
 
 use Drupal\Component\Utility\DiffArray;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_logging\Hook\EntityHooks;
 use Drupal\user\Entity\User;
 
 /**
@@ -109,4 +112,18 @@ function dpl_logging_user_presave(User $user): void {
     '@id' => $user->id(),
     '@values' => $values_string,
   ]);
+}
+
+/*
+ * The following hook functions is for Drupal 10, they can be removed, together
+ * with the hook class service in `bnf.services.yml` when upgrading to Drupal
+ * 11.
+ */
+
+/**
+ * Implements hook_entity_delete().
+ */
+#[LegacyHook]
+function dpl_logging_entity_delete(EntityInterface $entity): void {
+  \Drupal::service(EntityHooks::class)->logFileDeletion($entity);
 }

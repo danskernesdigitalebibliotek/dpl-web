@@ -269,7 +269,7 @@ export type Language = {
   direction?: Maybe<Scalars['String']['output']>;
   /** Sprogkoden. */
   id?: Maybe<Scalars['ID']['output']>;
-  /** Sprogets navn. */
+  /** Navnet på sproget. */
   name?: Maybe<Scalars['String']['output']>;
 };
 

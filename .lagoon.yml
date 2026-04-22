@@ -201,12 +201,12 @@ environments:
   go-demo:
     autogenerateRoutes: false
     routes:
+      - varnish:
+          - "varnish.go-demo.dpl-web.dplplat02.dpl.reload.dk"
       - node:
           - "node.go-demo.dpl-web.dplplat02.dpl.reload.dk":
               annotations:
                 nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
-      - varnish:
-          - "varnish.go-demo.dpl-web.dplplat02.dpl.reload.dk"
       - nginx:
           - "nginx.go-demo.dpl-web.dplplat02.dpl.reload.dk"
     cronjobs:
@@ -232,12 +232,12 @@ environments:
   go-playground:
     autogenerateRoutes: false
     routes:
+      - varnish:
+          - "varnish.go-playground.dpl-web.dplplat02.dpl.reload.dk"
       - node:
           - "node.go-playground.dpl-web.dplplat02.dpl.reload.dk":
               annotations:
                 nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
-      - varnish:
-          - "varnish.go-playground.dpl-web.dplplat02.dpl.reload.dk"
       - nginx:
           - "nginx.go-playground.dpl-web.dplplat02.dpl.reload.dk"
     cronjobs:
