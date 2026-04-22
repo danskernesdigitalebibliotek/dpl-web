@@ -4,10 +4,10 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { PatronSettingsV3 } from './patronSettingsV3';
+import type { PatronSettingsV3 } from "./patronSettingsV3"
 
 export interface CreatePatronRequestV3 {
-  cprNumber: string;
-  patron: PatronSettingsV3;
-  pincode: string;
+  cprNumber: string
+  patron: PatronSettingsV3
+  pincode: string
 }
