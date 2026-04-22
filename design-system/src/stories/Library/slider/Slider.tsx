@@ -13,6 +13,8 @@ const Slider: FC<SliderProps> = ({ title, items }) => {
 
   return (
     <>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore https://github.com/nfl/react-helmet/issues/646 */}
       <Helmet>
         <link
           rel="stylesheet"
@@ -21,7 +23,6 @@ const Slider: FC<SliderProps> = ({ title, items }) => {
 
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" />
       </Helmet>
-
       <div className="slider swiper">
         <div className="slider__header">
           {title && (
