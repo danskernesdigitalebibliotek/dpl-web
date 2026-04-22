@@ -235,9 +235,6 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
-      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
-      - dependency-name: "orval"
-        update-types: ["version-update:semver-major"]
 
   # React - npm dependencies
   - package-ecosystem: npm
@@ -323,9 +320,6 @@ updates:
       - dependency-name: "@graphql-codegen/typescript-react-query"
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
-      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
-      - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
       - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]

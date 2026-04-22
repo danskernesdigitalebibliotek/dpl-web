@@ -1,5 +1,4 @@
 import FetchFailedError from "../../fetchers/FetchFailedError";
-import { getServiceUrlWithParams } from "../../fetchers/helpers";
 import { getToken, TOKEN_USER_KEY } from "../../token";
 import {
   getServiceBaseUrl,
@@ -7,43 +6,25 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import MaterialListServiceHttpError from "./MaterialListServiceHttpError";
 
-export const fetcher = async <ResponseType>({
-  url,
-  method,
-  params,
-  data
-}: {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
-  params?: unknown;
-  data?: BodyType<unknown>;
-  signal?: AbortSignal;
-}) => {
-  const additionalHeaders =
-    data?.headers === "object" ? (data?.headers as unknown as object) : {};
+export const fetcher = async <T>(
+  url: string,
+  init: RequestInit
+): Promise<T> => {
   const userToken = getToken(TOKEN_USER_KEY);
   const authHeaders = userToken
     ? ({ Authorization: `Bearer ${userToken}` } as object)
     : {};
 
-  const headers = {
-    ...authHeaders,
-    ...additionalHeaders,
-    "Accept-Version": "2"
-  };
-
-  const body = data ? JSON.stringify(data) : null;
-  const serviceUrl = getServiceUrlWithParams({
-    baseUrl: getServiceBaseUrl(serviceUrlKeys.materialList),
-    url,
-    params
-  });
+  const serviceUrl = `${getServiceBaseUrl(serviceUrlKeys.materialList)}${url}`;
 
   try {
     const response = await fetch(serviceUrl, {
-      method,
-      headers,
-      body
+      ...init,
+      headers: {
+        ...init.headers,
+        ...authHeaders,
+        "Accept-Version": "2"
+      }
     });
 
     if (!response.ok) {
@@ -54,13 +35,12 @@ export const fetcher = async <ResponseType>({
       );
     }
 
-    // Return the response body in JSON format if the method is GET.
-    if (method === "GET") {
-      try {
-        return (await response.json()) as ResponseType;
-      } catch {
-        throw new Error("The response body contains invalid JSON");
-      }
+    try {
+      return (await response.json()) as T;
+    } catch {
+      // Some responses are intentionally empty and thus cannot be
+      // converted to JSON.
+      return undefined as T;
     }
   } catch (error) {
     if (error instanceof MaterialListServiceHttpError) {
@@ -70,12 +50,6 @@ export const fetcher = async <ResponseType>({
     const message = error instanceof Error ? error.message : "Unknown error";
     throw new FetchFailedError(message, serviceUrl);
   }
-
-  // Do nothing. Some of our responses are intentionally empty and thus
-  // cannot be converted to JSON. Fetch API and TypeScript has no clean
-  // way for us to identify empty responses so instead we swallow
-  // syntax errors during decoding.
-  return null;
 };
 
 export default fetcher;

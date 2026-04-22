@@ -1,5 +1,4 @@
 import FetchFailedCriticalError from "../../fetchers/FetchFailedCriticalError";
-import { getServiceUrlWithParams } from "../../fetchers/helpers";
 import { getToken, TOKEN_LIBRARY_KEY } from "../../token";
 import { getUserToken } from "../../utils/helpers/user";
 import {
@@ -8,20 +7,10 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import FbsServiceHttpError from "./FbsServiceHttpError";
 
-export const fetcher = async <ResponseType>({
-  url,
-  method,
-  headers,
-  params,
-  data
-}: {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
-  headers?: object;
-  params?: unknown;
-  data?: BodyType<unknown>;
-  signal?: AbortSignal;
-}) => {
+export const fetcher = async <T>(
+  url: string,
+  init: RequestInit
+): Promise<T> => {
   const token = getUserToken() ?? getToken(TOKEN_LIBRARY_KEY);
   const baseUrl = getServiceBaseUrl(serviceUrlKeys.fbs);
 
@@ -29,17 +18,15 @@ export const fetcher = async <ResponseType>({
     ? ({ Authorization: `Bearer ${token}` } as object)
     : {};
 
-  const body = data ? JSON.stringify(data) : null;
-  const serviceUrl = getServiceUrlWithParams({ baseUrl, url, params });
+  const serviceUrl = `${baseUrl}${url}`;
 
   try {
     const response = await fetch(serviceUrl, {
-      method,
+      ...init,
       headers: {
-        ...headers,
+        ...init.headers,
         ...authHeaders
-      },
-      body
+      }
     });
 
     if (!response.ok) {
@@ -52,7 +39,7 @@ export const fetcher = async <ResponseType>({
 
     const text = await response.text();
     // Some of our responses are intentionally empty. Only try to convert non-empty responses to JSON.
-    return text ? (JSON.parse(text) as ResponseType) : null;
+    return (text ? JSON.parse(text) : undefined) as T;
   } catch (error: unknown) {
     if (error instanceof FbsServiceHttpError) {
       throw error;
