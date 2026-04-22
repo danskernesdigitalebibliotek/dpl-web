@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "repository": "https://github.com/danskernesdigitalebibliotek/dpl-design-system",
   "scripts": {
-    "storybook": "storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
-    "storybook:axe": "storybook build && axe-storybook",
-    "build-storybook": "storybook build",
+    "storybook": "DISABLE_ESLINT_PLUGIN=true storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
+    "storybook:axe": "DISABLE_ESLINT_PLUGIN=true storybook build && axe-storybook",
+    "build-storybook": "DISABLE_ESLINT_PLUGIN=true storybook build",
     "js:eslint": "eslint 'src/**/*.{js,ts,tsx}' --max-warnings=0",
     "js:prettier": "prettier 'src/**/*.{js,ts,tsx}'",
     "js:lint": "concurrently 'yarn:js:eslint' 'yarn:js:prettier --check' --raw",
@@ -22,7 +22,7 @@
     "markdown:lint": "markdownlint-cli2",
     "markdown:format": "markdownlint-cli2-fix",
     "watch": "concurrently 'yarn:js:lint:watch' 'yarn:css:lint:watch'",
-    "dev": "concurrently --raw 'yarn storybook' 'yarn css:watch' 'yarn watch'",
+    "dev": "DISABLE_ESLINT_PLUGIN=true concurrently --raw 'yarn storybook' 'yarn css:watch' 'yarn watch'",
     "chromatic": "npx chromatic --exit-zero-on-changes",
     "lint": "concurrently 'yarn:js:lint' 'yarn:css:lint' 'yarn:markdown:lint'",
     "format": "concurrently 'yarn:js:format' 'yarn:css:format' 'yarn:markdown:format'"
