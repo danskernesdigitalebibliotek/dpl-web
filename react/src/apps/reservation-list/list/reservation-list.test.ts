@@ -433,7 +433,7 @@ describe("Reservation list", () => {
     // ID 11 2.c The list "physical reservations"
     cy.getBySel("list-reservation-container").eq(1).should("exist");
     // ID 11 2.c.i. Header: "Physical" and number of reservations in queue
-    cy.get(".dpl-list-buttons")
+    cy.get(".list-header")
       .eq(1)
       .getBySel("reservation-list-header")
       .eq(1)

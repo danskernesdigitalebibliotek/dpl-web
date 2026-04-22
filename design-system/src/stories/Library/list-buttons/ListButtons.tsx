@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../Buttons/button/Button";
+import { ListHeader } from "../list-header/ListHeader";
 import { ReactComponent as MenuIcon } from "../../../public/icons/collection/Menu.svg";
 import { ReactComponent as VariousIcon } from "../../../public/icons/collection/Various.svg";
 
@@ -15,7 +16,7 @@ export const ListButton: React.FC<ListButtonProps> = ({
   number,
 }) => {
   return (
-    <div className="dpl-list-buttons">
+    <ListHeader header={header} count={number}>
       <div
         className="dpl-list-buttons__screen-reader-description"
         id="renew-multiple-modal"
@@ -24,10 +25,6 @@ export const ListButton: React.FC<ListButtonProps> = ({
         with different due dates, if some of the loans in the modal are
         renewable you can renew them
       </div>
-      <h2 className="dpl-list-buttons__header">
-        {header}
-        <div className="dpl-list-buttons__power">{number}</div>
-      </h2>
       <div className="dpl-list-buttons__buttons">
         <div className="dpl-list-buttons__buttons__button">
           <button
@@ -61,6 +58,6 @@ export const ListButton: React.FC<ListButtonProps> = ({
           />
         </div>
       </div>
-    </div>
+    </ListHeader>
   );
 };

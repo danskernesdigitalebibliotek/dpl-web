@@ -1,19 +1,10 @@
-.reservation-list-page {
-  background: $color__global-primary;
-  padding: $s-md;
-
-  @include media-query__medium {
-    padding: $s-6xl;
-  }
-}
-
-.reservation-list-page__section-header {
+.list-header {
   display: flex;
   justify-content: space-between;
   @include typography($typo__body-medium);
 }
 
-.reservation-list-page__section-title {
+.list-header__title {
   all: unset;
   height: 35px;
   position: relative;
@@ -22,10 +13,16 @@
   align-items: flex-end;
 }
 
-.reservation-list-page__section-count {
+.list-header__count {
   @include typography($typo__small-caption);
 
   margin-left: 2px;
   height: 30px;
   vertical-align: super;
+}
+
+.list-header__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
