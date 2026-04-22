@@ -1,4 +1,23 @@
 # Mark generated files so they are collapsed in GitHub pull requests.
 # See https://docs.github.com/en/repositories/working-with-files/managing-files/customizing-how-changed-files-appear-on-github
+
+# GraphQL codegen
 go/lib/graphql/generated/** linguist-generated
 react/src/core/dbc-gateway/generated/** linguist-generated
+
+# Orval codegen (go)
+go/lib/rest/fbs/generated/** linguist-generated
+go/lib/rest/publizon/adapter/generated/** linguist-generated
+go/lib/rest/publizon/local-adapter/generated/** linguist-generated
+
+# Orval codegen (react)
+react/src/core/cover-service-api/cover-service.ts linguist-generated
+react/src/core/cover-service-api/model/** linguist-generated
+react/src/core/dpl-cms/dpl-cms.ts linguist-generated
+react/src/core/dpl-cms/model/** linguist-generated
+react/src/core/fbs/fbs.ts linguist-generated
+react/src/core/fbs/model/** linguist-generated
+react/src/core/material-list-api/material-list.ts linguist-generated
+react/src/core/material-list-api/model/** linguist-generated
+react/src/core/publizon/publizon.ts linguist-generated
+react/src/core/publizon/model/** linguist-generated
