@@ -39,7 +39,7 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
 
   // Save to use identifier! because the hook is not enabled if there is no identifier
   const { data: dataLoanStatus } = useGetV1LoanstatusIdentifier(identifier!, {
-    enabled: !!identifier
+    query: { enabled: !!identifier }
   });
 
   const orderId =

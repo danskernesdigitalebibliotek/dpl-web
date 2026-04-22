@@ -27,12 +27,26 @@ export const getCoverCollection = (
   params: GetCoverCollectionParams,
   signal?: AbortSignal
 ) => {
-  return fetcher<Cover[]>({
-    url: `/api/v2/covers`,
-    method: "GET",
-    params,
-    signal
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value === undefined) return;
+    if (Array.isArray(value)) {
+      value.forEach((item) =>
+        normalizedParams.append(key, item === null ? "null" : item.toString())
+      );
+    } else {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
   });
+
+  const stringifiedParams = normalizedParams.toString();
+  const url =
+    stringifiedParams.length > 0
+      ? `/api/v2/covers?${stringifiedParams}`
+      : `/api/v2/covers`;
+
+  return fetcher<Cover[]>(url, { method: "GET", signal });
 };
 
 export const getGetCoverCollectionQueryKey = (

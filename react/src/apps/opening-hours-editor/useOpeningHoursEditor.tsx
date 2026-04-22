@@ -10,7 +10,7 @@ import {
   useDplOpeningHoursUpdatePATCH
 } from "../../core/dpl-cms/dpl-cms";
 import {
-  DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
+  DplOpeningHoursCreatePOSTBody,
   DplOpeningHoursUpdatePATCH200Item
 } from "../../core/dpl-cms/model";
 import { useConfig } from "../../core/utils/config";
@@ -32,7 +32,7 @@ const useOpeningHoursEditor = () => {
         to_date: formatDateForAPI(datesSet.end)
       })
     },
-    { enabled: !!datesSet }
+    { query: { enabled: !!datesSet } }
   );
   const { mutate: removeOpeningHours, isLoading: removeOpeningHoursLoading } =
     useDplOpeningHoursDeleteDELETE();
@@ -66,9 +66,7 @@ const useOpeningHoursEditor = () => {
     window.location.reload();
   };
 
-  const handleEventAdd = (
-    event: DplOpeningHoursCreatePOSTOpeningHoursInstanceBody
-  ) => {
+  const handleEventAdd = (event: DplOpeningHoursCreatePOSTBody) => {
     createOpeningHours(
       {
         data: {
