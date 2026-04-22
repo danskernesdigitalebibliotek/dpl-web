@@ -25,8 +25,8 @@ export const ListButton: React.FC<ListButtonProps> = ({
         with different due dates, if some of the loans in the modal are
         renewable you can renew them
       </div>
-      <div className="dpl-list-buttons__buttons">
-        <div className="dpl-list-buttons__buttons__button">
+      <div className="dpl-list-buttons">
+        <div className="dpl-list-buttons__button">
           <button
             className="dpl-icon-button"
             type="button"
@@ -35,7 +35,7 @@ export const ListButton: React.FC<ListButtonProps> = ({
             <MenuIcon />
           </button>
         </div>
-        <div className="dpl-list-buttons__buttons__button">
+        <div className="dpl-list-buttons__button">
           <button
             className="dpl-icon-button"
             type="button"
@@ -45,7 +45,7 @@ export const ListButton: React.FC<ListButtonProps> = ({
           </button>
         </div>
         <div
-          className="dpl-list-buttons__buttons__button"
+          className="dpl-list-buttons__button"
           aria-describedby="renew-multiple-modal"
         >
           <Button

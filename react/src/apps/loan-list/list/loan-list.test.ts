@@ -290,14 +290,14 @@ describe("Loan list", () => {
 
     // 2.b.i: Toggle: two icons that changes the list view
     cy.get(".loan-list-page")
-      .find(".dpl-list-buttons__buttons")
+      .find(".dpl-list-buttons")
       .find("#test-list")
       .should("exist")
       // 2.b.i.1. List is chosen as default
       .should("have.class", "dpl-icon-button--selected");
 
     cy.get(".loan-list-page")
-      .find(".dpl-list-buttons__buttons")
+      .find(".dpl-list-buttons")
       .find("[data-cy='stack']")
       .should("exist");
 
