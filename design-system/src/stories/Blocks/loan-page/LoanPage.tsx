@@ -45,8 +45,8 @@ const LoanPage: React.FC<LoanPageProps> = ({
       <div>
         <div className="m-32">
           <ListHeader header="Physical loans" count={String(physicalLoans)}>
-            <div className="dpl-list-buttons__buttons">
-              <div className="dpl-list-buttons__buttons__button">
+            <div className="dpl-list-buttons">
+              <div className="dpl-list-buttons__button">
                 <button
                   aria-pressed={!isStacked}
                   className="dpl-icon-button dpl-icon-button--selected"
@@ -57,7 +57,7 @@ const LoanPage: React.FC<LoanPageProps> = ({
                   <ListIcon />
                 </button>
               </div>
-              <div className="dpl-list-buttons__buttons__button">
+              <div className="dpl-list-buttons__button">
                 <button
                   aria-pressed={isStacked}
                   className="dpl-icon-button"
@@ -67,8 +67,8 @@ const LoanPage: React.FC<LoanPageProps> = ({
                   <VariousIcon />
                 </button>
               </div>
-              <div className="dpl-list-buttons__buttons__button">
-                <div className="dpl-list-buttons__buttons__button--hide-on-mobile">
+              <div className="dpl-list-buttons__button">
+                <div className="dpl-list-buttons__button--hide-on-mobile">
                   <Button
                     buttonType="none"
                     label="Renew several"

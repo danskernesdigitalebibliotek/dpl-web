@@ -1,15 +1,15 @@
-.dpl-list-buttons__buttons {
+.dpl-list-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.dpl-list-buttons__buttons__button {
+.dpl-list-buttons__button {
   margin-left: $s-xl;
   display: flex;
 }
 
-.dpl-list-buttons__buttons__button--hide-on-mobile {
+.dpl-list-buttons__button--hide-on-mobile {
   display: none;
 
   @include media-query__small {
