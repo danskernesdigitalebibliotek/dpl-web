@@ -1,4 +1,5 @@
 import ResultPager from "../../Library/card-list-page/ResultPager";
+import { ListHeader } from "../../Library/list-header/ListHeader";
 import { PauseReservation } from "../../Library/pause-reservation/PauseReservation";
 import ReservationListEmptyState from "./ReservationListEmptyState";
 import ReservationListItem from "./ReservationListItem";
@@ -45,14 +46,11 @@ const ReservationPage: React.FC<ReservationPageProps> = ({
       />
 
       <div>
-        <div className="dpl-list-buttons m-32">
-          <h2
-            data-cy="reservation-list-header"
-            className="dpl-list-buttons__header"
-          >
-            Ready for pickup
-            <div className="dpl-list-buttons__power">{readyForPickup}</div>
-          </h2>
+        <div className="m-32">
+          <ListHeader
+            header="Ready for pickup"
+            count={String(readyForPickup)}
+          />
         </div>
         {!!readyForPickup && (
           <div>
@@ -73,16 +71,11 @@ const ReservationPage: React.FC<ReservationPageProps> = ({
       </div>
 
       <div>
-        <div className="dpl-list-buttons m-32">
-          <h2
-            data-cy="reservation-list-header"
-            className="dpl-list-buttons__header"
-          >
-            Physical reservations
-            <div className="dpl-list-buttons__power">
-              {physicalReservations}
-            </div>
-          </h2>
+        <div className="m-32">
+          <ListHeader
+            header="Physical reservations"
+            count={String(physicalReservations)}
+          />
         </div>
         {!!physicalReservations && (
           <div>
@@ -103,14 +96,11 @@ const ReservationPage: React.FC<ReservationPageProps> = ({
       </div>
 
       <div>
-        <div className="dpl-list-buttons m-32">
-          <h2
-            data-cy="reservation-list-header"
-            className="dpl-list-buttons__header"
-          >
-            Digital reservations
-            <div className="dpl-list-buttons__power">{digitalReservations}</div>
-          </h2>
+        <div className="m-32">
+          <ListHeader
+            header="Digital reservations"
+            count={String(digitalReservations)}
+          />
         </div>
         {!!digitalReservations && (
           <div>

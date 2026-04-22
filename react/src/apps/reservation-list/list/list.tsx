@@ -47,15 +47,10 @@ const List: FC<ListProps> = ({
 
   return (
     <div>
-      <div className="dpl-list-buttons m-32">
-        <h2
-          data-cy="reservation-list-header"
-          className="dpl-list-buttons__header"
-        >
-          <>
-            {header}
-            <div className="dpl-list-buttons__power">{reservations.length}</div>
-          </>
+      <div className="list-header m-32">
+        <h2 data-cy="reservation-list-header" className="list-header__title">
+          {header}
+          <span className="list-header__count">{reservations.length}</span>
         </h2>
       </div>
       <div data-cy="list-reservation-container">

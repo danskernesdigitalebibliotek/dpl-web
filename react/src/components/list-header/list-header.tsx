@@ -14,14 +14,14 @@ const ListHeader: FC<ListHeaderProps> = ({
   dataCy = "list-header"
 }) => {
   return (
-    <div className="dpl-list-buttons">
-      <h2 data-cy={dataCy} className="dpl-list-buttons__header">
+    <div className="list-header">
+      <h2 data-cy={dataCy} className="list-header__title">
         {header}
         {amount !== null && (
-          <span className="dpl-list-buttons__power">{amount}</span>
+          <span className="list-header__count">{amount}</span>
         )}
       </h2>
-      {buttons && <div className="dpl-list-buttons__buttons">{buttons}</div>}
+      {buttons && <div className="list-header__actions">{buttons}</div>}
     </div>
   );
 };
