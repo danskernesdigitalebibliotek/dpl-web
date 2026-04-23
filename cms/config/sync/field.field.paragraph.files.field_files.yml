@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_files
+    - media.type.audio
     - media.type.document
+    - media.type.image
     - paragraphs.paragraphs_type.files
 id: paragraph.files.field_files
 field_name: field_files
@@ -20,10 +22,12 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
+      audio: audio
       document: document
+      image: image
     sort:
       field: _none
       direction: ASC
     auto_create: false
-    auto_create_bundle: ''
+    auto_create_bundle: audio
 field_type: entity_reference
