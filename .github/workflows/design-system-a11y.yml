@@ -28,8 +28,5 @@ jobs:
       - name: Design / Install Playwright Browsers
         run: yarn playwright install --with-deps
 
-      - name: Design / Compile styles
-        run: yarn css:build
-
       - name: Design / Run accessibility tests
         run: yarn storybook:axe

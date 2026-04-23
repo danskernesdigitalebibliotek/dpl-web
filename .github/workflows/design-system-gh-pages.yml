@@ -31,7 +31,6 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: yarn install --frozen-lockfile
-      - run: yarn css:build
       - run: yarn build-storybook
 
       - name: Deploy
