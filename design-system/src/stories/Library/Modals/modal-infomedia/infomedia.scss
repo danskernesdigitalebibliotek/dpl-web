@@ -4,6 +4,8 @@
   object-fit: contain;
   height: $s-lg;
   margin-bottom: $s-lg;
+  position: relative;
+  z-index: $z-5;
 }
 
 .infomedia-article {
