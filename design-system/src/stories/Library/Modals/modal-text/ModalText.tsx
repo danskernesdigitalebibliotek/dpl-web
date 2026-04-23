@@ -25,8 +25,8 @@ export const ModalText = (props: ModalTextProps) => {
         <p className="mt-48 text-body-large">{subtitle}</p>
 
         <div className="mt-48">
-          {textContent.map((row) => (
-            <div key={row.title} className="modal-text__content">
+          {textContent.map((row, index) => (
+            <div key={index} className="modal-text__content">
               <p className="text-body-medium-regular">{row.title}</p>
               <p className="text-links">{row.text}</p>
             </div>

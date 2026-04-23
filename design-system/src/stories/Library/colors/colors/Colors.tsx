@@ -140,12 +140,12 @@ const textColorClasses = [
 export const Colors = () => {
   return (
     <div>
-      {colorClasses.map((color) => (
-        <div key={color.colorTitle} className="internal-colors-container">
+      {colorClasses.map((color, index) => (
+        <div key={index} className="internal-colors-container">
           <h1 className="text-header-h3">{color.colorTitle}</h1>
           <div className="internal-colors-wrapper">
-            {color.colorItems.map((colorItem) => (
-              <div key={colorItem.className}>
+            {color.colorItems.map((colorItem, index) => (
+              <div key={index}>
                 <div
                   className={`internal-colors-box ${
                     colorItem.classNameBg || colorItem.className
@@ -184,11 +184,8 @@ export const Colors = () => {
           <div className="internal-colors-wrapper">
             <div>
               <p className="text-body-large mb-8">Background classes</p>
-              {bgClasses.map((bgClass) => (
-                <div
-                  key={bgClass.classPrefix}
-                  className="internal-spacing-css-inner"
-                >
+              {bgClasses.map((bgClass, index) => (
+                <div key={index} className="internal-spacing-css-inner">
                   <div className="internal-spacing-css-inner-prefix p-8">
                     <pre>
                       <code>{`.${bgClass.classPrefix}`}</code>
@@ -200,11 +197,8 @@ export const Colors = () => {
 
             <div>
               <p className="text-body-large mb-8">Border classes</p>
-              {borderClasses.map((borderClass) => (
-                <div
-                  key={borderClass.classPrefix}
-                  className="internal-spacing-css-inner"
-                >
+              {borderClasses.map((borderClass, index) => (
+                <div key={index} className="internal-spacing-css-inner">
                   <div className="internal-spacing-css-inner-prefix p-8">
                     <pre>
                       <code>{`.${borderClass.classPrefix}`}</code>
@@ -216,11 +210,8 @@ export const Colors = () => {
 
             <div>
               <p className="text-body-large mb-8">Color (text) classes</p>
-              {textColorClasses.map((textColorClass) => (
-                <div
-                  key={textColorClass.classPrefix}
-                  className="internal-spacing-css-inner"
-                >
+              {textColorClasses.map((textColorClass, index) => (
+                <div key={index} className="internal-spacing-css-inner">
                   <div className="internal-spacing-css-inner-prefix p-8">
                     <pre>
                       <code>{`.${textColorClass.classPrefix}`}</code>
