@@ -22,7 +22,7 @@ class ConstructDplReactAssetsUrlCommand extends Command {
       ->setHelp('Specify branch name and optional arguments and a full url to the github assets will be returned.')
       ->addArgument('branch', InputArgument::REQUIRED, 'Specify branch name.')
       ->addOption('release-prefix', NULL, InputArgument::OPTIONAL, 'Specify release prefix (eg.: release-).', 'release-')
-      ->addOption('github-url', NULL, InputArgument::OPTIONAL, 'The beginning of the Github url', 'https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download')
+      ->addOption('github-url', NULL, InputArgument::OPTIONAL, 'The beginning of the Github url', 'https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download')
       ->addOption('filename', NULL, InputArgument::OPTIONAL, 'The file name in the end of the url', 'dist.zip');
   }
 
