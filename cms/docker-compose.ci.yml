@@ -17,11 +17,11 @@ services:
     depends_on:
       - wiremock
     environment:
-      CYPRESS_INSTALL_BINARY: 0
+      CYPRESS_CACHE_FOLDER: "/app/.cache/cypress"
       YARN_CACHE_FOLDER: "/app/.cache/yarn"
 
   cypress:
-    image: cypress/included:15.14.0
+    image: cypress/browsers:node-24.15.0-chrome-147.0.7727.101-1-ff-150.0-edge-147.0.3912.60-1
     links: *links
     volumes:
       - "projectroot:/app"
@@ -31,6 +31,7 @@ services:
       - wiremock
     environment:
       CYPRESS_BASE_URL: "http://varnish:8080"
+      CYPRESS_CACHE_FOLDER: "/app/.cache/cypress"
 
   wiremock:
     image: wiremock/wiremock:2.32.0
