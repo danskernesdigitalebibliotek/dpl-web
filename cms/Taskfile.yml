@@ -81,8 +81,9 @@ tasks:
     sources:
       - 'web/modules/**/*'
       - 'web/themes/**/*'
+      - 'web/libraries/dpl-react/*'
     cmds:
-      - task dev:cli -- drush cache-rebuild
+      - task dev:cache:clear:all
 
   dev:watch:bnf:
     summary: Watch source for changes and clear cache, including BNF.

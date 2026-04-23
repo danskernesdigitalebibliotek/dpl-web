@@ -1,5 +1,7 @@
 version: '3'
 
+output: prefixed
+
 includes:
   migration: ./migration/Taskfile.migration.yml
 
@@ -8,3 +10,164 @@ tasks:
     summary: Lint GitHub Actions workflows with actionlint
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
+
+  link:sync:design-system-to-cms:
+    desc: Copy design-system build output into the CMS theme assets
+    prefix: design-cms
+    deps: [deps:rsync]
+    sources:
+      - design-system/build/**/*
+    cmds:
+      - cmd: |
+          if [ ! -d design-system/build ]; then
+            echo "Skipping design-system sync because design-system/build is not available yet."
+            exit 0
+          fi
+          mkdir -p ./cms/web/themes/custom/novel/assets/dpl-design-system
+          rsync -a --delete --checksum --no-times design-system/build/ ./cms/web/themes/custom/novel/assets/dpl-design-system/
+          echo "Synchronized design to cms."
+        silent: true
+
+  link:sync:react-to-cms:
+    desc: Copy React dist output into the CMS library assets
+    prefix: react-cms
+    deps: [deps:rsync]
+    sources:
+      - react/dist/**/*
+    cmds:
+      - cmd: |
+          if [ ! -d react/dist ]; then
+            echo "Skipping react sync because react/dist is not available yet."
+            exit 0
+          fi
+          mkdir -p ./cms/web/libraries/dpl-react
+          rsync -a --delete --checksum --no-times react/dist/ ./cms/web/libraries/dpl-react/
+          echo "Synchronized react to cms."
+        silent: true
+
+  link:design-react:
+    desc: Link the local design-system package into React
+    prefix: design-react
+    cmds:
+      - cmd: yarn unlink
+        dir: ./design-system
+        ignore_error: true
+      - cmd: yarn link
+        dir: ./design-system
+      - cmd: yarn link "@danskernesdigitalebibliotek/dpl-design-system"
+        dir: ./react
+
+  link:design-react-cms:
+    desc: Bridge design-system and React outputs into CMS while the projects run separately
+    prefix: design-react-cms
+    deps:
+      #- link:design-react
+      - link:sync:design-system-to-cms
+      - link:sync:react-to-cms
+    cmds:
+      - cmd: |
+          task --watch --interval 500ms --parallel link:sync:design-system-to-cms link:sync:react-to-cms
+
+  dev:up:
+    desc: 'Start all subprojects in parallel tmux panes (use dev:up:<combo> for subsets, e.g. dev:up:design-cms)'
+    deps: [deps:tmux]
+    cmds:
+      - cmd: |
+          SESSION="${DPL_DEV_SESSION:-dpl-web}"
+          if tmux has-session -t "$SESSION" 2>/dev/null; then
+            echo "tmux session '$SESSION' already exists."
+            echo "  Attach: tmux attach -t $SESSION"
+            echo "  Reset:  tmux kill-session -t $SESSION"
+            exit 1
+          fi
+
+          # Wildcard sibling dev:up:* passes SUBPROJECTS; bare dev:up gets all four.
+          ARGS="{{.SUBPROJECTS | default "design react cms go"}}"
+
+          for a in $ARGS; do
+            case "$a" in
+              design|react|cms|go) ;;
+              *) echo "Unknown subproject '$a'. Valid: design react cms go" >&2; exit 1 ;;
+            esac
+          done
+
+          has() { echo " $ARGS " | grep -q " $1 "; }
+
+          # Yarn-link design-system into react only when both are in play.
+          if has design && has react; then
+            task link:design-react
+          fi
+
+          # Kill the session (and every pane's process) whenever this task
+          # exits — via detach, Ctrl-C in the attach, or the terminal closing.
+          trap 'tmux kill-session -t "$SESSION" 2>/dev/null || true' EXIT
+
+          FIRST=1
+          spawn() {
+            if [ "$FIRST" = 1 ]; then
+              tmux new-session -d -s "$SESSION" -n dpl "$1"
+              FIRST=0
+            else
+              tmux split-window -t "$SESSION" "$1"
+            fi
+          }
+
+          # cms is spawned first (when selected) so it becomes pane 0 and thus
+          # the "main" pane of the main-vertical layout below — it has no
+          # watcher of its own and benefits from the larger area for shells,
+          # drush, etc.
+          has cms    && spawn "cd cms && task dev:reset; exec \$SHELL"
+          has design && spawn "cd design-system && task dev:start && task dev:logs; exec \$SHELL"
+          has react  && spawn "cd react && task dev:start; exec \$SHELL"
+          has go     && spawn "cd go && task dev:reset; exec \$SHELL"
+
+          # Rsync bridge only matters when cms receives output from design and/or react.
+          if has cms && { has design || has react; }; then
+            spawn "task link:design-react-cms; exec \$SHELL"
+          fi
+
+          # main-vertical when cms is present (cms gets the large left column);
+          # tiled otherwise, since no pane has a clear "primary" role.
+          if has cms; then
+            tmux set-option -t "$SESSION" main-pane-width "60%"
+            tmux select-layout -t "$SESSION" main-vertical
+            # cms was spawned first (pane 0); focus it so attach lands there.
+            tmux select-pane -t "$SESSION":dpl.0
+          else
+            tmux select-layout -t "$SESSION" tiled
+          fi
+          tmux attach -t "$SESSION"
+        silent: true
+
+  dev:up:*:
+    desc: 'Start a named combination, e.g. task dev:up:design-cms or task dev:up:design-react-cms'
+    vars:
+      COMBO: '{{index .MATCH 0}}'
+    cmds:
+      - task: dev:up
+        vars:
+          SUBPROJECTS: '{{.COMBO | replace "-" " "}}'
+
+  dev:down:
+    desc: Stop everything dev:up may have left running (tmux session + docker in every subproject)
+    cmds:
+      - cmd: tmux kill-session -t "${DPL_DEV_SESSION:-dpl-web}" 2>/dev/null || true
+        silent: true
+      - cmd: cd design-system && task dev:down
+        ignore_error: true
+      - cmd: cd react && task dev:down
+        ignore_error: true
+      - cmd: cd cms && task dev:down
+        ignore_error: true
+
+  deps:rsync:
+    internal: true
+    preconditions:
+      - sh: rsync --version
+        msg: rsync is not installed.
+
+  deps:tmux:
+    internal: true
+    preconditions:
+      - sh: command -v tmux >/dev/null
+        msg: 'tmux is required. Install it (e.g. "brew install tmux") and retry.'
