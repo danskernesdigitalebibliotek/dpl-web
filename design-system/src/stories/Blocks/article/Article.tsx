@@ -1,3 +1,4 @@
+import "./article.scss";
 import { FC } from "react";
 import ArticleHeader, {
   ArticleHeaderProps,

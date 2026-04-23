@@ -1,3 +1,4 @@
+import "./footer-accordions.scss";
 import { FC, useState } from "react";
 import { clsx } from "clsx";
 import { FooterColumnType } from "../footer-colums/FooterColumn";

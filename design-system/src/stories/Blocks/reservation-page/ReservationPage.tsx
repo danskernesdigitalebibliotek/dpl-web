@@ -1,3 +1,4 @@
+import "../../Library/Lists/list-reservation/list-reservation.scss";
 import ResultPager from "../../Library/card-list-page/ResultPager";
 import { ListHeader } from "../../Library/list-header/ListHeader";
 import { PauseReservation } from "../../Library/pause-reservation/PauseReservation";

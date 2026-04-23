@@ -1,3 +1,4 @@
+import "./medias.scss";
 import { FC, ReactNode } from "react";
 import clsx from "clsx";
 

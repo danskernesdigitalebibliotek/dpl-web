@@ -1,3 +1,5 @@
+import "./icon-favourite.scss";
+
 import { ReactComponent as SvgIcon } from "./icon-favourite.svg";
 
 export type IconFavouriteProps = {

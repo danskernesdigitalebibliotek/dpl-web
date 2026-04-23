@@ -1,3 +1,4 @@
+import "./page.scss";
 import { FC } from "react";
 import Paragraph from "../../Library/paragraph/Paragraph";
 import HorizontalTermLine, {

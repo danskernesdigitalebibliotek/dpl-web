@@ -1,3 +1,7 @@
+import "../../Library/Buttons/icon-button/icon-button.scss";
+import "../../Library/list-buttons/list-buttons.scss";
+import "../../Library/Lists/list-reservation/list-reservation.scss";
+import "./loan-page-skeleton.scss";
 import { Button } from "../../Library/Buttons/button/Button";
 import ResultPager from "../../Library/card-list-page/ResultPager";
 import { ListHeader } from "../../Library/list-header/ListHeader";

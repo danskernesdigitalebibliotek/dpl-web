@@ -1,3 +1,5 @@
+import "../../../../base.scss";
+
 import React from "react";
 
 const SearchForm: React.FC = () => {

@@ -1,3 +1,5 @@
+import "./button-favourite.scss";
+
 import { IconFavourite } from "../../Icons/icon-favourite/IconFavourite";
 
 interface ButtonFavouriteProps {

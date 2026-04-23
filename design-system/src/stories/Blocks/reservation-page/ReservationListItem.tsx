@@ -1,3 +1,4 @@
+import "../../Library/Lists/list-reservation/list-reservation.scss";
 import clsx from "clsx";
 import Cover from "../../Library/cover/Cover";
 import { Counter } from "../../Library/counter/Counter";

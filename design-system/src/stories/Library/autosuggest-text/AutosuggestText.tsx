@@ -1,3 +1,6 @@
+import "../../Blocks/autosuggest/autosuggest.scss";
+import "./autosuggest-text.scss";
+
 export type AutosuggestTextProps = {
   textSuggestions: string[];
   categoryText?: string;

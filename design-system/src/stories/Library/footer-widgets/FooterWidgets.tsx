@@ -1,3 +1,4 @@
+import "./footer-widgets.scss";
 import { FC } from "react";
 import { Dropdown, DropdownItem } from "../dropdown/Dropdown";
 import Logo from "../logo/Logo";

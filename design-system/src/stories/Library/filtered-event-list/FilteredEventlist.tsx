@@ -1,3 +1,4 @@
+import "./filtered-event-list.scss";
 import React, { useEffect } from "react";
 import {
   ContentListItem,

@@ -1,3 +1,4 @@
+import "../../../../base.scss";
 import React from "react";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 import { ReactComponent as CheckIcon } from "../../../public/icons/collection/Check.svg";

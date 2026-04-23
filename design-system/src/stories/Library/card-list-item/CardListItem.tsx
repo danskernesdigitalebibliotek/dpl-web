@@ -1,3 +1,5 @@
+import "./card-list-item.scss";
+import "./card-list-item-skeleton.scss";
 import { AvailabilityLabelPropsType } from "../../availability-label/types";
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";
 import Cover from "../cover/Cover";

@@ -1,3 +1,7 @@
+import "./row-buttons.scss";
+
+import "./row-button.scss";
+
 import { FC } from "react";
 
 type RowButtonProps = {

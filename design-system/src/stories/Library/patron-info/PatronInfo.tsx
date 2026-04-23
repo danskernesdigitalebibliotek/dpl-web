@@ -1,3 +1,5 @@
+import "./patron-info.scss";
+
 export type PatronInfoProps = {
   name: string;
   nameLabel: string;

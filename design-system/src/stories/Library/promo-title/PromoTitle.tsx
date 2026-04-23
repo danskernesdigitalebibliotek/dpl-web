@@ -1,3 +1,5 @@
+import "./promo-title.scss";
+
 import clsx from "clsx";
 
 type PromoTitleProps = {

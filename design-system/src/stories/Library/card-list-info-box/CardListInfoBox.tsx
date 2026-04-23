@@ -1,3 +1,5 @@
+import "./card-list-info-box.scss";
+
 type CardListInfoBoxProps = {
   title?: string;
   html?: string;

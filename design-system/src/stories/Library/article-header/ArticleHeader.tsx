@@ -1,3 +1,4 @@
+import "./article-header.scss";
 import { FC } from "react";
 import ArrowLink from "../links/arrow-link/ArrowLink";
 import Tag from "../tag/Tag";

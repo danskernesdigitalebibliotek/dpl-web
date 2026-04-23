@@ -1,3 +1,5 @@
+import "../../Library/Lists/list-reservation/list-reservation.scss";
+
 const FeeListItemSkeleton = () => {
   return (
     <button

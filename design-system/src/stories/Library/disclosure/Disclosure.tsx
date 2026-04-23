@@ -1,3 +1,4 @@
+import "./disclosure.scss";
 import { useState } from "react";
 import { clsx } from "clsx";
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";

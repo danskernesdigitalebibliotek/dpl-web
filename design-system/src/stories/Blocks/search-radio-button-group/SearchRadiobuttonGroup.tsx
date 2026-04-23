@@ -1,3 +1,5 @@
+import "./search-radio-button-group.scss";
+
 const SearchRadiobuttonGroup: React.FC = () => {
   return (
     <div className="search-radio-button-group" role="radiogroup">

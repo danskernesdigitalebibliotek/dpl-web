@@ -1,3 +1,5 @@
+import "./boxed-text.scss";
+
 import { FC } from "react";
 
 export interface BoxedTextProps {

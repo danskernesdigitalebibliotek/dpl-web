@@ -1,3 +1,5 @@
+import "./empty-view.scss";
+
 const EmptyView = () => {
   return (
     <div className="empty-view">

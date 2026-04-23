@@ -1,3 +1,5 @@
+import "../../../../base.scss";
+
 import { ListHeader } from "../../Library/list-header/ListHeader";
 
 const FeeList = () => (

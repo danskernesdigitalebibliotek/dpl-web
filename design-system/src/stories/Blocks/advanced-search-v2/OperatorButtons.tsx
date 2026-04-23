@@ -1,3 +1,5 @@
+import "./search-filter.scss";
+
 import React from "react";
 
 const OperatorButtons: React.FC = () => {

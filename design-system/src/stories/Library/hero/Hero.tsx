@@ -1,3 +1,4 @@
+import "./hero.scss";
 import React, { ReactNode } from "react";
 import clsx from "clsx";
 import { ReactComponent as ArrowLargeRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-large-right.svg";

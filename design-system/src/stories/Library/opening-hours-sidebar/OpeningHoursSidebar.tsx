@@ -1,3 +1,4 @@
+import "./opening-hours-sidebar.scss";
 import { FC } from "react";
 import { ReactComponent as WatchStaticIcon } from "../../../public/icons/basic/icon-watch-static.svg";
 import DisclosureControllable from "../disclosure-controllable/DisclosureControllable";

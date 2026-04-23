@@ -1,3 +1,6 @@
+import "./material-periodical-select.scss";
+import "./material-header.scss";
+
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";
 import { ButtonFavourite } from "../Buttons/button-favourite/ButtonFavourite";
 import { Button } from "../Buttons/button/Button";

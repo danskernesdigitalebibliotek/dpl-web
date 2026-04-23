@@ -1,3 +1,4 @@
+import "./availability-label.scss";
 import clsx from "clsx";
 import { AvailabilityLabelPropsType } from "../../availability-label/types";
 import { PageFoldType } from "../pagefold/types";

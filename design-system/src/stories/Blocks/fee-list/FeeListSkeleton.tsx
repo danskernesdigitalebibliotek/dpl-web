@@ -1,3 +1,4 @@
+import "./fee-list-page-skeleton.scss";
 import FeeListItemSkeleton from "./FeeListItemSkeleton";
 
 const FeeListSkeleton: React.FC = () => {

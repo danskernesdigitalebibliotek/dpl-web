@@ -1,3 +1,4 @@
+import "./content-list-page.scss";
 import React from "react";
 import ContentList from "../../Library/content-list/ContentList";
 import contentListData from "../../Library/content-list/ContentListData";

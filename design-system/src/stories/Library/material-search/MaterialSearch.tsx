@@ -1,3 +1,4 @@
+import "./material-search.scss";
 import { FC, useState } from "react";
 import { PreviewData } from "./MaterialSearchExampleData";
 import MaterialSearchInputs from "./MaterialSearchInputs";

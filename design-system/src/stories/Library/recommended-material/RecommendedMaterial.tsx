@@ -1,3 +1,4 @@
+import "./recommended-material-skeleton.scss";
 import clsx from "clsx";
 import { ButtonFavourite } from "../Buttons/button-favourite/ButtonFavourite";
 import Cover from "../cover/Cover";

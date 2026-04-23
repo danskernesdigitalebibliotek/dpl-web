@@ -1,3 +1,5 @@
+import "./missing-story.scss";
+
 type MissingStoryProps = {
   name: "";
   description: "";

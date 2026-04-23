@@ -1,3 +1,4 @@
+import "./result-pager.scss";
 import clsx from "clsx";
 import { Button } from "../Buttons/button/Button";
 

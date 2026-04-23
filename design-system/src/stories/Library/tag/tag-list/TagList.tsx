@@ -1,3 +1,4 @@
+import "./tag-list.scss";
 import { FC, useEffect } from "react";
 import Tag from "../Tag";
 

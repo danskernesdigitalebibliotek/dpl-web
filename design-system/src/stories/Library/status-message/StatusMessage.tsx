@@ -1,3 +1,5 @@
+import "./status-message.scss";
+
 import { ReactComponent as CheckIcon } from "../../../public/icons/basic/icon-check.svg";
 
 export type StatusMessageProps = {

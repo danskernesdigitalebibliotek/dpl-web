@@ -1,3 +1,5 @@
+import "../../Library/Lists/list-reservation/list-reservation.scss";
+
 const ReservationListItemSkeleton = () => {
   return (
     <div className="list-reservation my-32">

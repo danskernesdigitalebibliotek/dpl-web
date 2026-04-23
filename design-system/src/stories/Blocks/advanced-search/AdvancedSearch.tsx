@@ -1,3 +1,4 @@
+import "../../../../base.scss";
 import React from "react";
 import { InputWithDropdown } from "../../Library/input-with-dropdown/InputWithDropdown";
 import { Multiselect } from "../../Library/multiselect/Multiselect";

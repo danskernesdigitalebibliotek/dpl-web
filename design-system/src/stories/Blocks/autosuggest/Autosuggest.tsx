@@ -1,3 +1,4 @@
+import "./autosuggest.scss";
 import {
   AutosuggestMaterial,
   AutosuggestMaterialProps,

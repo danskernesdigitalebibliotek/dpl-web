@@ -1,3 +1,4 @@
+import "./instant-loan.scss";
 import React from "react";
 import DisclosureControllable from "../disclosure-controllable/DisclosureControllable";
 import InstantLoanBranches from "./InstantLoanBranches";

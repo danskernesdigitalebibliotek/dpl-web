@@ -1,3 +1,4 @@
+import "./review.scss";
 import React from "react";
 import { ReactComponent as HeartFilledIcon } from "../../../public/icons/basic/icon-heart-filled.svg";
 import { ReactComponent as HeartEmptyIcon } from "../../../public/icons/basic/icon-heart-grey.svg";
