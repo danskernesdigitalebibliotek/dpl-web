@@ -84,7 +84,6 @@
   "devDependencies": {
     "@0no-co/graphqlsp": "^1.15.4",
     "@chromatic-com/storybook": "^5.1.2",
-    "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
     "@graphql-codegen/cli": "^6.3.1",
     "@graphql-codegen/client-preset": "^5.2.3",
@@ -121,7 +120,7 @@
     "eslint-config-next": "16.2.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^6.3.1",
-    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-import-x": "^4.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-storybook": "^10.3.5",
@@ -146,5 +145,14 @@
     "vite-tsconfig-paths": "^6.0.4",
     "vitest": "^4.0.18"
   },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+  "resolutions": {
+    "@typescript-eslint/parser": "^8.58.2",
+    "@typescript-eslint/scope-manager": "^8.58.2",
+    "@typescript-eslint/typescript-estree": "^8.58.2",
+    "@typescript-eslint/types": "^8.58.2",
+    "@typescript-eslint/utils": "^8.58.2",
+    "@typescript-eslint/visitor-keys": "^8.58.2",
+    "typescript-eslint": "^8.58.0"
+  }
 }
