@@ -46,23 +46,8 @@
 @import "./src/stories/Library/rich-text/rich-text";
 @import "./src/stories/Blocks/registration-page/registration-page";
 
-// Modal styles must be in the same compilation unit to preserve
-// cascade order between base modal and sub-type styles.
-@import "./src/stories/Library/Modals/modal";
-@import "./src/stories/Library/Modals/modal-details/modal-details";
-@import "./src/stories/Library/Modals/modal-cta/modal-cta";
-@import "./src/stories/Library/Modals/modal-header/modal-header";
-@import "./src/stories/Library/Modals/modal-loan/modal-loan";
-@import "./src/stories/Library/Modals/modal-login/modal-login";
-@import "./src/stories/Library/Modals/modal-search/modal-search";
-@import "./src/stories/Library/Modals/modal-text/modal-text";
-@import "./src/stories/Library/Modals/modal-pause/modal-pause";
-@import "./src/stories/Library/Modals/modal-profile/modal-profile";
-@import "./src/stories/Library/Modals/modal-reservation/reservation";
-@import "./src/stories/Library/Modals/modal-facet-browser/facet-browser";
-@import "./src/stories/Library/Modals/modal-find-on-shelf/modal-find-on-shelf";
-@import "./src/stories/Library/Modals/modal-infomedia/infomedia";
-@import "./src/stories/Library/Modals/group-modal-item-skeleton";
+// Modal styles bundled in cascade order.
+@import "./src/stories/Library/Modals/modals";
 
 @import "./src/stories/Library/Forms/input/input";
 @import "./src/stories/Library/Forms/checkbox/checkbox";
