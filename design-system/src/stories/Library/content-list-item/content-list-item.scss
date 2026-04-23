@@ -281,16 +281,18 @@ $_stacked-reduce-width: 20px;
 .status {
   border: none;
 
+  // stylelint-disable declaration-no-important
   &.status--cancelled,
   &.status--sold-out {
-    background-color: $color__signal-alert;
-    color: $color__global-white;
+    background-color: $color__signal-alert !important;
+    color: $color__global-white !important;
   }
 
   &.status--occurred {
-    background-color: $color__global-black;
-    color: $color__global-white;
+    background-color: $color__global-black !important;
+    color: $color__global-white !important;
   }
+  // stylelint-enable declaration-no-important
 }
 
 .content-list-item--status-parent {
