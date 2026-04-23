@@ -59,12 +59,12 @@ class DplGoServiceProvider implements ServiceModifierInterface {
 
     if (str_starts_with($cookieDomain, '.www.')) {
       // Strip `.www` so the cookie is shared with `www.go.<site>`.
-      $cookieDomain = substr($cookieDomain, 4);
+      $cookieDomain = substr($cookieDomain, strlen('.www'));
     }
     elseif (str_starts_with($cookieDomain, '.varnish.')) {
       // PR, demo, and playground environments use varnish.<env> and node.<env> subdomains.
       // Strip `.varnish` so the cookie is shared with the node (Go) subdomain.
-      $cookieDomain = substr($cookieDomain, 8);
+      $cookieDomain = substr($cookieDomain, strlen('.varnish'));
     }
     else {
       return;
