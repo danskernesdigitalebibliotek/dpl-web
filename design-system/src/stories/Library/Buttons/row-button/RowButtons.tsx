@@ -9,8 +9,8 @@ type RowButtonProps = {
 
 const RowButtons: FC<RowButtonProps> = ({ labels, className }) => (
   <div className={clsx("row-buttons", className)}>
-    {labels.slice(0, 2).map((label) => (
-      <RowButton label={label} />
+    {labels.slice(0, 2).map((label, index) => (
+      <RowButton key={index} label={label} />
     ))}
     {labels.length > 2 && <RowButton label="..." />}
   </div>

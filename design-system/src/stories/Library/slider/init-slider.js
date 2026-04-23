@@ -11,7 +11,6 @@ function swiperWrapperEventInit(swiper) {
   swiperWrapper.addEventListener("focusin", () => {
     // SwiperJS really wants to remove the tranisition duraton when not in use,
     // but we still want it active when using keyboard tabbing.
-    // eslint-disable-next-line no-param-reassign
     swiperWrapper.style.transitionDuration = "300ms";
 
     const activeSlide = swiperWrapper.querySelector(".swiper-slide-active");

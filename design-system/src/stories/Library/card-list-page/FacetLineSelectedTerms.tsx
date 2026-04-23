@@ -10,7 +10,7 @@ const FacetLineSelectedTerms: FC<FacetLineSelectedProps> = ({ items }) => {
   return (
     <ul className="facet-line-selected-terms">
       {items.map(({ title }) => (
-        <li className="facet-line-selected-terms__item">
+        <li key={title} className="facet-line-selected-terms__item">
           <TagButton showCloseIcon hasBackground>
             {title}
           </TagButton>
