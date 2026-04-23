@@ -18,6 +18,20 @@ services:
     parent: default_plugin_manager
   Drupal\bnf\BnfMapperManager: '@plugin.manager.bnf_mapper'
 
+  plugin.manager.bnf_entity_converter:
+    class: Drupal\bnf\EntityConverterManager
+    parent: default_plugin_manager
+  Drupal\bnf\EntityConverterManager: '@plugin.manager.bnf_entity_converter'
+
+  plugin.manager.bnf_field_converter:
+    class: Drupal\bnf\FieldConverterManager
+    parent: default_plugin_manager
+  Drupal\bnf\FieldConverterManager: '@plugin.manager.bnf_field_converter'
+
+  bnf.content_serializer:
+    class: Drupal\bnf\Services\ContentSerializer
+  Drupal\bnf\Services\ContentSerializer: '@bnf.content_serializer'
+
   logger.channel.bnf:
     parent: logger.channel_base
     arguments:
