@@ -3,20 +3,19 @@ import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
+import { configs as reactHooksConfigs } from "eslint-plugin-react-hooks";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
 import cypressPlugin from "eslint-plugin-cypress/flat";
-import importPlugin from "eslint-plugin-import";
+import { flatConfigs as importFlatConfigs } from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = import.meta.dirname;
 
 export default [
   {
+    files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
     ignores: [
       "src/core/dpl-cms/model",
       "src/core/dpl-cms/dpl-cms.ts",
@@ -28,15 +27,15 @@ export default [
       "*.config.mjs"
     ]
   },
-  js.configs.recommended,
   react.configs.flat.recommended,
-  reactHooks.configs["recommended-latest"],
+  js.configs.recommended,
+  reactHooksConfigs["recommended-latest"],
   ...tsPlugin.configs["flat/recommended"],
   cypressPlugin.configs.recommended,
-  importPlugin.flatConfigs.recommended,
-  importPlugin.flatConfigs.errors,
-  importPlugin.flatConfigs.warnings,
-  importPlugin.flatConfigs.typescript,
+  importFlatConfigs.recommended,
+  importFlatConfigs.errors,
+  importFlatConfigs.warnings,
+  importFlatConfigs.typescript,
   jsxA11y.flatConfigs.recommended,
   prettierRecommended,
   {
