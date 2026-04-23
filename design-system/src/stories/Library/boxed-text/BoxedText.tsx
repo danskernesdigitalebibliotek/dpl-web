@@ -1,13 +1,19 @@
 import "./boxed-text.scss";
 
 import { FC } from "react";
+import clsx from "clsx";
 
 export interface BoxedTextProps {
   text: string;
+  classNames?: string;
 }
 
-export const BoxedText: FC<BoxedTextProps> = ({ text }) => {
-  return <div className="boxed-text text-tags noselect">{text}</div>;
+export const BoxedText: FC<BoxedTextProps> = ({ text, classNames }) => {
+  return (
+    <div className={clsx("boxed-text text-tags noselect", classNames)}>
+      {text}
+    </div>
+  );
 };
 
 export default BoxedText;
