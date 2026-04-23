@@ -12,8 +12,9 @@ use Drupal\Core\DependencyInjection\ServiceModifierInterface;
  *
  * On sites whose primary domain starts with `www`, Drupal sets the cookie
  * domain to `.www.<site>` per default. This means that the cookie isn't shared
- * with `www.go.<site>` and the login doesn't work. Similarly, PR/demo/playground
- * environments use `varnish.<env>` and `node.<env>` subdomains, so the `varnish.`
+ * with `www.go.<site>` and the login doesn't work. Similarly,
+ * PR/demo/playground environments use `varnish.<env>` and `node.<env>`
+ * subdomains, so the `varnish.`
  * prefix must be stripped. In both cases we set the cookie domain explicitly to
  * the common base domain.
  */
@@ -62,8 +63,9 @@ class DplGoServiceProvider implements ServiceModifierInterface {
       $cookieDomain = substr($cookieDomain, strlen('.www'));
     }
     elseif (str_starts_with($cookieDomain, '.varnish.')) {
-      // PR, demo, and playground environments use varnish.<env> and node.<env> subdomains.
-      // Strip `.varnish` so the cookie is shared with the node (Go) subdomain.
+      // PR, demo, and playground environments use varnish.<env>
+      // and node.<env> subdomains. Strip `.varnish` so the cookie
+      // is shared with the node (Go) subdomain.
       $cookieDomain = substr($cookieDomain, strlen('.varnish'));
     }
     else {
