@@ -134,6 +134,7 @@ export default [
 
       "@typescript-eslint/comma-dangle": "off",
       "@typescript-eslint/lines-between-class-members": "off",
+      "@typescript-eslint/no-redeclare": "warn",
       "@typescript-eslint/no-throw-literal": "off",
 
       "react-hooks/exhaustive-deps": [
