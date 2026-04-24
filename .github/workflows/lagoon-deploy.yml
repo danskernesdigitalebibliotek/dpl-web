@@ -19,7 +19,7 @@ on:
       - '.lagoon.yml'
       - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
-name: CMS / Lagoon integration
+name: Lagoon / Deploy application
 
 env:
   LAGOON_DOMAIN: "dplplat02.dpl.reload.dk"
@@ -29,10 +29,10 @@ env:
   REPO: ${{ github.event.repository.name }}
 jobs:
   BranchNameLength:
-    name: CMS / Check branch length
+    name: Lagoon / Check branch name length
     runs-on: ubuntu-latest
     steps:
-      - name: Ensure branch name length
+      - name: Validate branch name length
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
@@ -41,12 +41,48 @@ jobs:
             exit 1
           fi
 
+  BuildGoBaseImage:
+    name: Lagoon / Build Go base image
+    needs: [BranchNameLength]
+    # Narrow the main workflow conditions to only run when a PR is opened or updated, or when a push is made to the special branches.
+    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: "Re-use cached Node.js modules"
+        uses: actions/cache@v5
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: "Install Node.js modules"
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: "go/.nvmrc"
+          cache: "yarn"
+          cache-dependency-path: "go/yarn.lock"
+
+      - name: "Install Go dependencies"
+        run: "yarn --cwd=go install --frozen-lockfile"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v7
+        with:
+          file: "go/lagoon/base.dockerfile"
+          push: true
+          tags: "ghcr.io/danskernesdigitalebibliotek/dpl-web-go:${{ github.sha }}"
+
   # Creating the deployment that Lagoon will look for, and add status to.
   CreateDeployment:
-    name: CMS / Create deployment
+    name: Lagoon / Create deployment
     runs-on: ubuntu-latest
-    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
-    needs: [BranchNameLength]
+    needs: [BuildGoBaseImage]
     steps:
       - env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -67,7 +103,7 @@ jobs:
           echo "deployment_id=$DEPLOYMENT_ID" >> "$GITHUB_OUTPUT"
 
   CreateDeploymentBNF:
-    name: CMS / Create BNF deployment
+    name: Lagoon / Create BNF deployment
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'bnf:') && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
     needs: [BranchNameLength]
@@ -90,9 +126,9 @@ jobs:
 
           echo "deployment_id=$DEPLOYMENT_ID" >> "$GITHUB_OUTPUT"
 
-  # When we close the pull request, we want to set the environment as inactive.
+  # When we close the pull request, we want to delete the associated environment.
   CloseEnvironment:
-    name: CMS / Close environment
+    name: Lagoon / Delete environment
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
     needs: [BranchNameLength]
@@ -105,7 +141,7 @@ jobs:
   # The integration is controlled by creating synthetic events related to select
   # pull-request events, and send them to Lagoon.
   InformLagoon:
-    name: CMS / Send synthetic event to Lagoon
+    name: Lagoon / Send synthetic event to Lagoon
     runs-on: ubuntu-latest
     needs: [BranchNameLength]
     steps:
