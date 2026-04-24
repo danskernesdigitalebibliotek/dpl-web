@@ -33,4 +33,4 @@ storybook-static
 .history
 
 #zipped files generated when using dapple. 
-dist.zip
+dist.zipbuild-storybook.log
