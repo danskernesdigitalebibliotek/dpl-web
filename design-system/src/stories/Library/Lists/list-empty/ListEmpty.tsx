@@ -1,3 +1,5 @@
+import "./list-empty.scss";
+
 import { Links, LinksProps } from "../../links/Links";
 
 interface ListEmptyProps {

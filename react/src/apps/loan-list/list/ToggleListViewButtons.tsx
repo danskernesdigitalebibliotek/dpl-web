@@ -39,14 +39,14 @@ const ToggleListViewButtons: FC<ToggleListViewButtonsProps> = ({
     : t("loanListRenewMultipleButtonText");
 
   return (
-    <div className="dpl-list-buttons__buttons">
+    <div className="dpl-list-buttons">
       <div
         id="renew-multiple-modal"
         className="dpl-list-buttons__screen-reader-description"
       >
         {t("loanListRenewMultipleButtonExplanationText")}
       </div>
-      <div className="dpl-list-buttons__buttons__button">
+      <div className="dpl-list-buttons__button">
         <button
           onClick={() => setViewHandler("list")}
           aria-pressed={view === "list"}
@@ -60,7 +60,7 @@ const ToggleListViewButtons: FC<ToggleListViewButtonsProps> = ({
           <IconList />
         </button>
       </div>
-      <div className="dpl-list-buttons__buttons__button">
+      <div className="dpl-list-buttons__button">
         <button
           aria-pressed={view === "stack"}
           className={`dpl-icon-button ${
@@ -74,7 +74,7 @@ const ToggleListViewButtons: FC<ToggleListViewButtonsProps> = ({
           <IconStack />
         </button>
       </div>
-      <div className="dpl-list-buttons__buttons__button dpl-list-buttons__buttons__button--hide-on-mobile">
+      <div className="dpl-list-buttons__button dpl-list-buttons__button--hide-on-mobile">
         <button
           type="button"
           onClick={() => {

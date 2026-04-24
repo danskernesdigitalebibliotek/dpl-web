@@ -1,3 +1,4 @@
+import "../../Blocks/header/header.scss";
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 
 import {

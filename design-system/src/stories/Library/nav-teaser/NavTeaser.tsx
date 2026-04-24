@@ -1,3 +1,4 @@
+import "./nav-teaser.scss";
 import { FC } from "react";
 import { ReactComponent as Arrow } from "../Arrows/icon-arrow-ui/icon-arrow-ui-nav.svg";
 

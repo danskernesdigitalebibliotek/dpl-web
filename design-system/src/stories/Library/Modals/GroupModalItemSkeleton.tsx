@@ -1,3 +1,4 @@
+import "./modal.scss";
 import { FC } from "react";
 import { Checkbox } from "../Forms/checkbox/Checkbox";
 

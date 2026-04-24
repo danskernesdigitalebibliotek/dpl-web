@@ -1,3 +1,4 @@
+import "./header-sidebar-nav.scss";
 import { useEffect } from "react";
 import { ReactComponent as CloseSidebarIcon } from "../Icons/icon-close-large/icon-close-large.svg";
 import { MenuItemsProps } from "../header-menu-list/HeaderMenuListData";

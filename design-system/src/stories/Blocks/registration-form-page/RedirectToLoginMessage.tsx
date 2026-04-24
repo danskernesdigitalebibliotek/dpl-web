@@ -1,3 +1,4 @@
+import "./registration-form-page.scss";
 import { FC } from "react";
 import { Button } from "../../Library/Buttons/button/Button";
 

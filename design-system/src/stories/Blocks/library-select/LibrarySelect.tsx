@@ -1,3 +1,5 @@
+import "./library-select.scss";
+
 import clsx from "clsx";
 
 export type InputProps = {

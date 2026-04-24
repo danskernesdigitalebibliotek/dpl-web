@@ -1,3 +1,5 @@
+import "./content-list-item.scss";
+import "../../Blocks/content-list-page/content-list-page.scss";
 import { FC } from "react";
 import { ReactComponent as ArrowSmallRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 import ContentListItemStatus, {

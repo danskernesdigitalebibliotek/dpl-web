@@ -1,3 +1,5 @@
+import "./date-calendar.scss";
+
 /* eslint-disable import/no-extraneous-dependencies */
 // Import default styling
 import "flatpickr/dist/flatpickr.css";

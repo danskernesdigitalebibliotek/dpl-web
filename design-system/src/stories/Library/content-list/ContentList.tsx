@@ -1,3 +1,5 @@
+import "./content-list.scss";
+
 import {
   ContentListItem,
   ContentListItemProps,

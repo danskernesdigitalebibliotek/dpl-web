@@ -1,3 +1,5 @@
+import "./footer-info.scss";
+
 import { FC } from "react";
 
 export type FooterSocialMediaType = {

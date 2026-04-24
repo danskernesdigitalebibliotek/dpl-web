@@ -1,3 +1,4 @@
+import "./copy-link.scss";
 import clsx from "clsx";
 import { useState } from "react";
 import { ReactComponent as LinkIcon } from "../../../public/icons/collection/link.svg";

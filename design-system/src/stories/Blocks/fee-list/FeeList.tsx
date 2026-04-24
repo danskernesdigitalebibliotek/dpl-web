@@ -1,13 +1,12 @@
+import "../../../../base.scss";
+
+import { ListHeader } from "../../Library/list-header/ListHeader";
+
 const FeeList = () => (
   <>
     <div>
       <div className="fee-list" data-cy="fee-list">
-        <div className="dpl-list-buttons">
-          <h2 data-cy="list-header" className="dpl-list-buttons__header">
-            Betales på biblioteket
-            <span className="dpl-list-buttons__power">7</span>
-          </h2>
-        </div>
+        <ListHeader header="Betales på biblioteket" count="7" />
         <button
           type="button"
           className="list-reservation my-32 list-reservation--stacked"
@@ -332,12 +331,7 @@ const FeeList = () => (
     </div>
     <div>
       <div data-cy="fee-list">
-        <div className="dpl-list-buttons">
-          <h2 data-cy="list-header" className="dpl-list-buttons__header">
-            Betales på Mit betalingsoverblik
-            <span className="dpl-list-buttons__power">6</span>
-          </h2>
-        </div>
+        <ListHeader header="Betales på Mit betalingsoverblik" count="6" />
         <button type="button" className="list-reservation my-32">
           <div className="list-reservation__material">
             <div>

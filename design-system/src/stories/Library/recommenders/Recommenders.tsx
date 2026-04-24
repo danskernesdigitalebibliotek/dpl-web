@@ -1,3 +1,6 @@
+import "../Icons/icon-favourite/icon-favourite.scss";
+import "../Buttons/button-favourite/button-favourite.scss";
+import "./recommenders.scss";
 import Cover from "../cover/Cover";
 import { ReactComponent as SvgIcon } from "../Icons/icon-favourite/icon-favourite.svg";
 

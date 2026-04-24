@@ -1,3 +1,5 @@
+import "./number.scss";
+
 export type NumberProps = {
   label: number;
   status: "danger" | "warning" | "info" | "neutral";

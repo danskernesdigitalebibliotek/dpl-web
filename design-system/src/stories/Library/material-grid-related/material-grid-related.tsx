@@ -1,3 +1,5 @@
+import "../input-with-dropdown/input-with-dropdown.scss";
+import "./material-grid-related.scss";
 import React from "react";
 import { Dropdown } from "../dropdown/Dropdown";
 import { MaterialGrid } from "../material-grid/MaterialGrid";

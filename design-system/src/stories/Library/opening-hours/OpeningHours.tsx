@@ -1,3 +1,5 @@
+import "./opening-hours-skeleton.scss";
+import "./opening-hours.scss";
 import { FC } from "react";
 import { ReactComponent as ArrowLeft } from "../../../public/icons/collection/ArrowLeft.svg";
 import { ReactComponent as ArrowRight } from "../../../public/icons/collection/ArrowRight.svg";

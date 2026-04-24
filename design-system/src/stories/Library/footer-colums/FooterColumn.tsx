@@ -1,3 +1,5 @@
+import "./footer-colums.scss";
+
 import { FC } from "react";
 
 export type FooterColumnType = {

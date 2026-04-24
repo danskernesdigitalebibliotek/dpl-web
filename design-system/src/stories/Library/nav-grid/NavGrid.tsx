@@ -1,3 +1,4 @@
+import "./nav-grid.scss";
 import { FC, ReactNode, useEffect } from "react";
 import clsx from "clsx";
 

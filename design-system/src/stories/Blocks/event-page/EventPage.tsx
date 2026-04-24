@@ -1,3 +1,4 @@
+import "./event-page.scss";
 import { FC } from "react";
 import EventDescription, {
   EventDescriptionProps,

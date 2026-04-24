@@ -1,3 +1,5 @@
+import "./shadows.scss";
+
 const shadowValues = [
   "shadow-low",
   "shadow-medium",

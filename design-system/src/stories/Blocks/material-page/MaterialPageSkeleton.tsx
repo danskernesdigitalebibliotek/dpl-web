@@ -1,3 +1,6 @@
+import "../../Library/material-header/material-header.scss";
+import "./material-page-skeleton.scss";
+
 const MaterialPageSkeleton: React.FC = () => {
   return (
     <section className="material-page ssc">

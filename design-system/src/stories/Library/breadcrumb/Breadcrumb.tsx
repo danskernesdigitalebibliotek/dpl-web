@@ -1,3 +1,5 @@
+import "./breadcrumb.scss";
+
 export type BreadcrumbProps = {
   items: { link?: string; text: string }[];
 };

@@ -1,3 +1,4 @@
+import "./image-credited.scss";
 import clsx from "clsx";
 import { FC } from "react";
 

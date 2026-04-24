@@ -1,3 +1,4 @@
+import "./multiselect.scss";
 import { Checkbox } from "../Forms/checkbox/Checkbox";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 

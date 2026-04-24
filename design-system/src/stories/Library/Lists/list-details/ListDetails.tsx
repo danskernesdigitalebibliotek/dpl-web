@@ -1,3 +1,4 @@
+import "./list-details.scss";
 import { Dropdown, DropdownProps } from "../../dropdown/Dropdown";
 import { Links } from "../../links/Links";
 

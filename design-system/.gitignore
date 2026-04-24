@@ -24,6 +24,7 @@ yarn-error.log*
 
 # storybook
 storybook-static
+build-storybook.log
 
 # SCSS to CSS
 /src/styles/css
@@ -32,5 +33,5 @@ storybook-static
 .vscode
 .history
 
-#zipped files generated when using dapple. 
+#zipped files generated when using dapple.
 dist.zip

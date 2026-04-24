@@ -1,3 +1,4 @@
+import "./modals.scss";
 import React, { useEffect, useState } from "react";
 import { clsx } from "clsx";
 import { ModalCloseButton, ModalFallbackButton } from "./ModalShared";

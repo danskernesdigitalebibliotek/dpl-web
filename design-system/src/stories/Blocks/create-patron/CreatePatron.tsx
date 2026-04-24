@@ -1,3 +1,4 @@
+import "./create-patron.scss";
 import { Button } from "../../Library/Buttons/button/Button";
 import DoubleInputRow from "../../Library/Forms/input/DoubleInputRow";
 import Dialog from "../../Library/dialog/Dialog";

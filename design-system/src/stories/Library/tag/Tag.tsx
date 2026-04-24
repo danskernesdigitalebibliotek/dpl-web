@@ -1,3 +1,4 @@
+import "./tag.scss";
 import clsx from "clsx";
 import { ReactComponent as CrossIcon } from "../../../public/icons/basic/icon-cross.svg";
 

@@ -37,49 +37,7 @@
 }
 
 .patron__input {
-  display: flex;
-  flex-direction: column;
-  @include typography($typo__body-medium);
   margin-bottom: $s-xl;
-
-  label {
-    @include typography($typo__body-medium);
-    color: $color__text-secondary-gray;
-  }
-
-  input {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid $color__global-tertiary-1;
-    height: 40px;
-
-    &:focus {
-      border-bottom-color: $color__global-black;
-      outline: none;
-    }
-  }
-
-  &__description {
-    color: $color__text-secondary-gray;
-    @include typography($typo__body-small);
-    margin-top: $s-sm;
-  }
-
-  &__validation {
-    color: $color__signal-alert;
-    @include typography($typo__body-small);
-    margin-top: $s-sm;
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-
-  input[type="number"] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-  }
 }
 
 .patron__input--desktop {

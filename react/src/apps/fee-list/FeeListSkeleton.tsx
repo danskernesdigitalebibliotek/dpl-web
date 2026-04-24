@@ -4,7 +4,7 @@ import FeeListItemSkeleton from "./FeeListItemSkeleton";
 const FeeListSkeleton: React.FC = () => {
   return (
     <section className="ssc fee-list">
-      <h2 className="dpl-list-buttons__header" aria-label="Fee payment info">
+      <h2 className="list-header__title" aria-label="Fee payment info">
         <div className="ssc-head-line w-20 mt-10" />
       </h2>
       <FeeListItemSkeleton />

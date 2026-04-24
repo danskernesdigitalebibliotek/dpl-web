@@ -1,3 +1,4 @@
+import "./logo.scss";
 import clsx from "clsx";
 import logo from "./logo.png";
 

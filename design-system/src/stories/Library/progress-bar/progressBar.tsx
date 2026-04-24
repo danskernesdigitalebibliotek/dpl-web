@@ -1,3 +1,5 @@
+import "./progress-bar.scss";
+
 export type ProgressBarProps = {
   amount: number;
   fullAmount: number;

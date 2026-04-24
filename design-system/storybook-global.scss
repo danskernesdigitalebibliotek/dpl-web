@@ -1,0 +1,71 @@
+// Global styles loaded once in Storybook's preview.js.
+// Component-specific styles are imported by each component's TSX file
+// so that TurboSnap can trace SCSS changes to individual stories.
+@import "./src/styles/scss/tools";
+@import "./src/styles/scss/reset";
+@import "./src/styles/scss/skeleton";
+@import "./src/styles/scss/legacy";
+
+// Component styles without a corresponding TSX file.
+@import "./src/stories/Library/Arrows/arrows";
+@import "./src/stories/Library/select/select";
+@import "./src/stories/Library/Forms/address-input/address-input";
+@import "./src/stories/Library/Forms/address-search-bar/address-search-bar";
+@import "./src/stories/Library/material-contents";
+@import "./src/stories/Library/loan-list-page/loan-list-page";
+@import "./src/stories/Library/dashboard-page/dashboard-page";
+@import "./src/stories/Library/patron-page/patron-page";
+@import "./src/stories/Library/reservation-list-page/reservation-list-page";
+@import "./src/stories/Library/pincode-container/pincode-container";
+@import "./src/stories/Library/Lists/fee-list/fee-list";
+@import "./src/stories/Library/scroll-lock-background/scroll-lock-background";
+@import "./src/stories/Library/player/player";
+@import "./src/stories/Blocks/range-select/range-select";
+@import "./src/stories/Blocks/search-summary/search-summary";
+@import "./src/stories/Blocks/search-facets/search-facets";
+@import "./src/stories/utils/show-more";
+
+// Component styles used as utility classes across many components.
+@import "./src/stories/Library/links/links";
+
+// Component styles with cross-component @extend dependencies.
+@import "./src/stories/Library/media-container/media-container";
+@import "./src/stories/Library/Buttons/button/buttons";
+@import "./src/stories/Library/Buttons/button-share/button-share";
+@import "./src/stories/Library/pause-reservation/pause-reservation";
+@import "./src/stories/Library/card/card";
+@import "./src/stories/Library/card-grid/card-grid";
+@import "./src/stories/Library/slider/slider";
+@import "./src/stories/Library/nav-spot/nav-spot";
+@import "./src/stories/Library/nav-spots/nav-spots";
+
+// Component styles with cross-component variable dependencies.
+@import "./src/stories/Library/cover/cover";
+@import "./src/stories/Library/recommended-material/recommended-material";
+@import "./src/stories/Library/recommendation/recommendation";
+@import "./src/stories/Library/rich-text/rich-text";
+@import "./src/stories/Blocks/registration-page/registration-page";
+
+// Modal styles bundled in cascade order.
+@import "./src/stories/Library/Modals/modals";
+
+@import "./src/stories/Library/Forms/input/input";
+@import "./src/stories/Library/Forms/checkbox/checkbox";
+@import "./src/stories/Library/Forms/radio/radio";
+@import "./src/stories/Library/Forms/textarea/textarea";
+@import "./src/stories/Library/Forms/submit-button/submit-button";
+@import "./src/stories/Library/Forms/date-picker/date-picker";
+@import "./src/stories/Blocks/form/form";
+@import "./src/stories/Library/status-label/status-label";
+@import "./src/stories/Library/dialog/dialog";
+@import "./src/stories/Library/dropdown/dropdown";
+
+// button-box must load before shared.scss so that .hide-on-desktop
+// can override button-box's display property via cascade order.
+@import "./src/stories/Library/button-box/button-box";
+
+// Utility classes loaded last to match base.scss cascade order.
+// These must come after component styles so utility classes like
+// .hide-on-desktop can override component display properties.
+@import "./src/styles/scss/shared";
+@import "./src/styles/scss/internal";

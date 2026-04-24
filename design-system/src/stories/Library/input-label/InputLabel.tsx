@@ -1,3 +1,5 @@
+import "./input-label.scss";
+
 export type InputLabelProps = {
   text: string;
   required?: boolean;

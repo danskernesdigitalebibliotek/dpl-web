@@ -1,3 +1,5 @@
+import "./material-description.scss";
+
 import HorizontalTermLine, {
   generateId,
 } from "../horizontal-term-line/HorizontalTermLine";

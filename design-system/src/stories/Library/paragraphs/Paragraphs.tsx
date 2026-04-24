@@ -1,3 +1,4 @@
+import "./paragraphs.scss";
 import CardGrid from "../card-grid/CardGrid";
 import { card, cardNoImage } from "../card-grid/card-grid-data";
 import { LinkWithIcon } from "../link-with-icon/LinkWithIcon";

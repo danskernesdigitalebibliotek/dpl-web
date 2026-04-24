@@ -1,3 +1,6 @@
+import "../search/search.scss";
+import "./search-sort-select.scss";
+
 import React from "react";
 
 const SearchSortSelect: React.FC = () => {

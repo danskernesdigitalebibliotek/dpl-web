@@ -1,3 +1,5 @@
+import "./material-page-skeleton.scss";
+import "./material-page.scss";
 import Disclosure from "../../Library/disclosure/Disclosure";
 import { generateId } from "../../Library/horizontal-term-line/HorizontalTermLine";
 import ListDescription, {

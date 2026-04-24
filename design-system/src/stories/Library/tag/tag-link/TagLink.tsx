@@ -1,3 +1,4 @@
+import "../tag.scss";
 import clsx from "clsx";
 
 type TagProps = {

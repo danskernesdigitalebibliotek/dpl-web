@@ -1,3 +1,5 @@
+import "./cookie-placeholder.scss";
+import "./video-embed.scss";
 import { FC, useState, useEffect } from "react";
 import { Button } from "../Buttons/button/Button";
 

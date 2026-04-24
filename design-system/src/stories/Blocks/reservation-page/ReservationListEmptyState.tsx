@@ -1,3 +1,6 @@
+import "../../Library/Lists/list-empty/list-empty.scss";
+import "./reservation-page-skeleton.scss";
+
 export interface ReservationListEmptyStateProps {
   text: string;
   classsNames?: string;

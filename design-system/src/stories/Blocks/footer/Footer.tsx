@@ -1,3 +1,4 @@
+import "./footer.scss";
 import { FC } from "react";
 import Pagefold from "../../Library/pagefold/Pagefold";
 import { DropdownItem } from "../../Library/dropdown/Dropdown";

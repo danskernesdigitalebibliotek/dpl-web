@@ -1,3 +1,5 @@
+import "./buttons-ui.scss";
+
 type ContentIcon = {
   kind: "ICON";
   url: string;

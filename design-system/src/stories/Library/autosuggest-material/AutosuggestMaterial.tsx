@@ -1,3 +1,5 @@
+import "../../Blocks/autosuggest/autosuggest.scss";
+import "./autosuggest-material.scss";
 import Cover from "../cover/Cover";
 
 export type AutosuggestMaterialProps = {

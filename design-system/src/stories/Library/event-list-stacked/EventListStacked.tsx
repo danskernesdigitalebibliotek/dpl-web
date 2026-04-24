@@ -1,3 +1,4 @@
+import "./event-list-stacked.scss";
 import React from "react";
 import { ContentListItem } from "../content-list-item/ContentListItem";
 import ContentListItemStacked from "../content-list-item/ContentListItemStacked";

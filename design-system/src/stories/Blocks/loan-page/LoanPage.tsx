@@ -1,5 +1,10 @@
+import "../../Library/Buttons/icon-button/icon-button.scss";
+import "../../Library/list-buttons/list-buttons.scss";
+import "../../Library/Lists/list-reservation/list-reservation.scss";
+import "./loan-page-skeleton.scss";
 import { Button } from "../../Library/Buttons/button/Button";
 import ResultPager from "../../Library/card-list-page/ResultPager";
+import { ListHeader } from "../../Library/list-header/ListHeader";
 import ReservationListEmptyState from "../reservation-page/ReservationListEmptyState";
 import ReservationListItem from "../reservation-page/ReservationListItem";
 import LoanPageSkeleton from "./LoanPageSkeleton";
@@ -42,55 +47,50 @@ const LoanPage: React.FC<LoanPageProps> = ({
       <h1 className="text-header-h1 my-32">{headline}</h1>
 
       <div>
-        <div className="dpl-list-buttons m-32">
-          <h2
-            data-cy="reservation-list-header"
-            className="dpl-list-buttons__header"
-          >
-            Physical loans
-            <div className="dpl-list-buttons__power">{physicalLoans}</div>
-          </h2>
-          <div className="dpl-list-buttons__buttons">
-            <div className="dpl-list-buttons__buttons__button">
-              <button
-                aria-pressed={!isStacked}
-                className="dpl-icon-button dpl-icon-button--selected"
-                id="test-list"
-                type="button"
-                aria-label="This button shows all loans in the list"
-              >
-                <ListIcon />
-              </button>
-            </div>
-            <div className="dpl-list-buttons__buttons__button">
-              <button
-                aria-pressed={isStacked}
-                className="dpl-icon-button"
-                type="button"
-                aria-label="This button filters the list, so only one the materials that have the same due date is shown"
-              >
-                <VariousIcon />
-              </button>
-            </div>
-            <div className="dpl-list-buttons__buttons__button">
-              <div className="dpl-list-buttons__buttons__button--hide-on-mobile">
-                <Button
-                  buttonType="none"
-                  label="Renew several"
-                  size="small"
-                  variant="filled"
-                />
+        <div className="m-32">
+          <ListHeader header="Physical loans" count={String(physicalLoans)}>
+            <div className="dpl-list-buttons">
+              <div className="dpl-list-buttons__button">
+                <button
+                  aria-pressed={!isStacked}
+                  className="dpl-icon-button dpl-icon-button--selected"
+                  id="test-list"
+                  type="button"
+                  aria-label="This button shows all loans in the list"
+                >
+                  <ListIcon />
+                </button>
               </div>
-              <div className="hide-on-desktop button-box button-box--sticky-bottom">
-                <Button
-                  buttonType="none"
-                  label="Renew several"
-                  size="small"
-                  variant="filled"
-                />
+              <div className="dpl-list-buttons__button">
+                <button
+                  aria-pressed={isStacked}
+                  className="dpl-icon-button"
+                  type="button"
+                  aria-label="This button filters the list, so only one the materials that have the same due date is shown"
+                >
+                  <VariousIcon />
+                </button>
+              </div>
+              <div className="dpl-list-buttons__button">
+                <div className="dpl-list-buttons__button--hide-on-mobile">
+                  <Button
+                    buttonType="none"
+                    label="Renew several"
+                    size="small"
+                    variant="filled"
+                  />
+                </div>
+                <div className="hide-on-desktop button-box button-box--sticky-bottom">
+                  <Button
+                    buttonType="none"
+                    label="Renew several"
+                    size="small"
+                    variant="filled"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </ListHeader>
         </div>
         {!!physicalLoans && (
           <div>
@@ -115,11 +115,11 @@ const LoanPage: React.FC<LoanPageProps> = ({
       </div>
 
       <div>
-        <div className="dpl-list-buttons m-32">
-          <h2 className="dpl-list-buttons__header">
-            Digital reservations
-            <div className="dpl-list-buttons__power">{digitalLoans}</div>
-          </h2>
+        <div className="m-32">
+          <ListHeader
+            header="Digital reservations"
+            count={String(digitalLoans)}
+          />
         </div>
         {!!digitalLoans && (
           <div>

@@ -1,3 +1,4 @@
+import "../tag.scss";
 import { useState } from "react";
 import clsx from "clsx";
 

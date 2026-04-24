@@ -1,3 +1,4 @@
+import "./material-card.scss";
 import { useState } from "react";
 import { ButtonUI } from "../Buttons/button-ui/ButtonUI";
 import Cover from "../cover/Cover";

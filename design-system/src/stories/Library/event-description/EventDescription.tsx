@@ -1,3 +1,4 @@
+import "./event-description.scss";
 import { FC } from "react";
 import HorizontalTermLine, {
   HorizontalTermLineProps,

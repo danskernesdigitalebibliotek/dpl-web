@@ -1,3 +1,5 @@
+import "./status-loans.scss";
+
 import {
   ProgressBar,
   ProgressBarProps,

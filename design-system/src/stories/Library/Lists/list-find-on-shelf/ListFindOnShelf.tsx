@@ -1,3 +1,5 @@
+import "./list-find-on-shelf.scss";
+
 export type ListFindOnShelfProps = {
   manifestationName: string;
   location: string;

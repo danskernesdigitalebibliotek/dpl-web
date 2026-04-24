@@ -1,3 +1,6 @@
+import "../../Library/paragraphs/paragraphs.scss";
+import "../../Library/article-header/article-header.scss";
+import "../article/article.scss";
 import IconTextLink from "../../Library/icon-text-link/IconTextLink";
 import { Links } from "../../Library/links/Links";
 import RegistrationPageSection from "./RegistrationPageSection";

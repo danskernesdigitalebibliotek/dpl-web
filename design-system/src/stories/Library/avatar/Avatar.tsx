@@ -1,3 +1,5 @@
+import "./avatar.scss";
+
 import { ReactComponent as ProfileIcon } from "../../../public/icons/collection/Profile.svg";
 
 export const Avatar = () => {

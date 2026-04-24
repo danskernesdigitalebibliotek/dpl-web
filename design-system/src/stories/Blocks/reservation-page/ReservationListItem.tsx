@@ -1,5 +1,8 @@
+import "../../Library/Lists/list-reservation/list-reservation.scss";
 import clsx from "clsx";
+import Cover from "../../Library/cover/Cover";
 import { Counter } from "../../Library/counter/Counter";
+import { StatusLabel } from "../../Library/status-label/StatusLabel";
 import { ReactComponent as ArrowSmallRight } from "../../Library/Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 
 export interface ReservationListItemProps {
@@ -25,11 +28,11 @@ const ReservationListItem: React.FC<ReservationListItemProps> = ({
         >
           <div className="list-reservation__material">
             <div>
-              <div className="cover cover--size-small cover--aspect-small bg-identity-tint-120" />
+              <Cover size="small" tint="120" src="" animate={false} />
             </div>
             <div className="list-reservation__information">
               <div>
-                <div className="status-label status-label--outline">bog</div>
+                <StatusLabel label="bog" status="outline" />
               </div>
               <div className="list-reservation__about">
                 <button
@@ -88,15 +91,10 @@ const ReservationListItem: React.FC<ReservationListItemProps> = ({
             </div>
             <div>
               <div className="list-reservation__deadline">
-                <div
-                  data-cy="info-label"
-                  className={clsx("status-label", [
-                    { "status-label--info": !withNote },
-                    { "status-label--danger": withNote },
-                  ])}
-                >
-                  Pick up before xx-xx-xxxx
-                </div>
+                <StatusLabel
+                  label="Pick up before xx-xx-xxxx"
+                  status={withNote ? "danger" : "info"}
+                />
                 <p className="text-small-caption">Hovedbiblioteket</p>
                 <p className="text-small-caption">Reserveringshylde 74</p>
               </div>

@@ -8,10 +8,10 @@ export interface ListHeaderProps {
 
 const ListHeader: FC<ListHeaderProps> = ({ header, amount, children }) => {
   return (
-    <div className="dpl-list-buttons m-32">
-      <h2 className="dpl-list-buttons__header">
+    <div className="list-header m-32">
+      <h2 className="list-header__title">
         {header}
-        <span className="dpl-list-buttons__power">{amount}</span>
+        <span className="list-header__count">{amount}</span>
       </h2>
       {children}
     </div>

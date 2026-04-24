@@ -1,3 +1,5 @@
+import "./counter.scss";
+
 import { ReactComponent as CheckIcon } from "../../../public/icons/collection/Check.svg";
 
 export type CounterProps = {

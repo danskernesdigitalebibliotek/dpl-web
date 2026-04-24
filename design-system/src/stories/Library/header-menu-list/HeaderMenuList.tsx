@@ -1,3 +1,5 @@
+import "./header-menu-list.scss";
+
 import { MenuItemsProps } from "./HeaderMenuListData";
 
 interface MenuItemListProps {
