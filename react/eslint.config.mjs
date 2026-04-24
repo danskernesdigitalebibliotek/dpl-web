@@ -7,7 +7,7 @@ import js from "@eslint/js";
 import react from "eslint-plugin-react";
 import { configs as reactHooksConfigs } from "eslint-plugin-react-hooks";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
-import pluginCypress from "eslint-plugin-cypress/flat";
+import cypressPlugin from "eslint-plugin-cypress/flat";
 import { flatConfigs as importFlatConfigs } from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 
@@ -29,15 +29,17 @@ export default [
       "*.config.mjs"
     ]
   },
+  react.configs.flat.recommended,
   js.configs.recommended,
   reactHooksConfigs["recommended-latest"],
   ...tsPlugin.configs["flat/recommended"],
+  cypressPlugin.configs.recommended,
   importFlatConfigs.recommended,
   importFlatConfigs.errors,
   importFlatConfigs.warnings,
   importFlatConfigs.typescript,
+  jsxA11y.flatConfigs.recommended,
   prettierRecommended,
-  pluginCypress.configs.recommended,
   {
     plugins: {
       "no-only-tests": noOnlyTests
