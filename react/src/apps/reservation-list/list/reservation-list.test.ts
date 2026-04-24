@@ -827,8 +827,8 @@ describe("Reservation list", () => {
       .should("have.text", "Your reservations");
 
     // ID 11 2.b. Text: "At the moment you have 0 reservations"
-    cy.get(".dpl-list-empty")
-      .should("exist")
+    cy.getBySel("empty-list")
+      .should("have.length", 1)
       .should("have.text", "At the moment you have 0 reservations");
   });
 
