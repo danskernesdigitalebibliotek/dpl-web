@@ -228,6 +228,9 @@ updates:
         versions: [">=10.0.0"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
         update-types: ["version-update:semver-major"]
+      # DDFNEXT-1302: Cypress major updates blocked until Go Cypress issues are resolved.
+      - dependency-name: "cypress"
+        update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
