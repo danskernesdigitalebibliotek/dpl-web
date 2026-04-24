@@ -563,6 +563,42 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "BibliographicCategory",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": "Code for bibliographic category",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "display",
+            "description": "The code as displayable text",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
@@ -5705,6 +5741,18 @@
             "deprecationReason": null
           },
           {
+            "name": "bibliographicCategory",
+            "description": "Code for bibliographic category",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "BibliographicCategory",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "catalogueCodes",
             "description": "CatalogueCodes divided in codes from the national bibliography and other codes",
             "args": [],
@@ -6081,6 +6129,18 @@
             "deprecationReason": null
           },
           {
+            "name": "musicShelf",
+            "description": "Information on music shelving",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MusicShelf",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "notes",
             "description": "Notes about the manifestation",
             "args": [],
@@ -6313,6 +6373,18 @@
             "deprecationReason": null
           },
           {
+            "name": "shelfCreator",
+            "description": "The creator of the manifestation that the material can be located under on the shelf",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShelfCreator",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "shelfmark",
             "description": "Information about on which shelf in the library this manifestation can be found",
             "args": [],
@@ -6356,6 +6428,18 @@
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "specialMaterialGroup",
+            "description": "Code for comics, children's picture books and drama",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SpecialMaterialGroup",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -8111,6 +8195,42 @@
                 "name": "Work",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MusicShelf",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "display",
+            "description": "The shelf where the material can be found",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sort",
+            "description": "The sort version of 'display'",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -12646,13 +12766,13 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Shelfmark",
+        "name": "ShelfCreator",
         "description": null,
         "isOneOf": null,
         "fields": [
           {
-            "name": "creator",
-            "description": "The creator of the manifestation that the material can be located under on the shelf",
+            "name": "display",
+            "description": "The display name of the creator",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -12662,6 +12782,30 @@
             "isDeprecated": false,
             "deprecationReason": null
           },
+          {
+            "name": "sort",
+            "description": "The sort version of the creator name",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Shelfmark",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
           {
             "name": "postfix",
             "description": "A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935",
@@ -12686,18 +12830,6 @@
                 "name": "String",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "specialMaterialGroup",
-            "description": "Code for comics, children's picture books and drama",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "SpecialMaterialGroup",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

@@ -52,8 +52,8 @@ export const MaterialBanner: React.FC<MaterialBannerProps> = ({
       </div>
       <ul className="material-banner__cards">
         {covers.map((item, index) => (
-          <li>
-            <MaterialCard key={index} {...item} />
+          <li key={index}>
+            <MaterialCard {...item} />
           </li>
         ))}
       </ul>

@@ -93,9 +93,8 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      # Tests fail when running Cypress 15 using task cy:cypress:local.
       - dependency-name: "cypress"
-        versions: [">=15"]
+        update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
       day: monday
@@ -235,6 +234,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
+      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
+      - dependency-name: "orval"
+        update-types: ["version-update:semver-major"]
 
   # React - npm dependencies
   - package-ecosystem: npm
@@ -321,7 +323,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
+      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
       - dependency-name: "orval"
-        versions: ["^7.2.0"]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]

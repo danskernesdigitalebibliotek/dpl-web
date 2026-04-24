@@ -44,12 +44,16 @@ export const StatusLoans = (props: StatusLoansProps) => {
         {reservationsText}
       </div>
       <div className="dpl-status mt-32">
-        {statusBarsData.map(({ statusBars, title }) => (
-          <div className="dpl-status-loans__container">
+        {statusBarsData.map(({ statusBars, title }, index) => (
+          <div key={index} className="dpl-status-loans__container">
             <h3 className="text-small-caption">{title}</h3>
             {statusBars.map(
-              ({ title: statusBarTitle, amount, fullAmount, outOf }) => (
+              (
+                { title: statusBarTitle, amount, fullAmount, outOf },
+                sIndex,
+              ) => (
                 <ProgressBar
+                  key={sIndex}
                   title={statusBarTitle}
                   fullAmount={fullAmount}
                   outOf={outOf}

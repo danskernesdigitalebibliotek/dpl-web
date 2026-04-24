@@ -4,3 +4,5 @@ description: Logging custom DDF events, such as updates to users.
 package: DPL
 type: module
 core_version_requirement: ^10 || ^11
+dependencies:
+  - autowire_plugin_trait:autowire_plugin_trait

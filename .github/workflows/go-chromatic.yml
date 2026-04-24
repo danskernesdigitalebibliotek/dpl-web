@@ -6,7 +6,7 @@ on:
   pull_request:
     paths:
       - 'go/**'
-      - '.github/workflows/go-*.yml'
+      - '.github/workflows/go-chromatic.yml'
 
 # List of jobs
 jobs:

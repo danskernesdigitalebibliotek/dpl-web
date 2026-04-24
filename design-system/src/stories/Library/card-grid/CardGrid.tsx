@@ -22,8 +22,12 @@ const CardGrid: FC<CardProps> = ({ items, title, linkText }) => {
       </div>
       <div className="card-grid__items-wrapper">
         <div className="card-grid__items">
-          {items.map((item) => {
-            return <div className={clsx("card-grid__item")}>{item}</div>;
+          {items.map((item, index) => {
+            return (
+              <div key={index} className={clsx("card-grid__item")}>
+                {item}
+              </div>
+            );
           })}
         </div>
       </div>

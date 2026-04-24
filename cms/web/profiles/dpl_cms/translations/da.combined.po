@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-04-17 11:21+0200\n"
-"PO-Revision-Date: 2026-04-17 11:21+0200\n"
+"POT-Creation-Date: 2026-04-23 14:46+0200\n"
+"PO-Revision-Date: 2026-04-23 14:46+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21240,6 +21240,10 @@ msgstr ""
 
 msgctxt "core.entity_view_mode.media.card:label"
 msgid "Card"
+msgstr ""
+
+msgctxt "core.entity_view_mode.media.download:label"
+msgid "Download"
 msgstr ""
 
 msgctxt "core.entity_view_mode.media.full:label"

@@ -87,6 +87,16 @@
   }
 }
 
+.search__title-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.search__cql-link {
+  @include link-tag;
+}
+
 .search__selects-wrapper {
   display: flex;
   flex-direction: column;

@@ -10,7 +10,18 @@ export default {
 } as Meta<typeof SearchForm>;
 
 const Template: StoryFn<typeof SearchForm> = () => (
-  <div style={{ maxWidth: 1000, margin: "auto" }}>
+  <div className="search">
+    <div className="search__title-bar">
+      <div className="search__header">
+        <h1 className="search__header__title">Avanceret søgning</h1>
+      </div>
+      <a
+        href="/advanced-search?advancedSearchCql=*"
+        className="search__cql-link"
+      >
+        CQL-søgning
+      </a>
+    </div>
     <SearchForm />
   </div>
 );

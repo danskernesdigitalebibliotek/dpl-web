@@ -117,6 +117,7 @@ tasks:
         command: |
           source dev-scripts/lagoon-error-handling.sh
 
+          mkdir -p web/sites/default/files/translations
           drush locale-check
           drush locale-update
         service: cli
@@ -198,6 +199,16 @@ environments:
         command: drush err:purge paragraph
         service: cli
   go-demo:
+    autogenerateRoutes: false
+    routes:
+      - varnish:
+          - "varnish.go-demo.dpl-web.dplplat02.dpl.reload.dk"
+      - node:
+          - "node.go-demo.dpl-web.dplplat02.dpl.reload.dk":
+              annotations:
+                nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+      - nginx:
+          - "nginx.go-demo.dpl-web.dplplat02.dpl.reload.dk"
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
@@ -219,6 +230,16 @@ environments:
         command: drush err:purge paragraph
         service: cli
   go-playground:
+    autogenerateRoutes: false
+    routes:
+      - varnish:
+          - "varnish.go-playground.dpl-web.dplplat02.dpl.reload.dk"
+      - node:
+          - "node.go-playground.dpl-web.dplplat02.dpl.reload.dk":
+              annotations:
+                nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+      - nginx:
+          - "nginx.go-playground.dpl-web.dplplat02.dpl.reload.dk"
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
