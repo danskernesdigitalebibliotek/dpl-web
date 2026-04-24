@@ -1,21 +1,21 @@
 import noOnlyTests from "eslint-plugin-no-only-tests";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import react from "eslint-plugin-react";
+import { configs as reactHooksConfigs } from "eslint-plugin-react-hooks";
+import prettierRecommended from "eslint-plugin-prettier/recommended";
+import cypressPlugin from "eslint-plugin-cypress/flat";
+import { flatConfigs as importFlatConfigs } from "eslint-plugin-import";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
+const __dirname = import.meta.dirname;
 
 export default [
   {
+    files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
     ignores: [
       "src/core/cover-service-api/model/",
       "src/core/cover-service-api/cover-service.ts",
@@ -29,20 +29,17 @@ export default [
       "*.config.mjs"
     ]
   },
-  ...compat.extends(
-    "prettier",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:cypress/recommended",
-    "plugin:import/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "plugin:jsx-a11y/recommended"
-  ),
+  react.configs.flat.recommended,
+  js.configs.recommended,
+  reactHooksConfigs["recommended-latest"],
+  ...tsPlugin.configs["flat/recommended"],
+  cypressPlugin.configs.recommended,
+  importFlatConfigs.recommended,
+  importFlatConfigs.errors,
+  importFlatConfigs.warnings,
+  importFlatConfigs.typescript,
+  jsxA11y.flatConfigs.recommended,
+  prettierRecommended,
   {
     plugins: {
       "no-only-tests": noOnlyTests
@@ -58,8 +55,6 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        files: ["*.ts", "*.tsx", "*.js", "*.jsx"],
-
         allowImportExportEverywhere: false,
 
         ecmaFeatures: {
@@ -76,7 +71,7 @@ export default [
 
     settings: {
       react: {
-        version: "detect" // Automatically detect the React version
+        version: "detect"
       },
       "import/core-modules": ["vitest"],
       "import/resolver": [
@@ -141,6 +136,7 @@ export default [
 
       "@typescript-eslint/comma-dangle": "off",
       "@typescript-eslint/lines-between-class-members": "off",
+      "@typescript-eslint/no-redeclare": "warn",
       "@typescript-eslint/no-throw-literal": "off",
 
       "react-hooks/exhaustive-deps": [
