@@ -1,0 +1,5 @@
+@import "../../../styles/scss/tools";
+// Block styling must load before library components
+@import "./autosuggest";
+@import "../../Library/autosuggest-text/autosuggest-text";
+@import "../../Library/autosuggest-material/autosuggest-material";

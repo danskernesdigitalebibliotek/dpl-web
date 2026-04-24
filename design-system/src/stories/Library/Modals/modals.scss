@@ -1,3 +1,4 @@
+@import "../../../styles/scss/tools";
 // All modal styles in cascade order. The base modal.scss must load
 // before sub-type styles since they override base modal classes.
 @import "./modal";
