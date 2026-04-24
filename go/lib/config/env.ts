@@ -34,6 +34,9 @@ function getEnvs() {
     UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE,
     UNLILOGIN_SERVICES_WS_PASSWORD: process.env.UNLILOGIN_SERVICES_WS_PASSWORD,
     UNLILOGIN_SERVICES_WS_USER: process.env.UNLILOGIN_SERVICES_WS_USER,
+    UNILOGIN_WS_PRIVATE_KEY: process.env.UNILOGIN_WS_PRIVATE_KEY,
+    UNILOGIN_WS_PUBLIC_CERT: process.env.UNILOGIN_WS_PUBLIC_CERT,
+    UNILOGIN_WS_UDBYDERSYSTEM_ID: process.env.UNILOGIN_WS_UDBYDERSYSTEM_ID,
   }
 }
 
@@ -69,6 +72,9 @@ const EnvServerSchema = z.object({
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string().optional(),
   UNLILOGIN_SERVICES_WS_PASSWORD: z.string().optional(),
   UNLILOGIN_SERVICES_WS_USER: z.string().optional(),
+  UNILOGIN_WS_PRIVATE_KEY: z.string().optional(),
+  UNILOGIN_WS_PUBLIC_CERT: z.string().optional(),
+  UNILOGIN_WS_UDBYDERSYSTEM_ID: z.string().optional(),
   // Is fetched from dpl-cms, but can be overridden by env vars
   UNILOGIN_CLIENT_ID: z.string().optional(),
   UNILOGIN_CLIENT_SECRET: z.string().optional(),

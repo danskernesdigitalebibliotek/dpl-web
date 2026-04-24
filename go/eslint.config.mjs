@@ -18,7 +18,7 @@ const eslintConfig = [
   {
     ignores: [
       "lib/soap/publizon/v2_7/generated/",
-      "lib/soap/unilogin/wsiinst-v5/generated/",
+      "lib/soap/unilogin/wsiinst-v6/generated/",
       "lib/rest/**/generated/",
       "**/.history/",
     ],
