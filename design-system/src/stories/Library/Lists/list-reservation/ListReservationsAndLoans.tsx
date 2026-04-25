@@ -1,3 +1,4 @@
+import "../_lists-group.scss";
 import clsx from "clsx";
 import { Counter, CounterProps } from "../../counter/Counter";
 import { StatusLabel, StatusLabelProps } from "../../status-label/StatusLabel";

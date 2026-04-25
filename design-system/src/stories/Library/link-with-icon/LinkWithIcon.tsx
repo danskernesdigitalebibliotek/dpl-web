@@ -1,3 +1,4 @@
+import "../links/_links-group.scss";
 import clsx from "clsx";
 import { ReactComponent as ArrowSmallRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 import { IconType, LinkType } from "./LinkTypes";

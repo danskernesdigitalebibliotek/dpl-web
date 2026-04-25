@@ -1,3 +1,4 @@
+import "../_lists-group.scss";
 import { useState, FC } from "react";
 import { Checkbox } from "../../Forms/checkbox/Checkbox";
 import { StatusLabel, StatusLabelProps } from "../../status-label/StatusLabel";

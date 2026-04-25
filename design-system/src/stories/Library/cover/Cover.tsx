@@ -1,3 +1,4 @@
+import "./_cover-group.scss";
 import clsx from "clsx";
 import { FC, useState } from "react";
 import CoverImage from "./CoverImage";

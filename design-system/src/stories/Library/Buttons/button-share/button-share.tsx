@@ -1,3 +1,4 @@
+import "../_buttons-group.scss";
 import { ReactComponent as LinkSvg } from "../../../../public/icons/collection/link.svg";
 import { ReactComponent as FacebookSvg } from "../../../../public/icons/social/icon-social-facebook.svg";
 

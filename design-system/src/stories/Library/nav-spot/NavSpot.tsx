@@ -1,3 +1,4 @@
+import "./_navigation-group.scss";
 import { FC, ReactNode } from "react";
 import { ReactComponent as Arrow } from "../Arrows/icon-arrow-ui/icon-arrow-ui-large-right.svg";
 import MediaContainer from "../media-container/MediaContainer";

@@ -1,3 +1,4 @@
+import "../cover/_cover-group.scss";
 import React from "react";
 import clsx from "clsx";
 import {

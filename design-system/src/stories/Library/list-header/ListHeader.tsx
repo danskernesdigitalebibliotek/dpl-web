@@ -1,3 +1,4 @@
+import "../Lists/_lists-group.scss";
 import { FC, ReactNode } from "react";
 
 export interface ListHeaderProps {

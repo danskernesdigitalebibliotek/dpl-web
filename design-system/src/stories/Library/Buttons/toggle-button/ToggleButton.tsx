@@ -1,3 +1,5 @@
+import "../_buttons-group.scss";
+
 type ToggleButtonProps = {
   isChecked: boolean;
 };

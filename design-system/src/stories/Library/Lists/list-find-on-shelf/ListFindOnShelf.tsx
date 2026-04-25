@@ -1,3 +1,5 @@
+import "../_lists-group.scss";
+
 export type ListFindOnShelfProps = {
   manifestationName: string;
   location: string;

@@ -1,3 +1,4 @@
+import "../card/_cards-group.scss";
 import { FC, ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet";
 

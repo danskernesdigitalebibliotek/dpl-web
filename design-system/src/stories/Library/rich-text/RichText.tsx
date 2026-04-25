@@ -1,3 +1,5 @@
+import "../links/_links-group.scss";
+
 export interface RichTextProps {
   text: string;
 }

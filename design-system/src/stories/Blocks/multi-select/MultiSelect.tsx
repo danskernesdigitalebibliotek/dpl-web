@@ -1,3 +1,4 @@
+import "../search/_search-group.scss";
 import React from "react";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 

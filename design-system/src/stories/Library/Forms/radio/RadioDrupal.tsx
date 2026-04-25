@@ -1,3 +1,5 @@
+import "../_forms-group.scss";
+
 export type CheckboxProps = {
   legend?: string;
   description?: string;

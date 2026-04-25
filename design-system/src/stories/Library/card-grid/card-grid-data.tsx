@@ -1,3 +1,4 @@
+import "../card/_cards-group.scss";
 import Card from "../card/Card";
 import ImageCredited from "../image-credited/ImageCredited";
 

@@ -1,3 +1,4 @@
+import "../_buttons-group.scss";
 import clsx from "clsx";
 import { ButtonIcon } from "./ButtonIcon";
 import { getSize, getVariant } from "./helper";

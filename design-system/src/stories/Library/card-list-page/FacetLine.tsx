@@ -1,3 +1,4 @@
+import "../card/_cards-group.scss";
 import { FC } from "react";
 import { Dropdown } from "../dropdown/Dropdown";
 import { TagButton } from "../tag/tag-button/TagButton";

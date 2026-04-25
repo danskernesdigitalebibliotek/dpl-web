@@ -1,3 +1,4 @@
+import "../_lists-group.scss";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { generateId } from "../../horizontal-term-line/HorizontalTermLine";

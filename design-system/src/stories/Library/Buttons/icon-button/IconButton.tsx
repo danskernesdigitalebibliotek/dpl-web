@@ -1,3 +1,5 @@
+import "../_buttons-group.scss";
+
 interface IconButtonProps {
   src: string;
   altText: string;

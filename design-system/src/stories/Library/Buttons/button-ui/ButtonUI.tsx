@@ -1,3 +1,5 @@
+import "../_buttons-group.scss";
+
 type ContentIcon = {
   kind: "ICON";
   url: string;

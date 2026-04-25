@@ -1,3 +1,4 @@
+import "../content-list/_content-lists-group.scss";
 import React, { useEffect } from "react";
 import {
   ContentListItem,

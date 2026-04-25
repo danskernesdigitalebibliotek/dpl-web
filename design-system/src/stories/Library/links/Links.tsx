@@ -1,3 +1,4 @@
+import "./_links-group.scss";
 import clsx from "clsx";
 
 export type LinksProps = {

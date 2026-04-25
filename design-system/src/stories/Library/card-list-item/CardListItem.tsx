@@ -1,3 +1,4 @@
+import "../card/_cards-group.scss";
 import { AvailabilityLabelPropsType } from "../../availability-label/types";
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";
 import Cover from "../cover/Cover";

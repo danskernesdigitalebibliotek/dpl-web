@@ -1,3 +1,4 @@
+import "../search/_search-group.scss";
 import React from "react";
 
 const SearchToggle: React.FC<{ checked?: boolean }> = ({ checked }) => {

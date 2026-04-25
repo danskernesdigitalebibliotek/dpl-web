@@ -1,3 +1,4 @@
+import "../../Blocks/autosuggest/_autosuggest-group.scss";
 import { BoxedText } from "../boxed-text/BoxedText";
 
 export type AutosuggestTextProps = {

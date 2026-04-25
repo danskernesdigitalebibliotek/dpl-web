@@ -1,3 +1,4 @@
+import "../_lists-group.scss";
 import { Links, LinksProps } from "../../links/Links";
 
 interface ListEmptyProps {

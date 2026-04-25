@@ -1,3 +1,4 @@
+import "../content-list/_content-lists-group.scss";
 import { FC } from "react";
 import HorizontalTermLine, {
   HorizontalTermLineProps,

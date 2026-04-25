@@ -1,3 +1,4 @@
+import "../nav-spot/_navigation-group.scss";
 import { FC, ReactNode, useEffect } from "react";
 import clsx from "clsx";
 

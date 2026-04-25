@@ -1,3 +1,4 @@
+import "../content-list/_content-lists-group.scss";
 import React from "react";
 import { ContentListItem } from "../content-list-item/ContentListItem";
 import ContentListItemStacked from "../content-list-item/ContentListItemStacked";

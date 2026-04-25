@@ -1,4 +1,4 @@
-import "../base.scss";
+import "../storybook-global.scss";
 import { allModes } from "../.storybook/modes";
 
 export const parameters = {

@@ -1,3 +1,4 @@
+import "./_autosuggest-group.scss";
 import {
   AutosuggestMaterial,
   AutosuggestMaterialProps,

@@ -1,3 +1,4 @@
+import "../_lists-group.scss";
 import { StatusLabel, StatusLabelProps } from "../../status-label/StatusLabel";
 import { Number, NumberProps } from "../../number/Number";
 import { ReactComponent as ArrowSmallRight } from "../../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
