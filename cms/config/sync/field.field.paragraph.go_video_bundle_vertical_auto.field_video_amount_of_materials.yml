@@ -1,0 +1,25 @@
+uuid: e17c146e-0b8a-4adc-b730-1f8a2e3e35d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_video_amount_of_materials
+    - paragraphs.paragraphs_type.go_video_bundle_vertical_auto
+id: paragraph.go_video_bundle_vertical_auto.field_video_amount_of_materials
+field_name: field_video_amount_of_materials
+entity_type: paragraph
+bundle: go_video_bundle_vertical_auto
+label: 'Amount of materials'
+description: 'The amount of related materials that should be shown.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 5
+default_value_callback: ''
+settings:
+  min: 1
+  max: 10
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,11 @@
+uuid: ef3a342d-0efb-4bbd-b130-2503eafb24b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.videotool_vertical
+id: media.videotool_vertical
+target_entity_type_id: media
+target_bundle: videotool_vertical
+default_langcode: site_default
+language_alterable: false

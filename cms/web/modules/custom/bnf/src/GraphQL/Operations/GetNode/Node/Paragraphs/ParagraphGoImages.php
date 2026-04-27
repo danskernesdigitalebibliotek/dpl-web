@@ -4,14 +4,14 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 
 /**
  * @property string $id
- * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideotool> $goImages
+ * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideotoolVertical> $goImages
  * @property string $__typename
  */
 class ParagraphGoImages extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideotool> $goImages
+     * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoImages\MediaVideotoolVertical> $goImages
      */
     public static function make($id, $goImages): self
     {
@@ -41,6 +41,7 @@ class ParagraphGoImages extends \Spawnia\Sailor\ObjectLike
             'MediaImage' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\GoImages\\MediaImage',
             'MediaVideo' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\GoImages\\MediaVideo',
             'MediaVideotool' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\GoImages\\MediaVideotool',
+            'MediaVideotoolVertical' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\GoImages\\MediaVideotoolVertical',
         ])))),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];

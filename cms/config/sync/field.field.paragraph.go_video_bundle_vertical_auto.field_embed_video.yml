@@ -1,0 +1,29 @@
+uuid: b09ba9fb-6528-4ee4-a491-51b330d0c2ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_embed_video
+    - media.type.videotool_vertical
+    - paragraphs.paragraphs_type.go_video_bundle_vertical_auto
+id: paragraph.go_video_bundle_vertical_auto.field_embed_video
+field_name: field_embed_video
+entity_type: paragraph
+bundle: go_video_bundle_vertical_auto
+label: 'Embed video'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      videotool_vertical: videotool_vertical
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: videotool
+field_type: entity_reference

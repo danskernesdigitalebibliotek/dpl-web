@@ -1,18 +1,12 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
-
-import { Button } from "@/components/shared/button/Button"
-import Icon from "@/components/shared/icon/Icon"
-import Timer from "@/components/shared/timer/Timer"
-import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
+import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import { cyKeys } from "@/cypress/support/constants"
 import type {
   ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
   ParagraphGoVideoBundleManual as VideoBundleManualType,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { WorkId } from "@/lib/types/ids"
 
 export type VideoBundleProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
@@ -21,35 +15,11 @@ export type VideoBundleProps = {
 }
 
 const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
-  const [materialOrder, setMaterialOrder] = useState<WorkId[]>([])
-  const [currentItemNumber, setCurrentItemNumber] = useState<number>(1)
-  const resetTimerRef = useRef<
-    ((nextItemNumber?: number | ((prev: number) => number)) => void) | null
-  >(null)
-
-  const moveToNextMaterial = () => {
-    setMaterialOrder(prev => [...prev.slice(1), prev[0]])
-    setCurrentItemNumber(prev => (prev === materialOrder.length ? 1 : prev + 1))
-    resetTimerRef.current?.(prev => (prev % materialOrder.length) + 1)
-  }
-
-  const moveToPreviousMaterial = () => {
-    setMaterialOrder(prev => [prev[prev.length - 1], ...prev.slice(0, -1)])
-    setCurrentItemNumber(prev => (prev === 1 ? materialOrder.length : prev - 1))
-    resetTimerRef.current?.()
-  }
-
-  useEffect(() => {
-    if (!!works) {
-      setMaterialOrder(works.map(work => work.workId as WorkId))
-    }
-  }, [works])
-
   return (
     <div className="bg-background-overlay" data-cy={cyKeys["video-bundle"]}>
       <div className="content-container">
-        <div className="py-paragraph-spacing w-full text-center">
-          <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
+        <div className="py-paragraph-spacing w-full">
+          <h2 className="text-typo-heading-2 mb-paragraph-spacing text-center">{title}</h2>
           <div className="grid-go items-start">
             <div
               className="rounded-base relative col-span-full aspect-16/9 overflow-hidden
@@ -64,81 +34,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 loading="lazy"
               />
             </div>
-            <div
-              className="grid-go mt-paragraph-spacing col-span-full items-center lg:col-span-3
-                lg:hidden"
-              data-cy={cyKeys["video-bundle-slider"]}>
-              <div className="col-span-1">
-                <Button
-                  onClick={moveToPreviousMaterial}
-                  variant="icon"
-                  ariaLabel="Vis forrige værk"
-                  disabled={!works}
-                  data-cy={cyKeys["video-bundle-prev-button"]}>
-                  <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-                </Button>
-              </div>
-              <div className="col-span-4">
-                <WorkCardStackedWithCaption
-                  currentItemNumber={currentItemNumber}
-                  works={works || []}
-                  materialOrder={materialOrder}
-                />
-              </div>
-              <div className="col-span-1">
-                <Button
-                  onClick={moveToNextMaterial}
-                  variant="icon"
-                  ariaLabel="Vis næste værk"
-                  disabled={!works}
-                  data-cy={cyKeys["video-bundle-next-button"]}>
-                  <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-                </Button>
-              </div>
-            </div>
-            <div
-              className="col-span-full hidden flex-col items-center justify-center text-left
-                lg:col-span-3 lg:flex"
-              data-cy={cyKeys["video-bundle-slider"]}>
-              <div className="pl-grid-gap-half flex w-full flex-col gap-y-8">
-                <div className="relative w-full">
-                  <WorkCardStackedWithCaption
-                    currentItemNumber={currentItemNumber}
-                    works={works || []}
-                    materialOrder={materialOrder}
-                  />
-                </div>
-                <div className="hidden lg:flex lg:items-center">
-                  <Timer
-                    durationInSeconds={5}
-                    currentItemNumber={currentItemNumber}
-                    totalItems={materialOrder.length}
-                    fullCircleAction={moveToNextMaterial}
-                    setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
-                    className="mr-auto"
-                    isStopped={!works?.length}
-                  />
-                  <div className="space-x-grid-gap-half">
-                    <Button
-                      onClick={moveToPreviousMaterial}
-                      variant="icon"
-                      ariaLabel="Vis forrige værk"
-                      disabled={!works?.length}
-                      data-cy={cyKeys["video-bundle-prev-button"]}>
-                      <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-                    </Button>
-                    <Button
-                      onClick={moveToNextMaterial}
-                      variant="icon"
-                      ariaLabel="Vis næste værk"
-                      disabled={!works?.length}
-                      data-cy={cyKeys["video-bundle-next-button"]}>
-                      <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CarouselSlider works={works} className="lg:col-span-3" />
           </div>
         </div>
       </div>
