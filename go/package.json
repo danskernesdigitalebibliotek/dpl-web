@@ -133,7 +133,7 @@
     "next-test-api-route-handler": "^5.0.4",
     "node-mocks-http": "^1.17.2",
     "orval": "^7.21.0",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.12",
     "prepend-file": "^2.0.1",
     "prettier": "^3.8.3",
     "prettier-plugin-classnames": "^0.10.1",
