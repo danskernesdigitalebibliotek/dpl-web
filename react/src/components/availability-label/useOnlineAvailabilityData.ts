@@ -21,7 +21,7 @@ const useOnlineAvailabilityData = ({
   const [isAvailable, setIsAvailable] = useState<null | boolean>(null);
 
   // Find out if the material is cost free.
-  const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
+  const { isLoading: isLoadingIdentifier, data: identifierData } =
     // We never want to pass an empty string to the API
     // So we only enable the query if we have an isbn
     useGetV1ProductsIdentifier(isbn ?? "", {
@@ -33,20 +33,22 @@ const useOnlineAvailabilityData = ({
     });
 
   // Publizon request.
-  const { isLoading: isLoadingPublizonData, data: dataPublizon } =
+  const { isLoading: isLoadingPublizonData, data: loanStatusData } =
     useGetV1LoanstatusIdentifier(isbn || "", {
-      // Publizon / useGetV1LoanstatusIdentifier shows loan status per material.
-      // This status is only available for products found on Publizon. Other online
-      // materials are always supposed to be shown as "available"
-      enabled:
-        enabled &&
-        isAvailable === null &&
-        !!isbn &&
-        // If the material is free (I think it is called blue material btw.)
-        // we should not load the loan status because then we know that it is available.
-        // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
-        dataIdentifier?.product?.costFree === false &&
-        access.some((acc) => acc === "Ereol")
+      query: {
+        // Publizon / useGetV1LoanstatusIdentifier shows loan status per material.
+        // This status is only available for products found on Publizon. Other online
+        // materials are always supposed to be shown as "available"
+        enabled:
+          enabled &&
+          isAvailable === null &&
+          !!isbn &&
+          // If the material is free (I think it is called blue material btw.)
+          // we should not load the loan status because then we know that it is available.
+          // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
+          identifierData?.product?.costFree === false &&
+          access.some((acc) => acc === "Ereol")
+      }
     });
 
   useEffect(() => {
@@ -60,9 +62,9 @@ const useOnlineAvailabilityData = ({
     }
 
     // If we have Publizon data, we can use that to determine the availability.
-    if (dataPublizon && dataPublizon.loanStatus) {
+    if (loanStatusData?.loanStatus) {
       setIsAvailable(
-        publizonProductStatuses[dataPublizon.loanStatus].isAvailable
+        publizonProductStatuses[loanStatusData.loanStatus].isAvailable
       );
     }
   }, [
@@ -70,7 +72,7 @@ const useOnlineAvailabilityData = ({
     isAvailable,
     faustIds,
     enabled,
-    dataPublizon,
+    loanStatusData,
     isLoadingPublizonData
   ]);
 

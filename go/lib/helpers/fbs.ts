@@ -1,6 +1,6 @@
 import getQueryClient from "../getQueryClient"
 import { getGetPatronInformationByPatronIdV4QueryOptions } from "../rest/fbs/generated/fbs"
-import { AuthenticatedPatronV6 } from "../rest/fbs/generated/model"
+import { AuthenticatedPatronV8 } from "../rest/fbs/generated/model"
 import { fetcher } from "../rest/fbs/mutator/fetcher"
 
 export const loadPatronServerSide = async (accessToken: string) => {
@@ -11,8 +11,7 @@ export const loadPatronServerSide = async (accessToken: string) => {
   const response = await queryClient.fetchQuery({
     queryKey,
     queryFn: ({ signal }) =>
-      fetcher<AuthenticatedPatronV6>({
-        url: patronInfoUrl,
+      fetcher<AuthenticatedPatronV8>(patronInfoUrl, {
         method: "GET",
         signal,
         headers: {

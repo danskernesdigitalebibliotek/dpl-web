@@ -37,16 +37,3 @@ export const createAuthHeader = (
         authorization: `Bearer ${token}`,
       }
     : {}
-
-export const getRestServiceUrlWithParams = ({
-  baseUrl,
-  url,
-  params,
-}: {
-  baseUrl: string
-  url: string
-  params: unknown
-}) => {
-  const urlParams = params ? `?${buildParams(params as FetchParams)}` : ""
-  return `${baseUrl}${url}${urlParams}`
-}

@@ -14,6 +14,7 @@ paths:
             type: string
           name: exclude
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: 'No response was specified'
@@ -41,6 +42,7 @@ paths:
           name: reservationid
           required: true
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: 'No response was specified'
@@ -175,6 +177,7 @@ paths:
           name: recordid
           required: true
           type: array
+          collectionFormat: multi
         -
           description: 'Identifies the branchIds which are excluded from the result'
           in: query
@@ -182,6 +185,7 @@ paths:
             type: string
           name: exclude
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: 'No response was specified'
@@ -209,6 +213,7 @@ paths:
           name: recordid
           required: true
           type: array
+          collectionFormat: multi
         -
           description: 'Identifies the branchIds which are excluded from the result'
           in: query
@@ -216,6 +221,7 @@ paths:
             type: string
           name: exclude
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: 'No response was specified'
@@ -470,7 +476,7 @@ securityDefinitions:
     tokenUrl: 'https://login.bib.dk/oauth/token'
 security:
   -
-    oauth: {  }
+    oauth: []
 tags:
   -
     description: 'External Catalog'

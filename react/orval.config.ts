@@ -14,17 +14,17 @@ export default defineConfig({
         },
         query: {
           useQuery: true
+        },
+        fetch: {
+          includeHttpResponseReturnType: false
         }
       },
-      prettier: true
+      formatter: "prettier"
     },
     input: {
       target:
         // This should come from a url that will be updated if there are any changes
-        "https://raw.githubusercontent.com/danskernesdigitalebibliotek/ddb-material-list/develop/spec/material-list-2.0.0.yaml",
-      converterOptions: {
-        indent: 2
-      }
+        "https://raw.githubusercontent.com/danskernesdigitalebibliotek/ddb-material-list/develop/spec/material-list-2.0.0.yaml"
     }
   },
   coverService: {
@@ -40,15 +40,15 @@ export default defineConfig({
         },
         query: {
           useQuery: true
+        },
+        fetch: {
+          includeHttpResponseReturnType: false
         }
       },
-      prettier: true
+      formatter: "prettier"
     },
     input: {
-      target: "https://cover.dandigbib.org/spec.yaml",
-      converterOptions: {
-        indent: 2
-      }
+      target: "https://cover.dandigbib.org/spec.yaml"
     }
   },
   fbsAdapter: {
@@ -65,21 +65,14 @@ export default defineConfig({
         query: {
           useQuery: true
         },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // getPatronInformationByPatronIdV2 query. This lets us call it conditionally.
-          getPatronInformationByPatronIdV4: {
-            requestOptions: false
-          }
+        fetch: {
+          includeHttpResponseReturnType: false
         }
       },
-      prettier: true
+      formatter: "prettier"
     },
     input: {
-      target: "src/core/fbs/fbs-adapter.yaml",
-      converterOptions: {
-        indent: 2
-      }
+      target: "src/core/fbs/fbs-adapter.yaml"
     }
   },
   publizonAdapter: {
@@ -96,21 +89,14 @@ export default defineConfig({
         query: {
           useQuery: true
         },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // useGetV1LoanstatusIdentifier query. This lets us call it conditionally.
-          getV1LoanstatusIdentifier: {
-            requestOptions: false
-          }
+        fetch: {
+          includeHttpResponseReturnType: false
         }
       },
-      prettier: true
+      formatter: "prettier"
     },
     input: {
-      target: "src/core/publizon/publizon-adapter.yaml",
-      converterOptions: {
-        indent: 2
-      }
+      target: "src/core/publizon/publizon-adapter.yaml"
     }
   },
   dplCms: {
@@ -127,25 +113,14 @@ export default defineConfig({
         query: {
           useQuery: true
         },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // proxy-url:GET query. This lets us call it conditionally.
-          "proxy-url:GET": {
-            requestOptions: false
-          },
-          "dpl_opening_hours_list:GET": {
-            requestOptions: false
-          }
+        fetch: {
+          includeHttpResponseReturnType: false
         }
       },
-      prettier: true
+      formatter: "prettier"
     },
     input: {
-      target:
-        "../cms/openapi.json",
-      converterOptions: {
-        indent: 2
-      }
+      target: "../cms/openapi.json"
     }
   }
 });

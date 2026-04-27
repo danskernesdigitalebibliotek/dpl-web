@@ -1,5 +1,4 @@
 import FetchFailedError from "../../fetchers/FetchFailedError";
-import { getServiceUrlWithParams } from "../../fetchers/helpers";
 import { getToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../token";
 import {
   getServiceBaseUrl,
@@ -7,42 +6,25 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import DplCmsServiceHttpError from "./DplCmsServiceHttpError";
 
-export const fetcher = async <ResponseType>({
-  url,
-  method,
-  headers,
-  params,
-  data
-}: {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
-  headers?: object;
-  params?: unknown;
-  data?: BodyType<unknown>;
-  signal?: AbortSignal;
-}) => {
+export const fetcher = async <T>(
+  url: string,
+  init: RequestInit
+): Promise<T> => {
   const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
 
   const authHeaders = token
     ? ({ Authorization: `Bearer ${token}` } as object)
     : {};
 
-  const body = data ? JSON.stringify(data) : null;
-
-  const serviceUrl = getServiceUrlWithParams({
-    baseUrl: getServiceBaseUrl(serviceUrlKeys.dplCms),
-    url,
-    params
-  });
+  const serviceUrl = `${getServiceBaseUrl(serviceUrlKeys.dplCms)}${url}`;
 
   try {
     const response = await fetch(serviceUrl, {
-      method,
+      ...init,
       headers: {
-        ...headers,
+        ...init.headers,
         ...authHeaders
-      },
-      body
+      }
     });
 
     if (!response.ok) {
@@ -54,11 +36,14 @@ export const fetcher = async <ResponseType>({
     }
 
     try {
-      return (await response.json()) as ResponseType;
+      return (await response.json()) as T;
     } catch (e) {
       if (!(e instanceof SyntaxError)) {
         throw e;
       }
+      // Some responses are intentionally empty and thus cannot be
+      // converted to JSON. We swallow syntax errors during decoding.
+      return undefined as T;
     }
   } catch (error: unknown) {
     if (error instanceof DplCmsServiceHttpError) {
@@ -68,11 +53,6 @@ export const fetcher = async <ResponseType>({
     const message = error instanceof Error ? error.message : "Unknown error";
     throw new FetchFailedError(message, serviceUrl);
   }
-  // Do nothing. Some of our responses are intentionally empty and thus
-  // cannot be converted to JSON. Fetch API and TypeScript has no clean
-  // way for us to identify empty responses, so instead we swallow
-  // syntax errors during decoding.
-  return null;
 };
 
 export default fetcher;

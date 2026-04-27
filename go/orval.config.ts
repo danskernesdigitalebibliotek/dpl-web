@@ -16,24 +16,14 @@ const publizonConfig = (type: string): Options => ({
       query: {
         useQuery: true,
       },
-      operations: {
-        // The reason why we add this here is to be able to use "enabled" option in the
-        // query. This lets us call it conditionally.
-        getV1ProductsIdentifierLocalAdapter: {
-          requestOptions: false,
-        },
-        getV1ProductsIdentifierAdapter: {
-          requestOptions: false,
-        },
+      fetch: {
+        includeHttpResponseReturnType: false,
       },
     },
-    prettier: true,
+    formatter: "prettier",
   },
   input: {
     target: "lib/rest/publizon/publizon-spec.yaml",
-    converterOptions: {
-      indent: 2,
-    },
     override: {
       transformer: transformer(type),
     },
@@ -57,21 +47,14 @@ export default defineConfig({
         query: {
           useQuery: true,
         },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // getPatronInformationByPatronIdV2 query. This lets us call it conditionally.
-          getPatronInformationByPatronIdV2: {
-            requestOptions: false,
-          },
+        fetch: {
+          includeHttpResponseReturnType: false,
         },
       },
-      prettier: true,
+      formatter: "prettier",
     },
     input: {
       target: "lib/rest/fbs/fbs-adapter.yaml",
-      converterOptions: {
-        indent: 2,
-      },
     },
   },
 })

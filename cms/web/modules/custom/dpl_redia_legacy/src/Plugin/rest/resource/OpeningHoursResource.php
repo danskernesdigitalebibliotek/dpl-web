@@ -223,7 +223,6 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
         "notice" => [
           "type" => "string",
           "description" => "Additional notice regarding the opening hours.",
-          "nullable" => TRUE,
         ],
       ],
       "required" => [

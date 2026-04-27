@@ -10,7 +10,7 @@ export const usePatronData = (): UseQueryResult<
   ErrorType<void>
 > & { queryKey: QueryKey } => {
   return useGetPatronInformationByPatronIdV4({
-    enabled: !isAnonymous()
+    query: { enabled: !isAnonymous() }
   });
 };
 

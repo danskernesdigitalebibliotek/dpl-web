@@ -421,7 +421,8 @@
             },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
-                "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
+                "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch",
+                "Remove cookie from security blocks (not representable in Swagger 2.0)": "patches/openapi-rest-remove-cookie-security.patch"
             },
             "drupal/openid_connect": {
                 "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "https://git.drupalcode.org/project/openid_connect/-/commit/312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch"
