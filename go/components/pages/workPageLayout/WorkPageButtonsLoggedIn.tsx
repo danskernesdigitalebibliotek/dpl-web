@@ -17,7 +17,7 @@ import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
-import WorkPageInfoBox from "./WorkPageInfoBox"
+import AlertBox from "@/components/shared/alertBox/AlertBox"
 
 export type WorkPageButtonsLoggedInProps = {
   workId: string
@@ -54,8 +54,9 @@ const WorkPageButtonsLoggedIn = ({
 
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
-      <WorkPageInfoBox
-        text={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+      <AlertBox
+        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+        variant="warning"
       />
     )
   }

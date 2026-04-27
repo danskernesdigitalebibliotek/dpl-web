@@ -19,7 +19,7 @@ import { sheetStore } from "@/store/sheet.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
-import WorkPageInfoBox from "./WorkPageInfoBox"
+import AlertBox from "@/components/shared/alertBox/AlertBox"
 
 export type WorkPageButtonsLoggedOutProps = {
   workId: string
@@ -48,8 +48,9 @@ const WorkPageButtonsLoggedOut = ({
 
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
-      <WorkPageInfoBox
-        text={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+      <AlertBox
+        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+        variant="warning"
       />
     )
   }

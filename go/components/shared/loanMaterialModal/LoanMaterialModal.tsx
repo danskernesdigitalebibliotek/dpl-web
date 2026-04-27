@@ -6,6 +6,8 @@ import {
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
+import AlertBox from "@/components/shared/alertBox/AlertBox"
+import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
@@ -13,7 +15,6 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
@@ -37,7 +38,7 @@ const LoanMaterialModal = ({
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
   const { mutate } = usePostV1UserLoansIdentifier()
-  const { data: loansData } = useGetV1UserLoans()
+  const { data: loansData, isLoading: isLoadingLoans } = useGetV1UserLoans()
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [publizonError, setPublizonError] = useState<{
     code: ApiResponseCode
@@ -76,54 +77,56 @@ const LoanMaterialModal = ({
     <ResponsiveDialog
       open={open}
       onClose={onClose}
-      title={`Lån ${(manifestation && getManifestationLabel(manifestation)) || "materialet"}`}>
-      {manifestation && (
-        <>
-          <div
-            className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
-              justify-center lg:aspect-4/5">
-            <CoverPicture alt="Forsidebillede på værket" covers={manifestation.cover} />
-            <MaterialTypeIconWrapper
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              className="bg-background absolute -bottom-6 h-10 w-10 outline-1"
-            />
-          </div>
+      title={(manifestation && `Lån ${getManifestationLabel(manifestation)}`) || ""}>
+      <AnimateChangeInHeight>
+        {manifestation && (
+          <>
+            <div
+              className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
+                justify-center lg:aspect-4/5">
+              <CoverPicture alt="Forsidebillede på værket" covers={manifestation.cover} />
+              <MaterialTypeIconWrapper
+                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                className="bg-background absolute -bottom-6 h-10 w-10 outline-1"
+              />
+            </div>
 
-          <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
-            {isAlreadyLoaned ? (
+            <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
               <p className="text-typo-subtitle-md text-center">
-                {`Du har allerede lånt denne ${getManifestationLabel(manifestation)}. Find den på Min side`}
+                {`Er du sikker på, at du vil låne materialet${` (${getManifestationLabel(manifestation)})?` || "?"}`}
               </p>
-            ) : (
-              <>
-                <p className="text-typo-subtitle-md text-center">
-                  {`Er du sikker på, at du vil låne materialet${` (${getManifestationLabel(manifestation)})?` || "?"}`}
-                </p>
-                {publizonError && (
-                  <div className="flex">
-                    <div
-                      className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex
-                        items-center gap-4 p-4">
-                      <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
-                      <p className="text-typo-link">
-                        {publizonErrorMessageMap[publizonError.code]}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+              {isAlreadyLoaned && (
+                <AlertBox
+                  variant="warning"
+                  message={`Du har allerede lånt denne ${getManifestationLabel(manifestation)}. Find den på Min side.`}
+                />
+              )}
+              {publizonError && <AlertBox message={publizonErrorMessageMap[publizonError.code]} />}
+            </div>
 
-          <div className="flex flex-row items-center justify-center gap-6">
-            {!isAlreadyLoaned && !publizonError && (
+            <div className="flex flex-row items-center justify-center gap-6">
+              {!isAlreadyLoaned && !publizonError && (
+                <Button
+                  theme={"primary"}
+                  size={"lg"}
+                  data-cy={cyKeys["approve-loan-button"]}
+                  onClick={handleLoanMaterial}
+                  disabled={isHandlingLoan || isLoadingLoans}>
+                  {!isHandlingLoan && "Ja"}
+                  {isHandlingLoan && (
+                    <Icon
+                      name="go-spinner"
+                      ariaLabel="Indlæser"
+                      className="animate-spin-reverse h-[24px] w-[24px]"
+                    />
+                  )}
+                </Button>
+              )}
               <Button
-                theme={"primary"}
                 size={"lg"}
-                data-cy={cyKeys["approve-loan-button"]}
-                onClick={handleLoanMaterial}
-                disabled={isHandlingLoan}>
-                {!isHandlingLoan && "Ja"}
+                disabled={isHandlingLoan || isLoadingLoans}
+                onClick={() => onClose()}>
+                {!isHandlingLoan && (publizonError || isAlreadyLoaned ? "Luk" : "Nej")}
                 {isHandlingLoan && (
                   <Icon
                     name="go-spinner"
@@ -132,20 +135,10 @@ const LoanMaterialModal = ({
                   />
                 )}
               </Button>
-            )}
-            <Button size={"lg"} disabled={isHandlingLoan} onClick={() => onClose()}>
-              {!isHandlingLoan && (publizonError || isAlreadyLoaned ? "Luk" : "Nej")}
-              {isHandlingLoan && (
-                <Icon
-                  name="go-spinner"
-                  ariaLabel="Indlæser"
-                  className="animate-spin-reverse h-[24px] w-[24px]"
-                />
-              )}
-            </Button>
-          </div>
-        </>
-      )}
+            </div>
+          </>
+        )}
+      </AnimateChangeInHeight>
     </ResponsiveDialog>
   )
 }
