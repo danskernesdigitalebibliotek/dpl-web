@@ -486,7 +486,6 @@ describe("Reservation list", () => {
     cy.visit(
       "/iframe.html?path=/story/apps-reservation-list--reservation-list-entry"
     );
-    cy.wait("@user");
 
     cy.getBySel("reservation-material")
       .eq(0)
