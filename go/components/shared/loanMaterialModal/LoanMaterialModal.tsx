@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query"
+import { first } from "lodash"
 import React, { useState } from "react"
 
 import {
@@ -16,6 +17,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
+import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 
 import { publizonErrorMessageMap } from "./helper"
@@ -35,11 +37,16 @@ const LoanMaterialModal = ({
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
   const { mutate } = usePostV1UserLoansIdentifier()
+  const { data: loansData } = useGetV1UserLoans()
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [publizonError, setPublizonError] = useState<{
     code: ApiResponseCode
     message: string
   } | null>(null)
+
+  const identifier = first(manifestation?.identifiers)?.value
+  const isAlreadyLoaned =
+    loansData?.loans?.some(loan => loan.libraryBook?.identifier === identifier) ?? false
 
   const handleLoanMaterial = () => {
     if (!manifestation) return
@@ -82,26 +89,34 @@ const LoanMaterialModal = ({
             />
           </div>
 
-          {/* Description */}
           <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
-            <p className="text-typo-subtitle-md text-center">
-              {`Er du sikker på, at du vil låne materialet${` (${getManifestationLabel(manifestation)})?` || "?"}`}
-            </p>
-            {publizonError && (
-              <div className="flex">
-                <div
-                  className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex
-                    items-center gap-4 p-4">
-                  <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
-                  <p className="text-typo-link">{publizonErrorMessageMap[publizonError.code]}</p>
-                </div>
-              </div>
+            {isAlreadyLoaned ? (
+              <p className="text-typo-subtitle-md text-center">
+                {`Du har allerede lånt denne ${getManifestationLabel(manifestation)}. Find den på Min side`}
+              </p>
+            ) : (
+              <>
+                <p className="text-typo-subtitle-md text-center">
+                  {`Er du sikker på, at du vil låne materialet${` (${getManifestationLabel(manifestation)})?` || "?"}`}
+                </p>
+                {publizonError && (
+                  <div className="flex">
+                    <div
+                      className="bg-error-red-100 text-error-red-400 rounded-base mx-auto flex
+                        items-center gap-4 p-4">
+                      <Icon className={cn("h-5 min-h-5 w-5 min-w-5")} name="alert" />
+                      <p className="text-typo-link">
+                        {publizonErrorMessageMap[publizonError.code]}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
           <div className="flex flex-row items-center justify-center gap-6">
-            {/* Only show "approve loan" button if user can still loan more materials */}
-            {!publizonError && (
+            {!isAlreadyLoaned && !publizonError && (
               <Button
                 theme={"primary"}
                 size={"lg"}
@@ -119,7 +134,7 @@ const LoanMaterialModal = ({
               </Button>
             )}
             <Button size={"lg"} disabled={isHandlingLoan} onClick={() => onClose()}>
-              {!isHandlingLoan && (publizonError ? "Luk" : "Nej")}
+              {!isHandlingLoan && (publizonError || isAlreadyLoaned ? "Luk" : "Nej")}
               {isHandlingLoan && (
                 <Icon
                   name="go-spinner"
