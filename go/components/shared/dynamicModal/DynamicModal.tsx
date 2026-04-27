@@ -1,30 +1,75 @@
 "use client"
 
-import { useSelector } from "@xstate/react"
-import React from "react"
+import { useQueryStates } from "nuqs"
+import React, { useCallback, useEffect, useState } from "react"
 
-import { modalStore } from "@/store/modal.store"
+import {
+  TModalType,
+  TModalUrlParams,
+  VALID_MODAL_TYPES,
+  modalParsers,
+} from "@/lib/helpers/modal-url"
 
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
 
-export const ModalComponentTypes = {
-  LoanMaterialModal,
-  PlayerPreviewModal,
-  PlayerModal,
-}
-
 export function DynamicModal() {
-  const open = useSelector(modalStore, state => state.context.open)
-  const modalType = useSelector(modalStore, state => state.context.modalType)
-  const props = useSelector(modalStore, state => state.context.props)
+  const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, { scroll: false })
 
-  const DynamicModalType =
-    ModalComponentTypes[modalType as keyof typeof ModalComponentTypes] || null
-  if (DynamicModalType === null) return null
+  const modalType = modal && VALID_MODAL_TYPES.has(modal) ? (modal as TModalType) : null
+  const wid = modalProps?.wid ?? null
+  const pid = modalProps?.pid ?? null
 
-  // TODO: figure out how to type props dynamically
-  // @ts-ignore
-  return <DynamicModalType open={open} {...props} />
+  const [open, setOpen] = useState(!!modalType)
+  const [activeModal, setActiveModal] = useState<TModalType | null>(modalType)
+  const [activeParams, setActiveParams] = useState<TModalUrlParams[TModalType] | null>(modalProps)
+
+  useEffect(() => {
+    if (modalType && wid && pid) {
+      setActiveModal(modalType)
+      setActiveParams({ wid, pid })
+      setOpen(true)
+    } else {
+      setOpen(false)
+      const timer = setTimeout(() => setActiveModal(null), 500)
+      return () => clearTimeout(timer)
+    }
+  }, [modalType, wid, pid])
+
+  const closeModal = useCallback(() => {
+    setModal({ modal: null, modalProps: null })
+  }, [setModal])
+
+  if (!activeModal || !activeParams) return null
+
+  if (activeModal === "LoanMaterialModal") {
+    return (
+      <LoanMaterialModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
+  if (activeModal === "PlayerPreviewModal") {
+    return (
+      <PlayerPreviewModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
+  if (activeModal === "PlayerModal") {
+    return (
+      <PlayerModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    )
+  }
+
+  return null
 }

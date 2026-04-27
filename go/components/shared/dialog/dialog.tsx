@@ -40,11 +40,10 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         `z-dialog gap-grid-edge bg-background p-grid-edge data-[state=closed]:animate-out
-        data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-30 data-[state=open]:animate-in
-        data-[state=open]:fade-in-0 data-[state=open]:zoom-in-0 fixed top-[50%] left-[50%] m-auto
-        grid max-h-[95vh] w-[calc(100%-var(--grid-edge)*2)] max-w-[1000px] translate-x-[-50%]
-        translate-y-[-50%] overflow-y-scroll rounded-md shadow-lg duration-200 lg:gap-6 lg:px-6
-        lg:py-10`,
+        data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-30
+        data-[state=open]:animate-dialog-open fixed top-[50%] left-[50%] m-auto grid max-h-[95vh]
+        w-[calc(100%-var(--grid-edge)*2)] max-w-250 translate-x-[-50%] translate-y-[-50%]
+        overflow-y-scroll rounded-md shadow-lg lg:min-h-[60vh] lg:gap-6 lg:px-6 lg:py-10`,
         className
       )}
       {...props}>
@@ -66,15 +65,9 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 )
 DialogHeader.displayName = "DialogHeader"
 
-const DialogBody = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
-  const [display, setDisplay] = React.useState(false)
-  setTimeout(() => {
-    setDisplay(true)
-  }, 300)
-  if (display) {
-    return <div className={cn("animate-content-grow space-y-4", className)} {...props} />
-  }
-}
+const DialogBody = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("space-y-4", className)} {...props} />
+)
 DialogBody.displayName = "DialogBody"
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
