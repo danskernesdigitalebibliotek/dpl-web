@@ -93,8 +93,6 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
       day: monday
@@ -228,9 +226,10 @@ updates:
       # The Go lint stack still depends on packages that only support ESLint 8/9.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
+      # DDFNEXT-1302: Cypress major updates blocked until Go Cypress issues are resolved.
+      - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
