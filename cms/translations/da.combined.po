@@ -25371,7 +25371,7 @@ msgstr "Søg indhold"
 
 #: 
 msgid "Search the website"
-msgstr "Search the website"
+msgstr "Søg på indholdet på hjemmesiden"
 
 #: 
 msgid "Search button"
@@ -30802,5 +30802,10 @@ msgstr ""
 
 #: 
 msgid "Does not use GO VIP profile"
+msgstr ""
+
+#: 
+msgctxt "core.entity_view_mode.media.download:label"
+msgid "Download"
 msgstr ""
 
