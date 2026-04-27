@@ -1345,7 +1345,6 @@ describe("Dashboard", () => {
     ).as("renew");
 
     cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");
-    cy.wait(["@fees", "@loans", "@reservations"]);
   });
 
   it.skip("Dashboard general", () => {
@@ -1418,6 +1417,11 @@ describe("Dashboard", () => {
   });
 
   it("Can go trough renewal flow of soon overdue loans", () => {
+    // Ensure the initial page-load requests have completed before spying,
+    // otherwise the spy below also counts the page-load loans request and the
+    // assertion that exactly one loans request happens after the click fails.
+    cy.wait(["@fees", "@loans", "@reservations"]);
+
     // Spy on the loan request.
     cy.intercept(
       "**/external/agencyid/patrons/patronid/loans/v2**",
