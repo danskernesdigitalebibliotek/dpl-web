@@ -9,6 +9,7 @@ import {
   isPhysicalMaterialType,
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
+import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -17,7 +18,6 @@ import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
 
 export type WorkPageButtonsLoggedInProps = {
   workId: string
