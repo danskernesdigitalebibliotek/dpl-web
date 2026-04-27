@@ -3,6 +3,8 @@ import * as React from "react";
 import Arrow from "../../components/atoms/icons/arrow/arrow";
 import Link from "../../components/atoms/links/Link";
 import { useGetMaterialQuery } from "../../core/dbc-gateway/generated/graphql";
+import { statistics } from "../../core/statistics/statistics";
+import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
@@ -27,6 +29,7 @@ const Recommendation: React.FC<RecommendationProps> = ({
   description
 }) => {
   const u = useUrls();
+  const { track } = useEventStatistics();
 
   const materialUrl = u("materialUrl");
 
@@ -53,6 +56,13 @@ const Recommendation: React.FC<RecommendationProps> = ({
   const activeTitle = !title ? materialFullTitle : title;
   const activeDescription = !description ? materialDescription : description;
 
+  const trackRecommendationClick = () =>
+    track("click", {
+      id: statistics.recommendationParagraphClick.id,
+      name: statistics.recommendationParagraphClick.name,
+      trackedData: wid
+    });
+
   return (
     <div
       className={clsx(
@@ -65,6 +75,7 @@ const Recommendation: React.FC<RecommendationProps> = ({
       <Link
         href={materialFullUrl}
         className="recommendation__texts arrow__hover--right-small"
+        trackClick={trackRecommendationClick}
       >
         <h3 className="recommendation__title" data-cy="recommendation-title">
           {activeTitle}

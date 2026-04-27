@@ -169,6 +169,11 @@ export const statistics: Statistics = {
     id: 74,
     name: "Klik på recommended material",
     parameterName: ""
+  },
+  recommendationParagraphClick: {
+    id: 69,
+    name: "Klik på recommendation-paragraphs",
+    parameterName: ""
   }
 };
 

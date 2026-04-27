@@ -93,6 +93,7 @@ const getDplCmsPublicConfigData = async () => {
       libraryInfo: {
         name: null,
       },
+      mapp: null,
       unilogin: {
         municipalityId: null,
       },

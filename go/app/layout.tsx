@@ -5,6 +5,7 @@ import { Suspense } from "react"
 import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
+import MappTracking from "@/components/global/mappTracking/MappTracking"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
@@ -49,6 +50,7 @@ async function RootLayout({
           <DynamicModal />
           {children}
           <Footer />
+          <MappTracking />
         </ReactQueryProvider>
       </Theme>
     </DplCmsConfigContextProvider>

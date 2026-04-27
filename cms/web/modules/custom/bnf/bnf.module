@@ -2,6 +2,7 @@
 
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Hook\GraphQLComposeHooks;
+use Drupal\bnf\Hook\PageHooks;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Hook\Attribute\LegacyHook;
@@ -71,6 +72,17 @@ function bnf_preprocess_html(array &$variables): void {
  * with the hook class service in `bnf.services.yml` when upgrading to Drupal
  * 11.
  */
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * @param array[] $page
+ *   The page render array.
+ */
+#[LegacyHook]
+function bnf_page_attachments(array &$page): void {
+  \Drupal::service(PageHooks::class)->pageAttachments($page);
+}
 
 /**
  * Implements hook_graphql_compose_field_type_alter().

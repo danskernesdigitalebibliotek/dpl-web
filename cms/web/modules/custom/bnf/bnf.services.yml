@@ -23,7 +23,9 @@ services:
     arguments:
       - 'bnf'
 
-  # This hook services definitions is only needed by Drupal 10, it can
-  # be removed when we upgrade to Drupal 11.
+  # These hook services definitions is only needed by Drupal 10, they
+  # can be removed when we upgrade to Drupal 11.
+  Drupal\bnf\Hook\PageHooks:
+    class: Drupal\bnf\Hook\PageHooks
   Drupal\bnf\Hook\GraphQLComposeHooks:
     class: Drupal\bnf\Hook\GraphQLComposeHooks
