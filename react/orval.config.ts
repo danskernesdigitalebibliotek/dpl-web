@@ -27,30 +27,6 @@ export default defineConfig({
       }
     }
   },
-  coverService: {
-    output: {
-      mode: "split",
-      target: "src/core/cover-service-api/cover-service.ts",
-      schemas: "src/core/cover-service-api/model",
-      client: "react-query",
-      override: {
-        mutator: {
-          path: "src/core/cover-service-api/mutator/fetcher.ts",
-          name: "fetcher"
-        },
-        query: {
-          useQuery: true
-        }
-      },
-      prettier: true
-    },
-    input: {
-      target: "https://cover.dandigbib.org/spec.yaml",
-      converterOptions: {
-        indent: 2
-      }
-    }
-  },
   fbsAdapter: {
     output: {
       mode: "split",
