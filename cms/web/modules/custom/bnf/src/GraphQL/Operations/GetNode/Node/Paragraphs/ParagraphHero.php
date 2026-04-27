@@ -9,7 +9,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property string|null $heroContentType
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroDate\DateTime|null $heroDate
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroDescription\Text|null $heroDescription
- * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideotool|null $heroImage
+ * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideotoolVertical|null $heroImage
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroLink\Link|null $heroLink
  */
 class ParagraphHero extends \Spawnia\Sailor\ObjectLike
@@ -20,7 +20,7 @@ class ParagraphHero extends \Spawnia\Sailor\ObjectLike
      * @param string|null $heroContentType
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroDate\DateTime|null $heroDate
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroDescription\Text|null $heroDescription
-     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideotool|null $heroImage
+     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroImage\MediaVideotoolVertical|null $heroImage
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroLink\Link|null $heroLink
      */
     public static function make(
@@ -78,6 +78,7 @@ class ParagraphHero extends \Spawnia\Sailor\ObjectLike
             'MediaImage' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\HeroImage\\MediaImage',
             'MediaVideo' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\HeroImage\\MediaVideo',
             'MediaVideotool' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\HeroImage\\MediaVideotool',
+            'MediaVideotoolVertical' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\HeroImage\\MediaVideotoolVertical',
         ])),
             'heroLink' => new \Spawnia\Sailor\Convert\NullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\HeroLink\Link),
         ];

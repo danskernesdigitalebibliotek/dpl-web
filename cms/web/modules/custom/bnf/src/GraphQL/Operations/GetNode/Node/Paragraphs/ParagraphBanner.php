@@ -7,7 +7,7 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerLink\Link $bannerLink
  * @property string $__typename
  * @property string|null $bannerDescription
- * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideotool|null $bannerImage
+ * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideotoolVertical|null $bannerImage
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\UnderlinedTitle\Text|null $underlinedTitle
  */
 class ParagraphBanner extends \Spawnia\Sailor\ObjectLike
@@ -16,7 +16,7 @@ class ParagraphBanner extends \Spawnia\Sailor\ObjectLike
      * @param string $id
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerLink\Link $bannerLink
      * @param string|null $bannerDescription
-     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideotool|null $bannerImage
+     * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\BannerImage\MediaVideotoolVertical|null $bannerImage
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\UnderlinedTitle\Text|null $underlinedTitle
      */
     public static function make(
@@ -64,6 +64,7 @@ class ParagraphBanner extends \Spawnia\Sailor\ObjectLike
             'MediaImage' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\BannerImage\\MediaImage',
             'MediaVideo' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\BannerImage\\MediaVideo',
             'MediaVideotool' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\BannerImage\\MediaVideotool',
+            'MediaVideotoolVertical' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\BannerImage\\MediaVideotoolVertical',
         ])),
             'underlinedTitle' => new \Spawnia\Sailor\Convert\NullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\UnderlinedTitle\Text),
         ];

@@ -36,6 +36,32 @@ fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
   }
 }
 
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+
 fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
   __typename
   cqlSearch {

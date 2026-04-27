@@ -84,4 +84,33 @@ describe("getLocalAgencySubjects", () => {
 
     expect(result).toEqual([]);
   });
+
+  it("deduplicates subjects that appear across multiple manifestations", () => {
+    const manifestationsWithDuplicates = [
+      {
+        pid: "762100-katalog:139939085" as Pid,
+        subjects: {
+          all: [{ display: "familien" }, { display: "DR Romanklub 2024/2025" }]
+        }
+      },
+      {
+        pid: "762100-katalog:139939086" as Pid,
+        subjects: {
+          all: [{ display: "familien" }, { display: "DR Romanklub 2024/2025" }]
+        }
+      },
+      {
+        pid: "762100-katalog:139939087" as Pid,
+        subjects: {
+          all: [{ display: "familien" }, { display: "DR Romanklub 2024/2025" }]
+        }
+      }
+    ];
+
+    const result = getLocalAgencySubjects(manifestationsWithDuplicates, [
+      "762100-katalog"
+    ]);
+
+    expect(result).toEqual(["familien", "DR Romanklub 2024/2025"]);
+  });
 });
