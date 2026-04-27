@@ -167,7 +167,9 @@ export const ModalLoan: React.FC<ModalLoanProps> = ({
           )}
           <ul className="modal-loan__list-materials">
             {isLoadingItems &&
-              [0, 1].map(() => <GroupModalItemSkeleton withLeftOutset />)}
+              [0, 1].map((index) => (
+                <GroupModalItemSkeleton key={index} withLeftOutset />
+              ))}
             {!isLoadingItems && (
               <>
                 {loanList.map(({ list }) => (

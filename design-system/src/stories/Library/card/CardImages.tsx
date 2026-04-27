@@ -25,6 +25,7 @@ const ImageCredited: FC<ImageCreditedProps> = ({
           {alternativeSrcs &&
             alternativeSrcs.map((alternativeSrc) => (
               <div
+                key={alternativeSrc.src}
                 className="card__override-images"
                 style={{
                   display: "none",
