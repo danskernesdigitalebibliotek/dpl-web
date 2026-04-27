@@ -1,0 +1,43 @@
+"""
+A period option for reservation interest.
+"""
+type InterestPeriod {
+  "The number of days for the interest period."
+  value: Int!
+  "The human-readable label for the interest period."
+  label: String!
+}
+
+"""
+The interest period configuration for reservations.
+"""
+type InterestPeriods {
+  "All available interest periods for reservations."
+  all: [InterestPeriod!]!
+  "The default interest period for reservations."
+  default: InterestPeriod!
+}
+
+"""
+URLs related to reservation settings.
+"""
+type ReservationUrls {
+  "URL to the page with information about pausing reservations."
+  pauseReservationInfo: String!
+  "URL to the page shown when a search returns zero results."
+  zeroHitsSearch: String!
+}
+
+"""
+Reservation settings for the library.
+"""
+type ReservationSettings {
+  "Interest period configuration for reservations."
+  interestPeriods: InterestPeriods!
+  "URLs related to reservations."
+  urls: ReservationUrls!
+  "Whether SMS notifications for reservations are enabled."
+  smsNotificationsEnabled: Boolean!
+  "Whether patrons are allowed to remove ready reservations."
+  allowRemoveReadyReservations: Boolean!
+}
