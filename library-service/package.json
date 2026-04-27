@@ -1,0 +1,34 @@
+{
+  "name": "library-service",
+  "version": "0.0.7",
+  "private": true,
+  "description": "WeDoBooks SDK wrapper",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@wedobooks/sdk": "latest",
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.9.3"
+  },
+  "sideEffects": false
+}
