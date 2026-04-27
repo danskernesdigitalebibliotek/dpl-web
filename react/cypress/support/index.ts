@@ -8,6 +8,15 @@ import { Operations } from "../../src/core/dbc-gateway/types";
 // Install cypress-terminal-report logs collector
 require("cypress-terminal-report/src/installLogsCollector")();
 
+// Stub real FBI cover image bytes for every spec so tests never touch the live
+// network. Specs that need a different stub can override with their own
+// cy.intercept — the most-recently-registered intercept wins.
+beforeEach(() => {
+  cy.intercept("GET", "https://*.dbc.dk/images/**", {
+    fixture: "cover/cover-placeholder.jpg"
+  });
+});
+
 const TOKEN_LIBRARY_KEY = "library";
 const TOKEN_USER_KEY = "user";
 
