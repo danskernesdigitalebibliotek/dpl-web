@@ -94,7 +94,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
         )}>
         <h3 className="text-typo-caption uppercase">{getFacetTranslation(facetFilter)}</h3>
 
-        <AnimateChangeInHeight className="overflow-visible">
+        <AnimateChangeInHeight>
           <div
             className={cn(
               "text-typo-caption mx-[-10px] mt-[-10px] flex gap-1 px-[10px] pt-[10px]",
