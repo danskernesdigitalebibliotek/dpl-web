@@ -1,15 +1,27 @@
 import withPlaiceholder from "@plaiceholder/next"
 import { env } from "process"
 
-function getAllowedHostname() {
-  // While testing we allow all hostnames, to avoid errors while using mocked responses
+function dynamicAllowedHostnames() {
+  const allowed = []
+
+  // While testing, we allow all host names to avoid errors while using mocked responses.
   if (env.NODE_ENV !== "production") {
-    return "**"
+    allowed.push({
+      protocol: "https",
+      hostname: "**",
+      pathname: "/**",
+    })
+  } else if (env.NEXT_PUBLIC_DPL_CMS_HOSTNAME) {
+    // Allow images which originate from set DPL CMS hostname
+    // Strip protocol from url, as remotePatterns only supports hostnames
+    allowed.push({
+      protocol: "https",
+      hostname: env.NEXT_PUBLIC_DPL_CMS_HOSTNAME.replace(/^https?:\/\//, ""),
+      pathname: "/**",
+    })
   }
 
-  // Allow images which originate from set DPL CMS hostname
-  // Strip protocol from url, as remotePatterns only supports hostnames
-  return env.NEXT_PUBLIC_DPL_CMS_HOSTNAME?.replace(/^https?:\/\//, "") || ""
+  return allowed
 }
 
 /** @type {import('next').NextConfig} */
@@ -46,11 +58,6 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: getAllowedHostname(),
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
         hostname: "fbiinfo-present.dbc.dk",
         pathname: "/**",
       },
@@ -59,6 +66,7 @@ const nextConfig = {
         hostname: "default-forsider.dbc.dk",
         pathname: "/**",
       },
+      ...dynamicAllowedHostnames(),
     ],
   },
 }

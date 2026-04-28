@@ -6,11 +6,11 @@ import {
   PHASE_PRODUCTION_SERVER,
   PHASE_TEST,
 } from "next/constants"
-import { z } from "zod"
+import { ZodObject, z } from "zod"
 
 function getEnvs() {
   return {
-    // Public env variables
+    // Public environment variables.
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     CODEGEN_LIBRARY_TOKEN: process.env.NEXT_PUBLIC_CODEGEN_LIBRARY_TOKEN,
     CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI,
@@ -21,7 +21,7 @@ function getEnvs() {
     NODE_ENV: process.env.NODE_ENV,
     TEST_MODE: process.env.TEST_MODE,
 
-    // Server-only env variables
+    // Server-only environment variables.
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
     GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
     NEXT_PHASE: process.env.NEXT_PHASE,
@@ -49,7 +49,7 @@ const EnvPublicSchema = z.object({
   TEST_MODE: z.coerce.boolean().default(false),
 })
 
-// Environment variables only available in Nodejs.
+// Environment variables only available in Node.js.
 // Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
   DRUPAL_REVALIDATE_SECRET: z.string(),
@@ -75,13 +75,16 @@ const EnvServerSchema = z.object({
   UNILOGIN_WELLKNOWN_URL: z.string().refine(validateUrl).optional(),
 })
 
-type EnvPublicSchema = z.infer<typeof EnvPublicSchema>
-type EnvServerSchema = z.infer<typeof EnvServerSchema>
+type EnvPublicSchemaResult = z.infer<typeof EnvPublicSchema>
+type EnvServerSchemaResult = z.infer<typeof EnvServerSchema>
 
-let memoizedPublicEnvs: EnvPublicSchema
-let memoizedServerEnvs: EnvServerSchema
+let memoizedPublicEnvs: EnvPublicSchemaResult
+let memoizedServerEnvs: EnvServerSchemaResult
 
-export function getEnv<T extends keyof EnvPublicSchema>(key: T): EnvPublicSchema[T] {
+/**
+ * Get a variable from the public schema.
+ */
+export function getEnv<T extends keyof EnvPublicSchemaResult>(key: T): EnvPublicSchemaResult[T] {
   if (!memoizedPublicEnvs || skipMemoization()) {
     memoizedPublicEnvs = validateEnv(EnvPublicSchema)
   }
@@ -89,7 +92,12 @@ export function getEnv<T extends keyof EnvPublicSchema>(key: T): EnvPublicSchema
   return memoizedPublicEnvs[key]
 }
 
-export function getServerEnv<T extends keyof EnvServerSchema>(key: T): EnvServerSchema[T] {
+/**
+ * Get a variable from the server schema.
+ */
+export function getServerEnv<T extends keyof EnvServerSchemaResult>(
+  key: T
+): EnvServerSchemaResult[T] {
   if (!memoizedServerEnvs || skipMemoization()) {
     memoizedServerEnvs = validateEnv(EnvServerSchema)
   }
@@ -107,16 +115,26 @@ export function validateAllEnvs() {
   validateEnv(EnvServerSchema)
 }
 
-function validateEnv<T extends z.ZodSchema>(schema: T): z.infer<T> {
-  const result = schema.safeParse(getEnvs())
+function validateEnv(schema: typeof EnvPublicSchema): EnvPublicSchemaResult
+function validateEnv(schema: typeof EnvServerSchema): EnvServerSchemaResult
+function validateEnv(
+  schema: typeof EnvPublicSchema | typeof EnvServerSchema
+): EnvPublicSchemaResult | EnvServerSchemaResult {
+  let derivedSchema: ZodObject = schema
+
+  if (!enforceRequiredVariables()) {
+    derivedSchema = schema.partial()
+  }
+
+  const result = derivedSchema.safeParse(getEnvs())
 
   if (!result.success) {
     console.error("Environment variables do not match validation schema.")
     console.info("Type mismatch: ", result.error.toString())
-    throw new Error("Make sure you have all the required environment variables set")
+    throw new Error("Make sure you have all the required environment variables set.")
   }
 
-  return result.data
+  return result.data as z.infer<typeof schema>
 }
 
 function validateUrl(url: string) {
@@ -126,6 +144,21 @@ function validateUrl(url: string) {
   } catch {
     return false
   }
+}
+
+/**
+ * Return true if we should enforce required variables.
+ *
+ * Skips the enforcement when building shared images or in tests.
+ */
+export const enforceRequiredVariables = () => {
+  const phase = process.env["NEXT_PHASE"]
+
+  return (
+    phase === PHASE_DEVELOPMENT_SERVER ||
+    phase === PHASE_EXPORT ||
+    phase === PHASE_PRODUCTION_SERVER
+  )
 }
 
 /**
