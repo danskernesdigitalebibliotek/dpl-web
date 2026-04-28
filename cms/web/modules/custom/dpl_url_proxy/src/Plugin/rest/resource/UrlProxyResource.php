@@ -150,6 +150,22 @@ class UrlProxyResource extends ResourceBase {
       throw new HttpException(400, "Url $url_param does not contain a host name. Urls to be proxied must contain a host name.");
     }
 
+    if (!empty($conf['disable_proxy'])) {
+      $cache_tags = $this->configManager
+        ->getConfigFactory()
+        ->get(DplUrlProxyInterface::CONFIG_NAME)
+        ->getCacheTags();
+
+      $response = new ResourceResponse(['data' => ['url' => $url_param]], 200);
+      return $response
+        ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
+          '#cache' => [
+            'tags' => $cache_tags,
+            'contexts' => ['url.query_args'],
+          ],
+        ]));
+    }
+
     if (!$prefix = $conf['prefix'] ?? NULL) {
       throw new HttpException(500, 'Could not generate url. Insufficient configuration');
     }

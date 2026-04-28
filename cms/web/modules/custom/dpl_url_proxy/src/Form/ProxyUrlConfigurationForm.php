@@ -118,7 +118,11 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         [],
         ['context' => 'Url Proxy']
       ),
-      '#required' => TRUE,
+      '#states' => [
+        'required' => [
+          ':input[name="disable_proxy"]' => ['checked' => FALSE],
+        ],
+      ],
     ];
 
     $form['hostnames'] = [
@@ -205,6 +209,17 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
       ],
     ];
 
+    $form['disable_proxy'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable proxy', [], ['context' => 'Url Proxy']),
+      '#description' => $this->t(
+        'When checked, the proxy endpoint returns the requested URL unmodified. Use this on sites that do not use a proxy.',
+        [],
+        ['context' => 'Url Proxy']
+      ),
+      '#default_value' => $saved_values['disable_proxy'] ?? FALSE,
+    ];
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit', [], ['context' => 'Url Proxy']),
@@ -286,6 +301,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         }
         return $carry;
       }, []);
+    $values['disable_proxy'] = (bool) $form_state->getValue('disable_proxy');
 
     $this->config('dpl_url_proxy.settings')
       ->set('values', $values)
