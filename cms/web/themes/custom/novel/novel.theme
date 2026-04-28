@@ -406,3 +406,53 @@ function novel_theme_suggestions_fieldset_alter(array &$suggestions, array $vari
     $suggestions[] = 'fieldset__webform';
   }
 }
+
+/**
+ * Implements hook_theme_suggestions_media_alter().
+ */
+function novel_theme_suggestions_media_alter(array &$suggestions, array $variables): void {
+  // Give the template suggestion for the download display mode higher priority
+  // so it trumps everything else.
+  $index = array_search('media__download', $suggestions);
+
+  if ($index !== FALSE) {
+    unset($suggestions[$index]);
+    $suggestions[] = 'media__download';
+  }
+}
+
+/**
+ * Preprocesses variables for HTML templates.
+ */
+function novel_preprocess_media(array &$variables): void {
+  // Prepare special variables for the download view_mode.
+  if ($variables['view_mode'] == 'download') {
+    /** @var \Drupal\media\Entity\Media $media */
+    $media = $variables['media'];
+
+    $description = $media->getName();
+    $url = '';
+
+    if ($media->hasField('field_media_file')) {
+      // Documents use the file description as link text.
+      /** @var \Drupal\file\Plugin\Field\FieldType\FileItem $file */
+      $file = $media->get('field_media_file')[0];
+      $description = $file->description;
+      $url = $file->entity?->createFileUrl();
+    }
+    elseif ($media->hasField('field_media_image')) {
+      /** @var \Drupal\file\Plugin\Field\FieldType\FileItem $file */
+      $file = $media->get('field_media_image')[0];
+      $url = $file->entity?->createFileUrl();
+
+    }
+    elseif ($media->hasField('field_media_audio_file')) {
+      /** @var \Drupal\file\Plugin\Field\FieldType\FileItem $file */
+      $file = $media->get('field_media_audio_file')[0];
+      $url = $file->entity?->createFileUrl();
+    }
+
+    $variables['download_description'] = $description;
+    $variables['download_url'] = $url;
+  }
+}

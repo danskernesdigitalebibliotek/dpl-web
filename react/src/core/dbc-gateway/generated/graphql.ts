@@ -122,6 +122,14 @@ export type AudienceGeneral = {
   language?: Maybe<Language>;
 };
 
+export type BibliographicCategory = {
+  __typename?: "BibliographicCategory";
+  /** Code for bibliographic category */
+  code?: Maybe<Scalars["String"]["output"]>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars["String"]["output"]>;
+};
+
 export enum CsHoldingsStatusEnum {
   /** Item is discarded by the branch */
   Discarded = "DISCARDED",
@@ -935,6 +943,8 @@ export type Manifestation = {
   accessTypes: Array<AccessType>;
   /** Different kinds of definitions of appropriate audience for this manifestation */
   audience?: Maybe<Audience>;
+  /** Code for bibliographic category */
+  bibliographicCategory?: Maybe<BibliographicCategory>;
   /** CatalogueCodes divided in codes from the national bibliography and other codes */
   catalogueCodes: CatalogueCodes;
   /** The publication status of a catalogued manifestation. */
@@ -977,6 +987,8 @@ export type Manifestation = {
   localId?: Maybe<Scalars["String"]["output"]>;
   /** The type of material of the manifestation based on bibliotek.dk types */
   materialTypes: Array<MaterialType>;
+  /** Information on music shelving */
+  musicShelf?: Maybe<MusicShelf>;
   /** Notes about the manifestation */
   notes: Array<Note>;
   /** The work that this manifestation is part of */
@@ -1003,12 +1015,16 @@ export type Manifestation = {
   series: Array<Series>;
   /** Material that can be identified as sheet music */
   sheetMusicCategories?: Maybe<SheetMusicCategory>;
+  /** The creator of the manifestation that the material can be located under on the shelf */
+  shelfCreator?: Maybe<ShelfCreator>;
   /** Information about on which shelf in the library this manifestation can be found */
   shelfmark?: Maybe<Shelfmark>;
   /** The records type of sound recording - excluding music recordings and its material */
   soundRecording?: Maybe<SoundRecording>;
   /** The source of the manifestation, e.g. own library catalogue (Bibliotekskatalog) or online source e.g. Filmstriben, Ebook Central, eReolen Global etc. */
   source: Array<Scalars["String"]["output"]>;
+  /** Code for comics, children's picture books and drama */
+  specialMaterialGroup?: Maybe<SpecialMaterialGroup>;
   /** Subjects for this manifestation */
   subjects: SubjectContainer;
   /** Different kinds of titles for this work */
@@ -1253,6 +1269,14 @@ export type MoodTagRecommendResponse = {
   __typename?: "MoodTagRecommendResponse";
   similarity?: Maybe<Scalars["Float"]["output"]>;
   work: Work;
+};
+
+export type MusicShelf = {
+  __typename?: "MusicShelf";
+  /** The shelf where the material can be found */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /** The sort version of 'display' */
+  sort?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type Mutation = {
@@ -1854,16 +1878,20 @@ export type SheetMusicCategory = {
   orchestraTypes: Array<Scalars["String"]["output"]>;
 };
 
+export type ShelfCreator = {
+  __typename?: "ShelfCreator";
+  /** The display name of the creator */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /** The sort version of the creator name */
+  sort?: Maybe<Scalars["String"]["output"]>;
+};
+
 export type Shelfmark = {
   __typename?: "Shelfmark";
-  /** The creator of the manifestation that the material can be located under on the shelf */
-  creator?: Maybe<Scalars["String"]["output"]>;
   /** A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935 */
   postfix?: Maybe<Scalars["String"]["output"]>;
   /** The actual shelfmark - e.g. information about on which shelf in the library this manifestation can be found, e.g. 99.4 */
   shelfmark: Scalars["String"]["output"];
-  /** Code for comics, children's picture books and drama */
-  specialMaterialGroup?: Maybe<SpecialMaterialGroup>;
 };
 
 export type SortInput = {

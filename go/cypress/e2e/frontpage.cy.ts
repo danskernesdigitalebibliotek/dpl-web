@@ -17,13 +17,7 @@ describe("Front Page Tests", () => {
       .first()
       .scrollIntoView()
       .within(() => {
-        cy.isViewport("mobile").then(isMobile => {
-          if (isMobile) {
-            cy.dataCy("video-bundle-slider").first().then(testMaterialNavigation)
-          } else {
-            cy.dataCy("video-bundle-slider").eq(1).then(testMaterialNavigation)
-          }
-        })
+        cy.dataCy("video-bundle-slider").first().then(testMaterialNavigation)
       })
   })
 
@@ -34,14 +28,14 @@ describe("Front Page Tests", () => {
         .should("be.visible")
         .should("contain.text", "Dette er titlen på en e-bog")
 
-      cy.dataCy("video-bundle-next-button").click()
+      cy.dataCy("video-bundle-next-button").filter(":visible").click()
 
       cy.dataCy("work-card-title")
         .first()
         .should("be.visible")
         .should("contain.text", "Dette er titlen på en lydbog")
 
-      cy.dataCy("video-bundle-prev-button").click()
+      cy.dataCy("video-bundle-prev-button").filter(":visible").click()
 
       cy.dataCy("work-card-title")
         .first()
@@ -59,6 +53,10 @@ describe("Front Page Tests", () => {
       .first()
       .should("be.visible")
       .within(() => {
+        // Wait for data to load — the next button starts disabled and becomes
+        // enabled once works are loaded and keen-slider updates.
+        cy.dataCy("material-slider-next-button").should("not.be.disabled")
+
         // Verify that the material is visible
         cy.dataCy("work-card-title")
           .first()

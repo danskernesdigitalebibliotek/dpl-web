@@ -9,11 +9,11 @@ on:
       - release/*
     paths:
       - 'design-system/**'
-      - '.github/workflows/design-system-*.yml'
+      - '.github/workflows/design-system-chromatic.yml'
   pull_request:
     paths:
       - 'design-system/**'
-      - '.github/workflows/design-system-*.yml'
+      - '.github/workflows/design-system-chromatic.yml'
     types: [ready_for_review, opened, synchronize]
 
 # Detect if this action is already running, and cancel it.

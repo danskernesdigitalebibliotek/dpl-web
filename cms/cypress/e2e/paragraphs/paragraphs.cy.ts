@@ -182,24 +182,24 @@ describe('Paragraphs module', () => {
     const links = [
       {
         text: 'Jesper Stein vinder Læsernes Bogpris for Rampen',
-        url: '/articles/netmedier/jesper-stein-vinder-laesernes-bogpris-rampen',
+        url: '/artikler/netmedier/jesper-stein-vinder-laesernes-bogpris-rampen',
       },
       {
         text: 'Bibliotekarerne anbefaler læsning til den mørke tid',
-        url: '/articles/bibliotekarerne-anbefaler-laesning-til-den-morke-tid',
+        url: '/artikler/bibliotekarerne-anbefaler-laesning-til-den-morke-tid',
       },
       { text: 'Frontpage', url: '/frontpage' },
       {
         text: 'Litterær skovbadning',
-        url: '/hovedbiblioteket/articles/klima/litteraer-skovbadning',
+        url: '/hovedbiblioteket/artikler/klima/litteraer-skovbadning',
       },
       {
         text: '3 gode til godnat 3-6 år',
-        url: '/articles/3-gode-til-godnat-3-6-ar',
+        url: '/artikler/3-gode-til-godnat-3-6-ar',
       },
       {
         text: 'Ny læsesal på Hovedbiblioteket',
-        url: '/hovedbiblioteket/articles/litteratur/ny-laesesal-pa-hovedbiblioteket',
+        url: '/hovedbiblioteket/artikler/litteratur/ny-laesesal-pa-hovedbiblioteket',
       },
     ];
 

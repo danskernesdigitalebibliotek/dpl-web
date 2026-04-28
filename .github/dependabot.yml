@@ -93,12 +93,8 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      # @typescript-eslint 8.56.0+ pulls eslint-visitor-keys 5.0.1, which breaks the current CMS CI flow.
-      - dependency-name: "@typescript-eslint/*"
-        versions: [">=8.56.0"]
-      # Tests fail when running Cypress 15 using task cy:cypress:local.
       - dependency-name: "cypress"
-        versions: [">=15"]
+        update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
       day: monday
@@ -232,13 +228,14 @@ updates:
       # The Go lint stack still depends on packages that only support ESLint 8/9.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
-      - dependency-name: "orval"
-        versions: ["^7.13.2"]
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
+      - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
 
   # React - npm dependencies
@@ -326,7 +323,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
+      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
       - dependency-name: "orval"
-        versions: ["^7.2.0"]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]

@@ -17,8 +17,6 @@ const compat = new FlatCompat({
 export default [
   {
     ignores: [
-      "src/core/cover-service-api/model/",
-      "src/core/cover-service-api/cover-service.ts",
       "src/core/dpl-cms/model",
       "src/core/dpl-cms/dpl-cms.ts",
       "src/core/fbs/model",

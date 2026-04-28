@@ -28,8 +28,8 @@ const svgIcons = [
 export const IconBasic = () => {
   return (
     <div className="internal-container-grid">
-      {svgIcons.map((i) => (
-        <div className="internal-center">
+      {svgIcons.map((i, index) => (
+        <div key={index} className="internal-center">
           <img src={`icons/basic/${i.fileName}`} alt={i.title} />
           <span className="text-body-medium-regular">{i.title}</span>
         </div>

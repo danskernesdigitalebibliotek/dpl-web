@@ -37,7 +37,7 @@ function getEnvs() {
   }
 }
 
-const EnvSchema = z.object({
+const EnvPublicSchema = z.object({
   APP_URL: z.string().refine(validateUrl),
   CODEGEN_LIBRARY_TOKEN: z.string().optional(),
   CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl).optional(),
@@ -75,28 +75,48 @@ const EnvServerSchema = z.object({
   UNILOGIN_WELLKNOWN_URL: z.string().refine(validateUrl).optional(),
 })
 
-type EnvSchema = z.infer<typeof EnvSchema>
+type EnvPublicSchema = z.infer<typeof EnvPublicSchema>
 type EnvServerSchema = z.infer<typeof EnvServerSchema>
 
-export function getEnv<T extends keyof EnvSchema>(key: T): z.infer<typeof EnvSchema>[T] {
-  return validateEnv(EnvSchema)[key]
+let memoizedPublicEnvs: EnvPublicSchema
+let memoizedServerEnvs: EnvServerSchema
+
+export function getEnv<T extends keyof EnvPublicSchema>(key: T): EnvPublicSchema[T] {
+  if (!memoizedPublicEnvs || skipMemoization()) {
+    memoizedPublicEnvs = validateEnv(EnvPublicSchema)
+  }
+
+  return memoizedPublicEnvs[key]
 }
 
-export function getServerEnv<T extends keyof EnvServerSchema>(
-  key: T
-): z.infer<typeof EnvServerSchema>[T] {
-  return validateEnv(EnvServerSchema)[key]
+export function getServerEnv<T extends keyof EnvServerSchema>(key: T): EnvServerSchema[T] {
+  if (!memoizedServerEnvs || skipMemoization()) {
+    memoizedServerEnvs = validateEnv(EnvServerSchema)
+  }
+
+  return memoizedServerEnvs[key]
+}
+
+/**
+ * Validate both server and client environment variables.
+ *
+ * To be run when the Next.js server starts.
+ */
+export function validateAllEnvs() {
+  validateEnv(EnvPublicSchema)
+  validateEnv(EnvServerSchema)
 }
 
 function validateEnv<T extends z.ZodSchema>(schema: T): z.infer<T> {
   const result = schema.safeParse(getEnvs())
 
-  if (result.success) return result.data
+  if (!result.success) {
+    console.error("Environment variables do not match validation schema.")
+    console.info("Type mismatch: ", result.error.toString())
+    throw new Error("Make sure you have all the required environment variables set")
+  }
 
-  const message = "Environment variables doesn't match type signature"
-  console.error("\n\n\x1b[41m%s\x1b[0m", message)
-  console.info("Type mismatch: ", result.error.toString())
-  throw new Error("Make sure you have all the required environment variables set")
+  return result.data
 }
 
 function validateUrl(url: string) {
@@ -108,14 +128,11 @@ function validateUrl(url: string) {
   }
 }
 
-// If SKIP_ENV_VALIDATION is set to "1", we skip env validation.
-const shouldValidateEnv = process.env?.SKIP_ENV_VALIDATION !== "1"
-if (shouldValidateEnv) {
-  if (typeof window !== "undefined") {
-    // Validating envs for client-side
-    validateEnv(EnvSchema)
-  } else {
-    // Validating envs for server-side
-    validateEnv(EnvServerSchema)
-  }
-}
+/**
+ * Return true if we should skip memoization.
+ *
+ * Memoization does not work well inside vitest, since it is not cleared between
+ * tests, and we therefore cannot make tests where we modify the environment to
+ * trigger validation errors.
+ */
+const skipMemoization = () => process.env.NODE_ENV === "test"

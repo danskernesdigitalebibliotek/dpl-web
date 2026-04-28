@@ -1,0 +1,39 @@
+---
+name: React / Check generated client code
+
+on:
+  pull_request:
+    paths:
+      - 'react/src/core/dpl-cms/**'
+      - 'react/orval.config.ts'
+      - 'cms/openapi.json'
+      - '.github/workflows/react-codegen-check.yml'
+
+jobs:
+  codegen-dpl-cms:
+    name: React / Check DPL CMS client code is up to date
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: 'react/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
+          registry-url: 'https://npm.pkg.github.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate DPL CMS client code
+        run: npm run codegen:client:dpl-cms
+
+      - name: Ensure generated client code has not drifted
+        run: git diff --exit-code

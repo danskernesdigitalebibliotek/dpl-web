@@ -1,4 +1,5 @@
 import { first } from "lodash"
+import { useQueryStates } from "nuqs"
 import React, { useMemo } from "react"
 
 import {
@@ -8,15 +9,15 @@ import {
   isPhysicalMaterialType,
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
+import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
-import { modalStore } from "@/store/modal.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
-import WorkPageInfoBox from "./WorkPageInfoBox"
 
 export type WorkPageButtonsLoggedInProps = {
   workId: string
@@ -28,6 +29,7 @@ const WorkPageButtonsLoggedIn = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
+  const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
@@ -37,8 +39,6 @@ const WorkPageButtonsLoggedIn = ({
     })
   }, [dataLoans?.loans, identifier])
   const isLoaned = !!loan
-
-  const { openModal } = modalStore.trigger
 
   if (isLoadingLoans) {
     return (
@@ -54,8 +54,9 @@ const WorkPageButtonsLoggedIn = ({
 
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
-      <WorkPageInfoBox
-        text={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+      <AlertBox
+        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
+        variant="warning"
       />
     )
   }
@@ -94,12 +95,12 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={isLoanButtonDisabled}
-          onClick={() => {
-            openModal({
-              modalType: "LoanMaterialModal",
-              props: { manifestation: selectedManifestation },
+          onClick={() =>
+            setModal({
+              modal: "LoanMaterialModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
             })
-          }}>
+          }>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
@@ -115,9 +116,9 @@ const WorkPageButtonsLoggedIn = ({
             theme={"primary"}
             disabled={isLoanButtonDisabled}
             onClick={() =>
-              openModal({
-                modalType: "PlayerModal",
-                props: { manifestation: selectedManifestation, orderId: loan?.orderId },
+              setModal({
+                modal: "PlayerModal",
+                modalProps: { wid: workId, pid: selectedManifestation.pid },
               })
             }>
             Lyt til {label}
@@ -132,9 +133,9 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Prøv ${label}`}
           disabled={isLoanButtonDisabled}
           onClick={() =>
-            openModal({
-              modalType: "PlayerPreviewModal",
-              props: { manifestation: selectedManifestation },
+            setModal({
+              modal: "PlayerPreviewModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
             })
           }>
           Prøv {label}
@@ -143,12 +144,12 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={isLoanButtonDisabled}
-          onClick={() => {
-            openModal({
-              modalType: "LoanMaterialModal",
-              props: { manifestation: selectedManifestation },
+          onClick={() =>
+            setModal({
+              modal: "LoanMaterialModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
             })
-          }}>
+          }>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>

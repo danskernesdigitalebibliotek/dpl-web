@@ -17,7 +17,6 @@ const CardListInfoBox = ({ title, html, buttonText }: CardListInfoBoxProps) => {
           </h3>
           <div
             className="text-body-small-regular"
-            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: html || "" }}
           />
         </div>

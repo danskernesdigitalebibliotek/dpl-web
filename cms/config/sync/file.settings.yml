@@ -5,7 +5,7 @@ description:
   length: 128
 icon:
   directory: core/modules/file/icons
-make_unused_managed_files_temporary: false
+make_unused_managed_files_temporary: true
 filename_sanitization:
   transliterate: false
   replace_whitespace: false

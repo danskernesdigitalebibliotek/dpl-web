@@ -16,9 +16,12 @@ export const AutosuggestMaterial: React.FC<AutosuggestMaterialProps> = ({
 }) => {
   return (
     <>
-      {materialSuggestions.map((item) => {
+      {materialSuggestions.map((item, index) => {
         return (
-          <li className={`autosuggest__material-item ${classes || ""}`}>
+          <li
+            key={index}
+            className={`autosuggest__material-item ${classes || ""}`}
+          >
             <div className="autosuggest__material-card">
               <Cover size="xsmall" animate src={item.cover} shadow="small" />
               <div className="autosuggest__info">

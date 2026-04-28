@@ -9,8 +9,12 @@ const NavSpots: FC<NavSpotsProps> = ({ items }) => {
   return (
     <div className={clsx("nav-spots", `nav-spots--count-${items.length}`)}>
       <div className="nav-spots__items">
-        {items.map((item) => {
-          return <div className="nav-spots__item">{item}</div>;
+        {items.map((item, index) => {
+          return (
+            <div key={index} className="nav-spots__item">
+              {item}
+            </div>
+          );
         })}
       </div>
     </div>

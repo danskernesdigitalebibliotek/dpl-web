@@ -14,8 +14,10 @@ const Form: FC<UserDataProps> = ({ title, description, children }) => {
       <div className="reservation-form__content">
         <div className="reservation-form__header">
           <h3 className="text-header-h3 mb-35">{title}</h3>
-          {description.map((paragraph) => (
-            <p className="text-body-large">{paragraph}</p>
+          {description.map((paragraph, index) => (
+            <p key={index} className="text-body-large">
+              {paragraph}
+            </p>
           ))}
         </div>
         {children && (

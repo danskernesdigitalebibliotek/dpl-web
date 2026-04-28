@@ -1,0 +1,50 @@
+uuid: c15e29f5-8306-467a-9e80-aa68a9175b32
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_video_bundle_vertical_auto.field_cql_search
+    - field.field.paragraph.go_video_bundle_vertical_auto.field_embed_video
+    - field.field.paragraph.go_video_bundle_vertical_auto.field_go_video_title
+    - field.field.paragraph.go_video_bundle_vertical_auto.field_video_amount_of_materials
+    - paragraphs.paragraphs_type.go_video_bundle_vertical_auto
+  module:
+    - dpl_fbi
+    - media_library
+id: paragraph.go_video_bundle_vertical_auto.default
+targetEntityType: paragraph
+bundle: go_video_bundle_vertical_auto
+mode: default
+content:
+  field_cql_search:
+    type: cql_search_widget
+    weight: 3
+    region: content
+    settings:
+      advanced: 0
+    third_party_settings: {  }
+  field_embed_video:
+    type: media_library_widget
+    weight: 1
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_go_video_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_video_amount_of_materials:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

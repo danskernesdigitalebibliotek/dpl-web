@@ -15,7 +15,6 @@ const HeaderSidebarNav: React.FC<HeaderSidebarNavProps> = ({
   isStorybookContext = false,
 }) => {
   useEffect(() => {
-    /* eslint-disable-next-line global-require */
     require("./header-sidebar-nav-js");
   }, []);
 

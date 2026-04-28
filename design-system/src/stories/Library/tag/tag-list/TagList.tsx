@@ -25,8 +25,8 @@ const TagList: FC<TagListProps> = ({ tags }) => {
             data-show-more-list-id="tag-list"
           >
             {tags.map((tag, index) => (
-              <li data-show-more-item>
-                <Tag key={index} hasBackground size="large">
+              <li key={index} data-show-more-item>
+                <Tag hasBackground size="large">
                   {tag}
                 </Tag>
               </li>

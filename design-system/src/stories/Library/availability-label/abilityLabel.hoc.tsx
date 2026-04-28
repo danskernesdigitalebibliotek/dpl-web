@@ -17,7 +17,7 @@ export const withAvailabilityProps = <T extends PageFoldType>(
 ): React.FC<PropsProcessedComponent<T>> => {
   const defaultClasses = ["availability-label", "text-label"];
 
-  return (props: PropsProcessedComponent<T>) => {
+  const WrappedComponent: React.FC<PropsProcessedComponent<T>> = (props) => {
     const { status } = props;
 
     const propMap: {
@@ -53,6 +53,12 @@ export const withAvailabilityProps = <T extends PageFoldType>(
 
     return <Component {...(updatedProps as T)} />;
   };
+
+  WrappedComponent.displayName = `withAvailabilityProps(${
+    Component.displayName || Component.name || "Component"
+  })`;
+
+  return WrappedComponent;
 };
 
 export default withAvailabilityProps;

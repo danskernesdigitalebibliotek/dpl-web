@@ -1,16 +1,12 @@
 # Dockerfiles
 
-This directory contains the Dockerfiles that are used during the deployment
-of branch and PR environments for DPL CMS and for building source releases.
+This directory contains the Dockerfile and startup script for the Go (Next.js)
+application deployed via Lagoon.
 
-the cli, nginx and php dockerfiles are used to generate the container-images
-that Lagoon uses in PR/Branch environments. These files mirrors the files used
-for production deployments in
-<https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/infrastructure/dpladm/env-repo-template/>
-. Should you need to make modifications to these files, make sure to also make
-the changes to the production versions.
+`node.dockerfile` is a self-contained multi-stage build that installs
+dependencies, builds the Next.js app with environment-specific variables
+(injected by Lagoon as build args), and produces the production runtime image.
+Lagoon builds this directly from the `go/` context — no external pre-built
+image is needed.
 
-`source.dockerfile` is used build and store a release of dpl-cms. For PR/branch
-environments the file is used as the first step in building the Lagoon images.
-The same file is used by the Github action that builds tagged releases of
-dpl-cms.
+`start.sh` sets runtime environment variables and starts the Next.js server.
