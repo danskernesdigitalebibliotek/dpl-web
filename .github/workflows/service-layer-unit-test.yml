@@ -1,13 +1,12 @@
 # Workflow name
-name: "Go / Unit test"
+name: "Service Layer / Unit test"
 
 # Event for the workflow
 on:
   pull_request:
     paths:
-      - 'go/**'
       - 'serviceLayer/**'
-      - '.github/workflows/go-*.yml'
+      - '.github/workflows/service-layer-*.yml'
 
 # List of jobs
 jobs:
@@ -17,20 +16,20 @@ jobs:
 
     defaults:
       run:
-        working-directory: go
+        working-directory: serviceLayer
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # 👈 Required to retrieve git history
+          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
-          node-version-file: "go/.nvmrc"
+          node-version-file: "serviceLayer/.nvmrc"
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
       - name: Run unit tests
-        run: yarn test:unit:once
+        run: yarn test
