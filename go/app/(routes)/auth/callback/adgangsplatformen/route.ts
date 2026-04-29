@@ -2,6 +2,7 @@ import { NextResponse, connection } from "next/server"
 
 import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
+import { getAndClearLoginRedirectUrl } from "@/lib/helpers/login-redirect"
 import { loadUserToken } from "@/lib/helpers/user-token"
 import { getSession, saveAdgangsplatformenSession } from "@/lib/session/session"
 
@@ -12,6 +13,10 @@ export async function GET() {
   if (userTokenData) {
     const session = await getSession()
     await saveAdgangsplatformenSession(session, userTokenData)
+    const loginRedirectUrl = await getAndClearLoginRedirectUrl()
+    if (loginRedirectUrl) {
+      return NextResponse.redirect(`${getEnv("APP_URL")}${loginRedirectUrl}`)
+    }
     return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
   }
 
