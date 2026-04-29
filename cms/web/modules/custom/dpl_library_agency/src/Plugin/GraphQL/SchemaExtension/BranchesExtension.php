@@ -68,6 +68,26 @@ class BranchesExtension extends SdlSchemaExtensionPluginBase {
       })
     );
 
+    $registry->addFieldResolver('Branch', 'phone',
+      $builder->callback(function (Branch $branch): ?string {
+        $node = $branch->getNode();
+        if (!$node || !$node->hasField('field_phone') || $node->get('field_phone')->isEmpty()) {
+          return NULL;
+        }
+        return $node->get('field_phone')->value;
+      })
+    );
+
+    $registry->addFieldResolver('Branch', 'email',
+      $builder->callback(function (Branch $branch): ?string {
+        $node = $branch->getNode();
+        if (!$node || !$node->hasField('field_email') || $node->get('field_email')->isEmpty()) {
+          return NULL;
+        }
+        return $node->get('field_email')->value;
+      })
+    );
+
     $registry->addFieldResolver('Branch', 'availabilityContext',
       $builder->callback(function (Branch $branch): array {
         return [
