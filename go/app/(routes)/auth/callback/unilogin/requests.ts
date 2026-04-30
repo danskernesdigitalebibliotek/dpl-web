@@ -17,7 +17,7 @@
 import { randomUUID } from "crypto"
 import { WSSecurityCert } from "soap"
 
-import { getEnv, getServerEnv } from "@/lib/config/env"
+import { getServerEnv } from "@/lib/config/env"
 import { createClientAsync } from "@/lib/soap/unilogin/wsiinst-v6/generated/ws"
 
 import schemas from "./schemas"
@@ -27,8 +27,8 @@ const COMMON_V3_NAMESPACE = "https://brugerdatabasen.stil.dk/bpi/common/3"
 const WSA_NAMESPACE = "http://www.w3.org/2005/08/addressing"
 
 export const getInstitutionRequest = async (institutionId: string) => {
-  // Evaluated at runtime so CI can set TEST_MODE after build.
-  const isTestMode = getEnv("TEST_MODE")
+  // Read directly from process.env to avoid build-time inlining by Next.js.
+  const isTestMode = process.env.TEST_MODE === "true"
   const clientEndpoint = isTestMode
     ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/institution`
     : undefined
