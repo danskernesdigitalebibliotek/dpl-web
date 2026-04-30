@@ -1,12 +1,10 @@
-<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:uni="https://brugerdatabasen.stil.dk/bpi/common/3" xmlns:tns="https://brugerdatabasen.stil.dk/bpi/wsiinst/6" xmlns="http://schemas.xmlsoap.org/wsdl/" name="WsiInst" targetNamespace="https://brugerdatabasen.stil.dk/bpi/wsiinst/6">
+<?xml version='1.0' encoding='UTF-8'?><definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:uni="https://brugerdatabasen.stil.dk/bpi/common/3" xmlns:tns="https://brugerdatabasen.stil.dk/bpi/wsiinst/6" xmlns="http://schemas.xmlsoap.org/wsdl/" name="WsiInst" targetNamespace="https://brugerdatabasen.stil.dk/bpi/wsiinst/6">
+  <import location="https://brugerdatabasen.stil.dk/bpi/wsiinst/6?wsdl=../../common/v3/common.wsdl" namespace="https://brugerdatabasen.stil.dk/bpi/common/3"></import>
   <types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:uni="https://brugerdatabasen.stil.dk/bpi/common/3" xmlns:tns="https://brugerdatabasen.stil.dk/bpi/wsiinst/6" xmlns="http://schemas.xmlsoap.org/wsdl/">
-
-  <xs:import namespace="https://brugerdatabasen.stil.dk/bpi/common/3" schemaLocation="common/common.xsd"/>
-
-  <xs:import namespace="https://brugerdatabasen.stil.dk/bpi/wsiinst/6" schemaLocation="wsiinst-ws.xsd"/>
-
-</xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:uni="https://brugerdatabasen.stil.dk/bpi/common/3" xmlns:tns="https://brugerdatabasen.stil.dk/bpi/wsiinst/6" xmlns="http://schemas.xmlsoap.org/wsdl/">
+      <xs:import namespace="https://brugerdatabasen.stil.dk/bpi/common/3" schemaLocation="https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=../../common/v3/common.xsd"/>
+      <xs:import namespace="https://brugerdatabasen.stil.dk/bpi/wsiinst/6" schemaLocation="https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=wsiinst-ws.xsd"/>
+    </xs:schema>
   </types>
   <message name="HentGrupperIn">
     <part element="tns:hentGrupper" name="parameters">
@@ -82,6 +80,7 @@
   </message>
   <portType name="WsiInstPortType">
     <operation name="helloWorldWithCertificate">
+      <documentation>Ping webservicen med simpelt kald. Returnerer "Hello &lt;udbydersystemID>!" hvis webservicen svarer, udbydersystemId er korrekt angivet og request er korrekt signeret med certifikat.</documentation>
       <input message="tns:HelloWorldWithCertificateIn">
     </input>
       <output message="tns:HelloWorldWithCertificateOut">
@@ -130,6 +129,7 @@
     </fault>
     </operation>
     <operation name="hentDataAftaler">
+      <documentation>Returnerer en liste af institutionsnumre, hvor der er lavet en dataaftale</documentation>
       <input message="tns:hentDataAftalerIn">
     </input>
       <output message="tns:hentDataAftalerOut">
@@ -138,6 +138,7 @@
     </fault>
     </operation>
     <operation name="hentInstitutionshierarki">
+      <documentation>Returnerer hovedinstitution og alle relaterede afdelinger fra Institutionsregisteret uanset om input er en hovedinstitution eller en afdeling.</documentation>
       <input message="tns:hentInstitutionshierarkiIn">
     </input>
       <output message="tns:hentInstitutionshierarkiOut">
@@ -150,11 +151,16 @@
     <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="helloWorldWithCertificate">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/helloWorldWithCertificate"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -162,11 +168,16 @@
     </operation>
     <operation name="hentGrupper">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentGrupper"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -174,11 +185,16 @@
     </operation>
     <operation name="hentBrugereIGruppe">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentBrugereIGruppe"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -186,11 +202,16 @@
     </operation>
     <operation name="hentInstitution">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentInstitution"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -198,11 +219,16 @@
     </operation>
     <operation name="hentInstitutioner">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentInstitutioner"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -210,11 +236,16 @@
     </operation>
     <operation name="hentInstBruger">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentInstBruger"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -222,11 +253,16 @@
     </operation>
     <operation name="hentDataAftaler">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentDataAftaler"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
@@ -234,11 +270,16 @@
     </operation>
     <operation name="hentInstitutionshierarki">
       <wsoap12:operation soapAction="https://brugerdatabasen.stil.dk/bpi/wsiinst/6/hentInstitutionshierarki"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy"/>
       <input>
         <wsoap12:body use="literal"/>
+        <wsoap12:header message="tns:AuthHeader" part="UdbydersystemId" use="literal">
+        </wsoap12:header>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Input"/>
       </input>
       <output>
         <wsoap12:body use="literal"/>
+    <wsp:PolicyReference URI="#BrugerdatabasenPolicy_Output"/>
       </output>
       <fault name="authentificationFault">
         <wsoap12:fault name="authentificationFault" use="literal"/>
