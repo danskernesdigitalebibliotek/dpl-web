@@ -24,8 +24,8 @@ export const getInstitutionRequest = async (institutionId: string) => {
     endpoint: clientEndpoint,
   })
 
-  const privateKey = getServerEnv("UNILOGIN_WS_PRIVATE_KEY")
-  const publicCert = getServerEnv("UNILOGIN_WS_PUBLIC_CERT")
+  const privateKey = getServerEnv("UNILOGIN_WS_PRIVATE_KEY")?.replace(/\\n/g, "\n")
+  const publicCert = getServerEnv("UNILOGIN_WS_PUBLIC_CERT")?.replace(/\\n/g, "\n")
   const udbydersystemId = getServerEnv("UNILOGIN_WS_UDBYDERSYSTEM_ID")
 
   if (!privateKey || !publicCert) {
@@ -41,7 +41,7 @@ export const getInstitutionRequest = async (institutionId: string) => {
     hasTimeStamp: true,
     signatureAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
     digestAlgorithm: "http://www.w3.org/2001/04/xmlenc#sha256",
-    additionalReferences: ["wsa:Action", "wsa:To", "wsa:MessageID"],
+    additionalReferences: ["uni:UdbydersystemId", "wsa:Action", "wsa:To", "wsa:MessageID"],
     signerOptions: {
       prefix: "ds",
       existingPrefixes: {
@@ -51,20 +51,19 @@ export const getInstitutionRequest = async (institutionId: string) => {
   })
   client.setSecurity(wsSecurity)
 
-  // Add UdbydersystemId SOAP header
+  // Add UdbydersystemId SOAP header (must be signed per policy)
   client.addSoapHeader(
-    { UdbydersystemId: udbydersystemId },
-    "",
-    "uni",
-    COMMON_V3_NAMESPACE
+    `<uni:UdbydersystemId xmlns:uni="${COMMON_V3_NAMESPACE}">${udbydersystemId}</uni:UdbydersystemId>`
   )
 
-  // Add WS-Addressing headers
-  client.addSoapHeader({
-    "wsa:Action": `${WSIINST_V6_NAMESPACE}/hentInstitution`,
-    "wsa:To": clientEndpoint || `${WSIINST_V6_NAMESPACE}`,
-    "wsa:MessageID": `urn:uuid:${randomUUID()}`,
-  })
+  // Add WS-Addressing headers as raw XML to ensure namespace declaration.
+  const wsaNamespace = "http://www.w3.org/2005/08/addressing"
+  const endpoint = clientEndpoint || WSIINST_V6_NAMESPACE
+  client.addSoapHeader(
+    `<wsa:Action xmlns:wsa="${wsaNamespace}">${WSIINST_V6_NAMESPACE}/hentInstitution</wsa:Action>` +
+      `<wsa:To xmlns:wsa="${wsaNamespace}">${endpoint}</wsa:To>` +
+      `<wsa:MessageID xmlns:wsa="${wsaNamespace}">urn:uuid:${randomUUID()}</wsa:MessageID>`
+  )
 
   const [response] = await client.hentInstitutionAsync({
     instnr: institutionId,
