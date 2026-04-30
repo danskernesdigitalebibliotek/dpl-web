@@ -22,20 +22,20 @@ import { createClientAsync } from "@/lib/soap/unilogin/wsiinst-v6/generated/ws"
 
 import schemas from "./schemas"
 
-// In test mode, use local WSDL with vendored XSDs to avoid remote fetches
-const isTestMode = getEnv("TEST_MODE")
-const clientEndpoint = isTestMode
-  ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/institution`
-  : undefined
-const wsdlPath = isTestMode
-  ? "./lib/soap/unilogin/wsiinst-v6/wsdl/test/ws.test.wsdl"
-  : "./lib/soap/unilogin/wsiinst-v6/wsdl/ws.wsdl"
-
 const WSIINST_V6_NAMESPACE = "https://brugerdatabasen.stil.dk/bpi/wsiinst/6"
 const COMMON_V3_NAMESPACE = "https://brugerdatabasen.stil.dk/bpi/common/3"
 const WSA_NAMESPACE = "http://www.w3.org/2005/08/addressing"
 
 export const getInstitutionRequest = async (institutionId: string) => {
+  // Evaluated at runtime so CI can set TEST_MODE after build.
+  const isTestMode = getEnv("TEST_MODE")
+  const clientEndpoint = isTestMode
+    ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/institution`
+    : undefined
+  const wsdlPath = isTestMode
+    ? "./lib/soap/unilogin/wsiinst-v6/wsdl/test/ws.test.wsdl"
+    : "./lib/soap/unilogin/wsiinst-v6/wsdl/ws.wsdl"
+
   const client = await createClientAsync(wsdlPath, {
     forceSoap12Headers: true,
     endpoint: clientEndpoint,
