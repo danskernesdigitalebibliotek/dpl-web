@@ -1,6 +1,14 @@
 import '@testing-library/cypress/add-commands';
+import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
 import type { StubMapping } from 'wiremock-rest-client/dist/model/stub-mapping.model';
 import type { RequestPattern } from 'wiremock-rest-client/dist/model/request-pattern.model';
+
+addMatchImageSnapshotCommand({
+  failureThreshold: 0.05,
+  failureThresholdType: 'percent',
+  customSnapshotsDir: 'cypress/snapshots',
+  customDiffDir: 'cypress/snapshots/__diff_output__',
+});
 
 Cypress.Commands.add('createMapping', (stub: StubMapping) => {
   cy.task('createMapping', stub);

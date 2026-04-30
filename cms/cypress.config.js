@@ -1,5 +1,6 @@
 const { defineConfig } = require('cypress');
 const { WireMockRestClient } = require('wiremock-rest-client');
+const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
 
 const wiremockUrl = process.env.CYPRESS_WIREMOCK_URL || 'http://wiremock';
 const wiremock = () => new WireMockRestClient(wiremockUrl);
@@ -13,8 +14,9 @@ module.exports = defineConfig({
       runMode: 3,
       openMode: 0,
     },
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
       require('cypress-terminal-report/src/installLogsPrinter')(on);
+      addMatchImageSnapshotPlugin(on, config);
 
       // wiremock-rest-client is a Node.js library that cannot be bundled
       // for the browser. All WireMock operations run here via cy.task().
