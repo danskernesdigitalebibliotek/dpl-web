@@ -41,44 +41,47 @@ export const getInstitutionRequest = async (institutionId: string) => {
     endpoint: clientEndpoint,
   })
 
-  const privateKey = getServerEnv("UNILOGIN_WS_PRIVATE_KEY")?.replace(/\\n/g, "\n")
-  const publicCert = getServerEnv("UNILOGIN_WS_PUBLIC_CERT")?.replace(/\\n/g, "\n")
-  const udbydersystemId = getServerEnv("UNILOGIN_WS_UDBYDERSYSTEM_ID")
+  // In test mode the mock server doesn't enforce WS-Security, so skip signing.
+  if (!isTestMode) {
+    const privateKey = getServerEnv("UNILOGIN_WS_PRIVATE_KEY")?.replace(/\\n/g, "\n")
+    const publicCert = getServerEnv("UNILOGIN_WS_PUBLIC_CERT")?.replace(/\\n/g, "\n")
+    const udbydersystemId = getServerEnv("UNILOGIN_WS_UDBYDERSYSTEM_ID")
 
-  if (!privateKey || !publicCert) {
-    throw new Error("Missing Unilogin WS-Security certificate configuration")
-  }
+    if (!privateKey || !publicCert) {
+      throw new Error("Missing Unilogin WS-Security certificate configuration")
+    }
 
-  if (!udbydersystemId) {
-    throw new Error("Missing Unilogin UdbydersystemId (UNILOGIN_WS_UDBYDERSYSTEM_ID)")
-  }
+    if (!udbydersystemId) {
+      throw new Error("Missing Unilogin UdbydersystemId (UNILOGIN_WS_UDBYDERSYSTEM_ID)")
+    }
 
-  const wsSecurity = new WSSecurityCert(privateKey, publicCert, undefined, {
-    hasTimeStamp: true,
-    signatureAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
-    digestAlgorithm: "http://www.w3.org/2001/04/xmlenc#sha256",
-    additionalReferences: ["uni:UdbydersystemId", "wsa:Action", "wsa:To", "wsa:MessageID"],
-    signerOptions: {
-      prefix: "ds",
-      existingPrefixes: {
-        wsse: "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd",
+    const wsSecurity = new WSSecurityCert(privateKey, publicCert, undefined, {
+      hasTimeStamp: true,
+      signatureAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
+      digestAlgorithm: "http://www.w3.org/2001/04/xmlenc#sha256",
+      additionalReferences: ["uni:UdbydersystemId", "wsa:Action", "wsa:To", "wsa:MessageID"],
+      signerOptions: {
+        prefix: "ds",
+        existingPrefixes: {
+          wsse: "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd",
+        },
       },
-    },
-  })
-  client.setSecurity(wsSecurity)
+    })
+    client.setSecurity(wsSecurity)
 
-  // Add UdbydersystemId SOAP header (must be signed per policy)
-  client.addSoapHeader(
-    `<uni:UdbydersystemId xmlns:uni="${COMMON_V3_NAMESPACE}">${udbydersystemId}</uni:UdbydersystemId>`
-  )
+    // Add UdbydersystemId SOAP header (must be signed per policy)
+    client.addSoapHeader(
+      `<uni:UdbydersystemId xmlns:uni="${COMMON_V3_NAMESPACE}">${udbydersystemId}</uni:UdbydersystemId>`
+    )
 
-  // Raw XML ensures the wsa namespace prefix is declared on each element.
-  const endpoint = clientEndpoint || WSIINST_V6_NAMESPACE
-  client.addSoapHeader(
-    `<wsa:Action xmlns:wsa="${WSA_NAMESPACE}">${WSIINST_V6_NAMESPACE}/hentInstitution</wsa:Action>` +
-      `<wsa:To xmlns:wsa="${WSA_NAMESPACE}">${endpoint}</wsa:To>` +
-      `<wsa:MessageID xmlns:wsa="${WSA_NAMESPACE}">urn:uuid:${randomUUID()}</wsa:MessageID>`
-  )
+    // Raw XML ensures the wsa namespace prefix is declared on each element.
+    const endpoint = clientEndpoint || WSIINST_V6_NAMESPACE
+    client.addSoapHeader(
+      `<wsa:Action xmlns:wsa="${WSA_NAMESPACE}">${WSIINST_V6_NAMESPACE}/hentInstitution</wsa:Action>` +
+        `<wsa:To xmlns:wsa="${WSA_NAMESPACE}">${endpoint}</wsa:To>` +
+        `<wsa:MessageID xmlns:wsa="${WSA_NAMESPACE}">urn:uuid:${randomUUID()}</wsa:MessageID>`
+    )
+  }
 
   const [response] = await client.hentInstitutionAsync({
     instnr: institutionId,
