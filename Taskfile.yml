@@ -224,3 +224,24 @@ tasks:
       - rm -rf {{ .CMS_REACT_LIBRARY }}
       - mkdir -p {{ .CMS_REACT_LIBRARY }}
       - cp -r ./react/dist/* {{ .CMS_REACT_LIBRARY }}/
+
+  lagoon:run-on-projects:
+    desc: Show how to run shell commands across many Lagoon projects in parallel
+    silent: true
+    cmds:
+      - |
+        cat <<'EOF'
+        run-on-projects.sh — run shell commands across many Lagoon projects.
+
+        The tool lives in:  cms/tools/lagoon-commands/
+
+          1. cd cms/tools/lagoon-commands
+          2. Edit projects.txt   (one project per line)
+          3. Edit commands.txt   (one shell command per line, {project} is replaced)
+          4. ./run-on-projects.sh           # default: 3 in parallel
+             ./run-on-projects.sh --dry-run # preview without running
+             ./run-on-projects.sh -h        # all flags
+
+        Per-project output goes to logs/<timestamp>/<project>.log.
+        See cms/tools/lagoon-commands/README.md for full docs.
+        EOF
