@@ -36,6 +36,7 @@ export const ArticleParagraphs = () => {
         <VideoEmbed
           info="To view this content, we need your consent to use marketing cookies."
           buttonText="Manage consent"
+          // eslint-disable-next-line no-restricted-syntax -- YouTube embed, not an image
           src="https://www.youtube.com/embed/CmzKQ3PSrow"
           acceptCookies={false}
         />

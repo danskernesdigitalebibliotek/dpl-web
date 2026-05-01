@@ -21,6 +21,7 @@ const Slider: FC<SliderProps> = ({ title, items }) => {
           href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
         />
 
+        {/* eslint-disable-next-line no-restricted-syntax -- CDN script, not an image */}
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" />
       </Helmet>
       <div className="slider swiper">
