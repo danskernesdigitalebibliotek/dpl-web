@@ -5,6 +5,10 @@
 go/lib/graphql/generated/** linguist-generated
 react/src/core/dbc-gateway/generated/** linguist-generated
 
+# WSDL codegen (go)
+go/lib/soap/unilogin/wsiinst-v6/generated/** linguist-generated
+go/lib/soap/publizon/v2_7/generated/** linguist-generated
+
 # Orval codegen (go)
 go/lib/rest/fbs/generated/** linguist-generated
 go/lib/rest/publizon/adapter/generated/** linguist-generated
