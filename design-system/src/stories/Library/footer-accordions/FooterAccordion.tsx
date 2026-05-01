@@ -32,7 +32,6 @@ const FooterAccordion: FC<FooterAccordionProps> = ({
         </button>
       </h2>
       <div
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: content }}
         className={clsx("footer__content", {
           "footer__content--hidden": !isOpen,

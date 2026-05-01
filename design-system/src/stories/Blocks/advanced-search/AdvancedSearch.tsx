@@ -166,8 +166,8 @@ export const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
         <ul className="content-list">
           {data.searchResult.map((item, i) => {
             return (
-              <li className="content-list__item">
-                <CardListItem {...item} tintIndex={i} key={i} />
+              <li key={i} className="content-list__item">
+                <CardListItem {...item} tintIndex={i} />
               </li>
             );
           })}

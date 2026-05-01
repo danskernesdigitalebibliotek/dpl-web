@@ -84,7 +84,8 @@ const WorkCardStackedWithCaption = ({
         <WorkCardWithCaption
           creators={currentWork.creators || []}
           title={title}
-          className="pointer-events-auto relative h-auto overflow-visible opacity-100">
+          className="pointer-events-auto relative h-auto overflow-visible text-center opacity-100
+            lg:text-left">
           {manifestation ? (
             <WorkCard
               className={cn("bg-background dark:bg-background-overlay-solid shadow-stacked-card")}

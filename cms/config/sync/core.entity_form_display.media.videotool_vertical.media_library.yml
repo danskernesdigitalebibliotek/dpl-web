@@ -1,0 +1,30 @@
+uuid: 202cbc7d-80a7-494c-b8b0-72273da5d4f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.videotool_vertical.field_media_videotool_vertical
+    - media.type.videotool_vertical
+id: media.videotool_vertical.media_library
+targetEntityType: media
+bundle: videotool_vertical
+mode: media_library
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_media_videotool_vertical: true
+  langcode: true
+  path: true
+  publish_on: true
+  status: true
+  uid: true
+  unpublish_on: true

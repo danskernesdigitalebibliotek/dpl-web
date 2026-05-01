@@ -1,18 +1,9 @@
-import { FlatCompat } from "@eslint/eslintrc"
-import js from "@eslint/js"
 import nextCoreWebVitals from "eslint-config-next/core-web-vitals"
 import nextTypescript from "eslint-config-next/typescript"
+import eslintConfigPrettier from "eslint-config-prettier/flat"
 import pluginCypress from "eslint-plugin-cypress"
-import path from "node:path"
-import { fileURLToPath } from "node:url"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-})
+import { flatConfigs as importXConfigs } from "eslint-plugin-import-x"
+import { configs as storybookConfigs } from "eslint-plugin-storybook"
 
 const eslintConfig = [
   {
@@ -30,16 +21,10 @@ const eslintConfig = [
   },
   ...nextTypescript,
   ...nextCoreWebVitals,
-  ...compat.config({
-    extends: [
-      "prettier",
-      "plugin:storybook/recommended",
-      "plugin:import/recommended",
-      "plugin:import/errors",
-      "plugin:import/warnings",
-      "plugin:import/typescript",
-    ],
-  }),
+  eslintConfigPrettier,
+  ...storybookConfigs["flat/recommended"],
+  importXConfigs.recommended,
+  importXConfigs.typescript,
   {
     files: ["cypress/**/*.{js,ts}", "**/*.cy.{js,ts}"],
     plugins: {

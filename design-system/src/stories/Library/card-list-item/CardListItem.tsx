@@ -66,6 +66,7 @@ export const CardListItem = ({
               // To emulate a more realistic view, we render a mix of available & unavailable
               // labels and cycle through different material types.
               <AvailabilityLabel
+                key={index}
                 manifestationType={
                   index < 4 ? materialTypes[index] : materialTypes[index % 4]
                 }

@@ -18,7 +18,7 @@ const MaterialTypeIconWrapper = ({
   return (
     <div
       className={cn(
-        "h-6 w-6 rounded-full md:h-10 md:w-10",
+        "h-8 w-8 rounded-full md:h-10 md:w-10",
         costFree
           ? "bg-blue-title/50 text-blue-title-dark dark:text-white"
           : "bg-background-overlay",

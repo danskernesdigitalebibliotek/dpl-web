@@ -369,6 +369,9 @@
                 "3407189: Automated Drupal 10 compatibility fixes": "https://www.drupal.org/files/issues/2023-12-09/address_dawa.2.0.1.rector.patch",
                 "3550696: Update API endpoints.": "https://git.drupalcode.org/project/address_dawa/-/commit/330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
             },
+            "drupal/azure_mailer": {
+                "3541803: Error: Call to a member function addError() on null": "https://www.drupal.org/files/issues/2025-08-18/3541803-azure_mailer-fix_call_to_member_on_null.patch"
+            },
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
             },

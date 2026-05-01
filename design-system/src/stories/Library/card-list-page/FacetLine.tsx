@@ -26,7 +26,7 @@ const FacetLine: FC<FacetLineProps> = ({ items }) => {
         }
         if (type === "facet") {
           return (
-            <li className="facet-line__item">
+            <li key={index} className="facet-line__item">
               <Dropdown
                 ariaLabel={title}
                 list={[{ title }, ...terms]}

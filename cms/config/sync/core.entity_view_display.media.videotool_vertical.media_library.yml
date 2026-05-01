@@ -1,0 +1,34 @@
+uuid: 589efb4b-b336-463c-a3ee-79061841ca20
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.videotool_vertical.field_media_videotool_vertical
+    - image.style.media_library
+    - media.type.videotool_vertical
+  module:
+    - image
+id: media.videotool_vertical.media_library
+targetEntityType: media
+bundle: videotool_vertical
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: media_library
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  field_media_videotool_vertical: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  uid: true

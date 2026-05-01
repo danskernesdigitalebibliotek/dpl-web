@@ -1,0 +1,5 @@
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+}

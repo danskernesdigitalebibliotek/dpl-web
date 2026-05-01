@@ -519,9 +519,11 @@ export const getLocalAgencySubjects = (
   manifestations: Pick<Manifestation, "pid" | "subjects">[],
   agencyIds: string[]
 ): string[] =>
-  manifestations
-    .filter((m) => agencyIds.some((id) => m.pid.startsWith(id)))
-    .flatMap((m) => m.subjects?.all?.map((s) => s.display) ?? []);
+  uniq(
+    manifestations
+      .filter((m) => agencyIds.some((id) => m.pid.startsWith(id)))
+      .flatMap((m) => m.subjects?.all?.map((s) => s.display) ?? [])
+  );
 
 export const isParallelReservation = (manifestations: Manifestation[]) =>
   manifestations.length > 1 &&

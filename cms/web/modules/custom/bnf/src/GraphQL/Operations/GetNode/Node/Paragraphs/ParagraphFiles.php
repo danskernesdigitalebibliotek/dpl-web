@@ -5,13 +5,13 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 /**
  * @property string $id
  * @property string $__typename
- * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideotool>|null $files
+ * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideotoolVertical>|null $files
  */
 class ParagraphFiles extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
-     * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideotool>|null $files
+     * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideotool|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaVideotoolVertical>|null $files
      */
     public static function make(
         $id,
@@ -44,6 +44,7 @@ class ParagraphFiles extends \Spawnia\Sailor\ObjectLike
             'MediaImage' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\Files\\MediaImage',
             'MediaVideo' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\Files\\MediaVideo',
             'MediaVideotool' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\Files\\MediaVideotool',
+            'MediaVideotoolVertical' => '\\Drupal\\bnf\\GraphQL\\Operations\\GetNode\\Node\\Paragraphs\\Files\\MediaVideotoolVertical',
         ])))),
         ];
     }

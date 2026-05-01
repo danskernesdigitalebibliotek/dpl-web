@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { Suspense } from "react"
 
 import Footer from "@/components/global/footer/Footer"
@@ -41,17 +42,19 @@ async function RootLayout({
 }>) {
   const dplCmsConfig = await getDplCmsPublicConfig()
   return (
-    <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
-      <Theme>
-        <ReactQueryProvider>
-          <Header />
-          <DynamicSheet />
-          <DynamicModal />
-          {children}
-          <Footer />
-        </ReactQueryProvider>
-      </Theme>
-    </DplCmsConfigContextProvider>
+    <NuqsAdapter>
+      <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
+        <Theme>
+          <ReactQueryProvider>
+            <Header />
+            <DynamicSheet />
+            <DynamicModal />
+            {children}
+            <Footer />
+          </ReactQueryProvider>
+        </Theme>
+      </DplCmsConfigContextProvider>
+    </NuqsAdapter>
   )
 }
 

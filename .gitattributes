@@ -11,8 +11,6 @@ go/lib/rest/publizon/adapter/generated/** linguist-generated
 go/lib/rest/publizon/local-adapter/generated/** linguist-generated
 
 # Orval codegen (react)
-react/src/core/cover-service-api/cover-service.ts linguist-generated
-react/src/core/cover-service-api/model/** linguist-generated
 react/src/core/dpl-cms/dpl-cms.ts linguist-generated
 react/src/core/dpl-cms/model/** linguist-generated
 react/src/core/fbs/fbs.ts linguist-generated

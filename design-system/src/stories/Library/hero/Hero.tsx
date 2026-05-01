@@ -80,7 +80,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                 <dt>{item.label}</dt>
                 <dd>
                   {item.values.map((value) => (
-                    <span>{value}</span>
+                    <span key={value}>{value}</span>
                   ))}
                 </dd>
               </>

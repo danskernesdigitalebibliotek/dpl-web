@@ -60,11 +60,11 @@ hiddenLabel.args = {
 // Show multiple checkboxes to make it easier to test keyboard navigation.
 const Several: StoryFn<typeof Checkbox> = (args) => (
   <>
-    {[1, 2, 3, 4, 5].map((value) => {
+    {[1, 2, 3, 4, 5].map((value, index) => {
       const { label } = args;
       // Append a number to make it easier to distinguish between each entry.
       const elementArgs = { ...args, label: `${label} ${value}` };
-      return <Checkbox {...elementArgs} />;
+      return <Checkbox key={index} {...elementArgs} />;
     })}
   </>
 );

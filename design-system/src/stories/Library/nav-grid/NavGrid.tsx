@@ -27,8 +27,10 @@ const NavGrid: FC<CardProps> = ({ items, title, showSubtitles }) => {
         {title && <h2 className="nav-grid__title">{title}</h2>}
       </div>
       <ul className="nav-grid__items">
-        {items.map((item) => (
-          <li className="nav-grid__item">{item}</li>
+        {items.map((item, index) => (
+          <li key={index} className="nav-grid__item">
+            {item}
+          </li>
         ))}
       </ul>
 

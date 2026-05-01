@@ -13,6 +13,8 @@ const Slider: FC<SliderProps> = ({ title, items }) => {
 
   return (
     <>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore https://github.com/nfl/react-helmet/issues/646 */}
       <Helmet>
         <link
           rel="stylesheet"
@@ -21,14 +23,12 @@ const Slider: FC<SliderProps> = ({ title, items }) => {
 
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" />
       </Helmet>
-
       <div className="slider swiper">
         <div className="slider__header">
           {title && (
             <h2
               className="slider__title"
               // We need to be able to replicate our WYSIWYG field in Drupal that makes it possible to underline (<u>) words.
-              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: title }}
             />
           )}
