@@ -34,13 +34,10 @@ const clientEndpoint = isTestMode
   : WSIINST_V6_NAMESPACE
 
 export const getInstitutionRequest = async (institutionId: string) => {
-  const client = await createClientAsync(
-    "./lib/soap/unilogin/wsiinst-v6/wsdl/ws.wsdl",
-    {
-      forceSoap12Headers: true,
-      endpoint: clientEndpoint,
-    }
-  )
+  const client = await createClientAsync("./lib/soap/unilogin/wsiinst-v6/wsdl/ws.wsdl", {
+    forceSoap12Headers: true,
+    endpoint: clientEndpoint,
+  })
 
   // In test mode the mock server doesn't enforce WS-Security, so skip signing.
   if (!isTestMode) {
