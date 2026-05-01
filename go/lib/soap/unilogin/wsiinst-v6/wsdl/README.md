@@ -17,20 +17,27 @@ in `requests.ts` at runtime (mock server in test, production in prod).
 | `wsiinst-ws.xsd`    | Type definitions for the `wsiinst/6` namespace         |
 | `common/common.xsd` | Common type definitions (auth errors, shared types)    |
 
-## How `ws.wsdl` differs from the upstream WSDL
+## How vendored files differ from upstream
 
-The upstream WSDL at `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?wsdl` has:
+All remote `schemaLocation` and `import location` URLs are replaced with local paths.
+WS-Policy references are removed (WS-Security signing is configured in code).
 
-1. **Remote schema imports** — replaced with local relative paths:
+**`ws.wsdl`** (from `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?wsdl`):
 
-   | Upstream remote URL                                                            | Local path          |
-   | ------------------------------------------------------------------------------ | ------------------- |
-   | `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=../../common/v3/common.xsd` | `common/common.xsd` |
-   | `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=wsiinst-ws.xsd`             | `wsiinst-ws.xsd`    |
+| Change | Upstream | Local |
+| ------ | -------- | ----- |
+| Schema import | `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=../../common/v3/common.xsd` | `common/common.xsd` |
+| Schema import | `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=wsiinst-ws.xsd` | `wsiinst-ws.xsd` |
+| WSDL import | `<import location="...common.wsdl">` | Removed |
+| WS-Policy | `<wsp:PolicyReference>` elements | Removed |
 
-2. **WS-Policy references** — removed (WS-Security signing is configured in code, not via WSDL policy)
+**`wsiinst-ws.xsd`** (from `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=wsiinst-ws.xsd`):
 
-3. **Common WSDL import** — removed (`common.wsdl` only contained policy definitions)
+| Change | Upstream | Local |
+| ------ | -------- | ----- |
+| Schema import | `https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=../../common/v3/common.xsd` | `common/common.xsd` |
+
+**`common/common.xsd`** — no changes needed (self-contained, no imports)
 
 ## Keeping these files in sync
 
@@ -44,6 +51,6 @@ curl -o wsiinst-ws.xsd 'https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=wsiins
 curl -o common/common.xsd 'https://brugerdatabasen.stil.dk/bpi/wsiinst/6?xsd=../../common/v3/common.xsd'
 ```
 
-2. In `ws.wsdl`: replace remote `schemaLocation` URLs with local paths (see table above)
-3. In `ws.wsdl`: remove the `<import location="...common.wsdl">` and all `<wsp:PolicyReference>` elements
+2. In `ws.wsdl`: replace remote `schemaLocation` URLs with local paths, remove WSDL import and WS-Policy elements (see table above)
+3. In `wsiinst-ws.xsd`: replace the remote `schemaLocation` URL with `common/common.xsd`
 4. Run `npm run codegen:unilogin` to regenerate the TypeScript client
