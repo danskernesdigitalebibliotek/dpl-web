@@ -42,6 +42,15 @@ export default tseslint.config(
         { props: true, ignorePropertyModificationsFor: ["state"] },
       ],
       "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+      "no-restricted-syntax": [
+        "warn",
+        {
+          selector:
+            'JSXAttribute[name.name="src"] Literal[value=/^https?:\\/\\//]',
+          message:
+            "Do not use external URLs in src attributes. Import local fixtures from __fixtures__/images/ instead.",
+        },
+      ],
       // We like to use arrow function syntax also for functional components.
       "react/function-component-definition": "off",
     },
