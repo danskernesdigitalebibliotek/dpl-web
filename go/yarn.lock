@@ -12135,10 +12135,10 @@ next-drupal@^2.0.1:
     react "^18.2 || ^19.0"
     react-dom "^18.2 || ^19.0"
 
-next-test-api-route-handler@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/next-test-api-route-handler/-/next-test-api-route-handler-5.0.4.tgz#6d34a9dbf247997b16dc5b485f6853f9bc69c35b"
-  integrity sha512-bvLRJAfK6NHVLVwJm+HRCxrU3UQbXLuuj1qcLg1sJK40lRzHmGtVGHLxFWj3LnEoH8UZFTwV0Be0jTg4zHckkw==
+next-test-api-route-handler@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/next-test-api-route-handler/-/next-test-api-route-handler-5.0.5.tgz#7a5361cf409fda94c92252b1287ecfb2bc77919a"
+  integrity sha512-ku6YBjF8s4kbDMO7t9vM8dOAj7jJ1tTCHNY6hnBRgx5TvUYqrppZ7RWQIywMyVSntX9UaFGDH5/KFNDEr9zRvw==
   dependencies:
     "@whatwg-node/server" "^0.10.18"
     cookie "^1.1.1"
