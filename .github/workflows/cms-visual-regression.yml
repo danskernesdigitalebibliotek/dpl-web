@@ -1,0 +1,91 @@
+name: CMS / Visual Regression
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'cms/**'
+      - '!cms/cypress/snapshots/**'
+      - '.github/workflows/cms-visual-regression.yml'
+  pull_request:
+    paths:
+      - 'cms/**'
+      - '!cms/cypress/snapshots/**'
+      - '.github/workflows/cms-visual-regression.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  visual-regression:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup site
+        run: task ci:reset
+
+      - name: Test for visual regressions
+        id: test
+        continue-on-error: true
+        run: task ci:cypress:visual-regression
+
+      - name: Update baselines
+        if: steps.test.outcome == 'failure'
+        run: task ci:cypress:visual-regression:update
+
+      - name: Archive videos
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-regression-cms-videos
+          path: cms/cypress/videos
+
+      - name: Archive screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-regression-cms-screenshots
+          path: cms/cypress/screenshots
+
+      - name: Create pull request with updated snapshots
+        if: >-
+          steps.test.outcome == 'failure'
+          && github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.full_name == github.repository
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update CMS visual regression baselines"
+          branch: visual-regression-cms/${{ github.head_ref }}
+          base: ${{ github.head_ref }}
+          title: "Update CMS visual regression baselines for #${{ github.event.pull_request.number }}"
+          body: |
+            Visual changes detected in #${{ github.event.pull_request.number }}.
+
+            Review the image diffs in the **Files changed** tab to verify
+            the visual changes are intentional.
+          author: ${{ github.event.pull_request.user.login }} <${{ github.event.pull_request.user.id }}+${{ github.event.pull_request.user.login }}@users.noreply.github.com>
+          assignees: ${{ github.event.pull_request.user.login }}
+          delete-branch: true
+          add-paths: |
+            cms/cypress/snapshots
+
+      - name: Visual regressions detected
+        if: steps.test.outcome == 'failure'
+        run: exit 1
