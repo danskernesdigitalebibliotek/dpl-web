@@ -63,7 +63,7 @@ export const defaultSession: TSessionData = {
 }
 
 export async function getSession(): Promise<IronSession<TSessionData>> {
-  // If we are buikding the go app, we will use the default session to simulate an anonymous user.
+  // If we are building the go app, we will use the default session to simulate an anonymous user.
   if (isBuildingGoApp()) {
     return defaultSession as IronSession<TSessionData>
   }
