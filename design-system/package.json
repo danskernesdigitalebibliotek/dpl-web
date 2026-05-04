@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@chanzuckerberg/axe-storybook-testing": "^9.0.0",
-    "@eslint/js": "^9",
+    "@eslint/js": "^10",
     "@storybook/addon-a11y": "^9.1.20",
     "@storybook/addon-designs": "^10.0.2",
     "@storybook/addon-docs": "^9.1.20",
