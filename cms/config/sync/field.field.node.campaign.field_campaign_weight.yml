@@ -12,7 +12,7 @@ field_name: field_campaign_weight
 entity_type: node
 bundle: campaign
 label: Weight
-description: "If multiple campaigns matches a query, the one with the highest weight will be used. <br />If several matches have the same weight, we'll use alphabetical sorting.<br />Only one campaign will be shown."
+description: "If multiple campaigns matches a query, the one with the highest weight will be used. <br />Only one campaign will be shown."
 required: true
 translatable: false
 default_value:
