@@ -9,10 +9,12 @@ on:
       - release/*
     paths:
       - 'design-system/**'
+      - '!design-system/__visual_snapshots__/**'
       - '.github/workflows/design-system-chromatic.yml'
   pull_request:
     paths:
       - 'design-system/**'
+      - '!design-system/__visual_snapshots__/**'
       - '.github/workflows/design-system-chromatic.yml'
     types: [ready_for_review, opened, synchronize]
 
