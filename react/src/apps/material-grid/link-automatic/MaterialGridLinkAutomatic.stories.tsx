@@ -78,7 +78,7 @@ export const Primary: Story = {
     title: "Recommended materials",
     description:
       "This is a long description of the materials selected, or whatever else you want to put in here",
-    link: "https://dapple-cms.docker/advanced-search?advancedSearchCql=%27harry%27&linked=true",
+    link: "https://dpl-web.local/advanced-search?advancedSearchCql=%27harry%27&linked=true",
     requestedAmount: 12,
     buttonText: "Show all",
     materialUrl: "/work/:workid",
@@ -99,7 +99,7 @@ export const WithoutOnshelf: Story = {
     ...Primary.args,
     title: "All Availability",
     description: "Includes materials regardless of on-shelf status",
-    link: "https://dapple-cms.docker/advanced-search?advancedSearchCql=%28lix%3D2+OR+lix%3D3+OR+lix%3D4+OR+lix%3D5+OR+let%3D8+OR+let%3D9+OR+let%3D10%29+AND+term.childrenoradults%3D%22til+b%C3%B8rn%22&linked=true"
+    link: "https://dpl-web.local/advanced-search?advancedSearchCql=%28lix%3D2+OR+lix%3D3+OR+lix%3D4+OR+lix%3D5+OR+let%3D8+OR+let%3D9+OR+let%3D10%29+AND+term.childrenoradults%3D%22til+b%C3%B8rn%22&linked=true"
   }
 };
 
@@ -108,7 +108,7 @@ export const WithOnshelfTrue: Story = {
     ...Primary.args,
     title: "On-Shelf Only",
     description: "Filtered to show only materials currently on shelf",
-    link: "https://dapple-cms.docker/advanced-search?advancedSearchCql=%28lix%3D2+OR+lix%3D3+OR+lix%3D4+OR+lix%3D5+OR+let%3D8+OR+let%3D9+OR+let%3D10%29+AND+term.childrenoradults%3D%22til+b%C3%B8rn%22&onshelf=true&linked=true"
+    link: "https://dpl-web.local/advanced-search?advancedSearchCql=%28lix%3D2+OR+lix%3D3+OR+lix%3D4+OR+lix%3D5+OR+let%3D8+OR+let%3D9+OR+let%3D10%29+AND+term.childrenoradults%3D%22til+b%C3%B8rn%22&onshelf=true&linked=true"
   }
 };
 
@@ -117,7 +117,7 @@ export const WithSort: Story = {
     ...Primary.args,
     title: "with sort = sort.title.desc",
     description: "Sorts materials by title in descending order",
-    link: "https://dapple-cms.docker/advanced-search?advancedSearchCql=%28lix%3D2+OR+lix%3D3+OR+lix%3D4+OR+lix%3D5+OR+let%3D8+OR+let%3D9+OR+let%3D10%29+AND+term.childrenoradults%3D%22til+b%C3%B8rn%22&sort=sort.title.desc"
+    link: "https://dpl-web.local/advanced-search?advancedSearchCql=%28lix%3D2+OR+lix%3D3+OR+lix%3D4+OR+lix%3D5+OR+let%3D8+OR+let%3D9+OR+let%3D10%29+AND+term.childrenoradults%3D%22til+b%C3%B8rn%22&sort=sort.title.desc"
   }
 };
 
