@@ -13,6 +13,126 @@
 
 set -uo pipefail
 
+# Colours, only when stdout is a terminal.
+if [[ -t 1 && "${TERM:-}" != "dumb" ]]; then
+  C_GREEN=$'\033[32m'; C_RED=$'\033[31m'; C_YELLOW=$'\033[33m'
+  C_CYAN=$'\033[36m';  C_DIM=$'\033[2m';  C_BOLD=$'\033[1m'
+  C_RESET=$'\033[0m'
+else
+  C_GREEN=""; C_RED=""; C_YELLOW=""; C_CYAN=""
+  C_DIM="";   C_BOLD="";  C_RESET=""
+fi
+
+# Strip blank/comment lines and trailing inline comments.
+# An inline `#` is treated as a comment only when preceded by whitespace, so
+# `#` inside a quoted command (e.g. drush --filter="status#ok") is preserved.
+read_lines() {
+  local file="$1"
+  [[ -f "$file" ]] || { echo "${C_RED}error: file not found: $file${C_RESET}" >&2; exit 2; }
+  awk '
+    {
+      sub(/[[:space:]]+#.*$/, "")   # drop trailing inline comment
+      sub(/^[[:space:]]+/, "")      # trim leading whitespace
+      sub(/[[:space:]]+$/, "")      # trim trailing whitespace
+    }
+    /^#/ { next }                   # skip full-line comments
+    NF                              # skip blank lines
+  ' "$file"
+}
+
+# Sanitise a project name for safe use as a filename.
+sanitise() { printf '%s' "${1//\//-}"; }
+
+# Run a single command with retries. Streams to the project log file.
+run_command() {
+  local project="$1" cmd="$2" log="$3"
+  local attempt rc=1
+  for ((attempt=1; attempt<=RETRIES; attempt++)); do
+    printf '\n$ (attempt %d/%d) %s\n' "$attempt" "$RETRIES" "$cmd" >> "$log"
+    if bash -c "$cmd" >> "$log" 2>&1; then
+      return 0
+    fi
+    rc=$?
+    if (( attempt < RETRIES )); then
+      printf '[exit %d, retrying in %ss]\n' "$rc" "$RETRY_DELAY" >> "$log"
+      sleep "$RETRY_DELAY"
+    fi
+  done
+  printf '[gave up after %d attempts, exit %d]\n' "$RETRIES" "$rc" >> "$log"
+  return 1
+}
+
+# Run all commands for one project, in order. Stop on first failure.
+run_project() {
+  local project="$1"
+  local safe log started finished elapsed cmd rendered
+  safe=$(sanitise "$project")
+  log="$LOG_DIR/${safe}.log"
+  started=$(date +%s)
+  {
+    printf '# project: %s\n' "$project"
+    printf '# started: %s\n' "$(date -Iseconds 2>/dev/null || date)"
+  } > "$log"
+
+  while IFS= read -r cmd; do
+    rendered="${cmd//\{project\}/$project}"
+    if ! run_command "$project" "$rendered" "$log"; then
+      finished=$(date +%s)
+      elapsed=$((finished - started))
+      printf '%s\t%s\t%d\n' "fail" "$rendered" "$elapsed" > "$STATE_DIR/results/$safe"
+      return 1
+    fi
+  done < "$STATE_DIR/commands"
+
+  finished=$(date +%s)
+  elapsed=$((finished - started))
+  printf '%s\t\t%d\n' "ok" "$elapsed" > "$STATE_DIR/results/$safe"
+  return 0
+}
+
+# Atomic counter via mkdir. Linear search from 1 — bounded by the number of
+# completed workers, so total work is O(N²) at worst. Fine for the scales
+# we run at; if you need higher concurrency, drop the [N/M] index entirely.
+next_index() {
+  local i=1
+  while ! mkdir "$STATE_DIR/seq/$i" 2>/dev/null; do
+    i=$((i + 1))
+  done
+  printf '%d' "$i"
+}
+
+# Worker invoked through xargs. Prints a one-line status when finished.
+worker() {
+  local project="$1"
+  local safe ok=0 idx elapsed
+  safe=$(sanitise "$project")
+  run_project "$project" && ok=1
+  idx=$(next_index)
+  elapsed=$(awk -F'\t' '{print $3}' "$STATE_DIR/results/$safe")
+  if (( ok )); then
+    printf '%s[%d/%d]%s %s✓%s %s %s(%ss)%s\n' \
+      "$C_DIM" "$idx" "$PROJECT_COUNT" "$C_RESET" \
+      "$C_GREEN" "$C_RESET" "$project" \
+      "$C_DIM" "$elapsed" "$C_RESET"
+  else
+    printf '%s[%d/%d]%s %s✗%s %s %s(%ss — see %s/%s.log)%s\n' \
+      "$C_DIM" "$idx" "$PROJECT_COUNT" "$C_RESET" \
+      "$C_RED" "$C_RESET" "$project" \
+      "$C_DIM" "$elapsed" "$LOG_DIR" "$safe" "$C_RESET"
+  fi
+}
+
+# Worker mode: invoked as `bash "$0" --worker <project>` from xargs. All
+# state is read from env vars and from $STATE_DIR (set by the parent).
+# This avoids `export -f`, which is unreliable under macOS SIP because the
+# system /usr/bin/xargs scrubs BASH_FUNC_* env vars before invoking bash.
+if [[ "${1:-}" == "--worker" ]]; then
+  worker "$2"
+  exit
+fi
+
+# ----- parent mode -----
+
 PROJECTS_FILE="projects.txt"
 COMMANDS_FILE="commands.txt"
 PARALLEL=3
@@ -36,7 +156,8 @@ Usage: $0 [options]
       --dry-run           Print resolved commands and exit
   -h, --help              Show this help
 
-Blank lines and lines starting with # are ignored in both files.
+Blank lines, full-line comments (# ...) and trailing inline comments are
+ignored in both files.
 EOF
 }
 
@@ -53,23 +174,6 @@ while [[ $# -gt 0 ]]; do
     *) echo "unknown argument: $1" >&2; usage >&2; exit 2 ;;
   esac
 done
-
-# Colours, only when stdout is a terminal.
-if [[ -t 1 && "${TERM:-}" != "dumb" ]]; then
-  C_GREEN=$'\033[32m'; C_RED=$'\033[31m'; C_YELLOW=$'\033[33m'
-  C_CYAN=$'\033[36m';  C_DIM=$'\033[2m';  C_BOLD=$'\033[1m'
-  C_RESET=$'\033[0m'
-else
-  C_GREEN=""; C_RED=""; C_YELLOW=""; C_CYAN=""
-  C_DIM="";   C_BOLD="";  C_RESET=""
-fi
-
-# Read non-blank, non-comment lines into a newline-separated string.
-read_lines() {
-  local file="$1"
-  [[ -f "$file" ]] || { echo "${C_RED}error: file not found: $file${C_RESET}" >&2; exit 2; }
-  awk 'NF && $1 !~ /^#/' "$file"
-}
 
 PROJECTS=$(read_lines "$PROJECTS_FILE")
 COMMANDS=$(read_lines "$COMMANDS_FILE")
@@ -101,103 +205,30 @@ fi
 mkdir -p "$LOG_DIR"
 
 STATE_DIR=$(mktemp -d)
-mkdir -p "$STATE_DIR/seq"
+mkdir -p "$STATE_DIR/seq" "$STATE_DIR/results"
+# Stash the cleaned commands so workers can read them straight from disk
+# instead of inheriting them through the env (avoids ARG_MAX worries).
+printf '%s\n' "$COMMANDS" > "$STATE_DIR/commands"
 trap 'rm -rf "$STATE_DIR"' EXIT
-
-# Atomic sequence: returns the next 1-based index, race-free across workers.
-# Uses mkdir which is atomic on POSIX filesystems.
-next_index() {
-  local i
-  i=$(ls -1 "$STATE_DIR/seq" 2>/dev/null | wc -l | tr -d ' ')
-  while true; do
-    i=$((i + 1))
-    if mkdir "$STATE_DIR/seq/$i" 2>/dev/null; then
-      echo "$i"
-      return
-    fi
-  done
-}
 
 printf '%s▶ %d projects × %d commands  %s(parallel=%d, retries=%d)%s\n' \
   "$C_BOLD" "$PROJECT_COUNT" "$COMMAND_COUNT" "$C_DIM" "$PARALLEL" "$RETRIES" "$C_RESET"
 printf '%s  logs: %s/%s\n\n' "$C_DIM" "$LOG_DIR" "$C_RESET"
 
-# Run a single command with retries. Streams to the project log file.
-run_command() {
-  local project="$1" cmd="$2" log="$3"
-  local attempt rc=1
-  for ((attempt=1; attempt<=RETRIES; attempt++)); do
-    {
-      printf '\n$ (attempt %d/%d) %s\n' "$attempt" "$RETRIES" "$cmd"
-    } >> "$log"
-    if bash -c "$cmd" >> "$log" 2>&1; then
-      return 0
-    fi
-    rc=$?
-    if (( attempt < RETRIES )); then
-      printf '[exit %d, retrying in %ss]\n' "$rc" "$RETRY_DELAY" >> "$log"
-      sleep "$RETRY_DELAY"
-    fi
-  done
-  printf '[gave up after %d attempts, exit %d]\n' "$RETRIES" "$rc" >> "$log"
-  return 1
-}
-
-# Run all commands for one project, in order. Stop on first failure.
-run_project() {
-  local project="$1"
-  local log="$LOG_DIR/${project}.log"
-  local started finished elapsed cmd rendered
-  started=$(date +%s)
-  {
-    printf '# project: %s\n' "$project"
-    printf '# started: %s\n' "$(date -Iseconds 2>/dev/null || date)"
-  } > "$log"
-
-  while IFS= read -r cmd; do
-    rendered="${cmd//\{project\}/$project}"
-    if ! run_command "$project" "$rendered" "$log"; then
-      finished=$(date +%s)
-      elapsed=$((finished - started))
-      printf '%s\t%s\t%d\n' "fail" "$rendered" "$elapsed" > "$STATE_DIR/$project"
-      return 1
-    fi
-  done <<< "$COMMANDS"
-
-  finished=$(date +%s)
-  elapsed=$((finished - started))
-  printf '%s\t\t%d\n' "ok" "$elapsed" > "$STATE_DIR/$project"
-  return 0
-}
-
-# Worker invoked through xargs. Prints a one-line status when finished.
-worker() {
-  local project="$1"
-  local ok=0
-  run_project "$project" && ok=1
-  local idx elapsed
-  idx=$(next_index)
-  elapsed=$(awk -F'\t' '{print $3}' "$STATE_DIR/$project")
-  if (( ok )); then
-    printf '%s[%d/%d]%s %s✓%s %s %s(%ss)%s\n' \
-      "$C_DIM" "$idx" "$PROJECT_COUNT" "$C_RESET" \
-      "$C_GREEN" "$C_RESET" "$project" \
-      "$C_DIM" "$elapsed" "$C_RESET"
-  else
-    printf '%s[%d/%d]%s %s✗%s %s %s(%ss — see %s/%s.log)%s\n' \
-      "$C_DIM" "$idx" "$PROJECT_COUNT" "$C_RESET" \
-      "$C_RED" "$C_RESET" "$project" \
-      "$C_DIM" "$elapsed" "$LOG_DIR" "$project" "$C_RESET"
-  fi
-}
-export -f worker run_project run_command next_index
-export PROJECT_COUNT PARALLEL RETRIES RETRY_DELAY LOG_DIR STATE_DIR COMMANDS
+# Variables (not functions) — these survive macOS SIP env scrubbing because
+# they don't carry the BASH_FUNC_*%% prefix that SIP filters on.
+export PROJECT_COUNT PARALLEL RETRIES RETRY_DELAY LOG_DIR STATE_DIR
 export C_GREEN C_RED C_YELLOW C_CYAN C_DIM C_BOLD C_RESET
 
 START_TIME=$(date +%s)
 
 # xargs gives us bounded parallelism that survives Ctrl-C cleanly.
-printf '%s\n' "$PROJECTS" | xargs -n 1 -P "$PARALLEL" -I {} bash -c 'worker "$@"' _ {}
+# - Self-invoking via `bash "$0" --worker {}` so we don't rely on `export -f`
+#   (macOS SIP scrubs BASH_FUNC_*%% env vars when invoking /usr/bin/xargs).
+# - NUL-delimited (`xargs -0`) so project names are passed through literally,
+#   without xargs's default shell-style quote handling.
+printf '%s\n' "$PROJECTS" | tr '\n' '\0' | \
+  xargs -0 -n 1 -P "$PARALLEL" -I {} bash "$0" --worker {}
 
 END_TIME=$(date +%s)
 TOTAL_ELAPSED=$((END_TIME - START_TIME))
@@ -207,8 +238,9 @@ OK_COUNT=0
 FAIL_COUNT=0
 FAILED_PROJECTS=()
 while IFS= read -r project; do
-  if [[ -f "$STATE_DIR/$project" ]]; then
-    status=$(awk -F'\t' '{print $1}' "$STATE_DIR/$project")
+  safe=$(sanitise "$project")
+  if [[ -f "$STATE_DIR/results/$safe" ]]; then
+    status=$(awk -F'\t' '{print $1}' "$STATE_DIR/results/$safe")
     if [[ "$status" == "ok" ]]; then
       OK_COUNT=$((OK_COUNT + 1))
     else
@@ -228,14 +260,18 @@ printf '%sdone%s  %s✓ %d ok%s  %s✗ %d failed%s  in %ss\n' \
 if (( FAIL_COUNT > 0 )); then
   printf '\n%sfailed projects:%s\n' "$C_RED" "$C_RESET"
   for project in "${FAILED_PROJECTS[@]}"; do
-    failed_cmd=$(awk -F'\t' '{print $2}' "$STATE_DIR/$project")
+    safe=$(sanitise "$project")
+    failed_cmd=$(awk -F'\t' '{print $2}' "$STATE_DIR/results/$safe")
     printf '  ✗ %s\n' "$project"
     printf '%s      cmd: %s%s\n' "$C_DIM" "$failed_cmd" "$C_RESET"
-    printf '%s      log: %s/%s.log%s\n' "$C_DIM" "$LOG_DIR" "$project" "$C_RESET"
+    printf '%s      log: %s/%s.log%s\n' "$C_DIM" "$LOG_DIR" "$safe" "$C_RESET"
   done
+  # Write the failed list to a file directly so we don't have to construct
+  # a shell snippet that quotes project names containing spaces correctly.
+  failed_file="$LOG_DIR/failed.txt"
+  printf '%s\n' "${FAILED_PROJECTS[@]}" > "$failed_file"
   printf '\n%sre-run only failed:%s\n' "$C_YELLOW" "$C_RESET"
-  printf "  printf '%%s\\\\n' %s > failed.txt && \\\\\n" "${FAILED_PROJECTS[*]}"
-  printf '  %s -p failed.txt -c %s -j %d\n' "$0" "$COMMANDS_FILE" "$PARALLEL"
+  printf '  %s -p %s -c %s -j %d\n' "$0" "$failed_file" "$COMMANDS_FILE" "$PARALLEL"
 fi
 
 printf '\n%sper-project output saved to %s/%s\n' "$C_DIM" "$LOG_DIR" "$C_RESET"

@@ -116,8 +116,8 @@ pointer to the log.
 ## When things fail
 
 After the run, failed projects get listed with the failing command and the
-path to their log. There's also a copy-pasteable snippet to re-run only the
-failures:
+path to their log. The failed project names are also written to
+`logs/<timestamp>/failed.txt`, so re-running the failures is one command:
 
 ```sh
 failed projects:
@@ -126,8 +126,7 @@ failed projects:
       log: logs/20260501-085707/aarhus.log
 
 re-run only failed:
-  printf '%s\n' aarhus > failed.txt && \
-  ./run-on-projects.sh -p failed.txt -c commands.txt -j 3
+  ./run-on-projects.sh -p logs/20260501-085707/failed.txt -c commands.txt -j 3
 ```
 
 ## Why parallelism is bounded
