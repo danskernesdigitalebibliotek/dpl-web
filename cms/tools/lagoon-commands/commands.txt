@@ -1,0 +1,9 @@
+# Commands run against each project in projects.txt.
+# One shell command per line. {project} is replaced with the project name.
+# Lines starting with # and blank lines are ignored.
+
+# Common Examples — uncomment to use:
+# lagoon ssh -p {project} -e main --command "drush cr"
+# lagoon ssh -p {project} -e main --command "drush deploy -y"
+# lagoon ssh -p {project} -e main --command "drush core-cron"
+lagoon ssh -p {project} -e main --command "drush status"
