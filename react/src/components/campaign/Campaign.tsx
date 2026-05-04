@@ -35,11 +35,9 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
       onClick={onClick}
     >
       {campaignData?.image?.url && (
-        <img
-          className="campaign__image"
-          src={campaignData.image.url}
-          alt={campaignData?.image?.alt}
-        />
+        <div className="campaign__image">
+          <img src={campaignData.image.url} alt={campaignData?.image?.alt} />
+        </div>
       )}
       {campaignData.text && (
         <h2 className="campaign__title">{campaignData.text}</h2>
