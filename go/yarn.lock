@@ -12658,10 +12658,10 @@ openapi3-ts@4.5.0:
   dependencies:
     yaml "^2.8.0"
 
-openid-client@^6.8.3:
-  version "6.8.3"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.8.3.tgz#38aaf86552f1b9dbe1d0fe4a69512e533da14420"
-  integrity sha512-AoY/NaN9esS3+xvHInFSK0g3skSfeE0uqQAKRj4rB6/GsBIvzwTUaYo9+HcqpKIaP0dP85p5W07hayKgS4GAeA==
+openid-client@^6.8.4:
+  version "6.8.4"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.8.4.tgz#573e852a9c6ea3fcfe180956da6aaf979c4e4724"
+  integrity sha512-QSw0BA08piujetEwfZsHoTrDpMEha7GDZDicQqVwX4u0ChCjefvjDB++TZ8BTg76UpwhzIQgdvvfgfl3HpCSAw==
   dependencies:
     jose "^6.2.2"
     oauth4webapi "^3.8.5"
