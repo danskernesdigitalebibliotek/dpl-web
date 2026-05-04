@@ -6,6 +6,7 @@ on:
       - develop
     paths:
       - 'design-system/**'
+      - '!design-system/__visual_snapshots__/**'
       - '.github/workflows/design-system-*.yml'
 
 jobs:
