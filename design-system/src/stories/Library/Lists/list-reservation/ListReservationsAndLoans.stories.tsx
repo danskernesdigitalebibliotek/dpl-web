@@ -1,5 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 import { ListReservationsAndLoans } from "./ListReservationsAndLoans";
+import bookCover1 from "../../../../../public/images/placeholder/book_cover_1.jpg";
+import bookCover2 from "../../../../../public/images/placeholder/book_cover_2.jpg";
+import bookCover3 from "../../../../../public/images/placeholder/book_cover_3.jpg";
+import bookCover5 from "../../../../../public/images/placeholder/book_cover_5.jpg";
+import bookCover6 from "../../../../../public/images/placeholder/book_cover_6.jpg";
 
 export default {
   title: "Library / Lists / ReservationAndLoans",
@@ -24,7 +29,7 @@ Item1.args = {
     title:
       "Den utrolige historie om den kæmpestore pære (eller beretningen om, hvordan Jeronimus Bjergstrøm Severin Olsen blev genindsat i sit retmæssige embede som Solbys borgmester til glæde for alle byens indbyggere på nær én)",
     description: "Af Jakob Martin Strid ",
-    image: "images/book_cover_5.jpg",
+    image: bookCover5,
     url: "",
     noteLabel: "Du pålægges et gebyr, når materialet afleveres",
     noteUrl: "",
@@ -52,7 +57,7 @@ Item2.args = {
     type: "bog",
     title: "Audrey Hepburn",
     description: "Af Isabel Sánchez Vegara, Amaia Arrazola (2018)",
-    image: "images/book_cover_3.jpg",
+    image: bookCover3,
     url: "",
     noteLabel: "Du pålægges et gebyr, når materialet afleveres",
     noteUrl: "",
@@ -80,7 +85,7 @@ Item3.args = {
     type: "bog",
     title: "Sauna",
     description: "Af Anton M. Berg (2020)",
-    image: "images/book_cover_6.jpg",
+    image: bookCover6,
     url: "",
     noteLabel: "",
     noteUrl: "",
@@ -108,7 +113,7 @@ Item4.args = {
     type: "bog",
     title: "De Uadskillige",
     description: "Af Anton M. Berg (2020)",
-    image: "images/book_cover_1.jpg",
+    image: bookCover1,
     url: "",
     noteLabel: "",
     noteUrl: "",
@@ -133,7 +138,7 @@ Item5.args = {
     type: "bog",
     title: "Den lille bog om dansk design - for børn og barnlige sjæle",
     description: "Af Marie Hugsted (2018)",
-    image: "images/book_cover_2.jpg",
+    image: bookCover2,
     url: "",
     noteLabel: "",
     noteUrl: "",
@@ -158,7 +163,7 @@ Item6.args = {
     type: "bog",
     title: "Døgnkioskmennesket",
     description: "Af Sayaka Murata (2019)",
-    image: "images/book_cover_2.jpg",
+    image: bookCover2,
     url: "",
     noteLabel: "",
     noteUrl: "",
@@ -183,7 +188,7 @@ ItemStacked.args = {
     type: "bog",
     title: "Audrey Hepburn",
     description: "Af Isabel Sánchez Vegara, Amaia Arrazola (2018)",
-    image: "images/book_cover_3.jpg",
+    image: bookCover3,
     url: "",
     noteLabel: "+ 3 materialer",
     noteUrl: "",

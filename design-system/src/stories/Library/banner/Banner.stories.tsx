@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 
 import Banner from "./Banner";
+import campaignCover from "../../../../public/images/placeholder/campaign_cover.jpg";
 
 export default {
   title: "Library / Banner",
@@ -29,7 +30,7 @@ export default {
     },
   },
   args: {
-    imageSrc: "images/campaign_cover.jpg",
+    imageSrc: campaignCover,
     title: "Hvad skal jeg <u>høre?</u>",
     description:
       "Om du er dedikeret musiknørd eller moderat musikinteresseret, så er dette siden til dig. Her kan du finde anbefalinger, digitale musikmagasiner, nyheder, musiklitteratur og meget mere.",

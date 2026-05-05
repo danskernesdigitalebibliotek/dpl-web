@@ -1,4 +1,5 @@
 import { AvailabilityLabelPropsType } from "../../availability-label/types";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";
 import Cover from "../cover/Cover";
 import { ReactComponent as ArrowSmallRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
@@ -38,7 +39,7 @@ export const CardListItem = ({
     <a href="/" className="card-list-item arrow arrow__hover--right-small">
       <div className="card-list-item__cover">
         <Cover
-          src="images/book_cover_3.jpg"
+          src={bookCover3}
           size="small"
           animate={false}
           tint={getCoverTint(tintIndex)}

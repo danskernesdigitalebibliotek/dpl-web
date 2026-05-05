@@ -1,8 +1,15 @@
+import bookCover1 from "../../../../public/images/placeholder/book_cover_1.jpg";
+import bookCover2 from "../../../../public/images/placeholder/book_cover_2.jpg";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
+import bookCover4 from "../../../../public/images/placeholder/book_cover_4.jpg";
+import bookCover5 from "../../../../public/images/placeholder/book_cover_5.jpg";
+import bookCover6 from "../../../../public/images/placeholder/book_cover_6.jpg";
+import bookCover7 from "../../../../public/images/placeholder/book_cover_7.jpg";
 import { FacetLineItem } from "./FacetLine";
 
 const searchResult = [
   {
-    coverUrl: "images/book_cover_1.jpg",
+    coverUrl: bookCover1,
     heartFill: false,
     title: "Audrey Hepburn",
     author: "Sánchez Vegara, Amaia Arrazola",
@@ -12,7 +19,7 @@ const searchResult = [
     availabilityLabels: 1,
   },
   {
-    coverUrl: "images/book_cover_2.jpg",
+    coverUrl: bookCover2,
     heartFill: false,
     title: "De uadskillelige",
     author: "Simone de Beauvoir",
@@ -20,7 +27,7 @@ const searchResult = [
     availabilityLabels: 3,
   },
   {
-    coverUrl: "images/book_cover_3.jpg",
+    coverUrl: bookCover3,
     heartFill: true,
     title: "Døgnkioskmennesket",
     author: "Sayaka Murata",
@@ -28,7 +35,7 @@ const searchResult = [
     availabilityLabels: 4,
   },
   {
-    coverUrl: "images/book_cover_4.jpg",
+    coverUrl: bookCover4,
     heartFill: false,
     title: "Testamente",
     author: "Nina Wähä (f. 1979)",
@@ -36,7 +43,7 @@ const searchResult = [
     availabilityLabels: 3,
   },
   {
-    coverUrl: "images/book_cover_5.jpg",
+    coverUrl: bookCover5,
     heartFill: false,
     title: "Sønnen (Norsk)",
     author: "Jo Nesbø",
@@ -44,7 +51,7 @@ const searchResult = [
     availabilityLabels: 2,
   },
   {
-    coverUrl: "images/book_cover_6.jpg",
+    coverUrl: bookCover6,
     heartFill: false,
     title: "Den bæredygtige stat",
     author: "Rasmus Willig, Anders Blok",
@@ -52,7 +59,7 @@ const searchResult = [
     availabilityLabels: 2,
   },
   {
-    coverUrl: "images/book_cover_7.jpg",
+    coverUrl: bookCover7,
     heartFill: false,
     title: "Den lille bog om dansk design - for børn og barnlige sjæle",
     author: "Marie Hugsted",
@@ -60,7 +67,7 @@ const searchResult = [
     availabilityLabels: 2,
   },
   {
-    coverUrl: "images/book_cover_8.jpg",
+    coverUrl: bookCover1,
     heartFill: false,
     title: "Den lille prins (Ved Henrik Ægidius)",
     author: "Antoine de Saint-Exupéry",
@@ -68,7 +75,7 @@ const searchResult = [
     availabilityLabels: 2,
   },
   {
-    coverUrl: "images/book_cover_9.jpg",
+    coverUrl: bookCover2,
     heartFill: false,
     title: "Yayoi Kusama",
     author: "",
@@ -76,7 +83,7 @@ const searchResult = [
     availabilityLabels: 2,
   },
   {
-    coverUrl: "images/book_cover_10.jpg",
+    coverUrl: bookCover3,
     heartFill: false,
     title: "Kvinde kend din historie - spejl dig i fortiden",
     author: "Gry Jexen",
