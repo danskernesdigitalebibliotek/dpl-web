@@ -14,10 +14,10 @@ import { Button } from "../Buttons/Button";
 import { Cover } from "../cover/cover";
 import ReservationFormListItem from "./ReservationFormListItem";
 import {
-  AgencyBranch,
-  HoldingsForBibliographicalRecordLogisticsV1,
-  ReservationResponseV2
-} from "../../core/fbs/model";
+  Branch,
+  HoldingsForBibliographicalRecord,
+  ReservationResponse
+} from "@dpl/service-layer/fbs";
 import UserListItems from "./UserListItems";
 import ReservationSucces from "./ReservationSucces";
 import ReservationError from "./ReservationError";
@@ -101,7 +101,7 @@ export const ReservationModalBody = ({
     transformer: "jsonParse"
   });
 
-  const branches = config<AgencyBranch[]>("branchesConfig", {
+  const branches = config<Branch[]>("branchesConfig", {
     transformer: "jsonParse"
   });
   const blacklistBranchesInstantLoan = config(
@@ -124,7 +124,7 @@ export const ReservationModalBody = ({
   });
   const queryClient = useQueryClient();
   const [reservationResponse, setReservationResponse] =
-    useState<ReservationResponseV2 | null>(null);
+    useState<ReservationResponse | null>(null);
   const [openOrderResponse, setOpenOrderResponse] =
     useState<OpenOrderMutation | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
@@ -161,7 +161,7 @@ export const ReservationModalBody = ({
   }
   const { data: userData } = userResponse as { data: AuthenticatedPatron };
   const { data: holdingsData } = holdingsResponse as {
-    data: HoldingsForBibliographicalRecordLogisticsV1[];
+    data: HoldingsForBibliographicalRecord[];
   };
   const holdings = getTotalHoldings(holdingsData);
   const reservations = getTotalReservations(holdingsData);

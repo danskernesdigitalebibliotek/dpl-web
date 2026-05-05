@@ -1,5 +1,5 @@
 import { head, keys, values } from "lodash";
-import { LoanV2, ReservationDetailsV2 } from "../../fbs/model";
+import { Loan as FbsLoan, ReservationDetails } from "@dpl/service-layer/fbs";
 import { FaustId } from "../types/ids";
 import { ManifestationBasicDetailsFragment } from "../../dbc-gateway/generated/graphql";
 import { BasicDetailsType } from "../types/basic-details-type";
@@ -32,7 +32,7 @@ function getSeriesString(
 }
 
 // Loan is a loan from Publizon, and is the equivalent
-// to the LoanV2 type in FBS. These are mapped to the same
+// to the Loan type in FBS. These are mapped to the same
 // so digital/physical loans/reservations can use the same components,
 // as their UI is often quite similar
 export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
@@ -54,11 +54,11 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
   );
 };
 
-// LoanV2 is a loan from FBS, and is the equivalent
+// Loan is a loan from FBS, and is the equivalent
 // to the Loan type in Publizon. These are mapped to the same
 // so digital/physical loans/reservations can use the same components,
 // as their UI is often quite similar
-export const mapFBSLoanToLoanType = (list: LoanV2[]): LoanType[] => {
+export const mapFBSLoanToLoanType = (list: FbsLoan[]): LoanType[] => {
   return list.map(({ loanDetails, isRenewable, renewalStatusList }) => {
     return {
       dueDate: loanDetails.dueDate,
@@ -181,7 +181,7 @@ export const mapManifestationToBasicDetailsType = (
 };
 
 // Reservation is a reservation from Publizon, and is the equivalent
-// to the ReservationDetailsV2 type in FBS. These are mapped to the same
+// to the ReservationDetails type in FBS. These are mapped to the same
 // so digital/physical loans/reservations can use the same components,
 // as their UI is often quite similar
 export const mapPublizonReservationToReservationType = (
@@ -219,12 +219,12 @@ export const mapPublizonReservationToReservationType = (
   );
 };
 
-// ReservationDetailsV2 is a reservation from FBS, and is the equivalent
+// ReservationDetails is a reservation from FBS, and is the equivalent
 // to the Reservation type in Publizon. These are mapped to the same
 // so digital/physical loans/reservations can use the same components,
 // as their UI is often quite similar
 export const mapFBSReservationToReservationType = (
-  list: ReservationDetailsV2[]
+  list: ReservationDetails[]
 ): ReservationType[] => {
   return list.map(
     ({

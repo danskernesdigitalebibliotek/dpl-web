@@ -1,15 +1,14 @@
-import { RenewedLoanV2 } from "../../fbs/model";
+import { RenewedLoan } from "@dpl/service-layer/fbs";
 import { UseTextFunction } from "../text";
 import { RenewStatus } from "../types/renew-status";
 import { RequestStatus } from "../types/request";
 
-export const filterRenewResponseData = (data: RenewedLoanV2[]) => {
+export const filterRenewResponseData = (data: RenewedLoan[]) => {
   return data.filter((loan) => loan.renewalStatus[0] === RenewStatus.renewed);
 };
 
-export const succeededRenewalCount = (
-  renewingResponse: RenewedLoanV2[] | null
-) => filterRenewResponseData(renewingResponse || []).length;
+export const succeededRenewalCount = (renewingResponse: RenewedLoan[] | null) =>
+  filterRenewResponseData(renewingResponse || []).length;
 
 export const getRenewButtonLabel = ({
   isRenewable,

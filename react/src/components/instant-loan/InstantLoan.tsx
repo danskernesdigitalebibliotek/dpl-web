@@ -2,12 +2,12 @@ import React from "react";
 import { Manifestation } from "../../core/utils/types/entities";
 import DisclosureControllable from "../Disclosures/DisclosureControllable";
 import InstantLoanSummary from "./InstantLoanSummary";
-import { HoldingsLogisticsV1 } from "../../core/fbs/model";
+import { HoldingsLogistics } from "@dpl/service-layer/fbs";
 import InstantLoanBranch from "./InstantLoanBranch";
 
 type InstantLoanProps = {
   manifestation: Manifestation;
-  instantLoanBranchHoldings: HoldingsLogisticsV1[];
+  instantLoanBranchHoldings: HoldingsLogistics[];
 };
 
 const InstantLoan: React.FunctionComponent<InstantLoanProps> = ({

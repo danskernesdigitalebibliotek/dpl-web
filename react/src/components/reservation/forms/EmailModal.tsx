@@ -1,10 +1,10 @@
 import React from "react";
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { useText } from "../../../core/utils/text";
 import ModalReservationFormText from "./ModalReservationFormText";
 
 export interface EmailModalProps {
-  patron: PatronV5;
+  patron: PatronInfo;
 }
 
 export const EmailModalId = "reservation-form-email";

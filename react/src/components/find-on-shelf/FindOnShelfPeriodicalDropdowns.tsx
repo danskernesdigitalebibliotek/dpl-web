@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC, useState } from "react";
 import Dropdown from "../Dropdown/Dropdown";
-import { HoldingsForBibliographicalRecordLogisticsV1 } from "../../core/fbs/model";
+import { HoldingsForBibliographicalRecord } from "@dpl/service-layer/fbs";
 import {
   PeriodicalEdition,
   makePeriodicalEditionsFromHoldings,
@@ -14,7 +14,7 @@ import { groupObjectArrayByProperty } from "../../core/utils/helpers/general";
 import { useText } from "../../core/utils/text";
 
 export interface FindOnShelfPeriodicalDropdownProps {
-  manifestationsHoldings: HoldingsForBibliographicalRecordLogisticsV1[];
+  manifestationsHoldings: HoldingsForBibliographicalRecord[];
   setSelectedPeriodical: (selectedPeriodical: PeriodicalEdition) => void;
   selectedPeriodical: PeriodicalEdition;
 }

@@ -1,7 +1,7 @@
 import React, { FC, useState, FormEvent } from "react";
 import { set } from "lodash";
 import BranchesDropdown from "../patron-page/util/BranchesDropdown";
-import { PatronSettingsV4 } from "../../core/fbs/model";
+import { PatronSettings } from "@dpl/service-layer/fbs";
 import { useText } from "../../core/utils/text";
 import { useCreateV9 } from "../../core/fbs/fbs";
 import { patronAgeValid } from "../../core/utils/helpers/general";
@@ -9,7 +9,7 @@ import { useConfig } from "../../core/utils/config";
 import { useUrls } from "../../core/utils/url";
 import Link from "../../components/atoms/links/Link";
 import { getSubmitButtonText } from "./helper";
-import { convertPatronSettingsV4toV6 } from "../../core/utils/useSavePatron";
+import { convertPatronSettingstoV6 } from "../../core/utils/useSavePatron";
 import ContactInfoPhone from "../../components/contact-info-section/ContactInfoPhone";
 import ContactInfoEmail from "../../components/contact-info-section/ContactInfoEmail";
 import CheckBox from "../../components/checkbox/Checkbox";
@@ -35,7 +35,7 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
   const minAge = parseInt(config("minAgeConfig"), 10);
   const [validCpr] = useState<boolean>(patronAgeValid(cpr, minAge));
   const { mutate } = useCreateV9();
-  const [patron, setPatron] = useState<PatronSettingsV4>({
+  const [patron, setPatron] = useState<PatronSettings>({
     preferredPickupBranch: "",
     receiveEmail: true,
     receivePostalMail: false,
@@ -72,7 +72,7 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
         {
           data: {
             personIdentifier: cpr,
-            patron: convertPatronSettingsV4toV6(patron),
+            patron: convertPatronSettingstoV6(patron),
             pincode: pin
           }
         },

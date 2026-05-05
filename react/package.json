@@ -40,7 +40,7 @@
     "codegen:dbc:gateway": "CODEGEN_SCHEMA_PROFILE=next graphql-codegen -r dotenv/config --config dbc-gateway.codegen.yml",
     "codegen:rest-services": "orval",
     "codegen:client:fbs": "rm -rf src/core/fbs/model/*.* && orval --project fbsAdapter",
-"codegen:client:publizon": "rm -rf src/core/publizon/model/*.* && orval --project publizonAdapter",
+    "codegen:client:publizon": "rm -rf src/core/publizon/model/*.* && orval --project publizonAdapter",
     "codegen:client:dpl-cms": "rm -rf src/core/dpl-cms/model/*.* && orval --project dplCms",
     "post-process-generated-graphql": "ts-node ./scripts/post-process-generated-graphql.ts"
   },
@@ -152,6 +152,7 @@
     "prop-types": "Since we use former ddb-react components that depend on prop-types we keep this. Should be removed when usage of prop-types is deprecated."
   },
   "dependencies": {
+    "@dpl/service-layer": "file:../serviceLayer",
     "@danskernesdigitalebibliotek/dpl-design-system": "0.0.0-branch-ddf-37-migration",
     "@fullcalendar/core": "^6.1.20",
     "@fullcalendar/daygrid": "^6.1.20",

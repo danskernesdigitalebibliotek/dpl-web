@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { useText } from "../../../core/utils/text";
 import { FriendlyCardResult } from "../../../core/publizon/model";
 
 interface BasicDetailsSectionProps {
-  patron: PatronV5;
+  patron: PatronInfo;
   patronCardNumber?: FriendlyCardResult | null;
 }
 

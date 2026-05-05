@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import { FeeV2 } from "../../../core/fbs/model";
+import { Fee } from "@dpl/service-layer/fbs";
 import FeeInfo from "./fee-info";
 import fetchMaterial, {
   MaterialProps
@@ -15,7 +15,7 @@ import { isEnterOrSpacePressed } from "../../../core/utils/helpers/general";
 export interface StackableFeeProps {
   amountOfMaterialsWithDueDate: number;
   material?: BasicDetailsType;
-  feeData: FeeV2;
+  feeData: Fee;
   materialItemNumber: string;
   openDetailsModalClickEvent: (feeId: number) => void;
 }

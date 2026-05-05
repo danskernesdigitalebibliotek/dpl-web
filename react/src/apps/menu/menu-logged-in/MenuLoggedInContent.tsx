@@ -4,7 +4,7 @@ import Link from "../../../components/atoms/links/Link";
 import MenuNavigationItem, {
   MenuNavigationDataType
 } from "../menu-navigation-list/MenuNavigationItem";
-import { FeeV2 } from "../../../core/fbs/model";
+import { Fee } from "@dpl/service-layer/fbs";
 import { useUrls } from "../../../core/utils/url";
 import { useGetFeesV2 } from "../../../core/fbs/fbs";
 import { useConfig } from "../../../core/utils/config";
@@ -36,7 +36,7 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
     all: { loans, overdue: loansOverdue, soonOverdue: loansSoonOverdue }
   } = useLoans();
   const { data: patronData } = usePatronData();
-  const { data: fbsFees = [] } = useGetFeesV2<FeeV2[]>({
+  const { data: fbsFees = [] } = useGetFeesV2<Fee[]>({
     includepaid: false,
     includenonpayable: true
   });

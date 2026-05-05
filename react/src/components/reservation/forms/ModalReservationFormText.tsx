@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import React, { memo, useState } from "react";
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { stringifyValue } from "../../../core/utils/helpers/general";
 import Modal, { useModalButtonHandler } from "../../../core/utils/modal";
 import { useText, UseTextFunction } from "../../../core/utils/text";
@@ -25,7 +25,7 @@ export interface ModalReservationFormTextProps {
     description: string;
     label: string;
   };
-  patron: PatronV5;
+  patron: PatronInfo;
 }
 
 const modalProps = (

@@ -1,7 +1,4 @@
-import {
-  AvailabilityV3,
-  HoldingsLogisticsV1
-} from "../../../src/core/fbs/model";
+import { Availability, HoldingsLogistics } from "@dpl/service-layer/fbs";
 import {
   holdingsLogisticsFactory,
   materialFactory
@@ -56,7 +53,7 @@ export const createHoldingsAtLibrary = ({
   availableCount,
   unavailableCount,
   placement
-}: CreateHoldingsOptions): HoldingsLogisticsV1 => {
+}: CreateHoldingsOptions): HoldingsLogistics => {
   return holdingsLogisticsFactory.build({
     branch: library,
     lmsPlacement: {
@@ -99,7 +96,7 @@ export const scenarios = {
       available: true,
       reservable: true,
       reservations: 0
-    } as Partial<AvailabilityV3>,
+    } as Partial<Availability>,
     holdings: [
       createHoldingsAtLibrary({
         library: libraries.hovedbiblioteket,
@@ -133,7 +130,7 @@ export const scenarios = {
       available: false,
       reservable: true,
       reservations: 0
-    } as Partial<AvailabilityV3>,
+    } as Partial<Availability>,
     holdings: [
       createHoldingsAtLibrary({
         library: libraries.hovedbiblioteket,
@@ -149,7 +146,7 @@ export const scenarios = {
       available: false,
       reservable: false,
       reservations: 0
-    } as Partial<AvailabilityV3>,
+    } as Partial<Availability>,
     holdings: []
   },
 
@@ -158,7 +155,7 @@ export const scenarios = {
       available: false,
       reservable: true,
       reservations: 2
-    } as Partial<AvailabilityV3>,
+    } as Partial<Availability>,
     holdings: []
   },
 
@@ -167,7 +164,7 @@ export const scenarios = {
       available: true,
       reservable: true,
       reservations: 0
-    } as Partial<AvailabilityV3>,
+    } as Partial<Availability>,
     holdings: [
       holdingsLogisticsFactory.build({
         branch: libraries.hovedbiblioteket,

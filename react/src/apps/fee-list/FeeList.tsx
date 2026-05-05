@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "../../components/atoms/links/Link";
 import { useGetFeesV2 } from "../../core/fbs/fbs";
-import { FeeV2 } from "../../core/fbs/model";
+import { Fee } from "@dpl/service-layer/fbs";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import { useText } from "../../core/utils/text";
 import { useUrls } from "../../core/utils/url";
@@ -43,7 +43,7 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
   const viewFeesAndCompensationRatesUrl = u("viewFeesAndCompensationRatesUrl");
   const [feeDetailsModalId, setFeeDetailsModalId] = useState("");
   const { open } = useModalButtonHandler();
-  const { data: fbsFees = [], isLoading } = useGetFeesV2<FeeV2[]>({
+  const { data: fbsFees = [], isLoading } = useGetFeesV2<Fee[]>({
     includepaid: false,
     includenonpayable: true
   });
@@ -52,7 +52,7 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
     publizon: { overdue: loansOverdueDigital, isLoading: isLoadingPublizon }
   } = useLoans();
   const [overdueLoans, setOverdueLoans] = useState<LoanType[]>([]);
-  const [feeDetailsData, setFeeDetailsData] = useState<FeeV2[]>();
+  const [feeDetailsData, setFeeDetailsData] = useState<Fee[]>();
   const dueDate: string | number = "yesterday";
   const { dueDateModal, allLoansId } = getModalIds();
   const [modalLoan, setModalLoan] = useState<LoanType | null>(null);
@@ -183,7 +183,7 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
       <FeeDetailsModal modalId={feeDetailsModalId} material={{}}>
         {feeDetailsData && (
           <FeeDetailsContent
-            feeDetailsData={feeDetailsData[0] as unknown as FeeV2}
+            feeDetailsData={feeDetailsData[0] as unknown as Fee}
           />
         )}
       </FeeDetailsModal>

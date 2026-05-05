@@ -1,13 +1,13 @@
-import { FeeV2 } from "../../../core/fbs/model";
+import { Fee } from "@dpl/service-layer/fbs";
 
-export const getFeeObjectByFeeId = (feeObj: FeeV2[], feeId: number) => {
+export const getFeeObjectByFeeId = (feeObj: Fee[], feeId: number) => {
   return feeObj.filter((item) => {
     return item.feeId === feeId;
   });
 };
 
 export const getFeesBasedOnPayableByClient = (
-  fees: FeeV2[],
+  fees: Fee[],
   payableByClient: boolean
 ) => {
   return fees.filter((fee) => {
@@ -16,7 +16,7 @@ export const getFeesBasedOnPayableByClient = (
 };
 
 export const calculateFeeAmount =
-  (fees: FeeV2[], payableByClient: boolean) => () => {
+  (fees: Fee[], payableByClient: boolean) => () => {
     return getFeesBasedOnPayableByClient(fees, payableByClient).reduce(
       (accumulator, { amount }) => accumulator + amount,
       0

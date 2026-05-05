@@ -1,6 +1,6 @@
-import { AgencyBranch, HoldingsLogisticsV1 } from "../../../core/fbs/model";
+import { Branch, HoldingsLogistics } from "@dpl/service-layer/fbs";
 
-const branchHoldings: HoldingsLogisticsV1[] = [
+const branchHoldings: HoldingsLogistics[] = [
   {
     branch: {
       branchId: "DK-775140",
@@ -149,7 +149,7 @@ const branchHoldings: HoldingsLogisticsV1[] = [
     ]
   }
 ];
-const whitelist: AgencyBranch[] = [
+const whitelist: Branch[] = [
   {
     branchId: "DK-775147",
     title: "Hasle"

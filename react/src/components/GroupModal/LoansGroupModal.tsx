@@ -11,7 +11,7 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { useRenewLoansV2, getGetLoansV2QueryKey } from "../../core/fbs/fbs";
 import GroupModalLoansList from "./GroupModalLoansList";
 import LoansGroupModalButton from "./LoansGroupModalButton";
-import { RenewedLoanV2 } from "../../core/fbs/model/renewedLoanV2";
+import { RenewedLoan } from "@dpl/service-layer/fbs";
 import RenewalModalMessage from "../renewal/RenewalModalMessage";
 import { succeededRenewalCount } from "../../core/utils/helpers/renewal";
 import { useSingleRequestWithStatus } from "../../core/utils/useRequestsWithStatus";
@@ -59,7 +59,7 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
   const renewableMaterials = getAmountOfRenewableLoans(loansModal);
   const [materialsToRenew, setMaterialsToRenew] = useState<ListType[]>([]);
   const [renewingResponse, setRenewingResponse] = useState<
-    RenewedLoanV2[] | null
+    RenewedLoan[] | null
   >(null);
   const { track } = useEventStatistics();
   const {
@@ -71,7 +71,7 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
     {
       data: number[];
     },
-    RenewedLoanV2[] | null
+    RenewedLoan[] | null
   >({
     request: {
       params: {

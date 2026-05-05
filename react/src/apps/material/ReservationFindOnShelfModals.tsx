@@ -2,14 +2,14 @@ import React from "react";
 import ReservationModal from "../../components/reservation/ReservationModal";
 import FindOnShelfModal from "../../components/find-on-shelf/FindOnShelfModal";
 import { isAnonymous, isBlocked } from "../../core/utils/helpers/user";
-import { PatronV5 } from "../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { PeriodicalEdition } from "../../components/material/periodical/helper";
 import { getManifestationTitle, getWorkTitle } from "./helper";
 import { first } from "lodash";
 
 export interface ReservationFindOnShelfModalsProps {
-  patron: PatronV5 | undefined;
+  patron: PatronInfo | undefined;
   manifestations: Manifestation[];
   selectedPeriodical: PeriodicalEdition | null;
   setSelectedPeriodical: React.Dispatch<

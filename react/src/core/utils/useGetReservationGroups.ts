@@ -1,6 +1,6 @@
 import { groupBy, map, min, reduce } from "lodash";
 import { useGetReservationsV2 } from "../fbs/fbs";
-import { ReservationDetailsV2 } from "../fbs/model";
+import { ReservationDetails } from "@dpl/service-layer/fbs";
 
 /**
  * Custom reservation details type which covers parallel reservations.
@@ -17,7 +17,7 @@ import { ReservationDetailsV2 } from "../fbs/model";
  * reservations in the group.
  */
 export type ReservationGroupDetails = Omit<
-  ReservationDetailsV2,
+  ReservationDetails,
   "reservationId" | "recordId"
 > & {
   records: {
@@ -26,7 +26,7 @@ export type ReservationGroupDetails = Omit<
   };
 };
 
-function groupReservations(data: ReservationDetailsV2[]) {
+function groupReservations(data: ReservationDetails[]) {
   const reservationGroups = groupBy(data, (reservation) => {
     if (reservation.reservationType === "parallel") {
       return reservation.transactionId;
@@ -36,7 +36,7 @@ function groupReservations(data: ReservationDetailsV2[]) {
 
   const processedReserations = map(
     reservationGroups,
-    (reservationGroup: ReservationDetailsV2[]): ReservationGroupDetails => {
+    (reservationGroup: ReservationDetails[]): ReservationGroupDetails => {
       return {
         // Use the first reservation in the group as the base.
         ...reservationGroup[0],
@@ -88,8 +88,8 @@ if (import.meta.vitest) {
   describe("Reservation grouping", () => {
     // Generator for setting up mock data with sensible defaults.
     function generateReservation(
-      data: Partial<ReservationDetailsV2>
-    ): ReservationDetailsV2 {
+      data: Partial<ReservationDetails>
+    ): ReservationDetails {
       return {
         reservationId: 123,
         transactionId: "transaction",

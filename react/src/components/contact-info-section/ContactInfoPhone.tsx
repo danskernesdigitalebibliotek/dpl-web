@@ -1,13 +1,13 @@
 import * as React from "react";
 import { FC } from "react";
-import { PatronSettingsV3, PatronV5 } from "../../core/fbs/model";
+import { PatronSettings, PatronInfo } from "@dpl/service-layer/fbs";
 import CheckBox from "../checkbox/Checkbox";
 import { useText } from "../../core/utils/text";
 import { ChangePatronProps } from "./types";
 import TextInput from "../forms/input/TextInput";
 
 export interface ContactInfoPhoneProps {
-  patron: PatronV5 | PatronSettingsV3 | null;
+  patron: PatronInfo | PatronSettings | null;
   changePatron: ChangePatronProps;
   showCheckboxes: boolean;
   className?: string;

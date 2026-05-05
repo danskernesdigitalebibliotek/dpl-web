@@ -13,7 +13,7 @@ import {
   getGetReservationsV2QueryKey
 } from "../../../../core/fbs/fbs";
 import { getPreferredBranch } from "../../../../components/reservation/helper";
-import { AgencyBranch } from "../../../../core/fbs/model";
+import { Branch } from "@dpl/service-layer/fbs";
 import ListDetails from "../../../../components/list-details/list-details";
 import { useConfig } from "../../../../core/utils/config";
 import PickupModal from "../../../../components/reservation/forms/PickupModal";
@@ -68,7 +68,7 @@ const PhysicalListDetails: FC<PhysicalListDetailsProps & MaterialProps> = ({
   const openModal = (type: ModalReservationFormTextType) => () => {
     open(modalReservationFormId(type));
   };
-  const branches = config<AgencyBranch[]>("branchesConfig", {
+  const branches = config<Branch[]>("branchesConfig", {
     transformer: "jsonParse"
   });
   const blacklistBranches = config("blacklistedPickupBranchesConfig", {

@@ -4,13 +4,13 @@ import {
   getAllFaustIds,
   convertPostIdToFaustId
 } from "../../core/utils/helpers/general";
-import { AvailabilityV3 } from "../../core/fbs/model";
+import { Availability } from "@dpl/service-layer/fbs";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
 import { useConfig } from "../../core/utils/config";
 import useGetAvailability from "../../core/utils/useGetAvailability";
 
-type ManifestationWithAvailability = Manifestation & AvailabilityV3;
+type ManifestationWithAvailability = Manifestation & Availability;
 
 const useAlternativeAvailableManifestation = (
   work: Work,

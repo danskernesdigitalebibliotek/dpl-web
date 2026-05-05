@@ -18,9 +18,9 @@ import {
   useGetHoldingsLogisticsV1
 } from "../../core/fbs/fbs";
 import {
-  HoldingsForBibliographicalRecordLogisticsV1,
-  HoldingsLogisticsV1
-} from "../../core/fbs/model";
+  HoldingsForBibliographicalRecord,
+  HoldingsLogistics
+} from "@dpl/service-layer/fbs";
 import { UseConfigFunction } from "../../core/utils/config";
 import {
   getIdFromUrlHash,
@@ -348,7 +348,7 @@ export const getDetailsListData = ({
 };
 
 export const getTotalHoldings = (
-  holdings: HoldingsForBibliographicalRecordLogisticsV1[]
+  holdings: HoldingsForBibliographicalRecord[]
 ) => {
   return holdings.reduce((acc, curr) => {
     return (
@@ -361,7 +361,7 @@ export const getTotalHoldings = (
 };
 
 export const getTotalReservations = (
-  holdings: HoldingsForBibliographicalRecordLogisticsV1[]
+  holdings: HoldingsForBibliographicalRecord[]
 ) => {
   return holdings.reduce((acc, curr) => {
     return acc + curr.reservations;
@@ -369,7 +369,7 @@ export const getTotalReservations = (
 };
 
 export const totalAvailableMaterials = (
-  materials: HoldingsLogisticsV1["materials"]
+  materials: HoldingsLogistics["materials"]
 ) => {
   return materials.reduce((acc, curr) => (curr.available ? acc + 1 : acc), 0);
 };

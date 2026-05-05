@@ -3,7 +3,7 @@ import SubtitlesIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/
 import MessageIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Message.svg";
 import { useText } from "../../core/utils/text";
 import ReservationFormListItem from "./ReservationFormListItem";
-import { PatronV5 } from "../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import EmailModal from "./forms/EmailModal";
 import {
@@ -18,7 +18,7 @@ import { isConfigValueOne } from "./helper";
 import { RequestStatus } from "../../core/utils/types/request";
 
 export interface OnlineInternalModalUserListItemsProps {
-  patron: PatronV5;
+  patron: PatronInfo;
   reservationStatus: RequestStatus;
 }
 

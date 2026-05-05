@@ -4,14 +4,14 @@ import { tallyUpFees } from "../../../core/utils/helpers/general";
 import { useText } from "../../../core/utils/text";
 import { useUrls } from "../../../core/utils/url";
 import WarningBar from "../../loan-list/materials/utils/warning-bar";
-import { FeeV2 } from "../../../core/fbs/model/feeV2";
+import { Fee } from "@dpl/service-layer/fbs";
 
 const DashboardFees: FC = () => {
   const t = useText();
   const u = useUrls();
 
   const feesPageUrl = u("feesPageUrl");
-  const { data: fbsFees = [], isLoading } = useGetFeesV2<FeeV2[]>({
+  const { data: fbsFees = [], isLoading } = useGetFeesV2<Fee[]>({
     includepaid: false,
     includenonpayable: true
   });

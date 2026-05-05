@@ -1,12 +1,12 @@
 import React, { FC, ReactNode } from "react";
 import ListHeader from "../../components/list-header/list-header";
-import { FeeV2 } from "../../core/fbs/model";
+import { Fee } from "@dpl/service-layer/fbs";
 import StackableFees from "./stackable-fees/stackable-fees";
 import { FaustId } from "../../core/utils/types/ids";
 
 interface ListProps {
   openDetailsModalClickEvent: (feeId: number) => void;
-  fees: FeeV2[] | null;
+  fees: Fee[] | null;
   dataCy: string;
   listHeader: ReactNode;
   totalText: string;

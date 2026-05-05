@@ -1,14 +1,14 @@
 import { Factory } from "fishery";
 import {
-  HoldingsForBibliographicalRecordLogisticsV1,
-  HoldingsLogisticsV1,
-  MaterialV3
-} from "../../../src/core/fbs/model";
+  HoldingsForBibliographicalRecord,
+  HoldingsLogistics,
+  HoldingsMaterial
+} from "@dpl/service-layer/fbs";
 
 /**
  * Factory for individual material items
  */
-export const materialFactory = Factory.define<MaterialV3>(() => ({
+export const materialFactory = Factory.define<HoldingsMaterial>(() => ({
   itemNumber: "item-001",
   available: true,
   periodical: undefined,
@@ -22,7 +22,7 @@ export const materialFactory = Factory.define<MaterialV3>(() => ({
  * Factory for holdings at a specific library branch
  * All data should be provided by scenarios
  */
-export const holdingsLogisticsFactory = Factory.define<HoldingsLogisticsV1>(
+export const holdingsLogisticsFactory = Factory.define<HoldingsLogistics>(
   () => ({
     branch: {
       branchId: "",
@@ -44,7 +44,7 @@ export const holdingsLogisticsFactory = Factory.define<HoldingsLogisticsV1>(
  * Holdings should be provided by scenarios, not defaults
  */
 export const holdingsForRecordFactory =
-  Factory.define<HoldingsForBibliographicalRecordLogisticsV1>(() => ({
+  Factory.define<HoldingsForBibliographicalRecord>(() => ({
     recordId: "870970-basis:52557240",
     reservable: true,
     reservations: 0,

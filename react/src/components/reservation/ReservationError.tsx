@@ -1,16 +1,13 @@
 import FocusTrap from "focus-trap-react";
 import React from "react";
-import {
-  ReservationResponseV2,
-  ReservationResultV2
-} from "../../core/fbs/model";
+import { ReservationResponse, ReservationResult } from "@dpl/service-layer/fbs";
 import { useText } from "../../core/utils/text";
 import { Button } from "../Buttons/Button";
 
 type ReservationErrorProps = {
-  reservationResults: ReservationResultV2[];
+  reservationResults: ReservationResult[];
   setReservationResponse: (
-    reservationResponse: ReservationResponseV2 | null
+    reservationResponse: ReservationResponse | null
   ) => void;
 };
 
@@ -20,7 +17,7 @@ const ReservationError: React.FC<ReservationErrorProps> = ({
 }) => {
   const t = useText();
 
-  const handleErrorText = (reservationResultArray: ReservationResultV2[]) => {
+  const handleErrorText = (reservationResultArray: ReservationResult[]) => {
     const hasAlreadyReserved = reservationResultArray.some(
       ({ result }) => result === "already_reserved"
     );

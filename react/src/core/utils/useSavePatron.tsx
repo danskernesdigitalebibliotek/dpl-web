@@ -1,10 +1,10 @@
 import { useQueryClient } from "react-query";
 import { Patron } from "./types/entities";
 import {
-  PatronSettingsV4,
+  PatronSettings,
   PatronSettingsV6,
   PincodeChange
-} from "../fbs/model";
+} from "@dpl/service-layer/fbs";
 import {
   getGetPatronInformationByPatronIdV4QueryKey,
   useUpdateV8
@@ -32,7 +32,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
   const { mutate } = useUpdateV8();
   const queryClient = useQueryClient();
 
-  const savePatron = (data: Partial<PatronSettingsV4>) => {
+  const savePatron = (data: Partial<PatronSettings>) => {
     const { onSuccess, onError } = fetchHandlers?.savePatron || {};
 
     if (!patron || !userInfo) {
@@ -49,7 +49,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
             libraryCardNumber: patron.patronId.toString()
           },
           patron: {
-            ...convertPatronSettingsV4toV6({
+            ...convertPatronSettingstoV6({
               ...patron,
               ...data
             })
@@ -107,21 +107,21 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
   return { savePatron, savePincode };
 };
 
-export function convertPatronSettingsV4toV6(
-  patronSettings: PatronSettingsV4
+export function convertPatronSettingstoV6(
+  patronSettings: PatronSettings
 ): PatronSettingsV6;
-export function convertPatronSettingsV4toV6(
-  patronSettings: Partial<PatronSettingsV4>
+export function convertPatronSettingstoV6(
+  patronSettings: Partial<PatronSettings>
 ): Partial<PatronSettingsV6> & { guardianVisibility: boolean };
-export function convertPatronSettingsV4toV6(
-  patronSettings: Partial<PatronSettingsV4> | PatronSettingsV4
+export function convertPatronSettingstoV6(
+  patronSettings: Partial<PatronSettings> | PatronSettings
 ):
   | (Partial<PatronSettingsV6> & { guardianVisibility: boolean })
   | PatronSettingsV6 {
   return {
     ...patronSettings,
     // PatronSettingsV6 supports multiple email addresses and phone numbers with
-    // individual notifications. Convert the current PatronSettingsV4 with
+    // individual notifications. Convert the current PatronSettings with
     // single values to an array.
     emailAddresses: patronSettings.emailAddress
       ? [

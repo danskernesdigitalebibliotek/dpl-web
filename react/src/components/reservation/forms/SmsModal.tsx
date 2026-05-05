@@ -1,10 +1,10 @@
 import React from "react";
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { useText } from "../../../core/utils/text";
 import ModalReservationFormText from "./ModalReservationFormText";
 
 export interface SmsModalProps {
-  patron: PatronV5;
+  patron: PatronInfo;
 }
 
 const SmsModal = ({ patron, patron: { phoneNumber } }: SmsModalProps) => {

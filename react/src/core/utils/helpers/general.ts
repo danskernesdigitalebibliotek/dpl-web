@@ -14,7 +14,7 @@ import { getUrlQueryParam } from "./url";
 import { LoanType } from "../types/loan-type";
 import { ListType } from "../types/list-type";
 import { ManifestationReviewFieldsFragment } from "../../dbc-gateway/generated/graphql";
-import { FeeV2 } from "../../fbs/model/feeV2";
+import { Fee } from "@dpl/service-layer/fbs";
 import { ReservationType } from "../types/reservation-type";
 import { ManifestationMaterialType } from "../types/material-type";
 import { store } from "../../store";
@@ -328,7 +328,7 @@ export const sameLoanDate = (loans: string[]): boolean => {
   return loans.every((loanDate, i, arr) => loanDate === arr[0]);
 };
 
-export const tallyUpFees = (fees: FeeV2[]) => {
+export const tallyUpFees = (fees: Fee[]) => {
   return formatCurrency(fees.reduce((total, { amount }) => total + amount, 0));
 };
 

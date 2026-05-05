@@ -1,10 +1,10 @@
 import { UseTextFunction } from "../../core/utils/text";
 import {
-  AgencyBranch,
+  Branch,
   CreateReservation,
-  CreateReservationBatchV2,
-  HoldingsLogisticsV1
-} from "../../core/fbs/model";
+  CreateReservationBatch,
+  HoldingsLogistics
+} from "@dpl/service-layer/fbs";
 import {
   convertPostIdToFaustId,
   creatorsToString,
@@ -23,7 +23,7 @@ import { Periods } from "./types";
 export const isConfigValueOne = (configValue: string | undefined | string[]) =>
   configValue === "1";
 
-export const getPreferredBranch = (id: string, array: AgencyBranch[]) => {
+export const getPreferredBranch = (id: string, array: Branch[]) => {
   const locationItem = array.find((item) => item.branchId === id);
   return locationItem ? locationItem.title : id;
 };
@@ -99,7 +99,7 @@ export const constructReservationData = ({
   selectedBranch: string | null;
   expiryDate: string | null;
   periodical: PeriodicalEdition | null;
-}): CreateReservationBatchV2 => {
+}): CreateReservationBatch => {
   return {
     reservations: constructReservations({
       manifestations,
@@ -195,10 +195,10 @@ export const getReservationModalTypeTranslation = (
   }
 };
 
-export const consolidatedHoldings = (branchHoldings: HoldingsLogisticsV1[]) => {
+export const consolidatedHoldings = (branchHoldings: HoldingsLogistics[]) => {
   const processedBranches = new Map<
     string,
-    Pick<HoldingsLogisticsV1, "branch" | "materials">
+    Pick<HoldingsLogistics, "branch" | "materials">
   >();
 
   branchHoldings.forEach(({ branch, materials }) => {
@@ -220,8 +220,8 @@ export const consolidatedHoldings = (branchHoldings: HoldingsLogisticsV1[]) => {
 };
 
 export const getInstantLoanBranchHoldings = (
-  branchHoldings: HoldingsLogisticsV1[],
-  whitelist: AgencyBranch[],
+  branchHoldings: HoldingsLogistics[],
+  whitelist: Branch[],
   instantLoanStrings: string[]
 ) => {
   const whitelistBranchIds = whitelist.map(({ branchId }) => branchId);
@@ -252,7 +252,7 @@ export const getInstantLoanBranchHoldings = (
 };
 
 export const getInstantLoanBranchHoldingsAboveThreshold = (
-  instantLoanBranchHoldings: HoldingsLogisticsV1[],
+  instantLoanBranchHoldings: HoldingsLogistics[],
   instantLoanThresholdConfig: string | null
 ) =>
   instantLoanBranchHoldings.filter(

@@ -1,4 +1,4 @@
-import { ReservationDetailsV2 } from "../../../core/fbs/model";
+import { ReservationDetails } from "@dpl/service-layer/fbs";
 import {
   calculateRoundedUpDaysUntil,
   formatDateDependingOnDigitalMaterial,
@@ -8,7 +8,7 @@ import { UseTextFunction } from "../../../core/utils/text";
 import { ReservationType } from "../../../core/utils/types/reservation-type";
 
 export const sortByOldestPickupDeadline = (
-  list: ReservationType[] | ReservationDetailsV2[]
+  list: ReservationType[] | ReservationDetails[]
 ) => {
   return list.sort(
     (objA, objB) =>

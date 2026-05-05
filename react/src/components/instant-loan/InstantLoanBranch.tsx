@@ -1,9 +1,9 @@
 import React from "react";
-import { HoldingsLogisticsV1 } from "../../core/fbs/model";
+import { HoldingsLogistics } from "@dpl/service-layer/fbs";
 import AvailabilityLabelVisual from "../availability-label/availability-label-visual";
 
 type InstantLoanBranchProps = {
-  branch: HoldingsLogisticsV1;
+  branch: HoldingsLogistics;
   materialType: string;
 };
 

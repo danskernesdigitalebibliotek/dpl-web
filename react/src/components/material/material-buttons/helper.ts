@@ -1,4 +1,4 @@
-import { AvailabilityV3 } from "../../../core/fbs/model/availabilityV3";
+import { Availability } from "@dpl/service-layer/fbs";
 import { Manifestation } from "../../../core/utils/types/entities";
 import articleTypes from "../../../core/utils/types/article-types";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
@@ -60,7 +60,7 @@ export const isArticle = (manifestations: Manifestation[]) => {
   );
 };
 
-export const areAnyAvailable = (availability: AvailabilityV3[]) => {
+export const areAnyAvailable = (availability: Availability[]) => {
   return availability.some((item) => item.available);
 };
 

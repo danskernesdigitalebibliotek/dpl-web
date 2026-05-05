@@ -1,11 +1,11 @@
 import { Factory } from "fishery";
-import { AvailabilityV3 } from "../../../src/core/fbs/model";
+import { Availability } from "@dpl/service-layer/fbs";
 
 /**
- * Factory for FBS AvailabilityV3
+ * Factory for FBS Availability
  * Default represents a material that is available and reservable with no queue
  */
-export const availabilityFactory = Factory.define<AvailabilityV3>(() => ({
+export const availabilityFactory = Factory.define<Availability>(() => ({
   recordId: "870970-basis:52557240",
   available: true,
   reservable: true,

@@ -1,4 +1,4 @@
-import { RenewedLoanV2 } from "../../../core/fbs/model/renewedLoanV2";
+import { RenewedLoan } from "@dpl/service-layer/fbs";
 import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
 import { UseTextFunction } from "../../../core/utils/text";
@@ -13,7 +13,7 @@ export const removeLoansWithDuplicateDueDate = (
 export const loansAreEmpty = (list: LoanType[] | null) =>
   Array.isArray(list) && list.length === 0;
 
-export const getRenewedIds = (list: RenewedLoanV2[]) => {
+export const getRenewedIds = (list: RenewedLoan[]) => {
   return list.map(({ loanDetails }) => loanDetails.recordId);
 };
 export const materialsAreStacked = (materialsInStack: number) => {

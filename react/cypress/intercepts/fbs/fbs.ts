@@ -7,7 +7,7 @@ import { newBookManifestation } from "../../factories/manifestation/variants/new
 import { audioBookManifestation } from "../../factories/manifestation/variants/audioBookManifestation";
 import { eBookManifestation } from "../../factories/manifestation/variants/eBookManifestation";
 import { periodicalManifestation } from "../../factories/material/variants/periodicalMaterial";
-import { ReservationResponseV2 } from "../../../src/core/fbs/model";
+import { ReservationResponse } from "@dpl/service-layer/fbs";
 import { convertPostIdToFaustId } from "../../../src/core/utils/helpers/general";
 import { Pid } from "../../../src/core/utils/types/ids";
 /**
@@ -101,7 +101,7 @@ export const interceptFbsCalls = () => {
  * Sets up intercept to simulate successful reservation creation
  */
 export const givenReservationWillSucceed = (
-  overrides?: Partial<ReservationResponseV2>
+  overrides?: Partial<ReservationResponse>
 ) => {
   cy.intercept("POST", "**/external/v1/**/patrons/**/reservations/v2", {
     statusCode: 200,

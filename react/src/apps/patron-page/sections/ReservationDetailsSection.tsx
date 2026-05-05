@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import BranchesDropdown from "../util/BranchesDropdown";
 import { useText } from "../../../core/utils/text";
 
@@ -8,7 +8,7 @@ export interface ChangePatronProps {
 }
 
 interface ReservationDetailsSectionProps {
-  patron: PatronV5;
+  patron: PatronInfo;
   changePatron: ChangePatronProps;
 }
 

@@ -1,14 +1,14 @@
 import { Factory } from "fishery";
 import {
-  ReservationResponseV2,
-  ReservationDetailsV2,
-  ReservationResultV2
-} from "../../../src/core/fbs/model";
+  ReservationResponse,
+  ReservationDetails,
+  ReservationResult
+} from "@dpl/service-layer/fbs";
 
 /**
  * Factory for FBS reservation details
  */
-export const reservationDetailsFactory = Factory.define<ReservationDetailsV2>(
+export const reservationDetailsFactory = Factory.define<ReservationDetails>(
   () => ({
     reservationId: 12345,
     recordId: "12345678",
@@ -29,7 +29,7 @@ export const reservationDetailsFactory = Factory.define<ReservationDetailsV2>(
 /**
  * Factory for FBS reservation result
  */
-export const reservationResultFactory = Factory.define<ReservationResultV2>(
+export const reservationResultFactory = Factory.define<ReservationResult>(
   () => ({
     result: "success",
     recordId: "12345678",
@@ -40,7 +40,7 @@ export const reservationResultFactory = Factory.define<ReservationResultV2>(
 /**
  * Factory for FBS reservation response
  */
-export const reservationResponseFactory = Factory.define<ReservationResponseV2>(
+export const reservationResponseFactory = Factory.define<ReservationResponse>(
   () => ({
     success: true,
     reservationResults: [reservationResultFactory.build()]

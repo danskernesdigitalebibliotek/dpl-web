@@ -1,4 +1,4 @@
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import useSavePatron from "../../../core/utils/useSavePatron";
 
 export type ModalReservationFormTextType =
@@ -25,7 +25,7 @@ export const constructPatronSaveData = ({
 }: {
   type: string;
   value: string;
-  patron: PatronV5;
+  patron: PatronInfo;
 }) => {
   const defaultData = {
     preferredPickupBranch,
@@ -58,7 +58,7 @@ type SaveText = {
   type: ModalReservationFormTextType;
   changedText: string;
   savedText?: string;
-  patron: PatronV5;
+  patron: PatronInfo;
   savePatron: ReturnType<typeof useSavePatron>["savePatron"];
 };
 

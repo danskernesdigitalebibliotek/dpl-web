@@ -5,7 +5,7 @@ import { useRenewLoansV2, getGetLoansV2QueryKey } from "../../../core/fbs/fbs";
 import { LoanId } from "../../../core/utils/types/ids";
 import { Button } from "../../../components/Buttons/Button";
 import { RequestStatus } from "../../../core/utils/types/request";
-import { RenewedLoanV2 } from "../../../core/fbs/model";
+import { RenewedLoan } from "@dpl/service-layer/fbs";
 import { getRenewButtonLabel } from "../../../core/utils/helpers/renewal";
 import { useEventStatistics } from "../../../core/statistics/useStatistics";
 import { statistics } from "../../../core/statistics/statistics";
@@ -20,7 +20,7 @@ interface RenewButtonProps {
   renewingStatus: RequestStatus;
   renewalStatusList: string[];
   loanType: string;
-  setRenewingResponse: (response: RenewedLoanV2[] | null) => void;
+  setRenewingResponse: (response: RenewedLoan[] | null) => void;
 }
 
 const RenewButton: FC<RenewButtonProps> = ({

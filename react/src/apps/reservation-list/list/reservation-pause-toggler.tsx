@@ -2,13 +2,13 @@ import React, { useState, FC, useEffect } from "react";
 import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reservations.svg";
 import { useModalButtonHandler } from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
-import { PatronV5 } from "../../../core/fbs/model";
+import { PatronInfo } from "@dpl/service-layer/fbs";
 import { formatDate } from "../../../core/utils/helpers/date";
 import { getModalIds } from "../../../core/utils/helpers/modal-helpers";
 import { isEnterOrSpacePressed } from "../../../core/utils/helpers/general";
 
 interface ReservationPauseTogglerProps {
-  user: PatronV5;
+  user: PatronInfo;
 }
 
 const ReservationPauseToggler: FC<ReservationPauseTogglerProps> = ({

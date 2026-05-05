@@ -1386,6 +1386,9 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-1.0.0.tgz#f75c08f88cfd9eb8d9b062284d5bbcc60c41bf2a"
   integrity sha512-dDlz3W405VMFO4w5kIP9DOmELBcvFQGmLoKSdIRstBDubKFYwaNHV1NnlzMCQpXQFGWVALmeMORAuiLx18AvZQ==
 
+"@dpl/service-layer@file:../serviceLayer":
+  version "0.1.0"
+
 "@envelop/core@^5.4.0":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@envelop/core/-/core-5.5.1.tgz#ca30c927b3a7d7f118d36111e17b355eedae9ff4"

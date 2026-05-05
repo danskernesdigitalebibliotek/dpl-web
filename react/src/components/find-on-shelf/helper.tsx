@@ -1,7 +1,7 @@
-import { HoldingsLogisticsV1 } from "../../core/fbs/model";
+import { HoldingsLogistics } from "@dpl/service-layer/fbs";
 
 export const getLocationArray = (
-  holdingsLogistics: HoldingsLogisticsV1
+  holdingsLogistics: HoldingsLogistics
 ): string[] => {
   const { logisticsPlacement, lmsPlacement } = holdingsLogistics;
 

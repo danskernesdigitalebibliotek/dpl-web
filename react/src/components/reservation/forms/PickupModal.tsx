@@ -1,12 +1,12 @@
 import React from "react";
-import { AgencyBranch } from "../../../core/fbs/model";
+import { Branch } from "@dpl/service-layer/fbs";
 import { useText } from "../../../core/utils/text";
 import ModalReservationFormSelect from "./ModalReservationFormSelect";
 import { RequestStatus } from "../../../core/utils/types/request";
 import { FormSelectValue } from "./types";
 
 export interface PickupModalProps {
-  branches: AgencyBranch[];
+  branches: Branch[];
   defaultBranch: string;
   selectBranchHandler: (value: string) => void;
   saveCallback?: <TValue extends FormSelectValue>(value: TValue) => void;

@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import { RenewedLoanV2 } from "../../core/fbs/model";
+import { RenewedLoan } from "@dpl/service-layer/fbs";
 import { filterRenewResponseData } from "../../core/utils/helpers/renewal";
 import ModalMessage from "../message/modal-message/ModalMessage";
 import { RequestStatus } from "../../core/utils/types/request";
 
 interface RenewalModalMessageProps {
   messageType: "success" | "error";
-  renewingResponse: RenewedLoanV2[] | null;
+  renewingResponse: RenewedLoan[] | null;
   modalId: string;
   setRenewingStatus: (status: RequestStatus) => void;
   texts: {
