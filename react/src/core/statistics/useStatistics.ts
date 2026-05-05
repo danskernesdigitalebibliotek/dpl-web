@@ -70,9 +70,9 @@ export function usePageStatistics() {
     // Wait time based on intuition — not strictly calculated.
     // I've used 1000, 2500, and even 5000ms on the work page
     setTimeout(() => {
-      if (window.location.href.includes("dapple-cms")) {
+      if (window.location.href.includes("dpl-web")) {
         // eslint-disable-next-line no-console
-        console.warn("⚠️ Mapp tracking is not enabled for dapple-cms");
+        console.warn("⚠️ Mapp tracking is not enabled for dpl-web");
         // eslint-disable-next-line no-console, no-underscore-dangle
         console.log("Tracking: send, page", JSON.stringify(window._ti));
         return;

@@ -67,7 +67,7 @@ const config: CodegenConfig = {
     },
     // "lib/graphql/generated/dpl-cms/graphql.schema.json": {
     //   // TODO: Make this configurable
-    //   schema: "http://dapple-cms.docker/graphql",
+    //   schema: "http://dpl-web.local/graphql",
     //   plugins: ["introspection"],
     // },
     "lib/graphql/generated/fbi/graphql.ts": {
