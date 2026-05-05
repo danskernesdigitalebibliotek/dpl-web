@@ -5,7 +5,7 @@
   "scripts": {
     "storybook": "DISABLE_ESLINT_PLUGIN=true storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
     "storybook:axe": "DISABLE_ESLINT_PLUGIN=true storybook build && axe-storybook",
-    "build-storybook": "DISABLE_ESLINT_PLUGIN=true storybook build",
+    "build-storybook": "yarn css:build && DISABLE_ESLINT_PLUGIN=true storybook build",
     "js:eslint": "eslint 'src/**/*.{js,ts,tsx}' --max-warnings=0",
     "js:prettier": "prettier 'src/**/*.{js,ts,tsx}'",
     "js:lint": "concurrently 'yarn:js:eslint' 'yarn:js:prettier --check' --raw",
