@@ -134,7 +134,7 @@ export async function GET(request: NextRequest) {
     const institutionId = getInstitutionId(introspect.institution_ids)
     // Check if user is authorized to log.
     const isAuthorized = await isUniloginUserAuthorizedToLogIn(institutionId, claims)
-    if (isAuthorized === false) {
+    if (!isAuthorized) {
       // Make sure that the user is logged out remotely first. And destroy session.
       await logoutUniloginSSO(session)
       await destroySession(session)

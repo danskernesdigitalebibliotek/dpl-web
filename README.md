@@ -4,9 +4,9 @@ Monorepo for the Danish Public Libraries (DPL) web platform, containing four int
 
 ## Projects
 
-- **[cms](./cms/)** - Drupal CMS
+- **[cms](./cms/)** - Drupal-based CMS
 - **[design-system](./design-system/)** - UI component library
-- **[go](./go/)** - Next.js frontend
+- **[go](./go/)** - Next.js frontend for youth-focused “Go” sites.
 - **[react](./react/)** - React component library
 
 ## Documentation

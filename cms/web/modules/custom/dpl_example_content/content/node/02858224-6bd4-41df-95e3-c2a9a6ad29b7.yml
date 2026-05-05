@@ -703,7 +703,7 @@ default:
               value: 'Dette er beskrivelsen af hvad grid''et indeholder. Jeg har søgt på "Harry" med sublocation "fantasy"'
           field_material_grid_link:
             -
-              value: 'https://dapple-cms.docker/advanced-search?sublocation=fantasy&advancedSearchCql=%27harry%27&linked=true"'
+              value: 'https://dpl-web.local/advanced-search?sublocation=fantasy&advancedSearchCql=%27harry%27&linked=true"'
           field_material_grid_title:
             -
               value: 'Material Grid automatic (Link) 8 materialer'

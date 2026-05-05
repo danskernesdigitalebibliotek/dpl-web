@@ -54,6 +54,10 @@ type Branch {
 
   address: BranchAddress
 
+  phone: String
+
+  email: String
+
   availabilityContext: BranchAvailabilityContext!
 }
 
