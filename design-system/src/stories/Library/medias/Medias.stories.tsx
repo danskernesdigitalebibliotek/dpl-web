@@ -2,6 +2,8 @@ import { StoryFn, Meta } from "@storybook/react-webpack5";
 
 import Medias from "./Medias";
 import ImageCredited from "../image-credited/ImageCredited";
+import media1Img from "../../../../public/images/placeholder/media-1.jpeg";
+import media2Img from "../../../../public/images/placeholder/media-2.jpeg";
 
 export default {
   title: "Library / Medias",
@@ -27,14 +29,14 @@ Multiple.args = {
   items: [
     <ImageCredited
       key={0}
-      src="https://i.imgur.com/0Fis99n.jpeg"
+      src={media1Img}
       description="Happy dog is Happy"
     />,
-    <ImageCredited key={1} src="https://i.imgur.com/KYhYZkp.jpeg" />,
+    <ImageCredited key={1} src={media2Img} />,
   ],
 };
 
 export const Single = Template.bind({});
 Single.args = {
-  items: [<ImageCredited key={0} src="https://i.imgur.com/KYhYZkp.jpeg" />],
+  items: [<ImageCredited key={0} src={media2Img} />],
 };

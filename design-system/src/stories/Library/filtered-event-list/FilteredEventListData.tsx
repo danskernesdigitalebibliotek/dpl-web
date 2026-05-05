@@ -1,10 +1,12 @@
 import { ContentListItemProps } from "../content-list-item/ContentListItem";
 import ImageCredited from "../image-credited/ImageCredited";
+import concertImg from "../../../../public/images/placeholder/concert.jpg";
+import galleryImg from "../../../../public/images/placeholder/gallery.jpg";
 
 const FilteredListData: ContentListItemProps[] = [
   {
     image: (
-      <ImageCredited src="https://images.unsplash.com/photo-1549277513-f1b32fe1f8f5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <ImageCredited src={concertImg} />
     ),
     tagText: "Foredrag",
     title: "Kunst og kultur i middelalderen",
@@ -17,7 +19,7 @@ const FilteredListData: ContentListItemProps[] = [
   },
   {
     image: (
-      <ImageCredited src="https://plus.unsplash.com/premium_photo-1696886122527-e4303b76aa8f?q=80&w=5156&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <ImageCredited src={galleryImg} />
     ),
     tagText: "arrangement",
     title: "Fars Legestue",
@@ -30,7 +32,7 @@ const FilteredListData: ContentListItemProps[] = [
   },
   {
     image: (
-      <ImageCredited src="https://images.unsplash.com/photo-1549277513-f1b32fe1f8f5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <ImageCredited src={concertImg} />
     ),
     tagText: "arrangement",
     title: "Fars Legestue",
@@ -43,7 +45,7 @@ const FilteredListData: ContentListItemProps[] = [
   },
   {
     image: (
-      <ImageCredited src="https://plus.unsplash.com/premium_photo-1696886122527-e4303b76aa8f?q=80&w=5156&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <ImageCredited src={galleryImg} />
     ),
     tagText: "arrangement",
     title: "Fars Legestue",

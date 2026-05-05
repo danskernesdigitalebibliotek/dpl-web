@@ -4,6 +4,7 @@ import ContentListItemStacked from "./ContentListItemStacked";
 import { ContentListItemStatuses } from "../content-list-item-status/ContentListItemStatus";
 import { ContentListItem } from "./ContentListItem";
 import ImageCredited from "../image-credited/ImageCredited";
+import bookshelfImg from "../../../../public/images/placeholder/bookshelf.jpg";
 
 export default {
   title: "Library / Content List Item Stacked",
@@ -40,7 +41,7 @@ const TemplateWithParent: StoryFn<typeof ContentListItemStacked> = (args) => (
       description="Demokrati betyder helt enkelt folkestyre og er en måde at fordele magten i fx et land"
       price="80 KR"
       image={
-        <ImageCredited src="https://images.unsplash.com/photo-1585779034823-7e9ac8faec70?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+        <ImageCredited src={bookshelfImg} />
       }
     />
     <ContentListItemStacked {...args} />

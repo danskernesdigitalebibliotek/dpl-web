@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 
 import Cover from "./Cover";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
 
 export default {
   title: "Library / Cover",
@@ -34,7 +35,7 @@ export default {
   args: {
     size: "small",
     animate: false,
-    src: "images/book_cover_3.jpg",
+    src: bookCover3,
     tint: "120",
     coverUrl: "https://www.google.com",
     description: "/",

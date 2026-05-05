@@ -1,4 +1,5 @@
 import Cover from "../cover/Cover";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 
 type InstantLoanSummaryProps = {
@@ -15,7 +16,7 @@ const InstantLoanSummary: React.FunctionComponent<InstantLoanSummaryProps> = ({
   <>
     <div className="pagefold-triangle--small" />
     <Cover
-      src="images/book_cover_3.jpg"
+      src={bookCover3}
       size="small"
       animate={false}
       tint="120"

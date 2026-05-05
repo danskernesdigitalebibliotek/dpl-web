@@ -1,4 +1,5 @@
 import { useState } from "react";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
 import AvailabilityLabel from "../../Library/availability-label/AvailabilityLabel";
 import { Button } from "../../Library/Buttons/button/Button";
 import ListDescription, {
@@ -40,7 +41,7 @@ export const MaterialMainfestationItem = ({
       </div>
       <div className="material-manifestation-item__cover">
         <Cover
-          src="images/book_cover_3.jpg"
+          src={bookCover3}
           size="small"
           animate={false}
           tint="120"
