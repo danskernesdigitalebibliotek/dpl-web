@@ -1,16 +1,26 @@
 import { useQueryClient } from "react-query";
 import { Patron } from "./types/entities";
-import {
-  PatronSettings,
-  PatronSettingsV6,
-  PincodeChange
-} from "@dpl/service-layer/fbs";
+import { PatronSettings, Period, PincodeChange } from "@dpl/service-layer/fbs";
 import {
   getGetPatronInformationByPatronIdV4QueryKey,
   useUpdateV8
 } from "../fbs/fbs";
 import useUserInfo from "../adgangsplatformen/useUserInfo";
 import { isAnonymous } from "./helpers/user";
+
+// Form-level type for patron settings input. Uses single email/phone fields
+// which get converted to the API's array format via convertToPatronSettings.
+export type PatronSettingsFormData = {
+  emailAddress?: string;
+  phoneNumber?: string;
+  preferredPickupBranch: string;
+  receiveEmail: boolean;
+  receivePostalMail: boolean;
+  receiveSms: boolean;
+  onHold?: Period;
+  preferredLanguage?: string;
+  notificationProtocols?: string[];
+};
 
 export interface FetchHandlers {
   onSuccess?: () => void;
@@ -32,7 +42,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
   const { mutate } = useUpdateV8();
   const queryClient = useQueryClient();
 
-  const savePatron = (data: Partial<PatronSettings>) => {
+  const savePatron = (data: Partial<PatronSettingsFormData>) => {
     const { onSuccess, onError } = fetchHandlers?.savePatron || {};
 
     if (!patron || !userInfo) {
@@ -49,7 +59,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
             libraryCardNumber: patron.patronId.toString()
           },
           patron: {
-            ...convertPatronSettingstoV6({
+            ...convertToPatronSettings({
               ...patron,
               ...data
             })
@@ -107,22 +117,11 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
   return { savePatron, savePincode };
 };
 
-export function convertPatronSettingstoV6(
-  patronSettings: PatronSettings
-): PatronSettingsV6;
-export function convertPatronSettingstoV6(
-  patronSettings: Partial<PatronSettings>
-): Partial<PatronSettingsV6> & { guardianVisibility: boolean };
-export function convertPatronSettingstoV6(
-  patronSettings: Partial<PatronSettings> | PatronSettings
-):
-  | (Partial<PatronSettingsV6> & { guardianVisibility: boolean })
-  | PatronSettingsV6 {
+export function convertToPatronSettings(
+  patronSettings: Partial<PatronSettingsFormData>
+): Partial<PatronSettings> & { guardianVisibility: boolean } {
   return {
     ...patronSettings,
-    // PatronSettingsV6 supports multiple email addresses and phone numbers with
-    // individual notifications. Convert the current PatronSettings with
-    // single values to an array.
     emailAddresses: patronSettings.emailAddress
       ? [
           {
@@ -139,8 +138,6 @@ export function convertPatronSettingstoV6(
           }
         ]
       : [],
-    // Assume guardian visibility is false as we are not dealing with
-    // child patrons in this client.
     guardianVisibility: false
   };
 }

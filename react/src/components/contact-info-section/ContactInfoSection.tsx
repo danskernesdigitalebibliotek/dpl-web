@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import { PatronInfo, PatronSettings } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronSettingsFormData } from "../../core/utils/useSavePatron";
 import { useConfig } from "../../core/utils/config";
 import ContactInfoInputs from "./ContactInfoInputs";
 import ContactInfoPhone from "./ContactInfoPhone";
@@ -8,7 +9,7 @@ import ContactInfoEmail from "./ContactInfoEmail";
 import { ChangePatronProps } from "./types";
 
 interface ContactInfoSectionProps {
-  patron: PatronInfo | PatronSettings | null;
+  patron: PatronInfo | PatronSettingsFormData | null;
   inLine?: boolean;
   isDouble?: boolean;
   changePatron: ChangePatronProps;

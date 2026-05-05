@@ -89,18 +89,6 @@ export type Period = {
 }
 
 export type PatronSettings = {
-  emailAddress?: string
-  phoneNumber?: string
-  preferredPickupBranch: string
-  receiveEmail: boolean
-  receivePostalMail: boolean
-  receiveSms: boolean
-  onHold?: Period
-  preferredLanguage?: string
-  notificationProtocols?: string[]
-}
-
-export type PatronSettingsV6 = {
   emailAddresses?: EmailAddress[]
   phoneNumbers?: PhoneNumber[]
   preferredPickupBranch: string
@@ -128,14 +116,14 @@ export type PincodeChange = {
 }
 
 export type UpdatePatronRequest = {
-  patron?: PatronSettingsV6
+  patron?: PatronSettings
   pincodeChange?: PincodeChange
 }
 
 export type CreatePatronRequest = {
   personIdentifier: string
   pincode: string
-  patron: PatronSettingsV6
+  patron: PatronSettings
   blockStatusRequest?: BlockStatusRequest
 }
 

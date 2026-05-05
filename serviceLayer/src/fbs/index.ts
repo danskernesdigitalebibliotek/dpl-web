@@ -14,7 +14,6 @@ export type {
   BlockStatus,
   Period,
   PatronSettings,
-  PatronSettingsV6,
   EmailAddress,
   PhoneNumber,
   PincodeChange,
