@@ -38,18 +38,19 @@ import type {
 } from "./types"
 
 function buildQueryString(params: Record<string, unknown>): string {
-  const parts: string[] = []
+  const searchParams = new URLSearchParams()
   for (const [key, value] of Object.entries(params)) {
     if (value === undefined || value === null) continue
     if (Array.isArray(value)) {
       for (const item of value) {
-        parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`)
+        searchParams.append(key, String(item))
       }
     } else {
-      parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+      searchParams.append(key, String(value))
     }
   }
-  return parts.length > 0 ? `?${parts.join("&")}` : ""
+  const qs = searchParams.toString()
+  return qs ? `?${qs}` : ""
 }
 
 export function createFbsClient(config: FbsFetcherConfig) {

@@ -14,19 +14,8 @@ export function mapBibliographicRecord(
 ): BibliographicRecord {
   return {
     author: raw.author,
-    bibliographicCategory: raw.bibliographicCategory,
-    edition: raw.edition,
-    isbn: raw.isbn,
-    issn: raw.issn,
     language: raw.language,
-    mediumType: raw.mediumType,
-    periodicalNumber: raw.periodicalNumber,
-    periodicalVolume: raw.periodicalVolume,
-    placeOfPublication: raw.placeOfPublication,
     publicationDate: raw.publicationDate,
-    publicationDateOfComponent: raw.publicationDateOfComponent,
-    publisher: raw.publisher,
-    recordId: raw.recordId,
     title: raw.title,
   }
 }
@@ -40,7 +29,6 @@ export function mapLoanDetails(raw: LoanDetailsV2): LoanDetails {
     loanDate: raw.loanDate,
     loanId: raw.loanId,
     loanType: raw.loanType,
-    materialGroup: raw.materialGroup,
     materialItemNumber: raw.materialItemNumber,
     periodical: raw.periodical,
     recordId: raw.recordId,
@@ -49,7 +37,6 @@ export function mapLoanDetails(raw: LoanDetailsV2): LoanDetails {
 
 export function mapLoan(raw: LoanV2): Loan {
   return {
-    isLongtermLoan: raw.isLongtermLoan,
     isRenewable: raw.isRenewable,
     loanDetails: mapLoanDetails(raw.loanDetails),
     renewalStatusList: raw.renewalStatusList,

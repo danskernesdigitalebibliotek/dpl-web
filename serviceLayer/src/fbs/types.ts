@@ -2,7 +2,7 @@
 // FBS Service Layer Types
 // ============================================================================
 // These are the service layer's own types — not re-exports of generated types.
-// Field names mirror the FBS API types where practical to minimize migration.
+// Only fields actually consumed by the apps are included.
 // ============================================================================
 
 // ----------------------------------------------------------------------------
@@ -41,13 +41,19 @@ export type AuthenticatedPatronInfo = {
   patron?: PatronInfo
 }
 
+export type Address = {
+  city: string
+  coName: string
+  country: string
+  postalCode: string
+  street: string
+}
+
 export type PatronInfo = {
   name?: string
   patronId: number
   address?: Address
-  birthday?: string
   blockStatus?: BlockStatus[]
-  defaultInterestPeriod: number
   emailAddress?: string
   phoneNumber?: string
   notificationProtocols?: string[]
@@ -58,23 +64,7 @@ export type PatronInfo = {
   receivePostalMail: boolean
   receiveSms: boolean
   resident: boolean
-  secondaryAddress?: Address
-  allowBookings?: boolean
-  tags?: string[]
-  interests?: Interest[]
   guardianVisibility: boolean
-}
-
-export type Interest = {
-  [key: string]: unknown
-}
-
-export type Address = {
-  city: string
-  coName: string
-  country: string
-  postalCode: string
-  street: string
 }
 
 export type BlockStatus = {
@@ -139,19 +129,14 @@ export type BlockStatusRequest = {
 export type Fee = {
   amount: number
   creationDate: string
-  dueDate?: string
   feeId: number
   materials: FeeMaterial[]
-  paidDate?: string
   payableByClient: boolean
   reasonMessage: string
-  type: string
 }
 
 export type FeeMaterial = {
-  materialGroup: MaterialGroup
   materialItemNumber: string
-  periodical?: Periodical
   recordId: string
 }
 
@@ -160,7 +145,6 @@ export type FeeMaterial = {
 // ----------------------------------------------------------------------------
 
 export type Loan = {
-  isLongtermLoan: boolean
   isRenewable: boolean
   loanDetails: LoanDetails
   renewalStatusList: string[]
@@ -172,7 +156,6 @@ export type LoanDetails = {
   loanDate: string
   loanId: number
   loanType: string
-  materialGroup: MaterialGroup
   materialItemNumber: string
   periodical?: Periodical
   recordId: string
@@ -185,19 +168,8 @@ export type RenewedLoan = {
 
 export type BibliographicRecord = {
   author?: string
-  bibliographicCategory?: string
-  edition?: string
-  isbn?: string
-  issn?: string
   language?: string
-  mediumType: string
-  periodicalNumber?: string
-  periodicalVolume?: string
-  placeOfPublication?: string
   publicationDate?: string
-  publicationDateOfComponent?: string
-  publisher?: string
-  recordId: string
   title?: string
 }
 
@@ -227,8 +199,6 @@ export type ReservationResponse = {
 }
 
 export type ReservationResult = {
-  periodical?: PeriodicalReservation
-  recordId: string
   reservationDetails?: ReservationDetails
   result: string
 }
@@ -322,22 +292,17 @@ export type HoldingsMaterial = {
 export type Placement = {
   department?: { departmentId: string; title: string }
   location?: { locationId: string; title: string }
-  section?: { sectionId: string; title: string }
   sublocation?: { sublocationId: string; title: string }
 }
 
 // ----------------------------------------------------------------------------
-// Fee params
+// Params
 // ----------------------------------------------------------------------------
 
 export type GetFeesParams = {
   includepaid: boolean
   includenonpayable: boolean
 }
-
-// ----------------------------------------------------------------------------
-// Holdings params
-// ----------------------------------------------------------------------------
 
 export type GetHoldingsParams = {
   recordid: string[]

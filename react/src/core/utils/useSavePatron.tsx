@@ -1,6 +1,7 @@
 import { useQueryClient } from "react-query";
 import { Patron } from "./types/entities";
-import { PatronSettings, Period, PincodeChange } from "@dpl/service-layer/fbs";
+import type { PatronSettings as SLPatronSettings } from "@dpl/service-layer/fbs";
+import { Period, PincodeChange } from "@dpl/service-layer/fbs";
 import {
   getGetPatronInformationByPatronIdV4QueryKey,
   useUpdateV8
@@ -58,12 +59,8 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
             pincode: userInfo.attributes.pincode,
             libraryCardNumber: patron.patronId.toString()
           },
-          patron: {
-            ...convertToPatronSettings({
-              ...patron,
-              ...data
-            })
-          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          patron: convertToPatronSettings({ ...patron, ...data }) as any
         }
       },
       {
@@ -119,24 +116,17 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
 
 export function convertToPatronSettings(
   patronSettings: Partial<PatronSettingsFormData>
-): Partial<PatronSettings> & { guardianVisibility: boolean } {
+): Partial<SLPatronSettings> & { guardianVisibility: boolean } {
+  const { emailAddress, phoneNumber, receiveEmail, receiveSms, ...rest } =
+    patronSettings;
+
   return {
-    ...patronSettings,
-    emailAddresses: patronSettings.emailAddress
-      ? [
-          {
-            emailAddress: patronSettings.emailAddress,
-            receiveNotification: patronSettings.receiveEmail || false
-          }
-        ]
+    ...rest,
+    emailAddresses: emailAddress
+      ? [{ emailAddress, receiveNotification: receiveEmail || false }]
       : [],
-    phoneNumbers: patronSettings.phoneNumber
-      ? [
-          {
-            phoneNumber: patronSettings.phoneNumber,
-            receiveNotification: patronSettings.receiveSms || false
-          }
-        ]
+    phoneNumbers: phoneNumber
+      ? [{ phoneNumber, receiveNotification: receiveSms || false }]
       : [],
     guardianVisibility: false
   };

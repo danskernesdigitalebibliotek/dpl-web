@@ -9,7 +9,6 @@ export type {
   AuthenticationStatus,
   AuthenticatedPatronInfo,
   PatronInfo,
-  Interest,
   Address,
   BlockStatus,
   Period,

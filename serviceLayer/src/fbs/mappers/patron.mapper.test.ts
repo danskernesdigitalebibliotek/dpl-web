@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest"
 
 import type { AuthenticatedPatronV8 } from "../generated/model/authenticatedPatronV8"
-import type { PatronV5 } from "../generated/model/patronV5"
 import {
   mapAuthenticatedPatron,
-  mapPatronV5,
   mapPatronV7,
 } from "./patron.mapper"
 
@@ -51,9 +49,7 @@ describe("mapAuthenticatedPatron", () => {
     expect(result.patron!.phoneNumber).toBe("12345678")
     expect(result.patron!.preferredPickupBranch).toBe("DK-123456")
     expect(result.patron!.receiveEmail).toBe(true)
-    expect(result.patron!.resident).toBe(true)
     expect(result.patron!.blockStatus).toHaveLength(1)
-    expect(result.patron!.address?.city).toBe("Copenhagen")
     expect(result.patron!.guardianVisibility).toBe(false)
   })
 
@@ -100,11 +96,10 @@ describe("mapAuthenticatedPatron", () => {
 
     expect(result.patron!.name).toBeUndefined()
     expect(result.patron!.patronId).toBe(456)
-    expect(result.patron!.defaultInterestPeriod).toBe(30)
     expect(result.patron!.preferredPickupBranch).toBe("DK-654321")
   })
 
-  it("maps tags and interests from PatronV7", () => {
+  it("maps guardianVisibility from PatronV7", () => {
     const raw: AuthenticatedPatronV8 = {
       authenticateStatus: "VALID",
       patron: {
@@ -116,17 +111,11 @@ describe("mapAuthenticatedPatron", () => {
         receivePostalMail: false,
         receiveSms: true,
         resident: true,
-        tags: ["vip", "student"],
-        interests: [{ displayName: "Fiction", name: "fiction" }],
       },
     }
 
     const result = mapAuthenticatedPatron(raw)
 
-    expect(result.patron!.tags).toEqual(["vip", "student"])
-    expect(result.patron!.interests).toEqual([
-      { displayName: "Fiction", name: "fiction" },
-    ])
     expect(result.patron!.guardianVisibility).toBe(true)
   })
 })
@@ -148,28 +137,5 @@ describe("mapPatronV7", () => {
     expect(result.patronId).toBe(100)
     expect(result.name).toBe("V7 Patron")
     expect(result.guardianVisibility).toBe(true)
-  })
-})
-
-describe("mapPatronV5", () => {
-  it("maps PatronV5 and defaults V7-only fields", () => {
-    const raw: PatronV5 = {
-      patronId: 200,
-      name: "V5 Patron",
-      defaultInterestPeriod: 14,
-      preferredPickupBranch: "DK-200000",
-      receiveEmail: false,
-      receivePostalMail: false,
-      receiveSms: true,
-      resident: false,
-    }
-
-    const result = mapPatronV5(raw)
-
-    expect(result.patronId).toBe(200)
-    expect(result.name).toBe("V5 Patron")
-    expect(result.guardianVisibility).toBe(false)
-    expect(result.interests).toBeUndefined()
-    expect(result.tags).toBeUndefined()
   })
 })

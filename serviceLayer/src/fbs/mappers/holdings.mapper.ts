@@ -14,7 +14,6 @@ export function mapPlacement(raw: PlacementV1): Placement {
   return {
     department: raw.department,
     location: raw.location,
-    section: raw.section,
     sublocation: raw.sublocation,
   }
 }
@@ -33,9 +32,7 @@ export function mapHoldingsLogistics(
 ): HoldingsLogistics {
   return {
     branch: mapBranch(raw.branch),
-    lmsPlacement: raw.lmsPlacement
-      ? mapPlacement(raw.lmsPlacement)
-      : undefined,
+    lmsPlacement: raw.lmsPlacement ? mapPlacement(raw.lmsPlacement) : undefined,
     logisticsPlacement: raw.logisticsPlacement,
     materials: raw.materials.map(mapHoldingsMaterial),
   }

@@ -1,6 +1,7 @@
 import React, { FC, useState, FormEvent } from "react";
 import { set } from "lodash";
 import BranchesDropdown from "../patron-page/util/BranchesDropdown";
+import { PatronSettings } from "@dpl/service-layer/fbs";
 import { PatronSettingsFormData } from "../../core/utils/useSavePatron";
 import { useText } from "../../core/utils/text";
 import { useCreateV9 } from "../../core/fbs/fbs";
@@ -72,7 +73,8 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
         {
           data: {
             personIdentifier: cpr,
-            patron: convertToPatronSettings(patron),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            patron: convertToPatronSettings(patron) as any,
             pincode: pin
           }
         },

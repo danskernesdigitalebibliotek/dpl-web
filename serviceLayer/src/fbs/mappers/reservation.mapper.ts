@@ -1,12 +1,12 @@
 import type { ReservationDetailsV2 } from "../generated/model/reservationDetailsV2"
 import type { ReservationResponseV2 } from "../generated/model/reservationResponseV2"
 import type { ReservationResultV2 } from "../generated/model/reservationResultV2"
+import { mapBibliographicRecord } from "./loan.mapper"
 import type {
   ReservationDetails,
   ReservationResponse,
   ReservationResult,
 } from "../types"
-import { mapBibliographicRecord } from "./loan.mapper"
 
 export function mapReservationDetails(
   raw: ReservationDetailsV2
@@ -34,8 +34,6 @@ export function mapReservationResult(
   raw: ReservationResultV2
 ): ReservationResult {
   return {
-    periodical: raw.periodical,
-    recordId: raw.recordId,
     reservationDetails: raw.reservationDetails
       ? mapReservationDetails(raw.reservationDetails)
       : undefined,
