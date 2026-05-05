@@ -1,3 +1,9 @@
+import bookCover2 from "../../../../public/images/placeholder/book_cover_2.jpg";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
+import bookCover4 from "../../../../public/images/placeholder/book_cover_4.jpg";
+import bookCover5 from "../../../../public/images/placeholder/book_cover_5.jpg";
+import bookCover6 from "../../../../public/images/placeholder/book_cover_6.jpg";
+
 export const MaterialTypes = [
   "bog",
   "artikel",
@@ -17,7 +23,7 @@ export interface PreviewDataProps {
   workId: string;
 }
 export const PreviewData: PreviewDataProps = {
-  coverUrl: "images/book_cover_6.jpg",
+  coverUrl: bookCover6,
   title: "Rødhals",
   author: "Jo Nesbø",
   publicationYear: 2022,
@@ -27,7 +33,7 @@ export const PreviewData: PreviewDataProps = {
 
 export const ListResultData: PreviewDataProps[] = [
   {
-    coverUrl: "images/book_cover_3.jpg",
+    coverUrl: bookCover3,
     title: "Book Title 3",
     author: "Author 3",
     publicationYear: 2019,
@@ -35,7 +41,7 @@ export const ListResultData: PreviewDataProps[] = [
     workId: "work-of:800010-katalog:98432897",
   },
   {
-    coverUrl: "images/book_cover_2.jpg",
+    coverUrl: bookCover2,
     title: "Book Title 2",
     author: "Author 2",
     publicationYear: 2020,
@@ -43,7 +49,7 @@ export const ListResultData: PreviewDataProps[] = [
     workId: "work-of:800010-katalog:2389129",
   },
   {
-    coverUrl: "images/book_cover_6.jpg",
+    coverUrl: bookCover6,
     title: "Rødhals",
     author: "Jo Nesbø",
     publicationYear: 2022,
@@ -51,7 +57,7 @@ export const ListResultData: PreviewDataProps[] = [
     workId: "work-of:800010-katalog:99122475830405763",
   },
   {
-    coverUrl: "images/book_cover_4.jpg",
+    coverUrl: bookCover4,
     title: "Book Title 4",
     author: "Author 4",
     publicationYear: 2018,
@@ -59,7 +65,7 @@ export const ListResultData: PreviewDataProps[] = [
     workId: "work-of:800010-katalog:9778817",
   },
   {
-    coverUrl: "images/book_cover_5.jpg",
+    coverUrl: bookCover5,
     title: "Book Title 5",
     author: "Author 5",
     publicationYear: 2017,

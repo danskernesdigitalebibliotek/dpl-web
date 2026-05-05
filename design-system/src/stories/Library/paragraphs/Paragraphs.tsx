@@ -1,4 +1,5 @@
 import CardGrid from "../card-grid/CardGrid";
+import bookCover6 from "../../../../public/images/placeholder/book_cover_6.jpg";
 import { card, cardNoImage } from "../card-grid/card-grid-data";
 import { LinkWithIcon } from "../link-with-icon/LinkWithIcon";
 import Paragraph from "../paragraph/Paragraph";
@@ -52,7 +53,7 @@ export const ArticleParagraphs = () => {
           recommendedMaterialProps={{
             author: "Pia Deges (2019)",
             description: "Børnenes Naturhobbybog",
-            src: "images/book_cover_6.jpg",
+            src: bookCover6,
             alt: "book cover",
             favoriteFill: false,
             materialUrl: "#",
@@ -69,7 +70,7 @@ export const ArticleParagraphs = () => {
           recommendedMaterialProps={{
             author: "Pia Deges (2019)",
             description: "Børnenes Naturhobbybog",
-            src: "images/book_cover_6.jpg",
+            src: bookCover6,
             alt: "book cover",
             favoriteFill: false,
             materialUrl: "#",

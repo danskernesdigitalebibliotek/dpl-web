@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 
 import Campaign, { CampaignProps } from "./Campaign";
+import campaignCover from "../../../../public/images/placeholder/campaign_cover.jpg";
 
 export default {
   title: "Library / Campaign",
@@ -13,7 +14,7 @@ export default {
   },
   args: {
     title: "10 gode bøger om Venner & Veninder",
-    imageUrl: "https://picsum.photos/id/777/300/200",
+    imageUrl: campaignCover,
     reverse: false,
     ellipsis: false,
   },
@@ -50,5 +51,5 @@ textOnly.args = {
 export const imageOnly = Template.bind({});
 imageOnly.args = {
   title: undefined,
-  imageUrl: "images/campaign_cover.jpg",
+  imageUrl: campaignCover,
 };

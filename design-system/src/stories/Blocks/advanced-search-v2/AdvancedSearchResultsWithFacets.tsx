@@ -1,4 +1,6 @@
 import React from "react";
+import defaultCover1 from "../../../../public/images/placeholder/default-cover-1.jpg";
+import defaultCover2 from "../../../../public/images/placeholder/default-cover-2.jpg";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 import { ReactComponent as LinkIcon } from "../../../public/icons/collection/link.svg";
 import { ReactComponent as CheckIcon } from "../../../public/icons/collection/Check.svg";
@@ -465,7 +467,7 @@ const AdvancedSearchSummary: React.FC = () => {
                     <img
                       className="cover__img cover__img--animate"
                       alt="undefined"
-                      src="https://default-forsider.dbc.dk/large/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkFuZGVycyBUaGlzZXQgb2cgaWRlbnRpdGV0ZW4gYWYgTmllbHMgRXJpa3NlbiBhZiBBc2RhbCIsIm1hdGVyaWFsVHlwZSI6IkFSVElDTEVTIiwiY29sb3JzIjpbeyJiYWNrZ3JvdW5kIjoiIzAwNWM2MSJ9LHsiYmFja2dyb3VuZCI6IiMwMDZlNzQifSx7ImJhY2tncm91bmQiOiIjMDA4MTg4In1dLCJpYXQiOjE3NjU0NjQyMDR9.q_MuG4sGcMDwxGyMcie9JOJZORIexT2FVenVjbpn-WU"
+                      src={defaultCover1}
                     />
                   </a>
                 </div>
@@ -547,7 +549,7 @@ const AdvancedSearchSummary: React.FC = () => {
                     <img
                       className="cover__img cover__img--animate"
                       alt="undefined"
-                      src="https://default-forsider.dbc.dk/large/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkVuIG92ZXJzZXQgZ3J1cHBlIGxpZGVyIGFmIGV0IHNqw6ZsZGVudCBzeW1wdG9tLiBPZyBzw6UgZW5kZXIgcGxhbmxhZ3RlIGdyYXZpZGl0ZXRlciBpIGFib3J0IiwibWF0ZXJpYWxUeXBlIjoiQVJUSUNMRVMiLCJjb2xvcnMiOlt7ImJhY2tncm91bmQiOiIjMDA1YzYxIn0seyJiYWNrZ3JvdW5kIjoiIzAwNmU3NCJ9LHsiYmFja2dyb3VuZCI6IiMwMDgxODgifV0sImlhdCI6MTc2NTQ2NDIwNH0.W-xH_fAWTq1u-3K0VOH61Vousfq4-DgCd6pWqiYBhQ8"
+                      src={defaultCover2}
                     />
                   </a>
                 </div>
