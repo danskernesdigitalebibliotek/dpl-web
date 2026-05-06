@@ -1236,14 +1236,6 @@ type Query {
   ): [Branch!]!
   dplTokens: DplTokens
 
-  paragraph(
-    id: ID!
-
-    langcode: String
-
-    revision: ID
-  ): ParagraphUnion
-
   node(
     id: ID!
 
@@ -1251,6 +1243,14 @@ type Query {
 
     revision: ID
   ): NodeUnion
+
+  paragraph(
+    id: ID!
+
+    langcode: String
+
+    revision: ID
+  ): ParagraphUnion
 
   info: SchemaInformation!
 
