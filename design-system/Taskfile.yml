@@ -3,9 +3,6 @@ version: '3'
 dotenv: [".task.env"]
 
 vars:
-  COMMIT_COUNT:
-    sh: git rev-list --count origin/main
-
   # Constructing docker image name.
   DOCKER_IMAGE_PREFIX: '{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}'
 
