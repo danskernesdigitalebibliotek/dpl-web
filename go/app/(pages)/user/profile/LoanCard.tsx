@@ -106,7 +106,7 @@ const LoanCard = ({
               costFree={isCostFree}
             />
           </div>
-          <p className="text-typo-subtitle-sm text-foreground/50 w-full text-center break-words">{`Udløber om ${daysUntil} dage`}</p>
+          <p className="text-typo-subtitle-sm text-foreground/70 w-full text-center break-words">{`Udløber om ${daysUntil} dage`}</p>
           {isCostFree && (
             <div className="flex w-full justify-center">
               <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
