@@ -10,6 +10,9 @@ module.exports = {
     expect.extend({ toMatchImageSnapshot });
   },
   async postVisit(page, context) {
+    // Disable hyphenation to avoid platform-dependent line breaks.
+    await page.addStyleTag({ content: "* { hyphens: none !important; }" });
+
     for (const { name, width, height } of viewports) {
       await page.setViewportSize({ width, height });
       // Wait for layout to settle after resize.
