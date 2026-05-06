@@ -1,0 +1,4259 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/auth/sign-in": {
+      "post": {
+        "operationId": "SignInWithPassword",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInWithPasswordApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unable to authenticate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Authenticates an existing email/password user and returns an ID token.\nUse the returned `id_token` as the bearer token for endpoints protected by `bearer_auth`.\nThis endpoint is only relevant when the user signs in with an email/password credential that\nalready exists in Firebase Authentication.\n\nUse the token for requests to this API.",
+        "summary": "Authenticate user",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInWithPasswordApiRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/create-user": {
+      "post": {
+        "operationId": "CreateUser",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to authenticate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Creates a authentication user record for the supplied external `user_id`.\nThis endpoint only provisions the user id. It does not set an email, password, or profile fields.\nUse it when your integration manages user identities outside this API and wants to ensure the\naccount exists before issuing sign-in tokens.",
+        "summary": "Create user",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserApiRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/create-sign-in-token": {
+      "post": {
+        "operationId": "CreateSignInToken",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSignInTokenApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to authenticate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Creates a custom token for a user.\nThe returned `token` is not itself the bearer token for this API. A client must exchange it\nwith authentication and then use the resulting ID token as `bearer_auth`.\nWhen `create_if_not_exists` is `true` (default), the user record is created automatically if\nit does not already exist. Optional `user_data` is stored alongside the external user record\nand can be used to attach organization context or other integration metadata.",
+        "summary": "Create sign in token",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSignInTokenApiRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/inventory": {
+      "get": {
+        "operationId": "GetInventory",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetInventoryApiReponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Organization not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of material ids that are currently searchable for an organization.\nThe inventory is organization-specific and reflects the loan providers, access rules, and\nfiltering configured for that organization in WeDoBooks.\nThis endpoint only returns material ids (ISBN-13). Use the metadata or ONIX endpoints to fetch\ndescriptive data for the returned ids.\n\nThe authenticated API client must be explicitly allowed to access the target organization.\nThe organization can be resolved either by `organization_id` or `third_party_organization_id`.",
+        "summary": "Get inventory for organization",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "A string to identify the organization in question. This id is either provided by WeDoBooks or the organization itself per agreement will all parties involved. The credentials of the caller needs to allowed to access the inventory on behalf of the organization.",
+            "in": "query",
+            "name": "organization_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "lnjHp3by6HFLotb37V4u"
+          },
+          {
+            "description": "Alternative string to identify the organization in question. This is intended to be the ISIL of the organization in question if it exists. If you want to use this id then this needs to be configured in our system, so please let us know.",
+            "in": "query",
+            "name": "third_party_organization_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "710100"
+          },
+          {
+            "description": "A string to identify the last retrieved item for pagination. Use this to continue pulling data from where the last request left off. The pagination_cursor will be updated and returned on each request until there is no more data to be fetched.",
+            "in": "query",
+            "name": "pagination_cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "9788726607550"
+          },
+          {
+            "description": "The maximum number of items to retrieve. If the specified value exceeds 1000, it will be capped at 1000.\nIf omitted, the endpoint defaults to `1000`.",
+            "in": "query",
+            "name": "pagination_limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "example": 1000
+          }
+        ]
+      }
+    },
+    "/v1/loans": {
+      "get": {
+        "operationId": "GetLoans",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLoansApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of loans.\nBy default only active loans are returned because `active` defaults to `true`. Set\n`active=false` to retrieve ended or inactive loans instead.\nUse `user_id` to limit the list to a single user. Pagination uses the returned loan id as the\nnext `cursor`.",
+        "summary": "Get loans",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "format": "int32",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Defaults to `true`. Set to `false` to page inactive or ended loans.",
+            "in": "query",
+            "name": "active",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Optional user filter. Omit to page across users.",
+            "in": "query",
+            "name": "user_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "CreateLoan",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/CreateLoanApiResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApiErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Attempts to create a loan for a user and material immediately.\nThis endpoint performs the same availability and quota checks as `GET /v1/loans/can-loan`.\nWhen a loan is created, the response status is `201` and the `loan` object is populated. When\nthe material cannot be loaned, the response is still a successful API response with a decision\nstatus and optional rejection details, but without a `loan`.",
+        "summary": "Request loan for user",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CanLoanApiRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/loans/can-loan": {
+      "get": {
+        "operationId": "CanLoan",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/CanLoanApiResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApiErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Checks whether a user can currently loan a specific material without creating a loan.\nUse this as a preflight check when you want to show availability, provider choice, or quota\nrejection details before calling `POST /v1/loans`.\nThe result reflects the state at request time only and should not be treated as a reservation\nor guarantee that a later loan request will still succeed.",
+        "summary": "Material loan availability for user",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "ISBN-13 of the material the user wants to loan.",
+            "in": "query",
+            "name": "material_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "User identifier.",
+            "in": "query",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/loans/{loan_id}": {
+      "get": {
+        "operationId": "GetLoan",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/GetLoanApiResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApiErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a single loan by its `loan_id`.\nUse this endpoint to refresh the authoritative state of a loan after creation or when syncing\nan external system with loan status in WeDoBooks.",
+        "summary": "Get loan",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "loan_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/metadata": {
+      "get": {
+        "operationId": "GetMaterials",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMetadataApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns metadata for up to 50 materials in a single request.\nThe input uses ISBN-13 values in `material_ids`. Materials that do not exist are silently\nomitted from the response instead of failing the entire request.\nUse this endpoint together with inventory or reservation/loan data when you need catalog\nfields such as title, author, language, description, and publisher metadata.",
+        "summary": "Get metadata for materials",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Up to 50 ISBN-13 identifiers to resolve in a single request.",
+            "in": "query",
+            "name": "material_ids",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/v1/metadata/{material_id}": {
+      "get": {
+        "operationId": "GetMaterial",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMetadataApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns metadata for a single material id.\nDespite the singular path, the response shape is the same as the batch endpoint and still\nreturns a `materials` array containing zero or one item.\nUse this when you already know the ISBN-13 and want the same metadata structure as the bulk\nendpoint.",
+        "summary": "Get metadata material",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "material_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/onix/{material_id}": {
+      "get": {
+        "operationId": "GetOnix",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Material not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a single material as ONIX 3.0 XML.\nThe exact output depends on the authenticated client's API context, so a material may exist in\nWeDoBooks internally but still return `404` if it is not exposed in the caller's context.\nUse this endpoint when you need the current ONIX representation for one ISBN-13 instead of a\npaginated export feed.",
+        "summary": "Get single Onix",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "ISBN 13",
+            "in": "path",
+            "name": "material_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "9788726607550"
+          }
+        ]
+      }
+    },
+    "/v1/onix/pull/alpha": {
+      "get": {
+        "operationId": "GetAlpha",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedProducts"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a page from the full ONIX export for the authenticated client's context.\n`onix_products` contains an ONIX 3.0 XML document with up to `pagination_limit` products.\nStart without a cursor and continue until the returned pagination cursor is empty. The final\npage includes `next_delta_pull_utc_timestamp`, which should be stored and later used when\nswitching to delta pulls.\n\nAccess to alpha pulls is restricted per API client and returns `401` when the client is not\nenabled for this export mode.",
+        "summary": "Onix alpha pull",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "A string to identify the last retrieved item for pagination. Use this to continue pulling data from where the last request left off. The pagination_cursor will be updated and returned on each request until there is no more data to be fetched.",
+            "in": "query",
+            "name": "pagination_cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "9788726607550"
+          },
+          {
+            "description": "The maximum number of items to retrieve. If the specified value exceeds 100, it will be capped at 100.\nIf omitted, the endpoint defaults to `100`.",
+            "in": "query",
+            "name": "pagination_limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer",
+              "pattern": "^(100|[1-9][0-9]?)$"
+            },
+            "example": 100
+          }
+        ]
+      }
+    },
+    "/v1/onix/pull/delta/{from_utc_timestamp}": {
+      "get": {
+        "operationId": "GetDelta",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedProducts"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a page from the incremental ONIX export for the authenticated client's context.\nThe response contains an ONIX 3.0 XML document with products updated since\n`from_utc_timestamp`. Continue paging with `pagination_cursor` until the cursor is empty.\nThe final page includes `next_delta_pull_utc_timestamp`, which should be stored as the start\npoint for the next delta synchronization.\n\n`from_utc_timestamp` must be a UTC ISO 8601 timestamp with millisecond precision and may not\nbe older than one month.",
+        "summary": "Onix delta pull",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "onix metadata for books edited after this UTC date in ISO 8601 format",
+            "in": "path",
+            "name": "from_utc_timestamp",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2024-11-08T11:43:55.262Z"
+          },
+          {
+            "description": "A string to identify the last retrieved item for pagination. Use this to continue pulling data from where the last request left off. The pagination_cursor will be updated and returned on each request until there is no more data to be fetched.",
+            "in": "query",
+            "name": "pagination_cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "9788726607550"
+          },
+          {
+            "description": "The maximum number of items to retrieve. If the specified value exceeds 100, it will be capped at 100.\nIf omitted, the endpoint defaults to `100`.",
+            "in": "query",
+            "name": "pagination_limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer",
+              "pattern": "^(100|[1-9][0-9]?)$"
+            },
+            "example": 100
+          }
+        ]
+      }
+    },
+    "/v1/organizations": {
+      "get": {
+        "operationId": "GetOrganization",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns organization details resolved by either the internal `organization_id` or an external\n`third_party_id`.\nUse this endpoint to resolve an organization before making organization-scoped calls or when\nyou need display, hierarchy, contact, or branding data for the organization.\nAt least one identifier must be provided.",
+        "summary": "Get organization",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "WDB internal id. 20 characters. `id` on the organization model",
+            "in": "query",
+            "name": "organization_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "External id - use if you don't have the WDB internal id. For example a national municipality or institution id",
+            "in": "query",
+            "name": "third_party_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/organizations/configs": {
+      "get": {
+        "operationId": "GetOrganizationConfigs",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationConfigsApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns the organization configuration for an organization resolved by\n`organization_id` or `third_party_id`.\nUse this endpoint when your integration needs organization-level settings that influence client\nbehavior. Internal library system details and card credentials are intentionally excluded from\nthe response DTO.",
+        "summary": "Get organization configs",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "WDB internal id. 20 characters. `id` on the organization model",
+            "in": "query",
+            "name": "organization_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "External id - use if you don't have the WDB internal id. For example a national municipality or institution id",
+            "in": "query",
+            "name": "third_party_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/reservations": {
+      "post": {
+        "operationId": "CreateReservation",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateReservationApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Requests a reservation for a user and material.\n\nIf the material can be loaned right away, the endpoint creates a loan instead of a waiting\nreservation and responds with status `201`. Otherwise it returns status `200` with a\nreservation-oriented decision payload.",
+        "summary": "Create reservation",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReservationApiRequest"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetReservations",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetReservationsApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of reservations.\nUse `user_id` to limit the response to a single user, or omit it to page through reservations\nacross users. When `limit` is omitted, the default page size is `25`.\nThe returned pagination cursor is the reservation id to send back on the next request.",
+        "summary": "Get reservations.",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "format": "int32",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Optional user filter. Omit to page across users.",
+            "in": "query",
+            "name": "user_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/reservations/accept-offer": {
+      "post": {
+        "operationId": "AcceptReservationOffer",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptReservationOfferApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Accepts an active reservation offer and converts it into a loan.\nEither `offer_id` or `reservation_id` can be used.\n\nA reservation offer temporarily holds the relevant license for the title and price model.\nOn expiry/cancellation the license will be released.\nOn success, the response includes the created `loan_id` and uses status `201`.\n\nThe reservation and the offer are cleaned up shortly after acceptance, so external systems\nshould not expect those records to remain available indefinitely.",
+        "summary": "Accept reservation offer",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptReservationOfferApiRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/reservations/offers": {
+      "get": {
+        "operationId": "GetReservationOffers",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetReservationOffersApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of reservation offers for a single user.\n`user_id` is required. Use this endpoint to discover offers before calling\n`POST /v1/reservations/accept-offer`, or to inspect offer status and timestamps.\nThe returned pagination cursor is the reservation offer id to send back on the next request.",
+        "summary": "Get reservation offers",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "format": "int32",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "User whose reservation offers should be returned.",
+            "in": "query",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/reservations/{reservation_id}": {
+      "get": {
+        "operationId": "GetReservation",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetReservationApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a single reservation by `reservation_id`.\nUse this to refresh the authoritative state of a known reservation.\nA previously accepted or deleted reservation may return `404` if it has already been removed.",
+        "summary": "Get reservation",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reservation_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteReservation",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteReservationApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Deletes an existing reservation.\nUse this when the user no longer wants to wait for the material.\nThe response indicates whether the underlying reservation record was successfully removed.",
+        "summary": "Delete reservation",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reservation_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/shelves": {
+      "get": {
+        "operationId": "GetShelves",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetShelvesApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns the curated shelf layout for an organization and context.\nUse `context` to choose between the organization's `education` and `library` curation setup.\nThe response is grouped into blocks by age range and contains the referenced collection,\nstandard, and theme shelves in display order.\nIf the organization has no curation configured for the requested context, the endpoint returns\nan empty `blocks` array instead of an error.",
+        "summary": "Get organization shelves by context",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "WDB internal id. 20 characters. `id` on the organization model",
+            "in": "query",
+            "name": "organization_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "External id - use if you don't have the WDB internal id. For example a national municipality or institution id",
+            "in": "query",
+            "name": "third_party_id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "context",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "education",
+                "library"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "/v1/users/get_loan_quotas": {
+      "get": {
+        "operationId": "GetLoanQuotas",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/GetLoanQuotasApiResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApiErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns borrowing quota information for a user across every organization the user belongs to.\nUse this endpoint when you need to show remaining loan capacity or organization-specific quota\nrules before attempting a loan.\n\nThe response may contain multiple entries for the same user, one per organization. Each entry\ncontains the organization id and name, ancestor ids, whether quotas are split by format or\nshared across formats, and only the relevant quota fields for that mode.\n\nTreat this as informational state at request time. Loan creation endpoints remain\nauthoritative because availability and quota usage can change between calls.\n\nWhen `split_on_format` is `true`, the response includes per-format loan limits and usage for\naudiobooks and ebooks. When `split_on_format` is `false`, the response includes combined loan\nlimits and usage across formats.",
+        "summary": "Get user loan quotas",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/users/get_support_id": {
+      "get": {
+        "operationId": "GetSupportId",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/GetSupportIdApiResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApiErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns the support id for a user.\nIf the user does not already have a support id, one is generated and persisted before the\nresponse is returned.",
+        "summary": "Get user support id",
+        "security": [
+          {
+            "api_key": [],
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://stage-de.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://stage-dk.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://stage-fi.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://stage-no.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://stage-se.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://prod-de.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://prod-dk.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://prod-fi.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://prod-no.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://prod-se.biblio.wedobooks.io/"
+    },
+    {
+      "url": "https://biblio-stage-dk.biblio.wedobooks.io/"
+    }
+  ],
+  "info": {
+    "description": "## Rate limit\n\nAll API calls are subject to rate limiting per API consumer. The API will respond with status code 429 if an API consumer is a bit too enthusiastic with the frequency of calls so be prepared to back off if that's the case.\n\nThe rate limit is implemented using the \"sliding window\" method with a default max of 100 calls per 60 seconds. If you exceed this threshold 5 times you will be locked out and will have to reach out to us to have access restored.\n\nThe rate limit values _can_ be adjusted if absolutely necessary, so get in touch if you feel like it's necessary.\n\n## Authentication\n\nUse the [/auth/sign-in](#operation/SignInWithPassword) endpoint to get the short-lived token needed to call the rest of the endpoints. \nPlace the API key in an \\`x-api-key\\` header and pass the email and password credentials as a JSON body.\n\nThe short lived token received from the [/auth/sign-in](#operation/SignInWithPassword) call should be place as a Bearer token in the \\`Authorization\\` header for calls to all other endpoints.\n\nThe API key needs to be present in all API calls.\n\n## How to use the Onix endpoints\n\n1. Alpha pull: First time you use the Onix API you must retrieve all the books metadata using the [alpha pull endpoint](#operation/GetAlpha). Alpha pull is not active by default. Please contact us in order to activate alpha pulls for your account.\n2. Delta pull: Use the [delta pull endpoint](#operation/GetDelta) to retrieve updates (created/updated products).\n\nBoth alpha and delta pulls are paginated. You will be able to fetch up to 100 products per request.\n\nOnce the last page of an alpha or delta pull is reached, a \\`next_delta_pull_utc_timestamp\\` will be returned. This is a timestamp in ISO 8601 format with milliseconds precision. It must be stored in the client's system and be used for the next delta pull.\n\nYou can also get metadata for a specific book by ISBN using the [book onix metadata](#operation/GetOnix) endpoint\n\n\n## Webhooks\n\nRegistered endpoints will receive HTTP POST requests when resources change. All webhook events share a common envelope format.\n\n### Request\n\n**Method:** `POST`\n**Content-Type:** `application/json`\n\n### Envelope\n\n```json\n{\n  \"type\": \"<event_type>\",\n  \"action\": \"create\" | \"update\" | \"delete\",\n  \"data\": { ... }\n}\n```\n\n| Field    | Type     | Description                                                                 |\n|----------|----------|-----------------------------------------------------------------------------|\n| `type`   | `string` | Identifies the resource that changed. See types below for possible values. Use this to route events on your end. |\n| `action` | `string` | One of `create`, `update`, `delete`.                                        |\n| `data`   | `object` | The resource payload. Shape depends on `type`.                              |\n\n### Expected Response\n\nReturn any `2xx` status code to acknowledge receipt. Non-2xx responses or network errors are logged on our side but do not trigger retries within the same invocation.\n\n---\n\n### Event Types\n\n#### `reservation_offer`\n\nFired when a reservation offer is created, updated (e.g. status change), or deleted.\n\n**`data` fields (ReservationOfferDto):**\nSee return type of [Get reservation offers](#operation/GetReservationOffers)\n\n**Example:**\n\n```json\n{\n  \"type\": \"reservation_offer\",\n  \"action\": \"create\",\n  \"data\": {\n    \"id\": \"0047BKfxp5vjXVNwGWyL\",\n    \"reservation_id\": \"004HtOh1s2W7pnifFXZC\",\n    \"uid\": \"004l4QzdSEb4ehKX1Smz\",\n    \"material_id\": \"9788711623671\",\n    \"material_type\": \"ebook\",\n    \"org_id\": \"004olTeagCyw9FF1IEaa\",\n    \"origin_org_id\": \"004olTeagCyw9FF1IEaa\",\n    \"origin_org_type\": \"municipality\",\n    \"provider\": \"package\",\n    \"license_id\": \"005RvbmU7NrWSamdddbx\",\n    \"created_at\": \"2026-04-01T10:00:00.000Z\",\n    \"expires_at\": \"2026-04-10T23:59:59.000Z\",\n    \"status\": \"offered\"\n  }\n}\n```\n",
+    "title": "Biblio API",
+    "version": "1.0.0",
+    "license": {
+      "name": "WeDoBooks 1.0",
+      "url": "https://www.wedobooks.io/licenses/LICENSE-1.0.html"
+    }
+  },
+  "components": {
+    "examples": {},
+    "headers": {},
+    "parameters": {},
+    "requestBodies": {},
+    "responses": {},
+    "schemas": {
+      "ApiErrorResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SignInWithPasswordApiResponse": {
+        "properties": {
+          "id_token": {
+            "type": "string",
+            "description": "ID token to use as `bearer_auth`."
+          },
+          "expires_in_seconds": {
+            "type": "number",
+            "format": "double",
+            "description": "Lifetime of the returned ID token in seconds."
+          }
+        },
+        "required": [
+          "id_token",
+          "expires_in_seconds"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SignInWithPasswordApiRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of a email/password user."
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for the supplied email address."
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateUserApiResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "nullable": false,
+            "description": "`true` when the user record exists after the request."
+          }
+        },
+        "required": [
+          "success"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateUserApiRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 20
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateSignInTokenApiResponse": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Custom token. Exchange it for an ID token before calling bearer-auth endpoints."
+          },
+          "expires_in_seconds": {
+            "type": "number",
+            "format": "double",
+            "description": "Lifetime of the custom token in seconds."
+          }
+        },
+        "required": [
+          "token",
+          "expires_in_seconds"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ExternalUserType": {
+        "enum": [
+          "library",
+          "institution",
+          "unilogin"
+        ],
+        "type": "string"
+      },
+      "ExternalUserData": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ExternalUserType"
+          },
+          "organization_id": {
+            "type": "string",
+            "deprecated": true
+          },
+          "organization_third_party_id": {
+            "type": "string",
+            "description": "Third party id for the municipality"
+          },
+          "institution_id": {
+            "type": "string",
+            "description": "Required for `unilogin` type"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "0 or more tags. Only for `institution` type currently.\nIf more than one is supplied the first supported one will\nbe used. If none are supplied the default settings for the client type are used.\nTags can apply special loan quotas.\nThe current list of supported institution tags are: `BOERNETILBUD, AELDRETILBUD,\nBIBLIOTEKET_KOMMER, ADGANG_4, ADGANG_5, ADGANG_6, ADGANG_7,\nADGANG_8, ADGANG_9, ADGANG_10`"
+          }
+        },
+        "required": [
+          "organization_third_party_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateSignInTokenApiRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 20
+          },
+          "create_if_not_exists": {
+            "type": "boolean",
+            "description": "Create user record if one does not already exist",
+            "default": true
+          },
+          "user_data": {
+            "$ref": "#/components/schemas/ExternalUserData",
+            "description": "Optional external user payload persisted for later organization/user resolution."
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "InventoryPagination": {
+        "properties": {
+          "limit": {
+            "type": "number",
+            "format": "double",
+            "description": "Number of items returned per page."
+          },
+          "cursor": {
+            "type": "string",
+            "description": "Identifier to use as the starting point for the next page."
+          }
+        },
+        "required": [
+          "limit"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetInventoryApiReponse": {
+        "properties": {
+          "material_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Material ids (ISBN-13) available in the organization's searchable inventory."
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/InventoryPagination"
+          }
+        },
+        "required": [
+          "material_ids",
+          "pagination"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "LoanProvider": {
+        "enum": [
+          "free",
+          "k-fond",
+          "click",
+          "package",
+          "premium",
+          "selection"
+        ],
+        "type": "string"
+      },
+      "LoanLicenseInfo": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/LoanProvider"
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "RequestLoanRequestType": {
+        "enum": [
+          "loan",
+          "loan_from_reservation",
+          "external_loan",
+          "reservation_offer",
+          "reservation",
+          "system_reservation",
+          "wish",
+          "renew"
+        ],
+        "type": "string"
+      },
+      "MaterialType": {
+        "enum": [
+          "audiobook",
+          "ebook",
+          "paper_book"
+        ],
+        "type": "string"
+      },
+      "LoanDto": {
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "author": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "string"
+          },
+          "is_listen_and_read": {
+            "type": "boolean"
+          },
+          "license": {
+            "$ref": "#/components/schemas/LoanLicenseInfo"
+          },
+          "lix": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "loan_request_type": {
+            "$ref": "#/components/schemas/RequestLoanRequestType"
+          },
+          "material_id": {
+            "type": "string"
+          },
+          "material_type": {
+            "$ref": "#/components/schemas/MaterialType"
+          },
+          "org_id": {
+            "type": "string"
+          },
+          "org_type": {
+            "type": "string"
+          },
+          "publish_date": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "publisher_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string",
+            "description": "Loan start timestamp in ISO 8601 format."
+          },
+          "end": {
+            "type": "string",
+            "description": "Loan end or expiry timestamp in ISO 8601 format."
+          },
+          "last_opened_at": {
+            "type": "string",
+            "description": "Last time the loan was opened, in ISO 8601 format. \nOnly available if maintained by clients."
+          }
+        },
+        "required": [
+          "active",
+          "author",
+          "id",
+          "license",
+          "loan_request_type",
+          "material_id",
+          "material_type",
+          "org_id",
+          "publish_date",
+          "publisher",
+          "publisher_id",
+          "title",
+          "uid",
+          "start",
+          "end"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pagination": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "format": "int32",
+            "default": 25,
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "cursor": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetLoansApiResponse": {
+        "properties": {
+          "loans": {
+            "items": {
+              "$ref": "#/components/schemas/LoanDto"
+            },
+            "type": "array",
+            "description": "Loans for the current page."
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        },
+        "required": [
+          "loans",
+          "pagination"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetLoansApiRequest": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "format": "int32",
+            "default": 25,
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "cursor": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Defaults to `true`. Set to `false` to page inactive or ended loans."
+          },
+          "user_id": {
+            "type": "string",
+            "description": "Optional user filter. Omit to page across users."
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CanLoanResponseType": {
+        "enum": [
+          "unavailable",
+          "monthly_limit_exceeded",
+          "concurrent_limit_exceeded",
+          "wishable",
+          "reservable",
+          "loanable",
+          "no_valid_credentials"
+        ],
+        "type": "string"
+      },
+      "CanLoanResponseType.ConcurrentLimitExceeded": {
+        "enum": [
+          "concurrent_limit_exceeded"
+        ],
+        "type": "string"
+      },
+      "CanLoanResponseType.PeriodLimitExceeded": {
+        "enum": [
+          "monthly_limit_exceeded"
+        ],
+        "type": "string"
+      },
+      "CanLoanRejectReasons": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/CanLoanResponseType.ConcurrentLimitExceeded"
+          },
+          {
+            "$ref": "#/components/schemas/CanLoanResponseType.PeriodLimitExceeded"
+          }
+        ]
+      },
+      "QuotaReject": {
+        "properties": {
+          "reason": {
+            "$ref": "#/components/schemas/CanLoanRejectReasons"
+          },
+          "quota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextLoanAvailableDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "quota"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateLoanApiResponse": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CanLoanResponseType",
+            "description": "Current loan decision returned by the loan manager."
+          },
+          "loan_provider": {
+            "$ref": "#/components/schemas/LoanProvider",
+            "description": "Loan provider selected for the attempted loan, when available."
+          },
+          "active_loan_provider": {
+            "type": "boolean",
+            "description": "Indicates whether the selected provider is currently active for the user/org context."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable explanation of the loan decision."
+          },
+          "org_id": {
+            "type": "string",
+            "description": "Organization that governed the decision, when relevant."
+          },
+          "quota_reject": {
+            "$ref": "#/components/schemas/QuotaReject",
+            "description": "Structured quota rejection details when quota rules block the loan."
+          },
+          "loan": {
+            "$ref": "#/components/schemas/LoanDto",
+            "description": "Present only when a loan was actually created."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CanLoanApiRequest": {
+        "properties": {
+          "material_id": {
+            "type": "string",
+            "description": "ISBN-13 of the material the user wants to loan."
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User identifier."
+          }
+        },
+        "required": [
+          "material_id",
+          "user_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CanLoanApiResponse": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CanLoanResponseType",
+            "description": "Current loan decision returned by the loan manager."
+          },
+          "loan_provider": {
+            "$ref": "#/components/schemas/LoanProvider",
+            "description": "Loan provider selected for the attempted loan, when available."
+          },
+          "active_loan_provider": {
+            "type": "boolean",
+            "description": "Indicates whether the selected provider is currently active for the user/org context."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable explanation of the loan decision."
+          },
+          "org_id": {
+            "type": "string",
+            "description": "Organization that governed the decision, when relevant."
+          },
+          "quota_reject": {
+            "$ref": "#/components/schemas/QuotaReject",
+            "description": "Structured quota rejection details when quota rules block the loan."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetLoanApiResponse": {
+        "properties": {
+          "loan": {
+            "$ref": "#/components/schemas/LoanDto",
+            "description": "Loan details for the requested id."
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "MaterialType.Ebook": {
+        "enum": [
+          "ebook"
+        ],
+        "type": "string"
+      },
+      "MaterialType.Audiobook": {
+        "enum": [
+          "audiobook"
+        ],
+        "type": "string"
+      },
+      "ImportMaterialType": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/MaterialType.Ebook"
+          },
+          {
+            "$ref": "#/components/schemas/MaterialType.Audiobook"
+          }
+        ]
+      },
+      "Pick_MaterialInformation.author-or-category-or-description-or-collection_title-or-collection_volume_number-or-duration_seconds-or-editor-or-file_bytes-or-isbn-or-languages-or-material_type-or-narrator-or-publish_date-or-publisher-or-thema_codes-or-title-or-translator_": {
+        "properties": {
+          "author": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "material_type": {
+            "$ref": "#/components/schemas/ImportMaterialType"
+          },
+          "publish_date": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "description": {
+            "type": "string"
+          },
+          "collection_title": {
+            "type": "string"
+          },
+          "collection_volume_number": {
+            "type": "string"
+          },
+          "duration_seconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "editor": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "file_bytes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isbn": {
+            "type": "string"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "narrator": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "thema_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "translator": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "material_type",
+          "publish_date",
+          "publisher",
+          "title",
+          "category",
+          "description",
+          "isbn",
+          "languages",
+          "thema_codes"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "MaterialInformationDto": {
+        "$ref": "#/components/schemas/Pick_MaterialInformation.author-or-category-or-description-or-collection_title-or-collection_volume_number-or-duration_seconds-or-editor-or-file_bytes-or-isbn-or-languages-or-material_type-or-narrator-or-publish_date-or-publisher-or-thema_codes-or-title-or-translator_"
+      },
+      "GetMetadataApiResponse": {
+        "properties": {
+          "materials": {
+            "items": {
+              "$ref": "#/components/schemas/MaterialInformationDto"
+            },
+            "type": "array",
+            "description": "Metadata records for the requested ids. Unknown ids are omitted."
+          }
+        },
+        "required": [
+          "materials"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetMetadataApiRequest": {
+        "properties": {
+          "material_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Up to 50 ISBN-13 identifiers to resolve in a single request."
+          }
+        },
+        "required": [
+          "material_ids"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OnixPagination": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "format": "int32",
+            "default": 100,
+            "minimum": 1,
+            "maximum": 100
+          },
+          "cursor": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PaginatedProducts": {
+        "properties": {
+          "onix_products": {
+            "type": "string",
+            "description": "ONIX 3.0 XML document containing the products for the current page."
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/OnixPagination"
+          },
+          "next_delta_pull_utc_timestamp": {
+            "type": "string",
+            "description": "Timestamp to persist and reuse as `from_utc_timestamp` for the next delta sync."
+          }
+        },
+        "required": [
+          "onix_products",
+          "pagination"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AppMessage": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "created"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ContactPerson": {
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uid"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OrganizationType": {
+        "enum": [
+          "bookbites",
+          "municipality",
+          "library",
+          "region",
+          "custom",
+          "high_school",
+          "higher_education",
+          "public_school",
+          "private_school"
+        ],
+        "type": "string"
+      },
+      "AppThemeId": {
+        "enum": [
+          "biblio",
+          "sunset",
+          "flashlight",
+          "classic_and_warm",
+          "digital_twist",
+          "bonfire",
+          "holly",
+          "classic_and_cool",
+          "modern_twist",
+          "black_and_white"
+        ],
+        "type": "string"
+      },
+      "OrganizationAddress": {
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "street_2": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "street",
+          "postcode",
+          "city",
+          "country"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OrganizationContactInfo": {
+        "properties": {
+          "website": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pick_OrganizationData.Exclude_keyofOrganizationData.force_update-or-hubspot_fastlane-or-app_message__": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "legal_name": {
+            "type": "string"
+          },
+          "contacts": {
+            "items": {
+              "$ref": "#/components/schemas/ContactPerson"
+            },
+            "type": "array"
+          },
+          "owners": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": {
+            "$ref": "#/components/schemas/OrganizationType"
+          },
+          "ancestors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "ancestor_types": {
+            "items": {
+              "$ref": "#/components/schemas/OrganizationType"
+            },
+            "type": "array"
+          },
+          "member_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "population": {
+            "type": "number",
+            "format": "double",
+            "description": "population of the organization's area (unrelated to user/loaner count) - used for calculating selections prices"
+          },
+          "third_party_id": {
+            "type": "string"
+          },
+          "third_party_ref": {
+            "type": "string"
+          },
+          "disable_custom_names": {
+            "type": "boolean",
+            "description": "disable `display_name` for users"
+          },
+          "enable_demo_stats": {
+            "type": "boolean"
+          },
+          "inherit_visual_appearance": {
+            "type": "boolean"
+          },
+          "app_logo_url": {
+            "type": "string"
+          },
+          "app_theme": {
+            "$ref": "#/components/schemas/AppThemeId"
+          },
+          "address": {
+            "$ref": "#/components/schemas/OrganizationAddress"
+          },
+          "business_registration_number": {
+            "type": "string"
+          },
+          "contact_info": {
+            "$ref": "#/components/schemas/OrganizationContactInfo"
+          },
+          "is_strict": {
+            "type": "boolean",
+            "description": "- A strict organization will always be the primary\n- A patron can only have one strict organization"
+          }
+        },
+        "required": [
+          "name",
+          "contacts",
+          "owners",
+          "type",
+          "ancestors",
+          "ancestor_types",
+          "member_count"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "OrganizationDto": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "legal_name": {
+            "type": "string"
+          },
+          "contacts": {
+            "items": {
+              "$ref": "#/components/schemas/ContactPerson"
+            },
+            "type": "array"
+          },
+          "owners": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": {
+            "$ref": "#/components/schemas/OrganizationType"
+          },
+          "ancestors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "ancestor_types": {
+            "items": {
+              "$ref": "#/components/schemas/OrganizationType"
+            },
+            "type": "array"
+          },
+          "member_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "population": {
+            "type": "number",
+            "format": "double",
+            "description": "population of the organization's area (unrelated to user/loaner count) - used for calculating selections prices"
+          },
+          "third_party_id": {
+            "type": "string"
+          },
+          "third_party_ref": {
+            "type": "string"
+          },
+          "disable_custom_names": {
+            "type": "boolean",
+            "description": "disable `display_name` for users"
+          },
+          "enable_demo_stats": {
+            "type": "boolean"
+          },
+          "inherit_visual_appearance": {
+            "type": "boolean"
+          },
+          "app_logo_url": {
+            "type": "string"
+          },
+          "app_theme": {
+            "$ref": "#/components/schemas/AppThemeId"
+          },
+          "address": {
+            "$ref": "#/components/schemas/OrganizationAddress"
+          },
+          "business_registration_number": {
+            "type": "string"
+          },
+          "contact_info": {
+            "$ref": "#/components/schemas/OrganizationContactInfo"
+          },
+          "is_strict": {
+            "type": "boolean",
+            "description": "- A strict organization will always be the primary\n- A patron can only have one strict organization"
+          },
+          "id": {
+            "type": "string"
+          },
+          "app_message": {
+            "$ref": "#/components/schemas/AppMessage"
+          }
+        },
+        "required": [
+          "name",
+          "contacts",
+          "owners",
+          "type",
+          "ancestors",
+          "ancestor_types",
+          "member_count",
+          "id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetOrganizationApiResponse": {
+        "properties": {
+          "organization": {
+            "$ref": "#/components/schemas/OrganizationDto"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OrgId": {
+        "properties": {
+          "organization_id": {
+            "type": "string",
+            "description": "WDB internal id. 20 characters. `id` on the organization model"
+          },
+          "third_party_id": {
+            "type": "string",
+            "description": "External id - use if you don't have the WDB internal id. For example a national municipality or institution id"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AllowEduLoans": {
+        "properties": {
+          "lower": {
+            "type": "boolean",
+            "description": "`true` if library allows loan for lower educations."
+          },
+          "higher": {
+            "type": "boolean",
+            "description": "`true` if library allows loan for higher educations."
+          }
+        },
+        "required": [
+          "lower",
+          "higher"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pick_LibraryConfig.Exclude_keyofLibraryConfig.library_system-or-card_credentials__": {
+        "properties": {
+          "visible_to_users": {
+            "type": "boolean"
+          },
+          "library_number": {
+            "type": "string"
+          },
+          "allow_edu_loans": {
+            "$ref": "#/components/schemas/AllowEduLoans"
+          },
+          "validate_patron_on_loan": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "visible_to_users",
+          "library_number"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "Omit_LibraryConfig.library_system-or-card_credentials_": {
+        "$ref": "#/components/schemas/Pick_LibraryConfig.Exclude_keyofLibraryConfig.library_system-or-card_credentials__",
+        "description": "Construct a type with the properties of T except for those in type K."
+      },
+      "LoanPeriod": {
+        "properties": {
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "months": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "days",
+          "months"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CombinedLoanConfig": {
+        "description": "Loan configurations for all material types.",
+        "properties": {
+          "loan_duration_days": {
+            "type": "number",
+            "format": "double"
+          },
+          "reservation_offer_duration_days": {
+            "type": "number",
+            "format": "double",
+            "description": "Only used for projects where user has to accept reservation offer"
+          },
+          "max_concurrent_package_loans": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_concurrent_user_loans": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_concurrent_user_reservations": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_concurrent_user_wishes": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_monthly_user_reservations": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_monthly_user_wishes": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_user_loans": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_user_loans_period": {
+            "$ref": "#/components/schemas/LoanPeriod"
+          }
+        },
+        "required": [
+          "loan_duration_days",
+          "max_concurrent_package_loans",
+          "max_concurrent_user_loans",
+          "max_user_loans",
+          "max_user_loans_period"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ByMaterialType_LoanPeriod_": {
+        "properties": {
+          "audiobook": {
+            "$ref": "#/components/schemas/LoanPeriod"
+          },
+          "ebook": {
+            "$ref": "#/components/schemas/LoanPeriod"
+          }
+        },
+        "required": [
+          "audiobook",
+          "ebook"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ByMaterialType_number_": {
+        "properties": {
+          "audiobook": {
+            "type": "number",
+            "format": "double"
+          },
+          "ebook": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "audiobook",
+          "ebook"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SplitLoanConfig": {
+        "description": "Loan configurations per material type.",
+        "properties": {
+          "loan_duration_days": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "reservation_offer_duration_days": {
+            "$ref": "#/components/schemas/ByMaterialType_number_",
+            "description": "Only used for projects where user has to accept reservation offer"
+          },
+          "max_concurrent_package_loans": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_concurrent_user_loans": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_concurrent_user_reservations": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_concurrent_user_wishes": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_monthly_user_reservations": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_monthly_user_wishes": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_user_loans": {
+            "$ref": "#/components/schemas/ByMaterialType_number_"
+          },
+          "max_user_loans_period": {
+            "$ref": "#/components/schemas/ByMaterialType_LoanPeriod_"
+          }
+        },
+        "required": [
+          "loan_duration_days",
+          "max_concurrent_package_loans",
+          "max_concurrent_user_loans",
+          "max_user_loans",
+          "max_user_loans_period"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "LoanProviderConfig": {
+        "properties": {
+          "selected_order": {
+            "items": {
+              "$ref": "#/components/schemas/LoanProvider"
+            },
+            "type": "array",
+            "description": "Prioritized order of active loan providers."
+          }
+        },
+        "required": [
+          "selected_order"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "DrmConfig": {
+        "description": "DRM content config.",
+        "properties": {
+          "adobe": {
+            "type": "boolean",
+            "description": "`true` if Adobe DRM is enabled"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pick_OrganizationConfigs.Exclude_keyofOrganizationConfigs.library_config__": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "combined_loan_config": {
+            "$ref": "#/components/schemas/CombinedLoanConfig"
+          },
+          "loan_config": {
+            "$ref": "#/components/schemas/SplitLoanConfig"
+          },
+          "loan_provider_config": {
+            "$ref": "#/components/schemas/LoanProviderConfig"
+          },
+          "split_on_format": {
+            "type": "boolean",
+            "description": "If `true` organization uses {@link loan_config} else uses {@link combined_loan_config}."
+          },
+          "drm_config": {
+            "$ref": "#/components/schemas/DrmConfig"
+          }
+        },
+        "required": [
+          "combined_loan_config",
+          "loan_config",
+          "loan_provider_config",
+          "split_on_format"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "OrganizationConfigsDto": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "combined_loan_config": {
+            "$ref": "#/components/schemas/CombinedLoanConfig"
+          },
+          "loan_config": {
+            "$ref": "#/components/schemas/SplitLoanConfig"
+          },
+          "loan_provider_config": {
+            "$ref": "#/components/schemas/LoanProviderConfig"
+          },
+          "split_on_format": {
+            "type": "boolean",
+            "description": "If `true` organization uses {@link loan_config} else uses {@link combined_loan_config}."
+          },
+          "drm_config": {
+            "$ref": "#/components/schemas/DrmConfig"
+          },
+          "library_config": {
+            "$ref": "#/components/schemas/Omit_LibraryConfig.library_system-or-card_credentials_"
+          }
+        },
+        "required": [
+          "combined_loan_config",
+          "loan_config",
+          "loan_provider_config",
+          "split_on_format"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetOrganizationConfigsApiResponse": {
+        "properties": {
+          "organization_configurations": {
+            "$ref": "#/components/schemas/OrganizationConfigsDto"
+          }
+        },
+        "required": [
+          "organization_configurations"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateReservationApiResponse": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CanLoanResponseType",
+            "description": "Current loan decision returned by the loan manager."
+          },
+          "loan_provider": {
+            "$ref": "#/components/schemas/LoanProvider",
+            "description": "Loan provider selected for the attempted loan, when available."
+          },
+          "active_loan_provider": {
+            "type": "boolean",
+            "description": "Indicates whether the selected provider is currently active for the user/org context."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable explanation of the loan decision."
+          },
+          "org_id": {
+            "type": "string",
+            "description": "Organization that governed the decision, when relevant."
+          },
+          "quota_reject": {
+            "$ref": "#/components/schemas/QuotaReject",
+            "description": "Structured quota rejection details when quota rules block the loan."
+          },
+          "loan": {
+            "$ref": "#/components/schemas/LoanDto",
+            "description": "Present only when the reservation request was fulfilled immediately as a loan."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateReservationApiRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "User that should receive the reservation or immediate loan decision."
+          },
+          "material_id": {
+            "type": "string",
+            "description": "ISBN-13 of the requested material."
+          }
+        },
+        "required": [
+          "user_id",
+          "material_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AcceptReservationOfferApiResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "`true` when the offer was accepted and converted into a loan."
+          },
+          "loan_id": {
+            "type": "string",
+            "description": "Loan id created from the accepted offer. Present only on success."
+          }
+        },
+        "required": [
+          "success"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AcceptReservationOfferApiRequest": {
+        "properties": {
+          "offer_id": {
+            "type": "string",
+            "description": "Reservation offer id to accept."
+          },
+          "reservation_id": {
+            "type": "string",
+            "description": "Reservation id whose active offer should be accepted."
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "RequestLoanRequestType.Reservation": {
+        "enum": [
+          "reservation"
+        ],
+        "type": "string"
+      },
+      "RequestLoanRequestType.SystemReservation": {
+        "enum": [
+          "system_reservation"
+        ],
+        "type": "string"
+      },
+      "RequestLoanRequestType.Wish": {
+        "enum": [
+          "wish"
+        ],
+        "type": "string"
+      },
+      "RequestLoanReservationGroup": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/RequestLoanRequestType.Reservation"
+          },
+          {
+            "$ref": "#/components/schemas/RequestLoanRequestType.SystemReservation"
+          },
+          {
+            "$ref": "#/components/schemas/RequestLoanRequestType.Wish"
+          }
+        ]
+      },
+      "ReservationDto": {
+        "properties": {
+          "duration": {
+            "type": "number",
+            "format": "double",
+            "description": "Audiobook duration or 0"
+          },
+          "material_id": {
+            "type": "string",
+            "description": "Reserved material identifier."
+          },
+          "material_type": {
+            "$ref": "#/components/schemas/MaterialType",
+            "description": "Material type at reservation creation time."
+          },
+          "org_id": {
+            "type": "string",
+            "description": "The organization that made the reservation possible.\nLoan can be created on another organization if material will be available sooner"
+          },
+          "uid": {
+            "type": "string",
+            "description": "User that owns the reservation."
+          },
+          "type": {
+            "$ref": "#/components/schemas/RequestLoanReservationGroup",
+            "description": "Either `Reservation` or `Wish`. `SystemReservation`: wish was converted to reservation."
+          },
+          "offer_id": {
+            "type": "string",
+            "description": "Active reservation offer id when this reservation has been offered to the user."
+          },
+          "org_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "User organizations (including ancestors) at reservation create time"
+          },
+          "word_count": {
+            "type": "number",
+            "format": "double",
+            "description": "Word count snapshot used for reservation prioritization and analytics."
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Reservation create time."
+          },
+          "loan_date": {
+            "type": "string",
+            "description": "Date where reservation is expected to be converted to loan at latest\nbased on material license and organization loan config."
+          },
+          "offer_expires_at": {
+            "type": "string",
+            "description": "Expiry time of the currently linked reservation offer."
+          },
+          "id": {
+            "type": "string",
+            "description": "Reservation id."
+          }
+        },
+        "required": [
+          "duration",
+          "material_id",
+          "material_type",
+          "org_id",
+          "uid",
+          "type",
+          "org_ids",
+          "word_count",
+          "timestamp",
+          "loan_date",
+          "id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetReservationsApiResponse": {
+        "properties": {
+          "reservations": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationDto"
+            },
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        },
+        "required": [
+          "reservations",
+          "pagination"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetReservationsApiRequest": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "format": "int32",
+            "default": 25,
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "cursor": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "Optional user filter. Omit to page across users."
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ReservationOfferStatus": {
+        "enum": [
+          "offered",
+          "accepted",
+          "expired",
+          "cancelled"
+        ],
+        "type": "string"
+      },
+      "ReservationOfferDto": {
+        "properties": {
+          "material_id": {
+            "type": "string",
+            "description": "Material made available by the offer."
+          },
+          "material_type": {
+            "$ref": "#/components/schemas/MaterialType",
+            "description": "Material type of the offered title."
+          },
+          "org_id": {
+            "type": "string",
+            "description": "Organization that provided the held availability."
+          },
+          "uid": {
+            "type": "string",
+            "description": "User that owns and may accept the offer."
+          },
+          "reservation_id": {
+            "type": "string",
+            "description": "Source reservation that produced this offer."
+          },
+          "origin_org_id": {
+            "type": "string",
+            "description": "User organization used when resolving the held provider allocation."
+          },
+          "origin_org_type": {
+            "type": "string",
+            "description": "Type of {@link origin_org_id}."
+          },
+          "provider": {
+            "$ref": "#/components/schemas/LoanProvider",
+            "description": "Provider whose availability is being retained during the offer window."
+          },
+          "license_id": {
+            "type": "string",
+            "description": "Provider-specific identifier for the retained license/budget allocation."
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReservationOfferStatus",
+            "description": "Current lifecycle state for the offer."
+          },
+          "loan_id": {
+            "type": "string",
+            "description": "Final created loan id after acceptance."
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Reservation offer create time."
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "Reservation offer expiry time."
+          },
+          "accepted_at": {
+            "type": "string",
+            "description": "Reservation offer accept time."
+          },
+          "expired_at": {
+            "type": "string",
+            "description": "Reservation offer expire time."
+          },
+          "cancelled_at": {
+            "type": "string",
+            "description": "Reservation offer cancel time."
+          },
+          "id": {
+            "type": "string",
+            "description": "Reservation offer id."
+          }
+        },
+        "required": [
+          "material_id",
+          "material_type",
+          "org_id",
+          "uid",
+          "reservation_id",
+          "origin_org_id",
+          "origin_org_type",
+          "provider",
+          "license_id",
+          "status",
+          "created_at",
+          "expires_at",
+          "id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetReservationOffersApiResponse": {
+        "properties": {
+          "reservation_offers": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationOfferDto"
+            },
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        },
+        "required": [
+          "reservation_offers",
+          "pagination"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetReservationOffersApiRequest": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "format": "int32",
+            "default": 25,
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "cursor": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User whose reservation offers should be returned."
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetReservationApiResponse": {
+        "properties": {
+          "reservation": {
+            "$ref": "#/components/schemas/ReservationDto"
+          }
+        },
+        "required": [
+          "reservation"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "DeleteReservationApiResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "`true` when the reservation was removed."
+          }
+        },
+        "required": [
+          "success"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OrgCurationAgeRange": {
+        "description": "adult = from 17 to 1000 (UNKNOWN_AGE)",
+        "properties": {
+          "from": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "to": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ShelfType.Standard": {
+        "enum": [
+          "standard"
+        ],
+        "type": "string"
+      },
+      "ShelfPublicityType": {
+        "enum": [
+          "public",
+          "local",
+          "private"
+        ],
+        "type": "string"
+      },
+      "ShelfDuplicationReason": {
+        "enum": [
+          "manual",
+          "deleted"
+        ],
+        "type": "string"
+      },
+      "AppSearchField": {
+        "enum": [
+          "title",
+          "title_localized",
+          "author",
+          "category",
+          "isbn",
+          "genre",
+          "genre_keys",
+          "publisher",
+          "collection_title",
+          "collection_subtitle_number",
+          "collection_series_number",
+          "collection_volume_number",
+          "directors",
+          "actors",
+          "imdb_id",
+          "id",
+          "year",
+          "publish_date",
+          "material_type",
+          "word_count",
+          "duration_seconds",
+          "organizations",
+          "age_markers",
+          "language",
+          "narrator",
+          "translator",
+          "editor",
+          "lix",
+          "thema_codes",
+          "literary_form",
+          "intended_audience"
+        ],
+        "type": "string"
+      },
+      "ShelfAgeGroup": {
+        "type": "string",
+        "enum": [
+          "0-3",
+          "4-6",
+          "7-9",
+          "10-13",
+          "14-16",
+          "adult"
+        ]
+      },
+      "OrganizationContext": {
+        "enum": [
+          "education",
+          "library"
+        ],
+        "type": "string"
+      },
+      "Replace_StandardShelf.DateTime.string_": {
+        "properties": {
+          "creator_org": {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "id"
+            ],
+            "type": "object"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "audiobooks": {
+            "type": "number",
+            "format": "double"
+          },
+          "ebooks": {
+            "type": "number",
+            "format": "double"
+          },
+          "target_age_groups": {
+            "items": {
+              "$ref": "#/components/schemas/ShelfAgeGroup"
+            },
+            "type": "array"
+          },
+          "title": {
+            "type": "string"
+          },
+          "context": {
+            "$ref": "#/components/schemas/OrganizationContext"
+          },
+          "id": {
+            "type": "string"
+          },
+          "configurator_data": {
+            "properties": {
+              "filters": {
+                "properties": {
+                  "organizations": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "age_groups": {
+                    "items": {
+                      "$ref": "#/components/schemas/ShelfAgeGroup"
+                    },
+                    "type": "array"
+                  },
+                  "genres": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "languages": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "publish_years": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "material_types": {
+                    "items": {
+                      "$ref": "#/components/schemas/MaterialType"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "organizations",
+                  "age_groups",
+                  "genres",
+                  "languages",
+                  "publish_years",
+                  "material_types"
+                ],
+                "type": "object"
+              },
+              "entries": {
+                "items": {
+                  "properties": {
+                    "excluded": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "$ref": "#/components/schemas/AppSearchField"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "filters",
+              "entries"
+            ],
+            "type": "object"
+          },
+          "duplicated": {
+            "properties": {
+              "from_org": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "id"
+                ],
+                "type": "object"
+              },
+              "dismissed": {
+                "type": "boolean"
+              },
+              "reason": {
+                "$ref": "#/components/schemas/ShelfDuplicationReason"
+              }
+            },
+            "required": [
+              "from_org",
+              "dismissed",
+              "reason"
+            ],
+            "type": "object"
+          },
+          "publicity": {
+            "properties": {
+              "local_org_id": {
+                "type": "string"
+              },
+              "type": {
+                "$ref": "#/components/schemas/ShelfPublicityType"
+              }
+            },
+            "required": [
+              "local_org_id",
+              "type"
+            ],
+            "type": "object"
+          },
+          "preview_materials": {
+            "items": {
+              "properties": {
+                "lix": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "duration_seconds": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "word_count": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "material_type": {
+                  "$ref": "#/components/schemas/MaterialType"
+                },
+                "material_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "duration_seconds",
+                "word_count",
+                "title",
+                "material_type",
+                "material_id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "app_search_filters": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "draft": {
+            "type": "boolean"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ShelfType.Standard"
+          }
+        },
+        "required": [
+          "creator_org",
+          "updated_at",
+          "created_at",
+          "audiobooks",
+          "ebooks",
+          "target_age_groups",
+          "title",
+          "context",
+          "configurator_data",
+          "publicity",
+          "preview_materials",
+          "app_search_filters",
+          "end",
+          "start",
+          "draft",
+          "type"
+        ],
+        "type": "object"
+      },
+      "ReplaceDateTimes_StandardShelf_": {
+        "$ref": "#/components/schemas/Replace_StandardShelf.DateTime.string_"
+      },
+      "WithId": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "StandardShelfDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ReplaceDateTimes_StandardShelf_"
+          },
+          {
+            "$ref": "#/components/schemas/WithId"
+          }
+        ]
+      },
+      "ShelfType": {
+        "enum": [
+          "standard",
+          "collection",
+          "theme"
+        ],
+        "type": "string"
+      },
+      "Replace_DefaultShelf.DateTime.string_": {
+        "properties": {
+          "creator_org": {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "id"
+            ],
+            "type": "object"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "audiobooks": {
+            "type": "number",
+            "format": "double"
+          },
+          "ebooks": {
+            "type": "number",
+            "format": "double"
+          },
+          "target_age_groups": {
+            "items": {
+              "$ref": "#/components/schemas/ShelfAgeGroup"
+            },
+            "type": "array"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ShelfType"
+          },
+          "context": {
+            "$ref": "#/components/schemas/OrganizationContext"
+          },
+          "id": {
+            "type": "string"
+          },
+          "configurator_data": {
+            "properties": {
+              "filters": {
+                "properties": {
+                  "organizations": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "age_groups": {
+                    "items": {
+                      "$ref": "#/components/schemas/ShelfAgeGroup"
+                    },
+                    "type": "array"
+                  },
+                  "genres": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "languages": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "publish_years": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "material_types": {
+                    "items": {
+                      "$ref": "#/components/schemas/MaterialType"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "organizations",
+                  "age_groups",
+                  "genres",
+                  "languages",
+                  "publish_years",
+                  "material_types"
+                ],
+                "type": "object"
+              },
+              "entries": {
+                "items": {
+                  "properties": {
+                    "excluded": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "$ref": "#/components/schemas/AppSearchField"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "filters",
+              "entries"
+            ],
+            "type": "object"
+          },
+          "duplicated": {
+            "properties": {
+              "from_org": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "id"
+                ],
+                "type": "object"
+              },
+              "dismissed": {
+                "type": "boolean"
+              },
+              "reason": {
+                "$ref": "#/components/schemas/ShelfDuplicationReason"
+              }
+            },
+            "required": [
+              "from_org",
+              "dismissed",
+              "reason"
+            ],
+            "type": "object"
+          },
+          "publicity": {
+            "properties": {
+              "local_org_id": {
+                "type": "string"
+              },
+              "type": {
+                "$ref": "#/components/schemas/ShelfPublicityType"
+              }
+            },
+            "required": [
+              "local_org_id",
+              "type"
+            ],
+            "type": "object"
+          },
+          "preview_materials": {
+            "items": {
+              "properties": {
+                "lix": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "duration_seconds": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "word_count": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "material_type": {
+                  "$ref": "#/components/schemas/MaterialType"
+                },
+                "material_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "duration_seconds",
+                "word_count",
+                "title",
+                "material_type",
+                "material_id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "app_search_filters": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "draft": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "creator_org",
+          "updated_at",
+          "created_at",
+          "audiobooks",
+          "ebooks",
+          "target_age_groups",
+          "title",
+          "type",
+          "context",
+          "configurator_data",
+          "publicity",
+          "preview_materials",
+          "app_search_filters",
+          "end",
+          "start",
+          "draft"
+        ],
+        "type": "object"
+      },
+      "ReplaceDateTimes_DefaultShelf_": {
+        "$ref": "#/components/schemas/Replace_DefaultShelf.DateTime.string_"
+      },
+      "CollectionShelfDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ReplaceDateTimes_DefaultShelf_"
+          },
+          {
+            "$ref": "#/components/schemas/WithId"
+          }
+        ]
+      },
+      "ThemeShelfDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ReplaceDateTimes_DefaultShelf_"
+          },
+          {
+            "$ref": "#/components/schemas/WithId"
+          }
+        ]
+      },
+      "OrgCurationShelvesDto": {
+        "properties": {
+          "standard": {
+            "items": {
+              "$ref": "#/components/schemas/StandardShelfDto"
+            },
+            "type": "array"
+          },
+          "collection": {
+            "items": {
+              "$ref": "#/components/schemas/CollectionShelfDto"
+            },
+            "type": "array"
+          },
+          "theme": {
+            "items": {
+              "$ref": "#/components/schemas/ThemeShelfDto"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "standard",
+          "collection",
+          "theme"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OrgCurationBlockDto": {
+        "properties": {
+          "age_range": {
+            "$ref": "#/components/schemas/OrgCurationAgeRange"
+          },
+          "shelves": {
+            "$ref": "#/components/schemas/OrgCurationShelvesDto"
+          }
+        },
+        "required": [
+          "age_range",
+          "shelves"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetShelvesApiResponse": {
+        "properties": {
+          "blocks": {
+            "items": {
+              "$ref": "#/components/schemas/OrgCurationBlockDto"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "blocks"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetShelvesApiRequest": {
+        "properties": {
+          "organization_id": {
+            "type": "string",
+            "description": "WDB internal id. 20 characters. `id` on the organization model"
+          },
+          "third_party_id": {
+            "type": "string",
+            "description": "External id - use if you don't have the WDB internal id. For example a national municipality or institution id"
+          },
+          "context": {
+            "type": "string",
+            "enum": [
+              "education",
+              "library"
+            ]
+          }
+        },
+        "required": [
+          "context"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SplitLoanConfigType": {
+        "$ref": "#/components/schemas/ByMaterialType_number_"
+      },
+      "SplitLoanQuotaDto": {
+        "properties": {
+          "org_id": {
+            "type": "string",
+            "description": "Organization id"
+          },
+          "org_name": {
+            "type": "string",
+            "description": "Organization name"
+          },
+          "ancestors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Ancestor organization ids"
+          },
+          "split_on_format": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "nullable": false,
+            "description": "Split quotas are enabled, so only per-format values are returned"
+          },
+          "max_user_loans": {
+            "$ref": "#/components/schemas/SplitLoanConfigType",
+            "description": "Maximum loans allowed per format"
+          },
+          "max_user_loans_period": {
+            "properties": {
+              "ebook": {
+                "$ref": "#/components/schemas/LoanPeriod"
+              },
+              "audiobook": {
+                "$ref": "#/components/schemas/LoanPeriod"
+              }
+            },
+            "required": [
+              "ebook",
+              "audiobook"
+            ],
+            "type": "object",
+            "description": "Period used when evaluating `max_user_loans` per format.\nThe total duration can be at most 3 months."
+          },
+          "max_concurrent_user_loans": {
+            "$ref": "#/components/schemas/SplitLoanConfigType",
+            "description": "Maximum concurrent loans allowed per format"
+          },
+          "current_concurrent_loans": {
+            "$ref": "#/components/schemas/SplitLoanConfigType",
+            "description": "Current active loans per format"
+          },
+          "current_monthly_loans": {
+            "$ref": "#/components/schemas/SplitLoanConfigType",
+            "description": "Current loans counted within the configured loan period per format"
+          }
+        },
+        "required": [
+          "org_id",
+          "org_name",
+          "ancestors",
+          "split_on_format",
+          "max_user_loans",
+          "max_concurrent_user_loans",
+          "current_concurrent_loans",
+          "current_monthly_loans"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CombinedLoanQuotaDto": {
+        "properties": {
+          "org_id": {
+            "type": "string",
+            "description": "Organization id"
+          },
+          "org_name": {
+            "type": "string",
+            "description": "Organization name"
+          },
+          "ancestors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Ancestor organization ids"
+          },
+          "split_on_format": {
+            "type": "boolean",
+            "enum": [
+              false
+            ],
+            "nullable": false,
+            "description": "Split quotas are disabled, so only combined values are returned"
+          },
+          "combined_max_concurrent_user_loans": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum concurrent loans allowed across formats"
+          },
+          "combined_current_concurrent_loans": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Current active loans across formats"
+          },
+          "combined_current_monthly_loans": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Current loans counted within the configured loan period across formats"
+          },
+          "combined_max_user_loans": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum loans allowed across formats"
+          },
+          "combined_max_user_loans_period": {
+            "$ref": "#/components/schemas/LoanPeriod",
+            "description": "Period used when evaluating `combined_max_user_loans`.\nThe total duration can be at most 3 months."
+          }
+        },
+        "required": [
+          "org_id",
+          "org_name",
+          "ancestors",
+          "split_on_format",
+          "combined_max_concurrent_user_loans",
+          "combined_current_concurrent_loans",
+          "combined_current_monthly_loans",
+          "combined_max_user_loans"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetLoanQuotasApiResponse": {
+        "properties": {
+          "loan_quotas": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/SplitLoanQuotaDto"
+                },
+                {
+                  "$ref": "#/components/schemas/CombinedLoanQuotaDto"
+                }
+              ]
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "loan_quotas"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetLoanQuotasApiRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetSupportIdApiResponse": {
+        "properties": {
+          "support_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "support_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetSupportIdApiRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "bearer_auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Short lived bearer token obtained from auth endpoint"
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "Api token obtained from WeDoBooks"
+      }
+    }
+  }
+}
