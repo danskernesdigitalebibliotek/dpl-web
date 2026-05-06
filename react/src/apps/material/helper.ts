@@ -14,13 +14,9 @@ import {
 } from "../../core/dbc-gateway/generated/graphql";
 import {
   getAvailability as getAvailabilityFn,
-  getHoldings as getHoldingsFn,
   useGetHoldings as useGetHoldingsHook
 } from "../../core/fbs/hooks";
-import {
-  HoldingsForBibliographicalRecord,
-  HoldingsLogistics
-} from "@dpl/fbs";
+import { HoldingsForBibliographicalRecord, HoldingsLogistics } from "@dpl/fbs";
 import { UseConfigFunction } from "../../core/utils/config";
 import {
   getIdFromUrlHash,

@@ -29,10 +29,7 @@ import {
   editionSwitchModalId,
   useGetHoldings
 } from "../../apps/material/helper";
-import {
-  fbsQueryKeys,
-  useAddReservations
-} from "../../core/fbs/hooks";
+import { fbsQueryKeys, useAddReservations } from "../../core/fbs/hooks";
 import {
   AuthenticatedPatron,
   Manifestation,
