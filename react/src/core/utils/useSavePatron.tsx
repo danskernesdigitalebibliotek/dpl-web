@@ -2,10 +2,7 @@ import { useQueryClient } from "react-query";
 import { Patron } from "./types/entities";
 import type { PatronSettings as SLPatronSettings } from "@dpl/service-layer/fbs";
 import { Period, PincodeChange } from "@dpl/service-layer/fbs";
-import {
-  fbsQueryKeys,
-  useUpdatePatron
-} from "../fbs/hooks";
+import { fbsQueryKeys, useUpdatePatron } from "../fbs/hooks";
 import useUserInfo from "../adgangsplatformen/useUserInfo";
 import { isAnonymous } from "./helpers/user";
 
@@ -43,7 +40,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
   const { mutate } = useUpdatePatron();
   const queryClient = useQueryClient();
 
-  const savePatron = (data: Partial<PatronSettingsFormData>) => {
+  const savePatron = (data: Partial<PatronSettingsFormData> = {}) => {
     const { onSuccess, onError } = fetchHandlers?.savePatron || {};
 
     if (!patron || !userInfo) {
@@ -64,9 +61,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(
-            fbsQueryKeys.patronInfo()
-          );
+          queryClient.invalidateQueries(fbsQueryKeys.patronInfo());
           if (onSuccess) {
             onSuccess();
           }
@@ -93,9 +88,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(
-            fbsQueryKeys.patronInfo()
-          );
+          queryClient.invalidateQueries(fbsQueryKeys.patronInfo());
           if (onSuccess) {
             onSuccess();
           }
@@ -114,8 +107,8 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
 };
 
 export function convertToPatronSettings(
-  patronSettings: Partial<PatronSettingsFormData>
-): Partial<SLPatronSettings> & { guardianVisibility: boolean } {
+  patronSettings: PatronSettingsFormData
+): SLPatronSettings {
   const { emailAddress, phoneNumber, receiveEmail, receiveSms, ...rest } =
     patronSettings;
 

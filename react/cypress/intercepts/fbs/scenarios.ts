@@ -61,7 +61,6 @@ export const createHoldingsAtLibrary = ({
         departmentId: placement.department.id,
         title: placement.department.name
       },
-      section: undefined,
       location: undefined,
       sublocation: {
         sublocationId: placement.section.id,

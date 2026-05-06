@@ -1,7 +1,6 @@
 import {
   useMutation,
   useQuery,
-  useQueryClient,
   UseQueryOptions,
   UseMutationOptions
 } from "react-query";
@@ -28,20 +27,23 @@ import { getFbsClient } from "./useFbsClient";
 // -- Query Keys --
 
 export const fbsQueryKeys = {
-  fees: (params: GetFeesParams) => ["fbs", "fees", params] as const,
-  loans: () => ["fbs", "loans"] as const,
-  reservations: () => ["fbs", "reservations"] as const,
-  patronInfo: () => ["fbs", "patronInfo"] as const,
-  availability: (params: GetAvailabilityParams) =>
-    ["fbs", "availability", params] as const,
-  holdings: (params: GetHoldingsParams) => ["fbs", "holdings", params] as const
+  fees: (params: GetFeesParams) => ["fbs", "fees", params],
+  loans: () => ["fbs", "loans"],
+  reservations: () => ["fbs", "reservations"],
+  patronInfo: () => ["fbs", "patronInfo"],
+  availability: (params: GetAvailabilityParams) => [
+    "fbs",
+    "availability",
+    params
+  ],
+  holdings: (params: GetHoldingsParams) => ["fbs", "holdings", params]
 };
 
 // -- Fees --
 
 export const useGetFees = (
   params: GetFeesParams,
-  options?: { query?: UseQueryOptions<Fee[]> }
+  options?: { query?: Omit<UseQueryOptions<Fee[]>, "queryKey" | "queryFn"> }
 ) => {
   const client = getFbsClient();
   return useQuery(
@@ -53,7 +55,9 @@ export const useGetFees = (
 
 // -- Loans --
 
-export const useGetLoans = (options?: { query?: UseQueryOptions<Loan[]> }) => {
+export const useGetLoans = (options?: {
+  query?: Omit<UseQueryOptions<Loan[]>, "queryKey" | "queryFn">;
+}) => {
   const client = getFbsClient();
   return useQuery(
     fbsQueryKeys.loans(),
@@ -75,7 +79,7 @@ export const useRenewLoans = (
 // -- Reservations --
 
 export const useGetReservations = (options?: {
-  query?: UseQueryOptions<ReservationDetails[]>;
+  query?: Omit<UseQueryOptions<ReservationDetails[]>, "queryKey" | "queryFn">;
 }) => {
   const client = getFbsClient();
   return useQuery(
@@ -167,7 +171,9 @@ export const useUpdatePatron = (
 
 export const useGetAvailability = (
   params: GetAvailabilityParams,
-  options?: { query?: UseQueryOptions<Availability[]> }
+  options?: {
+    query?: Omit<UseQueryOptions<Availability[]>, "queryKey" | "queryFn">;
+  }
 ) => {
   const client = getFbsClient();
   return useQuery(
@@ -177,7 +183,6 @@ export const useGetAvailability = (
   );
 };
 
-// Non-hook version for prefetching
 export const getAvailability = (params: GetAvailabilityParams) => {
   const client = getFbsClient();
   return client.getAvailability(params);
@@ -187,7 +192,12 @@ export const getAvailability = (params: GetAvailabilityParams) => {
 
 export const useGetHoldings = (
   params: GetHoldingsParams,
-  options?: { query?: UseQueryOptions<HoldingsForBibliographicalRecord[]> }
+  options?: {
+    query?: Omit<
+      UseQueryOptions<HoldingsForBibliographicalRecord[]>,
+      "queryKey" | "queryFn"
+    >;
+  }
 ) => {
   const client = getFbsClient();
   return useQuery(
@@ -197,7 +207,6 @@ export const useGetHoldings = (
   );
 };
 
-// Non-hook version for prefetching
 export const getHoldings = (params: GetHoldingsParams) => {
   const client = getFbsClient();
   return client.getHoldings(params);
