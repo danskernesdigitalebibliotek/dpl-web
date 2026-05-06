@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useText } from "../../../core/utils/text";
 import { MaterialProps } from "../../loan-list/materials/utils/material-fetch-hoc";
-import { FeeMaterial } from "@dpl/service-layer/fbs";
+import { FeeMaterial } from "@dpl/fbs";
 import SelectableMaterial from "../../loan-list/materials/selectable-material/selectable-material";
 import StatusBadge from "../../loan-list/materials/utils/status-badge";
 import { FaustId } from "../../../core/utils/types/ids";

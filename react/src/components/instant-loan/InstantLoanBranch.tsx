@@ -1,5 +1,5 @@
 import React from "react";
-import { HoldingsLogistics } from "@dpl/service-layer/fbs";
+import { HoldingsLogistics } from "@dpl/fbs";
 import AvailabilityLabelVisual from "../availability-label/availability-label-visual";
 
 type InstantLoanBranchProps = {

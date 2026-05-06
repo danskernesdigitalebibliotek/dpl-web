@@ -4,7 +4,7 @@ import { tallyUpFees } from "../../../core/utils/helpers/general";
 import { useText } from "../../../core/utils/text";
 import { useUrls } from "../../../core/utils/url";
 import WarningBar from "../../loan-list/materials/utils/warning-bar";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 
 const DashboardFees: FC = () => {
   const t = useText();

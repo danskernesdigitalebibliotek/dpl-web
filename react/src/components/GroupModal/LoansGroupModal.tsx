@@ -11,7 +11,7 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { useRenewLoans, fbsQueryKeys } from "../../core/fbs/hooks";
 import GroupModalLoansList from "./GroupModalLoansList";
 import LoansGroupModalButton from "./LoansGroupModalButton";
-import { RenewedLoan } from "@dpl/service-layer/fbs";
+import { RenewedLoan } from "@dpl/fbs";
 import RenewalModalMessage from "../renewal/RenewalModalMessage";
 import { succeededRenewalCount } from "../../core/utils/helpers/renewal";
 import { useSingleRequestWithStatus } from "../../core/utils/useRequestsWithStatus";

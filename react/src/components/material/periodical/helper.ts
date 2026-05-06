@@ -1,5 +1,5 @@
 import { mapValues, uniq } from "lodash";
-import { HoldingsLogistics, Periodical } from "@dpl/service-layer/fbs";
+import { HoldingsLogistics, Periodical } from "@dpl/fbs";
 
 export type PeriodicalEdition = {
   displayText: string;

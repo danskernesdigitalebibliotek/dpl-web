@@ -12,7 +12,7 @@ import {
   WorkMediumFragment,
   WorkSmallFragment
 } from "../../dbc-gateway/generated/graphql";
-import { AuthenticatedPatronInfo, PatronInfo } from "@dpl/service-layer/fbs";
+import { AuthenticatedPatronInfo, PatronInfo } from "@dpl/fbs";
 import { Pid, WorkId } from "./ids";
 
 export type Manifestation = Omit<ManifestationsSimpleFieldsFragment, "pid"> & {

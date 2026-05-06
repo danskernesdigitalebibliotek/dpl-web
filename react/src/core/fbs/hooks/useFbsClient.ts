@@ -1,4 +1,4 @@
-import { createFbsClient } from "@dpl/service-layer/fbs";
+import { createFbsClient } from "@dpl/fbs";
 import { getToken, TOKEN_LIBRARY_KEY } from "../../token";
 import { getUserToken } from "../../utils/helpers/user";
 import {

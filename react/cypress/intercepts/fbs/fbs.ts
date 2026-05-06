@@ -7,7 +7,7 @@ import { newBookManifestation } from "../../factories/manifestation/variants/new
 import { audioBookManifestation } from "../../factories/manifestation/variants/audioBookManifestation";
 import { eBookManifestation } from "../../factories/manifestation/variants/eBookManifestation";
 import { periodicalManifestation } from "../../factories/material/variants/periodicalMaterial";
-import { ReservationResponse } from "@dpl/service-layer/fbs";
+import { ReservationResponse } from "@dpl/fbs";
 import { convertPostIdToFaustId } from "../../../src/core/utils/helpers/general";
 import { Pid } from "../../../src/core/utils/types/ids";
 /**

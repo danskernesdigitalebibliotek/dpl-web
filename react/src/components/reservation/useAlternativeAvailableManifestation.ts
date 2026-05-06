@@ -4,7 +4,7 @@ import {
   getAllFaustIds,
   convertPostIdToFaustId
 } from "../../core/utils/helpers/general";
-import { Availability } from "@dpl/service-layer/fbs";
+import { Availability } from "@dpl/fbs";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
 import { useConfig } from "../../core/utils/config";

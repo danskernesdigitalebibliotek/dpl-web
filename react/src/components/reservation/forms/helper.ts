@@ -1,4 +1,4 @@
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import useSavePatron from "../../../core/utils/useSavePatron";
 
 export type ModalReservationFormTextType =

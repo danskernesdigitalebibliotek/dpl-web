@@ -3,7 +3,7 @@ import SubtitlesIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/
 import MessageIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Message.svg";
 import { useText } from "../../core/utils/text";
 import ReservationFormListItem from "./ReservationFormListItem";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import EmailModal from "./forms/EmailModal";
 import {

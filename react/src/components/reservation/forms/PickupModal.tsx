@@ -1,5 +1,5 @@
 import React from "react";
-import { Branch } from "@dpl/service-layer/fbs";
+import { Branch } from "@dpl/fbs";
 import { useText } from "../../../core/utils/text";
 import ModalReservationFormSelect from "./ModalReservationFormSelect";
 import { RequestStatus } from "../../../core/utils/types/request";

@@ -1,4 +1,4 @@
-import { ReservationDetails } from "@dpl/service-layer/fbs";
+import { ReservationDetails } from "@dpl/fbs";
 import {
   calculateRoundedUpDaysUntil,
   formatDateDependingOnDigitalMaterial,

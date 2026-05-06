@@ -1,4 +1,4 @@
-import { HoldingsLogistics } from "@dpl/service-layer/fbs";
+import { HoldingsLogistics } from "@dpl/fbs";
 
 export const getLocationArray = (
   holdingsLogistics: HoldingsLogistics

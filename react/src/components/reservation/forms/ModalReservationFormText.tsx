@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import React, { memo, useState } from "react";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import { stringifyValue } from "../../../core/utils/helpers/general";
 import Modal, { useModalButtonHandler } from "../../../core/utils/modal";
 import { useText, UseTextFunction } from "../../../core/utils/text";

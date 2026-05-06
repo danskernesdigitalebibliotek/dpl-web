@@ -1,5 +1,5 @@
 import { head, keys, values } from "lodash";
-import { Loan as FbsLoan, ReservationDetails } from "@dpl/service-layer/fbs";
+import { Loan as FbsLoan, ReservationDetails } from "@dpl/fbs";
 import { FaustId } from "../types/ids";
 import { ManifestationBasicDetailsFragment } from "../../dbc-gateway/generated/graphql";
 import { BasicDetailsType } from "../types/basic-details-type";

@@ -1,4 +1,4 @@
-import { Availability } from "@dpl/service-layer/fbs";
+import { Availability } from "@dpl/fbs";
 import { Manifestation } from "../../../core/utils/types/entities";
 import articleTypes from "../../../core/utils/types/article-types";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";

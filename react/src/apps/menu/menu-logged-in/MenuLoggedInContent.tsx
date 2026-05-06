@@ -4,7 +4,7 @@ import Link from "../../../components/atoms/links/Link";
 import MenuNavigationItem, {
   MenuNavigationDataType
 } from "../menu-navigation-list/MenuNavigationItem";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 import { useUrls } from "../../../core/utils/url";
 import { useGetFees } from "../../../core/fbs/hooks";
 import { useConfig } from "../../../core/utils/config";

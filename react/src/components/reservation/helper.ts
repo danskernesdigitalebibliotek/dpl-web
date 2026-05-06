@@ -4,7 +4,7 @@ import {
   CreateReservation,
   CreateReservationBatch,
   HoldingsLogistics
-} from "@dpl/service-layer/fbs";
+} from "@dpl/fbs";
 import {
   convertPostIdToFaustId,
   creatorsToString,

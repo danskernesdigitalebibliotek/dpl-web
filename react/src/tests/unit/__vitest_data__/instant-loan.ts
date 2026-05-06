@@ -1,4 +1,4 @@
-import { Branch, HoldingsLogistics } from "@dpl/service-layer/fbs";
+import { Branch, HoldingsLogistics } from "@dpl/fbs";
 
 const branchHoldings: HoldingsLogistics[] = [
   {

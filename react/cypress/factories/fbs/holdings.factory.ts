@@ -3,7 +3,7 @@ import {
   HoldingsForBibliographicalRecord,
   HoldingsLogistics,
   HoldingsMaterial
-} from "@dpl/service-layer/fbs";
+} from "@dpl/fbs";
 
 /**
  * Factory for individual material items

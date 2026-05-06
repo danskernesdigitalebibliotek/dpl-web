@@ -1,7 +1,7 @@
 import { useQueryClient } from "react-query";
 import { Patron } from "./types/entities";
-import type { PatronSettings as SLPatronSettings } from "@dpl/service-layer/fbs";
-import { Period, PincodeChange } from "@dpl/service-layer/fbs";
+import type { PatronSettings as SLPatronSettings } from "@dpl/fbs";
+import { Period, PincodeChange } from "@dpl/fbs";
 import { fbsQueryKeys, useUpdatePatron } from "../fbs/hooks";
 import useUserInfo from "../adgangsplatformen/useUserInfo";
 import { isAnonymous } from "./helpers/user";

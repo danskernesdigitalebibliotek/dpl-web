@@ -26,7 +26,7 @@ function dynamicAllowedHostnames() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@dpl/service-layer"],
+  transpilePackages: ["@dpl/fbs"],
   cacheComponents: true,
   typescript: {
     // @todo This is a temporary solution!!

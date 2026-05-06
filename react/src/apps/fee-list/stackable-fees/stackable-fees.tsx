@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 import FeeInfo from "./fee-info";
 import fetchMaterial, {
   MaterialProps

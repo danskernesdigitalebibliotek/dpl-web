@@ -2,7 +2,7 @@ import React from "react";
 import { Manifestation } from "../../core/utils/types/entities";
 import DisclosureControllable from "../Disclosures/DisclosureControllable";
 import InstantLoanSummary from "./InstantLoanSummary";
-import { HoldingsLogistics } from "@dpl/service-layer/fbs";
+import { HoldingsLogistics } from "@dpl/fbs";
 import InstantLoanBranch from "./InstantLoanBranch";
 
 type InstantLoanProps = {

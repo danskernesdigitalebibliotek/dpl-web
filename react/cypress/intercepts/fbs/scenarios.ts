@@ -1,4 +1,4 @@
-import { Availability, HoldingsLogistics } from "@dpl/service-layer/fbs";
+import { Availability, HoldingsLogistics } from "@dpl/fbs";
 import {
   holdingsLogisticsFactory,
   materialFactory

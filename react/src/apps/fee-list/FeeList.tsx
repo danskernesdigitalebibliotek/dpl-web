@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "../../components/atoms/links/Link";
 import { useGetFees } from "../../core/fbs/hooks";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import { useText } from "../../core/utils/text";
 import { useUrls } from "../../core/utils/url";

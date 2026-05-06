@@ -1,6 +1,6 @@
 import FocusTrap from "focus-trap-react";
 import React from "react";
-import { ReservationResponse, ReservationResult } from "@dpl/service-layer/fbs";
+import { ReservationResponse, ReservationResult } from "@dpl/fbs";
 import { useText } from "../../core/utils/text";
 import { Button } from "../Buttons/Button";
 

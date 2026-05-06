@@ -13,7 +13,7 @@ import {
   fbsQueryKeys
 } from "../../../../core/fbs/hooks";
 import { getPreferredBranch } from "../../../../components/reservation/helper";
-import { Branch } from "@dpl/service-layer/fbs";
+import { Branch } from "@dpl/fbs";
 import ListDetails from "../../../../components/list-details/list-details";
 import { useConfig } from "../../../../core/utils/config";
 import PickupModal from "../../../../components/reservation/forms/PickupModal";

@@ -1,4 +1,4 @@
-import { RenewedLoan } from "@dpl/service-layer/fbs";
+import { RenewedLoan } from "@dpl/fbs";
 import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
 import { UseTextFunction } from "../../../core/utils/text";

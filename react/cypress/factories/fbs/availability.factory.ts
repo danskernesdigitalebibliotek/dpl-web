@@ -1,5 +1,5 @@
 import { Factory } from "fishery";
-import { Availability } from "@dpl/service-layer/fbs";
+import { Availability } from "@dpl/fbs";
 
 /**
  * Factory for FBS Availability

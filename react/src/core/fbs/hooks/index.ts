@@ -21,7 +21,7 @@ import type {
   GetAvailabilityParams,
   HoldingsForBibliographicalRecord,
   GetHoldingsParams
-} from "@dpl/service-layer/fbs";
+} from "@dpl/fbs";
 import { getFbsClient } from "./useFbsClient";
 
 // -- Query Keys --

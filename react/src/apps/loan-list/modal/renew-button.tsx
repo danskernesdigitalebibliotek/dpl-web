@@ -5,7 +5,7 @@ import { useRenewLoans, fbsQueryKeys } from "../../../core/fbs/hooks";
 import { LoanId } from "../../../core/utils/types/ids";
 import { Button } from "../../../components/Buttons/Button";
 import { RequestStatus } from "../../../core/utils/types/request";
-import { RenewedLoan } from "@dpl/service-layer/fbs";
+import { RenewedLoan } from "@dpl/fbs";
 import { getRenewButtonLabel } from "../../../core/utils/helpers/renewal";
 import { useEventStatistics } from "../../../core/statistics/useStatistics";
 import { statistics } from "../../../core/statistics/statistics";

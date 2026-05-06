@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { RenewedLoan } from "@dpl/service-layer/fbs";
+import { RenewedLoan } from "@dpl/fbs";
 import { filterRenewResponseData } from "../../core/utils/helpers/renewal";
 import ModalMessage from "../message/modal-message/ModalMessage";
 import { RequestStatus } from "../../core/utils/types/request";

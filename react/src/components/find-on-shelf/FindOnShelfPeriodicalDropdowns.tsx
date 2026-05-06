@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC, useState } from "react";
 import Dropdown from "../Dropdown/Dropdown";
-import { HoldingsForBibliographicalRecord } from "@dpl/service-layer/fbs";
+import { HoldingsForBibliographicalRecord } from "@dpl/fbs";
 import {
   PeriodicalEdition,
   makePeriodicalEditionsFromHoldings,

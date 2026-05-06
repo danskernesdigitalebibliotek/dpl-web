@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FC } from "react";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import { PatronSettingsFormData } from "../../core/utils/useSavePatron";
 import { useText } from "../../core/utils/text";
 import CheckBox from "../checkbox/Checkbox";

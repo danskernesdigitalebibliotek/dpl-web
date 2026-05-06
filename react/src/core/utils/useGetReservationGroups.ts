@@ -1,6 +1,6 @@
 import { groupBy, map, min, reduce } from "lodash";
 import { useGetReservations } from "../fbs/hooks";
-import { ReservationDetails } from "@dpl/service-layer/fbs";
+import { ReservationDetails } from "@dpl/fbs";
 
 /**
  * Custom reservation details type which covers parallel reservations.

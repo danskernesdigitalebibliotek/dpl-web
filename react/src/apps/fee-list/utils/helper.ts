@@ -1,4 +1,4 @@
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 
 export const getFeeObjectByFeeId = (feeObj: Fee[], feeId: number) => {
   return feeObj.filter((item) => {

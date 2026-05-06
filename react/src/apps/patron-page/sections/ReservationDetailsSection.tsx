@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import BranchesDropdown from "../util/BranchesDropdown";
 import { useText } from "../../../core/utils/text";
 

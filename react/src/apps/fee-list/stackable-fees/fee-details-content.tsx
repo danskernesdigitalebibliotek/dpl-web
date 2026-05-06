@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FC } from "react";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 import { useText } from "../../../core/utils/text";
 import StackableFeesList from "./stackable-fees-list";
 import GroupModalContent from "../../../components/GroupModal/GroupModalContent";

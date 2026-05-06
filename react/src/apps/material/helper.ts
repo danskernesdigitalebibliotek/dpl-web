@@ -20,7 +20,7 @@ import {
 import {
   HoldingsForBibliographicalRecord,
   HoldingsLogistics
-} from "@dpl/service-layer/fbs";
+} from "@dpl/fbs";
 import { UseConfigFunction } from "../../core/utils/config";
 import {
   getIdFromUrlHash,

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import { PatronSettingsFormData } from "../../core/utils/useSavePatron";
 import { useConfig } from "../../core/utils/config";
 import ContactInfoInputs from "./ContactInfoInputs";

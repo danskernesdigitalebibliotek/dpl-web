@@ -1,4 +1,4 @@
-import { createFbsClient } from "@dpl/service-layer/fbs"
+import { createFbsClient } from "@dpl/fbs"
 
 import { getAPServiceFetcherBaseUrl } from "./ap-service"
 

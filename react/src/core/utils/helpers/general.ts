@@ -14,7 +14,7 @@ import { getUrlQueryParam } from "./url";
 import { LoanType } from "../types/loan-type";
 import { ListType } from "../types/list-type";
 import { ManifestationReviewFieldsFragment } from "../../dbc-gateway/generated/graphql";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 import { ReservationType } from "../types/reservation-type";
 import { ManifestationMaterialType } from "../types/material-type";
 import { store } from "../../store";

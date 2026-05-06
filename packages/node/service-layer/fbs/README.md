@@ -72,20 +72,20 @@ In `tsconfig.json` of the consuming app:
 For Next.js apps, also add to `next.config.mjs`:
 
 ```js
-transpilePackages: ["@dpl/service-layer"]
+transpilePackages: ["@dpl/service-layer"];
 ```
 
 Then import in your code:
 
 ```typescript
-import { createFbsClient } from "@dpl/service-layer/fbs"
+import { createFbsClient } from "@dpl/service-layer/fbs";
 
 const client = createFbsClient({
   baseUrl: "https://fbs-openplatform.dbc.dk",
   getAuthHeader: () => `Bearer ${token}`,
-})
+});
 
-const patronInfo = await client.getPatronInfo()
+const patronInfo = await client.getPatronInfo();
 ```
 
 ## How to add a new service

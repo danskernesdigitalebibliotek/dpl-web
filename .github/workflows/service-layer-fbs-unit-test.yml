@@ -1,12 +1,12 @@
 # Workflow name
-name: "Service Layer / Unit test"
+name: "Service Layer / FBS / Unit test"
 
 # Event for the workflow
 on:
   pull_request:
     paths:
-      - 'serviceLayer/**'
-      - '.github/workflows/service-layer-*.yml'
+      - 'packages/node/service-layer/fbs/**'
+      - '.github/workflows/service-layer-fbs-*.yml'
 
 # List of jobs
 jobs:
@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: serviceLayer
+        working-directory: packages/node/service-layer/fbs
 
     steps:
       - name: Checkout code
@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version-file: "serviceLayer/.nvmrc"
+          node-version-file: "packages/node/service-layer/fbs/.nvmrc"
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile

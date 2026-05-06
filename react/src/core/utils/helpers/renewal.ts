@@ -1,4 +1,4 @@
-import { RenewedLoan } from "@dpl/service-layer/fbs";
+import { RenewedLoan } from "@dpl/fbs";
 import { UseTextFunction } from "../text";
 import { RenewStatus } from "../types/renew-status";
 import { RequestStatus } from "../types/request";

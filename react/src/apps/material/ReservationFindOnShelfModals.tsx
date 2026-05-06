@@ -2,7 +2,7 @@ import React from "react";
 import ReservationModal from "../../components/reservation/ReservationModal";
 import FindOnShelfModal from "../../components/find-on-shelf/FindOnShelfModal";
 import { isAnonymous, isBlocked } from "../../core/utils/helpers/user";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { PeriodicalEdition } from "../../components/material/periodical/helper";
 import { getManifestationTitle, getWorkTitle } from "./helper";

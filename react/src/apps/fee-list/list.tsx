@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import ListHeader from "../../components/list-header/list-header";
-import { Fee } from "@dpl/service-layer/fbs";
+import { Fee } from "@dpl/fbs";
 import StackableFees from "./stackable-fees/stackable-fees";
 import { FaustId } from "../../core/utils/types/ids";
 

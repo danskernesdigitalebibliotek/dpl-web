@@ -18,7 +18,7 @@ import RenewButton from "./renew-button";
 import Link from "../../../components/atoms/links/Link";
 import { useUrls } from "../../../core/utils/url";
 import { RequestStatus } from "../../../core/utils/types/request";
-import { RenewedLoan } from "@dpl/service-layer/fbs";
+import { RenewedLoan } from "@dpl/fbs";
 import RenewalModalMessage from "../../../components/renewal/RenewalModalMessage";
 import { formatDate } from "../../../core/utils/helpers/date";
 import useWorkUrl from "../../../core/utils/useWorkUrl";

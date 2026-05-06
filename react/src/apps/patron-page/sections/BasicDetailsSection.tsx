@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { PatronInfo } from "@dpl/service-layer/fbs";
+import { PatronInfo } from "@dpl/fbs";
 import { useText } from "../../../core/utils/text";
 import { FriendlyCardResult } from "../../../core/publizon/model";
 

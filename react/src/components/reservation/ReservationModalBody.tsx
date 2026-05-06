@@ -17,7 +17,7 @@ import {
   Branch,
   HoldingsForBibliographicalRecord,
   ReservationResponse
-} from "@dpl/service-layer/fbs";
+} from "@dpl/fbs";
 import UserListItems from "./UserListItems";
 import ReservationSucces from "./ReservationSucces";
 import ReservationError from "./ReservationError";

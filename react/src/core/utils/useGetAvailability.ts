@@ -1,6 +1,6 @@
 import { UseQueryOptions } from "react-query";
 import { useGetAvailability as useGetAvailabilityHook } from "../fbs/hooks";
-import { Availability } from "@dpl/service-layer/fbs";
+import { Availability } from "@dpl/fbs";
 import { UseConfigFunction } from "./config";
 import { FaustId } from "./types/ids";
 import { getBlacklistedQueryArgs } from "../../apps/material/helper";

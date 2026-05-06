@@ -1,4 +1,4 @@
-import { HoldingsLogistics } from "@dpl/service-layer/fbs";
+import { HoldingsLogistics } from "@dpl/fbs";
 import { Manifestation } from "../../core/utils/types/entities";
 
 // This type is preferrably supposed to be used for matching manifestation +

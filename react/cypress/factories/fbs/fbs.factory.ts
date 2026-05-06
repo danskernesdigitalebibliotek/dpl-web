@@ -3,7 +3,7 @@ import {
   ReservationResponse,
   ReservationDetails,
   ReservationResult
-} from "@dpl/service-layer/fbs";
+} from "@dpl/fbs";
 
 /**
  * Factory for FBS reservation details

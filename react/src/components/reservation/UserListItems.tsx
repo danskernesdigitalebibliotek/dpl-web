@@ -5,7 +5,7 @@ import MessageIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/ic
 import LoanHistoryIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/LoanHistory.svg";
 import { useText } from "../../core/utils/text";
 import ReservationFormListItem from "./ReservationFormListItem";
-import { Branch, PatronInfo } from "@dpl/service-layer/fbs";
+import { Branch, PatronInfo } from "@dpl/fbs";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import EmailModal from "./forms/EmailModal";
 import {
