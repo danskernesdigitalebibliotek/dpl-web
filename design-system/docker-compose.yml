@@ -4,7 +4,6 @@ x-volumes:
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
       - 'projectroot:/home/node/app'
-      - ~/.npmrc:/home/node/.npmrc
 
 
 x-user:
