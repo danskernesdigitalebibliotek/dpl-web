@@ -5,21 +5,15 @@ x-volumes:
     volumes:
       - 'projectroot:/home/node/app'
 
-
-x-user:
-  &default-user
-    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
-    user: '1000'
-
 services:
   node:
   # Remember to keep version updated with the .nvmrc file.
   # The .nvmrc file is used in Github Actions and for "dockerless" development.
     image: node:24
-    user: node
+    user: root
     init: true
     working_dir: /home/node/app
-    <<: [*default-volumes, *default-user]
+    <<: [*default-volumes]
     labels:
       dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
     expose:
