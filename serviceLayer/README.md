@@ -30,6 +30,18 @@ src/
 - **Client factories accept injectable config** — each consuming app provides its own base URL and auth strategy. This allows the GO app to proxy through its API routes while the React app can call APIs directly.
 - **When an API version changes, only the mapper changes** — the service layer types and consumer code remain stable.
 
+## Why hooks don't belong in the service layer
+
+The service layer is intentionally framework-agnostic. It exports plain async functions via `createFbsClient()` and lets each consuming app wrap them in its own data-fetching pattern (React Query hooks, server-side fetch, etc.).
+
+React Query hooks live in each app, not here, because:
+
+- **Different React Query versions** — React uses react-query v3, GO uses @tanstack/react-query v5. The hook APIs are incompatible.
+- **Different auth mechanisms** — React gets tokens from Redux state, GO uses session-based auth via a Next.js API proxy. The client config is app-specific.
+- **Different rendering models** — GO uses Next.js server components where hooks don't work. React is purely client-side.
+
+Each app creates its own hooks that call the service layer client. For example, the React app has `react/src/core/fbs/hooks/` with hooks like `useGetFees`, `useGetLoans`, etc. that wrap `createFbsClient()` methods in react-query's `useQuery`/`useMutation`.
+
 ## Available scripts
 
 ```bash
