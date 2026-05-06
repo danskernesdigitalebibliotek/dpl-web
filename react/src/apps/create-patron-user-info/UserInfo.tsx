@@ -4,7 +4,7 @@ import BranchesDropdown from "../patron-page/util/BranchesDropdown";
 import { PatronSettings } from "@dpl/service-layer/fbs";
 import { PatronSettingsFormData } from "../../core/utils/useSavePatron";
 import { useText } from "../../core/utils/text";
-import { useCreateV9 } from "../../core/fbs/fbs";
+import { useCreatePatron } from "../../core/fbs/hooks";
 import { patronAgeValid } from "../../core/utils/helpers/general";
 import { useConfig } from "../../core/utils/config";
 import { useUrls } from "../../core/utils/url";
@@ -35,7 +35,7 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
   const [pin, setPin] = useState<string | null>(null);
   const minAge = parseInt(config("minAgeConfig"), 10);
   const [validCpr] = useState<boolean>(patronAgeValid(cpr, minAge));
-  const { mutate } = useCreateV9();
+  const { mutate } = useCreatePatron();
   const [patron, setPatron] = useState<PatronSettingsFormData>({
     preferredPickupBranch: "",
     receiveEmail: true,
@@ -73,8 +73,7 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
         {
           data: {
             personIdentifier: cpr,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            patron: convertToPatronSettings(patron) as any,
+            patron: convertToPatronSettings(patron),
             pincode: pin
           }
         },

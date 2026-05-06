@@ -10,8 +10,8 @@ import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import { MaterialProps } from "../../../loan-list/materials/utils/material-fetch-hoc";
 import {
   useUpdateReservations,
-  getGetReservationsV2QueryKey
-} from "../../../../core/fbs/fbs";
+  fbsQueryKeys
+} from "../../../../core/fbs/hooks";
 import { getPreferredBranch } from "../../../../components/reservation/helper";
 import { Branch } from "@dpl/service-layer/fbs";
 import ListDetails from "../../../../components/list-details/list-details";
@@ -105,7 +105,7 @@ const PhysicalListDetails: FC<PhysicalListDetailsProps & MaterialProps> = ({
       {
         onSuccess: () => {
           setReservationStatus("success");
-          queryClient.invalidateQueries(getGetReservationsV2QueryKey());
+          queryClient.invalidateQueries(fbsQueryKeys.reservations());
         },
         onError: () => {
           setReservationStatus("error");

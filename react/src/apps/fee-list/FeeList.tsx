@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "../../components/atoms/links/Link";
-import { useGetFeesV2 } from "../../core/fbs/fbs";
+import { useGetFees } from "../../core/fbs/hooks";
 import { Fee } from "@dpl/service-layer/fbs";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import { useText } from "../../core/utils/text";
@@ -43,7 +43,7 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
   const viewFeesAndCompensationRatesUrl = u("viewFeesAndCompensationRatesUrl");
   const [feeDetailsModalId, setFeeDetailsModalId] = useState("");
   const { open } = useModalButtonHandler();
-  const { data: fbsFees = [], isLoading } = useGetFeesV2<Fee[]>({
+  const { data: fbsFees = [], isLoading } = useGetFees({
     includepaid: false,
     includenonpayable: true
   });

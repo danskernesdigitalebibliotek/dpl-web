@@ -13,10 +13,10 @@ import {
   WorkTypeEnum
 } from "../../core/dbc-gateway/generated/graphql";
 import {
-  getAvailabilityV3,
-  getHoldingsLogisticsV1,
-  useGetHoldingsLogisticsV1
-} from "../../core/fbs/fbs";
+  getAvailability as getAvailabilityFn,
+  getHoldings as getHoldingsFn,
+  useGetHoldings as useGetHoldingsHook
+} from "../../core/fbs/hooks";
 import {
   HoldingsForBibliographicalRecord,
   HoldingsLogistics
@@ -593,7 +593,7 @@ export const getAvailability = async ({
   faustIds: FaustId[];
   config: UseConfigFunction;
 }) =>
-  getAvailabilityV3(getBlacklistedQueryArgs(faustIds, config, "availability"));
+  getAvailabilityFn(getBlacklistedQueryArgs(faustIds, config, "availability"));
 
 export const useGetHoldings = ({
   faustIds,
@@ -605,10 +605,10 @@ export const useGetHoldings = ({
   config: UseConfigFunction;
   blacklist: BlacklistType;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>;
+    query?: UseQueryOptions<HoldingsForBibliographicalRecord[]>;
   };
 }) => {
-  const { data, isLoading, isError } = useGetHoldingsLogisticsV1(
+  const { data, isLoading, isError } = useGetHoldingsHook(
     getBlacklistedQueryArgs(faustIds, config, blacklist),
     options
   );

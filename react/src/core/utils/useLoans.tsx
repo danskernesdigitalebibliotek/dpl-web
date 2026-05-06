@@ -1,4 +1,4 @@
-import { useGetLoansV2 } from "../fbs/fbs";
+import { useGetLoans } from "../fbs/hooks";
 import { useGetV1UserLoans } from "../publizon/publizon";
 import { calculateRoundedUpDaysUntil } from "./helpers/date";
 import { materialIsOverdue } from "./helpers/general";
@@ -61,7 +61,7 @@ const useLoans: UseLoans = () => {
     data: loansFbs,
     isLoading: isLoadingFbs,
     isError: isErrorFbs
-  } = useGetLoansV2();
+  } = useGetLoans();
   const {
     data: loansPublizon,
     isLoading: isLoadingPublizon,

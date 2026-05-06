@@ -4,9 +4,9 @@ import Modal from "../../../../core/utils/modal";
 import { useText } from "../../../../core/utils/text";
 import DeleteReservationContent from "./delete-reservation-content";
 import {
-  getGetReservationsV2QueryKey,
+  fbsQueryKeys,
   useDeleteReservations
-} from "../../../../core/fbs/fbs";
+} from "../../../../core/fbs/hooks";
 import {
   getGetV1LoanstatusIdentifierQueryKey,
   getGetV1UserReservationsQueryKey,
@@ -81,7 +81,7 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
       setDeletedReservations(reservations.length);
       // Invalidate queries to update the UI.
       queryClient.invalidateQueries(getGetV1UserReservationsQueryKey());
-      queryClient.invalidateQueries(getGetReservationsV2QueryKey());
+      queryClient.invalidateQueries(fbsQueryKeys.reservations());
       if (reservations.length) {
         reservations.forEach((res) => {
           if (res.identifier) {

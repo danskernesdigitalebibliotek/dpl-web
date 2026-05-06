@@ -8,7 +8,7 @@ import {
   getRenewableMaterials
 } from "../../core/utils/helpers/general";
 import { LoanType } from "../../core/utils/types/loan-type";
-import { useRenewLoansV2, getGetLoansV2QueryKey } from "../../core/fbs/fbs";
+import { useRenewLoans, fbsQueryKeys } from "../../core/fbs/hooks";
 import GroupModalLoansList from "./GroupModalLoansList";
 import LoansGroupModalButton from "./LoansGroupModalButton";
 import { RenewedLoan } from "@dpl/service-layer/fbs";
@@ -52,7 +52,7 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
   children
 }) => {
   const t = useText();
-  const { mutate } = useRenewLoansV2();
+  const { mutate } = useRenewLoans();
   const { dueDateModal, allLoansId } = getModalIds();
   const queryClient = useQueryClient();
   const modalIdUsed = createLoanModalId(dueDate, dueDateModal, allLoansId);
@@ -84,7 +84,7 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
     },
     onSuccess: (result) => {
       // Make sure the loans list is updated after renewal.
-      queryClient.invalidateQueries(getGetLoansV2QueryKey());
+      queryClient.invalidateQueries(fbsQueryKeys.loans());
       if (result) {
         setRenewingResponse(result);
       }

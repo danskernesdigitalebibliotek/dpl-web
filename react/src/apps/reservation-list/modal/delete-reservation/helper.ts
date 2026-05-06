@@ -1,4 +1,4 @@
-import { useDeleteReservations } from "../../../../core/fbs/fbs";
+import { useDeleteReservations } from "../../../../core/fbs/hooks";
 import { DeleteReservationsParams } from "@dpl/service-layer/fbs";
 import { useDeleteV1UserReservationsIdentifier } from "../../../../core/publizon/publizon";
 import { UseTextFunction } from "../../../../core/utils/text";

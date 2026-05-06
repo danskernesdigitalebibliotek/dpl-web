@@ -30,9 +30,9 @@ import {
   useGetHoldings
 } from "../../apps/material/helper";
 import {
-  getGetHoldingsLogisticsV1QueryKey,
-  useAddReservationsV2
-} from "../../core/fbs/fbs";
+  fbsQueryKeys,
+  useAddReservations
+} from "../../core/fbs/hooks";
 import {
   AuthenticatedPatron,
   Manifestation,
@@ -131,7 +131,7 @@ export const ReservationModalBody = ({
   const [selectedInterest, setSelectedInterest] = useState<number | null>(null);
   const allPids = getAllPids(selectedManifestations);
   const faustIds = convertPostIdsToFaustIds(allPids);
-  const { mutate: mutateAddReservations } = useAddReservationsV2();
+  const { mutate: mutateAddReservations } = useAddReservations();
   const { mutate: mutateOpenOrder } = useOpenOrderMutation();
   const userResponse = usePatronData();
   const holdingsResponse = useGetHoldings({
@@ -205,7 +205,7 @@ export const ReservationModalBody = ({
             setReservationResponse(res);
             // Because after a successful reservation the holdings (reservations) are updated.
             queryClient.invalidateQueries(
-              getGetHoldingsLogisticsV1QueryKey({ recordid: faustIds })
+              fbsQueryKeys.holdings({ recordid: faustIds })
             );
           },
           onError: () => {

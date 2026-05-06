@@ -1,7 +1,7 @@
 import React, { useCallback, FC } from "react";
 import { useQueryClient } from "react-query";
 import { useText } from "../../../core/utils/text";
-import { useRenewLoansV2, getGetLoansV2QueryKey } from "../../../core/fbs/fbs";
+import { useRenewLoans, fbsQueryKeys } from "../../../core/fbs/hooks";
 import { LoanId } from "../../../core/utils/types/ids";
 import { Button } from "../../../components/Buttons/Button";
 import { RequestStatus } from "../../../core/utils/types/request";
@@ -37,7 +37,7 @@ const RenewButton: FC<RenewButtonProps> = ({
   const t = useText();
   const { track } = useEventStatistics();
   const queryClient = useQueryClient();
-  const { mutate } = useRenewLoansV2();
+  const { mutate } = useRenewLoans();
   const label = getRenewButtonLabel({
     isRenewable: renewable,
     renewingStatus,
@@ -60,7 +60,7 @@ const RenewButton: FC<RenewButtonProps> = ({
         {
           onSuccess: (result) => {
             if (result) {
-              queryClient.invalidateQueries(getGetLoansV2QueryKey());
+              queryClient.invalidateQueries(fbsQueryKeys.loans());
               setRenewingResponse(result);
               setRenewingStatus("success");
             }

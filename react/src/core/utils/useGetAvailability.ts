@@ -1,5 +1,6 @@
 import { UseQueryOptions } from "react-query";
-import { getAvailabilityV3, useGetAvailabilityV3 } from "../fbs/fbs";
+import { useGetAvailability as useGetAvailabilityHook } from "../fbs/hooks";
+import { Availability } from "@dpl/service-layer/fbs";
 import { UseConfigFunction } from "./config";
 import { FaustId } from "./types/ids";
 import { getBlacklistedQueryArgs } from "../../apps/material/helper";
@@ -12,10 +13,10 @@ const useGetAvailability = ({
   faustIds: FaustId[];
   config: UseConfigFunction;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getAvailabilityV3>>>;
+    query?: UseQueryOptions<Availability[]>;
   };
 }) => {
-  const response = useGetAvailabilityV3(
+  const response = useGetAvailabilityHook(
     getBlacklistedQueryArgs(faustIds, config, "availability"),
     options
   );

@@ -3,9 +3,9 @@ import { Patron } from "./types/entities";
 import type { PatronSettings as SLPatronSettings } from "@dpl/service-layer/fbs";
 import { Period, PincodeChange } from "@dpl/service-layer/fbs";
 import {
-  getGetPatronInformationByPatronIdV4QueryKey,
-  useUpdateV8
-} from "../fbs/fbs";
+  fbsQueryKeys,
+  useUpdatePatron
+} from "../fbs/hooks";
 import useUserInfo from "../adgangsplatformen/useUserInfo";
 import { isAnonymous } from "./helpers/user";
 
@@ -40,7 +40,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
   const { data: userInfo } = useUserInfo({
     enabled: !isAnonymous()
   });
-  const { mutate } = useUpdateV8();
+  const { mutate } = useUpdatePatron();
   const queryClient = useQueryClient();
 
   const savePatron = (data: Partial<PatronSettingsFormData>) => {
@@ -59,14 +59,13 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
             pincode: userInfo.attributes.pincode,
             libraryCardNumber: patron.patronId.toString()
           },
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          patron: convertToPatronSettings({ ...patron, ...data }) as any
+          patron: convertToPatronSettings({ ...patron, ...data })
         }
       },
       {
         onSuccess: () => {
           queryClient.invalidateQueries(
-            getGetPatronInformationByPatronIdV4QueryKey()
+            fbsQueryKeys.patronInfo()
           );
           if (onSuccess) {
             onSuccess();
@@ -95,7 +94,7 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
       {
         onSuccess: () => {
           queryClient.invalidateQueries(
-            getGetPatronInformationByPatronIdV4QueryKey()
+            fbsQueryKeys.patronInfo()
           );
           if (onSuccess) {
             onSuccess();

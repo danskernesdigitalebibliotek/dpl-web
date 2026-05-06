@@ -6,7 +6,7 @@ import MenuNavigationItem, {
 } from "../menu-navigation-list/MenuNavigationItem";
 import { Fee } from "@dpl/service-layer/fbs";
 import { useUrls } from "../../../core/utils/url";
-import { useGetFeesV2 } from "../../../core/fbs/fbs";
+import { useGetFees } from "../../../core/fbs/hooks";
 import { useConfig } from "../../../core/utils/config";
 import { useText } from "../../../core/utils/text";
 import DashboardNotificationList from "../../dashboard/dashboard-notification-list/dashboard-notification-list";
@@ -36,7 +36,7 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
     all: { loans, overdue: loansOverdue, soonOverdue: loansSoonOverdue }
   } = useLoans();
   const { data: patronData } = usePatronData();
-  const { data: fbsFees = [] } = useGetFeesV2<Fee[]>({
+  const { data: fbsFees = [] } = useGetFees({
     includepaid: false,
     includenonpayable: true
   });

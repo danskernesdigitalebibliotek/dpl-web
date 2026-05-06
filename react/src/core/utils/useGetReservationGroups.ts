@@ -1,5 +1,5 @@
 import { groupBy, map, min, reduce } from "lodash";
-import { useGetReservationsV2 } from "../fbs/fbs";
+import { useGetReservations } from "../fbs/hooks";
 import { ReservationDetails } from "@dpl/service-layer/fbs";
 
 /**
@@ -63,13 +63,13 @@ function groupReservations(data: ReservationDetails[]) {
  * custom reservation details type.
  */
 type UseGetReservationGroupsResult = Omit<
-  ReturnType<typeof useGetReservationsV2>,
+  ReturnType<typeof useGetReservations>,
   "data"
 > & {
   data: ReservationGroupDetails[] | null;
 };
 const useGetReservationGroups = (): UseGetReservationGroupsResult => {
-  const result = useGetReservationsV2();
+  const result = useGetReservations();
   const resultWithGroups = {
     ...result,
     data:

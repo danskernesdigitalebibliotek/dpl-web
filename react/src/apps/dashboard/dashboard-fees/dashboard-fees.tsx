@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { useGetFeesV2 } from "../../../core/fbs/fbs";
+import { useGetFees } from "../../../core/fbs/hooks";
 import { tallyUpFees } from "../../../core/utils/helpers/general";
 import { useText } from "../../../core/utils/text";
 import { useUrls } from "../../../core/utils/url";
@@ -11,7 +11,7 @@ const DashboardFees: FC = () => {
   const u = useUrls();
 
   const feesPageUrl = u("feesPageUrl");
-  const { data: fbsFees = [], isLoading } = useGetFeesV2<Fee[]>({
+  const { data: fbsFees = [], isLoading } = useGetFees({
     includepaid: false,
     includenonpayable: true
   });

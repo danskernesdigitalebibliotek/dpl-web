@@ -10,7 +10,7 @@ import {
 } from "vitest";
 import { act } from "react";
 import usePhysicalAvailabilityData from "../../components/availability-label/usePhysicalAvailabilityData";
-import { useGetAvailabilityV3 } from "../../core/fbs/fbs";
+import { useGetAvailability } from "../../core/fbs/hooks";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { useConfig } from "../../core/utils/config";
 import {
@@ -21,8 +21,8 @@ import useOnlineAvailabilityData from "../../components/availability-label/useOn
 
 describe("usePhysicalAvailability tests", () => {
   beforeAll(() => {
-    vi.mock("../../core/fbs/fbs", () => ({
-      useGetAvailabilityV3: vi.fn()
+    vi.mock("../../core/fbs/hooks", () => ({
+      useGetAvailability: vi.fn()
     }));
     vi.mock("../../core/utils/config", () => ({
       useConfig: vi.fn()
@@ -50,7 +50,7 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useGetAvailability.mockReturnValue({
       data: [
         {
           recordId: "24859451",
@@ -90,7 +90,7 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useGetAvailability.mockReturnValue({
       data: [
         {
           recordId: "24859451",
@@ -130,7 +130,7 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useGetAvailability.mockReturnValue({
       data: [
         {
           recordId: "24859451",
@@ -170,7 +170,7 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useGetAvailability.mockReturnValue({
       data: [
         {
           recordId: "24859451",
@@ -210,7 +210,7 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useGetAvailability.mockReturnValue({
       data: undefined,
       isLoading: false,
       isError: false
