@@ -10,7 +10,6 @@ services:
   # Remember to keep version updated with the .nvmrc file.
   # The .nvmrc file is used in Github Actions and for "dockerless" development.
     image: node:24
-    platform: linux/amd64
     user: root
     init: true
     working_dir: /home/node/app
@@ -28,7 +27,6 @@ services:
 
   playwright:
     image: mcr.microsoft.com/playwright:v1.59.1
-    platform: linux/amd64
     working_dir: /home/node/app
     <<: [*default-volumes]
     profiles:
