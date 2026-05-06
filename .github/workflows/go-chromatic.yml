@@ -36,6 +36,10 @@ jobs:
         with:
           envFile: "go/.env.test"
 
+      - name: Install FBS package dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: packages/node/service-layer/fbs
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 

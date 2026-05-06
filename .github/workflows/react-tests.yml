@@ -42,6 +42,10 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install FBS package dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: packages/node/service-layer/fbs
+
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
@@ -107,6 +111,10 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install FBS package dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: packages/node/service-layer/fbs
+
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
