@@ -45,6 +45,19 @@ query GetNode($id: ID!) {
 
 
       paragraphs {
+        ... on ParagraphContentSlider {
+          id
+          contentReferences {
+            ... on NodeInterface {
+              id
+            }
+          }
+          underlinedTitle {
+            format
+            value
+          }
+        }
+
         ... on ParagraphNavGridManual {
           id
           titleOptional: title
@@ -286,7 +299,20 @@ query GetNode($id: ID!) {
       teaserText
 
       paragraphs {
-        ... on ParagraphNavGridManual {
+        ... on ParagraphContentSlider {
+          id
+          contentReferences {
+            ... on NodeInterface {
+              id
+            }
+          }
+          underlinedTitle {
+            format
+            value
+          }
+        }
+
+... on ParagraphNavGridManual {
           id
           titleOptional: title
           showSubtitles
