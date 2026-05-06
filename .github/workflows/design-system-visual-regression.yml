@@ -30,34 +30,25 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          # Needed for peter-evans/create-pull-request to push.
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v6
+      - uses: arduino/setup-task@v2
         with:
-          node-version-file: 'design-system/.nvmrc'
-
-      - run: yarn install --frozen-lockfile
-
-      - name: Install Playwright browsers
-        run: node node_modules/playwright-core/cli.js install --with-deps chromium
-
-      - name: Build Storybook
-        run: yarn build-storybook
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Start Storybook
         run: |
-          npx http-server storybook-static --port 6006 --silent &
-          npx wait-on http://localhost:6006
+          task dev:start
+          task dev:cli -- npx wait-on http://node:6006 --timeout 120000
 
       - name: Test for visual regressions
         id: test
         continue-on-error: true
-        run: yarn test:visual
+        run: task dev:visual-regression
 
       - name: Update baselines
         if: steps.test.outcome == 'failure'
-        run: yarn test:visual:update
+        run: task dev:visual-regression:update
 
       - name: Create pull request with updated snapshots
         if: >-
