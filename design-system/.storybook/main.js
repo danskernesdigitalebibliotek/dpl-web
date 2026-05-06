@@ -27,6 +27,6 @@ module.exports = {
     options: {},
   },
   core: {
-    allowedHosts: ["localhost", ".local"],
+    allowedHosts: true,
   },
 };

@@ -24,9 +24,6 @@
     "watch": "concurrently 'yarn:js:lint:watch' 'yarn:css:lint:watch'",
     "dev": "DISABLE_ESLINT_PLUGIN=true concurrently --raw 'yarn storybook' 'yarn css:watch' 'yarn watch'",
     "chromatic": "npx chromatic --exit-zero-on-changes",
-    "test:visual": "test-storybook --url http://localhost:6006",
-    "test:visual:ci": "concurrently -k -s first 'yarn dev' 'wait-on http://localhost:6006 && yarn test:visual'",
-    "test:visual:update": "test-storybook --url http://localhost:6006 --updateSnapshot",
     "lint": "concurrently 'yarn:js:lint' 'yarn:css:lint' 'yarn:markdown:lint'",
     "format": "concurrently 'yarn:js:format' 'yarn:css:format' 'yarn:markdown:format'"
   },
