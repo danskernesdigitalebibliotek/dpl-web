@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2020"],
+    "lib": ["es2020", "dom"],
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -10,10 +10,6 @@
     "isolatedModules": true,
     "target": "es6",
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
