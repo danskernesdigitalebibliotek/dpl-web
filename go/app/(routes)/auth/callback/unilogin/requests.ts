@@ -22,7 +22,7 @@ import { createClientAsync } from "@/lib/soap/unilogin/wsiinst-v6/generated/ws"
 
 import schemas from "./schemas"
 
-const WSIINST_V6_NAMESPACE = "https://brugerdatabasen.stil.dk/bpi/wsiinst/6"
+const WSIINST_V6_URL = "https://brugerdatabasen.stil.dk/bpi/wsiinst/6"
 const COMMON_V3_NAMESPACE = "https://brugerdatabasen.stil.dk/bpi/common/3"
 const WSA_NAMESPACE = "http://www.w3.org/2005/08/addressing"
 
@@ -31,7 +31,7 @@ const WSA_NAMESPACE = "http://www.w3.org/2005/08/addressing"
 const isTestMode = getEnv("TEST_MODE")
 const clientEndpoint = isTestMode
   ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/institution`
-  : WSIINST_V6_NAMESPACE
+  : WSIINST_V6_URL
 
 export const getInstitutionRequest = async (institutionId: string) => {
   const client = await createClientAsync("./lib/soap/unilogin/wsiinst-v6/wsdl/ws.wsdl", {
@@ -74,7 +74,7 @@ export const getInstitutionRequest = async (institutionId: string) => {
 
     // Raw XML ensures the wsa namespace prefix is declared on each element.
     client.addSoapHeader(
-      `<wsa:Action xmlns:wsa="${WSA_NAMESPACE}">${WSIINST_V6_NAMESPACE}/hentInstitution</wsa:Action>` +
+      `<wsa:Action xmlns:wsa="${WSA_NAMESPACE}">${WSIINST_V6_URL}/hentInstitution</wsa:Action>` +
         `<wsa:To xmlns:wsa="${WSA_NAMESPACE}">${clientEndpoint}</wsa:To>` +
         `<wsa:MessageID xmlns:wsa="${WSA_NAMESPACE}">urn:uuid:${randomUUID()}</wsa:MessageID>`
     )
