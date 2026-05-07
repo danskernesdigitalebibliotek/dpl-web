@@ -1532,8 +1532,6 @@ type Translation {
 
 type UniloginConfigurationPrivate {
   clientSecret: String
-  webServiceUsername: String
-  webServicePassword: String
   pubHubRetailerKeyCode: String
 }
 

@@ -49,26 +49,6 @@ class UniloginConfiguration extends DplReactConfigBase {
   }
 
   /**
-   * Get the Unilogin API webservice username.
-   *
-   * @return string|null
-   *   The Unilogin API webservice username.
-   */
-  public function getUniloginApiWebServiceUsername(): ?string {
-    return $this->loadConfig()->get('unilogin_api_webservice_username');
-  }
-
-  /**
-   * Get the Unilogin API webservice password.
-   *
-   * @return string|null
-   *   The Unilogin API webservice password.
-   */
-  public function getUniloginApiWebServicePassword(): ?string {
-    return $this->loadConfig()->get('unilogin_api_webservice_password');
-  }
-
-  /**
    * Get the Unilogin API Pubhub retailer key code.
    *
    * @return string|null

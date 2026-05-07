@@ -33,8 +33,6 @@ type SearchProfiles {
 
 type UniloginConfigurationPrivate {
   clientSecret: String
-  webServiceUsername: String
-  webServicePassword: String
   pubHubRetailerKeyCode: String
 }
 
