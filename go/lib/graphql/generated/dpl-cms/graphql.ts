@@ -92,8 +92,12 @@ export type Branch = {
   address?: Maybe<BranchAddress>;
   /** Indicates which contexts this branch is available in. */
   availabilityContext: BranchAvailabilityContext;
+  /** The email address of the branch. Only available for CMS-configured branches. */
+  email?: Maybe<Scalars['String']['output']>;
   /** The ISIL branch identifier, e.g. DK-710111. */
   isilId: Scalars['String']['output'];
+  /** The phone number of the branch. Only available for CMS-configured branches. */
+  phone?: Maybe<Scalars['String']['output']>;
   /** The human-readable name of the branch. */
   title: Scalars['String']['output'];
 };
@@ -254,6 +258,24 @@ export type Image = {
   url: Scalars['String']['output'];
   /** The width of the image. */
   width: Scalars['Int']['output'];
+};
+
+/** A period option for reservation interest. */
+export type InterestPeriod = {
+  __typename?: 'InterestPeriod';
+  /** The human-readable label for the interest period. */
+  label: Scalars['String']['output'];
+  /** The number of days for the interest period. */
+  value: Scalars['Int']['output'];
+};
+
+/** The interest period configuration for reservations. */
+export type InterestPeriods = {
+  __typename?: 'InterestPeriods';
+  /** All available interest periods for reservations. */
+  all: Array<InterestPeriod>;
+  /** The default interest period for reservations. */
+  default: InterestPeriod;
 };
 
 /** Generic input for key-value pairs. */
@@ -1483,19 +1505,6 @@ export type ParagraphRecommendation = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** Viser deleknapper på indhold, så brugerne kan dele via sociale medier eller andre kanaler. */
-export type ParagraphShareButtons = ParagraphInterface & {
-  __typename?: 'ParagraphShareButtons';
-  /** The time that the Paragraph was created. */
-  created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars['ID']['output'];
-  /** The paragraphs entity language code. */
-  langcode: Language;
-  /** Publiceret */
-  status: Scalars['Boolean']['output'];
-};
-
 /** Denne paragraph viser links uden ikoner. */
 export type ParagraphSimpleLinks = ParagraphInterface & {
   __typename?: 'ParagraphSimpleLinks';
@@ -1527,7 +1536,7 @@ export type ParagraphTextBody = ParagraphInterface & {
 };
 
 /** Entity type paragraph. */
-export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphGoVideoBundleVerticalAuto | ParagraphGoVideoBundleVerticalManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphShareButtons | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform;
+export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphGoVideoBundleVerticalAuto | ParagraphGoVideoBundleVerticalManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform;
 
 /** "Brugerregistreringselement" anvendes til at vise relevant information om brugerregistreringsprocessen. */
 export type ParagraphUserRegistrationItem = ParagraphInterface & {
@@ -1629,6 +1638,8 @@ export type Query = { go: { cacheTags: string[] } } & {
   paragraph?: Maybe<ParagraphUnion>;
   /** Load a content preview. */
   preview?: Maybe<NodeUnion>;
+  /** Retrieve reservation settings for the library. */
+  reservationSettings: ReservationSettings;
   /** Load a Route by path. */
   route?: Maybe<RouteUnion>;
 };
@@ -1677,6 +1688,28 @@ export type QueryRouteArgs = {
   langcode?: InputMaybe<Scalars['String']['input']>;
   path: Scalars['String']['input'];
   revision?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** Reservation settings for the library. */
+export type ReservationSettings = {
+  __typename?: 'ReservationSettings';
+  /** Whether patrons are allowed to remove ready reservations. */
+  allowRemoveReadyReservations: Scalars['Boolean']['output'];
+  /** Interest period configuration for reservations. */
+  interestPeriods: InterestPeriods;
+  /** Whether SMS notifications for reservations are enabled. */
+  smsNotificationsEnabled: Scalars['Boolean']['output'];
+  /** URLs related to reservations. */
+  urls: ReservationUrls;
+};
+
+/** URLs related to reservation settings. */
+export type ReservationUrls = {
+  __typename?: 'ReservationUrls';
+  /** URL to the page with information about pausing reservations. */
+  pauseReservationInfo: Scalars['String']['output'];
+  /** URL to the page shown when a search returns zero results. */
+  zeroHitsSearch: Scalars['String']['output'];
 };
 
 /** Routes represent incoming requests that resolve to content. */
@@ -2157,7 +2190,6 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
         | { __typename?: 'ParagraphNavSpotsManual' }
         | { __typename?: 'ParagraphOpeningHours' }
         | { __typename?: 'ParagraphRecommendation' }
-        | { __typename?: 'ParagraphShareButtons' }
         | { __typename?: 'ParagraphSimpleLinks' }
         | { __typename?: 'ParagraphTextBody' }
         | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2221,7 +2253,6 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs?: Array<
     | { __typename?: 'ParagraphNavSpotsManual' }
     | { __typename?: 'ParagraphOpeningHours' }
     | { __typename?: 'ParagraphRecommendation' }
-    | { __typename?: 'ParagraphShareButtons' }
     | { __typename?: 'ParagraphSimpleLinks' }
     | { __typename?: 'ParagraphTextBody' }
     | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2301,7 +2332,6 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { __typename?: 'ParagraphNavSpotsManual' }
         | { __typename?: 'ParagraphOpeningHours' }
         | { __typename?: 'ParagraphRecommendation' }
-        | { __typename?: 'ParagraphShareButtons' }
         | { __typename?: 'ParagraphSimpleLinks' }
         | { __typename?: 'ParagraphTextBody' }
         | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2365,7 +2395,6 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
     | { __typename?: 'ParagraphNavSpotsManual' }
     | { __typename?: 'ParagraphOpeningHours' }
     | { __typename?: 'ParagraphRecommendation' }
-    | { __typename?: 'ParagraphShareButtons' }
     | { __typename?: 'ParagraphSimpleLinks' }
     | { __typename?: 'ParagraphTextBody' }
     | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2438,7 +2467,6 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { __typename?: 'ParagraphNavSpotsManual' }
         | { __typename?: 'ParagraphOpeningHours' }
         | { __typename?: 'ParagraphRecommendation' }
-        | { __typename?: 'ParagraphShareButtons' }
         | { __typename?: 'ParagraphSimpleLinks' }
         | { __typename?: 'ParagraphTextBody' }
         | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2502,7 +2530,6 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
     | { __typename?: 'ParagraphNavSpotsManual' }
     | { __typename?: 'ParagraphOpeningHours' }
     | { __typename?: 'ParagraphRecommendation' }
-    | { __typename?: 'ParagraphShareButtons' }
     | { __typename?: 'ParagraphSimpleLinks' }
     | { __typename?: 'ParagraphTextBody' }
     | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2603,7 +2630,6 @@ export type GoLinkboxFragment = { __typename: 'ParagraphGoLinkbox', title: strin
     | { __typename?: 'ParagraphNavSpotsManual' }
     | { __typename?: 'ParagraphOpeningHours' }
     | { __typename?: 'ParagraphRecommendation' }
-    | { __typename?: 'ParagraphShareButtons' }
     | { __typename?: 'ParagraphSimpleLinks' }
     | { __typename?: 'ParagraphTextBody' }
     | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2704,7 +2730,6 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
                 | { __typename?: 'ParagraphNavSpotsManual' }
                 | { __typename?: 'ParagraphOpeningHours' }
                 | { __typename?: 'ParagraphRecommendation' }
-                | { __typename?: 'ParagraphShareButtons' }
                 | { __typename?: 'ParagraphSimpleLinks' }
                 | { __typename?: 'ParagraphTextBody' }
                 | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2768,7 +2793,6 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
             | { __typename?: 'ParagraphNavSpotsManual' }
             | { __typename?: 'ParagraphOpeningHours' }
             | { __typename?: 'ParagraphRecommendation' }
-            | { __typename?: 'ParagraphShareButtons' }
             | { __typename?: 'ParagraphSimpleLinks' }
             | { __typename?: 'ParagraphTextBody' }
             | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2874,7 +2898,6 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
                 | { __typename?: 'ParagraphNavSpotsManual' }
                 | { __typename?: 'ParagraphOpeningHours' }
                 | { __typename?: 'ParagraphRecommendation' }
-                | { __typename?: 'ParagraphShareButtons' }
                 | { __typename?: 'ParagraphSimpleLinks' }
                 | { __typename?: 'ParagraphTextBody' }
                 | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -2938,7 +2961,6 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
             | { __typename?: 'ParagraphNavSpotsManual' }
             | { __typename?: 'ParagraphOpeningHours' }
             | { __typename?: 'ParagraphRecommendation' }
-            | { __typename?: 'ParagraphShareButtons' }
             | { __typename?: 'ParagraphSimpleLinks' }
             | { __typename?: 'ParagraphTextBody' }
             | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3036,7 +3058,6 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
                 | { __typename?: 'ParagraphNavSpotsManual' }
                 | { __typename?: 'ParagraphOpeningHours' }
                 | { __typename?: 'ParagraphRecommendation' }
-                | { __typename?: 'ParagraphShareButtons' }
                 | { __typename?: 'ParagraphSimpleLinks' }
                 | { __typename?: 'ParagraphTextBody' }
                 | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3100,7 +3121,6 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?
             | { __typename?: 'ParagraphNavSpotsManual' }
             | { __typename?: 'ParagraphOpeningHours' }
             | { __typename?: 'ParagraphRecommendation' }
-            | { __typename?: 'ParagraphShareButtons' }
             | { __typename?: 'ParagraphSimpleLinks' }
             | { __typename?: 'ParagraphTextBody' }
             | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3192,7 +3212,6 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'ParagraphNavSpotsManual' }
             | { __typename?: 'ParagraphOpeningHours' }
             | { __typename?: 'ParagraphRecommendation' }
-            | { __typename?: 'ParagraphShareButtons' }
             | { __typename?: 'ParagraphSimpleLinks' }
             | { __typename?: 'ParagraphTextBody' }
             | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3256,7 +3275,6 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
         | { __typename?: 'ParagraphNavSpotsManual' }
         | { __typename?: 'ParagraphOpeningHours' }
         | { __typename?: 'ParagraphRecommendation' }
-        | { __typename?: 'ParagraphShareButtons' }
         | { __typename?: 'ParagraphSimpleLinks' }
         | { __typename?: 'ParagraphTextBody' }
         | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3328,7 +3346,6 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'ParagraphNavSpotsManual' }
             | { __typename?: 'ParagraphOpeningHours' }
             | { __typename?: 'ParagraphRecommendation' }
-            | { __typename?: 'ParagraphShareButtons' }
             | { __typename?: 'ParagraphSimpleLinks' }
             | { __typename?: 'ParagraphTextBody' }
             | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3392,7 +3409,6 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
         | { __typename?: 'ParagraphNavSpotsManual' }
         | { __typename?: 'ParagraphOpeningHours' }
         | { __typename?: 'ParagraphRecommendation' }
-        | { __typename?: 'ParagraphShareButtons' }
         | { __typename?: 'ParagraphSimpleLinks' }
         | { __typename?: 'ParagraphTextBody' }
         | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3464,7 +3480,6 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { __typename?: 'ParagraphNavSpotsManual' }
             | { __typename?: 'ParagraphOpeningHours' }
             | { __typename?: 'ParagraphRecommendation' }
-            | { __typename?: 'ParagraphShareButtons' }
             | { __typename?: 'ParagraphSimpleLinks' }
             | { __typename?: 'ParagraphTextBody' }
             | { __typename?: 'ParagraphUserRegistrationItem' }
@@ -3528,7 +3543,6 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
         | { __typename?: 'ParagraphNavSpotsManual' }
         | { __typename?: 'ParagraphOpeningHours' }
         | { __typename?: 'ParagraphRecommendation' }
-        | { __typename?: 'ParagraphShareButtons' }
         | { __typename?: 'ParagraphSimpleLinks' }
         | { __typename?: 'ParagraphTextBody' }
         | { __typename?: 'ParagraphUserRegistrationItem' }
