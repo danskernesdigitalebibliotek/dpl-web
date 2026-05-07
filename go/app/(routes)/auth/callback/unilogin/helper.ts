@@ -1,6 +1,5 @@
 import { getInstitutionRequest } from "@/app/(routes)/auth/callback/unilogin/requests"
 import { getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
-import { zodParseWithContext } from "@/lib/helpers/zod-validation"
 
 export const isUniloginUserAuthorizedToLogIn = async (
   institutionId: string | null,
@@ -19,11 +18,11 @@ export const isUniloginUserAuthorizedToLogIn = async (
   const institution = await getInstitutionRequest(institutionId)
   const municipalityId = await getLibraryMunicipalityId()
   // If the institution is DDF we are using a test user and therefore allow access
-  if (institution.instnr === "A04441") {
+  if (institution.INST_NR === "A04441") {
     return true
   }
 
-  const municipalityMatch = institution.kommunenr === municipalityId
+  const municipalityMatch = String(institution.KOMMUNE_NR) === municipalityId
   if (!municipalityMatch) {
     console.error(
       `unilogin error: User institution does not match expected municipality ${municipalityId}`,
@@ -32,19 +31,3 @@ export const isUniloginUserAuthorizedToLogIn = async (
   }
   return municipalityMatch
 }
-
-export const parseUniloginServiceResponse = <T>({
-  parsingFunction,
-  uniid,
-  step,
-}: {
-  parsingFunction: () => T
-  step: "introspect" | "userinfo"
-  uniid?: string
-}) =>
-  zodParseWithContext(
-    parsingFunction,
-    uniid
-      ? `[${step}] error affecting user with the uniid: ${uniid}`
-      : `[${step}] error parsing Unilogin service response`
-  )

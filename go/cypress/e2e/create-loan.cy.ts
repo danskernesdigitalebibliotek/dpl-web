@@ -5,9 +5,7 @@ import getMaterial from "../factories/fbi/getMaterial"
 import configuration from "../factories/unilogin/configuration"
 import createloan from "../factories/unilogin/createloan"
 import institution from "../factories/unilogin/institution"
-import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
-import userinfo from "../factories/unilogin/userinfo"
 import { mockFrontpage, mockUniloginProfilePage } from "../support/mocks"
 
 describe("Create loan UI Tests", () => {
@@ -74,20 +72,9 @@ describe("Create loan UI Tests", () => {
     })
 
     cy.mockServerRest({
-      method: "POST",
-      path: "/introspect",
-      data: introspection.build(),
-    })
-
-    cy.mockServerRest({
       method: "GET",
-      path: "/userinfo",
-      data: userinfo.build(),
-    })
-
-    cy.mockServerSoap({
-      path: "/institution",
-      data: institution,
+      path: "/institution/A04441",
+      data: institution.build(),
     })
 
     cy.visit(mockedCallbackUrl)

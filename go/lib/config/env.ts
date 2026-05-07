@@ -32,9 +32,9 @@ function getEnvs() {
     UNLILOGIN_PUBHUB_CLIENT_ID: process.env.UNLILOGIN_PUBHUB_CLIENT_ID,
     UNLILOGIN_PUBHUB_RETAILER_ID: process.env.UNLILOGIN_PUBHUB_RETAILER_ID,
     UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE,
-    UNILOGIN_WS_PRIVATE_KEY: process.env.UNILOGIN_WS_PRIVATE_KEY,
-    UNILOGIN_WS_PUBLIC_CERT: process.env.UNILOGIN_WS_PUBLIC_CERT,
-    UNILOGIN_WS_UDBYDERSYSTEM_ID: process.env.UNILOGIN_WS_UDBYDERSYSTEM_ID,
+    UNILOGIN_INST_REG_UID: process.env.UNILOGIN_INST_REG_UID,
+    UNILOGIN_INST_REG_PWD: process.env.UNILOGIN_INST_REG_PWD,
+    UNILOGIN_INST_REG_URL: process.env.UNILOGIN_INST_REG_URL,
   }
 }
 
@@ -68,9 +68,9 @@ const EnvServerSchema = z.object({
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string().optional(),
-  UNILOGIN_WS_PRIVATE_KEY: z.string().optional(),
-  UNILOGIN_WS_PUBLIC_CERT: z.string().optional(),
-  UNILOGIN_WS_UDBYDERSYSTEM_ID: z.string().optional(),
+  UNILOGIN_INST_REG_UID: z.string().optional(),
+  UNILOGIN_INST_REG_PWD: z.string().optional(),
+  UNILOGIN_INST_REG_URL: z.string().refine(validateUrl).optional(),
   // Is fetched from dpl-cms, but can be overridden by env vars
   UNILOGIN_CLIENT_ID: z.string().optional(),
   UNILOGIN_CLIENT_SECRET: z.string().optional(),

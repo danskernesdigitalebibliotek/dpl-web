@@ -3,9 +3,7 @@ import routes from "@/lib/config/resolvers/routes"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import configuration from "../factories/unilogin/configuration"
 import institution from "../factories/unilogin/institution"
-import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
-import userinfo from "../factories/unilogin/userinfo"
 import { mockAPProfilePage, mockFrontpage, mockUniloginProfilePage } from "../support/mocks"
 
 describe("Login / Logout UI Tests", () => {
@@ -104,20 +102,9 @@ describe("UNI•Login: Login / Logout API Tests", () => {
     })
 
     cy.mockServerRest({
-      method: "POST",
-      path: "/introspect",
-      data: introspection.build(),
-    })
-
-    cy.mockServerRest({
       method: "GET",
-      path: "/userinfo",
-      data: userinfo.build(),
-    })
-
-    cy.mockServerSoap({
-      path: "/institution",
-      data: institution,
+      path: "/institution/A04441",
+      data: institution.build(),
     })
 
     cy.visit(mockedCallbackUrl)
