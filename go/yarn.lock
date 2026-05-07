@@ -5831,10 +5831,10 @@
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.17.3":
-  version "3.17.3"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.17.3.tgz#4681622774145807795762ea8d9699faa2a064ca"
-  integrity sha512-O579OxkTMT+aWZ/guHXIp03JcIEC27UWKuMxhPMK2479k+nL15g5V7Ajoo7XIDCKgW5plOJBmZIbfYDEGM9L7Q==
+"@xstate/store@^3.17.4":
+  version "3.17.4"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.17.4.tgz#333ac8eac251cc0573c8932ccac4e52fbb35f33f"
+  integrity sha512-LOmx7B1hmKv3giOIs6NpLw2L1uldL6YoCnwxx21u4r5/u8HJbJIzhmnIpKoJ9gBmt/k7rYhGxuFrSSdct2/X8g==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
