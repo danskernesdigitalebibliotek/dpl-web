@@ -34,6 +34,7 @@ const BadgeButton = ({
         classNames
       )}
       aria-label={ariaLabel}
+      aria-pressed={isActive}
       {...restProps}>
       {children}
     </button>
