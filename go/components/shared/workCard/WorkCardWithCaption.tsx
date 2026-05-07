@@ -25,7 +25,7 @@ const WorkCardWithCaption = ({
         <p className="text-typo-subtitle-lg break-words" data-cy={cyKeys["work-card-title"]}>
           {title}
         </p>
-        <p className="text-typo-caption opacity-60">{displayCreators(creators, 2)}</p>
+        <p className="text-typo-caption opacity-70">{displayCreators(creators, 2)}</p>
       </div>
     </div>
   )

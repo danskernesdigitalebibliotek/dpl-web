@@ -21,7 +21,7 @@ const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
       <div
         className="bg-background duration-dark-mode col-span-6 w-full space-y-6 rounded-sm px-10
           pt-6 pb-9 transition-all md:w-[49%]">
-        <h3 className="text-typo-subtitle-sm col-span-full opacity-50">Kvote</h3>
+        <h3 className="text-typo-subtitle-sm col-span-full opacity-70">Kvote</h3>
         <div className="align-center flex w-full flex-row justify-between">
           <div
             className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center
@@ -29,7 +29,7 @@ const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
             <p className="text-typo-heading-3">
               {ebookLoans.length} af {data?.maxConcurrentEbookLoansPerBorrower || 0}
             </p>
-            <p className="text-typo-subtitle-sm opacity-50">E-bøger</p>
+            <p className="text-typo-subtitle-sm opacity-70">E-bøger</p>
           </div>
           <div
             className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center
@@ -37,19 +37,19 @@ const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
             <p className="text-typo-heading-3">
               {audioLoans.length} af {data?.maxConcurrentAudioLoansPerBorrower || 0}
             </p>
-            <p className="text-typo-subtitle-sm opacity-50">Lydbøger</p>
+            <p className="text-typo-subtitle-sm opacity-70">Lydbøger</p>
           </div>
         </div>
       </div>
       <div
         className="bg-background duration-dark-mode col-span-6 w-full space-y-6 rounded-sm px-10
           pt-6 pb-9 transition-all md:w-[49%]">
-        <h3 className="text-typo-subtitle-sm col-span-full opacity-60">Blå titler</h3>
+        <h3 className="text-typo-subtitle-sm col-span-full opacity-70">Blå titler</h3>
         <div className="flex w-full flex-row justify-between">
           <div
             className="bg-background-overlay flex h-36 w-full flex-col items-center justify-center
               gap-4 rounded-sm px-10">
-            <p className="text-typo-subtitle-md px-2 text-center opacity-50">
+            <p className="text-typo-subtitle-md px-2 text-center opacity-70">
               Bøger og podcasts med et blåt mærke kan du altid låne, selvom du har brugt alle dine
               lån
             </p>
