@@ -12,7 +12,7 @@ $config['system.logging']['error_level'] = 'verbose';
 
 $project = getenv('LAGOON_PROJECT');
 
-if ($project === 'dpl-cms') {
+if ($project === 'dpl-web') {
   $pr_title = getenv('LAGOON_PR_TITLE');
 
   // If this is a bnf pull-request, point the client to the corresponding
