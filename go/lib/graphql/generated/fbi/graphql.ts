@@ -2693,7 +2693,7 @@ export const WorkAccessFragmentDoc = `
     }
   }
 }
-    `;
+    ${ManifestationAccessFragmentDoc}`;
 export const WorkTitlesFragmentDoc = `
     fragment WorkTitles on Work {
   titles {
@@ -2815,7 +2815,11 @@ export const ManifestationSearchPageTeaserFragmentDoc = `
   ...ManifestationCover
   ...ManifestationDetails
 }
-    `;
+    ${ManifestationAccessFragmentDoc}
+${ManifestationMaterialTypesFragmentDoc}
+${ManifestationIdentifiersFragmentDoc}
+${ManifestationCoverFragmentDoc}
+${ManifestationDetailsFragmentDoc}`;
 export const WorkTeaserSearchPageFragmentDoc = `
     fragment WorkTeaserSearchPage on Work {
   workId
@@ -2832,7 +2836,11 @@ export const WorkTeaserSearchPageFragmentDoc = `
     }
   }
 }
-    `;
+    ${WorkTitlesFragmentDoc}
+${WorkCreatorsFragmentDoc}
+${WorkMaterialTypesFragmentDoc}
+${WorkPublicationYearFragmentDoc}
+${ManifestationSearchPageTeaserFragmentDoc}`;
 export const WorkDescriptionFragmentDoc = `
     fragment WorkDescription on Work {
   abstract
@@ -2885,7 +2893,14 @@ export const ManifestationWorkPageFragmentDoc = `
   ...ManifestationDescription
   ...ManifestationDetails
 }
-    `;
+    ${ManifestationMaterialTypesFragmentDoc}
+${ManifestationIdentifiersFragmentDoc}
+${ManifestationCoverFragmentDoc}
+${ManifestationAccessFragmentDoc}
+${ManifestationTitlesFragmentDoc}
+${ManifestationLanguagesFragmentDoc}
+${ManifestationDescriptionFragmentDoc}
+${ManifestationDetailsFragmentDoc}`;
 export const WorkFullWorkPageFragmentDoc = `
     fragment WorkFullWorkPage on Work {
   workId
@@ -2903,7 +2918,12 @@ export const WorkFullWorkPageFragmentDoc = `
     }
   }
 }
-    `;
+    ${WorkTitlesFragmentDoc}
+${WorkCreatorsFragmentDoc}
+${WorkMaterialTypesFragmentDoc}
+${WorkPublicationYearFragmentDoc}
+${WorkDescriptionFragmentDoc}
+${ManifestationWorkPageFragmentDoc}`;
 export const SearchWithPaginationDocument = `
     query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
@@ -2913,17 +2933,7 @@ export const SearchWithPaginationDocument = `
     }
   }
 }
-    ${WorkTeaserSearchPageFragmentDoc}
-${WorkTitlesFragmentDoc}
-${WorkCreatorsFragmentDoc}
-${WorkMaterialTypesFragmentDoc}
-${WorkPublicationYearFragmentDoc}
-${ManifestationSearchPageTeaserFragmentDoc}
-${ManifestationAccessFragmentDoc}
-${ManifestationMaterialTypesFragmentDoc}
-${ManifestationIdentifiersFragmentDoc}
-${ManifestationCoverFragmentDoc}
-${ManifestationDetailsFragmentDoc}`;
+    ${WorkTeaserSearchPageFragmentDoc}`;
 
 export const useSearchWithPaginationQuery = <
       TData = SearchWithPaginationQuery,
@@ -3022,17 +3032,7 @@ export const ComplexSearchForWorkTeaserDocument = `
     }
   }
 }
-    ${WorkTeaserSearchPageFragmentDoc}
-${WorkTitlesFragmentDoc}
-${WorkCreatorsFragmentDoc}
-${WorkMaterialTypesFragmentDoc}
-${WorkPublicationYearFragmentDoc}
-${ManifestationSearchPageTeaserFragmentDoc}
-${ManifestationAccessFragmentDoc}
-${ManifestationMaterialTypesFragmentDoc}
-${ManifestationIdentifiersFragmentDoc}
-${ManifestationCoverFragmentDoc}
-${ManifestationDetailsFragmentDoc}`;
+    ${WorkTeaserSearchPageFragmentDoc}`;
 
 export const useComplexSearchForWorkTeaserQuery = <
       TData = ComplexSearchForWorkTeaserQuery,
@@ -3079,21 +3079,7 @@ export const GetMaterialDocument = `
     ...WorkFullWorkPage
   }
 }
-    ${WorkFullWorkPageFragmentDoc}
-${WorkTitlesFragmentDoc}
-${WorkCreatorsFragmentDoc}
-${WorkMaterialTypesFragmentDoc}
-${WorkPublicationYearFragmentDoc}
-${WorkDescriptionFragmentDoc}
-${ManifestationWorkPageFragmentDoc}
-${ManifestationMaterialTypesFragmentDoc}
-${ManifestationIdentifiersFragmentDoc}
-${ManifestationCoverFragmentDoc}
-${ManifestationAccessFragmentDoc}
-${ManifestationTitlesFragmentDoc}
-${ManifestationLanguagesFragmentDoc}
-${ManifestationDescriptionFragmentDoc}
-${ManifestationDetailsFragmentDoc}`;
+    ${WorkFullWorkPageFragmentDoc}`;
 
 export const useGetMaterialQuery = <
       TData = GetMaterialQuery,
