@@ -27,37 +27,6 @@ export default defineConfig({
       }
     }
   },
-  fbsAdapter: {
-    output: {
-      mode: "split",
-      target: "src/core/fbs/fbs.ts",
-      schemas: "src/core/fbs/model",
-      client: "react-query",
-      override: {
-        mutator: {
-          path: "src/core/fbs/mutator/fetcher.ts",
-          name: "fetcher"
-        },
-        query: {
-          useQuery: true
-        },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // getPatronInformationByPatronIdV2 query. This lets us call it conditionally.
-          getPatronInformationByPatronIdV4: {
-            requestOptions: false
-          }
-        }
-      },
-      prettier: true
-    },
-    input: {
-      target: "src/core/fbs/fbs-adapter.yaml",
-      converterOptions: {
-        indent: 2
-      }
-    }
-  },
   publizonAdapter: {
     output: {
       mode: "split",
