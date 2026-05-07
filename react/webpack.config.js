@@ -83,6 +83,18 @@ module.exports = (_env, argv) => {
           exclude: /node_modules/,
           use: ["babel-loader"]
         },
+        {
+          test: /\.(ts|tsx)$/,
+          include: /node_modules\/@dpl/,
+          use: [
+            {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-typescript"]
+              }
+            }
+          ]
+        },
         // We consume css and svg files from dpl-design-system package
         {
           test: /\.css$/,
