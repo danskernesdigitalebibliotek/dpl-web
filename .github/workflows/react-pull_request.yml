@@ -27,7 +27,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install FBS package dependencies
         run: yarn install --frozen-lockfile
-        working-directory: packages/node/service-layer/fbs
+        working-directory: packages/js/service-layer/fbs
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: stylelint
@@ -59,7 +59,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install FBS package dependencies
         run: yarn install --frozen-lockfile
-        working-directory: packages/node/service-layer/fbs
+        working-directory: packages/js/service-layer/fbs
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Run typescript compile check
@@ -85,7 +85,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install FBS package dependencies
         run: yarn install --frozen-lockfile
-        working-directory: packages/node/service-layer/fbs
+        working-directory: packages/js/service-layer/fbs
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
@@ -119,7 +119,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install FBS package dependencies
         run: yarn install --frozen-lockfile
-        working-directory: packages/node/service-layer/fbs
+        working-directory: packages/js/service-layer/fbs
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Install problem matcher

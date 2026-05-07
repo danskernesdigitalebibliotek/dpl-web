@@ -1386,7 +1386,7 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-1.0.0.tgz#f75c08f88cfd9eb8d9b062284d5bbcc60c41bf2a"
   integrity sha512-dDlz3W405VMFO4w5kIP9DOmELBcvFQGmLoKSdIRstBDubKFYwaNHV1NnlzMCQpXQFGWVALmeMORAuiLx18AvZQ==
 
-"@dpl/fbs@file:../packages/node/service-layer/fbs":
+"@dpl/fbs@file:../packages/js/service-layer/fbs":
   version "0.1.0"
 
 "@envelop/core@^5.4.0":

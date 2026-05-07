@@ -3,7 +3,7 @@ name: "Service Layer / FBS / Type check"
 on:
   pull_request:
     paths:
-      - 'packages/node/service-layer/fbs/**'
+      - 'packages/js/service-layer/fbs/**'
       - '.github/workflows/service-layer-fbs-*.yml'
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: packages/node/service-layer/fbs
+        working-directory: packages/js/service-layer/fbs
 
     steps:
       - name: Checkout code
@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version-file: "packages/node/service-layer/fbs/.nvmrc"
+          node-version-file: "packages/js/service-layer/fbs/.nvmrc"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile

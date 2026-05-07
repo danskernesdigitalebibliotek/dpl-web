@@ -29,7 +29,7 @@ jobs:
 
     - name: Install FBS package dependencies
       run: yarn install --frozen-lockfile
-      working-directory: packages/node/service-layer/fbs
+      working-directory: packages/js/service-layer/fbs
 
     - run: yarn install --frozen-lockfile
 
