@@ -18,8 +18,6 @@ export const publicConfigSchema = z.object({
 export const privateConfigSchema = z.object({
   unilogin: z.object({
     clientSecret: z.string().nullable(),
-    webServiceUsername: z.string().nullable(),
-    webServicePassword: z.string().nullable(),
     pubHubRetailerKeyCode: z.string().nullable(),
   }),
 })

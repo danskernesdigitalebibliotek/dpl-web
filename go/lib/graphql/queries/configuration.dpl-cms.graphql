@@ -4,8 +4,6 @@ query getDplCmsPrivateConfiguration {
       unilogin {
         clientSecret
         pubHubRetailerKeyCode
-        webServicePassword
-        webServiceUsername
       }
     }
   }

@@ -1,14 +1,4 @@
-import { getDplCmsPrivateConfig, getDplCmsPublicConfig } from "../config/dpl-cms/dplCmsConfig"
-
-export const getUniloginWsCredentials = async () => {
-  const {
-    unilogin: { webServiceUsername: username, webServicePassword: password },
-  } = await getDplCmsPrivateConfig()
-  return {
-    username,
-    password,
-  }
-}
+import { getDplCmsPublicConfig } from "../config/dpl-cms/dplCmsConfig"
 
 export const getLibraryMunicipalityId = async () => {
   const {

@@ -2017,8 +2017,6 @@ export type UniloginConfigurationPrivate = {
   __typename?: 'UniloginConfigurationPrivate';
   clientSecret?: Maybe<Scalars['String']['output']>;
   pubHubRetailerKeyCode?: Maybe<Scalars['String']['output']>;
-  webServicePassword?: Maybe<Scalars['String']['output']>;
-  webServiceUsername?: Maybe<Scalars['String']['output']>;
 };
 
 export type UniloginConfigurationPublic = {
@@ -2978,7 +2976,7 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
 export type GetDplCmsPrivateConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', private?: { __typename?: 'GoConfigurationPrivate', unilogin?: { __typename?: 'UniloginConfigurationPrivate', clientSecret?: string | null, pubHubRetailerKeyCode?: string | null, webServicePassword?: string | null, webServiceUsername?: string | null } | null } | null } | null };
+export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', private?: { __typename?: 'GoConfigurationPrivate', unilogin?: { __typename?: 'UniloginConfigurationPrivate', clientSecret?: string | null, pubHubRetailerKeyCode?: string | null } | null } | null } | null };
 
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4035,8 +4033,6 @@ export const GetDplCmsPrivateConfigurationDocument = `
       unilogin {
         clientSecret
         pubHubRetailerKeyCode
-        webServicePassword
-        webServiceUsername
       }
     }
   }

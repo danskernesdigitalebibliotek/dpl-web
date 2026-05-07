@@ -160,7 +160,5 @@ If these are needed for development, proper values can be found in
 And if you need these, grab someone that's worked in the area before
 and ask them.
 
-- `UNILOGIN_WEBSERVICE_USERNAME`: Webservice username for UniLogin.
-- `UNILOGIN_WEBSERVICE_PASSWORD`: Webservice password for UniLogin.
 - `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`: Retailer key for PubHub.
 - `UNILOGIN_MUNICIPALITY_ID`: Municipality ID for UniLogin.

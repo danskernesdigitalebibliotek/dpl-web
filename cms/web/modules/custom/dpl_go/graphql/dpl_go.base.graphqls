@@ -1,4 +1,3 @@
-
 type GoLibraryInfo {
   name: String
   cmsUrl: String!
@@ -33,8 +32,6 @@ type SearchProfiles {
 
 type UniloginConfigurationPrivate {
   clientSecret: String
-  webServiceUsername: String
-  webServicePassword: String
   pubHubRetailerKeyCode: String
 }
 

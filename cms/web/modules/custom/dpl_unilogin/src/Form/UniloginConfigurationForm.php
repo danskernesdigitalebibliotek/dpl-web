@@ -84,28 +84,6 @@ class UniloginConfigurationForm extends ConfigFormBase {
       '#default_value' => $this->uniloginConfiguration->getUniloginApiClientSecret(),
     ];
 
-    $form['unilogin_configuration']['webservice_configuration'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Webservice configuration', [], ['context' => 'Unilogin configuration']),
-      '#tree' => FALSE,
-    ];
-
-    $form['unilogin_configuration']['webservice_configuration']['unilogin_api_webservice_username'] = [
-      '#type' => 'textfield',
-      '#size' => 100,
-      '#title' => $this->t('Unilogin webservice username.', [], ['context' => 'Unilogin configuration']),
-      '#description' => $this->t('The Unilogin webservice username.', [], ['context' => 'Unilogin configuration']),
-      '#default_value' => $this->uniloginConfiguration->getUniloginApiWebServiceUsername(),
-    ];
-
-    $form['unilogin_configuration']['webservice_configuration']['unilogin_api_webservice_password'] = [
-      '#type' => 'textfield',
-      '#size' => 100,
-      '#title' => $this->t('Unilogin webservice password.', [], ['context' => 'Unilogin configuration']),
-      '#description' => $this->t('The Unilogin webservice password.', [], ['context' => 'Unilogin configuration']),
-      '#default_value' => $this->uniloginConfiguration->getUniloginApiWebServicePassword(),
-    ];
-
     $form['unilogin_configuration']['pubhub_configuration'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('PubHub configuration', [], ['context' => 'Unilogin configuration']),
@@ -139,8 +117,6 @@ class UniloginConfigurationForm extends ConfigFormBase {
 
     $this->config($this->configService->getConfigKey())
       ->set('unilogin_api_client_secret', $form_state->getValue('unilogin_api_client_secret') ?? NULL)
-      ->set('unilogin_api_webservice_username', $form_state->getValue('unilogin_api_webservice_username') ?? NULL)
-      ->set('unilogin_api_webservice_password', $form_state->getValue('unilogin_api_webservice_password') ?? NULL)
       ->set('unilogin_api_pubhub_retailer_key_code', $form_state->getValue('unilogin_api_pubhub_retailer_key_code') ?? NULL)
       ->set('unilogin_api_municipality_id', $form_state->getValue('unilogin_api_municipality_id') ?? NULL)
       ->save();
