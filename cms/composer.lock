@@ -11277,21 +11277,26 @@
         },
         {
             "name": "mnsami/composer-custom-directory-installer",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mnsami/composer-custom-directory-installer.git",
-                "reference": "85f66323978d0b1cb0e6acc7f69b3e7b912f82d9"
+                "reference": "d9d71fea03c8e1f718fadfdd588ba76bd7392a3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/85f66323978d0b1cb0e6acc7f69b3e7b912f82d9",
-                "reference": "85f66323978d0b1cb0e6acc7f69b3e7b912f82d9",
+                "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/d9d71fea03c8e1f718fadfdd588ba76bd7392a3b",
+                "reference": "d9d71fea03c8e1f718fadfdd588ba76bd7392a3b",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
-                "php": ">=5.3"
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "phpunit/phpunit": "^10.5"
             },
             "type": "composer-plugin",
             "extra": {
@@ -11301,12 +11306,12 @@
                     "Composer\\CustomDirectoryInstaller\\PluginPlugin"
                 ],
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "2.1.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Composer\\CustomDirectoryInstaller": "src/"
+                "psr-4": {
+                    "Composer\\CustomDirectoryInstaller\\": "src/Composer/CustomDirectoryInstaller"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -11327,9 +11332,15 @@
             ],
             "support": {
                 "issues": "https://github.com/mnsami/composer-custom-directory-installer/issues",
-                "source": "https://github.com/mnsami/composer-custom-directory-installer/tree/2.0.0"
+                "source": "https://github.com/mnsami/composer-custom-directory-installer/tree/2.1.0"
             },
-            "time": "2020-08-18T11:00:11+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/mnsami",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-07T09:49:08+00:00"
         },
         {
             "name": "mobomo/guzzle-azure-hmac-auth",
