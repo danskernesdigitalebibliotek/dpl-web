@@ -84,6 +84,20 @@ class GetNode extends \Spawnia\Sailor\Operation
               teaserText
               paragraphs {
                 __typename
+                ... on ParagraphContentSlider {
+                  id
+                  contentReferences {
+                    __typename
+                    ... on NodeInterface {
+                      id
+                    }
+                  }
+                  underlinedTitle {
+                    __typename
+                    format
+                    value
+                  }
+                }
                 ... on ParagraphNavGridManual {
                   id
                   titleOptional: title
@@ -356,6 +370,20 @@ class GetNode extends \Spawnia\Sailor\Operation
               teaserText
               paragraphs {
                 __typename
+                ... on ParagraphContentSlider {
+                  id
+                  contentReferences {
+                    __typename
+                    ... on NodeInterface {
+                      id
+                    }
+                  }
+                  underlinedTitle {
+                    __typename
+                    format
+                    value
+                  }
+                }
                 ... on ParagraphNavGridManual {
                   id
                   titleOptional: title

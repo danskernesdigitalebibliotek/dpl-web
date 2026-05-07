@@ -10,7 +10,7 @@ field_name: field_material_grid_link
 entity_type: paragraph
 bundle: material_grid_link_automatic
 label: 'Material grid link'
-description: 'This field is for inserting a link string based on a search, e.g.: https://dapple-cms.docker/advanced-search?sublocation=fantasy&advancedSearchCql=%27harry%27&linked=true<br /><br />Please be aware that it is necessary to copy the exact link string.<br /><br />A valid link search string can be generated, by performing a query through the advanced search and copying the link string from there.'
+description: 'This field is for inserting a link string based on a search, e.g.: https://dpl-web.local/advanced-search?sublocation=fantasy&advancedSearchCql=%27harry%27&linked=true<br /><br />Please be aware that it is necessary to copy the exact link string.<br /><br />A valid link search string can be generated, by performing a query through the advanced search and copying the link string from there.'
 required: true
 translatable: false
 default_value: {  }

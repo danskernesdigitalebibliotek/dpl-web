@@ -2135,8 +2135,47 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs: Array<
         | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
         | Record<PropertyKey, never>
        | null, goLinkParagraph:
-        | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-        | Record<PropertyKey, never>
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename?: 'ParagraphGoImages' }
+        | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+        | { __typename?: 'ParagraphGoLinkbox' }
+        | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+        | { __typename?: 'ParagraphGoMaterialSliderManual' }
+        | { __typename?: 'ParagraphGoTextBody' }
+        | { __typename?: 'ParagraphGoVideo' }
+        | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+        | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
        }
     | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
     | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2158,10 +2197,32 @@ export type NodeGoPageFragment = { __typename: 'NodeGoPage', paragraphs: Array<
         | Record<PropertyKey, never>
        }
     | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-        | { id: string, name: string, mediaVideotoolVertical: string }
-        | Record<PropertyKey, never>
-      , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-    | Record<PropertyKey, never>
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
   > | null };
 
 export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, title: string, subtitle: string | null, goArticleImage:
@@ -2176,8 +2237,47 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
         | Record<PropertyKey, never>
        | null, goLinkParagraph:
-        | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-        | Record<PropertyKey, never>
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename?: 'ParagraphGoImages' }
+        | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+        | { __typename?: 'ParagraphGoLinkbox' }
+        | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+        | { __typename?: 'ParagraphGoMaterialSliderManual' }
+        | { __typename?: 'ParagraphGoTextBody' }
+        | { __typename?: 'ParagraphGoVideo' }
+        | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+        | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
        }
     | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
     | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2199,10 +2299,32 @@ export type NodeGoArticleFragment = { __typename: 'NodeGoArticle', id: string, t
         | Record<PropertyKey, never>
        }
     | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-        | { id: string, name: string, mediaVideotoolVertical: string }
-        | Record<PropertyKey, never>
-      , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-    | Record<PropertyKey, never>
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
   > | null };
 
 export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string, path: string | null, title: string, paragraphs: Array<
@@ -2214,8 +2336,47 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
         | Record<PropertyKey, never>
        | null, goLinkParagraph:
-        | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-        | Record<PropertyKey, never>
+        | { __typename?: 'ParagraphAccordion' }
+        | { __typename?: 'ParagraphBanner' }
+        | { __typename?: 'ParagraphBreadcrumbChildren' }
+        | { __typename?: 'ParagraphCampaignRule' }
+        | { __typename?: 'ParagraphCardGridAutomatic' }
+        | { __typename?: 'ParagraphCardGridManual' }
+        | { __typename?: 'ParagraphContentSlider' }
+        | { __typename?: 'ParagraphContentSliderAutomatic' }
+        | { __typename?: 'ParagraphEventTicketCategory' }
+        | { __typename?: 'ParagraphFiles' }
+        | { __typename?: 'ParagraphFilteredEventList' }
+        | { __typename?: 'ParagraphGoImages' }
+        | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+        | { __typename?: 'ParagraphGoLinkbox' }
+        | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+        | { __typename?: 'ParagraphGoMaterialSliderManual' }
+        | { __typename?: 'ParagraphGoTextBody' }
+        | { __typename?: 'ParagraphGoVideo' }
+        | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+        | { __typename?: 'ParagraphGoVideoBundleManual' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+        | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
        }
     | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
     | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2237,10 +2398,32 @@ export type NodeGoCategoryFragment = { __typename: 'NodeGoCategory', id: string,
         | Record<PropertyKey, never>
        }
     | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-        | { id: string, name: string, mediaVideotoolVertical: string }
-        | Record<PropertyKey, never>
-      , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-    | Record<PropertyKey, never>
+        | { __typename?: 'MediaAudio' }
+        | { __typename?: 'MediaDocument' }
+        | { __typename?: 'MediaImage' }
+        | { __typename?: 'MediaVideo' }
+        | { __typename?: 'MediaVideotool' }
+        | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+      , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
   > | null };
 
 export type GoVideoFragment = { __typename: 'ParagraphGoVideo', id: string, title: string, created: { timestamp: unknown }, embedVideo:
@@ -2276,8 +2459,47 @@ export type GoLinkboxFragment = { __typename: 'ParagraphGoLinkbox', title: strin
     | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
     | Record<PropertyKey, never>
    | null, goLinkParagraph:
-    | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-    | Record<PropertyKey, never>
+    | { __typename?: 'ParagraphAccordion' }
+    | { __typename?: 'ParagraphBanner' }
+    | { __typename?: 'ParagraphBreadcrumbChildren' }
+    | { __typename?: 'ParagraphCampaignRule' }
+    | { __typename?: 'ParagraphCardGridAutomatic' }
+    | { __typename?: 'ParagraphCardGridManual' }
+    | { __typename?: 'ParagraphContentSlider' }
+    | { __typename?: 'ParagraphContentSliderAutomatic' }
+    | { __typename?: 'ParagraphEventTicketCategory' }
+    | { __typename?: 'ParagraphFiles' }
+    | { __typename?: 'ParagraphFilteredEventList' }
+    | { __typename?: 'ParagraphGoImages' }
+    | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+    | { __typename?: 'ParagraphGoLinkbox' }
+    | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+    | { __typename?: 'ParagraphGoMaterialSliderManual' }
+    | { __typename?: 'ParagraphGoTextBody' }
+    | { __typename?: 'ParagraphGoVideo' }
+    | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+    | { __typename?: 'ParagraphGoVideoBundleManual' }
+    | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+    | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+    | { __typename?: 'ParagraphHero' }
+    | { __typename?: 'ParagraphLanguageSelector' }
+    | { __typename?: 'ParagraphLinks' }
+    | { __typename?: 'ParagraphManualEventList' }
+    | { __typename?: 'ParagraphMaterialGridAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+    | { __typename?: 'ParagraphMaterialGridManual' }
+    | { __typename?: 'ParagraphMedias' }
+    | { __typename?: 'ParagraphNavGridManual' }
+    | { __typename?: 'ParagraphNavSpotsManual' }
+    | { __typename?: 'ParagraphOpeningHours' }
+    | { __typename?: 'ParagraphRecommendation' }
+    | { __typename?: 'ParagraphSimpleLinks' }
+    | { __typename?: 'ParagraphTextBody' }
+    | { __typename?: 'ParagraphUserRegistrationItem' }
+    | { __typename?: 'ParagraphUserRegistrationLinklist' }
+    | { __typename?: 'ParagraphUserRegistrationSection' }
+    | { __typename?: 'ParagraphVideo' }
+    | { __typename?: 'ParagraphWebform' }
    };
 
 export type GoTextBodyFragment = { __typename: 'ParagraphGoTextBody', body: { processed: unknown } };
@@ -2309,8 +2531,47 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { route:
                 | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
                 | Record<PropertyKey, never>
                | null, goLinkParagraph:
-                | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-                | Record<PropertyKey, never>
+                | { __typename?: 'ParagraphAccordion' }
+                | { __typename?: 'ParagraphBanner' }
+                | { __typename?: 'ParagraphBreadcrumbChildren' }
+                | { __typename?: 'ParagraphCampaignRule' }
+                | { __typename?: 'ParagraphCardGridAutomatic' }
+                | { __typename?: 'ParagraphCardGridManual' }
+                | { __typename?: 'ParagraphContentSlider' }
+                | { __typename?: 'ParagraphContentSliderAutomatic' }
+                | { __typename?: 'ParagraphEventTicketCategory' }
+                | { __typename?: 'ParagraphFiles' }
+                | { __typename?: 'ParagraphFilteredEventList' }
+                | { __typename?: 'ParagraphGoImages' }
+                | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+                | { __typename?: 'ParagraphGoLinkbox' }
+                | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+                | { __typename?: 'ParagraphGoMaterialSliderManual' }
+                | { __typename?: 'ParagraphGoTextBody' }
+                | { __typename?: 'ParagraphGoVideo' }
+                | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+                | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+                | { __typename?: 'ParagraphHero' }
+                | { __typename?: 'ParagraphLanguageSelector' }
+                | { __typename?: 'ParagraphLinks' }
+                | { __typename?: 'ParagraphManualEventList' }
+                | { __typename?: 'ParagraphMaterialGridAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridManual' }
+                | { __typename?: 'ParagraphMedias' }
+                | { __typename?: 'ParagraphNavGridManual' }
+                | { __typename?: 'ParagraphNavSpotsManual' }
+                | { __typename?: 'ParagraphOpeningHours' }
+                | { __typename?: 'ParagraphRecommendation' }
+                | { __typename?: 'ParagraphSimpleLinks' }
+                | { __typename?: 'ParagraphTextBody' }
+                | { __typename?: 'ParagraphUserRegistrationItem' }
+                | { __typename?: 'ParagraphUserRegistrationLinklist' }
+                | { __typename?: 'ParagraphUserRegistrationSection' }
+                | { __typename?: 'ParagraphVideo' }
+                | { __typename?: 'ParagraphWebform' }
                }
             | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
             | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2332,10 +2593,32 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { route:
                 | Record<PropertyKey, never>
                }
             | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-                | { id: string, name: string, mediaVideotoolVertical: string }
-                | Record<PropertyKey, never>
-              , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-            | Record<PropertyKey, never>
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
           > | null }
         | Record<PropertyKey, never>
        | null }
@@ -2370,8 +2653,47 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { rou
                 | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
                 | Record<PropertyKey, never>
                | null, goLinkParagraph:
-                | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-                | Record<PropertyKey, never>
+                | { __typename?: 'ParagraphAccordion' }
+                | { __typename?: 'ParagraphBanner' }
+                | { __typename?: 'ParagraphBreadcrumbChildren' }
+                | { __typename?: 'ParagraphCampaignRule' }
+                | { __typename?: 'ParagraphCardGridAutomatic' }
+                | { __typename?: 'ParagraphCardGridManual' }
+                | { __typename?: 'ParagraphContentSlider' }
+                | { __typename?: 'ParagraphContentSliderAutomatic' }
+                | { __typename?: 'ParagraphEventTicketCategory' }
+                | { __typename?: 'ParagraphFiles' }
+                | { __typename?: 'ParagraphFilteredEventList' }
+                | { __typename?: 'ParagraphGoImages' }
+                | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+                | { __typename?: 'ParagraphGoLinkbox' }
+                | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+                | { __typename?: 'ParagraphGoMaterialSliderManual' }
+                | { __typename?: 'ParagraphGoTextBody' }
+                | { __typename?: 'ParagraphGoVideo' }
+                | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+                | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+                | { __typename?: 'ParagraphHero' }
+                | { __typename?: 'ParagraphLanguageSelector' }
+                | { __typename?: 'ParagraphLinks' }
+                | { __typename?: 'ParagraphManualEventList' }
+                | { __typename?: 'ParagraphMaterialGridAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridManual' }
+                | { __typename?: 'ParagraphMedias' }
+                | { __typename?: 'ParagraphNavGridManual' }
+                | { __typename?: 'ParagraphNavSpotsManual' }
+                | { __typename?: 'ParagraphOpeningHours' }
+                | { __typename?: 'ParagraphRecommendation' }
+                | { __typename?: 'ParagraphSimpleLinks' }
+                | { __typename?: 'ParagraphTextBody' }
+                | { __typename?: 'ParagraphUserRegistrationItem' }
+                | { __typename?: 'ParagraphUserRegistrationLinklist' }
+                | { __typename?: 'ParagraphUserRegistrationSection' }
+                | { __typename?: 'ParagraphVideo' }
+                | { __typename?: 'ParagraphWebform' }
                }
             | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
             | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2393,10 +2715,32 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { rou
                 | Record<PropertyKey, never>
                }
             | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-                | { id: string, name: string, mediaVideotoolVertical: string }
-                | Record<PropertyKey, never>
-              , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-            | Record<PropertyKey, never>
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
           > | null }
         | Record<PropertyKey, never>
        | null }
@@ -2430,8 +2774,47 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { route:
                 | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
                 | Record<PropertyKey, never>
                | null, goLinkParagraph:
-                | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-                | Record<PropertyKey, never>
+                | { __typename?: 'ParagraphAccordion' }
+                | { __typename?: 'ParagraphBanner' }
+                | { __typename?: 'ParagraphBreadcrumbChildren' }
+                | { __typename?: 'ParagraphCampaignRule' }
+                | { __typename?: 'ParagraphCardGridAutomatic' }
+                | { __typename?: 'ParagraphCardGridManual' }
+                | { __typename?: 'ParagraphContentSlider' }
+                | { __typename?: 'ParagraphContentSliderAutomatic' }
+                | { __typename?: 'ParagraphEventTicketCategory' }
+                | { __typename?: 'ParagraphFiles' }
+                | { __typename?: 'ParagraphFilteredEventList' }
+                | { __typename?: 'ParagraphGoImages' }
+                | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+                | { __typename?: 'ParagraphGoLinkbox' }
+                | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+                | { __typename?: 'ParagraphGoMaterialSliderManual' }
+                | { __typename?: 'ParagraphGoTextBody' }
+                | { __typename?: 'ParagraphGoVideo' }
+                | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+                | { __typename?: 'ParagraphGoVideoBundleManual' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+                | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+                | { __typename?: 'ParagraphHero' }
+                | { __typename?: 'ParagraphLanguageSelector' }
+                | { __typename?: 'ParagraphLinks' }
+                | { __typename?: 'ParagraphManualEventList' }
+                | { __typename?: 'ParagraphMaterialGridAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+                | { __typename?: 'ParagraphMaterialGridManual' }
+                | { __typename?: 'ParagraphMedias' }
+                | { __typename?: 'ParagraphNavGridManual' }
+                | { __typename?: 'ParagraphNavSpotsManual' }
+                | { __typename?: 'ParagraphOpeningHours' }
+                | { __typename?: 'ParagraphRecommendation' }
+                | { __typename?: 'ParagraphSimpleLinks' }
+                | { __typename?: 'ParagraphTextBody' }
+                | { __typename?: 'ParagraphUserRegistrationItem' }
+                | { __typename?: 'ParagraphUserRegistrationLinklist' }
+                | { __typename?: 'ParagraphUserRegistrationSection' }
+                | { __typename?: 'ParagraphVideo' }
+                | { __typename?: 'ParagraphWebform' }
                }
             | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
             | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2453,10 +2836,32 @@ export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { route:
                 | Record<PropertyKey, never>
                }
             | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-                | { id: string, name: string, mediaVideotoolVertical: string }
-                | Record<PropertyKey, never>
-              , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-            | Record<PropertyKey, never>
+                | { __typename?: 'MediaAudio' }
+                | { __typename?: 'MediaDocument' }
+                | { __typename?: 'MediaImage' }
+                | { __typename?: 'MediaVideo' }
+                | { __typename?: 'MediaVideotool' }
+                | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+              , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
           > | null }
         | Record<PropertyKey, never>
        | null }
@@ -2483,8 +2888,47 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
             | Record<PropertyKey, never>
            | null, goLinkParagraph:
-            | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-            | Record<PropertyKey, never>
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename?: 'ParagraphGoImages' }
+            | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+            | { __typename?: 'ParagraphGoLinkbox' }
+            | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+            | { __typename?: 'ParagraphGoMaterialSliderManual' }
+            | { __typename?: 'ParagraphGoTextBody' }
+            | { __typename?: 'ParagraphGoVideo' }
+            | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+            | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
            }
         | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
         | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2506,10 +2950,32 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | Record<PropertyKey, never>
            }
         | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-            | { id: string, name: string, mediaVideotoolVertical: string }
-            | Record<PropertyKey, never>
-          , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-        | Record<PropertyKey, never>
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
       > | null }
     | { __typename: 'NodeGoCategory', id: string, path: string | null, title: string, paragraphs: Array<
         | { __typename: 'ParagraphGoImages', goImages: Array<
@@ -2520,8 +2986,47 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
             | Record<PropertyKey, never>
            | null, goLinkParagraph:
-            | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-            | Record<PropertyKey, never>
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename?: 'ParagraphGoImages' }
+            | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+            | { __typename?: 'ParagraphGoLinkbox' }
+            | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+            | { __typename?: 'ParagraphGoMaterialSliderManual' }
+            | { __typename?: 'ParagraphGoTextBody' }
+            | { __typename?: 'ParagraphGoVideo' }
+            | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+            | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
            }
         | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
         | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2543,10 +3048,32 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | Record<PropertyKey, never>
            }
         | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-            | { id: string, name: string, mediaVideotoolVertical: string }
-            | Record<PropertyKey, never>
-          , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-        | Record<PropertyKey, never>
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
       > | null }
     | { __typename: 'NodeGoPage', paragraphs: Array<
         | { __typename: 'ParagraphGoImages', goImages: Array<
@@ -2557,8 +3084,47 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | { name: string, byline: string | null, mediaImage: { url: string, alt: string | null, height: number, width: number, mime: string | null, size: number, title: string | null } }
             | Record<PropertyKey, never>
            | null, goLinkParagraph:
-            | { targetBlank: boolean | null, ariaLabel: string | null, link: { title: string | null, url: string | null } }
-            | Record<PropertyKey, never>
+            | { __typename?: 'ParagraphAccordion' }
+            | { __typename?: 'ParagraphBanner' }
+            | { __typename?: 'ParagraphBreadcrumbChildren' }
+            | { __typename?: 'ParagraphCampaignRule' }
+            | { __typename?: 'ParagraphCardGridAutomatic' }
+            | { __typename?: 'ParagraphCardGridManual' }
+            | { __typename?: 'ParagraphContentSlider' }
+            | { __typename?: 'ParagraphContentSliderAutomatic' }
+            | { __typename?: 'ParagraphEventTicketCategory' }
+            | { __typename?: 'ParagraphFiles' }
+            | { __typename?: 'ParagraphFilteredEventList' }
+            | { __typename?: 'ParagraphGoImages' }
+            | { __typename?: 'ParagraphGoLink', targetBlank?: boolean | null, ariaLabel?: string | null, link: { __typename?: 'Link', title?: string | null, url?: string | null } }
+            | { __typename?: 'ParagraphGoLinkbox' }
+            | { __typename?: 'ParagraphGoMaterialSliderAutomatic' }
+            | { __typename?: 'ParagraphGoMaterialSliderManual' }
+            | { __typename?: 'ParagraphGoTextBody' }
+            | { __typename?: 'ParagraphGoVideo' }
+            | { __typename?: 'ParagraphGoVideoBundleAutomatic' }
+            | { __typename?: 'ParagraphGoVideoBundleManual' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalAuto' }
+            | { __typename?: 'ParagraphGoVideoBundleVerticalManual' }
+            | { __typename?: 'ParagraphHero' }
+            | { __typename?: 'ParagraphLanguageSelector' }
+            | { __typename?: 'ParagraphLinks' }
+            | { __typename?: 'ParagraphManualEventList' }
+            | { __typename?: 'ParagraphMaterialGridAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+            | { __typename?: 'ParagraphMaterialGridManual' }
+            | { __typename?: 'ParagraphMedias' }
+            | { __typename?: 'ParagraphNavGridManual' }
+            | { __typename?: 'ParagraphNavSpotsManual' }
+            | { __typename?: 'ParagraphOpeningHours' }
+            | { __typename?: 'ParagraphRecommendation' }
+            | { __typename?: 'ParagraphSimpleLinks' }
+            | { __typename?: 'ParagraphTextBody' }
+            | { __typename?: 'ParagraphUserRegistrationItem' }
+            | { __typename?: 'ParagraphUserRegistrationLinklist' }
+            | { __typename?: 'ParagraphUserRegistrationSection' }
+            | { __typename?: 'ParagraphVideo' }
+            | { __typename?: 'ParagraphWebform' }
            }
         | { __typename: 'ParagraphGoMaterialSliderAutomatic', sliderAmountOfMaterials: number, titleOptional: string, cqlSearch: { value: string | null } | null }
         | { __typename: 'ParagraphGoMaterialSliderManual', titleOptional: string, materialSliderWorkIds: Array<{ material_type: string | null, work_id: string | null }> }
@@ -2580,10 +3146,32 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
             | Record<PropertyKey, never>
            }
         | { __typename: 'ParagraphGoVideoBundleVerticalManual', id: string, goVideoTitle: string, embedVideo:
-            | { id: string, name: string, mediaVideotoolVertical: string }
-            | Record<PropertyKey, never>
-          , videoBundleWorkIds: Array<{ material_type: string | null, work_id: string | null }> | null }
-        | Record<PropertyKey, never>
+            | { __typename?: 'MediaAudio' }
+            | { __typename?: 'MediaDocument' }
+            | { __typename?: 'MediaImage' }
+            | { __typename?: 'MediaVideo' }
+            | { __typename?: 'MediaVideotool' }
+            | { __typename?: 'MediaVideotoolVertical', id: string, name: string, mediaVideotoolVertical: string }
+          , videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null }
+        | { __typename?: 'ParagraphHero' }
+        | { __typename?: 'ParagraphLanguageSelector' }
+        | { __typename?: 'ParagraphLinks' }
+        | { __typename?: 'ParagraphManualEventList' }
+        | { __typename?: 'ParagraphMaterialGridAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridLinkAutomatic' }
+        | { __typename?: 'ParagraphMaterialGridManual' }
+        | { __typename?: 'ParagraphMedias' }
+        | { __typename?: 'ParagraphNavGridManual' }
+        | { __typename?: 'ParagraphNavSpotsManual' }
+        | { __typename?: 'ParagraphOpeningHours' }
+        | { __typename?: 'ParagraphRecommendation' }
+        | { __typename?: 'ParagraphSimpleLinks' }
+        | { __typename?: 'ParagraphTextBody' }
+        | { __typename?: 'ParagraphUserRegistrationItem' }
+        | { __typename?: 'ParagraphUserRegistrationLinklist' }
+        | { __typename?: 'ParagraphUserRegistrationSection' }
+        | { __typename?: 'ParagraphVideo' }
+        | { __typename?: 'ParagraphWebform' }
       > | null }
     | { __typename: 'NodePage' }
    | null };
@@ -2891,7 +3479,7 @@ export const useGetArticleByPathQuery = <
       variables: GetArticleByPathQueryVariables,
       options?: Omit<UseQueryOptions<GetArticleByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetArticleByPathQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetArticleByPathQuery, TError, TData>(
       {
     queryKey: ['getArticleByPath', variables],
@@ -2909,7 +3497,7 @@ export const useSuspenseGetArticleByPathQuery = <
       variables: GetArticleByPathQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetArticleByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetArticleByPathQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetArticleByPathQuery, TError, TData>(
       {
     queryKey: ['getArticleByPath', variables],
@@ -2962,7 +3550,7 @@ export const useGetCategoriesQuery = <
       variables?: GetCategoriesQueryVariables,
       options?: Omit<UseQueryOptions<GetCategoriesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetCategoriesQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetCategoriesQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getCategories'] : ['getCategories', variables],
@@ -2980,7 +3568,7 @@ export const useSuspenseGetCategoriesQuery = <
       variables?: GetCategoriesQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetCategoriesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetCategoriesQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetCategoriesQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getCategories'] : ['getCategories', variables],
@@ -3030,7 +3618,7 @@ export const useGetCategoryPageByPathQuery = <
       variables: GetCategoryPageByPathQueryVariables,
       options?: Omit<UseQueryOptions<GetCategoryPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetCategoryPageByPathQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetCategoryPageByPathQuery, TError, TData>(
       {
     queryKey: ['getCategoryPageByPath', variables],
@@ -3048,7 +3636,7 @@ export const useSuspenseGetCategoryPageByPathQuery = <
       variables: GetCategoryPageByPathQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetCategoryPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetCategoryPageByPathQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetCategoryPageByPathQuery, TError, TData>(
       {
     queryKey: ['getCategoryPageByPath', variables],
@@ -3082,7 +3670,7 @@ export const useGetDplCmsPrivateConfigurationQuery = <
       variables?: GetDplCmsPrivateConfigurationQueryVariables,
       options?: Omit<UseQueryOptions<GetDplCmsPrivateConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetDplCmsPrivateConfigurationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetDplCmsPrivateConfigurationQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getDplCmsPrivateConfiguration'] : ['getDplCmsPrivateConfiguration', variables],
@@ -3100,7 +3688,7 @@ export const useSuspenseGetDplCmsPrivateConfigurationQuery = <
       variables?: GetDplCmsPrivateConfigurationQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetDplCmsPrivateConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetDplCmsPrivateConfigurationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetDplCmsPrivateConfigurationQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getDplCmsPrivateConfiguration'] : ['getDplCmsPrivateConfiguration', variables],
@@ -3142,7 +3730,7 @@ export const useGetDplCmsPublicConfigurationQuery = <
       variables?: GetDplCmsPublicConfigurationQueryVariables,
       options?: Omit<UseQueryOptions<GetDplCmsPublicConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetDplCmsPublicConfigurationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetDplCmsPublicConfigurationQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getDplCmsPublicConfiguration'] : ['getDplCmsPublicConfiguration', variables],
@@ -3160,7 +3748,7 @@ export const useSuspenseGetDplCmsPublicConfigurationQuery = <
       variables?: GetDplCmsPublicConfigurationQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetDplCmsPublicConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetDplCmsPublicConfigurationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetDplCmsPublicConfigurationQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getDplCmsPublicConfiguration'] : ['getDplCmsPublicConfiguration', variables],
@@ -3223,7 +3811,7 @@ export const useGetPageByPathQuery = <
       variables: GetPageByPathQueryVariables,
       options?: Omit<UseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetPageByPathQuery, TError, TData>(
       {
     queryKey: ['getPageByPath', variables],
@@ -3241,7 +3829,7 @@ export const useSuspenseGetPageByPathQuery = <
       variables: GetPageByPathQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetPageByPathQuery, TError, TData>(
       {
     queryKey: ['getPageByPath', variables],
@@ -3289,7 +3877,7 @@ export const useGetPreviewPageByIddQuery = <
       variables: GetPreviewPageByIddQueryVariables,
       options?: Omit<UseQueryOptions<GetPreviewPageByIddQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPreviewPageByIddQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetPreviewPageByIddQuery, TError, TData>(
       {
     queryKey: ['getPreviewPageByIdd', variables],
@@ -3307,7 +3895,7 @@ export const useSuspenseGetPreviewPageByIddQuery = <
       variables: GetPreviewPageByIddQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetPreviewPageByIddQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetPreviewPageByIddQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetPreviewPageByIddQuery, TError, TData>(
       {
     queryKey: ['getPreviewPageByIdd', variables],
@@ -3343,7 +3931,7 @@ export const useGetAdgangsplatformenLibraryTokenQuery = <
       variables?: GetAdgangsplatformenLibraryTokenQueryVariables,
       options?: Omit<UseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetAdgangsplatformenLibraryTokenQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables],
@@ -3361,7 +3949,7 @@ export const useSuspenseGetAdgangsplatformenLibraryTokenQuery = <
       variables?: GetAdgangsplatformenLibraryTokenQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenLibraryTokenQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetAdgangsplatformenLibraryTokenQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables],
@@ -3397,7 +3985,7 @@ export const useGetAdgangsplatformenUserTokenQuery = <
       variables?: GetAdgangsplatformenUserTokenQueryVariables,
       options?: Omit<UseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables],
@@ -3415,7 +4003,7 @@ export const useSuspenseGetAdgangsplatformenUserTokenQuery = <
       variables?: GetAdgangsplatformenUserTokenQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables],
@@ -3448,7 +4036,7 @@ export const useGetLoginUrlsQuery = <
       variables?: GetLoginUrlsQueryVariables,
       options?: Omit<UseQueryOptions<GetLoginUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetLoginUrlsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetLoginUrlsQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getLoginUrls'] : ['getLoginUrls', variables],
@@ -3466,7 +4054,7 @@ export const useSuspenseGetLoginUrlsQuery = <
       variables?: GetLoginUrlsQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetLoginUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetLoginUrlsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetLoginUrlsQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getLoginUrls'] : ['getLoginUrls', variables],
@@ -3499,7 +4087,7 @@ export const useGetLogoutUrlsQuery = <
       variables?: GetLogoutUrlsQueryVariables,
       options?: Omit<UseQueryOptions<GetLogoutUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetLogoutUrlsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetLogoutUrlsQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getLogoutUrls'] : ['getLogoutUrls', variables],
@@ -3517,7 +4105,7 @@ export const useSuspenseGetLogoutUrlsQuery = <
       variables?: GetLogoutUrlsQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetLogoutUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetLogoutUrlsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetLogoutUrlsQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getLogoutUrls'] : ['getLogoutUrls', variables],

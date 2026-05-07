@@ -769,7 +769,7 @@ const Search: React.FC = () => {
                   <div className="card-list-item__cover">
                     <a
                       data-cy="link-no-style"
-                      href="https://dapple-cms.local/work/work-of:870970-basis:38799053"
+                      href="https://dpl-web.local/work/work-of:870970-basis:38799053"
                       rel="noreferrer"
                       className="hide-linkstyle cover cover--size-small cover--aspect-small"
                       aria-labelledby="card-title-1"
@@ -799,7 +799,7 @@ const Search: React.FC = () => {
                       id="card-title-1"
                     >
                       <a
-                        href="https://dapple-cms.local/work/work-of:870970-basis:38799053"
+                        href="https://dpl-web.local/work/work-of:870970-basis:38799053"
                         rel="noreferrer"
                         tabIndex={0}
                       >
@@ -850,7 +850,7 @@ const Search: React.FC = () => {
                   <div className="card-list-item__cover">
                     <a
                       data-cy="link-no-style"
-                      href="https://dapple-cms.local/work/work-of:870970-basis:38738828"
+                      href="https://dpl-web.local/work/work-of:870970-basis:38738828"
                       rel="noreferrer"
                       className="hide-linkstyle cover cover--size-small cover--aspect-small"
                       aria-labelledby="card-title-2"
@@ -880,7 +880,7 @@ const Search: React.FC = () => {
                       id="card-title-2"
                     >
                       <a
-                        href="https://dapple-cms.local/work/work-of:870970-basis:38738828"
+                        href="https://dpl-web.local/work/work-of:870970-basis:38738828"
                         rel="noreferrer"
                         tabIndex={0}
                       >
@@ -931,7 +931,7 @@ const Search: React.FC = () => {
                   <div className="card-list-item__cover">
                     <a
                       data-cy="link-no-style"
-                      href="https://dapple-cms.local/work/work-of:870970-basis:47683033"
+                      href="https://dpl-web.local/work/work-of:870970-basis:47683033"
                       rel="noreferrer"
                       className="hide-linkstyle cover cover--size-small cover--aspect-small"
                       aria-labelledby="card-title-3"
@@ -961,7 +961,7 @@ const Search: React.FC = () => {
                       id="card-title-3"
                     >
                       <a
-                        href="https://dapple-cms.local/work/work-of:870970-basis:47683033"
+                        href="https://dpl-web.local/work/work-of:870970-basis:47683033"
                         rel="noreferrer"
                         tabIndex={0}
                       >
