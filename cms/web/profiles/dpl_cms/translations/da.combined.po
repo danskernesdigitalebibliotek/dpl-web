@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-06 10:24+0200\n"
-"PO-Revision-Date: 2026-05-06 10:24+0200\n"
+"POT-Creation-Date: 2026-05-07 17:21+0200\n"
+"PO-Revision-Date: 2026-05-07 17:21+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -665,26 +665,6 @@ msgstr "UNI-login API-klienthemmelighed."
 msgctxt "Unilogin configuration"
 msgid "The Unilogin API client secret."
 msgstr "UNI-login API-klienthemmelighed."
-
-msgctxt "Unilogin configuration"
-msgid "Webservice configuration"
-msgstr "Webservice-konfiguration"
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin webservice username."
-msgstr "UNI-login webservice-brugernavn."
-
-msgctxt "Unilogin configuration"
-msgid "The Unilogin webservice username."
-msgstr "UNI-login webservice-brugernavn."
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin webservice password."
-msgstr "UNI-login webservice-adgangskode."
-
-msgctxt "Unilogin configuration"
-msgid "The Unilogin webservice password."
-msgstr "UNI-login webservice-adgangskode."
 
 msgctxt "Unilogin configuration"
 msgid "PubHub configuration"
