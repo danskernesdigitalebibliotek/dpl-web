@@ -76,8 +76,8 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
       $entity->set('field_event_location', ' ');
     }
 
-    if ($entity->hasField('field_event_address')) {
-      $entity->set('field_event_address', []);
+    if ($entity->hasField('field_event_address_gsearch')) {
+      $entity->set('field_event_address_gsearch', NULL);
     }
   }
 }
@@ -548,6 +548,10 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (isset($form['field_event_address'])) {
     $form['field_event_address']['#states']['visible'] = $physical_state;
+  }
+
+  if (isset($form['field_event_address_gsearch'])) {
+    $form['field_event_address_gsearch']['#states']['visible'] = $physical_state;
   }
 
   if (isset($form['field_event_place'])) {

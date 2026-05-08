@@ -5233,17 +5233,17 @@
         },
         {
             "name": "drupal/gsearch",
-            "version": "1.1.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/gsearch.git",
-                "reference": "1.1.0"
+                "reference": "1.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/gsearch-1.1.0.zip",
-                "reference": "1.1.0",
-                "shasum": "bf8dff22f624f1bba86a31902c24e00e813fef45"
+                "url": "https://ftp.drupal.org/files/projects/gsearch-1.2.2.zip",
+                "reference": "1.2.2",
+                "shasum": "d640f49845f5bac0e2e0942fe09b5c61e8b8dbfc"
             },
             "require": {
                 "drupal/core": "^10.5 || ^11",
@@ -5254,11 +5254,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1775544911",
+                    "version": "1.2.2",
+                    "datestamp": "1778483734",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },

@@ -7,8 +7,8 @@ label: 'Event address'
 type: fallback
 sourceEntityType: eventseries
 sourceEntityBundle: default
-sourceField: field_event_address
+sourceField: field_event_address_gsearch
 destinationEntityType: eventinstance
 destinationEntityBundle: default
-destinationField: field_event_address
+destinationField: field_event_address_gsearch
 plugin: default_inheritance
