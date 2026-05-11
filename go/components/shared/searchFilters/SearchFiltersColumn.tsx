@@ -103,7 +103,8 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
                 "h-[102px] overflow-hidden": !isExpanded,
               }
             )}
-            ref={elementRef}>
+            ref={elementRef}
+            inert={!isExpanded && hasOverflow ? true : undefined}>
             {facet.values.map((value, index) => (
               <BadgeButton
                 key={index}
@@ -125,6 +126,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
           {hasOverflow && (
             <BadgeButton
               ariaLabel={isExpanded ? "Vis færre" : "Vis flere"}
+              aria-expanded={isExpanded}
               classNames={cn(`pl-3 w-auto flex flex-row items-center self-start mt-1`)}
               onClick={() => {
                 setIsExpanded(prev => !prev)
