@@ -141,7 +141,11 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'textfield',
         '#title' => $this->t('Hostname', [], ['context' => 'Url Proxy']),
         '#default_value' => $saved_values['hostnames'][$index]['hostname'] ?? '',
-        '#required' => TRUE,
+        '#states' => [
+          'required' => [
+            ':input[name="disable_proxy"]' => ['checked' => FALSE],
+          ],
+        ],
       ];
 
       $form['hostnames'][$index]['expression'] = [
@@ -290,18 +294,21 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $values = [];
-    if ($form_state->getValue('prefix')) {
-      $values['prefix'] = $form_state->getValue('prefix');
-    }
-    $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']),
-      function ($carry, $item) {
-        if (!empty($item['hostname'])) {
-          unset($item['remove_this']);
-          $carry[] = $item;
-        }
-        return $carry;
-      }, []);
     $values['disable_proxy'] = (bool) $form_state->getValue('disable_proxy');
+
+    if (!$values['disable_proxy']) {
+      if ($form_state->getValue('prefix')) {
+        $values['prefix'] = $form_state->getValue('prefix');
+      }
+      $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']),
+        function ($carry, $item) {
+          if (!empty($item['hostname'])) {
+            unset($item['remove_this']);
+            $carry[] = $item;
+          }
+          return $carry;
+        }, []);
+    }
 
     $this->config('dpl_url_proxy.settings')
       ->set('values', $values)
