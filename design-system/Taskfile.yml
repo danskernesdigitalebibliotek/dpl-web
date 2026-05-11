@@ -3,9 +3,6 @@ version: '3'
 dotenv: [".task.env"]
 
 vars:
-  COMMIT_COUNT:
-    sh: git rev-list --count origin/main
-
   # Constructing docker image name.
   DOCKER_IMAGE_PREFIX: '{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}'
 
@@ -29,7 +26,7 @@ tasks:
       - task dev:install
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
       - echo "Design System is starting. It can take a while before Storybook is ready."
-      - echo "https://${COMPOSE_PROJECT_NAME:-design-system}.local will shotly be available."
+      - echo "https://${COMPOSE_PROJECT_NAME:-design-system}.local will shortly be available."
 
   dev:stop:
     summary: Stop docker compose environment
@@ -83,6 +80,16 @@ tasks:
     summary:  Run Chromatic for visual test
     cmds:
       - task dev:cli -- yarn chromatic
+
+  dev:visual-regression:
+    summary: Run visual regression tests using Playwright in Docker
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm playwright npx test-storybook --url http://node:6006
+
+  dev:visual-regression:update:
+    summary: Update visual regression baselines using Playwright in Docker
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm playwright npx test-storybook --url http://node:6006 --updateSnapshot
 
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).

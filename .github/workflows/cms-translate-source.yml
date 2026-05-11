@@ -7,6 +7,7 @@ on:
       - develop
     paths:
       - 'cms/**'
+      - '!cms/cypress/snapshots/**'
       - '.github/workflows/cms-*.yml'
 
 jobs:

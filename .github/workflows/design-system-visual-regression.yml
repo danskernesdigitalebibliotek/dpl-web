@@ -1,0 +1,79 @@
+name: Design / Visual Regression
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'design-system/**'
+      - '!design-system/__visual_snapshots__/**'
+      - '.github/workflows/design-system-visual-regression.yml'
+  pull_request:
+    paths:
+      - 'design-system/**'
+      - '!design-system/__visual_snapshots__/**'
+      - '.github/workflows/design-system-visual-regression.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  visual-regression:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-system
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Start Storybook
+        run: |
+          task dev:start
+          task dev:cli -- npx wait-on http://node:6006 --timeout 120000
+
+      - name: Test for visual regressions
+        id: test
+        continue-on-error: true
+        run: task dev:visual-regression
+
+      - name: Update baselines
+        if: steps.test.outcome == 'failure'
+        run: task dev:visual-regression:update
+
+      - name: Create pull request with updated snapshots
+        if: >-
+          steps.test.outcome == 'failure'
+          && github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.full_name == github.repository
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update visual regression baselines"
+          branch: visual-regression/${{ github.head_ref }}
+          base: ${{ github.head_ref }}
+          title: "Update visual regression baselines for #${{ github.event.pull_request.number }}"
+          body: |
+            Visual changes detected in #${{ github.event.pull_request.number }}.
+
+            Review the image diffs in the **Files changed** tab to verify
+            the visual changes are intentional.
+          # Attribute and assign the new pull request to the original author.
+          author: ${{ github.event.pull_request.user.login }} <${{ github.event.pull_request.user.id }}+${{ github.event.pull_request.user.login }}@users.noreply.github.com>
+          assignees: ${{ github.event.pull_request.user.login }}
+          delete-branch: true
+          add-paths: |
+            design-system/__visual_snapshots__
+
+      - name: Visual regressions detected
+        if: steps.test.outcome == 'failure'
+        run: exit 1

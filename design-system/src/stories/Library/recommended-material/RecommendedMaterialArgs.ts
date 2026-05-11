@@ -1,3 +1,4 @@
+import bookCover6 from "../../../../public/images/placeholder/book_cover_6.jpg";
 import { RecommendedMaterialProps } from "./RecommendedMaterial";
 
 const recommendedMaterialArgs: RecommendedMaterialProps = {
@@ -5,7 +6,7 @@ const recommendedMaterialArgs: RecommendedMaterialProps = {
   description: "Børnenes Naturhobbybog",
   favoriteFill: false,
   materialUrl: "#",
-  src: "images/book_cover_6.jpg",
+  src: bookCover6,
   alt: "book cover",
 };
 

@@ -1,4 +1,5 @@
 import Cover from "../cover/Cover";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
 import { ReactComponent as SvgIcon } from "../Icons/icon-favourite/icon-favourite.svg";
 
 export type RecommenderData = {
@@ -80,7 +81,7 @@ const Recommender: React.FC<RecommenderProps> = ({
             </div>
             <div className="simple-material__cover-container">
               <Cover
-                src="images/book_cover_3.jpg"
+                src={bookCover3}
                 size="medium"
                 animate={false}
                 tint="120"

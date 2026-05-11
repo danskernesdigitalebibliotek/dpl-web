@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - 'cms/**'
+      - '!cms/cypress/snapshots/**'
       - '.github/workflows/cms-*.yml'
 
 env:

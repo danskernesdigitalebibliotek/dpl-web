@@ -32,5 +32,10 @@ storybook-static
 .vscode
 .history
 
-#zipped files generated when using dapple. 
+#zipped files generated when using dapple.
 dist.zip
+build-storybook.log
+
+# Visual regression testing
+__visual_report__
+__diff_output__

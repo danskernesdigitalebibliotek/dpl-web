@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 
 import { MaterialCard } from "./MaterialCard";
+import bookCover5 from "../../../../public/images/placeholder/book_cover_5.jpg";
 
 export default {
   title: "Library / Materials / Card",
@@ -27,7 +28,7 @@ MaterialSmall.args = {
   description: "Experiment with photosynthesis",
   isLiked: false,
   cover: {
-    src: "images/book_cover_5.jpg",
+    src: bookCover5,
     animate: false,
     size: "small",
   },
@@ -39,7 +40,7 @@ MaterialLarge.args = {
   description: "Experiment with photosynthesis",
   isLiked: true,
   cover: {
-    src: "images/book_cover_5.jpg",
+    src: bookCover5,
     animate: false,
     size: "medium",
   },

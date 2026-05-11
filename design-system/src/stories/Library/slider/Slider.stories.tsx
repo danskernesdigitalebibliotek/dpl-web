@@ -3,6 +3,10 @@ import { StoryFn } from "@storybook/react-webpack5";
 import Slider from "./Slider";
 import Card from "../card/Card";
 import CardImages from "../card/CardImages";
+import cardOriginal from "../../../../public/images/placeholder/card_original.jpg";
+import cardXLarge from "../../../../public/images/placeholder/card_x_large.jpg";
+import cardLarge from "../../../../public/images/placeholder/card_large.jpg";
+import cardMedium from "../../../../public/images/placeholder/card_medium.jpg";
 
 export default {
   title: "Library / Slider",
@@ -26,11 +30,11 @@ const Template: StoryFn<typeof Slider> = (args) => <Slider {...args} />;
 
 const image = (
   <CardImages
-    src="images/card_original.jpg"
+    src={cardOriginal}
     alternativeSrcs={[
-      { name: "x-large", src: "images/card_x_large.jpg" },
-      { name: "large", src: "images/card_large.jpg" },
-      { name: "medium", src: "images/card_medium.jpg" },
+      { name: "x-large", src: cardXLarge },
+      { name: "large", src: cardLarge },
+      { name: "medium", src: cardMedium },
     ]}
   />
 );

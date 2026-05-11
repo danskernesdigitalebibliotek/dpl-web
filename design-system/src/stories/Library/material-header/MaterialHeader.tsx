@@ -1,4 +1,5 @@
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";
+import bookCover3Large from "../../../../public/images/placeholder/book_cover_3_large.jpeg";
 import { ButtonFavourite } from "../Buttons/button-favourite/ButtonFavourite";
 import { Button } from "../Buttons/button/Button";
 import { generateId } from "../horizontal-term-line/HorizontalTermLine";
@@ -57,7 +58,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
       <div className="material-header">
         <div className="material-header__cover">
           <Cover
-            src="images/book_cover_3_large.jpeg"
+            src={bookCover3Large}
             size="xlarge"
             tint="120"
             animate

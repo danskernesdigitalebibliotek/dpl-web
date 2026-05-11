@@ -1,4 +1,7 @@
 import React from "react";
+import bookCover4 from "../../../../public/images/placeholder/book_cover_4.jpg";
+import bookCover5 from "../../../../public/images/placeholder/book_cover_5.jpg";
+import bookCover6 from "../../../../public/images/placeholder/book_cover_6.jpg";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 import { ReactComponent as CheckIcon } from "../../../public/icons/collection/Check.svg";
 import { ReactComponent as FilterIcon } from "../../../public/icons/collection/Filter.svg";
@@ -779,7 +782,7 @@ const Search: React.FC = () => {
                       <img
                         className="cover__img cover__img--animate"
                         alt=""
-                        src="https://fbiinfo-present.dbc.dk/images/dEcz_pEyQdGyw5wW5y-R4g/240px!ADCL6JWZHz_NJQ30wh-KVCdksMnyY8eCcwgZjZMvJQx0vg"
+                        src={bookCover5}
                       />
                     </a>
                   </div>
@@ -860,7 +863,7 @@ const Search: React.FC = () => {
                       <img
                         className="cover__img cover__img--animate"
                         alt=""
-                        src="https://fbiinfo-present.dbc.dk/images/MFmywgubSuWLfPKFW642_Q/240px!ADATeleY6WCLq1Xf3Ks-K7YCu-78BR2q1c1V1b5U7wUICw"
+                        src={bookCover6}
                       />
                     </a>
                   </div>
@@ -941,7 +944,7 @@ const Search: React.FC = () => {
                       <img
                         className="cover__img cover__img--animate"
                         alt=""
-                        src="https://fbiinfo-present.dbc.dk/images/cYI_uKO4Rhmq1iHuYm412w/240px!ADDXtnRxfMw20YEoI9xn9Ox1D0yfucVLJQ5CXAqXIjmf2A"
+                        src={bookCover4}
                       />
                     </a>
                   </div>

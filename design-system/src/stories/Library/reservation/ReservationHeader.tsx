@@ -1,4 +1,5 @@
 import Cover from "../cover/Cover";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
 
 export type ReservationHeaderProps = {
   author: string;
@@ -13,12 +14,7 @@ const ReservationHeader = ({
 }: ReservationHeaderProps) => {
   return (
     <header className="reservation-modal-header">
-      <Cover
-        src="images/book_cover_3.jpg"
-        size="medium"
-        animate={false}
-        tint="120"
-      />
+      <Cover src={bookCover3} size="medium" animate={false} tint="120" />
       <div className="reservation-modal-description">
         <div className="reservation-modal-tag">{label}</div>
         <h2 className="text-header-h2 mt-22 mb-8">{title}</h2>

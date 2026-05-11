@@ -1,6 +1,13 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 
 import { MaterialBanner } from "./MaterialBanner";
+import bookCover1 from "../../../../public/images/placeholder/book_cover_1.jpg";
+import bookCover2 from "../../../../public/images/placeholder/book_cover_2.jpg";
+import bookCover3 from "../../../../public/images/placeholder/book_cover_3.jpg";
+import bookCover4 from "../../../../public/images/placeholder/book_cover_4.jpg";
+import bookCover5 from "../../../../public/images/placeholder/book_cover_5.jpg";
+import bookCover6 from "../../../../public/images/placeholder/book_cover_6.jpg";
+import bookCover7 from "../../../../public/images/placeholder/book_cover_7.jpg";
 
 export default {
   title: "Blocks / Material Banner",
@@ -22,7 +29,7 @@ export default {
         description: "Simone de Beauvoir",
         isLiked: false,
         cover: {
-          src: "images/book_cover_1.jpg",
+          src: bookCover1,
           animate: true,
           size: "medium",
           tint: "80",
@@ -33,7 +40,7 @@ export default {
         description: "Af Marie Hugsted",
         isLiked: false,
         cover: {
-          src: "images/book_cover_7.jpg",
+          src: bookCover7,
           animate: true,
           size: "medium",
           tint: "40",
@@ -44,7 +51,7 @@ export default {
         description: "Isabel Sánchez Vegara",
         isLiked: true,
         cover: {
-          src: "images/book_cover_3.jpg",
+          src: bookCover3,
           animate: true,
           size: "medium",
           tint: "100",
@@ -55,7 +62,7 @@ export default {
         description: "Sayaka Murata",
         isLiked: false,
         cover: {
-          src: "images/book_cover_4.jpg",
+          src: bookCover4,
           animate: true,
           size: "medium",
           tint: "120",
@@ -66,7 +73,7 @@ export default {
         description: "Søren Rasmussen",
         isLiked: false,
         cover: {
-          src: "images/book_cover_5.jpg",
+          src: bookCover5,
           animate: true,
           size: "medium",
           tint: "20",
@@ -77,7 +84,7 @@ export default {
         description: "Af Anton M. Berg",
         isLiked: false,
         cover: {
-          src: "images/book_cover_6.jpg",
+          src: bookCover6,
           animate: true,
           size: "medium",
           tint: "80",
@@ -88,7 +95,7 @@ export default {
         description: "Simone de Beauvoir",
         isLiked: false,
         cover: {
-          src: "images/book_cover_1.jpg",
+          src: bookCover1,
           animate: true,
           size: "medium",
           tint: "40",
@@ -99,7 +106,7 @@ export default {
         description: "Af Marie Hugsted",
         isLiked: false,
         cover: {
-          src: "images/book_cover_2.jpg",
+          src: bookCover2,
           animate: true,
           size: "medium",
           tint: "100",
