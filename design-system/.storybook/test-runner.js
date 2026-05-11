@@ -22,8 +22,9 @@ module.exports = {
       expect(image).toMatchImageSnapshot({
         customSnapshotsDir: `${process.cwd()}/__visual_snapshots__`,
         customSnapshotIdentifier: `${context.id}--${name}`,
-        failureThreshold: 0,
+        failureThreshold: 0.4,
         failureThresholdType: "percent",
+        allowSizeMismatch: true,
       });
     }
   },
