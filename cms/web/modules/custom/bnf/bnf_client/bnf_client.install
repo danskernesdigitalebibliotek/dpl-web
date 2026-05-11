@@ -6,6 +6,8 @@
  */
 
 use Drupal\bnf_client\Entity\Subscription;
+use Drupal\Core\Database\Connection;
+use Drupal\drupal_typed\DrupalTyped;
 
 /**
  * Implements hook_install().
@@ -85,4 +87,21 @@ function bnf_client_update_10105(): string {
   }
 
   return "Could not install field node.$key.";
+}
+
+/**
+ * Fix job_scheduler jobs.
+ */
+function bnf_client_update_10106(): void {
+  // The job_scheduler module duplicates jobs with NULL IDs. As a workaround
+  // we're now setting a static ID, so clean out the old ones.
+  $database = DrupalTyped::service(Connection::class, Connection::class);
+
+  // Purge existing jobs.
+  $database->delete('job_schedule')
+    ->condition('name', 'bnf_update_scheduler')
+    ->execute();
+
+  // Recreate jobs.
+  job_scheduler_rebuild_all();
 }
