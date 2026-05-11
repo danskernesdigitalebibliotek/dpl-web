@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-07 17:21+0200\n"
-"PO-Revision-Date: 2026-05-07 17:21+0200\n"
+"POT-Creation-Date: 2026-05-11 11:58+0200\n"
+"PO-Revision-Date: 2026-05-11 11:58+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -19475,34 +19475,11 @@ msgstr "Token registry cacher ryddet."
 msgid "No tokens available."
 msgstr "Ingen tilgængelige tokens."
 
-msgid "Token"
-msgstr "Symbol"
+msgid "Menu link"
+msgstr "Menu-link"
 
-msgid "Click a token to insert it into the field you've last clicked."
-msgstr ""
-"Klik på et token for at indsætte det i det felt som du senest har klikket på."
-
-msgid "No tokens available"
-msgstr "Ingen tilgængelige tokens"
-
-msgid "Token value for @token was not generated."
-msgstr "Token værdi for @token blev ikke produceret."
-
-msgid ""
-"Token value for @token was '@actual', matching regular expression pattern "
-"'@expected'."
-msgstr ""
-"Token value for @token was '@actual', matching regular expression pattern "
-"'@expected'."
-
-msgid "Token value for @token was '@actual', expected value '@expected'."
-msgstr "Token værdi for @token var '@actual', forventet værdi '@expected'."
-
-msgid "Failed to generate token @token."
-msgstr "Mislykkedes med at generere token @token."
-
-msgid "A test token with colons in the name"
-msgstr "En testtoken med kolonner i navnet"
+msgid "Computed menu link for the node (only available during node saving)."
+msgstr "Beregnet menulink for noden (kun tilgængeligt imens noden gemmes)."
 
 msgid ""
 "The <a href=\":project\">Token</a> module provides a user interface for the "
@@ -19537,59 +19514,6 @@ msgstr ""
 msgid ""
 "The list of the currently available tokens on this site are shown below."
 msgstr "Listen over tilgængelige tokens vises herunder."
-
-msgid "This field supports tokens. @browse_tokens_link"
-msgstr "Dette felt understøtter tokens. @browse_tokens_link"
-
-msgid "%name must contain at least one token."
-msgid_plural "%name must contain at least @count tokens."
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%name must contain at most one token."
-msgid_plural "%name must contain at most @count tokens."
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%name is using the following invalid tokens: @invalid-tokens."
-msgstr "%name bruger følgende ikke-tilladte tokens: @invalid-tokens."
-
-msgid "This field supports tokens."
-msgstr "Feltet understøtter tokens."
-
-msgid ""
-"Available variables are: [site:name], [site:url], [user:display-name], "
-"[user:account-name], [user:mail], [site:login-url], [site:url-brief], "
-"[user:edit-url], [user:one-time-login-url], [user:cancel-url]."
-msgstr ""
-"Tilgængelige variable: [site:name], [site:url], [user:display-name], "
-"[user:account-name], [user:mail], [site:login-url], [site:url-brief], "
-"[user:edit-url], [user:one-time-login-url], [user:cancel-url]."
-
-msgid ""
-"The list of available tokens that can be used in e-mails is provided below."
-msgstr "Listen af tokens, som kan bruges i e-mails, er tilgængelig nedenfor."
-
-msgid "Menu link"
-msgstr "Menu-link"
-
-msgid "Computed menu link for the node (only available during node saving)."
-msgstr "Beregnet menulink for noden (kun tilgængeligt imens noden gemmes)."
-
-msgid "Tokens or token types not defined as arrays"
-msgstr "Tokens eller token typer ikke definerede som arrays"
-
-msgid "Tokens or token types missing name property"
-msgstr "Tokens eller token typer mangler navn"
-
-msgid "Token types do not have any tokens defined"
-msgstr "Token typer har ikke definerede tokens"
-
-msgid "Token types are not defined but have tokens"
-msgstr "Token typer er ikke definerede, men har tokens"
-
-msgid "Token or token types are defined by multiple modules"
-msgstr "Token eller token typer er defineret af flere moduler"
 
 msgid "Current date"
 msgstr "Aktuel dato"
@@ -19943,13 +19867,6 @@ msgstr "Billedets URI."
 msgid "The URL to the image."
 msgstr "Billedets URL."
 
-msgid ""
-"Attempting to perform token replacement for token type %type without "
-"required data"
-msgstr ""
-"Forsøger at foretage token-erstatning for token-typen %type uden de "
-"nødvendige data"
-
 msgid "Book"
 msgstr "Bog"
 
@@ -20016,8 +19933,91 @@ msgstr "@type felt. Også kendt som %labels."
 msgid "@type field."
 msgstr "@type field."
 
+msgid ""
+"Attempting to perform token replacement for token type %type without "
+"required data"
+msgstr ""
+"Forsøger at foretage token-erstatning for token-typen %type uden de "
+"nødvendige data"
+
 msgid "Browse available tokens."
 msgstr "Gennemse tilgængelige tokens."
+
+msgid "This field supports tokens. @browse_tokens_link"
+msgstr "Dette felt understøtter tokens. @browse_tokens_link"
+
+msgid "This field supports tokens."
+msgstr "Feltet understøtter tokens."
+
+msgid ""
+"Available variables are: [site:name], [site:url], [user:display-name], "
+"[user:account-name], [user:mail], [site:login-url], [site:url-brief], "
+"[user:edit-url], [user:one-time-login-url], [user:cancel-url]."
+msgstr ""
+"Tilgængelige variable: [site:name], [site:url], [user:display-name], "
+"[user:account-name], [user:mail], [site:login-url], [site:url-brief], "
+"[user:edit-url], [user:one-time-login-url], [user:cancel-url]."
+
+msgid ""
+"The list of available tokens that can be used in e-mails is provided below."
+msgstr "Listen af tokens, som kan bruges i e-mails, er tilgængelig nedenfor."
+
+msgid "Token"
+msgstr "Symbol"
+
+msgid "Click a token to insert it into the field you've last clicked."
+msgstr ""
+"Klik på et token for at indsætte det i det felt som du senest har klikket på."
+
+msgid "No tokens available"
+msgstr "Ingen tilgængelige tokens"
+
+msgid "Token value for @token was not generated."
+msgstr "Token værdi for @token blev ikke produceret."
+
+msgid ""
+"Token value for @token was '@actual', matching regular expression pattern "
+"'@expected'."
+msgstr ""
+"Token value for @token was '@actual', matching regular expression pattern "
+"'@expected'."
+
+msgid "Token value for @token was '@actual', expected value '@expected'."
+msgstr "Token værdi for @token var '@actual', forventet værdi '@expected'."
+
+msgid "Failed to generate token @token."
+msgstr "Mislykkedes med at generere token @token."
+
+msgid "A test token with colons in the name"
+msgstr "En testtoken med kolonner i navnet"
+
+msgid "%name must contain at least one token."
+msgid_plural "%name must contain at least @count tokens."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%name must contain at most one token."
+msgid_plural "%name must contain at most @count tokens."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%name is using the following invalid tokens: @invalid-tokens."
+msgstr "%name bruger følgende ikke-tilladte tokens: @invalid-tokens."
+
+msgid "Tokens or token types not defined as arrays"
+msgstr "Tokens eller token typer ikke definerede som arrays"
+
+msgid "Tokens or token types missing name property"
+msgstr "Tokens eller token typer mangler navn"
+
+msgid "Token types do not have any tokens defined"
+msgstr "Token typer har ikke definerede tokens"
+
+msgid "Token types are not defined but have tokens"
+msgstr "Token typer er ikke definerede, men har tokens"
+
+msgid "Token or token types are defined by multiple modules"
+msgstr "Token eller token typer er defineret af flere moduler"
 
 msgid "Token User picture"
 msgstr "Token Bruger billede"
@@ -24239,32 +24239,64 @@ msgctxt "pathauto.pattern.breadcrumb_pattern:label"
 msgid "Breadcrumb pattern"
 msgstr ""
 
+msgctxt "pathauto.pattern.breadcrumb_pattern:pattern"
+msgid "/[dpl_breadcrumb:breadcrumb-url-alias]"
+msgstr ""
+
 msgctxt "pathauto.pattern.breadcrumb_pattern_event_instance:label"
 msgid "Breadcrumb pattern (event instance)"
+msgstr ""
+
+msgctxt "pathauto.pattern.breadcrumb_pattern_event_instance:pattern"
+msgid "[dpl_breadcrumb:breadcrumb-url-alias]"
 msgstr ""
 
 msgctxt "pathauto.pattern.breadcrumb_pattern_event_series:label"
 msgid "Breadcrumb pattern (event series)"
 msgstr ""
 
+msgctxt "pathauto.pattern.breadcrumb_pattern_event_series:pattern"
+msgid "[dpl_breadcrumb:breadcrumb-url-alias]"
+msgstr ""
+
 msgctxt "pathauto.pattern.category_term:label"
 msgid "Category term - embedded search"
+msgstr ""
+
+msgctxt "pathauto.pattern.category_term:pattern"
+msgid "/search/web/categories/[term:name]"
 msgstr ""
 
 msgctxt "pathauto.pattern.go_articles:label"
 msgid "GO Articles"
 msgstr ""
 
+msgctxt "pathauto.pattern.go_articles:pattern"
+msgid "/artikel/[node:title]"
+msgstr ""
+
 msgctxt "pathauto.pattern.go_categories:label"
 msgid "GO Categories"
+msgstr ""
+
+msgctxt "pathauto.pattern.go_categories:pattern"
+msgid "/kategori/[node:title]"
 msgstr ""
 
 msgctxt "pathauto.pattern.go_pages:label"
 msgid "GO Pages"
 msgstr ""
 
+msgctxt "pathauto.pattern.go_pages:pattern"
+msgid "/[node:title]"
+msgstr ""
+
 msgctxt "pathauto.pattern.tag_term:label"
 msgid "Tag term - embedded search"
+msgstr ""
+
+msgctxt "pathauto.pattern.tag_term:pattern"
+msgid "/search/web/tag/[term:name]"
 msgstr ""
 
 msgctxt "recurring_events.eventinstance_type.default:label"
