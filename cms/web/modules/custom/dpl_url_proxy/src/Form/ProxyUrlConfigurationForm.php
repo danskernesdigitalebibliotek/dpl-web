@@ -98,6 +98,12 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     $form_state->set('indexes', $indexes);
     $saved_values = $this->getConfiguration();
 
+    $required_when_proxy_enabled = [
+      'required' => [
+        ':input[name="disable_proxy"]' => ['checked' => FALSE],
+      ],
+    ];
+
     $form['#tree'] = TRUE;
     $form['description'] = [
       '#type' => 'item',
@@ -118,11 +124,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         [],
         ['context' => 'Url Proxy']
       ),
-      '#states' => [
-        'required' => [
-          ':input[name="disable_proxy"]' => ['checked' => FALSE],
-        ],
-      ],
+      '#states' => $required_when_proxy_enabled,
     ];
 
     $form['hostnames'] = [
@@ -141,11 +143,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'textfield',
         '#title' => $this->t('Hostname', [], ['context' => 'Url Proxy']),
         '#default_value' => $saved_values['hostnames'][$index]['hostname'] ?? '',
-        '#states' => [
-          'required' => [
-            ':input[name="disable_proxy"]' => ['checked' => FALSE],
-          ],
-        ],
+        '#states' => $required_when_proxy_enabled,
       ];
 
       $form['hostnames'][$index]['expression'] = [
