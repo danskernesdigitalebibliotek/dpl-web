@@ -5908,10 +5908,10 @@
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/store@^3.17.3":
-  version "3.17.3"
-  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.17.3.tgz#4681622774145807795762ea8d9699faa2a064ca"
-  integrity sha512-O579OxkTMT+aWZ/guHXIp03JcIEC27UWKuMxhPMK2479k+nL15g5V7Ajoo7XIDCKgW5plOJBmZIbfYDEGM9L7Q==
+"@xstate/store@^3.17.5":
+  version "3.17.5"
+  resolved "https://registry.yarnpkg.com/@xstate/store/-/store-3.17.5.tgz#088dcdb972e6a015d73bb7602c2f5ff4b4bc1fe0"
+  integrity sha512-ITajQVRAMa1pgmgM0OdRFYQ6OQ8GK4ynh391p13GKtZnELXn9Hgs9pr4mqO1Z95HH9INcmczmWi5xk3O18GBWg==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -16301,10 +16301,10 @@ xpath@^0.0.33:
   resolved "https://registry.yarnpkg.com/xpath/-/xpath-0.0.33.tgz#5136b6094227c5df92002e7c3a13516a5074eb07"
   integrity sha512-NNXnzrkDrAzalLhIUc01jO2mOzXGXh1JwPgkihcLLzw98c0WgYDmmjSh1Kl3wzaxSVWMuA+fe0WTWOBDWCBmNA==
 
-xstate@^5.31.0:
-  version "5.31.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.31.0.tgz#44a2464acbdea20b9381eeed525bb7aca4f9c61c"
-  integrity sha512-5B+0DqC0uNUrcLUEY3pn3iNy+swvK2E0ZpYp5gnV3oxMX5y87vzXkU5YXv9CAtyG5c5FOJ1SzvTWHrwE8fMZNQ==
+xstate@^5.31.1:
+  version "5.31.1"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.31.1.tgz#7ac75846d2fa99f488b9c0e2a35a9063e776551c"
+  integrity sha512-3P7t7GQ61BvLu+8Cj6Zq7rcS34vecL9pvfN2ucUWmIFIUG+rAREviOs4Xy4OO3BuJHSz6RLU8eqDXxSbVotjDQ==
 
 xtend@^4.0.0, xtend@^4.0.2:
   version "4.0.2"
