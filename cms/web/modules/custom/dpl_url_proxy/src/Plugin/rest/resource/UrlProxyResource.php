@@ -150,48 +150,34 @@ class UrlProxyResource extends ResourceBase {
       throw new HttpException(400, "Url $url_param does not contain a host name. Urls to be proxied must contain a host name.");
     }
 
-    if (!empty($conf['disable_proxy'])) {
-      $cache_tags = $this->configManager
-        ->getConfigFactory()
-        ->get(DplUrlProxyInterface::CONFIG_NAME)
-        ->getCacheTags();
+    if (empty($conf['disable_proxy'])) {
+      if (!$prefix = $conf['prefix'] ?? NULL) {
+        throw new HttpException(500, 'Could not generate url. Insufficient configuration');
+      }
 
-      $response = new ResourceResponse(['data' => ['url' => $url_param]], 200);
-      return $response
-        ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
-          '#cache' => [
-            'tags' => $cache_tags,
-            'contexts' => ['url.query_args'],
-          ],
-        ]));
-    }
+      // Search host names.
+      foreach ($conf['hostnames'] as $config) {
+        if ($url_host == $config['hostname']) {
+          // Rewrite/convert url using regex.
+          if (
+            !empty($config['expression']['regex'])
+            && !empty($config['expression']['replacement'])
+          ) {
+            $url = preg_replace($config['expression']['regex'],
+              $config['expression']['replacement'],
+              $url_param);
+          }
 
-    if (!$prefix = $conf['prefix'] ?? NULL) {
-      throw new HttpException(500, 'Could not generate url. Insufficient configuration');
-    }
+          // Add prefix, if chosen.
+          if (!$config['disable_prefix']) {
+            // The URL is not encoded as it's send on to online resources
+            // proxies (ezproxy), which fails if the url is encoded.
+            $url = $prefix . $url;
+          }
 
-    // Search host names.
-    foreach ($conf['hostnames'] as $config) {
-      if ($url_host == $config['hostname']) {
-        // Rewrite/convert url using regex.
-        if (
-          !empty($config['expression']['regex'])
-          && !empty($config['expression']['replacement'])
-        ) {
-          $url = preg_replace($config['expression']['regex'],
-            $config['expression']['replacement'],
-            $url_param);
+          // Exit the foreach loop.
+          break;
         }
-
-        // Add prefix, if chosen.
-        if (!$config['disable_prefix']) {
-          // The URL is not encoded as it's send on to online resources proxies
-          // (ezproxy), which fails if the url is encoded.
-          $url = $prefix . $url;
-        }
-
-        // Exit the foreach loop.
-        break;
       }
     }
 
