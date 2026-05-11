@@ -1,5 +1,5 @@
 # This is a go-task file for various developer tasks
-# e.g. building docker images and setting up local development.
+# e.g. building docker images or setting up local development.
 # You can read about the Task files here: https://taskfile.dev.
 version: "3"
 
