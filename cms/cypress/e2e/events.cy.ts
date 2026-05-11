@@ -218,9 +218,9 @@ describe('Events', () => {
     cy.get('[data-drupal-selector="edit-field-event-location-0-value"]').as(
       'location',
     );
-    cy.get('[data-drupal-selector="edit-field-event-address-wrapper"]').as(
-      'address',
-    );
+    cy.get(
+      '[data-drupal-selector="edit-field-event-address-gsearch-wrapper"]',
+    ).as('address');
     cy.get(
       '[data-drupal-selector="edit-field-event-non-branch-location-value"]',
     ).as('non_branch');
@@ -259,32 +259,194 @@ describe('Events', () => {
     cy.get('@non_branch').should('not.be.visible');
   });
 
+  // Fields hidden by Drupal #states in dpl_event_form_alter() must also be
+  // cleared by dpl_event_entity_presave() — otherwise stale values leak
+  // through even though the user can no longer see them in the form. These
+  // tests are written against the eventinstance form because that's where
+  // both regressions surfaced:
+  //
+  //   1. Adding a custom address on an instance whose field_branch is empty
+  //      (only inherited from the series) used to be wiped by the presave,
+  //      because it inspected the inherited `branch` field instead of
+  //      `field_branch`.
+  //
+  //   2. Changing location-type to the empty "- None -" option on an instance
+  //      used to leave a previously-saved address untouched, because the
+  //      presave early-returned on empty location_type.
+  describe('Hidden location fields on eventinstance', () => {
+    const seriesTitle = 'Hidden fields series';
+    type Address = { street: string; postalCode: string; postalName: string };
+    const customAddress: Address = {
+      street: 'Testvej 1',
+      postalCode: '1000',
+      postalName: 'Testby',
+    };
+    const emptyAddress: Address = {
+      street: '',
+      postalCode: '',
+      postalName: '',
+    };
+
+    const gsearchField = (suffix: string) =>
+      cy.get(
+        `[data-drupal-selector="edit-field-event-address-gsearch-0-${suffix}"]`,
+      );
+    const gsearchWrapper = () =>
+      cy.get(
+        '[data-drupal-selector="edit-field-event-address-gsearch-wrapper"]',
+      );
+    const locationTypeRadio = (value: string) =>
+      cy.get(`input[name="field_event_location_type"][value="${value}"]`);
+
+    // Use the freetext path of the gsearch widget so the test doesn't depend
+    // on the live GSearch autocomplete endpoint.
+    const fillFreetextAddress = (address: Address) => {
+      gsearchField('main-enable-freetext').check();
+      gsearchField('freetext-address').clear().type(address.street);
+      gsearchField('freetext-postal-code').clear().type(address.postalCode);
+      gsearchField('freetext-postal-name').clear().type(address.postalName);
+    };
+
+    const assertFreetextAddress = (address: Address) => {
+      gsearchField('freetext-address').should('have.value', address.street);
+      gsearchField('freetext-postal-code').should(
+        'have.value',
+        address.postalCode,
+      );
+      gsearchField('freetext-postal-name').should(
+        'have.value',
+        address.postalName,
+      );
+    };
+
+    // Create the parent series (branch set, no custom address) and open the
+    // first instance for editing. The series's branch is inherited by the
+    // instance, but the instance's own field_branch stays empty, so the form's
+    // #states show the custom-address widget — the condition both regressions
+    // live under.
+    //
+    // A Weekly Event spanning multiple days is used so the series produces
+    // more than one instance: Drupal redirects to the series page when an
+    // eventinstance has no siblings, which breaks the save/re-open flow.
+    const createSeriesAndOpenInstance = (title: string) => {
+      // The weekly recurring widget emits uncaught JS warnings — unrelated to
+      // what we're testing.
+      Cypress.on('uncaught:exception', () => false);
+
+      cy.drupalLogin('/events/add/default');
+      cy.findByLabelText('Title').type(title);
+      cy.findByLabelText('Subtitle').type('Hello, world!');
+      cy.findByLabelText('Recur Type').select(events.repeatingEvent.recurType, {
+        force: true,
+      });
+      typeInCkEditor('Hello, world!');
+      cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
+        force: true,
+      });
+
+      cy.get(
+        '[data-drupal-selector="edit-weekly-recurring-date-0-value-date"]',
+      ).type(events.repeatingEvent.start.format('YYYY-MM-DD'));
+      cy.get(
+        '[data-drupal-selector="edit-weekly-recurring-date-0-end-value-date"]',
+      ).type(events.repeatingEvent.end.format('YYYY-MM-DD'));
+      events.repeatingEvent.daysOfWeek.forEach((day) => {
+        cy.get(`[name="weekly_recurring_date[0][days][${day}]"]`).check();
+      });
+
+      cy.clickSaveButton();
+
+      cy.get('a[href^="/events/series"][href$="/edit"]').click({ force: true });
+      cy.contains('Edit Instances').click();
+      cy.get(`a[aria-label="Edit ${title}"]`).first().click();
+
+      // field_event_location_type on eventinstance has no default, so a fresh
+      // instance form lands on "- None -" which hides the address widget via
+      // #states. Flip to "In person" so the rest of the test can interact.
+      locationTypeRadio('physical').check();
+    };
+
+    it('keeps a custom address when the address widget is visible', () => {
+      const title = `${seriesTitle} - kept`;
+      createSeriesAndOpenInstance(title);
+
+      gsearchWrapper().should('be.visible');
+      fillFreetextAddress(customAddress);
+      cy.clickSaveButton();
+
+      // Re-open the same instance and confirm the address survived presave.
+      cy.go('back');
+      assertFreetextAddress(customAddress);
+    });
+
+    // Both "Online" and the empty "- None -" hide the address widget via
+    // Drupal #states and must trigger the presave to drop the stored value.
+    // They take different code paths internally (the empty branch used to
+    // early-return), so we cover both.
+    const hidingTransitions = [
+      { label: 'Online', slug: 'online', radioValue: 'online' },
+      { label: '"- None -"', slug: 'none', radioValue: '_none' },
+    ];
+
+    hidingTransitions.forEach(({ label, slug, radioValue }) => {
+      it(`clears the address when location-type is set to ${label}`, () => {
+        const title = `${seriesTitle} - cleared-${slug}`;
+        createSeriesAndOpenInstance(title);
+
+        // Save an address first so we have something to clear.
+        fillFreetextAddress(customAddress);
+        cy.clickSaveButton();
+        cy.go('back');
+        assertFreetextAddress(customAddress);
+
+        locationTypeRadio(radioValue).check();
+        gsearchWrapper().should('not.be.visible');
+        cy.clickSaveButton();
+
+        cy.go('back');
+        assertFreetextAddress(emptyAddress);
+      });
+    });
+
+    after(() => {
+      [
+        `${seriesTitle} - kept`,
+        `${seriesTitle} - cleared-online`,
+        `${seriesTitle} - cleared-none`,
+      ].forEach((title) => {
+        cy.drupalLogin('/admin/content/eventseries');
+        cy.get('tr')
+          .contains(title)
+          // Empty if: we don't want a failing test if the item does not exist.
+          .if()
+          .each(() => {
+            cy.get(`a[aria-label="Delete ${title}"]`)
+              .first()
+              .click({ force: true });
+
+            cy.findByRole('dialog')
+              .findByRole('button', { name: 'Delete' })
+              .click();
+          });
+      });
+    });
+  });
+
   before(() => {
     cy.drupalLogin('/admin/content/eventseries');
     // Delete all preexisting instances of each event.
-    cy.get('a')
+    cy.get('tr')
       .contains(events.singleEvent.title)
+      // Empty if: we don't want failing test if the item does not exist.
       .if()
       .each(() => {
-        // We have to repeat the selector as Cypress will otherwise complain about
-        // missing references to elements when clicking the page.
-        cy.findAllByRole('link', { name: events.singleEvent.title })
+        cy.get(`a[aria-label="Delete ${events.singleEvent.title}"]`)
           .first()
-          .click();
-        cy.get('a[href^="/events/"][href$="/edit"]')
-          .contains(events.singleEvent.title)
-          .click();
-        cy.findByRole('button', { name: 'More actions' })
-          .click()
-          .parent()
-          .findByRole('link', { name: 'Delete' })
-          .click();
+          .click({ force: true });
+
         cy.findByRole('dialog')
           .findByRole('button', { name: 'Delete' })
           .click();
-
-        // Return to the event list to prepare for the next iteration.
-        cy.visit('/admin/content/eventseries');
       });
   });
 });
