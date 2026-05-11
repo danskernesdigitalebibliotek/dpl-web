@@ -104,81 +104,6 @@ class UrlProxyResourceTest extends UnitTestCase {
   }
 
   /**
-   * When proxy is disabled the requested url should be returned unmodified.
-   */
-  public function testThatDisabledProxyReturnsUrlUnmodified(): void {
-    $config = $this->prophesize(ImmutableConfig::class);
-    $config->getCacheTags()->willReturn([]);
-    $config->get(Argument::any(), Argument::any())->willReturn([
-      'prefix' => '',
-      'hostnames' => [],
-      'disable_proxy' => TRUE,
-    ]);
-
-    $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(DplUrlProxyInterface::CONFIG_NAME)->willReturn($config->reveal());
-
-    $config_manager = $this->prophesize(ConfigManagerInterface::class);
-    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
-
-    $container = \Drupal::getContainer();
-    $container->set('config.manager', $config_manager->reveal());
-
-    $resource = UrlProxyResource::create($container, [], '', []);
-    $request = Request::create(
-      '/dpl-url-proxy',
-      'GET',
-      ['url' => 'http://example.com/resource']
-    );
-    $response = $resource->get($request);
-
-    $this->assertEquals(
-      ['data' => ['url' => 'http://example.com/resource']],
-      $response->getResponseData()
-    );
-  }
-
-  /**
-   * Disabled proxy should win even if a prefix and hostname mapping are set.
-   */
-  public function testThatDisabledProxyOverridesConfiguredPrefix(): void {
-    $config = $this->prophesize(ImmutableConfig::class);
-    $config->getCacheTags()->willReturn([]);
-    $config->get(Argument::any(), Argument::any())->willReturn([
-      'prefix' => 'http://bib101.bibbaser.dk/login?url=',
-      'hostnames' => [
-        [
-          'hostname' => 'john.com',
-          'expression' => [
-            'regex' => '/(.*)ohn(.*)/',
-            'replacement' => '$1ane$2',
-          ],
-          'disable_prefix' => 0,
-        ],
-      ],
-      'disable_proxy' => TRUE,
-    ]);
-
-    $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(DplUrlProxyInterface::CONFIG_NAME)->willReturn($config->reveal());
-
-    $config_manager = $this->prophesize(ConfigManagerInterface::class);
-    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
-
-    $container = \Drupal::getContainer();
-    $container->set('config.manager', $config_manager->reveal());
-
-    $resource = UrlProxyResource::create($container, [], '', []);
-    $request = Request::create('/dpl-url-proxy', 'GET', ['url' => 'http://john.com']);
-    $response = $resource->get($request);
-
-    $this->assertEquals(
-      ['data' => ['url' => 'http://john.com']],
-      $response->getResponseData()
-    );
-  }
-
-  /**
    * Test that the url is generated correctly.
    *
    * @param mixed[] $input
@@ -245,6 +170,14 @@ class UrlProxyResourceTest extends UnitTestCase {
       ],
     ];
 
+    $conf_disabled = [
+      'prefix' => '',
+      'hostnames' => [],
+      'disable_proxy' => TRUE,
+    ];
+
+    $conf_disabled_with_mapping = ['disable_proxy' => TRUE] + $conf;
+
     return [
       [
         ['url' => 'http://john.com'],
@@ -255,6 +188,16 @@ class UrlProxyResourceTest extends UnitTestCase {
         ['url' => 'http://sally.com?foo=palle'],
         ['data' => ['url' => 'http://sally.com?foo=polle']],
         $conf,
+      ],
+      [
+        ['url' => 'http://example.com/resource'],
+        ['data' => ['url' => 'http://example.com/resource']],
+        $conf_disabled,
+      ],
+      [
+        ['url' => 'http://john.com'],
+        ['data' => ['url' => 'http://john.com']],
+        $conf_disabled_with_mapping,
       ],
     ];
   }
