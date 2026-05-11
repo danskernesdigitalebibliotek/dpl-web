@@ -2410,10 +2410,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@httptoolkit/httpolyglot@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@httptoolkit/httpolyglot/-/httpolyglot-3.0.1.tgz#b76598a852232c59fcab98d717c22bef512e169f"
-  integrity sha512-fU9psZBRc49PfdrxFZ8W19SwVQ4+rrc0EYVxmy7H41y6/elaIu5p68wly4uLVt1DPD0K92MdN65GqP3N1ofZKg==
+"@httptoolkit/httpolyglot@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@httptoolkit/httpolyglot/-/httpolyglot-3.1.0.tgz#9dd7e4c9e27b88692dd95785f377a5d295a4d095"
+  integrity sha512-Y+1gebmcMZMjDepn2e+9TBM4D+t3jYYbOwbXL9/PKmJEcaN/sbpv/00skN9KLXs43+BQvHTZc+5J0AnC5+9qDg==
   dependencies:
     "@types/node" "*"
 
@@ -12166,14 +12166,14 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mockttp@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.4.0.tgz#a28e171664f71ab2b236c386a0db9d159872ece4"
-  integrity sha512-aDZHIFr++a4QJQdZFKEwSJacAJBGVd4OigNM7emhtD5QAo3NvxS1UoSKi9XkSXCWlNwsppVh/ylT4NnSdPCIUg==
+mockttp@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.4.1.tgz#945087115cf3beaba3cb883d52701da5b77dff13"
+  integrity sha512-1Ox0oZERisl1dtpAv26FsR3XMVpB4AsKJAAT1g7OerCMhIDqz8b8r/nTK562zVuOyLYttuCsLVEt4eaHYaCWUg==
   dependencies:
     "@graphql-tools/schema" "^10.0.31"
     "@graphql-tools/utils" "^11.0.0"
-    "@httptoolkit/httpolyglot" "^3.0.1"
+    "@httptoolkit/httpolyglot" "^3.1.0"
     "@httptoolkit/subscriptions-transport-ws" "^0.11.2"
     "@httptoolkit/util" "^0.1.7"
     "@httptoolkit/websocket-stream" "^6.0.1"
