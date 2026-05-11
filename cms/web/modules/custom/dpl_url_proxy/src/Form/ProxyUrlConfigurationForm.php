@@ -320,22 +320,21 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $values = [];
-    $values['disable_proxy'] = (bool) $form_state->getValue('disable_proxy');
-
-    if (!$values['disable_proxy']) {
-      if ($form_state->getValue('prefix')) {
-        $values['prefix'] = $form_state->getValue('prefix');
-      }
-      $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']),
+    $values = [
+      'disable_proxy' => (bool) $form_state->getValue('disable_proxy'),
+      'prefix' => $form_state->getValue('prefix') ?? '',
+      'hostnames' => array_reduce(
+        (array) $form_state->getValue('hostnames'),
         function ($carry, $item) {
-          if (!empty($item['hostname'])) {
+          if (is_array($item) && !empty($item['hostname'])) {
             unset($item['remove_this']);
             $carry[] = $item;
           }
           return $carry;
-        }, []);
-    }
+        },
+        []
+      ),
+    ];
 
     $this->config('dpl_url_proxy.settings')
       ->set('values', $values)
