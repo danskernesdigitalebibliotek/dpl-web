@@ -47,7 +47,7 @@ const SearchPageLayout = () => {
             {`Viser resultater for ${searchQueryText} ${hitCountText}`}
           </h1>
           <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-            {!isLoadingResults && data.search && searchQuery
+            {!isLoadingResults && data.search
               ? data.search.hitcount
                 ? `Viser ${data.search.hitcount} resultater for søgningen "${searchQuery}"`
                 : "Intet søgeresultat"
@@ -76,9 +76,7 @@ const SearchPageLayout = () => {
           <hr />
           <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
             {isNoSearchResult && (
-              <p className="text-typo-subtitle-lg opacity-35">
-                Intet søgeresultat
-              </p>
+              <p className="text-typo-subtitle-lg opacity-35">Intet søgeresultat</p>
             )}
             {data.search &&
               data.search.pages.map(
