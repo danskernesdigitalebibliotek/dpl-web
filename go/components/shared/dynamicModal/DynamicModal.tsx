@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 
 import {
   TModalType,
@@ -24,15 +24,21 @@ export function DynamicModal() {
   const [open, setOpen] = useState(!!modalType)
   const [activeModal, setActiveModal] = useState<TModalType | null>(modalType)
   const [activeParams, setActiveParams] = useState<TModalUrlParams[TModalType] | null>(modalProps)
+  const triggerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     if (modalType && wid && pid) {
+      triggerRef.current = document.activeElement as HTMLElement
       setActiveModal(modalType)
       setActiveParams({ wid, pid })
       setOpen(true)
     } else {
       setOpen(false)
-      const timer = setTimeout(() => setActiveModal(null), 500)
+      const timer = setTimeout(() => {
+        setActiveModal(null)
+        triggerRef.current?.focus()
+        triggerRef.current = null
+      }, 500)
       return () => clearTimeout(timer)
     }
   }, [modalType, wid, pid])
