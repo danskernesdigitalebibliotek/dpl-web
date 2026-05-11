@@ -290,6 +290,35 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
+    parent::validateForm($form, $form_state);
+
+    if ($form_state->getValue('disable_proxy')) {
+      return;
+    }
+
+    if (!$form_state->getValue('prefix')) {
+      $form_state->setError(
+        $form['prefix'],
+        $this->t('Proxy server URL prefix is required when the proxy is enabled.', [], ['context' => 'Url Proxy'])
+      );
+    }
+
+    $hostnames = array_filter(
+      (array) $form_state->getValue('hostnames'),
+      fn ($item) => is_array($item) && !empty($item['hostname'])
+    );
+    if (empty($hostnames)) {
+      $form_state->setError(
+        $form['hostnames'],
+        $this->t('At least one hostname is required when the proxy is enabled.', [], ['context' => 'Url Proxy'])
+      );
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $values = [];
     $values['disable_proxy'] = (bool) $form_state->getValue('disable_proxy');
