@@ -8,7 +8,7 @@ export default function NotFound() {
   return (
     <DefaultLayout>
       <ErrorPageLayout
-        title="Ups! Noget gik galt."
+        title="Ups! Noget gik meget galt!"
         description={descriptionComponent}
         buttonText="Gå til forsiden"
         buttonLink="/"
