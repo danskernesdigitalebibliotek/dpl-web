@@ -112,17 +112,6 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
       ),
     ];
 
-    $form['disable_proxy'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Disable proxy', [], ['context' => 'Url Proxy']),
-      '#description' => $this->t(
-        'When checked, the proxy endpoint returns the requested URL unmodified. Use this on sites that do not use a proxy.',
-        [],
-        ['context' => 'Url Proxy']
-      ),
-      '#default_value' => $saved_values['disable_proxy'] ?? FALSE,
-    ];
-
     $form['prefix'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Proxy server URL prefix', [], ['context' => 'Url Proxy']),
@@ -226,6 +215,17 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         'callback' => '::addmoreCallback',
         'wrapper' => 'hostnames-fieldset-wrapper',
       ],
+    ];
+
+    $form['disable_proxy'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable proxy', [], ['context' => 'Url Proxy']),
+      '#description' => $this->t(
+        'When checked, the proxy endpoint returns the requested URL unmodified. Use this on sites that do not use a proxy.',
+        [],
+        ['context' => 'Url Proxy']
+      ),
+      '#default_value' => $saved_values['disable_proxy'] ?? FALSE,
     ];
 
     $form['actions']['submit'] = [
