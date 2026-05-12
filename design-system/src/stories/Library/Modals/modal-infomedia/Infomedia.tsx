@@ -1,5 +1,5 @@
 import Modal from "../Modal";
-import { ReactComponent as InfomediaIcon } from "../../../../public/icons/logo/infomedia-logo.svg";
+import RetrieverLogo from "../../../../public/icons/logo/retriever_horisontal_blue_logo.png";
 
 export type InfomediaProps = {
   showModal: boolean;
@@ -25,7 +25,7 @@ export const Infomedia = ({
   return (
     <Modal shownModal={showModal} classNames="">
       <article className="infomedia-article">
-        <InfomediaIcon className="infomedia-logo" />
+        <img className="infomedia-logo" src={RetrieverLogo} alt="" />
         <h2 className="infomedia-headline">{title}</h2>
         <p className="infomedia-hedline">{hedLine}</p>
         <p className="infomedia-byline">{byLine}</p>

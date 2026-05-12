@@ -35,5 +35,5 @@ Text.args = {
   byLine: "Jakob Nielsen",
   dateLine: "15. november 2013",
   footerText:
-    "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse.",
+    "Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse.",
 };
