@@ -83,7 +83,7 @@ module.exports = (_env, argv) => {
           exclude: /node_modules/,
           use: ["babel-loader"]
         },
-        // We consume css and svg files from dpl-design-system package
+        // We consume css, svg and raster image files from dpl-design-system package
         {
           test: /\.css$/,
           use: ["style-loader", "css-loader"]
@@ -95,6 +95,10 @@ module.exports = (_env, argv) => {
               loader: "svg-url-loader"
             }
           ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|webp)$/,
+          type: "asset/resource"
         }
       ]
     },
