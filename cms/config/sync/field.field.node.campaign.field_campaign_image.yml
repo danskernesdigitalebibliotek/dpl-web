@@ -11,8 +11,8 @@ id: node.campaign.field_campaign_image
 field_name: field_campaign_image
 entity_type: node
 bundle: campaign
-label: Image
-description: ''
+label: 'Image (Deprecated - will be deleted)'
+description: 'This field has been replaced by the campaign media field, and will be deleted in the future.<br />Existing images has been migrated.'
 required: false
 translatable: false
 default_value: {  }

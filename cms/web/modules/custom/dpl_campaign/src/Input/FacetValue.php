@@ -5,7 +5,7 @@ namespace Drupal\dpl_campaign\Input;
 /**
  * A value represents the number of times a term occurs within a search result.
  */
-class Value {
+class FacetValue {
 
   /**
    * Construct a new value.

@@ -1,52 +1,47 @@
 .campaign {
-  background-color: $color__global-tertiary-2;
-  display: grid;
-  grid-template-rows: 150px auto;
+  @include show-svg-on-hover;
+  @include teaser-hover-shadow;
+
+  background-color: $color__global-secondary;
+  display: flex;
+  box-sizing: border-box;
+  text-decoration: none;
+  padding-right: $s-lg;
+
+  overflow: hidden;
 
   @include media-query__small {
-    height: 150px;
-    display: flex;
+    min-height: 150px;
+  }
+}
+
+.campaign__image {
+  position: relative;
+  width: 100%;
+  max-width: 256px;
+  min-height: 80px;
+
+  @include media-query__small {
+    min-height: 150px;
   }
 
-  &__image {
+  > img {
+    position: absolute;
+    display: block;
     height: 100%;
     width: 100%;
     object-fit: cover;
-
-    @include media-query__small {
-      max-width: 30%;
-    }
-
-    &.campaign__image--full-width {
-      @include media-query__small {
-        max-width: 100%;
-        min-width: 100%;
-      }
-    }
-  }
-
-  &__title {
-    @include typography($typo__h4);
-
-    margin: $s-lg;
-    align-self: center;
-    color: $color__text-primary-white;
-
-    &.campaign__title--none {
-      display: none;
-    }
   }
 }
 
-.campaign--reverse {
-  @include media-query__small {
-    flex-direction: row-reverse;
-  }
-}
+.campaign__title {
+  @include typography($typo__h4);
 
-.campaign__title--ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  width: 100%;
+  margin: $s-lg;
+  align-self: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

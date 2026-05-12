@@ -8,9 +8,16 @@ import MaterialListItem from "../../components/card-item-list/MaterialListItem";
 import CardListInfoBox, {
   CardListInfoBoxProps
 } from "../../components/card-item-list/CardListInfoBox";
+import Campaign from "../../components/campaign/Campaign";
+import { CampaignMatchPOST200Data } from "../../core/dpl-cms/model";
+
+export type ResultItem = Work | CampaignMatchPOST200Data;
+
+const isCampaign = (item: ResultItem): item is CampaignMatchPOST200Data =>
+  !("workId" in item);
 
 export interface SearchResultListProps {
-  resultItems?: Work[];
+  resultItems?: ResultItem[];
   isLoading?: boolean;
   page: number;
   pageSize: number;
@@ -43,8 +50,17 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
     >
       {resultItems?.map((item, i) => {
         const isFirstNewItem = i === page * pageSize;
-
-        if (
+        if (isCampaign(item)) {
+          return (
+            <MaterialListItem
+              className="content-list__item"
+              key="campaign"
+              ref={isFirstNewItem ? lastItemRef : null}
+            >
+              <Campaign campaignData={item} />
+            </MaterialListItem>
+          );
+        } else if (
           i === searchInfoBoxIndex &&
           infoBoxProps?.title &&
           infoBoxProps?.html

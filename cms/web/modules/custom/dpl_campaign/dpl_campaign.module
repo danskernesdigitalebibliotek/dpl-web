@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_campaign\Hook\DplCampaignHooks;
+use Drupal\drupal_typed\DrupalTyped;
+
+/*
+ * The following LegacyHooks can be removed when upgrading to Drupal 11.2,
+ * together with the hook class service definitions.
+ */
+
+/**
+ * Alter options for campaign weights.
+ */
+#[LegacyHook]
+function dpl_campaign_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  DrupalTyped::service(DplCampaignHooks::class)->weightSelectAlter($element, $form_state, $context);
+}

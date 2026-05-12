@@ -1,4 +1,4 @@
-uuid: d2050f18-57d7-4791-ba90-a4e15399f0fb
+uuid: 80b44a59-4703-4cab-8442-415dc4fdac8f
 langcode: en
 status: true
 dependencies:
@@ -7,9 +7,9 @@ dependencies:
 third_party_settings:
   paragraphs_ee:
     paragraphs_categories: {  }
-id: campaign_rule
-label: 'Trigger Facet'
+id: campaign_trigger_query
+label: 'Trigger Phrase'
 icon_uuid: null
 icon_default: null
-description: 'Campaign trigger, based on the relevant facets of the users search.'
+description: 'Campaign trigger, based on direct inputs from the user, such as free-text search.'
 behavior_plugins: {  }
