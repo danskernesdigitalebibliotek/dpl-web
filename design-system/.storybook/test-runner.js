@@ -1,4 +1,7 @@
+const fs = require("fs");
 const { toMatchImageSnapshot } = require("jest-image-snapshot");
+
+const snapshotsDir = `${process.cwd()}/__visual_snapshots__`;
 
 const viewports = [
   { name: "mobile", width: 400, height: 900 },
@@ -19,13 +22,21 @@ module.exports = {
       await page.waitForTimeout(200);
 
       const image = await page.screenshot({ fullPage: true });
-      expect(image).toMatchImageSnapshot({
-        customSnapshotsDir: `${process.cwd()}/__visual_snapshots__`,
-        customSnapshotIdentifier: `${context.id}--${name}`,
-        failureThreshold: 0.4,
-        failureThresholdType: "percent",
-        allowSizeMismatch: true,
-      });
+      const snapshotId = `${context.id}--${name}`;
+
+      try {
+        expect(image).toMatchImageSnapshot({
+          customSnapshotsDir: snapshotsDir,
+          customSnapshotIdentifier: snapshotId,
+          failureThreshold: 0.4,
+          failureThresholdType: "percent",
+          allowSizeMismatch: true,
+        });
+      } catch (error) {
+        // Write the updated snapshot so it is ready to commit.
+        fs.writeFileSync(`${snapshotsDir}/${snapshotId}.png`, image);
+        throw error;
+      }
     }
   },
 };

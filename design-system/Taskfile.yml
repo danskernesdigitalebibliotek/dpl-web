@@ -86,11 +86,6 @@ tasks:
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm playwright npx test-storybook --url http://node:6006
 
-  dev:visual-regression:update:
-    summary: Update visual regression baselines using Playwright in Docker
-    cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm playwright npx test-storybook --url http://node:6006 --updateSnapshot
-
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
     cmds:

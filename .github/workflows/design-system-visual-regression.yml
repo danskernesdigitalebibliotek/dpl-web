@@ -46,10 +46,6 @@ jobs:
         continue-on-error: true
         run: task dev:visual-regression
 
-      - name: Update baselines
-        if: steps.test.outcome == 'failure'
-        run: task dev:visual-regression:update
-
       - name: Create pull request with updated snapshots
         if: >-
           steps.test.outcome == 'failure'
