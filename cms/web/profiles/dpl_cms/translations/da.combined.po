@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-12 10:13+0200\n"
-"PO-Revision-Date: 2026-05-12 10:13+0200\n"
+"POT-Creation-Date: 2026-05-12 11:38+0200\n"
+"PO-Revision-Date: 2026-05-12 11:38+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5804,6 +5804,38 @@ msgstr ""
 "Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et wildcard. "
 "Et eksempel på en sti er %user-wildcard for hver brugerside. %front er "
 "forsiden."
+
+msgctxt "dpl_campaign"
+msgid "Highest"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "High"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "Medium"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "Low"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "Highest (National)"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "High (National)"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "Medium (National)"
+msgstr ""
+
+msgctxt "dpl_campaign"
+msgid "Low (National)"
+msgstr ""
 
 msgid "CQL Search"
 msgstr "CQL søgning"
@@ -20886,12 +20918,12 @@ msgid "Paragraphs"
 msgstr ""
 
 msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title"
-msgid "Paragraph"
-msgstr "Paragraph"
+msgid "Trigger"
+msgstr "Trigger"
 
 msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title_plural"
-msgid "Paragraphs"
-msgstr "Paragraphs"
+msgid "Triggers"
+msgstr "Triggers"
 
 msgctxt "core.entity_form_display.node.go_article.default:third_party_settings:field_group:group_author_date:label"
 msgid "Author & Date"
@@ -21222,6 +21254,10 @@ msgstr ""
 
 msgctxt "core.entity_view_mode.media.banner:label"
 msgid "Banner"
+msgstr ""
+
+msgctxt "core.entity_view_mode.media.campaign:label"
+msgid "Campaign"
 msgstr ""
 
 msgctxt "core.entity_view_mode.media.card:label"
@@ -21959,11 +21995,21 @@ msgid "Off"
 msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_image:label"
-msgid "Image"
+msgid "Image (Deprecated - will be deleted)"
+msgstr ""
+
+msgctxt "field.field.node.campaign.field_campaign_image:description"
+msgid ""
+"This field has been replaced by the campaign media field, and will be "
+"deleted in the future.<br />Existing images has been migrated."
 msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_link:label"
 msgid "Link"
+msgstr ""
+
+msgctxt "field.field.node.campaign.field_campaign_media:label"
+msgid "Media"
 msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_rules:label"
@@ -21975,13 +22021,21 @@ msgid "Trigger Logic"
 msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_rules_logic:description"
-msgid ""
-"Choose if all triggers should match (AND) for a campaign to be displayed or "
-"just one of them (OR)."
+msgid "How many triggers must match, for a campaign to show up"
 msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
+msgstr ""
+
+msgctxt "field.field.node.campaign.field_campaign_weight:label"
+msgid "Weight"
+msgstr ""
+
+msgctxt "field.field.node.campaign.field_campaign_weight:description"
+msgid ""
+"If multiple campaigns matches a query, the one with the highest weight will "
+"be used. <br />Only one campaign will be shown."
 msgstr ""
 
 msgctxt "field.field.node.go_article.field_go_article_image:label"
@@ -22251,6 +22305,17 @@ msgstr ""
 
 msgctxt "field.field.paragraph.campaign_rule.field_campaign_rule_term:label"
 msgid "Term"
+msgstr ""
+
+msgctxt "field.field.paragraph.campaign_trigger_query.field_campaign_trigger_phrase:label"
+msgid "Trigger phrase"
+msgstr ""
+
+msgctxt "field.field.paragraph.campaign_trigger_query.field_campaign_trigger_phrase:description"
+msgid ""
+"Triggering based on the users free-text search.<br />The search will be "
+"fuzzy, so trigger <em>\"Fiction\"</em> will match user-input of "
+"<em>\"science-fiction books\"</em>"
 msgstr ""
 
 msgctxt "field.field.paragraph.card_grid_automatic.field_filter_branches:label"
@@ -23104,11 +23169,11 @@ msgid "Online"
 msgstr ""
 
 msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
-msgid "AND"
+msgid "Match all (AND)"
 msgstr ""
 
 msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:1:label"
-msgid "OR"
+msgid "Match any (OR)"
 msgstr ""
 
 msgctxt "field.storage.node.field_go_color:settings:allowed_values:0:label"
@@ -23492,7 +23557,7 @@ msgid "Banner"
 msgstr ""
 
 msgctxt "image.style.campaign_image:label"
-msgid "Campaign image (? x 150px)"
+msgid "Campaign image (400px x ?px)"
 msgstr ""
 
 msgctxt "image.style.card_large:label"
@@ -23889,11 +23954,21 @@ msgid ""
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
-msgid "Campaign Rule"
+msgid "Trigger Facet"
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:description"
-msgid "A rule for selecting a matching campaign"
+msgid "Campaign trigger, based on the relevant facets of the users search."
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.campaign_trigger_query:label"
+msgid "Trigger Phrase"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.campaign_trigger_query:description"
+msgid ""
+"Campaign trigger, based on direct inputs from the user, such as free-text "
+"search."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.card_grid_automatic:label"
