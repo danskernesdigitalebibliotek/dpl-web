@@ -3,7 +3,6 @@
 namespace Drupal\dpl_campaign\Plugin\rest\resource;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\dpl_campaign\Input\Facet;
 use Drupal\dpl_campaign\Input\Query;
 use Drupal\dpl_campaign\Input\FacetRule;
@@ -423,6 +422,11 @@ class MatchResource extends ResourceBase {
 
       $query->leftJoin('node__field_campaign_weight', 'w', 'w.entity_id = n.nid');
       $query->orderBy('w.field_campaign_weight_value', 'DESC');
+
+      // If several matching campaigns has the same weight, we'll choose
+      // a random one. Higher weights will still match before lower weights.
+      $query->addExpression('RAND()', 'random_order');
+      $query->orderBy('random_order');
       $query->range(0, 1);
 
       $nid = $query->execute()?->fetchField();
@@ -476,14 +480,7 @@ class MatchResource extends ResourceBase {
       'data' => $this->formatCampaignOutput($campaign),
     ]);
 
-    $cacheable_response = $response->addCacheableDependency(CacheableMetadata::createFromRenderArray([
-      '#cache' => [
-        'tags' => [$this->handyCacheTagManager->getBundleTag('node', 'campaign')],
-        'contexts' => ['url.query_args'],
-      ],
-    ]));
-
-    return $cacheable_response;
+    return $response;
   }
 
 }
