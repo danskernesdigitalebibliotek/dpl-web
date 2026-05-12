@@ -42,9 +42,18 @@ const SearchPageLayout = () => {
   return (
     <div className="content-container space-y-grid-gap-2">
       {searchQuery && machineIsReady && (
-        <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
-          {`Viser resultater for ${searchQueryText} ${hitCountText}`}
-        </h1>
+        <>
+          <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
+            {`Viser resultater for ${searchQueryText} ${hitCountText}`}
+          </h1>
+          <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+            {!isLoadingResults && data.search
+              ? data.search.hitcount
+                ? `Viser ${data.search.hitcount} resultater for søgningen "${searchQuery}"`
+                : "Intet søgeresultat"
+              : ""}
+          </div>
+        </>
       )}
       {searchQuery && machineIsReady ? (
         <>
