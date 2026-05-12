@@ -486,7 +486,6 @@ describe("Reservation list", () => {
     cy.visit(
       "/iframe.html?path=/story/apps-reservation-list--reservation-list-entry"
     );
-    cy.wait("@user");
 
     cy.getBySel("reservation-material")
       .eq(0)
@@ -826,10 +825,19 @@ describe("Reservation list", () => {
       .find("h1")
       .should("have.text", "Your reservations");
 
-    // ID 11 2.b. Text: "At the moment you have 0 reservations"
-    cy.get(".dpl-list-empty")
-      .should("exist")
-      .should("have.text", "At the moment you have 0 reservations");
+    // ID 11 2.b. Each tab shows its own empty message when no reservations exist
+    cy.getBySel("reservation-list-ready-for-pickup-empty-list").should(
+      "have.text",
+      "At the moment you have 0 reservations ready for pickup"
+    );
+    cy.getBySel("reservation-list-physical-reservations-empty-list").should(
+      "have.text",
+      "At the moment you have 0 physical reservations"
+    );
+    cy.getBySel("reservation-list-digital-reservations-empty-list").should(
+      "have.text",
+      "At the moment you have 0 reservations on digital items"
+    );
   });
 
   it("Reservations list shows parallel reservation", () => {
