@@ -1,5 +1,5 @@
 import React from "react";
-import InfomediaLogo from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/logo/infomedia-logo.svg";
+import RetrieverLogo from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/logo/retriever_horisontal_blue_logo.png";
 import { useText } from "../../../core/utils/text";
 
 export interface InfomediaModalBodyProps {
@@ -22,7 +22,7 @@ const InfomediaModalBody: React.FunctionComponent<InfomediaModalBodyProps> = ({
   const t = useText();
   return (
     <article className="infomedia-article">
-      <img className="infomedia-logo" src={InfomediaLogo} alt="" />
+      <img className="infomedia-logo" src={RetrieverLogo} alt="" />
       <h2 className="infomedia-headline">{headLine}</h2>
       <p className="infomedia-hedline">{hedLine}</p>
       <p className="infomedia-byline">{`${t("materialHeaderAuthorByText")} ${byLine}`}</p>
