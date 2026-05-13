@@ -1376,10 +1376,10 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@danskernesdigitalebibliotek/dpl-design-system@0.0.0-branch-ddf-37-migration":
-  version "0.0.0-branch-ddf-37-migration"
-  resolved "https://npm.pkg.github.com/download/@danskernesdigitalebibliotek/dpl-design-system/0.0.0-branch-ddf-37-migration/641bdbfdb8276effbd5343b3d6b087d95714ce62#641bdbfdb8276effbd5343b3d6b087d95714ce62"
-  integrity sha512-1nmyF7QYOGCvGFMDH8r0yMCxdGg1Z65t3oxEmkEO2+ZN/kkcLka6WBN+2Y1vdaNixSQlFDEGwEvMHxWQOvnUQw==
+"@danskernesdigitalebibliotek/dpl-design-system@0.0.0-branch-develop":
+  version "0.0.0-branch-develop"
+  resolved "https://npm.pkg.github.com/download/@danskernesdigitalebibliotek/dpl-design-system/0.0.0-branch-develop/54d68721b42dbaf50d2167257999e3f1117fef0e#54d68721b42dbaf50d2167257999e3f1117fef0e"
+  integrity sha512-+KYfNIW9zsJklgxIm2LeNB3lyqDbNJ/FQyEzUC5uFEmt4lNt7EPae2BNTfpO6UKPDvz4WogkgKXUPLXOXtjelg==
 
 "@discoveryjs/json-ext@^1.0.0":
   version "1.0.0"
