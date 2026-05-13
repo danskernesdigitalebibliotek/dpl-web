@@ -20,6 +20,7 @@ import { ApiResult, CreateLoanResult } from "../../../../core/publizon/model";
 import { getFirstManifestation } from "../../../../apps/material/helper";
 import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { useTrackPublizonReadListen } from "../../../../core/statistics/trackingHooks";
 import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
@@ -51,6 +52,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   isEditionPicker = false
 }) => {
   const { track } = useEventStatistics();
+  const trackReadListen = useTrackPublizonReadListen();
   const t = useText();
   const { open } = useModalButtonHandler();
   const modalsToClose = useModalIdsToCloseForReservation();
@@ -123,18 +125,17 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned && orderId) {
       return (
         <LinkButton
-          url={new URL(`/reader?orderid=${orderId}`, window.location.href)}
+          url={
+            new URL(
+              `/reader?orderid=${encodeURIComponent(orderId)}`,
+              window.location.href
+            )
+          }
           buttonType="none"
           variant="filled"
           size={size || "large"}
           dataCy={`${dataCy}-reader`}
-          trackClick={() =>
-            track("click", {
-              id: statistics.publizonReadListen.id,
-              name: statistics.publizonReadListen.name,
-              trackedData: workId
-            })
-          }
+          trackClick={() => trackReadListen(workId)}
         >
           {t("onlineMaterialReaderText", {
             placeholders: { "@materialType": manifestationType }
@@ -224,11 +225,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
             variant="filled"
             size={size || "large"}
             onClick={() => {
-              track("click", {
-                id: statistics.publizonReadListen.id,
-                name: statistics.publizonReadListen.name,
-                trackedData: workId
-              });
+              trackReadListen(workId);
               open(playerModalId(orderId), modalCloseOptions);
             }}
             disabled={false}
