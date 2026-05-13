@@ -205,8 +205,6 @@ environments:
           - "varnish.go-demo.dpl-web.dplplat02.dpl.reload.dk"
       - node:
           - "node.go-demo.dpl-web.dplplat02.dpl.reload.dk":
-              annotations:
-                nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
       - nginx:
           - "nginx.go-demo.dpl-web.dplplat02.dpl.reload.dk"
     cronjobs:
@@ -236,8 +234,6 @@ environments:
           - "varnish.go-playground.dpl-web.dplplat02.dpl.reload.dk"
       - node:
           - "node.go-playground.dpl-web.dplplat02.dpl.reload.dk":
-              annotations:
-                nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
       - nginx:
           - "nginx.go-playground.dpl-web.dplplat02.dpl.reload.dk"
     cronjobs:
