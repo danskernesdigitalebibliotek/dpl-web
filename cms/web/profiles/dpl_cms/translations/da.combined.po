@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-12 11:38+0200\n"
-"PO-Revision-Date: 2026-05-12 11:38+0200\n"
+"POT-Creation-Date: 2026-05-13 09:47+0200\n"
+"PO-Revision-Date: 2026-05-13 09:47+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4972,8 +4972,26 @@ msgid "Add one more"
 msgstr "Tilføj en mere"
 
 msgctxt "Url Proxy"
+msgid "Disable proxy"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid ""
+"When checked, the proxy endpoint returns the requested URL unmodified. Use "
+"this on sites that do not use a proxy."
+msgstr ""
+
+msgctxt "Url Proxy"
 msgid "Submit"
 msgstr "Gem"
+
+msgctxt "Url Proxy"
+msgid "Proxy server URL prefix is required when the proxy is enabled."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "At least one hostname is required when the proxy is enabled."
+msgstr ""
 
 msgctxt "Recommender"
 msgid "For your inspiration"
