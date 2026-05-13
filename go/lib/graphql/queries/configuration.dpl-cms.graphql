@@ -21,6 +21,10 @@ query getDplCmsPublicConfiguration {
       logoutUrls {
         adgangsplatformen
       }
+      mapp {
+        domain
+        id
+      }
       unilogin {
         municipalityId
       }

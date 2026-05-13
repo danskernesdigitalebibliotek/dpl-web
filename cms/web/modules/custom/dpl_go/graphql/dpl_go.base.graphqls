@@ -30,6 +30,11 @@ type SearchProfiles {
   global: String
 }
 
+type MappTracking {
+  domain: String
+  id: String
+}
+
 type UniloginConfigurationPrivate {
   clientSecret: String
   pubHubRetailerKeyCode: String
@@ -47,6 +52,7 @@ type GoConfigurationPublic {
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
+  mapp: MappTracking
   searchProfiles: SearchProfiles
   unilogin: UniloginConfigurationPublic
 }
