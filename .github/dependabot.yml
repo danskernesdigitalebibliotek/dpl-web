@@ -49,6 +49,9 @@ updates:
       # Our patches are not compatible with the latest version.
       - dependency-name: "drupal/entity_reference_revisions"
         versions: [">=1.13.0"]
+      # Our patches are not compatible with the latest version. See DDFNEXT-1494
+      - dependency-name: "drupal/paragraphs_ee"
+        versions: [">=10.0.8"]
       # Automated updates to paragraphs also trigger updates to
       # entity_reference_revisions.
       - dependency-name: "drupal/paragraphs"
