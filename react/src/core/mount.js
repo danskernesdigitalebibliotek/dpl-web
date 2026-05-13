@@ -1,7 +1,12 @@
 import { createRoot } from "react-dom/client";
 import { createElement } from "react";
 import { withErrorBoundary } from "react-error-boundary";
-import { setToken } from "./token";
+import {
+  setToken,
+  LOGOUT_FLAG_KEY,
+  TOKEN_USER_KEY,
+  TOKEN_UNREGISTERED_USER_KEY
+} from "./token";
 import Store from "../components/store";
 import { persistor, store } from "./store";
 import ErrorBoundaryAlert from "../components/error-boundary-alert/ErrorBoundaryAlert";
@@ -91,9 +96,26 @@ function init() {
     }
   });
 
+  // When the browser restores a page from back/forward cache after logout,
+  // force a reload so the server can enforce access control.
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted && sessionStorage.getItem(LOGOUT_FLAG_KEY)) {
+      document.documentElement.style.visibility = "hidden";
+      sessionStorage.removeItem(LOGOUT_FLAG_KEY);
+      window.location.reload();
+    }
+  });
+
   const initial = {
     apps: {},
-    setToken,
+    setToken: (type, value) => {
+      setToken(type, value);
+      // Clear the logout flag when a user logs in so that
+      // the pageshow handler does not trigger a stale reload.
+      if (type === TOKEN_USER_KEY || type === TOKEN_UNREGISTERED_USER_KEY) {
+        sessionStorage.removeItem(LOGOUT_FLAG_KEY);
+      }
+    },
     mount,
     unmount,
     reset

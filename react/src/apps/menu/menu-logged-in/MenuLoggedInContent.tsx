@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import profileIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-profile.svg";
+import { useQueryClient } from "react-query";
+import { performLogout } from "../../../core/utils/helpers/logout";
 import Link from "../../../components/atoms/links/Link";
 import MenuNavigationItem, {
   MenuNavigationDataType
@@ -13,9 +15,7 @@ import DashboardNotificationList from "../../dashboard/dashboard-notification-li
 import useReservations from "../../../core/utils/useReservations";
 import useLoans from "../../../core/utils/useLoans";
 import { usePatronData } from "../../../core/utils/helpers/usePatronData";
-import { resetPersistedData } from "../../../core/store";
 import { Button } from "../../../components/Buttons/Button";
-import { redirectTo } from "../../../core/utils/helpers/url";
 import { AuthenticatedPatron } from "../../../core/utils/types/entities";
 
 interface MenuLoggedInContentProps {
@@ -28,6 +28,7 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
   const userProfileUrl = u("userProfileUrl");
   const logoutUrl = u("logoutUrl");
   const config = useConfig();
+  const queryClient = useQueryClient();
 
   const {
     all: { reservations }
@@ -70,10 +71,7 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
     loansSoonOverdue.length !== 0 ||
     reservations.length !== 0;
 
-  const handleOnClick = () => {
-    resetPersistedData();
-    redirectTo(logoutUrl);
-  };
+  const handleOnClick = () => performLogout(logoutUrl, queryClient);
 
   return (
     <div className="modal-login modal-login--authenticated">

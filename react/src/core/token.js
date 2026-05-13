@@ -3,6 +3,7 @@ const tokens = {};
 export const TOKEN_UNREGISTERED_USER_KEY = `unregistered-user`;
 export const TOKEN_USER_KEY = `user`;
 export const TOKEN_LIBRARY_KEY = `library`;
+export const LOGOUT_FLAG_KEY = "dpl-logout";
 
 /**
  * @typedef {"user" | "unregistered-user" | "library"} TokenType
