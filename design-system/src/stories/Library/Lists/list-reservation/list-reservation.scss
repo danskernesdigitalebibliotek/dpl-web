@@ -38,6 +38,21 @@ $list-reservation-space-desktop: 24px;
   }
 }
 
+.list-reservation--no-hover {
+  cursor: default;
+
+  &:hover {
+    filter: none;
+  }
+}
+
+.list-reservation__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+}
+
 .list-reservation__material {
   min-height: 120px;
   display: flex;

@@ -12,6 +12,8 @@ import { GroupModalLoansProps } from "../../../core/storybook/loanGroupModalArgs
 import { RenewalArgs } from "../../../core/storybook/renewalArgs";
 import { MaterialDetailsModalProps } from "../../../core/storybook/materialDetailsModalArgs";
 import { GlobalEntryTextProps } from "../../../core/storybook/globalTextArgs";
+import { PlayerModalProps } from "../../../core/storybook/playerModalArgs";
+import { OnlineMaterialProps } from "../../../core/storybook/onlineMaterialArgs";
 
 export interface LoanListEntryConfigProps {
   expirationWarningDaysBeforeConfig: string;
@@ -31,6 +33,7 @@ interface LoanListEntryTextProps {
   loanListDigitalPhysicalLoansEmptyListText: string;
   loanListDueDateModalAriaDescribeMobileText: string;
   loanListDueDateModalAriaLabelText: string;
+  loanListLoanDetailsText: string;
   loanListLateFeeDesktopText: string;
   loanListLateFeeMobileText: string;
   loanListMaterialDaysText: string;
@@ -66,6 +69,8 @@ export interface LoanListEntryWithPageSizeProps
     RenewalArgs,
     LoanListEntryUrlProps,
     MaterialDetailsModalProps,
+    PlayerModalProps,
+    OnlineMaterialProps,
     GlobalUrlEntryPropsInterface {}
 
 const LoanListEntry: FC<LoanListEntryWithPageSizeProps> = ({
