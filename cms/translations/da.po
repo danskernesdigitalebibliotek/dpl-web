@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-11 12:04+0200\n"
-"PO-Revision-Date: 2026-05-11 12:04+0200\n"
+"POT-Creation-Date: 2026-05-13 10:28+0200\n"
+"PO-Revision-Date: 2026-05-13 10:28+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21168,7 +21168,7 @@ msgid ""
 msgstr ""
 
 msgid "Force replace"
-msgstr ""
+msgstr "Gennemtving erstat"
 
 msgid ""
 "Modify the user login form to show the the OpenID login buttons. If "
@@ -21180,10 +21180,10 @@ msgid ""
 msgstr ""
 
 msgid "Prompt"
-msgstr ""
+msgstr "Prompt"
 
 msgid "Consent"
-msgstr ""
+msgstr "Samtykke"
 
 msgid "Select account"
 msgstr "Vælg konto"
@@ -21274,8 +21274,58 @@ msgid "Does not use GO VIP profile"
 msgstr "Bruger ikke GO VIP profil"
 
 msgid "Enum class \"%enum_class\" does not exist."
-msgstr ""
+msgstr "Enum class \"%enum_class\" findes ikke."
 
 msgid "Enum class \"%enum_class\" is not a valid BackedEnum."
 msgstr "Enum class \"%enum_class\" er ikke en valid BackedEnum."
+
+msgctxt "dpl_campaign"
+msgid "Highest"
+msgstr "Højest"
+
+msgctxt "dpl_campaign"
+msgid "High"
+msgstr "Høj"
+
+msgctxt "dpl_campaign"
+msgid "Medium"
+msgstr "Medium"
+
+msgctxt "dpl_campaign"
+msgid "Low"
+msgstr "Lav"
+
+msgctxt "dpl_campaign"
+msgid "Highest (National)"
+msgstr "Højest (national)"
+
+msgctxt "dpl_campaign"
+msgid "High (National)"
+msgstr "Høj (national)"
+
+msgctxt "dpl_campaign"
+msgid "Medium (National)"
+msgstr "Medium (national)"
+
+msgctxt "dpl_campaign"
+msgid "Low (National)"
+msgstr "Lav (national)"
+
+msgctxt "Url Proxy"
+msgid "Disable proxy"
+msgstr "Slå proxy fra"
+
+msgctxt "Url Proxy"
+msgid ""
+"When checked, the proxy endpoint returns the requested URL unmodified. "
+"Use this on sites that do not use a proxy."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Proxy server URL prefix is required when the proxy is enabled."
+msgstr "Proxy server URL præfix er påkrævet når proxy er slået til."
+
+msgctxt "Url Proxy"
+msgid "At least one hostname is required when the proxy is enabled."
+msgstr "Mindst et værtsnavn er påkrævet når proxy er slået til."
 

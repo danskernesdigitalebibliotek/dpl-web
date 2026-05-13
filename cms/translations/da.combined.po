@@ -4492,16 +4492,6 @@ msgid "Paragraphs"
 msgstr "Paragraphs"
 
 #: 
-msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title"
-msgid "Paragraph"
-msgstr "Paragraph"
-
-#: 
-msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title_plural"
-msgid "Paragraphs"
-msgstr "Paragraphs"
-
-#: 
 msgctxt "core.entity_form_display.node.page.default:content:field_hero_title:settings:placeholder"
 msgid "If empty, the regular page title will be shown."
 msgstr "Hvis tom, vil sidetitlen blive vist."
@@ -5022,11 +5012,6 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: 
-msgctxt "field.field.node.campaign.field_campaign_image:label"
-msgid "Image"
-msgstr "Billede"
-
-#: 
 msgctxt "field.field.node.campaign.field_campaign_link:label"
 msgid "Link"
 msgstr "Link"
@@ -5040,11 +5025,6 @@ msgstr "Triggers"
 msgctxt "field.field.node.campaign.field_campaign_rules_logic:label"
 msgid "Trigger Logic"
 msgstr "Triggerlogik"
-
-#: 
-msgctxt "field.field.node.campaign.field_campaign_rules_logic:description"
-msgid "Choose if all triggers should match (AND) for a campaign to be displayed or just one of them (OR)."
-msgstr "Vælg om alle triggers skal matche (AND) for at en kampagne vises, eller kun én af dem (OR) "
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
@@ -5403,16 +5383,6 @@ msgid "Embed video"
 msgstr "Indlejr video"
 
 #: 
-msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
-msgid "AND"
-msgstr "AND"
-
-#: 
-msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:1:label"
-msgid "OR"
-msgstr "OR"
-
-#: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:0:label"
 msgid "Access"
 msgstr "Adgang"
@@ -5486,11 +5456,6 @@ msgstr "Begrænset"
 msgctxt "filter.format.plain_text:name"
 msgid "Plain text"
 msgstr "Ren tekst"
-
-#: 
-msgctxt "image.style.campaign_image:label"
-msgid "Campaign image (? x 150px)"
-msgstr "Kampagnebillede (? x 150px)"
 
 #: 
 msgctxt "image.style.entity_clone_template_preview:label"
@@ -5731,16 +5696,6 @@ msgstr "Side"
 msgctxt "paragraphs.paragraphs_type.accordion:label"
 msgid "Accordion"
 msgstr "Accordion"
-
-#: 
-msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
-msgid "Campaign Rule"
-msgstr "Søgeregel"
-
-#: 
-msgctxt "paragraphs.paragraphs_type.campaign_rule:description"
-msgid "A rule for selecting a matching campaign"
-msgstr "En regel til at vælge en matchende kampagne"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.card_grid_automatic:label"
@@ -30628,7 +30583,7 @@ msgstr ""
 
 #: 
 msgid "Force replace"
-msgstr ""
+msgstr "Gennemtving erstat"
 
 #: 
 msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form. The 'Force replace' option behaves like the 'Replace' option but cannot be overridden with the 'showcore' URL parameter."
@@ -30636,11 +30591,11 @@ msgstr ""
 
 #: 
 msgid "Prompt"
-msgstr ""
+msgstr "Prompt"
 
 #: 
 msgid "Consent"
-msgstr ""
+msgstr "Samtykke"
 
 #: 
 msgid "Select account"
@@ -30792,7 +30747,7 @@ msgstr "CQL søgning"
 #: 
 msgctxt "field.field.paragraph.go_video_bundle_vertical_auto.field_cql_search:description"
 msgid "This field is for inserting a CQL string based on a search. <br /><br />Please be aware, that it is necessary to copy the exact CQL string, including the quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be generated, by performing a query through the advanced search, and copying the CQL string from there. "
-msgstr ""
+msgstr "Indsæt CQL-søgestreng. <br /><br />Vær opmærksom på at kopiere den eksakte CQL-søgestreng med citationstegn fx 'harry potter'<br /><br />Der kan laves en CQL-søgestreng ved at lave foretage en søgning i avanceret søgning og kopiere CQL-søgestregen derfra."
 
 #: 
 msgctxt "field.field.paragraph.go_video_bundle_vertical_auto.field_embed_video:label"
@@ -30832,7 +30787,7 @@ msgstr "Værk ID'er"
 #: 
 msgctxt "field.field.paragraph.go_video_bundle_vertical_manual.field_video_bundle_work_ids:description"
 msgid "Here you can choose which materials to display. If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available.<br />Example work ID: work-of:870970-basis:136336282"
-msgstr ""
+msgstr "Her kan du vælge hvilke materialer der skal vises. Hvis du har brug for at linke til en specifik type, så vælg det i dropdown, så viser systemet det, hvis det er tilgængeligt.<br />Eksempel værk-ID: work-of:870970-basis:136336282"
 
 #: 
 msgctxt "media.type.videotool_vertical:label"
@@ -30851,7 +30806,7 @@ msgstr ""
 
 #: 
 msgid "Enum class \"%enum_class\" does not exist."
-msgstr ""
+msgstr "Enum class \"%enum_class\" findes ikke."
 
 #: 
 msgid "Enum class \"%enum_class\" is not a valid BackedEnum."
@@ -30865,40 +30820,190 @@ msgstr "I dette felt kan indsættes et link til en søgning, fx: https://dpl-web
 #: 
 msgctxt "pathauto.pattern.breadcrumb_pattern:pattern"
 msgid "/[dpl_breadcrumb:breadcrumb-url-alias]"
-msgstr ""
+msgstr "/[dpl_breadcrumb:breadcrumb-url-alias]"
 
 #: 
 msgctxt "pathauto.pattern.breadcrumb_pattern_event_instance:pattern"
 msgid "[dpl_breadcrumb:breadcrumb-url-alias]"
-msgstr ""
+msgstr "[dpl_breadcrumb:breadcrumb-url-alias]"
 
 #: 
 msgctxt "pathauto.pattern.breadcrumb_pattern_event_series:pattern"
 msgid "[dpl_breadcrumb:breadcrumb-url-alias]"
-msgstr ""
+msgstr "[dpl_breadcrumb:breadcrumb-url-alias]"
 
 #: 
 msgctxt "pathauto.pattern.category_term:pattern"
 msgid "/search/web/categories/[term:name]"
-msgstr ""
+msgstr "/search/web/categories/[term:name]"
 
 #: 
 msgctxt "pathauto.pattern.go_articles:pattern"
 msgid "/artikel/[node:title]"
-msgstr ""
+msgstr "/artikel/[node:title]"
 
 #: 
 msgctxt "pathauto.pattern.go_categories:pattern"
 msgid "/kategori/[node:title]"
-msgstr ""
+msgstr "/kategori/[node:title]"
 
 #: 
 msgctxt "pathauto.pattern.go_pages:pattern"
 msgid "/[node:title]"
-msgstr ""
+msgstr "/[node:title]"
 
 #: 
 msgctxt "pathauto.pattern.tag_term:pattern"
 msgid "/search/web/tag/[term:name]"
+msgstr "/search/web/tag/[term:name]"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "Highest"
+msgstr "Højest"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "High"
+msgstr "Høj"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "Medium"
+msgstr "Medium"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "Low"
+msgstr "Lav"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "Highest (National)"
+msgstr "Højest (national)"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "High (National)"
+msgstr "Høj (national)"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "Medium (National)"
+msgstr "Medium (national)"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "Low (National)"
+msgstr "Lav (national)"
+
+#: 
+msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title"
+msgid "Trigger"
+msgstr "Trigger"
+
+#: 
+msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title_plural"
+msgid "Triggers"
+msgstr "Triggers"
+
+#: 
+msgctxt "core.entity_view_mode.media.campaign:label"
+msgid "Campaign"
+msgstr "Kampagne"
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_image:label"
+msgid "Image (Deprecated - will be deleted)"
+msgstr "Billede (Deprecated - vil blive slettet)"
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_image:description"
+msgid "This field has been replaced by the campaign media field, and will be deleted in the future.<br />Existing images has been migrated."
 msgstr ""
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_media:label"
+msgid "Media"
+msgstr "Media"
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_rules_logic:description"
+msgid "How many triggers must match, for a campaign to show up"
+msgstr "Hvor mange triggers skal matche for at en kampagne bliver vist."
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_weight:label"
+msgid "Weight"
+msgstr "Vægt"
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_weight:description"
+msgid "If multiple campaigns matches a query, the one with the highest weight will be used. <br />Only one campaign will be shown."
+msgstr "Hvis flere kampagner aktiveres, så vil den med den højeste vægt blive brugt. <br /> Kun én kampagne vil blive vist."
+
+#: 
+msgctxt "field.field.paragraph.campaign_trigger_query.field_campaign_trigger_phrase:label"
+msgid "Trigger phrase"
+msgstr "Aktiveringsord"
+
+#: 
+msgctxt "field.field.paragraph.campaign_trigger_query.field_campaign_trigger_phrase:description"
+msgid "Triggering based on the users free-text search.<br />The search will be fuzzy, so trigger <em>\"Fiction\"</em> will match user-input of <em>\"science-fiction books\"</em>"
+msgstr "Aktivering er baseret på brugernes søgning.<br />Søgning er fuzzy, så den vil aktivere <em>\"fiction\"</em> ved søgning på <em>\"science-fiction bøger\"</em>"
+
+#: 
+msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
+msgid "Match all (AND)"
+msgstr "Match alle (AND)"
+
+#: 
+msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:1:label"
+msgid "Match any (OR)"
+msgstr "Match enhver (OR)"
+
+#: 
+msgctxt "image.style.campaign_image:label"
+msgid "Campaign image (400px x ?px)"
+msgstr "Kampagne billede (400px x ?px)"
+
+#: 
+msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
+msgid "Trigger Facet"
+msgstr "Trigger Facet"
+
+#: 
+msgctxt "paragraphs.paragraphs_type.campaign_rule:description"
+msgid "Campaign trigger, based on the relevant facets of the users search."
+msgstr "Kampagne aktiveres baseret på relevante facetter fra brugerens søgning."
+
+#: 
+msgctxt "paragraphs.paragraphs_type.campaign_trigger_query:label"
+msgid "Trigger Phrase"
+msgstr "Trigger Søgeord"
+
+#: 
+msgctxt "paragraphs.paragraphs_type.campaign_trigger_query:description"
+msgid "Campaign trigger, based on direct inputs from the user, such as free-text search."
+msgstr "Kampagne aktiveres baseret på søgeordene fra brugerens søgning"
+
+#: 
+msgctxt "Url Proxy"
+msgid "Disable proxy"
+msgstr "Slå proxy fra"
+
+#: 
+msgctxt "Url Proxy"
+msgid "When checked, the proxy endpoint returns the requested URL unmodified. Use this on sites that do not use a proxy."
+msgstr ""
+
+#: 
+msgctxt "Url Proxy"
+msgid "Proxy server URL prefix is required when the proxy is enabled."
+msgstr "Proxy server URL præfix er påkrævet når proxy er slået til."
+
+#: 
+msgctxt "Url Proxy"
+msgid "At least one hostname is required when the proxy is enabled."
+msgstr "Mindst et værtsnavn er påkrævet når proxy er slået til."
 
