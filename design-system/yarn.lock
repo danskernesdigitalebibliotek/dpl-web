@@ -12843,10 +12843,10 @@ stylelint-scss@^6.12.0:
     postcss-selector-parser "^7.1.1"
     postcss-value-parser "^4.2.0"
 
-stylelint-scss@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-7.1.0.tgz#21aa9422d4e140fc1a4bd1548c94aa9bed474a21"
-  integrity sha512-ByiA9umUGQ8rJXi0cWpnKoGwuco7rWJRLs8XvpKNPBiafQPH8inWVWZkg/AMgkwhqApaMu0tLY8qnmA9gAWn8A==
+stylelint-scss@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-7.1.1.tgz#2db334d8a9502dd08961d0e679383cf157b38977"
+  integrity sha512-pLPXJZ7RtAFNLXe8gqarf3B56ScVTd1vPiL9IFgcJkIZsYPzAgLJPh2h9NHrp3BFeKrtAkIgwQ08QSmhvlv1gA==
   dependencies:
     "@csstools/css-calc" "^3.2.0"
     "@csstools/css-parser-algorithms" "^4.0.0"
