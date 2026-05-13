@@ -12,6 +12,7 @@ import { PublizonErrorArgs } from "../../core/storybook/publizonErrorArgs";
 import { CopyLinkArgs } from "../../core/storybook/copyLinkArgs";
 import { MappArgs } from "../../core/storybook/mappArgs";
 import { EditionSwitchModalArgs } from "../../core/storybook/editionSwitchModalArgs";
+import { PlayerModalProps } from "../../core/storybook/playerModalArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import useSetSmoothScroll from "../../core/utils/useSetSmoothScroll";
 
@@ -177,8 +178,6 @@ interface MaterialEntryTextProps {
   outOfText: string;
   periodicalSelectEditionText: string;
   periodicalSelectYearText: string;
-  playerModalCloseButtonText: string;
-  playerModalDescriptionText: string;
   queueText: string;
   ratingIsText: string;
   readArticleText: string;
@@ -235,7 +234,8 @@ export interface MaterialEntryProps
     PublizonErrorArgs,
     CopyLinkArgs,
     MappArgs,
-    EditionSwitchModalArgs {
+    EditionSwitchModalArgs,
+    PlayerModalProps {
   wid: WorkId;
 }
 
