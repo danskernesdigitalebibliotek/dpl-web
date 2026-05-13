@@ -21,4 +21,9 @@ if ($project === 'dpl-web') {
     $config['bnf_client.settings']['base_url'] = 'https://varnish.' .
       getenv('LAGOON_ENVIRONMENT') . '.dpl-web-bnf.dplplat02.dpl.reload.dk/';
   }
+
+  if (str_starts_with(getenv('LAGOON_ENVIRONMENT'), 'pr-')) {
+    // Run automated_cron approximately as often as cron in production.
+    $config['automated_cron.settings']['interval'] = 900;
+  }
 }

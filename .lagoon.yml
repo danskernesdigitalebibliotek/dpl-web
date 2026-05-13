@@ -168,6 +168,14 @@ tasks:
           drush en -y dpl_example_content
         service: cli
     - run:
+        name: Enable automatic_cron on PR envs
+        command: |
+          if [[ "$LAGOON_ENVIRONMENT" =~ "^pr-" ]]; then
+            drush pm:enable --yes automatic_cron
+          fi
+        service: cli
+        shell: bash
+    - run:
         name: Setting Deployment status success
         command: |
           DRUPAL_URL=$(drush browse)
