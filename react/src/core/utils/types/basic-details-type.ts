@@ -13,6 +13,9 @@ interface BasicDetails {
   title: string;
   series: string;
   lang?: string;
+  // Publizon's product type enum (1 = ebook, 2 = audiobook, 4 = podcast).
+  // Set only for digital materials, used to launch reader/player directly.
+  digitalProductType: number;
 }
 
 export type BasicDetailsType = Nullable<Partial<BasicDetails>>;

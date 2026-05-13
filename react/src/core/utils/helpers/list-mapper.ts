@@ -4,6 +4,7 @@ import { FaustId } from "../types/ids";
 import { ManifestationBasicDetailsFragment } from "../../dbc-gateway/generated/graphql";
 import { BasicDetailsType } from "../types/basic-details-type";
 import { Product, Loan, Reservation } from "../../publizon/model";
+import { PUBLIZON_PRODUCT_TYPE } from "../../publizon/productType";
 import { LoanType } from "../types/loan-type";
 import { store } from "../../store";
 import { ReservationType } from "../types/reservation-type";
@@ -106,9 +107,9 @@ export const mapProductToBasicDetailsType = (material: Product) => {
   } = store.getState();
 
   const digitalProductType: { [key: number]: string } = {
-    1: texts.publizonEbookText,
-    2: texts.publizonAudioBookText,
-    4: texts.publizonPodcastText
+    [PUBLIZON_PRODUCT_TYPE.EBOOK]: texts.publizonEbookText,
+    [PUBLIZON_PRODUCT_TYPE.AUDIOBOOK]: texts.publizonAudioBookText,
+    [PUBLIZON_PRODUCT_TYPE.PODCAST]: texts.publizonPodcastText
   };
 
   const authors =
@@ -123,6 +124,7 @@ export const mapProductToBasicDetailsType = (material: Product) => {
     year: publicationDate ? getYearFromDataString(publicationDate) : "",
     description,
     materialType: productType ? digitalProductType[productType] : "",
+    digitalProductType: productType,
     externalProductId: externalProductId?.id,
     authors: contributors ? getContributors(false, authors) : "",
     authorsShort: contributors ? getContributors(true, authors) : ""
