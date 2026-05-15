@@ -54,7 +54,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
       <section>
         <button
           type="button"
-          className="link-tag mr-16 cursor-pointer capitalize-first"
+          className="link-tag mr-16 capitalize-first"
           onClick={() => reset()}
           data-cy="advanced-search-reset"
         >
@@ -64,7 +64,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
           <button
             type="button"
             className={clsx("link-tag mr-16 capitalize-first", {
-              "cursor-pointer": !copiedToClipboard
+              "cursor-default": copiedToClipboard
             })}
             onClick={() => {
               copy(translatedCql);
@@ -88,7 +88,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
         )}
         <button
           type="button"
-          className="link-tag link-tag cursor-pointer capitalize-first"
+          className="link-tag capitalize-first"
           onClick={() => setIsFormMode(false)}
           onKeyUp={(e) => e.key === "Enter" && setIsFormMode(false)}
           data-cy="advanced-search-edit-cql"
