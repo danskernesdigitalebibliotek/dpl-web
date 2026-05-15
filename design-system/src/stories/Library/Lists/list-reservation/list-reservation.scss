@@ -51,6 +51,12 @@ $list-reservation-space-desktop: 24px;
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+
+  @include media-query__small {
+    .btn-primary {
+      min-width: 200px;
+    }
+  }
 }
 
 .list-reservation__material {
@@ -106,7 +112,6 @@ $list-reservation-space-desktop: 24px;
   height: 100%;
   margin-left: $list-reservation-space-mobile;
   align-items: baseline;
-  justify-content: space-between;
   min-width: 200px;
 
   @include media-query__x-small("max-width") {
@@ -121,6 +126,7 @@ $list-reservation-space-desktop: 24px;
 .list-reservation__about {
   padding-left: 0;
   text-align: left;
+  margin-block: auto;
 
   p {
     margin-top: 2px;
@@ -129,7 +135,6 @@ $list-reservation-space-desktop: 24px;
   }
 
   @include media-query__small {
-    margin-top: 0;
     p {
       font-size: 12px;
       margin-bottom: 0;
