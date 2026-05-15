@@ -43,7 +43,7 @@ export const ListReservationsAndLoans = (
               <StatusLabel label="bog" status="outline" />
             </div>
             <div className="list-reservation__about">
-              <button className="list-reservation__header">
+              <button className="list-reservation__header list-reservation__header--button">
                 <span className="list-reservation__header__text">
                   {cover.title}
                 </span>

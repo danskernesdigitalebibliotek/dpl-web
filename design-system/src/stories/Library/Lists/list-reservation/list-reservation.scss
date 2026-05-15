@@ -146,6 +146,9 @@ $list-reservation-space-desktop: 24px;
   @include typography($typo__h4);
   color: $color__global-black;
   padding: 0;
+}
+
+.list-reservation__header--button {
   cursor: pointer;
 
   &:hover,

@@ -35,7 +35,7 @@ const ReservationListItem: React.FC<ReservationListItemProps> = ({
               <div className="list-reservation__about">
                 <button
                   type="button"
-                  className="list-reservation__header color-secondary-gray"
+                  className="list-reservation__header list-reservation__header--button color-secondary-gray"
                 >
                   <span
                     id="48991963-title"
