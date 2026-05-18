@@ -1,19 +1,13 @@
 import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 
-// A single physical-loan row rendered by StackableMaterial. Physical rows
-// use the `cursor-pointer` variant of `.list-reservation` (clickable to
-// open due-date / details), distinguishing them from digital rows which
-// use `--no-hover`.
+// A single physical-loan row rendered by StackableMaterial. Scoped via the
+// `role="button"` on the row's outer element (physical rows are clickable
+// to open due-date/details; digital rows are not).
 export class PhysicalLoanRowComponent extends ComponentObject {
   public elements!: Elements;
 
   constructor(index = 0) {
-    super(() =>
-      cy
-        .get(".list-reservation.cursor-pointer")
-        .not(".list-reservation--no-hover")
-        .eq(index)
-    );
+    super(() => cy.get(".list-reservation[role='button']").eq(index));
     this.addElements = {
       title: () => this.container().find(".list-reservation__header__text"),
       author: () =>
