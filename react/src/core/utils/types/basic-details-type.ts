@@ -1,5 +1,6 @@
 import { Pid } from "./ids";
 import { Nullable } from "./nullable";
+import { PublizonProductType } from "../../publizon/productType";
 
 interface BasicDetails {
   authors: string;
@@ -15,7 +16,7 @@ interface BasicDetails {
   lang?: string;
   // Publizon's product type enum (1 = ebook, 2 = audiobook, 4 = podcast).
   // Set only for digital materials, used to launch reader/player directly.
-  digitalProductType: number;
+  digitalProductType: PublizonProductType;
 }
 
 export type BasicDetailsType = Nullable<Partial<BasicDetails>>;

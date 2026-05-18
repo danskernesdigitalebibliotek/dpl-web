@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { getReaderPlayerTypeFromPublizonProductType } from "../../components/reader-player/helper";
-import { PUBLIZON_PRODUCT_TYPE } from "../../core/publizon/productType";
+import {
+  PUBLIZON_PRODUCT_TYPE,
+  PublizonProductType
+} from "../../core/publizon/productType";
 
 describe("getReaderPlayerTypeFromPublizonProductType", () => {
   it('returns "reader" for ebooks', () => {
@@ -29,6 +32,8 @@ describe("getReaderPlayerTypeFromPublizonProductType", () => {
   });
 
   it("returns null for unknown product type", () => {
-    expect(getReaderPlayerTypeFromPublizonProductType(999)).toBeNull();
+    expect(
+      getReaderPlayerTypeFromPublizonProductType(999 as PublizonProductType)
+    ).toBeNull();
   });
 });

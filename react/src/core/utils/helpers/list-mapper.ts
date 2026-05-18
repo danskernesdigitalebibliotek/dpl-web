@@ -4,7 +4,10 @@ import { FaustId } from "../types/ids";
 import { ManifestationBasicDetailsFragment } from "../../dbc-gateway/generated/graphql";
 import { BasicDetailsType } from "../types/basic-details-type";
 import { Product, Loan, Reservation } from "../../publizon/model";
-import { PUBLIZON_PRODUCT_TYPE } from "../../publizon/productType";
+import {
+  PUBLIZON_PRODUCT_TYPE,
+  isPublizonProductType
+} from "../../publizon/productType";
 import { LoanType } from "../types/loan-type";
 import { store } from "../../store";
 import { ReservationType } from "../types/reservation-type";
@@ -124,7 +127,7 @@ export const mapProductToBasicDetailsType = (material: Product) => {
     year: publicationDate ? getYearFromDataString(publicationDate) : "",
     description,
     materialType: productType ? digitalProductType[productType] : "",
-    digitalProductType: productType,
+    digitalProductType: isPublizonProductType(productType) ? productType : null,
     externalProductId: externalProductId?.id,
     authors: contributors ? getContributors(false, authors) : "",
     authorsShort: contributors ? getContributors(true, authors) : ""
