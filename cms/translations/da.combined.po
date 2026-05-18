@@ -418,7 +418,7 @@ msgstr "Luk pop-up"
 #: 
 msgctxt "Work Page"
 msgid "Infomedia modal screen reader description"
-msgstr "Infomedia pop-up beskrivelse til skærmlæser"
+msgstr "Retriever pop-up beskrivelse til skærmlæser"
 
 #: 
 msgctxt "Work Page"
@@ -28723,7 +28723,7 @@ msgstr "Bibliotekernes vurdering"
 #: 
 msgctxt "Work Page"
 msgid "All material in Infomedia is covered by copyright law and may not be copied without special permission."
-msgstr "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
+msgstr "Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
 
 #: 
 msgctxt "Patron page"
@@ -31006,4 +31006,9 @@ msgstr "Proxy server URL præfix er påkrævet når proxy er slået til."
 msgctxt "Url Proxy"
 msgid "At least one hostname is required when the proxy is enabled."
 msgstr "Mindst et værtsnavn er påkrævet når proxy er slået til."
+
+#: 
+msgctxt "Work Page"
+msgid "We're sorry. Unfortunately, there has been an error. Try again, please."
+msgstr ""
 
