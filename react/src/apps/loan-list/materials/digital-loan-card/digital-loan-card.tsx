@@ -103,7 +103,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
           animate={false}
           alt={description || ""}
         />
-        <div className="list-reservation__information">
+        <div className="list-reservation__information list-reservation__information--centered-about">
           <div>
             {materialType && (
               <div className="status-label status-label--outline">
