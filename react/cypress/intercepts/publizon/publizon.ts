@@ -8,6 +8,7 @@ import {
   FileExtensionType,
   IdentifierTypeEnum
 } from "../../../src/core/publizon/model";
+import { PUBLIZON_PRODUCT_TYPE } from "../../../src/core/publizon/productType";
 
 /**
  * Given: User has a loaned e-book
@@ -61,12 +62,6 @@ export const givenUserHasLoanedEbook = (options?: {
     })
   }).as("publizonUserLoansWithLoan");
 };
-
-// Fixed Publizon product types (see src/core/publizon/productType.ts) —
-// duplicated here so scenario helpers below can be read at a glance.
-const PUBLIZON_EBOOK = 1;
-const PUBLIZON_AUDIOBOOK = 2;
-const PUBLIZON_PODCAST = 4;
 
 type DigitalLoanOverrides = {
   orderId?: string;
@@ -159,7 +154,7 @@ export const givenUserHasDigitalEbookLoan = (
     identifier: overrides.identifier || "9788740065411",
     title: "Caribisk rom",
     publisher: "JP/Politikens Forlag",
-    productType: PUBLIZON_EBOOK,
+    productType: PUBLIZON_PRODUCT_TYPE.EBOOK,
     fileExtensionType: FileExtensionType.NUMBER_3, // epub
     format: "epub",
     durationInSeconds: null,
@@ -179,7 +174,7 @@ export const givenUserHasDigitalAudiobookLoan = (
     identifier: overrides.identifier || "9788740065411",
     title: "Harry Potter og De Vises Sten",
     publisher: "Pottermore Publishing",
-    productType: PUBLIZON_AUDIOBOOK,
+    productType: PUBLIZON_PRODUCT_TYPE.AUDIOBOOK,
     fileExtensionType: FileExtensionType.NUMBER_1,
     format: "zip",
     durationInSeconds: 34865,
@@ -199,7 +194,7 @@ export const givenUserHasDigitalPodcastLoan = (
     identifier: overrides.identifier || "9788740065411",
     title: "Genstart",
     publisher: "DR",
-    productType: PUBLIZON_PODCAST,
+    productType: PUBLIZON_PRODUCT_TYPE.PODCAST,
     fileExtensionType: FileExtensionType.NUMBER_1,
     format: "zip",
     durationInSeconds: 34865,
