@@ -10,9 +10,12 @@ export const performLogout = (logoutUrl: URL, queryClient: QueryClient) => {
   document.documentElement.style.visibility = "hidden";
   queryClient.clear();
   sessionStorage.clear();
-  // Delay navigation until the blank page is painted so the
-  // bfcache snapshot contains no user data.
+  // Delay navigation until the blank page is painted so the bfcache snapshot
+  // contains no user data. A double rAF ensures the first frame (with the
+  // empty DOM) is actually painted before navigation begins.
   requestAnimationFrame(() => {
-    window.location.replace(logoutUrl.toString());
+    requestAnimationFrame(() => {
+      window.location.replace(logoutUrl.toString());
+    });
   });
 };
