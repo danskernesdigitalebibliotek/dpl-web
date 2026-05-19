@@ -11,7 +11,7 @@ being set in javascript.
 We decided to download the components with composer and integrate them as Drupal
 libraries.
 
-As described in [adr-002-user-handling](architecture/adr-002-user-handling.md)
+As described in [adr-002-user-handling](adr-002-user-handling.md)
 we are setting an access token in the user session when a user has been through
 a succesful login at Adgangsplatformen.
 

@@ -12,7 +12,7 @@ functionality as a part of [the public API of the system](./architecture/adr-006
 
 ## Data synchronization
 
-[The public API for DPL CMS is documented through an OpenAPI 2.0 specification](../openapi.json).
+[The public API for DPL CMS is documented through an OpenAPI 2.0 specification](../../cms/openapi.json).
 
 The following flow diagram represents a suggested approach for synchronizing
 event data between DPL CMS and an external system.
@@ -59,5 +59,5 @@ using this information when updating events.
 
 ## API versioning
 
-Please read [the related ADR](./architecture/adr-011-api-versioning.md) for how
+Please read [the related ADR](./architecture/adr-012-api-versioning.md) for how
 we handle API versioning.
