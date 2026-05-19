@@ -1,12 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { createElement } from "react";
 import { withErrorBoundary } from "react-error-boundary";
-import {
-  setToken,
-  LOGOUT_FLAG_KEY,
-  TOKEN_USER_KEY,
-  TOKEN_UNREGISTERED_USER_KEY
-} from "./token";
+import { setToken } from "./token";
 import Store from "../components/store";
 import { persistor, store } from "./store";
 import ErrorBoundaryAlert from "../components/error-boundary-alert/ErrorBoundaryAlert";
@@ -97,10 +92,13 @@ function init() {
   });
 
   // Always reload patron pages restored from the back/forward cache so the
-  // server can enforce access control. If the user is still logged in this is
-  // a harmless refresh; if logged out the server redirects to login.
+  // server can enforce access control. Non-patron pages are covered by
+  // Cache-Control: no-store set server-side for all authenticated responses.
   window.addEventListener("pageshow", (e) => {
-    if (e.persisted && window.location.pathname.startsWith("/user/me")) {
+    if (
+      e.persisted &&
+      /(?:^|\/)(user\/me)(?:\/|$)/.test(window.location.pathname)
+    ) {
       document.documentElement.style.visibility = "hidden";
       window.location.reload();
     }
@@ -108,14 +106,7 @@ function init() {
 
   const initial = {
     apps: {},
-    setToken: (type, value) => {
-      setToken(type, value);
-      // Clear the logout flag when a user logs in so that
-      // the pageshow handler does not trigger a stale reload.
-      if (type === TOKEN_USER_KEY || type === TOKEN_UNREGISTERED_USER_KEY) {
-        sessionStorage.removeItem(LOGOUT_FLAG_KEY);
-      }
-    },
+    setToken,
     mount,
     unmount,
     reset
