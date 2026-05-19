@@ -1,5 +1,3 @@
-import { getEnv } from "../config/env"
-
 type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
 
@@ -10,22 +8,27 @@ export function buildRoute({
   params?: RouteParams
   query?: QueryParams
 }): string {
-  let routeParams = ""
+  const pathComponents: string[] = []
+
   if (params) {
-    routeParams = Object.keys(params).reduce((acc, key) => {
-      const value = encodeURIComponent(params[key])
-      return `${acc}/${value}`
-    }, routeParams)
+    for (const value of Object.values(params)) {
+      pathComponents.push(encodeURIComponent(value))
+    }
   }
 
-  const url = new URL(routeParams, getEnv("APP_URL"))
+  let path = `/${pathComponents.join("/")}`
+
   if (query) {
+    const searchParams = new URLSearchParams()
+
     Object.keys(query).forEach(key => {
-      url.searchParams.append(key, query[key].toString())
+      searchParams.append(key, query[key].toString())
     })
+
+    path += "?" + searchParams.toString()
   }
 
-  return url.toString()
+  return path
 }
 
 type ResolveUrlOptions =
