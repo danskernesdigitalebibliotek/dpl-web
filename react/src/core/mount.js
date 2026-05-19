@@ -96,12 +96,12 @@ function init() {
     }
   });
 
-  // When the browser restores a page from back/forward cache after logout,
-  // force a reload so the server can enforce access control.
+  // Always reload patron pages restored from the back/forward cache so the
+  // server can enforce access control. If the user is still logged in this is
+  // a harmless refresh; if logged out the server redirects to login.
   window.addEventListener("pageshow", (e) => {
-    if (e.persisted && sessionStorage.getItem(LOGOUT_FLAG_KEY)) {
+    if (e.persisted && window.location.pathname.startsWith("/user/me")) {
       document.documentElement.style.visibility = "hidden";
-      sessionStorage.removeItem(LOGOUT_FLAG_KEY);
       window.location.reload();
     }
   });
