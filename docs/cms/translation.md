@@ -36,11 +36,9 @@ To make the "translation traffic" work following components are being used:
   are two jobs in charge of importing the regular translations
   and the configuration translations.
 
-The following diagram show how these systems interact to support the flow of
-from introducing a new translateable string in the codebase to DPL CMS consuming
+The following diagram shows how these systems interact to support the flow
+from introducing a new translatable string in the codebase to DPL CMS consuming
 an updated translation with said string.
-
-case
 
 ```mermaid
 sequenceDiagram
