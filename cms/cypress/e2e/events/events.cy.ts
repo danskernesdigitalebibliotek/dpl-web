@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs';
 import 'cypress-if';
-import { typeInCkEditor } from '../helpers/helper-ckeditor';
-import { addParagraph } from '../helpers/helper-paragraph';
+import { typeInCkEditor } from '../../helpers/helper-ckeditor';
+import { addParagraph } from '../../helpers/helper-paragraph';
 
 const events = {
   singleEvent: {

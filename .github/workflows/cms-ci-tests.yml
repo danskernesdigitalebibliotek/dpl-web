@@ -218,6 +218,12 @@ jobs:
     with:
       id: campaigns
 
+  CypressEvents:
+    name: CMS / Cypress events tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    with:
+      id: events
+
   MarkdownLint:
     name: CMS / Lint Markdown
     runs-on: ubuntu-latest

@@ -582,6 +582,16 @@ tasks:
     env:
       SPEC_PATH: "cypress/e2e/campaigns/*.ts"
 
+  # The events tests take an extraordinarly long time. To speed up the
+  # GitHub Actions, we've split these out to run in parallel.
+  ci:cypress:events:
+    desc: Run Cypress tests for events.
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/events/*.ts"
+
   ci:cypress:local:
     desc: Run Cypress functional tests locally
     deps: [ci:wiremock:create-mappings, ci:local]
