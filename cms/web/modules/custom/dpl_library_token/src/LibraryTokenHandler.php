@@ -4,6 +4,7 @@ namespace Drupal\dpl_library_token;
 
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LogLevel;
@@ -46,11 +47,14 @@ class LibraryTokenHandler {
    *   The HTTP client.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
    *   The library token logger channel.
+   * @param \Drupal\dpl_login\Adgangsplatformen\Config $config
+   *   The Adgangsplatformen config.
    */
   public function __construct(
     KeyValueExpirableFactoryInterface $keyValueFactory,
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $logger,
+    protected Config $config,
   ) {
     $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);
     $this->httpClient = $http_client;
@@ -60,18 +64,18 @@ class LibraryTokenHandler {
   /**
    * Retrieve token from external service and save it if necessary.
    */
-  public function retrieveAndStoreToken(
-    string $agencyId,
-    string $clientId,
-    string $clientSecret,
-    string $tokenEndpoint,
-  ): null|bool {
+  public function retrieveAndStoreToken(): null|bool {
     // If we already have a valid token then do nothing.
-    if ($this->getToken()) {
+    if ($this->tokenCollection->get(self::LIBRARY_TOKEN_KEY)) {
       return NULL;
     }
 
     // Try to fetch token, if not possible return false.
+    $agencyId = $this->config->getAgencyId();
+    $clientId = $this->config->getClientId();
+    $clientSecret = $this->config->getClientSecret();
+    $tokenEndpoint = $this->config->getTokenEndpoint();
+
     if (!$token = $this->fetchToken($agencyId, $clientId, $clientSecret, $tokenEndpoint)) {
       return FALSE;
     }
@@ -113,7 +117,12 @@ class LibraryTokenHandler {
    *   The stored token or NULL if no token is stored.
    */
   public function getToken(): ?object {
-    return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
+    $token = $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
+    if (!$token) {
+      $this->retrieveAndStoreToken();
+      $token = $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
+    }
+    return $token;
   }
 
   /**
@@ -122,7 +131,7 @@ class LibraryTokenHandler {
    * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise, return NULL.
    */
-  public function fetchToken(string $agencyId, string $clientId, string $clientSecret, string $tokenEndpoint,): ?LibraryToken {
+  public function fetchToken(string $agencyId, string $clientId, string $clientSecret, string $tokenEndpoint): ?LibraryToken {
     $token = NULL;
 
     try {
