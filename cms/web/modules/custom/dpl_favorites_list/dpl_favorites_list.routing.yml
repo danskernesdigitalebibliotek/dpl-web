@@ -3,4 +3,4 @@ dpl_favorites_list.list:
   defaults:
     _controller: '\Drupal\dpl_favorites_list\Controller\DplFavoritesListController::list'
   requirements:
-    _permission: 'access content'
+    _role: 'authenticated'

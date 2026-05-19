@@ -3,4 +3,4 @@ dpl_loans.list:
   defaults:
     _controller: '\Drupal\dpl_loans\Controller\DplLoansController::list'
   requirements:
-    _permission: 'access content'
+    _role: 'authenticated'

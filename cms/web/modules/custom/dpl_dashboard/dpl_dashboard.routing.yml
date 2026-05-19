@@ -3,4 +3,4 @@ dpl_dashboard.list:
   defaults:
     _controller: '\Drupal\dpl_dashboard\Controller\DplDashboardController::list'
   requirements:
-    _permission: 'access content'
+    _role: 'authenticated'

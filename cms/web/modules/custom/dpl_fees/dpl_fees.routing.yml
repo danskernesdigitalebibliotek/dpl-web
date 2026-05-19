@@ -3,7 +3,7 @@ dpl_fees.list:
   defaults:
     _controller: '\Drupal\dpl_fees\Controller\DplFeesController::list'
   requirements:
-    _permission: 'access content'
+    _role: 'authenticated'
 
 dpl_fees.settings:
   path: '/admin/config/dpl-library-agency/fees'
