@@ -119,6 +119,9 @@ class LibraryTokenHandler {
   public function getToken(): ?object {
     $token = $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
     if (!$token) {
+      // In theory, automatically refreshing the library token when it
+      // expires could cause a stampede on busy libraries, but as we also have
+      // a cronjob that refreshes the token, this is not really a problem.
       $this->retrieveAndStoreToken();
       $token = $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
     }
