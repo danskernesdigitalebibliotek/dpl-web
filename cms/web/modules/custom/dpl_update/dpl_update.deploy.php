@@ -533,3 +533,10 @@ function dpl_update_deploy_create_mobile_graphql_permissions(): string {
 function dpl_update_deploy_event_address_field_inheritance(): string {
   return _dpl_update_field_inheritance('event_address');
 }
+
+/**
+ * Link new field inheritances on eventinstances.
+ */
+function dpl_update_deploy_event_location_field_inheritance(): string {
+  return _dpl_update_field_inheritance('event_location');
+}

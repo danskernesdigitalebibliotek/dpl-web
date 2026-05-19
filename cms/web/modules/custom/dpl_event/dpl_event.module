@@ -60,12 +60,9 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
   // visible when physical AND a branch is set.
   $show_non_branch_toggle = $is_physical && $has_branch;
 
-  // An empty space prevents field_inheritance from filling these in at view
-  // time. NULL on field_event_address_gsearch lets inheritance fall back to
-  // the series value, which is what we want when no custom address is set.
   if (!$show_custom_location) {
     if ($entity->hasField('field_event_location')) {
-      $entity->set('field_event_location', ' ');
+      $entity->set('field_event_location', NULL);
     }
     if ($entity->hasField('field_event_address_gsearch')) {
       $entity->set('field_event_address_gsearch', NULL);

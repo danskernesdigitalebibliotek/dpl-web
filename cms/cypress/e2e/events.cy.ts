@@ -394,6 +394,9 @@ describe('Events', () => {
         createSeriesAndOpenInstance(title);
 
         // Save an address first so we have something to clear.
+        cy.get(
+          '[data-drupal-selector="edit-field-event-location-0-value"]',
+        ).type('Some location');
         fillFreetextAddress(customAddress);
         cy.clickSaveButton();
         cy.go('back');
