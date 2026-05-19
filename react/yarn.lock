@@ -1378,8 +1378,8 @@
 
 "@danskernesdigitalebibliotek/dpl-design-system@0.0.0-branch-develop":
   version "0.0.0-branch-develop"
-  resolved "https://npm.pkg.github.com/download/@danskernesdigitalebibliotek/dpl-design-system/0.0.0-branch-develop/54d68721b42dbaf50d2167257999e3f1117fef0e#54d68721b42dbaf50d2167257999e3f1117fef0e"
-  integrity sha512-+KYfNIW9zsJklgxIm2LeNB3lyqDbNJ/FQyEzUC5uFEmt4lNt7EPae2BNTfpO6UKPDvz4WogkgKXUPLXOXtjelg==
+  resolved "https://npm.pkg.github.com/download/@danskernesdigitalebibliotek/dpl-design-system/0.0.0-branch-develop/ed36bc3eea65325393399366dc76abe72995c6c1#ed36bc3eea65325393399366dc76abe72995c6c1"
+  integrity sha512-ySFtxCEw1Cafbmw6MXo4qQvuZItfOd8oLFp6aQTmdGaifEI/HsdBVrC/YBFU1hD0sqLTFMzusJVk51o+CJ3W+A==
 
 "@discoveryjs/json-ext@^1.0.0":
   version "1.0.0"
