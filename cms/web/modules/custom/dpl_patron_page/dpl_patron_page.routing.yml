@@ -3,7 +3,7 @@ dpl_patron_page.profile:
   defaults:
     _controller: '\Drupal\dpl_patron_page\Controller\DplPatronPageController::profile'
   requirements:
-    _role: 'authenticated'
+    _permission: 'access content'
 
 dpl_patron_page.settings:
   path: '/admin/config/dpl-library-agency/patron-page-settings'
