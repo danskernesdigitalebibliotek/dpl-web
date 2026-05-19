@@ -5,8 +5,8 @@ services:
       - { name: event_subscriber }
     autowire: true
 
-  dpl_login.patron_page_cache:
-    class: Drupal\dpl_login\EventSubscriber\PatronPageCacheSubscriber
+  dpl_login.authenticated_cache:
+    class: Drupal\dpl_login\EventSubscriber\AuthenticatedCacheSubscriber
     tags:
       - { name: event_subscriber }
     autowire: true

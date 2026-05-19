@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * the browser may restore pages that contain user-specific UI such as the
  * authenticated menu modal.
  */
-class PatronPageCacheSubscriber implements EventSubscriberInterface {
+class AuthenticatedCacheSubscriber implements EventSubscriberInterface {
 
   use AutowireTrait;
 
