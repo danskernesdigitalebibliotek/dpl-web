@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\dpl_login\EventSubscriber;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -28,7 +27,6 @@ class AuthenticatedCacheSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     protected AccountInterface $currentUser,
-    protected KillSwitch $killSwitch,
   ) {
   }
 
@@ -36,11 +34,9 @@ class AuthenticatedCacheSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
-    $events = [];
-
-    $events[KernelEvents::RESPONSE][] = ['onResponse'];
-
-    return $events;
+    return [
+      KernelEvents::RESPONSE => 'onResponse',
+    ];
   }
 
   /**
@@ -52,7 +48,6 @@ class AuthenticatedCacheSubscriber implements EventSubscriberInterface {
     }
 
     $event->getResponse()->headers->set('Cache-Control', 'no-store');
-    $this->killSwitch->trigger();
   }
 
 }

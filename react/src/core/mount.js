@@ -97,7 +97,7 @@ function init() {
   window.addEventListener("pageshow", (e) => {
     if (
       e.persisted &&
-      /(?:^|\/)(user\/me)(?:\/|$)/.test(window.location.pathname)
+      /(?:^|\/)user\/me(?:\/|$)/.test(window.location.pathname)
     ) {
       document.documentElement.style.visibility = "hidden";
       window.location.reload();
