@@ -57,22 +57,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Re-use cached Node.js modules"
-        uses: actions/cache@v5
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: "Install Node.js modules"
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: "go/.nvmrc"
-          cache: "yarn"
-          cache-dependency-path: "go/yarn.lock"
-
-      - name: "Install Go dependencies"
-        run: "yarn --cwd=go install --frozen-lockfile"
-
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
