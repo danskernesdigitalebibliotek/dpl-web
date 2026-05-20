@@ -47,7 +47,7 @@ class AuthenticatedCacheSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    $event->getResponse()->headers->set('Cache-Control', 'no-store');
+    $event->getResponse()->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
   }
 
 }
