@@ -13,8 +13,11 @@ describe("Login redirect after loan attempt", () => {
   beforeEach(() => {
     mockFrontpage()
 
-    // Suppress known SSR hydration error from ResponsiveDialog/useMediaQuery
+    // Suppress known SSR hydration error from ResponsiveDialog/useMediaQuery.
+    // Dev builds throw the readable message; production builds (CI) throw the
+    // minified form, so suppress both.
     cy.expectError("useMediaQuery is a client-only hook")
+    cy.expectError("Minified React error #419")
 
     cy.visit("/")
   })
