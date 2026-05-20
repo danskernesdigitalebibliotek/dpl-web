@@ -12,6 +12,8 @@ use Drupal\media_videotool\Traits\HasVideoToolFeaturesTrait;
 
 /**
  * Plugin implementation of the 'VideoTool embed' formatter.
+ *
+ * @extends \Drupal\Core\Field\FormatterBase<\Drupal\Core\Field\FieldItemListInterface>
  */
 #[FieldFormatter(
   id: 'media_videotool_embed',
