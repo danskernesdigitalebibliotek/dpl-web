@@ -1,5 +1,6 @@
 "use client"
 
+import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
 import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import { cyKeys } from "@/cypress/support/constants"
 import type {
@@ -12,26 +13,22 @@ export type VideoBundleProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   title: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
   videoUrl: string
+  thumbnailUrl?: string | null
 }
 
-const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
+const VideoBundle = ({ works, title, videoUrl, thumbnailUrl }: VideoBundleProps) => {
   return (
     <div className="bg-background-overlay" data-cy={cyKeys["video-bundle"]}>
       <div className="content-container">
         <div className="py-paragraph-spacing w-full">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing text-center">{title}</h2>
           <div className="grid-go items-start">
-            <div
-              className="rounded-base relative col-span-full aspect-16/9 overflow-hidden
-                lg:col-span-9 lg:mb-0">
-              <iframe
-                title={title || "Video"}
-                aria-label={title || "Video"}
-                className="absolute inset-0 h-full w-full"
-                src={videoUrl}
-                allowFullScreen
-                allow="autoplay; fullscreen"
-                loading="lazy"
+            <div className="col-span-full lg:col-span-9 lg:mb-0">
+              <VideoEmbed
+                videoUrl={videoUrl}
+                thumbnailUrl={thumbnailUrl}
+                title={title}
+                aspect="16/9"
               />
             </div>
             <CarouselSlider works={works} className="lg:col-span-3" />

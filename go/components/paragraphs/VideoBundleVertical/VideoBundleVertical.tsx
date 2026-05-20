@@ -1,5 +1,6 @@
 "use client"
 
+import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
 import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import type { ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
@@ -8,9 +9,15 @@ export type VideoBundleVerticalProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
   title: VideoBundleVerticalManualType["goVideoTitle"]
   videoUrl: string
+  thumbnailUrl?: string | null
 }
 
-const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProps) => {
+const VideoBundleVertical = ({
+  works,
+  title,
+  videoUrl,
+  thumbnailUrl,
+}: VideoBundleVerticalProps) => {
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
@@ -21,17 +28,12 @@ const VideoBundleVertical = ({ works, title, videoUrl }: VideoBundleVerticalProp
               className="xl:-translate-x-grid-column-quarter xl:ml-grid-column-half
                 lg:-translate-x-grid-column-quarter lg:ml-grid-column-half col-span-4 col-start-2
                 lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3">
-              <div className="rounded-base relative aspect-9/16 w-full overflow-hidden">
-                <iframe
-                  title={title || "Video"}
-                  aria-label={title || "Video"}
-                  className="absolute inset-0 h-full w-full"
-                  src={videoUrl}
-                  allowFullScreen
-                  allow="autoplay; fullscreen"
-                  loading="lazy"
-                />
-              </div>
+              <VideoEmbed
+                videoUrl={videoUrl}
+                thumbnailUrl={thumbnailUrl}
+                title={title}
+                aspect="9/16"
+              />
             </div>
             <CarouselSlider
               works={works}

@@ -1,7 +1,5 @@
 "use client"
 
-import React from "react"
-
 import VideoBundle, { VideoBundleSkeleton } from "@/components/paragraphs/VideoBundle/VideoBundle"
 import {
   MediaVideotool,
@@ -15,6 +13,7 @@ type VideoBundleAutomaticProps = {
   embedVideo: {
     mediaVideotool: MediaVideotool["mediaVideotool"]
     name: MediaVideotool["name"]
+    thumbnail?: string | null
   }
   cqlSearch: ParagraphGoVideoBundleAutomatic["cqlSearch"]
   videoAmountOfMaterials: ParagraphGoVideoBundleAutomatic["videoAmountOfMaterials"]
@@ -47,6 +46,7 @@ const VideoBundleAutomatic = ({
           works={data?.complexSearch.works}
           title={goVideoTitle}
           videoUrl={embedVideo.mediaVideotool}
+          thumbnailUrl={embedVideo.thumbnail}
         />
       )}
     </div>
