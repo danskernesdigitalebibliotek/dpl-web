@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Plugin implementation of the 'preview_token_whatever' formatter.
  *
+ * @extends \Drupal\Core\Field\FormatterBase<\Drupal\Core\Field\FieldItemListInterface>
+ *
  * @FieldFormatter(
  *   id = "go_preview_token_iframe",
  *   label = @Translation("GO token preview iframe"),
