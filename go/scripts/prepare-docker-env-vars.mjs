@@ -17,6 +17,7 @@ function prepareDockerEnvVars() {
     // Remove leading whitespace from each line before writing.
     const finalContent = envFileContent.replace(/^ +/gm, "")
     const envFilePath = join(import.meta.dirname, "..", ENV_FILENAME)
+    console.info(`Writing '${envFilePath}'…`, finalContent)
     writeFileSync(envFilePath, finalContent, { flag: "a", flush: true })
   }
 }
