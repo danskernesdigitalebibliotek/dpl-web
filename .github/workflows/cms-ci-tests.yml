@@ -374,7 +374,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
-        run: task ci:reset
+        run: task ci:reset:clean
       - name: Export configuration
         run: task dev:cli -- drush config-export -y
       - name: Check for uncommited configuration after install
