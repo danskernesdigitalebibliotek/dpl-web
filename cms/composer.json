@@ -251,14 +251,14 @@
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
-        "drupal/core-dev": "^10.1",
+        "drupal/core-dev": "10.5.10",
         "jangregor/phpstan-prophecy": "^1",
         "mglaman/phpstan-drupal": "^1.2",
         "palantirnet/drupal-rector": "^0.21.0",
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan": "~1.11.11",
+        "phpstan/phpstan": "^1.12.4",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpstan/phpstan-webmozart-assert": "^1.2",
         "phpunit/phpunit": "9.6.33",
@@ -282,7 +282,9 @@
             "drupal/core-composer-scaffold": true,
             "mnsami/composer-custom-directory-installer": true,
             "oomphinc/composer-installers-extender": true,
+            "php-http/discovery": true,
             "phpstan/extension-installer": true,
+            "tbachert/spi": true,
             "zaporylie/composer-drupal-optimizations": true
         },
         "audit": {
