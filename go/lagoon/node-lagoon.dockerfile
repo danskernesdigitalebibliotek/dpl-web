@@ -33,12 +33,6 @@ FROM uselagoon/node-24:latest AS runner
 # start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.
 RUN apk add --no-cache bash
 
-# Lagoon injects these automatically during build.
-ARG LAGOON_ENVIRONMENT
-ARG LAGOON_PROJECT
-ARG LAGOON_ROUTE
-ARG LAGOON_ROUTES
-
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
