@@ -83,7 +83,6 @@ services:
       # The parent image is tagged with the branch name, so to avoid building with
       # a stale image, we always fetch the latest version.
       pull: true
-      no_cache: true
     labels:
       lagoon.type: node
 
