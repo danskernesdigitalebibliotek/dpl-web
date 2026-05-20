@@ -30196,7 +30196,7 @@ msgstr "F.eks. \"Kunstmuseet\", \"Studenterhuset\""
 #: 
 msgctxt "field.field.eventinstance.default.field_event_location:label"
 msgid "Location"
-msgstr "Lokation"
+msgstr "Lokationsnavn"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_location_type:label"
@@ -30241,7 +30241,7 @@ msgstr "Når du vælger et bibliotek, bruger arrangementet bibliotekets adresse 
 #: 
 msgctxt "field.field.eventseries.default.field_event_location:label"
 msgid "Location"
-msgstr "Lokation"
+msgstr "Lokationsnavn"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_location_type:label"

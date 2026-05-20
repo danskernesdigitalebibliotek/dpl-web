@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-18 08:10+0200\n"
-"PO-Revision-Date: 2026-05-18 08:10+0200\n"
+"POT-Creation-Date: 2026-05-20 10:46+0200\n"
+"PO-Revision-Date: 2026-05-20 10:46+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7551,7 +7551,7 @@ msgstr "F.eks. \"Kunstmuseet\", \"Studenterhuset\""
 
 msgctxt "field.field.eventinstance.default.field_event_location:label"
 msgid "Location"
-msgstr "Lokation"
+msgstr "Lokationsnavn"
 
 msgctxt "field.field.eventinstance.default.field_event_location_type:label"
 msgid "In person or online?"
@@ -7607,7 +7607,7 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_location:label"
 msgid "Location"
-msgstr "Lokation"
+msgstr "Lokationsnavn"
 
 msgctxt "field.field.eventseries.default.field_event_location_type:label"
 msgid "In person or online?"
