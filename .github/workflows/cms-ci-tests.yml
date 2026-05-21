@@ -363,6 +363,29 @@ jobs:
       - name: Ensure GraphQL client code has not drifted
         run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/src/GraphQL/*
 
+  CheckProxyClasses:
+    name: CMS / Check generated proxy classes
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Regenerate proxy classes
+        run: task dev:codegen:proxy-classes
+      - name: Ensure proxy classes have not drifted
+        run: git diff --ignore-space-at-eol --exit-code 'web/modules/custom/*/src/ProxyClass/*'
+
   CheckDrupalConfig:
     name: CMS / Check Drupal Config
     runs-on: ubuntu-latest
