@@ -20,6 +20,12 @@ services:
 
   dpl_go.path_processor_outbound:
     class: Drupal\dpl_go\PathProcessor\OutboundPathProcessor
+    # Lazy-load to break a service container dependency cycle: this processor
+    # is collected into path_processor_manager, which is a dependency of
+    # router.route_provider, so any of its dependencies that transitively
+    # reach `router` close the loop. The proxy defers resolution until
+    # processOutbound() is actually called.
+    lazy: true
     tags:
       # We need higher priority than
       # Drupal\path_alias\PathProcessor\AliasPathProcessor so we get
