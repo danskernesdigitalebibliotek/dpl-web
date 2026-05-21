@@ -6,6 +6,7 @@ use Drupal\dpl_related_content\Services\RelatedContent;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Place a dynamic 'related content' list on articles and eventinstances.
@@ -68,8 +69,21 @@ function dpl_related_content_preprocess_paragraph__content_slider_automatic(arra
  * Implements hook_preprocess_HOOK() for paragraph__filtered_list_event.
  */
 function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  // If the editor opted in on the paragraph, switch to the stacked list style.
+  // That allows several instances from the same series to appear, shown in a
+  // stacked view when no other series sit between them in the result order.
+  $allow_multiple = $paragraph instanceof ParagraphInterface
+    && $paragraph->hasField('field_allow_multiple_per_series')
+    && (bool) $paragraph->get('field_allow_multiple_per_series')->value;
+
+  $list_style = $allow_multiple
+    ? RelatedContentListStyle::EventListStacked
+    : RelatedContentListStyle::EventList;
+
   $variables = _dpl_related_content_filter_paragraph(
-    $variables, list_style: RelatedContentListStyle::EventList, max_items: 16, node_bundles: []
+    $variables, list_style: $list_style, max_items: 16, node_bundles: []
   );
 }
 
