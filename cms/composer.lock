@@ -11285,16 +11285,16 @@
         },
         {
             "name": "mnsami/composer-custom-directory-installer",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mnsami/composer-custom-directory-installer.git",
-                "reference": "23b198a163b52521f9785bc3d799987045f41960"
+                "reference": "23b7039ea7cf18b5846faae2b9f4d9c9445e0039"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/23b198a163b52521f9785bc3d799987045f41960",
-                "reference": "23b198a163b52521f9785bc3d799987045f41960",
+                "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/23b7039ea7cf18b5846faae2b9f4d9c9445e0039",
+                "reference": "23b7039ea7cf18b5846faae2b9f4d9c9445e0039",
                 "shasum": ""
             },
             "require": {
@@ -11336,11 +11336,16 @@
             "keywords": [
                 "composer",
                 "composer-installer",
-                "composer-plugin"
+                "composer-plugin",
+                "custom-path",
+                "drupal",
+                "installer-paths",
+                "monorepo",
+                "wordpress"
             ],
             "support": {
                 "issues": "https://github.com/mnsami/composer-custom-directory-installer/issues",
-                "source": "https://github.com/mnsami/composer-custom-directory-installer/tree/2.2.0"
+                "source": "https://github.com/mnsami/composer-custom-directory-installer/tree/2.2.1"
             },
             "funding": [
                 {
@@ -11348,7 +11353,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-07T14:57:47+00:00"
+            "time": "2026-05-20T07:57:55+00:00"
         },
         {
             "name": "mobomo/guzzle-azure-hmac-auth",
