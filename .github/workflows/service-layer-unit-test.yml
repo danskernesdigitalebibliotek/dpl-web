@@ -5,7 +5,7 @@ name: "Service Layer / Unit test"
 on:
   pull_request:
     paths:
-      - 'serviceLayer/**'
+      - 'packages/js/service-layer/**'
       - '.github/workflows/service-layer-*.yml'
 
 # List of jobs
@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: serviceLayer
+        working-directory: packages/js/service-layer
 
     steps:
       - name: Checkout code
@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version-file: "serviceLayer/.nvmrc"
+          node-version-file: "packages/js/service-layer/.nvmrc"
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile

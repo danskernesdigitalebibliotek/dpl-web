@@ -2,13 +2,11 @@
   "name": "@dpl/service-layer",
   "version": "0.1.0",
   "private": true,
-  "main": "src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./fbs": "./src/fbs/index.ts"
+    "./fbs": "./fbs/src/index.ts"
   },
   "scripts": {
-    "codegen:fbs": "orval --config src/fbs/orval.config.ts",
+    "codegen:fbs": "orval --config fbs/orval.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"

@@ -6,21 +6,25 @@ The service layer defines its own types, maps API responses to those types, and 
 
 ## Architecture
 
-Each external service gets its own folder under `src/` following a consistent pattern:
+Each external service gets its own folder under the package root, exposed as a subpath export:
 
 ```
-src/
-  fbs/                        # One folder per external service
-    fbs-adapter.yaml          # OpenAPI spec (source of truth)
-    orval.config.ts           # Codegen config for this service
-    generated/                # Orval output (internal, never exported)
-      model/
-    mappers/                  # Transforms raw API types -> service layer types
-      patron.mapper.ts
-      patron.mapper.test.ts
-    client.ts                 # Client factory with injectable config
-    types.ts                  # Hand-written types consumers see
-    index.ts                  # Public exports for this service
+packages/js/service-layer/
+  package.json                # @dpl/service-layer (subpath exports per service)
+  tsconfig.json
+  vitest.config.ts
+  fbs/                        # ./fbs subpath
+    orval.config.ts
+    src/
+      fbs-adapter.yaml        # OpenAPI spec (source of truth)
+      generated/              # Orval output (internal, never exported)
+        model/
+      mappers/                # Transforms raw API types -> service layer types
+        patron.mapper.ts
+        patron.mapper.test.ts
+      client.ts               # Client factory with injectable config
+      types.ts                # Hand-written types consumers see
+      index.ts                # Public exports for this service
 ```
 
 ## Design principles
@@ -41,19 +45,13 @@ yarn typecheck      # Run TypeScript type checking
 
 ## How consuming apps import
 
-Apps import via TypeScript path aliases — no publishing or linking needed.
-
-In `tsconfig.json` of the consuming app:
+Apps depend on this package via a `file:` reference in their `package.json`:
 
 ```json
 {
-  "compilerOptions": {
-    "paths": {
-      "@dpl/service-layer": ["../serviceLayer/src/index.ts"],
-      "@dpl/service-layer/*": ["../serviceLayer/src/*"]
-    }
-  },
-  "include": ["../serviceLayer/src/**/*.ts"]
+  "dependencies": {
+    "@dpl/service-layer": "file:../packages/js/service-layer"
+  }
 }
 ```
 
@@ -78,23 +76,21 @@ const patronInfo = await client.getPatronInfo()
 
 ## How to add a new service
 
-1. Create a new folder under `src/` (e.g., `src/publizon/`)
-2. Add the API spec file (e.g., `publizon-spec.yaml`)
-3. Create `orval.config.ts` for the service's codegen
-4. Run codegen to generate raw types into `generated/`
-5. Define hand-written service layer types in `types.ts`
-6. Write mappers in `mappers/` that transform generated types to service layer types
-7. Write the client factory in `client.ts`
-8. Export the public API from `index.ts`
-9. Re-export from `src/index.ts`
-10. Add a `codegen:<service>` script to `package.json`
+1. Create a new folder (e.g., `publizon/`) with the same `orval.config.ts` + `src/` shape
+2. Add the API spec file under `src/`
+3. Run codegen to generate raw types into `src/generated/`
+4. Define hand-written service layer types in `src/types.ts`
+5. Write mappers in `src/mappers/` that transform generated types to service layer types
+6. Write the client factory in `src/client.ts`
+7. Export the public API from `src/index.ts`
+8. Add the new subpath to `exports` in `package.json` and a `codegen:<service>` script
 
 ## How to add a new endpoint to an existing service
 
-1. Define any new service layer types needed in `types.ts`
-2. Write a mapper in `mappers/` for the new endpoint's response
-3. Add a method to the client factory in `client.ts`
-4. Export new types from `index.ts` if needed
+1. Define any new service layer types needed in `src/types.ts`
+2. Write a mapper in `src/mappers/` for the new endpoint's response
+3. Add a method to the client factory in `src/client.ts`
+4. Export new types from `src/index.ts` if needed
 5. Write tests for the mapper
 
 ## Node version

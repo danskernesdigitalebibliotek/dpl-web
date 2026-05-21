@@ -4,13 +4,13 @@ export default defineConfig({
   fbs: {
     output: {
       mode: "split",
-      target: "generated/fbs.ts",
-      schemas: "generated/model",
+      target: "src/generated/fbs.ts",
+      schemas: "src/generated/model",
       client: "fetch",
       prettier: true,
     },
     input: {
-      target: "fbs-adapter.yaml",
+      target: "src/fbs-adapter.yaml",
       converterOptions: {
         indent: 2,
       },
