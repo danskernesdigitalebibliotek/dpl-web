@@ -147,17 +147,21 @@ Password for the Mobile GraphQL consumer user. Used for runtime
 validation of authorization of mobile clients querying the graphql
 API.
 
-## Authentication (Adgangsplatformen & UniLogin)
+## Authentication (Adgangsplatforme)
 
-These are read by the `cli-set-openid-settings.sh` and
-`cli-set-unilogin-settings.sh` scripts and are deprecated.
-
-If these are needed for development, proper values can be found in
-1Password.
+These are automatically picked up for configuration (see
+`local.settings.php` and `development.settings.php`).
 
 - `OPENID_CLIENT_ID`: Client ID for Adgangsplatformen OIDC.
 - `OPENID_CLIENT_SECRET`: Client secret for Adgangsplatformen OIDC.
 - `OPENID_AGENCY_ID`: Agency ID for Adgangsplatformen OIDC.
+
+
+## Authentication (UniLogin)
+
+This is read by `cli-set-unilogin-settings.sh` scripts and are
+deprecated.
+
 - `UNILOGIN_CLIENT_SECRET`: Client secret for UniLogin API.
 
 And if you need these, grab someone that's worked in the area before

@@ -34,3 +34,8 @@ $bnf_base_url = preg_replace('{^https://}', 'https://bnf-', getenv('LAGOON_ROUTE
 // The URL MUST end with a slash, as is required by the config form.
 $bnf_base_url = str_ends_with($bnf_base_url, '/') ? $bnf_base_url : "$bnf_base_url/";
 $config['bnf_client.settings']['base_url'] = $bnf_base_url;
+
+// Dev environments just use environment vars.
+$config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = getenv('OPENID_CLIENT_ID');
+$config['openid_connect.client.adgangsplatformen']['settings']['client_secret'] = getenv('OPENID_CLIENT_SECRET');
+$config['openid_connect.client.adgangsplatformen']['settings']['agency_id'] = getenv('OPENID_AGENCY_ID');

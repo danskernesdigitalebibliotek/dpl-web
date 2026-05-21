@@ -21,4 +21,9 @@ if ($project === 'dpl-web') {
     $config['bnf_client.settings']['base_url'] = 'https://varnish.' .
       getenv('LAGOON_ENVIRONMENT') . '.dpl-web-bnf.dplplat02.dpl.reload.dk/';
   }
+
+  // Dev environments just use environment vars.
+  $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = getenv('OPENID_CLIENT_ID');
+  $config['openid_connect.client.adgangsplatformen']['settings']['client_secret'] = getenv('OPENID_CLIENT_SECRET');
+  $config['openid_connect.client.adgangsplatformen']['settings']['agency_id'] = getenv('OPENID_AGENCY_ID');
 }
