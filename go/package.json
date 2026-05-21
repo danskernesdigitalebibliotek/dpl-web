@@ -54,7 +54,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cookies-next": "^6.1.1",
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.2.1",
     "framer-motion": "12.38.0",
     "graphql": "^16.14.0",
     "iron-session": "^8.0.4",
