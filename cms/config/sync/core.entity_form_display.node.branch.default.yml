@@ -55,6 +55,7 @@ content:
     settings:
       size: 60
       placeholder: 'Type to search..'
+      freetext_coords: false
     third_party_settings: {  }
   field_agency_branch_id:
     type: select2

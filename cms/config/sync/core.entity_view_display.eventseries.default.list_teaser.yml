@@ -9,6 +9,7 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_address_gsearch
     - field.field.eventseries.default.field_event_all_day
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
@@ -29,6 +30,7 @@ dependencies:
     - recurring_events.eventseries_type.default
   module:
     - dpl_event
+    - gsearch
     - options
 _core:
   default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
@@ -68,6 +70,13 @@ content:
       domestic_country: site_default
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_event_address_gsearch:
+    type: address_gsearch
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
     region: content
   field_event_image:
     type: entity_reference_entity_view

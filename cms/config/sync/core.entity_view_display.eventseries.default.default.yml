@@ -8,6 +8,7 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_address_gsearch
     - field.field.eventseries.default.field_event_all_day
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
@@ -69,6 +70,15 @@ content:
       domestic_country: site_default
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_event_address_gsearch:
+    type: dpl_branch_address
+    label: hidden
+    settings:
+      skip_domestic_country: '1'
+      domestic_country: site_default
+    third_party_settings: {  }
+    weight: 18
     region: content
   field_event_image:
     type: entity_reference_entity_view
