@@ -7,7 +7,6 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\recurring_events\Entity\EventInstance;
 use Spatie\Color\Hex;
 use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
@@ -336,47 +335,6 @@ function novel_theme_suggestions_input_alter(array &$suggestions, array $variabl
 
   if ($name) {
     $suggestions[] = "input__$name";
-  }
-}
-
-/**
- * Preprocesses rows in a Drupal view to handle the display of event instances.
- *
- * Introduces an 'shouldBeStacked' attribute for event items to specify whether
- * they should be presented in a stacked view mode.
- * This determination is made by comparing the current event's series ID with
- *  that of the preceding event.
- *
- * @param array &$variables
- *   An array of variables to pass to the theme layer.
- */
-function novel_preprocess_views_view_unformatted(&$variables): void {
-
-  $rows = &$variables['rows'];
-  foreach ($rows as $index => &$row) {
-
-    if ($row['content']['#view_mode'] !== 'list_teaser_stacked_parent' ||
-      !($row['content']['#eventinstance'] instanceof EventInstance)) {
-      continue;
-    }
-
-    $eventInstance = $row['content']['#eventinstance'];
-    $eventSeriesId = $eventInstance->getEventSeries()->id();
-
-    // Check if not first row and previous event_series_id matches.
-    $shouldBeStacked = $index > 0 && $eventSeriesId === $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
-    $row['shouldBeStacked'] = $shouldBeStacked;
-
-    if ($shouldBeStacked) {
-      $row['content']['#view_mode'] = 'stacked_event';
-    }
-
-    // Add cache tags to ensure stacked view is recalculated for factors that
-    // can affect the order:
-    // - Events are created/updated/deleted
-    // - Path and url arguments as this can effect filtering and ordering.
-    $row['content']['#cache']['tags'][] = 'eventinstance_list';
-    $row['content']['#cache']['contexts'][] = 'url';
   }
 }
 
