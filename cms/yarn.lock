@@ -1589,12 +1589,12 @@ csstype@^3.1.2:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.2.tgz"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
 
-cypress-if@^1.13.2:
-  version "1.13.2"
-  resolved "https://registry.npmjs.org/cypress-if/-/cypress-if-1.13.2.tgz"
-  integrity sha512-qW42/GC9ORZNDcKpk5R8aF/AAmdRH8fwkX2ZO/SzeC7P3ogzmNRTObykUlAQITsMMpo65PqacJ0/LFMA5gyzrg==
+cypress-if@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/cypress-if/-/cypress-if-1.15.0.tgz#665cf4834711bef805690ae2459d63554d50c7cc"
+  integrity sha512-bX/t/F1KcLt/HRO3/mLum2vQPN8xfbY3Orhc6wKj36FPSNjfI0lP5HpcumABNRWcdjPyykWEPOgWbwxHrPmBrQ==
   dependencies:
-    debug "^4.3.4"
+    debug "^4.4.3"
 
 cypress-plugin-api@^2.11.2:
   version "2.11.2"
