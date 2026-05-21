@@ -226,6 +226,10 @@
                   "type": "integer",
                   "description": "The id for the branch the instance belongs to"
                 },
+                "branch_name": {
+                  "type": "string",
+                  "description": "The name of the branch the instance belongs to"
+                },
                 "repetition": {
                   "type": "object",
                   "properties": {
@@ -253,7 +257,7 @@
                   "required": ["type"]
                 }
               },
-              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
             }
           }
         ],
@@ -433,14 +437,14 @@
                     "type": "integer",
                     "description": "The id for the branch the instance belongs to"
                   },
+                  "branch_name": {
+                    "type": "string",
+                    "description": "The name of the branch the instance belongs to"
+                  },
                   "branch_isil_id": {
                     "type": "string",
                     "description": "External branch id (ISIL)",
                     "example": "DK-710100"
-                  },
-                  "branch_name": {
-                    "type": "string",
-                    "description": "The name of the branch the instance belongs to"
                   },
                   "repetition": {
                     "type": "object",
@@ -592,6 +596,10 @@
                   "type": "integer",
                   "description": "The id for the branch the instance belongs to"
                 },
+                "branch_name": {
+                  "type": "string",
+                  "description": "The name of the branch the instance belongs to"
+                },
                 "repetition": {
                   "type": "object",
                   "properties": {
@@ -619,7 +627,7 @@
                   "required": ["type"]
                 }
               },
-              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
             }
           }, 
           {
