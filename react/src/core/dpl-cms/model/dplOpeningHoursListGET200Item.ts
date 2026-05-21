@@ -22,5 +22,7 @@ export type DplOpeningHoursListGET200Item = {
   branch_id: number;
   /** External branch id (ISIL) */
   branch_isil_id?: string;
+  /** The name of the branch the instance belongs to */
+  branch_name: string;
   repetition: DplOpeningHoursListGET200ItemRepetition;
 };
