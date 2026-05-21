@@ -110,6 +110,17 @@ class DplOpeningHoursCreatePOST200ResponseInner
     protected ?int $branchId = null;
 
     /**
+     * The name of the branch the instance belongs to
+     *
+     * @var string|null
+     * @SerializedName("branch_name")
+     * @Assert\NotNull()
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $branchName = null;
+
+    /**
      * @var DplOpeningHoursListGET200ResponseInnerRepetition|null
      * @SerializedName("repetition")
      * @Assert\NotNull()
@@ -132,6 +143,7 @@ class DplOpeningHoursCreatePOST200ResponseInner
             $this->startTime = array_key_exists('startTime', $data) ? $data['startTime'] : $this->startTime;
             $this->endTime = array_key_exists('endTime', $data) ? $data['endTime'] : $this->endTime;
             $this->branchId = array_key_exists('branchId', $data) ? $data['branchId'] : $this->branchId;
+            $this->branchName = array_key_exists('branchName', $data) ? $data['branchName'] : $this->branchName;
             $this->repetition = array_key_exists('repetition', $data) ? $data['repetition'] : $this->repetition;
         }
     }
@@ -288,6 +300,32 @@ class DplOpeningHoursCreatePOST200ResponseInner
     public function setBranchId(?int $branchId): self
     {
         $this->branchId = $branchId;
+
+        return $this;
+    }
+
+    /**
+     * Gets branchName.
+     *
+     * @return string|null
+     */
+    public function getBranchName(): ?string
+    {
+        return $this->branchName;
+    }
+
+
+
+    /**
+     * Sets branchName.
+     *
+     * @param string|null $branchName  The name of the branch the instance belongs to
+     *
+     * @return $this
+     */
+    public function setBranchName(?string $branchName): self
+    {
+        $this->branchName = $branchName;
 
         return $this;
     }

@@ -226,10 +226,6 @@
                   "type": "integer",
                   "description": "The id for the branch the instance belongs to"
                 },
-                "branch_name": {
-                  "type": "string",
-                  "description": "The name of the branch the instance belongs to"
-                },
                 "repetition": {
                   "type": "object",
                   "properties": {
@@ -257,7 +253,7 @@
                   "required": ["type"]
                 }
               },
-              "required": ["category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
             }
           }
         ],
@@ -596,10 +592,6 @@
                   "type": "integer",
                   "description": "The id for the branch the instance belongs to"
                 },
-                "branch_name": {
-                  "type": "string",
-                  "description": "The name of the branch the instance belongs to"
-                },
                 "repetition": {
                   "type": "object",
                   "properties": {
@@ -627,7 +619,7 @@
                   "required": ["type"]
                 }
               },
-              "required": ["category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
             }
           }, 
           {
