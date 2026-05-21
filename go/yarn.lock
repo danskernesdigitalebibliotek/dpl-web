@@ -12558,10 +12558,10 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mockttp@^4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.4.1.tgz#945087115cf3beaba3cb883d52701da5b77dff13"
-  integrity sha512-1Ox0oZERisl1dtpAv26FsR3XMVpB4AsKJAAT1g7OerCMhIDqz8b8r/nTK562zVuOyLYttuCsLVEt4eaHYaCWUg==
+mockttp@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/mockttp/-/mockttp-4.4.2.tgz#8132e8343fbf166ab623e529bde6d067ae9d4523"
+  integrity sha512-jHw/qCuzIReIVRDNK5geG17K7Xo0qlamRCCw5yI4ab8vQ1MGimOS9QU3u76bc0sLG1jQygjlcx421QkKOy0pfA==
   dependencies:
     "@graphql-tools/schema" "^10.0.31"
     "@graphql-tools/utils" "^11.0.0"
