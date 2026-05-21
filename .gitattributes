@@ -6,7 +6,6 @@ go/lib/graphql/generated/** linguist-generated
 react/src/core/dbc-gateway/generated/** linguist-generated
 
 # Orval codegen (go)
-go/lib/rest/fbs/generated/** linguist-generated
 go/lib/rest/publizon/adapter/generated/** linguist-generated
 go/lib/rest/publizon/local-adapter/generated/** linguist-generated
 
