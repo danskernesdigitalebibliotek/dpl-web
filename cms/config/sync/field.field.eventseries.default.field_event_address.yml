@@ -11,7 +11,7 @@ id: eventseries.default.field_event_address
 field_name: field_event_address
 entity_type: eventseries
 bundle: default
-label: Address
+label: 'Address (Deprecated - will be removed)'
 description: 'Choose a country, to fill out the address of the event.'
 required: false
 translatable: false

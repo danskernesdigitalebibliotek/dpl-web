@@ -7,6 +7,7 @@ dependencies:
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_address_gsearch
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
@@ -27,9 +28,9 @@ dependencies:
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
-    - address
     - datetime_range
     - field_group
+    - gsearch
     - link
     - media_library
     - media_library_edit
@@ -47,7 +48,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 15
+      weight: 11
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -64,7 +65,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 16
+      weight: 12
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -82,7 +83,7 @@ third_party_settings:
       label: 'Event details'
       region: content
       parent_name: ''
-      weight: 14
+      weight: 10
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -98,7 +99,7 @@ third_party_settings:
       label: Infoscreen
       region: content
       parent_name: ''
-      weight: 17
+      weight: 13
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -115,7 +116,7 @@ third_party_settings:
       label: Library
       region: content
       parent_name: ''
-      weight: 4
+      weight: 3
       format_type: details
       format_settings:
         classes: ''
@@ -133,7 +134,7 @@ third_party_settings:
       label: Tickets
       region: content
       parent_name: ''
-      weight: 5
+      weight: 4
       format_type: details
       format_settings:
         classes: ''
@@ -149,7 +150,7 @@ third_party_settings:
       label: Partners
       region: content
       parent_name: ''
-      weight: 6
+      weight: 5
       format_type: details
       format_settings:
         classes: ''
@@ -166,7 +167,7 @@ third_party_settings:
       label: Dates
       region: content
       parent_name: ''
-      weight: 3
+      weight: 2
       format_type: details
       format_settings:
         classes: ''
@@ -181,7 +182,7 @@ third_party_settings:
         - field_event_location_type
         - field_event_non_branch_location
         - field_event_location
-        - field_event_address
+        - field_event_address_gsearch
         - field_event_place
       label: Locations
       region: content
@@ -234,18 +235,20 @@ content:
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 2
+    weight: 1
     region: content
     settings:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
-  field_event_address:
-    type: address_default
+  field_event_address_gsearch:
+    type: address_gsearch
     weight: 22
     region: content
     settings:
-      wrapper_type: details
+      size: 60
+      placeholder: 'Type to search..'
+      freetext_coords: false
     third_party_settings: {  }
   field_event_all_day:
     type: boolean_checkbox
@@ -294,7 +297,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 13
+    weight: 8
     region: content
     settings:
       title: Paragraph
@@ -332,7 +335,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 23
+    weight: 24
     region: content
     settings:
       size: 60
@@ -347,7 +350,7 @@ content:
     third_party_settings: {  }
   field_event_title:
     type: string_textfield
-    weight: 1
+    weight: 0
     region: content
     settings:
       size: 60
@@ -435,21 +438,22 @@ content:
           dialog_style: tiles
   path:
     type: path
-    weight: 18
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 12
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 11
+    weight: 6
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
 hidden:
   body: true
+  field_event_address: true

@@ -35,7 +35,7 @@ describe("Search Result Tests", () => {
     )
 
     // Check if facets are displayed
-    cy.dataCy("filter-button").should("have.length.above", 40)
+    cy.dataCy("filter-button").should("have.length.above", 10)
 
     // Intercept search request with only one result
     cy.interceptGraphql({

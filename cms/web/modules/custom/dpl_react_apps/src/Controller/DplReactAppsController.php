@@ -78,8 +78,8 @@ class DplReactAppsController extends ControllerBase {
         if (!empty($location)) {
           $branch_output['location'] = [
             'city' => $location->getPostalName(),
-            'value' => $location->getValue(),
-            'address' => $location->getValue(),
+            'value' => $location->getString(),
+            'address' => $location->getString(),
             'lat' => $location->getLatitude(),
             'lng' => $location->getLongitude(),
           ];
