@@ -190,6 +190,9 @@ if (getenv('LAGOON')) {
     // @see https://www.drupal.org/project/graphql/issues/3477239
     $settings['cache']['bins']['graphql_ast'] = 'cache.backend.database';
     $settings['cache']['bins']['graphql_results'] = 'cache.backend.database';
+    $settings['cache']['bins']['graphql_definitions'] = 'cache.backend.database';
+    $settings['cache']['bins']['graphql_results'] = 'cache.backend.database';
+    $settings['cache']['bins']['graphql_compose_definitions'] = 'cache.backend.database';
 
     // The default example configuration that ships with the module works fine.
     // By using it, we rely on future developers that updates the module to
