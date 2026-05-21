@@ -114,6 +114,10 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
           "type" => "integer",
           "description" => "The id for the branch the instance belongs to",
         ],
+        "branch_name" => [
+          "type" => "string",
+          "description" => "The name of the branch the instance belongs to",
+        ],
         ...($include_isil ? [
           "branch_isil_id" => [
             "type" => "string",
@@ -175,6 +179,7 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
         "start_time",
         "end_time",
         "branch_id",
+        "branch_name",
         "repetition",
       ],
     ];
