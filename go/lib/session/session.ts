@@ -5,7 +5,7 @@ import { NextResponse, connection } from "next/server"
 
 import { getEnv, getServerEnv } from "../config/env"
 import goConfig from "../config/goConfig"
-import { loadPatronServerSide } from "../helpers/fbs"
+import { loadPatronServerSide } from "../helpers/service-layer"
 import { isBuildingGoApp } from "../helpers/next-phase"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
