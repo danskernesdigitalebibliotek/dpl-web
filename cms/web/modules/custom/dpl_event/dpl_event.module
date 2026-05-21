@@ -591,10 +591,10 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
  * Each item is expected to be wrapped as ['content' => $entity_render_array],
  * matching the structure produced by views_view_unformatted.
  *
- * @param array $items
+ * @param array<mixed> $items
  *   The list of wrapped render items.
  *
- * @return array
+ * @return array<mixed>
  *   The items with stacked metadata, cache tags and contexts applied.
  */
 function _dpl_event_stack_eventinstances(array $items): array {
@@ -610,9 +610,9 @@ function _dpl_event_stack_eventinstances(array $items): array {
     $shouldBeStacked = FALSE;
 
     // Check if not first row and previous event_series_id matches.
-    $prior_instance = $items[$index - 1]['content']['#eventinstance'] ?? NULL;
-    if ($prior_instance instanceof EventInstance) {
-      $shouldBeStacked = $eventSeriesId === $prior_instance->getEventSeries()->id();
+    $priorInstance = $items[$index - 1]['content']['#eventinstance'] ?? NULL;
+    if ($priorInstance instanceof EventInstance) {
+      $shouldBeStacked = $eventSeriesId === $priorInstance->getEventSeries()->id();
     }
 
     $item['shouldBeStacked'] = $shouldBeStacked;
@@ -628,7 +628,6 @@ function _dpl_event_stack_eventinstances(array $items): array {
     $item['content']['#cache']['tags'][] = 'eventinstance_list';
     $item['content']['#cache']['contexts'][] = 'url';
   }
-  unset($item);
 
   return $items;
 }
