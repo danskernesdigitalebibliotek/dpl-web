@@ -8,6 +8,7 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_address_gsearch
     - field.field.eventseries.default.field_event_all_day
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
@@ -27,9 +28,9 @@ dependencies:
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
-    - address
     - datetime_range
     - field_group
+    - gsearch
     - link
     - media_library
     - media_library_edit
@@ -189,7 +190,7 @@ third_party_settings:
         - field_event_location_type
         - field_event_non_branch_location
         - field_event_location
-        - field_event_address
+        - field_event_address_gsearch
         - field_event_place
       label: Locations
       region: content
@@ -269,12 +270,14 @@ content:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
-  field_event_address:
-    type: address_default
-    weight: 5
+  field_event_address_gsearch:
+    type: address_gsearch
+    weight: 4
     region: content
     settings:
-      wrapper_type: fieldset
+      size: 60
+      placeholder: 'Type to search..'
+      freetext_coords: false
     third_party_settings: {  }
   field_event_all_day:
     type: boolean_checkbox
@@ -302,7 +305,7 @@ content:
     third_party_settings: {  }
   field_event_location:
     type: string_textfield
-    weight: 4
+    weight: 3
     region: content
     settings:
       size: 60
@@ -316,7 +319,7 @@ content:
     third_party_settings: {  }
   field_event_non_branch_location:
     type: boolean_checkbox
-    weight: 3
+    weight: 2
     region: content
     settings:
       display_label: true
@@ -401,7 +404,7 @@ content:
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
-    weight: 4
+    weight: 41
     region: content
     settings:
       media_types: {  }
@@ -410,7 +413,7 @@ content:
         show_edit: true
   field_teaser_text:
     type: string_textfield
-    weight: 2
+    weight: 40
     region: content
     settings:
       size: 60
@@ -425,7 +428,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 29
+    weight: 30
     region: content
     settings:
       title: Paragraph
@@ -465,7 +468,7 @@ content:
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -482,13 +485,13 @@ content:
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 9
+    weight: 10
     region: content
     settings:
       display_label: true
@@ -513,7 +516,7 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -532,4 +535,5 @@ content:
 hidden:
   body: true
   excluded_dates: true
+  field_event_address: true
   included_dates: true

@@ -1,0 +1,19 @@
+uuid: 1adc1475-67e6-44d4-b015-3af38d9d8d87
+langcode: en
+status: true
+dependencies:
+  module:
+    - gsearch
+    - recurring_events
+id: eventseries.field_event_address_gsearch
+field_name: field_event_address_gsearch
+entity_type: eventseries
+type: address_gsearch
+settings: {  }
+module: gsearch
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

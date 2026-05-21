@@ -1,0 +1,22 @@
+uuid: a3c064e4-1db7-4cf9-9e14-99bd18e439fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_address_gsearch
+    - recurring_events.eventseries_type.default
+  module:
+    - gsearch
+id: eventseries.default.field_event_address_gsearch
+field_name: field_event_address_gsearch
+entity_type: eventseries
+bundle: default
+label: Address
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_freetext: true
+field_type: address_gsearch
