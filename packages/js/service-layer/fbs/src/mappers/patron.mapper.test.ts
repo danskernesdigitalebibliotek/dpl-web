@@ -51,7 +51,7 @@ describe("mapAuthenticatedPatron", () => {
 
     const result = mapAuthenticatedPatron(raw)
 
-    expect(result.status).toBe("LOANER_LOCKED_OUT")
+    expect(result.status).toBe("LOCKED_OUT")
     expect(result.patron).toBeUndefined()
   })
 

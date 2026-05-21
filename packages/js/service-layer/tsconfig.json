@@ -12,6 +12,6 @@
     "skipLibCheck": true,
     "baseUrl": "."
   },
-  "include": ["fbs/src/**/*.ts"],
+  "include": ["**/src/**/*.ts"],
   "exclude": ["node_modules"]
 }

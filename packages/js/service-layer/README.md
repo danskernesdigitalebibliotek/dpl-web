@@ -1,38 +1,46 @@
-# Service Layer
+# @dpl/service-layer
 
 An abstraction between the monorepo apps (GO, CMS/React) and external APIs.
 
-The service layer defines its own types, maps API responses to those types, and shields consumers from API version changes. When an external API changes (e.g., FBS 1.0 to 2.0), only the service layer internals need updating — consumers remain unaffected.
+The service layer exposes **composed functions** that return domain data. Consumers don't know — or care — which upstream API a function reads from. When an external API changes (e.g., FBS 1.0 to 2.0), or when a function starts pulling data from multiple sources, only the service-layer internals change. Consumers stay the same.
 
 ## Architecture
 
-Each external service gets its own folder under the package root, exposed as a subpath export:
-
 ```
 packages/js/service-layer/
-  package.json                # @dpl/service-layer (subpath exports per service)
+  package.json                # @dpl/service-layer (one public entry: .)
   tsconfig.json
   vitest.config.ts
-  fbs/                        # ./fbs subpath
+  src/                        # public composed layer
+    index.ts                  # public exports (the only surface consumers touch)
+    types.ts                  # domain DTOs (PatronInfo, AuthenticatedPatronInfo, ...)
+    patron.ts                 # composed functions (getPatron, ...)
+  fbs/                        # internal adapter for FBS
     orval.config.ts
     src/
       fbs-adapter.yaml        # OpenAPI spec (source of truth)
       generated/              # Orval output (internal, never exported)
-        model/
-      mappers/                # Transforms raw API types -> service layer types
-        patron.mapper.ts
-        patron.mapper.test.ts
-      client.ts               # Client factory with injectable config
-      types.ts                # Hand-written types consumers see
-      index.ts                # Public exports for this service
+      mappers/                # Raw FBS -> domain DTOs
+      client.ts               # createFbsClient — internal
+      types.ts                # FbsConfig — internal
+      index.ts                # internal entry for the adapter
 ```
+
+The `fbs/` folder is an **internal adapter**. There is no public `./fbs` subpath — consumers cannot import from it.
 
 ## Design principles
 
-- **Generated API types stay internal** — they are never exported to consumers. Only hand-written service layer types are public.
-- **Service layer types are minimal** — only include fields actually used by consumers. This decouples consumers from the full API schema.
-- **Client factories accept injectable config** — each consuming app provides its own base URL and auth strategy. This allows the GO app to proxy through its API routes while the React app can call APIs directly.
-- **When an API version changes, only the mapper changes** — the service layer types and consumer code remain stable.
+- **Composed functions own the public API.** Each exported function (e.g., `getPatron`) returns a domain DTO. The name says what data you get, not which API it came from.
+- **Adapters are internal.** Per-service folders (`fbs/`, later `publizon/`) hold OpenAPI specs, generated types, mappers, and clients. None of this leaks out of the package.
+- **Generated API types stay internal.** Only hand-written domain DTOs (in `src/types.ts`) are public.
+- **Domain DTOs are minimal.** Only fields actually used by consumers. This decouples consumers from the full API schema.
+- **Config is injected per call** as a service-namespaced object, so each composed function declares exactly which upstreams it needs:
+  ```ts
+  getPatron({ fbs: {...} })
+  // future:
+  getAllLoans({ fbs: {...}, publizon: {...} })
+  ```
+- **When an API version changes, only the mapper changes.** Domain DTOs and consumer code remain stable.
 
 ## Available scripts
 
@@ -61,37 +69,34 @@ For Next.js apps, also add to `next.config.mjs`:
 transpilePackages: ["@dpl/service-layer"]
 ```
 
-Then import in your code:
+Then call composed functions:
 
 ```typescript
-import { createFbsClient } from "@dpl/service-layer/fbs"
+import { getPatron } from "@dpl/service-layer"
 
-const client = createFbsClient({
-  baseUrl: "https://fbs-openplatform.dbc.dk",
-  getAuthHeader: () => `Bearer ${token}`,
+const patron = await getPatron({
+  fbs: {
+    baseUrl: "https://fbs-openplatform.dbc.dk",
+    getAuthHeader: () => `Bearer ${token}`,
+  },
 })
-
-const patronInfo = await client.getPatronInfo()
 ```
 
-## How to add a new service
+## How to add a new composed function
 
-1. Create a new folder (e.g., `publizon/`) with the same `orval.config.ts` + `src/` shape
-2. Add the API spec file under `src/`
-3. Run codegen to generate raw types into `src/generated/`
-4. Define hand-written service layer types in `src/types.ts`
-5. Write mappers in `src/mappers/` that transform generated types to service layer types
-6. Write the client factory in `src/client.ts`
-7. Export the public API from `src/index.ts`
-8. Add the new subpath to `exports` in `package.json` and a `codegen:<service>` script
+1. Decide which adapter(s) it needs.
+2. Write/extend the relevant adapter client(s) under `<adapter>/src/client.ts` and mapper(s) under `<adapter>/src/mappers/`.
+3. Define or extend the domain DTO in `src/types.ts`.
+4. Add the composed function in `src/<domain>.ts` (or a new file). Its config parameter declares only the adapters it uses.
+5. Re-export from `src/index.ts`.
+6. Write tests for the mapper(s) and, if useful, the composed function.
 
-## How to add a new endpoint to an existing service
+## How to add a new upstream adapter (e.g., publizon)
 
-1. Define any new service layer types needed in `src/types.ts`
-2. Write a mapper in `src/mappers/` for the new endpoint's response
-3. Add a method to the client factory in `src/client.ts`
-4. Export new types from `src/index.ts` if needed
-5. Write tests for the mapper
+1. Create `publizon/` next to `fbs/` with the same shape (`orval.config.ts` + `src/{client,types,mappers,generated}.ts`, `src/<api>-adapter.yaml`).
+2. Run codegen for the new adapter (add a `codegen:publizon` script).
+3. Domain DTOs go in the package-level `src/types.ts`, not the adapter.
+4. Compose data in `src/<domain>.ts` — combine `fbs` and `publizon` as needed.
 
 ## Node version
 
