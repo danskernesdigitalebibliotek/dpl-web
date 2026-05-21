@@ -26,4 +26,7 @@ if ($project === 'dpl-web') {
   $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = getenv('OPENID_CLIENT_ID');
   $config['openid_connect.client.adgangsplatformen']['settings']['client_secret'] = getenv('OPENID_CLIENT_SECRET');
   $config['openid_connect.client.adgangsplatformen']['settings']['agency_id'] = getenv('OPENID_AGENCY_ID');
+  $config['dpl_unilogin.settings']['unilogin_api_client_secret'] = getenv('UNILOGIN_CLIENT_SECRET');
+  $config['dpl_unilogin.settings']['unilogin_api_pubhub_retailer_key_code'] = getenv('UNILOGIN_PUBHUB_RETAILER_KEY_CODE');
+  $config['dpl_unilogin.settings']['unilogin_api_municipality_id'] = getenv('UNILOGIN_MUNICIPALITY_ID');
 }

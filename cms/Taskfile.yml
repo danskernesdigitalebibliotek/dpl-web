@@ -221,12 +221,6 @@ tasks:
       - task dev:cli -- drush user-login
       - task dev:bnfcli -- drush user-login
 
-  dev:unilogin:configure:
-    desc: Set Unilogin settings based on .env variables.
-    cmds:
-      - task dev:cli -- ./dev-scripts/cli-set-unilogin-settings.sh
-      - task dev:cache:clear:all
-
   dev:run-cron:
     desc: Run cron in the container
     cmds:
