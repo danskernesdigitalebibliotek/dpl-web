@@ -91,6 +91,19 @@ function init() {
     }
   });
 
+  // Always reload patron pages restored from the back/forward cache so the
+  // server can enforce access control. Non-patron pages are covered by
+  // Cache-Control: no-store set server-side for all authenticated responses.
+  window.addEventListener("pageshow", (e) => {
+    if (
+      e.persisted &&
+      /(?:^|\/)user\/me(?:\/|$)/.test(window.location.pathname)
+    ) {
+      document.documentElement.style.visibility = "hidden";
+      window.location.reload();
+    }
+  });
+
   const initial = {
     apps: {},
     setToken,
