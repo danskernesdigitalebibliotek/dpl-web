@@ -1,4 +1,8 @@
-import { ApiResult, FileExtensionType } from "../../publizon/model";
+import {
+  ApiResult,
+  FileExtensionType,
+  LoanListResult
+} from "../../publizon/model";
 import { UseTextFunction } from "../text";
 
 export const getPublizonErrorStatusText = (
@@ -54,4 +58,33 @@ export const isAudiobookExtension = (type?: FileExtensionType): boolean => {
   return (
     type === FileExtensionType.NUMBER_1 || type === FileExtensionType.NUMBER_4
   );
+};
+
+export const getPatronLoanQuotas = (
+  loansData?: LoanListResult | null
+): { patronEbookLoans: number; patronAudioLoans: number } => {
+  let patronEbookLoans = 0;
+  if (loansData?.userData?.totalEbookLoans) {
+    patronEbookLoans = Math.abs(loansData.userData.totalEbookLoans) || 0;
+  }
+  let patronAudioLoans = 0;
+  if (loansData?.userData?.totalAudioLoans) {
+    patronAudioLoans = Math.abs(loansData.userData.totalAudioLoans) || 0;
+  }
+
+  if (loansData?.loans) {
+    const ebookSubscriptionLoans = loansData.loans.filter(
+      (loan) =>
+        loan.isSubscriptionLoan && isEbookExtension(loan.fileExtensionType)
+    ).length;
+    const audioSubscriptionLoans = loansData.loans.filter(
+      (loan) =>
+        loan.isSubscriptionLoan && isAudiobookExtension(loan.fileExtensionType)
+    ).length;
+
+    patronEbookLoans = Math.max(0, patronEbookLoans - ebookSubscriptionLoans);
+    patronAudioLoans = Math.max(0, patronAudioLoans - audioSubscriptionLoans);
+  }
+
+  return { patronEbookLoans, patronAudioLoans };
 };
