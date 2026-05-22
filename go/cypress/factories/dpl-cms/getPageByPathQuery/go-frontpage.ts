@@ -87,6 +87,38 @@ export default Factory.define<GetPageByPathQuery>(() => {
             id: "444e506f-0952-4cac-898d-7750ce2e9748",
           },
           {
+            __typename: "ParagraphGoVideoBundleVerticalAuto",
+            id: "c1aaaa01-0000-4000-8000-000000000001",
+            cqlSearch: {
+              value: "term.subject='vertical-auto-test' AND term.generalmaterialtype='bøger'",
+            },
+            goVideoTitle: "Vertical auto bundle",
+            embedVideo: {
+              id: "vert-auto-uuid-0000-0000-000000000001",
+              name: "Vertical auto video",
+              mediaVideotoolVertical: "https://media.videotool.dk?vn=vertical_auto_test_fixture",
+              thumbnail: "https://example.com/vertical-auto-thumbnail.jpg",
+            },
+            videoAmountOfMaterials: 10,
+          },
+          {
+            __typename: "ParagraphGoVideoBundleVerticalManual",
+            id: "c1aaaa02-0000-4000-8000-000000000002",
+            goVideoTitle: "Vertical manual bundle",
+            embedVideo: {
+              id: "vert-manual-uuid-0000-0000-000000000002",
+              name: "Vertical manual video",
+              mediaVideotoolVertical: "https://media.videotool.dk?vn=vertical_manual_test_fixture",
+              thumbnail: "https://example.com/vertical-manual-thumbnail.jpg",
+            },
+            videoBundleWorkIds: [
+              {
+                material_type: "e-bog",
+                work_id: "work-of:870970-basis:138640027",
+              },
+            ],
+          },
+          {
             __typename: "ParagraphGoVideoBundleManual",
             id: "fb248e2a-8d78-41a6-b80e-b5063cca740e",
             goVideoTitle: "Adrian løser læsekrisen!",
