@@ -63,9 +63,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
         {translatedCql && (
           <button
             type="button"
-            className={clsx("link-tag mr-16 capitalize-first", {
-              "cursor-default": copiedToClipboard
-            })}
+            className="link-tag mr-16 capitalize-first"
             onClick={() => {
               copy(translatedCql);
               setCopiedToClipboard(true);
