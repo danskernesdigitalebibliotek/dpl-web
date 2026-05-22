@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-20 14:54+0200\n"
-"PO-Revision-Date: 2026-05-20 14:54+0200\n"
+"POT-Creation-Date: 2026-05-22 08:13+0200\n"
+"PO-Revision-Date: 2026-05-22 08:13+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2179,7 +2179,7 @@ msgstr "Tilføj en mere"
 
 msgctxt "Url Proxy"
 msgid "Disable proxy"
-msgstr ""
+msgstr "Slå proxy fra"
 
 msgctxt "Url Proxy"
 msgid ""
@@ -2193,11 +2193,11 @@ msgstr "Gem"
 
 msgctxt "Url Proxy"
 msgid "Proxy server URL prefix is required when the proxy is enabled."
-msgstr ""
+msgstr "Proxy server URL præfix er påkrævet når proxy er slået til."
 
 msgctxt "Url Proxy"
 msgid "At least one hostname is required when the proxy is enabled."
-msgstr ""
+msgstr "Mindst et værtsnavn er påkrævet når proxy er slået til."
 
 msgctxt "dpl_search"
 msgid "Showing web results for \"@input\" (@total_results)"
@@ -3046,35 +3046,35 @@ msgstr "Opdaterede @count enheder, @source_field => @target_field"
 
 msgctxt "dpl_campaign"
 msgid "Highest"
-msgstr ""
+msgstr "Højest"
 
 msgctxt "dpl_campaign"
 msgid "High"
-msgstr ""
+msgstr "Høj"
 
 msgctxt "dpl_campaign"
 msgid "Medium"
-msgstr ""
+msgstr "Medium"
 
 msgctxt "dpl_campaign"
 msgid "Low"
-msgstr ""
+msgstr "Lav"
 
 msgctxt "dpl_campaign"
 msgid "Highest (National)"
-msgstr ""
+msgstr "Højest (national)"
 
 msgctxt "dpl_campaign"
 msgid "High (National)"
-msgstr ""
+msgstr "Høj (national)"
 
 msgctxt "dpl_campaign"
 msgid "Medium (National)"
-msgstr ""
+msgstr "Medium (national)"
 
 msgctxt "dpl_campaign"
 msgid "Low (National)"
-msgstr ""
+msgstr "Lav (national)"
 
 msgctxt "Search Result"
 msgid "+ more filters"
@@ -4144,7 +4144,7 @@ msgid ""
 "All material in Infomedia is covered by copyright law and may not be copied "
 "without special permission."
 msgstr ""
-"Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke "
+"Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke "
 "kopieres uden særlig tilladelse."
 
 msgctxt "Work Page"
@@ -4153,7 +4153,7 @@ msgstr "Luk pop-up"
 
 msgctxt "Work Page"
 msgid "Infomedia modal screen reader description"
-msgstr "Infomedia pop-up beskrivelse til skærmlæser"
+msgstr "Retriever pop-up beskrivelse til skærmlæser"
 
 msgctxt "Work Page"
 msgid "Avoid the queue and pick up the material now"
@@ -9642,7 +9642,7 @@ msgid "Backed enum class to get the allowed values from."
 msgstr "Understøttet enum-klasse for at få tilladte værdier fra."
 
 msgid "Enum class \"%enum_class\" does not exist."
-msgstr ""
+msgstr "Enum class \"%enum_class\" findes ikke."
 
 msgid "Enum class \"%enum_class\" is not a valid BackedEnum."
 msgstr "Enum class \"%enum_class\" er ikke en valid BackedEnum."
@@ -15010,13 +15010,13 @@ msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
 msgstr "Indtast ét domæne pr. linje, der må starte SSO via ISS."
 
 msgid "Prompt"
-msgstr ""
+msgstr "Prompt"
 
 msgid "Login"
 msgstr "Login"
 
 msgid "Consent"
-msgstr ""
+msgstr "Samtykke"
 
 msgid "Select account"
 msgstr "Vælg konto"
@@ -15283,7 +15283,7 @@ msgid "Replace"
 msgstr "Erstat"
 
 msgid "Force replace"
-msgstr ""
+msgstr "Gennemtving erstat"
 
 msgid ""
 "Modify the user login form to show the the OpenID login buttons. If the "
@@ -20769,7 +20769,7 @@ msgstr ""
 
 msgctxt "core.date_format.long:pattern"
 msgid "l, F j, Y - H:i"
-msgstr "l, F j, Y - H:i"
+msgstr ""
 
 msgctxt "core.date_format.medium:label"
 msgid "Default medium date"
@@ -20777,7 +20777,7 @@ msgstr ""
 
 msgctxt "core.date_format.medium:pattern"
 msgid "D, m/d/Y - H:i"
-msgstr "D, m/d/Y - H:i"
+msgstr ""
 
 msgctxt "core.date_format.short:label"
 msgid "Default short date"
@@ -20785,7 +20785,7 @@ msgstr ""
 
 msgctxt "core.date_format.short:pattern"
 msgid "m/d/Y - H:i"
-msgstr "m/d/Y - H:i"
+msgstr ""
 
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_teaser_card:label"
 msgid "Teaser card"
@@ -21502,11 +21502,15 @@ msgid "Subtitle"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_address:label"
-msgid "Address"
+msgid "Address (Deprecated - will be removed)"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_address:description"
 msgid "Choose a country, to fill out the address of the event."
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_address_gsearch:label"
+msgid "Address"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_all_day:label"
@@ -21689,11 +21693,15 @@ msgid "Subtitle"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_address:label"
-msgid "Address"
+msgid "Address (Deprecated - will be removed)"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_address:description"
 msgid "Choose a country, to fill out the address of the event."
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_address_gsearch:label"
+msgid "Address"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_all_day:label"

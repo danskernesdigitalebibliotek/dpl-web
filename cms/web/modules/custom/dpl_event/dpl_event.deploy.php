@@ -9,6 +9,11 @@
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\gsearch\Services\Gsearch;
+use Drupal\recurring_events\Entity\EventSeries;
+use function Safe\preg_replace;
 
 /**
  * Pre-populate data to new non-WYSIWYG field field_description.
@@ -90,33 +95,99 @@ function dpl_event_deploy_migrate_all_day_events(): string {
 }
 
 /**
- * Unset address data from events that only have countries set.
+ * Copy a single entity's address data into field_event_address_gsearch.
  *
- * In a previous version, we set Denmark as the default country and made the
- * individual address fields optional.
- * This was an attempt to make the interface easier to use - but meant that the
- * address field would never be empty - and break the logic that pulls address
- * from the associated branch.
- *
- * We'll look up any eventinstances/eventseries that only have a country set as
- * an address and unset the value completely.
- *
- * Used by
- * - dpl_event_deploy_migrate_country_eventseries()
- * - dpl_event_deploy_migrate_country_eventinstances()
+ * For Danish addresses we attempt a GSearch lookup to enrich the value with
+ * canonical address data (incl. GPS coords). On any failure we fall back to
+ * storing the raw user input as free-text.
  */
-function _dpl_event_unset_country_only_addresses(EntityStorageInterface $storage): string {
+function _dpl_event_migrate_event_to_gsearch(EventInstance|EventSeries $entity, string $field_name): void {
+  if (!$entity->hasField($field_name) || $entity->get($field_name)->isEmpty()) {
+    return;
+  }
+
+  $value = $entity->get($field_name)->first()?->getValue();
+
+  if (empty($value)) {
+    return;
+  }
+
+  $country = $value['country_code'] ?? '';
+  $address_line1 = $value['address_line1'] ?? '';
+  $address_line2 = $value['address_line2'] ?? '';
+  $address_line3 = $value['address_line3'] ?? '';
+  $postal_code = $value['postal_code'] ?? '';
+  $postal_name = $value['locality'] ?? '';
+  $address = '';
+
+  if (!empty($address_line1)) {
+    $address .= "$address_line1, ";
+  }
+
+  if (!empty($address_line2)) {
+    $address .= "$address_line2, ";
+  }
+
+  if (!empty($address_line3)) {
+    $address .= "$address_line3, ";
+  }
+
+  // Remove trailing spaces, and any duplicate whitespace characters.
+  $address = preg_replace('/\s+/', ' ', trim($address));
+
+  $user_input = "$address $postal_code $postal_name";
+  // Remove trailing spaces, and any duplicate whitespace characters.
+  $user_input = preg_replace('/\s+/', ' ', trim($user_input));
+
+  if (empty($user_input)) {
+    return;
+  }
+
+  $new_value = [
+    'value' => $user_input,
+    'user_input' => $user_input,
+    'address' => $address,
+    'postal_code' => $postal_code,
+    'postal_name' => $postal_name,
+    'country_code' => $country,
+  ];
+
+  // If the country is DK, we can attempt to look up proper values using
+  // GSearch. If it succeeds, we will get more info, such as GPS coords.
+  // If this fails, we'll default to the set values as free-text.
+  if ($country === 'DK') {
+    try {
+      $service = DrupalTyped::service(Gsearch::class, 'gsearch.address');
+      $gsearch_value = $service->getFieldValue($user_input);
+      $gsearch_value_string = $gsearch_value['value'];
+
+      // We'll do a pretty strict look up, as this is a migrator.
+      // Worst case, it'll be treated as a free-text field, which is better
+      // than accidentally adding a wrong address to an event.
+      if (str_starts_with($gsearch_value_string, $address) &&
+          str_ends_with($gsearch_value_string, "$postal_code $postal_name")) {
+        $new_value = $gsearch_value;
+      }
+    }
+    catch (\Exception) {
+      // It's not a problem if it fails, as we have a fall-back.
+    }
+  }
+
+  $entity->set('field_event_address_gsearch', $new_value);
+  $entity->save();
+}
+
+/**
+ * Run the field_event_address → field_event_address_gsearch migration.
+ *
+ * @see _dpl_event_migrate_event_to_gsearch()
+ */
+function _dpl_event_migrate_events_to_gsearch(EntityStorageInterface $storage): string {
   $field_name = 'field_event_address';
-  $query = $storage->getQuery();
 
-  // NULL is saved in different ways, in series/instances, for some reason.
-  $condition_group = $query->orConditionGroup()
-    ->condition("$field_name.address_line1", NULL, 'IS NULL')
-    ->condition("$field_name.address_line1", '');
-
-  $ids = $query
+  $ids = $storage->getQuery()
     ->condition("$field_name.country_code", NULL, 'IS NOT NULL')
-    ->condition($condition_group)
     // We do not need an access check, as it's a migrator.
     ->accessCheck(FALSE)
     ->execute();
@@ -127,33 +198,32 @@ function _dpl_event_unset_country_only_addresses(EntityStorageInterface $storage
 
   $count = count($ids);
 
-  /** @var \Drupal\recurring_events\Entity\EventSeries[]|\Drupal\recurring_events\Entity\EventInstance[] $entities */
+  /** @var \Drupal\recurring_events\Entity\EventSeries[]|EventInstance[] $entities */
   $entities = $storage->loadMultiple($ids);
 
   foreach ($entities as $entity) {
-    $entity->set($field_name, []);
-    $entity->save();
+    _dpl_event_migrate_event_to_gsearch($entity, $field_name);
   }
 
-  return "Updated $count events, removing country-only address.";
+  return "Updated $count events, migrating address-field to gsearch fields.";
 }
 
 /**
- * Unset address data from eventseries that only have countries set.
+ * Copy data from field_event_address to field_event_address_gsearch (series).
  *
- * @see _dpl_event_unset_country_only_addresses()
+ * @see _dpl_event_migrate_events_to_gsearch()
  */
-function dpl_event_deploy_migrate_country_eventseries(): string {
+function dpl_event_deploy_migrate_gsearch_eventseries(): string {
   $storage = \Drupal::entityTypeManager()->getStorage('eventseries');
-  return _dpl_event_unset_country_only_addresses($storage);
+  return _dpl_event_migrate_events_to_gsearch($storage);
 }
 
 /**
- * Unset address data from eventinstances that only have countries set.
+ * Copy data from field_event_address to field_event_address_gsearch (instance).
  *
- * @see _dpl_event_unset_country_only_addresses()
+ * @see _dpl_event_migrate_events_to_gsearch()
  */
-function dpl_event_deploy_migrate_country_eventinstances(): string {
+function dpl_event_deploy_migrate_gsearch_eventinstance(): string {
   $storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
-  return _dpl_event_unset_country_only_addresses($storage);
+  return _dpl_event_migrate_events_to_gsearch($storage);
 }

@@ -25,60 +25,56 @@ use Drupal\recurring_events\Entity\EventSeries;
 /**
  * Implements hook_entity_presave().
  *
- * Unset values when choosing 'online' location for event series or instances.
+ * Clear data from fields that are hidden in the form by Drupal #states, so we
+ * don't persist stale values from a previously-selected configuration. The
+ * logic here mirrors the visibility states set in dpl_event_form_alter().
+ *
+ * For eventinstance we read the entity's own fields — not the field_inheritance
+ * fallbacks (e.g. `branch`, `event_non_branch_location`) — because the form
+ * widgets edit the real storage fields (`field_branch`, etc.). Using the
+ * inherited values here would wipe a custom instance address whenever the
+ * series happens to have a branch.
  */
 function dpl_event_entity_presave(EntityInterface $entity): void {
   if (!($entity instanceof EventInstance) && !($entity instanceof EventSeries)) {
     return;
   }
 
-  $location_type = 'physical';
-  $non_branch_location = TRUE;
+  $location_type = $entity->hasField('field_event_location_type')
+    ? $entity->get('field_event_location_type')->getString()
+    : 'physical';
 
-  if ($entity->hasField('field_event_location_type')) {
-    $location_type = $entity->get('field_event_location_type')->getString();
-  }
+  // Anything that isn't 'physical' (online, or the empty "- None -" choice)
+  // hides the custom-location fields, so we clear them.
+  $is_physical = ($location_type === 'physical');
+  $has_branch = $entity->hasField('field_branch')
+    && !$entity->get('field_branch')->isEmpty();
+  $is_non_branch_location = $entity->hasField('field_event_non_branch_location')
+    && (bool) $entity->get('field_event_non_branch_location')->getString();
 
-  if ($location_type === 'online') {
-    if ($entity->hasField('field_event_non_branch_location')) {
-      $entity->set('field_event_non_branch_location', FALSE);
-    }
+  // Mirror the form #states for the custom-location fields:
+  // visible when physical AND (no branch OR non_branch_location is on).
+  $show_custom_location = $is_physical && (!$has_branch || $is_non_branch_location);
 
+  // Mirror the form #states for the non-branch-location toggle:
+  // visible when physical AND a branch is set.
+  $show_non_branch_toggle = $is_physical && $has_branch;
+
+  if (!$show_custom_location) {
     if ($entity->hasField('field_event_location')) {
-      // We're adding an empty space to avoid field inheritance taking over.
-      $entity->set('field_event_location', ' ');
+      $entity->set('field_event_location', NULL);
     }
-
-    if ($entity->hasField('field_event_place')) {
-      // We're adding an empty space to avoid field inheritance taking over.
-      $entity->set('field_event_place', ' ');
+    if ($entity->hasField('field_event_address_gsearch')) {
+      $entity->set('field_event_address_gsearch', NULL);
     }
   }
-  elseif (empty($location_type)) {
-    return;
+
+  if (!$is_physical && $entity->hasField('field_event_place')) {
+    $entity->set('field_event_place', ' ');
   }
 
-  if ($entity->hasField('field_event_non_branch_location')) {
-    $non_branch_location = !empty($entity->get('field_event_non_branch_location')->getString());
-  }
-
-  $branch_field_name = ($entity instanceof EventInstance) ?
-    'branch' : 'field_branch';
-  $branch = NULL;
-
-  if ($entity->hasField($branch_field_name)) {
-    $branch = $entity->get($branch_field_name)->getString();
-  }
-
-  if (!$non_branch_location && !empty($branch)) {
-    if ($entity->hasField('field_event_location')) {
-      // We're adding an empty space to avoid field inheritance taking over.
-      $entity->set('field_event_location', ' ');
-    }
-
-    if ($entity->hasField('field_event_address')) {
-      $entity->set('field_event_address', []);
-    }
+  if (!$show_non_branch_toggle && $entity->hasField('field_event_non_branch_location')) {
+    $entity->set('field_event_non_branch_location', FALSE);
   }
 }
 
@@ -548,6 +544,10 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (isset($form['field_event_address'])) {
     $form['field_event_address']['#states']['visible'] = $physical_state;
+  }
+
+  if (isset($form['field_event_address_gsearch'])) {
+    $form['field_event_address_gsearch']['#states']['visible'] = $physical_state;
   }
 
   if (isset($form['field_event_place'])) {
