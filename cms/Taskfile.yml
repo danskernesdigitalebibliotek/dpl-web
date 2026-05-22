@@ -221,18 +221,6 @@ tasks:
       - task dev:cli -- drush user-login
       - task dev:bnfcli -- drush user-login
 
-  dev:openid:configure:
-    desc: Set openid connect settings based on .env variables. And run cron.
-    cmds:
-      - task dev:cli -- ./dev-scripts/cli-set-openid-settings.sh
-      - task dev:run-cron
-
-  dev:unilogin:configure:
-    desc: Set Unilogin settings based on .env variables.
-    cmds:
-      - task dev:cli -- ./dev-scripts/cli-set-unilogin-settings.sh
-      - task dev:cache:clear:all
-
   dev:run-cron:
     desc: Run cron in the container
     cmds:
