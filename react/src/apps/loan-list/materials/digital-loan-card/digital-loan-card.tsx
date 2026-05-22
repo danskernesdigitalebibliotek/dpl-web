@@ -13,7 +13,8 @@ import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
 import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
 import { getReaderPlayerTypeFromPublizonProductType } from "../../../../components/reader-player/helper";
-import { useTrackPublizonReadListen } from "../../../../core/statistics/trackingHooks";
+import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { trackPublizonReadListen } from "../../../../core/statistics/tracking";
 
 export interface DigitalLoanCardProps {
   loan: LoanType;
@@ -31,7 +32,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
 }) => {
   const { dueDate, loanDate, identifier, periodical, orderId } = loan;
   const t = useText();
-  const trackReadListen = useTrackPublizonReadListen();
+  const { track } = useEventStatistics();
 
   const readerPlayerType = getReaderPlayerTypeFromPublizonProductType(
     material?.digitalProductType
@@ -65,7 +66,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
           variant="filled"
           size="small"
           dataCy="loan-list-reader-button"
-          trackClick={() => trackReadListen(orderId)}
+          trackClick={() => trackPublizonReadListen(track, orderId)}
         >
           {t("onlineMaterialReaderText", {
             placeholders: { "@materialType": material?.materialType || "" }
@@ -84,7 +85,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
         size="small"
         collapsible={false}
         onClick={() => {
-          trackReadListen(orderId);
+          trackPublizonReadListen(track, orderId);
           onPlayDigital(orderId);
         }}
       />

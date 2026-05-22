@@ -20,7 +20,7 @@ import { ApiResult, CreateLoanResult } from "../../../../core/publizon/model";
 import { getFirstManifestation } from "../../../../apps/material/helper";
 import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
-import { useTrackPublizonReadListen } from "../../../../core/statistics/trackingHooks";
+import { trackPublizonReadListen } from "../../../../core/statistics/tracking";
 import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
@@ -52,7 +52,6 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   isEditionPicker = false
 }) => {
   const { track } = useEventStatistics();
-  const trackReadListen = useTrackPublizonReadListen();
   const t = useText();
   const { open } = useModalButtonHandler();
   const modalsToClose = useModalIdsToCloseForReservation();
@@ -135,7 +134,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
           variant="filled"
           size={size || "large"}
           dataCy={`${dataCy}-reader`}
-          trackClick={() => trackReadListen(workId)}
+          trackClick={() => trackPublizonReadListen(track, workId)}
         >
           {t("onlineMaterialReaderText", {
             placeholders: { "@materialType": manifestationType }
@@ -225,7 +224,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
             variant="filled"
             size={size || "large"}
             onClick={() => {
-              trackReadListen(workId);
+              trackPublizonReadListen(track, workId);
               open(playerModalId(orderId), modalCloseOptions);
             }}
             disabled={false}
