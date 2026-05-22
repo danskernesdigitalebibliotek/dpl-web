@@ -1,4 +1,4 @@
-import { ApiResult } from "../../publizon/model";
+import { ApiResult, FileExtensionType } from "../../publizon/model";
 import { UseTextFunction } from "../text";
 
 export const getPublizonErrorStatusText = (
@@ -38,5 +38,20 @@ export const getPublizonErrorStatusText = (
   return (
     (error?.code && statusMessages[error.code]) ||
     t("publizonErrorStatusUnknownErrorText")
+  );
+};
+
+// These two functions is basically pure guesses from Gemini. It's not
+// been possible to find any documentation on the meaning of
+// FileExtensionType, so we'll try with this.
+export const isEbookExtension = (type?: FileExtensionType): boolean => {
+  return (
+    type === FileExtensionType.NUMBER_2 || type === FileExtensionType.NUMBER_3
+  );
+};
+
+export const isAudiobookExtension = (type?: FileExtensionType): boolean => {
+  return (
+    type === FileExtensionType.NUMBER_1 || type === FileExtensionType.NUMBER_4
   );
 };
