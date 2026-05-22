@@ -11,10 +11,7 @@ import { ManifestationMaterialType } from "../../../../core/utils/types/material
 import { AvailabilityTextMap, getAvailabilityText } from "./helper";
 import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
-import {
-  isEbookExtension,
-  isAudiobookExtension
-} from "../../../../core/utils/helpers/publizon";
+import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 
 interface MaterialAvailabilityTextOnlineProps {
   isbns: string[];
@@ -53,28 +50,7 @@ const MaterialAvailabilityTextOnline: React.FC<
 
   if (!productsData) return null;
 
-  let patronEbookLoans = 0;
-  if (loansData?.userData?.totalEbookLoans) {
-    patronEbookLoans = Math.abs(loansData.userData.totalEbookLoans) || 0;
-  }
-  let patronAudioLoans = 0;
-  if (loansData?.userData?.totalAudioLoans) {
-    patronAudioLoans = Math.abs(loansData.userData.totalAudioLoans) || 0;
-  }
-
-  if (loansData?.loans) {
-    const ebookSubscriptionLoans = loansData.loans.filter(
-      (loan) =>
-        loan.isSubscriptionLoan && isEbookExtension(loan.fileExtensionType)
-    ).length;
-    const audioSubscriptionLoans = loansData.loans.filter(
-      (loan) =>
-        loan.isSubscriptionLoan && isAudiobookExtension(loan.fileExtensionType)
-    ).length;
-
-    patronEbookLoans = Math.max(0, patronEbookLoans - ebookSubscriptionLoans);
-    patronAudioLoans = Math.max(0, patronAudioLoans - audioSubscriptionLoans);
-  }
+  const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
 
   const availabilityTextMap: AvailabilityTextMap = {
     ...readerTypes.reduce((acc, type) => {
