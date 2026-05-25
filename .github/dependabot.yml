@@ -328,6 +328,9 @@ updates:
       # eslint-plugin-cypress v6 uses a flat-config shape that the current ESLint setup rejects.
       - dependency-name: "eslint-plugin-cypress"
         versions: [">=6.0.0"]
+      # DDFNEXT-1501 - conflicts with current setup.
+      - dependency-name: "downshift"
+        versions: [">=9.0.9"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@graphql-codegen/typescript-react-query"
