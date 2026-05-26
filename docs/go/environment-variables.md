@@ -185,24 +185,6 @@ Retailer key code for Publizon. MD5-hashed at runtime before being sent as `reta
 
 > **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
 
-### `UNLILOGIN_SERVICES_WS_USER`
-
-- **Required:** No (optional, can come from DPL CMS private config)
-- **Example:** `XXX`
-
-Username for Unilogin SOAP web services (e.g. institution lookups via `wsiinst-v5`). If set, overrides DPL CMS private config.
-
-> **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
-
-### `UNLILOGIN_SERVICES_WS_PASSWORD`
-
-- **Required:** No (optional, can come from DPL CMS private config)
-- **Example:** `XXX` (sensitive)
-
-Password for Unilogin SOAP web services. Paired with `UNLILOGIN_SERVICES_WS_USER`. If set, overrides DPL CMS private config.
-
-> **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
-
 ## Build / Tooling Variables
 
 Used by scripts and tooling, not by the running application.

@@ -98,12 +98,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=DuqqM4hG'
+        content: 'https://dpl-web.local/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=DuqqM4hG'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=DuqqM4hG'
+        content: 'https://dpl-web.local/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=DuqqM4hG'
     -
       tag: meta
       attributes:

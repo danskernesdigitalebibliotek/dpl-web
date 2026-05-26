@@ -32,8 +32,6 @@ const getDplCmsPrivateConfigData = async () => {
     return {
       unilogin: {
         clientSecret: null,
-        webServiceUsername: null,
-        webServicePassword: null,
         pubHubRetailerKeyCode: null,
       },
     }
@@ -51,12 +49,6 @@ export const getDplCmsPrivateConfig = async () => {
   const uniLoginConfigEnv = {
     ...(getServerEnv("UNILOGIN_CLIENT_SECRET")
       ? { clientSecret: getServerEnv("UNILOGIN_CLIENT_SECRET") }
-      : {}),
-    ...(getServerEnv("UNLILOGIN_SERVICES_WS_USER")
-      ? { webServiceUsername: getServerEnv("UNLILOGIN_SERVICES_WS_USER") }
-      : {}),
-    ...(getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD")
-      ? { webServicePassword: getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD") }
       : {}),
     ...(getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE")
       ? { pubHubRetailerKeyCode: getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE") }
@@ -93,6 +85,7 @@ const getDplCmsPublicConfigData = async () => {
       libraryInfo: {
         name: null,
       },
+      mapp: null,
       unilogin: {
         municipalityId: null,
       },

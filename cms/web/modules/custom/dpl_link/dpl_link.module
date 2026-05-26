@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\Query\QueryInterface;
+
+/**
+ * Implements hook_entity_query_TAG_alter().
+ *
+ * Hide "campaign" nodes from Linkit autocomplete — campaigns are not meant
+ * to be linked to as standalone pages. Negating the bundle (rather than using
+ * Linkit's allow-list "bundles" setting) keeps any new content types
+ * automatically visible without needing config updates.
+ */
+function dpl_link_entity_query_tag__linkit_entity_node_autocomplete_alter(QueryInterface $query): void {
+  $query->condition('type', 'campaign', '<>');
+}

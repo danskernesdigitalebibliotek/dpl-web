@@ -1,4 +1,4 @@
-const allowedUrls = ["dpl-", "dapple-cms"];
+const allowedUrls = ["dpl-"];
 
 const features = [
   { name: "exampleFeature", active: false },

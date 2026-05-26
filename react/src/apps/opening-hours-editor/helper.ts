@@ -83,7 +83,8 @@ export const formatFullCalendarEventToCmsEventEdit = (
     repetition: event.repetition,
     // set to id 0 to because the API requires a branch_id.
     // This will be overwritten when the event is added or edited in the useOpeningHoursEditor hook
-    branch_id: 0
+    branch_id: 0,
+    branch_name: ""
   };
 };
 

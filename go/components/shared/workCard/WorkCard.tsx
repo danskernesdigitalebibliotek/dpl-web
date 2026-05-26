@@ -155,7 +155,7 @@ export const WorkCardEmpty = ({ className }: { className?: string }) => {
           className="text-foreground h-[50px] opacity-20 lg:h-[80px]"
           aria-label="Advarsel ikon"
         />
-        <p className="text-typo-caption text-center opacity-55">Materialet kunne ikke vises</p>
+        <p className="text-typo-caption text-center opacity-70">Materialet kunne ikke vises</p>
       </div>
     </div>
   )

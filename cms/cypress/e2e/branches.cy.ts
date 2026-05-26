@@ -22,7 +22,7 @@ describe('Testing branch functionality', () => {
     // Wait for the GSearch API response before clicking, otherwise Select2's
     // tags:true may create a tag from typed text instead of a real result.
     cy.intercept('/gsearch/address/select2*').as('gsearchResults');
-    cy.get('[name="field_address_gsearch[0][user_input]"]')
+    cy.get('[name="field_address_gsearch[0][main][user_input]"]')
       .siblings('.select2-container')
       .click();
     cy.get('.select2-search__field').type(branchAddressSearch);

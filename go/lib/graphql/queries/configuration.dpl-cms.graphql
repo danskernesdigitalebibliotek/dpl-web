@@ -4,8 +4,6 @@ query getDplCmsPrivateConfiguration {
       unilogin {
         clientSecret
         pubHubRetailerKeyCode
-        webServicePassword
-        webServiceUsername
       }
     }
   }
@@ -22,6 +20,10 @@ query getDplCmsPublicConfiguration {
       }
       logoutUrls {
         adgangsplatformen
+      }
+      mapp {
+        domain
+        id
       }
       unilogin {
         municipalityId

@@ -36,6 +36,10 @@ class JobSchedulerHooks {
         'jobs' => [
           [
             'type' => 'bnf_schedules_update_check',
+            // Workaround for bug in job_scheduler whose check() method doesn't
+            // see existing jobs with a NULL ID.
+            // @see https://www.drupal.org/project/job_scheduler/issues/3589674
+            'id' => '1',
             'period' => 3600,
             'periodic' => TRUE,
           ],

@@ -35,7 +35,7 @@ function _dpl_library_agency_set_address(NodeInterface $node, string $value, str
   ]);
 
   $gsearch = DrupalTyped::service(Gsearch::class, 'gsearch.address');
-  $new_value = $gsearch->getFieldValue($value, TRUE);
+  $new_value = $gsearch->getFieldValue($value);
 
   $node->set($field_name, $new_value);
   $node->save();

@@ -8,7 +8,6 @@
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_token\LibraryTokenHandler;
-use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\drupal_typed\DrupalTyped;
 
 /**
@@ -52,7 +51,6 @@ function dpl_library_token_requirements($phase) : array {
  */
 function dpl_library_token_update_10000(): string {
   $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
-  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
   $keyValueFactory = DrupalTyped::service(KeyValueExpirableFactoryInterface::class, 'keyvalue.expirable');
 
   $tokenCollection = $keyValueFactory->get(LibraryTokenHandler::TOKEN_COLLECTION_KEY);
@@ -61,12 +59,7 @@ function dpl_library_token_update_10000(): string {
   if (is_string($token)) {
     $tokenCollection->delete('library_token');
 
-    $handler->retrieveAndStoreToken(
-      $config->getAgencyId(),
-      $config->getClientId(),
-      $config->getClientSecret(),
-      $config->getTokenEndpoint()
-    );
+    $handler->retrieveAndStoreToken();
 
     return "Invalid token deleted and new token retrieved.";
   }

@@ -125,12 +125,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/paige-cody-FHFfHWWzbCc-unsplash_0.jpg?h=4c1fc98e&itok=gK4kmQNp'
+        content: 'https://dpl-web.local/sites/default/files/styles/open_graph/public/2024-02/paige-cody-FHFfHWWzbCc-unsplash_0.jpg?h=4c1fc98e&itok=gK4kmQNp'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/paige-cody-FHFfHWWzbCc-unsplash_0.jpg?h=4c1fc98e&itok=gK4kmQNp'
+        content: 'https://dpl-web.local/sites/default/files/styles/open_graph/public/2024-02/paige-cody-FHFfHWWzbCc-unsplash_0.jpg?h=4c1fc98e&itok=gK4kmQNp'
     -
       tag: meta
       attributes:

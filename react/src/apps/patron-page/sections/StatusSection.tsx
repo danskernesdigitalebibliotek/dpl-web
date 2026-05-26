@@ -5,6 +5,7 @@ import {
 } from "../../../core/publizon/publizon";
 import { LibraryProfile, UserData } from "../../../core/publizon/model";
 import { useText } from "../../../core/utils/text";
+import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 
 const StatusSection: FC = () => {
   const t = useText();
@@ -35,14 +36,16 @@ const StatusSection: FC = () => {
     maxConcurrentEbookReservationsPerBorrower = 0
   } = libraryProfile || {};
 
-  let patronEbookLoans = 0;
-  if (patronData?.totalEbookLoans) {
-    patronEbookLoans = Math.abs(patronData?.totalEbookLoans) || 0;
-  }
-  let patronAudioBookLoans = 0;
-  if (patronData?.totalAudioLoans) {
-    patronAudioBookLoans = Math.abs(patronData?.totalAudioLoans) || 0;
-  }
+  const { patronEbookLoans, patronAudioLoans: patronAudioBookLoans } =
+    getPatronLoanQuotas({
+      userData: patronData ?? undefined,
+      loans: data?.loans
+    });
+
+  // Publizon doesn't account for "subscription" (aka, "blue", aka
+  // "non-quota") loans, so we have to figure out how many of the
+  // loans are outside quota and subtract them. This will move to the
+  // service layer when that's implemented.
   let eBookLoanPercent = 100;
   if (maxConcurrentEbookLoansPerBorrower) {
     eBookLoanPercent =
@@ -149,7 +152,7 @@ const StatusSection: FC = () => {
                         "patronPageStatusSectionOutOfAriaLabelAudioBooksText",
                         {
                           placeholders: {
-                            "@this": patronEbookLoans,
+                            "@this": patronAudioBookLoans,
                             "@that": maxConcurrentAudioLoansPerBorrower
                           }
                         }

@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-
+import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
 import type {
   MediaVideotool,
   ParagraphGoVideo as Video,
@@ -12,6 +11,7 @@ type VideoProps = {
   embedVideo: {
     mediaVideotool: MediaVideotool["mediaVideotool"]
     name: MediaVideotool["name"]
+    thumbnail?: string | null
   }
 }
 
@@ -24,17 +24,12 @@ const Video = (Video: VideoProps) => {
         <h2 className="text-typo-heading-2 text-center">{title}</h2>
       </div>
       <div className="col-span-6 lg:col-span-12">
-        <div className="rounded-base relative aspect-16/9 w-full overflow-hidden">
-          <iframe
-            title={title || "Video"}
-            aria-label={title || "Video"}
-            className="absolute inset-0 h-full w-full"
-            src={embedVideo?.mediaVideotool}
-            allowFullScreen
-            allow="autoplay; fullscreen"
-            loading="lazy"
-          />
-        </div>
+        <VideoEmbed
+          videoUrl={embedVideo?.mediaVideotool}
+          thumbnailUrl={embedVideo?.thumbnail}
+          title={title}
+          aspect="16/9"
+        />
       </div>
     </div>
   )

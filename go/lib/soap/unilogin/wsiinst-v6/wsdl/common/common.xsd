@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://brugerdatabasen.stil.dk/bpi/common/3" elementFormDefault="qualified" targetNamespace="https://brugerdatabasen.stil.dk/bpi/common/3" version="1.0">
+
+    <!-- Tværgående endpoint definitioner -->
+    <xs:element name="helloWorld" type="tns:NoArgs"/>
+    <xs:element name="helloWorldResponse" type="tns:HelloWorldResponse"/>
+    <xs:element name="helloWorldWithCertificate" type="tns:NoArgs"/>
+    <xs:element name="helloWorldWithCertificateResponse" type="tns:HelloWorldResponse"/>
+    <xs:element name="helloWorldWithHeaderCredentials" type="tns:NoArgs"/>
+    <xs:element name="helloWorldWithHeaderCredentialsResponse" type="tns:HelloWorldResponse"/>
+
+    <xs:element name="authentificationError" type="tns:AuthentificationError"/>
+
+    <xs:element name="hentDataAftaler" type="tns:NoArgs"/>
+    <xs:element name="hentDataAftalerResponse" type="tns:HentDataAftalerResponse"/>
+
+    <!-- Header type -->
+    <xs:element name="UdbydersystemId" type="tns:UdbydersystemIdType"/>
+    <xs:complexType name="UdbydersystemIdType">
+        <xs:simpleContent>
+            <xs:extension base="tns:NonEmptyToken">
+                <xs:anyAttribute processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Input typer -->
+    <xs:complexType name="NoArgs"/>
+
+    <!-- Svar objekter -->
+    <xs:complexType name="HelloWorldResponse">
+        <xs:sequence>
+            <xs:element name="helloWorldResult" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HentDataAftalerResponse">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="regnr" type="tns:Regnr"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Fejl -->
+
+    <xs:complexType name="AuthentificationError">
+        <xs:sequence>
+            <!-- Kunne udgå, hvis vi kunne bruge WSDL 2.0 -->
+            <xs:element name="type">
+                <xs:annotation>
+                    <xs:documentation>Fejlkoder ved autentifikationsfejl. Sættes også som en subcode i den returnerede
+                        SOAP-fault.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Signatur"/>
+                        <xs:enumeration value="SignaturMangler"/>
+                        <xs:enumeration value="UdbydersytemIdMangler"/>
+                        <xs:enumeration value="BrugeridEllerPassword"/>
+                        <xs:enumeration value="Rettigheder"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Tværgående typer -->
+    <xs:simpleType name="trin">
+        <xs:annotation>
+            <xs:documentation>
+                DT er dagtilbud, 1 svarer til 1. klassetrin i grundskolen,
+                U1 er første trin på en ungdomsuddannelse, og VU er voksenuddannelse.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DT"/>
+            <xs:enumeration value="0"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+            <xs:enumeration value="5"/>
+            <xs:enumeration value="6"/>
+            <xs:enumeration value="7"/>
+            <xs:enumeration value="8"/>
+            <xs:enumeration value="9"/>
+            <xs:enumeration value="10"/>
+            <xs:enumeration value="U1"/>
+            <xs:enumeration value="U2"/>
+            <xs:enumeration value="U3"/>
+            <xs:enumeration value="U4"/>
+            <xs:enumeration value="VU"/>
+            <xs:enumeration value="Andet"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Elevrolle">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Barn"/>
+            <xs:enumeration value="Elev"/>
+            <xs:enumeration value="Studerende"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Ansatrolle">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Lærer"/>
+            <xs:enumeration value="Pædagog"/>
+            <xs:enumeration value="Vikar"/>
+            <xs:enumeration value="Leder"/>
+            <xs:enumeration value="Ledelse"/>
+            <xs:enumeration value="TAP"/>
+            <xs:enumeration value="Konsulent"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Eksternrolle">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Praktikant"/>
+            <xs:enumeration value="Ekstern"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Kontaktpersonsrelation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Mor"/>
+            <xs:enumeration value="Far"/>
+            <xs:enumeration value="Andet"/>
+            <xs:enumeration value="Officielt tilknyttet person"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NonEmptyToken">
+        <xs:annotation>
+            <xs:documentation>
+                Basistype for strenge.
+                Indholdet må ikke være tomt, og overflødig whitespace fjernes (XSD token).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Regnr">
+        <xs:restriction base="tns:NonEmptyToken">
+            <xs:maxLength value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="GroupId" type="tns:Gruppekode">
+        <xs:annotation>
+            <xs:documentation>
+                Feltet skal indeholde gruppens unikke id på institutionen (GroupId).
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="Gruppekode">
+        <xs:restriction base="tns:NonEmptyToken">
+            <xs:maxLength value="75"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="Verifikationsniveau">
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>Uverificeret.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>CPR-verificeret.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="KontaktpersonAdgangsniveau">
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Kontaktpersonen må få adgang til almindelige personoplysninger om den tilknyttede elev.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Kontaktpersonen må få adgang til fortrolige og følsomme personoplysninger om eleven.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="LocalPersonId" type="tns:localPersonId"/>
+
+    <xs:simpleType name="localPersonId">
+        <xs:annotation>
+            <xs:documentation>
+                Den lokale identifikation af personen på institutionen.
+                Identifikationen bruges til at genkende personer fra en import til den næste. Identifikationen skal
+                derfor være unik inden for en import, således at InstitutionNumber+source+LocalPersonId skal være unik.
+                Identifikationen skal være uforanderlig, således at en person, der én gang er importeret med et
+                LocalPersonId, skal have det samme LocalPersonId i alle fremtidige importer.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="tns:singleToken">
+            <xs:maxLength value="18"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="singleToken">
+        <xs:annotation>
+            <xs:documentation>Basistype for ikke-tomme strenge, der ikke må indeholde whitespace.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[^ ]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="importGroupType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Hovedgruppe"/>
+            <xs:enumeration value="Årgang"/>
+            <xs:enumeration value="Retning"/>
+            <xs:enumeration value="Hold"/>
+            <xs:enumeration value="SFO"/>
+            <xs:enumeration value="Team"/>
+            <xs:enumeration value="Andet"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Token100char">
+        <xs:restriction base="tns:NonEmptyToken">
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Token75char">
+        <xs:restriction base="tns:NonEmptyToken">
+            <xs:maxLength value="75"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Token40char">
+        <xs:restriction base="tns:NonEmptyToken">
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

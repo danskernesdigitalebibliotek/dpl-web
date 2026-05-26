@@ -19,6 +19,10 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
         libraryInfo: {
           name: "Test Library",
         },
+        mapp: {
+          domain: "responder.wt-safetag.com",
+          id: "476651662471322",
+        },
         unilogin: {
           municipalityId: "101",
         },

@@ -75,7 +75,7 @@
     --space-y: 2.5rem; /* 40px */
 
     /* COLORS */
-    --black: hsla(0, 0%, 0%, 1);
+    --black: hsla(0, 0%, 10.2%, 1);
     --white: hsla(255, 100%, 100%, 1);
 
     --beige: hsla(36, 45%, 98%, 1);

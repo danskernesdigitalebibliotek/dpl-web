@@ -57,8 +57,6 @@ class UniloginPrivateProducer extends DataProducerPluginBase implements Containe
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
     return [
       'clientSecret' => $this->uniloginConfiguration->getUniloginApiClientSecret() ?: NULL,
-      'webServiceUsername' => $this->uniloginConfiguration->getUniloginApiWebServiceUsername() ?: NULL,
-      'webServicePassword' => $this->uniloginConfiguration->getUniloginApiWebServicePassword() ?: NULL,
       'pubHubRetailerKeyCode' => $this->uniloginConfiguration->getUniloginApiPubhubRetailerKeyCode() ?: NULL,
     ];
   }

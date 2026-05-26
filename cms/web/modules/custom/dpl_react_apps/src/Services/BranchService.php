@@ -129,7 +129,7 @@ class BranchService {
     }
 
     return [
-      'address' => $item->getAddress() ?? $item->getValue(),
+      'address' => $item->getAddress() ?? $item->getString(),
       'city' => $item->getPostalName(),
     ];
   }

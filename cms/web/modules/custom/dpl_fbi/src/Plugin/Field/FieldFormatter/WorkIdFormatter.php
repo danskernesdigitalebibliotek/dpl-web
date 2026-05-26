@@ -8,6 +8,8 @@ use Drupal\Core\Field\FormatterBase;
 /**
  * Plugin implementation of the 'work_id_formatter' formatter.
  *
+ * @extends \Drupal\Core\Field\FormatterBase<\Drupal\Core\Field\FieldItemListInterface>
+ *
  * @FieldFormatter(
  *   id = "work_id_formatter",
  *   label = @Translation("Work ID Formatter"),

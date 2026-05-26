@@ -8,7 +8,6 @@
  */
 
 use Drupal\dpl_library_token\LibraryTokenHandler;
-use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\drupal_typed\DrupalTyped;
 
 /**
@@ -16,11 +15,5 @@ use Drupal\drupal_typed\DrupalTyped;
  */
 function dpl_library_token_cron(): void {
   $handler = DrupalTyped::service(LibraryTokenHandler::class, 'dpl_library_token.handler');
-  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
-  $handler->retrieveAndStoreToken(
-    $config->getAgencyId(),
-    $config->getClientId(),
-    $config->getClientSecret(),
-    $config->getTokenEndpoint()
-  );
+  $handler->retrieveAndStoreToken();
 }

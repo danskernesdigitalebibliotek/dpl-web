@@ -1,0 +1,22 @@
+uuid: af4a789b-32af-4be1-b21d-56d5e2fc64c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.campaign_trigger_query.field_campaign_trigger_phrase
+    - paragraphs.paragraphs_type.campaign_trigger_query
+id: paragraph.campaign_trigger_query.default
+targetEntityType: paragraph
+bundle: campaign_trigger_query
+mode: default
+content:
+  field_campaign_trigger_phrase:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

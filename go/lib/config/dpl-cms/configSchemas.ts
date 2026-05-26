@@ -10,6 +10,12 @@ export const publicConfigSchema = z.object({
   libraryInfo: z.object({
     name: z.string().nullable(),
   }),
+  mapp: z
+    .object({
+      domain: z.string().nullable(),
+      id: z.string().nullable(),
+    })
+    .nullable(),
   unilogin: z.object({
     municipalityId: z.string().nullable(),
   }),
@@ -18,8 +24,6 @@ export const publicConfigSchema = z.object({
 export const privateConfigSchema = z.object({
   unilogin: z.object({
     clientSecret: z.string().nullable(),
-    webServiceUsername: z.string().nullable(),
-    webServicePassword: z.string().nullable(),
     pubHubRetailerKeyCode: z.string().nullable(),
   }),
 })

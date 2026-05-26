@@ -71,6 +71,11 @@ class OutboundPathProcessor implements OutboundPathProcessorInterface {
           $baseUrl = $isGoNode ?
             $this->goSite->getGoBaseUrl() :
             $this->goSite->getCmsBaseUrl();
+
+          // Track CMS-to-Go navigation via Mapp URL parameter.
+          if ($isGoNode && !$this->goSite->isGoSite()) {
+            $options['query']['u_cms_t_go'] = 'true';
+          }
         }
       }
     }

@@ -78,8 +78,8 @@ class DplReactAppsController extends ControllerBase {
         if (!empty($location)) {
           $branch_output['location'] = [
             'city' => $location->getPostalName(),
-            'value' => $location->getValue(),
-            'address' => $location->getValue(),
+            'value' => $location->getString(),
+            'address' => $location->getString(),
             'lat' => $location->getLatitude(),
             'lng' => $location->getLongitude(),
           ];
@@ -681,7 +681,7 @@ class DplReactAppsController extends ControllerBase {
       'reservable-from-another-library-missing-email-text' => $this->t('You need to add an email address to reserve from another library.', [], ['context' => 'Work Page']),
       'reservable-from-another-library-extra-info-text' => $this->t('NOTE! This material is ordered from another library. Therefore, it may take a few days before it appears on your list of reservations.', [], ['context' => 'Work Page']),
       'reservable-from-another-library-text' => $this->t('Ordered from another library', [], ['context' => 'Work Page']),
-      'reservation-errors-description-text' => $this->t('Year', [], ['context' => 'Work Page']),
+      'reservation-errors-description-text' => $this->t("We're sorry. Unfortunately, there has been an error. Try again, please.", [], ['context' => 'Work Page']),
       'reservation-errors-title-text' => $this->t('Reservation error', [], ['context' => 'Work Page']),
       'reservation-modal-close-modal-aria-label-text' => $this->t('Close reservation modal', [], ['context' => 'Work Page']),
       'reservation-modal-screen-reader-modal-description-text' => $this->t('modal for reservation', [], ['context' => 'Work Page']),

@@ -75,6 +75,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
         $this->prophesize(NodeInterface::class)
           ->bundle()->willReturn('branch')->getObjectProphecy()
           ->id()->willReturn($branchId)->getObjectProphecy()
+          ->label()->willReturn('Branch ' . $branchId)->getObjectProphecy()
           ->hasField('field_agency_branch_id')->willReturn(FALSE)->getObjectProphecy()
       );
     }

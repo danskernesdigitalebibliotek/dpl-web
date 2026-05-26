@@ -170,6 +170,14 @@ class UrlProxyResourceTest extends UnitTestCase {
       ],
     ];
 
+    $conf_disabled = [
+      'prefix' => '',
+      'hostnames' => [],
+      'disable_proxy' => TRUE,
+    ];
+
+    $conf_disabled_with_mapping = ['disable_proxy' => TRUE] + $conf;
+
     return [
       [
         ['url' => 'http://john.com'],
@@ -180,6 +188,16 @@ class UrlProxyResourceTest extends UnitTestCase {
         ['url' => 'http://sally.com?foo=palle'],
         ['data' => ['url' => 'http://sally.com?foo=polle']],
         $conf,
+      ],
+      [
+        ['url' => 'http://example.com/resource'],
+        ['data' => ['url' => 'http://example.com/resource']],
+        $conf_disabled,
+      ],
+      [
+        ['url' => 'http://john.com'],
+        ['data' => ['url' => 'http://john.com']],
+        $conf_disabled_with_mapping,
       ],
     ];
   }

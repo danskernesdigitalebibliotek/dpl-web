@@ -81,7 +81,7 @@ default:
     - tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: 'http://dpl-web.local/user/login'
   path:
     - alias: /arrangementer/event-4-tag2-0
       langcode: und

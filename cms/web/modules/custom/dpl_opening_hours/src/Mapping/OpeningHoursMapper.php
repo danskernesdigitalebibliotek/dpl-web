@@ -97,6 +97,7 @@ class OpeningHoursMapper {
     return (new OpeningHoursResponse())
       ->setId($instance->id)
       ->setBranchId(intval($instance->branch->id()))
+      ->setBranchName((string) $instance->branch->label())
       ->setBranchIsilId($branchIsilId)
       ->setCategory($category)
       ->setDate(new DateTime($instance->startTime->format('Y-m-d')))

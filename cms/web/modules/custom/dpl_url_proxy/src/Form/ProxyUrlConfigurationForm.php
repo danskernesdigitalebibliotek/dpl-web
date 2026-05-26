@@ -98,6 +98,10 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     $form_state->set('indexes', $indexes);
     $saved_values = $this->getConfiguration();
 
+    $proxy_enabled_condition = [
+      ':input[name="disable_proxy"]' => ['checked' => FALSE],
+    ];
+
     $form['#tree'] = TRUE;
     $form['description'] = [
       '#type' => 'item',
@@ -118,7 +122,10 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         [],
         ['context' => 'Url Proxy']
       ),
-      '#required' => TRUE,
+      '#states' => [
+        'visible' => $proxy_enabled_condition,
+        'required' => $proxy_enabled_condition,
+      ],
     ];
 
     $form['hostnames'] = [
@@ -126,6 +133,9 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
       '#title' => $this->t('Hostnames', [], ['context' => 'Url Proxy']),
       '#prefix' => '<div id="hostnames-fieldset-wrapper">',
       '#suffix' => '</div>',
+      '#states' => [
+        'visible' => $proxy_enabled_condition,
+      ],
     ];
 
     foreach ($indexes as $index) {
@@ -137,7 +147,9 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'textfield',
         '#title' => $this->t('Hostname', [], ['context' => 'Url Proxy']),
         '#default_value' => $saved_values['hostnames'][$index]['hostname'] ?? '',
-        '#required' => TRUE,
+        '#states' => [
+          'required' => $proxy_enabled_condition,
+        ],
       ];
 
       $form['hostnames'][$index]['expression'] = [
@@ -203,6 +215,17 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         'callback' => '::addmoreCallback',
         'wrapper' => 'hostnames-fieldset-wrapper',
       ],
+    ];
+
+    $form['disable_proxy'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable proxy', [], ['context' => 'Url Proxy']),
+      '#description' => $this->t(
+        'When checked, the proxy endpoint returns the requested URL unmodified. Use this on sites that do not use a proxy.',
+        [],
+        ['context' => 'Url Proxy']
+      ),
+      '#default_value' => $saved_values['disable_proxy'] ?? FALSE,
     ];
 
     $form['actions']['submit'] = [
@@ -273,19 +296,51 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $values = [];
-    if ($form_state->getValue('prefix')) {
-      $values['prefix'] = $form_state->getValue('prefix');
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
+    parent::validateForm($form, $form_state);
+
+    if ($form_state->getValue('disable_proxy')) {
+      return;
     }
-    $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']),
-      function ($carry, $item) {
-        if (!empty($item['hostname'])) {
-          unset($item['remove_this']);
-          $carry[] = $item;
-        }
-        return $carry;
-      }, []);
+
+    if (!$form_state->getValue('prefix')) {
+      $form_state->setError(
+        $form['prefix'],
+        $this->t('Proxy server URL prefix is required when the proxy is enabled.', [], ['context' => 'Url Proxy'])
+      );
+    }
+
+    $hostnames = array_filter(
+      (array) $form_state->getValue('hostnames'),
+      fn ($item) => is_array($item) && !empty($item['hostname'])
+    );
+    if (empty($hostnames)) {
+      $form_state->setError(
+        $form['hostnames'],
+        $this->t('At least one hostname is required when the proxy is enabled.', [], ['context' => 'Url Proxy'])
+      );
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
+    $values = [
+      'disable_proxy' => (bool) $form_state->getValue('disable_proxy'),
+      'prefix' => $form_state->getValue('prefix') ?? '',
+      'hostnames' => array_reduce(
+        (array) $form_state->getValue('hostnames'),
+        function ($carry, $item) {
+          if (is_array($item) && !empty($item['hostname'])) {
+            unset($item['remove_this']);
+            $carry[] = $item;
+          }
+          return $carry;
+        },
+        []
+      ),
+    ];
 
     $this->config('dpl_url_proxy.settings')
       ->set('values', $values)

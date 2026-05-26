@@ -8,6 +8,7 @@ dependencies:
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_address_gsearch
     - field.field.eventinstance.default.field_event_all_day
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
@@ -32,6 +33,7 @@ dependencies:
     - datetime_range
     - dpl_event
     - entity_reference_revisions
+    - gsearch
     - link
     - options
     - text
@@ -48,7 +50,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 50
+    weight: 16
     region: content
   date:
     type: daterange_default
@@ -71,7 +73,9 @@ content:
   event_address:
     type: address_default
     label: above
-    settings: {  }
+    settings:
+      skip_domestic_country: false
+      domestic_country: site_default
     third_party_settings: {  }
     weight: 4
     region: content
@@ -83,7 +87,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 53
+    weight: 17
     region: content
   event_automatic_list_hide:
     type: boolean
@@ -93,7 +97,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 53
+    weight: 18
     region: content
   event_categories:
     type: entity_reference_label
@@ -134,16 +138,16 @@ content:
     type: dpl_event_location
     label: above
     settings:
-      link: true
+      link_to_entity: false
     third_party_settings: {  }
-    weight: 59
+    weight: 19
     region: content
   event_location_type:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 60
+    weight: 20
     region: content
   event_non_branch_location:
     type: boolean
@@ -153,7 +157,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 61
+    weight: 22
     region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -196,7 +200,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 60
+    weight: 21
     region: content
   event_tags:
     type: entity_reference_label
@@ -229,7 +233,7 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 64
+    weight: 23
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
@@ -246,6 +250,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 3
+    region: content
+  field_event_address_gsearch:
+    type: address_gsearch
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 25
     region: content
   title:
     type: string

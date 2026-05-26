@@ -1,0 +1,19 @@
+uuid: 97c53a74-a6f7-4074-a556-095c5830f8f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_campaign_trigger_phrase
+    - paragraphs.paragraphs_type.campaign_trigger_query
+id: paragraph.campaign_trigger_query.field_campaign_trigger_phrase
+field_name: field_campaign_trigger_phrase
+entity_type: paragraph
+bundle: campaign_trigger_query
+label: 'Trigger phrase'
+description: 'Triggering based on the users free-text search.<br />The search will be fuzzy, so trigger <em>"Fiction"</em> will match user-input of <em>"science-fiction books"</em>'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

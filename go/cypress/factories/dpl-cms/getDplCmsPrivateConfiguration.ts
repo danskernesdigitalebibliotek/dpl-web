@@ -11,8 +11,6 @@ export default Factory.define<GetDplCmsPrivateConfigurationQuery>(() => {
       private: {
         unilogin: {
           clientSecret: "mocked-client-secret",
-          webServiceUsername: "mocked-web-service-username",
-          webServicePassword: "mocked-web-service-password",
           pubHubRetailerKeyCode: "mocked-retailer-key-code",
         },
       },

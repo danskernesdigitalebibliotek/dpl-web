@@ -43,7 +43,7 @@ final class OpeningHoursCreateResource extends OpeningHoursResourceBase {
             'description' => Response::$statusTexts[Response::HTTP_OK],
             'schema' => [
               "type" => "array",
-              "items" => $this->openingHoursInstanceSchema(require_id: TRUE),
+              "items" => $this->openingHoursInstanceSchema(require_id: TRUE, include_branch_name: TRUE),
             ],
           ],
           Response::HTTP_BAD_REQUEST => [

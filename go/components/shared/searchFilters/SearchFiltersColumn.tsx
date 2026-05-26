@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 
 import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
@@ -25,6 +25,9 @@ type SearchFiltersColumnProps = {
 
 type FacetValue = SearchFacetFragment["values"][number]
 
+const COLLAPSED_COUNT = 3
+const COLLAPSED_COUNT_WRAPPED = 8
+
 const sortByPriority =
   (priority: string[]) =>
   (a: FacetValue, b: FacetValue): number =>
@@ -44,8 +47,6 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const actor = useSearchMachineActor()
   const [isExpanded, setIsExpanded] = useState<boolean>(false)
   const facetFilter = facet.name as keyof TFilters
-  const elementRef = useRef<HTMLDivElement | null>(null)
-  const [hasOverflow, setHasOverflow] = useState(false)
   const { selectedFilters } = useSearchDataAndLoadingStates()
   const toggleFilter = createToggleFilterCallback(actor)
   const facetData = actor.getSnapshot().context.facetData
@@ -66,18 +67,29 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
     facet.values = sortByActiveFacets(facet, selectedFilters)
   }
 
-  useEffect(() => {
-    const el = elementRef.current
-    if (el) {
-      const isOverflowing = el.scrollHeight > el.clientHeight
+  const visibleCount = isLast ? COLLAPSED_COUNT_WRAPPED : COLLAPSED_COUNT
+  const hasMore = facet.values.length > visibleCount
+  const visibleValues = isExpanded ? facet.values : facet.values.slice(0, visibleCount)
 
-      if (isOverflowing) {
-        setHasOverflow(true)
-      } else {
-        setHasOverflow(false)
+  const firstRevealedRef = useRef<HTMLButtonElement | null>(null)
+  const shouldFocusRevealed = useRef(false)
+
+  const handleToggleExpand = useCallback(() => {
+    setIsExpanded(prev => {
+      if (!prev) {
+        shouldFocusRevealed.current = true
       }
+      return !prev
+    })
+  }, [])
+
+  // Focus the first revealed badge button when the column is expanded
+  useEffect(() => {
+    if (shouldFocusRevealed.current && isExpanded && firstRevealedRef.current) {
+      firstRevealedRef.current.focus()
+      shouldFocusRevealed.current = false
     }
-  }, [elementRef?.current?.scrollHeight])
+  }, [isExpanded])
 
   useEffect(() => {
     setIsExpanded(false)
@@ -99,14 +111,12 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
             className={cn(
               "text-typo-caption mx-[-10px] mt-[-10px] flex gap-1 px-[10px] pt-[10px]",
               isLast ? "flex-row flex-wrap content-start" : "flex-col",
-              {
-                "h-[102px] overflow-hidden": !isExpanded,
-              }
-            )}
-            ref={elementRef}>
-            {facet.values.map((value, index) => (
+              isLast && !isExpanded && "max-h-[102px] overflow-hidden"
+            )}>
+            {visibleValues.map((value, index) => (
               <BadgeButton
                 key={index}
+                ref={index === visibleCount ? firstRevealedRef : undefined}
                 ariaLabel={value.term}
                 onClick={() => toggleFilter({ name: facet.name, value: value.term })}
                 isActive={facetTermIsSelected({
@@ -122,13 +132,12 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
               </BadgeButton>
             ))}
           </div>
-          {hasOverflow && (
+          {hasMore && (
             <BadgeButton
               ariaLabel={isExpanded ? "Vis færre" : "Vis flere"}
+              aria-expanded={isExpanded}
               classNames={cn(`pl-3 w-auto flex flex-row items-center self-start mt-1`)}
-              onClick={() => {
-                setIsExpanded(prev => !prev)
-              }}
+              onClick={handleToggleExpand}
               withAnimation>
               <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : "")} name="arrow-down" />
               <p>{isExpanded ? "Skjul" : "Flere"}</p>
