@@ -21,3 +21,23 @@ matchers:
       limit: 100
       include_unpublished: true
     weight: 0
+  0f686e6f-3aa0-44da-a170-85d9f151ed6b:
+    id: 'entity:eventinstance'
+    uuid: 0f686e6f-3aa0-44da-a170-85d9f151ed6b
+    settings:
+      metadata: '[eventinstance:date] - [eventinstance:end_date]'
+      bundles: {  }
+      group_by_bundle: false
+      substitution_type: canonical
+      limit: 100
+    weight: 0
+  531b5e67-bc87-4e97-a181-81357ebd39ff:
+    id: 'entity:eventseries'
+    uuid: 531b5e67-bc87-4e97-a181-81357ebd39ff
+    settings:
+      metadata: ''
+      bundles: {  }
+      group_by_bundle: false
+      substitution_type: canonical
+      limit: 100
+    weight: 0

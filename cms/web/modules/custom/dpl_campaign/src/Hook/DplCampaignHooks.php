@@ -7,14 +7,36 @@ namespace Drupal\dpl_campaign\Hook;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_campaign\CampaignWeight;
 
 /**
  * Drupal hooks for the module. Modern alternative to .module file.
  */
 class DplCampaignHooks {
+  use StringTranslationTrait;
 
   public function __construct(protected ModuleHandlerInterface $moduleHandler) {}
+
+  /**
+   * Setting a help text for the title-field of campaign nodes.
+   *
+   * @param array<mixed> $form
+   *   The form element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   * @param string $form_id
+   *   The ID for the form.
+   *   /.
+   */
+  #[Hook('form_node_campaign_form_alter')]
+  public function setCampaignTitleDescription(array &$form, FormStateInterface $form_state, string $form_id): void {
+    $form['title']['widget'][0]['value']['#description'] = $this->t(
+      'The title is for naming the content type so editors can locate it in the content overview. <br/>It is not shown to users.',
+      [],
+      ['context' => 'dpl_campaign']
+    );
+  }
 
   /**
    * Alter campaign_weight field, only showing allowed options.
