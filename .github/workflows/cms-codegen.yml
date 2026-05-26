@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   codegen:
-    name: Generated clients
+    name: Generate code
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -32,7 +32,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # BNF enabled + clean install covers all four cms codegens.
+      # BNF enabled + clean install covers all cms codegens.
       - name: Enable BNF for site
         run: task dev:bnf:enable
 
@@ -50,6 +50,9 @@ jobs:
 
       - name: Ensure OpenAPI specification has not drifted
         run: git diff --ignore-space-at-eol --exit-code openapi.json
+
+      - name: Regenerate proxy classes
+        run: task dev:codegen:proxy-classes
 
       - name: Codegen - FBS PHP client
         run: task dev:codegen:fbs
