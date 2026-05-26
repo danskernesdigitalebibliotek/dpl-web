@@ -374,6 +374,17 @@ tasks:
     cmds:
       - task dev:cli -- drush sailor:codegen dpl_fbi
 
+  dev:codegen:proxy-classes:
+    desc: Regenerate Drupal lazy-service proxy classes for custom modules.
+    # Add an entry per service marked `lazy: true` in any custom module's
+    # *.services.yml: "<fully qualified class>|<namespace root relative to
+    # web/>". CheckProxyClasses verifies the result matches what is committed.
+    cmds:
+      - for:
+          - 'Drupal\dpl_go\GoSite|modules/custom/dpl_go/src'
+        cmd: |
+          docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm --workdir /app/cms/web cli php core/scripts/generate-proxy-class.php '{{ splitList "|" .ITEM | first }}' {{ splitList "|" .ITEM | last }}
+
   dev:composer:update-design-system:
     desc: Update the DPL design system package to a specific version or branch release.
     summary: |
