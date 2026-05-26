@@ -13,6 +13,14 @@ use Drupal\drupal_typed\DrupalTyped;
  */
 
 /**
+ * Set a title-field description for campaign nodes.
+ */
+#[LegacyHook]
+function dpl_campaign_form_node_campaign_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  DrupalTyped::service(DplCampaignHooks::class)->setCampaignTitleDescription($form, $form_state, $form_id);
+}
+
+/**
  * Alter options for campaign weights.
  */
 #[LegacyHook]
