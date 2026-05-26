@@ -10,7 +10,7 @@ field_name: field_campaign_text
 entity_type: node
 bundle: campaign
 label: Text
-description: ''
+description: 'The text that is shown to the user in the frontend. If an image is chosen, it is shown next to it.'
 required: true
 translatable: false
 default_value: {  }
