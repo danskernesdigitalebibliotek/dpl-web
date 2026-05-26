@@ -4,7 +4,7 @@ namespace Drupal\dpl_go\Cache\Context;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\Context\CacheContextInterface;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 
 /**
  * Defines the "is Go site" cache context.
@@ -16,7 +16,7 @@ class IsGoCacheContext implements CacheContextInterface {
   /**
    * Constructor.
    */
-  public function __construct(protected GoSite $goSite) {}
+  public function __construct(protected GoSiteInterface $goSite) {}
 
   /**
    * {@inheritdoc}

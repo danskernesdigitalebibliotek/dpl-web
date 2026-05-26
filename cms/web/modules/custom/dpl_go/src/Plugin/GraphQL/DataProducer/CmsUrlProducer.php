@@ -4,7 +4,7 @@ namespace Drupal\dpl_go\Plugin\GraphQL\DataProducer;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,7 +30,7 @@ class CmsUrlProducer extends DataProducerPluginBase implements ContainerFactoryP
     array $configuration,
     string $pluginId,
     mixed $pluginDefinition,
-    protected GoSite $goSite,
+    protected GoSiteInterface $goSite,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }

@@ -9,9 +9,21 @@ services:
 
   dpl_go.go_site:
     class: Drupal\dpl_go\GoSite
+    # Lazy-load to break a service container dependency cycle: GoSite's
+    # autowired EntityTypeManagerInterface and AccountInterface can transitively
+    # pull `router` into its dependency graph, and GoSite is itself injected
+    # into dpl_go.path_processor_outbound (collected by path_processor_manager,
+    # a dependency of router.route_provider). The proxy defers resolution of
+    # GoSite's dependencies until a method is actually called on it.
+    #
+    # Lazy must apply to GoSite (consumed by direct constructor injection)
+    # rather than path_processor_outbound (consumed by tag collection): the
+    # ProxyServicesPass moves tags onto the renamed original service, so a
+    # lazy tag-collected service still pulls its full dep graph in.
+    lazy: true
     arguments:
       $keyValueStore: '@dpl_go.node_type_storage'
-  Drupal\dpl_go\GoSite: '@dpl_go.go_site'
+  Drupal\dpl_go\GoSiteInterface: '@dpl_go.go_site'
 
   dpl_go.node_type_storage:
     class: Drupal\Core\KeyValueStore\KeyValueStoreInterface

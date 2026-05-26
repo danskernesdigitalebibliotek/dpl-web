@@ -7,7 +7,7 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Utility\Token;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 use Drupal\graphql_compose_preview\TokenHelper;
 use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,9 +30,9 @@ class PreviewTokenIframeGoFormatter extends FormatterBase {
   /**
    * The GoSite service.
    *
-   * @var \Drupal\dpl_go\GoSite
+   * @var \Drupal\dpl_go\GoSiteInterface
    */
-  protected GoSite $goSite;
+  protected GoSiteInterface $goSite;
 
   /**
    * The token service.
