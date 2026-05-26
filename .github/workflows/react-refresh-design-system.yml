@@ -1,0 +1,45 @@
+---
+name: React / Refresh design system
+
+on:
+  registry_package:
+    types:
+      - published
+      - updated
+
+jobs:
+  refresh_package:
+    name: React / Refresh design system develop package
+    runs-on: ubuntu-latest
+    if: ${{ github.event.registry_package.name == 'dpl-design-system' && github.event.registry_package.package_version.version == '0.0.0-branch-develop' }}
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: develop
+          # AUTOCOMMIT_GITHUB_TOKEN is a dpl-platform-bot PAT used to
+          # bypass branch protection on develop.
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: 'react/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'react/yarn.lock'
+          registry-url: 'https://npm.pkg.github.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Re-resolve design system package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn remove @danskernesdigitalebibliotek/dpl-design-system
+          yarn add --dev --exact @danskernesdigitalebibliotek/dpl-design-system@0.0.0-branch-develop
+      - name: Commit refreshed package files
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          file_pattern: react/yarn.lock react/package.json
+          commit_message: Refreshed dpl-design-system package
