@@ -1,6 +1,6 @@
 export { getPatron } from "./patron"
 export type {
-  AuthenticatedPatronInfo,
+  AuthenticatedPatron,
   AuthenticationStatus,
-  PatronInfo,
+  Patron,
 } from "./types"

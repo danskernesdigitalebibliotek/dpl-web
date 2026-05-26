@@ -1,29 +1,25 @@
-import type {
-  AuthenticatedPatronInfo,
-  AuthenticationStatus,
-} from "../../../src/types"
-import type { AuthenticatedPatronV8 } from "../generated/model/authenticatedPatronV8"
-import type { AuthenticatedPatronV8AuthenticateStatus } from "../generated/model/authenticatedPatronV8AuthenticateStatus"
+import { z } from "zod";
 
-const FBS_STATUS_TO_DOMAIN: Record<
-  AuthenticatedPatronV8AuthenticateStatus,
-  AuthenticationStatus
-> = {
-  VALID: "VALID",
-  INVALID: "INVALID",
-  LOANER_LOCKED_OUT: "LOCKED_OUT",
-}
+import type { AuthenticatedPatron } from "../../../src/types";
 
-export function mapAuthenticatedPatron(
-  raw: AuthenticatedPatronV8
-): AuthenticatedPatronInfo {
+const AuthenticatedPatronSchema = z.object({
+  authenticateStatus: z.enum(["VALID", "INVALID", "LOANER_LOCKED_OUT"]),
+  patron: z
+    .object({
+      name: z.string().optional(),
+    })
+    .optional(),
+});
+
+export function parseAndMapAuthenticatedPatron(
+  raw: unknown,
+): AuthenticatedPatron {
+  const parsed = AuthenticatedPatronSchema.parse(raw);
   return {
-    status: FBS_STATUS_TO_DOMAIN[raw.authenticateStatus],
-    patron: raw.patron
-      ? {
-          name: raw.patron.name,
-          patronId: raw.patron.patronId,
-        }
-      : undefined,
-  }
+    status:
+      parsed.authenticateStatus === "LOANER_LOCKED_OUT"
+        ? "LOCKED_OUT"
+        : parsed.authenticateStatus,
+    patron: parsed.patron ? { name: parsed.patron.name } : undefined,
+  };
 }

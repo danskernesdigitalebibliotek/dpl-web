@@ -13,10 +13,14 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "orval": "^7.21.0",
     "prettier": "^3.8.3",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
 }

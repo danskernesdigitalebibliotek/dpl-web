@@ -1,11 +1,10 @@
-export type PatronInfo = {
+export type Patron = {
   name: string | undefined
-  patronId: number
 }
 
 export type AuthenticationStatus = "VALID" | "INVALID" | "LOCKED_OUT"
 
-export type AuthenticatedPatronInfo = {
+export type AuthenticatedPatron = {
   status: AuthenticationStatus
-  patron: PatronInfo | undefined
+  patron: Patron | undefined
 }

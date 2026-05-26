@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["es2020"],
+    "lib": ["es2022"],
+    "types": ["node"],
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -9,8 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "target": "es6",
-    "skipLibCheck": true,
-    "baseUrl": "."
+    "skipLibCheck": true
   },
   "include": ["**/src/**/*.ts"],
   "exclude": ["node_modules"]

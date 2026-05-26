@@ -1,80 +1,87 @@
 import { describe, expect, it } from "vitest"
 
-import type { AuthenticatedPatronV8 } from "../generated/model/authenticatedPatronV8"
-import { mapAuthenticatedPatron } from "./patron.mapper"
+import { parseAndMapAuthenticatedPatron } from "./patron.mapper"
 
-describe("mapAuthenticatedPatron", () => {
-  it("maps a valid patron with all fields", () => {
-    const raw: AuthenticatedPatronV8 = {
+describe("parseAndMapAuthenticatedPatron", () => {
+  it("maps a valid patron with a name", () => {
+    const raw = {
       authenticateStatus: "VALID",
       patron: {
-        patronId: 123,
         name: "Test User",
-        defaultInterestPeriod: 30,
-        guardianVisibility: false,
-        preferredPickupBranch: "DK-123456",
-        receiveEmail: true,
-        receivePostalMail: false,
-        receiveSms: false,
-        resident: true,
       },
     }
 
-    const result = mapAuthenticatedPatron(raw)
-
-    expect(result).toEqual({
+    expect(parseAndMapAuthenticatedPatron(raw)).toEqual({
       status: "VALID",
-      patron: {
-        name: "Test User",
-        patronId: 123,
-      },
+      patron: { name: "Test User" },
     })
   })
 
-  it("maps a response with undefined patron", () => {
-    const raw: AuthenticatedPatronV8 = {
-      authenticateStatus: "INVALID",
-    }
+  it("maps a response with no patron object", () => {
+    const raw = { authenticateStatus: "INVALID" }
 
-    const result = mapAuthenticatedPatron(raw)
-
-    expect(result).toEqual({
+    expect(parseAndMapAuthenticatedPatron(raw)).toEqual({
       status: "INVALID",
       patron: undefined,
     })
   })
 
-  it("maps LOANER_LOCKED_OUT status", () => {
-    const raw: AuthenticatedPatronV8 = {
-      authenticateStatus: "LOANER_LOCKED_OUT",
-    }
+  it("maps LOANER_LOCKED_OUT status to LOCKED_OUT", () => {
+    const raw = { authenticateStatus: "LOANER_LOCKED_OUT" }
 
-    const result = mapAuthenticatedPatron(raw)
-
-    expect(result.status).toBe("LOCKED_OUT")
-    expect(result.patron).toBeUndefined()
+    expect(parseAndMapAuthenticatedPatron(raw).status).toBe("LOCKED_OUT")
   })
 
-  it("maps a patron with undefined name", () => {
-    const raw: AuthenticatedPatronV8 = {
+  it("maps a patron with no name", () => {
+    const raw = {
+      authenticateStatus: "VALID",
+      patron: {},
+    }
+
+    expect(parseAndMapAuthenticatedPatron(raw)).toEqual({
+      status: "VALID",
+      patron: { name: undefined },
+    })
+  })
+
+  it("ignores additional fields on the upstream patron object", () => {
+    const raw = {
       authenticateStatus: "VALID",
       patron: {
-        patronId: 456,
-        defaultInterestPeriod: 30,
-        guardianVisibility: false,
-        preferredPickupBranch: "DK-654321",
-        receiveEmail: false,
-        receivePostalMail: false,
-        receiveSms: false,
-        resident: false,
+        name: "Test User",
+        patronId: 123,
+        emailAddress: "user@example.com",
       },
     }
 
-    const result = mapAuthenticatedPatron(raw)
-
-    expect(result.patron).toEqual({
-      name: undefined,
-      patronId: 456,
+    expect(parseAndMapAuthenticatedPatron(raw)).toEqual({
+      status: "VALID",
+      patron: { name: "Test User" },
     })
+  })
+
+  it("throws on an unknown authenticateStatus", () => {
+    expect(() =>
+      parseAndMapAuthenticatedPatron({ authenticateStatus: "SUSPENDED" })
+    ).toThrow()
+  })
+
+  it("throws on a missing authenticateStatus", () => {
+    expect(() => parseAndMapAuthenticatedPatron({})).toThrow()
+  })
+
+  it("throws on a non-object response", () => {
+    expect(() => parseAndMapAuthenticatedPatron(null)).toThrow()
+    expect(() => parseAndMapAuthenticatedPatron("VALID")).toThrow()
+    expect(() => parseAndMapAuthenticatedPatron(42)).toThrow()
+  })
+
+  it("throws when patron.name is the wrong type", () => {
+    expect(() =>
+      parseAndMapAuthenticatedPatron({
+        authenticateStatus: "VALID",
+        patron: { name: 42 },
+      })
+    ).toThrow()
   })
 })

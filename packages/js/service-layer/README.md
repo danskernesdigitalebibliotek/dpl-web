@@ -85,11 +85,14 @@ const patron = await getPatron({
 ## How to add a new composed function
 
 1. Decide which adapter(s) it needs.
-2. Write/extend the relevant adapter client(s) under `<adapter>/src/client.ts` and mapper(s) under `<adapter>/src/mappers/`.
-3. Define or extend the domain DTO in `src/types.ts`.
+2. Write/extend the relevant adapter client(s) under `<adapter>/src/client.ts` and mapper(s) under `<adapter>/src/mappers/`. Each mapper file exports a single `parseAndMap…(raw: unknown)` function that runs a co-located zod schema and returns the domain DTO. The client calls that function after the `response.ok` check.
+3. Define or extend the domain DTO in `src/types.ts`. Domain DTOs are strictly minimal — a field only lives here if a consumer reads it. The PR that adds a field must also add the call site that reads it.
 4. Add the composed function in `src/<domain>.ts` (or a new file). Its config parameter declares only the adapters it uses.
 5. Re-export from `src/index.ts`.
-6. Write tests for the mapper(s) and, if useful, the composed function.
+6. Tests:
+   - Mapper + schema: pass raw shapes through `parseAndMap…` and assert the mapped DTO; cover the "bogus shape throws" case.
+   - Client method: mock `fetch` and cover happy path, non-2xx, shape mismatch, and both sync and async auth-header callbacks.
+   - Composed functions get their own tests only when they actually compose (i.e. read from more than one adapter). Pass-throughs are covered by the client + mapper tests.
 
 ## How to add a new upstream adapter (e.g., publizon)
 

@@ -1,4 +1,4 @@
 export type FbsConfig = {
   baseUrl: string
-  getAuthHeader: () => Promise<string | null> | string | null
+  getAuthHeader: () => Promise<string> | string
 }

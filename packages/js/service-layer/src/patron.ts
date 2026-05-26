@@ -1,9 +1,9 @@
 import { createFbsClient, type FbsConfig } from "../fbs/src"
-import type { AuthenticatedPatronInfo } from "./types"
+import type { AuthenticatedPatron } from "./types"
 
 export async function getPatron(config: {
   fbs: FbsConfig
-}): Promise<AuthenticatedPatronInfo> {
+}): Promise<AuthenticatedPatron> {
   const fbs = createFbsClient(config.fbs)
-  return fbs.getPatronInfo()
+  return fbs.getPatron()
 }
