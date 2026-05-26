@@ -1,7 +1,5 @@
 "use client"
 
-import React from "react"
-
 import VideoBundleVertical, {
   VideoBundleVerticalSkeleton,
 } from "@/components/paragraphs/VideoBundleVertical/VideoBundleVertical"
@@ -17,6 +15,7 @@ export type VideoBundleVerticalManualProps = {
   embedVideo: {
     mediaVideotoolVertical: MediaVideotoolVertical["mediaVideotoolVertical"]
     name: MediaVideotoolVertical["name"]
+    thumbnail?: string | null
   }
   videoBundleWorkIds: ParagraphGoVideoBundleVerticalManual["videoBundleWorkIds"]
 }
@@ -47,6 +46,7 @@ const VideoBundleVerticalManual = ({
           works={data?.complexSearch.works}
           title={goVideoTitle}
           videoUrl={embedVideo.mediaVideotoolVertical}
+          thumbnailUrl={embedVideo.thumbnail}
         />
       )}
     </div>

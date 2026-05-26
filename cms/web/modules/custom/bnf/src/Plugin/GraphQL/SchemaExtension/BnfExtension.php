@@ -69,7 +69,7 @@ class BnfExtension extends SdlSchemaExtensionPluginBase {
       );
     }
 
-    $thumbnailFields = ['MediaVideo', 'MediaVideotool'];
+    $thumbnailFields = ['MediaVideo', 'MediaVideotool', 'MediaVideotoolVertical'];
 
     foreach ($thumbnailFields as $field) {
       $registry->addFieldResolver($field, 'thumbnail', $builder->compose(

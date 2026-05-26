@@ -359,6 +359,7 @@ type MediaVideotoolVertical implements MediaInterface {
   path: String
 
   status: Boolean!
+  thumbnail: String!
 }
 
 type Mutation {
