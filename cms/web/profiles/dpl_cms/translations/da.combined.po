@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-26 07:09+0200\n"
-"PO-Revision-Date: 2026-05-26 07:09+0200\n"
+"POT-Creation-Date: 2026-05-26 10:21+0200\n"
+"PO-Revision-Date: 2026-05-26 10:21+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3043,6 +3043,12 @@ msgstr ""
 
 msgid "Updated @count entities, @source_field => @target_field"
 msgstr "Opdaterede @count enheder, @source_field => @target_field"
+
+msgctxt "dpl_campaign"
+msgid ""
+"The title is for naming the content type so editors can locate it in the "
+"content overview. <br/>It is not shown to users."
+msgstr ""
 
 msgctxt "dpl_campaign"
 msgid "Highest"
@@ -22056,6 +22062,12 @@ msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
+msgstr ""
+
+msgctxt "field.field.node.campaign.field_campaign_text:description"
+msgid ""
+"The text that is shown to the user in the frontend. If an image is chosen, "
+"it is shown next to it."
 msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_weight:label"
