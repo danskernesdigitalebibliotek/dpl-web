@@ -66,20 +66,20 @@ Apps depend on this package via a `file:` reference in their `package.json`:
 For Next.js apps, also add to `next.config.mjs`:
 
 ```js
-transpilePackages: ["@dpl/service-layer"]
+transpilePackages: ["@dpl/service-layer"];
 ```
 
 Then call composed functions:
 
 ```typescript
-import { getPatron } from "@dpl/service-layer"
+import { getPatron } from "@dpl/service-layer";
 
 const patron = await getPatron({
   fbs: {
     baseUrl: "https://fbs-openplatform.dbc.dk",
     getAuthHeader: () => `Bearer ${token}`,
   },
-})
+});
 ```
 
 ## How to add a new composed function
@@ -100,7 +100,3 @@ const patron = await getPatron({
 2. Run codegen for the new adapter (add a `codegen:publizon` script).
 3. Domain DTOs go in the package-level `src/types.ts`, not the adapter.
 4. Compose data in `src/<domain>.ts` — combine `fbs` and `publizon` as needed.
-
-## Node version
-
-This package requires Node 24+. See `.nvmrc`.
