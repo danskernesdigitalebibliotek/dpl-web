@@ -66,20 +66,20 @@ Apps depend on this package via a `file:` reference in their `package.json`:
 For Next.js apps, also add to `next.config.mjs`:
 
 ```js
-transpilePackages: ["@dpl/service-layer"];
+transpilePackages: ["@dpl/service-layer"]
 ```
 
 Then call composed functions:
 
 ```typescript
-import { getPatron } from "@dpl/service-layer";
+import { getPatron } from "@dpl/service-layer"
 
 const patron = await getPatron({
   fbs: {
     baseUrl: "https://fbs-openplatform.dbc.dk",
     getAuthHeader: () => `Bearer ${token}`,
   },
-});
+})
 ```
 
 ## How to add a new composed function

@@ -1,9 +1,9 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { createFbsClient } from "./client";
+import { createFbsClient } from "./client"
 
-const baseUrl = "https://fbs.example";
-const patronInfoUrl = `${baseUrl}/external/agencyid/patrons/patronid/v4`;
+const baseUrl = "https://fbs.example"
+const patronInfoUrl = `${baseUrl}/external/agencyid/patrons/patronid/v4`
 
 const mockJsonResponse = (body: unknown, status = 200) =>
   ({
@@ -11,71 +11,70 @@ const mockJsonResponse = (body: unknown, status = 200) =>
     status,
     statusText: status === 200 ? "OK" : "Error",
     json: async () => body,
-  }) as Response;
+  }) as Response
 
 const validPatronBody = {
   authenticateStatus: "VALID",
   patron: { name: "Test User" },
-};
+}
 
-const buildClient = (
-  getAuthHeader: () => Promise<string> | string = () => "Bearer abc",
-) => createFbsClient({ baseUrl, getAuthHeader });
+const buildClient = (getAuthHeader: () => Promise<string> | string = () => "Bearer abc") =>
+  createFbsClient({ baseUrl, getAuthHeader })
 
 describe("createFbsClient.getPatron", () => {
   beforeEach(() => {
-    vi.stubGlobal("fetch", vi.fn());
-  });
+    vi.stubGlobal("fetch", vi.fn())
+  })
 
   afterEach(() => {
-    vi.unstubAllGlobals();
-  });
+    vi.unstubAllGlobals()
+  })
 
   it("fetches the patron endpoint with the auth header and returns the mapped DTO", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validPatronBody));
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validPatronBody))
 
-    const result = await buildClient().getPatron();
+    const result = await buildClient().getPatron()
 
     expect(fetch).toHaveBeenCalledWith(patronInfoUrl, {
       method: "GET",
       headers: { authorization: "Bearer abc" },
-    });
+    })
     expect(result).toEqual({
       status: "VALID",
       patron: { name: "Test User" },
-    });
-  });
+    })
+  })
 
   it("awaits an async auth header callback", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validPatronBody));
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validPatronBody))
 
-    await buildClient(async () => "Bearer async-token").getPatron();
+    await buildClient(async () => "Bearer async-token").getPatron()
 
     expect(fetch).toHaveBeenCalledWith(
       patronInfoUrl,
       expect.objectContaining({
         headers: { authorization: "Bearer async-token" },
-      }),
-    );
-  });
+      })
+    )
+  })
 
   it("throws on a non-2xx response", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401));
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
 
-    await expect(buildClient().getPatron()).rejects.toThrow(/401/);
-  });
+    await expect(buildClient().getPatron()).rejects.toThrow(/401/)
+  })
 
   it("throws on a 5xx response", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 503));
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 503))
 
-    await expect(buildClient().getPatron()).rejects.toThrow(/503/);
-  });
+    await expect(buildClient().getPatron()).rejects.toThrow(/503/)
+  })
 
   it("throws when the response shape fails validation", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
-      mockJsonResponse({ authenticateStatus: "SOMETHING_NEW" }),
-    );
+      mockJsonResponse({ authenticateStatus: "SOMETHING_NEW" })
+    )
 
-    await expect(buildClient().getPatron()).rejects.toThrow();
-  });
-});
+    await expect(buildClient().getPatron()).rejects.toThrow()
+  })
+})

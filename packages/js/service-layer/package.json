@@ -8,11 +8,14 @@
   },
   "scripts": {
     "codegen:fbs": "orval --config fbs/orval.config.ts",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^25.9.1",
     "orval": "^7.21.0",
     "prettier": "^3.8.3",

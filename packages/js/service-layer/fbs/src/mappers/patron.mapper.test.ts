@@ -61,9 +61,7 @@ describe("parseAndMapAuthenticatedPatron", () => {
   })
 
   it("throws on an unknown authenticateStatus", () => {
-    expect(() =>
-      parseAndMapAuthenticatedPatron({ authenticateStatus: "SUSPENDED" })
-    ).toThrow()
+    expect(() => parseAndMapAuthenticatedPatron({ authenticateStatus: "SUSPENDED" })).toThrow()
   })
 
   it("throws on a missing authenticateStatus", () => {
