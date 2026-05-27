@@ -201,16 +201,12 @@ Used by scripts and tooling, not by the running application.
 
 ## Lagoon Platform Variables
 
-Provided by the Lagoon hosting environment and consumed in `lagoon/start.sh` to derive runtime env vars:
+Provided by the Lagoon hosting environment and consumed in `go/scripts/prepare-docker-env-vars.mjs` to derive runtime env vars:
 
-### `LAGOON_ROUTES`
+- `LAGOON_ROUTES`
 
-The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.)
+  The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.).
 
-- `DPL_GO_BASE_URL` – set directly
+- `LAGOON_ROUTE`
 
-### `LAGOON_ROUTE`
-
-The full route URL (with protocol) from Lagoon. Used to derive:
-
-- `DPL_CMS_BASE_URL` – set directly
+  The full route URL (with protocol) for the first/primary route.
