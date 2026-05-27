@@ -4,7 +4,7 @@ Libraries on the "webmaster" plan has extended permissions compared to
 regular libraries. They have access to most of the Drupal
 administration pages, and can install custom modules.
 
-See [Permissions and roles](./permissions-and-roles) for details on
+See [Permissions and roles](./permissions-and-roles.md) for details on
 Drupal setup.
 
 In addition to the Drupal setup, the site should use the `webmaster`

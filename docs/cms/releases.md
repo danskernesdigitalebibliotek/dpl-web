@@ -25,5 +25,6 @@ for just invoking the `source:build` task.
 
 You can override the name of the built image and/or the destination registry
 temporarily by providing a number of environment variables (see the
-[Taskfile](Taskfile.yml)). To permanently change these configurations, eg. in
-a fork, change the defaults directly in the `Taskfile.yml`.
+[CMS Taskfile](../../cms/Taskfile.yml)). To permanently change these
+configurations, eg. in a fork, change the defaults directly in
+`cms/Taskfile.yml`.

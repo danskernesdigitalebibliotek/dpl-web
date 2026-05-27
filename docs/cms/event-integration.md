@@ -6,13 +6,13 @@ in Denmark use different external vendors for handling this responsibility
 which includes functionalities such payment, keeping track of availability,
 validation, seating etc.
 
-On goal for libraries is to keep staff workflows as simple as possible and
+One goal for libraries is to keep staff workflows as simple as possible and
 avoid duplicate data entry. To achieve this DPL CMS exposes data and
 functionality as a part of [the public API of the system](./architecture/adr-006-api-specification.md).
 
 ## Data synchronization
 
-[The public API for DPL CMS is documented through an OpenAPI 2.0 specification](../openapi.json).
+[The public API for DPL CMS is documented through an OpenAPI 2.0 specification](../../cms/openapi.json).
 
 The following flow diagram represents a suggested approach for synchronizing
 event data between DPL CMS and an external system.
@@ -28,7 +28,7 @@ sequenceDiagram
   activate DplCms
   DplCms ->> ExternalSystem: List of all publicly available events
   deactivate DplCms
-  ExternalSystem ->> ExternalSystem: (Optional) Filter out any events that have not been marked as relevant (ticket_manager_relevance)
+  ExternalSystem ->> ExternalSystem: (Optional) Filter out any events that have not been marked as relevant (ticketManagerRelevance)
   ExternalSystem ->> ExternalSystem: Identify new events by UUID and create them locally
   ExternalSystem ->> DplCms: Update events with external urls
   ExternalSystem ->> ExternalSystem: Identify existing events by UUID and update them locally
@@ -46,6 +46,29 @@ sequenceDiagram
 ```
 <!-- markdownlint-enable MD013 -->
 
+### External data
+
+The `PATCH` payload also accepts an `externalData` object which the
+external system can use to attach its own URL and reference to an event
+(for example, a link to the ticket purchase page on the external system).
+This is what the "Update events with external urls" step in the sequence
+diagram refers to.
+
+## Configuration affecting integration
+
+Administrators configure event-related behaviour at
+`/admin/config/dpl-event/settings`. The settings that affect integrations
+are:
+
+- **Price Currency** — the currency used when prices are emitted in API
+  responses (defaults to `DKK`).
+- **Automatic unpublication** — when enabled, instances are automatically
+  unpublished a configurable interval after their end time, and (optionally)
+  the parent series is unpublished once all of its instances have been
+  unpublished. Unpublished events disappear from `GET /api/v1/events`, so
+  external systems must be prepared to delete their local copies in
+  response.
+
 ## Authentication
 
 An external system which intends to integrate with events is setup in the same
@@ -59,5 +82,5 @@ using this information when updating events.
 
 ## API versioning
 
-Please read [the related ADR](./architecture/adr-011-api-versioning.md) for how
+Please read [the related ADR](./architecture/adr-012-api-versioning.md) for how
 we handle API versioning.

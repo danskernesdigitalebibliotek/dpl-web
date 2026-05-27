@@ -33,4 +33,4 @@ This must be done on behalf of the library - never the patron.
   only include APIs to be used with library tokens. This signals what APIs are
   OK to be accessed server-side.
 - The CMS must only access services using the library token provided by the
-  [`dpl_library_token.handler` service](../../web/modules/custom/dpl_library_token/dpl_library_token.services.yml).
+  [`dpl_library_token.handler` service](../../../cms/web/modules/custom/dpl_library_token/dpl_library_token.services.yml).

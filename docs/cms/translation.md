@@ -14,9 +14,9 @@ of the system is in Danish.
 To make the "translation traffic" work following components are being used:
 
 * GitHub
-  * [Stores `.po` files in git](web/profiles/dpl_cms/translations/da.po) with
+  * [Stores `.po` files in git](../../cms/web/profiles/dpl_cms/translations/da.po) with
     translatable strings and translations
-* [GitHub Actions](.github/workflows/translations.yml)
+* [GitHub Actions](../../.github/workflows/cms-translate-source.yml)
   * Scans codebase for new translatable strings and commits them to GitHub
   * Exports translatable configuration strings into a separate `*.config.po` file
   * Merges the two files: `*.po` and `*.config.po` into a `*.combined.po` file
@@ -30,17 +30,15 @@ To make the "translation traffic" work following components are being used:
   * Provides webhooks where external systems can notify of new translations
 * DPL CMS
   * Drupal installation which is [configured to use GitHub Pages as an interface
-    translation server](web/profiles/dpl_cms/dpl_cms.info.yml) from which `.po`
+    translation server](../../cms/web/profiles/dpl_cms/dpl_cms.info.yml) from which `.po`
     files can be consumed.
   * In the development setup and in cronjobs defined in the environments there
   are two jobs in charge of importing the regular translations
   and the configuration translations.
 
-The following diagram show how these systems interact to support the flow of
-from introducing a new translateable string in the codebase to DPL CMS consuming
+The following diagram shows how these systems interact to support the flow
+from introducing a new translatable string in the codebase to DPL CMS consuming
 an updated translation with said string.
-
-case
 
 ```mermaid
 sequenceDiagram

@@ -1,0 +1,8 @@
+customizable-canary
+cms-school
+canary
+bibliotek-test
+staging
+bnf
+dpl-web-bnf
+dpl-web

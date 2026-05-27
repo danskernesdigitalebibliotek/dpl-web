@@ -9,7 +9,7 @@ theater for children, tutoring and exhibitions of art. Some of these events
 are singular and some are recurring.
 
 We define a recurring event as an event that occurs more than once over the
-course of a period of time where the primary different between each occurrence
+course of a period of time where the primary difference between each occurrence
 of the event is the event start and end time.
 
 A simple solution to this would be to use a multi-value date range field but
@@ -18,18 +18,18 @@ there are a number of factors that makes this more challenging:
 ### Functional requirements
 
 - **Schedules**: Editors would like to create occurrences based on a schedule
-  e.g. every Tuesday from 15:00 to 17:00 between January 1st and March 31th.
+  e.g. every Tuesday from 15:00 to 17:00 between January 1st and March 31st.
   This is simpler than having to set each date and time manually.
 - **Reuse**: Editors would like to avoid having to retype information for each
-  instance if it does not wary.
+  instance if it does not vary.
 - **Exceptions**: Editors need to be able to create exceptions. An event might
   not occur during a holiday.
-- **Variatons**: Occurrences may have variations between them. If attendance
+- **Variations**: Occurrences may have variations between them. If attendance
   requires a ticket, then each occurrence should have a unique url to buy
   these. An occurrence can also be marked as sold out or cancelled. This is
   preferable to deleting the instance for the sake of communication to end
   users.
-- **Relationships**: End users would like to a see the relationship between
+- **Relationships**: End users would like to see the relationship between
   occurrences. If the date of one occurrence does not fit their personal
   schedules it is nice to see the alternatives.
 - **Instances in lists**: End users should be able to see individual
@@ -59,7 +59,7 @@ The module solves our requirements the following way:
 
 ### Schedule
 
-The module supports creating shedules for events with daily, weekly, monthly,
+The module supports creating schedules for events with daily, weekly, monthly,
 and annual repetitions. Each frequency can be customized, for example, which
 days of the week the weekly event should repeat on (e.g., every Tuesday and
 Thursday), which days of the month events should repeat on (e.g., the first
@@ -90,7 +90,7 @@ individual instances.
 ### Relationships
 
 Recurring events creates a relationship between an event series and individual
-instances. Through this relationsship we can determine what other instances
+instances. Through this relationship we can determine what other instances
 might be for an individual instance.
 
 ### Instances in lists
@@ -112,11 +112,17 @@ Recurring events lists six maintainers on Drupal.org and is supported by
 three companies. Among them is Lullabot, a well known company within the
 community.
 
-The module has over 1.000 sites reported using the module. The latest
-version, 2.0.0-rc16, was recently released on December 1th 2023.
+The module has over 1.000 sites reported using the module. At the time the
+decision was made the latest version was 2.0.0-rc16, released on
+December 1st 2023. The module has since had a stable release; the version
+currently installed in this project is 2.0.3 (released June 2025).
 
-The dependency, Field Inheritance, currently requires two patches to
-Drupal Core.
+Maintaining the integration requires applying a small number of patches.
+These are tracked in `cms/composer.json` and reflected in the installed
+module's `PATCHES.txt`. The set includes patches against `recurring_events`
+itself (for example, Scheduler compatibility and various bug fixes) and a
+single patch against the `field_inheritance` contrib module. No patches
+against Drupal Core are currently required.
 
 ## Consequences
 
@@ -144,8 +150,9 @@ events - even for singular events.
 We may have to do work to improve the editorial experience. This should
 preferably be upstreamed to the Recurring Events module.
 
-Going forward we will have to participate in keeping Field Inheritance patches
-to Drupal Core updated to match future versions until they are merged.
+Going forward we will have to participate in keeping the patches we apply
+to `recurring_events` and `field_inheritance` aligned with future releases
+of those modules until the upstream issues are resolved.
 
 ## Alternatives considered
 
@@ -158,5 +165,5 @@ In the process two alternative Drupal modules were considered:
   for variations out of the box.
 - **[Entity repeat](https://www.drupal.org/project/entity_repeat)**: This was
   ruled out due to lack of relationship between event instances, poor editorial
-  experience and worrying outlook regading maintenance (very small user base,
+  experience and worrying outlook regarding maintenance (very small user base,
   no official Drupal 10 version)
