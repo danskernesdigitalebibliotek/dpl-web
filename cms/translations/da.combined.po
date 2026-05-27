@@ -4757,11 +4757,6 @@ msgid "Categories"
 msgstr "Kategorier"
 
 #: 
-msgctxt "field.field.eventinstance.default.field_event_address:label"
-msgid "Address"
-msgstr "Adresse"
-
-#: 
 msgctxt "field.field.eventinstance.default.field_event_image:label"
 msgid "Image"
 msgstr "Billede"
@@ -4835,11 +4830,6 @@ msgstr "Bibliotek"
 msgctxt "field.field.eventseries.default.field_categories:label"
 msgid "Categories"
 msgstr "Kategorier"
-
-#: 
-msgctxt "field.field.eventseries.default.field_event_address:label"
-msgid "Address"
-msgstr "Adresse"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_image:label"
@@ -31010,5 +31000,35 @@ msgstr "Mindst et værtsnavn er påkrævet når proxy er slået til."
 #: 
 msgctxt "Work Page"
 msgid "We're sorry. Unfortunately, there has been an error. Try again, please."
+msgstr "Din reservering kunne ikke gennemføres. Prøv at kontakte os, hvis du stadig ønsker at låne materialet. Bemærk, at nogle materialer kun kan lånes af bestemte lånergrupper."
+
+#: 
+msgctxt "field.field.eventinstance.default.field_event_address:label"
+msgid "Address (Deprecated - will be removed)"
+msgstr ""
+
+#: 
+msgctxt "field.field.eventinstance.default.field_event_address_gsearch:label"
+msgid "Address"
+msgstr "Adresse"
+
+#: 
+msgctxt "field.field.eventseries.default.field_event_address:label"
+msgid "Address (Deprecated - will be removed)"
+msgstr ""
+
+#: 
+msgctxt "field.field.eventseries.default.field_event_address_gsearch:label"
+msgid "Address"
+msgstr "Adresse"
+
+#: 
+msgctxt "dpl_campaign"
+msgid "The title is for naming the content type so editors can locate it in the content overview. <br/>It is not shown to users."
+msgstr ""
+
+#: 
+msgctxt "field.field.node.campaign.field_campaign_text:description"
+msgid "The text that is shown to the user in the frontend. If an image is chosen, it is shown next to it."
 msgstr ""
 
