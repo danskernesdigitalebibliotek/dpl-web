@@ -31,6 +31,7 @@ class ComplexSearchFacetsEnum
     public const TYPEOFSCORE = 'TYPEOFSCORE';
     public const SUBJECT = 'SUBJECT';
     public const HOSTPUBLICATION = 'HOSTPUBLICATION';
+    public const HOSTPUBLICATIONTYPE = 'HOSTPUBLICATIONTYPE';
     public const SERIES = 'SERIES';
     public const MEDIACOUNCILAGERESTRICTION = 'MEDIACOUNCILAGERESTRICTION';
     public const ACCESSTYPE = 'ACCESSTYPE';
@@ -45,6 +46,7 @@ class ComplexSearchFacetsEnum
     public const INSTRUMENT = 'INSTRUMENT';
     public const CHOIRTYPE = 'CHOIRTYPE';
     public const CHAMBERMUSICTYPE = 'CHAMBERMUSICTYPE';
+    public const DATEFIRSTEDITION = 'DATEFIRSTEDITION';
 
     public static function endpoint(): string
     {

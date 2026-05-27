@@ -1,3 +1,8 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
 directive @fallback on ENUM_VALUE
 
 """Complexity directive to evaluate query complexity """
@@ -20,7 +25,7 @@ enum AccessTypeCodeEnum {
   UNKNOWN
 }
 
-union AccessUnion = AccessUrl | Ereol | InterLibraryLoan | InfomediaService | DigitalArticleService
+union AccessUnion = AccessUrl | Ereol | InterLibraryLoan | InfomediaService | DigitalArticleService | Publizon
 
 type AccessUrl {
   """
@@ -54,6 +59,14 @@ enum AccessUrlTypeEnum {
   SAMPLE
   TABLE_OF_CONTENTS
   THUMBNAIL
+}
+
+type AddBookmarksResponse {
+  """The overall status of the bookmark addition operation."""
+  status: BookmarksOverallStatusEnum!
+
+  """A list of materials for which bookmark addition failed."""
+  items: [BookmarksStatusItem!]!
 }
 
 type Audience {
@@ -99,13 +112,151 @@ type Audience {
   players: Players
 
   """PEGI age rating for games """
-  PEGI: PEGI @deprecated(reason: "Use 'Audience.pegi' instead expires: 01\/06-2025")
-
-  """PEGI age rating for games """
   pegi: PEGI
 
   """Media council age recommendation"""
   mediaCouncilAgeRestriction: MediaCouncilAgeRestriction
+
+  """Appropriate audience for this manifestation"""
+  audienceGeneral: [AudienceGeneral!]!
+}
+
+"""
+A single general audience object containing a subject word and a possible associated language
+"""
+type AudienceGeneral {
+  """Appropriate audience for this manifestation"""
+  display: String
+
+  """The associated language of the audience term, if applicable"""
+  language: Language
+}
+
+type BibliographicCategory {
+  """Code for bibliographic category"""
+  code: String
+
+  """The code as displayable text"""
+  display: String
+}
+
+type BookmarkItem {
+  """The unique identifier for the bookmark"""
+  id: String!
+
+  """The unique identifier for the material this bookmark points to."""
+  materialId: String
+
+  """
+  The bibliographic record associated with the bookmark, if it can still be resolved.
+  """
+  material: MaterialUnion
+
+  """Stored metadata captured when the bookmark was created."""
+  snapshot: BookmarkSnapshot
+
+  """creation date of the bookmark"""
+  createdAt: DateTime!
+
+  """The application the bookmark belongs to"""
+  application: BookmarksApplicationEnum!
+}
+
+type BookmarkSnapshot {
+  """Stored work id from when the bookmark was created."""
+  workId: String
+
+  """Stored title from when the bookmark was created."""
+  title: String
+
+  """Stored creator from when the bookmark was created."""
+  creator: String
+
+  """Stored material type from when the bookmark was created."""
+  materialType: String
+
+  """Stored work type from when the bookmark was created."""
+  workType: String
+}
+
+type Bookmarks {
+  """The total number of bookmarks for the patron"""
+  hitcount: Int!
+
+  """The overall status of the bookmarks"""
+  status: BookmarksOverallStatusEnum!
+
+  """The list of bookmarks for the patron"""
+  items(orderBy: OrderBookmarksByEnum, offset: Int, limit: PaginationLimitScalar): [BookmarkItem!]!
+}
+
+enum BookmarksApplicationEnum {
+  BIBLIOTEKDK
+  STUDIESOEG
+  UNKNOWN
+}
+
+input BookmarksInput {
+  """
+  The unique identifier for the material being bookmarked (e.g., a PID or work ID).
+  """
+  materialId: String!
+}
+
+enum BookmarksOverallStatusEnum {
+  OK
+  FAILED
+  PARTIALLY_FAILED
+  ERROR_UNAUTHENTICATED_TOKEN
+  ERROR_MISSING_CLIENT_CONFIGURATION
+}
+
+enum BookmarksStatusEnum {
+  OK
+  FAILED
+  ALREADY_EXISTS
+  NOT_FOUND
+  UNKNOWN_ERROR
+}
+
+type BookmarksStatusItem {
+  """
+  Status of the bookmark addition or deletion attempt for a specific material.
+  """
+  status: BookmarksStatusEnum!
+
+  """
+  The unique identifier for the bookmark that was attempted to be added or deleted.
+  """
+  id: String
+
+  """
+  The unique identifier for the material for which bookmark addition failed (e.g., a PID or work ID).
+  """
+  materialId: String
+
+  """The material for which bookmark addition failed."""
+  material: MaterialUnion
+}
+
+enum CSHoldingsStatusEnum {
+  """Item is physically available at the branch"""
+  ONSHELF
+
+  """Item is on loan and not available"""
+  ONLOAN
+
+  """Item is discarded by the branch"""
+  DISCARDED
+
+  """Item is lost by the branch and not available"""
+  LOST
+
+  """Item is not for loan by the branch"""
+  NOTFORLOAN
+
+  """Item is on order by the branch"""
+  ONORDER
 }
 
 type CatalogueCodes {
@@ -167,6 +318,12 @@ type Classification {
   system: String!
 }
 
+"""CQL based filters. Mutually exclusive with ComplexSearchFiltersInput."""
+input ComplexSearchCQLFiltersInput {
+  """A CQL expression used to filter the search result."""
+  cqlfilterquery: String
+}
+
 """The complete facet in response"""
 type ComplexSearchFacetResponse {
   name: String
@@ -209,6 +366,7 @@ enum ComplexSearchFacetsEnum {
   TYPEOFSCORE
   SUBJECT
   HOSTPUBLICATION
+  HOSTPUBLICATIONTYPE
   SERIES
   MEDIACOUNCILAGERESTRICTION
   ACCESSTYPE
@@ -223,6 +381,7 @@ enum ComplexSearchFacetsEnum {
   INSTRUMENT
   CHOIRTYPE
   CHAMBERMUSICTYPE
+  DATEFIRSTEDITION
 }
 
 """The facets to ask for"""
@@ -246,7 +405,7 @@ input ComplexSearchFiltersInput {
   sublocation: [String!]
 
   """Onloan or OnShelf."""
-  status: [HoldingsStatusEnum!]
+  status: [CSHoldingsStatusEnum!]
 
   """Id of agency."""
   agencyId: [String!]
@@ -262,6 +421,18 @@ input ComplexSearchFiltersInput {
 
   """Date of first accession"""
   firstAccessionDate: String
+
+  """The circulationrule of the item"""
+  circulationRule: [String!]
+
+  """The section which the item belongs to"""
+  section: [String!]
+
+  """The floatgroup of the item"""
+  floatGroup: [String!]
+
+  """Boolean to denote whether to include or exclude online holdingsitems"""
+  useOnlineHoldings: Boolean
 }
 
 type ComplexSearchIndex {
@@ -522,9 +693,6 @@ type Corporation implements SubjectInterface & CreatorInterface {
 
   """VIAF identifier of the creator"""
   viafid: String
-
-  """Additional data from Wikidata"""
-  wikidata(language: LanguageCodeEnum): Wikidata
 }
 
 type Cover {
@@ -546,18 +714,6 @@ type CoverDetails {
   url: String
   width: Int
   height: Int
-}
-
-type CreatorImage {
-  """Url to creator image. Width 800px"""
-  small: String
-
-  """Url to creator image. Width 1200px"""
-  medium: String
-
-  """Url to creator image. Width 1800px"""
-  large: String
-  attributionText: String
 }
 
 interface CreatorInterface {
@@ -597,6 +753,16 @@ scalar DateTime
 type Debug {
   complexity: Complexity!
   depth: Depth!
+}
+
+type DeleteBookmarksResponse {
+  """The overall status of the bookmark deletion operation."""
+  status: BookmarksOverallStatusEnum!
+
+  """
+  Number of failed bookmark deletions (e.g., due to non-existent bookmark IDs).
+  """
+  items: [BookmarksStatusItem!]!
 }
 
 type Depth {
@@ -783,6 +949,14 @@ enum GeneralMaterialTypeCodeEnum {
   TV_SERIES
 }
 
+type GenreForm {
+  """The genre/form term"""
+  display: String
+
+  """Language of the genre/form term, if applicable"""
+  language: Language
+}
+
 enum HoldingsStatusEnum {
   """Holding is physically available at the branch"""
   ONSHELF
@@ -854,6 +1028,14 @@ enum IdentifierTypeEnum {
   NOT_SPECIFIED
   ORDER_NUMBER
   BARCODE
+}
+
+type IllAutomationMaterialGroup {
+  """The material group (1-9)"""
+  id: Int!
+
+  """The name of the material group"""
+  name: String!
 }
 
 type InfomediaArticle {
@@ -1091,11 +1273,6 @@ type Manifestation {
   languages: Languages
 
   """
-  Tracks on music album, sheet music content, or articles/short stories etc. in this manifestation
-  """
-  manifestationParts: ManifestationParts @deprecated(reason: "Use 'Manifestation.contents' instead expires: 01\/11-2025")
-
-  """
   Content title entries with possible creators, contributors and playing time
   for music tracks, sheet music titles, articles, poems, short stories etc.
   """
@@ -1122,6 +1299,9 @@ type Manifestation {
 
   """Publisher of this manifestion"""
   publisher: [String!]!
+
+  """The city or place where the item was published"""
+  placeOfPublication: [String!]!
 
   """
   The creation date of the record describing this manifestation in the format YYYYMMDD
@@ -1153,11 +1333,6 @@ type Manifestation {
   """
   volume: String
 
-  """
-  Quotation of the manifestation's table of contents or a similar content list
-  """
-  tableOfContents: TableOfContent @deprecated(reason: "Use 'Manifestation.contents' instead expires: 01\/11-2025")
-
   """Worktypes for this manifestations work"""
   workTypes: [WorkTypeEnum!]!
 
@@ -1166,6 +1341,9 @@ type Manifestation {
 
   """id of the manifestaion unit"""
   unit: Unit
+
+  """automation material group info"""
+  illAutomationMaterialGroup: IllAutomationMaterialGroup
 
   """Identification of the local id of this manifestation"""
   localId: String
@@ -1176,59 +1354,36 @@ type Manifestation {
   """The publication status of a catalogued manifestation."""
   cataloguedPublicationStatus: CataloguedPublicationStatus
 
+  """The genre and (literary) form of this manifestation"""
+  genreForm: [GenreForm!]!
+
+  """
+  The records type of sound recording - excluding music recordings and its material
+  """
+  soundRecording: SoundRecording
+
+  """Code for type of periodical"""
+  periodicalType: PeriodicalType
+
+  """Code for bibliographic category"""
+  bibliographicCategory: BibliographicCategory
+
+  """Code for comics, children's picture books and drama"""
+  specialMaterialGroup: SpecialMaterialGroup
+
+  """
+  The creator of the manifestation that the material can be located under on the shelf
+  """
+  shelfCreator: ShelfCreator
+
+  """Information on music shelving"""
+  musicShelf: MusicShelf
+
   """Relations to other manifestations"""
   relations: Relations!
 
   """Some review data, if this manifestation is a review"""
   review: ManifestationReview
-}
-
-type ManifestationPart {
-  """The title of the entry (music track or title of a literary analysis)"""
-  title: String!
-
-  """The creator of the music track or literary analysis"""
-  creators: [CreatorInterface!]!
-
-  """Classification of this entry (music track or literary analysis)"""
-  classifications: [Classification!]!
-
-  """Subjects of this entry (music track or literary analysis)"""
-  subjects: [SubjectInterface!]
-
-  """
-  Additional creator or contributor to this entry (music track or literary
-  analysis) as described on the publication. E.g. 'arr.: H. Cornell'
-  """
-  creatorsFromDescription: [String!]!
-
-  """Contributors from description - additional contributor to this entry"""
-  contributorsFromDescription: [String!]!
-
-  """
-  The playing time for this specific part (i.e. the duration of a music track) 
-  """
-  playingTime: String
-}
-
-enum ManifestationPartTypeEnum {
-  MUSIC_TRACKS
-  SHEET_MUSIC_CONTENT
-  PARTS_OF_BOOK
-  NOT_SPECIFIED
-}
-
-type ManifestationParts {
-  """Heading for the music content note"""
-  heading: String
-
-  """The creator and title etc of the individual parts"""
-  parts: [ManifestationPart!]!
-
-  """
-  The type of manifestation parts, is this music tracks, book parts etc.
-  """
-  type: ManifestationPartTypeEnum!
 }
 
 type ManifestationReview {
@@ -1288,7 +1443,17 @@ type Manifestations {
   first: Manifestation!
   latest: Manifestation!
   all: [Manifestation!]!
+
+  """
+  The best representation of all manifestations. Corresponds to the first element in the bestRepresentations list.
+  """
   bestRepresentation: Manifestation!
+
+  """
+  All manifestations sorted after best representation. Newer is better. Records
+  from DBC or KB are considered better. MaterialType.specific 'bog', 'music
+  (cd)', and 'film (dvd)' are also considered better
+  """
   bestRepresentations: [Manifestation!]!
   mostRelevant: [Manifestation!]!
 
@@ -1309,6 +1474,9 @@ type MaterialType {
   """jed 1.1 - the specific materialtType"""
   materialTypeSpecific: SpecificMaterialType!
 }
+
+"""Union type for different material types that can be bookmarked"""
+union MaterialUnion = Work | Manifestation
 
 type MediaCouncilAgeRestriction {
   """Minimum age"""
@@ -1407,8 +1575,20 @@ type MoodTagRecommendResponse {
   similarity: Float
 }
 
+type MusicShelf {
+  """The sort version of 'display'"""
+  sort: String
+
+  """The shelf where the material can be found"""
+  display: String
+}
+
 type Mutation {
   elba: ElbaServices!
+  submitOrder(input: SubmitOrderInput!, dryRun: Boolean): SubmitOrder
+
+  """Updates patron information, such as adding or removing bookmarks."""
+  patron: PatronMutation
 }
 
 type NarrativeTechnique implements SubjectInterface {
@@ -1455,6 +1635,23 @@ enum NoteTypeEnum {
   CONTAINS_AI_GENERATED_CONTENT
 }
 
+"""Enum for sorting bookmarks"""
+enum OrderBookmarksByEnum {
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  TITLE_ASC
+  TITLE_DESC
+}
+
+enum OrderTypeEnum {
+  ESTIMATE
+  HOLD
+  LOAN
+  NON_RETURNABLE_COPY
+  NORMAL
+  STACK_RETRIEVAL
+}
+
 type PEGI {
   """Minimum age to play the game. PEGI rating"""
   minimumAge: Int
@@ -1465,6 +1662,33 @@ type PEGI {
 
 """An integer in the range from 1 to 100"""
 scalar PaginationLimitScalar
+
+type Patron {
+  """
+  Retrieves the list of bookmarks for the patron, including pagination and sorting options.
+  """
+  bookmarks: Bookmarks!
+}
+
+type PatronMutation {
+  """
+  Adds one or more bookmarks for the patron. If a bookmark already exists, it will be ignored.
+  """
+  addBookmarks(bookmarks: [BookmarksInput!]!, dryRun: Boolean): AddBookmarksResponse!
+
+  """
+  Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored.
+  """
+  deleteBookmarks(ids: [String!]!, dryRun: Boolean): DeleteBookmarksResponse!
+}
+
+type PeriodicalType {
+  """A code for the type of periodical"""
+  code: String
+
+  """The code as displayable text"""
+  display: String
+}
 
 type Person implements SubjectInterface & CreatorInterface {
   """The person's whole name in normal order"""
@@ -1501,9 +1725,6 @@ type Person implements SubjectInterface & CreatorInterface {
 
   """VIAF identifier of the creator"""
   viafid: String
-
-  """Additional metadata for the creator"""
-  wikidata(language: LanguageCodeEnum): Wikidata
 }
 
 type PhysicalUnitDescription {
@@ -1558,11 +1779,40 @@ type PublicationYear {
   frequency: String
 }
 
+type Publizon {
+  """
+  URL to the material on the public library's website, built from the agency's
+  lookupUrl and the manifestation workId. Defaults to the logged-in user's
+  municipality agency.
+  """
+  agencyUrl(agencyId: String): String
+
+  """
+  URL of the sample provided by Publizon (Pubhub), typically a preview
+  of the e-book or audiobook content.
+  """
+  sample: String!
+
+  """The file format of the Publizon resource (e.g., "epub", "mp3")."""
+  format: String
+
+  """The file size of the resource in bytes, if available."""
+  fileSizeInBytes: Int
+
+  """The total duration of the resource in seconds, if available."""
+  durationInSeconds: Int
+}
+
 type Query {
   """All indexes in complex search"""
   complexSearchIndexes: [ComplexSearchIndex!]
   debug: Debug
   mood: MoodQueries!
+
+  """
+  Retrieves information about the patron, such as bookmarks, reservations, and loans.
+  """
+  patron: Patron
 
   """Access to various types of recommendations."""
   recommendations: Recommendations!
@@ -1571,7 +1821,7 @@ type Query {
   work(id: String, faust: String, pid: String, oclc: String, language: LanguageCodeEnum): Work
   works(id: [String!], faust: [String!], pid: [String!], oclc: [String!], language: LanguageCodeEnum): [Work]!
   search(q: SearchQueryInput!, filters: SearchFiltersInput, search_exact: Boolean): SearchResponse!
-  complexSearch(cql: String!, filters: ComplexSearchFiltersInput, facets: ComplexSearchFacetsInput): ComplexSearchResponse!
+  complexSearch(cql: String!, filters: ComplexSearchFiltersInput, cqlfilter: ComplexSearchCQLFiltersInput, facets: ComplexSearchFacetsInput): ComplexSearchResponse!
   linkCheck: LinkCheckService!
   localSuggest(
     """The query to get suggestions from"""
@@ -1614,7 +1864,6 @@ type Query {
   infomedia(id: String!): InfomediaResponse!
   refWorks(pids: [String!]!): String!
   ris(pids: [String!]!): String!
-  relatedSubjects(q: [String!]!, limit: Int): [String!] @deprecated(reason: "Use 'Recommendations.subjects' instead expires: 01\/03-2025")
   series(seriesId: String!): Series
   universe(key: String, universeId: String): Universe
 }
@@ -1994,6 +2243,14 @@ type SheetMusicCategory {
   orchestraTypes: [String!]!
 }
 
+type ShelfCreator {
+  """The display name of the creator"""
+  display: String
+
+  """The sort version of the creator name"""
+  sort: String
+}
+
 type Shelfmark {
   """A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935"""
   postfix: String
@@ -2012,6 +2269,22 @@ input SortInput {
 enum SortOrderEnum {
   ASC
   DESC
+}
+
+type SoundRecording {
+  """A code for the type of sound recording"""
+  code: String
+
+  """The code as displayable text"""
+  display: String
+}
+
+type SpecialMaterialGroup {
+  """A code for the type of the special material group"""
+  code: String
+
+  """The code as displayable text"""
+  display: String
 }
 
 type SpecificMaterialType {
@@ -2106,6 +2379,110 @@ type SubjectWithRating implements SubjectInterface {
   rating: Int
 }
 
+type SubmitOrder {
+  """if order was submitted successfully"""
+  ok: Boolean
+  status: SubmitOrderStatusEnum!
+  message: String
+  orderId: String
+  deleted: Boolean
+  orsId: String
+}
+
+input SubmitOrderInput {
+  orderType: OrderTypeEnum
+  pids: [String!]!
+  pickUpBranch: String!
+  key: String
+  exactEdition: Boolean
+
+  """
+  expires is required to be iso 8601 dateTime eg. "2024-03-15T12:24:32Z"
+  """
+  expires: String
+  userParameters: SubmitOrderUserParametersInput!
+  author: String
+  authorOfComponent: String
+  pagination: String
+  publicationDate: String
+  publicationDateOfComponent: String
+  title: String
+  titleOfComponent: String
+  volume: String
+}
+
+enum SubmitOrderStatusEnum {
+  """Borchk: User is blocked by agency"""
+  BORCHK_USER_BLOCKED_BY_AGENCY
+
+  """Borchk: User is no longer loaner at the provided pickupbranch"""
+  BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY
+
+  """Borchk: User could not be verified"""
+  BORCHK_USER_NOT_VERIFIED
+
+  """Item available at pickupAgency, order accepted"""
+  OWNED_ACCEPTED
+
+  """Item not available at pickupAgency, item localised for ILL"""
+  NOT_OWNED_ILL_LOC
+
+  """Item available at pickupAgency, order of mediumType not accepted"""
+  OWNED_WRONG_MEDIUMTYPE
+
+  """Item not available at pickupAgency, ILL of mediumType not accepted"""
+  NOT_OWNED_WRONG_ILL_MEDIUMTYPE
+
+  """Item not available at pickupAgency, item not localised for ILL"""
+  NOT_OWNED_NO_ILL_LOC
+
+  """
+  Item available at pickupAgency, item may be ordered through the library's catalogue
+  """
+  OWNED_OWN_CATALOGUE
+
+  """Service unavailable"""
+  SERVICE_UNAVAILABLE
+
+  """PickupAgency not found"""
+  UNKNOWN_PICKUPAGENCY
+
+  """User not found"""
+  UNKNOWN_USER
+
+  """Order does not validate"""
+  INVALID_ORDER
+
+  """Error sending order to ORS"""
+  ORS_ERROR
+
+  """ServiceRequester is obligatory"""
+  NO_SERVICEREQUESTER
+
+  """Authentication error"""
+  AUTHENTICATION_ERROR
+
+  """Unknown error occured, status is unknown"""
+  UNKNOWN_ERROR
+
+  """Pincode was not found in arguments"""
+  ERROR_MISSING_PINCODE
+}
+
+input SubmitOrderUserParametersInput {
+  cpr: String
+  userId: String
+  barcode: String
+  cardno: String
+  customId: String
+  pincode: String
+  userDateOfBirth: String
+  userName: String
+  userAddress: String
+  userMail: String
+  userTelephone: String
+}
+
 type SuggestResponse {
   result: [Suggestion!]!
 }
@@ -2133,12 +2510,6 @@ enum SuggestionTypeEnum {
   TITLE
   CREATOR
   COMPOSIT
-}
-
-type TableOfContent {
-  heading: String
-  content: String
-  listOfContent: [TableOfContent!]
 }
 
 type TimePeriod implements SubjectInterface {
@@ -2262,16 +2633,6 @@ type UniverseContentResult {
 }
 
 union UniverseContentUnion = Work | Series
-
-type Wikidata {
-  education: [String!]
-  image: CreatorImage
-  nationality: String
-  occupation: [String!]
-  wikidataId: String
-  description: String
-  awards: [String!]
-}
 
 type Work {
   """Relations to other manifestations"""

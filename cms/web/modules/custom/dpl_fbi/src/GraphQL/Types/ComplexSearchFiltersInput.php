@@ -13,6 +13,10 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
  * @property array<string>|null $itemId
  * @property array<string>|null $issueId
  * @property string|null $firstAccessionDate
+ * @property array<string>|null $circulationRule
+ * @property array<string>|null $section
+ * @property array<string>|null $floatGroup
+ * @property bool|null $useOnlineHoldings
  */
 class ComplexSearchFiltersInput extends \Spawnia\Sailor\ObjectLike
 {
@@ -27,6 +31,10 @@ class ComplexSearchFiltersInput extends \Spawnia\Sailor\ObjectLike
      * @param array<string>|null $itemId
      * @param array<string>|null $issueId
      * @param string|null $firstAccessionDate
+     * @param array<string>|null $circulationRule
+     * @param array<string>|null $section
+     * @param array<string>|null $floatGroup
+     * @param bool|null $useOnlineHoldings
      */
     public static function make(
         $branchId = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
@@ -39,6 +47,10 @@ class ComplexSearchFiltersInput extends \Spawnia\Sailor\ObjectLike
         $itemId = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $issueId = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $firstAccessionDate = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $circulationRule = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $section = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $floatGroup = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $useOnlineHoldings = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
@@ -72,6 +84,18 @@ class ComplexSearchFiltersInput extends \Spawnia\Sailor\ObjectLike
         if ($firstAccessionDate !== self::UNDEFINED) {
             $instance->firstAccessionDate = $firstAccessionDate;
         }
+        if ($circulationRule !== self::UNDEFINED) {
+            $instance->circulationRule = $circulationRule;
+        }
+        if ($section !== self::UNDEFINED) {
+            $instance->section = $section;
+        }
+        if ($floatGroup !== self::UNDEFINED) {
+            $instance->floatGroup = $floatGroup;
+        }
+        if ($useOnlineHoldings !== self::UNDEFINED) {
+            $instance->useOnlineHoldings = $useOnlineHoldings;
+        }
 
         return $instance;
     }
@@ -92,6 +116,10 @@ class ComplexSearchFiltersInput extends \Spawnia\Sailor\ObjectLike
             'itemId' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter))),
             'issueId' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter))),
             'firstAccessionDate' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'circulationRule' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter))),
+            'section' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter))),
+            'floatGroup' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter))),
+            'useOnlineHoldings' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\BooleanConverter),
         ];
     }
 
