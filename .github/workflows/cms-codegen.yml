@@ -1,0 +1,114 @@
+---
+name: CMS / Codegen
+
+on:
+  pull_request:
+    paths:
+      - 'cms/**'
+      - 'react/**'
+      - '.github/workflows/cms-*.yml'
+
+# Detect if this action is already running, and cancel it.
+# This most likely happened because a second push has been made to a branch.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  CheckOpenApiSpec:
+    name: OpenAPI spec
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Validate specification
+        run: task ci:openapi:validate
+      - name: Download current specification
+        run: task ci:openapi:download
+      - name: Ensure specification has not drifted
+        run: git diff --ignore-space-at-eol --exit-code openapi.json
+      - name: Generate package for CMS API specification
+        run: task dev:codegen:dpl-cms
+      - name: Ensure CMS API package code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code packages/cms-api/*
+
+  CheckFbsClient:
+    name: FBS client
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate FBS client package
+        run: task dev:codegen:fbs
+      - name: Ensure FBS client code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code packages/fbs-client/*
+
+  CheckGraphQlSchema:
+    name: BNF GraphQL
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enable BNF for site
+        run: task dev:bnf:enable
+      - name: Setup site
+        run: task ci:reset:clean
+      - name: Extract GraphQL schema and generate client
+        run: task dev:codegen:bnf-graphql
+      - name: Ensure BNF GraphQL client code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code web/modules/custom/bnf/src/GraphQL/*
+
+  CheckFbiGraphQlSchema:
+    name: FBI GraphQL
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Extract GraphQL schema and generate client
+        run: task dev:codegen:fbi-graphql
+      - name: Ensure FBI GraphQL client code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code web/modules/custom/dpl_fbi/src/GraphQL/*

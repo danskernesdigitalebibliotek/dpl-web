@@ -1,17 +1,16 @@
 ---
-name: React / Check generated client code
+name: React / Codegen
 
 on:
   pull_request:
     paths:
-      - 'react/src/core/dpl-cms/**'
-      - 'react/orval.config.ts'
+      - 'react/**'
       - 'cms/openapi.json'
       - '.github/workflows/react-codegen-check.yml'
 
 jobs:
   codegen-dpl-cms:
-    name: React / Check DPL CMS client code is up to date
+    name: Generated clients
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -32,8 +31,19 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Generate FBS client code
+        run: npm run codegen:client:fbs
+
+      - name: Generate Publizon client code
+        run: npm run codegen:client:publizon
+
       - name: Generate DPL CMS client code
         run: npm run codegen:client:dpl-cms
+
+      - name: Generate DBC Gateway GraphQL client code
+        env:
+          STORYBOOK_LIBRARY_TOKEN: ${{ secrets.STORYBOOK_LIBRARY_TOKEN }}
+        run: npm run codegen:dbc:gateway
 
       - name: Ensure generated client code has not drifted
         run: git diff --exit-code

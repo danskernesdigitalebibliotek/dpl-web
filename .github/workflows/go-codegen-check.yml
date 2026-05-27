@@ -1,0 +1,97 @@
+---
+name: Go / Codegen
+
+on:
+  pull_request:
+    paths:
+      - 'go/**'
+      - '.github/workflows/go-codegen-check.yml'
+
+jobs:
+  codegen:
+    name: REST + SOAP clients
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'go/.nvmrc'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate FBS REST client code
+        run: yarn codegen:fbs
+
+      - name: Generate Publizon REST client code
+        run: yarn codegen:publizon
+
+      - name: Generate Publizon SOAP client code
+        run: yarn codegen:pubhub
+
+      - name: Generate UniLogin SOAP client code
+        run: yarn codegen:unilogin
+
+      - name: Ensure generated client code has not drifted
+        run: git diff --exit-code
+
+  codegen-graphql:
+    name: GraphQL clients
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup site
+        working-directory: cms
+        run: task ci:reset
+
+      - name: Resolve endpoints and credentials
+        id: cms_setup
+        working-directory: cms
+        run: |
+          # Resolve the host port that docker compose mapped varnish:8080 to.
+          PORT=$(docker compose -f docker-compose.yml -f docker-compose.ci.yml port varnish 8080 | head -1 | sed 's/.*://')
+          echo "endpoint=http://localhost:${PORT}/graphql" >> "$GITHUB_OUTPUT"
+          # ci:reset creates .env from .env.example; pull the consumer password
+          # out of it so the graphql codegen can authenticate as go_graphql.
+          PASSWORD=$(grep '^NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD=' .env | cut -d= -f2-)
+          echo "::add-mask::${PASSWORD}"
+          echo "password=${PASSWORD}" >> "$GITHUB_OUTPUT"
+          # FBI endpoint is a public URL; read it from go/.env.example.
+          FBI_ENDPOINT=$(grep '^CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI=' ../go/.env.example | cut -d= -f2-)
+          echo "fbi_endpoint=${FBI_ENDPOINT}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'go/.nvmrc'
+
+      - name: Install Go dependencies
+        working-directory: go
+        run: yarn install --frozen-lockfile
+
+      - name: Generate GraphQL client code
+        working-directory: go
+        env:
+          GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: ${{ steps.cms_setup.outputs.endpoint }}
+          GO_GRAPHQL_CONSUMER_USER_NAME: go_graphql
+          GO_GRAPHQL_CONSUMER_USER_PASSWORD: ${{ steps.cms_setup.outputs.password }}
+          CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: ${{ steps.cms_setup.outputs.fbi_endpoint }}
+          CODEGEN_LIBRARY_TOKEN: ${{ secrets.CODEGEN_LIBRARY_TOKEN }}
+        run: yarn codegen:graphql
+
+      - name: Ensure generated GraphQL client code has not drifted
+        working-directory: go
+        run: git diff --exit-code lib/graphql/generated/
