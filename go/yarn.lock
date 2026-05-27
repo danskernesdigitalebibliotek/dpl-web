@@ -1448,8 +1448,10 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@dpl/service-layer@file:../packages/js/service-layer":
+"@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/js/service-layer":
   version "0.1.0"
+  dependencies:
+    zod "^4.3.6"
 
 "@emnapi/core@^1.4.3", "@emnapi/core@^1.7.1":
   version "1.7.1"

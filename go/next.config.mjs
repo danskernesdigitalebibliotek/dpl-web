@@ -14,7 +14,7 @@ function getAllowedHostname() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@dpl/service-layer"],
+  transpilePackages: ["@danskernesdigitalebibliotek/dpl-service-layer"],
   cacheComponents: true,
   typescript: {
     // @todo This is a temporary solution!!

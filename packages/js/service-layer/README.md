@@ -1,4 +1,4 @@
-# @dpl/service-layer
+# @danskernesdigitalebibliotek/dpl-service-layer
 
 An abstraction between the monorepo apps (GO, CMS/React) and external APIs.
 
@@ -8,7 +8,7 @@ The service layer exposes **composed functions** that return domain data. Consum
 
 ```
 packages/js/service-layer/
-  package.json                # @dpl/service-layer (one public entry: .)
+  package.json                # @danskernesdigitalebibliotek/dpl-service-layer (one public entry: .)
   tsconfig.json
   vitest.config.ts
   src/                        # public composed layer
@@ -58,7 +58,7 @@ Apps depend on this package via a `file:` reference in their `package.json`:
 ```json
 {
   "dependencies": {
-    "@dpl/service-layer": "file:../packages/js/service-layer"
+    "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/js/service-layer"
   }
 }
 ```
@@ -66,13 +66,13 @@ Apps depend on this package via a `file:` reference in their `package.json`:
 For Next.js apps, also add to `next.config.mjs`:
 
 ```js
-transpilePackages: ["@dpl/service-layer"]
+transpilePackages: ["@danskernesdigitalebibliotek/dpl-service-layer"]
 ```
 
 Then call composed functions:
 
 ```typescript
-import { getPatron } from "@dpl/service-layer"
+import { getPatron } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
 const patron = await getPatron({
   fbs: {

@@ -1,4 +1,4 @@
-import { getPatron } from "@dpl/service-layer"
+import { getPatron } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
 import { getAPServiceFetcherBaseUrl } from "./ap-service"
 
