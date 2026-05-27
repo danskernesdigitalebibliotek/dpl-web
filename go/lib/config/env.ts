@@ -78,6 +78,8 @@ const EnvServerSchema = z.object({
 type EnvPublicSchemaResult = z.infer<typeof EnvPublicSchema>
 type EnvServerSchemaResult = z.infer<typeof EnvServerSchema>
 
+// Memoized copies of the validated values, so we don’t have to re-run
+// validation every time getEnv or getServerEnv is called.
 let memoizedPublicEnvs: EnvPublicSchemaResult
 let memoizedServerEnvs: EnvServerSchemaResult
 
