@@ -1,0 +1,32 @@
+name: "Service Layer / Format check"
+
+on:
+  pull_request:
+    paths:
+      - 'packages/js/service-layer/**'
+      - '.github/workflows/service-layer-*.yml'
+
+jobs:
+  format:
+    name: Format check
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: packages/js/service-layer
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: "packages/js/service-layer/.nvmrc"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run prettier format check
+        run: yarn format:check
