@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'go/**'
-      - 'packages/js/service-layer/**'
+      - 'packages/service-layer/**'
       - '.github/workflows/go-*.yml'
 
 jobs:

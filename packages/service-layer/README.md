@@ -7,7 +7,7 @@ The service layer exposes **composed functions** that return domain data. Consum
 ## Architecture
 
 ```
-packages/js/service-layer/
+packages/service-layer/
   package.json                # @danskernesdigitalebibliotek/dpl-service-layer (one public entry: .)
   tsconfig.json
   vitest.config.ts
@@ -58,7 +58,7 @@ Apps depend on this package via a `file:` reference in their `package.json`:
 ```json
 {
   "dependencies": {
-    "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/js/service-layer"
+    "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/service-layer"
   }
 }
 ```
