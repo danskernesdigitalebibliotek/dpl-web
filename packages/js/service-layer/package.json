@@ -19,7 +19,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/node": "^25.9.1",
+    "@types/node": "^24",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
     "orval": "^7.21.0",
