@@ -1,0 +1,100 @@
+---
+name: Service Layer / CI
+
+on:
+  pull_request:
+    paths:
+      - 'packages/js/service-layer/**'
+      - '.github/workflows/service-layer-ci.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  TypeCheck:
+    name: Service Layer / Type check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/js/service-layer
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'packages/js/service-layer/.nvmrc'
+      - run: yarn install --frozen-lockfile
+      - run: yarn typecheck
+
+  UnitTest:
+    name: Service Layer / Unit test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/js/service-layer
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'packages/js/service-layer/.nvmrc'
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
+
+  FormatCheck:
+    name: Service Layer / Format check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/js/service-layer
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'packages/js/service-layer/.nvmrc'
+      - run: yarn install --frozen-lockfile
+      - run: yarn format:check
+
+  LintCheck:
+    name: Service Layer / Lint check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/js/service-layer
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'packages/js/service-layer/.nvmrc'
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+
+  CodegenCheck:
+    name: Service Layer / Codegen up to date
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/js/service-layer
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'packages/js/service-layer/.nvmrc'
+      - run: yarn install --frozen-lockfile
+      - name: Re-run FBS codegen
+        run: yarn codegen:fbs
+      - name: Verify generated files match the spec
+        run: |
+          if ! git diff --exit-code -- fbs/src/generated; then
+            echo "::error::Generated FBS files are out of date with fbs-adapter.yaml. Run 'yarn codegen:fbs' inside packages/js/service-layer and commit the result."
+            exit 1
+          fi
