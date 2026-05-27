@@ -254,12 +254,16 @@ export type ComplexSearchFiltersInput = {
   department?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Date of first accession */
   firstAccessionDate?: InputMaybe<Scalars['String']['input']>;
+  /** The floatgroup of the item */
+  floatGroup?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Local id of the item. */
   itemId?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** The section which the item belongs to */
+  section?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Onloan or OnShelf. */
   status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
