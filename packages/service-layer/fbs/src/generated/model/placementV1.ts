@@ -4,10 +4,10 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { AgencyDepartment } from "./agencyDepartment";
-import type { AgencyLocation } from "./agencyLocation";
-import type { AgencySection } from "./agencySection";
-import type { AgencySublocation } from "./agencySublocation";
+import type { AgencyDepartment } from './agencyDepartment';
+import type { AgencyLocation } from './agencyLocation';
+import type { AgencySection } from './agencySection';
+import type { AgencySublocation } from './agencySublocation';
 
 export interface PlacementV1 {
   department?: AgencyDepartment;

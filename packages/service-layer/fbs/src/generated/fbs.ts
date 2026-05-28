@@ -29,8 +29,9 @@ import type {
   UpdateGuardianRequest,
   UpdatePatronRequestV3,
   UpdatePatronRequestV6,
-  UpdateReservationBatch,
-} from "./model";
+  UpdateReservationBatch
+} from './model';
+
 
 /**
  * 
@@ -40,35 +41,30 @@ import type {
  * @summary Get branches for an agency.
  */
 export type getBranchesResponse200 = {
-  data: AgencyBranch[];
-  status: 200;
-};
+  data: AgencyBranch[]
+  status: 200
+}
 
 export type getBranchesResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getBranchesResponse401 = {
-  data: void;
-  status: 401;
-};
-
-export type getBranchesResponseSuccess = getBranchesResponse200 & {
+  data: void
+  status: 401
+}
+    
+export type getBranchesResponseSuccess = (getBranchesResponse200) & {
   headers: Headers;
 };
-export type getBranchesResponseError = (
-  | getBranchesResponse400
-  | getBranchesResponse401
-) & {
+export type getBranchesResponseError = (getBranchesResponse400 | getBranchesResponse401) & {
   headers: Headers;
 };
 
-export type getBranchesResponse =
-  | getBranchesResponseSuccess
-  | getBranchesResponseError;
+export type getBranchesResponse = (getBranchesResponseSuccess | getBranchesResponseError)
 
-export const getGetBranchesUrl = (params?: GetBranchesParams) => {
+export const getGetBranchesUrl = (params?: GetBranchesParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -76,72 +72,66 @@ export const getGetBranchesUrl = (params?: GetBranchesParams) => {
 
     if (Array.isArray(value) && explodeParameters.includes(key)) {
       value.forEach((v) => {
-        normalizedParams.append(key, v === null ? "null" : v.toString());
+        normalizedParams.append(key, v === null ? 'null' : v.toString());
       });
       return;
     }
+      
+    
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `/external/v1/agencyid/branches?${stringifiedParams}`
-    : `/external/v1/agencyid/branches`;
-};
+  return stringifiedParams.length > 0 ? `/external/v1/agencyid/branches?${stringifiedParams}` : `/external/v1/agencyid/branches`
+}
 
-export const getBranches = async (
-  params?: GetBranchesParams,
-  options?: RequestInit,
-): Promise<getBranchesResponse> => {
-  const res = await fetch(getGetBranchesUrl(params), {
+export const getBranches = async (params?: GetBranchesParams, options?: RequestInit): Promise<getBranchesResponse> => {
+  
+  const res = await fetch(getGetBranchesUrl(params),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getBranchesResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getBranchesResponse
+}
 
-  const data: getBranchesResponse["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getBranchesResponse;
-};
+
 
 /**
  * @summary Delete existing reservations.
  */
 export type deleteReservationsResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
 export type deleteReservationsResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type deleteReservationsResponse401 = {
-  data: void;
-  status: 401;
+  data: void
+  status: 401
+}
+    
+export type deleteReservationsResponseSuccess = (deleteReservationsResponse200) & {
+  headers: Headers;
 };
-
-export type deleteReservationsResponseSuccess =
-  deleteReservationsResponse200 & {
-    headers: Headers;
-  };
-export type deleteReservationsResponseError = (
-  | deleteReservationsResponse400
-  | deleteReservationsResponse401
-) & {
+export type deleteReservationsResponseError = (deleteReservationsResponse400 | deleteReservationsResponse401) & {
   headers: Headers;
 };
 
-export type deleteReservationsResponse =
-  | deleteReservationsResponseSuccess
-  | deleteReservationsResponseError;
+export type deleteReservationsResponse = (deleteReservationsResponseSuccess | deleteReservationsResponseError)
 
-export const getDeleteReservationsUrl = (params: DeleteReservationsParams) => {
+export const getDeleteReservationsUrl = (params: DeleteReservationsParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -149,37 +139,37 @@ export const getDeleteReservationsUrl = (params: DeleteReservationsParams) => {
 
     if (Array.isArray(value) && explodeParameters.includes(key)) {
       value.forEach((v) => {
-        normalizedParams.append(key, v === null ? "null" : v.toString());
+        normalizedParams.append(key, v === null ? 'null' : v.toString());
       });
       return;
     }
+      
+    
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `/external/v1/agencyid/patrons/patronid/reservations?${stringifiedParams}`
-    : `/external/v1/agencyid/patrons/patronid/reservations`;
-};
+  return stringifiedParams.length > 0 ? `/external/v1/agencyid/patrons/patronid/reservations?${stringifiedParams}` : `/external/v1/agencyid/patrons/patronid/reservations`
+}
 
-export const deleteReservations = async (
-  params: DeleteReservationsParams,
-  options?: RequestInit,
-): Promise<deleteReservationsResponse> => {
-  const res = await fetch(getDeleteReservationsUrl(params), {
+export const deleteReservations = async (params: DeleteReservationsParams, options?: RequestInit): Promise<deleteReservationsResponse> => {
+  
+  const res = await fetch(getDeleteReservationsUrl(params),
+  {      
     ...options,
-    method: "DELETE",
-  });
+    method: 'DELETE'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: deleteReservationsResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as deleteReservationsResponse
+}
 
-  const data: deleteReservationsResponse["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as deleteReservationsResponse;
-};
+
 
 /**
  * 
@@ -208,55 +198,55 @@ export const deleteReservations = async (
  * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
  */
 export type getReservationsResponse200 = {
-  data: ReservationDetails[];
-  status: 200;
-};
+  data: ReservationDetails[]
+  status: 200
+}
 
 export type getReservationsResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getReservationsResponse401 = {
-  data: void;
-  status: 401;
-};
-
-export type getReservationsResponseSuccess = getReservationsResponse200 & {
+  data: void
+  status: 401
+}
+    
+export type getReservationsResponseSuccess = (getReservationsResponse200) & {
   headers: Headers;
 };
-export type getReservationsResponseError = (
-  | getReservationsResponse400
-  | getReservationsResponse401
-) & {
+export type getReservationsResponseError = (getReservationsResponse400 | getReservationsResponse401) & {
   headers: Headers;
 };
 
-export type getReservationsResponse =
-  | getReservationsResponseSuccess
-  | getReservationsResponseError;
+export type getReservationsResponse = (getReservationsResponseSuccess | getReservationsResponseError)
 
 export const getGetReservationsUrl = () => {
-  return `/external/v1/agencyid/patrons/patronid/reservations`;
-};
 
-export const getReservations = async (
-  options?: RequestInit,
-): Promise<getReservationsResponse> => {
-  const res = await fetch(getGetReservationsUrl(), {
+
+  
+
+  return `/external/v1/agencyid/patrons/patronid/reservations`
+}
+
+export const getReservations = async ( options?: RequestInit): Promise<getReservationsResponse> => {
+  
+  const res = await fetch(getGetReservationsUrl(),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getReservationsResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getReservationsResponse
+}
 
-  const data: getReservationsResponse["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getReservationsResponse;
-};
+
 
 /**
  * 
@@ -286,67 +276,61 @@ export const getReservations = async (
  * @summary Create new reservations for the patron (DEPRECATED).
  */
 export type addReservationsDeprecatedResponse200 = {
-  data: ReservationDetails[];
-  status: 200;
-};
+  data: ReservationDetails[]
+  status: 200
+}
 
 export type addReservationsDeprecatedResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type addReservationsDeprecatedResponse401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type addReservationsDeprecatedResponse404 = {
-  data: void;
-  status: 404;
+  data: void
+  status: 404
+}
+    
+export type addReservationsDeprecatedResponseSuccess = (addReservationsDeprecatedResponse200) & {
+  headers: Headers;
 };
-
-export type addReservationsDeprecatedResponseSuccess =
-  addReservationsDeprecatedResponse200 & {
-    headers: Headers;
-  };
-export type addReservationsDeprecatedResponseError = (
-  | addReservationsDeprecatedResponse400
-  | addReservationsDeprecatedResponse401
-  | addReservationsDeprecatedResponse404
-) & {
+export type addReservationsDeprecatedResponseError = (addReservationsDeprecatedResponse400 | addReservationsDeprecatedResponse401 | addReservationsDeprecatedResponse404) & {
   headers: Headers;
 };
 
-export type addReservationsDeprecatedResponse =
-  | addReservationsDeprecatedResponseSuccess
-  | addReservationsDeprecatedResponseError;
+export type addReservationsDeprecatedResponse = (addReservationsDeprecatedResponseSuccess | addReservationsDeprecatedResponseError)
 
 export const getAddReservationsDeprecatedUrl = () => {
-  return `/external/v1/agencyid/patrons/patronid/reservations`;
-};
 
-export const addReservationsDeprecated = async (
-  createReservationBatch: CreateReservationBatch,
-  options?: RequestInit,
-): Promise<addReservationsDeprecatedResponse> => {
-  const res = await fetch(getAddReservationsDeprecatedUrl(), {
+
+  
+
+  return `/external/v1/agencyid/patrons/patronid/reservations`
+}
+
+export const addReservationsDeprecated = async (createReservationBatch: CreateReservationBatch, options?: RequestInit): Promise<addReservationsDeprecatedResponse> => {
+  
+  const res = await fetch(getAddReservationsDeprecatedUrl(),
+  {      
     ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(createReservationBatch),
-  });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createReservationBatch,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: addReservationsDeprecatedResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as addReservationsDeprecatedResponse
+}
 
-  const data: addReservationsDeprecatedResponse["data"] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as addReservationsDeprecatedResponse;
-};
+
 
 /**
  * 
@@ -371,59 +355,56 @@ export const addReservationsDeprecated = async (
  * @summary Update existing reservations.
  */
 export type updateReservationsResponse200 = {
-  data: ReservationDetails[];
-  status: 200;
-};
+  data: ReservationDetails[]
+  status: 200
+}
 
 export type updateReservationsResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type updateReservationsResponse401 = {
-  data: void;
-  status: 401;
+  data: void
+  status: 401
+}
+    
+export type updateReservationsResponseSuccess = (updateReservationsResponse200) & {
+  headers: Headers;
 };
-
-export type updateReservationsResponseSuccess =
-  updateReservationsResponse200 & {
-    headers: Headers;
-  };
-export type updateReservationsResponseError = (
-  | updateReservationsResponse400
-  | updateReservationsResponse401
-) & {
+export type updateReservationsResponseError = (updateReservationsResponse400 | updateReservationsResponse401) & {
   headers: Headers;
 };
 
-export type updateReservationsResponse =
-  | updateReservationsResponseSuccess
-  | updateReservationsResponseError;
+export type updateReservationsResponse = (updateReservationsResponseSuccess | updateReservationsResponseError)
 
 export const getUpdateReservationsUrl = () => {
-  return `/external/v1/agencyid/patrons/patronid/reservations`;
-};
 
-export const updateReservations = async (
-  updateReservationBatch: UpdateReservationBatch,
-  options?: RequestInit,
-): Promise<updateReservationsResponse> => {
-  const res = await fetch(getUpdateReservationsUrl(), {
+
+  
+
+  return `/external/v1/agencyid/patrons/patronid/reservations`
+}
+
+export const updateReservations = async (updateReservationBatch: UpdateReservationBatch, options?: RequestInit): Promise<updateReservationsResponse> => {
+  
+  const res = await fetch(getUpdateReservationsUrl(),
+  {      
     ...options,
-    method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(updateReservationBatch),
-  });
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateReservationBatch,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateReservationsResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateReservationsResponse
+}
 
-  const data: updateReservationsResponse["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as updateReservationsResponse;
-};
+
 
 /**
  * 
@@ -454,55 +435,55 @@ export const updateReservations = async (
  * @summary Get all unfulfilled reservations made by the patron.
  */
 export type getReservationsV2Response200 = {
-  data: ReservationDetailsV2[];
-  status: 200;
-};
+  data: ReservationDetailsV2[]
+  status: 200
+}
 
 export type getReservationsV2Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getReservationsV2Response401 = {
-  data: void;
-  status: 401;
-};
-
-export type getReservationsV2ResponseSuccess = getReservationsV2Response200 & {
+  data: void
+  status: 401
+}
+    
+export type getReservationsV2ResponseSuccess = (getReservationsV2Response200) & {
   headers: Headers;
 };
-export type getReservationsV2ResponseError = (
-  | getReservationsV2Response400
-  | getReservationsV2Response401
-) & {
+export type getReservationsV2ResponseError = (getReservationsV2Response400 | getReservationsV2Response401) & {
   headers: Headers;
 };
 
-export type getReservationsV2Response =
-  | getReservationsV2ResponseSuccess
-  | getReservationsV2ResponseError;
+export type getReservationsV2Response = (getReservationsV2ResponseSuccess | getReservationsV2ResponseError)
 
 export const getGetReservationsV2Url = () => {
-  return `/external/v1/agencyid/patrons/patronid/reservations/v2`;
-};
 
-export const getReservationsV2 = async (
-  options?: RequestInit,
-): Promise<getReservationsV2Response> => {
-  const res = await fetch(getGetReservationsV2Url(), {
+
+  
+
+  return `/external/v1/agencyid/patrons/patronid/reservations/v2`
+}
+
+export const getReservationsV2 = async ( options?: RequestInit): Promise<getReservationsV2Response> => {
+  
+  const res = await fetch(getGetReservationsV2Url(),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getReservationsV2Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getReservationsV2Response
+}
 
-  const data: getReservationsV2Response["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getReservationsV2Response;
-};
+
 
 /**
  * 
@@ -564,64 +545,61 @@ export const getReservationsV2 = async (
  * @summary Create new reservations for the patron.
  */
 export type addReservationsV2Response200 = {
-  data: ReservationResponseV2;
-  status: 200;
-};
+  data: ReservationResponseV2
+  status: 200
+}
 
 export type addReservationsV2Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type addReservationsV2Response401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type addReservationsV2Response404 = {
-  data: void;
-  status: 404;
-};
-
-export type addReservationsV2ResponseSuccess = addReservationsV2Response200 & {
+  data: void
+  status: 404
+}
+    
+export type addReservationsV2ResponseSuccess = (addReservationsV2Response200) & {
   headers: Headers;
 };
-export type addReservationsV2ResponseError = (
-  | addReservationsV2Response400
-  | addReservationsV2Response401
-  | addReservationsV2Response404
-) & {
+export type addReservationsV2ResponseError = (addReservationsV2Response400 | addReservationsV2Response401 | addReservationsV2Response404) & {
   headers: Headers;
 };
 
-export type addReservationsV2Response =
-  | addReservationsV2ResponseSuccess
-  | addReservationsV2ResponseError;
+export type addReservationsV2Response = (addReservationsV2ResponseSuccess | addReservationsV2ResponseError)
 
 export const getAddReservationsV2Url = () => {
-  return `/external/v1/agencyid/patrons/patronid/reservations/v2`;
-};
 
-export const addReservationsV2 = async (
-  createReservationBatchV2: CreateReservationBatchV2,
-  options?: RequestInit,
-): Promise<addReservationsV2Response> => {
-  const res = await fetch(getAddReservationsV2Url(), {
+
+  
+
+  return `/external/v1/agencyid/patrons/patronid/reservations/v2`
+}
+
+export const addReservationsV2 = async (createReservationBatchV2: CreateReservationBatchV2, options?: RequestInit): Promise<addReservationsV2Response> => {
+  
+  const res = await fetch(getAddReservationsV2Url(),
+  {      
     ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(createReservationBatchV2),
-  });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createReservationBatchV2,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: addReservationsV2Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as addReservationsV2Response
+}
 
-  const data: addReservationsV2Response["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as addReservationsV2Response;
-};
+
 
 /**
  * 
@@ -629,73 +607,68 @@ export const addReservationsV2 = async (
  * @summary Get availability of bibliographical records.
  */
 export type getAvailabilityV3Response200 = {
-  data: AvailabilityV3[];
-  status: 200;
-};
+  data: AvailabilityV3[]
+  status: 200
+}
 
 export type getAvailabilityV3Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getAvailabilityV3Response401 = {
-  data: void;
-  status: 401;
-};
-
-export type getAvailabilityV3ResponseSuccess = getAvailabilityV3Response200 & {
+  data: void
+  status: 401
+}
+    
+export type getAvailabilityV3ResponseSuccess = (getAvailabilityV3Response200) & {
   headers: Headers;
 };
-export type getAvailabilityV3ResponseError = (
-  | getAvailabilityV3Response400
-  | getAvailabilityV3Response401
-) & {
+export type getAvailabilityV3ResponseError = (getAvailabilityV3Response400 | getAvailabilityV3Response401) & {
   headers: Headers;
 };
 
-export type getAvailabilityV3Response =
-  | getAvailabilityV3ResponseSuccess
-  | getAvailabilityV3ResponseError;
+export type getAvailabilityV3Response = (getAvailabilityV3ResponseSuccess | getAvailabilityV3ResponseError)
 
-export const getGetAvailabilityV3Url = (params: GetAvailabilityV3Params) => {
+export const getGetAvailabilityV3Url = (params: GetAvailabilityV3Params,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    const explodeParameters = ["recordid", "exclude"];
+    const explodeParameters = ["recordid","exclude"];
 
     if (Array.isArray(value) && explodeParameters.includes(key)) {
       value.forEach((v) => {
-        normalizedParams.append(key, v === null ? "null" : v.toString());
+        normalizedParams.append(key, v === null ? 'null' : v.toString());
       });
       return;
     }
+      
+    
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `/external/agencyid/catalog/availability/v3?${stringifiedParams}`
-    : `/external/agencyid/catalog/availability/v3`;
-};
+  return stringifiedParams.length > 0 ? `/external/agencyid/catalog/availability/v3?${stringifiedParams}` : `/external/agencyid/catalog/availability/v3`
+}
 
-export const getAvailabilityV3 = async (
-  params: GetAvailabilityV3Params,
-  options?: RequestInit,
-): Promise<getAvailabilityV3Response> => {
-  const res = await fetch(getGetAvailabilityV3Url(params), {
+export const getAvailabilityV3 = async (params: GetAvailabilityV3Params, options?: RequestInit): Promise<getAvailabilityV3Response> => {
+  
+  const res = await fetch(getGetAvailabilityV3Url(params),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getAvailabilityV3Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAvailabilityV3Response
+}
 
-  const data: getAvailabilityV3Response["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getAvailabilityV3Response;
-};
+
 
 /**
  * 
@@ -704,78 +677,68 @@ export const getAvailabilityV3 = async (
  * @summary Get placement holdings for bibliographical records.
  */
 export type getHoldingsLogisticsV1Response200 = {
-  data: HoldingsForBibliographicalRecordLogisticsV1[];
-  status: 200;
-};
+  data: HoldingsForBibliographicalRecordLogisticsV1[]
+  status: 200
+}
 
 export type getHoldingsLogisticsV1Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getHoldingsLogisticsV1Response401 = {
-  data: void;
-  status: 401;
+  data: void
+  status: 401
+}
+    
+export type getHoldingsLogisticsV1ResponseSuccess = (getHoldingsLogisticsV1Response200) & {
+  headers: Headers;
 };
-
-export type getHoldingsLogisticsV1ResponseSuccess =
-  getHoldingsLogisticsV1Response200 & {
-    headers: Headers;
-  };
-export type getHoldingsLogisticsV1ResponseError = (
-  | getHoldingsLogisticsV1Response400
-  | getHoldingsLogisticsV1Response401
-) & {
+export type getHoldingsLogisticsV1ResponseError = (getHoldingsLogisticsV1Response400 | getHoldingsLogisticsV1Response401) & {
   headers: Headers;
 };
 
-export type getHoldingsLogisticsV1Response =
-  | getHoldingsLogisticsV1ResponseSuccess
-  | getHoldingsLogisticsV1ResponseError;
+export type getHoldingsLogisticsV1Response = (getHoldingsLogisticsV1ResponseSuccess | getHoldingsLogisticsV1ResponseError)
 
-export const getGetHoldingsLogisticsV1Url = (
-  params: GetHoldingsLogisticsV1Params,
-) => {
+export const getGetHoldingsLogisticsV1Url = (params: GetHoldingsLogisticsV1Params,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    const explodeParameters = ["recordid", "exclude"];
+    const explodeParameters = ["recordid","exclude"];
 
     if (Array.isArray(value) && explodeParameters.includes(key)) {
       value.forEach((v) => {
-        normalizedParams.append(key, v === null ? "null" : v.toString());
+        normalizedParams.append(key, v === null ? 'null' : v.toString());
       });
       return;
     }
+      
+    
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `/external/agencyid/catalog/holdingsLogistics/v1?${stringifiedParams}`
-    : `/external/agencyid/catalog/holdingsLogistics/v1`;
-};
+  return stringifiedParams.length > 0 ? `/external/agencyid/catalog/holdingsLogistics/v1?${stringifiedParams}` : `/external/agencyid/catalog/holdingsLogistics/v1`
+}
 
-export const getHoldingsLogisticsV1 = async (
-  params: GetHoldingsLogisticsV1Params,
-  options?: RequestInit,
-): Promise<getHoldingsLogisticsV1Response> => {
-  const res = await fetch(getGetHoldingsLogisticsV1Url(params), {
+export const getHoldingsLogisticsV1 = async (params: GetHoldingsLogisticsV1Params, options?: RequestInit): Promise<getHoldingsLogisticsV1Response> => {
+  
+  const res = await fetch(getGetHoldingsLogisticsV1Url(params),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getHoldingsLogisticsV1Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getHoldingsLogisticsV1Response
+}
 
-  const data: getHoldingsLogisticsV1Response["data"] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getHoldingsLogisticsV1Response;
-};
+
 
 /**
  * 
@@ -795,68 +758,62 @@ export const getHoldingsLogisticsV1 = async (
  * @summary List of fees in FBS for the patron with all available information about the fee.
  */
 export type getFeesV2Response200 = {
-  data: FeeV2[];
-  status: 200;
-};
+  data: FeeV2[]
+  status: 200
+}
 
 export type getFeesV2Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getFeesV2Response401 = {
-  data: void;
-  status: 401;
-};
-
-export type getFeesV2ResponseSuccess = getFeesV2Response200 & {
+  data: void
+  status: 401
+}
+    
+export type getFeesV2ResponseSuccess = (getFeesV2Response200) & {
   headers: Headers;
 };
-export type getFeesV2ResponseError = (
-  | getFeesV2Response400
-  | getFeesV2Response401
-) & {
+export type getFeesV2ResponseError = (getFeesV2Response400 | getFeesV2Response401) & {
   headers: Headers;
 };
 
-export type getFeesV2Response =
-  | getFeesV2ResponseSuccess
-  | getFeesV2ResponseError;
+export type getFeesV2Response = (getFeesV2ResponseSuccess | getFeesV2ResponseError)
 
-export const getGetFeesV2Url = (params: GetFeesV2Params) => {
+export const getGetFeesV2Url = (params: GetFeesV2Params,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? "null" : value.toString());
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `/external/agencyid/patron/patronid/fees/v2?${stringifiedParams}`
-    : `/external/agencyid/patron/patronid/fees/v2`;
-};
+  return stringifiedParams.length > 0 ? `/external/agencyid/patron/patronid/fees/v2?${stringifiedParams}` : `/external/agencyid/patron/patronid/fees/v2`
+}
 
-export const getFeesV2 = async (
-  params: GetFeesV2Params,
-  options?: RequestInit,
-): Promise<getFeesV2Response> => {
-  const res = await fetch(getGetFeesV2Url(params), {
+export const getFeesV2 = async (params: GetFeesV2Params, options?: RequestInit): Promise<getFeesV2Response> => {
+  
+  const res = await fetch(getGetFeesV2Url(params),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getFeesV2Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getFeesV2Response
+}
 
-  const data: getFeesV2Response["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getFeesV2Response;
-};
+
 
 /**
  * 
@@ -887,58 +844,61 @@ export const getFeesV2 = async (
  * @summary Create a new patron who is a person.
  */
 export type createV9Response200 = {
-  data: AuthenticatedPatronV10;
-  status: 200;
-};
+  data: AuthenticatedPatronV10
+  status: 200
+}
 
 export type createV9Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type createV9Response401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type createV9Response404 = {
-  data: void;
-  status: 404;
-};
-
-export type createV9ResponseSuccess = createV9Response200 & {
+  data: void
+  status: 404
+}
+    
+export type createV9ResponseSuccess = (createV9Response200) & {
   headers: Headers;
 };
-export type createV9ResponseError = (
-  | createV9Response400
-  | createV9Response401
-  | createV9Response404
-) & {
+export type createV9ResponseError = (createV9Response400 | createV9Response401 | createV9Response404) & {
   headers: Headers;
 };
 
-export type createV9Response = createV9ResponseSuccess | createV9ResponseError;
+export type createV9Response = (createV9ResponseSuccess | createV9ResponseError)
 
 export const getCreateV9Url = () => {
-  return `/external/agencyid/patrons/v9`;
-};
 
-export const createV9 = async (
-  createPatronRequestV7: CreatePatronRequestV7,
-  options?: RequestInit,
-): Promise<createV9Response> => {
-  const res = await fetch(getCreateV9Url(), {
+
+  
+
+  return `/external/agencyid/patrons/v9`
+}
+
+export const createV9 = async (createPatronRequestV7: CreatePatronRequestV7, options?: RequestInit): Promise<createV9Response> => {
+  
+  const res = await fetch(getCreateV9Url(),
+  {      
     ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(createPatronRequestV7),
-  });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createPatronRequestV7,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createV9Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createV9Response
+}
 
-  const data: createV9Response["data"] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as createV9Response;
-};
+
 
 /**
  * 
@@ -954,65 +914,61 @@ export const createV9 = async (
  * @summary Creates a person patron with a guardian (eg A financial responsible).
  */
 export type createWithGuardianResponse200 = {
-  data: number;
-  status: 200;
-};
+  data: number
+  status: 200
+}
 
 export type createWithGuardianResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type createWithGuardianResponse401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type createWithGuardianResponse404 = {
-  data: void;
-  status: 404;
+  data: void
+  status: 404
+}
+    
+export type createWithGuardianResponseSuccess = (createWithGuardianResponse200) & {
+  headers: Headers;
 };
-
-export type createWithGuardianResponseSuccess =
-  createWithGuardianResponse200 & {
-    headers: Headers;
-  };
-export type createWithGuardianResponseError = (
-  | createWithGuardianResponse400
-  | createWithGuardianResponse401
-  | createWithGuardianResponse404
-) & {
+export type createWithGuardianResponseError = (createWithGuardianResponse400 | createWithGuardianResponse401 | createWithGuardianResponse404) & {
   headers: Headers;
 };
 
-export type createWithGuardianResponse =
-  | createWithGuardianResponseSuccess
-  | createWithGuardianResponseError;
+export type createWithGuardianResponse = (createWithGuardianResponseSuccess | createWithGuardianResponseError)
 
 export const getCreateWithGuardianUrl = () => {
-  return `/external/agencyid/patrons/withGuardian/v1`;
-};
 
-export const createWithGuardian = async (
-  patronWithGuardianRequest: PatronWithGuardianRequest,
-  options?: RequestInit,
-): Promise<createWithGuardianResponse> => {
-  const res = await fetch(getCreateWithGuardianUrl(), {
+
+  
+
+  return `/external/agencyid/patrons/withGuardian/v1`
+}
+
+export const createWithGuardian = async (patronWithGuardianRequest: PatronWithGuardianRequest, options?: RequestInit): Promise<createWithGuardianResponse> => {
+  
+  const res = await fetch(getCreateWithGuardianUrl(),
+  {      
     ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(patronWithGuardianRequest),
-  });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      patronWithGuardianRequest,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createWithGuardianResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createWithGuardianResponse
+}
 
-  const data: createWithGuardianResponse["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as createWithGuardianResponse;
-};
+
 
 /**
  * 
@@ -1028,64 +984,61 @@ export const createWithGuardian = async (
  * @summary Updates a person patron's guardian (eg A financial responsible).
  */
 export type updateGuardianResponse200 = {
-  data: number;
-  status: 200;
-};
+  data: number
+  status: 200
+}
 
 export type updateGuardianResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type updateGuardianResponse401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type updateGuardianResponse404 = {
-  data: void;
-  status: 404;
-};
-
-export type updateGuardianResponseSuccess = updateGuardianResponse200 & {
+  data: void
+  status: 404
+}
+    
+export type updateGuardianResponseSuccess = (updateGuardianResponse200) & {
   headers: Headers;
 };
-export type updateGuardianResponseError = (
-  | updateGuardianResponse400
-  | updateGuardianResponse401
-  | updateGuardianResponse404
-) & {
+export type updateGuardianResponseError = (updateGuardianResponse400 | updateGuardianResponse401 | updateGuardianResponse404) & {
   headers: Headers;
 };
 
-export type updateGuardianResponse =
-  | updateGuardianResponseSuccess
-  | updateGuardianResponseError;
+export type updateGuardianResponse = (updateGuardianResponseSuccess | updateGuardianResponseError)
 
 export const getUpdateGuardianUrl = () => {
-  return `/external/agencyid/patrons/withGuardian/v1`;
-};
 
-export const updateGuardian = async (
-  updateGuardianRequest: UpdateGuardianRequest,
-  options?: RequestInit,
-): Promise<updateGuardianResponse> => {
-  const res = await fetch(getUpdateGuardianUrl(), {
+
+  
+
+  return `/external/agencyid/patrons/withGuardian/v1`
+}
+
+export const updateGuardian = async (updateGuardianRequest: UpdateGuardianRequest, options?: RequestInit): Promise<updateGuardianResponse> => {
+  
+  const res = await fetch(getUpdateGuardianUrl(),
+  {      
     ...options,
-    method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(updateGuardianRequest),
-  });
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateGuardianRequest,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateGuardianResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateGuardianResponse
+}
 
-  const data: updateGuardianResponse["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as updateGuardianResponse;
-};
+
 
 /**
  * 
@@ -1120,64 +1073,61 @@ export const updateGuardian = async (
  * @summary Renew loans.
  */
 export type renewLoansV2Response200 = {
-  data: RenewedLoanV2[];
-  status: 200;
-};
+  data: RenewedLoanV2[]
+  status: 200
+}
 
 export type renewLoansV2Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type renewLoansV2Response401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type renewLoansV2Response404 = {
-  data: void;
-  status: 404;
-};
-
-export type renewLoansV2ResponseSuccess = renewLoansV2Response200 & {
+  data: void
+  status: 404
+}
+    
+export type renewLoansV2ResponseSuccess = (renewLoansV2Response200) & {
   headers: Headers;
 };
-export type renewLoansV2ResponseError = (
-  | renewLoansV2Response400
-  | renewLoansV2Response401
-  | renewLoansV2Response404
-) & {
+export type renewLoansV2ResponseError = (renewLoansV2Response400 | renewLoansV2Response401 | renewLoansV2Response404) & {
   headers: Headers;
 };
 
-export type renewLoansV2Response =
-  | renewLoansV2ResponseSuccess
-  | renewLoansV2ResponseError;
+export type renewLoansV2Response = (renewLoansV2ResponseSuccess | renewLoansV2ResponseError)
 
 export const getRenewLoansV2Url = () => {
-  return `/external/agencyid/patrons/patronid/loans/renew/v2`;
-};
 
-export const renewLoansV2 = async (
-  renewLoansV2Body: number[],
-  options?: RequestInit,
-): Promise<renewLoansV2Response> => {
-  const res = await fetch(getRenewLoansV2Url(), {
+
+  
+
+  return `/external/agencyid/patrons/patronid/loans/renew/v2`
+}
+
+export const renewLoansV2 = async (renewLoansV2Body: number[], options?: RequestInit): Promise<renewLoansV2Response> => {
+  
+  const res = await fetch(getRenewLoansV2Url(),
+  {      
     ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(renewLoansV2Body),
-  });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      renewLoansV2Body,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: renewLoansV2Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as renewLoansV2Response
+}
 
-  const data: renewLoansV2Response["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as renewLoansV2Response;
-};
+
 
 /**
  * 
@@ -1213,61 +1163,60 @@ export const renewLoansV2 = async (
  * @summary Get list of current loans by the patron.
  */
 export type getLoansV2Response200 = {
-  data: LoanV2[];
-  status: 200;
-};
+  data: LoanV2[]
+  status: 200
+}
 
 export type getLoansV2Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getLoansV2Response401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type getLoansV2Response404 = {
-  data: void;
-  status: 404;
-};
-
-export type getLoansV2ResponseSuccess = getLoansV2Response200 & {
+  data: void
+  status: 404
+}
+    
+export type getLoansV2ResponseSuccess = (getLoansV2Response200) & {
   headers: Headers;
 };
-export type getLoansV2ResponseError = (
-  | getLoansV2Response400
-  | getLoansV2Response401
-  | getLoansV2Response404
-) & {
+export type getLoansV2ResponseError = (getLoansV2Response400 | getLoansV2Response401 | getLoansV2Response404) & {
   headers: Headers;
 };
 
-export type getLoansV2Response =
-  | getLoansV2ResponseSuccess
-  | getLoansV2ResponseError;
+export type getLoansV2Response = (getLoansV2ResponseSuccess | getLoansV2ResponseError)
 
 export const getGetLoansV2Url = () => {
-  return `/external/agencyid/patrons/patronid/loans/v2`;
-};
 
-export const getLoansV2 = async (
-  options?: RequestInit,
-): Promise<getLoansV2Response> => {
-  const res = await fetch(getGetLoansV2Url(), {
+
+  
+
+  return `/external/agencyid/patrons/patronid/loans/v2`
+}
+
+export const getLoansV2 = async ( options?: RequestInit): Promise<getLoansV2Response> => {
+  
+  const res = await fetch(getGetLoansV2Url(),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getLoansV2Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getLoansV2Response
+}
 
-  const data: getLoansV2Response["data"] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getLoansV2Response;
-};
+
 
 /**
  * 
@@ -1285,58 +1234,55 @@ export const getLoansV2 = async (
  * @summary Returns the patron details
  */
 export type getPatronInformationByPatronIdV4Response200 = {
-  data: AuthenticatedPatronV8;
-  status: 200;
-};
+  data: AuthenticatedPatronV8
+  status: 200
+}
 
 export type getPatronInformationByPatronIdV4Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getPatronInformationByPatronIdV4Response401 = {
-  data: void;
-  status: 401;
+  data: void
+  status: 401
+}
+    
+export type getPatronInformationByPatronIdV4ResponseSuccess = (getPatronInformationByPatronIdV4Response200) & {
+  headers: Headers;
 };
-
-export type getPatronInformationByPatronIdV4ResponseSuccess =
-  getPatronInformationByPatronIdV4Response200 & {
-    headers: Headers;
-  };
-export type getPatronInformationByPatronIdV4ResponseError = (
-  | getPatronInformationByPatronIdV4Response400
-  | getPatronInformationByPatronIdV4Response401
-) & {
+export type getPatronInformationByPatronIdV4ResponseError = (getPatronInformationByPatronIdV4Response400 | getPatronInformationByPatronIdV4Response401) & {
   headers: Headers;
 };
 
-export type getPatronInformationByPatronIdV4Response =
-  | getPatronInformationByPatronIdV4ResponseSuccess
-  | getPatronInformationByPatronIdV4ResponseError;
+export type getPatronInformationByPatronIdV4Response = (getPatronInformationByPatronIdV4ResponseSuccess | getPatronInformationByPatronIdV4ResponseError)
 
 export const getGetPatronInformationByPatronIdV4Url = () => {
-  return `/external/agencyid/patrons/patronid/v4`;
-};
 
-export const getPatronInformationByPatronIdV4 = async (
-  options?: RequestInit,
-): Promise<getPatronInformationByPatronIdV4Response> => {
-  const res = await fetch(getGetPatronInformationByPatronIdV4Url(), {
+
+  
+
+  return `/external/agencyid/patrons/patronid/v4`
+}
+
+export const getPatronInformationByPatronIdV4 = async ( options?: RequestInit): Promise<getPatronInformationByPatronIdV4Response> => {
+  
+  const res = await fetch(getGetPatronInformationByPatronIdV4Url(),
+  {      
     ...options,
-    method: "GET",
-  });
+    method: 'GET'
+    
+    
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getPatronInformationByPatronIdV4Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getPatronInformationByPatronIdV4Response
+}
 
-  const data: getPatronInformationByPatronIdV4Response["data"] = body
-    ? JSON.parse(body)
-    : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getPatronInformationByPatronIdV4Response;
-};
+
 
 /**
  * 
@@ -1357,58 +1303,61 @@ export const getPatronInformationByPatronIdV4 = async (
  * @summary Update information about the patron.
  */
 export type updateV4Response200 = {
-  data: AuthenticatedPatronV4;
-  status: 200;
-};
+  data: AuthenticatedPatronV4
+  status: 200
+}
 
 export type updateV4Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type updateV4Response401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type updateV4Response404 = {
-  data: void;
-  status: 404;
-};
-
-export type updateV4ResponseSuccess = updateV4Response200 & {
+  data: void
+  status: 404
+}
+    
+export type updateV4ResponseSuccess = (updateV4Response200) & {
   headers: Headers;
 };
-export type updateV4ResponseError = (
-  | updateV4Response400
-  | updateV4Response401
-  | updateV4Response404
-) & {
+export type updateV4ResponseError = (updateV4Response400 | updateV4Response401 | updateV4Response404) & {
   headers: Headers;
 };
 
-export type updateV4Response = updateV4ResponseSuccess | updateV4ResponseError;
+export type updateV4Response = (updateV4ResponseSuccess | updateV4ResponseError)
 
 export const getUpdateV4Url = () => {
-  return `/external/agencyid/patrons/patronid/v4`;
-};
 
-export const updateV4 = async (
-  updatePatronRequestV3: UpdatePatronRequestV3,
-  options?: RequestInit,
-): Promise<updateV4Response> => {
-  const res = await fetch(getUpdateV4Url(), {
+
+  
+
+  return `/external/agencyid/patrons/patronid/v4`
+}
+
+export const updateV4 = async (updatePatronRequestV3: UpdatePatronRequestV3, options?: RequestInit): Promise<updateV4Response> => {
+  
+  const res = await fetch(getUpdateV4Url(),
+  {      
     ...options,
-    method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(updatePatronRequestV3),
-  });
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updatePatronRequestV3,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateV4Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateV4Response
+}
 
-  const data: updateV4Response["data"] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as updateV4Response;
-};
+
 
 /**
  * 
@@ -1434,63 +1383,64 @@ export const updateV4 = async (
  * @summary Update information about the patron.
  */
 export type updateV8Response200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
 export type updateV8Response204 = {
-  data: void;
-  status: 204;
-};
+  data: void
+  status: 204
+}
 
 export type updateV8Response400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type updateV8Response401 = {
-  data: void;
-  status: 401;
-};
+  data: void
+  status: 401
+}
 
 export type updateV8Response404 = {
-  data: void;
-  status: 404;
-};
-
-export type updateV8ResponseSuccess = (
-  | updateV8Response200
-  | updateV8Response204
-) & {
+  data: void
+  status: 404
+}
+    
+export type updateV8ResponseSuccess = (updateV8Response200 | updateV8Response204) & {
   headers: Headers;
 };
-export type updateV8ResponseError = (
-  | updateV8Response400
-  | updateV8Response401
-  | updateV8Response404
-) & {
+export type updateV8ResponseError = (updateV8Response400 | updateV8Response401 | updateV8Response404) & {
   headers: Headers;
 };
 
-export type updateV8Response = updateV8ResponseSuccess | updateV8ResponseError;
+export type updateV8Response = (updateV8ResponseSuccess | updateV8ResponseError)
 
 export const getUpdateV8Url = () => {
-  return `/external/agencyid/patrons/patronid/v8`;
-};
 
-export const updateV8 = async (
-  updatePatronRequestV6: UpdatePatronRequestV6,
-  options?: RequestInit,
-): Promise<updateV8Response> => {
-  const res = await fetch(getUpdateV8Url(), {
+
+  
+
+  return `/external/agencyid/patrons/patronid/v8`
+}
+
+export const updateV8 = async (updatePatronRequestV6: UpdatePatronRequestV6, options?: RequestInit): Promise<updateV8Response> => {
+  
+  const res = await fetch(getUpdateV8Url(),
+  {      
     ...options,
-    method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(updatePatronRequestV6),
-  });
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updatePatronRequestV6,)
+  }
+)
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateV8Response['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateV8Response
+}
 
-  const data: updateV8Response["data"] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as updateV8Response;
-};
+
+

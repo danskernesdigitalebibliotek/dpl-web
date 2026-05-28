@@ -4,7 +4,7 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { PeriodicalReservation } from "./periodicalReservation";
+import type { PeriodicalReservation } from './periodicalReservation';
 
 export interface CreateReservationV2 {
   /** Sets the activation date. From this date, the reservation can be fulfilled. */

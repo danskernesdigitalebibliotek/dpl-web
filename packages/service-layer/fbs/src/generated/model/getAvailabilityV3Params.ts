@@ -6,12 +6,12 @@
  */
 
 export type GetAvailabilityV3Params = {
-  /**
-   * list of record ids
-   */
-  recordid: string[];
-  /**
-   * Identifies the branchIds which are excluded from the result
-   */
-  exclude?: string[];
+/**
+ * list of record ids
+ */
+recordid: string[];
+/**
+ * Identifies the branchIds which are excluded from the result
+ */
+exclude?: string[];
 };

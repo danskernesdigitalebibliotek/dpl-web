@@ -4,8 +4,8 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { NewsletterTagV1 } from "./newsletterTagV1";
-import type { NewsletterGroupCategoryV1 } from "./newsletterGroupCategoryV1";
+import type { NewsletterTagV1 } from './newsletterTagV1';
+import type { NewsletterGroupCategoryV1 } from './newsletterGroupCategoryV1';
 
 export interface NewsletterV1 {
   /** The newsletter preferences */

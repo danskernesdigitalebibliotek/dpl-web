@@ -4,7 +4,7 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { HoldingsLogisticsV1 } from "./holdingsLogisticsV1";
+import type { HoldingsLogisticsV1 } from './holdingsLogisticsV1';
 
 export interface HoldingsForBibliographicalRecordLogisticsV1 {
   /** An array of holdings for the materials matching the bibliographical record, as distributed across branches,

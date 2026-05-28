@@ -4,9 +4,9 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { EmailAddressV1 } from "./emailAddressV1";
-import type { Period } from "./period";
-import type { PhoneNumberV1 } from "./phoneNumberV1";
+import type { EmailAddressV1 } from './emailAddressV1';
+import type { Period } from './period';
+import type { PhoneNumberV1 } from './phoneNumberV1';
 
 export interface PatronSettingsV6 {
   /** Existing email addresses are overwritten with these values

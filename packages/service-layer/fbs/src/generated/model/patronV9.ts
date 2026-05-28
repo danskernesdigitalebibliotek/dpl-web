@@ -4,9 +4,9 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { AddressV3 } from "./addressV3";
-import type { BlockStatus } from "./blockStatus";
-import type { Period } from "./period";
+import type { AddressV3 } from './addressV3';
+import type { BlockStatus } from './blockStatus';
+import type { Period } from './period';
 
 export interface PatronV9 {
   /** Tags associated with the patron. Can be used to e.g. give permissions to patron in external ressources. */

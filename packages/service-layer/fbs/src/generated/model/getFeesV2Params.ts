@@ -6,14 +6,14 @@
  */
 
 export type GetFeesV2Params = {
-  /**
+/**
  * true if all paid/unpaid fees should be included, false if only unpaid fees should
                     be included; default=false
  */
-  includepaid: boolean;
-  /**
+includepaid: boolean;
+/**
  * true if fees that are not payable through a CMS system should be included (for read
                           only access); default=false
  */
-  includenonpayable: boolean;
+includenonpayable: boolean;
 };

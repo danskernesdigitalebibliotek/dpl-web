@@ -4,8 +4,8 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { AuthenticatedPatronV10AuthenticateStatus } from "./authenticatedPatronV10AuthenticateStatus";
-import type { PatronV9 } from "./patronV9";
+import type { AuthenticatedPatronV10AuthenticateStatus } from './authenticatedPatronV10AuthenticateStatus';
+import type { PatronV9 } from './patronV9';
 
 export interface AuthenticatedPatronV10 {
   /** AuthenticateStatus:

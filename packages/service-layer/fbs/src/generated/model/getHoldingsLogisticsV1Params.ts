@@ -6,12 +6,12 @@
  */
 
 export type GetHoldingsLogisticsV1Params = {
-  /**
-   * Identifies the bibliographical records - The FAUST number.
-   */
-  recordid: string[];
-  /**
-   * Identifies the branchIds which are excluded from the result
-   */
-  exclude?: string[];
+/**
+ * Identifies the bibliographical records - The FAUST number.
+ */
+recordid: string[];
+/**
+ * Identifies the branchIds which are excluded from the result
+ */
+exclude?: string[];
 };

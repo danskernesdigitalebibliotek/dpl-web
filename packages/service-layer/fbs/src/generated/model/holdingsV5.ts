@@ -4,12 +4,12 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { AgencyBranch } from "./agencyBranch";
-import type { AgencyDepartment } from "./agencyDepartment";
-import type { AgencyLocation } from "./agencyLocation";
-import type { MaterialV4 } from "./materialV4";
-import type { AgencySection } from "./agencySection";
-import type { AgencySublocation } from "./agencySublocation";
+import type { AgencyBranch } from './agencyBranch';
+import type { AgencyDepartment } from './agencyDepartment';
+import type { AgencyLocation } from './agencyLocation';
+import type { MaterialV4 } from './materialV4';
+import type { AgencySection } from './agencySection';
+import type { AgencySublocation } from './agencySublocation';
 
 export interface HoldingsV5 {
   branch: AgencyBranch;

@@ -4,8 +4,8 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { BlockStatusRequest } from "./blockStatusRequest";
-import type { PatronSettingsV6 } from "./patronSettingsV6";
+import type { BlockStatusRequest } from './blockStatusRequest';
+import type { PatronSettingsV6 } from './patronSettingsV6';
 
 export interface CreatePatronRequestV7 {
   blockStatusRequest?: BlockStatusRequest;

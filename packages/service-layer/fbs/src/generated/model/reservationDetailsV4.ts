@@ -4,8 +4,8 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { ILLBibliographicRecord } from "./iLLBibliographicRecord";
-import type { Periodical } from "./periodical";
+import type { ILLBibliographicRecord } from './iLLBibliographicRecord';
+import type { Periodical } from './periodical';
 
 export interface ReservationDetailsV4 {
   /** Sets the activation date. From this date, the reservation can be fulfilled. */

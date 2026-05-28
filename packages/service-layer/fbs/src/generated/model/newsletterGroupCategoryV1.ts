@@ -4,7 +4,7 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import type { NewsletterGroupNameV1 } from "./newsletterGroupNameV1";
+import type { NewsletterGroupNameV1 } from './newsletterGroupNameV1';
 
 export interface NewsletterGroupCategoryV1 {
   /** The preference id stored in Mailchimp */
