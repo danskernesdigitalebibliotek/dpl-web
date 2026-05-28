@@ -363,8 +363,7 @@ function dpl_breadcrumb_tokens(string $type, array $tokens, array $data): array 
     return [];
   }
 
-  $breadcrumb =
-    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
+  $breadcrumb = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
 
   return [
     $token_original => $breadcrumb,
