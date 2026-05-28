@@ -7,8 +7,8 @@ import { getEnv, getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
-import { loadPatronServerSide } from "../helpers/service-layer"
 import { isBuildingGoApp } from "../helpers/next-phase"
+import { loadPatronServerSide } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
