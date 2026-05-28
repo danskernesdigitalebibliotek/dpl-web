@@ -154,8 +154,16 @@ export const saveAdgangsplatformenSession = async (
   session.isLoggedIn = true
   session.type = "adgangsplatformen"
   await setAdgangsplatformenUserTokenOnSession(session, userToken)
-  // Get name of user/patron from Adgangsplatformen.
-  const patron = await loadPatronServerSide(userToken.token)
+  // Get name of user/patron from FBS. FBS may be unavailable or refuse the
+  // call (test mocks, locked-out patrons, etc.); we don't want that to break
+  // the login. Log and continue without setting session.user — matches the
+  // pre-service-layer fetcher's "log and return null" behaviour.
+  let patron
+  try {
+    patron = await loadPatronServerSide(userToken.token)
+  } catch (error) {
+    console.error("Could not load patron during Adgangsplatformen login:", error)
+  }
   if (patron?.name) {
     session.user = {
       name: patron.name,
