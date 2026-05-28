@@ -50,6 +50,9 @@ jobs:
           echo 'registry "https://registry.yarnpkg.com"' >> "$HOME/.yarnrc"
 
       - name: Build package files for npm publish
+        # NPM publish does not require browsers.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: |
           bash ./bundle.sh
           npm pack --dry-run

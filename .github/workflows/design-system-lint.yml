@@ -24,7 +24,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        # Linters do not require browsers.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: yarn install --frozen-lockfile
 
       - name: Run css:lint
         run: yarn css:lint
@@ -40,7 +44,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        # Linters do not require browsers.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: yarn install --frozen-lockfile
 
       - name: Run js:lint
         run: yarn js:lint
@@ -57,7 +65,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: 'design-system/.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        # Linters do not require browsers.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: yarn install --frozen-lockfile
 
       - name: Run markdown:lint
         run: yarn markdown:lint
