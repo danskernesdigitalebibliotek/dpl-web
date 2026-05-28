@@ -115,9 +115,9 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
           <div className="list-reservation__about">
             <h3
               lang={lang || ""}
-              className="list-reservation__header color-secondary-gray"
+              className="list-reservation__title color-secondary-gray"
             >
-              <span id={titleId} className="list-reservation__header__text">
+              <span id={titleId} className="list-reservation__title__text">
                 {title}
               </span>
             </h3>

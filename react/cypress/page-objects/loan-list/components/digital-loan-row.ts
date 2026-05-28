@@ -17,7 +17,7 @@ export class DigitalLoanRowComponent extends ComponentObject {
         this.container().find("[data-cy='loan-list-player-button']"),
       loanDetailsButton: () =>
         this.container().find("[data-cy='loan-list-loan-details-button']"),
-      title: () => this.container().find(".list-reservation__header__text"),
+      title: () => this.container().find(".list-reservation__title__text"),
       materialType: () => this.container().find(".status-label"),
       author: () => this.container().find(".list-reservation__about p").first(),
       dueDate: () => this.container().find(".list-reservation__deadline p")

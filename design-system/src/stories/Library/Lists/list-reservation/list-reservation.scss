@@ -158,13 +158,13 @@ $list-reservation-space-desktop: 24px;
   }
 }
 
-.list-reservation__header {
+.list-reservation__title {
   @include typography($typo__h4);
   color: $color__global-black;
   padding: 0;
 }
 
-.list-reservation__header--button {
+.list-reservation__title--button {
   cursor: pointer;
 
   &:hover,
@@ -173,7 +173,7 @@ $list-reservation-space-desktop: 24px;
   }
 }
 
-.list-reservation__header__text {
+.list-reservation__title__text {
   @include text-ellipsis-truncation(2);
 }
 

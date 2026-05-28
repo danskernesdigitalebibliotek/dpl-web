@@ -334,7 +334,7 @@ describe("Loan list", () => {
     cy.get(".list-reservation-container")
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .should("have.text", "Dummy Some Title");
 
     // ID 42 2.d. authors & ID 42 2.f. year published
@@ -489,7 +489,7 @@ describe("Loan list", () => {
       .eq(1)
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .should("have.text", "Mordet i det blå tog");
 
     // ID 42 2.d. authors & ID 42 2.f. year published
@@ -605,7 +605,7 @@ describe("Loan list", () => {
       .eq(1)
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .click();
     cy.get(".modal-details").should("be.visible");
   });
@@ -634,7 +634,7 @@ describe("Loan list", () => {
       .eq(0)
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .click();
     cy.get(".modal-details").should("be.visible");
   });
@@ -716,7 +716,7 @@ describe("Loan list", () => {
 
     cy.get(".list-reservation-container")
       .find(".list-reservation")
-      .get(".list-reservation__header")
+      .get(".list-reservation__title")
       // The title should be the one returned by ilBibliographicRecord property
       // on the reservation.
       .should("contain", "Supermac : the life of Harold Macmillan")

@@ -495,7 +495,7 @@ describe("Reservation list", () => {
           "E-book"
         );
 
-        cy.get(".list-reservation__header__text").should(
+        cy.get(".list-reservation__title__text").should(
           "have.text",
           "Mordet i det blå tog"
         );
@@ -906,7 +906,7 @@ describe("Reservation list", () => {
       // Even though we return multiple reservations they are parallel and
       // should be represented as one.
       .should("have.length", 1)
-      .get(".list-reservation__header")
+      .get(".list-reservation__title")
       // The title should be the one returned by the best representation
       // fixture.
       .should("contain", "Best representation of dummy title")
@@ -989,7 +989,7 @@ describe("Reservation list", () => {
 
     cy.getBySel("list-reservation-container")
       .find(".list-reservation")
-      .get(".list-reservation__header")
+      .get(".list-reservation__title")
       // The title should be the one returned by ilBibliographicRecord property
       // on the reservation.
       .should("contain", "Supermac : the life of Harold Macmillan")

@@ -9,7 +9,7 @@ export class PhysicalLoanRowComponent extends ComponentObject {
   constructor(index = 0) {
     super(() => cy.get(".list-reservation[role='button']").eq(index));
     this.addElements = {
-      title: () => this.container().find(".list-reservation__header__text"),
+      title: () => this.container().find(".list-reservation__title__text"),
       author: () =>
         this.container().find("[data-cy='reservation-about-author']"),
       dueDate: () => this.container().find(".list-reservation__deadline p"),

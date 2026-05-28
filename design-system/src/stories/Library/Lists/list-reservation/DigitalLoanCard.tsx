@@ -38,8 +38,8 @@ export const DigitalLoanCard = ({
           <StatusLabel label={material.materialType} status="outline" />
         </div>
         <div className="list-reservation__about">
-          <h3 className="list-reservation__header color-secondary-gray">
-            <span className="list-reservation__header__text">
+          <h3 className="list-reservation__title color-secondary-gray">
+            <span className="list-reservation__title__text">
               {material.title}
             </span>
           </h3>
