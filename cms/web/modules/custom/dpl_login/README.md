@@ -25,7 +25,7 @@ This module requires the following modules:
  * The [id of the library][2] (agency id/biblioteksnummer) has to be determined.
 
 *) The redirect url has following format:
-https://[DOMAIN_NAME]/openid-connect/adgansplatformen
+https://[DOMAIN_NAME]/openid-connect/adgangsplatformen
 
 CONFIGURATION
 -------------

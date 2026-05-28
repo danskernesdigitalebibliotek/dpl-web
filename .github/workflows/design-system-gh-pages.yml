@@ -30,7 +30,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        # Storybook build does not require browsers.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: yarn install --frozen-lockfile
       - run: yarn css:build
       - run: yarn build-storybook
 

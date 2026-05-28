@@ -32,6 +32,10 @@ jobs:
           node-version-file: "go/.nvmrc"
 
       - name: Install dependencies
+        # Browsers are installed by the dedicated step below so a CDN stall
+        # surfaces with the failing URL instead of hiding in yarn postinstall.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: yarn
 
       - name: Load environment variables
@@ -41,6 +45,7 @@ jobs:
 
       - name: Install Playwright
         run: npx playwright install --with-deps
+        timeout-minutes: 5
 
       - name: Build Storybook
         run: yarn build-storybook --quiet

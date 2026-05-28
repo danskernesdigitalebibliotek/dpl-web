@@ -363,10 +363,12 @@ function dpl_breadcrumb_tokens(string $type, array $tokens, array $data): array 
     return [];
   }
 
-  $breadcrumb =
-    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
+  $token_value = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
+  // Pathauto 1.15.0 automatically adds a / prefix when patterns are saved.
+  // Strip leading / from the url string to avoid duplication.
+  $token_value = $token_value ? ltrim($token_value, '/') : NULL;
 
   return [
-    $token_original => $breadcrumb,
+    $token_original => $token_value,
   ];
 }

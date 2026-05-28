@@ -7,7 +7,7 @@ dependencies:
 id: breadcrumb_pattern_event_series
 label: 'Breadcrumb pattern (event series)'
 type: 'canonical_entities:eventseries'
-pattern: '[dpl_breadcrumb:breadcrumb-url-alias]'
+pattern: '/[dpl_breadcrumb:breadcrumb-url-alias]'
 selection_criteria: {  }
 selection_logic: and
 weight: 0
