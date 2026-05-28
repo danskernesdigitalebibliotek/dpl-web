@@ -8,6 +8,7 @@ import { configs as storybookConfigs } from "eslint-plugin-storybook"
 const eslintConfig = [
   {
     ignores: [
+      "lib/graphql/generated/",
       "lib/soap/publizon/v2_7/generated/",
       "lib/soap/unilogin/wsiinst-v6/generated/",
       "lib/rest/**/generated/",

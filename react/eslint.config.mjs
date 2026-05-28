@@ -17,6 +17,7 @@ export default [
   {
     files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
     ignores: [
+      "src/core/dbc-gateway/generated",
       "src/core/dpl-cms/model",
       "src/core/dpl-cms/dpl-cms.ts",
       "src/core/fbs/model",
