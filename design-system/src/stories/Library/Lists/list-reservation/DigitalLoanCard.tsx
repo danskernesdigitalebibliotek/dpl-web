@@ -2,42 +2,58 @@ import { Button } from "../../Buttons/button/Button";
 import { LinkButton } from "../../Buttons/button/LinkButton";
 import Cover from "../../cover/Cover";
 import { Counter, CounterProps } from "../../counter/Counter";
-import { StatusLabel } from "../../status-label/StatusLabel";
+import { StatusLabel, StatusLabelProps } from "../../status-label/StatusLabel";
 
 export type DigitalLoanCardProps = {
-  cover: {
+  material: {
     materialType: string;
     title: string;
     author: string;
     image: string;
   };
+  periodical?: string;
+  series?: string;
   counter: CounterProps;
+  statusBadge?: StatusLabelProps;
   deadlineNote: string;
   primaryAction: "reader" | "player";
   primaryActionLabel: string;
 };
 
 export const DigitalLoanCard = ({
-  cover,
+  material,
+  periodical,
+  series,
   counter,
+  statusBadge,
   deadlineNote,
   primaryAction,
   primaryActionLabel,
 }: DigitalLoanCardProps) => (
-  <div className="list-reservation list-reservation--no-hover">
+  <div className="list-reservation list-reservation--no-hover my-32">
     <div className="list-reservation__material">
-      <Cover size="small" animate={false} src={cover.image} />
+      <Cover size="small" animate={false} src={material.image} />
       <div className="list-reservation__information list-reservation__information--centered-about">
-        <StatusLabel label={cover.materialType} status="outline" />
+        <div>
+          <StatusLabel label={material.materialType} status="outline" />
+        </div>
         <div className="list-reservation__about">
           <h3 className="list-reservation__header color-secondary-gray">
             <span className="list-reservation__header__text">
-              {cover.title}
+              {material.title}
             </span>
           </h3>
           <p className="text-small-caption color-secondary-gray">
-            {cover.author}
+            {material.author}
           </p>
+          {periodical && (
+            <p className="text-small-caption color-secondary-gray">
+              {periodical}
+            </p>
+          )}
+          {series && (
+            <p className="text-small-caption color-secondary-gray">{series}</p>
+          )}
         </div>
       </div>
     </div>
@@ -52,6 +68,9 @@ export const DigitalLoanCard = ({
         />
       </div>
       <div className="list-reservation__deadline">
+        {statusBadge && (
+          <StatusLabel label={statusBadge.label} status={statusBadge.status} />
+        )}
         <p className="text-small-caption color-secondary-gray">
           {deadlineNote}
         </p>
