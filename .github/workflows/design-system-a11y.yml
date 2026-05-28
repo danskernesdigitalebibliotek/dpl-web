@@ -14,7 +14,10 @@ on:
 
 jobs:
   a11y:
-    runs-on: ubuntu-latest
+    # Experiment: ubuntu-24.04 image (provisioner 20260520.533+) wedges
+    # `playwright install` after the first browser download. Pin to the
+    # older 22.04 family to verify the regression is image specific.
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: design-system
@@ -27,6 +30,7 @@ jobs:
 
       - name: Design / Install Playwright Browsers
         run: yarn playwright install --with-deps
+        timeout-minutes: 5
 
       - name: Design / Compile styles
         run: yarn css:build
