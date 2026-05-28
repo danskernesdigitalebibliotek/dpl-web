@@ -31,7 +31,12 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Design / Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        # Experiment: run the install via the latest Playwright (1.60.0) in
+        # case the installer has been patched upstream for whatever the new
+        # provisioner is doing to cdn.playwright.dev/dbazure connections.
+        # Downstream steps will fail because the project uses 1.56.1; we
+        # only care whether this install step completes.
+        run: npx -y playwright@1.60.0 install --with-deps
         timeout-minutes: 5
 
       - name: Design / Compile styles
