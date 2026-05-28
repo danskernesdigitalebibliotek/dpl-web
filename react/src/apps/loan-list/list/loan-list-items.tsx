@@ -3,7 +3,7 @@ import { isDigital, removeLoansWithDuplicateDueDate } from "../utils/helpers";
 import StackableMaterial from "../materials/stackable-material/stackable-material";
 import DigitalLoanCard from "../materials/digital-loan-card/digital-loan-card";
 import { ListView } from "../../../core/utils/types/list-view";
-import { loanId, LoanType } from "../../../core/utils/types/loan-type";
+import { LoanType } from "../../../core/utils/types/loan-type";
 import { useText } from "../../../core/utils/text";
 import PlayerModal from "../../../components/material/player-modal/PlayerModal";
 import { playerModalId } from "../../../components/material/player-modal/helper";
@@ -76,7 +76,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
                 loan={loan}
                 item={loan}
                 loanId={loan.loanId}
-                key={loanId(loan)}
+                key={loan.loanId}
                 // -1 because it is _additional_ to the one displayed
                 additionalMaterials={loansUniqueDueDate.length - 1}
               />
@@ -93,7 +93,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
                 loan={loan}
                 item={loan}
                 loanId={loan.loanId}
-                key={loanId(loan)}
+                key={loan.loanId}
               />
             ) : (
               <StackableMaterial
@@ -101,7 +101,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
                 openLoanDetailsModal={openLoanDetailsModal}
                 item={loan}
                 loanId={loan.loanId}
-                key={loanId(loan)}
+                key={loan.loanId}
                 loan={loan}
                 // Zero, as it is not stacked
                 additionalMaterials={0}
