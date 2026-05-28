@@ -44,6 +44,10 @@ $list-reservation-space-desktop: 24px;
   &:hover {
     filter: none;
   }
+
+  .list-reservation__deadline .status-label {
+    justify-self: start;
+  }
 }
 
 .list-reservation__actions {
@@ -51,8 +55,11 @@ $list-reservation-space-desktop: 24px;
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+  margin-left: $s-md;
 
   @include media-query__small {
+    margin-left: $s-lg;
+
     .btn-primary {
       min-width: 200px;
     }
