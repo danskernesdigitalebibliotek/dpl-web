@@ -31,7 +31,12 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Design / Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        # Experiment: run the install via Playwright 1.54.2 (legacy
+        # playwright.azureedge.net CDN) to test whether the broken
+        # provisioner only affects the new cdn.playwright.dev/dbazure host.
+        # Downstream steps will fail because the project uses 1.56.1; we
+        # only care whether this install step completes.
+        run: npx -y playwright@1.54.2 install --with-deps
         timeout-minutes: 5
 
       - name: Design / Compile styles
