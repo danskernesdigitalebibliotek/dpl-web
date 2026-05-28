@@ -1,8 +1,8 @@
 import { z } from "zod"
 
-import type { AuthenticatedPatron } from "../../../src/types"
+import type { Patron } from "../../../src/types"
 
-const AuthenticatedPatronSchema = z.object({
+const FbsPatronResponseSchema = z.object({
   authenticateStatus: z.enum(["VALID", "INVALID", "LOANER_LOCKED_OUT"]),
   patron: z
     .object({
@@ -11,11 +11,11 @@ const AuthenticatedPatronSchema = z.object({
     .optional(),
 })
 
-export function parseAndMapAuthenticatedPatron(raw: unknown): AuthenticatedPatron {
-  const parsed = AuthenticatedPatronSchema.parse(raw)
+export function parseAndMapPatron(raw: unknown): Patron | undefined {
+  const parsed = FbsPatronResponseSchema.parse(raw)
+  if (!parsed.patron) return undefined
   return {
-    status:
-      parsed.authenticateStatus === "LOANER_LOCKED_OUT" ? "LOCKED_OUT" : parsed.authenticateStatus,
-    patron: parsed.patron ? { name: parsed.patron.name } : undefined,
+    name: parsed.patron.name,
+    isLocked: parsed.authenticateStatus === "LOANER_LOCKED_OUT",
   }
 }

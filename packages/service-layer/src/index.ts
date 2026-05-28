@@ -1,2 +1,2 @@
 export { getPatron } from "./patron"
-export type { AuthenticatedPatron, AuthenticationStatus, Patron } from "./types"
+export type { Patron } from "./types"

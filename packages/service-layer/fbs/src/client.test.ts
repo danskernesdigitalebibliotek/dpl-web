@@ -40,8 +40,8 @@ describe("createFbsClient.getPatron", () => {
       headers: { authorization: "Bearer abc" },
     })
     expect(result).toEqual({
-      status: "VALID",
-      patron: { name: "Test User" },
+      name: "Test User",
+      isLocked: false,
     })
   })
 

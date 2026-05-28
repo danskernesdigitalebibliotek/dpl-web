@@ -155,10 +155,10 @@ export const saveAdgangsplatformenSession = async (
   session.type = "adgangsplatformen"
   await setAdgangsplatformenUserTokenOnSession(session, userToken)
   // Get name of user/patron from Adgangsplatformen.
-  const patronInfo = await loadPatronServerSide(userToken.token)
-  if (patronInfo?.patron?.name) {
+  const patron = await loadPatronServerSide(userToken.token)
+  if (patron?.name) {
     session.user = {
-      name: patronInfo.patron.name,
+      name: patron.name,
       // Adgangsplatformen does not return a username.
       username: undefined,
     }
