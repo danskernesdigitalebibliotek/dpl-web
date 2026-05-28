@@ -1,0 +1,5 @@
+# Exclude folders not needed for Docker builds from context.
+/*.lagoon.*
+/.github
+/docs
+/migration

@@ -62,7 +62,7 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
                     ariaLabel="Log ind med bibliotekslogin"
                     onClick={() => {
                       if (onLogin) onLogin()
-                      router.push(loginUrlAdgangsplatformen ?? "")
+                      router.push(loginUrlAdgangsplatformen ?? "/")
                     }}
                     disabled={!loginUrlAdgangsplatformen}
                     data-cy={cyKeys["login-sheet-adgangsplatformen-button"]}>

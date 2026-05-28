@@ -12,11 +12,13 @@ import { getDplcmsGraphqlBasicAuthToken } from "./lib/graphql/fetchers/dpl-cms.f
 
 loadEnvConfig(process.cwd())
 
-const GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS = getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")
+const DPL_CMS_BASE_URL = getEnv("DPL_CMS_BASE_URL")
 
-if (!GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS) {
-  throw new Error("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS is not set, cannot generate GraphQL code.")
+if (!DPL_CMS_BASE_URL) {
+  throw new Error("DPL_CMS_BASE_URL is not set, cannot generate GraphQL code.")
 }
+
+const GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS = `${DPL_CMS_BASE_URL}/graphql`
 
 const CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI = getEnv("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI")
 

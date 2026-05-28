@@ -1,4 +1,4 @@
-import { getEnv } from "@/lib/config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 
@@ -20,7 +20,7 @@ export const fetcher = async <ResponseType>({
 }) => {
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: `${getEnv("APP_URL")}/${goConfig("routes.pubhub")}`,
+    baseUrl: `${getBaseURL()}/${goConfig("routes.pubhub")}`,
     url,
     params,
   })

@@ -9,6 +9,7 @@ export const publicConfigSchema = z.object({
   }),
   libraryInfo: z.object({
     name: z.string().nullable(),
+    baseURL: z.string().nullable().optional(),
   }),
   mapp: z
     .object({
@@ -29,4 +30,3 @@ export const privateConfigSchema = z.object({
 })
 
 export type TDplCmsPublicConfig = z.infer<typeof publicConfigSchema>
-export type TDplCmsPrivateConfig = z.infer<typeof privateConfigSchema>

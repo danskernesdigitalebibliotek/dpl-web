@@ -7,7 +7,7 @@ import {
   useGetDplCmsPublicConfigurationQuery,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-import { getServerEnv } from "../env"
+import { getEnv, getServerEnv } from "../env"
 import { privateConfigSchema, publicConfigSchema } from "./configSchemas"
 
 const queryDplCmsPrivateConfig = async () => {
@@ -84,6 +84,7 @@ const getDplCmsPublicConfigData = async () => {
       },
       libraryInfo: {
         name: null,
+        baseURL: null,
       },
       mapp: null,
       unilogin: {
@@ -101,6 +102,8 @@ export const getDplCmsPublicConfig = async () => {
   if (envMunicipalityId) {
     data.unilogin.municipalityId = envMunicipalityId
   }
+
+  data.libraryInfo.baseURL = getEnv("DPL_CMS_BASE_URL")
 
   return data
 }

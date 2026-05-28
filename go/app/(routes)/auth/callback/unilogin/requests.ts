@@ -17,7 +17,8 @@
 import { randomUUID } from "crypto"
 import { WSSecurityCert } from "soap"
 
-import { getEnv, getServerEnv } from "@/lib/config/env"
+import { getServerEnv } from "@/lib/config/env"
+import { isTest } from "@/lib/config/environmentChecks"
 import { createClientAsync } from "@/lib/soap/unilogin/wsiinst-v6/generated/ws"
 
 import schemas from "./schemas"
@@ -28,7 +29,7 @@ const WSA_NAMESPACE = "http://www.w3.org/2005/08/addressing"
 
 // The WSDL uses vendored XSDs (local schema references) to avoid remote fetches.
 // The endpoint is set explicitly below for both test and production.
-const isTestMode = getEnv("TEST_MODE")
+const isTestMode = isTest()
 const clientEndpoint = isTestMode
   ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/institution`
   : WSIINST_V6_URL

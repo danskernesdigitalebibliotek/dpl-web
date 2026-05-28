@@ -2,7 +2,6 @@ import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/shared/button/Button"
 import ButtonWithLoadingStateHoc from "@/components/shared/button/ButtonWithLoadingStateHoc"
-import { getEnv } from "@/lib/config/env"
 
 type TFindBookButtonProps = {
   isLoading?: boolean
@@ -21,7 +20,7 @@ const FindBookButton = ({ onClick }: TFindBookButtonProps) => {
         if (onClick) {
           onClick()
         }
-        router.push(`${getEnv("APP_URL")}`)
+        router.push("/")
       }}
       className={className}>
       Find din næste bog

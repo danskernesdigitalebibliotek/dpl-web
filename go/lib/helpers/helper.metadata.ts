@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import { getEnv } from "../config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
 
 /**
  * Sets metadata for a single page in the Next.js application.
@@ -42,7 +42,7 @@ export const setLayoutMetadata = () => {
   } as Metadata
 }
 
-const metadataBase: Metadata["metadataBase"] = new URL("", getEnv("APP_URL"))
+const metadataBase: Metadata["metadataBase"] = getBaseURL()
 
 const openGraph: Metadata["openGraph"] = {
   type: "website",
