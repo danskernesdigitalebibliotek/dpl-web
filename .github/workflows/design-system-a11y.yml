@@ -15,6 +15,12 @@ on:
 jobs:
   a11y:
     runs-on: ubuntu-latest
+    # Experiment: ubuntu-24.04 image (provisioner 20260520.533+) wedges
+    # `playwright install` after the first browser download. Run inside the
+    # official Playwright image (browsers + system deps pre-baked) so the
+    # failing path is skipped entirely.
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
     defaults:
       run:
         working-directory: design-system
