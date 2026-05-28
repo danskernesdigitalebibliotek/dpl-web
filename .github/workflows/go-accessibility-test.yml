@@ -44,6 +44,11 @@ jobs:
           envFile: "go/.env.test"
 
       - name: Install Playwright
+        # Experiment: surface what Playwright's installer is doing during the
+        # silent window between download finishing and the next request.
+        env:
+          DEBUG: 'pw:install'
+          NODE_DEBUG: 'http,https'
         run: npx playwright install --with-deps
         timeout-minutes: 5
 

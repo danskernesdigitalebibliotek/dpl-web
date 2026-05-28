@@ -31,6 +31,11 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Design / Install Playwright Browsers
+        # Experiment: surface what Playwright's installer is doing during the
+        # silent window between download finishing and the next request.
+        env:
+          DEBUG: 'pw:install'
+          NODE_DEBUG: 'http,https'
         run: yarn playwright install --with-deps
         timeout-minutes: 5
 
