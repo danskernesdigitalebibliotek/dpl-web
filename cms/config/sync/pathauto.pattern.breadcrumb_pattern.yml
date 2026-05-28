@@ -7,7 +7,7 @@ dependencies:
 id: breadcrumb_pattern
 label: 'Breadcrumb pattern'
 type: 'canonical_entities:node'
-pattern: '[dpl_breadcrumb:breadcrumb-url-alias]'
+pattern: '/[dpl_breadcrumb:breadcrumb-url-alias]'
 selection_criteria:
   f8e93f99-e638-4c48-9901-278f15d59aa1:
     id: 'entity_bundle:node'

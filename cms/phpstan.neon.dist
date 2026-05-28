@@ -17,6 +17,8 @@ parameters:
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
     - '#.*\:\:(addButtonSubmit|buildConfigurationForm|buildForm|buildInputElement|defaultConfiguration|getEditableConfigNames|getMetadataAttributes|submitForm|validateElement|validateForm)\(\) .* no value type specified in iterable type array\.#'
+    - '#_alter\(\) has parameter \$element with no value type specified in iterable type array\.#'
+    - '#_alter\(\) has parameter \$context with no value type specified in iterable type array\.#'
     - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
     - '#_form_submit\(\) has parameter \$form with no value type specified in iterable type array\.#'
     # Drupal *_theme() implementation returns array which we cannot provide more detailed typing of.
@@ -49,8 +51,6 @@ parameters:
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
     # Allow no doc block details in hook_dpl_protected_nodes_get_protected_nodes() functions
     - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
-    # Field formatters return render arrays which we cannot provide more detailed typing of.
-    - '#Method Drupal\\.*\\Plugin\\Field\\FieldFormatter\\.*\:\:viewElements\(\) return type has no value type specified in iterable type array\.#'
     # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
     - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
     # Since methods are defined in interface there is no need to document signatures.

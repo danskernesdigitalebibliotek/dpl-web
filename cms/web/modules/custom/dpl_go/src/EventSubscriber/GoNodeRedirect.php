@@ -45,7 +45,9 @@ class GoNodeRedirect implements EventSubscriberInterface {
     $node = $request->attributes->get('node');
 
     if ($node instanceof NodeInterface && $this->goSite->isGoNode($node)) {
-      $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString();
+      $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()], [
+        'query' => ['u_cms_t_go' => 'true'],
+      ])->toString();
 
       $response = new RedirectResponse($this->goSite->getGoBaseUrl() . $url);
       $event->setResponse($response);

@@ -1,19 +1,29 @@
-# Workflow name
 name: Go / Chromatic
 
-# Event for the workflow
 on:
+  push:
+    branches:
+      - main
+      - develop
+      - release/*
+    paths:
+      - "go/**"
+      - ".github/workflows/go-chromatic.yml"
   pull_request:
     paths:
-      - 'go/**'
-      - '.github/workflows/go-chromatic.yml'
+      - "go/**"
+      - ".github/workflows/go-chromatic.yml"
+    types: [ready_for_review, opened, synchronize]
 
-# List of jobs
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   chromatic-deployment:
     name: Go / Chromatic
 
-    if: github.event.pull_request.draft == false
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
 
     runs-on: ubuntu-latest
 
@@ -25,7 +35,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # 👈 Required to retrieve git history
+          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
@@ -40,8 +50,9 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v16
+        uses: chromaui/action@v17
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_GO }}
           workingDir: go
+          autoAcceptChanges: ${{ github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' }}

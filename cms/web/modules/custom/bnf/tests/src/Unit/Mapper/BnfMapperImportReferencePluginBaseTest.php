@@ -6,6 +6,7 @@ namespace Drupal\Tests\bnf\Unit\Mapper;
 
 use Drupal\bnf\ImportContext;
 use Drupal\bnf\Plugin\bnf_mapper\FieldGoLinkRequiredMapper;
+use Drupal\bnf\Plugin\bnf_mapper\ParagraphContentSliderMapper;
 use Drupal\bnf\Plugin\bnf_mapper\ParagraphNavSpotsManualMapper;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf\Services\ImportContextStack;
@@ -24,7 +25,7 @@ abstract class BnfMapperImportReferencePluginBaseTest extends UnitTestCase {
   /**
    * The subject under test.
    */
-  protected FieldGoLinkRequiredMapper|ParagraphNavSpotsManualMapper $mapper;
+  protected FieldGoLinkRequiredMapper|ParagraphNavSpotsManualMapper|ParagraphContentSliderMapper $mapper;
 
   /**
    * Entity type manager prophecy.

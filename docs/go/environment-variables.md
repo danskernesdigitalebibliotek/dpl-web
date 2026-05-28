@@ -8,7 +8,7 @@ Storybook automatically forwards all `NEXT_PUBLIC_*` variables to its environmen
 
 Available on both client and server. Accessed via `getEnv()`.
 
-### `NEXT_PUBLIC_APP_URL`
+### `DPL_GO_BASE_URL`
 
 - **Required:** Yes (validated as URL)
 - **Example:** `https://dpl-cms.local:3000`
@@ -17,7 +17,7 @@ The canonical base URL of the GO frontend itself. The single most widely-used en
 
 In production, dynamically set in `lagoon/start.sh` from `LAGOON_DOMAIN` (with `go.` subdomain handling).
 
-### `NEXT_PUBLIC_DPL_CMS_HOSTNAME`
+### `DPL_CMS_BASE_URL`
 
 - **Required:** Yes
 - **Example:** `dpl-cms.local`
@@ -28,11 +28,6 @@ The hostname of the DPL CMS (Drupal) instance.
 - **Header link** – rendered as the "parent library" link in `LinkToParentLibrary.tsx`.
 
 In production, set in `lagoon/start.sh` from `LAGOON_DOMAIN`.
-
-### `NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS`
-
-- **Required:** Yes (validated as URL)
-- **Example:** `https://dpl-cms.local/graphql`
 
 The full URL of the DPL CMS GraphQL API endpoint.
 
@@ -185,24 +180,6 @@ Retailer key code for Publizon. MD5-hashed at runtime before being sent as `reta
 
 > **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
 
-### `UNLILOGIN_SERVICES_WS_USER`
-
-- **Required:** No (optional, can come from DPL CMS private config)
-- **Example:** `XXX`
-
-Username for Unilogin SOAP web services (e.g. institution lookups via `wsiinst-v5`). If set, overrides DPL CMS private config.
-
-> **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
-
-### `UNLILOGIN_SERVICES_WS_PASSWORD`
-
-- **Required:** No (optional, can come from DPL CMS private config)
-- **Example:** `XXX` (sensitive)
-
-Password for Unilogin SOAP web services. Paired with `UNLILOGIN_SERVICES_WS_USER`. If set, overrides DPL CMS private config.
-
-> **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
-
 ## Build / Tooling Variables
 
 Used by scripts and tooling, not by the running application.
@@ -224,17 +201,12 @@ Used by scripts and tooling, not by the running application.
 
 ## Lagoon Platform Variables
 
-Provided by the Lagoon hosting environment and consumed in `lagoon/start.sh` to derive runtime env vars:
+Provided by the Lagoon hosting environment and consumed in `go/scripts/prepare-docker-env-vars.mjs` to derive runtime env vars:
 
-### `LAGOON_DOMAIN`
+- `LAGOON_ROUTES`
 
-The primary domain of the Lagoon environment. Used to derive:
+  The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.).
 
-- `NEXT_PUBLIC_APP_URL` — prefixed with `go.` subdomain (handles `www.` prefix)
-- `NEXT_PUBLIC_DPL_CMS_HOSTNAME` — set directly
+- `LAGOON_ROUTE`
 
-### `LAGOON_ROUTE`
-
-The full route URL (with protocol) from Lagoon. Used to derive:
-
-- `NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS` — appends `/graphql`
+  The full route URL (with protocol) for the first/primary route.

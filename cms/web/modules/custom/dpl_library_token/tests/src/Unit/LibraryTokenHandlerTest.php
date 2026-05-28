@@ -69,12 +69,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       $key_value_factory->reveal(),
       $client->reveal()
     );
-    $handler->retrieveAndStoreToken(
-      'agency_id',
-      'client_id',
-      'client_secret',
-      'token_endpoint'
-    );
+    $handler->retrieveAndStoreToken();
   }
 
   /**
@@ -127,10 +122,17 @@ class LibraryTokenHandlerTest extends UnitTestCase {
     $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
     $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger);
 
+    $config = $this->prophesize(Config::class);
+    $config->getAgencyId()->willReturn('agency_id');
+    $config->getClientId()->willReturn('client_id');
+    $config->getClientSecret()->willReturn('client_secret');
+    $config->getTokenEndpoint()->willReturn('token_endpoint');
+
     return new LibraryTokenHandler(
       $key_value_factory,
       $client,
-      $logger_factory->reveal()
+      $logger_factory->reveal(),
+      $config->reveal()
     );
   }
 

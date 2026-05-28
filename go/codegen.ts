@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Config file for graphql-codegen.
+ *
+ * Will throw exceptions if the environment variables are not set.
+ */
 import type { CodegenConfig } from "@graphql-codegen/cli"
 import { loadEnvConfig } from "@next/env"
 
@@ -6,6 +12,20 @@ import { getDplcmsGraphqlBasicAuthToken } from "./lib/graphql/fetchers/dpl-cms.f
 
 loadEnvConfig(process.cwd())
 
+const DPL_CMS_BASE_URL = getEnv("DPL_CMS_BASE_URL")
+
+if (!DPL_CMS_BASE_URL) {
+  throw new Error("DPL_CMS_BASE_URL is not set, cannot generate GraphQL code.")
+}
+
+const GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS = `${DPL_CMS_BASE_URL}/graphql`
+
+const CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI = getEnv("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI")
+
+if (!CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI) {
+  throw new Error("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI is not set, cannot generate GraphQL code.")
+}
+
 const config: CodegenConfig = {
   overwrite: true,
   generates: {
@@ -13,7 +33,7 @@ const config: CodegenConfig = {
       documents: "**/*.dpl-cms.graphql",
       // TODO: Make this configurable
       schema: {
-        [getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")]: {
+        [GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS]: {
           headers: {
             Authorization: `Basic ${getDplcmsGraphqlBasicAuthToken()}`,
           },
@@ -49,15 +69,14 @@ const config: CodegenConfig = {
     },
     // "lib/graphql/generated/dpl-cms/graphql.schema.json": {
     //   // TODO: Make this configurable
-    //   schema: "http://dapple-cms.docker/graphql",
+    //   schema: "http://dpl-web.local/graphql",
     //   plugins: ["introspection"],
     // },
     "lib/graphql/generated/fbi/graphql.ts": {
       documents: "**/*.fbi.graphql",
       schema: [
         {
-          // Needs a fallback if the environment variable is not set
-          [getEnv("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI") || ""]: {
+          [CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI]: {
             headers: {
               Authorization: `Bearer ${getEnv("CODEGEN_LIBRARY_TOKEN")}`,
             },

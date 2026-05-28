@@ -35,16 +35,20 @@ the 'bnf' module.
 
 The Sailor GraphQL client generator maintains its own copy of the
 GraphQL schema, so if the schema changes (and occasionally, for good
-measure), it needs to fetch a fresh copy:
+measure), it needs to fetch a fresh copy and regenerate the client.
+
+The recommended way is to use the bundled task, which introspects, generates
+the client and strips GraphQL descriptions from the schema dump in one go:
 
 ```shell
-task dev:bnfcli -- ./vendor/bin/sailor introspect
+task dev:codegen:bnf-graphql
 ```
 
-Then generate the client code from the schema and the query:
+This runs the equivalent drush wrappers under the hood:
 
 ```shell
-task dev:bnfcli -- ./vendor/bin/sailor
+task dev:bnfcli -- drush sailor:introspect bnf
+task dev:bnfcli -- drush sailor:codegen bnf
 ```
 
 Sailor will update the files in the `Drupal\bnf\GraphQL` namespace.

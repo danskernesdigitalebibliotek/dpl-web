@@ -2,8 +2,8 @@
 
 namespace Drupal\dpl_event\Plugin\Field\FieldFormatter;
 
-use Drupal\address\Plugin\Field\FieldFormatter\AddressDefaultFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\gsearch\Plugin\Field\FieldFormatter\AddressGsearchFormatter;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
@@ -19,11 +19,11 @@ use Drupal\recurring_events\Entity\EventSeries;
  *   id = "dpl_branch_address",
  *   label = @Translation("DPL: Branch address fallback"),
  *   field_types = {
- *     "address"
+ *     "address_gsearch"
  *   }
  * )
  */
-class BranchAddressFormatter extends AddressDefaultFormatter {
+class BranchAddressFormatter extends AddressGsearchFormatter {
 
   /**
    * {@inheritdoc}
@@ -31,6 +31,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
   public function settingsSummary() {
     $summary = [];
     $summary[] = $this->t('Use the address from associated branch as fallback.', [], ['context' => 'DPL Event']);
+
     return $summary;
   }
 
@@ -92,7 +93,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
    */
   private function getAddressField(EventSeries|EventInstance $event): ?FieldItemListInterface {
     $address_field_name = ($event instanceof EventSeries) ?
-      'field_event_address' : 'event_address';
+      'field_event_address_gsearch' : 'event_address';
     $branch_field_name = ($event instanceof EventSeries) ?
       'field_branch' : 'branch';
 

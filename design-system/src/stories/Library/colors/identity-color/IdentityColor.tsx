@@ -25,9 +25,9 @@ function hexToHSL(H: string) {
   const cmin: any = Math.min(r, g, b);
   const cmax = Math.max(r, g, b);
   const delta = cmax - cmin;
-  let h = 0;
-  let s = 0;
-  let l = 0;
+  let h;
+  let s;
+  let l;
 
   if (delta === 0) h = 0;
   else if (cmax === r) h = ((g - b) / delta) % 6;

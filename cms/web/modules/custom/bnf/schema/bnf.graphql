@@ -54,6 +54,10 @@ type Branch {
 
   address: BranchAddress
 
+  phone: String
+
+  email: String
+
   availabilityContext: BranchAvailabilityContext!
 }
 
@@ -293,7 +297,13 @@ interface MediaInterface {
   status: Boolean!
 }
 
-union MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool | MediaVideotoolVertical
+union MediaUnion =
+  | MediaAudio
+  | MediaDocument
+  | MediaImage
+  | MediaVideo
+  | MediaVideotool
+  | MediaVideotoolVertical
 
 type MediaVideo implements MediaInterface {
   id: ID!
@@ -349,6 +359,7 @@ type MediaVideotoolVertical implements MediaInterface {
   path: String
 
   status: Boolean!
+  thumbnail: String!
 }
 
 type Mutation {
@@ -562,7 +573,12 @@ type NodePage implements NodeInterface {
   url: String!
 }
 
-union NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+union NodeUnion =
+  | NodeArticle
+  | NodeGoArticle
+  | NodeGoCategory
+  | NodeGoPage
+  | NodePage
 
 type ParagraphAccordion implements ParagraphInterface {
   id: ID!
@@ -665,7 +681,12 @@ type ParagraphCardGridManual implements ParagraphInterface {
   gridContentUuids: [String]
 }
 
-union ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+union ParagraphCardGridManualGridContentUnion =
+  | NodeArticle
+  | NodeGoArticle
+  | NodeGoCategory
+  | NodeGoPage
+  | NodePage
 
 type ParagraphContentSlider implements ParagraphInterface {
   id: ID!
@@ -707,7 +728,12 @@ type ParagraphContentSliderAutomatic implements ParagraphInterface {
   underlinedTitle: Text
 }
 
-union ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+union ParagraphContentSliderContentReferencesUnion =
+  | NodeArticle
+  | NodeGoArticle
+  | NodeGoCategory
+  | NodeGoPage
+  | NodePage
 
 type ParagraphEventTicketCategory implements ParagraphInterface {
   id: ID!
@@ -1086,7 +1112,12 @@ type ParagraphNavGridManual implements ParagraphInterface {
   contentReferenceUuids: [String]
 }
 
-union ParagraphNavGridManualContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+union ParagraphNavGridManualContentReferencesUnion =
+  | NodeArticle
+  | NodeGoArticle
+  | NodeGoCategory
+  | NodeGoPage
+  | NodePage
 
 type ParagraphNavSpotsManual implements ParagraphInterface {
   id: ID!
@@ -1101,7 +1132,12 @@ type ParagraphNavSpotsManual implements ParagraphInterface {
   navSpotsContentUuids: [String]
 }
 
-union ParagraphNavSpotsManualNavSpotsContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+union ParagraphNavSpotsManualNavSpotsContentUnion =
+  | NodeArticle
+  | NodeGoArticle
+  | NodeGoCategory
+  | NodeGoPage
+  | NodePage
 
 type ParagraphOpeningHours implements ParagraphInterface {
   id: ID!
@@ -1155,7 +1191,48 @@ type ParagraphTextBody implements ParagraphInterface {
   status: Boolean!
 }
 
-union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphGoVideoBundleVerticalAuto | ParagraphGoVideoBundleVerticalManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
+union ParagraphUnion =
+  | ParagraphAccordion
+  | ParagraphBanner
+  | ParagraphBreadcrumbChildren
+  | ParagraphCampaignRule
+  | ParagraphCardGridAutomatic
+  | ParagraphCardGridManual
+  | ParagraphContentSlider
+  | ParagraphContentSliderAutomatic
+  | ParagraphEventTicketCategory
+  | ParagraphFiles
+  | ParagraphFilteredEventList
+  | ParagraphGoImages
+  | ParagraphGoLink
+  | ParagraphGoLinkbox
+  | ParagraphGoMaterialSliderAutomatic
+  | ParagraphGoMaterialSliderManual
+  | ParagraphGoTextBody
+  | ParagraphGoVideo
+  | ParagraphGoVideoBundleAutomatic
+  | ParagraphGoVideoBundleManual
+  | ParagraphGoVideoBundleVerticalAuto
+  | ParagraphGoVideoBundleVerticalManual
+  | ParagraphHero
+  | ParagraphLanguageSelector
+  | ParagraphLinks
+  | ParagraphManualEventList
+  | ParagraphMaterialGridAutomatic
+  | ParagraphMaterialGridLinkAutomatic
+  | ParagraphMaterialGridManual
+  | ParagraphMedias
+  | ParagraphNavGridManual
+  | ParagraphNavSpotsManual
+  | ParagraphOpeningHours
+  | ParagraphRecommendation
+  | ParagraphSimpleLinks
+  | ParagraphTextBody
+  | ParagraphUserRegistrationItem
+  | ParagraphUserRegistrationLinklist
+  | ParagraphUserRegistrationSection
+  | ParagraphVideo
+  | ParagraphWebform
 
 type ParagraphUserRegistrationItem implements ParagraphInterface {
   id: ID!
@@ -1236,14 +1313,6 @@ type Query {
   ): [Branch!]!
   dplTokens: DplTokens
 
-  paragraph(
-    id: ID!
-
-    langcode: String
-
-    revision: ID
-  ): ParagraphUnion
-
   node(
     id: ID!
 
@@ -1251,6 +1320,14 @@ type Query {
 
     revision: ID
   ): NodeUnion
+
+  paragraph(
+    id: ID!
+
+    langcode: String
+
+    revision: ID
+  ): ParagraphUnion
 
   info: SchemaInformation!
 
@@ -1270,9 +1347,7 @@ type Query {
     langcode: String
   ): RouteUnion
 
-  goCategories(
-    page: Int = 0
-  ): GoCategoriesResult
+  goCategories(page: Int = 0): GoCategoriesResult
 }
 
 interface Route {
@@ -1470,7 +1545,13 @@ type TermTags implements TermInterface {
   weight: Int!
 }
 
-union TermUnion = TermBreadcrumbStructure | TermCategories | TermOpeningHoursCategories | TermScreenName | TermTags | TermWebformEmailCategories
+union TermUnion =
+  | TermBreadcrumbStructure
+  | TermCategories
+  | TermOpeningHoursCategories
+  | TermScreenName
+  | TermTags
+  | TermWebformEmailCategories
 
 type TermWebformEmailCategories implements TermInterface {
   id: ID!
@@ -1528,8 +1609,6 @@ type Translation {
 
 type UniloginConfigurationPrivate {
   clientSecret: String
-  webServiceUsername: String
-  webServicePassword: String
   pubHubRetailerKeyCode: String
 }
 

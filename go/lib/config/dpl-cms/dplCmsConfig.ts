@@ -7,7 +7,7 @@ import {
   useGetDplCmsPublicConfigurationQuery,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-import { getServerEnv } from "../env"
+import { getEnv, getServerEnv } from "../env"
 import { privateConfigSchema, publicConfigSchema } from "./configSchemas"
 
 const queryDplCmsPrivateConfig = async () => {
@@ -32,8 +32,6 @@ const getDplCmsPrivateConfigData = async () => {
     return {
       unilogin: {
         clientSecret: null,
-        webServiceUsername: null,
-        webServicePassword: null,
         pubHubRetailerKeyCode: null,
       },
     }
@@ -51,12 +49,6 @@ export const getDplCmsPrivateConfig = async () => {
   const uniLoginConfigEnv = {
     ...(getServerEnv("UNILOGIN_CLIENT_SECRET")
       ? { clientSecret: getServerEnv("UNILOGIN_CLIENT_SECRET") }
-      : {}),
-    ...(getServerEnv("UNLILOGIN_SERVICES_WS_USER")
-      ? { webServiceUsername: getServerEnv("UNLILOGIN_SERVICES_WS_USER") }
-      : {}),
-    ...(getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD")
-      ? { webServicePassword: getServerEnv("UNLILOGIN_SERVICES_WS_PASSWORD") }
       : {}),
     ...(getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE")
       ? { pubHubRetailerKeyCode: getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE") }
@@ -92,7 +84,9 @@ const getDplCmsPublicConfigData = async () => {
       },
       libraryInfo: {
         name: null,
+        baseURL: null,
       },
+      mapp: null,
       unilogin: {
         municipalityId: null,
       },
@@ -108,6 +102,8 @@ export const getDplCmsPublicConfig = async () => {
   if (envMunicipalityId) {
     data.unilogin.municipalityId = envMunicipalityId
   }
+
+  data.libraryInfo.baseURL = getEnv("DPL_CMS_BASE_URL")
 
   return data
 }

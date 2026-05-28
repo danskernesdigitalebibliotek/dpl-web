@@ -24,6 +24,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "7fc12944-4955-48b9-a0e6-dd3e55ab45c4",
               name: "Læs den, hvis du tør!",
               mediaVideotool: "https://media.videotool.dk?vn=557_2024062111110397319436605901",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
             videoAmountOfMaterials: 10,
             id: "f2f834a0-eb5f-461c-bf6a-99db8a2eb243",
@@ -39,6 +40,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "f69dfe07-1668-47b2-ac18-949145f0f31e",
               name: "TRÆK MIG OP! Jeg DRUKNER!! | Gang Beasts | LitGaming ",
               mediaVideotool: "https://media.videotool.dk?vn=557_2024070413002075865498967878",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
           },
           {
@@ -79,9 +81,42 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "7baa79d0-acfc-4b8c-a8bc-45b5555ffa61",
               name: "I snakker så MEGET LORT | Falls Guys | LitGaming ",
               mediaVideotool: "https://media.videotool.dk/?vn=557_2024070412592885465731986449",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
             videoAmountOfMaterials: 10,
             id: "444e506f-0952-4cac-898d-7750ce2e9748",
+          },
+          {
+            __typename: "ParagraphGoVideoBundleVerticalAuto",
+            id: "c1aaaa01-0000-4000-8000-000000000001",
+            cqlSearch: {
+              value: "term.subject='vertical-auto-test' AND term.generalmaterialtype='bøger'",
+            },
+            goVideoTitle: "Vertical auto bundle",
+            embedVideo: {
+              id: "vert-auto-uuid-0000-0000-000000000001",
+              name: "Vertical auto video",
+              mediaVideotoolVertical: "https://media.videotool.dk?vn=vertical_auto_test_fixture",
+              thumbnail: "https://example.com/vertical-auto-thumbnail.jpg",
+            },
+            videoAmountOfMaterials: 10,
+          },
+          {
+            __typename: "ParagraphGoVideoBundleVerticalManual",
+            id: "c1aaaa02-0000-4000-8000-000000000002",
+            goVideoTitle: "Vertical manual bundle",
+            embedVideo: {
+              id: "vert-manual-uuid-0000-0000-000000000002",
+              name: "Vertical manual video",
+              mediaVideotoolVertical: "https://media.videotool.dk?vn=vertical_manual_test_fixture",
+              thumbnail: "https://example.com/vertical-manual-thumbnail.jpg",
+            },
+            videoBundleWorkIds: [
+              {
+                material_type: "e-bog",
+                work_id: "work-of:870970-basis:138640027",
+              },
+            ],
           },
           {
             __typename: "ParagraphGoVideoBundleManual",
@@ -91,6 +126,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "019590bb-facb-4e75-8041-d1b0bf2276b2",
               name: "Adrians bogklub 2.0",
               mediaVideotool: "https://media.videotool.dk?vn=557_2025010614502071929993093451",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
             videoBundleWorkIds: [
               {
@@ -127,6 +163,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "019590bb-facb-4e75-8041-d1b0bf2276b2",
               name: "Adrians bogklub 2.0",
               mediaVideotool: "https://media.videotool.dk?vn=557_2025010614502071929993093451",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
           },
           {
@@ -165,6 +202,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "c5b67876-f150-45bc-bf4e-760801c79f30",
               name: "Kaya anbefaler Wimpy Kid‐serien",
               mediaVideotool: "https://media.videotool.dk?vn=557_2024121813322134777736762715",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
             videoBundleWorkIds: [
               {
@@ -219,6 +257,7 @@ export default Factory.define<GetPageByPathQuery>(() => {
               id: "88636a49-1d81-4504-92d3-4af31489aad9",
               name: "Nadin og Ida anbefaler",
               mediaVideotool: "https://media.videotool.dk?vn=557_2024122009434463486994182557",
+              thumbnail: "https://example.com/thumbnail.jpg",
             },
             videoBundleWorkIds: [
               {

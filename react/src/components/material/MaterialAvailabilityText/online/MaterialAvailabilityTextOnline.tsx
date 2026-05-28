@@ -11,6 +11,7 @@ import { ManifestationMaterialType } from "../../../../core/utils/types/material
 import { AvailabilityTextMap, getAvailabilityText } from "./helper";
 import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
+import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 
 interface MaterialAvailabilityTextOnlineProps {
   isbns: string[];
@@ -49,11 +50,12 @@ const MaterialAvailabilityTextOnline: React.FC<
 
   if (!productsData) return null;
 
+  const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
+
   const availabilityTextMap: AvailabilityTextMap = {
     ...readerTypes.reduce((acc, type) => {
       if (isUserAnonymous) return acc;
 
-      const totalEbookLoans = loansData?.userData?.totalEbookLoans;
       const maxConcurrentEbookLoansPerBorrower =
         libraryProfileData?.maxConcurrentEbookLoansPerBorrower;
 
@@ -61,7 +63,7 @@ const MaterialAvailabilityTextOnline: React.FC<
         ...acc,
         [type]: {
           text: "onlineLimitMonthEbookInfoText",
-          count: totalEbookLoans,
+          count: patronEbookLoans,
           limit: maxConcurrentEbookLoansPerBorrower
         }
       };
@@ -69,7 +71,6 @@ const MaterialAvailabilityTextOnline: React.FC<
     ...playerTypes.reduce((acc, type) => {
       if (isUserAnonymous) return acc;
 
-      const totalAudioLoans = loansData?.userData?.totalAudioLoans;
       const maxConcurrentAudioLoansPerBorrower =
         libraryProfileData?.maxConcurrentAudioLoansPerBorrower;
 
@@ -77,7 +78,7 @@ const MaterialAvailabilityTextOnline: React.FC<
         ...acc,
         [type]: {
           text: "onlineLimitMonthAudiobookInfoText",
-          count: totalAudioLoans,
+          count: patronAudioLoans,
           limit: maxConcurrentAudioLoansPerBorrower
         }
       };

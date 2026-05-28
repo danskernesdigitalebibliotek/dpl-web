@@ -20,5 +20,7 @@ export type DplOpeningHoursUpdatePATCH200Item = {
   end_time: string;
   /** The id for the branch the instance belongs to */
   branch_id: number;
+  /** The name of the branch the instance belongs to */
+  branch_name: string;
   repetition: DplOpeningHoursUpdatePATCH200ItemRepetition;
 };

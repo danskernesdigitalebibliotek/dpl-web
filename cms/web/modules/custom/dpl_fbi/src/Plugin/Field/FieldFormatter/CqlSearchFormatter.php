@@ -8,6 +8,8 @@ use Drupal\Core\Field\FormatterBase;
 /**
  * Plugin implementation of the 'cql_search_formatter' formatter.
  *
+ * @extends \Drupal\Core\Field\FormatterBase<\Drupal\Core\Field\FieldItemListInterface>
+ *
  * @FieldFormatter(
  *   id = "cql_search_formatter",
  *   label = @Translation("CQL Search Formatter"),

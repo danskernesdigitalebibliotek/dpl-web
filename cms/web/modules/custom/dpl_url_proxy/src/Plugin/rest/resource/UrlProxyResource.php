@@ -150,32 +150,34 @@ class UrlProxyResource extends ResourceBase {
       throw new HttpException(400, "Url $url_param does not contain a host name. Urls to be proxied must contain a host name.");
     }
 
-    if (!$prefix = $conf['prefix'] ?? NULL) {
-      throw new HttpException(500, 'Could not generate url. Insufficient configuration');
-    }
+    if (empty($conf['disable_proxy'])) {
+      if (!$prefix = $conf['prefix'] ?? NULL) {
+        throw new HttpException(500, 'Could not generate url. Insufficient configuration');
+      }
 
-    // Search host names.
-    foreach ($conf['hostnames'] as $config) {
-      if ($url_host == $config['hostname']) {
-        // Rewrite/convert url using regex.
-        if (
-          !empty($config['expression']['regex'])
-          && !empty($config['expression']['replacement'])
-        ) {
-          $url = preg_replace($config['expression']['regex'],
-            $config['expression']['replacement'],
-            $url_param);
+      // Search host names.
+      foreach ($conf['hostnames'] as $config) {
+        if ($url_host == $config['hostname']) {
+          // Rewrite/convert url using regex.
+          if (
+            !empty($config['expression']['regex'])
+            && !empty($config['expression']['replacement'])
+          ) {
+            $url = preg_replace($config['expression']['regex'],
+              $config['expression']['replacement'],
+              $url_param);
+          }
+
+          // Add prefix, if chosen.
+          if (!$config['disable_prefix']) {
+            // The URL is not encoded as it's send on to online resources
+            // proxies (ezproxy), which fails if the url is encoded.
+            $url = $prefix . $url;
+          }
+
+          // Exit the foreach loop.
+          break;
         }
-
-        // Add prefix, if chosen.
-        if (!$config['disable_prefix']) {
-          // The URL is not encoded as it's send on to online resources proxies
-          // (ezproxy), which fails if the url is encoded.
-          $url = $prefix . $url;
-        }
-
-        // Exit the foreach loop.
-        break;
       }
     }
 

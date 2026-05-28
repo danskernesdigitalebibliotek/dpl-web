@@ -1,5 +1,11 @@
 services:
   dpl_library_token.handler:
     class: Drupal\dpl_library_token\LibraryTokenHandler
-    arguments: ['@keyvalue.expirable', '@http_client', '@logger.factory']
+    arguments:
+      [
+        '@keyvalue.expirable',
+        '@http_client',
+        '@logger.factory',
+        '@dpl_login.adgangsplatformen.config',
+      ]
   Drupal\dpl_library_token\LibraryTokenHandler: '@dpl_library_token.handler'

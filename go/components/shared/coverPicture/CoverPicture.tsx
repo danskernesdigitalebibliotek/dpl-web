@@ -131,7 +131,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
             className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
             aria-label="Spørgsmålstegn ikon"
           />
-          <p className="text-typo-caption text-center opacity-55">Billede kunne ikke vises</p>
+          <p className="text-typo-caption text-center opacity-70">Billede kunne ikke vises</p>
         </motion.div>
       )}
     </div>

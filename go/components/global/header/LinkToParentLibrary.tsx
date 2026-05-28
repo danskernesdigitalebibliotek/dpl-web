@@ -3,7 +3,6 @@
 import React, { useContext } from "react"
 
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import { getEnv } from "@/lib/config/env"
 import { cn } from "@/lib/helpers/helper.cn"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
@@ -13,7 +12,7 @@ export type LinkToParentLibraryProps = {
 
 const LinkToParentLibrary = ({ className }: LinkToParentLibraryProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
-  const parentLibraryUrl = getEnv("DPL_CMS_HOSTNAME")
+  const parentLibraryUrl = dplCmsConfig?.libraryInfo.baseURL
   const libraryName = dplCmsConfig?.libraryInfo.name || "dit lokale bibliotek"
 
   return (

@@ -35,7 +35,7 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
               <div>
                 <Button
                   theme="primary"
-                  ariaLabel="Log ind"
+                  ariaLabel="Log ind med UNI•Login"
                   onClick={() => {
                     if (onLogin) onLogin()
                     router.push(routes["routes.login.unilogin"])
@@ -59,10 +59,10 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
                 <div>
                   <Button
                     theme="primary"
-                    ariaLabel="Log ind"
+                    ariaLabel="Log ind med bibliotekslogin"
                     onClick={() => {
                       if (onLogin) onLogin()
-                      router.push(loginUrlAdgangsplatformen ?? "")
+                      router.push(loginUrlAdgangsplatformen ?? "/")
                     }}
                     disabled={!loginUrlAdgangsplatformen}
                     data-cy={cyKeys["login-sheet-adgangsplatformen-button"]}>

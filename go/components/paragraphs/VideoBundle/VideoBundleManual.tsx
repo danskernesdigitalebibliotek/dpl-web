@@ -1,7 +1,5 @@
 "use client"
 
-import React from "react"
-
 import VideoBundle, { VideoBundleSkeleton } from "@/components/paragraphs/VideoBundle/VideoBundle"
 import {
   MediaVideotool,
@@ -15,6 +13,7 @@ export type VideoBundleManualProps = {
   embedVideo: {
     mediaVideotool: MediaVideotool["mediaVideotool"]
     name: MediaVideotool["name"]
+    thumbnail?: string | null
   }
   videoBundleWorkIds: ParagraphGoVideoBundleManual["videoBundleWorkIds"]
 }
@@ -45,6 +44,7 @@ const VideoBundleManual = ({
           works={data?.complexSearch.works}
           title={goVideoTitle}
           videoUrl={embedVideo.mediaVideotool}
+          thumbnailUrl={embedVideo.thumbnail}
         />
       )}
     </div>

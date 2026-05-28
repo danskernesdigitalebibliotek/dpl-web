@@ -167,6 +167,12 @@ export type Classification = {
   system: Scalars['String']['output'];
 };
 
+/** CQL based filters. Mutually exclusive with ComplexSearchFiltersInput. */
+export type ComplexSearchCqlFiltersInput = {
+  /** A CQL expression used to filter the search result. */
+  cqlfilterquery?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** The complete facet in response */
 export type ComplexSearchFacetResponse = {
   __typename?: 'ComplexSearchFacetResponse';
@@ -1428,6 +1434,7 @@ export type Query = {
 
 export type QueryComplexSearchArgs = {
   cql: Scalars['String']['input'];
+  cqlfilter?: InputMaybe<ComplexSearchCqlFiltersInput>;
   facets?: InputMaybe<ComplexSearchFacetsInput>;
   filters?: InputMaybe<ComplexSearchFiltersInput>;
 };

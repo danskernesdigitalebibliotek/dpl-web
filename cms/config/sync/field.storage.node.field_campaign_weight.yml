@@ -1,0 +1,20 @@
+uuid: f3e1fa4b-dccb-4a2a-906f-92175d7698d7
+langcode: en
+status: true
+dependencies:
+  module:
+    - enum_field
+    - node
+id: node.field_campaign_weight
+field_name: field_campaign_weight
+entity_type: node
+type: enum_integer
+settings:
+  enum_class: \Drupal\dpl_campaign\CampaignWeight
+module: enum_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

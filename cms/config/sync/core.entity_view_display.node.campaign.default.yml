@@ -5,13 +5,14 @@ dependencies:
   config:
     - field.field.node.campaign.field_campaign_image
     - field.field.node.campaign.field_campaign_link
+    - field.field.node.campaign.field_campaign_media
     - field.field.node.campaign.field_campaign_rules
     - field.field.node.campaign.field_campaign_rules_logic
     - field.field.node.campaign.field_campaign_text
+    - field.field.node.campaign.field_campaign_weight
     - node.type.campaign
   module:
     - entity_reference_revisions
-    - image
     - link
     - options
     - user
@@ -20,32 +21,30 @@ targetEntityType: node
 bundle: campaign
 mode: default
 content:
-  field_campaign_image:
-    type: image
-    label: above
-    settings:
-      image_link: ''
-      image_style: ''
-      image_loading:
-        attribute: lazy
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_campaign_link:
     type: link
-    label: above
+    label: hidden
     settings:
-      trim_length: 80
+      trim_length: null
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
     weight: 1
     region: content
+  field_campaign_media:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_campaign_rules:
     type: entity_reference_revisions_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
@@ -54,17 +53,24 @@ content:
     region: content
   field_campaign_rules_logic:
     type: list_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 5
     region: content
   field_campaign_text:
     type: basic_string
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_campaign_weight:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
     region: content
   links:
     settings: {  }
@@ -72,6 +78,7 @@ content:
     weight: 0
     region: content
 hidden:
+  field_campaign_image: true
   langcode: true
   preview_token: true
   search_api_excerpt: true

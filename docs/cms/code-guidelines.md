@@ -34,9 +34,10 @@ be especially aware of.
 
 ### PHP
 
-* Code must be compatible with all currently available minor and major versions
-  of PHP from 8.0 and onwards. This is important when trying to ensure smooth
-  updates going forward. Note that this only applies to custom code.
+* Code must be compatible with PHP 8.3, the version currently pinned by the
+  project (see `composer.json`). When the pinned version is bumped, custom code
+  must remain compatible with all currently supported PHP minor releases to
+  ensure smooth upgrades going forward.
 * Code must be compatible with Drupal Best Practices as defined by the
   [Drupal Coder module](https://www.drupal.org/project/coder)
 * Code must use [types](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict)
@@ -93,7 +94,7 @@ be especially aware of.
 
 ### Modules
 
-* All modules written specifically for Ding3 must be prefixed with `dpl`.
+* All modules written specifically for DPL CMS must be prefixed with `dpl`.
 * The `dpl` prefix is not required for modules which provide functionality deemed
   relevant outside the DPL community and are intended for publication on
   Drupal.org.

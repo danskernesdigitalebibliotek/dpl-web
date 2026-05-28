@@ -52,31 +52,49 @@
             "default": "json"
           }, 
           {
-            "name": "facets",
-            "description": "A facet to match against",
+            "name": "triggers",
+            "description": "Triggers to match campaigns against",
             "in": "body",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "values": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "string"
-                        },
-                        "term": {
-                          "type": "string"
-                        },
-                        "score": {
-                          "type": "integer"
+              "type": "object",
+              "properties": {
+                "queries": {
+                  "type": "array",
+                  "description": "The users free-text queries, used in a fuzzy-search.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "facets": {
+                  "type": "array",
+                  "description": "A facet to match against",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "values": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string"
+                            },
+                            "term": {
+                              "type": "string"
+                            },
+                            "score": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     }
@@ -130,6 +148,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input"
           },
           "404": {
             "description": "No matching campaign found"
@@ -281,6 +302,10 @@
                     "type": "integer",
                     "description": "The id for the branch the instance belongs to"
                   },
+                  "branch_name": {
+                    "type": "string",
+                    "description": "The name of the branch the instance belongs to"
+                  },
                   "repetition": {
                     "type": "object",
                     "properties": {
@@ -308,7 +333,7 @@
                     "required": ["id", "type"]
                   }
                 },
-                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
               }
             }
           },
@@ -408,6 +433,10 @@
                     "type": "integer",
                     "description": "The id for the branch the instance belongs to"
                   },
+                  "branch_name": {
+                    "type": "string",
+                    "description": "The name of the branch the instance belongs to"
+                  },
                   "branch_isil_id": {
                     "type": "string",
                     "description": "External branch id (ISIL)",
@@ -440,7 +469,7 @@
                     "required": ["id", "type"]
                   }
                 },
-                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
               }
             }
           },
@@ -645,6 +674,10 @@
                     "type": "integer",
                     "description": "The id for the branch the instance belongs to"
                   },
+                  "branch_name": {
+                    "type": "string",
+                    "description": "The name of the branch the instance belongs to"
+                  },
                   "repetition": {
                     "type": "object",
                     "properties": {
@@ -672,7 +705,7 @@
                     "required": ["id", "type"]
                   }
                 },
-                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "branch_name", "repetition"]
               }
             }
           },

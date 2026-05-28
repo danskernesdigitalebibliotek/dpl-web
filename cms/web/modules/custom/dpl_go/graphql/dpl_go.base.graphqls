@@ -1,4 +1,3 @@
-
 type GoLibraryInfo {
   name: String
   cmsUrl: String!
@@ -31,10 +30,13 @@ type SearchProfiles {
   global: String
 }
 
+type MappTracking {
+  domain: String
+  id: String
+}
+
 type UniloginConfigurationPrivate {
   clientSecret: String
-  webServiceUsername: String
-  webServicePassword: String
   pubHubRetailerKeyCode: String
 }
 
@@ -50,6 +52,7 @@ type GoConfigurationPublic {
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls
+  mapp: MappTracking
   searchProfiles: SearchProfiles
   unilogin: UniloginConfigurationPublic
 }

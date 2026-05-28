@@ -8,6 +8,10 @@ type Branch {
   title: String!
   "The physical address of the branch. Only available for CMS-configured branches."
   address: BranchAddress
+  "The phone number of the branch. Only available for CMS-configured branches."
+  phone: String
+  "The email address of the branch. Only available for CMS-configured branches."
+  email: String
   "Indicates which contexts this branch is available in."
   availabilityContext: BranchAvailabilityContext!
 }

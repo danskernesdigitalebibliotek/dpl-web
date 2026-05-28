@@ -41,12 +41,10 @@ jobs:
           # A bug in the current version of Nextjs causes NODE_ENV=test to brick the build
           # By overridding the variables here we can ensure that the correct urls are set
           TEST_MODE: true
-          NEXT_PUBLIC_DPL_CMS_HOSTNAME: http://localhost:9000
-          NEXT_PUBLIC_DPL_CMS_GRAPHQL_URL: http://localhost:9000/graphql
-          NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBS: http://localhost:9000/graphql
+          DPL_CMS_BASE_URL: http://localhost:9000
           UNILOGIN_CLIENT_ID: http://localhost:9000/client
           UNILOGIN_WELLKNOWN_URL: http://localhost:9000
-          NEXT_PUBLIC_APP_URL: http://localhost:3000
+          DPL_GO_BASE_URL: http://localhost:3000
 
         with:
           install: false

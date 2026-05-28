@@ -1075,7 +1075,7 @@ const meta: Meta<typeof MaterialEntry> = {
     infomediaModalScreenReaderModalDescriptionText: "Modal for infomedia",
     infomediaModalCloseModalAriaLabelText: "Close infomedia modal",
     infomediaCopyrightText:
-      "All material in Infomedia is covered by copyright law and may not be copied without special permission.",
+      "All material in Retriever is covered by copyright law and may not be copied without special permission.",
     saveButtonText: "Save",
     orderDigitalCopyModalScreenReaderModalDescriptionText:
       "Modal for Order digital copy",
