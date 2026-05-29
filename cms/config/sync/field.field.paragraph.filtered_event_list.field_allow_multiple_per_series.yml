@@ -1,0 +1,23 @@
+uuid: edb227a6-d78a-4605-abde-ba4e36a9b535
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_allow_multiple_per_series
+    - paragraphs.paragraphs_type.filtered_event_list
+id: paragraph.filtered_event_list.field_allow_multiple_per_series
+field_name: field_allow_multiple_per_series
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Allow multiple instances per series'
+description: 'Enable this to show several instances from the same series, in a stacked view. If not enabled, only the first matching instance will be shown.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

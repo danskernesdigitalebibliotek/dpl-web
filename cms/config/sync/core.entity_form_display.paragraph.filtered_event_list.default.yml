@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.filtered_event_list.field_allow_multiple_per_series
     - field.field.paragraph.filtered_event_list.field_amount_of_events
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
@@ -25,7 +26,7 @@ third_party_settings:
       label: 'Grouped filters'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: fieldset
       format_settings:
         classes: ''
@@ -38,9 +39,16 @@ targetEntityType: paragraph
 bundle: filtered_event_list
 mode: default
 content:
+  field_allow_multiple_per_series:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_filter_branches:
     type: select2_entity_reference
-    weight: 1
+    weight: 2
     region: content
     settings:
       width: 100%

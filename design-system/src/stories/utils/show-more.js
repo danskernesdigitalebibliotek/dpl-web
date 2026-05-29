@@ -29,18 +29,32 @@ document.addEventListener("DOMContentLoaded", () => {
     list.setAttribute("id", `list-id-${listId}`);
     listShowMoreButton.setAttribute("aria-controls", `list-id-${listId}`);
 
-    const initialVisibleItems =
-      list.getAttribute("data-initial-visible-items") || amountOfListElements;
+    const initialVisibleItems = parseInt(
+      list.getAttribute("data-initial-visible-items") || amountOfListElements,
+      10,
+    );
 
-    // Hide button if there are less items than the initial visible items
-    if (initialVisibleItems >= amountOfListElements) {
+    // Stacked items (e.g. stacked event instances) follow their parent and
+    // should not count toward the initial visible count.
+    // @todo: clear this with the client!
+    const isStacked = (item) =>
+      item.hasAttribute("data-show-more-item-stacked");
+    const countableElements = Array.from(listElements).filter(
+      (item) => !isStacked(item),
+    );
+
+    // Hide button if there are fewer countable items than the initial visible items
+    if (initialVisibleItems >= countableElements.length) {
       listShowMoreButton.classList.add("show-more__hidden");
       return;
     }
 
-    // Hide items beyond the initial visible items
-    listElements.forEach((listItem, index) => {
-      if (index > initialVisibleItems - 1)
+    // Hide items beyond the initial visible items, ignoring stacked items
+    // when counting.
+    let shownCountable = 0;
+    listElements.forEach((listItem) => {
+      if (!isStacked(listItem)) shownCountable += 1;
+      if (shownCountable > initialVisibleItems)
         listItem.classList.add("show-more__hidden");
     });
 
@@ -51,8 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     listShowMoreButton.addEventListener("click", () => {
-      listElements.forEach((listItem, index) => {
-        if (index > initialVisibleItems - 1)
+      let toggledCountable = 0;
+      listElements.forEach((listItem) => {
+        if (!isStacked(listItem)) toggledCountable += 1;
+        if (toggledCountable > initialVisibleItems)
           listItem.classList.toggle("show-more__hidden");
       });
 
