@@ -27,8 +27,8 @@ export const loadLibraryToken = async () => {
       return null
     }
     return validateLibraryToken.data
-  } catch {
-    console.error("Could not load library token.")
+  } catch (error) {
+    console.error("Could not load library token.", error)
     return null
   }
 }
