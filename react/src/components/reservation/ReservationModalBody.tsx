@@ -39,6 +39,7 @@ import {
   Work
 } from "../../core/utils/types/entities";
 import {
+  canSubmitOpenOrderReservation,
   getPreferredBranch,
   constructReservationData,
   getAuthorLine,
@@ -179,8 +180,10 @@ export const ReservationModalBody = ({
 
   const canSubmitFbs =
     manifestationsToReserve?.length && !materialIsReservableFromAnotherLibrary;
-  const canSubmitOpenOrder =
-    materialIsReservableFromAnotherLibrary && patron && userHasEmail;
+  const canSubmitOpenOrder = canSubmitOpenOrderReservation({
+    materialIsReservableFromAnotherLibrary,
+    patron
+  });
 
   const saveReservation = () => {
     if (canSubmitFbs) {
@@ -216,7 +219,7 @@ export const ReservationModalBody = ({
           }
         }
       );
-    } else if (canSubmitOpenOrder) {
+    } else if (canSubmitOpenOrder && patron) {
       setReservationStatus("pending");
       const { patronId, name, emailAddress, preferredPickupBranch } = patron;
       // Save reservation to open order.
