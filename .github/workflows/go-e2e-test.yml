@@ -3,9 +3,9 @@ name: Go / E2E tests
 on:
   pull_request:
     paths:
-      - 'go/**'
-      - 'packages/service-layer/**'
-      - '.github/workflows/go-*.yml'
+      - "go/**"
+      - "packages/**"
+      - ".github/workflows/go-*.yml"
 
 jobs:
   check:
