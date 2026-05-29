@@ -7,8 +7,8 @@ import { getEnv, getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
-import { loadPatronServerSide } from "../helpers/fbs"
 import { isBuildingGoApp } from "../helpers/next-phase"
+import { loadPatronServerSide } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
@@ -154,11 +154,19 @@ export const saveAdgangsplatformenSession = async (
   session.isLoggedIn = true
   session.type = "adgangsplatformen"
   await setAdgangsplatformenUserTokenOnSession(session, userToken)
-  // Get name of user/patron from Adgangsplatformen.
-  const patronInfo = await loadPatronServerSide(userToken.token)
-  if (patronInfo?.patron?.name) {
+  // Get name of user/patron from FBS. FBS may be unavailable or refuse the
+  // call (test mocks, locked-out patrons, etc.); we don't want that to break
+  // the login. Log and continue without setting session.user — matches the
+  // pre-service-layer fetcher's "log and return null" behaviour.
+  let patron
+  try {
+    patron = await loadPatronServerSide(userToken.token)
+  } catch (error) {
+    console.error("Could not load patron during Adgangsplatformen login:", error)
+  }
+  if (patron?.name) {
     session.user = {
-      name: patronInfo.patron.name,
+      name: patron.name,
       // Adgangsplatformen does not return a username.
       username: undefined,
     }

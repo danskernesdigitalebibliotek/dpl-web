@@ -3,8 +3,9 @@ name: "Go / Type check"
 on:
   pull_request:
     paths:
-      - 'go/**'
-      - '.github/workflows/go-*.yml'
+      - "go/**"
+      - "packages/**"
+      - ".github/workflows/go-*.yml"
 
 jobs:
   build:

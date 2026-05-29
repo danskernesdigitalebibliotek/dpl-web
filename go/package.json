@@ -11,7 +11,6 @@
     "build:dev": "DPL_GO_BASE_URL=http://dpl-cms.local:3000 next build",
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
-    "codegen:fbs": "rm -rf src/lib/rest/fbs/generated/model/*.* && orval --project fbs",
     "codegen:graphql": "NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/* && orval --project publizonAdapter && orval --project publizonLocalAdapter",
     "codegen:pubhub": "rm -rf lib/soap/publizon/v2_7/generated/* && npx tsx ./scripts/wsdl-tsclient/publizon-wsdl-codegen",
@@ -40,6 +39,7 @@
     "post-process-dpl-cms-graphql": "tsx ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
   },
   "dependencies": {
+    "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/service-layer",
     "@next/env": "16.2.6",
     "@plaiceholder/next": "^3.0.0",
     "@radix-ui/react-accordion": "^1.2.12",
