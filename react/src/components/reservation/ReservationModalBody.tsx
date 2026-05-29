@@ -175,9 +175,12 @@ export const ReservationModalBody = ({
   const expiryDate = getFutureDateString(interestPeriod);
   const materialType = getMaterialType(selectedManifestations);
 
+  const userHasEmail = Boolean(patron?.emailAddress);
+
   const canSubmitFbs =
     manifestationsToReserve?.length && !materialIsReservableFromAnotherLibrary;
-  const canSubmitOpenOrder = materialIsReservableFromAnotherLibrary && patron;
+  const canSubmitOpenOrder =
+    materialIsReservableFromAnotherLibrary && patron && userHasEmail;
 
   const saveReservation = () => {
     if (canSubmitFbs) {
@@ -269,8 +272,6 @@ export const ReservationModalBody = ({
       instantLoanBranchHoldings,
       instantLoanThreshold
     );
-
-  const userHasEmail = Boolean(patron?.emailAddress);
 
   // Disable submit based on the exact conditions used in saveReservation
   const isSubmitDisabled =
