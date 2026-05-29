@@ -15,6 +15,9 @@ concurrency:
 jobs:
   create_release:
     name: Design / Create release on branch changes
+    # Skip automated housekeeping pushes made by dpl-platform-bot to avoid
+    # recursive releases.
+    if: ${{ github.event.pusher.name != 'dpl-platform-bot' }}
     uses: ./.github/workflows/common-release-workflow.yml
     with:
       project: 'design-system'
@@ -24,6 +27,9 @@ jobs:
 
   create_npm_package:
     name: Design / Create and Release NPM package on branch changes
+    # Skip automated housekeeping pushes made by dpl-platform-bot to avoid
+    # recursive releases.
+    if: ${{ github.event.pusher.name != 'dpl-platform-bot' }}
     uses: ./.github/workflows/design-system-npm-workflow.yml
     needs: create_release
     with:
