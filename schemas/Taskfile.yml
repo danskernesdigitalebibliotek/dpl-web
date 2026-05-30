@@ -1,17 +1,56 @@
 version: '3'
 
-# Refresh tasks for the contracts under openapi/. Codegen lives in
-# each consuming sub-project — see README.
+# Refresh tasks for the contracts under openapi/ and graphql/.
+# Codgen lives in each consuming sub-project — see README.
 
 vars:
   FBS_TOOL_REPO: https://github.com/itk-dev/dpl-fbs-adapter-tool.git
   FBS_TOOL_REF: develop
   FBS_TOOL_DIR: .cache/dpl-fbs-adapter-tool
 
+  # DBC FBI gateway endpoints. Names = host+profile, see README.
+  DBC_FBI_TEMP_NEXT_URL: https://temp.fbi-api.dbc.dk/next/graphql
+  DBC_FBI_FBCMS_GO_URL: https://fbi-api.dbc.dk/fbcms-go/graphql
+
 tasks:
 
+  _introspect-fbi:
+    internal: true
+    dir: '{{.TASKFILE_DIR}}'
+    requires:
+      vars: [URL, OUT]
+    cmds:
+      - |
+        # Grep — don't `source` — the .env files: they may contain
+        # multi-line PEM values (e.g. UNILOGIN_WS_PRIVATE_KEY).
+        token="${STORYBOOK_LIBRARY_TOKEN:-${CODEGEN_LIBRARY_TOKEN:-}}"
+        if [ -z "$token" ]; then
+          for envfile in ../react/.env ../go/.env; do
+            [ -f "$envfile" ] || continue
+            line=$(grep -m1 -E '^(STORYBOOK_LIBRARY_TOKEN|CODEGEN_LIBRARY_TOKEN)=' "$envfile" || true)
+            [ -n "$line" ] || continue
+            v="${line#*=}"
+            v="${v#\"}"; v="${v%\"}"
+            v="${v#\'}"; v="${v%\'}"
+            token="$v"
+            break
+          done
+        fi
+        if [ -z "$token" ]; then
+          echo "refresh:dbc-fbi: no bearer token found." >&2
+          echo "Looked for \$STORYBOOK_LIBRARY_TOKEN or \$CODEGEN_LIBRARY_TOKEN in the shell, react/.env, and go/.env." >&2
+          exit 1
+        fi
+        if [ ! -d ../react/node_modules/graphql ]; then
+          echo "react/node_modules/graphql not found — run 'yarn install' in react/ first." >&2
+          exit 1
+        fi
+        script="$(pwd)/scripts/introspect.mjs"
+        out="$(pwd)/{{.OUT}}"
+        cd ../react && node "$script" "{{.URL}}" "$out" "$token"
+
   format:
-    desc: Normalize whitespace and quote style in openapi/ via prettier (uses react/'s installed prettier).
+    desc: Normalize whitespace and quote style in openapi/ and graphql/ via prettier (uses react/'s installed prettier).
     dir: '{{.TASKFILE_DIR}}'
     cmds:
       - |
@@ -19,7 +58,7 @@ tasks:
           echo "format: prettier not found — run 'yarn install' in react/ first." >&2
           exit 1
         fi
-        ../react/node_modules/.bin/prettier --write openapi
+        ../react/node_modules/.bin/prettier --write openapi graphql
 
   refresh:material-list:
     desc: Refresh openapi/material-list.yaml from upstream ddb-material-list.
@@ -46,6 +85,32 @@ tasks:
       - cp "{{.FBS_TOOL_DIR}}/fbs-adapter.yaml" openapi/fbs-adapter.yaml
       - task: format
 
+  refresh:dbc-fbi:temp-next:
+    desc: Refresh graphql/dbc-fbi.temp-next.graphql from temp.fbi-api.dbc.dk/next.
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - task: _introspect-fbi
+        vars:
+          URL: '{{.DBC_FBI_TEMP_NEXT_URL}}'
+          OUT: graphql/dbc-fbi.temp-next.graphql
+      - task: format
+
+  refresh:dbc-fbi:fbcms-go:
+    desc: Refresh graphql/dbc-fbi.fbcms-go.graphql from fbi-api.dbc.dk/fbcms-go.
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - task: _introspect-fbi
+        vars:
+          URL: '{{.DBC_FBI_FBCMS_GO_URL}}'
+          OUT: graphql/dbc-fbi.fbcms-go.graphql
+      - task: format
+
+  refresh:dbc-fbi:
+    desc: Refresh both DBC FBI snapshots (temp-next + fbcms-go).
+    cmds:
+      - task: refresh:dbc-fbi:temp-next
+      - task: refresh:dbc-fbi:fbcms-go
+
   refresh:publizon:
     desc: "Stub: publizon-adapter.yaml has no automated upstream. Edit it by hand."
     cmds:
@@ -59,4 +124,5 @@ tasks:
     cmds:
       - task: refresh:material-list
       - task: refresh:fbs
+      - task: refresh:dbc-fbi
       - task refresh:publizon

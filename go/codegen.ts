@@ -20,11 +20,8 @@ if (!DPL_CMS_BASE_URL) {
 
 const GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS = `${DPL_CMS_BASE_URL}/graphql`
 
-const CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI = getEnv("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI")
-
-if (!CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI) {
-  throw new Error("CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI is not set, cannot generate GraphQL code.")
-}
+// Refresh with `task schemas:refresh:dbc-fbi:fbcms-go`.
+const FBI_SCHEMA_PATH = "../schemas/graphql/dbc-fbi.fbcms-go.graphql"
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -74,15 +71,7 @@ const config: CodegenConfig = {
     // },
     "lib/graphql/generated/fbi/graphql.ts": {
       documents: "**/*.fbi.graphql",
-      schema: [
-        {
-          [CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI]: {
-            headers: {
-              Authorization: `Bearer ${getEnv("CODEGEN_LIBRARY_TOKEN")}`,
-            },
-          },
-        },
-      ],
+      schema: FBI_SCHEMA_PATH,
       plugins: [
         "typescript",
         "typescript-operations",
