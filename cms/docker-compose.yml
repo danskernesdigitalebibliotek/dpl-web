@@ -16,6 +16,9 @@ x-volumes:
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
       - 'projectroot:/app'
+      # /schemas/ read-only for drush sailor:codegen (local-dev only —
+      # Lagoon's injected docker-compose doesn't have this mount).
+      - '../schemas:/schemas:ro'
 
 x-user:
   &default-user

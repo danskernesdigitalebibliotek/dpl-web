@@ -371,9 +371,8 @@ tasks:
       - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
 
   dev:codegen:fbi-graphql:
-    desc: Generate graphQL client classes for dpl_fbi.
+    desc: Generate dpl_fbi graphQL classes (reads /schemas/graphql/dbc-fbi.fbcms-go.graphql).
     cmds:
-      - task dev:cli -- drush sailor:introspect dpl_fbi
       - task dev:cli -- drush sailor:codegen dpl_fbi
 
   dev:composer:update-design-system:
