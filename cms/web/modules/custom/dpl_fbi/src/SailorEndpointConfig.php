@@ -56,7 +56,9 @@ class SailorEndpointConfig extends EndpointConfig {
    * {@inheritdoc}
    */
   public function schemaPath(): string {
-    return __DIR__ . '/../schema/fbi.graphql';
+    // Codegen profile (fbcms-go) ≠ runtime profile (next, see
+    // Fbi::FBI_PROFILE); they overlap on every field we currently query.
+    return '/schemas/graphql/dbc-fbi.fbcms-go.graphql';
   }
 
   /**
