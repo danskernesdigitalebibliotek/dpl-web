@@ -1,26 +1,29 @@
 ---
-name: React / Check generated client code
+name: React / Codegen
 
 on:
   pull_request:
     paths:
-      - 'react/src/core/dpl-cms/**'
-      - 'react/orval.config.ts'
+      - 'react/**'
+      - 'schemas/openapi/**'
+      - 'schemas/graphql/dbc-fbi.temp-next.graphql'
       - 'cms/openapi.json'
-      - '.github/workflows/react-codegen-check.yml'
+      - '.github/workflows/react-codegen.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  codegen-dpl-cms:
-    name: React / Check DPL CMS client code is up to date
+  codegen:
+    name: Generated clients
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: react
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: 'react/.nvmrc'
           cache: 'yarn'
@@ -29,11 +32,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Dependencies
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Generate DPL CMS client code
-        run: npm run codegen:client:dpl-cms
+      - name: Run codegen
+        run: task codegen:all
 
       - name: Ensure generated client code has not drifted
         run: git diff --exit-code
