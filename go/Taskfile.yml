@@ -64,3 +64,13 @@ tasks:
       - task dev:nvm:use
       - yarn
       - yarn dev:https
+
+  codegen:all:
+    desc: Regenerate every codegen output in go/ (OpenAPI + GraphQL + SOAP). codegen:graphql live-introspects dpl-cms, so DPL_CMS_BASE_URL and GraphQL credentials must be set.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:all-rest-services
+      - yarn codegen:graphql
+      - yarn codegen:publizon
+      - yarn codegen:pubhub
+      - yarn codegen:unilogin

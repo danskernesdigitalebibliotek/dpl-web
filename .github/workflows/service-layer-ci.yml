@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "packages/**"
+      - "schemas/openapi/fbs-adapter.yaml"
       - ".github/workflows/service-layer-ci.yml"
 
 concurrency:

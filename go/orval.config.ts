@@ -30,7 +30,7 @@ const publizonConfig = (type: string): Options => ({
     prettier: true,
   },
   input: {
-    target: "lib/rest/publizon/publizon-spec.yaml",
+    target: "../schemas/openapi/publizon-adapter.yaml",
     converterOptions: {
       indent: 2,
     },

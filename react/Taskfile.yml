@@ -105,3 +105,13 @@ tasks:
       - yarn lint:js --fix
       - yarn lint:scss --fix
       - yarn lint:markdown --fix
+
+  codegen:all:
+    desc: Regenerate every codegen output in react/ (OpenAPI + DBC gateway GraphQL).
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:dbc:gateway
+      - yarn codegen:rest-services
+      - yarn codegen:client:fbs
+      - yarn codegen:client:publizon
+      - yarn codegen:client:dpl-cms

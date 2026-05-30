@@ -8,6 +8,9 @@ output: prefixed
 includes:
   migration:
     taskfile: ./migration/Taskfile.migration.yml
+  schemas:
+    taskfile: ./schemas/Taskfile.yml
+    dir: ./schemas
 
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system

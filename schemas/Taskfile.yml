@@ -1,0 +1,62 @@
+version: '3'
+
+# Refresh tasks for the contracts under openapi/. Codegen lives in
+# each consuming sub-project — see README.
+
+vars:
+  FBS_TOOL_REPO: https://github.com/itk-dev/dpl-fbs-adapter-tool.git
+  FBS_TOOL_REF: develop
+  FBS_TOOL_DIR: .cache/dpl-fbs-adapter-tool
+
+tasks:
+
+  format:
+    desc: Normalize whitespace and quote style in openapi/ via prettier (uses react/'s installed prettier).
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - |
+        if [ ! -x ../react/node_modules/.bin/prettier ]; then
+          echo "format: prettier not found — run 'yarn install' in react/ first." >&2
+          exit 1
+        fi
+        ../react/node_modules/.bin/prettier --write openapi
+
+  refresh:material-list:
+    desc: Refresh openapi/material-list.yaml from upstream ddb-material-list.
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - curl -sSfL https://raw.githubusercontent.com/danskernesdigitalebibliotek/ddb-material-list/develop/spec/material-list-2.0.0.yaml -o openapi/material-list.yaml
+      - task: format
+
+  refresh:fbs:
+    desc: Regenerate openapi/fbs-adapter.yaml via the dpl-fbs-adapter-tool. Needs docker, git, task.
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - mkdir -p .cache
+      - |
+        if [ -d "{{.FBS_TOOL_DIR}}/.git" ]; then
+          git -C "{{.FBS_TOOL_DIR}}" fetch --depth=1 origin "{{.FBS_TOOL_REF}}"
+          git -C "{{.FBS_TOOL_DIR}}" reset --hard "origin/{{.FBS_TOOL_REF}}"
+        else
+          git clone --depth=1 -b "{{.FBS_TOOL_REF}}" "{{.FBS_TOOL_REPO}}" "{{.FBS_TOOL_DIR}}"
+        fi
+      - task -d "{{.FBS_TOOL_DIR}}" dev:install
+      - task -d "{{.FBS_TOOL_DIR}}" dev:swagger2yaml
+      - task -d "{{.FBS_TOOL_DIR}}" dev:convert
+      - cp "{{.FBS_TOOL_DIR}}/fbs-adapter.yaml" openapi/fbs-adapter.yaml
+      - task: format
+
+  refresh:publizon:
+    desc: "Stub: publizon-adapter.yaml has no automated upstream. Edit it by hand."
+    cmds:
+      - cmd: |
+          echo "publizon-adapter.yaml has no upstream — edit it by hand and re-run codegen in each consuming project." >&2
+          exit 1
+        silent: true
+
+  refresh:
+    desc: Run every refresh task that has an automated upstream.
+    cmds:
+      - task: refresh:material-list
+      - task: refresh:fbs
+      - task refresh:publizon
