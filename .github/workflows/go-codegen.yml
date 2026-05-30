@@ -1,0 +1,69 @@
+---
+name: Go / Codegen
+
+on:
+  pull_request:
+    paths:
+      - 'go/**'
+      - 'cms/**'
+      - 'schemas/openapi/publizon-adapter.yaml'
+      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - '.github/workflows/go-codegen.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codegen:
+    name: Generated clients
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # codegen:graphql live-introspects the dpl-cms endpoint, so the CMS
+      # has to be running. (FBI portion reads the vendored SDL.)
+      - name: Setup CMS site
+        working-directory: cms
+        run: task ci:reset
+
+      - name: Resolve dpl-cms endpoint and consumer password
+        id: cms_setup
+        working-directory: cms
+        run: |
+          PORT=$(docker compose -f docker-compose.yml -f docker-compose.ci.yml port varnish 8080 | head -1 | sed 's/.*://')
+          echo "endpoint=http://localhost:${PORT}/graphql" >> "$GITHUB_OUTPUT"
+          PASSWORD=$(grep '^NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD=' .env | cut -d= -f2-)
+          echo "::add-mask::${PASSWORD}"
+          echo "password=${PASSWORD}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'go/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'go/yarn.lock'
+
+      - name: Install dependencies
+        working-directory: go
+        run: yarn install --frozen-lockfile
+
+      - name: Run codegen
+        working-directory: go
+        env:
+          DPL_CMS_BASE_URL: ${{ steps.cms_setup.outputs.endpoint }}
+          GO_GRAPHQL_CONSUMER_USER_NAME: go_graphql
+          GO_GRAPHQL_CONSUMER_USER_PASSWORD: ${{ steps.cms_setup.outputs.password }}
+        run: task codegen:all
+
+      - name: Ensure generated client code has not drifted
+        working-directory: go
+        run: git diff --exit-code

@@ -31,7 +31,7 @@ tasks:
     summary: Use project Node.js version with nvm
     silent: true
     cmds:
-      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm use'
+      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm install && nvm use'
 
   ghcr:login:
     summary: Login into Github Container Registry
