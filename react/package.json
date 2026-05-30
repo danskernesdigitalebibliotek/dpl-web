@@ -37,7 +37,7 @@
     "test:unit": "vitest",
     "test:integration": "cypress run",
     "cypress:open": "cypress open",
-    "codegen:dbc:gateway": "CODEGEN_SCHEMA_PROFILE=next graphql-codegen -r dotenv/config --config dbc-gateway.codegen.yml",
+    "codegen:dbc:gateway": "graphql-codegen --config dbc-gateway.codegen.yml",
     "codegen:rest-services": "orval",
     "codegen:client:fbs": "rm -rf src/core/fbs/model/*.* && orval --project fbsAdapter",
     "codegen:client:publizon": "rm -rf src/core/publizon/model/*.* && orval --project publizonAdapter",

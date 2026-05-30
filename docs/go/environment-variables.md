@@ -86,20 +86,6 @@ Enables test-specific behaviour:
 - **Unilogin OIDC** – allows insecure (non-HTTPS) requests to the identity broker (`uniloginClient.ts`)
 - **SOAP services** – redirects Publizon loan creation and Unilogin institution lookup endpoints to the local mock server (`requests.ts` files)
 
-### `CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI`
-
-- **Required:** No (optional, validated as URL if set)
-- **Example:** `https://fbi-api.dbc.dk/ereolgo/graphql`
-
-The FBI (Fælles Biblioteks Infrastruktur) GraphQL endpoint. Used **only** during code generation (`codegen.ts`) to introspect the FBI schema and generate TypeScript types/hooks.
-
-### `CODEGEN_LIBRARY_TOKEN`
-
-- **Required:** No (optional)
-- **Example:** `XXX`
-
-Bearer token for authenticating with the FBI GraphQL API during codegen. Sent as `Authorization: Bearer` when introspecting the FBI schema.
-
 ## Server-Only Variables
 
 Only available server-side. Accessed via `getServerEnv()`.
