@@ -40,19 +40,34 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendlyCardResult"
-              example: { "friendlyCardNumber": "AABBCC123", "code": 101, "message": "OK" }
+              example:
+                {
+                  "friendlyCardNumber": "AABBCC123",
+                  "code": 101,
+                  "message": "OK",
+                }
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendlyCardResult"
-              example: { "friendlyCardNumber": "AABBCC123", "code": 101, "message": "OK" }
+              example:
+                {
+                  "friendlyCardNumber": "AABBCC123",
+                  "code": 101,
+                  "message": "OK",
+                }
             text/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/FriendlyCardResult"
-              example: { "friendlyCardNumber": "AABBCC123", "code": 101, "message": "OK" }
+              example:
+                {
+                  "friendlyCardNumber": "AABBCC123",
+                  "code": 101,
+                  "message": "OK",
+                }
         "400":
           description: "Error occurred, see message."
           content:

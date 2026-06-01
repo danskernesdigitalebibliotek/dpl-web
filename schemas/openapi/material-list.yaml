@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
-  version: '2.0.0'
-  title: 'Collection List'
+  version: "2.0.0"
+  title: "Collection List"
   license:
-    name: 'GNU General Public License v3.0'
-    url: 'https://www.gnu.org/licenses/gpl-3.0.html'
+    name: "GNU General Public License v3.0"
+    url: "https://www.gnu.org/licenses/gpl-3.0.html"
 
 servers:
   - url: https://prod.materiallist.dandigbib.org
@@ -13,7 +13,7 @@ servers:
     description: Test server (uses test data)
 
 tags:
-  - name: 'List'
+  - name: "List"
     description: List handling
 security:
   - BearerAuth: []
@@ -23,80 +23,80 @@ paths:
       operationId: getList
       tags:
         - List
-      description: 'Get list with collections.'
+      description: "Get list with collections."
       parameters:
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/collectionIds'
+        - $ref: "#/components/parameters/version"
+        - $ref: "#/components/parameters/listId"
+        - $ref: "#/components/parameters/collectionIds"
       responses:
         200:
-          description: 'The list data is returned.'
+          description: "The list data is returned."
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/List'
+                $ref: "#/components/schemas/List"
         404:
-          description: 'Unknown list.'
+          description: "Unknown list."
         422:
-          description: 'Invalid collection id.'
+          description: "Invalid collection id."
         default:
-          description: 'Unspecified error.'
+          description: "Unspecified error."
 
   /list/{listId}/{itemId}:
     head:
       operationId: hasItem
       tags:
         - List
-      description: 'Check existence of a collection on a list. To check multiple collections in one request, see the collection_ids query parameter on /list/{listId}.'
+      description: "Check existence of a collection on a list. To check multiple collections in one request, see the collection_ids query parameter on /list/{listId}."
       parameters:
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/itemId'
+        - $ref: "#/components/parameters/version"
+        - $ref: "#/components/parameters/listId"
+        - $ref: "#/components/parameters/itemId"
       responses:
         200:
-          description: 'The collection exists on the list.'
+          description: "The collection exists on the list."
         404:
-          description: 'The list or collection does not exist.'
+          description: "The list or collection does not exist."
         422:
-          description: 'Invalid collection id.'
+          description: "Invalid collection id."
         default:
-          description: 'Unspecified error.'
+          description: "Unspecified error."
     put:
       operationId: addItem
       tags:
         - List
-      description: 'Add collection to the the list.'
+      description: "Add collection to the the list."
       parameters:
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/itemId'
+        - $ref: "#/components/parameters/version"
+        - $ref: "#/components/parameters/listId"
+        - $ref: "#/components/parameters/itemId"
       responses:
         201:
-          description: 'The collection was successfully added to the list.'
+          description: "The collection was successfully added to the list."
         404:
-          description: 'Unknown list.'
+          description: "Unknown list."
         422:
-          description: 'Invalid collection id.'
+          description: "Invalid collection id."
         default:
-          description: 'Unspecified error.'
+          description: "Unspecified error."
     delete:
       operationId: removeItem
       tags:
         - List
-      description: 'Delete collection from list.'
+      description: "Delete collection from list."
       parameters:
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/listId'
-        - $ref: '#/components/parameters/itemId'
+        - $ref: "#/components/parameters/version"
+        - $ref: "#/components/parameters/listId"
+        - $ref: "#/components/parameters/itemId"
       responses:
         204:
-          description: 'Successfully removed.'
+          description: "Successfully removed."
         404:
-          description: 'Unknown list or collection.'
+          description: "Unknown list or collection."
         422:
-          description: 'Invalid collection id.'
+          description: "Invalid collection id."
         default:
-          description: 'Unspecified error.'
+          description: "Unspecified error."
 
 components:
   securitySchemes:
@@ -107,7 +107,7 @@ components:
     version:
       name: Accept-Version
       in: header
-      description: 'The version of the API to use.'
+      description: "The version of the API to use."
       example: 2
       schema:
         type: integer
@@ -115,25 +115,25 @@ components:
           - 2
       required: true
     listId:
-      name: 'listId'
-      in: 'path'
+      name: "listId"
+      in: "path"
       description: 'The identifier of the list to return. Use "default" for the default list.'
       required: true
-      example: 'default'
+      example: "default"
       schema:
-        $ref: '#/components/schemas/ListId'
+        $ref: "#/components/schemas/ListId"
     itemId:
-      name: 'itemId'
-      in: 'path'
-      description: 'The identifier of the collection.'
+      name: "itemId"
+      in: "path"
+      description: "The identifier of the collection."
       required: true
-      example: 'work-of:870970-basis:54871910'
+      example: "work-of:870970-basis:54871910"
       schema:
-        $ref: '#/components/schemas/itemId'
+        $ref: "#/components/schemas/itemId"
     collectionIds:
-      name: 'collection_ids'
-      in: 'query'
-      description: 'Filter the list reply down to the given collection identifiers. This is the recommended way to check for existence of multiple collections on the list.'
+      name: "collection_ids"
+      in: "query"
+      description: "Filter the list reply down to the given collection identifiers. This is the recommended way to check for existence of multiple collections on the list."
       example:
         - work-of:870970-basis:54871910
         - work-of:870970-basis:44791668
@@ -141,7 +141,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/itemId'
+          $ref: "#/components/schemas/itemId"
 
   schemas:
     ListId:
@@ -159,8 +159,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          $ref: '#/components/schemas/ListId'
+          $ref: "#/components/schemas/ListId"
         collections:
           type: array
           items:
-            $ref: '#/components/schemas/itemId'
+            $ref: "#/components/schemas/itemId"
