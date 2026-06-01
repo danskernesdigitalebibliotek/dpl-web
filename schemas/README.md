@@ -49,6 +49,10 @@ sub-project; only the contracts live here.
 | `openapi/publizon-adapter.yaml` | None — edit by hand                                                                                                                                     | `task schemas:refresh:publizon` *(stub that prints this)* |
 
 
+The DBC FBI refresh tasks need a bearer token. Copy `schemas/.env.example`
+to `schemas/.env` and fill in `LIBRARY_TOKEN` — `Taskfile.yml` loads it
+via `dotenv:`.
+
 ```sh
 task schemas:refresh          # rebuild schemas from respective sources
 task schemas:format           # prettier-format the schemas (also run by :refresh)

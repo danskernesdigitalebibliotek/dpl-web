@@ -1,2 +1,3 @@
 # Local working directory for refresh:fbs (clone of itk-dev/dpl-fbs-adapter-tool)
 .cache/
+.env
