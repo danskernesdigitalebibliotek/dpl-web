@@ -1,5 +1,16 @@
 # schemas/
 
+> ## 🚨 ACTION REQUIRED ON NEXT DBC-FBI REFRESH 🚨
+>
+> **Do not just re-run the existing refresh tasks.** As of 2026-06-01,
+> `graphql/dbc-fbi.temp-next.graphql` and `graphql/dbc-fbi.fbcms-go.graphql`
+> are byte-identical — `temp-next` has caught up to `fbcms-go`.
+>
+> On the next refresh, **collapse them into a single `graphql/dbc-fbi.graphql`**
+> sourced from `fbi-api.dbc.dk/fbcms-go` (the canonical truth), and repoint
+> `react/`, `go/`, and `cms/` codegen at the merged file. Then delete the
+> per-consumer rows from the refresh table below.
+
 Single source of truth for API contracts shared across sub-projects or
 sourced from an external system. Generated clients live inside each
 sub-project; only the contracts live here.
@@ -21,31 +32,27 @@ sub-project; only the contracts live here.
    code (the dpl-cms GraphQL endpoint, CMS modules that define their own
    types) stay introspected live — live introspection is its own
    consistency check.
+
+   **See the banner above** — the two `dbc-fbi.*.graphql` files are due
+   to be collapsed into one on the next refresh.
 5. **`cms/openapi.json` stays in `cms/`.** It's an artifact produced by
    the Drupal CMS itself, not an upstream contract.
 
 ## Refresh
 
-Each spec has its own upstream story. Hand-editing is fine where a row
-below says so; otherwise use the refresh task.
-
-| Spec | Upstream | Refresh |
-|---|---|---|
-| `graphql/dbc-fbi.temp-next.graphql` | DBC FBI gateway @ `temp.fbi-api.dbc.dk/next` (DBC's preview host) — consumed by `react/` | `task schemas:refresh:dbc-fbi:temp-next` |
+| Spec | Upstream                                                                                                                                                | Refresh |
+|---|---------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+| `graphql/dbc-fbi.temp-next.graphql` | DBC FBI gateway @ `temp.fbi-api.dbc.dk/next` (will be removed on next refresh - see above) — consumed by `react/`                                       | `task schemas:refresh:dbc-fbi:temp-next` |
 | `graphql/dbc-fbi.fbcms-go.graphql` | DBC FBI gateway @ `fbi-api.dbc.dk/fbcms-go` (prod host, profile matching go's runtime) — consumed by `go/` and `cms/` (via Sailor in the cli container) | `task schemas:refresh:dbc-fbi:fbcms-go` |
-| `openapi/material-list.yaml` | `danskernesdigitalebibliotek/ddb-material-list@develop` | `task schemas:refresh:material-list` |
-| `openapi/fbs-adapter.yaml` | FBS swagger 1.2 (Cicero), converted via [`itk-dev/dpl-fbs-adapter-tool`](https://github.com/itk-dev/dpl-fbs-adapter-tool) | `task schemas:refresh:fbs` (clones the tool into `.cache/`, runs its docker pipeline) |
-| `openapi/publizon-adapter.yaml` | None — edit by hand | `task schemas:refresh:publizon` *(stub that prints this)* |
+| `openapi/material-list.yaml` | `danskernesdigitalebibliotek/ddb-material-list@develop`                                                                                                 | `task schemas:refresh:material-list` |
+| `openapi/fbs-adapter.yaml` | FBS swagger 1.2 (Cicero), converted via [`itk-dev/dpl-fbs-adapter-tool`](https://github.com/itk-dev/dpl-fbs-adapter-tool)                               | `task schemas:refresh:fbs` (clones the tool into `.cache/`, runs its docker pipeline) |
+| `openapi/publizon-adapter.yaml` | None — edit by hand                                                                                                                                     | `task schemas:refresh:publizon` *(stub that prints this)* |
 
 
 ```sh
 task schemas:refresh          # rebuild schemas from respective sources
 task schemas:format           # prettier-format the schemas (also run by :refresh)
 ```
-
-The two `dbc-fbi.*.graphql` files are the same gateway at different host+profile combinations. `temp-next` (DBC's preview host) gets new features first — e.g. the `submitOrder` mutation `react/` uses; `fbcms-go` is a stable prod-host profile that matches `go/`'s runtime. They share a single bearer token, picked up from the shell, `react/.env`, or `go/.env`.
-
-> `cms/` reads `dbc-fbi.fbcms-go.graphql` but its runtime actually hits the `next` profile on the prod host (see `cms/web/modules/custom/dpl_fbi/src/Fbi.php`). The two prod-host profiles overlap on every field cms currently queries — revisit if cms starts using fields that diverge between profiles.
 
 ## Regenerate clients
 
