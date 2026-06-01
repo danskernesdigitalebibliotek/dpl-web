@@ -103,12 +103,32 @@ tasks:
       - yarn lint:scss --fix
       - yarn lint:markdown --fix
 
-  codegen:all:
-    desc: Regenerate every codegen output in react/ (OpenAPI + DBC gateway GraphQL).
+  codegen:dbc:gateway:
+    desc: Regenerate DBC gateway GraphQL client.
     cmds:
       - task dev:nvm:use
       - yarn codegen:dbc:gateway
+
+  codegen:rest-services:
+    desc: Regenerate REST service clients via orval.
+    cmds:
+      - task dev:nvm:use
       - yarn codegen:rest-services
+
+  codegen:client:fbs:
+    desc: Regenerate FBS REST client.
+    cmds:
+      - task dev:nvm:use
       - yarn codegen:client:fbs
+
+  codegen:client:publizon:
+    desc: Regenerate Publizon REST client.
+    cmds:
+      - task dev:nvm:use
       - yarn codegen:client:publizon
+
+  codegen:client:dpl-cms:
+    desc: Regenerate dpl-cms REST client.
+    cmds:
+      - task dev:nvm:use
       - yarn codegen:client:dpl-cms

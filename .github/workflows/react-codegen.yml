@@ -40,8 +40,20 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Run codegen
-        run: task codegen:all
+      - name: Codegen - DBC gateway GraphQL
+        run: task codegen:dbc:gateway
+
+      - name: Codegen - REST services
+        run: task codegen:rest-services
+
+      - name: Codegen - FBS client
+        run: task codegen:client:fbs
+
+      - name: Codegen - Publizon client
+        run: task codegen:client:publizon
+
+      - name: Codegen - dpl-cms client
+        run: task codegen:client:dpl-cms
 
       - name: Ensure generated client code has not drifted
         run: git diff --exit-code
