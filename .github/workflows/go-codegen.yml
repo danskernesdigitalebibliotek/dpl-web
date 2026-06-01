@@ -41,7 +41,7 @@ jobs:
         working-directory: cms
         run: |
           PORT=$(docker compose -f docker-compose.yml -f docker-compose.ci.yml port varnish 8080 | head -1 | sed 's/.*://')
-          echo "endpoint=http://localhost:${PORT}/graphql" >> "$GITHUB_OUTPUT"
+          echo "endpoint=http://localhost:${PORT}" >> "$GITHUB_OUTPUT"
           PASSWORD=$(grep '^NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD=' .env | cut -d= -f2-)
           echo "::add-mask::${PASSWORD}"
           echo "password=${PASSWORD}" >> "$GITHUB_OUTPUT"
@@ -62,10 +62,16 @@ jobs:
 
       - name: Codegen - dpl-cms GraphQL
         working-directory: go
+        # `lib/config/env.ts` reads these via `process.env.NEXT_PUBLIC_*`,
+        # so the env vars MUST carry the NEXT_PUBLIC_ prefix here even
+        # though `getEnv()` exposes them without it. Setting them without
+        # the prefix leaves auth headers undefined → Drupal treats the
+        # request as anonymous → "execute graphql_compose_server arbitrary
+        # graphql requests" permission error.
         env:
           DPL_CMS_BASE_URL: ${{ steps.cms_setup.outputs.endpoint }}
-          GO_GRAPHQL_CONSUMER_USER_NAME: go_graphql
-          GO_GRAPHQL_CONSUMER_USER_PASSWORD: ${{ steps.cms_setup.outputs.password }}
+          NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_NAME: go_graphql
+          NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD: ${{ steps.cms_setup.outputs.password }}
         run: task codegen:graphql
 
       - name: Codegen - Publizon
