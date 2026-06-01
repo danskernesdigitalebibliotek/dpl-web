@@ -23,7 +23,7 @@ The repo is a mono-repo of four projects that together form the platform:
   runs. It hosts content, configuration, and (today) embeds the React apps.
 - **`react/`** — A library of small standalone React apps (search, loans,
   reservations, …) bundled per-app and embedded into CMS pages via
-  `<div data-dpl-app="…">` containers. **Being gradually replaced by Go.**
+  `<div data-dpl-app="…">` containers.
 - **`go/`** — A Next.js App Router frontend, the modern public-facing site.
   Aimed initially at youth audiences. Reads content and configuration from
   the CMS over GraphQL.
