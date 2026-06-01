@@ -7,9 +7,9 @@ info:
     url: 'https://www.gnu.org/licenses/gpl-3.0.html'
 
 servers:
-  - url: https://prod.collectionlist.dandigbib.org
+  - url: https://prod.materiallist.dandigbib.org
     description: Production server (uses live data)
-  - url: https://test.collectionlist.dandigbib.org
+  - url: https://test.materiallist.dandigbib.org
     description: Test server (uses test data)
 
 tags:
@@ -25,6 +25,7 @@ paths:
         - List
       description: 'Get list with collections.'
       parameters:
+        - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/listId'
         - $ref: '#/components/parameters/collectionIds'
       responses:
@@ -48,6 +49,7 @@ paths:
         - List
       description: 'Check existence of a collection on a list. To check multiple collections in one request, see the collection_ids query parameter on /list/{listId}.'
       parameters:
+        - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/listId'
         - $ref: '#/components/parameters/itemId'
       responses:
@@ -65,6 +67,7 @@ paths:
         - List
       description: 'Add collection to the the list.'
       parameters:
+        - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/listId'
         - $ref: '#/components/parameters/itemId'
       responses:
@@ -82,6 +85,7 @@ paths:
         - List
       description: 'Delete collection from list.'
       parameters:
+        - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/listId'
         - $ref: '#/components/parameters/itemId'
       responses:
@@ -100,6 +104,16 @@ components:
       type: http
       scheme: bearer
   parameters:
+    version:
+      name: Accept-Version
+      in: header
+      description: 'The version of the API to use.'
+      example: 2
+      schema:
+        type: integer
+        enum:
+          - 2
+      required: true
     listId:
       name: 'listId'
       in: 'path'
@@ -113,7 +127,7 @@ components:
       in: 'path'
       description: 'The identifier of the collection.'
       required: true
-      example: '870970-basis:54871910'
+      example: 'work-of:870970-basis:54871910'
       schema:
         $ref: '#/components/schemas/itemId'
     collectionIds:
@@ -121,8 +135,8 @@ components:
       in: 'query'
       description: 'Filter the list reply down to the given collection identifiers. This is the recommended way to check for existence of multiple collections on the list.'
       example:
-        - 870970-basis:54871910
-        - 870970-basis:44791668
+        - work-of:870970-basis:54871910
+        - work-of:870970-basis:44791668
       explode: false
       schema:
         type: array
@@ -134,9 +148,9 @@ components:
       description: 'List identifier. In the initial version, this can only be "default".'
       type: string
     itemId:
-      description: 'A collection identifier in the form <digits>-<alphanum>:<alphanum>.'
+      description: 'A collection identifier in the form "work-of:<digits>-<alphanum>:<alphanum>".'
       type: string
-      pattern: '^\d+-\w+:\w+$'
+      pattern: '^work-of:\d+-\w+:\w+$'
     List:
       type: object
       required:
@@ -150,7 +164,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/itemId'
-    LegacyUserId:
-      description: 'Legacy user identifier.'
-      type: string
-      example: '29A10F616FE6CA5C6E06EBF507A9FDC5BB89F8EBCF65726BEAC61C646854E83856D3B1D46BE4696EDCFB3C9F57EEBB6941D8654BC1F4B514D6217141AEA1653C'
