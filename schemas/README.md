@@ -51,8 +51,3 @@ The two `dbc-fbi.*.graphql` files are the same gateway at different host+profile
 
 Codegen is owned by each consuming project. After updating a contract
 here, run that project's `task codegen:all`.
-
-## Drift artifacts
-
-`*-drift.diff` files next to a canonical YAML record semantic drift that
-hasn't been reconciled yet. Not used by tooling — delete once resolved.
