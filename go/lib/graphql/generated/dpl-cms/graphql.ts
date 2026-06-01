@@ -797,7 +797,7 @@ export type ParagraphBreadcrumbChildren = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** Campaign trigger, based on the relevant facets of the users search. */
+/** Kampagne aktiveres baseret på relevante facetter fra brugerens søgning. */
 export type ParagraphCampaignRule = ParagraphInterface & {
   __typename?: 'ParagraphCampaignRule';
   /** Facet */
@@ -1362,10 +1362,10 @@ export type ParagraphMaterialGridLinkAutomatic = ParagraphInterface & {
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /**
-   * This field is for inserting a link string based on a search, e.g.:
-   * /><br />Please be aware that it is necessary to copy the exact link string.<br
-   * /><br />A valid link search string can be generated, by performing a query
-   * through the advanced search and copying the link string from there.
+   * I dette felt kan indsættes et link til en søgning, fx:
+   * /><br />Vær opmærksom på at kopiere den eksakte linkstreng.<br /><br />Du
+   * kan sikre at linket er validt ved at lave søgningen via avanceret søgning og
+   * kopiere url'en.
    */
   materialGridLink: Scalars['String']['output'];
   /** Der vises ikke en titel, hvis denne er tom. */
