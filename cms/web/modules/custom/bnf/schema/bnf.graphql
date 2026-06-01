@@ -1,82 +1,69 @@
 type Address {
-  langcode: String
-  country: AddressCountry
-  givenName: String
   additionalName: String
-  familyName: String
-  organization: String
   addressLine1: String
   addressLine2: String
+  administrativeArea: String
+  country: AddressCountry
+  dependentLocality: String
+  familyName: String
+  givenName: String
+  langcode: String
+  locality: String
+  organization: String
   postalCode: String
   sortingCode: String
-  dependentLocality: String
-  locality: String
-  administrativeArea: String
 }
 
 type AddressCountry {
-  name: String
-
   code: String
+  name: String
 }
 
 type AdgangsplatformenLibraryToken {
-  token: String
   expire: DateTime
+  token: String
 }
 
 type AdgangsplatformenTokens {
-  user: AdgangsplatformenUserToken
   library: AdgangsplatformenLibraryToken
+  user: AdgangsplatformenUserToken
 }
 
 type AdgangsplatformenUserToken {
-  token: String
   expire: DateTime
+  token: String
 }
 
 input BetweenFloatInput {
-  min: Float
-
   max: Float
+  min: Float
 }
 
 input BetweenStringInput {
-  min: String
-
   max: String
+  min: String
 }
 
 type Branch {
-  isilId: String!
-
-  title: String!
-
   address: BranchAddress
-
-  phone: String
-
-  email: String
-
   availabilityContext: BranchAvailabilityContext!
+  email: String
+  isilId: String!
+  phone: String
+  title: String!
 }
 
 type BranchAddress {
-  street: String
-
-  postalCode: String
-
   city: String
-
   country: String
+  postalCode: String
+  street: String
 }
 
 type BranchAvailabilityContext {
-  search: Boolean!
-
   availability: Boolean!
-
   reservations: Boolean!
+  search: Boolean!
 }
 
 type CQLSearch {
@@ -85,24 +72,19 @@ type CQLSearch {
 
 type Color {
   color: String
-
   opacity: Float
 }
 
 type DateRange {
-  start: DateTime
-
   end: DateTime
+  start: DateTime
 }
 
 type DateTime {
-  timestamp: Timestamp!
-
-  timezone: TimeZone!
-
   offset: UtcOffset!
-
   time: Time!
+  timestamp: Timestamp!
+  timezone: TimeZone!
 }
 
 type DplTokens {
@@ -116,38 +98,27 @@ type Error {
 }
 
 type File {
-  name: String
-
-  url: String!
-
-  size: Int!
-
-  mime: String
-
   description: String
+  mime: String
+  name: String
+  size: Int!
+  url: String!
 }
 
 type GoCategoriesResult implements View {
-  id: ID!
-
-  view: String!
-
-  display: String!
-
-  langcode: String
-
-  label: String
-
   description: String
-
+  display: String!
+  id: ID!
+  label: String
+  langcode: String
   pageInfo: ViewPageInfo!
-
   results: [NodeUnion!]!
+  view: String!
 }
 
 type GoConfiguration {
-  public: GoConfigurationPublic
   private: GoConfigurationPrivate
+  public: GoConfigurationPublic
 }
 
 type GoConfigurationPrivate {
@@ -164,8 +135,8 @@ type GoConfigurationPublic {
 }
 
 type GoLibraryInfo {
-  name: String
   cmsUrl: String!
+  name: String
 }
 
 type GoLoginUrls {
@@ -179,40 +150,32 @@ type GoLogoutUrls {
 scalar Html
 
 type Image {
-  url: String!
-
-  width: Int!
-
-  height: Int!
-
   alt: String
-
-  title: String
-
-  size: Int!
-
+  height: Int!
   mime: String
+  size: Int!
+  title: String
+  url: String!
+  width: Int!
 }
 
 type ImportResponse {
-  status: ImportStatus!
   message: String!
+  status: ImportStatus!
 }
 
 enum ImportStatus {
-  success
   failure
+  success
 }
 
 type InterestPeriod {
-  value: Int!
-
   label: String!
+  value: Int!
 }
 
 type InterestPeriods {
   all: [InterestPeriod!]!
-
   default: InterestPeriod!
 }
 
@@ -222,20 +185,16 @@ input KeyValueInput {
 }
 
 type Language {
-  id: ID
-
-  name: String
-
   direction: String
+  id: ID
+  name: String
 }
 
 type Link {
-  title: String
-
-  url: String
-
-  internal: Boolean!
   id: String
+  internal: Boolean!
+  title: String
+  url: String
 }
 
 type MappTracking {
@@ -244,343 +203,209 @@ type MappTracking {
 }
 
 type MediaAudio implements MediaInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   mediaAudioFile: File!
-
   name: String!
-
   path: String
-
   status: Boolean!
 }
 
 type MediaDocument implements MediaInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   mediaFile: File!
-
   name: String!
-
   path: String
-
   status: Boolean!
 }
 
 type MediaImage implements MediaInterface {
-  id: ID!
-
   byline: String
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   mediaImage: Image!
-
   name: String!
-
   path: String
-
   status: Boolean!
 }
 
 interface MediaInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   path: String
-
   status: Boolean!
 }
 
 union MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo | MediaVideotool | MediaVideotoolVertical
 
 type MediaVideo implements MediaInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   mediaOembedVideo: String!
-
   name: String!
-
   path: String
-
   status: Boolean!
   thumbnail: String!
 }
 
 type MediaVideotool implements MediaInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   mediaVideotool: String!
-
   name: String!
-
   path: String
-
   status: Boolean!
   thumbnail: String!
 }
 
 type MediaVideotoolVertical implements MediaInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   mediaVideotoolVertical: String!
-
   name: String!
-
   path: String
-
   status: Boolean!
   thumbnail: String!
 }
 
 type Mutation {
   _: Boolean!
-  import(uuid: String!, callbackUrl: String!): ImportResponse!
+  import(callbackUrl: String!, uuid: String!): ImportResponse!
 }
 
 type NewContentResponse {
+  errors: [Error!]!
   uuids: [String!]!
   youngest: Time!
-  errors: [Error!]!
 }
 
 type NodeArticle implements NodeInterface {
-  id: ID!
-
   branch: NodeUnion
-
   canonicalUrl: Link
-
   categories: TermUnion
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   overrideAuthor: String
-
   paragraphs: [ParagraphUnion!]
-
   path: String
-
   promote: Boolean!
-
   publicationDate: DateTime!
-
   showOverrideAuthor: Boolean
-
   status: Boolean!
-
   sticky: Boolean!
-
   subtitle: String
-
   tags: [TermUnion!]
-
   teaserImage: MediaUnion
-
   teaserText: String
-
   title: String!
   url: String!
 }
 
 type NodeGoArticle implements NodeInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
   goArticleImage: MediaUnion
-
+  id: ID!
   langcode: Language!
-
   overrideAuthor: String
-
   paragraphs: [ParagraphUnion!]
-
   path: String
-
   promote: Boolean!
-
   publicationDate: DateTime!
-
   showOverrideAuthor: Boolean
-
   status: Boolean!
-
   sticky: Boolean!
-
   subtitle: String
-
   teaserImage: MediaUnion!
-
   teaserText: String
-
   title: String!
   url: String!
 }
 
 type NodeGoCategory implements NodeInterface {
-  id: ID!
-
   categoryMenuImage: MediaUnion!
-
   categoryMenuSound: MediaUnion
-
   categoryMenuTitle: String!
-
   changed: DateTime!
-
   created: DateTime!
-
   goColor: String
-
+  id: ID!
   langcode: Language!
-
   paragraphs: [ParagraphUnion!]
-
   path: String
-
   promote: Boolean!
-
   publicationDate: DateTime!
-
   status: Boolean!
-
   sticky: Boolean!
-
   title: String!
   url: String!
 }
 
 type NodeGoPage implements NodeInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   paragraphs: [ParagraphUnion!]
-
   path: String
-
   promote: Boolean!
-
   publicationDate: DateTime!
-
   status: Boolean!
-
   sticky: Boolean!
-
   title: String!
   url: String!
 }
 
 interface NodeInterface {
-  id: ID!
-
   changed: DateTime!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   path: String
-
   promote: Boolean!
-
   status: Boolean!
-
   sticky: Boolean!
-
   title: String!
   url: String!
 }
 
 type NodePage implements NodeInterface {
-  id: ID!
-
   branch: NodeUnion
-
   breadcrumbParent: TermUnion
-
   canonicalUrl: Link
-
   changed: DateTime!
-
   created: DateTime!
-
   displayTitles: Boolean
-
   heroTitle: String
-
+  id: ID!
   langcode: Language!
-
   paragraphs: [ParagraphUnion!]
-
   path: String
-
   promote: Boolean!
-
   publicationDate: DateTime!
-
   status: Boolean!
-
   sticky: Boolean!
-
   subtitle: String
-
   teaserImage: MediaUnion
-
   teaserText: String
-
   title: String!
   url: String!
 }
@@ -588,794 +413,498 @@ type NodePage implements NodeInterface {
 union NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type ParagraphAccordion implements ParagraphInterface {
-  id: ID!
-
   accordionDescription: Text
-
   accordionTitle: Text!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphBanner implements ParagraphInterface {
-  id: ID!
-
   bannerDescription: String
-
   bannerImage: MediaUnion
-
   bannerLink: Link!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   underlinedTitle: Text
 }
 
 type ParagraphBreadcrumbChildren implements ParagraphInterface {
-  id: ID!
-
   breadcrumbTarget: TermUnion
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   showSubtitles: Boolean
-
   status: Boolean!
 }
 
 type ParagraphCampaignRule implements ParagraphInterface {
-  id: ID!
-
   campaignRuleFacet: String!
-
   campaignRuleTerm: String!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphCardGridAutomatic implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   filterBranches: [NodeUnion!]
-
   filterCategories: [TermUnion!]
-
   filterCondType: String!
-
   filterContentTypes: [String!]
-
   filterTags: [TermUnion!]
-
+  id: ID!
   langcode: Language!
-
   moreLink: Link
-
   status: Boolean!
-
   title: String
 }
 
 type ParagraphCardGridManual implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   gridContent: [ParagraphCardGridManualGridContentUnion!]
-
-  langcode: Language!
-
-  moreLink: Link
-
-  status: Boolean!
-
-  title: String
   gridContentUuids: [String]
+  id: ID!
+  langcode: Language!
+  moreLink: Link
+  status: Boolean!
+  title: String
 }
 
 union ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type ParagraphContentSlider implements ParagraphInterface {
-  id: ID!
-
   contentReferences: [ParagraphContentSliderContentReferencesUnion!]
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   title: String
-
   underlinedTitle: Text
 }
 
 type ParagraphContentSliderAutomatic implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   filterBranches: [NodeUnion!]
-
   filterCategories: [TermUnion!]
-
   filterCondType: String!
-
   filterContentTypes: [String!]
-
   filterTags: [TermUnion!]
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   title: String
-
   underlinedTitle: Text
 }
 
 union ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type ParagraphEventTicketCategory implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   ticketCategoryName: String!
 }
 
 type ParagraphFiles implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   files: [MediaUnion!]
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphFilteredEventList implements ParagraphInterface {
-  id: ID!
-
   amountOfEvents: Int
-
   created: DateTime!
-
   filterBranches: [NodeUnion!]
-
   filterCategories: [TermUnion!]
-
   filterCondType: String!
-
   filterTags: [TermUnion!]
-
+  id: ID!
   langcode: Language!
-
   maxItemAmount: String!
-
   status: Boolean!
-
   title: String
 }
 
 type ParagraphGoImages implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   goImages: [MediaUnion!]!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphGoLink implements ParagraphInterface {
-  id: ID!
-
   ariaLabel: String
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   link: Link!
-
   status: Boolean!
-
   targetBlank: Boolean
 }
 
 type ParagraphGoLinkbox implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   goColor: String
-
   goDescription: String!
-
   goImage: MediaUnion
-
   goLinkParagraph: ParagraphUnion!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   title: String!
 }
 
 type ParagraphGoMaterialSliderAutomatic implements ParagraphInterface {
-  id: ID!
-
   cqlSearch: CQLSearch
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   sliderAmountOfMaterials: Int!
-
   status: Boolean!
-
   title: String!
 }
 
 type ParagraphGoMaterialSliderManual implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   materialSliderWorkIds: [WorkId!]!
-
   status: Boolean!
-
   title: String!
 }
 
 type ParagraphGoTextBody implements ParagraphInterface {
-  id: ID!
-
   body: Text!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphGoVideo implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   embedVideo: MediaUnion!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   title: String!
 }
 
 type ParagraphGoVideoBundleAutomatic implements ParagraphInterface {
-  id: ID!
-
   cqlSearch: CQLSearch
-
   created: DateTime!
-
   embedVideo: MediaUnion!
-
   goVideoTitle: String!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   videoAmountOfMaterials: Int!
 }
 
 type ParagraphGoVideoBundleManual implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   embedVideo: MediaUnion!
-
   goVideoTitle: String!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   videoBundleWorkIds: [WorkId!]
 }
 
 type ParagraphGoVideoBundleVerticalAuto implements ParagraphInterface {
-  id: ID!
-
   cqlSearch: CQLSearch
-
   created: DateTime!
-
   embedVideo: MediaUnion!
-
   goVideoTitle: String!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   videoAmountOfMaterials: Int!
 }
 
 type ParagraphGoVideoBundleVerticalManual implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   embedVideo: MediaUnion!
-
   goVideoTitle: String!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   videoBundleWorkIds: [WorkId!]
 }
 
 type ParagraphHero implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   heroCategories: TermUnion
-
   heroContentType: String
-
   heroDate: DateTime
-
   heroDescription: Text
-
   heroImage: MediaUnion
-
   heroLink: Link
-
   heroTitle: String!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 interface ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphLanguageSelector implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   languageIcon: Image!
-
   status: Boolean!
 }
 
 type ParagraphLinks implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   link: [Link!]!
-
   status: Boolean!
 }
 
 type ParagraphManualEventList implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   events: [UnsupportedType!]
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
-
   title: String
 }
 
 type ParagraphMaterialGridAutomatic implements ParagraphInterface {
-  id: ID!
-
-  cqlSearch: CQLSearch
-
-  created: DateTime!
-
-  langcode: Language!
-
-  materialAmount: Int!
-
-  materialGridDescription: String
-
-  materialGridTitle: String
-
-  status: Boolean!
   amountOfMaterials: Int! @deprecated(reason: "Use materialAmount instead")
+  cqlSearch: CQLSearch
+  created: DateTime!
+  id: ID!
+  langcode: Language!
+  materialAmount: Int!
+  materialGridDescription: String
+  materialGridTitle: String
+  status: Boolean!
 }
 
 type ParagraphMaterialGridLinkAutomatic implements ParagraphInterface {
-  id: ID!
-
-  created: DateTime!
-
-  langcode: Language!
-
-  materialAmount: Int!
-
-  materialGridDescription: String
-
-  materialGridLink: String!
-
-  materialGridTitle: String
-
-  status: Boolean!
   amountOfMaterials: Int! @deprecated(reason: "Use materialAmount instead")
+  created: DateTime!
+  id: ID!
+  langcode: Language!
+  materialAmount: Int!
+  materialGridDescription: String
+  materialGridLink: String!
+  materialGridTitle: String
+  status: Boolean!
 }
 
 type ParagraphMaterialGridManual implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   materialGridDescription: String
-
   materialGridTitle: String
-
   materialGridWorkIds: [WorkId!]
-
   status: Boolean!
-
   workId: [WorkId!]
 }
 
 type ParagraphMedias implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   medias: [MediaUnion!]!
-
   status: Boolean!
 }
 
 type ParagraphNavGridManual implements ParagraphInterface {
-  id: ID!
-
-  contentReferences: [ParagraphNavGridManualContentReferencesUnion!]
-
-  created: DateTime!
-
-  langcode: Language!
-
-  showSubtitles: Boolean
-
-  status: Boolean!
-
-  title: String
   contentReferenceUuids: [String]
+  contentReferences: [ParagraphNavGridManualContentReferencesUnion!]
+  created: DateTime!
+  id: ID!
+  langcode: Language!
+  showSubtitles: Boolean
+  status: Boolean!
+  title: String
 }
 
 union ParagraphNavGridManualContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type ParagraphNavSpotsManual implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   navSpotsContent: [ParagraphNavSpotsManualNavSpotsContentUnion!]
-
-  status: Boolean!
   navSpotsContentUuids: [String]
+  status: Boolean!
 }
 
 union ParagraphNavSpotsManualNavSpotsContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type ParagraphOpeningHours implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphRecommendation implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   imagePositionRight: Boolean
-
   langcode: Language!
-
   recommendationDescription: String
-
   recommendationTitle: Text
-
   recommendationWorkId: WorkId
-
   status: Boolean!
 }
 
 type ParagraphSimpleLinks implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   link: [Link!]!
-
   status: Boolean!
 }
 
 type ParagraphTextBody implements ParagraphInterface {
-  id: ID!
-
   body: Text!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoImages | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoTextBody | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphGoVideoBundleVerticalAuto | ParagraphGoVideoBundleVerticalManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridLinkAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
 
 type ParagraphUserRegistrationItem implements ParagraphInterface {
-  id: ID!
-
   anchor: String
-
   body: Text!
-
   created: DateTime!
-
   displayInNavigation: Boolean
-
+  id: ID!
   langcode: Language!
-
   linkTarget: String!
-
   navigationTitle: String
-
   registrationLink: Link
-
   status: Boolean!
 }
 
 type ParagraphUserRegistrationLinklist implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphUserRegistrationSection implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphVideo implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
   embedVideo: MediaUnion!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 type ParagraphWebform implements ParagraphInterface {
-  id: ID!
-
   created: DateTime!
-
+  id: ID!
   langcode: Language!
-
   status: Boolean!
 }
 
 scalar PhoneNumber
 
 type Query {
-  newContent(uuid: String!, since: Time!): NewContentResponse!
-  goConfiguration: GoConfiguration
-
-  reservationSettings: ReservationSettings!
-
-  getBranches(
-    isilId: String
-
-    availabilityContexts: [String!]
-
-    cmsConfigured: Boolean
-  ): [Branch!]!
   dplTokens: DplTokens
-
-  paragraph(
-    id: ID!
-
-    langcode: String
-
-    revision: ID
-  ): ParagraphUnion
-
-  node(
-    id: ID!
-
-    langcode: String
-
-    revision: ID
-  ): NodeUnion
-
+  getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
+  goCategories(page: Int = 0): GoCategoriesResult
+  goConfiguration: GoConfiguration
   info: SchemaInformation!
-
-  preview(
-    id: ID!
-
-    token: String
-
-    langcode: String
-  ): NodeUnion
-
-  route(
-    path: String!
-
-    revision: ID
-
-    langcode: String
-  ): RouteUnion
-
-  goCategories(
-    page: Int = 0
-  ): GoCategoriesResult
+  newContent(since: Time!, uuid: String!): NewContentResponse!
+  node(id: ID!, langcode: String, revision: ID): NodeUnion
+  paragraph(id: ID!, langcode: String, revision: ID): ParagraphUnion
+  preview(id: ID!, langcode: String, token: String): NodeUnion
+  reservationSettings: ReservationSettings!
+  route(langcode: String, path: String!, revision: ID): RouteUnion
 }
 
 type ReservationSettings {
-  interestPeriods: InterestPeriods!
-
-  urls: ReservationUrls!
-
-  smsNotificationsEnabled: Boolean!
-
   allowRemoveReadyReservations: Boolean!
+  interestPeriods: InterestPeriods!
+  smsNotificationsEnabled: Boolean!
+  urls: ReservationUrls!
 }
 
 type ReservationUrls {
   pauseReservationInfo: String!
-
   zeroHitsSearch: String!
 }
 
 interface Route {
-  url: String!
-
   internal: Boolean!
+  url: String!
 }
 
 union RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type RouteExternal implements Route {
-  url: String!
-
   internal: Boolean!
+  url: String!
 }
 
 type RouteInternal implements Route {
-  url: String!
-
-  internal: Boolean!
-
   breadcrumbs: [Link!]
-
   entity: RouteEntityUnion
+  internal: Boolean!
+  url: String!
 }
 
 type RouteRedirect implements Route {
-  url: String!
-
   internal: Boolean!
-
-  status: Int!
-
   redirect: Boolean!
+  status: Int!
+  url: String!
 }
 
-union RouteUnion = RouteInternal | RouteExternal | RouteRedirect
+union RouteUnion = RouteExternal | RouteInternal | RouteRedirect
 
 type SchemaInformation {
   description: String
-
   home: String
-
+  languages: [Language!]!
   name: String
   url: String!
-
   version: String
-
-  languages: [Language!]!
 }
 
 type SearchProfiles {
   default: String
-
-  local: String
-
   global: String
+  local: String
 }
 
 enum SortDirection {
   ASC
-
   DESC
 }
 
@@ -1384,173 +913,107 @@ type Subscription {
 }
 
 type TermBreadcrumbStructure implements TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   childrenTitle: String
-
   content: NodeUnion!
-
   description: Text!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   showChildren: Boolean
-
   showChildrenSubtitles: Boolean
-
   status: Boolean!
-
   weight: Int!
 }
 
 type TermCategories implements TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   description: Text!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   status: Boolean!
-
   weight: Int!
 }
 
 interface TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   description: Text!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   status: Boolean!
-
   weight: Int!
 }
 
 type TermOpeningHoursCategories implements TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   description: Text!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   status: Boolean!
-
   weight: Int!
 }
 
 type TermScreenName implements TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   description: Text!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   status: Boolean!
-
   weight: Int!
 }
 
 type TermTags implements TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   description: Text!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   status: Boolean!
-
   weight: Int!
 }
 
 union TermUnion = TermBreadcrumbStructure | TermCategories | TermOpeningHoursCategories | TermScreenName | TermTags | TermWebformEmailCategories
 
 type TermWebformEmailCategories implements TermInterface {
-  id: ID!
-
   changed: DateTime!
-
   description: Text!
-
   email: Email!
-
+  id: ID!
   langcode: Language!
-
   name: String!
-
   parent: TermUnion
-
   path: String
-
   status: Boolean!
-
   weight: Int!
 }
 
 type Text {
-  value: String
-
-  processed: Html
-
   format: String
+  processed: Html
+  value: String
 }
 
 type TextSummary {
-  value: String
-
-  processed: Html
-
   format: String
-
+  processed: Html
   summary: Html
+  value: String
 }
 
 scalar Time
@@ -1560,11 +1023,9 @@ scalar TimeZone
 scalar Timestamp
 
 type Translation {
-  title: String
-
   langcode: Language!
-
   path: String
+  title: String
 }
 
 type UniloginConfigurationPrivate {
@@ -1585,71 +1046,47 @@ scalar UntypedStructuredData
 scalar UtcOffset
 
 interface View {
-  id: ID!
-
-  view: String!
-
-  display: String!
-
-  langcode: String
-
-  label: String
-
   description: String
-
+  display: String!
+  id: ID!
+  label: String
+  langcode: String
   pageInfo: ViewPageInfo!
+  view: String!
 }
 
 type ViewFilter {
-  id: ID!
-
-  plugin: String!
-
-  type: String!
-
-  operator: String!
-
-  label: String
-
-  description: String
-
-  required: Boolean!
-
-  multiple: Boolean!
-
-  value: UntypedStructuredData
-
-  options: UntypedStructuredData
-
   attributes: UntypedStructuredData!
+  description: String
+  id: ID!
+  label: String
+  multiple: Boolean!
+  operator: String!
+  options: UntypedStructuredData
+  plugin: String!
+  required: Boolean!
+  type: String!
+  value: UntypedStructuredData
 }
 
 type ViewPageInfo {
   offset: Int!
-
   page: Int!
-
   pageSize: Int!
-
   total: Int!
 }
 
 type ViewReference {
-  view: String!
-
-  display: String!
-
   contextualFilter: [String!]
-
+  display: String!
   pageSize: Int
-
   query: String
+  view: String!
 }
 
 union ViewResultUnion = GoCategoriesResult
 
 type WorkId {
-  work_id: String
-
   material_type: String
+  work_id: String
 }
