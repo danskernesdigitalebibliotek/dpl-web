@@ -56,13 +56,29 @@ jobs:
         working-directory: go
         run: yarn install --frozen-lockfile
 
-      - name: Run codegen
+      - name: Codegen - REST services
+        working-directory: go
+        run: task codegen:rest-services
+
+      - name: Codegen - dpl-cms GraphQL
         working-directory: go
         env:
           DPL_CMS_BASE_URL: ${{ steps.cms_setup.outputs.endpoint }}
           GO_GRAPHQL_CONSUMER_USER_NAME: go_graphql
           GO_GRAPHQL_CONSUMER_USER_PASSWORD: ${{ steps.cms_setup.outputs.password }}
-        run: task codegen:all
+        run: task codegen:graphql
+
+      - name: Codegen - Publizon
+        working-directory: go
+        run: task codegen:publizon
+
+      - name: Codegen - Pubhub
+        working-directory: go
+        run: task codegen:pubhub
+
+      - name: Codegen - Unilogin
+        working-directory: go
+        run: task codegen:unilogin
 
       - name: Ensure generated client code has not drifted
         working-directory: go

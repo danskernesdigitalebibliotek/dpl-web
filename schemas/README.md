@@ -63,4 +63,6 @@ task schemas:format           # prettier-format the schemas (also run by :refres
 ## Regenerate clients
 
 Codegen is owned by each consuming project. After updating a contract
-here, run that project's `task codegen:all`.
+here, run the relevant `task codegen:*` tasks in the consuming project
+(see each sub-project's `Taskfile.yml` — `task codegen` shows the
+available codegen tasks).

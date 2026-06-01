@@ -51,8 +51,17 @@ jobs:
       - name: Ensure OpenAPI specification has not drifted
         run: git diff --ignore-space-at-eol --exit-code openapi.json
 
-      - name: Run codegen
-        run: task codegen:all
+      - name: Codegen - FBS PHP client
+        run: task dev:codegen:fbs
+
+      - name: Codegen - dpl-cms PHP client
+        run: task dev:codegen:dpl-cms
+
+      - name: Codegen - BNF GraphQL
+        run: task dev:codegen:bnf-graphql
+
+      - name: Codegen - FBI GraphQL
+        run: task dev:codegen:fbi-graphql
 
       - name: Ensure generated client code has not drifted
         run: git diff --ignore-space-at-eol --exit-code

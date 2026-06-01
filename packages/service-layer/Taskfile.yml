@@ -5,7 +5,7 @@ version: "3"
 # which reads /schemas/openapi/fbs-adapter.yaml.
 
 tasks:
-  codegen:all:
+  codegen:fbs:
     desc: Regenerate the internal FBS adapter from /schemas/openapi/fbs-adapter.yaml
     cmds:
       - yarn codegen:fbs
