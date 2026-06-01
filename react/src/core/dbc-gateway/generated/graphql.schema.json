@@ -288,58 +288,6 @@
       },
       {
         "kind": "OBJECT",
-        "name": "AddBookmarksResponse",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "items",
-            "description": "A list of materials for which bookmark addition failed.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": null,
-                "kind": "LIST",
-                "ofType": {
-                  "name": null,
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "name": "BookmarksStatusItem",
-                    "kind": "OBJECT",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "status",
-            "description": "The overall status of the bookmark addition operation.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "BookmarksOverallStatusEnum",
-                "kind": "ENUM",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
         "name": "Audience",
         "description": null,
         "isOneOf": null,
@@ -502,7 +450,7 @@
           },
           {
             "name": "pegi",
-            "description": "PEGI age rating for games ",
+            "description": "PEGI age rating for games",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -640,485 +588,6 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "BookmarkItem",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "application",
-            "description": "The application the bookmark belongs to",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "BookmarksApplicationEnum",
-                "kind": "ENUM",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "createdAt",
-            "description": "creation date of the bookmark",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "DateTime",
-                "kind": "SCALAR",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": "The unique identifier for the bookmark",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "String",
-                "kind": "SCALAR",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "material",
-            "description": "The bibliographic record associated with the bookmark, if it can still be resolved.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "MaterialUnion",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "materialId",
-            "description": "The unique identifier for the material this bookmark points to.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "snapshot",
-            "description": "Stored metadata captured when the bookmark was created.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "BookmarkSnapshot",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "BookmarkSnapshot",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "creator",
-            "description": "Stored creator from when the bookmark was created.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "materialType",
-            "description": "Stored material type from when the bookmark was created.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "title",
-            "description": "Stored title from when the bookmark was created.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "workId",
-            "description": "Stored work id from when the bookmark was created.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "workType",
-            "description": "Stored work type from when the bookmark was created.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Bookmarks",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "hitcount",
-            "description": "The total number of bookmarks for the patron",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "Int",
-                "kind": "SCALAR",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "items",
-            "description": "The list of bookmarks for the patron",
-            "args": [
-              {
-                "name": "limit",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "PaginationLimitScalar",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "orderBy",
-                "description": null,
-                "type": {
-                  "kind": "ENUM",
-                  "name": "OrderBookmarksByEnum",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": null,
-                "kind": "LIST",
-                "ofType": {
-                  "name": null,
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "name": "BookmarkItem",
-                    "kind": "OBJECT",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "status",
-            "description": "The overall status of the bookmarks",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "BookmarksOverallStatusEnum",
-                "kind": "ENUM",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "BookmarksApplicationEnum",
-        "description": null,
-        "isOneOf": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "BIBLIOTEKDK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "STUDIESOEG",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UNKNOWN",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "BookmarksInput",
-        "description": null,
-        "isOneOf": false,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "materialId",
-            "description": "The unique identifier for the material being bookmarked (e.g., a PID or work ID).",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "String",
-                "kind": "SCALAR",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "BookmarksOverallStatusEnum",
-        "description": null,
-        "isOneOf": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "ERROR_MISSING_CLIENT_CONFIGURATION",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ERROR_UNAUTHENTICATED_TOKEN",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FAILED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "OK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "PARTIALLY_FAILED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "BookmarksStatusEnum",
-        "description": null,
-        "isOneOf": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "ALREADY_EXISTS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FAILED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NOT_FOUND",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "OK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UNKNOWN_ERROR",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "BookmarksStatusItem",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": "The unique identifier for the bookmark that was attempted to be added or deleted.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "material",
-            "description": "The material for which bookmark addition failed.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "MaterialUnion",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "materialId",
-            "description": "The unique identifier for the material for which bookmark addition failed (e.g., a PID or work ID).",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "status",
-            "description": "Status of the bookmark addition or deletion attempt for a specific material.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "BookmarksStatusEnum",
-                "kind": "ENUM",
-                "ofType": null
-              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1471,30 +940,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "ComplexSearchCQLFiltersInput",
-        "description": "CQL based filters. Mutually exclusive with ComplexSearchFiltersInput.",
-        "isOneOf": false,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "cqlfilterquery",
-            "description": "A CQL expression used to filter the search result.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1965,7 +1410,7 @@
           },
           {
             "name": "branchId",
-            "description": "BranchId. ",
+            "description": "BranchId.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -2036,26 +1481,6 @@
             "deprecationReason": null
           },
           {
-            "name": "floatGroup",
-            "description": "The floatgroup of the item",
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "name": null,
-                "kind": "NON_NULL",
-                "ofType": {
-                  "name": "String",
-                  "kind": "SCALAR",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "issueId",
             "description": "Id of publishing issue.",
             "type": {
@@ -2098,26 +1523,6 @@
           {
             "name": "location",
             "description": "Where is the book physically located  (eg. skønlitteratur).",
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "name": null,
-                "kind": "NON_NULL",
-                "ofType": {
-                  "name": "String",
-                  "kind": "SCALAR",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "section",
-            "description": "The section which the item belongs to",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -2449,7 +1854,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this suggestion. \nIt is generated in the response and should be included in subsequent\nAPI calls when this suggestion is selected.",
+            "description": "A unique identifier for tracking user interactions with this suggestion.\nIt is generated in the response and should be included in subsequent\nAPI calls when this suggestion is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3846,7 +3251,7 @@
           },
           {
             "name": "nameSort",
-            "description": "Name of the creator which can be used to sort after ",
+            "description": "Name of the creator which can be used to sort after",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4030,58 +3435,6 @@
       },
       {
         "kind": "OBJECT",
-        "name": "DeleteBookmarksResponse",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "items",
-            "description": "Number of failed bookmark deletions (e.g., due to non-existent bookmark IDs).",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": null,
-                "kind": "LIST",
-                "ofType": {
-                  "name": null,
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "name": "BookmarksStatusItem",
-                    "kind": "OBJECT",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "status",
-            "description": "The overall status of the bookmark deletion operation.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "BookmarksOverallStatusEnum",
-                "kind": "ENUM",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
         "name": "Depth",
         "description": null,
         "isOneOf": null,
@@ -4164,7 +3517,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this didYouMean value. \nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
+            "description": "A unique identifier for tracking user interactions with this didYouMean value.\nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4734,7 +4087,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this facet value. \nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
+            "description": "A unique identifier for tracking user interactions with this facet value.\nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -6585,7 +5938,7 @@
           },
           {
             "name": "dateFirstEdition",
-            "description": "The year for the publication of the first edition for this work ",
+            "description": "The year for the publication of the first edition for this work",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -7125,7 +6478,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this manifestation. \nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
+            "description": "A unique identifier for tracking user interactions with this manifestation.\nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -7465,7 +6818,7 @@
           },
           {
             "name": "tvSeries",
-            "description": "detailed title for tv series ",
+            "description": "detailed title for tv series",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -7676,28 +7029,6 @@
         "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
-      },
-      {
-        "kind": "UNION",
-        "name": "MaterialUnion",
-        "description": "Union type for different material types that can be bookmarked",
-        "isOneOf": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": [
-          {
-            "kind": "OBJECT",
-            "name": "Manifestation",
-            "ofType": null
-          },
-          {
-            "kind": "OBJECT",
-            "name": "Work",
-            "ofType": null
-          }
-        ]
       },
       {
         "kind": "OBJECT",
@@ -8750,7 +8081,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this suggestion. \nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
+            "description": "A unique identifier for tracking user interactions with this suggestion.\nIt is generated in the response and should be included in subsequent\nAPI calls when this manifestation is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -8933,18 +8264,6 @@
             "deprecationReason": null
           },
           {
-            "name": "patron",
-            "description": "Updates patron information, such as adding or removing bookmarks.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "PatronMutation",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "submitOrder",
             "description": null,
             "args": [
@@ -9109,7 +8428,7 @@
           },
           {
             "name": "type",
-            "description": "The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. ",
+            "description": "The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -9267,42 +8586,6 @@
       },
       {
         "kind": "ENUM",
-        "name": "OrderBookmarksByEnum",
-        "description": "Enum for sorting bookmarks",
-        "isOneOf": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "CREATEDAT_ASC",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "CREATEDAT_DESC",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "TITLE_ASC",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "TITLE_DESC",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
         "name": "OrderTypeEnum",
         "description": null,
         "isOneOf": null,
@@ -9393,152 +8676,6 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Patron",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "bookmarks",
-            "description": "Retrieves the list of bookmarks for the patron, including pagination and sorting options.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "Bookmarks",
-                "kind": "OBJECT",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "PatronMutation",
-        "description": null,
-        "isOneOf": null,
-        "fields": [
-          {
-            "name": "addBookmarks",
-            "description": "Adds one or more bookmarks for the patron. If a bookmark already exists, it will be ignored.",
-            "args": [
-              {
-                "name": "bookmarks",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "name": null,
-                    "kind": "LIST",
-                    "ofType": {
-                      "name": null,
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "name": "BookmarksInput",
-                        "kind": "INPUT_OBJECT",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "dryRun",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "AddBookmarksResponse",
-                "kind": "OBJECT",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "deleteBookmarks",
-            "description": "Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored.",
-            "args": [
-              {
-                "name": "dryRun",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "ids",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "name": null,
-                    "kind": "LIST",
-                    "ofType": {
-                      "name": null,
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "name": "String",
-                        "kind": "SCALAR",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "name": "DeleteBookmarksResponse",
-                "kind": "OBJECT",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -10157,18 +9294,6 @@
                 "deprecationReason": null
               },
               {
-                "name": "cqlfilter",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ComplexSearchCQLFiltersInput",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
                 "name": "facets",
                 "description": null,
                 "type": {
@@ -10522,18 +9647,6 @@
                 "kind": "OBJECT",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "patron",
-            "description": "Retrieves information about the patron, such as bookmarks, reservations, and loans.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "Patron",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -12058,7 +11171,7 @@
           },
           {
             "name": "contentSubstitute",
-            "description": "This is a paragraph containing markup where links to manifestations\ncan be inserted. For instance '\"Axel Steens nye job minder om [870970-basis:20307021] fra ...'.\nRelevant manifestations are located in the manifestations field. ",
+            "description": "This is a paragraph containing markup where links to manifestations\ncan be inserted. For instance '\"Axel Steens nye job minder om [870970-basis:20307021] fra ...'.\nRelevant manifestations are located in the manifestations field.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -13228,7 +12341,7 @@
           },
           {
             "name": "identifyingAddition",
-            "description": "Additional information ",
+            "description": "Additional information",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -13276,7 +12389,7 @@
           },
           {
             "name": "members",
-            "description": "Members of this serie. ",
+            "description": "Members of this serie.",
             "args": [
               {
                 "name": "limit",
@@ -14006,7 +13119,7 @@
           },
           {
             "name": "language",
-            "description": "Language of the subject - contains display and isoCode ",
+            "description": "Language of the subject - contains display and isoCode",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -14115,7 +13228,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this subject recommendation. \nIt is generated in the response and should be included in subsequent\nAPI calls when this suggestion is selected.",
+            "description": "A unique identifier for tracking user interactions with this subject recommendation.\nIt is generated in the response and should be included in subsequent\nAPI calls when this suggestion is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -15075,7 +14188,7 @@
           },
           {
             "name": "traceId",
-            "description": "A unique identifier for tracking user interactions with this suggestion. \nIt is generated in the response and should be included in subsequent\nAPI calls when this suggestion is selected.",
+            "description": "A unique identifier for tracking user interactions with this suggestion.\nIt is generated in the response and should be included in subsequent\nAPI calls when this suggestion is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -16458,7 +15571,7 @@
           },
           {
             "name": "tvSeries",
-            "description": "detailed title for tv series ",
+            "description": "detailed title for tv series",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -17552,7 +16665,7 @@
     "directives": [
       {
         "name": "complexity",
-        "description": "Complexity directive to evaluate query complexity ",
+        "description": "Complexity directive to evaluate query complexity",
         "isRepeatable": false,
         "isDeprecated": false,
         "deprecationReason": null,
@@ -17606,6 +16719,7 @@
         "deprecationReason": null,
         "locations": [
           "ARGUMENT_DEFINITION",
+          "DIRECTIVE_DEFINITION",
           "ENUM_VALUE",
           "FIELD_DEFINITION",
           "INPUT_FIELD_DEFINITION"
@@ -17709,7 +16823,7 @@
       },
       {
         "name": "specifiedBy",
-        "description": "Exposes a URL that specifies the behaviour of this scalar.",
+        "description": "Exposes a URL that specifies the behavior of this scalar.",
         "isRepeatable": false,
         "isDeprecated": false,
         "deprecationReason": null,
@@ -17719,7 +16833,7 @@
         "args": [
           {
             "name": "url",
-            "description": "The URL that specifies the behaviour of this scalar.",
+            "description": "The URL that specifies the behavior of this scalar.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
