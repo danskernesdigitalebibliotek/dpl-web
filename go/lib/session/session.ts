@@ -3,7 +3,8 @@ import { IronSession, SessionOptions, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
 import { NextResponse, connection } from "next/server"
 
-import { getEnv, getServerEnv } from "@/lib/config/env"
+import { CLIENT_COOKIE_OPTIONS, DEFAULT_COOKIE_OPTIONS } from "@/lib/config/cookies"
+import { getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
@@ -19,8 +20,7 @@ export const getSessionOptions = (): SessionOptions => {
     password: sessionSecret,
     cookieName: "go-session",
     cookieOptions: {
-      // secure only works in `https` environments
-      secure: getEnv("NODE_ENV") === "production",
+      ...DEFAULT_COOKIE_OPTIONS,
     },
     // TODO: Decide on the session ttl.
     ttl: 60 * 60 * 24 * 7, // 1 week
@@ -70,10 +70,7 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
     return defaultSession as IronSession<TSessionData>
   }
 
-  const sessionOptions = await getSessionOptions()
-  if (!sessionOptions) {
-    return defaultSession as IronSession<TSessionData>
-  }
+  const sessionOptions = getSessionOptions()
 
   try {
     const { cookies } = await import("next/headers")
@@ -144,7 +141,11 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   session.adgangsplatformenUserToken = token.token
   session.expires = new Date(token.expire.timestamp * 1000)
   const cookieStore = await cookies()
-  cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgangsplatformen")
+  cookieStore.set(
+    goConfig("auth.cookie-names.session-type"),
+    "adgangsplatformen",
+    CLIENT_COOKIE_OPTIONS
+  )
 }
 
 export const saveAdgangsplatformenSession = async (
