@@ -3,12 +3,20 @@ version: '3'
 # Refresh tasks for the contracts under openapi/ and graphql/.
 # Codgen lives in each consuming sub-project — see README.
 
-dotenv: ['.env']
-
 vars:
   FBS_TOOL_REPO: https://github.com/itk-dev/dpl-fbs-adapter-tool.git
   FBS_TOOL_REF: develop
   FBS_TOOL_DIR: .cache/dpl-fbs-adapter-tool
+
+  # Pinned dockerized toolchain — keeps schemas/ self-contained, no
+  # reach-in to sibling sub-projects. Prettier and graphql-inspector
+  # both run as ephemeral `npx` invocations inside `node:22-alpine`;
+  # nothing is installed locally. (Note: kamilkisiela/graphql-inspector
+  # docker images are broken — v3.4.0 has a buggy undici, master is
+  # missing internal loader deps — so we run the npm package directly.)
+  NODE_IMAGE: node:22-alpine
+  PRETTIER_VERSION: 3.8.3
+  GRAPHQL_INSPECTOR_VERSION: 6.0.7
 
   # DBC FBI gateway endpoints. Names = host+profile, see README.
   DBC_FBI_TEMP_NEXT_URL: https://temp.fbi-api.dbc.dk/next/graphql
@@ -23,28 +31,32 @@ tasks:
       vars: [URL, OUT]
     cmds:
       - |
+        # Task forbids `dotenv:` in included Taskfiles, so source .env
+        # inline. Safe here — .env only carries LIBRARY_TOKEN.
+        if [ -f .env ]; then set -a; . ./.env; set +a; fi
         if [ -z "${LIBRARY_TOKEN:-}" ]; then
           echo "refresh:dbc-fbi: \$LIBRARY_TOKEN not set — copy schemas/.env.example to schemas/.env and fill it in." >&2
           exit 1
         fi
-        if [ ! -d ../react/node_modules/graphql ]; then
-          echo "react/node_modules/graphql not found — run 'yarn install' in react/ first." >&2
-          exit 1
-        fi
-        script="$(pwd)/scripts/introspect.mjs"
-        out="$(pwd)/{{.OUT}}"
-        cd ../react && node "$script" "{{.URL}}" "$out" "$LIBRARY_TOKEN"
+        docker run --rm \
+          --volume "$(pwd):/work" \
+          --workdir /work \
+          "{{.NODE_IMAGE}}" \
+          npx --yes --package="@graphql-inspector/cli@{{.GRAPHQL_INSPECTOR_VERSION}}" -- \
+            graphql-inspector introspect "{{.URL}}" \
+            --write "{{.OUT}}" \
+            --header "Authorization: Bearer $LIBRARY_TOKEN"
 
   format:
-    desc: Normalize whitespace and quote style in openapi/ and graphql/ via prettier (uses react/'s installed prettier).
+    desc: Normalize whitespace and quote style in openapi/ and graphql/ via prettier (dockerized).
     dir: '{{.TASKFILE_DIR}}'
     cmds:
       - |
-        if [ ! -x ../react/node_modules/.bin/prettier ]; then
-          echo "format: prettier not found — run 'yarn install' in react/ first." >&2
-          exit 1
-        fi
-        ../react/node_modules/.bin/prettier --write openapi graphql
+        docker run --rm \
+          --volume "$(pwd):/work" \
+          --workdir /work \
+          "{{.NODE_IMAGE}}" \
+          npx --yes "prettier@{{.PRETTIER_VERSION}}" --write openapi graphql
 
   refresh:material-list:
     desc: Refresh openapi/material-list.yaml from upstream ddb-material-list (latest spec/material-list-X.Y.Z.yaml on develop).
@@ -112,7 +124,6 @@ tasks:
     cmds:
       - cmd: |
           echo "publizon-adapter.yaml has no upstream — edit it by hand and re-run codegen in each consuming project." >&2
-          exit 1
         silent: true
 
   refresh:

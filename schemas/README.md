@@ -49,8 +49,10 @@ sub-project; only the contracts live here.
 | `openapi/publizon-adapter.yaml` | None — edit by hand                                                                                                                                     | `task schemas:refresh:publizon` *(stub that prints this)* |
 
 
-The DBC FBI refresh tasks need a bearer token. Copy `schemas/.env.example`
-to `schemas/.env` and fill in `LIBRARY_TOKEN` — `Taskfile.yml` loads it
+All refresh/format tasks run in Docker — `schemas/` has no local
+toolchain (no `node_modules`, no `npm install`). The DBC FBI refresh
+tasks additionally need a bearer token: copy `schemas/.env.example` to
+`schemas/.env` and fill in `LIBRARY_TOKEN` — `Taskfile.yml` loads it
 via `dotenv:`.
 
 ```sh
