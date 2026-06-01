@@ -1,0 +1,20 @@
+uuid: 7849f2ae-22a9-466f-b788-90ebdf4fd6b0
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+    - taxonomy
+id: eventseries.field_audiences
+field_name: field_audiences
+entity_type: eventseries
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

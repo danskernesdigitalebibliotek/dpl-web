@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventinstance.default.field_audiences
     - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
@@ -87,6 +88,14 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     weight: 53
+    region: content
+  event_audiences:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 54
     region: content
   event_categories:
     type: entity_reference_label
@@ -215,6 +224,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_audiences:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 64
     region: content
   field_branch:
     type: entity_reference_label
