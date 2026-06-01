@@ -2940,32 +2940,32 @@
         },
         {
             "name": "drupal/config_ignore_auto",
-            "version": "3.0.3",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/config_ignore_auto.git",
-                "reference": "3.0.3"
+                "reference": "3.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/config_ignore_auto-3.0.3.zip",
-                "reference": "3.0.3",
-                "shasum": "dd6c372d2ee2405473db4dc7f220ccbbaa82d8eb"
+                "url": "https://ftp.drupal.org/files/projects/config_ignore_auto-3.3.1.zip",
+                "reference": "3.3.1",
+                "shasum": "0f09df5756eb1013615ef7e68382d7f212a62629"
             },
             "require": {
                 "drupal/config_ignore": "^3.0",
                 "drupal/core": "^8.8 || ^9 || ^10 || ^11"
             },
             "require-dev": {
-                "drupal/admin_toolbar": "^3.5",
-                "drupal/devel": "^5.3",
+                "drupal/admin_toolbar": "*",
+                "drupal/devel": "*",
                 "drush/drush": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.3",
-                    "datestamp": "1728397967",
+                    "version": "3.3.1",
+                    "datestamp": "1780268848",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
