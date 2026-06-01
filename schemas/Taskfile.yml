@@ -61,11 +61,21 @@ tasks:
         ../react/node_modules/.bin/prettier --write openapi graphql
 
   refresh:material-list:
-    desc: Refresh openapi/material-list.yaml from upstream ddb-material-list.
+    desc: Refresh openapi/material-list.yaml from upstream ddb-material-list (latest spec/material-list-X.Y.Z.yaml on develop).
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - curl -sSfL https://raw.githubusercontent.com/danskernesdigitalebibliotek/ddb-material-list/develop/spec/material-list-2.0.0.yaml -o openapi/material-list.yaml
-      - task: format
+      - |
+        api='https://api.github.com/repos/danskernesdigitalebibliotek/ddb-material-list/contents/spec?ref=develop'
+        latest=$(curl -sSfL "$api" \
+          | grep -oE 'material-list-[0-9]+\.[0-9]+\.[0-9]+\.yaml' \
+          | sort -V -u \
+          | tail -n1)
+        if [ -z "$latest" ]; then
+          echo "refresh:material-list: could not determine latest spec version from $api" >&2
+          exit 1
+        fi
+        echo "refresh:material-list: using $latest"
+        curl -sSfL "https://raw.githubusercontent.com/danskernesdigitalebibliotek/ddb-material-list/develop/spec/$latest" -o openapi/material-list.yaml
 
   refresh:fbs:
     desc: Regenerate openapi/fbs-adapter.yaml via the dpl-fbs-adapter-tool. Needs docker, git, task.
