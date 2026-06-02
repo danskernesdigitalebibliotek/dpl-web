@@ -1,0 +1,221 @@
+diff --git a/config/install/jsonlog.settings.yml b/config/install/jsonlog.settings.yml
+index 08034e7..92de57c 100644
+--- a/config/install/jsonlog.settings.yml
++++ b/config/install/jsonlog.settings.yml
+@@ -4,6 +4,6 @@ jsonlog_siteid: ''
+ jsonlog_canonical: ''
+ jsonlog_file_time: 'Ymd'
+ jsonlog_dir: ''
+-jsonlog_stdout: false
++jsonlog_stderr: false
+ jsonlog_newline_prepend: false
+ jsonlog_tags: ''
+diff --git a/config/schema/jsonlog.schema.yml b/config/schema/jsonlog.schema.yml
+index c6c0eac..0d568cd 100644
+--- a/config/schema/jsonlog.schema.yml
++++ b/config/schema/jsonlog.schema.yml
+@@ -22,10 +22,10 @@ jsonlog.settings:
+     jsonlog_dir:
+       type: string
+       label: 'Log directory'
+-    jsonlog_stdout:
++    jsonlog_stderr:
+       type: boolean
+       nullable: true
+-      label: 'Log to STDOUT'
++      label: 'Log to STDERR'
+     jsonlog_newline_prepend:
+       type: boolean
+       # Nullable because is addition to original schema.
+diff --git a/jsonlog.inc b/jsonlog.inc
+index 4f1297f..d428b90 100644
+--- a/jsonlog.inc
++++ b/jsonlog.inc
+@@ -163,32 +163,32 @@ function _jsonlog_form_system_logging_settings_alter(&$form, FormStateInterface
+     ];
+   }
+ 
+-  // STDOUT.
+-  if (($stdout = getenv('drupal_jsonlog_stdout'))) {
++  // STDERR.
++  if (($stderr = getenv('drupal_jsonlog_stderr'))) {
+     $overridden = TRUE;
+   }
+   else {
+-    $stdout = $config->get('jsonlog_stdout') ?? FALSE;
++    $stderr = $config->get('jsonlog_stderr') ?? FALSE;
+     $overridden = FALSE;
+   }
+-  $form['jsonlog']['jsonlog_stdout'] = [
++  $form['jsonlog']['jsonlog_stderr'] = [
+     '#type' => 'checkbox',
+     '#title' => t(
+-      'Output to stdout [jsonlog_stdout] @overridden',
++      'Output to stderr [jsonlog_stderr] @overridden',
+       ['@overridden' => $overridden ? $t_overridden : ''],
+       ['context' => 'module:jsonlog']
+     ),
+     '#title_display' => 'before',
+     '#description' => t(
+-      'In containerized environments like Docker it is way more convenient to send your logs to container stdout and let platform do the rest for you.',
++      'In containerized environments like Docker it is way more convenient to send your logs to container stderr and let platform do the rest for you.',
+       [],
+       ['context' => 'module:jsonlog']
+     ),
+     '#required' => FALSE,
+-    '#default_value' => $stdout,
++    '#default_value' => $stderr,
+   ];
+   if ($overridden) {
+-    $form['jsonlog']['jsonlog_stdout']['#attributes'] = [
++    $form['jsonlog']['jsonlog_stderr']['#attributes'] = [
+       'disabled' => 'disabled',
+     ];
+   }
+@@ -200,10 +200,10 @@ function _jsonlog_form_system_logging_settings_alter(&$form, FormStateInterface
+       [],
+       ['context' => 'module:jsonlog']
+     ),
+-    '#open' => !$stdout,
++    '#open' => !$stderr,
+     '#states' => [
+       'open' => [
+-        ':input[name="jsonlog_stdout"]' => ['checked' => FALSE],
++        ':input[name="jsonlog_stderr"]' => ['checked' => FALSE],
+       ],
+     ],
+   ];
+@@ -247,7 +247,7 @@ function _jsonlog_form_system_logging_settings_alter(&$form, FormStateInterface
+   }
+ 
+   // Dir.
+-  if (!($dir_default = jsonlog_default_dir()) && !$stdout) {
++  if (!($dir_default = jsonlog_default_dir()) && !$stderr) {
+     \Drupal::messenger()->addMessage(
+       t('Failed to establish the server\'s default logging directory.', [], ['context' => 'module:jsonlog']),
+       'warning'
+diff --git a/jsonlog.module b/jsonlog.module
+index 130431e..560247d 100644
+--- a/jsonlog.module
++++ b/jsonlog.module
+@@ -76,7 +76,7 @@ function jsonlog_form_system_logging_settings_submit($form, FormStateInterface $
+     'jsonlog_truncate',
+     'jsonlog_siteid',
+     'jsonlog_dir',
+-    'jsonlog_stdout',
++    'jsonlog_stderr',
+     'jsonlog_file_time',
+   ];
+ 
+@@ -87,8 +87,8 @@ function jsonlog_form_system_logging_settings_submit($form, FormStateInterface $
+   if (!$values['jsonlog_truncate']) {
+     $values['jsonlog_truncate'] = 0;
+   }
+-  $stdout = $values['jsonlog_stdout'];
+-  if (!$stdout && !$values['jsonlog_dir']) {
++  $stderr = $values['jsonlog_stderr'];
++  if (!$stderr && !$values['jsonlog_dir']) {
+     $values['jsonlog_dir'] = jsonlog_default_dir();
+   }
+ 
+@@ -105,7 +105,7 @@ function jsonlog_form_system_logging_settings_submit($form, FormStateInterface $
+     ->set('jsonlog_truncate', $values['jsonlog_truncate'])
+     ->set('jsonlog_siteid', $values['jsonlog_siteid'])
+     ->set('jsonlog_canonical', $values['jsonlog_canonical'])
+-    ->set('jsonlog_stdout', $values['jsonlog_stdout'])
++    ->set('jsonlog_stderr', $values['jsonlog_stderr'])
+     ->set('jsonlog_file_time', $values['jsonlog_file_time'])
+     ->set('jsonlog_dir', $values['jsonlog_dir'])
+     ->set('jsonlog_newline_prepend', (bool) $values['jsonlog_newline_prepend'])
+@@ -126,7 +126,7 @@ function jsonlog_form_system_logging_settings_submit($form, FormStateInterface $
+     ];
+ 
+     $jsonlogger->log($values['jsonlog_severity_threshold'], $values['example_entry_data']['message'], $context);
+-    if (!$stdout) {
++    if (!$stderr) {
+       \Drupal::messenger()->addMessage(
+         t(
+           'An attempt was made to write a test entry to the json log at @file.',
+@@ -136,7 +136,7 @@ function jsonlog_form_system_logging_settings_submit($form, FormStateInterface $
+       );
+     }
+     else {
+-      \Drupal::messenger()->addMessage(t('An attempt was made to log a JSON-formatted test entry to stdout.', [], ['context' => 'module:jsonlog']));
++      \Drupal::messenger()->addMessage(t('An attempt was made to log a JSON-formatted test entry to stderr.', [], ['context' => 'module:jsonlog']));
+     }
+   }
+ }
+diff --git a/src/Logger/JsonLog.php b/src/Logger/JsonLog.php
+index 5c6518b..278999f 100644
+--- a/src/Logger/JsonLog.php
++++ b/src/Logger/JsonLog.php
+@@ -63,11 +63,11 @@ class JsonLog implements LoggerInterface {
+   private $canonical;
+ 
+   /**
+-   * Log to STDOUT.
++   * Log to STDERR.
+    *
+    * @var bool
+    */
+-  private $stdout;
++  private $stderr;
+ 
+   /**
+    * @var string
+@@ -121,24 +121,26 @@ class JsonLog implements LoggerInterface {
+       return;
+     }
+ 
+-    if ($this->stdout) {
+-      if (FALSE === file_put_contents('php://stdout', $log_entry->getJson())) {
+-        error_log('Drupal jsonlog, site ID[' . $this->site_id . '], failed to write to STDOUT.');
++    // Log entry append/prepend.
++    $prepend = '';
++    $append = "\n";
++    if ($this->config->get('jsonlog_newline_prepend') ?? JsonLog::JSONLOG_NEWLINE_PREPEND) {
++      $prepend = "\n";
++      $append = '';
++    }
++    $log_entry_wrapped = $prepend . $log_entry->getJson() . $append;
++
++    if ($this->stderr) {
++      if (FALSE === file_put_contents('php://stderr', $log_entry_wrapped)) {
++        error_log('Drupal jsonlog, site ID[' . $this->site_id . '], failed to write to STDERR.');
+       }
+       unset($log_entry);
+       return;
+     }
+ 
+-    // File append, using lock (write, doesn't prevent reading).
++    // Logging to file if not stderr.
+     // If failure: log filing error to web server's default log.
+-    if ($this->config->get('jsonlog_newline_prepend') ?? JsonLog::JSONLOG_NEWLINE_PREPEND) {
+-      $prepend = "\n";
+-      $append = '';
+-    } else {
+-      $prepend = '';
+-      $append = "\n";
+-    }
+-    if (!file_put_contents($this->file, $prepend . $log_entry->getJson() . $append, FILE_APPEND | LOCK_EX)) {
++    if (!file_put_contents($this->file, $log_entry_wrapped, FILE_APPEND | LOCK_EX)) {
+       error_log('Drupal jsonlog, site ID[' . $this->site_id . '], failed to write to file[' . $this->file . '].');
+     }
+ 
+@@ -219,12 +221,12 @@ class JsonLog implements LoggerInterface {
+       $this->canonical = $this->config->get('jsonlog_canonical');
+     }
+ 
+-    // Send to STDOUT
+-    if (!($this->stdout = getenv('drupal_jsonlog_stdout'))) {
+-      $this->stdout = $this->config->get('jsonlog_stdout') ?? FALSE;
++    // Send to STDERR
++    if (!($this->stderr = getenv('drupal_jsonlog_stderr'))) {
++      $this->stderr = $this->config->get('jsonlog_stderr') ?? FALSE;
+     }
+ 
+-    if (!$this->stdout) {
++    if (!$this->stderr) {
+       // Dir
+       if (!($this->dir = getenv('drupal_jsonlog_dir'))) {
+         if (!($this->dir = $this->config->get('jsonlog_dir'))) {

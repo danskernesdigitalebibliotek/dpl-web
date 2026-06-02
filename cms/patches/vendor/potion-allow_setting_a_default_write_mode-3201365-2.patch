@@ -1,0 +1,59 @@
+diff --git a/src/Commands/PotionCommands.php b/src/Commands/PotionCommands.php
+index 7890386..a02b74e 100644
+--- a/src/Commands/PotionCommands.php
++++ b/src/Commands/PotionCommands.php
+@@ -279,6 +279,10 @@ class PotionCommands extends DrushCommands {
+    *
+    * @command potion:generate
+    *
++   * @option default-write-mode
++   *   Allows choosing the default write mode if an existing PO file is found.
++   *   [default: "none"].
++   *
+    * @option exclude-yaml
+    *   Exclude YAML files (.yaml) to be scanned for translations.
+    *   [default: "false"].
+@@ -327,11 +331,12 @@ class PotionCommands extends DrushCommands {
+    *   If the given destination is not writable.
+    */
+   public function translationExtract($langcode, $source, $destination, array $options = [
+-    'format'       => 'table',
+-    'exclude-yaml' => FALSE,
+-    'exclude-twig' => FALSE,
+-    'exclude-php'  => FALSE,
+-    'recursive'    => FALSE,
++    'format'             => 'table',
++    'default-write-mode' => 'none',
++    'exclude-yaml'       => FALSE,
++    'exclude-twig'       => FALSE,
++    'exclude-php'        => FALSE,
++    'recursive'          => FALSE,
+   ]) {
+     // Check for existing & enabled langcode.
+     if (!$this->utility->isLangcodeEnabled($langcode)) {
+@@ -370,14 +375,18 @@ class PotionCommands extends DrushCommands {
+     // Get the final destination path.
+     $fullpath = $this->utility->sanitizePath($this->fileSystem->realpath($destination)) . $langcode . '.po';
+ 
+-    // If file final destination already exists, ask to choose a write mode.
++    // If file final destination already exists, ask to choose a write mode or use the default it is set.
+     if (is_file($fullpath)) {
+-      $msg = $this->t('A file @destination already exists. Do you want to replace it with the new one?', ['@destination' => $fullpath]);
+-      $write_mode = $this->io()->choice($msg, [
+-        'merge'    => $this->t('Merge.')->render(),
+-        'create'   => $this->t('Keep both.')->render(),
+-        'override' => $this->t('Replace.')->render(),
+-      ], 'merge');
++      if (in_array($options["default-write-mode"], ['merge', 'create', 'override'])) {
++        $write_mode = $options["default-write-mode"];
++      } else {
++        $msg = $this->t('A file @destination already exists. Do you want to replace it with the new one?', ['@destination' => $fullpath]);
++        $write_mode = $this->io()->choice($msg, [
++          'merge' => $this->t('Merge.')->render(),
++          'create' => $this->t('Keep both.')->render(),
++          'override' => $this->t('Replace.')->render(),
++        ], 'merge');
++      }
+     }
+ 
+     switch ($write_mode) {
