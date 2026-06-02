@@ -20,27 +20,17 @@ all of them.
 The repo is a mono-repo of four projects that together form the platform:
 
 - **`cms/`** — A Drupal distribution. The editorial backend each library
-  runs. It hosts content, configuration, and (today) embeds the React apps.
+  runs. It hosts content, configuration, and embeds the React apps.
 - **`react/`** — A library of small standalone React apps (search, loans,
   reservations, …) bundled per-app and embedded into CMS pages via
   `<div data-dpl-app="…">` containers.
-- **`go/`** — A Next.js App Router frontend, the modern public-facing site.
-  Aimed initially at youth audiences. Reads content and configuration from
+- **`go/`** — A Next.js App Router frontend, a standalone public-facing site.
+  Aimed at young audiences. Reads content and configuration from
   the CMS over GraphQL.
-- **`design-system/`** — The shared visual language. Ships **HTML markup +
-  CSS classes** (not React components) to consumers.
-
-## How the projects relate
-
-```
-design-system  ──HTML+CSS──▶  cms (Drupal theme "novel")
-                          └─▶  react (npm package)
-
-react  ──bundled + embedded──▶  cms  ──GraphQL──▶  go
-```
-
-Go does **not** consume the design system today. React and Go don't talk to
-each other.
+- **`design-system/`** — The shared visual language for non-GO functionality. 
+  Ships **HTML markup + CSS classes** (not React components) to consumers.
+  GO does NOT use the design-system - it has its own visual identity, contained
+  within its project subfolder.
 
 ## Where to learn more
 
@@ -48,12 +38,9 @@ each other.
   there, plus an `architecture/` folder of ADRs (Architectural Decision
   Records). See [`docs/AGENTS.md`](./docs/AGENTS.md) for how docs are
   organised and when to write what.
-- Each subproject has its own **`AGENTS.md`**. Read the relevant one before
-  editing inside that subproject — it captures the conventions and gotchas
-  that are easy to get wrong from generic stack knowledge alone.
 - Public docs (architecture, processes, releases):
   <https://danskernesdigitalebibliotek.github.io/dpl-docs/>.
-- `Taskfile.yml` (root and per-subproject) is the index of human-runnable
+- `Taskfile.yml` (root and per-subproject) is the index of runnable
   workflows — linting, formatting, codegen, dev servers, resets. When the
   next step in your work is to run a command, there is almost certainly a
   Task for it; surface that name to the developer rather than raw

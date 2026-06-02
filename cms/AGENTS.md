@@ -28,18 +28,9 @@ check via `moduleHandler()->moduleExists(...)` first.
 
 ## Configuration management — the highest-risk area
 
-The mechanism is **`config_ignore_auto`**: *all* config is ignored on import
-by default. Core-managed config is opted in *explicitly* with a `~` prefix
-in `config_ignore.settings.ignored_config_entities`. Forgetting that prefix
-means your change will not actually deploy. Forgetting it the *other* way —
-adding a key that should have stayed library-controllable — silently
-overrides what libraries had configured.
-
-This is the single area where mistakes propagate to all 100 sites. Read
-[`../docs/cms/configuration-management.md`](../docs/cms/configuration-management.md)
-before touching configuration. Deployments always use `drush deploy` (it
-orders updatedb → cache rebuild → config import → deploy hooks correctly);
-never `drush config-import` raw.
+We use `config_ignore_auto`, to avoid breaking stuff for especially webmaster
+library sites.  As soon as you want to do anything with config (config-export,
+config-import, etc.), read [the config documentation](../docs/cms/configuration-management.md) first.
 
 ## How the React apps end up on a page
 
@@ -82,6 +73,3 @@ known.
   but breaks in BNF, start there.
 - **`docker-compose.yml` here is *not* production.** Production compose
   lives in the sibling `dpl-platform` repo. Don't expect parity.
-- **Install profile has no `install:` dependencies.** Module enable/disable
-  goes through update hooks in `dpl_update.install`, not the profile's
-  `.info.yml`.

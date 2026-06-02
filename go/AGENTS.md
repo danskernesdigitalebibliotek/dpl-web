@@ -50,16 +50,7 @@ don't bake URLs into the build.
 
 ## Caching is three independent layers
 
-Don't conflate them:
-
-1. **DPL CMS content** — Next.js `"use cache"` + cache tags (ADR-009). The
-   DPL CMS GraphQL fetcher attaches an `x-dpl-graphql-cache-tags` header,
-   wrapped into a `go: { cacheTags }` envelope on each response. Stored
-   indefinitely; invalidated on-demand when the CMS calls
-   `GET /cache/revalidate?secret=…&tags=…`.
-2. **DPL CMS configuration** — `"use cache"` without tags; ~15 min lifetime.
-3. **3rd-party React Query cache** — `staleTime` 1 min in prod, 0 in dev;
-   invalidate explicitly on mutations and logout (ADR-008).
+If you are working with caching, make sure to see ADR-008 and ADR-009.
 
 ## Authentication — two providers, one session
 
@@ -73,9 +64,7 @@ is either one or the other at a time, never both.
   user's first institution's `kommunenr` must match
   `UNILOGIN_MUNICIPALITY_ID`.
 
-A parallel public `go-session:type` cookie is readable client-side so the
-right Publizon adapter can be chosen without a round-trip — see
-`lib/rest/publizon/` and ADR-005.
+If you are doing anything with authentication, make sure to see ADR-005 and [`../docs/go/authentication.md`](../docs/go/authentication.md)
 
 ## Where to learn more
 
@@ -95,10 +84,6 @@ right Publizon adapter can be chosen without a round-trip — see
 
 - **The middleware file is `proxy.ts`, not `middleware.ts`** — extend it,
   don't create a parallel file.
-- **Publizon has two generated adapter sets** (external for Adgangsplatformen
-  users, local Next.js proxy for Unilogin users). Never call a generated
-  Publizon hook directly from a component — go through the
-  `withSessionType()` wrapper hooks in `lib/rest/publizon/` (ADR-005).
 - **`UNLILOGIN_*` is a typo carried through the codebase** (missing an `I`).
   It's load-bearing in production envs — don't "fix" it without a
   coordinated rename across env files, Lagoon, and the Zod schema.

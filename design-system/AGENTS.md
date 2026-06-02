@@ -30,9 +30,6 @@ before editing:
   nesting all become part of the contract once a component ships. Changing
   `<div class="card">` to `<article class="card">` is a breaking change.
 
-Consumers: the CMS theme `novel` (via the `dist.zip` GitHub release) and the
-`/react` npm package. `/go` does not consume the design system today.
-
 ## SCSS — tokens, mixins, BEM
 
 A few rules that override generic SCSS instincts:
@@ -61,12 +58,6 @@ A few rules that override generic SCSS instincts:
   unmodified by Drupal Twig. CRA's loader transforms `class` → `className`
   for the React preview side. Don't bulk-convert.
 - Renaming or removing an icon is a breaking change for consumers.
-
-## Tenant theming
-
-Each library re-skins the system at runtime. That's why colours are exposed
-as **HSL-decomposed CSS custom properties** (`--identity-color-h`, `-s`,
-`-l`) on `:root`, not single hex values. Don't flatten them.
 
 ## Where to learn more
 

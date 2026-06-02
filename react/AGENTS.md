@@ -31,8 +31,6 @@ HTML page":
   by `hook_dpl_react_apps_data()` in the CMS; if it's missing,
   `useText("fooText")` throws at runtime. See the matching gotcha in
   [`../cms/AGENTS.md`](../cms/AGENTS.md).
-- **Don't render `<main>` inside an app** — the CMS provides the page's
-  `<main>`. Use `<section>`. ESLint blocks this.
 - **`bundle.js` is shared across all apps**, so a fat dep added to one app
   inflates every page that loads any DPL app. Reuse before adding.
 
@@ -53,10 +51,7 @@ Server data never goes into Redux; app config never goes into react-query.
 ## Codegen is the wire
 
 Server clients are generated — GraphQL via `graphql-codegen` (DBC Gateway),
-REST via Orval (FBS, Publizon, dpl-cms, material-list). The generated files
-under `src/core/{dbc-gateway,fbs,publizon,dpl-cms,material-list-api}/`
-**must not be hand-edited**. Edit the source spec (`*.graphql` file,
-`*-adapter.yaml`, or the sibling CMS's `openapi.json`) and regenerate.
+REST via Orval (FBS, Publizon, dpl-cms, material-list).
 
 Each generated client has a hand-written `mutator/fetcher.ts` alongside the
 generated code — those are yours to edit. They inject the `Authorization`
