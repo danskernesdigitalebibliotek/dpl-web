@@ -79,11 +79,11 @@ const MaterialInfo: FC<MaterialInfoProps> = ({
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus={focused}
             lang={lang || ""}
-            className="list-reservation__header color-secondary-gray"
+            className="list-reservation__title list-reservation__title--button color-secondary-gray"
           >
             <span
               id={arrowLabelledBy}
-              className="list-reservation__header__text"
+              className="list-reservation__title__text"
             >
               {title}
             </span>

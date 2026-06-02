@@ -123,7 +123,12 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned && orderId) {
       return (
         <LinkButton
-          url={new URL(`/reader?orderid=${orderId}`, window.location.href)}
+          url={
+            new URL(
+              `/reader?orderid=${encodeURIComponent(orderId)}`,
+              window.location.href
+            )
+          }
           buttonType="none"
           variant="filled"
           size={size || "large"}

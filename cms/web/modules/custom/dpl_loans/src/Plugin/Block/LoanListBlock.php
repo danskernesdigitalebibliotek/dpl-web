@@ -8,6 +8,8 @@ use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_loans\DplLoansSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\dpl_react_apps\SharedTranslations\OnlineMaterialTexts;
+use Drupal\dpl_react_apps\SharedTranslations\PlayerModalTexts;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -86,6 +88,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'loan-list-digital-loans-title-text' => $this->t("Digital loans", [], ['context' => 'Loan list']),
       'loan-list-digital-physical-loans-empty-list-text' => $this->t("You have 0 loans at the moment", [], ['context' => 'Loan list']),
       'loan-list-due-date-modal-aria-label-text' => $this->t("This button opens a modal that covers the entire page and contains loans with the same due date as the loan currently in focus", [], ['context' => 'Loan list (Aria)']),
+      'loan-list-loan-details-text' => $this->t("Loan details", [], ['context' => 'Loan list']),
       'loan-list-material-day-text' => $this->t("day", [], ['context' => 'Loan list']),
       'loan-list-material-days-text' => $this->t("days", [], ['context' => 'Loan list']),
       'loan-list-material-late-fee-text' => $this->t("You will be charged a fee, when the item is returned", [], ['context' => 'Loan list']),
@@ -99,7 +102,9 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'loan-list-title-text' => $this->t("Your loans", [], ['context' => 'Loan list']),
       'loan-list-to-be-delivered-digital-material-text' => $this->t("Due date digital @date", [], ['context' => 'Loan list']),
       'loan-list-to-be-delivered-text' => $this->t("Due date physical @date", [], ['context' => 'Loan list']),
-    ] + DplReactAppsController::externalApiBaseUrls();
+    ] + DplReactAppsController::externalApiBaseUrls()
+      + PlayerModalTexts::texts()
+      + OnlineMaterialTexts::texts();
 
     return [
       '#theme' => 'dpl_react_app',

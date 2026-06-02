@@ -6,6 +6,8 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_react_apps\Services\BranchService;
+use Drupal\dpl_react_apps\SharedTranslations\OnlineMaterialTexts;
+use Drupal\dpl_react_apps\SharedTranslations\PlayerModalTexts;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
@@ -615,8 +617,6 @@ class DplReactAppsController extends ControllerBase {
       'online-internal-success-manual-borrowing-notice-text' => $this->t('Please note that the loan does not happen automatically. You must manually borrow the digital material yourself within 48 hours', [], ['context' => 'Work Page']),
       'online-limit-month-audiobook-info-text' => $this->t('You have borrowed @count out of @limit possible audio-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
-      'online-material-player-text' => $this->t('Listen to @materialType', [], ['context' => 'Work Page']),
-      'online-material-reader-text' => $this->t('Read @materialType', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-material-teaser-text' => $this->t('Try @materialType', [], ['context' => 'Work Page']),
       'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
@@ -644,8 +644,6 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-title-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'original-title-text' => $this->t('Original title', [], ['context' => 'Work Page']),
       'periodical-select-edition-text' => $this->t('Edition', [], ['context' => 'Work Page']),
-      'player-modal-close-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
-      'player-modal-description-text' => $this->t('Modal for player', [], ['context' => 'Work Page']),
       'periodical-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'periodikum-select-week-text' => $this->t('Week', [], ['context' => 'Work Page']),
       'periodikum-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
@@ -718,7 +716,9 @@ class DplReactAppsController extends ControllerBase {
       'copy-link-text' => $this->t('Copy link', [], ['context' => 'Work Page']),
       'copy-link-aria-label-text' => $this->t('Copy link to this page', [], ['context' => 'Work Page']),
       // Add external API base urls.
-    ] + self::externalApiBaseUrls();
+    ] + self::externalApiBaseUrls()
+      + PlayerModalTexts::texts()
+      + OnlineMaterialTexts::texts();
 
     $app = [
       '#theme' => 'dpl_react_app',
