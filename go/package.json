@@ -85,7 +85,6 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@0no-co/graphqlsp": "^1.15.4",
     "@chromatic-com/storybook": "^5.2.1",
     "@eslint/js": "^10.0.1",
     "@graphql-codegen/cli": "^6.3.1",
