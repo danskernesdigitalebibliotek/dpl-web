@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\dpl_classes\Hook\EntityHooks;
 use Drupal\dpl_classes\Hook\PreprocessHooks;
@@ -38,4 +39,12 @@ function dpl_classes_preprocess_node(array &$variables): void {
 #[LegacyHook]
 function dpl_classes_preprocess_field(array &$variables): void {
   DrupalTyped::service(PreprocessHooks::class)->preprocessField($variables);
+}
+
+/**
+ * Implements hook_form_alter() for hiding Classes field on some CTs.
+ */
+#[LegacyHook]
+function dpl_classes_form_alter(array &$form, FormStateInterface $form_state): void {
+  DrupalTyped::service(EntityHooks::class)->hideClassesOnForm($form, $form_state);
 }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_classes\Hook;
 
+use Drupal\node\NodeForm;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -40,6 +42,31 @@ class EntityHooks {
     }
 
     return $fields;
+  }
+
+  /**
+   * Hide the CSS classes field on certain node CT forms.
+   *
+   * @param array<mixed> $form
+   *   The form element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  #[Hook('form_alter')]
+  public function hideClassesOnForm(array &$form, FormStateInterface $form_state): void {
+    $excluded_bundles = [
+      'campaign',
+    ];
+
+    $form_object = $form_state->getFormObject();
+
+    if (!($form_object instanceof NodeForm)) {
+      return;
+    }
+
+    if (in_array($form_object->getEntity()->bundle(), $excluded_bundles)) {
+      unset($form['dpl_classes']);
+    }
   }
 
 }
