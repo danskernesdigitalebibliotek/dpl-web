@@ -178,31 +178,20 @@ When introducing new classes, make sure to reuse existing ones and maintain cons
 
 ### Codegen
 
-In this project, we use codegen to generate GraphQL types and queries, which helps streamline the development process and maintain a high level of code quality.
+In this project, we use codegen to generate REST clients (via `orval`) and GraphQL types and queries (via `graphql-codegen`) from API contracts. The contracts are **vendored** in the repo-root [`/schemas`](../../schemas/) directory — codegen never live-introspects a running service. See [`/schemas/README.md`](../../schemas/README.md) for the design rules and the `task schemas:refresh:*` flow that keeps the vendored contracts up to date.
 
-### Codegen types
-
-Codegen types are automatically generated TypeScript types based on the specific API schema. These types ensure type safety and provide autocompletion features when working with GraphQL queries and mutations.
-
-To generate the types, run the following command:
+Run all generators via `task codegen` (or any of the per-generator subtasks listed by `task --list`):
 
 ```bash
-yarn codegen:all-rest-services
+task codegen                  # all generators
+task codegen:rest-services    # orval — REST clients
+task codegen:graphql          # graphql-codegen — dpl-cms + FBI from /schemas SDL
+task codegen:publizon         # orval — Publizon adapter
+task codegen:pubhub           # SOAP — PubHub
+task codegen:unilogin         # SOAP — Unilogin
 ```
 
-The custom functions and configurations for these services are located in the `lib/rest` directory.
-
-```bash
-yarn codegen:graphql
-```
-
-This will create or update the types in the `lib/graphql/generated` directory.
-
-```bash
-yarn codegen:publizon
-```
-
-The `lib/rest/publizon-api` directory contains functions and configurations for interacting with the Publizon API. This API is used to manage and retrieve information about digital publications.
+Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL), and `lib/soap/` (SOAP). To pick up upstream schema changes, refresh the relevant contract in `/schemas` first (`task -d ../schemas refresh:dpl-cms-graphql`, `:dbc-fbi:fbcms-go`, `:material-list`, …) and then re-run codegen here.
 
 ### Custom types
 

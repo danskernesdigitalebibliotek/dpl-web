@@ -50,7 +50,7 @@ Drupal:
 - This is an automatically generated API and specification. To avoid other
   changes leading to unintended changes this we keep the [latest version of the
   specification](../../../cms/openapi.json) in VCS and [setup automations to ensure that the
-  generated specification matches the inteded one](../../../.github/workflows/cms-ci-tests.yml).
+  generated specification matches the inteded one](../../../.github/workflows/cms-codegen.yml).
   When developers update the API they have to use [the provided tasks](../../../cms/Taskfile.yml)
   to update the stored API accordingly.
 - OpenAPI and OpenAPI REST are Drupal modules which have not seen updates for a
