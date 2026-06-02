@@ -1,4 +1,3 @@
-import { clsx } from "clsx";
 import { ReactNode } from "react";
 import { ReactComponent as ArrowSmallRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 import Tag from "../tag/Tag";
@@ -48,12 +47,9 @@ export const ContentListItem: React.FC<ContentListItemProps> = ({
   return (
     <a
       href={href}
-      className={clsx(
-        "content-list-item-grid content-list-item arrow__hover--right-small",
-        status && "content-list-item--status-parent",
-      )}
+      className="content-list-item-grid content-list-item arrow__hover--right-small"
     >
-      <div className="content-list-item__image-container">
+      <div className="content-list-item__image-container status-parent status-parent--media-container">
         {status && <ContentListItemStatus status={status} />}
         <MediaContainer media={image} placeholderText={placeholderText} />
       </div>

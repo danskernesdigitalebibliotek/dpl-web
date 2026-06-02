@@ -2,6 +2,7 @@ import { StoryFn, Meta } from "@storybook/react-webpack5";
 
 import Hero from "./Hero";
 import ImageCredited from "../image-credited/ImageCredited";
+import { ContentListItemStatuses } from "../content-list-item-status/ContentListItemStatus";
 
 const defaultArgs = {
   image: (
@@ -49,12 +50,18 @@ export default {
     },
   },
   args: defaultArgs,
-  excludeStories: ["EventArgs", "ParagraphArgs", "PageArgs"],
+  excludeStories: [
+    "EventArgs",
+    "EventCancelledArgs",
+    "ParagraphArgs",
+    "PageArgs",
+  ],
 } as Meta<typeof Hero>;
 
 const Template: StoryFn<typeof Hero> = (args) => <Hero {...args} />;
 
 export const Event = Template.bind({});
+export const EventCancelled = Template.bind({});
 export const Paragraph = Template.bind({});
 export const Page = Template.bind({});
 
@@ -62,6 +69,11 @@ export const EventArgs = {
   ...defaultArgs,
   description: undefined,
   type: undefined,
+};
+
+export const EventCancelledArgs = {
+  ...EventArgs,
+  status: ContentListItemStatuses.CANCELLED,
 };
 
 export const ParagraphArgs = {
@@ -81,5 +93,6 @@ export const PageArgs = {
 };
 
 Event.args = EventArgs;
+EventCancelled.args = EventCancelledArgs;
 Paragraph.args = ParagraphArgs;
 Page.args = PageArgs;

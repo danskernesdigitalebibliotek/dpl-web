@@ -10,12 +10,17 @@ export enum ContentListItemStatuses {
 
 type ContentListItemStatusProps = {
   status: ContentListItemStatuses;
+  size?: "small" | "large";
 };
 
-const ContentListItemStatus = ({ status }: ContentListItemStatusProps) => {
+const ContentListItemStatus = ({
+  status,
+  size = "small",
+}: ContentListItemStatusProps) => {
   return (
     <Tag
       hasBackground
+      size={size}
       className={clsx(
         "status",
         status === ContentListItemStatuses.NOT_FOR_SALE &&

@@ -1,0 +1,14 @@
+{% if status_value and status_value != 'Active' %}
+  {% set size = size|default('small') %}
+  {% set status_classes = [
+    'tag',
+    'tag--fill',
+    'tag--' ~ size,
+    'status',
+    status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
+    status_value == 'SoldOut' ? 'status--sold-out',
+    status_value == 'Cancelled' ? 'status--cancelled',
+    status_value == 'Occurred' ? 'status--occurred',
+  ] %}
+  <span class="{{ status_classes|join(' ') }}">{{ status }}</span>
+{% endif %}
