@@ -1,0 +1,13 @@
+diff --git a/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php b/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php
+index 92ec640..4e843f0 100644
+--- a/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php
+@@ -79,7 +79,7 @@ class DateRangeFormatterRangeFormatter extends DateTimeCustomFormatter {
+         }
+         if (!array_key_exists($delta, $elements)) {
+           // No end date provided or end date equals start date use single formatting.
+-          $single_format = $this->getSetting('single');
++          $single_format = $this->getSetting('one_day');
+           $elements[$delta] = ['#markup' => \Drupal::service('date.formatter')->format($start_date, 'custom', $this->t($single_format))];
+         }
+       }

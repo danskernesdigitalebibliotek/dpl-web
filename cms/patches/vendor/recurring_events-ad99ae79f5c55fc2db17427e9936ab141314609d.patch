@@ -1,0 +1,120 @@
+From ad99ae79f5c55fc2db17427e9936ab141314609d Mon Sep 17 00:00:00 2001
+From: Benjamin Rasmussen <rasben@users.noreply.github.com>
+Date: Wed, 18 Sep 2024 11:11:20 +0200
+Subject: [PATCH] Use centralized version of date_range ID, across fieldtypes
+
+---
+ src/EventCreationService.php                            | 2 +-
+ src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php | 5 ++++-
+ src/Plugin/Field/FieldType/DailyRecurringDate.php       | 4 +++-
+ src/Plugin/Field/FieldType/MonthlyRecurringDate.php     | 5 ++++-
+ src/Plugin/Field/FieldType/WeeklyRecurringDate.php      | 5 ++++-
+ 5 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/src/EventCreationService.php b/src/EventCreationService.php
+index 03999dd..8c66f21 100644
+--- a/src/EventCreationService.php
++++ b/src/EventCreationService.php
+@@ -400,7 +400,7 @@ class EventCreationService {
+    * @return string
+    *  The ID, used in various arrays.
+    */
+-  public function getDateRangeId(DrupalDateTime $start, DrupalDateTime $end): string {
++  static public function getDateRangeId(DrupalDateTime $start, DrupalDateTime $end): string {
+     return "{$start->format('U')}:{$end->format('U')}";
+   }
+ 
+diff --git a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+index 0eb1cca..058e0c7 100644
+--- a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
++++ b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+@@ -9,6 +9,7 @@ use Drupal\Core\TypedData\DataDefinition;
+ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+ use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
+ use Drupal\recurring_events\Entity\EventSeries;
++use Drupal\recurring_events\EventCreationService;
+ use Drupal\recurring_events\Plugin\RecurringEventsFieldTrait;
+ use Drupal\recurring_events\RecurringEventsFieldTypeInterface;
+ 
+@@ -274,7 +275,9 @@ class ConsecutiveRecurringDate extends DateRangeItem implements RecurringEventsF
+               // Add the number of seconds specified in the duration field.
+               $daily_date_end->modify('+' . $form_data['duration'] . ' ' . $form_data['duration_units']);
+               // Set this event to be created.
+-              $events_to_create[$day_time->format('U') . ':' . $daily_date_end->format('U')] = [
++              $date_id = EventCreationService::getDateRangeId($day_time, $daily_date_end);
++
++              $events_to_create[$date_id] = [
+                 'start_date' => $day_time,
+                 'end_date' => $daily_date_end,
+               ];
+diff --git a/src/Plugin/Field/FieldType/DailyRecurringDate.php b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+index a946dd9..0f2d8d7 100644
+--- a/src/Plugin/Field/FieldType/DailyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+@@ -9,6 +9,7 @@ use Drupal\Core\TypedData\DataDefinition;
+ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+ use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
+ use Drupal\recurring_events\Entity\EventSeries;
++use Drupal\recurring_events\EventCreationService;
+ use Drupal\recurring_events\Plugin\RecurringEventsFieldTrait;
+ use Drupal\recurring_events\RecurringEventsFieldTypeInterface;
+ 
+@@ -245,7 +246,8 @@ class DailyRecurringDate extends DateRangeItem implements RecurringEventsFieldTy
+         $daily_date_end->setTimezone($utc_timezone);
+ 
+         // Set this event to be created.
+-        $events_to_create[$daily_date->format('U') . ':' . $daily_date_end->format('U')] = [
++        $date_id = EventCreationService::getDateRangeId($daily_date, $daily_date_end);
++        $events_to_create[$date_id] = [
+           'start_date' => $daily_date,
+           'end_date' => $daily_date_end,
+         ];
+diff --git a/src/Plugin/Field/FieldType/MonthlyRecurringDate.php b/src/Plugin/Field/FieldType/MonthlyRecurringDate.php
+index 254d956..ca6673c 100644
+--- a/src/Plugin/Field/FieldType/MonthlyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/MonthlyRecurringDate.php
+@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\TypedData\DataDefinition;
+ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+ use Drupal\recurring_events\Entity\EventSeries;
++use Drupal\recurring_events\EventCreationService;
+ use Drupal\recurring_events\Plugin\RecurringEventsFieldTrait;
+ use Drupal\recurring_events\RecurringEventsFieldTypeInterface;
+ 
+@@ -277,7 +278,9 @@ class MonthlyRecurringDate extends WeeklyRecurringDate implements RecurringEvent
+           $monthly_date_end->setTimezone($utc_timezone);
+ 
+           // Set this event to be created.
+-          $events_to_create[$monthly_date->format('U') . ':' . $monthly_date_end->format('U')] = [
++          $date_id = EventCreationService::getDateRangeId($monthly_date, $monthly_date_end);
++
++          $events_to_create[$date_id] = [
+             'start_date' => $monthly_date,
+             'end_date' => $monthly_date_end,
+           ];
+diff --git a/src/Plugin/Field/FieldType/WeeklyRecurringDate.php b/src/Plugin/Field/FieldType/WeeklyRecurringDate.php
+index 0298403..3d0818b 100644
+--- a/src/Plugin/Field/FieldType/WeeklyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/WeeklyRecurringDate.php
+@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\TypedData\DataDefinition;
+ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+ use Drupal\recurring_events\Entity\EventSeries;
++use Drupal\recurring_events\EventCreationService;
+ use Drupal\recurring_events\Plugin\RecurringEventsFieldTrait;
+ use Drupal\recurring_events\RecurringEventsFieldTypeInterface;
+ 
+@@ -182,7 +183,9 @@ class WeeklyRecurringDate extends DailyRecurringDate implements RecurringEventsF
+         $weekly_date_end->setTimezone($utc_timezone);
+ 
+         // Set this event to be created.
+-        $events_to_create[$weekly_date->format('U') . ':' . $weekly_date_end->format('U')] = [
++        $date_id = EventCreationService::getDateRangeId($weekly_date, $weekly_date_end);
++
++        $events_to_create[$date_id] = [
+           'start_date' => $weekly_date,
+           'end_date' => $weekly_date_end,
+         ];
+-- 
+GitLab
+

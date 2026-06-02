@@ -1,0 +1,27 @@
+diff --git a/address_dawa.info.yml b/address_dawa.info.yml
+index 06a8917..283dbe6 100644
+--- a/address_dawa.info.yml
++++ b/address_dawa.info.yml
+@@ -1,7 +1,7 @@
+ name: 'Address DAWA'
+ description: 'A utility module defining field type, widgets and formatters for easy storage and rendering of Danish addresses.'
+ type: module
+-core_version_requirement: ^8.8 || ^9
++core_version_requirement: ^8.8 || ^9 || ^10
+ dependencies:
+   - drupal:field
+ 
+diff --git a/composer.json b/composer.json
+index 236bc85..647aad6 100644
+--- a/composer.json
++++ b/composer.json
+@@ -17,7 +17,7 @@
+     }
+   ],
+   "require": {
+-    "drupal/core": "^8.8 || ^9",
+-    "ext-json": "*"
++    "ext-json": "*",
++    "drupal/core": "^8.8 || ^9 || ^10"
+   }
+ }

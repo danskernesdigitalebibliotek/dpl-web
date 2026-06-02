@@ -1,0 +1,318 @@
+From 67261f4ac34546f2c9514199d9febb6dcce6fd10 Mon Sep 17 00:00:00 2001
+From: Benjamin Rasmussen <rasben@users.noreply.github.com>
+Date: Fri, 16 Aug 2024 12:41:32 +0200
+Subject: [PATCH] 3468521: When changing recurrance, identical date
+ combinations should not be deleted & recreated
+
+Let's assume you have an eventseries, with 3 custom dates:
+
+- 1st of april, 2024, 10:00 - 12:00
+- 2nd of april 2024, 10:00 - 12:00
+- 3rd of april 2024, 10:00 - 12:00
+
+Now, let's say that we want to add a 4th of april.
+If an editor goes to the series edit page, they and add the 4th of
+april, the 3 existing instances will be deleted, and re-created.
+
+This is a problem for anything that uses APIs, as the instances will get
+new IDs.
+It is also a problem if any of the existing instances have had custom
+values added.
+
+I can see in the code that we have a "events_to_create" array. I'd
+expect this array to loop through, and check that if any date
+combination already exists, we should not delete that - and should not
+create it again.
+
+The same concept also applies for non-custom - if you update an series
+that only happened on tuesdays, to also happen on wednesdays.
+
+This commits updates the previous "keys" that were formatted as a
+human-readable string - instead we use a timestamp, to check again.
+---
+ src/EventCreationService.php                  | 165 ++++++++++++------
+ src/Form/EventSeriesForm.php                  |   2 +-
+ .../FieldType/ConsecutiveRecurringDate.php    |   2 +-
+ .../Field/FieldType/DailyRecurringDate.php    |   2 +-
+ .../Field/FieldType/MonthlyRecurringDate.php  |   2 +-
+ .../Field/FieldType/WeeklyRecurringDate.php   |   2 +-
+ 6 files changed, 117 insertions(+), 58 deletions(-)
+
+diff --git a/src/EventCreationService.php b/src/EventCreationService.php
+index 7eecac8..19dfe1a 100644
+--- a/src/EventCreationService.php
++++ b/src/EventCreationService.php
+@@ -4,20 +4,21 @@ namespace Drupal\recurring_events;
+ 
+ use Drupal\Core\Database\Connection;
+ use Drupal\Core\Datetime\DrupalDateTime;
++use Drupal\Core\Logger\LoggerChannelFactoryInterface;
++use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
++use Drupal\recurring_events\Entity\EventSeries;
++use Drupal\Core\Form\FormStateInterface;
++use Drupal\Core\Messenger\Messenger;
++use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+ use Drupal\Core\Entity\EntityFieldManager;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Field\FieldTypePluginManager;
+-use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+-use Drupal\Core\Messenger\Messenger;
+ use Drupal\Core\StringTranslation\StringTranslationTrait;
+ use Drupal\Core\StringTranslation\TranslationInterface;
+-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+ use Drupal\field_inheritance\Entity\FieldInheritanceInterface;
+ use Drupal\recurring_events\Entity\EventInstance;
+-use Drupal\recurring_events\Entity\EventSeries;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ 
+ /**
+@@ -395,7 +396,86 @@ class EventCreationService {
+   }
+ 
+   /**
+-   * Clear out existing event instances..
++   * Getting an array of dates that should be created as new instances.
++   *
++   * @param \Drupal\recurring_events\Entity\EventSeries $event
++   *  The parent eventseries.
++   * @param bool $exclude_existing
++   *  Whether we want to exclude dates that already exist.
++   *
++   * @return array
++   */
++  public function getEventDatesToCreate(EventSeries $event, bool $exclude_existing = FALSE) {
++    $form_data = $this->convertEntityConfigToArray($event);
++    $dates_to_create = [];
++
++    if (empty($form_data['type'])) {
++      return $dates_to_create;
++    }
++
++    if ($form_data['type'] === 'custom' && !empty($form_data['custom_dates'])) {
++      foreach ($form_data['custom_dates'] as $date_range) {
++        $dates_to_create[$date_range['start_date']->format('U') . ':' . $date_range['end_date']->format('U')] = [
++          'start_date' => $date_range['start_date'],
++          'end_date' => $date_range['end_date'],
++        ];
++      }
++    }
++    else {
++      $field_definition = $this->fieldTypePluginManager->getDefinition($form_data['type']);
++      $field_class = $field_definition['class'];
++      $dates_to_create = $field_class::calculateInstances($form_data);
++    }
++
++    if ($exclude_existing) {
++      /** @var EventInstance[] $existing_instances */
++      $existing_instances = $this->entityTypeManager->getStorage('eventinstance')->loadByProperties([
++        'eventseries_id' => $event->id(),
++      ]);
++
++      foreach ($existing_instances as $instance) {
++        $date_id = $this->getInstanceDateId($instance);
++
++        // Don't re-create instance with the same date ID.
++        if (array_key_exists($date_id, $dates_to_create)) {
++          unset($dates_to_create[$date_id]);
++        }
++      }
++    }
++
++    return $dates_to_create;
++  }
++
++  /**
++   * Generating an date ID, based on an instance.
++   *
++   * The ID will be a mix of the start and end dates, and will allow us to
++   * look up if a date combination already exists when we create instances.
++   */
++  public function getInstanceDateId(EventInstance $instance) {
++    try {
++      /** @var DateRangeItem $date */
++      $date = $instance->get('date')->first();
++
++      $properties = $date->getProperties();
++
++      /** @var DrupalDateTime $start */
++      $start = $properties['value']->getDateTime();
++      /** @var DrupalDateTime $end */
++      $end = $properties['end_value']->getDateTime();
++
++      return "{$start->format('U')}:{$end->format('U')}";
++    }
++    catch (\Exception $e) {
++      $this->loggerChannel->error('Could not create Date ID for event instance.');
++      $this->loggerChannel->error($e->getMessage());
++    }
++
++    return NULL;
++  }
++
++  /**
++   * Clear out existing event instances.
+    *
+    * @param Drupal\recurring_events\Entity\EventSeries $event
+    *   The event series entity.
+@@ -412,8 +492,20 @@ class EventCreationService {
+ 
+     $this->moduleHandler->invokeAll('recurring_events_save_pre_instances_deletion_alter', [&$instances]);
+ 
++    $dates_to_create = $this->getEventDatesToCreate($event);
++
+     if (!empty($instances)) {
+-      foreach ($instances as $instance) {
++      foreach ($instances as $key => $instance) {
++        $date_id = $this->getInstanceDateId($instance);
++
++        // Don't delete the instance, if the exact same date will exist
++        // after we re-create later.
++        // This way, the instance gets to keep its UUID.
++        if (array_key_exists($date_id, $dates_to_create)) {
++          unset($instances[$key]);
++          continue;
++        }
++
+         // Allow other modules to react prior to deleting a specific
+         // instance after a date configuration change.
+         $this->moduleHandler->invokeAll('recurring_events_save_pre_instance_deletion', [
+@@ -463,55 +555,22 @@ class EventCreationService {
+    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+    */
+   public function createInstances(EventSeries $event): array {
+-    $form_data = $this->convertEntityConfigToArray($event);
+     $event_instances = [];
+ 
+-    if (!empty($form_data['type'])) {
+-      if ($form_data['type'] === 'custom') {
+-        if (!empty($form_data['custom_dates'])) {
+-          $events_to_create = [];
+-          foreach ($form_data['custom_dates'] as $date_range) {
+-            // Set this event to be created.
+-            $events_to_create[$date_range['start_date']->format('r')] = [
+-              'start_date' => $date_range['start_date'],
+-              'end_date' => $date_range['end_date'],
+-            ];
+-          }
++    $dates_to_create = $this->getEventDatesToCreate($event, TRUE);
+ 
+-          // Allow modules to alter the array of event instances before they
+-          // get created.
+-          $this->moduleHandler->alter('recurring_events_event_instances_pre_create', $events_to_create, $event);
+-
+-          if (!empty($events_to_create)) {
+-            foreach ($events_to_create as $custom_event) {
+-              $instance = $this->createEventInstance($event, $custom_event['start_date'], $custom_event['end_date']);
+-              $this->configureDefaultInheritances($instance, $event->id());
+-              if ($instance) {
+-                $instance->save();
+-              }
+-              $event_instances[] = $instance;
+-            }
+-          }
+-        }
+-      }
+-      else {
+-        $field_definition = $this->fieldTypePluginManager->getDefinition($form_data['type']);
+-        $field_class = $field_definition['class'];
+-        $events_to_create = $field_class::calculateInstances($form_data);
+-
+-        // Allow modules to alter the array of event instances before they
+-        // get created.
+-        $this->moduleHandler->alter('recurring_events_event_instances_pre_create', $events_to_create, $event);
+-
+-        if (!empty($events_to_create)) {
+-          foreach ($events_to_create as $event_to_create) {
+-            $instance = $this->createEventInstance($event, $event_to_create['start_date'], $event_to_create['end_date']);
+-            $this->configureDefaultInheritances($instance, $event->id());
+-            if ($instance) {
+-              $instance->save();
+-            }
+-            $event_instances[] = $instance;
+-          }
++    // Allow modules to alter the array of event instances before they
++    // get created.
++    $this->moduleHandler->alter('recurring_events_event_instances_pre_create', $dates_to_create, $event);
++
++    if (!empty($dates_to_create)) {
++      foreach ($dates_to_create as $date_to_create) {
++        $instance = $this->createEventInstance($event, $date_to_create['start_date'], $date_to_create['end_date']);
++        $this->configureDefaultInheritances($instance, $event->id());
++
++        if ($instance instanceof EventInstance) {
++          $instance->save();
++          $event_instances[] = $instance;
+         }
+       }
+     }
+diff --git a/src/Form/EventSeriesForm.php b/src/Form/EventSeriesForm.php
+index 0e32de6..aeaeedf 100644
+--- a/src/Form/EventSeriesForm.php
++++ b/src/Form/EventSeriesForm.php
+@@ -252,7 +252,7 @@ class EventSeriesForm extends ContentEntityForm {
+           $form['diff']['diff_message'] = [
+             '#type' => '#markup',
+             '#prefix' => '<p>',
+-            '#markup' => $this->t('Recurrence configuration has been changed, as a result all instances will be removed and recreated. This action cannot be undone.'),
++            '#markup' => $this->t('Recurrence configuration has been changed, as a result instances may be created or deleted. This action cannot be undone.'),
+             '#suffix' => '</p>',
+           ];
+ 
+diff --git a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+index d8129dc..0eb1cca 100644
+--- a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
++++ b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+@@ -274,7 +274,7 @@ class ConsecutiveRecurringDate extends DateRangeItem implements RecurringEventsF
+               // Add the number of seconds specified in the duration field.
+               $daily_date_end->modify('+' . $form_data['duration'] . ' ' . $form_data['duration_units']);
+               // Set this event to be created.
+-              $events_to_create[$day_time->format('r')] = [
++              $events_to_create[$day_time->format('U') . ':' . $daily_date_end->format('U')] = [
+                 'start_date' => $day_time,
+                 'end_date' => $daily_date_end,
+               ];
+diff --git a/src/Plugin/Field/FieldType/DailyRecurringDate.php b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+index 5f8b01e..a946dd9 100644
+--- a/src/Plugin/Field/FieldType/DailyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+@@ -245,7 +245,7 @@ class DailyRecurringDate extends DateRangeItem implements RecurringEventsFieldTy
+         $daily_date_end->setTimezone($utc_timezone);
+ 
+         // Set this event to be created.
+-        $events_to_create[$daily_date->format('r')] = [
++        $events_to_create[$daily_date->format('U') . ':' . $daily_date_end->format('U')] = [
+           'start_date' => $daily_date,
+           'end_date' => $daily_date_end,
+         ];
+diff --git a/src/Plugin/Field/FieldType/MonthlyRecurringDate.php b/src/Plugin/Field/FieldType/MonthlyRecurringDate.php
+index ba6e310..254d956 100644
+--- a/src/Plugin/Field/FieldType/MonthlyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/MonthlyRecurringDate.php
+@@ -277,7 +277,7 @@ class MonthlyRecurringDate extends WeeklyRecurringDate implements RecurringEvent
+           $monthly_date_end->setTimezone($utc_timezone);
+ 
+           // Set this event to be created.
+-          $events_to_create[$monthly_date->format('r')] = [
++          $events_to_create[$monthly_date->format('U') . ':' . $monthly_date_end->format('U')] = [
+             'start_date' => $monthly_date,
+             'end_date' => $monthly_date_end,
+           ];
+diff --git a/src/Plugin/Field/FieldType/WeeklyRecurringDate.php b/src/Plugin/Field/FieldType/WeeklyRecurringDate.php
+index c3c5be2..0298403 100644
+--- a/src/Plugin/Field/FieldType/WeeklyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/WeeklyRecurringDate.php
+@@ -182,7 +182,7 @@ class WeeklyRecurringDate extends DailyRecurringDate implements RecurringEventsF
+         $weekly_date_end->setTimezone($utc_timezone);
+ 
+         // Set this event to be created.
+-        $events_to_create[$weekly_date->format('r')] = [
++        $events_to_create[$weekly_date->format('U') . ':' . $weekly_date_end->format('U')] = [
+           'start_date' => $weekly_date,
+           'end_date' => $weekly_date_end,
+         ];
+-- 
+GitLab
+

@@ -1,0 +1,68 @@
+From 312d6282fbc032e2c84f87d6ffdf30676b7534ca Mon Sep 17 00:00:00 2001
+From: Andreas Nielsen <andreas@reload.dk>
+Date: Mon, 17 Feb 2025 12:43:58 +0100
+Subject: [PATCH] When copying authmap entries from "openid_connect_authmap"
+ into the "authmap" db, it is possible to run into duplicate entries.
+
+This commit adds a try/catch to the merge function and logs the error on
+"IntegretyConstrainViolationException".
+
+By adding the try/catch inside of the foreach loop, we make sure that the
+update hook completes, while we skip and log the duplicate entries.
+
+By doing this, we presume that duplicate entries is obsolete, and can safely
+be discarded in the update hook merge process.
+---
+ openid_connect.install | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
+
+diff --git a/openid_connect.install b/openid_connect.install
+index 354bc76..c557c32 100644
+--- a/openid_connect.install
++++ b/openid_connect.install
+@@ -9,6 +9,7 @@
+ /* @noinspection PhpUnused */
+ 
+ use Drupal\Core\Config\Entity\ConfigEntityType;
++use Drupal\Core\Database\IntegrityConstraintViolationException;
+ use Drupal\Core\StringTranslation\TranslatableMarkup;
+ use Drupal\Core\Url;
+ use Drupal\Core\Utility\UpdateException;
+@@ -243,16 +244,24 @@ function openid_connect_update_8204() {
+   $authmap_records = $query->execute()->fetchAllAssoc('aid');
+ 
+   foreach ($authmap_records as $authmap_record) {
+-    $database->merge('authmap')
+-      ->keys([
+-        'uid' => $authmap_record->uid,
+-        'provider' => 'openid_connect.' . $authmap_record->client_name,
+-      ])
+-      ->fields([
+-        'authname' => $authmap_record->sub,
+-        'data' => 'N;',
+-      ])
+-      ->execute();
++    try {
++      $database->merge('authmap')
++        ->keys([
++          'uid' => $authmap_record->uid,
++          'provider' => 'openid_connect.' . $authmap_record->client_name,
++        ])
++        ->fields([
++          'authname' => $authmap_record->sub,
++          'data' => 'N;',
++        ])
++        ->execute();
++    }
++    catch (IntegrityConstraintViolationException $e) {
++      \Drupal::logger('openid_connect')
++        ->error('Multiple records found for openid_connect Client with Error @message', [
++          '@message' => $e->getMessage(),
++        ]);
++    }
+   }
+ }
+ 
+-- 
+GitLab
+

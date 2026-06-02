@@ -1,0 +1,165 @@
+diff --git a/src/Controller/AccessController.php b/src/Controller/AccessController.php
+index 4b42fcafcd..c0a9f80a19 100644
+--- a/src/Controller/AccessController.php
++++ b/src/Controller/AccessController.php
+@@ -119,6 +119,87 @@ public function access(AccountInterface $account, string $theme = NULL): AccessR
+     }
+   }
+ 
++  /**
++   * Check install permission.
++   *
++   * @param Drupal\Core\Session\AccountInterface $account
++   *   Get Account.
++   * @param string $theme
++   *   Theme Name.
++   *
++   * @return \Drupal\Core\Access\AccessResultInterface
++   *   The access result.
++   */
++  public function accessInstall(AccountInterface $account, $theme = NULL) {
++    if (empty($theme)) {
++      $theme = $this->requestStack->getCurrentRequest()->query->get('theme');
++    }
++
++    $auth = $account->hasPermission("administer themes $theme");
++    $install_theme = $account->hasPermission("install themes $theme");
++
++    if ($auth && $install_theme) {
++      return AccessResult::allowed();
++    }
++    else {
++      return AccessResult::forbidden();
++    }
++  }
++
++  /**
++   * Check uninstall permission.
++   *
++   * @param Drupal\Core\Session\AccountInterface $account
++   *   Get Account.
++   * @param string $theme
++   *   Theme Name.
++   *
++   * @return \Drupal\Core\Access\AccessResultInterface
++   *   The access result.
++   */
++  public function accessUninstall(AccountInterface $account, $theme = NULL) {
++    if (empty($theme)) {
++      $theme = $this->requestStack->getCurrentRequest()->query->get('theme');
++    }
++
++    $auth = $account->hasPermission("administer themes $theme");
++    $uninstall_theme = $account->hasPermission("uninstall themes $theme");
++
++    if ($auth && $uninstall_theme) {
++      return AccessResult::allowed();
++    }
++    else {
++      return AccessResult::forbidden();
++    }
++  }
++
++  /**
++   * Check edit permission.
++   *
++   * @param Drupal\Core\Session\AccountInterface $account
++   *   Get Account.
++   * @param string $theme
++   *   Theme Name.
++   *
++   * @return \Drupal\Core\Access\AccessResultInterface
++   *   The access result.
++   */
++  public function accessEdit(AccountInterface $account, $theme = NULL) {
++    if (empty($theme)) {
++      $theme = \Drupal::request()->query->get('theme');
++    }
++
++    $auth = $account->hasPermission("administer themes $theme");
++    $edit_theme = $account->hasPermission("edit themes $theme");
++
++    if ($auth && $edit_theme) {
++      return AccessResult::allowed();
++    }
++    else {
++      return AccessResult::forbidden();
++    }
++  }
++
+   /**
+    * {@inheritdoc}
+    *
+@@ -144,6 +225,11 @@ public function themesPage() {
+         ->hasPermission("administer themes $theme_name");
+       $uninstall_theme = $this->currentUser
+         ->hasPermission("uninstall themes $theme_name");
++      $edit_theme = $this->currentUser
++        ->hasPermission("edit themes $theme_name");
++      $install_theme = $this->currentUser
++        ->hasPermission("install themes $theme_name");
++
+       if ($auth) {
+         if (!empty($theme->info['hidden'])) {
+           continue;
+@@ -239,7 +325,7 @@ public function themesPage() {
+         if (!empty($theme->status) || !$theme->info['core_incompatible'] && !$theme->incompatible_php && !$theme->incompatible_base && !$theme->incompatible_engine && !$theme->incompatible_module && empty($theme->module_dependencies_disabled)) {
+           // Create the operations links.
+           $query['theme'] = $theme->getName();
+-          if ($this->themeAccess->checkAccess($theme->getName())) {
++          if ($this->themeAccess->checkAccess($theme->getName()) && $auth && $edit_theme) {
+             $theme->operations[] = [
+               'title' => $this->t('Settings'),
+               'url' => Url::fromRoute('system.theme_settings_theme', ['theme' => $theme->getName()]),
+@@ -281,7 +367,7 @@ public function themesPage() {
+             /* @phpstan-ignore-next-line */
+             $admin_theme_options[$theme->getName()] = $theme->info['name'] . ($theme->is_experimental ? ' (' . $this->t('Experimental') . ')' : '');
+           }
+-          else {
++          elseif ($install_theme) {
+             $theme->operations[] = [
+               'title' => $this->t('Install'),
+               'url' => Url::fromRoute('system.theme_install'),
+
+diff --git a/src/Routing/RouteSubscriber.php b/src/Routing/RouteSubscriber.php
+index 660b7c31e7..f98e03bfe4 100644
+--- a/src/Routing/RouteSubscriber.php
++++ b/src/Routing/RouteSubscriber.php
+@@ -22,16 +22,16 @@ protected function alterRoutes(RouteCollection $collection): void {
+       $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::access');
+     }
+     if ($route = $collection->get('system.theme_settings_theme')) {
+-      $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::access');
++      $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::accessEdit');
+     }
+     if ($route = $collection->get('system.theme_set_default')) {
+       $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::access');
+     }
+     if ($route = $collection->get('system.theme_install')) {
+-      $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::access');
++      $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::accessInstall');
+     }
+     if ($route = $collection->get('system.theme_uninstall')) {
+-      $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::access');
++      $route->setRequirement('_custom_access', '\Drupal\theme_permission\Controller\AccessController::accessUninstall');
+     }
+     if ($route = $collection->get('system.themes_page')) {
+       $route->setDefaults(['_controller' => '\Drupal\theme_permission\Controller\AccessController::themesPage']);
+
+diff --git a/src/ThemePerm.php b/src/ThemePerm.php
+index 797e42328e..ecea89eb37 100644
+--- a/src/ThemePerm.php
++++ b/src/ThemePerm.php
+@@ -62,6 +62,12 @@ public function dynamicPermissions() :array {
+         "uninstall themes $theme" => [
+           'title' => $this->t('uninstall themes %themename', $type_params),
+         ],
++        "install themes $theme" => [
++          'title' => $this->t('install themes %themename', $type_params),
++        ],
++        "edit themes $theme" => [
++          'title' => $this->t('edit themes %themename', $type_params),
++        ],
+         "Edit Administration theme" => [
+           'title' => $this->t('Edit Administration theme'),
+         ],

@@ -1,0 +1,46 @@
+From 330964eb0004c59eb45d1ca5d038cd53024944c1 Mon Sep 17 00:00:00 2001
+From: Benjamin Rasmussen <rasben@users.noreply.github.com>
+Date: Tue, 7 Oct 2025 12:44:13 +0200
+Subject: [PATCH] 3550696: Update API endpoints.
+
+---
+ README.md           | 3 ++-
+ src/AddressDawa.php | 6 +++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/README.md b/README.md
+index da896d2..ad7504f 100644
+--- a/README.md
++++ b/README.md
+@@ -5,4 +5,5 @@ addresses, access addresses, street names and postcodes.
+ 
+ This modules provides a field type, an autocomplete field widget and formatter
+ to request and store addresses and access addresses from DAWA service.
+-https://dawa.aws.dk/
++https://api.dataforsyningen.dk/
++
+diff --git a/src/AddressDawa.php b/src/AddressDawa.php
+index c2aa552..c9a54ab 100644
+--- a/src/AddressDawa.php
++++ b/src/AddressDawa.php
+@@ -76,14 +76,14 @@ class AddressDawa implements AddressDawaInterface {
+   public static function getDawaApiUrl(string $address_type = '') {
+     // Automated test in drupal.org environment fails if https.
+     if ($address_type == 'adresse') {
+-      return 'http://dawa.aws.dk/adresser';
++      return 'https://api.dataforsyningen.dk/adresser';
+     }
+ 
+     if ($address_type == 'adgangsadresse') {
+-      return 'http://dawa.aws.dk/adgangsadresser';
++      return 'https://api.dataforsyningen.dk/adgangsadresser';
+     }
+ 
+-    return 'http://dawa.aws.dk/autocomplete';
++    return 'https://api.dataforsyningen.dk/autocomplete';
+   }
+ 
+ }
+-- 
+GitLab
+

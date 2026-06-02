@@ -1,0 +1,53 @@
+diff --git a/src/EntityReferenceRevisionsFieldItemList.php b/src/EntityReferenceRevisionsFieldItemList.php
+index 956fc5e..edb1489 100644
+--- a/src/EntityReferenceRevisionsFieldItemList.php
++++ b/src/EntityReferenceRevisionsFieldItemList.php
+@@ -129,24 +129,44 @@ class EntityReferenceRevisionsFieldItemList extends EntityReferenceFieldItemList
+    * {@inheritdoc}
+    */
+   public function hasAffectingChanges(FieldItemListInterface $original_items, $langcode) {
++    // Static cache that remembers if an entity has affecting changes or not.
++    // This is needed to break a circular dependencies.
++    static $currentStackCache = [];
++
++    // Create a cache key based on entity type, entity id, and langcode.
++    $cache_key = "{$this->getEntity()->getEntityTypeId()}:{$this->getEntity()->id()}:$langcode";
++    
++    // If entity exists in cache, return cached value.
++    if (isset($currentStackCache[$cache_key])) {
++      return $currentStackCache[$cache_key];
++    }
++
++
+     // If there are fewer items, then it is a change.
+     if (count($this) < count($original_items)) {
+       return TRUE;
+     }
+ 
++
++    // add cached value to stack, FALSE until proven otherwise.
++    $currentStackCache[$cache_key] = FALSE;
++
+     foreach ($this as $delta => $item) {
+       // If this is a different entity, then it is an affecting change.
+       if (!$original_items->offsetExists($delta) || $item->target_id != $original_items[$delta]->target_id) {
+-        return TRUE;
++        $currentStackCache[$cache_key] = TRUE;
++        break;
+       }
+       // If it is the same entity, only consider it as having affecting changes
+-      // if the target entity itself has changes.
++      // if the target entity itself has changes.      
+       if ($item->entity && $item->entity->hasTranslation($langcode) && $item->entity->getTranslation($langcode)->hasTranslationChanges()) {
+-        return TRUE;
++        $currentStackCache[$cache_key] = TRUE;
++        break;
+       }
+     }
+ 
+-    return FALSE;
++    // pop the entry
++    return array_pop($currentStackCache);
+   }
+ 
+ }

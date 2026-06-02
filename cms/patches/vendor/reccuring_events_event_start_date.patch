@@ -1,0 +1,33 @@
+diff --git a/src/Plugin/views/field/EventSeriesStartDate.php b/src/Plugin/views/field/EventSeriesStartDate.php
+index 4ff0600..57cbcff 100644
+--- a/src/Plugin/views/field/EventSeriesStartDate.php
++++ b/src/Plugin/views/field/EventSeriesStartDate.php
+@@ -88,10 +88,10 @@ class EventSeriesStartDate extends FieldPluginBase {
+    */
+   public function query() {
+     // Add a subquery to get the earliest instance start date for a series.
+-    $subQuery = $this->database->select('eventinstance_field_data', 'eventinstance_field_data');
+-    $subQuery->addField('eventinstance_field_data', 'eventseries_id');
+-    $subQuery->addExpression("MIN(eventinstance_field_data.date__value)", 'eventseries_start_date');
+-    $subQuery->groupBy("eventinstance_field_data.eventseries_id");
++    $subQuery = $this->database->select('eventinstance_field_data', 'eventinstance_sub');
++    $subQuery->addField('eventinstance_sub', 'eventseries_id');
++    $subQuery->addExpression("MIN(eventinstance_sub.date__value)", 'eventseries_start_date');
++    $subQuery->groupBy("eventinstance_sub.eventseries_id");
+ 
+     // Create a join for the subquery.
+     $joinDefinition = [
+@@ -105,10 +105,10 @@ class EventSeriesStartDate extends FieldPluginBase {
+     // Add the subquery join to the main query.
+     /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $join */
+     $join = $this->joinHandler->createInstance('standard', $joinDefinition);
+-    $this->query->addRelationship('eventseries_start_date', $join, 'eventseries_field_data');
++    $this->query->addRelationship('eventseries_start_date_sub', $join, 'eventseries_field_data');
+ 
+-    // Add the field to the view.
+-    $this->query->addField(NULL, 'eventseries_start_date', 'eventseries_start_date');
++    // Add the field to the view using the alias from the subquery join.
++    $this->query->addField('eventseries_start_date_sub', 'eventseries_start_date', 'eventseries_start_date');
+   }
+ 
+   /**

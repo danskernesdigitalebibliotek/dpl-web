@@ -1,0 +1,26 @@
+diff --git a/src/Element/MultiValue.php b/src/Element/MultiValue.php
+index 8a8a8e4..d3d6b78 100644
+--- a/src/Element/MultiValue.php
++++ b/src/Element/MultiValue.php
+@@ -396,7 +396,20 @@ class MultiValue extends FormElement {
+     // @todo Handle nested elements.
+     foreach (Element::children($elements, FALSE) as $child) {
+       if (isset($value[$child])) {
+-        $elements[$child]['#default_value'] = $value[$child];
++        if (Element::children($elements[$child], FALSE)) {
++          static::setDefaultValue($elements[$child], $value[$child]);
++        } else {
++          $default_value = $value[$child];
++          if (is_array($value[$child])) {
++            if (isset($value[$child]['value'])) {
++              $default_value = $value[$child]['value'];
++            }
++            if (isset($value[$child]['format'])) {
++              $elements[$child]['#format'] = $value[$child]['format'];
++            }
++          }
++          $elements[$child]['#default_value'] = $default_value;
++        }
+       }
+     }
+   }

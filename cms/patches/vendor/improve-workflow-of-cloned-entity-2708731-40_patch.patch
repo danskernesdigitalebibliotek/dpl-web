@@ -1,0 +1,330 @@
+Subject: [PATCH] improve-workflow-of-cloned-entity-2708731-40.patch
+---
+Index: tests/src/Functional/EntityCloneContentTest.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tests/src/Functional/EntityCloneContentTest.php b/tests/src/Functional/EntityCloneContentTest.php
+--- a/tests/src/Functional/EntityCloneContentTest.php	(revision 553850af42873cbe38eff22695aa531025c938c3)
++++ b/tests/src/Functional/EntityCloneContentTest.php	(date 1721900352031)
+@@ -308,4 +308,42 @@
+     $this->assertTrue($node->getTranslation('en')->isDefaultTranslation());
+   }
+ 
++  /**
++   * Tests the redirection setting after doing entity clone.
++   */
++  public function testContentEntityCloneRedirect() {
++    $config = \Drupal::service('config.factory')->getEditable('entity_clone.settings');
++    $config->set('form_settings_after_clone', [
++      'node' => [
++        'redirect_to' => 'edit-form',
++      ],
++    ]);
++    $config->set('form_settings', [
++      'node' => [
++        'default_value' => 1,
++        'disable' => 0,
++        'hidden' => 0,
++      ],
++    ]);
++    $config->save();
++    $node_title = $this->randomMachineName(8);
++    $node = Node::create([
++      'type' => 'page',
++      'title' => $node_title,
++    ]);
++    $node->save();
++
++    $this->drupalGet("entity_clone/node/{$node->id()}");
++    $this->submitForm([], t('Clone'));
++
++    $nodes = \Drupal::entityTypeManager()
++      ->getStorage('node')
++      ->loadByProperties([
++        'title' => $node_title . ' - Cloned',
++      ]);
++    $node = reset($nodes);
++    $this->assertInstanceOf(Node::class, $node, 'Test node cloned found in database.');
++    $this->assertSession()->addressEquals("node/{$node->id()}/edit");
++  }
++
+ }
+Index: src/EntityCloneSettingsManager.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/EntityCloneSettingsManager.php b/src/EntityCloneSettingsManager.php
+--- a/src/EntityCloneSettingsManager.php	(revision 553850af42873cbe38eff22695aa531025c938c3)
++++ b/src/EntityCloneSettingsManager.php	(date 1721900352029)
+@@ -12,6 +12,10 @@
+  */
+ class EntityCloneSettingsManager {
+ 
++  const AFTER_CLONE_REDIRECT_VIEW = 'canonical';
++
++  const AFTER_CLONE_REDIRECT_EDIT = 'edit-form';
++
+   /**
+    * The entity type manager service.
+    *
+@@ -84,17 +88,25 @@
+   public function setFormSettings(array $settings) {
+     if (isset($settings['table'])) {
+       array_walk_recursive($settings['table'], function (&$item) {
+-        if ($item == '1') {
+-          $item = TRUE;
+-        }
+-        else {
+-          $item = FALSE;
+-        }
++        $item = ($item == '1');
+       });
+       $this->editableConfig->set('form_settings', $settings['table'])->save();
+     }
+   }
+ 
++  /**
++   * Set the after entity clone settings.
++   *
++   * @param array $settings
++   *   The settings from the form.
++   */
++  public function setFormSettingsAfterClone(array $settings) {
++    if (isset($settings['table'])) {
++      $this->editableConfig->set('form_settings_after_clone', $settings['table'])
++        ->save();
++    }
++  }
++
+   /**
+    * Get the checkbox default value for a given entity type.
+    *
+@@ -180,4 +192,21 @@
+     return $this->config->get('no_suffix') ?? FALSE;
+   }
+ 
++  /**
++   * Get the after_clone setting value for a given entity type.
++   *
++   * @param string $entity_type_id
++   *   The entity type ID.
++   *
++   * @return mixed
++   *   The after_clone setting value.
++   */
++  public function getAfterCloneSetting($entity_type_id, $setting_name) {
++    $form_settings_after_clone = $this->config->get('form_settings_after_clone');
++    if (isset($form_settings_after_clone[$entity_type_id][$setting_name])) {
++      return $form_settings_after_clone[$entity_type_id][$setting_name];
++    }
++    return FALSE;
++  }
++
+ }
+Index: src/Form/EntityCloneSettingsForm.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Form/EntityCloneSettingsForm.php b/src/Form/EntityCloneSettingsForm.php
+--- a/src/Form/EntityCloneSettingsForm.php	(revision 553850af42873cbe38eff22695aa531025c938c3)
++++ b/src/Form/EntityCloneSettingsForm.php	(date 1721900999670)
+@@ -2,6 +2,7 @@
+ 
+ namespace Drupal\entity_clone\Form;
+ 
++use Drupal\Component\Utility\UrlHelper;
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+ use Drupal\Core\Form\ConfigFormBase;
+ use Drupal\Core\Form\FormStateInterface;
+@@ -71,11 +72,28 @@
+       '#header' => [
+         'label' => $this->t('Label'),
+         'default_value' => $this->t('Checkboxes default value'),
+-        'disable'  => $this->t('Disable checkboxes'),
++        'disable' => $this->t('Disable checkboxes'),
+         'hidden' => $this->t('Hide checkboxes'),
+       ],
+     ];
+ 
++    $form['form_settings_after_clone'] = [
++      '#tree' => TRUE,
++      '#type' => 'fieldset',
++      '#title' => $this->t('After clone settings'),
++      '#description' => $this->t('For each type you can specify the destination to redirect after cloning.'),
++      '#open' => TRUE,
++      '#collapsible' => FALSE,
++    ];
++    
++    $form['form_settings_after_clone']['table'] = [
++      '#type' => 'table',
++      '#header' => [
++        'label' => $this->t('Label'),
++        'redirect_to' => $this->t('Redirect to'),
++      ],
++    ];
++
+     foreach ($this->entityCloneSettingsManager->getContentEntityTypes() as $type_id => $type) {
+       $form['form_settings']['table'][$type_id] = [
+         'label' => [
+@@ -97,6 +115,23 @@
+           '#default_value' => $this->entityCloneSettingsManager->getHiddenValue($type_id),
+         ],
+       ];
++
++      $form['form_settings_after_clone']['table'][$type_id] = [
++        'label' => [
++          '#type' => 'label',
++          '#title' => $this->t('@type', [
++            '@type' => $type->getLabel(),
++          ]),
++        ],
++        'redirect_to' => [
++          '#type' => 'radios',
++          '#options' => [
++            EntityCloneSettingsManager::AFTER_CLONE_REDIRECT_VIEW => $this->t('View'),
++            EntityCloneSettingsManager::AFTER_CLONE_REDIRECT_EDIT => $this->t('Edit form'),
++          ],
++          '#default_value' => $this->entityCloneSettingsManager->getAfterCloneSetting($type_id, 'redirect_to') ?: EntityCloneSettingsManager::AFTER_CLONE_REDIRECT_VIEW,
++        ],
++      ];
+     }
+ 
+     $form['take_ownership'] = [
+@@ -121,6 +156,7 @@
+    */
+   public function submitForm(array &$form, FormStateInterface $form_state) {
+     $this->entityCloneSettingsManager->setFormSettings($form_state->getValue('form_settings'));
++    $this->entityCloneSettingsManager->setFormSettingsAfterClone($form_state->getValue('form_settings_after_clone'));
+     $this->entityCloneSettingsManager->setTakeOwnershipSettings($form_state->getValue('take_ownership'));
+     $this->entityCloneSettingsManager->setExcludeClonedSetting($form_state->getValue('no_suffix'));
+     parent::submitForm($form, $form_state);
+Index: src/Form/EntityCloneForm.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Form/EntityCloneForm.php b/src/Form/EntityCloneForm.php
+--- a/src/Form/EntityCloneForm.php	(revision 553850af42873cbe38eff22695aa531025c938c3)
++++ b/src/Form/EntityCloneForm.php	(date 1721900352027)
+@@ -147,7 +147,8 @@
+     $this->stringTranslationManager = $string_translation;
+     $this->eventDispatcher = $eventDispatcher;
+     $this->messenger = $messenger;
+-    $parameter_name = $route_match->getRouteObject()->getOption('_entity_clone_entity_type_id');
++    $parameter_name = $route_match->getRouteObject()
++      ->getOption('_entity_clone_entity_type_id');
+     $this->entity = $route_match->getParameter($parameter_name);
+     $this->entityTypeDefinition = $entity_type_manager->getDefinition($this->entity->getEntityTypeId());
+     $this->currentUser = $currentUser;
+@@ -339,7 +340,8 @@
+   /**
+    * {@inheritdoc}
+    */
+-  public function validateForm(array &$form, FormStateInterface $form_state) {}
++  public function validateForm(array &$form, FormStateInterface $form_state) {
++  }
+ 
+   /**
+    * {@inheritdoc}
+@@ -406,7 +408,7 @@
+       '@type' => $this->entity->getEntityTypeId(),
+     ]));
+ 
+-    $this->formSetRedirect($form_state, $cloned_entity);
++    $this->formSetRedirect($form_state, $cloned_entity, TRUE);
+   }
+ 
+   /**
+@@ -429,9 +431,22 @@
+    * @param \Drupal\Core\Entity\EntityInterface $entity
+    *   The cloned entity.
+    */
+-  protected function formSetRedirect(FormStateInterface $form_state, EntityInterface $entity) {
+-    if ($entity && $entity->hasLinkTemplate('canonical')) {
+-      $form_state->setRedirect($entity->toUrl('canonical')->getRouteName(), $entity->toUrl('canonical')->getRouteParameters());
++  protected function formSetRedirect(FormStateInterface $form_state, EntityInterface $entity, $cloned_entity = FALSE) {
++    if ($entity) {
++      if ($cloned_entity) {
++        $entity_type_id = $entity->getEntityTypeId();
++        $redirect_to = $this->entityCloneSettingsManager->getAfterCloneSetting($entity_type_id, 'redirect_to');
++        if ($entity->hasLinkTemplate($redirect_to)) {
++          $form_state->setRedirect($entity->toUrl($redirect_to)
++            ->getRouteName(), $entity->toUrl($redirect_to)->getRouteParameters());
++        }
++        else {
++          $form_state->setRedirect('<front>');
++        }
++      }
++      else {
++        $form_state->setRedirect($entity->toUrl('canonical')->getRouteName(), $entity->toUrl('canonical')->getRouteParameters());
++      }
+     }
+     else {
+       $form_state->setRedirect('<front>');
+Index: config/schema/entity_clone.settings.schema.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/schema/entity_clone.settings.schema.yml b/config/schema/entity_clone.settings.schema.yml
+--- a/config/schema/entity_clone.settings.schema.yml	(revision 553850af42873cbe38eff22695aa531025c938c3)
++++ b/config/schema/entity_clone.settings.schema.yml	(date 1721900352024)
+@@ -86,6 +86,54 @@
+               type: boolean
+             hidden:
+               type: boolean
++    form_settings_after_clone:
++      type: mapping
++      mapping:
++        taxonomy_term:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        block_content:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        comment:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        contact_message:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        file:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        node:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        shortcut:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        user:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
++        menu_link_content:
++          type: mapping
++          mapping:
++            redirect_to:
++              type: string
+     no_suffix:
+       type: boolean
+     take_ownership:

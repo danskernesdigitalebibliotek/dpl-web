@@ -1,0 +1,108 @@
+From ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1 Mon Sep 17 00:00:00 2001
+From: Benjamin Rasmussen <rasben@users.noreply.github.com>
+Date: Thu, 12 Sep 2024 11:49:33 +0200
+Subject: [PATCH] 3468521: Apply requested changes from MR.
+
+---
+ src/EventCreationService.php | 45 +++++++++++++++++++++---------------
+ src/Form/EventSeriesForm.php |  2 +-
+ 2 files changed, 28 insertions(+), 19 deletions(-)
+
+diff --git a/src/EventCreationService.php b/src/EventCreationService.php
+index 3521bf2..03999dd 100644
+--- a/src/EventCreationService.php
++++ b/src/EventCreationService.php
+@@ -394,6 +394,16 @@ class EventCreationService {
+     return $diff;
+   }
+ 
++  /**
++   * Centralising the way we create a ID that describes a date range.
++   *
++   * @return string
++   *  The ID, used in various arrays.
++   */
++  public function getDateRangeId(DrupalDateTime $start, DrupalDateTime $end): string {
++    return "{$start->format('U')}:{$end->format('U')}";
++  }
++
+   /**
+    * Getting an array of dates that should be created as new instances.
+    *
+@@ -415,7 +425,10 @@ class EventCreationService {
+ 
+     if ($form_data['type'] === 'custom' && !empty($form_data['custom_dates'])) {
+       foreach ($form_data['custom_dates'] as $date_range) {
+-        $dates_to_create[$date_range['start_date']->format('U') . ':' . $date_range['end_date']->format('U')] = [
++
++        $range_id = $this->getDateRangeId($date_range['start_date'], $date_range['end_date']);
++
++        $dates_to_create[$range_id] = [
+           'start_date' => $date_range['start_date'],
+           'end_date' => $date_range['end_date'],
+         ];
+@@ -455,27 +468,22 @@ class EventCreationService {
+    *
+    * The ID will be a mix of the start and end dates, and will allow us to
+    * look up if a date combination already exists when we create instances.
++   *
++   * @return string
++   *  The string ID.
+    */
+   public function getInstanceDateId(EventInstance $instance) {
+-    try {
+-      /** @var \Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem $date */
+-      $date = $instance->get('date')->first();
++    /** @var \Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem $date */
++    $date = $instance->get('date')->first();
+ 
+-      $properties = $date->getProperties();
++    $properties = $date->getProperties();
+ 
+-      /** @var \Drupal\Core\Datetime\DrupalDateTime $start */
+-      $start = $properties['value']->getDateTime();
+-      /** @var \Drupal\Core\Datetime\DrupalDateTime $end */
+-      $end = $properties['end_value']->getDateTime();
+-
+-      return "{$start->format('U')}:{$end->format('U')}";
+-    }
+-    catch (\Exception $e) {
+-      $this->loggerChannel->error('Could not create Date ID for event instance.');
+-      $this->loggerChannel->error($e->getMessage());
+-    }
++    /** @var \Drupal\Core\Datetime\DrupalDateTime $start */
++    $start = $properties['value']->getDateTime();
++    /** @var \Drupal\Core\Datetime\DrupalDateTime $end */
++    $end = $properties['end_value']->getDateTime();
+ 
+-    return NULL;
++    return $this->getDateRangeId($start, $end);
+   }
+ 
+   /**
+@@ -504,7 +512,8 @@ class EventCreationService {
+ 
+         // Don't delete the instance, if the exact same date will exist
+         // after we re-create later.
+-        // This way, the instance gets to keep its UUID.
++        // This way, the instance gets to keep its UUID, and any allocated
++        // data, added to this instance.
+         if (array_key_exists($date_id, $dates_to_create)) {
+           unset($instances[$key]);
+           continue;
+diff --git a/src/Form/EventSeriesForm.php b/src/Form/EventSeriesForm.php
+index aeaeedf..6638554 100644
+--- a/src/Form/EventSeriesForm.php
++++ b/src/Form/EventSeriesForm.php
+@@ -252,7 +252,7 @@ class EventSeriesForm extends ContentEntityForm {
+           $form['diff']['diff_message'] = [
+             '#type' => '#markup',
+             '#prefix' => '<p>',
+-            '#markup' => $this->t('Recurrence configuration has been changed, as a result instances may be created or deleted. This action cannot be undone.'),
++            '#markup' => $this->t('Recurrence configuration has been changed. New instances may be created, and now-unrelevant instances will be deleted, along with any custom changes made to these instances. This action cannot be undone.'),
+             '#suffix' => '</p>',
+           ];
+ 
+-- 
+GitLab
+

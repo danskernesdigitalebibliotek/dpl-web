@@ -1,0 +1,36 @@
+From da200da280c4c95e6e91f2416581ad3797ab1428 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Thu, 7 Mar 2024 13:58:16 +0100
+Subject: [PATCH] Add support for callables as worker callbacks
+
+The existing usage of function name strings as worker callbacks are
+already callables. call_user_func() supports many other types which
+we might as well support.
+
+Update the exeception message to take the additional possibilities
+into account.
+---
+ src/JobScheduler.php | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/JobScheduler.php b/src/JobScheduler.php
+index ccfeecc..50cd56d 100644
+--- a/src/JobScheduler.php
++++ b/src/JobScheduler.php
+@@ -141,11 +141,11 @@ class JobScheduler implements JobSchedulerInterface {
+     if (!empty($info['file']) && file_exists($info['file'])) {
+       include_once $info['file'];
+     }
+-    if (function_exists($info['worker callback'])) {
++    if (is_callable($info['worker callback'])) {
+       call_user_func($info['worker callback'], $job);
+     }
+     else {
+-      throw new JobSchedulerException('Could not find worker callback function: ' . $info['worker callback']);
++      throw new JobSchedulerException('Could not find worker callback: ' . print_r($info['worker callback'], TRUE));
+     }
+   }
+ 
+-- 
+GitLab
+

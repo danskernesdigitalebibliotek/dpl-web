@@ -1,0 +1,84 @@
+diff --git a/config/install/recurring_events.eventinstance.config.yml b/config/install/recurring_events.eventinstance.config.yml
+index 195886a..7bfa6c8 100644
+--- a/config/install/recurring_events.eventinstance.config.yml
++++ b/config/install/recurring_events.eventinstance.config.yml
+@@ -1,2 +1,3 @@
+ date_format: 'F jS, Y h:iA'
+ limit: 10
++auto_delete_orphaned: 0
+diff --git a/recurring_events.module b/recurring_events.module
+index 4902fe0..3bf2d0e 100644
+--- a/recurring_events.module
++++ b/recurring_events.module
+@@ -760,3 +760,46 @@ function recurring_events_entity_base_field_info_alter(&$fields, EntityTypeInter
+       ->setProvider('recurring_events');
+   }
+ }
++
++/**
++ * Implements hook_cron().
++ *
++ * Finding any orphaned eventinstances, and deleting them.
++ * Only happens if enabled as part of recurring_events settings.
++ */
++function recurring_events_cron() {
++  $config = \Drupal::config('recurring_events.eventinstance.config');
++
++  if (empty($config->get('auto_delete_orphaned'))) {
++    return;
++  }
++
++  $database = \Drupal::database();
++
++  $max_delete_batch = 200;
++
++  $query = $database->select('eventinstance_field_data', 'ei');
++  $query->leftJoin('eventseries', 'es', 'ei.eventseries_id = es.id');
++  $query
++    ->fields('ei', ['id'])
++    ->condition('ei.eventseries_id', NULL, 'IS NOT NULL')
++    ->condition('es.id', NULL, 'IS NULL');
++
++  $orphaned_instance_ids = $query->execute()?->fetchCol() ?? [];
++
++  if (empty($orphaned_instance_ids)) {
++    return;
++  }
++
++  \Drupal::logger('recurring_events')->notice('Found @count orphaned instances. Will delete @max and delete remaining in upcoming crons.', [
++    '@count' => count($orphaned_instance_ids),
++    '@max' => $max_delete_batch,
++  ]);
++
++  $orphaned_instance_ids = array_slice($orphaned_instance_ids, 0, $max_delete_batch);
++
++  $storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
++  $entities = $storage->loadMultiple($orphaned_instance_ids);
++  $storage->delete($entities);
++
++}
+diff --git a/src/Form/EventInstanceSettingsForm.php b/src/Form/EventInstanceSettingsForm.php
+index c3971f2..59b74db 100644
+--- a/src/Form/EventInstanceSettingsForm.php
++++ b/src/Form/EventInstanceSettingsForm.php
+@@ -43,6 +43,7 @@ class EventInstanceSettingsForm extends ConfigFormBase {
+     $this->config('recurring_events.eventinstance.config')
+       ->set('date_format', $form_state->getValue('date_format'))
+       ->set('limit', $form_state->getValue('limit'))
++      ->set('auto_delete_orphaned', $form_state->getValue('auto_delete_orphaned'))
+       ->save();
+ 
+     parent::submitForm($form, $form_state);
+@@ -89,6 +90,12 @@ class EventInstanceSettingsForm extends ConfigFormBase {
+       '#default_value' => $config->get('limit'),
+     ];
+ 
++    $form['auto_delete_orphaned'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Automatically delete orphaned eventinstances.'),
++      '#default_value' => $config->get('auto_delete_orphaned'),
++    ];
++
+     return parent::buildForm($form, $form_state);
+   }
+ 

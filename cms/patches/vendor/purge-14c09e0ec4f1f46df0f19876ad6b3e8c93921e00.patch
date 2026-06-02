@@ -1,0 +1,134 @@
+From 14c09e0ec4f1f46df0f19876ad6b3e8c93921e00 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Wed, 17 Jul 2024 15:43:00 +0200
+Subject: [PATCH] Add support for disabling late runtime processor when using
+ cron
+
+Add a configuration form to the processor which allows you to disable
+processing the purge queue during cron.
+
+Update the late runtime processor to respect the configuration
+accordingly.
+---
+ .../EventSubscriber/LateRuntimeProcessor.php  | 17 ++++++
+ .../src/Form/ConfigurationForm.php            | 52 +++++++++++++++++++
+ .../Purge/Processor/LateRuntimeProcessor.php  |  2 +-
+ 3 files changed, 70 insertions(+), 1 deletion(-)
+ create mode 100644 modules/purge_processor_lateruntime/src/Form/ConfigurationForm.php
+
+diff --git a/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php b/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php
+index 5137a8e..246f745 100644
+--- a/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php
++++ b/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php
+@@ -43,6 +43,13 @@ class LateRuntimeProcessor implements EventSubscriberInterface {
+    */
+   protected $container;
+ 
++  /**
++   * Whether to disable processing when running CLI commands.
++   *
++   * @var bool
++   */
++  protected $cliDisable;
++
+   /**
+    * Construct the Late Runtime Processor.
+    *
+@@ -80,6 +87,11 @@ class LateRuntimeProcessor implements EventSubscriberInterface {
+       if ($this->processor !== FALSE) {
+         $this->purgePurgers = $this->container->get('purge.purgers');
+         $this->purgeQueue = $this->container->get('purge.queue');
++
++        $this->cliDisable = (bool) $this->container
++          ->get('config.factory')
++          ->get('purge_processor_lateruntime.settings')
++          ->get('cli_disable') ?? FALSE;
+       }
+     }
+     return $this->processor !== FALSE;
+@@ -98,6 +110,11 @@ class LateRuntimeProcessor implements EventSubscriberInterface {
+       return;
+     }
+ 
++    // Immediately stop if using CLI and CLI processing is disabled.
++    if ($this->cliDisable && PHP_SAPI === 'cli') {
++      return;
++    }
++
+     // Claim a chunk of invalidations, process and let the queue handle results.
+     $claims = $this->purgeQueue->claim();
+     try {
+diff --git a/modules/purge_processor_lateruntime/src/Form/ConfigurationForm.php b/modules/purge_processor_lateruntime/src/Form/ConfigurationForm.php
+new file mode 100644
+index 0000000..6b558c0
+--- /dev/null
++++ b/modules/purge_processor_lateruntime/src/Form/ConfigurationForm.php
+@@ -0,0 +1,52 @@
++<?php
++
++namespace Drupal\purge_processor_lateruntime\Form;
++
++use Drupal\Core\Form\FormStateInterface;
++use Drupal\purge_ui\Form\ProcessorConfigFormBase;
++
++/**
++ * Configuration form for the Core Tags queuer.
++ */
++class ConfigurationForm extends ProcessorConfigFormBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function getEditableConfigNames() {
++    return ['purge_processor_lateruntime.settings'];
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getFormId() {
++    return 'purge_processor_lateruntime.configform';
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function buildForm(array $form, FormStateInterface $form_state) {
++    $config = $this->config('purge_processor_lateruntime.settings');
++
++    $form['cli_disable'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Disable for CLI commands'),
++      '#description' => $this->t('Normally the late runtime processor will also process the queue when using a CLI commands such as arbitrary Drush commands. You can disable this if you use other means of processing the queue e.g. the Cron processor or Purge specific Drush commands.'),
++      '#default_value' => $config->get('cli_disable') ?? FALSE,
++    ];
++
++    return parent::buildForm($form, $form_state);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function submitFormSuccess(array &$form, FormStateInterface $form_state) {
++    $this->config('purge_processor_lateruntime.settings')
++      ->set('cli_disable', (bool) $form_state->getValue('cli_disable'))
++      ->save();
++  }
++
++}
+diff --git a/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php b/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php
+index 565ed67..6f7c89c 100644
+--- a/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php
++++ b/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php
+@@ -13,7 +13,7 @@ use Drupal\purge\Plugin\Purge\Processor\ProcessorInterface;
+  *   label = @Translation("Late runtime processor"),
+  *   description = @Translation("Process the queue on every request, this is only recommended on high latency configurations."),
+  *   enable_by_default = true,
+- *   configform = "",
++ *   configform = "\Drupal\purge_processor_lateruntime\Form\ConfigurationForm",
+  * )
+  */
+ class LateRuntimeProcessor extends ProcessorBase implements ProcessorInterface {
+-- 
+GitLab
+
