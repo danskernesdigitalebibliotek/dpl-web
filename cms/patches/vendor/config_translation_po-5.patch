@@ -1,0 +1,26 @@
+From be85a7482e538addd871b173516484d610f65b2c Mon Sep 17 00:00:00 2001
+From: Alexandru Dumitru <alexandru.dumitru@ffw.com>
+Date: Mon, 23 Sep 2024 11:21:56 +0300
+Subject: [PATCH] Issue 3426797: Untranslated string used as source
+
+---
+ src/Services/CtpConfigManager.php | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/src/Services/CtpConfigManager.php b/src/Services/CtpConfigManager.php
+index 3383296..761f829 100644
+--- a/src/Services/CtpConfigManager.php
++++ b/src/Services/CtpConfigManager.php
+@@ -347,9 +347,6 @@ class CtpConfigManager extends LocaleConfigManager {
+         if (locale_is_translatable($langcode)) {
+           $value = $this->translateString($name, $langcode, $item->getUntranslatedString(), $item->getOption('context'));
+         }
+-        if (empty($value)) {
+-          $value = $item->getUntranslatedString();
+-        }
+         if (!empty($value)) {
+           $translated[$key] = $value;
+         }
+-- 
+GitLab
+

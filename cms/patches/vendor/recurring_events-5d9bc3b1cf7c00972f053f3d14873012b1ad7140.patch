@@ -1,0 +1,70 @@
+From 5d9bc3b1cf7c00972f053f3d14873012b1ad7140 Mon Sep 17 00:00:00 2001
+From: Benjamin Rasmussen <rasben@users.noreply.github.com>
+Date: Fri, 4 Oct 2024 14:02:42 +0200
+Subject: [PATCH] 3468300: Update EventSeriesSettings to use datetime form
+ element.
+
+This avoids the end-user accidentally writing a format that is
+invalid.
+Ideally, we'd save the value in config as UNIX, but there are
+too many moving parts to move away from "H:ia" right now.
+---
+ src/Form/EventSeriesSettingsForm.php | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/src/Form/EventSeriesSettingsForm.php b/src/Form/EventSeriesSettingsForm.php
+index 600aa89..5d73e9b 100644
+--- a/src/Form/EventSeriesSettingsForm.php
++++ b/src/Form/EventSeriesSettingsForm.php
+@@ -6,6 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
+ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\Link;
+ use Drupal\Core\Url;
++use Drupal\Core\Datetime\DrupalDateTime;
+ use Drupal\recurring_events\EventCreationService;
+ use Drupal\recurring_events\EventInstanceCreatorPluginManager;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+@@ -82,8 +83,8 @@ class EventSeriesSettingsForm extends ConfigFormBase {
+   public function submitForm(array &$form, FormStateInterface $form_state) {
+     $this->config('recurring_events.eventseries.config')
+       ->set('interval', $form_state->getValue('interval'))
+-      ->set('min_time', $form_state->getValue('min_time'))
+-      ->set('max_time', $form_state->getValue('max_time'))
++      ->set('min_time', $form_state->getValue('min_time')->format('h:ia'))
++      ->set('max_time', $form_state->getValue('max_time')->format('h:ia'))
+       ->set('date_format', $form_state->getValue('date_format'))
+       ->set('time_format', $form_state->getValue('time_format'))
+       ->set('days', implode(',', array_filter($form_state->getValue('days'))))
+@@ -136,19 +137,23 @@ class EventSeriesSettingsForm extends ConfigFormBase {
+     ];
+ 
+     $form['creation']['min_time'] = [
+-      '#type' => 'textfield',
++      '#type' => 'datetime',
++      '#date_date_element' => 'none',
++      '#date_time_element' => 'time',
+       '#title' => $this->t('Event Series Minimum Time'),
+       '#required' => TRUE,
+-      '#description' => $this->t('Enter the earliest an event can start, in h:ia format. For example 08:00am.'),
+-      '#default_value' => $config->get('min_time'),
++      '#description' => $this->t('Enter the earliest an event can start.'),
++      '#default_value' => DrupalDateTime::createFromFormat('h:ia', $config->get('min_time')),
+     ];
+ 
+     $form['creation']['max_time'] = [
+-      '#type' => 'textfield',
++      '#type' => 'datetime',
++      '#date_date_element' => 'none',
++      '#date_time_element' => 'time',
+       '#title' => $this->t('Event Series Maximum Time'),
+       '#required' => TRUE,
+-      '#description' => $this->t('Enter the latest an event can start, in h:ia format. For example 11:45pm.'),
+-      '#default_value' => $config->get('max_time'),
++      '#description' => $this->t('Enter the latest an event can start.'),
++      '#default_value' => DrupalDateTime::createFromFormat('h:ia', $config->get('max_time')),
+     ];
+ 
+     $php_date_url = Url::fromUri('https://secure.php.net/manual/en/function.date.php');
+-- 
+GitLab
+
