@@ -1,10 +1,10 @@
 "use client"
 
-import { useQuery, type UseQueryOptions, type UseQueryResult } from "@tanstack/react-query"
+import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import { materialAvailabilityQuery } from "../queries/availability"
-import { materialAvailabilityQueryKey } from "../queryKeys"
+import type { materialAvailabilityQueryKey } from "../queryKeys"
 import type { MaterialAvailability } from "../types"
 
 type MaterialAvailabilityQueryKey = ReturnType<typeof materialAvailabilityQueryKey>

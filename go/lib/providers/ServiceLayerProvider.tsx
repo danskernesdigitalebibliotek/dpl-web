@@ -12,8 +12,8 @@ import { TServiceType, getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-servi
 function ServiceLayerProvider({ children }: React.PropsWithChildren) {
   const config = useMemo<ServiceLayerConfig>(
     () => ({
-      getBaseUrl: (api) => getAPServiceFetcherBaseUrl(api as TServiceType),
-      getAuthHeader: (api) => getServiceLayerAuthHeader(api as TServiceType),
+      getBaseUrl: api => getAPServiceFetcherBaseUrl(api as TServiceType),
+      getAuthHeader: api => getServiceLayerAuthHeader(api as TServiceType),
     }),
     []
   )

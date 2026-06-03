@@ -11,9 +11,7 @@ import { fileURLToPath } from "url"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const singletonModules = ["react", "react-dom", "@tanstack/react-query"]
 // Turbopack expects paths relative to the project root (no leading slash).
-const turbopackAliases = Object.fromEntries(
-  singletonModules.map(m => [m, `./node_modules/${m}`])
-)
+const turbopackAliases = Object.fromEntries(singletonModules.map(m => [m, `./node_modules/${m}`]))
 // Webpack accepts absolute paths.
 const webpackAliases = Object.fromEntries(
   singletonModules.map(m => [m, path.resolve(__dirname, "node_modules", m)])
@@ -68,7 +66,7 @@ const nextConfig = {
       },
     },
   },
-  webpack: (config) => {
+  webpack: config => {
     config.resolve.alias = {
       ...config.resolve.alias,
       ...webpackAliases,

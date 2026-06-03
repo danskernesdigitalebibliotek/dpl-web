@@ -9,6 +9,6 @@ const apiIdToServiceType = (api: ApiId): TServiceType => api as TServiceType
 // Server-side config (used during prefetch / session). The auth header is supplied
 // synchronously because the access token is already in hand on the server.
 export const getServiceLayerConfig = (accessToken: string): ServiceLayerConfig => ({
-  getBaseUrl: (api) => getAPServiceFetcherBaseUrl(apiIdToServiceType(api)),
+  getBaseUrl: api => getAPServiceFetcherBaseUrl(apiIdToServiceType(api)),
   getAuthHeader: () => `Bearer ${accessToken}`,
 })

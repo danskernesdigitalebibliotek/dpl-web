@@ -4,7 +4,7 @@ import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/r
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import { patronQuery } from "../queries/patron"
-import { patronQueryKey } from "../queryKeys"
+import type { patronQueryKey } from "../queryKeys"
 import type { Patron } from "../types"
 
 type PatronQueryKey = ReturnType<typeof patronQueryKey>
