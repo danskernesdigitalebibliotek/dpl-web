@@ -26,6 +26,10 @@ async function buildAuthHeaders(
   return { authorization: value }
 }
 
+function resolveBaseUrl(baseUrl: FbsConfig["baseUrl"]): string {
+  return typeof baseUrl === "function" ? baseUrl() : baseUrl
+}
+
 // FBS paths come from the orval-generated URL helpers — never spell out a
 // route string by hand here. The generated helpers handle querystring
 // encoding, array-explode params (e.g. repeated `recordid`), etc.
@@ -33,7 +37,7 @@ async function fbsFetch(
   config: FbsConfig,
   endpoint: { path: string; operation: string }
 ): Promise<unknown> {
-  const response = await fetch(`${config.baseUrl}${endpoint.path}`, {
+  const response = await fetch(`${resolveBaseUrl(config.baseUrl)}${endpoint.path}`, {
     method: "GET",
     headers: await buildAuthHeaders(config.getAuthHeader),
   })

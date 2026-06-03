@@ -100,6 +100,26 @@ describe("createFbsClient.getPatron", () => {
     await expect(buildClient(() => "").getPatron()).rejects.toThrow(/empty string/)
     expect(fetch).not.toHaveBeenCalled()
   })
+
+  it("resolves a function baseUrl lazily on each request", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validPatronBody))
+    let current = baseUrl
+    const client = createFbsClient({
+      baseUrl: () => current,
+      getAuthHeader: () => "Bearer abc",
+    })
+
+    await client.getPatron()
+    expect(fetch).toHaveBeenLastCalledWith(patronInfoUrl, expect.anything())
+
+    current = "https://fbs.other"
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validPatronBody))
+    await client.getPatron()
+    expect(fetch).toHaveBeenLastCalledWith(
+      "https://fbs.other/external/agencyid/patrons/patronid/v4",
+      expect.anything()
+    )
+  })
 })
 
 describe("createFbsClient.getAvailability", () => {
