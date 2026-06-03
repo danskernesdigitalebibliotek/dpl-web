@@ -536,7 +536,7 @@ const formatBranches = (branches: string[][]) => {
   return branches.flat().length ? { exclude: branches.flat() } : {};
 };
 
-const branchesFromConfig = (
+export const branchesFromConfig = (
   blacklist: BlacklistType,
   config: UseConfigFunction
 ) => {

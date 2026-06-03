@@ -1,9 +1,12 @@
-import { UseQueryOptions } from "react-query";
-import { getAvailabilityV3, useGetAvailabilityV3 } from "../fbs/fbs";
+import { useAvailability } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { branchesFromConfig } from "../../apps/material/helper";
 import { UseConfigFunction } from "./config";
 import { FaustId } from "./types/ids";
-import { getBlacklistedQueryArgs } from "../../apps/material/helper";
 
+// Thin wrapper around the service-layer's useAvailability so existing /react
+// callers keep their { faustIds, config, options } shape. The returned data
+// is the service-layer Availability[] domain DTO (faustId / isAvailable /
+// isReservable / reservationCount) rather than the raw AvailabilityV3 shape.
 const useGetAvailability = ({
   faustIds,
   config,
@@ -12,14 +15,14 @@ const useGetAvailability = ({
   faustIds: FaustId[];
   config: UseConfigFunction;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getAvailabilityV3>>>;
+    query?: { enabled?: boolean };
   };
 }) => {
-  const response = useGetAvailabilityV3(
-    getBlacklistedQueryArgs(faustIds, config, "availability"),
-    options
+  const excludeBranches = branchesFromConfig("availability", config);
+  return useAvailability(
+    { faustIds, excludeBranches },
+    { enabled: options?.query?.enabled }
   );
-  return response;
 };
 
 export default useGetAvailability;

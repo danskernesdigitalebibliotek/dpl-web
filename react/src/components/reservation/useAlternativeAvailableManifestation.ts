@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useDeepCompareEffect } from "react-use";
+import type { Availability } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   getAllFaustIds,
   convertPostIdToFaustId
 } from "../../core/utils/helpers/general";
-import { AvailabilityV3 } from "../../core/fbs/model";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
 import { useConfig } from "../../core/utils/config";
 import useGetAvailability from "../../core/utils/useGetAvailability";
 
-type ManifestationWithAvailability = Manifestation & AvailabilityV3;
+type ManifestationWithAvailability = Manifestation & Availability;
 
 const useAlternativeAvailableManifestation = (
   work: Work,
@@ -31,11 +31,11 @@ const useAlternativeAvailableManifestation = (
   useDeepCompareEffect(() => {
     if (availabilityData) {
       const reservableData = availabilityData.filter(
-        (manifestation) => manifestation.reservable
+        (manifestation) => manifestation.isReservable
       );
 
       const sortedReservableData = reservableData.sort((a, b) => {
-        return a.reservations - b.reservations;
+        return a.reservationCount - b.reservationCount;
       });
 
       const leastReservedData = sortedReservableData.shift();
@@ -47,7 +47,7 @@ const useAlternativeAvailableManifestation = (
         (manifestation) => {
           return (
             convertPostIdToFaustId(manifestation.pid) ===
-            leastReservedData.recordId
+            leastReservedData.faustId
           );
         }
       );

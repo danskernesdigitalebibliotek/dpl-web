@@ -7,6 +7,7 @@ import FetcherHttpError from "../core/fetchers/FetcherHttpError";
 import FetcherError from "../core/fetchers/FetcherError";
 import FetcherCriticalHttpError from "../core/fetchers/FetcherCriticalHttpError";
 import InvalidUrlError from "../core/errors/InvalidUrlError";
+import ServiceLayerProviderWrapper from "./ServiceLayerProviderWrapper";
 
 const queryErrorHandler = (error: unknown) => {
   // If we get an error that controls the error boundary make sure it does just that.
@@ -46,7 +47,9 @@ function Store({ children }: StoreProps) {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <PersistGate persistor={persistor}>{children}</PersistGate>
+        <PersistGate persistor={persistor}>
+          <ServiceLayerProviderWrapper>{children}</ServiceLayerProviderWrapper>
+        </PersistGate>
       </QueryClientProvider>
     </Provider>
   );

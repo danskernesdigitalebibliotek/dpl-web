@@ -55,7 +55,7 @@ const usePhysicalAvailabilityData = ({
   }
 
   // If we have data, check if any of the items are available.
-  if (data?.some((item) => item.available)) {
+  if (data?.some((item) => item.isAvailable)) {
     return {
       isLoading: false,
       isAvailable: true

@@ -10,7 +10,7 @@ import {
 } from "vitest";
 import { act } from "react";
 import usePhysicalAvailabilityData from "../../components/availability-label/usePhysicalAvailabilityData";
-import { useGetAvailabilityV3 } from "../../core/fbs/fbs";
+import { useAvailability } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { useConfig } from "../../core/utils/config";
 import {
@@ -21,8 +21,8 @@ import useOnlineAvailabilityData from "../../components/availability-label/useOn
 
 describe("usePhysicalAvailability tests", () => {
   beforeAll(() => {
-    vi.mock("../../core/fbs/fbs", () => ({
-      useGetAvailabilityV3: vi.fn()
+    vi.mock("@danskernesdigitalebibliotek/dpl-service-layer", () => ({
+      useAvailability: vi.fn()
     }));
     vi.mock("../../core/utils/config", () => ({
       useConfig: vi.fn()
@@ -50,19 +50,19 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useAvailability.mockReturnValue({
       data: [
         {
-          recordId: "24859451",
-          reservable: true,
-          available: true,
-          reservations: 0
+          faustId: "24859451",
+          isReservable: true,
+          isAvailable: true,
+          reservationCount: 0
         },
         {
-          recordId: "24859450",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859450",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         }
       ],
       isLoading: false,
@@ -90,19 +90,19 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useAvailability.mockReturnValue({
       data: [
         {
-          recordId: "24859451",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859451",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         },
         {
-          recordId: "24859450",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859450",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         }
       ],
       isLoading: false,
@@ -130,19 +130,19 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useAvailability.mockReturnValue({
       data: [
         {
-          recordId: "24859451",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859451",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         },
         {
-          recordId: "24859450",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859450",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         }
       ],
       isLoading: false,
@@ -170,19 +170,19 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useAvailability.mockReturnValue({
       data: [
         {
-          recordId: "24859451",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859451",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         },
         {
-          recordId: "24859450",
-          reservable: true,
-          available: false,
-          reservations: 0
+          faustId: "24859450",
+          isReservable: true,
+          isAvailable: false,
+          reservationCount: 0
         }
       ],
       isLoading: false,
@@ -210,7 +210,7 @@ describe("usePhysicalAvailability tests", () => {
     // So we gracefully ignore the error :).
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useGetAvailabilityV3.mockReturnValue({
+    useAvailability.mockReturnValue({
       data: undefined,
       isLoading: false,
       isError: false

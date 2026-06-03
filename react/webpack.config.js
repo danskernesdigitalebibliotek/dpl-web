@@ -80,7 +80,9 @@ module.exports = (_env, argv) => {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
-          exclude: /node_modules/,
+          // dpl-service-layer ships TypeScript source; let babel transpile it.
+          exclude:
+            /node_modules\/(?!@danskernesdigitalebibliotek\/dpl-service-layer)/,
           use: ["babel-loader"]
         },
         // We consume css, svg and raster image files from dpl-design-system package

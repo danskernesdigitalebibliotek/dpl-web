@@ -358,7 +358,8 @@ export const ReservationModalBody = ({
                       ),
                       "@authorAndYear":
                         getAuthorLine(otherManifestationPreferred, t) ?? "",
-                      "@reservations": otherManifestationPreferred.reservations
+                      "@reservations":
+                        otherManifestationPreferred.reservationCount
                     }
                   })}
                 />
