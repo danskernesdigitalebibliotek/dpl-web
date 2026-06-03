@@ -268,7 +268,7 @@ class EventRestMapper {
     $rendered = $this->event->get('event_address')->view('full');
     $street = NULL;
 
-    if ($rendered['#field_type'] === 'address_gsearch') {
+    if (isset($rendered['#field_type']) && $rendered['#field_type'] === 'address_gsearch') {
       $zip = $rendered[0]['#content']['postal_code'] ?? NULL;
       $city = $rendered[0]['#content']['postal_name'] ?? NULL;
       $street = $rendered[0]['#content']['address'] ?? NULL;
