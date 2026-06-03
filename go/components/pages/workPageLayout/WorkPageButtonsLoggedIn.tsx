@@ -1,6 +1,6 @@
 import { first } from "lodash"
 import { useQueryStates } from "nuqs"
-import React, { useMemo } from "react"
+import React, { useMemo, useState } from "react"
 
 import {
   getManifestationLabel,
@@ -9,7 +9,7 @@ import {
   isPhysicalMaterialType,
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
+import ReservationModal from "@/components/shared/reservationModal/ReservationModal"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -30,6 +30,7 @@ const WorkPageButtonsLoggedIn = ({
 }: WorkPageButtonsLoggedInProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
+  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false)
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
@@ -54,10 +55,22 @@ const WorkPageButtonsLoggedIn = ({
 
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
-      <AlertBox
-        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
-        variant="warning"
-      />
+      <>
+        <WorkPageButtons>
+          <WorkPageButton
+            ariaLabel={`Reservér ${label}`}
+            theme={"primary"}
+            onClick={() => setIsReservationModalOpen(true)}>
+            Reservér {label}
+          </WorkPageButton>
+        </WorkPageButtons>
+        <ReservationModal
+          open={isReservationModalOpen}
+          onClose={() => setIsReservationModalOpen(false)}
+          wid={workId}
+          pid={selectedManifestation.pid}
+        />
+      </>
     )
   }
 

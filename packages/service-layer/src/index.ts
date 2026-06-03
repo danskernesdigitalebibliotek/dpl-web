@@ -1,2 +1,20 @@
+// Domain types — what apps reason about.
+export type { ApiId, Patron, MaterialAvailability, ServiceLayerConfig } from "./types"
+
+// React provider — wraps an app subtree and supplies config to the hooks.
+export { ServiceLayerProvider } from "./context/ServiceLayerContext"
+
+// React hooks — fetch + lifecycle. Require ServiceLayerProvider above in the tree.
+export { usePatron } from "./hooks/usePatron"
+export { useMaterialAvailability } from "./hooks/useMaterialAvailability"
+
+// queryOptions factories — for prefetchQuery / setQueryData in non-hook contexts.
+export { patronQuery } from "./queries/patron"
+export { materialAvailabilityQuery } from "./queries/availability"
+
+// Query keys — for cache mutations (tests, stories, setQueryData).
+export { patronQueryKey, materialAvailabilityQueryKey } from "./queryKeys"
+
+// Imperative fetchers — for non-react-query contexts (e.g. baking patron name into session).
 export { getPatron } from "./patron"
-export type { Patron } from "./types"
+export { getMaterialAvailability } from "./availability"

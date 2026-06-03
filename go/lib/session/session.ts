@@ -1,3 +1,4 @@
+import { getPatron } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { add, isPast, sub } from "date-fns"
 import { IronSession, SessionOptions, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
@@ -8,7 +9,7 @@ import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
 import { isBuildingGoApp } from "../helpers/next-phase"
-import { loadPatronServerSide } from "../helpers/service-layer"
+import { getServiceLayerConfig } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
@@ -160,7 +161,7 @@ export const saveAdgangsplatformenSession = async (
   // pre-service-layer fetcher's "log and return null" behaviour.
   let patron
   try {
-    patron = await loadPatronServerSide(userToken.token)
+    patron = await getPatron(getServiceLayerConfig(userToken.token))
   } catch (error) {
     console.error("Could not load patron during Adgangsplatformen login:", error)
   }

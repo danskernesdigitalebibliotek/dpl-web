@@ -7,6 +7,9 @@ const FbsPatronResponseSchema = z.object({
   patron: z
     .object({
       name: z.string().optional(),
+      preferredPickupBranch: z.string(),
+      emailAddress: z.string().optional(),
+      phoneNumber: z.string().optional(),
     })
     .optional(),
 })
@@ -17,5 +20,8 @@ export function parseAndMapPatron(raw: unknown): Patron | undefined {
   return {
     name: parsed.patron.name,
     isLocked: parsed.authenticateStatus === "LOANER_LOCKED_OUT",
+    preferredPickupBranchId: parsed.patron.preferredPickupBranch,
+    emailAddress: parsed.patron.emailAddress,
+    phoneNumber: parsed.patron.phoneNumber,
   }
 }
