@@ -80,10 +80,31 @@ module.exports = (_env, argv) => {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
-          // dpl-service-layer ships TypeScript source; let babel transpile it.
-          exclude:
-            /node_modules\/(?!@danskernesdigitalebibliotek\/dpl-service-layer)/,
+          exclude: /node_modules/,
           use: ["babel-loader"]
+        },
+        {
+          // dpl-service-layer ships TypeScript source rather than a built
+          // bundle, so we transpile it here. The project's .babelrc is
+          // file-relative and intentionally does not apply to node_modules,
+          // so we pass the presets explicitly for this one package.
+          test: /\.(ts|tsx)$/,
+          include:
+            /node_modules\/@danskernesdigitalebibliotek\/dpl-service-layer/,
+          use: [
+            {
+              loader: "babel-loader",
+              options: {
+                babelrc: false,
+                configFile: false,
+                presets: [
+                  ["@babel/preset-env", { modules: false }],
+                  "@babel/preset-react",
+                  "@babel/preset-typescript"
+                ]
+              }
+            }
+          ]
         },
         // We consume css, svg and raster image files from dpl-design-system package
         {
