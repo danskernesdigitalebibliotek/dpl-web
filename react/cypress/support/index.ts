@@ -71,29 +71,58 @@ Cypress.Commands.add(
   }
 );
 /**
- * interceptRest is used to make a REST HTTP request that returns fixture data
+ * interceptRest is used to make a REST HTTP request that returns either
+ * static fixture data or a body produced per-request from the actual
+ * request (useful when the backend echoes input — e.g. FBS returning one
+ * entry per recordid passed in the query string).
+ *
+ * Pass exactly one of `fixtureFilePath` or `buildBody`.
  *
  * @param {string} aliasName The name of the alias to use for the request
  * @param {"GET" | "POST" | "PUT" | "DELETE"} httpMethod The HTTP method to intercept
- * @param {string} url The URL to intercept
- * @param {string} fixtureFilePath The path to the fixture file to use as response
- *
+ * @param {string} url The URL pattern to intercept
+ * @param {string} [fixtureFilePath] Static fixture file to reply with
+ * @param {(req) => unknown} [buildBody] Function invoked per matching
+ * request that returns the response body
  */
-type InterceptRestParams = {
+type InterceptRestBase = {
   aliasName: string;
   httpMethod?: "GET" | "POST" | "PUT" | "DELETE";
   url: string;
-  fixtureFilePath: string;
 };
+type InterceptRestStaticParams = InterceptRestBase & {
+  fixtureFilePath: string;
+  buildBody?: never;
+};
+// Loose typing on purpose: cy.intercept already validates its handler
+// signature at the call site; here we only forward the request to the
+// caller-provided builder. Tightening this needs the CyHttpMessages
+// namespace, which isn't reliably importable from this support file.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InterceptedRequest = any;
+type InterceptRestDynamicParams = InterceptRestBase & {
+  fixtureFilePath?: never;
+  buildBody: (req: InterceptedRequest) => unknown;
+};
+type InterceptRestParams =
+  | InterceptRestStaticParams
+  | InterceptRestDynamicParams;
 Cypress.Commands.add(
   "interceptRest",
   ({
     aliasName,
     httpMethod = "GET",
     url,
-    fixtureFilePath
+    fixtureFilePath,
+    buildBody
   }: InterceptRestParams) => {
-    cy.fixture(fixtureFilePath)
+    if (buildBody) {
+      cy.intercept(httpMethod, url, (req) => {
+        req.reply({ statusCode: 200, body: buildBody(req) });
+      }).as(aliasName);
+      return;
+    }
+    cy.fixture(fixtureFilePath as string)
       .then((result) => {
         cy.intercept(httpMethod, url, result);
       })

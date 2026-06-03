@@ -158,18 +158,12 @@ describe("Material buttons", () => {
   });
 
   it("Renders correct action button for ordering a physical article with 'DigitalArticle' access", () => {
-    cy.interceptRest({
-      aliasName: "Availability",
-      url: "**/availability/v3?recordid=**",
-      fixtureFilePath:
-        "material/availability-physical-article-with-digital-access.json"
-    });
-    cy.interceptRest({
-      aliasName: "Holdings",
-      url: "**/availability/v3?recordid=**",
-      fixtureFilePath:
-        "material/holdings-periodical-article-with-digital-article-access.json"
-    });
+    // The dynamic availability intercept in `beforeEach` covers the FBS call
+    // for this test: it echoes the requested recordids with reservable=true.
+    // Earlier this block also registered a fixture-based "Holdings" intercept
+    // pointed at the availability URL with a holdings-shaped JSON — that was
+    // a copy-paste bug that worked only because the legacy code didn't
+    // validate the response shape.
     cy.interceptGraphql({
       operationName: "getMaterial",
       fixtureFilePath:
@@ -277,10 +271,23 @@ describe("Material buttons", () => {
       fixtureFilePath: "material/user.json"
     });
 
+    // FBS responds with one entry per requested recordid. Static fixtures
+    // don't model that — they return the same record regardless of the URL,
+    // which silently mismatched recordids in the past. Echo the requested
+    // recordids so every manifestation lookup gets a real answer. Tests that
+    // need the unavailable case override this with a fixture in the `it`.
     cy.interceptRest({
       aliasName: "Availability",
       url: "**/availability/v3?recordid=**",
-      fixtureFilePath: "material/availability.json"
+      buildBody: (req) => {
+        const params = new URLSearchParams(req.url.split("?")[1]);
+        return params.getAll("recordid").map((recordId) => ({
+          recordId,
+          available: true,
+          reservable: true,
+          reservations: 0
+        }));
+      }
     });
 
     cy.interceptGraphql({
