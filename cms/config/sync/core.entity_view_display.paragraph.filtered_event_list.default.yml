@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.filtered_event_list.field_allow_multiple_per_series
     - field.field.paragraph.filtered_event_list.field_amount_of_events
+    - field.field.paragraph.filtered_event_list.field_filter_audiences
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
     - field.field.paragraph.filtered_event_list.field_filter_cond_type
@@ -20,6 +21,7 @@ content: {  }
 hidden:
   field_allow_multiple_per_series: true
   field_amount_of_events: true
+  field_filter_audiences: true
   field_filter_branches: true
   field_filter_categories: true
   field_filter_cond_type: true

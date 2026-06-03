@@ -95,6 +95,14 @@ class RelatedContent {
   private array $branches = [];
 
   /**
+   * Audience term IDs, to look for.
+   *
+   * @var int[]
+   *  List of audience IDs
+   */
+  private array $audiences = [];
+
+  /**
    * What the results are based on - helps with debugging.
    *
    * The result basis is shown in the frontend, in a data-attribute as part
@@ -209,17 +217,20 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
-    if (empty($this->tags) && empty($this->categories) && !$this->broadSearch) {
+    if (empty($this->tags) && empty($this->categories) && empty($this->audiences) && !$this->broadSearch) {
       return [];
     }
 
     if ($this->outerAndConditions || $this->broadSearch) {
-      $node_ids = $this->getNodeIds($this->tags, $this->categories);
-      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
-      $this->resultBasis = ['tags', 'categories'];
+      $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->audiences);
+      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->audiences);
+      $this->resultBasis = ['tags', 'categories', 'audiences'];
     }
     else {
-      // First, let's look up related content, based only on tags.
+      // First, let's look up related content, based only on tags. We ignore
+      // audience in this conditional branch as it doesn't really make sense
+      // without re-thinking the algorithm. In practice it's only the "Related
+      // content" block that uses this logic.
       if (!empty($this->tags)) {
         $node_ids = $this->getNodeIds($this->tags);
         $event_ids = $this->getEventInstanceIds($this->tags);
@@ -377,11 +388,17 @@ class RelatedContent {
    *   Tag term IDs, to look for.
    * @param array<int> $categories
    *   Category term IDs, to look for.
+   * @param array<int> $audiences
+   *   Audience term IDs, to look for.
    *
    * @return array<int|string>
    *   Matching node IDs
    */
-  private function getNodeIds(array $tags = [], array $categories = []): array {
+  private function getNodeIds(
+    array $tags = [],
+    array $categories = [],
+    array $audiences = [],
+  ): array {
     if (empty($this->nodeBundles)) {
       return [];
     }
@@ -409,6 +426,7 @@ class RelatedContent {
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
+      'field_audiences' => $audiences,
     ];
 
     $this->addFilterConditions($query, $filters);
@@ -425,11 +443,17 @@ class RelatedContent {
    *   Tag term IDs, to look for.
    * @param array<int> $categories
    *   Category term IDs, to look for.
+   * @param array<int> $audiences
+   *   Audience term IDs, to look for.
    *
    * @return array<int|string>
    *   Matching Event Instance IDs
    */
-  private function getEventInstanceIds(array $tags = [], array $categories = []): array {
+  private function getEventInstanceIds(
+    array $tags = [],
+    array $categories = [],
+    array $audiences = [],
+  ): array {
     if (!$this->includeEvents) {
       return [];
     }
@@ -452,10 +476,10 @@ class RelatedContent {
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
+      'field_audiences' => $audiences,
     ];
 
     $this->addFilterConditions($es_query, $filters);
-
     $es_ids = $es_query->execute();
 
     // If we found no eventseries that match, we cannot look up relevant
@@ -546,6 +570,20 @@ class RelatedContent {
   public function setBranches(array $branches): array {
     $this->branches = $this->getReferenceIds($branches);
     return $this->branches;
+  }
+
+  /**
+   * Setter for audiences.
+   *
+   * @param int[]|string[]|\Drupal\taxonomy\TermInterface[] $audiences
+   *   The tags to set.
+   *
+   * @return int[]
+   *   The tag IDs.
+   */
+  public function setAudiences(array $audiences): array {
+    $this->audiences = $this->getReferenceIds($audiences);
+    return $this->audiences;
   }
 
   /**
