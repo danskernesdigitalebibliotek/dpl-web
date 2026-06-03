@@ -13,6 +13,7 @@ import {
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
+import ReservationModal from "../reservationModal/ReservationModal"
 
 export function DynamicModal() {
   const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, { scroll: false })
@@ -68,6 +69,17 @@ export function DynamicModal() {
   if (activeModal === "PlayerModal") {
     return (
       <PlayerModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    )
+  }
+
+  if (activeModal === "ReservationModal") {
+    return (
+      <ReservationModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
     )
   }
 

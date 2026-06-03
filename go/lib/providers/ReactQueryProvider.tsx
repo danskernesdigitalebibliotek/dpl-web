@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { useState } from "react"
 
 import { getQueryClientStaleTime } from "../helpers/graphql"
+import ServiceLayerProviderClient from "./ServiceLayerProviderClient"
 
 function ReactQueryProvider({ children }: React.PropsWithChildren) {
   const [client] = useState(
@@ -19,7 +20,7 @@ function ReactQueryProvider({ children }: React.PropsWithChildren) {
 
   return (
     <QueryClientProvider client={client}>
-      {children}
+      <ServiceLayerProviderClient>{children}</ServiceLayerProviderClient>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )

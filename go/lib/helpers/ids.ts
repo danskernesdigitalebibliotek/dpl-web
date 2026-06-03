@@ -24,3 +24,15 @@ export const getIsbnsFromWork = (work: WorkFullWorkPageFragment) => {
   )
   return filterFalsyValuesFromArray(flatten(isbnsNested))
 }
+
+// FBI pids look like "870970-basis:12345678". FBS keys availability and
+// holdings by the FAUST number — the substring after the colon.
+export const convertPidToFaustId = (pid: string): string | null => {
+  const parts = pid.split(":")
+  if (parts.length !== 2) return null
+  const faust = parts[1]
+  return /^\d+$/.test(faust) ? faust : null
+}
+
+export const getFaustIdsFromManifestations = (manifestations: { pid: string }[]): string[] =>
+  filterFalsyValuesFromArray(manifestations.map(m => convertPidToFaustId(m.pid)))
