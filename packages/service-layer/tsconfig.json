@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2022"],
+    "lib": ["es2022", "dom"],
     "types": ["node"],
     "strict": true,
     "noEmit": true,
@@ -10,8 +10,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "target": "es6",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
   },
-  "include": ["**/src/**/*.ts"],
+  "include": ["**/src/**/*.ts", "**/src/**/*.tsx"],
   "exclude": ["node_modules"]
 }

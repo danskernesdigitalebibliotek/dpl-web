@@ -18,15 +18,30 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@tanstack/react-query": "^5.100.14",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^24",
+    "@types/react": "^18",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
     "orval": "^7.21.0",
     "prettier": "^3.8.3",
+    "react": "^18",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.60.0",
     "vitest": "^4.0.18"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5",
+    "react": "^18 || ^19"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
   "dependencies": {
