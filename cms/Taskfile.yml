@@ -360,25 +360,14 @@ tasks:
     cmds:
       - task dev:bnfcli -- drush sailor:introspect bnf
       - task dev:bnfcli -- drush sailor:codegen bnf
-      - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
+      - task dev:bnfcli -- node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
       # sailor:introspect doesn't emit fields in a deterministic order
       # — Drupal's schema-build order varies with module load and cache
       # state, so two clean introspections can produce semantically
       # identical SDL with different field ordering. Normalize via the
       # `graphql` package so the committed file is stable regardless of
       # which environment ran the introspection.
-      - cmd: |
-          docker run --rm \
-            --volume "$(pwd):/work" \
-            --workdir /work \
-            node:22-alpine sh -c '
-              set -e
-              cd /tmp
-              npm init -y >/dev/null
-              npm install --silent --no-progress --no-fund graphql@16
-              cd /work
-              NODE_PATH=/tmp/node_modules node dev-scripts/normalizeGraphqlSchema.js web/modules/custom/bnf/schema/bnf.graphql
-            '
+      - task dev:bnfcli -- node dev-scripts/normalizeGraphqlSchema.js web/modules/custom/bnf/schema/bnf.graphql
 
   dev:codegen:fbi-graphql:
     desc: Generate dpl_fbi graphQL classes (reads /schemas/graphql/dbc-fbi.fbcms-go.graphql).
