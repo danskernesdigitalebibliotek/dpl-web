@@ -31,13 +31,6 @@ tasks:
       vars: [URL, OUT]
     cmds:
       - |
-        # Task forbids `dotenv:` in included Taskfiles, so source .env
-        # inline. Safe here — .env only carries LIBRARY_TOKEN.
-        if [ -f .env ]; then set -a; . ./.env; set +a; fi
-        if [ -z "${LIBRARY_TOKEN:-}" ]; then
-          echo "refresh:dbc-fbi: \$LIBRARY_TOKEN not set — copy schemas/.env.example to schemas/.env and fill it in." >&2
-          exit 1
-        fi
         docker run --rm \
           --volume "$(pwd):/work" \
           --workdir /work \
