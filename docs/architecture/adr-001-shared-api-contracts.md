@@ -45,20 +45,6 @@ enforced by per-sub-project codegen workflows
 [`react-codegen.yml`](../../.github/workflows/react-codegen.yml))
 that re-run codegen and `git diff --exit-code` the result.
 
-## Alternatives considered
-
-- **Per-sub-project live introspection (the status quo).** Rejected —
-  the three problems above are intrinsic to it.
-- **Per-sub-project vendored SDL, no `/schemas` directory.** Removes
-  the running-service dependency but not the drift, and doesn't give
-  us a central refresh story. Three independent snapshots of the same
-  FBS spec is exactly what we're eliminating.
-- **Git submodule for shared contracts.** Overkill: four consumers in
-  one monorepo doesn't justify the cross-repo PR friction.
-- **Monorepo workspace package** (`packages/api-contracts`). Rejected
-  because the contracts aren't JS — wrapping a directory of YAML/SDL
-  in a `package.json` adds ceremony without buying anything.
-
 ## Consequences
 
 - Refreshing an upstream API is one `task -d schemas refresh:<name>`
