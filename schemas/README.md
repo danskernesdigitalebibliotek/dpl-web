@@ -66,3 +66,7 @@ Codegen is owned by each consuming project. After updating a contract
 here, run the relevant `task codegen:*` tasks in the consuming project
 (see each sub-project's `Taskfile.yml` — `task codegen` shows the
 available codegen tasks).
+
+## TO-DOs
+- Move SOAP parts to `/schemas` also. (`/go/lib/soap`)
+- Consider more strict GH Action triggers, rather than broad (e.g. `/go/**`)
