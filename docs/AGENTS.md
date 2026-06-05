@@ -37,6 +37,3 @@ docs first.
 - Public DPL documentation site:
   <https://danskernesdigitalebibliotek.github.io/dpl-docs/>. That is the
   audience-facing docs surface; this folder is the source-code-adjacent one.
-- The CMS docs folder also has a `Taskfile.yml`, `diagrams/`, and
-  `images/` — diagrams are programmatic where possible (PlantUML, draw.io),
-  re-rendered via `task render`.

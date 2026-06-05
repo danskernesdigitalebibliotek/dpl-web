@@ -8,7 +8,7 @@ pieces talk to each other.
 ## What this is
 
 `dpl-web` is the codebase behind the shared web platform of the **Danish
-Public Libraries** (*Danskernes Digitale Bibliotek, DDB*). A single codebase
+Public Libraries** (*Danish Public Libraries, DPL*). A single codebase
 here is deployed to **100+ individual library websites** — see
 <https://fkb.dk/> for one running instance. The libraries differ in size and
 ambition but share this platform, so a change to default behaviour ships to
