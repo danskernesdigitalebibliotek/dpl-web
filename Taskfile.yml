@@ -55,20 +55,25 @@ tasks:
           exit 1
         fi
 
-        updated=0
-        for envfile in */.env; do
-          [ -f "$envfile" ] || continue
-          if grep -qE '^[A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
-            TOKEN="$token" perl -i -pe 's/^([A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
-            echo "  updated $envfile"
-            updated=$((updated + 1))
-          fi
-        done
-
-        if [ "$updated" -eq 0 ]; then
-          echo "No *LIBRARY_TOKEN entries found in first-level .env files." >&2
+        if ! command -v perl >/dev/null 2>&1; then
+          echo "perl not found on PATH — skipping automatic .env updates."
+          echo "Paste the token below into the *LIBRARY_TOKEN entries of your .env files manually."
         else
-          echo "Done. Updated $updated file(s)."
+          updated=0
+          for envfile in */.env; do
+            [ -f "$envfile" ] || continue
+            if grep -qE '^[A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
+              TOKEN="$token" perl -i -pe 's/^([A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
+              echo "  updated $envfile"
+              updated=$((updated + 1))
+            fi
+          done
+
+          if [ "$updated" -eq 0 ]; then
+            echo "No *LIBRARY_TOKEN entries found in first-level .env files." >&2
+          else
+            echo "Done. Updated $updated file(s)."
+          fi
         fi
 
         echo
