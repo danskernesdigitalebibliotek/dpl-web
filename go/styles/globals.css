@@ -78,6 +78,8 @@
     --black: hsla(0, 0%, 10.2%, 1);
     --white: hsla(255, 100%, 100%, 1);
 
+    --backdrop: hsla(0, 0%, 10.2%, 0.5);
+
     --beige: hsla(36, 45%, 98%, 1);
     --beige-overlay: hsla(42, 25%, 35%, 0.05);
     --beige-overlay-solid: hsl(26, 28%, 95%);
@@ -429,6 +431,14 @@
 
   .wysiwyg li::marker {
     @apply font-headline;
+  }
+
+  ol {
+    @apply list-outside list-decimal pl-[1.5em];
+  }
+
+  ul {
+    @apply list-outside list-disc pl-[1.3em];
   }
 }
 

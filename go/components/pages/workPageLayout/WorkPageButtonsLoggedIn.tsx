@@ -1,6 +1,6 @@
 import { first } from "lodash"
 import { useQueryStates } from "nuqs"
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 
 import {
   getManifestationLabel,
@@ -9,8 +9,8 @@ import {
   isPhysicalMaterialType,
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
-import ReservationModal from "@/components/shared/reservationModal/ReservationModal"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { modalParsers } from "@/lib/helpers/modal-url"
@@ -30,7 +30,7 @@ const WorkPageButtonsLoggedIn = ({
 }: WorkPageButtonsLoggedInProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
-  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false)
+  const { session } = useSession()
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
@@ -54,23 +54,23 @@ const WorkPageButtonsLoggedIn = ({
   const label = getManifestationLabel(selectedManifestation)
 
   if (isPhysicalMaterialType(materialTypeCode)) {
+    const reservationModalType =
+      session?.type === "unilogin" ? "ReservationUniloginModal" : "ReservationModal"
+
     return (
-      <>
-        <WorkPageButtons>
-          <WorkPageButton
-            ariaLabel={`Reservér ${label}`}
-            theme={"primary"}
-            onClick={() => setIsReservationModalOpen(true)}>
-            Reservér {label}
-          </WorkPageButton>
-        </WorkPageButtons>
-        <ReservationModal
-          open={isReservationModalOpen}
-          onClose={() => setIsReservationModalOpen(false)}
-          wid={workId}
-          pid={selectedManifestation.pid}
-        />
-      </>
+      <WorkPageButtons>
+        <WorkPageButton
+          ariaLabel={`Reservér ${label}`}
+          theme={"primary"}
+          onClick={() =>
+            setModal({
+              modal: reservationModalType,
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
+            })
+          }>
+          Reservér {label}
+        </WorkPageButton>
+      </WorkPageButtons>
     )
   }
 

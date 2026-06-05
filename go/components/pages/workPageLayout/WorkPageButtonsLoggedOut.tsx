@@ -10,7 +10,6 @@ import {
   isPhysicalMaterialType,
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -48,10 +47,19 @@ const WorkPageButtonsLoggedOut = ({
 
   if (isPhysicalMaterialType(materialTypeCode)) {
     return (
-      <AlertBox
-        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
-        variant="warning"
-      />
+      <WorkPageButtons>
+        <WorkPageButton
+          ariaLabel={`Reservér ${label}`}
+          theme={"primary"}
+          onClick={() =>
+            setModal({
+              modal: "ReservationLoginModal",
+              modalProps: { wid: workId, pid: selectedManifestation.pid },
+            })
+          }>
+          Reservér {label}
+        </WorkPageButton>
+      </WorkPageButtons>
     )
   }
 
