@@ -1,5 +1,10 @@
 import { SearchResultPage } from "../../../cypress/page-objects/search-result/SearchResultPage";
-import { givenSearchWithPaginationResponse } from "../../../cypress/intercepts/fbi/searchWithPagination";
+import {
+  givenSearchWithFictionNonfictionNotSpecifiedResponse,
+  givenSearchWithNonfictionResponse,
+  givenSearchWithPaginationResponse,
+  SHELFMARK_TEXT
+} from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
 
 describe("Search Result", () => {
@@ -36,6 +41,30 @@ describe("Search Result", () => {
 
     it("shows hit count in results heading", () => {
       page.verifyResultsHeadingContains("3537");
+    });
+  });
+
+  describe("Result Card Display", () => {
+    it("Should show shelfmark on the result card for a nonfiction work", () => {
+      // Given: a search response whose only work has fictionNonfiction code NONFICTION
+      givenSearchWithNonfictionResponse();
+      page.visit([]);
+
+      // Then: the shelfmark text from the factory should be rendered on the card.
+      page.elements.resultItems().eq(0).should("contain.text", SHELFMARK_TEXT);
+    });
+
+    it("Should hide shelfmark on the result card when fictionNonfiction is not specified", () => {
+      // Given: a search response whose only work has fictionNonfiction code NOT_SPECIFIED
+      givenSearchWithFictionNonfictionNotSpecifiedResponse();
+      page.visit([]);
+
+      // Then: the shelfmark text must not appear on the card — the
+      // SubjectNumber line is suppressed when fictionNonfiction is not specified.
+      page.elements
+        .resultItems()
+        .eq(0)
+        .should("not.contain.text", SHELFMARK_TEXT);
     });
   });
 
