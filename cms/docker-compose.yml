@@ -24,6 +24,10 @@ x-user:
 
 x-environment:
   &default-environment
+    # White-list the monorepo Git folder, so it can be read from, regardless of ownership.
+    GIT_CONFIG_COUNT: "1"
+    GIT_CONFIG_KEY_0: "safe.directory"
+    GIT_CONFIG_VALUE_0: "/app"
     # Lagoon ensures that Drush knows the local site URI using this variable.
     LAGOON_ROUTE: &default-url https://${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
     # Environment variables which mimic what will be set in a Lagoon cluster locally
