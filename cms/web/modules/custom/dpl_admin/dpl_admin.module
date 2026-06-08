@@ -48,6 +48,13 @@ function dpl_admin_local_tasks_alter(array &$local_tasks): void {
   unset($local_tasks['entity.eventseries.collection']);
   unset($local_tasks['entity.eventinstance.collection']);
   unset($local_tasks['entity.media.collection']);
+
+  // Remove the duplicate "Clone" tab on eventseries.
+  // entity_clone's deriver auto-generates a generic Clone tab for any entity
+  // type with a "clone-form" link template. recurring_events already ships its
+  // own purpose-built clone form for series (it clones the series and its
+  // instances), so the generic entity_clone tab is a redundant duplicate here.
+  unset($local_tasks['entity_clone.clone:eventseries.clone_tab']);
 }
 
 /**
