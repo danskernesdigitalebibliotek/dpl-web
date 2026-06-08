@@ -6,30 +6,43 @@ x-links: &links
   # For mapp-tracking.cy.ts
   - "wiremock:responder.wt-safetag.com"
 
+# The repo root is bind-mounted at /app, so .git is now visible inside the
+# containers. The checked-out files are owned by the host/runner user, not the
+# container user, so git refuses to use the repo ("dubious ownership"). Tools
+# that read git metadata (Cypress, Lighthouse CI) trip over this. Mark the repo
+# root as safe via env so we don't have to run git config in each container.
+x-git-safe-directory: &git-safe-directory
+  GIT_CONFIG_COUNT: "1"
+  GIT_CONFIG_KEY_0: "safe.directory"
+  GIT_CONFIG_VALUE_0: "/app"
+
 services:
   node-chrome:
     build:
-      context: .
-      dockerfile: docker/node-chromium.dockerfile
+      context: ..
+      dockerfile: cms/docker/node-chromium.dockerfile
     links: *links
     volumes:
-      - "projectroot:/app"
+      - "../:/app"
     depends_on:
       - wiremock
+    working_dir: "/app/cms"
     environment:
+      <<: *git-safe-directory
       CYPRESS_INSTALL_BINARY: 0
-      YARN_CACHE_FOLDER: "/app/.cache/yarn"
+      YARN_CACHE_FOLDER: "/app/cms/.cache/yarn"
 
   cypress:
     image: cypress/included:15.14.0
     links: *links
     volumes:
-      - "projectroot:/app"
-      - "./cypress/tsconfig.json:/app/tsconfig.json"
-    working_dir: "/app"
+      - "../:/app"
+      - "./cypress/tsconfig.json:/app/cms/tsconfig.json"
+    working_dir: "/app/cms"
     depends_on:
       - wiremock
     environment:
+      <<: *git-safe-directory
       CYPRESS_BASE_URL: "http://varnish:8080"
 
   wiremock:
@@ -43,7 +56,7 @@ services:
     # or not.
     command: "--port=80 --https-port=443 --local-response-templating --enable-stub-cors --verbose --disable-banner"
     volumes:
-      - "projectroot:/app"
+      - "../:/app"
     ports:
       - 80
       - 443
