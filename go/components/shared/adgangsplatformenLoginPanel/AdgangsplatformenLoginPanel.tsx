@@ -26,8 +26,7 @@ const AdgangsplatformenLoginPanel = ({
   return (
     <div
       className={cn(
-        `bg-background-overlay flex flex-col items-center justify-center rounded-sm p-8
-        text-center`,
+        "bg-background-overlay flex flex-col items-center justify-center rounded-sm p-8 text-center",
         className
       )}>
       <Icon name="adgangsplatformen" className="mb-4" />
@@ -41,9 +40,7 @@ const AdgangsplatformenLoginPanel = ({
         dataCy={dataCy}>
         LOG IND
       </Button>
-      {description && (
-        <p className="text-typo-body-sm text-foreground/70 mt-6">{description}</p>
-      )}
+      {description && <p className="text-typo-body-sm text-foreground/70 mt-6">{description}</p>}
     </div>
   )
 }
