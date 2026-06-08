@@ -125,4 +125,4 @@ tasks:
       - task: refresh:material-list
       - task: refresh:fbs
       - task: refresh:dbc-fbi
-      - task refresh:publizon
+      - task: refresh:publizon

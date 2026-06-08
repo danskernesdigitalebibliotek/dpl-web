@@ -7,18 +7,28 @@ consume the same external APIs. Historically each owned its own copy of
 every contract — duplicated OpenAPI YAML, separate GraphQL codegen
 pipelines that live-introspected upstream services at build time.
 
-Three concrete problems followed:
+### Problems:
+
+The main motivation for cleaning up the schemas, was that we wanted better
+GitHub actions for catching problems, especially in relation to Dependabot
+updates. This was blocked by a few things, which `/schemas` would solve:
 
 1. **Drift.** The same FBS adapter spec was tracked in three places
    with no enforced equivalence.
-2. **Codegen needed running services.** GraphQL codegen introspected a
+2. **Introspect and codegen was baked together**
+   Running codegen for external services (such as FBI) also included running an
+   introspect against the actual service. That meant that we could not set up
+   a code-drift action for PR, as they could contain unrelated changes
+3. **Some codegen needed dynamic tokens**
+   The library tokens needed to be generated dynamically, and would have made
+   GitHub actions extra complicated to construct.
+4. **Codegen needed running services.** GraphQL codegen introspected a
    live `dpl-cms` (full Drupal + Varnish + Basic Auth credentials) and
    the DBC FBI gateways. CI had to spin up the stack to generate
    client types, and the resulting SDL varied with the running site's
    language pack and Drupal's module-load order — producing spurious
    schema diffs.
-3. **No central refresh story.** Each sub-project had its own ad-hoc
-   refresh script and codegen flow. Onboarding meant learning four.
+   This was not a critical problem, but it would be nice to clean up.
 
 ## Decision
 
