@@ -22,22 +22,6 @@ async function postProcess(path: string) {
     from: /Query = {/g,
     to: "Query = { go: { cacheTags: string[] } } & {",
   })
-
-  // Strip schema-sourced JSDoc comments (`/** ... */` blocks emitted by
-  // graphql-codegen from GraphQL descriptions). Drupal localizes those
-  // descriptions to whatever language pack is installed on the
-  // introspected site — Danish locally, English in CI (where
-  // SKIP_LANGUAGE_IMPORT is set) — so leaving them in causes pure
-  // translation drift in the generated file. Removing them keeps codegen
-  // output stable regardless of which language Drupal happens to be
-  // configured with.
-  await replaceInFile({
-    files: path,
-    // Matches `/** ... */` blocks (single- or multi-line) on their own
-    // line, including any leading indentation and the trailing newline.
-    from: /^[ \t]*\/\*\*[\s\S]*?\*\/[ \t]*\r?\n/gm,
-    to: "",
-  })
 }
 
 postProcess(pathToGeneratedFile).catch((error: unknown) => {

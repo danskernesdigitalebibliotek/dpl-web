@@ -72,7 +72,7 @@ tasks:
       - yarn codegen:all-rest-services
 
   codegen:graphql:
-    desc: Regenerate dpl-cms GraphQL client. Live-introspects dpl-cms, so DPL_CMS_BASE_URL and GraphQL credentials must be set.
+    desc: Regenerate dpl-cms + FBI GraphQL clients from the committed SDL in /schemas/graphql/.
     cmds:
       - task dev:nvm:use
       - yarn codegen:graphql

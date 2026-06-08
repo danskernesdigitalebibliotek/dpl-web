@@ -25,18 +25,19 @@ sub-project; only the contracts live here.
 3. **Contracts are codegen-only.** Read by `orval` /
    `openapi-generator-cli` / `graphql-codegen` at codegen time; nothing
    reads them at runtime.
-4. **External GraphQL schemas are vendored as SDL; internal ones aren't.**
-   Third-party schemas (the DBC FBI gateway, vendored once per host+profile
-   as `dbc-fbi.temp-next.graphql` + `dbc-fbi.fbcms-go.graphql`) are checked
-   in so codegen doesn't need a bearer token. Schemas defined by our own
-   code (the dpl-cms GraphQL endpoint, CMS modules that define their own
-   types) stay introspected live — live introspection is its own
-   consistency check.
+4. **External GraphQL schemas are vendored here as SDL.** Third-party
+   schemas (the DBC FBI gateway, vendored once per host+profile as
+   `dbc-fbi.temp-next.graphql` + `dbc-fbi.fbcms-go.graphql`) are checked
+   in so codegen doesn't need a bearer token. Schemas defined by our
+   own code are vendored alongside their producer instead — see rule 5.
 
    **See the banner above** — the two `dbc-fbi.*.graphql` files are due
    to be collapsed into one on the next refresh.
-5. **`cms/openapi.json` stays in `cms/`.** It's an artifact produced by
-   the Drupal CMS itself, not an upstream contract.
+5. **CMS-produced artifacts stay in `cms/`.** `cms/openapi.json` (REST
+   surface) and `cms/dpl-cms.bnf.graphql` (BNF GraphQL SDL,
+   snapshotted via Sailor) are artifacts produced by the Drupal CMS
+   itself, not upstream contracts — they live next to the code that
+   generates them. `go/` codegen reads them from `cms/` directly.
 
 ## Refresh
 

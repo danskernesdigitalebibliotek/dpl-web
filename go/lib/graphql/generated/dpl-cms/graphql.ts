@@ -7,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+/** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
   String: { input: string; output: string; }
@@ -129,6 +130,11 @@ export type DplTokens = {
   adgangsplatformen?: Maybe<AdgangsplatformenTokens>;
 };
 
+export type Error = {
+  __typename?: 'Error';
+  message: Scalars['String']['output'];
+};
+
 export type File = {
   __typename?: 'File';
   description?: Maybe<Scalars['String']['output']>;
@@ -197,6 +203,16 @@ export type Image = {
   url: Scalars['String']['output'];
   width: Scalars['Int']['output'];
 };
+
+export type ImportResponse = {
+  __typename?: 'ImportResponse';
+  message: Scalars['String']['output'];
+  status: ImportStatus;
+};
+
+export type ImportStatus =
+  | 'failure'
+  | 'success';
 
 export type InterestPeriod = {
   __typename?: 'InterestPeriod';
@@ -327,6 +343,20 @@ export type MediaVideotoolVertical = MediaInterface & {
 export type Mutation = {
   __typename?: 'Mutation';
   _: Scalars['Boolean']['output'];
+  import: ImportResponse;
+};
+
+
+export type MutationImportArgs = {
+  callbackUrl: Scalars['String']['input'];
+  uuid: Scalars['String']['input'];
+};
+
+export type NewContentResponse = {
+  __typename?: 'NewContentResponse';
+  errors: Array<Error>;
+  uuids: Array<Scalars['String']['output']>;
+  youngest: Scalars['Time']['output'];
 };
 
 export type NodeArticle = NodeInterface & {
@@ -754,6 +784,7 @@ export type ParagraphManualEventList = ParagraphInterface & {
 
 export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridAutomatic';
+  /** @deprecated Use materialAmount instead */
   amountOfMaterials: Scalars['Int']['output'];
   cqlSearch?: Maybe<CqlSearch>;
   created: DateTime;
@@ -767,6 +798,7 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
 
 export type ParagraphMaterialGridLinkAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridLinkAutomatic';
+  /** @deprecated Use materialAmount instead */
   amountOfMaterials: Scalars['Int']['output'];
   created: DateTime;
   id: Scalars['ID']['output'];
@@ -919,6 +951,7 @@ export type Query = { go: { cacheTags: string[] } } & {
   goCategories?: Maybe<GoCategoriesResult>;
   goConfiguration?: Maybe<GoConfiguration>;
   info: SchemaInformation;
+  newContent: NewContentResponse;
   node?: Maybe<NodeUnion>;
   paragraph?: Maybe<ParagraphUnion>;
   preview?: Maybe<NodeUnion>;
@@ -936,6 +969,12 @@ export type QueryGetBranchesArgs = {
 
 export type QueryGoCategoriesArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryNewContentArgs = {
+  since: Scalars['Time']['input'];
+  uuid: Scalars['String']['input'];
 };
 
 

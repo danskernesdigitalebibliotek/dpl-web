@@ -54,7 +54,7 @@ class SailorEndpointConfig extends EndpointConfig {
    * {@inheritdoc}
    */
   public function schemaPath(): string {
-    return __DIR__ . '/../schema/bnf.graphql';
+    return __DIR__ . '/../../../../../dpl-cms.bnf.graphql';
   }
 
   /**
