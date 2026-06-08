@@ -45,7 +45,7 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
                     if (onLogin) onLogin()
                     router.push(routes["routes.login.unilogin"])
                   }}
-                  dataCy={cyKeys["login-sheet-unilogin-button"]}>
+                  data-cy={cyKeys["login-sheet-unilogin-button"]}>
                   LOG IND
                 </Button>
               </div>

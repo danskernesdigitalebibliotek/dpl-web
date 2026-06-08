@@ -37,7 +37,8 @@ const AdgangsplatformenLoginPanel = ({
         ariaLabel="Log ind med bibliotekslogin"
         onClick={onLogin}
         disabled={disabled}
-        dataCy={dataCy}>
+        // eslint-disable-next-line no-restricted-syntax
+        data-cy={dataCy}>
         LOG IND
       </Button>
       {description && <p className="text-typo-body-sm text-foreground/70 mt-6">{description}</p>}
