@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React, { useContext } from "react"
 
-import AdgangsplatformenLoginPanel from "@/components/shared/adgangsplatformenLoginPanel/AdgangsplatformenLoginPanel"
+import LoginPanel from "@/components/shared/loginPanel/LoginPanel"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
 import { createModalUrl } from "@/lib/helpers/modal-url"
@@ -41,7 +41,9 @@ const ReservationUniloginModal = ({ open, onClose, wid, pid }: ReservationUnilog
           Du kan ikke reservere bøger på biblioteket med UNI-login.
         </p>
 
-        <ul className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 space-y-3">
+        <ul
+          className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 unordered-list
+            space-y-3">
           <li>Brug dit bibliotekslogin i stedet for UNI-login.</li>
           <li>
             Hvis du ikke har et bibliotekslogin, kan du få det lavet sammen med en forælder/værge på
@@ -49,7 +51,10 @@ const ReservationUniloginModal = ({ open, onClose, wid, pid }: ReservationUnilog
           </li>
         </ul>
 
-        <AdgangsplatformenLoginPanel
+        <LoginPanel
+          icon="adgangsplatformen"
+          heading="Log ind med dit bibliotekslogin"
+          ariaLabel="Log ind med bibliotekslogin"
           onLogin={handleLogin}
           disabled={!loginUrlAdgangsplatformen}
           description="Med bibliotekslogin kan du låne e-bøger, lydbøger og podcasts. Du kan også reservere og låne fysiske bøger på dit lokale bibliotek."

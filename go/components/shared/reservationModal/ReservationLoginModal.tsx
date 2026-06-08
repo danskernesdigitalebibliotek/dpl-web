@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React, { useContext } from "react"
 
-import AdgangsplatformenLoginPanel from "@/components/shared/adgangsplatformenLoginPanel/AdgangsplatformenLoginPanel"
+import LoginPanel from "@/components/shared/loginPanel/LoginPanel"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
 import { createModalUrl } from "@/lib/helpers/modal-url"
@@ -39,7 +39,9 @@ const ReservationLoginModal = ({ open, onClose, wid, pid }: ReservationLoginModa
       <div className="mx-auto w-full max-w-prose space-y-6">
         <p className="text-typo-heading-5">4 nemme steps til lån af bog på biblioteket.</p>
 
-        <ol className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 space-y-3">
+        <ol
+          className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 ordered-list
+            space-y-3">
           <li>
             For at låne en fysisk bog skal du logge ind med et bibliotekslogin (ikke UNI-login).
           </li>
@@ -48,7 +50,10 @@ const ReservationLoginModal = ({ open, onClose, wid, pid }: ReservationLoginModa
           <li>Hent bogen på dit bibliotek.</li>
         </ol>
 
-        <AdgangsplatformenLoginPanel
+        <LoginPanel
+          icon="adgangsplatformen"
+          heading="Log ind med dit bibliotekslogin"
+          ariaLabel="Log ind med bibliotekslogin"
           onLogin={handleLogin}
           disabled={!loginUrlAdgangsplatformen}
           description="Med bibliotekslogin kan du låne e-bøger, lydbøger og podcasts. Du kan også reservere og låne fysiske bøger på dit lokale bibliotek."
