@@ -37,11 +37,11 @@ const ReservationUniloginModal = ({ open, onClose, wid, pid }: ReservationUnilog
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Brug bibliotekslogin">
       <div className="mx-auto w-full max-w-prose space-y-6">
-        <p className="text-typo-subtitle-md">
+        <p className="text-typo-heading-5">
           Du kan ikke reservere bøger på biblioteket med UNI-login.
         </p>
 
-        <ul className="text-typo-body-md list-disc space-y-3 pl-6">
+        <ul className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 space-y-3">
           <li>Brug dit bibliotekslogin i stedet for UNI-login.</li>
           <li>
             Hvis du ikke har et bibliotekslogin, kan du få det lavet sammen med en forælder/værge på

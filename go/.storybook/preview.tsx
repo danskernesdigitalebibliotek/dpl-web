@@ -84,6 +84,16 @@ const preview: Preview = {
       // Add dark mode to the context of the story. This can be called later in the story decorator.
       const params = { useDarkMode, ...parameters }
 
+      // Apply the font variable to <html> so portalled content (modals, drawers,
+      // sheets) renders with the correct headline font.
+      React.useEffect(() => {
+        const root = document.documentElement
+        root.classList.add(GTFlexa.variable, "antialiased")
+        return () => {
+          root.classList.remove(GTFlexa.variable, "antialiased")
+        }
+      }, [])
+
       return (
         <div className={`${GTFlexa.variable} antialiased`}>
           <Story {...params} />
