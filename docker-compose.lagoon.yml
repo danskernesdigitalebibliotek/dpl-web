@@ -16,8 +16,8 @@ services:
 
   varnish:
     build:
-      context: cms
-      dockerfile: lagoon/varnish.dockerfile
+      context: .
+      dockerfile: cms/lagoon/varnish.dockerfile
     labels:
       lagoon.type: varnish
     extends:
@@ -26,23 +26,21 @@ services:
 
   cli:
     build:
-      context: cms
-      dockerfile: lagoon/cli.dockerfile
+      dockerfile: cms/lagoon/cli.dockerfile
     labels:
       lagoon.type: cli-persistent
       lagoon.persistent.name: nginx
-      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.persistent: /app/cms/web/sites/default/files/
     extends:
       file: cms/docker-compose.yml
       service: cli
 
   nginx:
     build:
-      context: cms
-      dockerfile: lagoon/nginx.dockerfile
+      dockerfile: cms/lagoon/nginx.dockerfile
     labels:
       lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.persistent: /app/cms/web/sites/default/files/
       lagoon.persistent.size: 10Gi
     extends:
       file: cms/docker-compose.yml
@@ -50,12 +48,11 @@ services:
 
   php:
     build:
-      context: cms
-      dockerfile: lagoon/php.dockerfile
+      dockerfile: cms/lagoon/php.dockerfile
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx
-      lagoon.persistent: /app/web/sites/default/files/
+      lagoon.persistent: /app/cms/web/sites/default/files/
     extends:
       file: cms/docker-compose.yml
       service: php
@@ -78,8 +75,7 @@ services:
 
   node:
     build:
-      context: go
-      dockerfile: lagoon/node-lagoon.dockerfile
+      dockerfile: go/lagoon/node-lagoon.dockerfile
       # The parent image is tagged with the branch name, so to avoid building with
       # a stale image, we always fetch the latest version.
       pull: true

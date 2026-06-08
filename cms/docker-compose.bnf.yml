@@ -3,7 +3,7 @@
 x-volumes:
   &default-volumes
     volumes:
-      - 'projectroot:/app'
+      - '../:/app'
 
 x-user:
   &default-user
@@ -16,7 +16,7 @@ x-environment:
     LAGOON_PROJECT: 'bnf'
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
-    WEBROOT: web
+    WEBROOT: cms/web
     #
     MARIADB_HOST: bnfmariadb
     REDIS_HOST: bnfredis
@@ -34,11 +34,11 @@ services:
     labels:
       lagoon.type: none
     volumes:
-      - 'projectroot:/app'
+      - '../:/app'
       - '${HOME}/.local/share/mkcert:/rootCA:ro'
       - '${HOME}/.local/share/dev_certificates:/cert:rw'
     environment:
-      NGINX_DOCUMENT_ROOT: /app/web
+      NGINX_DOCUMENT_ROOT: /app/cms/web
       NGINX_PROXY_PASS: http://bnfvarnish:8080
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
@@ -69,8 +69,8 @@ services:
   bnfcli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
-      context: .
-      dockerfile: lagoon/cli.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/cli.dockerfile
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:
@@ -81,8 +81,8 @@ services:
   bnfnginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
-      context: .
-      dockerfile: lagoon/nginx.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/nginx.dockerfile
     depends_on:
       - bnfphp
     # loads the defined volumes and user from the top
@@ -95,8 +95,8 @@ services:
   bnfphp: # php-fpm server that executes php requests.
     # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
     build:
-      context: .
-      dockerfile: lagoon/php.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/php.dockerfile
     depends_on:
       bnfredis:
         condition: service_started

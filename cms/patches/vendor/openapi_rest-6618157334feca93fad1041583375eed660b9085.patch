@@ -1,0 +1,34 @@
+From 6618157334feca93fad1041583375eed660b9085 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Wed, 22 Feb 2023 20:40:13 +0100
+Subject: [PATCH] 3343816: Do not include disabled rest resources in OpenAPI
+ spec
+
+The getResourceConfigs is the central method for retrieving REST
+resource configurations. Filtering away disabled here will exclude it
+everywhere.
+---
+ src/RestInspectionTrait.php | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/RestInspectionTrait.php b/src/RestInspectionTrait.php
+index d8e61d8..32b5d5f 100644
+--- a/src/RestInspectionTrait.php
++++ b/src/RestInspectionTrait.php
+@@ -58,7 +58,12 @@ trait RestInspectionTrait {
+         }
+       }
+     }
+-    return $resource_configs;
++
++    $enabled_resource_configs = array_filter($resource_configs, function(RestResourceConfigInterface $config) {
++        return $config->status();
++    });
++
++    return $enabled_resource_configs;
+   }
+ 
+   /**
+-- 
+GitLab
+

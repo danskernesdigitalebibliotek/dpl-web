@@ -1,0 +1,31 @@
+diff --git a/src/Extractor/YamlExtractor.php b/src/Extractor/YamlExtractor.php
+index 16a0b74..3058b2c 100644
+--- a/src/Extractor/YamlExtractor.php
++++ b/src/Extractor/YamlExtractor.php
+@@ -15,7 +15,8 @@ use Drupal\Component\Serialization\SerializationInterface;
+  * - "name" and "description" in *.info.yml
+  * - "_title" coupled with optional "_title_context" in *.routing.yml
+  * - "title" coupled with optional "title_context in *.links.action.yml,
+- * *.links.task.yml and *.links.contextual.yml.
++ * - "title" and "description" coupled with optional "title_context" and "description_context" in *.links.menu.yml,
++ * - *.links.task.yml and *.links.contextual.yml.
+  *
+  * @see https://www.drupal.org/docs/8/api/translation-api/overview
+  */
+@@ -63,6 +64,16 @@ class YamlExtractor extends ExtractorBase implements ExtractableInterface {
+         'context' => ['title_context'],
+       ],
+     ],
++    '.links.menu.yml' => [
++      [
++        'message' => ['title'],
++        'context' => ['title_context'],
++      ],
++      [
++        'message' => ['description'],
++        'context' => ['description_context'],
++      ],
++    ],
+     '.links.task.yml' => [
+       [
+         'message' => ['title'],

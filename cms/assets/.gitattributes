@@ -10,3 +10,6 @@ packages/cms-api/**/*.* linguist-generated=true
 web/modules/custom/*/src/GraphQL/**/*.* linguist-generated=true
 # And the schema files we keep around.
 web/modules/custom/*/schema/*.graphql
+
+# Mark third-party patches vendored into the repo as vendored.
+patches/vendor/** linguist-vendored

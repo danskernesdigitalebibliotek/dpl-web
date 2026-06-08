@@ -342,3 +342,16 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]
+      # codegen breaks with these versions. DDFNEXT-1455
+      # typescript / typescript-operations v6 emit a second set of input/enum
+      # types that collide with typescript-react-query@6 legacyMode output.
+      - dependency-name: "@graphql-codegen/add"
+        versions: [">=7.0.0"]
+      - dependency-name: "@graphql-codegen/cli"
+        versions: [">=7.0.0"]
+      - dependency-name: "@graphql-codegen/introspection"
+        versions: [">=6.0.0"]
+      - dependency-name: "@graphql-codegen/typescript"
+        versions: [">=6.0.0"]
+      - dependency-name: "@graphql-codegen/typescript-operations"
+        versions: [">=6.0.0"]

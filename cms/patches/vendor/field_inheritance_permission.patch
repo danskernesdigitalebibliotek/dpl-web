@@ -1,0 +1,34 @@
+diff --git a/field_inheritance.module b/field_inheritance.module
+index 7c565a1..c1164dc 100644
+--- a/field_inheritance.module
++++ b/field_inheritance.module
+@@ -133,7 +133,7 @@ function field_inheritance_entity_bundle_field_info_alter(&$fields, EntityTypeIn
+  * Implements hook_form_alter().
+  */
+ function field_inheritance_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+-  if (!\Drupal::currentUser()->hasPermission('administer field inheritance')) {
++  if (!\Drupal::currentUser()->hasPermission('administer entity field inheritance')) {
+     return;
+   }
+   $form_object = $form_state->getFormObject();
+@@ -184,7 +184,8 @@ function field_inheritance_form_alter(&$form, FormStateInterface $form_state, $f
+       ];
+ 
+       $form['field_inheritance']['fields'] = [
+-        '#type' => 'fieldset',
++        '#type' => 'details',
++        '#open' => FALSE,
+         '#title' => t('Field Mappings'),
+         '#states' => [
+           'visible' => [
+diff --git a/field_inheritance.permissions.yml b/field_inheritance.permissions.yml
+index 5366063..43efc72 100644
+--- a/field_inheritance.permissions.yml
++++ b/field_inheritance.permissions.yml
+@@ -4,3 +4,6 @@ administer field inheritance:
+   title: 'Administer Field Inheritance configuration'
+   description: 'Allow to access the administration form to configure Field Inheritance.'
+   restrict access: true
++administer entity field inheritance:
++  title: 'Administer Field Inheritance when creating/editing an entity.'
++  description: 'Allow to choose how a specific entity respects inheritance.'
