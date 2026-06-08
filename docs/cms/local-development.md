@@ -71,7 +71,7 @@ For performance reasons XDebug is disabled by default. It can be enabled
 temporarily through a task:
 
 1. Run `task dev:enable-xdebug`
-2. Validate that XDebug is enabled by inspecting <http://dpl-cms.docker/admin/reports/status/php>.
+2. Validate that XDebug is enabled by inspecting <http://dpl-cms.local/admin/reports/status/php>.
    It should contain extended information about XDebug
 3. Debug the application by setting breakpoints, listen for incoming
    connections in your IDE and [activate XDebug from you client/browser](https://xdebug.org/docs/step_debug#web-application)

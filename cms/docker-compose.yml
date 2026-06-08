@@ -58,7 +58,7 @@ services:
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
         ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
-        dpl-cms.docker
+        dpl-cms.local
     working_dir: /app
 
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.

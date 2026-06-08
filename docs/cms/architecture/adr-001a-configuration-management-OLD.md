@@ -21,11 +21,11 @@ A solution to configuration management must live up to the following test:
    `drush site-install --existing-config -y`
 3. Log in to see that Core configuration is imported. This can be verified if
    the site name is set to DPL CMS.
-4. Change a Core configuration value e.g. on <http://dpl-cms.docker/admin/config/development/performance>
+4. Change a Core configuration value e.g. on <http://dpl-cms.local/admin/config/development/performance>
 5. Run `drush config-import -y` and see that the change is rolled back and the
    configuration value is back to default. This shows that Core configuration
    will remain managed by the configuration system.
-6. Change a local configuration value like the site name on <http://dpl-cms.docker/admin/config/system/site-information>
+6. Change a local configuration value like the site name on <http://dpl-cms.local/admin/config/system/site-information>
 7. Run `drush config-import -y` to see that no configuration is imported. This
    shows that local configuration which can be managed by Editor libraries will
    be left unchanged.
