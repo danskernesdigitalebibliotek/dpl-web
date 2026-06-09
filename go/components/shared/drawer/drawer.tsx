@@ -3,6 +3,7 @@
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
+import { cyKeys } from "@/cypress/support/constants"
 import { cn } from "@/lib/shadcn/utils"
 
 const Drawer = ({
@@ -27,6 +28,7 @@ const DrawerOverlay = React.forwardRef<
     ref={ref}
     className={cn("z-drawer bg-backdrop fixed inset-0", className)}
     {...props}
+    data-cy={cyKeys["global-drawer-overlay"]}
   />
 ))
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
@@ -44,7 +46,8 @@ const DrawerContent = React.forwardRef<
         flex-col overflow-hidden rounded-t-xl`,
         className
       )}
-      {...props}>
+      {...props}
+      data-cy={cyKeys["global-drawer"]}>
       <div className="bg-background-overlay mx-auto mt-4 h-[6px] w-[100px] shrink-0 rounded-full" />
       {children}
     </DrawerPrimitive.Content>

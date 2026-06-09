@@ -7,10 +7,11 @@ import institution from "../factories/unilogin/institution"
 import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
 import userinfo from "../factories/unilogin/userinfo"
-import { mockFrontpage } from "../support/mocks"
+import { mockConfig, mockFrontpage } from "../support/mocks"
 
 describe("Login redirect after loan attempt", () => {
   beforeEach(() => {
+    mockConfig()
     mockFrontpage()
 
     // Suppress known SSR hydration error from ResponsiveDialog/useMediaQuery.

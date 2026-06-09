@@ -16,6 +16,8 @@ export const cyKeys = {
   "profile-button": "profile-button",
   "global-sheet": "global-sheet",
   "global-sheet-close-button": "global-sheet-close-button",
+  "global-drawer": "global-drawer",
+  "global-drawer-overlay": "global-drawer-overlay",
   "login-sheet-unilogin-button": "login-sheet-unilogin-button",
   "login-sheet-adgangsplatformen-button": "login-sheet-adgangsplatformen-button",
   "loan-login-modal": "loan-login-modal",
