@@ -40,12 +40,12 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        `z-drawer bg-background fixed inset-x-0 bottom-0 mt-24 flex h-auto min-h-[80vh] flex-col
-        rounded-t-xl`,
+        `z-drawer bg-background fixed inset-x-0 bottom-0 mt-24 flex h-auto max-h-[95vh]
+        min-h-[80vh] flex-col overflow-hidden rounded-t-xl`,
         className
       )}
       {...props}>
-      <div className="bg-background-overlay mx-auto mt-4 h-[6px] w-[100px] rounded-full" />
+      <div className="bg-background-overlay mx-auto mt-4 h-[6px] w-[100px] shrink-0 rounded-full" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -53,7 +53,7 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = "DrawerContent"
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("grid gap-1.5 p-4 text-center", className)} {...props} />
+  <div className={cn("grid shrink-0 gap-1.5 p-4 text-center", className)} {...props} />
 )
 DrawerHeader.displayName = "DrawerHeader"
 

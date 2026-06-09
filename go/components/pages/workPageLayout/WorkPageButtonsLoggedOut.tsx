@@ -1,5 +1,4 @@
 import { first } from "lodash"
-import { usePathname, useSearchParams } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React from "react"
 
@@ -13,9 +12,7 @@ import {
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
-import { createModalUrl, modalParsers } from "@/lib/helpers/modal-url"
-import { sheetStore } from "@/store/sheet.store"
+import { modalParsers } from "@/lib/helpers/modal-url"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -30,18 +27,14 @@ const WorkPageButtonsLoggedOut = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
   const identifier = first(selectedManifestation?.identifiers)?.value
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
-
-  const { openSheet } = sheetStore.trigger
 
   const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
   const label = getManifestationLabel(selectedManifestation)
 
-  const getLoanRedirectPath = () =>
-    createModalUrl(`${pathname}?${searchParams}`, {
-      modal: "LoanMaterialModal",
+  const openLoanLoginModal = () =>
+    setModal({
+      modal: "LoanLoginModal",
       modalProps: { wid: workId, pid: selectedManifestation.pid },
     })
 
@@ -78,12 +71,7 @@ const WorkPageButtonsLoggedOut = ({
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={!identifier}
-          onClick={() => {
-            openSheet({
-              sheetType: "LoginSheet",
-              props: { onLogin: () => setLoginRedirectCookie(getLoanRedirectPath()) },
-            })
-          }}>
+          onClick={openLoanLoginModal}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
@@ -108,12 +96,7 @@ const WorkPageButtonsLoggedOut = ({
           ariaLabel={`Lån ${label}`}
           theme={"primary"}
           disabled={!identifier}
-          onClick={() => {
-            openSheet({
-              sheetType: "LoginSheet",
-              props: { onLogin: () => setLoginRedirectCookie(getLoanRedirectPath()) },
-            })
-          }}>
+          onClick={openLoanLoginModal}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>

@@ -84,7 +84,7 @@ const DialogTitle = React.forwardRef<
         variant="icon"
         theme="secondary"
         ariaLabel="Luk"
-        dataCy={cyKeys["global-sheet-close-button"]}>
+        data-cy={cyKeys["global-sheet-close-button"]}>
         <Cross2Icon className="h-5 w-5" />
       </Button>
     </DialogPrimitive.Close>

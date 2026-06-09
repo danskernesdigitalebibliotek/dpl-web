@@ -10,6 +10,7 @@ import {
   modalParsers,
 } from "@/lib/helpers/modal-url"
 
+import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
@@ -49,6 +50,17 @@ export function DynamicModal() {
   if (activeModal === "LoanMaterialModal") {
     return (
       <LoanMaterialModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
+  if (activeModal === "LoanLoginModal") {
+    return (
+      <LoanLoginModal
         open={open}
         onClose={closeModal}
         wid={activeParams.wid}

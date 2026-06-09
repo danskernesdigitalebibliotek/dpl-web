@@ -31,33 +31,31 @@ function SearchFilterSheet(props: { open: boolean; facets: SearchFacetFragment[]
 
   return (
     <ResponsiveSheet open={open} onClose={closeSheet} title="Filtre">
-      <div className="-mx-grid-edge lg:-mx-8">
-        <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
-          {facets.map(facet => {
-            const facetName = facet.name as keyof TFilters
-            return (
-              <AccordionItem key={facetName} value={facetName}>
-                <AccordionTrigger>{getFacetTranslation(facetName)}</AccordionTrigger>
-                <AccordionContent className="flex flex-wrap gap-1">
-                  {facet.values.map((value, index) => (
-                    <BadgeButton
-                      onClick={() => {
-                        closeSheet()
-                        toggleFilter({ name: facet.name, value: value.term })
-                      }}
-                      isActive={!!searchParams.getAll(facet.name).includes(value.term)}
-                      key={index}
-                      ariaLabel={value.term}
-                      data-cy={cyKeys["filter-button"]}>
-                      {value.term}
-                    </BadgeButton>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-            )
-          })}
-        </Accordion>
-      </div>
+      <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
+        {facets.map(facet => {
+          const facetName = facet.name as keyof TFilters
+          return (
+            <AccordionItem key={facetName} value={facetName}>
+              <AccordionTrigger>{getFacetTranslation(facetName)}</AccordionTrigger>
+              <AccordionContent className="flex flex-wrap gap-1">
+                {facet.values.map((value, index) => (
+                  <BadgeButton
+                    onClick={() => {
+                      closeSheet()
+                      toggleFilter({ name: facet.name, value: value.term })
+                    }}
+                    isActive={!!searchParams.getAll(facet.name).includes(value.term)}
+                    key={index}
+                    ariaLabel={value.term}
+                    data-cy={cyKeys["filter-button"]}>
+                    {value.term}
+                  </BadgeButton>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          )
+        })}
+      </Accordion>
     </ResponsiveSheet>
   )
 }

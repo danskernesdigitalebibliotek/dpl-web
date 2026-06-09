@@ -33,11 +33,11 @@ describe("Login redirect after loan attempt", () => {
     // Select audiobook tab
     cy.get("[data-cy='slide-select-option']").eq(1).click()
 
-    // Click "Lån lydbog" to open LoginSheet
+    // Click "Lån lydbog" to open LoanLoginModal
     cy.contains("Lån lydbog").click()
 
-    // LoginSheet should be visible
-    cy.dataCy("global-sheet").should("be.visible")
+    // LoanLoginModal should be visible
+    cy.dataCy("loan-login-modal").should("be.visible")
 
     // Intercept UNI•Login URL to prevent leaving the test domain
     cy.intercept("GET", routes["routes.login.unilogin"], {
@@ -47,7 +47,7 @@ describe("Login redirect after loan attempt", () => {
     })
 
     // Click UNI•Login button — this sets the redirect cookie, then navigates
-    cy.dataCy("login-sheet-unilogin-button").click()
+    cy.dataCy("loan-login-modal-unilogin-button").click()
 
     // Verify we arrived at the login page (cookie is now set)
     cy.location("pathname").should("eq", routes["routes.login.unilogin"])
@@ -110,11 +110,11 @@ describe("Login redirect after loan attempt", () => {
     // Select ebook tab
     cy.get("[data-cy='slide-select-option']").eq(2).click()
 
-    // Click "Lån e-bog" to open LoginSheet
+    // Click "Lån e-bog" to open LoanLoginModal
     cy.contains("Lån e-bog").click()
 
-    // LoginSheet should be visible
-    cy.dataCy("global-sheet").should("be.visible")
+    // LoanLoginModal should be visible
+    cy.dataCy("loan-login-modal").should("be.visible")
 
     // Intercept Adgangsplatformen login URL
     cy.intercept("GET", "/mocked/login*", {
@@ -124,7 +124,7 @@ describe("Login redirect after loan attempt", () => {
     })
 
     // Click Adgangsplatformen button — this sets the redirect cookie, then navigates
-    cy.dataCy("login-sheet-adgangsplatformen-button").click()
+    cy.dataCy("loan-login-modal-adgangsplatformen-button").click()
 
     // Verify we arrived at the login page (cookie is now set)
     cy.location("pathname").should("eq", "/mocked/login")

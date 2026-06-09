@@ -43,7 +43,7 @@ function ResponsiveDialog({
               className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 sticky top-0
                 z-10 shrink-0 border-b lg:mx-10 lg:pt-10 lg:pb-6">
               <DialogHeader>
-                <DialogTitle>{title}</DialogTitle>
+                <DialogTitle className="px-10">{title}</DialogTitle>
                 {description && <DialogDescription>{description}</DialogDescription>}
               </DialogHeader>
             </div>
@@ -61,12 +61,10 @@ function ResponsiveDialog({
               <DrawerTitle>{title}</DrawerTitle>
               {description && <DrawerDescription>{description}</DrawerDescription>}
             </DrawerHeader>
-            <div className="px-grid-edge">
+            <div className="px-grid-edge shrink-0">
               <hr />
             </div>
-            <div className="px-grid-edge flex-1 overflow-scroll overflow-y-auto py-6">
-              {children}
-            </div>
+            <div className="px-grid-edge flex-1 overflow-y-auto py-6">{children}</div>
           </DrawerContent>
         </Drawer>
       )}

@@ -60,10 +60,10 @@ function ResponsiveSheet({
           <DrawerTitle className="px-grid-edge">{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
-        <div className="px-grid-edge">
+        <div className="px-grid-edge shrink-0">
           <hr />
         </div>
-        <div className="px-grid-edge flex-1 overflow-scroll overflow-y-auto py-8">{children}</div>
+        <div className="px-grid-edge flex-1 overflow-y-auto py-8">{children}</div>
       </DrawerContent>
     </Drawer>
   )

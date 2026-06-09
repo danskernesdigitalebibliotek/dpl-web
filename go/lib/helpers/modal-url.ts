@@ -2,6 +2,7 @@ import { createSerializer, parseAsJson, parseAsString } from "nuqs"
 
 export type TModalUrlParams = {
   LoanMaterialModal: { wid: string; pid: string }
+  LoanLoginModal: { wid: string; pid: string }
   PlayerPreviewModal: { wid: string; pid: string }
   PlayerModal: { wid: string; pid: string }
   ReservationModal: { wid: string; pid: string }
@@ -13,6 +14,7 @@ export type TModalType = keyof TModalUrlParams
 
 export const VALID_MODAL_TYPES = new Set<string>([
   "LoanMaterialModal",
+  "LoanLoginModal",
   "PlayerPreviewModal",
   "PlayerModal",
   "ReservationModal",
