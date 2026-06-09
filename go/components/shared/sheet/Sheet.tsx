@@ -7,6 +7,8 @@ import * as React from "react"
 import { cyKeys } from "@/cypress/support/constants"
 import { cn } from "@/lib/helpers/helper.cn"
 
+import { Button } from "../button/Button"
+
 const Sheet = SheetPrimitive.Root
 
 const SheetTrigger = React.forwardRef<
@@ -59,22 +61,13 @@ const SheetContent = React.forwardRef<
       className={cn(
         `z-sheet bg-background data-[state=open]:animate-in data-[state=closed]:animate-out
         max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom
-        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right
-        p-grid-edge fixed inset-y-0 bottom-0 h-full w-full max-w-[560px] overflow-scroll pb-24
-        shadow-lg transition ease-in-out data-[state=closed]:duration-300
-        data-[state=open]:duration-500 sm:right-0 lg:p-8`,
+        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right fixed
+        inset-y-0 bottom-0 h-full w-full max-w-[600px] shadow-lg transition ease-in-out
+        data-[state=closed]:duration-300 data-[state=open]:duration-500 sm:right-0`,
         className
       )}
       {...props}
       data-cy={cyKeys["global-sheet"]}>
-      <SheetPrimitive.Close
-        className="focus-visible right-grid-edge top-grid-edge ring-offset-background
-          data-[state=open]:bg-secondary absolute rounded-sm transition-opacity hover:cursor-pointer
-          hover:opacity-100 disabled:pointer-events-none lg:top-8 lg:right-8"
-        data-cy={cyKeys["global-sheet-close-button"]}>
-        <Cross2Icon className="h-8 w-8" />
-        <span className="sr-only">Luk</span>
-      </SheetPrimitive.Close>
       {children}
     </SheetPrimitive.Content>
   </div>
@@ -98,7 +91,18 @@ const SheetTitle = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title ref={ref} className={cn("text-foreground", className)} {...props} />
+  <div className="flex items-center justify-between gap-4">
+    <SheetPrimitive.Title ref={ref} className={cn("text-foreground", className)} {...props} />
+    <SheetPrimitive.Close asChild>
+      <Button
+        variant="icon"
+        theme="secondary"
+        ariaLabel="Luk"
+        dataCy={cyKeys["global-sheet-close-button"]}>
+        <Cross2Icon className="h-5 w-5" />
+      </Button>
+    </SheetPrimitive.Close>
+  </div>
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 

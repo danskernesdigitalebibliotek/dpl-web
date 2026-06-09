@@ -49,8 +49,13 @@ const buttonVariants = cva(
       },
       {
         variant: "icon",
-        size: ["default", "sm", "lg"],
+        size: ["default", "lg"],
         class: "h-[40px] w-[40px]",
+      },
+      {
+        variant: "icon",
+        size: ["md", "sm"],
+        class: "h-[32px] w-[32px]",
       },
     ],
     defaultVariants: {

@@ -30,12 +30,15 @@ const LoginPanel = ({
   return (
     <div
       className={cn(
-        `bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm
-        p-8`,
+        `bg-background-overlay flex min-h-[250px] flex-col items-center justify-center gap-y-5
+        rounded-sm p-8 md:min-h-[300px]`,
         className
       )}>
       {icon && <Icon name={icon} className="mb-4" />}
-      <div className="text-typo-heading-4 text-foreground mb-4 text-center">{heading}</div>
+      <div className="text-typo-heading-5 text-foreground text-center">{heading}</div>
+      {description && (
+        <p className="text-typo-body-sm text-foreground/70 text-center">{description}</p>
+      )}
       <div>
         <Button
           theme="primary"
@@ -47,9 +50,6 @@ const LoginPanel = ({
           LOG IND
         </Button>
       </div>
-      {description && (
-        <p className="text-typo-body-sm text-foreground/70 mt-6 text-center">{description}</p>
-      )}
     </div>
   )
 }

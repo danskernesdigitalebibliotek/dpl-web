@@ -40,8 +40,8 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        `z-drawer bg-background px-grid-edge pb-grid-edge fixed inset-x-0 bottom-0 mt-24 flex h-auto
-        min-h-[80vh] flex-col rounded-t-md`,
+        `z-drawer bg-background fixed inset-x-0 bottom-0 mt-24 flex h-auto min-h-[80vh] flex-col
+        rounded-t-xl`,
         className
       )}
       {...props}>
@@ -66,7 +66,7 @@ const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Title ref={ref} className={cn("text-typo-heading-5", className)} {...props} />
+  <DrawerPrimitive.Title ref={ref} className={cn("text-typo-heading-3", className)} {...props} />
 ))
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 
