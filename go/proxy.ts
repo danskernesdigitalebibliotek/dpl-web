@@ -20,7 +20,7 @@ import {
   sessionHasPKCECodeVerifier,
   uniloginAccessTokenHasExpired,
   uniloginAccessTokenShouldBeRefreshed,
-} from "./lib/session/session"
+} from "./lib/session/serverSideSession"
 
 // These pages require a logged-in user.
 // The user gets redirected to the front page if they are not logged in.
@@ -36,7 +36,7 @@ export async function proxy(request: NextRequest) {
   })
 
   // Make sure we have a library token cookie.
-  await ensureLibraryTokenExist(request)
+  await ensureLibraryTokenExist()
 
   const session = await getSession()
 

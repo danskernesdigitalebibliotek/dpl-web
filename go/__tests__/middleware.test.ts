@@ -11,7 +11,7 @@ import * as bearerTokenFunctions from "@/lib/helpers/bearer-token"
 import * as libraryTokenFunctions from "@/lib/helpers/library-token"
 import * as userTokenFunctions from "@/lib/helpers/user-token"
 import * as uniloginClientConfigFunctions from "@/lib/session/oauth/uniloginClient"
-import * as sessionFunctions from "@/lib/session/session"
+import * as sessionFunctions from "@/lib/session/serverSideSession"
 import { proxy as middleware } from "@/proxy"
 
 vi.mock("next/headers", () => ({
@@ -49,7 +49,7 @@ vi.mock("openid-client", () => ({
   refreshTokenGrant: vi.fn(),
 }))
 
-vi.mock("@/lib/session/session", async importOriginal => {
+vi.mock("@/lib/session/serverSideSession", async importOriginal => {
   const actual = await importOriginal()
   return {
     ...actual,
@@ -171,7 +171,7 @@ describe("Middleware", () => {
           })),
       })
     )
-    const setLibraryTokenCookieSpy = vi.spyOn(libraryTokenFunctions, "setLibraryTokenCookie")
+    const setLibraryTokenCookieSpy = vi.spyOn(libraryTokenFunctions, "saveLibraryTokenToSession")
 
     await middleware(new NextRequest("http://localhost"))
     expect(setLibraryTokenCookieSpy).toHaveBeenCalledTimes(1)
@@ -315,8 +315,8 @@ describe("Middleware", () => {
   it("can destroy a Unilogin session if the refresh time is overdue", async () => {
     // Note: The refresh endpoint is typically failing because the refresh lifespan has run out.
     // But it can also fail for abritraty reasons - eg. server down.
-    vi.unmock("@/lib/session/session")
-    vi.doMock("@/lib/session/session", async importOriginal => {
+    vi.unmock("@/lib/session/serverSideSession")
+    vi.doMock("@/lib/session/serverSideSession", async importOriginal => {
       const actual = await importOriginal()
       return {
         ...actual,

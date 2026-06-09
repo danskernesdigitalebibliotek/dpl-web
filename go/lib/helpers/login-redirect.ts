@@ -1,3 +1,7 @@
+import { deleteCookie, getCookie, setCookie } from "cookies-next/client"
+
+import { CLIENT_COOKIE_OPTIONS } from "@/lib/config/cookies"
+
 const LOGIN_REDIRECT_COOKIE_NAME = "go-login-redirect"
 
 /**
@@ -9,14 +13,17 @@ export const setLoginRedirectCookie = (path: string) => {
   if (!path.startsWith("/") || path.startsWith("//")) {
     return
   }
-  document.cookie = `${LOGIN_REDIRECT_COOKIE_NAME}=${encodeURIComponent(path)}; path=/; SameSite=Lax; max-age=600`
+  setCookie(LOGIN_REDIRECT_COOKIE_NAME, path, {
+    maxAge: 600,
+    ...CLIENT_COOKIE_OPTIONS,
+  })
 }
 
 /**
  * Delete the login redirect cookie from client-side code.
  */
-export const deleteLoginRedirectCookie = () => {
-  cookieStore.delete(LOGIN_REDIRECT_COOKIE_NAME)
+export const deleteLoginRedirectCookie = async () => {
+  deleteCookie(LOGIN_REDIRECT_COOKIE_NAME)
 }
 
 /**
@@ -24,9 +31,7 @@ export const deleteLoginRedirectCookie = () => {
  * Returns the redirect URL if set, otherwise null.
  */
 export const getAndClearLoginRedirectUrl = async (): Promise<string | null> => {
-  const { cookies } = await import("next/headers")
-  const cookieStore = await cookies()
-  const redirectUrl = cookieStore.get(LOGIN_REDIRECT_COOKIE_NAME)?.value
+  const redirectUrl = getCookie(LOGIN_REDIRECT_COOKIE_NAME)
 
   if (!redirectUrl) {
     return null
@@ -36,11 +41,11 @@ export const getAndClearLoginRedirectUrl = async (): Promise<string | null> => {
 
   // Validate: only allow relative paths to prevent open redirect
   if (!decodedUrl.startsWith("/") || decodedUrl.startsWith("//")) {
-    cookieStore.delete(LOGIN_REDIRECT_COOKIE_NAME)
+    deleteCookie(LOGIN_REDIRECT_COOKIE_NAME)
     return null
   }
 
-  // Clear the cookie after reading
-  cookieStore.delete(LOGIN_REDIRECT_COOKIE_NAME)
+  // Clear the cookie after readin
+  deleteCookie(LOGIN_REDIRECT_COOKIE_NAME)
   return decodedUrl
 }

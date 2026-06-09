@@ -1,20 +1,22 @@
 import { connection } from "next/server"
 
-import { destroySessionAndRedirectToFrontPage, getSession } from "@/lib/session/session"
+import {
+  destroySessionAndRedirectToFrontPage,
+  getSessionDataProvider,
+} from "@/lib/session/serverSideSession"
 
 import { handleAdgangsplatformenLogout, handleUniloginLogout } from "./helpers"
 
 export async function GET() {
   await connection() // Opt into dynamic rendering
-  const session = await getSession()
+  const sessionData = await getSessionDataProvider()
+  const sessionType = await sessionData.getValue("authenticationMethod")
 
-  if (session.type === "unilogin") {
-    return handleUniloginLogout(session)
+  if (sessionType === "unilogin") {
+    return handleUniloginLogout(sessionData)
+  } else if (sessionType === "adgangsplatformen") {
+    return handleAdgangsplatformenLogout(sessionData)
   }
 
-  if (session.type === "adgangsplatformen") {
-    return handleAdgangsplatformenLogout(session)
-  }
-
-  return destroySessionAndRedirectToFrontPage(session)
+  return destroySessionAndRedirectToFrontPage(sessionData)
 }

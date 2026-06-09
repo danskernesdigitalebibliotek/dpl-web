@@ -1,18 +1,6 @@
-import { cookies } from "next/headers"
 import { z } from "zod"
 
-import { DEFAULT_COOKIE_OPTIONS } from "@/lib/config/cookies"
-
-import goConfig from "../config/goConfig"
 import { useGetAdgangsplatformenLibraryTokenQuery } from "../graphql/generated/dpl-cms/graphql"
-
-export const setLibraryTokenCookie = async (token: string, expires: Date) => {
-  const cookieStore = await cookies()
-  cookieStore.set(goConfig("library-token.cookie-name"), token, {
-    expires,
-    ...DEFAULT_COOKIE_OPTIONS,
-  })
-}
 
 export const loadLibraryToken = async () => {
   try {

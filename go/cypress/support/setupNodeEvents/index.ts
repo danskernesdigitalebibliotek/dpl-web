@@ -1,6 +1,6 @@
 import { sealData } from "iron-session"
 
-import { TSessionType } from "@/lib/types/session"
+import { AuthenticationMethod } from "@/lib/session/definitions"
 
 import {
   MockGraphQLMutationParams,
@@ -59,7 +59,7 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
       return null // Return null to indicate that the task has been completed
     },
 
-    async getMockedGoSessionCookieValue({ type }: { type: TSessionType }) {
+    async getMockedGoSessionCookieValue({ type }: { type: AuthenticationMethod }) {
       const password = process.env.GO_SESSION_SECRET
       if (!password) {
         throw new Error("GO_SESSION_SECRET is not defined")

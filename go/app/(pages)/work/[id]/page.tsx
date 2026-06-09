@@ -8,6 +8,7 @@ import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn } from "@/lib/helpers/bearer-token"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
+import { getSessionDataProvider } from "@/lib/session/serverSideSession"
 
 export const metadata: Metadata = setPageMetadata("Materiale")
 
@@ -15,7 +16,7 @@ type TWorkPageProps = { params: Promise<{ id: string }> }
 
 async function WorkPage({ params }: TWorkPageProps) {
   const { id } = await params
-  const cookieStore = await cookies()
+  const sessionData = getSessionDataProvider()
 
   const queryClient = getQueryClient()
   const workId = decodeURIComponent(id)
@@ -23,7 +24,7 @@ async function WorkPage({ params }: TWorkPageProps) {
   const queryFn = await createServerQueryFn({
     fetcher: useGetMaterialQuery.fetcher,
     variables: { wid: workId },
-    cookieStore,
+    sessionData,
   })
 
   await queryClient.prefetchQuery({

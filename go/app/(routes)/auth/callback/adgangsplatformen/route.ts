@@ -4,15 +4,21 @@ import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
 import { getAndClearLoginRedirectUrl } from "@/lib/helpers/login-redirect"
 import { loadUserToken } from "@/lib/helpers/user-token"
-import { getSession, saveAdgangsplatformenSession } from "@/lib/session/session"
+import {
+  deleteObsoleteCookies,
+  getSessionDataProvider,
+  saveAdgangsplatformenSession,
+} from "@/lib/session/serverSideSession"
 
 export async function GET() {
   await connection() // Opt into dynamic rendering
+  void deleteObsoleteCookies()
   const userTokenData = await loadUserToken()
 
   if (userTokenData) {
-    const session = await getSession()
-    await saveAdgangsplatformenSession(session, userTokenData)
+    const sessionData = await getSessionDataProvider()
+
+    await saveAdgangsplatformenSession(sessionData, userTokenData)
     const loginRedirectUrl = await getAndClearLoginRedirectUrl()
     if (loginRedirectUrl) {
       return NextResponse.redirect(`${getBaseURL()}${loginRedirectUrl}`)

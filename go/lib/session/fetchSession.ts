@@ -1,14 +1,9 @@
-import { getBaseURL } from "@/lib/config/getBaseURL"
-
-import goConfig from "../config/goConfig"
-import { TSessionData } from "./session"
+"use server"
 
 export const loadSession = async () => {
-  // By using an absolute url we make sure that we can fetch the session both client and server side.
-  const response = await fetch(`${getBaseURL()}/${goConfig("routes.session")}`)
-  if (!response.ok) {
-    throw new Error("Failed to fetch session")
-  }
+  const { getSessionDataProvider } = await import("@/lib/session/serverSideSession")
 
-  return (await response.json()) as TSessionData
+  const sessionData = await getSessionDataProvider()
+
+  return sessionData.getObject()
 }

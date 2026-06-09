@@ -33,7 +33,7 @@ To facilitate this, we:
 For example:
 
 ```ts
-const useGetV1UserLoans = withSessionType((cookieType: TSessionType) => {
+const useGetV1UserLoans = withSessionType((cookieType: AuthenticationMethod) => {
   if (cookieType === "unilogin") {
     return useGetV1UserLoansLocalAdapter()
   }

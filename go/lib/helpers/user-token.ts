@@ -3,7 +3,7 @@
 import { z } from "zod"
 
 import { useGetAdgangsplatformenUserTokenQuery } from "../graphql/generated/dpl-cms/graphql"
-import { getDplCmsSessionCookie } from "../session/session"
+import { getDplCmsSessionCookie } from "../session/serverSideSession"
 
 export const loadUserToken = async () => {
   const sessionCookie = await getDplCmsSessionCookie()
