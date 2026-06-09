@@ -643,7 +643,7 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-success-title-text' => $this->t('Digital copy ordered', [], ['context' => 'Work Page']),
       'order-digital-copy-title-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'original-title-text' => $this->t('Original title', [], ['context' => 'Work Page']),
-      'periodical-select-edition-text' => $this->t('Edition', [], ['context' => 'Work Page']),
+      'periodical-select-edition-text' => $this->t('Edition', [], ['context' => 'Work Page - periodical']),
       'periodical-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'periodikum-select-week-text' => $this->t('Week', [], ['context' => 'Work Page']),
       'periodikum-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
