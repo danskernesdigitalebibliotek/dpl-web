@@ -490,6 +490,17 @@ function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query)
  * - Hide screen names if the feature is disabled.
  */
 function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  // The exposed form for the event list is rather difficult to detect.
+  if ($form_id == 'views_exposed_form' && $form['#id'] == 'views-exposed-form-events-all') {
+    $form['actions']['submit']['#type'] = 'image_button';
+    $form['actions']['submit']['#src'] = '/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-search.svg';
+    // This is horrible, but the Form API apparently already populated the
+    // #pre_render, and it's in the pre_render the magic happens.
+    $form['actions']['submit']['#pre_render'][0][0] = 'Drupal\Core\Render\Element\ImageButton';
+
+    return;
+  }
+
   $forms = [
     'eventseries_default_edit_form',
     'eventseries_default_add_form',
