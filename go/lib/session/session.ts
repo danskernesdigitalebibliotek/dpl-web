@@ -1,11 +1,16 @@
 import { add, isPast, sub } from "date-fns"
 import { IronSession, SessionOptions, getIronSession } from "iron-session"
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
+import { cookies } from "next/headers"
 import { unstable_rethrow } from "next/navigation"
 import { NextResponse, connection } from "next/server"
+import "server-only"
 
 import { CLIENT_COOKIE_OPTIONS, DEFAULT_COOKIE_OPTIONS } from "@/lib/config/cookies"
 import { getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
+import { getRedisClient } from "@/lib/redis"
+import { SESSION_COOKIE_NAME, SessionId } from "@/lib/session/definitions"
 
 import goConfig from "../config/goConfig"
 import { isBuildingGoApp } from "../helpers/next-phase"
@@ -64,6 +69,46 @@ export const defaultSession: TSessionData = {
   type: "anonymous",
 }
 
+const obsoleteCookieNames = ["go-tokens:library-token"]
+
+/**
+ * For migration to Redis session cookies, delete the old obsolete cookies.
+ *
+ * This can be removed once the migration is complete.
+ */
+function deleteObsoleteCookies(cookieStore: ReadonlyRequestCookies) {
+  for (const cookieName of obsoleteCookieNames) {
+    cookieStore.delete(cookieName)
+  }
+}
+
+export async function getSessionId(
+  cookieStore: ReadonlyRequestCookies
+): Promise<SessionId | undefined> {
+  return cookieStore.get(SESSION_COOKIE_NAME)?.value
+}
+
+async function setSessionId(
+  cookieStore: ReadonlyRequestCookies,
+  sessionId: SessionId
+): Promise<void> {
+  cookieStore.set(SESSION_COOKIE_NAME, sessionId)
+}
+
+export async function getSessionIdAndCreateIfMissing(
+  cookieStore: ReadonlyRequestCookies
+): Promise<SessionId> {
+  const sessionId = await getSessionId(cookieStore)
+  if (!sessionId) {
+    const newSessionId = crypto.randomUUID()
+    await setSessionId(cookieStore, newSessionId)
+
+    return newSessionId
+  }
+
+  return sessionId
+}
+
 export async function getSession(): Promise<IronSession<TSessionData>> {
   // If we are building the go app, we will use the default session to simulate an anonymous user.
   if (isBuildingGoApp()) {
@@ -73,9 +118,14 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
   const sessionOptions = getSessionOptions()
 
   try {
+    const redisClient = getRedisClient()
     const { cookies } = await import("next/headers")
     const cookieStore = await cookies()
-    const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
+
+    deleteObsoleteCookies(cookieStore)
+    const sessionID: SessionId = getSessionIdAndCreateIfMissing(cookieStore)
+
+    // const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
     const session = await getIronSession<TSessionData>(cookieStore, sessionOptions)
 
     if (!session?.isLoggedIn) {

@@ -59,6 +59,7 @@
     "date-fns": "^4.4.0",
     "framer-motion": "12.40.0",
     "graphql": "^16.14.0",
+    "ioredis": "^5.11.1",
     "iron-session": "^8.0.4",
     "js-md5": "^0.8.3",
     "keen-slider": "^6.8.6",
