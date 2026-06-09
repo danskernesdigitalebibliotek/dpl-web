@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-28 22:51+0200\n"
-"PO-Revision-Date: 2026-05-28 22:51+0200\n"
+"POT-Creation-Date: 2026-06-09 15:24+0200\n"
+"PO-Revision-Date: 2026-06-09 15:24+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -717,6 +717,10 @@ msgid ""
 msgstr ""
 "Åbner en pop-up som indeholder lån med samme afleveringsfrist som lånet der "
 "er i fokus"
+
+msgctxt "Loan list"
+msgid "Loan details"
+msgstr ""
 
 msgctxt "Loan list"
 msgid "day"
@@ -1503,6 +1507,22 @@ msgstr ""
 "Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et wildcard. "
 "Et eksempel på en sti er %user-wildcard for hver brugerside. %front er "
 "forsiden."
+
+msgctxt "Player modal"
+msgid "Close"
+msgstr ""
+
+msgctxt "Player modal"
+msgid "Modal for player"
+msgstr ""
+
+msgctxt "Online material"
+msgid "Listen to @materialType"
+msgstr ""
+
+msgctxt "Online material"
+msgid "Read @materialType"
+msgstr ""
 
 msgctxt "Search Result"
 msgid "+ more filters"
@@ -2814,14 +2834,6 @@ msgid "You have borrowed @count out of @limit possible e-books this month"
 msgstr "Du har lånt @count ud af @limit mulige e-bøger denne måned"
 
 msgctxt "Work Page"
-msgid "Listen to @materialType"
-msgstr "Lyt til @materialType"
-
-msgctxt "Work Page"
-msgid "Read @materialType"
-msgstr "Læs @materialType"
-
-msgctxt "Work Page"
 msgid "Try @materialType"
 msgstr "Prøv @materialType"
 
@@ -2912,9 +2924,9 @@ msgctxt "Work Page"
 msgid "Digital copy ordered"
 msgstr "Digital kopi er bestilt"
 
-msgctxt "Work Page"
-msgid "Modal for player"
-msgstr "Modal til afspiller"
+msgctxt "Work Page - periodical"
+msgid "Edition"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Year"
@@ -3066,6 +3078,9 @@ msgstr "Bestilles fra et andet bibliotek"
 msgctxt "Work Page"
 msgid "We're sorry. Unfortunately, there has been an error. Try again, please."
 msgstr ""
+"Din reservering kunne ikke gennemføres. Prøv at kontakte os, hvis du stadig "
+"ønsker at låne materialet. Bemærk, at nogle materialer kun kan lånes af "
+"bestemte lånergrupper."
 
 msgctxt "Work Page"
 msgid "Reservation error"
@@ -10542,8 +10557,8 @@ msgstr ""
 "Hvor meget tid scheduleren skal bruge på at behandle jobs i sekunder. "
 "Standard er 30"
 
-msgid "Rebuilded successfully."
-msgstr "Genopbygget succesfuldt."
+msgid "Rebuilt successfully."
+msgstr ""
 
 msgid "The ID of the job schedule."
 msgstr "ID'et på jobskemaet."
@@ -18292,99 +18307,6 @@ msgstr "ikke tilgængeligt"
 msgid "Scheduler"
 msgstr "Planlægning"
 
-msgid "Publishing"
-msgstr "Udgivelse"
-
-msgid "Enable scheduled publishing for %type @plural"
-msgstr "Aktiver planlagt publicering for %type @plural"
-
-msgid "Change %type creation time to match the scheduled publish time"
-msgstr ""
-"Ændr %type oprettelsestidspunkt for at matche det planlagte "
-"offentliggørelsestidspunkt"
-
-msgid "The entity type does not support the change of creation time."
-msgstr "Enhedstypen understøtter ikke ændring af oprettelsestidspunktet."
-
-msgid "Require scheduled publishing"
-msgstr "Planlagt udgivelse skal være påkrævet"
-
-msgid "Create a new revision on publishing"
-msgstr "Opret en revision ved udgivelse"
-
-msgid "Action to be taken for publication dates in the past"
-msgstr "Handling der skal tages for udgivelsesdatoer i fortiden"
-
-msgid "Display an error message - do not allow dates in the past"
-msgstr "Vis en fejlmeddelelse - tillad ikke datoer i fortiden"
-
-msgid "Publish the %type @singular immediately after saving"
-msgstr "Udgiv %type @singular umiddelbart efter at gemme"
-
-msgid "Schedule the %type @singular for publication on the next cron run"
-msgstr "Planlæg %type @singular til publicering ved næste cron-opdatering"
-
-msgid ""
-"Change %type creation time to match the published time, for dates before the "
-"%type was created"
-msgstr ""
-"Ændr %type oprettelsestidspunkt for at matche offentliggørelsestidspunktet, "
-"for datoer før %type blev oprettet"
-
-msgid ""
-"The created time will only be altered when the scheduled publishing time is "
-"earlier than the existing creation time"
-msgstr ""
-"Oprettelsestidspunktet vil kun blive ændret, hvis det planlagte "
-"udgivelsestidspunkt er tidligere end det eksisterende oprettelsestidspunkt"
-
-msgid "Unpublishing"
-msgstr "Afpublicering"
-
-msgid "Enable scheduled unpublishing for %type @plural"
-msgstr "Aktiver planlagt afpublicering for %type @plural"
-
-msgid "Require scheduled unpublishing"
-msgstr "Planlagt afpublicering skal være påkrævet"
-
-msgid "Create a new revision on unpublishing"
-msgstr "Opret en ny revision ved afpublicering"
-
-msgid "@type edit page"
-msgstr "@type redigér side"
-
-msgid "Display scheduling date input fields in"
-msgstr "Vis inputfelter for planlægningsdato i"
-
-msgid "Vertical tab"
-msgstr "Vertikal fane"
-
-msgid "Separate fieldset"
-msgstr "Separat feltgruppe"
-
-msgid ""
-"Use this option to specify how the scheduler fields are displayed when "
-"editing %type @plural"
-msgstr ""
-"Brug denne indstilling til at angive, hvordan planlægningsfelterne vises "
-"under redigering %type @plural"
-
-msgid "Expand fieldset or vertical tab"
-msgstr "Expand fieldset or vertical tab"
-
-msgid "Expand only when a scheduled date exists or when a date is required"
-msgstr ""
-"Udvider kun, når der findes en planlagt dato eller når en dato er nødvendig"
-
-msgid "Always open the fieldset or vertical tab"
-msgstr "Åbn altid feltgruppen eller den vertikale fane"
-
-msgid "Show message"
-msgstr "Vis besked"
-
-msgid "Show a confirmation message when a scheduled %type @singular is saved"
-msgstr "Vis en bekræftelsesmeddelelse, når en planlagt %type @singular er gemt"
-
 msgid "Scheduler settings"
 msgstr "Indstillinger for Scheduler"
 
@@ -18501,6 +18423,45 @@ msgstr "Dato for afpublicering"
 
 msgid "The date the %type will be unpublished."
 msgstr "Datoen for, hvornår %type bliver afpubliceret."
+
+msgid "currently in daylight saving mode"
+msgstr "currently in daylight saving mode"
+
+msgid "not in daylight saving mode"
+msgstr ""
+"\n"
+"not in daylight saving mode"
+
+msgid ""
+"In most cases the server time should match Coordinated Universal Time "
+"(UTC) / Greenwich Mean Time (GMT)."
+msgstr ""
+"I de fleste tilfælde bør serverens tid svare til koordineret universaltid "
+"(UTC) / Greenwich Mean Time (GMT)."
+
+msgid ""
+"Site timezone: %date_default_timezone (%date_default_code), offset from UTC/"
+"GMT by %date_default_offset hours. This can be <a "
+"href=\"@admin_regional_settings\">changed by admin users</a> who have the "
+"appropriate access."
+msgstr ""
+
+msgid ""
+"Your local time: %user_date, %user_time %user_timezone (%daylight_saving). "
+"You can change this via your <a href=\"@account_edit\">user account</a>."
+msgstr ""
+
+msgid ""
+"Note: The user timezone has not been stored, so defaulting to the website "
+"timezone."
+msgstr ""
+"Bemærk: Brugerens tidszone er ikke gemt, så standardindstillingen er "
+"webstedets tidszone."
+
+msgid ""
+"Your local time: %user_date, %user_time %user_timezone (%daylight_saving). "
+"This is not configurable by you."
+msgstr ""
 
 msgid "@entity_type_label type is enabled for scheduled publishing"
 msgstr "@entity_type_label type er aktiveret for planlagt publicering"
@@ -18747,6 +18708,14 @@ msgstr "intet at gøre"
 msgid "Scheduler entity revert - @reverted"
 msgstr "Enhed gendannelse for Scheduler - @reverted"
 
+msgctxt "Validation"
+msgid "Scheduler unpublish on"
+msgstr "Scheduler afpubliser på"
+
+msgctxt "Validation"
+msgid "Scheduler publish on"
+msgstr "Scheduler udgiver på"
+
 msgid "Leave blank for no date."
 msgstr "Lad være tom for ingen dato."
 
@@ -18761,6 +18730,21 @@ msgstr "Planlagte produkter"
 
 msgid "Scheduled terms"
 msgstr "Planlagte vilkår"
+
+msgid "Scheduler settings for @label"
+msgstr ""
+
+msgid "Scheduler options for @plural."
+msgstr ""
+
+msgid "Scheduler settings saved."
+msgstr ""
+
+msgid "Server time: %utc"
+msgstr ""
+
+msgid "Timecheck"
+msgstr ""
 
 msgid "Lightweight cron settings"
 msgstr "Letvægtscron indstillinger"
@@ -18822,14 +18806,14 @@ msgstr ""
 msgid "Entity Types"
 msgstr "Entity-typer"
 
-msgid "no entity types defined"
-msgstr "ingen enhedstyper defineret"
-
 msgid "publishing"
 msgstr "Publicerer"
 
 msgid "unpublishing"
 msgstr "afpublicering"
+
+msgid "no entity types defined"
+msgstr "ingen enhedstyper defineret"
 
 msgid "The settings below are common to all entity types."
 msgstr "Indstillingerne nedenfor er fælles for alle enhedstyper."
@@ -18880,12 +18864,6 @@ msgstr ""
 msgid "Published by Scheduler. The scheduled publishing date was @publish_on."
 msgstr "Udgivet af Scheduler. Den planlagte udgivelsesdato var @publish_on."
 
-msgid "View @type"
-msgstr "Se @type"
-
-msgid "@label settings"
-msgstr "@label indstillinger"
-
 msgid ""
 "Unpublished by Scheduler. The scheduled unpublishing date was @unpublish_on."
 msgstr ""
@@ -18895,12 +18873,107 @@ msgstr ""
 msgid "settings"
 msgstr "indstillinger"
 
+msgid "Publishing"
+msgstr "Udgivelse"
+
+msgid "Enable scheduled publishing for @items"
+msgstr ""
+
+msgid "Change %type creation time to match the scheduled publish time"
+msgstr ""
+"Ændr %type oprettelsestidspunkt for at matche det planlagte "
+"offentliggørelsestidspunkt"
+
+msgid "The entity type does not support changing the creation time."
+msgstr ""
+
+msgid "Require scheduled publishing"
+msgstr "Planlagt udgivelse skal være påkrævet"
+
+msgid "Create a new revision on publishing"
+msgstr "Opret en revision ved udgivelse"
+
+msgid "Action to be taken for publication dates in the past"
+msgstr "Handling der skal tages for udgivelsesdatoer i fortiden"
+
+msgid "Display an error message - do not allow dates in the past"
+msgstr "Vis en fejlmeddelelse - tillad ikke datoer i fortiden"
+
+msgid "Publish the @item immediately after saving"
+msgstr ""
+
+msgid "Schedule the @item for publication on the next cron run"
+msgstr ""
+
+msgid ""
+"Change %type creation time to match the published time, for dates before the "
+"%type was created"
+msgstr ""
+"Ændr %type oprettelsestidspunkt for at matche offentliggørelsestidspunktet, "
+"for datoer før %type blev oprettet"
+
+msgid ""
+"The created time is only altered when the scheduled publishing time is "
+"earlier than the existing creation time."
+msgstr ""
+
+msgid "Unpublishing"
+msgstr "Afpublicering"
+
+msgid "Enable scheduled unpublishing for @items"
+msgstr ""
+
+msgid "Require scheduled unpublishing"
+msgstr "Planlagt afpublicering skal være påkrævet"
+
+msgid "Create a new revision on unpublishing"
+msgstr "Opret en ny revision ved afpublicering"
+
+msgid "@type edit page"
+msgstr "@type redigér side"
+
+msgid "Display scheduling date input fields in"
+msgstr "Vis inputfelter for planlægningsdato i"
+
+msgid "Vertical tab"
+msgstr "Vertikal fane"
+
+msgid "Separate fieldset"
+msgstr "Separat feltgruppe"
+
+msgid ""
+"Use this option to specify how the scheduler fields are displayed when "
+"editing @items"
+msgstr ""
+
+msgid "Expand fieldset or vertical tab"
+msgstr "Expand fieldset or vertical tab"
+
+msgid "Expand only when a scheduled date exists or when a date is required"
+msgstr ""
+"Udvider kun, når der findes en planlagt dato eller når en dato er nødvendig"
+
+msgid "Always open the fieldset or vertical tab"
+msgstr "Åbn altid feltgruppen eller den vertikale fane"
+
+msgid "Show message"
+msgstr "Vis besked"
+
+msgid "Show a confirmation message when a scheduled @item is saved"
+msgstr ""
+
 msgid ""
 "Field '%field' specified by typeFieldName in the Scheduler plugin %id is not "
 "found in entity type %entity"
 msgstr ""
 "Felt '%field' angivet af typeFieldName i Scheduler plugin %id findes ikke i "
 "enhedstypen %entity"
+
+msgid "@label settings"
+msgstr "@label indstillinger"
+
+msgid "View @type"
+msgstr "Se @type"
 
 msgid "Unknown entity types (@unknown)"
 msgstr "Ukendt indholdselement (@unknown)"
@@ -19067,57 +19140,17 @@ msgstr ""
 "Scheduler_Api_Test: Orange skal ikke have afpublicering behandlet af "
 "Scheduler."
 
-msgid "currently in daylight saving mode"
-msgstr "currently in daylight saving mode"
-
-msgid "not in daylight saving mode"
+msgid "%entity_type @id has been created."
 msgstr ""
-"\n"
-"not in daylight saving mode"
 
-msgid ""
-"In most cases the server time should match Coordinated Universal Time "
-"(UTC) / Greenwich Mean Time (GMT)."
+msgid "%entity_type @id has been updated."
 msgstr ""
-"I de fleste tilfælde bør serverens tid svare til koordineret universaltid "
-"(UTC) / Greenwich Mean Time (GMT)."
 
-msgid ""
-"Default timezone: %date_default_timezone (%date_default_code), offset from "
-"UTC/GMT by %date_default_offset hours. This timezone can be <a "
-"href=\"@admin_regional_settings\">changed by admin users</a> with the "
-"appropriate access."
+msgid "Scheduler test entity - no bundle"
 msgstr ""
-"Standard tidszone: %date_default_timezone (%date_default_code), forskudt fra "
-"UTC/GMT med %date_default_offset timer. Denne tidszone kan <a "
-"href=\"@admin_regional_settings\">ændres af administratorer</a> med adgang."
-
-msgid ""
-"Local time: %localtime (%daylight_saving). You can change this via your <a "
-"href=\"@account_edit\">user account</a>."
-msgstr ""
-"Lokal tid: %localtime (%daylight_saving). Du kan ændre dette via din <a "
-"href=\"@account_edit\">brugerkonto</a>."
-
-msgid ""
-"Note: The user timezone has not been stored, so defaulting to the website "
-"timezone."
-msgstr ""
-"Bemærk: Brugerens tidszone er ikke gemt, så standardindstillingen er "
-"webstedets tidszone."
-
-msgid ""
-"Your local time is %localtime (%daylight_saving). This is not configurable "
-"by you."
-msgstr ""
-"Din lokale tid er %localtime (%daylight_saving). Dette kan ikke konfigureres "
-"af dig."
 
 msgid "Scheduler Time Check"
 msgstr "Scheduler tidstjek"
-
-msgid "Server time: @utc"
-msgstr "Servertid: @utc"
 
 msgid "The date and time format has been reset."
 msgstr "Dato- og tidsformatet er blevet nulstillet."
@@ -19230,14 +19263,6 @@ msgstr "Taxonomy Term Scheduler Plugin"
 msgid "Provides support for scheduling Taxonomy Term entities"
 msgstr "Leverer support for planlægning af taksonomiudtryk enheder"
 
-msgctxt "Validation"
-msgid "Scheduler unpublish on"
-msgstr "Scheduler afpubliser på"
-
-msgctxt "Validation"
-msgid "Scheduler publish on"
-msgstr "Scheduler udgiver på"
-
 msgid "Datetime Timestamp for Scheduler"
 msgstr "Datetime Timestamp for Scheduler"
 
@@ -19253,6 +19278,12 @@ msgstr "Planlagt indholdsadgang. FORÆLDET! BRUG IKKE DETTE."
 
 msgid "NOT USED"
 msgstr "IKKE BRUGT"
+
+msgid "Scheduler test no bundle entity scheduler plugin"
+msgstr ""
+
+msgid "Provides scheduler support for a no-bundle entity type"
+msgstr ""
 
 msgid "Scheduler Rules Integration"
 msgstr "Scheduler Regler-integration"
@@ -19292,6 +19323,14 @@ msgstr "Scheduler ekstra"
 
 msgid "Support module for general Scheduler testing."
 msgstr "Supportmodul for generel Scheduler-testning."
+
+msgid "Scheduler No-bundle Test"
+msgstr ""
+
+msgid ""
+"Support module providing a no-bundle entity type and Scheduler plugin for "
+"tests."
+msgstr ""
 
 msgid ""
 "Publish and unpublish content and entities automatically on specified dates "
@@ -20503,11 +20542,6 @@ msgstr "@site_title: forside"
 
 msgid "Status message icon"
 msgstr "Statusmeddelelsesikon"
-
-msgid "Search button"
-msgstr ""
-"\n"
-"Search button"
 
 msgid "Upcoming events"
 msgstr "Kommende arrangementer"
@@ -22482,6 +22516,24 @@ msgstr ""
 
 msgctxt "field.field.paragraph.files.field_files:label"
 msgid "Files"
+msgstr ""
+
+msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_series:label"
+msgid "Allow multiple instances per series"
+msgstr ""
+
+msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_series:description"
+msgid ""
+"Enable this to show several instances from the same series, in a stacked "
+"view. If not enabled, only the first matching instance will be shown."
+msgstr ""
+
+msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_series:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_series:settings:off_label"
+msgid "Off"
 msgstr ""
 
 msgctxt "field.field.paragraph.filtered_event_list.field_amount_of_events:label"
