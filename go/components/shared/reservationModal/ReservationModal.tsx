@@ -42,7 +42,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       onClose={onClose}
       title={(manifestation && `Reservér ${getManifestationLabel(manifestation)}`) || ""}>
       {manifestation && (
-        <>
+        <div data-cy={cyKeys["reservation-modal"]}>
           <div
             className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
               justify-center lg:aspect-4/5">
@@ -92,7 +92,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
               Annuller
             </Button>
           </div>
-        </>
+        </div>
       )}
     </ResponsiveDialog>
   )

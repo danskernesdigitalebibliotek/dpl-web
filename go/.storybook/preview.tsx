@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/nextjs"
 import localFont from "next/font/local"
-import React from "react"
+import { useEffect } from "react"
 
 import "@/styles/globals.css"
 
@@ -86,7 +86,7 @@ const preview: Preview = {
 
       // Apply the font variable to <html> so portalled content (modals, drawers,
       // sheets) renders with the correct headline font.
-      React.useEffect(() => {
+      useEffect(() => {
         const root = document.documentElement
         root.classList.add(GTFlexa.variable, "antialiased")
         return () => {

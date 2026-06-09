@@ -5,6 +5,7 @@ import React, { useContext } from "react"
 
 import LoginPanel from "@/components/shared/loginPanel/LoginPanel"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { cyKeys } from "@/cypress/support/constants"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
 import { createModalUrl } from "@/lib/helpers/modal-url"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
@@ -36,7 +37,9 @@ const ReservationLoginModal = ({ open, onClose, wid, pid }: ReservationLoginModa
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Reserver bog">
-      <div className="mx-auto w-full max-w-prose space-y-6">
+      <div
+        className="mx-auto w-full max-w-prose space-y-6"
+        data-cy={cyKeys["reservation-login-modal"]}>
         <p className="text-typo-heading-5">4 nemme steps til lån af bog på biblioteket.</p>
 
         <ol
