@@ -40,7 +40,7 @@ function ResponsiveSheet({
           <div className="h-full overflow-scroll">
             <div
               className="mx-grid-edge py-grid-edge bg-background border-foreground/10 sticky top-0
-                border-b lg:mx-10 lg:pt-8 lg:pb-6">
+                z-10 border-b lg:mx-10 lg:pt-8 lg:pb-6">
               <SheetHeader>
                 <SheetTitle className="text-typo-heading-3">{title}</SheetTitle>
                 {description && <SheetDescription>{description}</SheetDescription>}
