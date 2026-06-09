@@ -138,7 +138,7 @@
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
-        "doctrine/annotations": "^2.0",
+        "doctrine/annotations": "^1",
         "drupal/address": "^2.0",
         "drupal/address_dawa": "dev-2.x",
         "drupal/admin_toolbar": "^3.6",
