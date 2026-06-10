@@ -2,7 +2,7 @@ import { NextRequest, NextResponse, connection } from "next/server"
 import * as client from "openid-client"
 import type { IntrospectionResponse } from "openid-client"
 
-import { getEnv } from "@/lib/config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
 import { getAndClearLoginRedirectUrl } from "@/lib/helpers/login-redirect"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
   await connection() // Opt into dynamic rendering
   const session = await getSession()
   const config = await getUniloginClientConfig()
-  const appUrl = getEnv("APP_URL")
+  const appUrl = getBaseURL()
   const sessionOptions = await getSessionOptions()
   const loginContext: TUniloginLoginContext = {
     session,
@@ -139,9 +139,7 @@ export async function GET(request: NextRequest) {
       await logoutUniloginSSO(session)
       await destroySession(session)
       // Redirect user to login not authorized page.
-      return NextResponse.redirect(
-        `${getEnv("APP_URL")}/${goConfig("routes.login-not-authorized")}`
-      )
+      return NextResponse.redirect(`${getBaseURL()}/${goConfig("routes.login-not-authorized")}`)
     }
 
     // Set user info.
@@ -166,14 +164,14 @@ export async function GET(request: NextRequest) {
     console.info(`unilogin success - uniid: ${introspect.uniid} logged in successfully`)
     const loginRedirectUrl = await getAndClearLoginRedirectUrl()
     if (loginRedirectUrl) {
-      return NextResponse.redirect(`${getEnv("APP_URL")}${loginRedirectUrl}`)
+      return NextResponse.redirect(`${getBaseURL()}${loginRedirectUrl}`)
     }
-    return NextResponse.redirect(`${getEnv("APP_URL")}/user/profile`)
+    return NextResponse.redirect(`${getBaseURL()}/user/profile`)
   } catch (error) {
     console.error("unilogin error", error, loginContext)
     // Make sure that the user is logged out remotely first. And destroy session.
     await logoutUniloginSSO(session)
     await destroySession(session)
-    return NextResponse.redirect(`${getEnv("APP_URL")}/${goConfig("routes.login-failed-unilogin")}`)
+    return NextResponse.redirect(`${getBaseURL()}/${goConfig("routes.login-failed-unilogin")}`)
   }
 }

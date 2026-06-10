@@ -37,7 +37,7 @@
 }
 
 .hero__image {
-  > .media-container {
+  .media-container {
     height: auto;
 
     .hero--no-image & {

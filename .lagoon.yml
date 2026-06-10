@@ -109,7 +109,7 @@ tasks:
 
           if [[ ! -d "web/sites/default/files/modules_local" ]]; then
             echo "Creating directory for module uploads"
-            mkdir web/sites/default/files/modules_local
+            mkdir -p /app/cms/web/sites/default/files/modules_local
           fi
         service: cli
     - run:
@@ -117,7 +117,7 @@ tasks:
         command: |
           source dev-scripts/lagoon-error-handling.sh
 
-          mkdir -p web/sites/default/files/translations
+          mkdir -p /app/cms/web/sites/default/files/translations
           drush locale-check
           drush locale-update
         service: cli

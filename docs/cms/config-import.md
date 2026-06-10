@@ -10,7 +10,7 @@ keys and values as well as module ids to install or uninstall.
 
 ## How to use
 
-1. Download the [example file](../web/modules/custom/dpl_config_import/dpl_config_import.example.yaml)
+1. Download the [example file](../../cms/web/modules/custom/dpl_config_import/dpl_config_import.example.yaml)
    that comes with the module.
 2. Edit it to set the different configuration values.
 3. Upload the file at `/admin/config/configuration/import`

@@ -1,27 +1,32 @@
 import { add, isPast, sub } from "date-fns"
-import { IronSession, getIronSession } from "iron-session"
+import { IronSession, SessionOptions, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
 import { NextResponse, connection } from "next/server"
 
-import { getEnv, getServerEnv } from "../config/env"
+import { CLIENT_COOKIE_OPTIONS, DEFAULT_COOKIE_OPTIONS } from "@/lib/config/cookies"
+import { getServerEnv } from "@/lib/config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
+
 import goConfig from "../config/goConfig"
-import { loadPatronServerSide } from "../helpers/fbs"
 import { isBuildingGoApp } from "../helpers/next-phase"
+import { loadPatronServerSide } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
-export const getSessionOptions = async () => {
+export const getSessionOptions = (): SessionOptions => {
   const sessionSecret = getServerEnv("GO_SESSION_SECRET")
 
   return {
     password: sessionSecret,
     cookieName: "go-session",
     cookieOptions: {
-      // secure only works in `https` environments
-      secure: getEnv("NODE_ENV") === "production",
+      ...DEFAULT_COOKIE_OPTIONS,
     },
     // TODO: Decide on the session ttl.
     ttl: 60 * 60 * 24 * 7, // 1 week
+    chunking: {
+      enabled: true,
+    },
   }
 }
 
@@ -68,10 +73,7 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
     return defaultSession as IronSession<TSessionData>
   }
 
-  const sessionOptions = await getSessionOptions()
-  if (!sessionOptions) {
-    return defaultSession as IronSession<TSessionData>
-  }
+  const sessionOptions = getSessionOptions()
 
   try {
     const { cookies } = await import("next/headers")
@@ -142,7 +144,11 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   session.adgangsplatformenUserToken = token.token
   session.expires = new Date(token.expire.timestamp * 1000)
   const cookieStore = await cookies()
-  cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgansplatformen")
+  cookieStore.set(
+    goConfig("auth.cookie-names.session-type"),
+    "adgangsplatformen",
+    CLIENT_COOKIE_OPTIONS
+  )
 }
 
 export const saveAdgangsplatformenSession = async (
@@ -152,11 +158,19 @@ export const saveAdgangsplatformenSession = async (
   session.isLoggedIn = true
   session.type = "adgangsplatformen"
   await setAdgangsplatformenUserTokenOnSession(session, userToken)
-  // Get name of user/patron from Adgangsplatformen.
-  const patronInfo = await loadPatronServerSide(userToken.token)
-  if (patronInfo?.patron?.name) {
+  // Get name of user/patron from FBS. FBS may be unavailable or refuse the
+  // call (test mocks, locked-out patrons, etc.); we don't want that to break
+  // the login. Log and continue without setting session.user — matches the
+  // pre-service-layer fetcher's "log and return null" behaviour.
+  let patron
+  try {
+    patron = await loadPatronServerSide(userToken.token)
+  } catch (error) {
+    console.error("Could not load patron during Adgangsplatformen login:", error)
+  }
+  if (patron?.name) {
     session.user = {
-      name: patronInfo.patron.name,
+      name: patron.name,
       // Adgangsplatformen does not return a username.
       username: undefined,
     }
@@ -290,9 +304,7 @@ export const destroySessionAndRedirectToFrontPage = async (session: IronSession<
 }
 
 export const redirectToFrontPageAndReloadSession = async () => {
-  const appUrl = new URL(getEnv("APP_URL"))
-
-  return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
+  return NextResponse.redirect(`${getBaseURL()}?reload-session=true`)
 }
 
 export const sessionHasPKCECodeVerifier = (session: IronSession<TSessionData>) => {

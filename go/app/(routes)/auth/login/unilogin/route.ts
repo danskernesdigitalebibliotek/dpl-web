@@ -1,7 +1,7 @@
 import { connection } from "next/server"
 import * as client from "openid-client"
 
-import { getEnv } from "@/lib/config/env"
+import { getBaseURL } from "@/lib/config/getBaseURL"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
 
@@ -9,7 +9,7 @@ export async function GET() {
   await connection() // Opt into dynamic rendering
   const session = await getSession()
   const config = await getUniloginClientConfig()
-  const appUrl = getEnv("APP_URL")
+  const appUrl = getBaseURL()
 
   if (session.isLoggedIn) {
     return Response.redirect(`${appUrl}/user/profile`)

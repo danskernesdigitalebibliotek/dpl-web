@@ -1,0 +1,47 @@
+From 4bf78bde6378b01367c4f57b0d5c40b51e8dc53f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Fri, 28 Mar 2025 11:35:12 +0100
+Subject: [PATCH] Return anonymous user as event owner if it has been deleted
+
+The current implementation returns NULL. This is not an allowed return
+value based on the Drupal Core EntityOwnerInterface.
+
+The agreed upon approach to addressing this situation seems to be to
+return the anonymous user as the owner if the user does not exist.
+Update the code accordingly.
+
+The implementation is inspired by
+https://www.drupal.org/project/drupal/issues/3335025
+---
+ src/EventUserTrait.php | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/EventUserTrait.php b/src/EventUserTrait.php
+index 2ca2249..4802fdf 100644
+--- a/src/EventUserTrait.php
++++ b/src/EventUserTrait.php
+@@ -6,6 +6,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
+ use Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException;
+ use Drupal\Core\Field\BaseFieldDefinition;
+ use Drupal\Core\StringTranslation\TranslatableMarkup;
++use Drupal\user\Entity\User;
+ use Drupal\user\UserInterface;
+ 
+ /**
+@@ -62,7 +63,12 @@ trait EventUserTrait {
+    */
+   public function getOwner() {
+     $key = $this->getEntityType()->getKey('uid');
+-    return $this->get($key)->entity;
++    $owner = $this->get($key)->entity;
++    // Handle deleted owners.
++    if (!$owner) {
++      $owner = User::getAnonymousUser();
++    }
++    return $owner;
+   }
+ 
+   /**
+-- 
+GitLab
+

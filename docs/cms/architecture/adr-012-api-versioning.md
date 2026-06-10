@@ -3,7 +3,7 @@
 ## Context
 
 DPL CMS exposes data and functionality through HTTP endpoints which are
-documented by [an OpenAPI specification](../../openapi.json) as described in
+documented by [an OpenAPI specification](../../../cms/openapi.json) as described in
 [a previous ADR](adr-006-api-specification.md).
 
 Over time this API may need to be updated as the amount of data and

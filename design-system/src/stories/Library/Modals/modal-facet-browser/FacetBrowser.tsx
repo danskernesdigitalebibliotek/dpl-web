@@ -28,7 +28,7 @@ const FacetBrowser: React.FC<FacetBrowserProps> = ({
       <header className="facet-browser__header">
         <h2 className="text-header-h3">{title}</h2>
         {clearAll && (
-          <button className="link-tag cursor-pointer facet-browser__clear-btn">
+          <button className="link-tag facet-browser__clear-btn">
             {clearAll}
           </button>
         )}
@@ -46,7 +46,7 @@ const FacetBrowser: React.FC<FacetBrowserProps> = ({
               <TagButton key={tag}>{tag}</TagButton>
             ))}
           </div>
-          <button className="link-tag cursor-pointer facet-browser__more-btn">
+          <button className="link-tag facet-browser__more-btn">
             {showMore}
           </button>
         </Disclosure>

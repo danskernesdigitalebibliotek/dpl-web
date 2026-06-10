@@ -38,6 +38,34 @@ $list-reservation-space-desktop: 24px;
   }
 }
 
+.list-reservation--no-hover {
+  cursor: default;
+
+  &:hover {
+    filter: none;
+  }
+
+  .list-reservation__deadline .status-label {
+    justify-self: start;
+  }
+}
+
+.list-reservation__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  margin-left: $s-md;
+
+  @include media-query__small {
+    margin-left: $s-lg;
+
+    .btn-primary {
+      min-width: 200px;
+    }
+  }
+}
+
 .list-reservation__material {
   min-height: 120px;
   display: flex;
@@ -122,10 +150,21 @@ $list-reservation-space-desktop: 24px;
   }
 }
 
-.list-reservation__header {
+.list-reservation__information--centered-about {
+  justify-content: flex-start;
+
+  .list-reservation__about {
+    margin-block: auto;
+  }
+}
+
+.list-reservation__title {
   @include typography($typo__h4);
   color: $color__global-black;
   padding: 0;
+}
+
+.list-reservation__title--button {
   cursor: pointer;
 
   &:hover,
@@ -134,7 +173,7 @@ $list-reservation-space-desktop: 24px;
   }
 }
 
-.list-reservation__header__text {
+.list-reservation__title__text {
   @include text-ellipsis-truncation(2);
 }
 

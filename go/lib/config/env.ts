@@ -11,13 +11,12 @@ import { ZodObject, z } from "zod"
 function getEnvs() {
   return {
     // Public environment variables.
-    APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     CODEGEN_LIBRARY_TOKEN: process.env.NEXT_PUBLIC_CODEGEN_LIBRARY_TOKEN,
     CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI,
-    DPL_CMS_HOSTNAME: process.env.NEXT_PUBLIC_DPL_CMS_HOSTNAME,
+    DPL_GO_BASE_URL: process.env.DPL_GO_BASE_URL,
+    DPL_CMS_BASE_URL: process.env.DPL_CMS_BASE_URL,
     GO_GRAPHQL_CONSUMER_USER_NAME: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_NAME,
     GO_GRAPHQL_CONSUMER_USER_PASSWORD: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD,
-    GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS,
     NODE_ENV: process.env.NODE_ENV,
     TEST_MODE: process.env.TEST_MODE,
 
@@ -39,13 +38,12 @@ function getEnvs() {
 }
 
 const EnvPublicSchema = z.object({
-  APP_URL: z.string().refine(validateUrl),
+  DPL_GO_BASE_URL: z.url(),
   CODEGEN_LIBRARY_TOKEN: z.string().optional(),
-  CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: z.string().refine(validateUrl).optional(),
-  DPL_CMS_HOSTNAME: z.string(),
+  CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: z.url().optional(),
+  DPL_CMS_BASE_URL: z.url(),
   GO_GRAPHQL_CONSUMER_USER_NAME: z.string(),
   GO_GRAPHQL_CONSUMER_USER_PASSWORD: z.string(),
-  GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS: z.string().refine(validateUrl),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
   TEST_MODE: z.coerce.boolean().default(false),
 })
@@ -74,12 +72,14 @@ const EnvServerSchema = z.object({
   // Is fetched from dpl-cms, but can be overridden by env vars
   UNILOGIN_CLIENT_ID: z.string().optional(),
   UNILOGIN_CLIENT_SECRET: z.string().optional(),
-  UNILOGIN_WELLKNOWN_URL: z.string().refine(validateUrl).optional(),
+  UNILOGIN_WELLKNOWN_URL: z.url().optional(),
 })
 
 type EnvPublicSchemaResult = z.infer<typeof EnvPublicSchema>
 type EnvServerSchemaResult = z.infer<typeof EnvServerSchema>
 
+// Memoized copies of the validated values, so we don’t have to re-run
+// validation every time getEnv or getServerEnv is called.
 let memoizedPublicEnvs: EnvPublicSchemaResult
 let memoizedServerEnvs: EnvServerSchemaResult
 
@@ -137,15 +137,6 @@ function validateEnv(
   }
 
   return result.data as z.infer<typeof schema>
-}
-
-function validateUrl(url: string) {
-  try {
-    new URL("", url)
-    return true
-  } catch {
-    return false
-  }
 }
 
 /**

@@ -1,0 +1,174 @@
+From 35045cb17c7bbd1184553f83771939047175bc24 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Tue, 13 Feb 2024 16:15:01 +0100
+Subject: [PATCH] Implement Scheduler plugin for event series
+
+This will allow users to schedule future publication of event series.
+These are custom entities and thus not supported by the Scheduler
+module out of the box.
+
+Version 2.x of the Scheduler module supports scheduling of other
+entities through plugins.
+
+This adds:
+
+1. A plugin for integrating event series from the Recurring Events
+   module with the Scheduler module
+2. A class with events which are emitted when Scheduler updates
+   Recurring Events event series
+
+Intentionally the plugin does not deal with event instances. The
+Recurring Events module already ensures that the publication status
+of event instances follows the publication status of the corresponding
+series.
+
+The actual implementation is inspired by the corresponding code for
+Paragraphs.
+https://git.drupalcode.org/project/scheduler/-/blob/6e39fbfdc18bc2a4d3b6a05b268886eafa373ffa/src/Plugin/Scheduler/ParagraphScheduler.php
+---
+ src/Event/SchedulerEventSeriesEvents.php      | 96 +++++++++++++++++++
+ .../RecurringEventSeriesScheduler.php         | 29 ++++++
+ 2 files changed, 125 insertions(+)
+ create mode 100644 src/Event/SchedulerEventSeriesEvents.php
+ create mode 100644 src/Plugin/Scheduler/RecurringEventSeriesScheduler.php
+
+diff --git a/src/Event/SchedulerEventSeriesEvents.php b/src/Event/SchedulerEventSeriesEvents.php
+new file mode 100644
+index 0000000..1876d8d
+--- /dev/null
++++ b/src/Event/SchedulerEventSeriesEvents.php
+@@ -0,0 +1,96 @@
++<?php
++
++namespace Drupal\recurring_events\Event;
++
++/**
++ * Lists the six events dispatched by Scheduler for event series entities.
++ */
++final class SchedulerEventSeriesEvents {
++
++  /**
++   * The event triggered after an event series is published immediately.
++   *
++   * This event allows modules to react after an entity is published
++   * immediately when being saved after editing. The event listener method
++   * receives a \Drupal\Core\Entity\EntityInterface instance.
++   *
++   * @Event
++   *
++   * @see \Drupal\scheduler\Event\SchedulerEvent
++   *
++   * @var string
++   */
++  const PUBLISH_IMMEDIATELY = 'scheduler.recurring_events_eventseries_publish_immediately';
++
++  /**
++   * The event triggered after an event series is published by cron.
++   *
++   * This event allows modules to react after an entity is published by Cron.
++   * The event listener receives a \Drupal\Core\Entity\EntityInterface instance.
++   *
++   * @Event
++   *
++   * @see \Drupal\scheduler\Event\SchedulerEvent
++   *
++   * @var string
++   */
++  const PUBLISH = 'scheduler.recurring_events_eventseries_publish';
++
++  /**
++   * The event triggered before an event series is published immediately.
++   *
++   * This event allows modules to react before an entity is published
++   * immediately when being saved after editing. The event listener method
++   * receives a \Drupal\Core\Entity\EntityInterface instance.
++   *
++   * @Event
++   *
++   * @see \Drupal\scheduler\Event\SchedulerEvent
++   *
++   * @var string
++   */
++  const PRE_PUBLISH_IMMEDIATELY = 'scheduler.recurring_events_eventseries_pre_publish_immediately';
++
++  /**
++   * The event triggered before a taxonomy term is published by cron.
++   *
++   * This event allows modules to react before an entity is published by Cron.
++   * The event listener receives a \Drupal\Core\Entity\EntityInterface instance.
++   *
++   * @Event
++   *
++   * @see \Drupal\scheduler\Event\SchedulerEvent
++   *
++   * @var string
++   */
++  const PRE_PUBLISH = 'scheduler.recurring_events_eventseries_pre_publish';
++
++  /**
++   * The event triggered before an event series is unpublished by cron.
++   *
++   * This event allows modules to react before an entity is unpublished by Cron.
++   * The event listener receives a \Drupal\Core\Entity\EntityInterface instance.
++   *
++   * @Event
++   *
++   * @see \Drupal\scheduler\Event\SchedulerEvent
++   *
++   * @var string
++   */
++  const PRE_UNPUBLISH = 'scheduler.recurring_events_eventseries_pre_unpublish';
++
++  /**
++   * The event triggered after an event series is unpublished by cron.
++   *
++   * This event allows modules to react after an entity is unpublished by Cron.
++   * The event listener receives a \Drupal\Core\Entity\EntityInterface instance.
++   *
++   * @Event
++   *
++   * @see \Drupal\scheduler\Event\SchedulerEvent
++   *
++   * @var string
++   */
++  const UNPUBLISH = 'scheduler.recurring_events_eventseries_unpublish';
++
++}
+diff --git a/src/Plugin/Scheduler/RecurringEventSeriesScheduler.php b/src/Plugin/Scheduler/RecurringEventSeriesScheduler.php
+new file mode 100644
+index 0000000..a974d53
+--- /dev/null
++++ b/src/Plugin/Scheduler/RecurringEventSeriesScheduler.php
+@@ -0,0 +1,29 @@
++<?php
++
++namespace Drupal\recurring_events\Plugin\Scheduler;
++
++use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
++use Drupal\recurring_events\Event\SchedulerEventSeriesEvents;
++use Drupal\scheduler\SchedulerPluginBase;
++
++/**
++ * Plugin for Recurring event series entity type.
++ *
++ * @SchedulerPlugin(
++ *  id = "recurring_events_eventseries_scheduler",
++ *  label = @Translation("Recurring event series scheduler plugin"),
++ *  description = @Translation("Provides support for scheduling Recurring event series entities"),
++ *  entityType = "eventseries",
++ *  dependency = "recurring_events",
++ * )
++ */
++class RecurringEventSeriesScheduler extends SchedulerPluginBase implements ContainerFactoryPluginInterface {
++
++  /**
++   * {@inheritDoc}
++   */
++  public function schedulerEventClass() {
++    return SchedulerEventSeriesEvents::class;
++  }
++
++}
+-- 
+GitLab
+

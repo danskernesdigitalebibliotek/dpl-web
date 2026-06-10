@@ -1,0 +1,36 @@
+diff --git a/js/paragraphs_ee.categories.js b/js/paragraphs_ee.categories.js
+index 32ee30e..85db020 100644
+--- a/js/paragraphs_ee.categories.js
++++ b/js/paragraphs_ee.categories.js
+@@ -114,4 +114,31 @@
+     }
+   };
+ 
++  /**
++   * Sort listing in paragraphs modal.
++   */
++  Drupal.behaviors.sortParagraphListing = {
++    attach: function (context) {
++      $('.paragraphs-add-dialog-list', context).each(function () {
++        var $list = $(this);
++        sortUL($list);
++      });
++
++    }
++  };
++
++  /**
++   * Sort ul helper function.
++   *
++   * @param object $ul
++   *   The ul element to sort.
++   */
++  function sortUL($ul) {
++    $ul.find('li').sort(function(a, b) {
++      var upA = $(a).text().toUpperCase();
++      var upB = $(b).text().toUpperCase();
++      return (upA < upB) ? -1 : (upA > upB) ? 1 : 0;
++    }).appendTo($ul);
++  };
++
+ }(jQuery, Drupal, drupalSettings, once));

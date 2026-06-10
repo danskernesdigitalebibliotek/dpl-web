@@ -1,0 +1,15 @@
+# The cli/php/nginx images build with the repository root as their Docker build
+# context (see cms/docker-compose.yml), so this file — not cms/.dockerignore —
+# governs what those builds receive and copy.
+
+# Repo metadata / tooling not needed in any image.
+/.git
+/*.lagoon.*
+/.github
+/docs
+/migration
+
+# CMS build artifacts — must stay out of the images. Previously excluded by
+# cms/.dockerignore, which no longer applies now the context is the repo root.
+/cms/vendor
+/cms/web/sites/default/files

@@ -11,12 +11,12 @@ function dynamicAllowedHostnames() {
       hostname: "**",
       pathname: "/**",
     })
-  } else if (env.NEXT_PUBLIC_DPL_CMS_HOSTNAME) {
+  } else if (env.DPL_CMS_BASE_URL) {
     // Allow images which originate from set DPL CMS hostname
     // Strip protocol from url, as remotePatterns only supports hostnames
     allowed.push({
       protocol: "https",
-      hostname: env.NEXT_PUBLIC_DPL_CMS_HOSTNAME.replace(/^https?:\/\//, ""),
+      hostname: env.DPL_CMS_BASE_URL.replace(/^https?:\/\//, ""),
       pathname: "/**",
     })
   }
@@ -26,6 +26,7 @@ function dynamicAllowedHostnames() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["@danskernesdigitalebibliotek/dpl-service-layer"],
   cacheComponents: true,
   typescript: {
     // @todo This is a temporary solution!!

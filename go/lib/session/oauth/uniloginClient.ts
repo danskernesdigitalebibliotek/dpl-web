@@ -1,11 +1,8 @@
 import * as client from "openid-client"
 
 import { getDplCmsPrivateConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
-import { getEnv, getServerEnv } from "@/lib/config/env"
-
-export const uniloginClientSettings = {
-  post_login_route: `${getEnv("APP_URL")}/user/profile`,
-}
+import { getServerEnv } from "@/lib/config/env"
+import { isTest } from "@/lib/config/environmentChecks"
 
 export async function getUniloginClientConfig() {
   const {
@@ -41,7 +38,7 @@ export async function getUniloginClientConfig() {
     undefined,
     {
       // Allow insecure requests while testing
-      execute: getEnv("TEST_MODE") ? [client.allowInsecureRequests] : [],
+      execute: isTest() ? [client.allowInsecureRequests] : [],
     }
   )
 }

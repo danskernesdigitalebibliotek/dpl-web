@@ -39,6 +39,7 @@ import {
   Work
 } from "../../core/utils/types/entities";
 import {
+  canSubmitOpenOrderReservation,
   getPreferredBranch,
   constructReservationData,
   getAuthorLine,
@@ -175,9 +176,14 @@ export const ReservationModalBody = ({
   const expiryDate = getFutureDateString(interestPeriod);
   const materialType = getMaterialType(selectedManifestations);
 
+  const userHasEmail = Boolean(patron?.emailAddress);
+
   const canSubmitFbs =
     manifestationsToReserve?.length && !materialIsReservableFromAnotherLibrary;
-  const canSubmitOpenOrder = materialIsReservableFromAnotherLibrary && patron;
+  const canSubmitOpenOrder = canSubmitOpenOrderReservation({
+    materialIsReservableFromAnotherLibrary,
+    patron
+  });
 
   const saveReservation = () => {
     if (canSubmitFbs) {
@@ -213,7 +219,7 @@ export const ReservationModalBody = ({
           }
         }
       );
-    } else if (canSubmitOpenOrder) {
+    } else if (canSubmitOpenOrder && patron) {
       setReservationStatus("pending");
       const { patronId, name, emailAddress, preferredPickupBranch } = patron;
       // Save reservation to open order.
@@ -269,8 +275,6 @@ export const ReservationModalBody = ({
       instantLoanBranchHoldings,
       instantLoanThreshold
     );
-
-  const userHasEmail = Boolean(patron?.emailAddress);
 
   // Disable submit based on the exact conditions used in saveReservation
   const isSubmitDisabled =

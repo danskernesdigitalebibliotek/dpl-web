@@ -45,7 +45,6 @@ $_stacked-reduce-width: 20px;
 }
 
 .content-list-item__image-container {
-  position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
 }
@@ -275,36 +274,5 @@ $_stacked-reduce-width: 20px;
 
   @include media-query__small {
     display: block;
-  }
-}
-
-.status {
-  border: none;
-
-  &.status--cancelled,
-  &.status--sold-out {
-    background-color: $color__signal-alert;
-    color: $color__global-white;
-  }
-
-  &.status--occurred {
-    background-color: $color__global-black;
-    color: $color__global-white;
-  }
-}
-
-.content-list-item--status-parent {
-  position: relative;
-
-  .status {
-    z-index: $z-10;
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    @include media-query__small {
-      left: 0;
-      right: auto;
-    }
   }
 }

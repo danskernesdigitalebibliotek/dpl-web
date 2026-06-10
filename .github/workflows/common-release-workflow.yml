@@ -79,6 +79,8 @@ jobs:
         run: ./bundle.sh
         env:
           VERSION: ${{ env.TAG_NAME }}-${{ inputs.sha }}
+          # Release bundling does not require browsers.
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
 
       - name: Upload release artifact
         uses: actions/upload-artifact@v6

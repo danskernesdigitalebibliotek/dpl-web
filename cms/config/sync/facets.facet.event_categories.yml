@@ -37,18 +37,6 @@ only_visible_when_facet_source_is_visible: false
 show_only_one_result: true
 show_title: false
 processor_configs:
-  active_widget_order:
-    processor_id: active_widget_order
-    weights:
-      sort: 20
-    settings:
-      sort: DESC
-  count_widget_order:
-    processor_id: count_widget_order
-    weights:
-      sort: 30
-    settings:
-      sort: DESC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
@@ -64,7 +52,8 @@ processor_configs:
     processor_id: translate_entity
     weights:
       build: -10
-    settings: {  }
+    settings:
+      skip_access_check: false
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

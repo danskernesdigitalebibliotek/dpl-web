@@ -1,0 +1,45 @@
+.status {
+  border: none;
+
+  &.status--cancelled,
+  &.status--sold-out {
+    background-color: $color__signal-alert;
+    color: $color__global-white;
+  }
+
+  &.status--occurred {
+    background-color: $color__global-black;
+    color: $color__global-white;
+  }
+}
+
+.status-parent {
+  position: relative;
+
+  > .status {
+    z-index: $z-10;
+    position: absolute;
+  }
+}
+
+// Forwards a flex-stretched ancestor's height through this wrapper so a child
+// `.media-container` placeholder (which uses height: 100%) doesn't collapse.
+// Needed by Hero's no-image case — see `.hero__image` in hero.scss.
+.status-parent--fill {
+  height: 100%;
+}
+
+// Wrapper around a media-container that holds an overlaid status badge.
+// The media-query flip keeps the status label aligned with the rest of the
+// labels shown for other instances in the same event series.
+.status-parent--media-container {
+  > .status {
+    top: 0;
+    right: 0;
+
+    @include media-query__small {
+      left: 0;
+      right: auto;
+    }
+  }
+}

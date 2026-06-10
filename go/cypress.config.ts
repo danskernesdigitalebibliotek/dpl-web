@@ -9,7 +9,7 @@ const { combinedEnv } = loadEnvConfig(process.cwd(), true)
 
 export default defineConfig({
   e2e: {
-    baseUrl: combinedEnv.NEXT_PUBLIC_APP_URL,
+    baseUrl: combinedEnv.DPL_GO_BASE_URL,
     // Increase timeouts for better test resilience
     defaultCommandTimeout: 15000, // Default: 4000ms
     requestTimeout: 10000, // Default: 5000ms

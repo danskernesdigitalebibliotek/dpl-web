@@ -5,8 +5,9 @@ name: "Go / Unit test"
 on:
   pull_request:
     paths:
-      - 'go/**'
-      - '.github/workflows/go-*.yml'
+      - "go/**"
+      - "packages/**"
+      - ".github/workflows/go-*.yml"
 
 # List of jobs
 jobs:

@@ -4,6 +4,9 @@ import { ReactComponent as ArrowLargeRight } from "../Arrows/icon-arrow-ui/icon-
 
 import Tag from "../tag/Tag";
 import MediaContainer from "../media-container/MediaContainer";
+import ContentListItemStatus, {
+  ContentListItemStatuses,
+} from "../content-list-item-status/ContentListItemStatus";
 
 export type HeroProps = {
   image?: ReactNode;
@@ -16,6 +19,7 @@ export type HeroProps = {
   url?: string;
   tag?: string;
   placeholderText?: string;
+  status?: ContentListItemStatuses;
 };
 
 const Hero: React.FunctionComponent<HeroProps> = ({
@@ -29,6 +33,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
   cta,
   url,
   placeholderText,
+  status,
 }) => {
   const classes = clsx("hero", {
     "hero--no-image": !image,
@@ -44,7 +49,10 @@ const Hero: React.FunctionComponent<HeroProps> = ({
   return (
     <div className={classes}>
       <div className="hero__image">
-        <MediaContainer placeholderText={placeholderText} media={image} />
+        <div className="status-parent status-parent--fill status-parent--media-container">
+          {status && <ContentListItemStatus status={status} size="large" />}
+          <MediaContainer placeholderText={placeholderText} media={image} />
+        </div>
       </div>
 
       <ContentWrapper

@@ -1,0 +1,17 @@
+Index: src/Plugin/Mail/AzureMailer.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Plugin/Mail/AzureMailer.php b/src/Plugin/Mail/AzureMailer.php
+--- a/src/Plugin/Mail/AzureMailer.php
++++ b/src/Plugin/Mail/AzureMailer.php	(date 1755506100563)
+@@ -126,7 +126,7 @@
+       $client->send($requestMessage);
+     }
+     catch (GuzzleException $e) {
+-      $this->messenger->addError('Azure Communication Services error: ' . $e->getMessage());
++      $this->messenger()->addError('Azure Communication Services error: ' . $e->getMessage());
+       return FALSE;
+     }
+     return TRUE;

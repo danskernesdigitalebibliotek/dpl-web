@@ -12,8 +12,10 @@
         data-hide-list-button-after-expand="true"
         data-show-more-list-id="{{ 'filtered-event-list'|clean_unique_id }}">
       {% for item in items %}
-        <li class="filtered-event-list__list-item" data-show-more-item>
-          {{ item }}
+        <li class="filtered-event-list__list-item"
+            data-show-more-item
+            {% if item.shouldBeStacked %}data-show-more-item-stacked{% endif %}>
+          {{ item.content }}
         </li>
       {% endfor %}
     </ul>

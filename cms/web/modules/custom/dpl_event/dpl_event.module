@@ -490,6 +490,17 @@ function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query)
  * - Hide screen names if the feature is disabled.
  */
 function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  // The exposed form for the event list is rather difficult to detect.
+  if ($form_id == 'views_exposed_form' && $form['#id'] == 'views-exposed-form-events-all') {
+    $form['actions']['submit']['#type'] = 'image_button';
+    $form['actions']['submit']['#src'] = '/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-search.svg';
+    // This is horrible, but the Form API apparently already populated the
+    // #pre_render, and it's in the pre_render the magic happens.
+    $form['actions']['submit']['#pre_render'][0][0] = 'Drupal\Core\Render\Element\ImageButton';
+
+    return;
+  }
+
   $forms = [
     'eventseries_default_edit_form',
     'eventseries_default_add_form',
@@ -578,4 +589,79 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
   }
 
   $form['field_screen_names']['#access'] = FALSE;
+}
+
+/**
+ * Marks consecutive event instances from the same series as stacked.
+ *
+ * Walks an ordered list of render items and flags each item whose preceding
+ * sibling belongs to the same event series. Flagged items get
+ * 'shouldBeStacked' set on the wrapper and have their view mode switched to
+ * 'stacked_event' so the theme can render them in a compact, stacked form.
+ *
+ * Each item is expected to be wrapped as ['content' => $entity_render_array],
+ * matching the structure produced by views_view_unformatted.
+ *
+ * @param array<mixed> $items
+ *   The list of wrapped render items.
+ *
+ * @return array<mixed>
+ *   The items with stacked metadata, cache tags and contexts applied.
+ */
+function _dpl_event_stack_eventinstances(array $items): array {
+  foreach ($items as $index => &$item) {
+    if (($item['content']['#view_mode'] ?? NULL) !== 'list_teaser_stacked_parent' ||
+      !($item['content']['#eventinstance'] ?? NULL) instanceof EventInstance) {
+      continue;
+    }
+
+    $eventInstance = $item['content']['#eventinstance'];
+    $eventSeriesId = $eventInstance->getEventSeries()->id();
+
+    $shouldBeStacked = FALSE;
+
+    // Check if not first row and previous event_series_id matches.
+    $priorInstance = $items[$index - 1]['content']['#eventinstance'] ?? NULL;
+    if ($priorInstance instanceof EventInstance) {
+      $shouldBeStacked = $eventSeriesId === $priorInstance->getEventSeries()->id();
+    }
+
+    $item['shouldBeStacked'] = $shouldBeStacked;
+
+    if ($shouldBeStacked) {
+      $item['content']['#view_mode'] = 'stacked_event';
+    }
+
+    // Add cache tags to ensure stacked view is recalculated for factors that
+    // can affect the order:
+    // - Events are created/updated/deleted
+    // - Path and url arguments as this can effect filtering and ordering.
+    $item['content']['#cache']['tags'][] = 'eventinstance_list';
+    $item['content']['#cache']['contexts'][] = 'url';
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views_view_unformatted__events.
+ *
+ * Flags consecutive event instances from the same series as stacked. Scoped
+ * to the 'events' view, which is the only one rendering eventinstances in the
+ * stacked parent view mode.
+ */
+function dpl_event_preprocess_views_view_unformatted__events(array &$variables): void {
+  $variables['rows'] = _dpl_event_stack_eventinstances($variables['rows']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for dpl_related_content.
+ *
+ * Flags consecutive event instances from the same series as stacked.
+ */
+function dpl_event_preprocess_dpl_related_content(array &$variables): void {
+  if (empty($variables['items']) || !is_array($variables['items'])) {
+    return;
+  }
+  $variables['items'] = _dpl_event_stack_eventinstances($variables['items']);
 }

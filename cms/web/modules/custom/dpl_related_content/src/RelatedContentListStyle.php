@@ -9,4 +9,5 @@ enum RelatedContentListStyle: string {
   case Slider = "slider";
   case Grid = "grid";
   case EventList = "event_list";
+  case EventListStacked = "event_list_stacked";
 }

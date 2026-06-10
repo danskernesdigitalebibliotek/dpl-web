@@ -300,7 +300,9 @@ class RelatedContent {
       }
 
       if ($i < $event_length) {
-        $content[] = $event_view_builder->view($events[$i], $this->contentViewMode);
+        // We place it in a 'content', to match how views are built.
+        // That makes it easier for us to do similar preprocesses.
+        $content[]['content'] = $event_view_builder->view($events[$i], $this->contentViewMode);
       }
 
       if (count($content) >= $this->maxItems) {
@@ -308,7 +310,9 @@ class RelatedContent {
       }
 
       if ($i < $node_length) {
-        $content[] = $node_view_builder->view($nodes[$i], $this->contentViewMode);
+        // We place it in a 'content', to match how views are built.
+        // That makes it easier for us to do similar preprocesses.
+        $content[]['content'] = $node_view_builder->view($nodes[$i], $this->contentViewMode);
       }
     }
 
@@ -491,9 +495,11 @@ class RelatedContent {
     // so we will limit the query to this.
     $query->range(0, $this->maxItems);
 
-    // Add a GROUP BY clause to make results distinct by eventseries_id.
-    // E.g. - don't show eventinstances that look identical.
-    $query->groupBy('eid.eventseries_id');
+    if ($this->listStyle !== RelatedContentListStyle::EventListStacked) {
+      // Add a GROUP BY clause to make results distinct by eventseries_id.
+      // E.g. - don't show eventinstances that look identical.
+      $query->groupBy('eid.eventseries_id');
+    }
 
     // Execute the query and return ids.
     $result = $query->execute();
@@ -562,6 +568,13 @@ class RelatedContent {
 
     if ($this->listStyle == RelatedContentListStyle::EventList) {
       $this->contentViewMode = 'list_teaser';
+      $this->minItems = 1;
+      $this->maxItems = 12;
+    }
+
+    if ($this->listStyle === RelatedContentListStyle::EventListStacked) {
+      // The sub-events are being handled by a preprocess function in dpl_event.
+      $this->contentViewMode = 'list_teaser_stacked_parent';
       $this->minItems = 1;
       $this->maxItems = 12;
     }

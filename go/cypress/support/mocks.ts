@@ -19,7 +19,7 @@ export const mockConfig = () => {
   cy.mockServerGraphQLQuery({
     operationName: "getDplCmsPublicConfiguration",
     data: GetDplCmsPublicConfiguration.transient({
-      appUrl: Cypress.env("NEXT_PUBLIC_APP_URL"),
+      appUrl: Cypress.env("DPL_GO_BASE_URL"),
     }).build(),
   })
 
