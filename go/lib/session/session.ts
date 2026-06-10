@@ -1,5 +1,5 @@
 import { add, isPast, sub } from "date-fns"
-import { IronSession, SessionOptions, getIronSession } from "iron-session"
+import { IronSession, SessionOptions } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
 import { NextResponse, connection } from "next/server"
 
@@ -12,6 +12,7 @@ import { isBuildingGoApp } from "../helpers/next-phase"
 import { loadPatronServerSide } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
+import { getChunkedIronSession } from "./chunked-iron-session"
 
 export const getSessionOptions = (): SessionOptions => {
   const sessionSecret = getServerEnv("GO_SESSION_SECRET")
@@ -76,7 +77,7 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
     const { cookies } = await import("next/headers")
     const cookieStore = await cookies()
     const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
-    const session = await getIronSession<TSessionData>(cookieStore, sessionOptions)
+    const session = await getChunkedIronSession<TSessionData>(cookieStore, sessionOptions)
 
     if (!session?.isLoggedIn) {
       // Return the default session if the session is not logged in.
