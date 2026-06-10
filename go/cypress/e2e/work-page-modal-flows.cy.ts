@@ -16,18 +16,12 @@ const mockEmptyLoans = () => {
   // `useGetV1UserLoans` swaps adapters based on the `go-session:type` cookie:
   //   unilogin → /pubhub/v1/user/loans (local adapter)
   //   anything else → /ap-service/pubhub-adapter/v1/user/loans
-  // Mock both and alias them so `cy.wait("@loans")` can gate clicks until the
-  // logged-in buttons (which render after isLoadingLoans flips false) appear.
-  cy.intercept("GET", "/pubhub/v1/user/loans*", {
+  // Mock both with a single regex so we don't care which fires.
+  cy.intercept("GET", /\/(pubhub|ap-service\/pubhub-adapter)\/v1\/user\/loans(\?.*)?$/, {
     statusCode: 200,
     body: getV1UserLoansAdapterFactory.build({ loans: [] }),
     headers: { "content-type": "application/json" },
-  }).as("loansUnilogin")
-  cy.intercept("GET", "/ap-service/pubhub-adapter/v1/user/loans*", {
-    statusCode: 200,
-    body: getV1UserLoansAdapterFactory.build({ loans: [] }),
-    headers: { "content-type": "application/json" },
-  }).as("loansAdgangsplatformen")
+  })
 }
 
 const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
@@ -35,6 +29,15 @@ const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   // picker reads `go-session:type` separately, so set it explicitly.
   cy.createGoSession({ type })
   cy.setCookie("go-session:type", type)
+}
+
+// Click a button inside the logged-in WorkPageButtons block. Only LoggedIn
+// WorkPageButton instances carry `work-page-button-logged-in`, so scoping to
+// it guarantees we wait for the logged-in branch to mount before resolving
+// `.contains(label)` — even though LoggedOut renders an identically-labelled
+// button immediately on page load.
+const clickLoggedInButton = (label: string) => {
+  cy.dataCy("work-page-button-logged-in").contains(label).click()
 }
 
 describe("Work page → modal shown for each (material × login state)", () => {
@@ -79,24 +82,21 @@ describe("Work page → modal shown for each (material × login state)", () => {
 
     it("Physical book → ReservationUniloginModal (UNI•Login cannot reserve physical)", () => {
       visitWork("BOOK")
-      cy.wait("@loansUnilogin")
-      cy.contains("Reservér bog").click()
+      clickLoggedInButton("Reservér bog")
       cy.dataCy("reservation-unilogin-modal").should("be.visible")
       cy.url().should("include", "modal=ReservationUniloginModal")
     })
 
     it("E-book → LoanMaterialModal", () => {
       visitWork("EBOOK")
-      cy.wait("@loansUnilogin")
-      cy.contains("Lån e-bog").click()
+      clickLoggedInButton("Lån e-bog")
       cy.dataCy("loan-material-modal").should("be.visible")
       cy.url().should("include", "modal=LoanMaterialModal")
     })
 
     it("Audiobook → LoanMaterialModal", () => {
       visitWork("AUDIO_BOOK_ONLINE")
-      cy.wait("@loansUnilogin")
-      cy.contains("Lån lydbog").click()
+      clickLoggedInButton("Lån lydbog")
       cy.dataCy("loan-material-modal").should("be.visible")
       cy.url().should("include", "modal=LoanMaterialModal")
     })
@@ -110,24 +110,21 @@ describe("Work page → modal shown for each (material × login state)", () => {
 
     it("Physical book → ReservationModal", () => {
       visitWork("BOOK")
-      cy.wait("@loansAdgangsplatformen")
-      cy.contains("Reservér bog").click()
+      clickLoggedInButton("Reservér bog")
       cy.dataCy("reservation-modal").should("be.visible")
       cy.url().should("include", "modal=ReservationModal")
     })
 
     it("E-book → LoanMaterialModal", () => {
       visitWork("EBOOK")
-      cy.wait("@loansAdgangsplatformen")
-      cy.contains("Lån e-bog").click()
+      clickLoggedInButton("Lån e-bog")
       cy.dataCy("loan-material-modal").should("be.visible")
       cy.url().should("include", "modal=LoanMaterialModal")
     })
 
     it("Audiobook → LoanMaterialModal", () => {
       visitWork("AUDIO_BOOK_ONLINE")
-      cy.wait("@loansAdgangsplatformen")
-      cy.contains("Lån lydbog").click()
+      clickLoggedInButton("Lån lydbog")
       cy.dataCy("loan-material-modal").should("be.visible")
       cy.url().should("include", "modal=LoanMaterialModal")
     })

@@ -6,6 +6,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 function WorkPageButton({
   ariaLabel,
   className,
+  dataCy,
   disabled,
   onClick,
   asChild = false,
@@ -18,6 +19,8 @@ function WorkPageButton({
       className={cn("w-full lg:max-w-80 lg:min-w-72", className)}
       asChild={asChild}
       ariaLabel={ariaLabel}
+      // eslint-disable-next-line no-restricted-syntax
+      data-cy={dataCy}
       disabled={disabled}
       onClick={onClick}
       theme={theme}>

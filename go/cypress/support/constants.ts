@@ -27,6 +27,7 @@ export const cyKeys = {
   "reservation-login-modal": "reservation-login-modal",
   "reservation-unilogin-modal": "reservation-unilogin-modal",
   "reservation-modal": "reservation-modal",
+  "work-page-button-logged-in": "work-page-button-logged-in",
   "logout-button": "logout-button",
   "loan-slider": "loan-slider",
   "loan-slider-work": "loan-slider-work",
