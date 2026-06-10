@@ -1,4 +1,5 @@
-import { TSession, TSessionData, getDplCmsSessionCookie } from "../session/session"
+import { getDplCmsSessionCookie } from "../session/cms-session-cookie"
+import type { TSession, TSessionData } from "../session/types"
 
 export const userIsAnonymous = (session: TSession | TSessionData | null) =>
   !session || !session.isLoggedIn || session.type === "anonymous"

@@ -9,56 +9,20 @@ import goConfig from "../config/goConfig"
 import { isBuildingGoApp } from "../helpers/next-phase"
 import { loadPatronServerSide } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
-import { TSessionType, TUniloginTokenSet } from "../types/session"
+import { TUniloginTokenSet } from "../types/session"
 import redis from "./redis"
+import { TSession, TSessionData, defaultSession } from "./types"
+
+// Re-exports for backward compatibility with existing import sites.
+export { getDplCmsSessionCookie } from "./cms-session-cookie"
+export { defaultSession } from "./types"
+export type { TSession, TSessionData } from "./types"
 
 const SESSION_COOKIE_NAME = "go-session"
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7 // 1 week
 const REDIS_KEY_PREFIX = "go:session:"
 
 const sessionKey = (id: string) => `${REDIS_KEY_PREFIX}${id}`
-
-export interface TSessionData {
-  isLoggedIn: boolean
-  access_token?: string
-  refresh_token?: string
-  id_token?: string
-  expires?: Date
-  refresh_expires?: Date
-  code_verifier?: string
-  uniLoginUserInfo?: {
-    sub: string
-    uniid: string
-    institutionIds: string[]
-  }
-  user?: {
-    name?: string
-    username?: string
-  }
-  adgangsplatformenUserToken?: string
-  adgangsplatformenLibraryToken?: string
-  type: TSessionType
-}
-
-export type TSession = TSessionData & {
-  save: () => Promise<void>
-  destroy: () => Promise<void>
-}
-
-export const defaultSession: TSessionData = {
-  isLoggedIn: false,
-  access_token: undefined,
-  refresh_token: undefined,
-  id_token: undefined,
-  expires: undefined,
-  refresh_expires: undefined,
-  code_verifier: undefined,
-  uniLoginUserInfo: undefined,
-  user: undefined,
-  adgangsplatformenUserToken: undefined,
-  adgangsplatformenLibraryToken: undefined,
-  type: "anonymous",
-}
 
 const reviveSessionJson = (key: string, value: unknown) => {
   if ((key === "expires" || key === "refresh_expires") && typeof value === "string") {
@@ -335,15 +299,6 @@ const deleteGoSessionCookies = async () => {
       cookieStore.delete(cookie.name)
     }
   }
-}
-
-export const getDplCmsSessionCookie = async () => {
-  const { cookies } = await import("next/headers")
-  const cookieStore = await cookies()
-  const allCookies = cookieStore.getAll()
-
-  const sessionCookie = allCookies.find(cookie => cookie.name.startsWith("SSESS"))
-  return sessionCookie ?? null
 }
 
 export const destroySession = async (session: TSession) => {

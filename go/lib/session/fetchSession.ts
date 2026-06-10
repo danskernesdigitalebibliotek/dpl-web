@@ -1,7 +1,7 @@
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
-import { TSessionData } from "./session"
+import type { TSessionData } from "./types"
 
 export const loadSession = async () => {
   // By using an absolute url we make sure that we can fetch the session both client and server side.

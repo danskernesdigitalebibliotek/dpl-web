@@ -27,6 +27,10 @@ function dynamicAllowedHostnames() {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@danskernesdigitalebibliotek/dpl-service-layer"],
+  // ioredis depends on Node-only built-ins (net, dns, fs, tls, cluster).
+  // Mark it as a server external package so Turbopack does not try to
+  // bundle it for server components.
+  serverExternalPackages: ["ioredis"],
   cacheComponents: true,
   typescript: {
     // @todo This is a temporary solution!!

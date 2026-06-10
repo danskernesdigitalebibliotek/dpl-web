@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import { loadSession } from "@/lib/session/fetchSession"
-import { TSessionData } from "@/lib/session/session"
+import type { TSessionData } from "@/lib/session/types"
 
 const fetchSession = async ({
   setSessionHandler,
