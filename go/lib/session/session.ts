@@ -24,6 +24,9 @@ export const getSessionOptions = (): SessionOptions => {
     },
     // TODO: Decide on the session ttl.
     ttl: 60 * 60 * 24 * 7, // 1 week
+    chunking: {
+      enabled: true,
+    },
   }
 }
 
