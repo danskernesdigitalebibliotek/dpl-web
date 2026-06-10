@@ -161,3 +161,11 @@ services:
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
+
+  go-redis:
+    # In memory storage for Go Next.js application, for session cookies and other such needs.
+    image: uselagoon/redis-8:latest
+    labels:
+      lagoon.type: redis
+    environment:
+      VIRTUAL_HOST: dpl-go-redis.${DEV_TLD:-docker}

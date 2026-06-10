@@ -62,6 +62,7 @@ const EnvServerSchema = z.object({
       z.literal(PHASE_TEST),
     ])
     .optional(),
+  REDIS_URL: z.url({ protocol: /^rediss?$/ }),
   UNILOGIN_MUNICIPALITY_ID: z.string().optional(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),

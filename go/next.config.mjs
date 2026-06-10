@@ -12,11 +12,13 @@ function dynamicAllowedHostnames() {
       pathname: "/**",
     })
   } else if (env.DPL_CMS_BASE_URL) {
+    const parsed = new URL(env.DPL_CMS_BASE_URL)
+
     // Allow images which originate from set DPL CMS hostname
     // Strip protocol from url, as remotePatterns only supports hostnames
     allowed.push({
       protocol: "https",
-      hostname: env.DPL_CMS_BASE_URL.replace(/^https?:\/\//, ""),
+      hostname: parsed.hostname,
       pathname: "/**",
     })
   }
@@ -26,6 +28,7 @@ function dynamicAllowedHostnames() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  allowedDevOrigins: ["dpl-cms.local"],
   transpilePackages: ["@danskernesdigitalebibliotek/dpl-service-layer"],
   cacheComponents: true,
   typescript: {

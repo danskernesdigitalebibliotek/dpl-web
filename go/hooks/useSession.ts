@@ -3,8 +3,8 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
+import { TSessionData } from "@/lib/session/definitions"
 import { loadSession } from "@/lib/session/fetchSession"
-import { TSessionData } from "@/lib/session/session"
 
 const fetchSession = async ({
   setSessionHandler,
@@ -32,7 +32,7 @@ export default function useSession() {
   const reloadSession = Boolean(searchParams.get("reload-session"))
 
   useEffect(() => {
-    fetchSession({
+    void fetchSession({
       setSessionHandler: setSession,
       setLoadingHandler: setIsLoading,
     })

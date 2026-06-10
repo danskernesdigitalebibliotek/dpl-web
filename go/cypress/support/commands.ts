@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { TSessionType } from "@/lib/types/session"
+import { AuthenticationMethod } from "@/lib/session/definitions"
 
 import { CyKey, ViewportType, viewports } from "./constants"
 import { Operations, hasOperationName } from "./utils"
@@ -112,7 +112,7 @@ declare global {
        * @example
        * cy.createGoSession({ type: "unilogin" })
        */
-      createGoSession({ type }: { type: TSessionType }): Chainable<void>
+      createGoSession({ type }: { type: AuthenticationMethod }): Chainable<void>
 
       /**
        * Checks if the current viewport is mobile
@@ -203,7 +203,7 @@ Cypress.Commands.add("setViewport", (viewport: ViewportType) => {
   cy.viewport(viewports[viewport].width, viewports[viewport].height)
 })
 
-Cypress.Commands.add("createGoSession", ({ type }: { type: TSessionType }) => {
+Cypress.Commands.add("createGoSession", ({ type }: { type: AuthenticationMethod }) => {
   cy.task("getMockedGoSessionCookieValue", { type }).then(encodedSession => {
     cy.setCookie("go-session", encodedSession as string)
   })

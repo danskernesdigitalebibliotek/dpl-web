@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server"
 import { z } from "zod"
 
-import { getSession } from "@/lib/session/session"
+import { getSession } from "@/lib/session/serverSideSession"
 
 import { uniLoginUserInfoSchema } from "./schemas"
 import { TUserInfo } from "./types"

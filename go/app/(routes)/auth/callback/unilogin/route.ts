@@ -6,15 +6,14 @@ import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
 import { getAndClearLoginRedirectUrl } from "@/lib/helpers/login-redirect"
 import { getInstitutionId, getInstitutionIds } from "@/lib/helpers/unilogin"
+import { TSessionData, TUniloginTokenSet } from "@/lib/session/definitions"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
-  TSessionData,
   destroySession,
   getSession,
   getSessionOptions,
   setUniloginTokensOnSession,
-} from "@/lib/session/session"
-import { TUniloginTokenSet } from "@/lib/types/session"
+} from "@/lib/session/serverSideSession"
 
 import { logoutUniloginSSO } from "../../logout/helpers"
 import { isUniloginUserAuthorizedToLogIn, parseUniloginServiceResponse } from "./helper"

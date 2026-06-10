@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 import { TServiceType, getApServiceSettings, getApServiceUrl } from "@/lib/helpers/ap-service"
-import { getSession } from "@/lib/session/session"
+import { getSession } from "@/lib/session/serverSideSession"
 
 type TContext = { params: Promise<{ slug: string[] }> }
 

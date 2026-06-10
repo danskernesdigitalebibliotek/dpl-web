@@ -5,22 +5,22 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import * as client from "openid-client"
 import { z } from "zod"
 
-import goConfig from "../config/goConfig"
+import { RedisSessionDataProvider } from "@/lib/session/RedisSessionDataProvider"
+import { TSessionData, TUniloginTokenSet } from "@/lib/session/definitions"
+
 import {
-  TSessionData,
   destroySession,
   getSession,
   setUniloginTokensOnSession,
-} from "../session/session"
-import { TUniloginTokenSet } from "../types/session"
+} from "../session/serverSideSession"
 import { TServiceType, getApServiceSettings } from "./ap-service"
 
 export const getBearerTokenServerSide = async (
   serviceType: TServiceType,
-  cookieStore: ReadonlyRequestCookies
+  sessionData: RedisSessionDataProvider
 ) => {
   const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
-  const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
+  const libraryToken = await sessionData.getValue("adgangsplatformenLibraryToken")
   if (useLibraryToken && libraryToken) {
     return libraryToken
   }
@@ -43,19 +43,19 @@ export const createServerQueryFn = async <TQuery, TVariables>({
   fetcher,
   variables,
   options,
-  cookieStore,
+  sessionData,
 }: {
   fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TQuery>
   variables: TVariables
   options?: RequestInit["headers"]
-  cookieStore: ReadonlyRequestCookies
+  sessionData: RedisSessionDataProvider
 }) => {
-  const bearerToken = await getBearerTokenServerSide("fbi", cookieStore)
+  const bearerToken = await getBearerTokenServerSide("fbi", sessionData)
   return fetcher(variables, { ...options, authorization: `Bearer ${bearerToken}` })
 }
 
 export const refreshUniloginTokens = async (
-  session: IronSession<TSessionData>,
+  sessionData: RedisSessionDataProvider,
   config: client.Configuration
 ) => {
   const sessionTokenSchema = z.object({
@@ -66,13 +66,12 @@ export const refreshUniloginTokens = async (
 
   try {
     // TODO: Consider if we want to handle different types of sessions than unilogin.
-    const tokens = sessionTokenSchema.parse(session)
+    const tokens = sessionTokenSchema.parse(await sessionData.getObject())
     const newTokens = (await client.refreshTokenGrant(
       config,
       tokens.refresh_token
     )) as unknown as TUniloginTokenSet
-    await setUniloginTokensOnSession(session, newTokens)
-    await session.save()
+    await setUniloginTokensOnSession(sessionData, newTokens)
   } catch (error) {
     // Session is corrupt so we need to destroy it.
     destroySession(session)

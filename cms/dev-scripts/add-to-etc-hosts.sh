@@ -11,6 +11,11 @@ EOF
   exit 1;
 fi
 
+if [[ -n "$SKIP_ETC_HOST_CHANGE" ]]; then
+  echo "SKIP_ETC_HOST_CHANGE is set, not modifying /etc/hosts."
+  exit 0;
+fi
+
 CONTAINER_NAME=$1
 DOMAIN=$2
 DOCKER_COMPOSE_FILES=${DOCKER_COMPOSE_FILES:-}

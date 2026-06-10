@@ -2,23 +2,24 @@ import { IronSession } from "iron-session"
 import { NextResponse } from "next/server"
 import * as client from "openid-client"
 
+import { RedisSessionDataProvider } from "@/lib/session/RedisSessionDataProvider"
+import { TSessionData } from "@/lib/session/definitions"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
-  TSessionData,
   destroySession,
   destroySessionAndRedirectToFrontPage,
   getUniloginIdToken,
   redirectToFrontPageAndReloadSession,
-} from "@/lib/session/session"
+} from "@/lib/session/serverSideSession"
 
 import loadAdgangsplatformenLogoutUrl from "./loadAdgangsplatformenLogoutUrl"
 
-export const handleUniloginLogout = async (session: IronSession<TSessionData>) => {
-  await logoutUniloginSSO(session)
-  return destroySessionAndRedirectToFrontPage(session)
+export const handleUniloginLogout = async (sessionData: RedisSessionDataProvider) => {
+  await logoutUniloginSSO(sessionData)
+  return destroySessionAndRedirectToFrontPage(sessionData)
 }
 
-export const logoutUniloginSSO = async (session: IronSession<TSessionData>) => {
+export const logoutUniloginSSO = async (sessionData: RedisSessionDataProvider) => {
   const config = await getUniloginClientConfig()
   const id_token = await getUniloginIdToken()
 

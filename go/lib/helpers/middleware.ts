@@ -1,16 +1,17 @@
-import { NextRequest } from "next/server"
+import { loadLibraryToken } from "@/lib/helpers/library-token"
+import { getSessionDataProvider } from "@/lib/session/serverSideSession"
 
-import goConfig from "../config/goConfig"
-import { loadLibraryToken, setLibraryTokenCookie } from "./library-token"
+export const ensureLibraryTokenExist = async () => {
+  const sessionData = await getSessionDataProvider()
+  const libraryToken = sessionData.getLibraryToken()
 
-export const ensureLibraryTokenExist = async (request: NextRequest) => {
-  const libraryToken = request.cookies.get(goConfig("library-token.cookie-name"))?.value
   if (!libraryToken) {
     const libraryToken = await loadLibraryToken()
     const timestamp = libraryToken?.expire.timestamp
-    const expires = timestamp ? new Date(timestamp * 1000) : false
-    if (libraryToken && expires) {
-      setLibraryTokenCookie(libraryToken.token, expires)
+
+    if (libraryToken && timestamp) {
+      await sessionData.setValue("adgangsplatformenLibraryToken", libraryToken)
+      void sessionData.setExpiresAt(timestamp)
     }
   }
 }
