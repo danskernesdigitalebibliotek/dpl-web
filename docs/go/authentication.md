@@ -9,11 +9,24 @@ There are two ways of logging into the Go application:
 
 ## Go session
 
-The Go session is maintained by using the [iron-session](https://www.npmjs.com/package/iron-session)
-tool.
-The session data is stored in a cookie encrypted and is only readable server side.
-The session architecture was decided upon as a part of developing the Unilogin
-login flow which is documented in an [ADR](https://adr.github.io/) in the docs/architecture section.
+The Go session data is stored in a persistent Redis instance (`redis-persistent`,
+shared across workloads that need durable Redis storage) and paired with an
+opaque random session ID (`crypto.randomUUID()`) that lives in an httpOnly
+cookie named `go-session`. The cookie carries only the ID; all session
+fields live in Redis under `go:session:<id>`, with a sliding 7-day TTL
+refreshed on every write. See
+[`architecture/adr-010-redis-session-storage.md`](./architecture/adr-010-redis-session-storage.md)
+for the reasoning behind this design.
+
+The session wrapper lives in [`go/lib/session/session.ts`](../../go/lib/session/session.ts).
+Callers do `await getSession()`, mutate fields, and `await session.save()` —
+the same shape as the prior iron-session integration. The ioredis client is
+configured in [`go/lib/session/redis.ts`](../../go/lib/session/redis.ts) from
+the `REDIS_URL` environment variable (composed from
+`REDIS_PERSISTENT_HOST` / `REDIS_PERSISTENT_PORT` in
+[`go/scripts/prepare-docker-env-vars.mjs`](../../go/scripts/prepare-docker-env-vars.mjs),
+which runs at container start via `go/lagoon/start.sh`).
+
 The go session cookie is used for patrons logging in with either Unilogin or
 Adgangsplatformen and has two major attributes:
 

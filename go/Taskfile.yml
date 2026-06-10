@@ -58,9 +58,20 @@ tasks:
       - task: source:build
       - task: source:push
 
+  dev:redis:up:
+    summary: Start the local persistent Redis container
+    cmds:
+      - docker compose up -d redis-persistent
+
+  dev:redis:down:
+    summary: Stop the local persistent Redis container
+    cmds:
+      - docker compose down
+
   dev:reset:
     desc: Install development environment and clean up
     cmds:
       - task dev:nvm:use
       - yarn
+      - task: dev:redis:up
       - yarn dev:https

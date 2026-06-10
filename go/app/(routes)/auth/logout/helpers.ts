@@ -1,10 +1,9 @@
-import { IronSession } from "iron-session"
 import { NextResponse } from "next/server"
 import * as client from "openid-client"
 
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import {
-  TSessionData,
+  TSession,
   destroySession,
   destroySessionAndRedirectToFrontPage,
   getUniloginIdToken,
@@ -13,12 +12,12 @@ import {
 
 import loadAdgangsplatformenLogoutUrl from "./loadAdgangsplatformenLogoutUrl"
 
-export const handleUniloginLogout = async (session: IronSession<TSessionData>) => {
+export const handleUniloginLogout = async (session: TSession) => {
   await logoutUniloginSSO(session)
   return destroySessionAndRedirectToFrontPage(session)
 }
 
-export const logoutUniloginSSO = async (session: IronSession<TSessionData>) => {
+export const logoutUniloginSSO = async (session: TSession) => {
   const config = await getUniloginClientConfig()
   const id_token = await getUniloginIdToken()
 
@@ -51,7 +50,7 @@ export const logoutUniloginSSO = async (session: IronSession<TSessionData>) => {
   await fetch(endSessionUrl)
 }
 
-export const handleAdgangsplatformenLogout = async (session: IronSession<TSessionData>) => {
+export const handleAdgangsplatformenLogout = async (session: TSession) => {
   await destroySession(session)
 
   // Redirect to the logout url if available.

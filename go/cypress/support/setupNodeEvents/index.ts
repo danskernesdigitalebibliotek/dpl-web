@@ -1,4 +1,5 @@
-import { sealData } from "iron-session"
+import Redis from "ioredis"
+import { randomUUID } from "node:crypto"
 
 import { TSessionType } from "@/lib/types/session"
 
@@ -10,19 +11,33 @@ import {
 } from "../commands"
 import MockApiServer from "./mockApiServer"
 
+const SESSION_KEY_PREFIX = "go:session:"
+const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7
+
 export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, config) => {
   const mockApiServer = new MockApiServer()
+  let redis: Redis | null = null
 
   on("before:run", () => {
     mockApiServer.start()
+
+    const redisUrl = process.env.REDIS_URL
+    if (!redisUrl) {
+      throw new Error("REDIS_URL must be set for Cypress E2E runs")
+    }
+    redis = new Redis(redisUrl)
 
     if (config.env.viewport) {
       log("Running test with viewport:", config.env.viewport, true)
     }
   })
 
-  on("after:run", () => {
+  on("after:run", async () => {
     mockApiServer.stop()
+    if (redis) {
+      await redis.quit()
+      redis = null
+    }
   })
 
   function log(requestType: string, operationName: string, force: boolean = false) {
@@ -60,11 +75,9 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
     },
 
     async getMockedGoSessionCookieValue({ type }: { type: TSessionType }) {
-      const password = process.env.GO_SESSION_SECRET
-      if (!password) {
-        throw new Error("GO_SESSION_SECRET is not defined")
+      if (!redis) {
+        throw new Error("Redis client is not initialized")
       }
-
       if (!["unilogin", "adgangsplatformen", "anonymous"].includes(type)) {
         return null
       }
@@ -75,9 +88,16 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
         anonymous: { isLoggedIn: false },
         default: { isLoggedIn: true, type },
       }
+      const payload = { ...values.default, ...values[type] }
 
-      const encodedSession = await sealData({ ...values.default, ...values[type] }, { password })
-      return encodedSession
+      const sessionId = randomUUID()
+      await redis.set(
+        `${SESSION_KEY_PREFIX}${sessionId}`,
+        JSON.stringify(payload),
+        "EX",
+        SESSION_TTL_SECONDS
+      )
+      return sessionId
     },
 
     resetApiMocks() {

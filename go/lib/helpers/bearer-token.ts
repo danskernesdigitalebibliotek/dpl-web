@@ -1,13 +1,12 @@
 "use server"
 
-import { IronSession } from "iron-session"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import * as client from "openid-client"
 import { z } from "zod"
 
 import goConfig from "../config/goConfig"
 import {
-  TSessionData,
+  TSession,
   destroySession,
   getSession,
   setUniloginTokensOnSession,
@@ -54,10 +53,7 @@ export const createServerQueryFn = async <TQuery, TVariables>({
   return fetcher(variables, { ...options, authorization: `Bearer ${bearerToken}` })
 }
 
-export const refreshUniloginTokens = async (
-  session: IronSession<TSessionData>,
-  config: client.Configuration
-) => {
+export const refreshUniloginTokens = async (session: TSession, config: client.Configuration) => {
   const sessionTokenSchema = z.object({
     isLoggedIn: z.boolean(),
     access_token: z.string(),

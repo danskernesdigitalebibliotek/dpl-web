@@ -1,0 +1,30 @@
+# Local development services for the go/ Next.js app.
+#
+# Spin up with `task dev:redis:up` (or `docker compose up -d`) from this
+# directory. The session wrapper at lib/session/session.ts requires a
+# reachable Redis at REDIS_URL — there is no in-memory fallback so this
+# service must be running before `yarn dev:https`.
+#
+# Mirrors the production Lagoon service in docker-compose.lagoon.yml
+# (same image, same persistent flavor) so behaviour matches between
+# environments.
+
+services:
+  redis-persistent:
+    image: uselagoon/redis-8
+    environment:
+      REDIS_FLAVOR: persistent
+      MAXMEMORYPOLICY: allkeys-lru
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-persistent-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+
+volumes:
+  redis-persistent-data:

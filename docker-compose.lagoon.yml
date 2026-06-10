@@ -73,6 +73,15 @@ services:
       file: cms/docker-compose.yml
       service: redis
 
+  redis-persistent:
+    image: uselagoon/redis-8
+    labels:
+      lagoon.type: redis-persistent
+    environment:
+      REDIS_FLAVOR: persistent
+      MAXMEMORYPOLICY: allkeys-lru
+      MAXMEMORY: 256mb
+
   node:
     build:
       dockerfile: go/lagoon/node-lagoon.dockerfile

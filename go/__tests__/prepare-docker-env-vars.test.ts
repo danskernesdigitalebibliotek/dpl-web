@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest"
 
-import { findMatchingRoute } from "../scripts/prepare-docker-env-vars.mjs"
+import { composeRedisUrlEnvLine, findMatchingRoute } from "../scripts/prepare-docker-env-vars.mjs"
 
 describe("findMatchingRoute", () => {
   const routes = [
@@ -46,5 +46,34 @@ describe("findMatchingRoute", () => {
     const routesNodeFirst = ["https://node.example.com", "https://go.example.com"]
     const result = findMatchingRoute(routesNodeFirst, ["https://go.", "https://node."])
     expect(result).toBe("https://go.example.com")
+  })
+})
+
+describe("composeRedisUrlEnvLine", () => {
+  test("composes REDIS_URL from Lagoon-injected host and port", () => {
+    const line = composeRedisUrlEnvLine({
+      REDIS_PERSISTENT_HOST: "redis-persistent.namespace.svc",
+      REDIS_PERSISTENT_PORT: "6380",
+    })
+    expect(line).toContain("REDIS_URL=redis://redis-persistent.namespace.svc:6380")
+  })
+
+  test("defaults port to 6379 when only host is provided", () => {
+    const line = composeRedisUrlEnvLine({
+      REDIS_PERSISTENT_HOST: "redis-persistent.namespace.svc",
+    })
+    expect(line).toContain("REDIS_URL=redis://redis-persistent.namespace.svc:6379")
+  })
+
+  test("returns null when no Lagoon host is exposed", () => {
+    expect(composeRedisUrlEnvLine({})).toBeNull()
+  })
+
+  test("returns null when REDIS_URL is already set directly", () => {
+    const line = composeRedisUrlEnvLine({
+      REDIS_URL: "redis://elsewhere:6379",
+      REDIS_PERSISTENT_HOST: "redis-persistent.namespace.svc",
+    })
+    expect(line).toBeNull()
   })
 })

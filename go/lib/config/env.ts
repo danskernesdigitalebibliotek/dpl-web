@@ -24,6 +24,7 @@ function getEnvs() {
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
     GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
     NEXT_PHASE: process.env.NEXT_PHASE,
+    REDIS_URL: process.env.REDIS_URL,
     UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
     UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
     UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
@@ -62,6 +63,9 @@ const EnvServerSchema = z.object({
       z.literal(PHASE_TEST),
     ])
     .optional(),
+  REDIS_URL: z.url().refine(u => u.startsWith("redis://") || u.startsWith("rediss://"), {
+    message: "REDIS_URL must use the redis:// or rediss:// scheme",
+  }),
   UNILOGIN_MUNICIPALITY_ID: z.string().optional(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),

@@ -116,7 +116,16 @@ Shared secret for on-demand cache revalidation. The `GET /cache/revalidate` rout
 - **Required:** Yes (minimum 32 characters)
 - **Example:** `yZJhgvvvUYMawDRbdzfdvsVswWXCKwkU`
 
-The encryption password for `iron-session`. Used to seal/unseal the `go-session` cookie that stores all authentication state (tokens, user info, session type). Also used in Cypress E2E setup to create mocked session cookies via `sealData()`.
+Legacy: used to be the encryption password for the `iron-session` cookie. Session storage moved to Redis ([ADR-010](./architecture/adr-010-redis-session-storage.md)); the wrapper no longer reads this variable. Kept in the schema for now so existing Lagoon environment configuration does not need to be coordinated for removal in lockstep.
+
+### `REDIS_URL`
+
+- **Required:** Yes (must use the `redis://` or `rediss://` scheme)
+- **Example:** `redis://redis-persistent:6379`
+
+Connection URL for the persistent Redis instance that holds Go session data. The session wrapper at `lib/session/session.ts` writes one key per session as `go:session:<uuid>` with a sliding 7-day TTL; the cookie value is the UUID. See [ADR-010](./architecture/adr-010-redis-session-storage.md).
+
+In production, composed in [`go/scripts/prepare-docker-env-vars.mjs`](../../go/scripts/prepare-docker-env-vars.mjs) from Lagoon's `REDIS_PERSISTENT_HOST` and `REDIS_PERSISTENT_PORT` for the `redis-persistent` service declared in `docker-compose.lagoon.yml` (the script runs at container start via `go/lagoon/start.sh`). Locally, served by [`go/docker-compose.yml`](../../go/docker-compose.yml) (start with `task dev:redis:up`).
 
 ### `NEXT_PHASE`
 

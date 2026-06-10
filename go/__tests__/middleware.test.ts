@@ -28,9 +28,6 @@ vi.mock("next/headers", () => ({
 vi.mock("@/lib/session/oauth/uniloginClient", () => ({
   getUniloginClientConfig: vi.fn(),
 }))
-vi.mock("iron-session", () => ({
-  getIronSession: vi.fn(),
-}))
 vi.mock("openid-client", () => ({
   discovery: vi.fn(),
 }))

@@ -1,10 +1,8 @@
 import { add, isPast, sub } from "date-fns"
-import { IronSession, SessionOptions, getIronSession } from "iron-session"
 import { unstable_rethrow } from "next/navigation"
 import { NextResponse, connection } from "next/server"
 
 import { CLIENT_COOKIE_OPTIONS, DEFAULT_COOKIE_OPTIONS } from "@/lib/config/cookies"
-import { getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
@@ -12,20 +10,13 @@ import { isBuildingGoApp } from "../helpers/next-phase"
 import { loadPatronServerSide } from "../helpers/service-layer"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
+import redis from "./redis"
 
-export const getSessionOptions = (): SessionOptions => {
-  const sessionSecret = getServerEnv("GO_SESSION_SECRET")
+const SESSION_COOKIE_NAME = "go-session"
+const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7 // 1 week
+const REDIS_KEY_PREFIX = "go:session:"
 
-  return {
-    password: sessionSecret,
-    cookieName: "go-session",
-    cookieOptions: {
-      ...DEFAULT_COOKIE_OPTIONS,
-    },
-    // TODO: Decide on the session ttl.
-    ttl: 60 * 60 * 24 * 7, // 1 week
-  }
-}
+const sessionKey = (id: string) => `${REDIS_KEY_PREFIX}${id}`
 
 export interface TSessionData {
   isLoggedIn: boolean
@@ -49,6 +40,11 @@ export interface TSessionData {
   type: TSessionType
 }
 
+export type TSession = TSessionData & {
+  save: () => Promise<void>
+  destroy: () => Promise<void>
+}
+
 export const defaultSession: TSessionData = {
   isLoggedIn: false,
   access_token: undefined,
@@ -64,48 +60,109 @@ export const defaultSession: TSessionData = {
   type: "anonymous",
 }
 
-export async function getSession(): Promise<IronSession<TSessionData>> {
+const reviveSessionJson = (key: string, value: unknown) => {
+  if ((key === "expires" || key === "refresh_expires") && typeof value === "string") {
+    const d = new Date(value)
+    if (!Number.isNaN(d.getTime())) return d
+  }
+  return value
+}
+
+const stripMethods = (session: TSession): TSessionData => {
+  // Avoid serializing the attached methods.
+  const { save: _save, destroy: _destroy, ...rest } = session
+  void _save
+  void _destroy
+  return rest as TSessionData
+}
+
+type SessionIdRef = { id: string | undefined }
+
+const attachMethods = (data: TSessionData, idRef: SessionIdRef): TSession => {
+  const session = { ...data } as TSession
+  session.save = async () => {
+    if (!idRef.id) {
+      idRef.id = crypto.randomUUID()
+    }
+    const payload = JSON.stringify(stripMethods(session))
+    await redis.set(sessionKey(idRef.id), payload, "EX", SESSION_TTL_SECONDS)
+    const { cookies } = await import("next/headers")
+    const cookieStore = await cookies()
+    cookieStore.set(SESSION_COOKIE_NAME, idRef.id, {
+      ...DEFAULT_COOKIE_OPTIONS,
+      maxAge: SESSION_TTL_SECONDS,
+    })
+  }
+  session.destroy = async () => {
+    if (idRef.id) {
+      try {
+        await redis.del(sessionKey(idRef.id))
+      } catch (error) {
+        // Logout should always succeed from the user's perspective; the key
+        // will expire naturally within the TTL.
+        console.error("session destroy: redis del failed", error)
+      }
+      idRef.id = undefined
+    }
+    Object.assign(session, defaultSession)
+    await deleteGoSessionCookies()
+  }
+  return session
+}
+
+export async function getSession(): Promise<TSession> {
   // If we are building the go app, we will use the default session to simulate an anonymous user.
   if (isBuildingGoApp()) {
-    return defaultSession as IronSession<TSessionData>
+    return attachMethods(defaultSession, { id: undefined })
   }
-
-  const sessionOptions = getSessionOptions()
 
   try {
     const { cookies } = await import("next/headers")
     const cookieStore = await cookies()
     const libraryToken = cookieStore.get(goConfig("library-token.cookie-name"))?.value
-    const session = await getIronSession<TSessionData>(cookieStore, sessionOptions)
+    const cookieValue = cookieStore.get(SESSION_COOKIE_NAME)?.value
+    const idRef: SessionIdRef = { id: cookieValue }
 
-    if (!session?.isLoggedIn) {
+    let stored: TSessionData | null = null
+    if (cookieValue) {
+      const raw = await redis.get(sessionKey(cookieValue))
+      if (raw) {
+        stored = JSON.parse(raw, reviveSessionJson) as TSessionData
+      }
+    }
+
+    const data: TSessionData = stored ?? { ...defaultSession }
+
+    if (!data.isLoggedIn) {
       // Return the default session if the session is not logged in.
       // But if the session has a code_verifier, we will keep that.
       // The code_verifier is used for verifying the PKCE challenge
       // when coming back from Unilogin.
-      return Object.assign(session, defaultSession, {
-        ...(session.code_verifier ? { code_verifier: session.code_verifier } : {}),
+      const preserved: TSessionData = {
+        ...defaultSession,
+        ...(data.code_verifier ? { code_verifier: data.code_verifier } : {}),
         ...(libraryToken ? { adgangsplatformenLibraryToken: libraryToken } : {}),
-      }) as IronSession<TSessionData>
+      }
+      return attachMethods(preserved, idRef)
     }
 
     if (libraryToken) {
-      session.adgangsplatformenLibraryToken = libraryToken
+      data.adgangsplatformenLibraryToken = libraryToken
     }
 
-    return session
+    return attachMethods(data, idRef)
   } catch (error) {
     // Try to follow unstable_rethrow advise in this post:
     // https://stackoverflow.com/questions/78010331/dynamic-server-usage-page-couldnt-be-rendered-statically-because-it-used-next
     unstable_rethrow(error)
 
     console.error("getSession error", error)
-    return defaultSession as IronSession<TSessionData>
+    return attachMethods(defaultSession, { id: undefined })
   }
 }
 
 export const setUniloginTokensOnSession = async (
-  session: IronSession<TSessionData>,
+  session: TSession,
   tokenSet: TUniloginTokenSet
 ) => {
   const { cookies } = await import("next/headers")
@@ -133,7 +190,7 @@ type TAdgangsplatformenUserToken = {
 }
 
 export const setAdgangsplatformenUserTokenOnSession = async (
-  session: IronSession<TSessionData>,
+  session: TSession,
   token: TAdgangsplatformenUserToken
 ) => {
   const { cookies } = await import("next/headers")
@@ -149,7 +206,7 @@ export const setAdgangsplatformenUserTokenOnSession = async (
 }
 
 export const saveAdgangsplatformenSession = async (
-  session: IronSession<TSessionData>,
+  session: TSession,
   userToken: TAdgangsplatformenUserToken
 ) => {
   session.isLoggedIn = true
@@ -176,7 +233,7 @@ export const saveAdgangsplatformenSession = async (
   await session.save()
 }
 
-export const uniloginAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
+export const uniloginAccessTokenHasExpired = (session: TSession) => {
   if (userIsAnonymous(session) || session.type !== "unilogin") {
     return false
   }
@@ -190,7 +247,7 @@ export const uniloginAccessTokenHasExpired = (session: IronSession<TSessionData>
   return false
 }
 
-export const uniloginAccessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
+export const uniloginAccessTokenShouldBeRefreshed = (session: TSession) => {
   // If the session is not logged in, or it is not a unilogin session
   // we don't need to refresh the access token.
   if (userIsAnonymous(session) || session.type !== "unilogin" || !session.refresh_token) {
@@ -219,7 +276,7 @@ export const uniloginAccessTokenShouldBeRefreshed = (session: IronSession<TSessi
   return false
 }
 
-export const adgangsplatformenAccessTokenHasExpired = (session: IronSession<TSessionData>) => {
+export const adgangsplatformenAccessTokenHasExpired = (session: TSession) => {
   if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
     return false
   }
@@ -232,9 +289,7 @@ export const adgangsplatformenAccessTokenHasExpired = (session: IronSession<TSes
   return false
 }
 
-export const adgangsplatformenAccessTokenShouldBeRefreshed = (
-  session: IronSession<TSessionData>
-) => {
+export const adgangsplatformenAccessTokenShouldBeRefreshed = (session: TSession) => {
   // If the session is not logged in, or it is not a adgangsplatformen session
   // we don't need to refresh the access token.
   if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
@@ -268,13 +323,18 @@ export const getSessionTypeToken = async () => {
 const deleteGoSessionCookies = async () => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
-  const allCookies = cookieStore.getAll()
-
-  allCookies.map(async cookie => {
-    if (cookie.name.startsWith("go-session:")) {
-      ;(await cookies()).delete(cookie.name)
+  cookieStore.delete(SESSION_COOKIE_NAME)
+  // Sweep any leftover iron-session multipart cookies from before the
+  // Redis migration. iron-session has used both `:` and `_` separators
+  // across versions, so cover both.
+  for (const cookie of cookieStore.getAll()) {
+    if (
+      cookie.name.startsWith(`${SESSION_COOKIE_NAME}:`) ||
+      cookie.name.startsWith(`${SESSION_COOKIE_NAME}_`)
+    ) {
+      cookieStore.delete(cookie.name)
     }
-  })
+  }
 }
 
 export const getDplCmsSessionCookie = async () => {
@@ -286,16 +346,14 @@ export const getDplCmsSessionCookie = async () => {
   return sessionCookie ?? null
 }
 
-export const destroySession = async (session: IronSession<TSessionData>) => {
-  // ⁠await connection() is used to ensure that this function dynamically renders correctly, as ⁠session.destroy() only operates on the client.
+export const destroySession = async (session: TSession) => {
+  // ⁠await connection() is used to ensure that this function dynamically renders correctly.
   // https://nextjs.org/docs/app/api-reference/functions/connection
   await connection()
-  // Destroy session and additional go-session cookies.
-  session.destroy()
-  await deleteGoSessionCookies()
+  await session.destroy()
 }
 
-export const destroySessionAndRedirectToFrontPage = async (session: IronSession<TSessionData>) => {
+export const destroySessionAndRedirectToFrontPage = async (session: TSession) => {
   await destroySession(session)
   return redirectToFrontPageAndReloadSession()
 }
@@ -304,11 +362,11 @@ export const redirectToFrontPageAndReloadSession = async () => {
   return NextResponse.redirect(`${getBaseURL()}?reload-session=true`)
 }
 
-export const sessionHasPKCECodeVerifier = (session: IronSession<TSessionData>) => {
+export const sessionHasPKCECodeVerifier = (session: TSession) => {
   return !!session.code_verifier
 }
 
-export const removePCKECodeVerifierFromSession = async (session: IronSession<TSessionData>) => {
+export const removePCKECodeVerifierFromSession = async (session: TSession) => {
   delete session.code_verifier
   await session.save()
 }

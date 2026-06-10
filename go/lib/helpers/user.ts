@@ -1,8 +1,6 @@
-import { IronSession } from "iron-session"
+import { TSession, TSessionData, getDplCmsSessionCookie } from "../session/session"
 
-import { TSessionData, getDplCmsSessionCookie } from "../session/session"
-
-export const userIsAnonymous = (session: IronSession<TSessionData> | TSessionData | null) =>
+export const userIsAnonymous = (session: TSession | TSessionData | null) =>
   !session || !session.isLoggedIn || session.type === "anonymous"
 
 export const userIsLoggedInAtDplCms = async () => {

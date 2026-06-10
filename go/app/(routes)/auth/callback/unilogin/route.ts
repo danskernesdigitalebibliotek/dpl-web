@@ -11,7 +11,6 @@ import {
   TSessionData,
   destroySession,
   getSession,
-  getSessionOptions,
   setUniloginTokensOnSession,
 } from "@/lib/session/session"
 import { TUniloginTokenSet } from "@/lib/types/session"
@@ -60,7 +59,6 @@ export async function GET(request: NextRequest) {
   const session = await getSession()
   const config = await getUniloginClientConfig()
   const appUrl = getBaseURL()
-  const sessionOptions = await getSessionOptions()
   const loginContext: TUniloginLoginContext = {
     session,
   }
@@ -69,8 +67,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${appUrl}/user/profile`)
   }
 
-  // TODO: remove "!sessionOptions" as it can never be false
-  if (!config || !sessionOptions) {
+  if (!config) {
     return NextResponse.redirect(appUrl)
   }
 

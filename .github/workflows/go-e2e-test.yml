@@ -35,6 +35,9 @@ jobs:
         with:
           envFile: "go/.env.test"
 
+      - name: Start Redis via docker compose
+        run: docker compose up -d --wait redis-persistent
+
       - name: Build the Nextjs app and run Cypress tests
         uses: cypress-io/github-action@v7
         env:
@@ -45,6 +48,7 @@ jobs:
           UNILOGIN_CLIENT_ID: http://localhost:9000/client
           UNILOGIN_WELLKNOWN_URL: http://localhost:9000
           DPL_GO_BASE_URL: http://localhost:3000
+          REDIS_URL: redis://localhost:6379
 
         with:
           install: false
