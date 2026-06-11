@@ -30963,27 +30963,27 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Loan details"
-msgstr ""
+msgstr "Se detaljer om lån"
 
 #: 
 msgctxt "Player modal"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #: 
 msgctxt "Player modal"
 msgid "Modal for player"
-msgstr ""
+msgstr "Afspiller modal"
 
 #: 
 msgctxt "Online material"
 msgid "Listen to @materialType"
-msgstr ""
+msgstr "Lyt til @materialType"
 
 #: 
 msgctxt "Online material"
 msgid "Read @materialType"
-msgstr ""
+msgstr "Læs @materialType"
 
 #: 
 msgctxt "Work Page - periodical"
