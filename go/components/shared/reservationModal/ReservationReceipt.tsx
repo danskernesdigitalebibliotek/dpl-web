@@ -7,7 +7,6 @@ import {
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
-import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
@@ -20,10 +19,9 @@ type Manifestation = NonNullable<
 type ReservationReceiptProps = {
   manifestation: Manifestation
   result: CreateReservationSuccess
-  onClose: () => void
 }
 
-const ReservationReceipt = ({ manifestation, result, onClose }: ReservationReceiptProps) => {
+const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) => {
   const title = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
 
   return (
@@ -57,11 +55,6 @@ const ReservationReceipt = ({ manifestation, result, onClose }: ReservationRecei
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-center">
-        <Button theme="primary" size="lg" onClick={onClose}>
-          OK
-        </Button>
-      </div>
     </div>
   )
 }

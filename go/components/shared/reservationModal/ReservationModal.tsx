@@ -12,6 +12,8 @@ import React, { useCallback, useState } from "react"
 
 import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
+import { Button } from "@/components/shared/button/Button"
+import Icon from "@/components/shared/icon/Icon"
 import ReservationForm from "@/components/shared/reservationModal/ReservationForm"
 import ReservationReceipt from "@/components/shared/reservationModal/ReservationReceipt"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
@@ -31,7 +33,9 @@ type Step = "reserve" | "receipt"
 // Client-side mutation against the local route handler. We avoid useActionState
 // here because server actions trigger an automatic RSC tree refresh on success,
 // which visibly flashes the work page when the reservation completes.
-async function postReservation(input: CreateReservationInput): Promise<CreateReservationResult> {
+async function postReservation(
+  input: CreateReservationInput
+): Promise<CreateReservationResult> {
   const response = await fetch("/api/reservation", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -90,33 +94,59 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const title =
     step === "receipt"
       ? "Bogen er nu reserveret til dig!"
-      : (manifestation && `Reserver ${getManifestationLabel(manifestation)}`) || ""
+      : (manifestation && `Reservér ${getManifestationLabel(manifestation)}`) || ""
+
+  const isReceiptStep = step === "receipt" && successResult !== null
+  const submitDisabled = isSubmitting || !reservationRecordId
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title={title}>
       <AnimateChangeInHeight>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>
-            {step === "receipt" && successResult ? (
-              <ReservationReceipt
-                manifestation={manifestation}
-                result={successResult}
-                onClose={onClose}
-              />
+            {isReceiptStep && successResult ? (
+              <ReservationReceipt manifestation={manifestation} result={successResult} />
             ) : (
               <ReservationForm
                 wid={wid}
                 work={work}
                 manifestation={manifestation}
                 errorMessage={errorMessage}
-                isSubmitting={isSubmitting || !reservationRecordId}
-                onApprove={handleApprove}
-                onCancel={onClose}
               />
             )}
           </div>
         )}
       </AnimateChangeInHeight>
+
+      <ResponsiveDialog.Actions>
+        {isReceiptStep ? (
+          <Button theme="primary" size="lg" onClick={onClose}>
+            OK
+          </Button>
+        ) : (
+          <>
+            <Button
+              theme="primary"
+              size="lg"
+              data-cy={cyKeys["approve-reservation-button"]}
+              onClick={handleApprove}
+              disabled={submitDisabled}>
+              {isSubmitting ? (
+                <Icon
+                  name="go-spinner"
+                  ariaLabel="Indlæser"
+                  className="animate-spin-reverse h-[24px] w-[24px]"
+                />
+              ) : (
+                "Godkend reservation"
+              )}
+            </Button>
+            <Button size="lg" onClick={onClose} disabled={isSubmitting}>
+              Annuller
+            </Button>
+          </>
+        )}
+      </ResponsiveDialog.Actions>
     </ResponsiveDialog>
   )
 }

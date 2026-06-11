@@ -7,11 +7,8 @@ import {
   getManifestationMaterialTypeIcon,
   isPhysicalMaterialType,
 } from "@/components/pages/workPageLayout/helper"
-import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import Icon from "@/components/shared/icon/Icon"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
-import { cyKeys } from "@/cypress/support/constants"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { getFaustIdsFromManifestations } from "@/lib/helpers/ids"
 
@@ -23,20 +20,9 @@ type ReservationFormProps = {
   work: Work
   manifestation: Manifestation
   errorMessage?: string
-  isSubmitting: boolean
-  onApprove: () => void
-  onCancel: () => void
 }
 
-const ReservationForm = ({
-  wid,
-  work,
-  manifestation,
-  errorMessage,
-  isSubmitting,
-  onApprove,
-  onCancel,
-}: ReservationFormProps) => {
+const ReservationForm = ({ wid, work, manifestation, errorMessage }: ReservationFormProps) => {
   const physicalManifestations =
     work?.manifestations?.all.filter(m =>
       isPhysicalMaterialType(m.materialTypes[0]?.materialTypeSpecific.code)
@@ -85,28 +71,6 @@ const ReservationForm = ({
         {errorMessage && (
           <p className="text-typo-body-sm text-center text-red-600">{errorMessage}</p>
         )}
-      </div>
-
-      <div className="flex flex-row items-center justify-center gap-6">
-        <Button
-          theme="primary"
-          size="lg"
-          data-cy={cyKeys["approve-reservation-button"]}
-          onClick={onApprove}
-          disabled={isSubmitting}>
-          {isSubmitting ? (
-            <Icon
-              name="go-spinner"
-              ariaLabel="Indlæser"
-              className="animate-spin-reverse h-[24px] w-[24px]"
-            />
-          ) : (
-            "Godkend reservation"
-          )}
-        </Button>
-        <Button size="lg" onClick={onCancel} disabled={isSubmitting}>
-          Annuller
-        </Button>
       </div>
     </>
   )
