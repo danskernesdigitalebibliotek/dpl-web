@@ -1,3 +1,4 @@
+import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getMaterial from "../factories/fbi/getMaterial"
 import { mockFrontpage } from "../support/mocks"
@@ -35,6 +36,16 @@ const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   // never mount. Any SSESS-prefixed cookie satisfies the check.
   if (type === "adgangsplatformen") {
     cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
+    // The same SSESS cookie makes `userIsLoggedInAtDplCms` return true, which
+    // can lead proxy.ts to call `loadUserToken` between tests. Without a mock
+    // that DPL CMS query falls through to the catch arm and noisily fails,
+    // and the resulting save-session work has been observed to delay the next
+    // page load past Cypress's 15s data-cy timeout. Stub it so the refresh
+    // path completes quickly when triggered.
+    cy.mockServerGraphQLQuery({
+      operationName: "getAdgangsplatformenUserToken",
+      data: getAdgangsplatformenUserToken.build(),
+    })
   }
 }
 
