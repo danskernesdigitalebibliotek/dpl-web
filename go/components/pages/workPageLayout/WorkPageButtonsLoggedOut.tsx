@@ -39,10 +39,10 @@ const WorkPageButtonsLoggedOut = ({
     return (
       <WorkPageButtons>
         <WorkPageButton
-          ariaLabel={`Reservér ${label}`}
+          ariaLabel={`Reserver ${label}`}
           theme="primary"
           onClick={() => open("ReservationLoginModal")}>
-          Reservér {label}
+          Reserver {label}
         </WorkPageButton>
       </WorkPageButtons>
     )

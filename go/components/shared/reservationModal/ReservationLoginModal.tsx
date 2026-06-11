@@ -48,7 +48,7 @@ const ReservationLoginModal = ({ open, onClose, wid, pid }: ReservationLoginModa
           <li>
             For at låne en fysisk bog skal du logge ind med et bibliotekslogin (ikke UNI-login).
           </li>
-          <li>Tryk på reservér bog.</li>
+          <li>Tryk på Reserver bog.</li>
           <li>Du får besked, når bogen kan hentes.</li>
           <li>Hent bogen på dit bibliotek.</li>
         </ol>

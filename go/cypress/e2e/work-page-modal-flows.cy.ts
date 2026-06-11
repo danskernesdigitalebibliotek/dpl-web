@@ -72,7 +72,7 @@ describe("Work page → modal shown for each (material × login state)", () => {
   describe("Logged out", () => {
     it("Physical book → ReservationLoginModal", () => {
       visitWork("BOOK")
-      cy.contains("Reservér bog").click()
+      cy.contains("Reserver bog").click()
       cy.dataCy("reservation-login-modal").should("be.visible")
       cy.url().should("include", "modal=ReservationLoginModal")
     })
@@ -100,7 +100,7 @@ describe("Work page → modal shown for each (material × login state)", () => {
 
     it("Physical book → ReservationUniloginModal (UNI•Login cannot reserve physical)", () => {
       visitWork("BOOK")
-      clickLoggedInButton("Reservér bog")
+      clickLoggedInButton("Reserver bog")
       cy.dataCy("reservation-unilogin-modal").should("be.visible")
       cy.url().should("include", "modal=ReservationUniloginModal")
     })
@@ -128,7 +128,7 @@ describe("Work page → modal shown for each (material × login state)", () => {
 
     it("Physical book → ReservationModal", () => {
       visitWork("BOOK")
-      clickLoggedInButton("Reservér bog")
+      clickLoggedInButton("Reserver bog")
       cy.dataCy("reservation-modal").should("be.visible")
       cy.url().should("include", "modal=ReservationModal")
     })

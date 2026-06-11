@@ -58,11 +58,11 @@ const WorkPageButtonsLoggedIn = ({
     return (
       <WorkPageButtons>
         <WorkPageButton
-          ariaLabel={`Reservér ${label}`}
+          ariaLabel={`Reserver ${label}`}
           theme="primary"
           dataCy={dataCy}
           onClick={() => open(reservationModal)}>
-          Reservér {label}
+          Reserver {label}
         </WorkPageButton>
       </WorkPageButtons>
     )
