@@ -29,6 +29,13 @@ const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   // picker reads `go-session:type` separately, so set it explicitly.
   cy.createGoSession({ type })
   cy.setCookie("go-session:type", type)
+  // The middleware destroys adgangsplatformen sessions that lack a DPL CMS
+  // session cookie (proxy.ts → getDplCmsSessionCookie). Without this the
+  // session is wiped before the work page renders and the LoggedIn buttons
+  // never mount. Any SSESS-prefixed cookie satisfies the check.
+  if (type === "adgangsplatformen") {
+    cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
+  }
 }
 
 // Click a button inside the logged-in WorkPageButtons block. Only LoggedIn
