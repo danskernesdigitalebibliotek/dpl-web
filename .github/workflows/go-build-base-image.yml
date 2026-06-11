@@ -55,4 +55,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
+          build-args: |
+            DPL_VERSION=${{ steps.meta.outputs.version }}
