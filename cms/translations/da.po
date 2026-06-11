@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-05-27 09:27+0200\n"
-"PO-Revision-Date: 2026-05-27 09:27+0200\n"
+"POT-Creation-Date: 2026-06-11 10:20+0200\n"
+"PO-Revision-Date: 2026-06-11 10:20+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7162,9 +7162,6 @@ msgid ""
 msgstr ""
 "Hvor meget tid scheduleren skal bruge på at behandle jobs i sekunder. "
 "Standard er 30"
-
-msgid "Rebuilded successfully."
-msgstr "Genopbygget succesfuldt."
 
 msgid "The ID of the job schedule."
 msgstr "ID'et på jobskemaet."
@@ -15061,42 +15058,14 @@ msgstr ""
 "universaltid (UTC) / Greenwich Mean Time (GMT)."
 
 msgid ""
-"Default timezone: %date_default_timezone (%date_default_code), offset "
-"from UTC/GMT by %date_default_offset hours. This timezone can be <a "
-"href=\"@admin_regional_settings\">changed by admin users</a> with the "
-"appropriate access."
-msgstr ""
-"Standard tidszone: %date_default_timezone (%date_default_code), "
-"forskudt fra UTC/GMT med %date_default_offset timer. Denne tidszone "
-"kan <a href=\"@admin_regional_settings\">ændres af "
-"administratorer</a> med adgang."
-
-msgid ""
-"Local time: %localtime (%daylight_saving). You can change this via "
-"your <a href=\"@account_edit\">user account</a>."
-msgstr ""
-"Lokal tid: %localtime (%daylight_saving). Du kan ændre dette via din "
-"<a href=\"@account_edit\">brugerkonto</a>."
-
-msgid ""
 "Note: The user timezone has not been stored, so defaulting to the "
 "website timezone."
 msgstr ""
 "Bemærk: Brugerens tidszone er ikke gemt, så standardindstillingen er "
 "webstedets tidszone."
 
-msgid ""
-"Your local time is %localtime (%daylight_saving). This is not "
-"configurable by you."
-msgstr ""
-"Din lokale tid er %localtime (%daylight_saving). Dette kan ikke "
-"konfigureres af dig."
-
 msgid "Scheduler Time Check"
 msgstr "Scheduler tidstjek"
-
-msgid "Server time: @utc"
-msgstr "Servertid: @utc"
 
 msgid "The date and time format has been reset."
 msgstr "Dato- og tidsformatet er blevet nulstillet."
@@ -15233,16 +15202,10 @@ msgstr "ikke tilgængeligt"
 msgid "Publishing"
 msgstr "Udgivelse"
 
-msgid "Enable scheduled publishing for %type @plural"
-msgstr "Aktiver planlagt publicering for %type @plural"
-
 msgid "Change %type creation time to match the scheduled publish time"
 msgstr ""
 "Ændr %type oprettelsestidspunkt for at matche det planlagte "
 "offentliggørelsestidspunkt"
-
-msgid "The entity type does not support the change of creation time."
-msgstr "Enhedstypen understøtter ikke ændring af oprettelsestidspunktet."
 
 msgid "Require scheduled publishing"
 msgstr "Planlagt udgivelse skal være påkrævet"
@@ -15256,12 +15219,6 @@ msgstr "Handling der skal tages for udgivelsesdatoer i fortiden"
 msgid "Display an error message - do not allow dates in the past"
 msgstr "Vis en fejlmeddelelse - tillad ikke datoer i fortiden"
 
-msgid "Publish the %type @singular immediately after saving"
-msgstr "Udgiv %type @singular umiddelbart efter at gemme"
-
-msgid "Schedule the %type @singular for publication on the next cron run"
-msgstr "Planlæg %type @singular til publicering ved næste cron-opdatering"
-
 msgid ""
 "Change %type creation time to match the published time, for dates "
 "before the %type was created"
@@ -15269,19 +15226,8 @@ msgstr ""
 "Ændr %type oprettelsestidspunkt for at matche "
 "offentliggørelsestidspunktet, for datoer før %type blev oprettet"
 
-msgid ""
-"The created time will only be altered when the scheduled publishing "
-"time is earlier than the existing creation time"
-msgstr ""
-"Oprettelsestidspunktet vil kun blive ændret, hvis det planlagte "
-"udgivelsestidspunkt er tidligere end det eksisterende "
-"oprettelsestidspunkt"
-
 msgid "Unpublishing"
 msgstr "Afpublicering"
-
-msgid "Enable scheduled unpublishing for %type @plural"
-msgstr "Aktiver planlagt afpublicering for %type @plural"
 
 msgid "Require scheduled unpublishing"
 msgstr "Planlagt afpublicering skal være påkrævet"
@@ -15301,13 +15247,6 @@ msgstr "Vertikal fane"
 msgid "Separate fieldset"
 msgstr "Separat feltgruppe"
 
-msgid ""
-"Use this option to specify how the scheduler fields are displayed when "
-"editing %type @plural"
-msgstr ""
-"Brug denne indstilling til at angive, hvordan planlægningsfelterne "
-"vises under redigering %type @plural"
-
 msgid "Expand fieldset or vertical tab"
 msgstr "Expand fieldset or vertical tab"
 
@@ -15321,11 +15260,6 @@ msgstr "Åbn altid feltgruppen eller den vertikale fane"
 
 msgid "Show message"
 msgstr "Vis besked"
-
-msgid "Show a confirmation message when a scheduled %type @singular is saved"
-msgstr ""
-"Vis en bekræftelsesmeddelelse, når en planlagt %type @singular er "
-"gemt"
 
 msgid "Scheduler settings"
 msgstr "Indstillinger for Scheduler"
@@ -18103,11 +18037,6 @@ msgstr "Søg indhold"
 msgid "Search the website"
 msgstr "Søg på indholdet på hjemmesiden"
 
-msgid "Search button"
-msgstr ""
-"\n"
-"Search button"
-
 msgctxt "dpl_search"
 msgid "Showing web results for \"@input\" (@total_results)"
 msgstr "Viser hjemmesidens indhold for \"@input\" (@total_results)"
@@ -18839,20 +18768,8 @@ msgid "The opacity value."
 msgstr "The opacity value."
 
 msgctxt "Work Page"
-msgid "Listen to @materialType"
-msgstr "Lyt til @materialType"
-
-msgctxt "Work Page"
-msgid "Read @materialType"
-msgstr "Læs @materialType"
-
-msgctxt "Work Page"
 msgid "Try @materialType"
 msgstr "Prøv @materialType"
-
-msgctxt "Work Page"
-msgid "Modal for player"
-msgstr "Modal til afspiller"
 
 msgid "A CQL search string."
 msgstr "En CQL søgestreng."
@@ -21342,5 +21259,116 @@ msgctxt "dpl_campaign"
 msgid ""
 "The title is for naming the content type so editors can locate it in "
 "the content overview. <br/>It is not shown to users."
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Loan details"
+msgstr ""
+
+msgctxt "Player modal"
+msgid "Close"
+msgstr ""
+
+msgctxt "Player modal"
+msgid "Modal for player"
+msgstr ""
+
+msgctxt "Online material"
+msgid "Listen to @materialType"
+msgstr ""
+
+msgctxt "Online material"
+msgid "Read @materialType"
+msgstr ""
+
+msgctxt "Work Page - periodical"
+msgid "Edition"
+msgstr "Nr."
+
+msgid "Rebuilt successfully."
+msgstr ""
+
+msgid ""
+"Site timezone: %date_default_timezone (%date_default_code), offset "
+"from UTC/GMT by %date_default_offset hours. This can be <a "
+"href=\"@admin_regional_settings\">changed by admin users</a> who have "
+"the appropriate access."
+msgstr ""
+
+msgid ""
+"Your local time: %user_date, %user_time %user_timezone "
+"(%daylight_saving). You can change this via your <a "
+"href=\"@account_edit\">user account</a>."
+msgstr ""
+
+msgid ""
+"Your local time: %user_date, %user_time %user_timezone "
+"(%daylight_saving). This is not configurable by you."
+msgstr ""
+
+msgid "Scheduler settings for @label"
+msgstr ""
+
+msgid "Scheduler options for @plural."
+msgstr ""
+
+msgid "Scheduler settings saved."
+msgstr ""
+
+msgid "Server time: %utc"
+msgstr ""
+
+msgid "Timecheck"
+msgstr ""
+
+msgid "Enable scheduled publishing for @items"
+msgstr ""
+
+msgid "The entity type does not support changing the creation time."
+msgstr ""
+
+msgid "Publish the @item immediately after saving"
+msgstr ""
+
+msgid "Schedule the @item for publication on the next cron run"
+msgstr ""
+
+msgid ""
+"The created time is only altered when the scheduled publishing time is "
+"earlier than the existing creation time."
+msgstr ""
+
+msgid "Enable scheduled unpublishing for @items"
+msgstr ""
+
+msgid ""
+"Use this option to specify how the scheduler fields are displayed when "
+"editing @items"
+msgstr ""
+
+msgid "Show a confirmation message when a scheduled @item is saved"
+msgstr ""
+
+msgid "%entity_type @id has been created."
+msgstr ""
+
+msgid "%entity_type @id has been updated."
+msgstr ""
+
+msgid "Scheduler test entity - no bundle"
+msgstr ""
+
+msgid "Scheduler test no bundle entity scheduler plugin"
+msgstr ""
+
+msgid "Provides scheduler support for a no-bundle entity type"
+msgstr ""
+
+msgid "Scheduler No-bundle Test"
+msgstr ""
+
+msgid ""
+"Support module providing a no-bundle entity type and Scheduler plugin "
+"for tests."
 msgstr ""
 
