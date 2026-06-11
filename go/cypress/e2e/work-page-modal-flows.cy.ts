@@ -1,5 +1,5 @@
-import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
+import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import getMaterial from "../factories/fbi/getMaterial"
 import { mockFrontpage } from "../support/mocks"
 
