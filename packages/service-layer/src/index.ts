@@ -1,5 +1,14 @@
 // Domain types — what apps reason about.
-export type { ApiId, Patron, MaterialAvailability, ServiceLayerConfig } from "./types"
+export type {
+  ApiId,
+  Patron,
+  MaterialAvailability,
+  ServiceLayerConfig,
+  CreateReservationInput,
+  CreateReservationResult,
+  CreateReservationSuccess,
+  CreateReservationFailed,
+} from "./types"
 
 // React provider — wraps an app subtree and supplies config to the hooks.
 export { ServiceLayerProvider } from "./context/ServiceLayerContext"
@@ -18,3 +27,4 @@ export { patronQueryKey, materialAvailabilityQueryKey } from "./queryKeys"
 // Imperative fetchers — for non-react-query contexts (e.g. baking patron name into session).
 export { getPatron } from "./patron"
 export { getMaterialAvailability } from "./availability"
+export { createReservation } from "./reservation"

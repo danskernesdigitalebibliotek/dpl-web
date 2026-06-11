@@ -5,6 +5,7 @@ import { createFbsClient } from "./client"
 const baseUrl = "https://fbs.example"
 const patronInfoUrl = `${baseUrl}/external/agencyid/patrons/patronid/v4`
 const holdingsBaseUrl = `${baseUrl}/external/agencyid/catalog/holdingsLogistics/v1`
+const reservationsUrl = `${baseUrl}/external/v1/agencyid/patrons/patronid/reservations/v2`
 
 const mockJsonResponse = (body: unknown, status = 200) =>
   ({
@@ -155,5 +156,96 @@ describe("createFbsClient.getMaterialAvailability", () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ unexpected: "shape" }))
 
     await expect(buildClient().getMaterialAvailability(["12345678"])).rejects.toThrow()
+  })
+})
+
+describe("createFbsClient.createReservation", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  const successResponseBody = {
+    success: true,
+    reservationResults: [
+      {
+        recordId: "12345678",
+        result: "reserved",
+        reservationDetails: {
+          reservationId: 42,
+          pickupBranch: "DK-761500",
+          numberInQueue: 3,
+          state: "reserved",
+          transactionId: "tx-1",
+        },
+      },
+    ],
+  }
+
+  it("POSTs a batch with the given recordId and pickup branch, returning the mapped success", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(successResponseBody))
+
+    const result = await buildClient().createReservation({
+      recordId: "12345678",
+      pickupBranchId: "DK-761500",
+    })
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    const [calledUrl, calledOpts] = vi.mocked(fetch).mock.calls[0]
+    expect(calledUrl).toBe(reservationsUrl)
+    expect(calledOpts).toMatchObject({
+      method: "POST",
+      headers: {
+        authorization: "Bearer abc",
+        "content-type": "application/json",
+      },
+    })
+    expect(JSON.parse(calledOpts!.body as string)).toEqual({
+      reservations: [{ recordId: "12345678", pickupBranch: "DK-761500" }],
+    })
+    expect(result).toEqual({
+      status: "success",
+      recordId: "12345678",
+      reservationId: 42,
+      pickupBranchId: "DK-761500",
+      numberInQueue: 3,
+    })
+  })
+
+  it("omits pickupBranch from the body when no pickupBranchId is supplied", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(successResponseBody))
+
+    await buildClient().createReservation({ recordId: "12345678" })
+
+    const body = JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string)
+    expect(body).toEqual({ reservations: [{ recordId: "12345678" }] })
+  })
+
+  it("throws on a non-2xx response", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
+
+    await expect(
+      buildClient().createReservation({ recordId: "12345678" })
+    ).rejects.toThrow(/401/)
+  })
+
+  it("returns a failed result when FBS reports success=false", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse({
+        success: false,
+        reservationResults: [{ recordId: "12345678", result: "patron_blocked" }],
+      })
+    )
+
+    await expect(
+      buildClient().createReservation({ recordId: "12345678" })
+    ).resolves.toEqual({
+      status: "failed",
+      recordId: "12345678",
+      reason: "patron_blocked",
+    })
   })
 })

@@ -19,3 +19,26 @@ export type MaterialAvailability = {
   totalCopies: number
   reservationCount: number
 }
+
+export type CreateReservationInput = {
+  recordId: string
+  pickupBranchId?: string
+  expiryDate?: string
+}
+
+export type CreateReservationSuccess = {
+  status: "success"
+  recordId: string
+  reservationId: number
+  pickupBranchId: string
+  numberInQueue: number | undefined
+}
+
+// Failed branch is intentionally minimal — error mapping arrives in a later slice.
+export type CreateReservationFailed = {
+  status: "failed"
+  recordId: string
+  reason: string
+}
+
+export type CreateReservationResult = CreateReservationSuccess | CreateReservationFailed
