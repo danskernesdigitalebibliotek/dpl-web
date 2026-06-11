@@ -29,10 +29,7 @@ The hostname of the DPL CMS (Drupal) instance.
 
 In production, set in `lagoon/start.sh` from `LAGOON_DOMAIN`.
 
-The full URL of the DPL CMS GraphQL API endpoint.
-
-- **Runtime** – every GraphQL request to DPL CMS goes through this endpoint (`dpl-cms.fetcher.ts`)
-- **Codegen** – the `codegen:graphql` script introspects this endpoint to generate TypeScript types (`codegen.ts`)
+- **Runtime GraphQL** – `dpl-cms.fetcher.ts` builds `${DPL_CMS_BASE_URL}/graphql` for every GraphQL request the running app makes to DPL CMS. (Codegen reads the SDL committed at `cms/dpl-cms.bnf.graphql` and does not touch this variable.)
 
 In production, set in `lagoon/start.sh` from `LAGOON_ROUTE`.
 
@@ -41,7 +38,7 @@ In production, set in `lagoon/start.sh` from `LAGOON_ROUTE`.
 - **Required:** Yes
 - **Example:** `go_graphql`
 
-Username for Basic Auth against the DPL CMS GraphQL API. Combined with the password below to produce a Base64-encoded `Authorization: Basic` header in `dpl-cms.fetcher.ts`. Also used during codegen schema introspection.
+Username for Basic Auth against the DPL CMS GraphQL API. Combined with the password below to produce a Base64-encoded `Authorization: Basic` header in `dpl-cms.fetcher.ts`. Runtime only — codegen reads the committed SDL at `cms/dpl-cms.bnf.graphql` and needs no credentials.
 
 ### `NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD`
 
@@ -85,20 +82,6 @@ Enables test-specific behaviour:
 
 - **Unilogin OIDC** – allows insecure (non-HTTPS) requests to the identity broker (`uniloginClient.ts`)
 - **SOAP services** – redirects Publizon loan creation and Unilogin institution lookup endpoints to the local mock server (`requests.ts` files)
-
-### `CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI`
-
-- **Required:** No (optional, validated as URL if set)
-- **Example:** `https://fbi-api.dbc.dk/ereolgo/graphql`
-
-The FBI (Fælles Biblioteks Infrastruktur) GraphQL endpoint. Used **only** during code generation (`codegen.ts`) to introspect the FBI schema and generate TypeScript types/hooks.
-
-### `CODEGEN_LIBRARY_TOKEN`
-
-- **Required:** No (optional)
-- **Example:** `XXX`
-
-Bearer token for authenticating with the FBI GraphQL API during codegen. Sent as `Authorization: Bearer` when introspecting the FBI schema.
 
 ## Server-Only Variables
 
@@ -192,7 +175,7 @@ Used by scripts and tooling, not by the running application.
 ### `NODE_TLS_REJECT_UNAUTHORIZED`
 
 - **Values:** `0` to disable TLS verification
-- **Purpose:** Node.js flag used in dev/test scripts (`dev`, `dev:https`, `start:dev`, `codegen:graphql`) to allow HTTPS connections to servers with self-signed certificates (e.g. local DPL CMS on Docker). **Never set in production.**
+- **Purpose:** Node.js flag used in dev/test scripts (`dev`, `dev:https`, `start:dev`) to allow HTTPS connections to servers with self-signed certificates (e.g. local DPL CMS on Docker). **Never set in production.**
 
 ### `DEBUG_MOCK_SERVER`
 

@@ -11,7 +11,7 @@
     "build:dev": "DPL_GO_BASE_URL=http://dpl-cms.local:3000 next build",
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
-    "codegen:graphql": "NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
+    "codegen:graphql": "graphql-codegen --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/* && orval --project publizonAdapter && orval --project publizonLocalAdapter",
     "codegen:pubhub": "rm -rf lib/soap/publizon/v2_7/generated/* && npx tsx ./scripts/wsdl-tsclient/publizon-wsdl-codegen",
     "codegen:unilogin": "rm -rf lib/soap/unilogin/wsiinst-v6/generated/* && npx tsx ./scripts/wsdl-tsclient/unilogin-wsdl-codegen",
@@ -86,7 +86,6 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@0no-co/graphqlsp": "^1.15.4",
     "@chromatic-com/storybook": "^5.2.1",
     "@eslint/js": "^10.0.1",
     "@graphql-codegen/cli": "^6.3.1",

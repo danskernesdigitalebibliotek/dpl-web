@@ -40,6 +40,10 @@ React component library for self-service features.
 
 For developing across CMS, React, and Design System together (building, linking assets, watch mode), see **[Cross-Project Development](./development.md)**.
 
+Shared API contracts (OpenAPI YAML and vendored GraphQL SDL) live at
+the repo root in **[`/schemas`](../schemas/)** — see that directory's
+README for the design rules and the refresh flow.
+
 ---
 
 ## Getting Started

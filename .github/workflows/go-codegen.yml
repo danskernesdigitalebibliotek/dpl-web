@@ -1,0 +1,65 @@
+---
+name: Go / Codegen
+
+on:
+  pull_request:
+    paths:
+      - 'go/**'
+      - 'schemas/openapi/publizon-adapter.yaml'
+      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'cms/dpl-cms.bnf.graphql'
+      - '.github/workflows/go-codegen.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codegen:
+    name: Generated clients
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'go/.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: 'go/yarn.lock'
+
+      - name: Install dependencies
+        working-directory: go
+        run: yarn install --frozen-lockfile
+
+      - name: Codegen - REST services
+        working-directory: go
+        run: task codegen:rest-services
+
+      - name: Codegen - dpl-cms GraphQL
+        working-directory: go
+        run: task codegen:graphql
+
+      - name: Codegen - Publizon
+        working-directory: go
+        run: task codegen:publizon
+
+      - name: Codegen - Pubhub
+        working-directory: go
+        run: task codegen:pubhub
+
+      - name: Codegen - Unilogin
+        working-directory: go
+        run: task codegen:unilogin
+
+      - name: Ensure generated client code has not drifted
+        working-directory: go
+        run: git diff --exit-code

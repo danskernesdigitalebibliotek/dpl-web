@@ -1,13 +1,9 @@
 directive @fallback on ENUM_VALUE
 
-"""Complexity directive to evaluate query complexity """
+"""
+Complexity directive to evaluate query complexity
+"""
 directive @complexity(value: Int!, multipliers: [String!]) on FIELD_DEFINITION
-
-"""Exposes a URL that specifies the behaviour of this scalar."""
-directive @specifiedBy(
-  """The URL that specifies the behaviour of this scalar."""
-  url: String!
-) on SCALAR
 
 type AccessType {
   display: String!
@@ -20,7 +16,12 @@ enum AccessTypeCodeEnum {
   UNKNOWN
 }
 
-union AccessUnion = AccessUrl | Ereol | InterLibraryLoan | InfomediaService | DigitalArticleService
+union AccessUnion =
+  | AccessUrl
+  | Ereol
+  | InterLibraryLoan
+  | InfomediaService
+  | DigitalArticleService
 
 type AccessUrl {
   """
@@ -28,22 +29,34 @@ type AccessUrl {
   """
   origin: String!
 
-  """Description/type of URL"""
+  """
+  Description/type of URL
+  """
   urlText: String
 
-  """The url where manifestation is located"""
+  """
+  The url where manifestation is located
+  """
   url: String!
 
-  """Notes for the resource"""
+  """
+  Notes for the resource
+  """
   note: String
 
-  """If the resource requires login"""
+  """
+  If the resource requires login
+  """
   loginRequired: Boolean!
 
-  """The type of content that can be found at this URL"""
+  """
+  The type of content that can be found at this URL
+  """
   type: AccessUrlTypeEnum
 
-  """Status from linkcheck"""
+  """
+  Status from linkcheck
+  """
   status: LinkStatusEnum!
 }
 
@@ -57,7 +70,9 @@ enum AccessUrlTypeEnum {
 }
 
 type Audience {
-  """Appropriate audience for this manifestation"""
+  """
+  Appropriate audience for this manifestation
+  """
   generalAudience: [String!]!
 
   """
@@ -65,7 +80,9 @@ type Audience {
   """
   ages: [Range!]!
 
-  """Appropriate audience as recommended by the library"""
+  """
+  Appropriate audience as recommended by the library
+  """
   libraryRecommendation: String
 
   """
@@ -73,7 +90,9 @@ type Audience {
   """
   levelForChildren8to12: LevelForAudience
 
-  """Is this material for children or adults"""
+  """
+  Is this material for children or adults
+  """
   childrenOrAdults: [ChildOrAdult!]!
 
   """
@@ -82,7 +101,9 @@ type Audience {
   """
   schoolUse: [SchoolUse!]!
 
-  """Primary target audience for this manifestation"""
+  """
+  Primary target audience for this manifestation
+  """
   primaryTarget: [String!]!
 
   """
@@ -95,21 +116,32 @@ type Audience {
   """
   lix: String
 
-  """Number of players in the game."""
+  """
+  Number of players in the game.
+  """
   players: Players
 
-  """PEGI age rating for games """
-  PEGI: PEGI @deprecated(reason: "Use 'Audience.pegi' instead expires: 01\/06-2025")
+  """
+  PEGI age rating for games
+  """
+  PEGI: PEGI
+    @deprecated(reason: "Use 'Audience.pegi' instead expires: 01/06-2025")
 
-  """PEGI age rating for games """
+  """
+  PEGI age rating for games
+  """
   pegi: PEGI
 
-  """Media council age recommendation"""
+  """
+  Media council age recommendation
+  """
   mediaCouncilAgeRestriction: MediaCouncilAgeRestriction
 }
 
 type CatalogueCodes {
-  """CatalogueCodes from the national registers"""
+  """
+  CatalogueCodes from the national registers
+  """
   nationalBibliography: [String!]!
 
   """
@@ -119,22 +151,34 @@ type CatalogueCodes {
 }
 
 type CataloguedPublicationStatus {
-  """The code representing the catalogued publication status."""
+  """
+  The code representing the catalogued publication status.
+  """
   code: CataloguedPublicationStatusEnum!
 
-  """The display text corresponding to the publication status code."""
+  """
+  The display text corresponding to the publication status code.
+  """
   display: String!
 }
 
-"""Represents the publication status of a catalogued manifestation."""
+"""
+Represents the publication status of a catalogued manifestation.
+"""
 enum CataloguedPublicationStatusEnum {
-  """New title"""
+  """
+  New title
+  """
   NT
 
-  """New edition"""
+  """
+  New edition
+  """
   NU
 
-  """New print run"""
+  """
+  New print run
+  """
   OP
 }
 
@@ -149,13 +193,19 @@ enum ChildOrAdultCodeEnum {
 }
 
 type Classification {
-  """The classification code"""
+  """
+  The classification code
+  """
   code: String!
 
-  """The dk5Heading for the classification (DK5 only)"""
+  """
+  The dk5Heading for the classification (DK5 only)
+  """
   dk5Heading: String
 
-  """Descriptive text for the classification code (DK5 only)"""
+  """
+  Descriptive text for the classification code (DK5 only)
+  """
   display: String!
 
   """
@@ -163,24 +213,32 @@ type Classification {
   """
   entryType: EntryTypeEnum
 
-  """Name of the classification system"""
+  """
+  Name of the classification system
+  """
   system: String!
 }
 
-"""The complete facet in response"""
+"""
+The complete facet in response
+"""
 type ComplexSearchFacetResponse {
   name: String
   values: [ComplexSearchFacetValue!]
 }
 
-"""A Facet value in response"""
+"""
+A Facet value in response
+"""
 type ComplexSearchFacetValue {
   key: String!
   score: Int!
   traceId: String
 }
 
-"""The supported facet fields"""
+"""
+The supported facet fields
+"""
 enum ComplexSearchFacetsEnum {
   AGES
   CATALOGUECODE
@@ -225,94 +283,146 @@ enum ComplexSearchFacetsEnum {
   CHAMBERMUSICTYPE
 }
 
-"""The facets to ask for"""
+"""
+The facets to ask for
+"""
 input ComplexSearchFacetsInput {
   facetLimit: Int!
   facets: [ComplexSearchFacetsEnum!]
 }
 
-"""Search Filters"""
+"""
+Search Filters
+"""
 input ComplexSearchFiltersInput {
-  """BranchId. """
+  """
+  BranchId.
+  """
   branchId: [String!]
 
-  """Overall location in library (eg. Voksne)."""
+  """
+  Overall location in library (eg. Voksne).
+  """
   department: [String!]
 
-  """Where is the book physically located  (eg. skønlitteratur)."""
+  """
+  Where is the book physically located  (eg. skønlitteratur).
+  """
   location: [String!]
 
-  """More specific location (eg. Fantasy)."""
+  """
+  More specific location (eg. Fantasy).
+  """
   sublocation: [String!]
 
-  """Onloan or OnShelf."""
+  """
+  Onloan or OnShelf.
+  """
   status: [HoldingsStatusEnum!]
 
-  """Id of agency."""
+  """
+  Id of agency.
+  """
   agencyId: [String!]
 
-  """Name of the branch."""
+  """
+  Name of the branch.
+  """
   branch: [String!]
 
-  """Local id of the item."""
+  """
+  Local id of the item.
+  """
   itemId: [String!]
 
-  """Id of publishing issue."""
+  """
+  Id of publishing issue.
+  """
   issueId: [String!]
 
-  """Date of first accession"""
+  """
+  Date of first accession
+  """
   firstAccessionDate: String
 }
 
 type ComplexSearchIndex {
-  """The name of a Complex Search index"""
+  """
+  The name of a Complex Search index
+  """
   index: String!
 
-  """Can be used for searching"""
+  """
+  Can be used for searching
+  """
   search: Boolean!
 
-  """Can be used for faceting"""
+  """
+  Can be used for faceting
+  """
   facet: Boolean!
 
-  """Can be used for sorting"""
+  """
+  Can be used for sorting
+  """
   sort: Boolean!
 
-  """Aliases for this index"""
+  """
+  Aliases for this index
+  """
   aliases: [String!]
 }
 
-"""The search response"""
+"""
+The search response
+"""
 type ComplexSearchResponse {
-  """Total number of works found. May be used for pagination."""
+  """
+  Total number of works found. May be used for pagination.
+  """
   hitcount: Int!
 
-  """Facets for this response"""
+  """
+  Facets for this response
+  """
   facets: [ComplexSearchFacetResponse!]
 
   """
   The works matching the given search query. Use offset and limit for pagination.
   """
-  works(offset: Int!, limit: PaginationLimitScalar!, sort: [SortInput!]): [Work!]!
+  works(
+    offset: Int!
+    limit: PaginationLimitScalar!
+    sort: [SortInput!]
+  ): [Work!]!
 
-  """Error message, for instance if CQL is invalid"""
+  """
+  Error message, for instance if CQL is invalid
+  """
   errorMessage: String
 }
 
 type ComplexSearchSuggestion {
   """
-  A unique identifier for tracking user interactions with this suggestion. 
+  A unique identifier for tracking user interactions with this suggestion.
   It is generated in the response and should be included in subsequent
   API calls when this suggestion is selected.
   """
   traceId: String!
 
-  """The type of suggestion"""
+  """
+  The type of suggestion
+  """
   type: String!
 
-  """The suggested term which can be searched for"""
+  """
+  The suggested term which can be searched for
+  """
   term: String!
 
-  """A work related to the term"""
+  """
+  A work related to the term
+  """
   work: Work
 }
 
@@ -342,7 +452,9 @@ type Complexity {
 }
 
 type ContentEntry {
-  """Top level title of the entry"""
+  """
+  Top level title of the entry
+  """
   title: ContentEntryTitle!
 
   """
@@ -358,7 +470,9 @@ type ContentEntry {
   """
   contributors: [String!]
 
-  """Playing time for music tracks, quoted from the record"""
+  """
+  Playing time for music tracks, quoted from the record
+  """
   playingTime: String
 
   """
@@ -368,20 +482,28 @@ type ContentEntry {
 }
 
 type ContentEntryCreators {
-  """Details about a person, name, role etc."""
+  """
+  Details about a person, name, role etc.
+  """
   persons: [Person!]
 
-  """Details about a corporation or conference, name, role, etc."""
+  """
+  Details about a corporation or conference, name, role, etc.
+  """
   corporations: [Corporation!]
 }
 
 type ContentEntryTitle {
-  """Title of the content entry"""
+  """
+  Title of the content entry
+  """
   display: String!
 }
 
 type ContentSublevel {
-  """Title subordinate to the title in the entry's top level"""
+  """
+  Title subordinate to the title in the entry's top level
+  """
   title: ContentEntryTitle!
 
   """
@@ -391,7 +513,9 @@ type ContentSublevel {
   """
   contributors: [String!]
 
-  """Playing time for music tracks"""
+  """
+  Playing time for music tracks
+  """
   playingTime: String
 
   """
@@ -401,7 +525,9 @@ type ContentSublevel {
 }
 
 type ContentSublevelLast {
-  """Title subordinate to the title in the entry's top level"""
+  """
+  Title subordinate to the title in the entry's top level
+  """
   title: ContentEntryTitle!
 
   """
@@ -411,12 +537,16 @@ type ContentSublevelLast {
   """
   contributors: [String!]
 
-  """Playing time for music tracks"""
+  """
+  Playing time for music tracks
+  """
   playingTime: String
 }
 
 type ContentsEntity {
-  """Heading for the contents of this entity"""
+  """
+  Heading for the contents of this entity
+  """
   heading: String!
 
   """
@@ -446,7 +576,9 @@ enum ContentsEntityEnum {
 }
 
 input CopyRequestInput {
-  """The pid of an article or periodica"""
+  """
+  The pid of an article or periodica
+  """
   pid: String!
   userName: String
   userMail: String
@@ -484,16 +616,24 @@ enum CopyRequestStatusEnum {
 }
 
 type Corporation implements SubjectInterface & CreatorInterface {
-  """The full corporation or conference name"""
+  """
+  The full corporation or conference name
+  """
   display: String!
 
-  """The full corporation or conference name to sort after"""
+  """
+  The full corporation or conference name to sort after
+  """
   nameSort: String!
 
-  """Main corporation or conference"""
+  """
+  Main corporation or conference
+  """
   main: String
 
-  """Sub corporation or conference/meeting"""
+  """
+  Sub corporation or conference/meeting
+  """
   sub: String
 
   """
@@ -501,10 +641,14 @@ type Corporation implements SubjectInterface & CreatorInterface {
   """
   location: String
 
-  """Year of the conference"""
+  """
+  Year of the conference
+  """
   year: String
 
-  """Number of the conference"""
+  """
+  Number of the conference
+  """
   number: String
 
   """
@@ -520,10 +664,14 @@ type Corporation implements SubjectInterface & CreatorInterface {
   language: Language
   local: Boolean
 
-  """VIAF identifier of the creator"""
+  """
+  VIAF identifier of the creator
+  """
   viafid: String
 
-  """Additional data from Wikidata"""
+  """
+  Additional data from Wikidata
+  """
   wikidata(language: LanguageCodeEnum): Wikidata
 }
 
@@ -549,22 +697,32 @@ type CoverDetails {
 }
 
 type CreatorImage {
-  """Url to creator image. Width 800px"""
+  """
+  Url to creator image. Width 800px
+  """
   small: String
 
-  """Url to creator image. Width 1200px"""
+  """
+  Url to creator image. Width 1200px
+  """
   medium: String
 
-  """Url to creator image. Width 1800px"""
+  """
+  Url to creator image. Width 1800px
+  """
   large: String
   attributionText: String
 }
 
 interface CreatorInterface {
-  """Name of the creator"""
+  """
+  Name of the creator
+  """
   display: String!
 
-  """Name of the creator which can be used to sort after """
+  """
+  Name of the creator which can be used to sort after
+  """
   nameSort: String!
 
   """
@@ -572,18 +730,26 @@ interface CreatorInterface {
   """
   roles: [Role!]!
 
-  """VIAF identifier of the creator"""
+  """
+  VIAF identifier of the creator
+  """
   viafid: String
 }
 
 type DK5MainEntry {
-  """Displayable main DK5 classification"""
+  """
+  Displayable main DK5 classification
+  """
   display: String!
 
-  """Main DK5 classification code"""
+  """
+  Main DK5 classification code
+  """
   code: String!
 
-  """The dk5Heading for the classification"""
+  """
+  The dk5Heading for the classification
+  """
   dk5Heading: String!
 }
 
@@ -606,16 +772,20 @@ type Depth {
 
 type DidYouMean {
   """
-  A unique identifier for tracking user interactions with this didYouMean value. 
+  A unique identifier for tracking user interactions with this didYouMean value.
   It is generated in the response and should be included in subsequent
   API calls when this manifestation is selected.
   """
   traceId: String!
 
-  """An alternative query"""
+  """
+  An alternative query
+  """
   query: String!
 
-  """A probability score between 0-1 indicating how relevant the query is"""
+  """
+  A probability score between 0-1 indicating how relevant the query is
+  """
   score: Float!
 }
 
@@ -633,16 +803,24 @@ type Edition {
   """
   summary: String!
 
-  """A note about this specific edition"""
+  """
+  A note about this specific edition
+  """
   note: String
 
-  """The edition number and name"""
+  """
+  The edition number and name
+  """
   edition: String
 
-  """Quotation of contributor statements related to the edition"""
+  """
+  Quotation of contributor statements related to the edition
+  """
   contributors: [String!]!
 
-  """A year as displayable text and as number"""
+  """
+  A year as displayable text and as number
+  """
   publicationYear: PublicationYear
 }
 
@@ -671,7 +849,9 @@ type Ereol {
   """
   origin: String!
 
-  """The url where manifestation is located"""
+  """
+  The url where manifestation is located
+  """
   url: String!
 
   """
@@ -679,11 +859,15 @@ type Ereol {
   """
   canAlwaysBeLoaned: Boolean!
 
-  """Notes for the resource"""
+  """
+  Notes for the resource
+  """
   note: String
 }
 
-"""The supported facet fields"""
+"""
+The supported facet fields
+"""
 enum FacetFieldEnum {
   WORKTYPES
   MAINLANGUAGES
@@ -707,31 +891,47 @@ enum FacetFieldEnum {
   GAMEPLATFORM
 }
 
-"""The result for a specific facet"""
+"""
+The result for a specific facet
+"""
 type FacetResult {
-  """The name of the facet."""
+  """
+  The name of the facet.
+  """
   name: String!
 
-  """The enum type of the facet."""
+  """
+  The enum type of the facet.
+  """
   type: FacetFieldEnum!
 
-  """The values of thie facet result"""
+  """
+  The values of thie facet result
+  """
   values(limit: Int!): [FacetValue!]!
 }
 
-"""A facet value consists of a term and a count."""
+"""
+A facet value consists of a term and a count.
+"""
 type FacetValue {
-  """Use the key when applying filters"""
+  """
+  Use the key when applying filters
+  """
   key: String!
 
-  """A value of a facet field"""
+  """
+  A value of a facet field
+  """
   term: String!
 
-  """A score indicating relevance"""
+  """
+  A score indicating relevance
+  """
   score: Int
 
   """
-  A unique identifier for tracking user interactions with this facet value. 
+  A unique identifier for tracking user interactions with this facet value.
   It is generated in the response and should be included in subsequent
   API calls when this manifestation is selected.
   """
@@ -745,7 +945,9 @@ type FictionNonfiction {
   """
   display: String!
 
-  """Binary code fiction/nonfiction used for filtering"""
+  """
+  Binary code fiction/nonfiction used for filtering
+  """
   code: FictionNonfictionCodeEnum!
 }
 
@@ -761,7 +963,9 @@ type GeneralMaterialType {
   """
   code: GeneralMaterialTypeCodeEnum!
 
-  """Ths string to display"""
+  """
+  Ths string to display
+  """
   display: String!
 }
 
@@ -784,36 +988,56 @@ enum GeneralMaterialTypeCodeEnum {
 }
 
 enum HoldingsStatusEnum {
-  """Holding is physically available at the branch"""
+  """
+  Holding is physically available at the branch
+  """
   ONSHELF
 
-  """Holding is on loan"""
+  """
+  Holding is on loan
+  """
   ONLOAN
 }
 
 type HostPublication {
-  """Publication this manifestation can be found in"""
+  """
+  Publication this manifestation can be found in
+  """
   title: String!
 
-  """Creator of the host publication if host publication is book"""
+  """
+  Creator of the host publication if host publication is book
+  """
   creator: String
 
-  """Edition statement for the host publication"""
+  """
+  Edition statement for the host publication
+  """
   edition: String
 
-  """ISSN of the publication this manifestation can be found in"""
+  """
+  ISSN of the publication this manifestation can be found in
+  """
   issn: String
 
-  """ISBN of the publication this manifestation can be found in"""
+  """
+  ISBN of the publication this manifestation can be found in
+  """
   isbn: String
 
-  """The issue of the publication this manifestation can be found in"""
+  """
+  The issue of the publication this manifestation can be found in
+  """
   issue: String
 
-  """Notes about the publication where this manifestation can be found in"""
+  """
+  Notes about the publication where this manifestation can be found in
+  """
   notes: [String!]
 
-  """The pages in the publication where this manifestation can be found in"""
+  """
+  The pages in the publication where this manifestation can be found in
+  """
   pages: String
 
   """
@@ -821,7 +1045,9 @@ type HostPublication {
   """
   publisher: String
 
-  """Series of the publication this manifestation can be found in"""
+  """
+  Series of the publication this manifestation can be found in
+  """
   series: Series
 
   """
@@ -829,15 +1055,21 @@ type HostPublication {
   """
   year: PublicationYear
 
-  """All details about the publication this manifestation can be found in"""
+  """
+  All details about the publication this manifestation can be found in
+  """
   summary: String!
 }
 
 type Identifier {
-  """The type of identifier"""
+  """
+  The type of identifier
+  """
   type: IdentifierTypeEnum!
 
-  """The actual identifier"""
+  """
+  The actual identifier
+  """
   value: String!
 }
 
@@ -883,7 +1115,9 @@ enum InfomediaErrorEnum {
 }
 
 type InfomediaResponse {
-  """Infomedia error"""
+  """
+  Infomedia error
+  """
   error: InfomediaErrorEnum
   article: InfomediaArticle
 }
@@ -896,10 +1130,14 @@ type InfomediaService {
 }
 
 type InterLibraryLoan {
-  """Is true when manifestation can be borrowed via ill"""
+  """
+  Is true when manifestation can be borrowed via ill
+  """
   loanIsPossible: Boolean!
 
-  """Is newly added - nice to know if there are no localizations"""
+  """
+  Is newly added - nice to know if there are no localizations
+  """
   accessNew: Boolean!
 }
 
@@ -909,16 +1147,24 @@ input KidRecommenderTagsInput {
 }
 
 type Language {
-  """Language as displayable text"""
+  """
+  Language as displayable text
+  """
   display: String!
 
-  """ISO639-2 language code"""
+  """
+  ISO639-2 language code
+  """
   isoCode: String!
 
-  """ISO639-1 language code (2 letters)"""
+  """
+  ISO639-1 language code (2 letters)
+  """
   iso639Set1: String!
 
-  """ISO639-2 language code (3 letters)"""
+  """
+  ISO639-2 language code (3 letters)
+  """
   iso639Set2: String!
 }
 
@@ -934,10 +1180,14 @@ type Languages {
   """
   notes: [String!]
 
-  """Main language of this manifestation"""
+  """
+  Main language of this manifestation
+  """
   main: [Language!]
 
-  """Original language of this manifestation"""
+  """
+  Original language of this manifestation
+  """
   original: [Language!]
 
   """
@@ -950,7 +1200,9 @@ type Languages {
   """
   spoken: [Language!]
 
-  """Subtitles in this manifestation"""
+  """
+  Subtitles in this manifestation
+  """
   subtitles: [Language!]
 
   """
@@ -961,16 +1213,24 @@ type Languages {
 }
 
 type LevelForAudience {
-  """Level expressed as integer on a scale from 1 to 5"""
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
   difficulty: Int
 
-  """Level expressed as integer on a scale from 1 to 5"""
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
   illustrationsLevel: Int
 
-  """Level expressed as integer on a scale from 1 to 5"""
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
   length: Int
 
-  """Level expressed as integer on a scale from 1 to 5"""
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
   realisticVsFictional: Int
 }
 
@@ -1005,25 +1265,35 @@ type LocalSuggestResponse {
 
 type Manifestation {
   """
-  A unique identifier for tracking user interactions with this manifestation. 
+  A unique identifier for tracking user interactions with this manifestation.
   It is generated in the response and should be included in subsequent
   API calls when this manifestation is selected.
   """
   traceId: String!
 
-  """Unique identification of the manifestation e.g 870970-basis:54029519"""
+  """
+  Unique identification of the manifestation e.g 870970-basis:54029519
+  """
   pid: String!
 
-  """Different kinds of titles for this work"""
+  """
+  Different kinds of titles for this work
+  """
   titles: ManifestationTitles!
 
-  """Abstract of the entity"""
+  """
+  Abstract of the entity
+  """
   abstract: [String!]!
 
-  """Access type of this manifestation"""
+  """
+  Access type of this manifestation
+  """
   accessTypes: [AccessType!]!
 
-  """Different options to access manifestation"""
+  """
+  Different options to access manifestation
+  """
   access: [AccessUnion!]!
 
   """
@@ -1041,7 +1311,9 @@ type Manifestation {
   """
   classifications: [Classification!]!
 
-  """Contributors to the manifestation, actors, illustrators etc"""
+  """
+  Contributors to the manifestation, actors, illustrators etc
+  """
   contributors: [CreatorInterface!]!
 
   """
@@ -1049,7 +1321,9 @@ type Manifestation {
   """
   contributorsFromDescription: [String!]!
 
-  """Cover for this manifestation"""
+  """
+  Cover for this manifestation
+  """
   cover: Cover!
 
   """
@@ -1062,13 +1336,19 @@ type Manifestation {
   """
   creatorsFromDescription: [String!]!
 
-  """The year for the publication of the first edition for this work """
+  """
+  The year for the publication of the first edition for this work
+  """
   dateFirstEdition: PublicationYear
 
-  """Edition details for this manifestation"""
+  """
+  Edition details for this manifestation
+  """
   edition: Edition
 
-  """Details about the latest printing of this manifestation"""
+  """
+  Details about the latest printing of this manifestation
+  """
   latestPrinting: Printing
 
   """
@@ -1078,22 +1358,33 @@ type Manifestation {
   """
   fictionNonfiction: FictionNonfiction
 
-  """The genre, (literary) form, type etc. of this manifestation"""
+  """
+  The genre, (literary) form, type etc. of this manifestation
+  """
   genreAndForm: [String!]!
 
-  """Details about the host publications of this manifestation"""
+  """
+  Details about the host publications of this manifestation
+  """
   hostPublication: HostPublication
 
-  """Identifiers for this manifestation - often used for search indexes"""
+  """
+  Identifiers for this manifestation - often used for search indexes
+  """
   identifiers: [Identifier!]!
 
-  """Languages in this manifestation"""
+  """
+  Languages in this manifestation
+  """
   languages: Languages
 
   """
   Tracks on music album, sheet music content, or articles/short stories etc. in this manifestation
   """
-  manifestationParts: ManifestationParts @deprecated(reason: "Use 'Manifestation.contents' instead expires: 01\/11-2025")
+  manifestationParts: ManifestationParts
+    @deprecated(
+      reason: "Use 'Manifestation.contents' instead expires: 01/11-2025"
+    )
 
   """
   Content title entries with possible creators, contributors and playing time
@@ -1101,13 +1392,19 @@ type Manifestation {
   """
   contents: [ContentsEntity!]
 
-  """The type of material of the manifestation based on bibliotek.dk types"""
+  """
+  The type of material of the manifestation based on bibliotek.dk types
+  """
   materialTypes: [MaterialType!]!
 
-  """Notes about the manifestation"""
+  """
+  Notes about the manifestation
+  """
   notes: [Note!]!
 
-  """The work that this manifestation is part of"""
+  """
+  The work that this manifestation is part of
+  """
   ownerWork: Work!
 
   """
@@ -1120,7 +1417,9 @@ type Manifestation {
   """
   physicalDescription: PhysicalUnitDescription
 
-  """Publisher of this manifestion"""
+  """
+  Publisher of this manifestion
+  """
   publisher: [String!]!
 
   """
@@ -1128,10 +1427,14 @@ type Manifestation {
   """
   recordCreationDate: String!
 
-  """Series for this manifestation"""
+  """
+  Series for this manifestation
+  """
   series: [Series!]!
 
-  """Universes for this manifestation"""
+  """
+  Universes for this manifestation
+  """
   universes: [Universe!]!
 
   """
@@ -1145,7 +1448,9 @@ type Manifestation {
   """
   source: [String!]!
 
-  """Subjects for this manifestation"""
+  """
+  Subjects for this manifestation
+  """
   subjects: SubjectContainer!
 
   """
@@ -1156,44 +1461,71 @@ type Manifestation {
   """
   Quotation of the manifestation's table of contents or a similar content list
   """
-  tableOfContents: TableOfContent @deprecated(reason: "Use 'Manifestation.contents' instead expires: 01\/11-2025")
+  tableOfContents: TableOfContent
+    @deprecated(
+      reason: "Use 'Manifestation.contents' instead expires: 01/11-2025"
+    )
 
-  """Worktypes for this manifestations work"""
+  """
+  Worktypes for this manifestations work
+  """
   workTypes: [WorkTypeEnum!]!
 
-  """The year this manifestation was originally published or produced"""
+  """
+  The year this manifestation was originally published or produced
+  """
   workYear: PublicationYear
 
-  """id of the manifestaion unit"""
+  """
+  id of the manifestaion unit
+  """
   unit: Unit
 
-  """Identification of the local id of this manifestation"""
+  """
+  Identification of the local id of this manifestation
+  """
   localId: String
 
-  """Material that can be identified as sheet music"""
+  """
+  Material that can be identified as sheet music
+  """
   sheetMusicCategories: SheetMusicCategory
 
-  """The publication status of a catalogued manifestation."""
+  """
+  The publication status of a catalogued manifestation.
+  """
   cataloguedPublicationStatus: CataloguedPublicationStatus
 
-  """Relations to other manifestations"""
+  """
+  Relations to other manifestations
+  """
   relations: Relations!
 
-  """Some review data, if this manifestation is a review"""
+  """
+  Some review data, if this manifestation is a review
+  """
   review: ManifestationReview
 }
 
 type ManifestationPart {
-  """The title of the entry (music track or title of a literary analysis)"""
+  """
+  The title of the entry (music track or title of a literary analysis)
+  """
   title: String!
 
-  """The creator of the music track or literary analysis"""
+  """
+  The creator of the music track or literary analysis
+  """
   creators: [CreatorInterface!]!
 
-  """Classification of this entry (music track or literary analysis)"""
+  """
+  Classification of this entry (music track or literary analysis)
+  """
   classifications: [Classification!]!
 
-  """Subjects of this entry (music track or literary analysis)"""
+  """
+  Subjects of this entry (music track or literary analysis)
+  """
   subjects: [SubjectInterface!]
 
   """
@@ -1202,11 +1534,13 @@ type ManifestationPart {
   """
   creatorsFromDescription: [String!]!
 
-  """Contributors from description - additional contributor to this entry"""
+  """
+  Contributors from description - additional contributor to this entry
+  """
   contributorsFromDescription: [String!]!
 
   """
-  The playing time for this specific part (i.e. the duration of a music track) 
+  The playing time for this specific part (i.e. the duration of a music track)
   """
   playingTime: String
 }
@@ -1219,10 +1553,14 @@ enum ManifestationPartTypeEnum {
 }
 
 type ManifestationParts {
-  """Heading for the music content note"""
+  """
+  Heading for the music content note
+  """
   heading: String
 
-  """The creator and title etc of the individual parts"""
+  """
+  The creator and title etc of the individual parts
+  """
   parts: [ManifestationPart!]!
 
   """
@@ -1237,13 +1575,19 @@ type ManifestationReview {
 }
 
 type ManifestationTitles {
-  """The main title(s) of the work"""
+  """
+  The main title(s) of the work
+  """
   main: [String!]!
 
-  """The full title(s) of the manifestation including subtitles etc"""
+  """
+  The full title(s) of the manifestation including subtitles etc
+  """
   full: [String!]!
 
-  """The sorted title of the entity"""
+  """
+  The sorted title of the entity
+  """
   sort: String!
 
   """
@@ -1268,7 +1612,9 @@ type ManifestationTitles {
   """
   parallel: [String!]!
 
-  """The standard title of the entity, used for music and movies"""
+  """
+  The standard title of the entity, used for music and movies
+  """
   standard: String
 
   """
@@ -1277,10 +1623,14 @@ type ManifestationTitles {
   """
   titlePlusLanguage: String
 
-  """Danish translation of the main title"""
+  """
+  Danish translation of the main title
+  """
   translated: [String!]
 
-  """detailed title for tv series """
+  """
+  detailed title for tv series
+  """
   tvSeries: TvSeries
 }
 
@@ -1294,7 +1644,7 @@ type Manifestations {
 
   """
   A list of manifestations that matched the search query.
-  
+
   This field is populated only when a work is retrieved within a search context.
   Each entry is a SearchHit object representing a manifestation that matched the search criteria.
   Only one manifestation per unit is returned.
@@ -1303,18 +1653,26 @@ type Manifestations {
 }
 
 type MaterialType {
-  """jed 1.1 - the general materialtype"""
+  """
+  jed 1.1 - the general materialtype
+  """
   materialTypeGeneral: GeneralMaterialType!
 
-  """jed 1.1 - the specific materialtType"""
+  """
+  jed 1.1 - the specific materialtType
+  """
   materialTypeSpecific: SpecificMaterialType!
 }
 
 type MediaCouncilAgeRestriction {
-  """Minimum age"""
+  """
+  Minimum age
+  """
   minimumAge: Int
 
-  """Display string for minimum age"""
+  """
+  Display string for minimum age
+  """
   display: String
 }
 
@@ -1334,20 +1692,55 @@ input MoodKidsRecommendFiltersInput {
 }
 
 type MoodQueries {
-  moodSearch(q: String!, field: MoodSearchFieldValuesEnum, offset: Int, limit: Int): MoodSearchResponse!
-  moodSearchKids(q: String!, field: MoodSearchFieldValuesEnum, offset: Int, limit: Int): MoodSearchKidsResponse!
+  moodSearch(
+    q: String!
+    field: MoodSearchFieldValuesEnum
+    offset: Int
+    limit: Int
+  ): MoodSearchResponse!
+  moodSearchKids(
+    q: String!
+    field: MoodSearchFieldValuesEnum
+    offset: Int
+    limit: Int
+  ): MoodSearchKidsResponse!
   moodSuggest(q: String!, limit: Int): MoodSuggestResponse!
-  moodTagRecommend(tags: [String!]!, limit: Int, plus: [String!], minus: [String!], hasCover: Boolean): [MoodTagRecommendResponse]!
-  moodWorkRecommend(likes: [String!]!, dislikes: [String!], limit: Int, offset: Int, maxAuthorRecommendations: Int, threshold: Float, hasCover: Boolean): [MoodTagRecommendResponse]!
-  moodRecommendKids(tags: [KidRecommenderTagsInput!], work: String, filters: MoodKidsRecommendFiltersInput, dislikes: [String!], offset: Int, limit: Int): MoodRecommendKidsResponse!
+  moodTagRecommend(
+    tags: [String!]!
+    limit: Int
+    plus: [String!]
+    minus: [String!]
+    hasCover: Boolean
+  ): [MoodTagRecommendResponse]!
+  moodWorkRecommend(
+    likes: [String!]!
+    dislikes: [String!]
+    limit: Int
+    offset: Int
+    maxAuthorRecommendations: Int
+    threshold: Float
+    hasCover: Boolean
+  ): [MoodTagRecommendResponse]!
+  moodRecommendKids(
+    tags: [KidRecommenderTagsInput!]
+    work: String
+    filters: MoodKidsRecommendFiltersInput
+    dislikes: [String!]
+    offset: Int
+    limit: Int
+  ): MoodRecommendKidsResponse!
 }
 
-"""The reponse from moodrecommenkids"""
+"""
+The reponse from moodrecommenkids
+"""
 type MoodRecommendKidsResponse {
   works(offset: Int!, limit: PaginationLimitScalar!): [Work!]!
 }
 
-"""Supported fields for moodsearch request"""
+"""
+Supported fields for moodsearch request
+"""
 enum MoodSearchFieldValuesEnum {
   ALL
   TITLE
@@ -1356,12 +1749,16 @@ enum MoodSearchFieldValuesEnum {
   ALLTAGS
 }
 
-"""The reponse from moodsearchkids"""
+"""
+The reponse from moodsearchkids
+"""
 type MoodSearchKidsResponse {
   works(offset: Int!, limit: PaginationLimitScalar!): [Work!]!
 }
 
-"""The response from moodsearch"""
+"""
+The response from moodsearch
+"""
 type MoodSearchResponse {
   """
   The works matching the given search query. Use offset and limit for pagination.
@@ -1369,39 +1766,55 @@ type MoodSearchResponse {
   works(offset: Int!, limit: PaginationLimitScalar!): [Work!]!
 }
 
-"""Type of moodSuggest response"""
+"""
+Type of moodSuggest response
+"""
 enum MoodSuggestEnum {
   TITLE
   CREATOR
   TAG
 }
 
-"""MoodSuggest item"""
+"""
+MoodSuggest item
+"""
 type MoodSuggestItem {
   """
-  A unique identifier for tracking user interactions with this suggestion. 
+  A unique identifier for tracking user interactions with this suggestion.
   It is generated in the response and should be included in subsequent
   API calls when this manifestation is selected.
   """
   traceId: String!
 
-  """Suggestion"""
+  """
+  Suggestion
+  """
   term: String!
 
-  """The type of suggestion title/creator/tag"""
+  """
+  The type of suggestion title/creator/tag
+  """
   type: MoodSuggestEnum!
 
-  """A work associated with the suggestion"""
+  """
+  A work associated with the suggestion
+  """
   work: Work
 }
 
-"""The response type for moodSuggest"""
+"""
+The response type for moodSuggest
+"""
 type MoodSuggestResponse {
-  """Response is an array of MoodSuggestResponse"""
+  """
+  Response is an array of MoodSuggestResponse
+  """
   response: [MoodSuggestItem!]!
 }
 
-"""Response type for moodTagRecommend"""
+"""
+Response type for moodTagRecommend
+"""
 type MoodTagRecommendResponse {
   work: Work!
   similarity: Float
@@ -1420,17 +1833,23 @@ type NarrativeTechnique implements SubjectInterface {
 
 type Note {
   """
-  The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. 
+  The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.
   """
   type: NoteTypeEnum!
 
-  """Heading before note"""
+  """
+  Heading before note
+  """
   heading: String
 
-  """The actual notes"""
+  """
+  The actual notes
+  """
   display: [String!]!
 
-  """A link and possible link text"""
+  """
+  A link and possible link text
+  """
   urls: [AccessUrl]
 }
 
@@ -1456,39 +1875,61 @@ enum NoteTypeEnum {
 }
 
 type PEGI {
-  """Minimum age to play the game. PEGI rating"""
+  """
+  Minimum age to play the game. PEGI rating
+  """
   minimumAge: Int
 
-  """Display string for PEGI minimum age"""
+  """
+  Display string for PEGI minimum age
+  """
   display: String
 }
 
-"""An integer in the range from 1 to 100"""
+"""
+An integer in the range from 1 to 100
+"""
 scalar PaginationLimitScalar
 
 type Person implements SubjectInterface & CreatorInterface {
-  """The person's whole name in normal order"""
+  """
+  The person's whole name in normal order
+  """
   display: String!
 
-  """The person's full name inverted"""
+  """
+  The person's full name inverted
+  """
   nameSort: String!
 
-  """First name of the person"""
+  """
+  First name of the person
+  """
   firstName: String
 
-  """Last name of the person"""
+  """
+  Last name of the person
+  """
   lastName: String
 
-  """Birth year of the person"""
+  """
+  Birth year of the person
+  """
   birthYear: String
 
-  """A roman numeral added to the person, like Christian IV"""
+  """
+  A roman numeral added to the person, like Christian IV
+  """
   romanNumeral: String
 
-  """Added information about the person, like Henri, konge af Frankrig"""
+  """
+  Added information about the person, like Henri, konge af Frankrig
+  """
   attributeToName: String
 
-  """Creator aliases, creators behind used pseudonym"""
+  """
+  Creator aliases, creators behind used pseudonym
+  """
   aliases: [Person!]!
 
   """
@@ -1499,10 +1940,14 @@ type Person implements SubjectInterface & CreatorInterface {
   language: Language
   local: Boolean
 
-  """VIAF identifier of the creator"""
+  """
+  VIAF identifier of the creator
+  """
   viafid: String
 
-  """Additional metadata for the creator"""
+  """
+  Additional metadata for the creator
+  """
   wikidata(language: LanguageCodeEnum): Wikidata
 }
 
@@ -1512,24 +1957,36 @@ type PhysicalUnitDescription {
   """
   summaryFull: String
 
-  """List of units contained within the material"""
+  """
+  List of units contained within the material
+  """
   materialUnits: [UnitDescription!]
 
-  """Number of pages of the manifestation as number"""
+  """
+  Number of pages of the manifestation as number
+  """
   numberOfPages: Int
 
-  """Material that comes with the manifestation (bilag)"""
+  """
+  Material that comes with the manifestation (bilag)
+  """
   accompanyingMaterial: String
 }
 
 type Players {
-  """Number of players interval begin."""
+  """
+  Number of players interval begin.
+  """
   begin: Int
 
-  """Number of players interval end."""
+  """
+  Number of players interval end.
+  """
   end: Int
 
-  """Display name for the number of players."""
+  """
+  Display name for the number of players.
+  """
   display: String
 }
 
@@ -1539,7 +1996,9 @@ type Printing {
   """
   summary: String!
 
-  """The printing number and name"""
+  """
+  The printing number and name
+  """
   printing: String!
 
   """
@@ -1547,7 +2006,9 @@ type Printing {
   """
   publisher: String
 
-  """A year as displayable text and as number"""
+  """
+  A year as displayable text and as number
+  """
   publicationYear: PublicationYear
 }
 
@@ -1559,62 +2020,117 @@ type PublicationYear {
 }
 
 type Query {
-  """All indexes in complex search"""
+  """
+  All indexes in complex search
+  """
   complexSearchIndexes: [ComplexSearchIndex!]
   debug: Debug
   mood: MoodQueries!
 
-  """Access to various types of recommendations."""
+  """
+  Access to various types of recommendations.
+  """
   recommendations: Recommendations!
   manifestation(pid: String, faust: String): Manifestation
   manifestations(faust: [String!], pid: [String!]): [Manifestation]!
-  work(id: String, faust: String, pid: String, oclc: String, language: LanguageCodeEnum): Work
-  works(id: [String!], faust: [String!], pid: [String!], oclc: [String!], language: LanguageCodeEnum): [Work]!
-  search(q: SearchQueryInput!, filters: SearchFiltersInput, search_exact: Boolean): SearchResponse!
-  complexSearch(cql: String!, filters: ComplexSearchFiltersInput, facets: ComplexSearchFacetsInput): ComplexSearchResponse!
+  work(
+    id: String
+    faust: String
+    pid: String
+    oclc: String
+    language: LanguageCodeEnum
+  ): Work
+  works(
+    id: [String!]
+    faust: [String!]
+    pid: [String!]
+    oclc: [String!]
+    language: LanguageCodeEnum
+  ): [Work]!
+  search(
+    q: SearchQueryInput!
+    filters: SearchFiltersInput
+    search_exact: Boolean
+  ): SearchResponse!
+  complexSearch(
+    cql: String!
+    filters: ComplexSearchFiltersInput
+    facets: ComplexSearchFacetsInput
+  ): ComplexSearchResponse!
   linkCheck: LinkCheckService!
   localSuggest(
-    """The query to get suggestions from"""
+    """
+    The query to get suggestions from
+    """
     q: String!
 
-    """suggest type to include in result"""
+    """
+    suggest type to include in result
+    """
     suggestType: [SuggestionTypeEnum!]
 
-    """Number of items to return"""
+    """
+    Number of items to return
+    """
     limit: Int
 
-    """Id of branch to filter by"""
+    """
+    Id of branch to filter by
+    """
     branchId: String
   ): LocalSuggestResponse!
   complexSuggest(
-    """The query to get suggestions for"""
+    """
+    The query to get suggestions for
+    """
     q: String!
 
-    """the type of index to get suggestions from"""
+    """
+    the type of index to get suggestions from
+    """
     type: ComplexSuggestionTypeEnum!
   ): ComplexSuggestResponse!
   suggest(
     workType: WorkTypeEnum
 
-    """The query to get suggestions from"""
+    """
+    The query to get suggestions from
+    """
     q: String!
 
-    """suggest type to include in result"""
+    """
+    suggest type to include in result
+    """
     suggestType: SuggestionTypeEnum
 
-    """suggest types to include in result"""
+    """
+    suggest types to include in result
+    """
     suggestTypes: [SuggestionTypeEnum!]
 
-    """Number of items to return"""
+    """
+    Number of items to return
+    """
     limit: Int
   ): SuggestResponse!
 
-  """Get recommendations"""
-  recommend(id: String, pid: String, faust: String, limit: Int, branchId: String): RecommendationResponse!
+  """
+  Get recommendations
+  """
+  recommend(
+    id: String
+    pid: String
+    faust: String
+    limit: Int
+    branchId: String
+  ): RecommendationResponse!
   infomedia(id: String!): InfomediaResponse!
   refWorks(pids: [String!]!): String!
   ris(pids: [String!]!): String!
-  relatedSubjects(q: [String!]!, limit: Int): [String!] @deprecated(reason: "Use 'Recommendations.subjects' instead expires: 01\/03-2025")
+  relatedSubjects(q: [String!]!, limit: Int): [String!]
+    @deprecated(
+      reason: "Use 'Recommendations.subjects' instead expires: 01/03-2025"
+    )
   series(seriesId: String!): Series
   universe(key: String, universeId: String): Universe
 }
@@ -1626,13 +2142,19 @@ type Range {
 }
 
 type Recommendation {
-  """The recommended work"""
+  """
+  The recommended work
+  """
   work: Work!
 
-  """The recommended manifestation"""
+  """
+  The recommended manifestation
+  """
   manifestation: Manifestation!
 
-  """Info on how this recommendation was generated"""
+  """
+  Info on how this recommendation was generated
+  """
   reader: [String!]!
 }
 
@@ -1640,7 +2162,9 @@ type RecommendationResponse {
   result: [Recommendation!]!
 }
 
-"""Get different kinds of recommendations"""
+"""
+Get different kinds of recommendations
+"""
 type Recommendations {
   """
   Retrieve subject-based recommendations based on a list of query strings and an optional limit.
@@ -1656,25 +2180,39 @@ type RelatedPublication {
   """
   heading: String!
 
-  """Title of the related periodical/journal"""
+  """
+  Title of the related periodical/journal
+  """
   title: [String!]!
 
-  """Faust of the related publication"""
+  """
+  Faust of the related publication
+  """
   faust: String
 
-  """ISSN of the related periodical/journal/publication"""
+  """
+  ISSN of the related periodical/journal/publication
+  """
   issn: String
 
-  """ISBN of the related publication"""
+  """
+  ISBN of the related publication
+  """
   isbn: String
 
-  """Alle urls of the related publication"""
+  """
+  Alle urls of the related publication
+  """
   urls: [String]!
 
-  """Note regarding the URL of the related publication"""
+  """
+  Note regarding the URL of the related publication
+  """
   urlText: String
 
-  """The first URL of the urls in related publications"""
+  """
+  The first URL of the urls in related publications
+  """
   url: String
 }
 
@@ -1689,13 +2227,19 @@ type Relations {
   """
   continues: [Manifestation!]!
 
-  """The contents of this articles is also discussed in these articles"""
+  """
+  The contents of this articles is also discussed in these articles
+  """
   discussedIn: [Manifestation!]!
 
-  """The article discusses the content of these articles"""
+  """
+  The article discusses the content of these articles
+  """
   discusses: [Manifestation!]!
 
-  """This story is adapted in this or these movie(s)"""
+  """
+  This story is adapted in this or these movie(s)
+  """
   hasAdaptation: [Manifestation!]!
 
   """
@@ -1713,7 +2257,9 @@ type Relations {
   """
   hasDescriptionFromPublisher: [Manifestation!]!
 
-  """This movie is based on this manuscript"""
+  """
+  This movie is based on this manuscript
+  """
   hasManuscript: [Manifestation!]!
 
   """
@@ -1722,16 +2268,24 @@ type Relations {
   """
   hasReusedReview: [Manifestation!]!
 
-  """This manifestation has these reviews"""
+  """
+  This manifestation has these reviews
+  """
   hasReview: [Manifestation!]!
 
-  """This movie or game has this sound track"""
+  """
+  This movie or game has this sound track
+  """
   hasSoundtrack: [Manifestation!]!
 
-  """This movie is based on this or these books"""
+  """
+  This movie is based on this or these books
+  """
   isAdaptationOf: [Manifestation!]!
 
-  """This manifestation is an analysis of these manifestations"""
+  """
+  This manifestation is an analysis of these manifestations
+  """
   isAnalysisOf: [Manifestation!]!
 
   """
@@ -1739,7 +2293,9 @@ type Relations {
   """
   isDescriptionFromPublisherOf: [Manifestation!]!
 
-  """This movie is based on this manuscript"""
+  """
+  This movie is based on this manuscript
+  """
   isManuscriptOf: [Manifestation!]!
 
   """
@@ -1748,22 +2304,34 @@ type Relations {
   """
   isReusedReviewOf: [Manifestation!]!
 
-  """This manifestation is a review of these manifestations"""
+  """
+  This manifestation is a review of these manifestations
+  """
   isReviewOf: [Manifestation!]!
 
-  """This sound track for a game is related to these games"""
+  """
+  This sound track for a game is related to these games
+  """
   isSoundtrackOfGame: [Manifestation!]!
 
-  """This sound track for a movie is related to these movies"""
+  """
+  This sound track for a movie is related to these movies
+  """
   isSoundtrackOfMovie: [Manifestation!]!
 
-  """This album has these tracks"""
+  """
+  This album has these tracks
+  """
   hasTrack: [Manifestation!]!
 
-  """This music track is part of these albums"""
+  """
+  This music track is part of these albums
+  """
   isPartOfAlbum: [Manifestation!]!
 
-  """This article or book part can be found in these manifestations"""
+  """
+  This article or book part can be found in these manifestations
+  """
   isPartOfManifestation: [Manifestation!]!
 }
 
@@ -1773,7 +2341,7 @@ type ReviewElement {
   """
   This is a paragraph containing markup where links to manifestations
   can be inserted. For instance '"Axel Steens nye job minder om [870970-basis:20307021] fra ...'.
-  Relevant manifestations are located in the manifestations field. 
+  Relevant manifestations are located in the manifestations field.
   """
   contentSubstitute: String
   heading: String
@@ -1818,7 +2386,9 @@ enum SchoolUseCodeEnum {
   FOR_TEACHER
 }
 
-"""Search Filters"""
+"""
+Search Filters
+"""
 input SearchFiltersInput {
   accessTypes: [String!]
   childrenOrAdults: [String!]
@@ -1852,11 +2422,15 @@ input SearchFiltersInput {
 A search hit that encapsulates a matched manifestation from a search query.
 """
 type SearchHit {
-  """The manifestation that was matched during the search."""
+  """
+  The manifestation that was matched during the search.
+  """
   match: Manifestation
 }
 
-"""The supported fields to query"""
+"""
+The supported fields to query
+"""
 input SearchQueryInput {
   """
   Search for title, creator, subject or a combination.
@@ -1864,19 +2438,29 @@ input SearchQueryInput {
   """
   all: String
 
-  """Search for creator"""
+  """
+  Search for creator
+  """
   creator: String
 
-  """Search for specific subject"""
+  """
+  Search for specific subject
+  """
   subject: String
 
-  """Search for specific title"""
+  """
+  Search for specific title
+  """
   title: String
 }
 
-"""The simple search response"""
+"""
+The simple search response
+"""
 type SearchResponse {
-  """Total number of works found. May be used for pagination."""
+  """
+  Total number of works found. May be used for pagination.
+  """
   hitcount: Int!
 
   """
@@ -1890,18 +2474,26 @@ type SearchResponse {
   """
   facets(facets: [FacetFieldEnum!]!): [FacetResult!]!
 
-  """Will return the facets that best match the input query and filters"""
+  """
+  Will return the facets that best match the input query and filters
+  """
   intelligentFacets(limit: Int): [FacetResult!]!
 
-  """A list of alternative search queries"""
+  """
+  A list of alternative search queries
+  """
   didYouMean(limit: Int): [DidYouMean!]!
 }
 
 type SerieWork {
-  """The number of work in the series as a number (as text)"""
+  """
+  The number of work in the series as a number (as text)
+  """
   numberInSeries: String
 
-  """Work of a serieWork"""
+  """
+  Work of a serieWork
+  """
   work: Work!
 
   """
@@ -1917,25 +2509,39 @@ type SerieWork {
 }
 
 type Series {
-  """The number of members in the series"""
+  """
+  The number of members in the series
+  """
   hitcount: Int!
 
-  """The title of the series"""
+  """
+  The title of the series
+  """
   title: String!
 
-  """Identifier for the series"""
+  """
+  Identifier for the series
+  """
   seriesId: String
 
-  """Traceid for tracking"""
+  """
+  Traceid for tracking
+  """
   traceId: String!
 
-  """Additional information """
+  """
+  Additional information
+  """
   identifyingAddition: String
 
-  """Description of the series"""
+  """
+  Description of the series
+  """
   description: String
 
-  """A alternative title to the main 'title' of the series"""
+  """
+  A alternative title to the main 'title' of the series
+  """
   alternativeTitles: [String!]!
 
   """
@@ -1943,7 +2549,9 @@ type Series {
   """
   parallelTitles: [String!]!
 
-  """The number in the series as text qoutation"""
+  """
+  The number in the series as text qoutation
+  """
   numberInSeries: String
 
   """
@@ -1957,16 +2565,24 @@ type Series {
   """
   readThisWhenever: Boolean
 
-  """Whether this is a popular series or general series"""
+  """
+  Whether this is a popular series or general series
+  """
   isPopular: Boolean
 
-  """WorkTypes for the series"""
+  """
+  WorkTypes for the series
+  """
   workTypes: [String!]!
 
-  """MainLanguages of the series"""
+  """
+  MainLanguages of the series
+  """
   mainLanguages: [String!]!
 
-  """Members of this serie. """
+  """
+  Members of this serie.
+  """
   members(limit: Int, offset: Int): [SerieWork!]!
 }
 
@@ -1978,24 +2594,36 @@ type Setting implements SubjectInterface {
 }
 
 type SheetMusicCategory {
-  """The types of instruments material covers"""
+  """
+  The types of instruments material covers
+  """
   instruments: [String!]!
 
-  """I this node for exercises"""
+  """
+  I this node for exercises
+  """
   forMusicalExercise: Boolean
 
-  """The types of choir material covers"""
+  """
+  The types of choir material covers
+  """
   choirTypes: [String!]!
 
-  """The types of chamber music material covers"""
+  """
+  The types of chamber music material covers
+  """
   chamberMusicTypes: [String!]!
 
-  """The types of orchestra material covers"""
+  """
+  The types of orchestra material covers
+  """
   orchestraTypes: [String!]!
 }
 
 type Shelfmark {
-  """A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935"""
+  """
+  A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935
+  """
   postfix: String
 
   """
@@ -2015,18 +2643,26 @@ enum SortOrderEnum {
 }
 
 type SpecificMaterialType {
-  """code for materialType"""
+  """
+  code for materialType
+  """
   code: String!
 
-  """Ths string to display"""
+  """
+  Ths string to display
+  """
   display: String!
 }
 
 type SubjectContainer {
-  """All subjects"""
+  """
+  All subjects
+  """
   all: [SubjectInterface!]!
 
-  """Only DBC verified subjects"""
+  """
+  Only DBC verified subjects
+  """
   dbcVerified: [SubjectInterface!]!
 }
 
@@ -2038,18 +2674,24 @@ interface SubjectInterface {
   """
   type: SubjectTypeEnum!
 
-  """Language of the subject - contains display and isoCode """
+  """
+  Language of the subject - contains display and isoCode
+  """
   language: Language
   local: Boolean
 }
 
-"""Details about a single subject recommendation."""
+"""
+Details about a single subject recommendation.
+"""
 type SubjectRecommendation {
-  """The recommended subject."""
+  """
+  The recommended subject.
+  """
   subject: String!
 
   """
-  A unique identifier for tracking user interactions with this subject recommendation. 
+  A unique identifier for tracking user interactions with this subject recommendation.
   It is generated in the response and should be included in subsequent
   API calls when this suggestion is selected.
   """
@@ -2087,7 +2729,9 @@ enum SubjectTypeEnum {
   MOOD
   MOOD_CHILDREN
 
-  """Subject describing selected topics for children, and a rating."""
+  """
+  Subject describing selected topics for children, and a rating.
+  """
   TOPIC_CHILDREN
   PERSPECTIVE
   STYLE
@@ -2102,7 +2746,9 @@ type SubjectWithRating implements SubjectInterface {
   language: Language
   local: Boolean
 
-  """Expressed as integer on a scale from 1 to 5"""
+  """
+  Expressed as integer on a scale from 1 to 5
+  """
   rating: Int
 }
 
@@ -2112,19 +2758,25 @@ type SuggestResponse {
 
 type Suggestion {
   """
-  A unique identifier for tracking user interactions with this suggestion. 
+  A unique identifier for tracking user interactions with this suggestion.
   It is generated in the response and should be included in subsequent
   API calls when this suggestion is selected.
   """
   traceId: String!
 
-  """The type of suggestion: creator, subject or title"""
+  """
+  The type of suggestion: creator, subject or title
+  """
   type: SuggestionTypeEnum!
 
-  """The suggested term which can be searched for"""
+  """
+  The suggested term which can be searched for
+  """
   term: String!
 
-  """A work related to the term"""
+  """
+  A work related to the term
+  """
   work: Work
 }
 
@@ -2155,30 +2807,46 @@ type Translation {
   """
   plural: String!
 
-  """Translation in singular form, e.g. forfatter, komponist, instruktør"""
+  """
+  Translation in singular form, e.g. forfatter, komponist, instruktør
+  """
   singular: String!
 }
 
 type TvSeries {
-  """Title of the tv serie"""
+  """
+  Title of the tv serie
+  """
   title: String
 
-  """Dansih translated title of the tv serie"""
+  """
+  Dansih translated title of the tv serie
+  """
   danishLaunchTitle: String
 
-  """Detailed information about the episode"""
+  """
+  Detailed information about the episode
+  """
   episode: TvSeriesDetails
 
-  """Episode titles"""
+  """
+  Episode titles
+  """
   episodeTitles: [String!]
 
-  """Detailed information about the disc"""
+  """
+  Detailed information about the disc
+  """
   disc: TvSeriesDetails
 
-  """Detailed information about the season"""
+  """
+  Detailed information about the season
+  """
   season: TvSeriesDetails
 
-  """Detailed information about the volume"""
+  """
+  Detailed information about the volume
+  """
   volume: TvSeriesDetails
 }
 
@@ -2198,7 +2866,9 @@ type UnitDescription {
   """
   summary: String!
 
-  """Technical formats, e.g. Playstation 4, blu-ray"""
+  """
+  Technical formats, e.g. Playstation 4, blu-ray
+  """
   numberAndType: String
 
   """
@@ -2211,18 +2881,26 @@ type UnitDescription {
   """
   additionalDescription: String
 
-  """Size of the material unit"""
+  """
+  Size of the material unit
+  """
   size: String
 
-  """Technical formats, e.g. Playstation 4, blu-ray"""
+  """
+  Technical formats, e.g. Playstation 4, blu-ray
+  """
   technicalInformation: String
 }
 
 type Universe {
-  """A key that identifies a universe."""
+  """
+  A key that identifies a universe.
+  """
   key: String
 
-  """An id that identifies a universe."""
+  """
+  An id that identifies a universe.
+  """
   universeId: String
 
   """
@@ -2237,23 +2915,39 @@ type Universe {
   """
   title: String!
 
-  """A alternative title to the main 'title' of the universe"""
+  """
+  A alternative title to the main 'title' of the universe
+  """
   alternativeTitles: [String!]
 
-  """Description of the universe"""
+  """
+  Description of the universe
+  """
   description: String
 
-  """All series within the universe"""
+  """
+  All series within the universe
+  """
   series(limit: Int, offset: Int, workType: WorkTypeEnum): [Series!]!
 
-  """All works within the universe but not in any series"""
+  """
+  All works within the universe but not in any series
+  """
   works(limit: Int, offset: Int, workType: WorkTypeEnum): [Work!]!
 
-  """work types that are in this universe"""
+  """
+  work types that are in this universe
+  """
   workTypes: [WorkTypeEnum!]!
 
-  """both series and works in a list"""
-  content(limit: Int, offset: Int, workType: WorkTypeEnum): UniverseContentResult!
+  """
+  both series and works in a list
+  """
+  content(
+    limit: Int
+    offset: Int
+    workType: WorkTypeEnum
+  ): UniverseContentResult!
 }
 
 type UniverseContentResult {
@@ -2274,7 +2968,9 @@ type Wikidata {
 }
 
 type Work {
-  """Relations to other manifestations"""
+  """
+  Relations to other manifestations
+  """
   relations: Relations!
 
   """
@@ -2290,13 +2986,19 @@ type Work {
   workId: String!
   titles: WorkTitles!
 
-  """Abstract of the entity"""
+  """
+  Abstract of the entity
+  """
   abstract: [String!]
 
-  """Creators"""
+  """
+  Creators
+  """
   creators: [CreatorInterface!]!
 
-  """DK5 main entry for this work"""
+  """
+  DK5 main entry for this work
+  """
   dk5MainEntry: DK5MainEntry
 
   """
@@ -2305,13 +3007,19 @@ type Work {
   """
   fictionNonfiction: FictionNonfiction
 
-  """Date of latest publication"""
+  """
+  Date of latest publication
+  """
   latestPublicationDate: String
 
-  """The type of material of the manifestation based on bibliotek.dk types"""
+  """
+  The type of material of the manifestation based on bibliotek.dk types
+  """
   materialTypes: [MaterialType!]!
 
-  """Series for this work"""
+  """
+  Series for this work
+  """
   series: [Series!]!
 
   """
@@ -2319,36 +3027,56 @@ type Work {
   """
   universes: [Universe!]!
 
-  """Subjects for this work"""
+  """
+  Subjects for this work
+  """
   subjects: SubjectContainer!
 
-  """The genre, (literary) form, type etc. of this work"""
+  """
+  The genre, (literary) form, type etc. of this work
+  """
   genreAndForm: [String!]!
 
-  """Worktypes for this work - 'none' replaced by 'other'"""
+  """
+  Worktypes for this work - 'none' replaced by 'other'
+  """
   workTypes: [WorkTypeEnum!]!
 
-  """The year this work was originally published or produced"""
+  """
+  The year this work was originally published or produced
+  """
   workYear: PublicationYear
 
-  """The main language(s) of the work's content"""
+  """
+  The main language(s) of the work's content
+  """
   mainLanguages: [Language!]!
 
-  """Details about the manifestations of this work"""
+  """
+  Details about the manifestations of this work
+  """
   manifestations: Manifestations!
 }
 
 type WorkTitles {
-  """The main title(s) of the work"""
+  """
+  The main title(s) of the work
+  """
   main: [String!]!
 
-  """The full title(s) of the work including subtitles etc"""
+  """
+  The full title(s) of the work including subtitles etc
+  """
   full: [String!]!
 
-  """Titles (in other languages) parallel to the main 'title' of the work"""
+  """
+  Titles (in other languages) parallel to the main 'title' of the work
+  """
   parallel: [String!]!
 
-  """The sorted title of the entity"""
+  """
+  The sorted title of the entity
+  """
   sort: String!
 
   """
@@ -2357,7 +3085,9 @@ type WorkTitles {
   """
   original: [String!]
 
-  """The standard title of the entity, used for music and movies"""
+  """
+  The standard title of the entity, used for music and movies
+  """
   standard: String
 
   """
@@ -2366,10 +3096,14 @@ type WorkTitles {
   """
   titlePlusLanguage: String
 
-  """Danish translation of the main title"""
+  """
+  Danish translation of the main title
+  """
   translated: [String!]
 
-  """detailed title for tv series """
+  """
+  detailed title for tv series
+  """
   tvSeries: TvSeries
 }
 

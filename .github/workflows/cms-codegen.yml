@@ -1,0 +1,67 @@
+---
+name: CMS / Codegen
+
+on:
+  pull_request:
+    paths:
+      - 'cms/**'
+      - 'schemas/openapi/fbs-adapter.yaml'
+      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - '.github/workflows/cms-codegen.yml'
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codegen:
+    name: Generated clients
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # BNF enabled + clean install covers all four cms codegens.
+      - name: Enable BNF for site
+        run: task dev:bnf:enable
+
+      - name: Setup site
+        run: task ci:reset:clean
+
+      # openapi.json drift is its own concern (have we re-exported the spec
+      # after CMS changes?); the codegen drift is checked by the final
+      # git diff.
+      - name: Validate OpenAPI specification
+        run: task ci:openapi:validate
+
+      - name: Refresh OpenAPI specification
+        run: task ci:openapi:download
+
+      - name: Ensure OpenAPI specification has not drifted
+        run: git diff --ignore-space-at-eol --exit-code openapi.json
+
+      - name: Codegen - FBS PHP client
+        run: task dev:codegen:fbs
+
+      - name: Codegen - dpl-cms PHP client
+        run: task dev:codegen:dpl-cms
+
+      - name: Codegen - BNF GraphQL
+        run: task dev:codegen:bnf-graphql
+
+      - name: Codegen - FBI GraphQL
+        run: task dev:codegen:fbi-graphql
+
+      - name: Ensure generated client code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code
