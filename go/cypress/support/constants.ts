@@ -39,6 +39,9 @@ export const cyKeys = {
   "approve-loan-button": "approve-loan-button",
   "reserve-button": "reserve-button",
   "approve-reservation-button": "approve-reservation-button",
+  "reservation-receipt": "reservation-receipt",
+  "reservation-receipt-queue-position": "reservation-receipt-queue-position",
+  "reservation-receipt-pickup-branch": "reservation-receipt-pickup-branch",
 } as const
 
 export type CyKey = keyof typeof cyKeys
