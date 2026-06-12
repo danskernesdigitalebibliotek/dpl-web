@@ -121,8 +121,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               BLÅ
             </Badge>
           ) : null}
-          <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
-            {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
+          <h1
+            lang={languageCode}
+            className="text-typo-heading-3 text-balance break-words hyphens-auto lg:mt-0">
+            {selectedManifestation?.titles?.full || ""}
           </h1>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
