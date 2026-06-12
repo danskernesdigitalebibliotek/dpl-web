@@ -83,12 +83,13 @@ const LoanMaterialModal = ({
             <ManifestationCover
               cover={manifestation.cover}
               iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              className="rounded-base flex items-center justify-center"
+              className="rounded-base flex aspect-1/1 h-36 w-full flex-col items-center
+                justify-center lg:aspect-4/5"
             />
 
             <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
               <p className="text-typo-subtitle-md text-center">
-                {`Er du sikker på, at du vil låne materialet${` (${getManifestationLabel(manifestation)})?` || "?"}`}
+                {`Er du sikker på, at du vil låne${` ${getManifestationLabel(manifestation, "definite")}?`}`}
               </p>
               {isAlreadyLoaned && (
                 <AlertBox

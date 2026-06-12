@@ -100,16 +100,14 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
     }
   }, [reservationRecordId, isSubmitting, patron?.preferredPickupBranchId, queryClient, wid])
 
-  const title =
-    step === "receipt"
-      ? "Bogen er nu reserveret til dig!"
-      : (manifestation && `Reservér ${getManifestationLabel(manifestation)}`) || ""
-
   const isReceiptStep = step === "receipt" && successResult !== null
   const submitDisabled = isSubmitting || !reservationRecordId
 
   return (
-    <ResponsiveDialog open={open} onClose={onClose} title={title}>
+    <ResponsiveDialog
+      open={open}
+      onClose={onClose}
+      title={(manifestation && `Reserver ${getManifestationLabel(manifestation)}`) || ""}>
       <AnimateChangeInHeight>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>

@@ -202,12 +202,23 @@ export const getEbookReadUrl = (workId: string, orderId: string) =>
     queryParams: { orderId },
   })
 
+export type ManifestationLabelForm = "indefinite" | "definite"
+
 export const getManifestationLabel = (
-  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
+  form: ManifestationLabelForm = "indefinite"
 ): string => {
   const code = manifestation.materialTypes[0]?.materialTypeSpecific.code
-  return translateMaterialTypesStringForRender(code)?.toLowerCase() || ""
+  const label = translateMaterialTypesStringForRender(code)?.toLowerCase() || ""
+  if (!label || form === "indefinite") return label
+  return toDanishDefinite(label)
 }
+
+// Danish definite-article suffix for common-gender material labels.
+// Words ending in unstressed -e take -n (tegneserie → tegneserien);
+// everything else takes -en (bog → bogen, podcast → podcasten).
+const toDanishDefinite = (label: string): string =>
+  label.endsWith("e") ? `${label}n` : `${label}en`
 
 export const getManifestationByMaterialType = (
   work: WorkFullWorkPageFragment,
