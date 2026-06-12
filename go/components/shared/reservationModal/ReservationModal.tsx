@@ -5,12 +5,16 @@ import {
   type CreateReservationResult,
   type CreateReservationSuccess,
   materialAvailabilityQueryKey,
+  useMaterialAvailability,
   usePatron,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useState } from "react"
 
-import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
+import {
+  getManifestationLabel,
+  isPhysicalMaterialType,
+} from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
@@ -19,7 +23,7 @@ import ReservationReceipt from "@/components/shared/reservationModal/Reservation
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { pidToFaust } from "@/lib/helpers/ids"
+import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 type ReservationModalProps = {
   open: boolean
@@ -33,9 +37,7 @@ type Step = "reserve" | "receipt"
 // Client-side mutation against the local route handler. We avoid useActionState
 // here because server actions trigger an automatic RSC tree refresh on success,
 // which visibly flashes the work page when the reservation completes.
-async function postReservation(
-  input: CreateReservationInput
-): Promise<CreateReservationResult> {
+async function postReservation(input: CreateReservationInput): Promise<CreateReservationResult> {
   const response = await fetch("/api/reservation", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -58,7 +60,14 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const manifestation = work?.manifestations?.all?.find(m => m.pid === pid)
   const reservationRecordId = manifestation ? pidToFaust(manifestation.pid) : null
 
+  const physicalManifestations =
+    work?.manifestations?.all.filter(m =>
+      isPhysicalMaterialType(m.materialTypes[0]?.materialTypeSpecific.code)
+    ) ?? []
+  const recordIds = getFaustIdsFromManifestations(physicalManifestations)
+
   const { data: patron } = usePatron()
+  const { data: availability } = useMaterialAvailability(wid, recordIds)
 
   const queryClient = useQueryClient()
   const [step, setStep] = useState<Step>("reserve")
@@ -108,9 +117,9 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
               <ReservationReceipt manifestation={manifestation} result={successResult} />
             ) : (
               <ReservationForm
-                wid={wid}
                 work={work}
                 manifestation={manifestation}
+                patron={patron}
                 errorMessage={errorMessage}
               />
             )}
@@ -124,7 +133,16 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
             OK
           </Button>
         ) : (
-          <>
+          <div className="flex w-full flex-col items-center gap-3">
+            {availability && (
+              <p className="text-typo-caption text-foreground/70 max-w-prose text-center">
+                Biblioteket har {availability.totalCopies}{" "}
+                {availability.totalCopies === 1 ? "eksemplar" : "eksemplarer"}. Der er{" "}
+                {availability.reservationCount}{" "}
+                {availability.reservationCount === 1 ? "reservering" : "reserveringer"} til dette
+                materiale.
+              </p>
+            )}
             <Button
               theme="primary"
               size="lg"
@@ -138,13 +156,10 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
                   className="animate-spin-reverse h-[24px] w-[24px]"
                 />
               ) : (
-                "Godkend reservation"
+                "Godkend reservering"
               )}
             </Button>
-            <Button size="lg" onClick={onClose} disabled={isSubmitting}>
-              Annuller
-            </Button>
-          </>
+          </div>
         )}
       </ResponsiveDialog.Actions>
     </ResponsiveDialog>

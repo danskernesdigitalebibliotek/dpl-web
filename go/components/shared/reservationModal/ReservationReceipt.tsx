@@ -7,8 +7,7 @@ import {
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
-import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { cyKeys } from "@/cypress/support/constants"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
@@ -26,20 +25,15 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
 
   return (
     <div data-cy={cyKeys["reservation-receipt"]}>
-      <div
-        className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
-          justify-center lg:aspect-4/5">
-        <CoverPicture alt="Forsidebillede på værket" covers={manifestation.cover} />
-        <MaterialTypeIconWrapper
-          iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-          className="bg-background absolute -bottom-6 h-10 w-10 outline-1"
-        />
-      </div>
+      <ManifestationCover
+        cover={manifestation.cover}
+        iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+        className="rounded-base flex aspect-1/1 h-36 w-full flex-col items-center justify-center
+          lg:aspect-4/5"
+      />
 
       <div className="mx-auto mt-10 mb-6 w-full max-w-prose space-y-6 text-center">
-        <p className="text-typo-subtitle-md">
-          &ldquo;{title}&rdquo; er reserveret til dig.
-        </p>
+        <p className="text-typo-subtitle-md">&ldquo;{title}&rdquo; er reserveret til dig.</p>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <ReceiptStat
@@ -54,23 +48,14 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
           />
         </div>
       </div>
-
     </div>
   )
 }
 
-const ReceiptStat = ({
-  term,
-  value,
-  dataCy,
-}: {
-  term: string
-  value: string
-  dataCy: string
-}) => (
+const ReceiptStat = ({ term, value, dataCy }: { term: string; value: string; dataCy: string }) => (
   <div className="bg-background-skeleton/40 rounded-base px-6 py-4" data-cy={dataCy}>
-    <dt className="text-typo-body-sm text-foreground/70">{term}</dt>
-    <dd className="text-typo-subtitle-md mt-1">{value}</dd>
+    <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90">{term}</p>
+    <p className="text-typo-subtitle-md mt-1">{value}</p>
   </div>
 )
 
