@@ -9,6 +9,7 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import { cyKeys } from "@/cypress/support/constants"
 import routes from "@/lib/config/resolvers/routes"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
 import { createModalUrl } from "@/lib/helpers/modal-url"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
@@ -28,7 +29,7 @@ const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
   const router = useRouter()
 
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
-  const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
+  const manifestation = getManifestationByPid(data?.work, pid)
   const label = manifestation ? getManifestationLabel(manifestation) : ""
 
   const redirectAfterLogin = () => {

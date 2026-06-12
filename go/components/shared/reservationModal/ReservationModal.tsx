@@ -23,6 +23,7 @@ import ReservationReceipt from "@/components/shared/reservationModal/Reservation
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
 import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 type ReservationModalProps = {
@@ -57,7 +58,7 @@ async function postReservation(input: CreateReservationInput): Promise<CreateRes
 const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const work = data?.work
-  const manifestation = work?.manifestations?.all?.find(m => m.pid === pid)
+  const manifestation = getManifestationByPid(work, pid)
   const reservationRecordId = manifestation ? pidToFaust(manifestation.pid) : null
 
   const physicalManifestations =

@@ -14,6 +14,7 @@ import ManifestationCover from "@/components/shared/manifestationCover/Manifesta
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
@@ -35,7 +36,7 @@ const LoanMaterialModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
-  const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
+  const manifestation = getManifestationByPid(data?.work, pid)
   const { mutate } = usePostV1UserLoansIdentifier()
   const { data: loansData, isLoading: isLoadingLoans } = useGetV1UserLoans()
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
