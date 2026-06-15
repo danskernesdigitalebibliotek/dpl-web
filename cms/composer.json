@@ -373,9 +373,6 @@
                 "3407189: Automated Drupal 10 compatibility fixes": "patches/vendor/address_dawa.2.0.1.rector.patch",
                 "3550696: Update API endpoints.": "patches/vendor/address_dawa-330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
             },
-            "drupal/azure_mailer": {
-                "3541803: Error: Call to a member function addError() on null": "patches/vendor/3541803-azure_mailer-fix_call_to_member_on_null.patch"
-            },
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "patches/vendor/nested_elements-3199172-14.patch"
             },
