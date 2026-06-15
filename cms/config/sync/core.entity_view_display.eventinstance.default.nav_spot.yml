@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.nav_spot
+    - field.field.eventinstance.default.field_audiences
     - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
@@ -62,6 +63,14 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     weight: 53
+    region: content
+  event_audiences:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 54
     region: content
   event_automatic_list_hide:
     type: boolean
@@ -165,6 +174,7 @@ hidden:
   event_state: true
   event_tags: true
   event_ticket_categories: true
+  field_audiences: true
   field_branch: true
   field_categories: true
   field_description: true

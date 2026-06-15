@@ -26,7 +26,7 @@ use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTime;
 
 /**
- * Translator understand the link between EventInstances and resource objects.
+ * Translate EventInstances into REST responses.
  */
 class EventRestMapper {
 
@@ -63,6 +63,7 @@ class EventRestMapper {
       'teaserImage' => $this->getTeaserImage(),
       'branches' => $this->getBranches(),
       'address' => $this->getAddress(),
+      'audiences' => $this->getAudiences(),
       'tags' => $this->getTags(),
       'categories' => $this->getCategories(),
       'partners' => $this->getMultiValue('event_partners'),
@@ -139,6 +140,16 @@ class EventRestMapper {
    */
   private function getTags(): array {
     return $this->getTaxonomyNames('event_tags');
+  }
+
+  /**
+   * Getting associated audiences.
+   *
+   * @return string[]
+   *   The translated audience labels.
+   */
+  private function getAudiences(): array {
+    return $this->getTaxonomyNames('event_audiences');
   }
 
   /**
@@ -257,7 +268,7 @@ class EventRestMapper {
     $rendered = $this->event->get('event_address')->view('full');
     $street = NULL;
 
-    if ($rendered['#field_type'] === 'address_gsearch') {
+    if (isset($rendered['#field_type']) && $rendered['#field_type'] === 'address_gsearch') {
       $zip = $rendered[0]['#content']['postal_code'] ?? NULL;
       $city = $rendered[0]['#content']['postal_name'] ?? NULL;
       $street = $rendered[0]['#content']['address'] ?? NULL;
