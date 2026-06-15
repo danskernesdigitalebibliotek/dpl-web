@@ -39,7 +39,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
       select: data => data.getBranch,
     }
   )
-  const pickupBranchName = branch?.title ?? patron?.pickupBranchId ?? ""
+  const pickupBranchName = branch?.title ?? ""
 
   return (
     <div className="mx-auto max-w-prose space-y-8">

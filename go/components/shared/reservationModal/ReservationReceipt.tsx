@@ -27,7 +27,7 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
     { isilId: result.pickupBranchId },
     { staleTime: Infinity, select: data => data.getBranch }
   )
-  const pickupBranchName = branch?.title ?? result.pickupBranchId
+  const pickupBranchName = branch?.title ?? ""
 
   return (
     <div
