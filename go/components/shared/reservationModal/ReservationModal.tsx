@@ -136,7 +136,9 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
         ) : (
           <div className="flex w-full flex-col items-center gap-3">
             {availability && (
-              <p className="text-typo-caption text-foreground/70 max-w-prose text-center">
+              <p
+                className="text-typo-caption text-foreground/70 dark:text-foreground/90 max-w-prose
+                  text-center">
                 Biblioteket har {availability.totalCopies}{" "}
                 {availability.totalCopies === 1 ? "eksemplar" : "eksemplarer"}. Der er{" "}
                 {availability.reservationCount}{" "}
