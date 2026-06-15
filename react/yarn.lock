@@ -4183,10 +4183,10 @@
     "@typescript-eslint/types" "8.61.0"
     eslint-visitor-keys "^5.0.0"
 
-"@vitest/coverage-istanbul@^4.1.8":
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/@vitest/coverage-istanbul/-/coverage-istanbul-4.1.8.tgz#a1dff5a874b6f041444c3d0e9595a6961701306a"
-  integrity sha512-/h514nMZMKI6foh21mVgO1zlCH6pdDamwKMbla1uLU2GMxTlfp0PQMxovWozmzQdCIQYZ2XXEzg2zNZom2zAOg==
+"@vitest/coverage-istanbul@^4.1.9":
+  version "4.1.9"
+  resolved "https://registry.yarnpkg.com/@vitest/coverage-istanbul/-/coverage-istanbul-4.1.9.tgz#8e7e2310007aa5a8f78c3634b42dae020cea4165"
+  integrity sha512-4a7DsIwycTf4eYwEDtnMfMV8H80KSKH9PuMHhqL5SwPZzDyUKq2X/TPCVZ7NqIuSz7UbZckmEmkip6iZBI/gEA==
   dependencies:
     "@babel/core" "^7.29.0"
     "@istanbuljs/schema" "^0.1.3"
