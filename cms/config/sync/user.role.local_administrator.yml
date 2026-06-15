@@ -24,6 +24,7 @@ dependencies:
     - rest.resource.dpl_opening_hours_update
     - system.menu.admin
     - system.menu.main
+    - taxonomy.vocabulary.audiences
     - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.opening_hours_categories
@@ -128,6 +129,7 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create terms in audiences'
   - 'create terms in breadcrumb_structure'
   - 'create terms in categories'
   - 'create terms in opening_hours_categories'
@@ -183,6 +185,7 @@ permissions:
   - 'delete own videotool media'
   - 'delete own webform'
   - 'delete page revisions'
+  - 'delete terms in audiences'
   - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
   - 'delete terms in opening_hours_categories'
@@ -223,6 +226,7 @@ permissions:
   - 'edit own video media'
   - 'edit own videotool media'
   - 'edit own webform'
+  - 'edit terms in audiences'
   - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
   - 'edit terms in opening_hours_categories'

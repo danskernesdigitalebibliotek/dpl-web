@@ -552,3 +552,19 @@ function dpl_update_deploy_add_default_audences_terms(): string {
 
   return _dpl_update_install_modules(['dpl_static_content_20260528_audiences']);
 }
+
+/**
+ * Add audience permissions.
+ */
+function dpl_update_deploy_add_audience_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator', 'editor'],
+    [
+      'create terms in audiences',
+      'delete terms in audiences',
+      'edit terms in audiences',
+    ],
+    TRUE);
+
+  return 'Allow editors to use edit audiences';
+}
