@@ -2765,10 +2765,10 @@
   dependencies:
     "@types/mdx" "^2.0.0"
 
-"@namics/stylelint-bem@^11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@namics/stylelint-bem/-/stylelint-bem-11.0.0.tgz#f29633cf2eaa0710848d9a291b7f0635344e69d0"
-  integrity sha512-Pq5DN0N3gXAVT17g+vIvpKE07vwCc7xMopF103d9bxNdQu+PXJbCUTdKYT0v/6lK8CiYLQO1FpUab+pPGf5RBw==
+"@namics/stylelint-bem@^11.1.0":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@namics/stylelint-bem/-/stylelint-bem-11.1.0.tgz#93cae3af26a2a36b2cd08ac130f47ebbd3d0cba8"
+  integrity sha512-9+hQpo1K5drx9flRLp4tg6SslB+o1DZL2Cm8udpMhlTbPs3WLZFubm+RsWckqj041OtEJgVUjDJ9Gd1OR4N5RA==
   dependencies:
     css-selector-parser "3.3.0"
     postcss-resolve-nested-selector "0.1.6"
