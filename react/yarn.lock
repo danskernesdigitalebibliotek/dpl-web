@@ -13302,10 +13302,10 @@ svg-tags@^1.0.0:
   resolved "https://registry.npmjs.org/svg-tags/-/svg-tags-1.0.0.tgz"
   integrity sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q=
 
-svg-url-loader@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/svg-url-loader/-/svg-url-loader-8.0.0.tgz"
-  integrity sha512-5doSXvl18hY1fGsRLdhWAU5jgzgxJ06/gc/26cpuDnN0xOz1HmmfhkpL29SSrdIvhtxQ1UwGzmk7wTT/l48mKw==
+svg-url-loader@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/svg-url-loader/-/svg-url-loader-8.1.0.tgz#d947f70ee0225a755b080eb489eb522bdec4378f"
+  integrity sha512-8Mf5g0R44VSiTQnSXT6qCSHwCO3VwZAOcm+o0FB80wGGeZNDzKBPKc8gtfIbSfNPmnE8SHv/+e49vO2NVHEmKA==
   dependencies:
     file-loader "~6.2.0"
 
