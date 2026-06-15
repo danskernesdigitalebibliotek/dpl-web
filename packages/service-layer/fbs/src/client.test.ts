@@ -57,7 +57,7 @@ describe("createFbsClient.getPatron", () => {
     expect(result).toEqual({
       name: "Test User",
       isLocked: false,
-      preferredPickupBranchId: "DK-761500",
+      pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
     })
@@ -227,9 +227,7 @@ describe("createFbsClient.createReservation", () => {
   it("throws on a non-2xx response", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
 
-    await expect(
-      buildClient().createReservation({ recordId: "12345678" })
-    ).rejects.toThrow(/401/)
+    await expect(buildClient().createReservation({ recordId: "12345678" })).rejects.toThrow(/401/)
   })
 
   it("returns a failed result when FBS reports success=false", async () => {
@@ -240,9 +238,7 @@ describe("createFbsClient.createReservation", () => {
       })
     )
 
-    await expect(
-      buildClient().createReservation({ recordId: "12345678" })
-    ).resolves.toEqual({
+    await expect(buildClient().createReservation({ recordId: "12345678" })).resolves.toEqual({
       status: "failed",
       recordId: "12345678",
       reason: "patron_blocked",

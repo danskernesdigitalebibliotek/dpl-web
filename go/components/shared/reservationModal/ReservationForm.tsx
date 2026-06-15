@@ -53,7 +53,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
         <InfoCard
           icon="pin"
           title="Afhentningssted"
-          value={patron?.preferredPickupBranchId ?? "Afhentningssted ikke valgt"}
+          value={patron?.pickupBranchId ?? "Afhentningssted ikke valgt"}
         />
         <InfoCard
           icon="chat"
@@ -88,11 +88,9 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
 const InfoCard = ({ icon, title, value }: { icon: string; title: string; value: string }) => (
   <div className="bg-background-skeleton/40 rounded-base flex items-center gap-4 px-6 py-4">
     <Icon name={icon} className="text-foreground h-7 w-7 shrink-0" />
-    <div>
+    <div className="flex flex-col gap-1">
       <p className="text-typo-subtitle-sm font-medium">{title}</p>
-      <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90 mt-1">
-        {value}
-      </p>
+      <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90">{value}</p>
     </div>
   </div>
 )

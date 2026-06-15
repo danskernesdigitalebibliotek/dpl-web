@@ -41,7 +41,7 @@ const physicalWork = {
 const fixturePatron: Patron = {
   name: "Test Bruger",
   isLocked: false,
-  preferredPickupBranchId: "DK-761500",
+  pickupBranchId: "DK-761500",
   emailAddress: "test@example.com",
   phoneNumber: "+4512345678",
 }

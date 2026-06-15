@@ -10,7 +10,7 @@ export type ServiceLayerConfig = {
 export type Patron = {
   name: string | undefined
   isLocked: boolean
-  preferredPickupBranchId: string
+  pickupBranchId: string
   emailAddress: string | undefined
   phoneNumber: string | undefined
 }

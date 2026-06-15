@@ -68,7 +68,11 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const recordIds = getFaustIdsFromManifestations(physicalManifestations)
 
   const { data: patron } = usePatron()
-  const { data: availability } = useMaterialAvailability(wid, recordIds)
+  // Skip the query until recordIds populate. queryKey is keyed by wid only, so
+  // an early call with empty recordIds would cache {0,0} and never refetch.
+  const { data: availability } = useMaterialAvailability(wid, recordIds, {
+    enabled: recordIds.length > 0,
+  })
 
   const queryClient = useQueryClient()
   const [step, setStep] = useState<Step>("reserve")
@@ -83,9 +87,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
     try {
       const result = await postReservation({
         recordId: reservationRecordId,
-        ...(patron?.preferredPickupBranchId
-          ? { pickupBranchId: patron.preferredPickupBranchId }
-          : {}),
+        ...(patron?.pickupBranchId ? { pickupBranchId: patron.pickupBranchId } : {}),
       })
       if (result.status === "success") {
         setSuccessResult(result)
@@ -99,7 +101,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
     } finally {
       setIsSubmitting(false)
     }
-  }, [reservationRecordId, isSubmitting, patron?.preferredPickupBranchId, queryClient, wid])
+  }, [reservationRecordId, isSubmitting, patron?.pickupBranchId, queryClient, wid])
 
   const isReceiptStep = step === "receipt" && successResult !== null
   const submitDisabled = isSubmitting || !reservationRecordId

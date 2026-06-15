@@ -17,7 +17,7 @@ describe("parseAndMapPatron", () => {
     expect(parseAndMapPatron(fullPatronBody)).toEqual({
       name: "Test User",
       isLocked: false,
-      preferredPickupBranchId: "DK-761500",
+      pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
     })
@@ -32,7 +32,7 @@ describe("parseAndMapPatron", () => {
     ).toEqual({
       name: "Test User",
       isLocked: true,
-      preferredPickupBranchId: "DK-761500",
+      pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
     })
@@ -56,7 +56,7 @@ describe("parseAndMapPatron", () => {
     ).toEqual({
       name: undefined,
       isLocked: false,
-      preferredPickupBranchId: "DK-761500",
+      pickupBranchId: "DK-761500",
       emailAddress: undefined,
       phoneNumber: undefined,
     })
@@ -76,7 +76,7 @@ describe("parseAndMapPatron", () => {
     ).toEqual({
       name: "Test User",
       isLocked: false,
-      preferredPickupBranchId: "DK-761500",
+      pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
     })
@@ -99,6 +99,26 @@ describe("parseAndMapPatron", () => {
         patron: { name: "Test User" },
       })
     ).toThrow()
+  })
+
+  it("coerces null name/email/phone to undefined (FBS sends null for missing)", () => {
+    expect(
+      parseAndMapPatron({
+        authenticateStatus: "VALID",
+        patron: {
+          name: "Test User",
+          preferredPickupBranch: "DK-710117",
+          emailAddress: null,
+          phoneNumber: null,
+        },
+      })
+    ).toEqual({
+      name: "Test User",
+      isLocked: false,
+      pickupBranchId: "DK-710117",
+      emailAddress: undefined,
+      phoneNumber: undefined,
+    })
   })
 
   it("throws on a non-object response", () => {
