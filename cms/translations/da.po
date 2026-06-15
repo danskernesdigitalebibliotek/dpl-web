@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-11 13:09+0200\n"
-"PO-Revision-Date: 2026-06-11 13:09+0200\n"
+"POT-Creation-Date: 2026-06-15 10:10+0200\n"
+"PO-Revision-Date: 2026-06-15 10:10+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "Beskrivelse"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Nr."
+msgstr "Udgave"
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -7617,9 +7617,6 @@ msgstr "Opdaterer links indsat af Linkit til at pege på enhedens URL-aliaser."
 
 msgid "Linkit"
 msgstr "Linkit"
-
-msgid "Configurable Dummy Matcher"
-msgstr "Konfigurerbar Dummy Matcher"
 
 msgid "Dummy Matcher"
 msgstr "Dummy Matcher"
@@ -21370,5 +21367,11 @@ msgstr ""
 msgid ""
 "Support module providing a no-bundle entity type and Scheduler plugin "
 "for tests."
+msgstr ""
+
+msgid "Linkit Profile"
+msgstr ""
+
+msgid "Configurable dummy matcher"
 msgstr ""
 
