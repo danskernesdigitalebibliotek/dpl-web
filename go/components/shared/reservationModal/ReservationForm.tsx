@@ -1,7 +1,7 @@
 "use client"
 
 import type { Patron } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import React from "react"
+import React, { useContext } from "react"
 
 import {
   getManifestationLabel,
@@ -12,6 +12,7 @@ import ManifestationCover from "@/components/shared/manifestationCover/Manifesta
 import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
 type Work = NonNullable<GetMaterialQuery["work"]>
 type Manifestation = NonNullable<Work["manifestations"]["all"]>[number]
@@ -24,6 +25,8 @@ type ReservationFormProps = {
 }
 
 const ReservationForm = ({ work, manifestation, patron, errorMessage }: ReservationFormProps) => {
+  const dplCmsConfig = useContext(DplCmsConfigContext)
+  const adultSiteUrl = dplCmsConfig?.libraryInfo?.baseURL ?? "#"
   const creators = work?.creators ?? manifestation.contributors ?? []
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
@@ -81,9 +84,12 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
           }
           value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adressse."}
         />
-        <p className="text-typo-caption text-foreground/70 text-center">
+
+        <p
+          className="text-typo-caption text-foreground/70 dark:text-foreground/90 max-w-prose
+            text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
-          <a href="#" className="animate-text-underline underline">
+          <a className="text-foreground underline" href={adultSiteUrl}>
             voksen-hjemmesiden
           </a>
           .
