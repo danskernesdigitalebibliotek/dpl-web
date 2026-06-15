@@ -11,7 +11,7 @@ entity_type: eventseries
 bundle: default
 label: Branch
 description: 'When selecting a branch, we will use the address from the branch, unless you select “Other location”.'
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

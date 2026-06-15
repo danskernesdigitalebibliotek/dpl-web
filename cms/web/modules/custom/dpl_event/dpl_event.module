@@ -534,16 +534,12 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     'and',
     [
       [':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE]],
-      'or',
-      [':input[name="field_branch"]' => ['value' => '']],
     ],
   ];
 
   if (isset($form['field_event_non_branch_location'])) {
     $form['field_event_non_branch_location']['#states']['visible'] = [
-      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
-      'and',
-      ':input[name="field_branch"]' => ['!value' => ''],
+      ':input[name="field_event_location_type"]' => ['value' => 'physical']
     ];
   }
   // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
