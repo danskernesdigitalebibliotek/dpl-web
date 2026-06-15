@@ -1,0 +1,13 @@
+query getBranches {
+  getBranches {
+    isilId
+    title
+  }
+}
+
+query getBranch($isilId: String!) {
+  getBranch(isilId: $isilId) {
+    isilId
+    title
+  }
+}

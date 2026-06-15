@@ -20,4 +20,13 @@ extend type Query {
     """
     cmsConfigured: Boolean
   ): [Branch!]!
+
+  """
+  Retrieve a single library branch by its ISIL id.
+  Returns null when no branch matches.
+  """
+  getBranch(
+    "ISIL branch ID, e.g. DK-710111."
+    isilId: String!
+  ): Branch
 }

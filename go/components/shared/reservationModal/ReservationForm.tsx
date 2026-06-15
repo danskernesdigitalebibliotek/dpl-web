@@ -9,6 +9,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import Icon from "@/components/shared/icon/Icon"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
@@ -27,6 +28,15 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
   const manifestationTitle = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
+  const { data: branch } = useGetBranchQuery(
+    { isilId: patron?.pickupBranchId ?? "" },
+    {
+      enabled: !!patron?.pickupBranchId,
+      staleTime: Infinity,
+      select: data => data.getBranch,
+    }
+  )
+  const pickupBranchName = branch?.title ?? patron?.pickupBranchId ?? ""
 
   return (
     <div className="mx-auto max-w-prose space-y-8">
@@ -53,7 +63,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
         <InfoCard
           icon="pin"
           title="Afhentningssted"
-          value={patron?.pickupBranchId ?? "Afhentningssted ikke valgt"}
+          value={pickupBranchName || "Afhentningssted ikke valgt"}
         />
         <InfoCard
           icon="chat"

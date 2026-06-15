@@ -292,7 +292,7 @@ export type Language = {
   direction?: Maybe<Scalars['String']['output']>;
   /** Sprogkoden. */
   id?: Maybe<Scalars['ID']['output']>;
-  /** Navnet på sproget. */
+  /** Sprogets navn. */
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -797,7 +797,7 @@ export type ParagraphBreadcrumbChildren = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-/** Campaign trigger, based on the relevant facets of the users search. */
+/** Kampagne aktiveres baseret på relevante facetter fra brugerens søgning. */
 export type ParagraphCampaignRule = ParagraphInterface & {
   __typename?: 'ParagraphCampaignRule';
   /** Facet */
@@ -1362,10 +1362,10 @@ export type ParagraphMaterialGridLinkAutomatic = ParagraphInterface & {
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
   /**
-   * This field is for inserting a link string based on a search, e.g.:
-   * /><br />Please be aware that it is necessary to copy the exact link string.<br
-   * /><br />A valid link search string can be generated, by performing a query
-   * through the advanced search and copying the link string from there.
+   * I dette felt kan indsættes et link til en søgning, fx:
+   * /><br />Vær opmærksom på at kopiere den eksakte linkstreng.<br /><br />Du
+   * kan sikre at linket er validt ved at lave søgningen via avanceret søgning og
+   * kopiere url'en.
    */
   materialGridLink: Scalars['String']['output'];
   /** Der vises ikke en titel, hvis denne er tom. */
@@ -1634,6 +1634,11 @@ export type ParagraphWebform = ParagraphInterface & {
 export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
+  /**
+   * Retrieve a single library branch by its ISIL id.
+   * Returns null when no branch matches.
+   */
+  getBranch?: Maybe<Branch>;
   /** Retrieve library branches with optional filtering. */
   getBranches: Array<Branch>;
   /** Query for view go_categories display go_categories. */
@@ -1651,6 +1656,12 @@ export type Query = { go: { cacheTags: string[] } } & {
   reservationSettings: ReservationSettings;
   /** Load a Route by path. */
   route?: Maybe<RouteUnion>;
+};
+
+
+/** The schema's entry-point for queries. */
+export type QueryGetBranchArgs = {
+  isilId: Scalars['String']['input'];
 };
 
 
@@ -2815,6 +2826,18 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
     | { __typename: 'RouteRedirect', url: string }
    | null };
 
+export type GetBranchesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBranchesQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', getBranches: Array<{ __typename?: 'Branch', isilId: string, title: string }> };
+
+export type GetBranchQueryVariables = Exact<{
+  isilId: Scalars['String']['input'];
+}>;
+
+
+export type GetBranchQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', getBranch?: { __typename?: 'Branch', isilId: string, title: string } | null };
+
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3898,6 +3921,102 @@ useSuspenseGetArticleByPathQuery.getKey = (variables: GetArticleByPathQueryVaria
 
 useGetArticleByPathQuery.fetcher = (variables: GetArticleByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables, options);
 
+export const GetBranchesDocument = `
+    query getBranches {
+  getBranches {
+    isilId
+    title
+  }
+}
+    `;
+
+export const useGetBranchesQuery = <
+      TData = GetBranchesQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesQueryVariables,
+      options?: Omit<UseQueryOptions<GetBranchesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBranchesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBranchesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getBranches'] : ['getBranches', variables],
+    queryFn: fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables),
+    ...options
+  }
+    )};
+
+useGetBranchesQuery.getKey = (variables?: GetBranchesQueryVariables) => variables === undefined ? ['getBranches'] : ['getBranches', variables];
+
+export const useSuspenseGetBranchesQuery = <
+      TData = GetBranchesQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetBranchesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetBranchesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetBranchesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getBranches'] : ['getBranches', variables],
+    queryFn: fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetBranchesQuery.getKey = (variables?: GetBranchesQueryVariables) => variables === undefined ? ['getBranches'] : ['getBranches', variables];
+
+
+useGetBranchesQuery.fetcher = (variables?: GetBranchesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables, options);
+
+export const GetBranchDocument = `
+    query getBranch($isilId: String!) {
+  getBranch(isilId: $isilId) {
+    isilId
+    title
+  }
+}
+    `;
+
+export const useGetBranchQuery = <
+      TData = GetBranchQuery,
+      TError = unknown
+    >(
+      variables: GetBranchQueryVariables,
+      options?: Omit<UseQueryOptions<GetBranchQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBranchQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBranchQuery, TError, TData>(
+      {
+    queryKey: ['getBranch', variables],
+    queryFn: fetcher<GetBranchQuery, GetBranchQueryVariables>(GetBranchDocument, variables),
+    ...options
+  }
+    )};
+
+useGetBranchQuery.getKey = (variables: GetBranchQueryVariables) => ['getBranch', variables];
+
+export const useSuspenseGetBranchQuery = <
+      TData = GetBranchQuery,
+      TError = unknown
+    >(
+      variables: GetBranchQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetBranchQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetBranchQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetBranchQuery, TError, TData>(
+      {
+    queryKey: ['getBranch', variables],
+    queryFn: fetcher<GetBranchQuery, GetBranchQueryVariables>(GetBranchDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetBranchQuery.getKey = (variables: GetBranchQueryVariables) => ['getBranch', variables];
+
+
+useGetBranchQuery.fetcher = (variables: GetBranchQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchQuery, GetBranchQueryVariables>(GetBranchDocument, variables, options);
+
 export const GetCategoriesDocument = `
     query getCategories {
   goCategories {
@@ -4513,6 +4632,8 @@ useGetLogoutUrlsQuery.fetcher = (variables?: GetLogoutUrlsQueryVariables, option
 export const operationNames = {
   Query: {
     getArticleByPath: 'getArticleByPath',
+    getBranches: 'getBranches',
+    getBranch: 'getBranch',
     getCategories: 'getCategories',
     getCategoryPageByPath: 'getCategoryPageByPath',
     getDplCmsPrivateConfiguration: 'getDplCmsPrivateConfiguration',

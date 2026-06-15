@@ -9,6 +9,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { cyKeys } from "@/cypress/support/constants"
+import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 type Manifestation = NonNullable<
@@ -22,6 +23,11 @@ type ReservationReceiptProps = {
 
 const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) => {
   const title = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
+  const { data: branch } = useGetBranchQuery(
+    { isilId: result.pickupBranchId },
+    { staleTime: Infinity, select: data => data.getBranch }
+  )
+  const pickupBranchName = branch?.title ?? result.pickupBranchId
 
   return (
     <div
@@ -49,7 +55,7 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
         />
         <ReceiptStat
           term={`${getManifestationLabel(manifestation, "definite")} skal hentes på`}
-          value={result.pickupBranchId}
+          value={pickupBranchName}
           dataCy={cyKeys["reservation-receipt-pickup-branch"]}
         />
       </dl>

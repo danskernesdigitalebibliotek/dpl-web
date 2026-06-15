@@ -1,4 +1,5 @@
 import {
+  type Patron,
   materialAvailabilityQuery,
   patronQuery,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
@@ -10,6 +11,7 @@ import React, { Suspense } from "react"
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import { isPhysicalMaterialType } from "@/components/pages/workPageLayout/helper"
 import getQueryClient from "@/lib/getQueryClient"
+import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn, getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
@@ -60,6 +62,19 @@ async function WorkPage({ params }: TWorkPageProps) {
         recordIds.length > 0 &&
           queryClient.prefetchQuery(materialAvailabilityQuery(config, workId, recordIds)),
       ])
+
+      // Prefetch the patron's pickup branch name (ISIL → title) so the
+      // reservation modal renders the friendly name on first paint.
+      const patron = queryClient.getQueryData<Patron | undefined>(patronQuery(config).queryKey)
+      const isilId = patron?.pickupBranchId
+      if (isilId) {
+        await queryClient
+          .prefetchQuery({
+            queryKey: useGetBranchQuery.getKey({ isilId }),
+            queryFn: useGetBranchQuery.fetcher({ isilId }),
+          })
+          .catch(() => {})
+      }
     }
   }
 

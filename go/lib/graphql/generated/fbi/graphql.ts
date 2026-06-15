@@ -254,12 +254,20 @@ export type ComplexSearchFiltersInput = {
   department?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Date of first accession */
   firstAccessionDate?: InputMaybe<Scalars['String']['input']>;
+  /** The floatgroup of the item */
+  floatGroup?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Local id of the item. */
   itemId?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** The last loan date of the item */
+  lastloandate?: InputMaybe<Scalars['String']['input']>;
+  /** The loan restriction of the item, g, a or nothing */
+  loanrestriction?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** The section which the item belongs to */
+  section?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Onloan or OnShelf. */
   status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
@@ -977,6 +985,12 @@ export type Manifestation = {
   relations: Relations;
   /** Some review data, if this manifestation is a review */
   review?: Maybe<ManifestationReview>;
+  /**
+   * Bibliographic reference data for this manifestation formatted as RIS.
+   * When fetching RIS for multiple manifestations, each record is returned on the
+   * manifestation. To combine them into a single RIS file, join the records with a newline.
+   */
+  ris?: Maybe<Scalars['String']['output']>;
   /** Series for this manifestation */
   series: Array<Series>;
   /** Material that can be identified as sheet music */
@@ -1422,6 +1436,12 @@ export type Query = {
   /** Access to various types of recommendations. */
   recommendations: Recommendations;
   refWorks: Scalars['String']['output'];
+  /**
+   * Returns bibliographic records formatted as RIS reference data for one or more manifestation pids.
+   * When multiple pids are provided, each RIS record is separated by a newline.
+   * Records are returned in the same order as the provided pids.
+   * If a pid is not found, it is omitted from the response.
+   */
   ris: Scalars['String']['output'];
   search: SearchResponse;
   series?: Maybe<Series>;

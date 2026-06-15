@@ -49,6 +49,18 @@ class BranchesExtension extends SdlSchemaExtensionPluginBase {
         ->map('cmsConfigured', $builder->fromArgument('cmsConfigured'))
     );
 
+    // Singular lookup. Filters the same producer by isilId then picks the
+    // first (and only) match. Returns NULL when no branch is found.
+    $registry->addFieldResolver('Query', 'getBranch',
+      $builder->compose(
+        $builder->produce('get_branches_producer')
+          ->map('isilId', $builder->fromArgument('isilId'))
+          ->map('availabilityContexts', $builder->fromValue(NULL))
+          ->map('cmsConfigured', $builder->fromValue(NULL)),
+        $builder->callback(fn(array $branches): ?Branch => $branches[0] ?? NULL)
+      )
+    );
+
     $registry->addFieldResolver('Branch', 'isilId',
       $builder->callback(fn(Branch $branch) => $branch->id)
     );
