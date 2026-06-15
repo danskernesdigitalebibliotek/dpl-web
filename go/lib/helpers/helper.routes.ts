@@ -1,5 +1,5 @@
-type RouteParams = { [key: string]: string | number }
-type QueryParams = { [key: string]: string | number }
+type RouteParams = Record<string, number | string>
+type QueryParams = Record<string, number | string>
 
 export function buildRoute({
   params,
