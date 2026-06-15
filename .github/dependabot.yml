@@ -74,7 +74,7 @@ updates:
 
   # CMS dev-scripts - Composer dependencies
   - package-ecosystem: composer
-    directory: "/cms/dev-scripts/**/*"
+    directory: "/cms/dev-scripts/dpl-react"
     open-pull-requests-limit: 20
     schedule:
       interval: weekly
