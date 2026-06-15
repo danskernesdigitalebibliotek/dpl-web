@@ -37,7 +37,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     ? getIsbnsFromManifestation(selectedManifestation)
     : []
   const languageCode = getManifestationLanguageCode(selectedManifestation)
-  const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
 
   const sortedManifestations = sortManifestationsBySortPriority(manifestations)
 

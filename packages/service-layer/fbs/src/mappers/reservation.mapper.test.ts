@@ -81,17 +81,13 @@ describe("parseAndMapReservation", () => {
   })
 
   it("throws when reservationResults is empty", () => {
-    expect(() =>
-      parseAndMapReservation({ success: true, reservationResults: [] })
-    ).toThrow()
+    expect(() => parseAndMapReservation({ success: true, reservationResults: [] })).toThrow()
   })
 
   it("throws when the response shape fails validation", () => {
     expect(() => parseAndMapReservation({})).toThrow()
     expect(() => parseAndMapReservation(null)).toThrow()
-    expect(() =>
-      parseAndMapReservation({ success: "yes", reservationResults: [] })
-    ).toThrow()
+    expect(() => parseAndMapReservation({ success: "yes", reservationResults: [] })).toThrow()
   })
 
   it("ignores additional fields on the reservation details", () => {

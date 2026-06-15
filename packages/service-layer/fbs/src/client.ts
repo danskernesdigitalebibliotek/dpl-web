@@ -4,12 +4,12 @@ import type {
   MaterialAvailability,
   Patron,
 } from "../../src/types"
-import type { CreateReservationBatchV2 } from "./generated/model/createReservationBatchV2"
 import {
   getAddReservationsV2Url,
   getGetHoldingsLogisticsV1Url,
   getGetPatronInformationByPatronIdV4Url,
 } from "./generated/fbs"
+import type { CreateReservationBatchV2 } from "./generated/model/createReservationBatchV2"
 import { parseAndMapAvailability } from "./mappers/availability.mapper"
 import { parseAndMapPatron } from "./mappers/patron.mapper"
 import { parseAndMapReservation } from "./mappers/reservation.mapper"
@@ -69,9 +69,7 @@ export function createFbsClient(config: FbsConfig) {
         body: JSON.stringify(body),
       })
       if (!response.ok) {
-        throw new Error(
-          `FBS createReservation failed: ${response.status} ${response.statusText}`
-        )
+        throw new Error(`FBS createReservation failed: ${response.status} ${response.statusText}`)
       }
       const raw: unknown = await response.json()
       return parseAndMapReservation(raw)

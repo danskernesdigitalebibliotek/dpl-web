@@ -58,6 +58,7 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
 }
 
 const ReceiptStat = ({ term, value, dataCy }: { term: string; value: string; dataCy: string }) => (
+  // eslint-disable-next-line no-restricted-syntax -- dataCy comes from cyKeys at call site
   <div className="bg-background-skeleton/40 rounded-base px-6 py-5 text-center" data-cy={dataCy}>
     <dt
       className="text-typo-caption text-foreground/70 dark:text-foreground/90

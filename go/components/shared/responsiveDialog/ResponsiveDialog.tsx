@@ -1,7 +1,7 @@
 "use client"
 
 import { useMediaQuery } from "@uidotdev/usehooks"
-import React from "react"
+import React, { Children, isValidElement } from "react"
 
 import {
   Dialog,
@@ -33,19 +33,13 @@ type ResponsiveDialogProps = {
   onClose: () => void
 }
 
-function ResponsiveDialog({
-  title,
-  description,
-  children,
-  open,
-  onClose,
-}: ResponsiveDialogProps) {
+function ResponsiveDialog({ title, description, children, open, onClose }: ResponsiveDialogProps) {
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   let actions: React.ReactNode = null
   const bodyChildren: React.ReactNode[] = []
-  React.Children.forEach(children, child => {
-    if (React.isValidElement(child) && child.type === Actions) {
+  Children.forEach(children, child => {
+    if (isValidElement(child) && child.type === Actions) {
       actions = (child.props as { children?: React.ReactNode }).children ?? null
     } else {
       bodyChildren.push(child)

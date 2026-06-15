@@ -1,10 +1,6 @@
 import { createFbsClient } from "../fbs/src"
 import { resolveFbsConfig } from "./internal/resolveFbsConfig"
-import type {
-  CreateReservationInput,
-  CreateReservationResult,
-  ServiceLayerConfig,
-} from "./types"
+import type { CreateReservationInput, CreateReservationResult, ServiceLayerConfig } from "./types"
 
 export async function createReservation(
   config: ServiceLayerConfig,
