@@ -114,15 +114,16 @@ third_party_settings:
         weight: 0
     group_library:
       children:
-        - field_branch
+        - field_event_location_type
         - group_location
-      label: Library
+        - field_event_place
+      label: 'Event location'
       region: content
       parent_name: ''
       weight: 4
       format_type: details
       format_settings:
-        classes: ''
+        classes: dpl-event-locations
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -189,18 +190,17 @@ third_party_settings:
         required_fields: false
     group_location:
       children:
-        - field_event_location_type
+        - field_branch
         - field_event_non_branch_location
         - field_event_location
         - field_event_address_gsearch
-        - field_event_place
       label: Locations
       region: content
       parent_name: group_library
       weight: 2
       format_type: html_element
       format_settings:
-        classes: dpl-event-locations
+        classes: ''
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -256,7 +256,7 @@ content:
     third_party_settings: {  }
   field_branch:
     type: select2_entity_reference
-    weight: 0
+    weight: 2
     region: content
     settings:
       width: 100%
@@ -284,7 +284,7 @@ content:
     third_party_settings: {  }
   field_event_address_gsearch:
     type: address_gsearch
-    weight: 4
+    weight: 5
     region: content
     settings:
       size: 60
@@ -317,7 +317,7 @@ content:
     third_party_settings: {  }
   field_event_location:
     type: string_textfield
-    weight: 3
+    weight: 4
     region: content
     settings:
       size: 60
@@ -331,7 +331,7 @@ content:
     third_party_settings: {  }
   field_event_non_branch_location:
     type: boolean_checkbox
-    weight: 2
+    weight: 3
     region: content
     settings:
       display_label: true
@@ -374,7 +374,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 6
+    weight: 3
     region: content
     settings:
       size: 60

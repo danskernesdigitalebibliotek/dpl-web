@@ -539,7 +539,7 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (isset($form['field_event_non_branch_location'])) {
     $form['field_event_non_branch_location']['#states']['visible'] = [
-      ':input[name="field_event_location_type"]' => ['value' => 'physical']
+      ':input[name="field_event_location_type"]' => ['value' => 'physical'],
     ];
   }
   // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
