@@ -258,6 +258,11 @@ body:has(.eventseries-form--confirm) .form-actions {
   }
 }
 
+.gin--edit-form  .claro-details__summary {
+  color: var(--gin-color-primary-hover);
+  background-color: var(--gin-bg-header);
+}
+
 /**
  Long URLs in the material grid automatic link field are breaking the layout.
 */
