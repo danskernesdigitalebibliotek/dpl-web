@@ -36,8 +36,7 @@
     "cypress:run:mobile": "NODE_ENV=test cypress run --env viewport=mobile",
     "cypress:run:desktop": "NODE_ENV=test cypress run --env viewport=desktop",
     "shadcn:add": "npx shadcn@canary add $MODULE",
-    "post-process-dpl-cms-graphql": "tsx ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts",
-    "postinstall": "patch-package"
+    "post-process-dpl-cms-graphql": "tsx ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
   },
   "dependencies": {
     "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/service-layer",
@@ -60,7 +59,7 @@
     "date-fns": "^4.4.0",
     "framer-motion": "12.40.0",
     "graphql": "^16.14.2",
-    "iron-session": "8.0.4",
+    "iron-session": "github:danskernesdigitalebibliotek/iron-session#chunking",
     "js-md5": "^0.8.3",
     "keen-slider": "^6.8.6",
     "lodash": "^4.18.1",
@@ -135,7 +134,6 @@
     "next-test-api-route-handler": "^5.0.5",
     "node-mocks-http": "^1.17.2",
     "orval": "^7.21.0",
-    "patch-package": "^8.0.1",
     "postcss": "^8.5.15",
     "prepend-file": "^2.0.1",
     "prettier": "^3.8.3",
