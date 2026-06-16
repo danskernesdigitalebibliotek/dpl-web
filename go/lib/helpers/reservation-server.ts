@@ -2,6 +2,7 @@ import {
   type CreateReservationInput,
   type CreateReservationResult,
   createReservation,
+  deleteReservation,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { cookies } from "next/headers"
 
@@ -18,4 +19,14 @@ export const createReservationServerSide = async (
   const token = await getBearerTokenServerSide("fbs", cookieStore)
   if (!token) return null
   return createReservation(getServiceLayerConfig(token), input)
+}
+
+export const deleteReservationServerSide = async (
+  reservationId: number
+): Promise<boolean> => {
+  const cookieStore = await cookies()
+  const token = await getBearerTokenServerSide("fbs", cookieStore)
+  if (!token) return false
+  await deleteReservation(getServiceLayerConfig(token), reservationId)
+  return true
 }
