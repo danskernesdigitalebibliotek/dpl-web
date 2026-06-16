@@ -42,6 +42,10 @@ export const cyKeys = {
   "reservation-receipt": "reservation-receipt",
   "reservation-receipt-queue-position": "reservation-receipt-queue-position",
   "reservation-receipt-pickup-branch": "reservation-receipt-pickup-branch",
+  "delete-reservation-button": "delete-reservation-button",
+  "delete-reservation-modal": "delete-reservation-modal",
+  "delete-reservation-receipt": "delete-reservation-receipt",
+  "approve-delete-reservation-button": "approve-delete-reservation-button",
 } as const
 
 export type CyKey = keyof typeof cyKeys

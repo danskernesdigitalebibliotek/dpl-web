@@ -1,3 +1,4 @@
+import { useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { first } from "lodash"
 import { useQueryStates } from "nuqs"
 import React from "react"
@@ -8,10 +9,14 @@ import {
   getManifestationLabel,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
+import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { getReservationByRecordId } from "@/lib/graphql/selectors/reservation"
+import { pidToFaust } from "@/lib/helpers/ids"
 import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -57,13 +62,13 @@ const WorkPageButtonsLoggedIn = ({
       session?.type === "unilogin" ? "ReservationUniloginModal" : "ReservationModal"
     return (
       <WorkPageButtons>
-        <WorkPageButton
-          ariaLabel={`Reserver ${label}`}
-          theme="primary"
+        <PhysicalReservationButton
           dataCy={dataCy}
-          onClick={() => open(reservationModal)}>
-          Reserver {label}
-        </WorkPageButton>
+          label={label}
+          selectedManifestation={selectedManifestation}
+          reservationModal={reservationModal}
+          onOpen={open}
+        />
       </WorkPageButtons>
     )
   }
@@ -132,6 +137,55 @@ const WorkPageButtonsLoggedIn = ({
   }
 
   return null
+}
+
+// Reads the patron's reservations and renders either the "Reserver" CTA or,
+// when the manifestation is already reserved, the "Slet reservering"
+// branch together with a small status row.
+const PhysicalReservationButton = ({
+  dataCy,
+  label,
+  selectedManifestation,
+  reservationModal,
+  onOpen,
+}: {
+  dataCy: string
+  label: string
+  selectedManifestation: ManifestationWorkPageFragment
+  reservationModal: TModalType
+  onOpen: (modal: TModalType) => void
+}) => {
+  const { data: reservations } = useReservations()
+  const recordId = pidToFaust(selectedManifestation.pid)
+  const existing = getReservationByRecordId(reservations, recordId)
+
+  if (existing) {
+    return (
+      <>
+        <div className="flex w-full lg:ml-auto lg:max-w-80 lg:justify-center">
+          <StatusLabel variant="success">Bogen er reserveret til dig</StatusLabel>
+        </div>
+        <WorkPageButton
+          ariaLabel="Slet reservering"
+          theme="primary"
+          dataCy={dataCy}
+          data-cy={cyKeys["delete-reservation-button"]}
+          onClick={() => onOpen("DeleteReservationModal")}>
+          Slet reservering
+        </WorkPageButton>
+      </>
+    )
+  }
+
+  return (
+    <WorkPageButton
+      ariaLabel={`Reserver ${label}`}
+      theme="primary"
+      dataCy={dataCy}
+      onClick={() => onOpen(reservationModal)}>
+      Reserver {label}
+    </WorkPageButton>
+  )
 }
 
 export default WorkPageButtonsLoggedIn

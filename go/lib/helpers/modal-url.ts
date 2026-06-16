@@ -8,6 +8,7 @@ export type TModalUrlParams = {
   ReservationModal: { wid: string; pid: string }
   ReservationLoginModal: { wid: string; pid: string }
   ReservationUniloginModal: { wid: string; pid: string }
+  DeleteReservationModal: { wid: string; pid: string }
 }
 
 export type TModalType = keyof TModalUrlParams
@@ -20,6 +21,7 @@ export const VALID_MODAL_TYPES = new Set<string>([
   "ReservationModal",
   "ReservationLoginModal",
   "ReservationUniloginModal",
+  "DeleteReservationModal",
 ])
 
 function validateModalProps(value: unknown): TModalUrlParams[TModalType] | null {

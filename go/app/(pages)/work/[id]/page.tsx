@@ -2,6 +2,7 @@ import {
   type Patron,
   materialAvailabilityQuery,
   patronQuery,
+  reservationsQuery,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
 import { Metadata } from "next"
@@ -61,6 +62,7 @@ async function WorkPage({ params }: TWorkPageProps) {
         queryClient.prefetchQuery(patronQuery(config)),
         recordIds.length > 0 &&
           queryClient.prefetchQuery(materialAvailabilityQuery(config, workId, recordIds)),
+        queryClient.prefetchQuery(reservationsQuery(config)),
       ])
 
       // Prefetch the patron's pickup branch name (ISIL → title) so the

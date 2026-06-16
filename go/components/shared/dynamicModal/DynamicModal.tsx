@@ -14,6 +14,7 @@ import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
+import DeleteReservationModal from "../reservationModal/DeleteReservationModal"
 import ReservationLoginModal from "../reservationModal/ReservationLoginModal"
 import ReservationModal from "../reservationModal/ReservationModal"
 import ReservationUniloginModal from "../reservationModal/ReservationUniloginModal"
@@ -111,6 +112,17 @@ export function DynamicModal() {
   if (activeModal === "ReservationUniloginModal") {
     return (
       <ReservationUniloginModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
+  if (activeModal === "DeleteReservationModal") {
+    return (
+      <DeleteReservationModal
         open={open}
         onClose={closeModal}
         wid={activeParams.wid}
