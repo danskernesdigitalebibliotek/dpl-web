@@ -155,7 +155,7 @@ const PhysicalReservationButton = ({
   reservationModal: TModalType
   onOpen: (modal: TModalType) => void
 }) => {
-  const { data: reservations } = useReservations()
+  const { data: reservations, isLoading, isError, error } = useReservations()
   const recordId = pidToFaust(selectedManifestation.pid)
   const existing = getReservationByRecordId(reservations, recordId)
 
@@ -168,8 +168,7 @@ const PhysicalReservationButton = ({
         <WorkPageButton
           ariaLabel="Slet reservering"
           theme="primary"
-          dataCy={dataCy}
-          data-cy={cyKeys["delete-reservation-button"]}
+          dataCy={cyKeys["delete-reservation-button"]}
           onClick={() => onOpen("DeleteReservationModal")}>
           Slet reservering
         </WorkPageButton>
