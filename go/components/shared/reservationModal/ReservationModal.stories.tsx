@@ -1,9 +1,11 @@
 import {
   MaterialAvailability,
   Patron,
+  Reservation,
   ServiceLayerProvider,
   materialAvailabilityQueryKey,
   patronQueryKey,
+  reservationsQueryKey,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -11,6 +13,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import ReservationModal from "@/components/shared/reservationModal/ReservationModal"
+import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 import workMock from "@/lib/mocks/work/infoBox.mock"
@@ -54,12 +57,16 @@ const fixtureAvailability: MaterialAvailability = {
 const wid = physicalWork.workId
 const pid = physicalManifestation.pid
 
+const fixtureBranch = { isilId: "DK-761500", title: "Hovedbiblioteket" }
+
 const seedClient = ({
   patron,
   availability,
+  reservations,
 }: {
   patron?: Patron
   availability?: MaterialAvailability
+  reservations?: Reservation[]
 } = {}) => {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false, staleTime: Infinity } },
@@ -67,7 +74,21 @@ const seedClient = ({
   client.setQueryData(useGetMaterialQuery.getKey({ wid }), { work: physicalWork })
   if (patron) client.setQueryData(patronQueryKey(), patron)
   if (availability) client.setQueryData(materialAvailabilityQueryKey(wid), availability)
+  if (reservations) client.setQueryData(reservationsQueryKey(), reservations)
+  // Seed the CMS branch lookup so both the form (patron's pickup branch) and
+  // the receipt ("Bogen skal hentes på") render with a friendly name.
+  client.setQueryData(useGetBranchQuery.getKey({ isilId: fixtureBranch.isilId }), {
+    getBranch: fixtureBranch,
+  })
   return client
+}
+
+const fixtureReservation: Reservation = {
+  reservationId: 987654,
+  recordId: "12345678",
+  pickupBranchId: "DK-761500",
+  numberInQueue: 3,
+  state: "reserved",
 }
 
 const storyServiceLayerConfig = {
@@ -96,7 +117,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   decorators: [
-    withQueryClient(seedClient({ patron: fixturePatron, availability: fixtureAvailability })),
+    withQueryClient(
+      seedClient({ patron: fixturePatron, availability: fixtureAvailability, reservations: [] })
+    ),
   ],
   args: {
     open: true,
@@ -108,7 +131,9 @@ export const Default: Story = {
 
 export const DefaultDarkMode: Story = {
   decorators: [
-    withQueryClient(seedClient({ patron: fixturePatron, availability: fixtureAvailability })),
+    withQueryClient(
+      seedClient({ patron: fixturePatron, availability: fixtureAvailability, reservations: [] })
+    ),
     darkModeDecorator,
   ],
   args: {
@@ -125,6 +150,28 @@ export const PatronWithoutContactInfo: Story = {
       seedClient({
         patron: { ...fixturePatron, emailAddress: undefined, phoneNumber: undefined },
         availability: fixtureAvailability,
+        reservations: [],
+      })
+    ),
+  ],
+  args: {
+    open: true,
+    onClose: () => {},
+    wid,
+    pid,
+  },
+}
+
+// Receipt step is derived from server state: when a reservation for the
+// manifestation already exists in cache, the modal renders the receipt
+// instead of the form.
+export const ReceiptStep: Story = {
+  decorators: [
+    withQueryClient(
+      seedClient({
+        patron: fixturePatron,
+        availability: fixtureAvailability,
+        reservations: [fixtureReservation],
       })
     ),
   ],

@@ -29,7 +29,7 @@ const statusLabelVariants = cva(
       // Inverted (filled)
       { variant: "error", inverted: true, class: "bg-error-red-400 text-white" },
       { variant: "warning", inverted: true, class: "bg-warning-orange-400 text-white" },
-      { variant: "success", inverted: true, class: "bg-success-green-350 text-white" },
+      { variant: "success", inverted: true, class: "bg-success-green-300 text-white" },
     ],
     defaultVariants: {
       variant: "error",

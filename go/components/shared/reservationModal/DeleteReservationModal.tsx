@@ -42,9 +42,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const manifestation = getManifestationByPid(data?.work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
-  const { data: reservations, isSuccess: reservationsLoaded } = useReservations({
-    refetchOnMount: "always",
-  })
+  const { data: reservations } = useReservations({ refetchOnMount: "always" })
   const reservation = getReservationByRecordId(reservations, recordId)
 
   const queryClient = useQueryClient()
@@ -53,10 +51,10 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const [justDeleted, setJustDeleted] = useState(false)
 
   // Receipt is derivable: either we just deleted, or the reservation is gone
-  // from server state (e.g. another tab killed it). Guard on recordId +
-  // reservationsLoaded so we don't flash receipt during initial hydration.
+  // from server state. Guard on having a recordId and a resolved reservations
+  // list so we don't flash receipt during initial hydration.
   const isReceiptStep =
-    justDeleted || (reservationsLoaded && recordId !== null && !reservation)
+    justDeleted || (reservations !== undefined && recordId !== null && !reservation)
 
   const handleDelete = useCallback(async () => {
     if (!reservation || isSubmitting) return
