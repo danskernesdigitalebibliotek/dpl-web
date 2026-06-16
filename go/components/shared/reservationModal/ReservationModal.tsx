@@ -5,8 +5,10 @@ import {
   type CreateReservationResult,
   type CreateReservationSuccess,
   materialAvailabilityQueryKey,
+  reservationsQueryKey,
   useMaterialAvailability,
   usePatron,
+  useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useState } from "react"
@@ -17,13 +19,13 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import Icon from "@/components/shared/icon/Icon"
 import ReservationForm from "@/components/shared/reservationModal/ReservationForm"
 import ReservationReceipt from "@/components/shared/reservationModal/ReservationReceipt"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
+import { getReservationByRecordId } from "@/lib/graphql/selectors/reservation"
 import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 type ReservationModalProps = {
@@ -33,11 +35,6 @@ type ReservationModalProps = {
   pid: string
 }
 
-type Step = "reserve" | "receipt"
-
-// Client-side mutation against the local route handler. We avoid useActionState
-// here because server actions trigger an automatic RSC tree refresh on success,
-// which visibly flashes the work page when the reservation completes.
 async function postReservation(input: CreateReservationInput): Promise<CreateReservationResult> {
   const response = await fetch("/api/reservation", {
     method: "POST",
@@ -59,7 +56,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const work = data?.work
   const manifestation = getManifestationByPid(work, pid)
-  const reservationRecordId = manifestation ? pidToFaust(manifestation.pid) : null
+  const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
   const physicalManifestations =
     work?.manifestations?.all.filter(m =>
@@ -68,31 +65,46 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const recordIds = getFaustIdsFromManifestations(physicalManifestations)
 
   const { data: patron } = usePatron()
-  // Skip the query until recordIds populate. queryKey is keyed by wid only, so
-  // an early call with empty recordIds would cache {0,0} and never refetch.
   const { data: availability } = useMaterialAvailability(wid, recordIds, {
     enabled: recordIds.length > 0,
   })
+  const { data: reservations } = useReservations({ refetchOnMount: "always" })
 
   const queryClient = useQueryClient()
-  const [step, setStep] = useState<Step>("reserve")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
 
+  // The receipt step is derivable: either we just succeeded (local state)
+  // or the patron already has a reservation for this manifestation
+  // (server state).
+  const existingReservation = getReservationByRecordId(reservations, recordId)
+  const derivedResult: CreateReservationSuccess | null =
+    successResult ??
+    (existingReservation
+      ? {
+          status: "success",
+          recordId: existingReservation.recordId,
+          reservationId: existingReservation.reservationId,
+          pickupBranchId: existingReservation.pickupBranchId,
+          numberInQueue: existingReservation.numberInQueue,
+        }
+      : null)
+  const isReceiptStep = derivedResult !== null
+
   const handleApprove = useCallback(async () => {
-    if (!reservationRecordId || isSubmitting) return
+    if (!recordId || isSubmitting) return
     setIsSubmitting(true)
     setErrorMessage(undefined)
     try {
       const result = await postReservation({
-        recordId: reservationRecordId,
+        recordId,
         ...(patron?.pickupBranchId ? { pickupBranchId: patron.pickupBranchId } : {}),
       })
       if (result.status === "success") {
         setSuccessResult(result)
-        setStep("receipt")
         queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey(wid) })
+        queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
       } else {
         setErrorMessage(`Reservationen kunne ikke gennemføres (${result.reason}).`)
       }
@@ -101,10 +113,9 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
     } finally {
       setIsSubmitting(false)
     }
-  }, [reservationRecordId, isSubmitting, patron?.pickupBranchId, queryClient, wid])
+  }, [recordId, isSubmitting, patron?.pickupBranchId, queryClient, wid])
 
-  const isReceiptStep = step === "receipt" && successResult !== null
-  const submitDisabled = isSubmitting || !reservationRecordId
+  const submitDisabled = isSubmitting || !recordId
 
   return (
     <ResponsiveDialog
@@ -114,8 +125,8 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       <AnimateChangeInHeight>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>
-            {isReceiptStep && successResult ? (
-              <ReservationReceipt manifestation={manifestation} result={successResult} />
+            {isReceiptStep && derivedResult ? (
+              <ReservationReceipt manifestation={manifestation} result={derivedResult} />
             ) : (
               <ReservationForm
                 work={work}
@@ -151,16 +162,9 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
               size="lg"
               data-cy={cyKeys["approve-reservation-button"]}
               onClick={handleApprove}
-              disabled={submitDisabled}>
-              {isSubmitting ? (
-                <Icon
-                  name="go-spinner"
-                  ariaLabel="Indlæser"
-                  className="animate-spin-reverse h-[24px] w-[24px]"
-                />
-              ) : (
-                "Godkend reservering"
-              )}
+              disabled={submitDisabled}
+              isLoading={isSubmitting}>
+              Godkend reservering
             </Button>
           </div>
         )}

@@ -9,7 +9,6 @@ import {
 import AlertBox from "@/components/shared/alertBox/AlertBox"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import Icon from "@/components/shared/icon/Icon"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
@@ -112,30 +111,16 @@ const LoanMaterialModal = ({
               size="lg"
               data-cy={cyKeys["approve-loan-button"]}
               onClick={handleLoanMaterial}
-              disabled={isHandlingLoan || isLoadingLoans}>
-              {isHandlingLoan ? (
-                <Icon
-                  name="go-spinner"
-                  ariaLabel="Indlæser"
-                  className="animate-spin-reverse h-[24px] w-[24px]"
-                />
-              ) : (
-                "Ja"
-              )}
+              disabled={isHandlingLoan || isLoadingLoans}
+              isLoading={isHandlingLoan}>
+              Ja
             </Button>
           )}
-          <Button size="lg" disabled={isHandlingLoan || isLoadingLoans} onClick={() => onClose()}>
-            {isHandlingLoan ? (
-              <Icon
-                name="go-spinner"
-                ariaLabel="Indlæser"
-                className="animate-spin-reverse h-[24px] w-[24px]"
-              />
-            ) : publizonError || isAlreadyLoaned ? (
-              "Luk"
-            ) : (
-              "Nej"
-            )}
+          <Button
+            size="lg"
+            disabled={isHandlingLoan || isLoadingLoans}
+            onClick={() => onClose()}>
+            {publizonError || isAlreadyLoaned ? "Luk" : "Nej"}
           </Button>
         </ResponsiveDialog.Actions>
       )}

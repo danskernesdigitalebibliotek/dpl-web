@@ -51,7 +51,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
         />
 
         <div className="mt-auto flex flex-1 flex-col gap-2 text-center lg:text-left">
-          <p className="text-typo-heading-5">{manifestationTitle}</p>
+          <p className="text-typo-heading-5 text-balance">{manifestationTitle}</p>
           {authorLabel && (
             <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90">
               {authorLabel}

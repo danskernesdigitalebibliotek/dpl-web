@@ -25,7 +25,9 @@ const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
         className="bg-background-overlay mt-14 w-full rounded-md px-6 pt-8 pb-14 lg:flex-row
           lg:px-14">
         <h2 className="text-typo-heading-4 mb-10 lg:mb-24">Detaljer</h2>
-        <div className="gap-grid-gap-3 flex w-full flex-col lg:flex-row lg:gap-44">
+        <div
+          className="gap-grid-gap-3 flex w-full flex-col lg:flex-row
+            lg:gap-[calc(var(--grid-column)+var(--grid-gap))]">
           <dl className="flex-1">
             <InfoBoxItem term="Type">{materialTypeDisplays.join(", ") || "-"}</InfoBoxItem>
             <InfoBoxItem term="Sprog">

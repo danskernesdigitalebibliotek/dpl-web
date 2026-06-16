@@ -15,7 +15,7 @@ export default function AlertBox({
 }) {
   return (
     <div
-      className={cn("rounded-base mx-auto flex items-center gap-4 p-4", {
+      className={cn("rounded-base flex items-center gap-4 p-4", {
         "bg-error-red-100 text-error-red-400": variant === "error",
         "bg-warning-orange-100 text-warning-orange-400": variant === "warning",
         "bg-success-green-100 text-success-green-500": variant === "success",
