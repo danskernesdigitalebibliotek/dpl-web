@@ -245,3 +245,77 @@ describe("createFbsClient.createReservation", () => {
     })
   })
 })
+
+describe("createFbsClient.getReservations", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("GETs the reservations endpoint and returns mapped reservations", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse([
+        {
+          recordId: "12345678",
+          reservationId: 42,
+          pickupBranch: "DK-761500",
+          numberInQueue: 3,
+          state: "reserved",
+        },
+      ])
+    )
+
+    const result = await buildClient().getReservations()
+
+    expect(fetch).toHaveBeenCalledWith(reservationsUrl, {
+      method: "GET",
+      headers: { authorization: "Bearer abc" },
+    })
+    expect(result).toEqual([
+      {
+        reservationId: 42,
+        recordId: "12345678",
+        pickupBranchId: "DK-761500",
+        numberInQueue: 3,
+        state: "reserved",
+      },
+    ])
+  })
+
+  it("throws on non-2xx", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
+    await expect(buildClient().getReservations()).rejects.toThrow(/401/)
+  })
+})
+
+describe("createFbsClient.deleteReservation", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("DELETEs by reservationid query param", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 200))
+
+    await buildClient().deleteReservation(42)
+
+    const [url, opts] = vi.mocked(fetch).mock.calls[0]
+    expect(url).toContain("/external/v1/agencyid/patrons/patronid/reservations?")
+    expect(url).toContain("reservationid=42")
+    expect(opts).toEqual({
+      method: "DELETE",
+      headers: { authorization: "Bearer abc" },
+    })
+  })
+
+  it("throws on non-2xx", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 404))
+    await expect(buildClient().deleteReservation(42)).rejects.toThrow(/404/)
+  })
+})

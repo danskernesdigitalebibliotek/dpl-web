@@ -3,16 +3,20 @@ import type {
   CreateReservationResult,
   MaterialAvailability,
   Patron,
+  Reservation,
 } from "../../src/types"
 import {
   getAddReservationsV2Url,
+  getDeleteReservationsUrl,
   getGetHoldingsLogisticsV1Url,
   getGetPatronInformationByPatronIdV4Url,
+  getGetReservationsV2Url,
 } from "./generated/fbs"
 import type { CreateReservationBatchV2 } from "./generated/model/createReservationBatchV2"
 import { parseAndMapAvailability } from "./mappers/availability.mapper"
 import { parseAndMapPatron } from "./mappers/patron.mapper"
 import { parseAndMapReservation } from "./mappers/reservation.mapper"
+import { parseAndMapReservations } from "./mappers/reservations.mapper"
 import type { FbsConfig } from "./types"
 
 export function createFbsClient(config: FbsConfig) {
@@ -73,6 +77,33 @@ export function createFbsClient(config: FbsConfig) {
       }
       const raw: unknown = await response.json()
       return parseAndMapReservation(raw)
+    },
+
+    getReservations: async (): Promise<Reservation[]> => {
+      const authHeader = await config.getAuthHeader()
+      const response = await fetch(`${config.baseUrl}${getGetReservationsV2Url()}`, {
+        method: "GET",
+        headers: { authorization: authHeader },
+      })
+      if (!response.ok) {
+        throw new Error(`FBS getReservations failed: ${response.status} ${response.statusText}`)
+      }
+      const raw: unknown = await response.json()
+      return parseAndMapReservations(raw)
+    },
+
+    deleteReservation: async (reservationId: number): Promise<void> => {
+      const authHeader = await config.getAuthHeader()
+      const url = `${config.baseUrl}${getDeleteReservationsUrl({
+        reservationid: [reservationId],
+      })}`
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: { authorization: authHeader },
+      })
+      if (!response.ok) {
+        throw new Error(`FBS deleteReservation failed: ${response.status} ${response.statusText}`)
+      }
     },
   }
 }

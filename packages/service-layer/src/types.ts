@@ -42,3 +42,11 @@ export type CreateReservationFailed = {
 }
 
 export type CreateReservationResult = CreateReservationSuccess | CreateReservationFailed
+
+export type Reservation = {
+  reservationId: number
+  recordId: string
+  pickupBranchId: string
+  numberInQueue: number | undefined
+  state: string
+}
