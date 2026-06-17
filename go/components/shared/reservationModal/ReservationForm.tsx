@@ -42,7 +42,9 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
       select: data => data.getBranch,
     }
   )
-  const pickupBranchName = branch?.title ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : "")
+  const pickupBranchName = !patron?.pickupBranchId
+    ? "Afhentningssted ikke valgt"
+    : (branch?.title ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : ""))
 
   return (
     <div className="mx-auto max-w-prose space-y-8">
@@ -55,18 +57,16 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
 
         <div className="mt-auto flex flex-1 flex-col gap-2 text-center lg:text-left">
           <p className="text-typo-heading-5">{manifestationTitle}</p>
-          {authorLabel && <p className="text-typo-subtitle-sm text-foreground-muted">{authorLabel}</p>}
+          {authorLabel && (
+            <p className="text-typo-subtitle-sm text-foreground-muted">{authorLabel}</p>
+          )}
         </div>
       </div>
 
       <hr className="border-foreground/10" />
 
       <div className="space-y-4">
-        <InfoCard
-          icon="pin"
-          title="Afhentningssted"
-          value={pickupBranchName || "Afhentningssted ikke valgt"}
-        />
+        <InfoCard icon="pin" title="Afhentningssted" value={pickupBranchName} />
         <InfoCard
           icon="chat"
           title={
