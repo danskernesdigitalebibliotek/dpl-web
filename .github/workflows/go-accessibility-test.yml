@@ -36,7 +36,7 @@ jobs:
           envFile: "go/.env.test"
 
       - name: Install Playwright
-        run: pnpm exec playwright install --with-deps
+        run: pnpm dlx playwright install --with-deps
         timeout-minutes: 5
 
       - name: Build Storybook

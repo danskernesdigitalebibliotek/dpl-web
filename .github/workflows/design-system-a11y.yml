@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Design / Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm dlx playwright install --with-deps
         timeout-minutes: 5
 
       - name: Design / Compile styles

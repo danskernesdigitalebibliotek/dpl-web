@@ -35,7 +35,7 @@
     "wiremock-rest-client": "^1.11.0"
   },
   "scripts": {
-    "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",
+    "wiremock:create-mappings": "pnpm wiremock:build && node wiremock/build/createMappings.js",
     "pa11y:ci": "pa11y-ci",
     "wiremock:dev:watch": "tsc -p wiremock -w",
     "wiremock:build": "tsc -p wiremock"
