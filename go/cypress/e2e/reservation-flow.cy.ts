@@ -31,7 +31,9 @@ const mockEmptyLoans = () => {
   })
 }
 
-const mockFbsPatron = () => {
+const mockFbsPatron = (
+  overrides: { emailAddress?: string | null; phoneNumber?: string | null } = {}
+) => {
   cy.mockServerRest({
     method: "GET",
     path: "/external/agencyid/patrons/patronid/v4",
@@ -40,8 +42,8 @@ const mockFbsPatron = () => {
       patron: {
         name: "Test Bruger",
         preferredPickupBranch: PICKUP_BRANCH_ID,
-        emailAddress: "test@example.com",
-        phoneNumber: "+4512345678",
+        emailAddress: "emailAddress" in overrides ? overrides.emailAddress : "test@example.com",
+        phoneNumber: "phoneNumber" in overrides ? overrides.phoneNumber : "+4512345678",
       },
     },
   })
@@ -121,6 +123,20 @@ describe("Reservation flow", () => {
     cy.dataCy("reservation-receipt-queue-position").should("contain", "3")
     cy.dataCy("reservation-receipt-pickup-branch").should("contain", "Hovedbiblioteket")
     cy.contains("er nu reserveret til dig").should("be.visible")
+  })
+
+  it("Reservation form shows missing-email copy when patron has no email", () => {
+    mockFbsPatron({ emailAddress: null })
+    mockFbsReservations([])
+
+    visitPhysicalWork()
+    cy.dataCy("work-page-button-logged-in").contains("Reserver bog").click()
+    cy.dataCy("reservation-modal").should("be.visible")
+    cy.contains("Du får ikke en e-mail").should("be.visible")
+    cy.contains("Du får en sms når du kan hente bogen").should("be.visible")
+    cy.contains("voksen-hjemmesiden")
+      .should("have.attr", "href")
+      .and("match", /\/user\/me$/)
   })
 
   it("Delete reservation: button swap → confirm → receipt", () => {
