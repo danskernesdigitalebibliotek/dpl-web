@@ -162,6 +162,42 @@ export const PatronWithoutContactInfo: Story = {
   },
 }
 
+export const PatronWithoutEmail: Story = {
+  decorators: [
+    withQueryClient(
+      seedClient({
+        patron: { ...fixturePatron, emailAddress: undefined },
+        availability: fixtureAvailability,
+        reservations: [],
+      })
+    ),
+  ],
+  args: {
+    open: true,
+    onClose: () => {},
+    wid,
+    pid,
+  },
+}
+
+export const PatronWithoutPhone: Story = {
+  decorators: [
+    withQueryClient(
+      seedClient({
+        patron: { ...fixturePatron, phoneNumber: undefined },
+        availability: fixtureAvailability,
+        reservations: [],
+      })
+    ),
+  ],
+  args: {
+    open: true,
+    onClose: () => {},
+    wid,
+    pid,
+  },
+}
+
 // Receipt step is derived from server state: when a reservation for the
 // manifestation already exists in cache, the modal renders the receipt
 // instead of the form.
