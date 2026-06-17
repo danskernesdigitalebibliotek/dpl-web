@@ -103,15 +103,15 @@ Cypress.Commands.add(
 
 // Data cy attribute selector helpers.
 const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
-Cypress.Commands.add("getBySel", (selector, checkVisible = false) => {
+Cypress.Commands.add("getBySel", (selector: string, checkVisible: boolean = false) => {
   return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`);
 });
-Cypress.Commands.add("getBySelLike", (selector, checkVisible = false) => {
+Cypress.Commands.add("getBySelLike", (selector: string, checkVisible: boolean = false) => {
   return cy.get(`[data-cy*="${selector}"]${visible(checkVisible)}`);
 });
 Cypress.Commands.add(
   "getBySelStartEnd",
-  (startSelector, endSelector, checkVisible = false) => {
+  (startSelector: string, endSelector: string, checkVisible: boolean = false) => {
     const v = visible(checkVisible);
     return cy.get(
       `[data-cy^="${startSelector}"]${v}[data-cy$="${endSelector}"]${v}`

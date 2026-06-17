@@ -854,6 +854,9 @@ importers:
       fishery:
         specifier: ^2.4.0
         version: 2.4.0
+      flatpickr:
+        specifier: ^4.6.13
+        version: 4.6.13
       focus-trap-react:
         specifier: ^12.0.2
         version: 12.0.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)

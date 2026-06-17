@@ -294,7 +294,7 @@ tasks:
   dev:restore:files:
     desc: "Restore files by overwriting existing with the ones from the Lagoon backup package"
     cmds:
-      - docker compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
+      - docker compose exec cli sh cms/dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
       - task dev:cache:clear:all
 
   dev:cache:clear:all:
@@ -316,7 +316,7 @@ tasks:
   dev:dpl-react:get-asset-url:
     summary: Outputs the url to the build in Github
     cmds:
-      - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
+      - cmd: task dev:cli -- cms/dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
     preconditions:
       - sh: "[ ! -z {{.BRANCH}} ]"
         msg: "Env variable BRANCH is not set or empty."
@@ -325,7 +325,7 @@ tasks:
     desc: Downloads assets from Github and overwrites existing dpl-react library
     cmds:
       - cmd: echo {{ .ASSET_URL }}
-      - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console download-and-overwrite-library {{ .ASSET_URL }}
+      - cmd: task dev:cli -- cms/dev-scripts/dpl-react/bin/console download-and-overwrite-library {{ .ASSET_URL }}
     vars:
       ASSET_URL:
         sh: task dev:dpl-react:get-asset-url
@@ -360,14 +360,14 @@ tasks:
     cmds:
       - task dev:bnfcli -- drush sailor:introspect bnf
       - task dev:bnfcli -- drush sailor:codegen bnf
-      - task dev:bnfcli -- node dev-scripts/stripGraphqlDescriptions.js dpl-cms.bnf.graphql
+      - task dev:bnfcli -- node cms/dev-scripts/stripGraphqlDescriptions.js dpl-cms.bnf.graphql
       # sailor:introspect doesn't emit fields in a deterministic order
       # — Drupal's schema-build order varies with module load and cache
       # state, so two clean introspections can produce semantically
       # identical SDL with different field ordering. Normalize via the
       # `graphql` package so the committed file is stable regardless of
       # which environment ran the introspection.
-      - task dev:bnfcli -- node dev-scripts/normalizeGraphqlSchema.js dpl-cms.bnf.graphql
+      - task dev:bnfcli -- node cms/dev-scripts/normalizeGraphqlSchema.js dpl-cms.bnf.graphql
 
   dev:codegen:fbi-graphql:
     desc: Generate dpl_fbi graphQL classes (reads /schemas/graphql/dbc-fbi.fbcms-go.graphql).
