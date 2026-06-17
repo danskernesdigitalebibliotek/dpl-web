@@ -23,11 +23,15 @@ type ReservationReceiptProps = {
 
 const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) => {
   const title = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
-  const { data: branch } = useGetBranchQuery(
+  const { data: branch, isSuccess: branchLoaded } = useGetBranchQuery(
     { isilId: result.pickupBranchId },
-    { staleTime: Infinity, select: data => data.getBranch }
+    {
+      enabled: !!result.pickupBranchId,
+      staleTime: Infinity,
+      select: data => data.getBranch,
+    }
   )
-  const pickupBranchName = branch?.title ?? ""
+  const pickupBranchName = branch?.title ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : "")
 
   return (
     <div
@@ -39,10 +43,10 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
         className="aspect-[4/5] w-32 shrink-0"
       />
       <div className="flex flex-col gap-y-4">
-        <h2 className="text-typo-heading-4 mt-2 text-balance first-letter:uppercase">
+        <h2 className="text-typo-heading-4 mt-2 first-letter:uppercase">
           {getManifestationLabel(manifestation, "definite")} er nu reserveret til dig!
         </h2>
-        <p className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 text-balance">
+        <p className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90">
           &ldquo;{title}&rdquo; er reserveret til dig.
         </p>
       </div>

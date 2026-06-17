@@ -34,7 +34,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
   const manifestationTitle = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
-  const { data: branch } = useGetBranchQuery(
+  const { data: branch, isSuccess: branchLoaded } = useGetBranchQuery(
     { isilId: patron?.pickupBranchId ?? "" },
     {
       enabled: !!patron?.pickupBranchId,
@@ -42,7 +42,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
       select: data => data.getBranch,
     }
   )
-  const pickupBranchName = branch?.title ?? ""
+  const pickupBranchName = branch?.title ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : "")
 
   return (
     <div className="mx-auto max-w-prose space-y-8">
@@ -54,7 +54,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
         />
 
         <div className="mt-auto flex flex-1 flex-col gap-2 text-center lg:text-left">
-          <p className="text-typo-heading-5 text-balance">{manifestationTitle}</p>
+          <p className="text-typo-heading-5">{manifestationTitle}</p>
           {authorLabel && (
             <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90">
               {authorLabel}
