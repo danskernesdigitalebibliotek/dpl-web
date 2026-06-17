@@ -51,15 +51,15 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "ebook") {
     return (
       <WorkPageButtons>
-        <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isDisabled}>
-          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
-        </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           disabled={isDisabled}
           onClick={() => open("LoanLoginModal")}>
           Lån {label}
+        </WorkPageButton>
+        <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isDisabled}>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
         </WorkPageButton>
       </WorkPageButtons>
     )
@@ -69,17 +69,17 @@ const WorkPageButtonsLoggedOut = ({
     return (
       <WorkPageButtons>
         <WorkPageButton
-          ariaLabel={`Prøv ${label}`}
-          disabled={isDisabled}
-          onClick={() => open("PlayerPreviewModal")}>
-          Prøv {label}
-        </WorkPageButton>
-        <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           disabled={isDisabled}
           onClick={() => open("LoanLoginModal")}>
           Lån {label}
+        </WorkPageButton>
+        <WorkPageButton
+          ariaLabel={`Prøv ${label}`}
+          disabled={isDisabled}
+          onClick={() => open("PlayerPreviewModal")}>
+          Prøv {label}
         </WorkPageButton>
       </WorkPageButtons>
     )

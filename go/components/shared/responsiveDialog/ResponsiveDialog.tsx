@@ -65,7 +65,8 @@ function ResponsiveDialog({ title, description, children, open, onClose }: Respo
             <div
               className="bg-background border-foreground/10 mx-grid-edge shrink-0 border-t py-4
                 lg:mx-10 lg:py-6">
-              <div className="flex flex-row flex-wrap items-center justify-center gap-4">
+              <div
+                className="flex flex-row-reverse flex-wrap items-center justify-center gap-4">
                 {actions}
               </div>
             </div>

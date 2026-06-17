@@ -85,9 +85,6 @@ const WorkPageButtonsLoggedIn = ({
     }
     return (
       <WorkPageButtons>
-        <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
-          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
-        </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
@@ -95,6 +92,9 @@ const WorkPageButtonsLoggedIn = ({
           disabled={isDisabled}
           onClick={() => open("LoanMaterialModal")}>
           Lån {label}
+        </WorkPageButton>
+        <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
         </WorkPageButton>
       </WorkPageButtons>
     )
@@ -118,19 +118,19 @@ const WorkPageButtonsLoggedIn = ({
     return (
       <WorkPageButtons>
         <WorkPageButton
-          ariaLabel={`Prøv ${label}`}
-          dataCy={dataCy}
-          disabled={isDisabled}
-          onClick={() => open("PlayerPreviewModal")}>
-          Prøv {label}
-        </WorkPageButton>
-        <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           dataCy={dataCy}
           disabled={isDisabled}
           onClick={() => open("LoanMaterialModal")}>
           Lån {label}
+        </WorkPageButton>
+        <WorkPageButton
+          ariaLabel={`Prøv ${label}`}
+          dataCy={dataCy}
+          disabled={isDisabled}
+          onClick={() => open("PlayerPreviewModal")}>
+          Prøv {label}
         </WorkPageButton>
       </WorkPageButtons>
     )
@@ -162,8 +162,8 @@ const PhysicalReservationButton = ({
   if (existing) {
     return (
       <>
-        <div className="flex w-full lg:ml-auto lg:max-w-80 lg:justify-center">
-          <StatusLabel variant="success">Bogen er reserveret til dig</StatusLabel>
+        <div className="text-typo-caption flex w-full justify-center lg:ml-auto lg:max-w-80">
+          Bogen er reserveret til dig
         </div>
         <WorkPageButton
           ariaLabel="Slet reservering"
