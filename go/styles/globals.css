@@ -387,6 +387,18 @@
     @apply font-headline;
   }
 
+  .text-typo-huge,
+  .text-typo-heading-1,
+  .text-typo-heading-2,
+  .text-typo-heading-3,
+  .text-typo-heading-4,
+  .text-typo-heading-5,
+  .text-typo-subtitle-lg,
+  .text-typo-subtitle-md,
+  .text-typo-subtitle-sm {
+    @apply text-balance;
+  }
+
   /* wysiwyg */
   .wysiwyg > *:first-child {
     @apply mt-0;

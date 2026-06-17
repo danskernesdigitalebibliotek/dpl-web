@@ -88,7 +88,7 @@ const LoanMaterialModal = ({
             />
 
             <div className="mx-auto mt-10 mb-5 w-full space-y-4">
-              <h3 className="text-typo-heading-5 text-center text-balance">
+              <h3 className="text-typo-heading-5 text-center">
                 {`Er du sikker på, at du vil låne${` ${getManifestationLabel(manifestation, "definite")}?`}`}
               </h3>
               {isAlreadyLoaned && (
