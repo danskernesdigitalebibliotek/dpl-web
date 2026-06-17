@@ -162,21 +162,9 @@ tasks:
       - cp -r ./src/styles/fonts ./build/fonts
       - find ./src -name "*.js" | while read -r f; do cp "$f" ./build/js/"$(basename "$f")"; done
 
-  dev:design-system:link:
-    desc: "Register design-system as a yarn link source"
-    dir: ./design-system
-    cmds:
-      - pnpm link
-
   # ---------------------------------------------------------------------------
   # React
   # ---------------------------------------------------------------------------
-
-  dev:react:link:
-    desc: "Link the local design-system package into React via yarn link"
-    dir: ./react
-    cmds:
-      - pnpm link @danskernesdigitalebibliotek/dpl-design-system
 
   dev:react:install:
     desc: "Install React dependencies"
@@ -187,9 +175,7 @@ tasks:
     desc: "Build design-system, yarn-link it, and install React deps"
     cmds:
       - task: dev:design-system:build
-      - task: dev:design-system:link
       - task: dev:react:install
-      - task: dev:react:link
       - task: dev:react:build
 
   dev:react:build:

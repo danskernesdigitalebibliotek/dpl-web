@@ -25,7 +25,7 @@ tasks:
     summary: Install packages
     cmds:
       - task dev:nvm:use
-      - yarn install
+      - pnpm install
 
   dev:start:
     summary: Install and run docker compose

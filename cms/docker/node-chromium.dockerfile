@@ -7,3 +7,4 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 RUN apk update \
     && apk add chromium \
     && rm -rf /var/cache/apk/*
+RUN corepack enable

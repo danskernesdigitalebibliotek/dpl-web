@@ -1,6 +1,6 @@
 version: "3"
 
-# packages/service-layer is a yarn-workspace package consumed by other
+# packages/service-layer is a pnpm workspace package consumed by other
 # sub-projects. The only codegen it owns is the internal FBS adapter,
 # which reads /schemas/openapi/fbs-adapter.yaml.
 
