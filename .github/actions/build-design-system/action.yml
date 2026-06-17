@@ -9,9 +9,11 @@ runs:
   steps:
     - uses: ./.github/actions/common-setup-js
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ inputs.token }}
     - name: Install go-task
       uses: arduino/setup-task@v2
+      with:
+        repo-token: ${{ inputs.token }}
     - name: Build design system
       shell: bash
       run: task dev:design-system:build
