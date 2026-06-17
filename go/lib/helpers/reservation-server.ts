@@ -21,9 +21,7 @@ export const createReservationServerSide = async (
   return createReservation(getServiceLayerConfig(token), input)
 }
 
-export const deleteReservationServerSide = async (
-  reservationId: number
-): Promise<boolean> => {
+export const deleteReservationServerSide = async (reservationId: number): Promise<boolean> => {
   const cookieStore = await cookies()
   const token = await getBearerTokenServerSide("fbs", cookieStore)
   if (!token) return false

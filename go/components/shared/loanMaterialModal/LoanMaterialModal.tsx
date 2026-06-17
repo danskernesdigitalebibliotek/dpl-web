@@ -87,10 +87,10 @@ const LoanMaterialModal = ({
                 justify-center lg:aspect-4/5"
             />
 
-            <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
-              <p className="text-typo-subtitle-md text-center">
+            <div className="mx-auto mt-10 mb-5 w-full space-y-4">
+              <h3 className="text-typo-heading-5 text-center text-balance">
                 {`Er du sikker på, at du vil låne${` ${getManifestationLabel(manifestation, "definite")}?`}`}
-              </p>
+              </h3>
               {isAlreadyLoaned && (
                 <AlertBox
                   variant="warning"
@@ -116,10 +116,7 @@ const LoanMaterialModal = ({
               Ja
             </Button>
           )}
-          <Button
-            size="lg"
-            disabled={isHandlingLoan || isLoadingLoans}
-            onClick={() => onClose()}>
+          <Button size="lg" disabled={isHandlingLoan || isLoadingLoans} onClick={() => onClose()}>
             {publizonError || isAlreadyLoaned ? "Luk" : "Nej"}
           </Button>
         </ResponsiveDialog.Actions>
