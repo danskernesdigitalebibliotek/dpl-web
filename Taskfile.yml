@@ -112,7 +112,7 @@ tasks:
   # Init (pnpm install for all JS projects)
   # ---------------------------------------------------------------------------
 
-  init:
+  init:pnpm:
     desc: "Install dependencies with pnpm"
     sources:
       - "**/package.json"
@@ -140,7 +140,7 @@ tasks:
   dev:design-system:build:
     desc: "Build design-system (sass + bundle into build/)"
     deps:
-      - init:design-system
+      - init:pnpm
     dir: ./design-system
     sources:
       - 'src/**/*.scss'
@@ -166,22 +166,16 @@ tasks:
   # React
   # ---------------------------------------------------------------------------
 
-  dev:react:install:
-    desc: "Install React dependencies"
-    deps:
-      - init:react
-
   dev:react:setup:
     desc: "Build design-system, yarn-link it, and install React deps"
     cmds:
       - task: dev:design-system:build
-      - task: dev:react:install
       - task: dev:react:build
 
   dev:react:build:
     desc: "Build React (yarn build → dist/)"
     deps:
-      - init:react
+      - init:pnpm
     dir: ./react
     sources:
       - 'src/**/*.ts'
@@ -233,7 +227,7 @@ tasks:
     desc: "Remove node_modules from all projects and reinstall with pnpm."
     cmds:
       - "rm -rf node_modules **/node_modules"
-      - pnpm install
+      - task: init:pnpm
 
   lagoon:run-on-projects:
     desc: Show how to run shell commands across many Lagoon projects in parallel
