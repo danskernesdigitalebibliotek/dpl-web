@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { ReactComponent as ExpandMoreIcon } from "../../../public/icons/collection/ExpandMore.svg";
 import { ReactComponent as TriangleIcon } from "../../../public/icons/basic/icon-triangle.svg";
-import Label from "../Forms/label/Label";
 
 export type DropdownWithLabelItem = {
   title: string;
