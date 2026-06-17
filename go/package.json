@@ -31,6 +31,7 @@
     "start:dev": "DPL_GO_BASE_URL=http://dpl-cms.local:3000 NODE_TLS_REJECT_UNAUTHORIZED=0 next start",
     "storybook": "storybook dev -p 6006",
     "test:accessibility": "test-storybook",
+    "test:storybook": "test-storybook",
     "test:unit:once": "vitest run",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit",

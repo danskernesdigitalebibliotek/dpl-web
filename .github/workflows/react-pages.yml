@@ -14,11 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - uses: ./.github/actions/common-setup-js
+    - uses: ./.github/actions/build-design-system
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-
-    - run: pnpm run design-system:build
 
     - run: pnpm run build:storybook
       working-directory: react

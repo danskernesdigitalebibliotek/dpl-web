@@ -30,10 +30,9 @@ jobs:
         containers: [1, 2, 3]
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/common-setup-js
+      - uses: ./.github/actions/build-design-system
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: pnpm run design-system:build
 
       - name: Install Chrome
         id: setup-chrome
@@ -86,10 +85,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/common-setup-js
+      - uses: ./.github/actions/build-design-system
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: pnpm run design-system:build
 
       - name: Run unit tests
         run: pnpm run test:unit

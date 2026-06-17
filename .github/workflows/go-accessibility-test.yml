@@ -17,8 +17,6 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults:
-      run:
-        working-directory: go
 
     steps:
       - name: Checkout code
@@ -43,8 +41,9 @@ jobs:
         run: pnpm run build-storybook --quiet
 
       - name: Serve Storybook and run tests
+        working-directory: go
         run: |
           export FORCE_COLOR=1
           pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "pnpm dlx http-server storybook-static --port 6006 --silent" \
-            "pnpm dlx wait-on tcp:6006 && pnpm run test-storybook"
+            "pnpm dlx wait-on tcp:6006 && pnpm run test:storybook"

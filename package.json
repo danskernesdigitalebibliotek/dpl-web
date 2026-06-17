@@ -10,8 +10,5 @@
     }
   },
   "private": true,
-  "packageManager": "pnpm@11.5.2",
-  "scripts": {
-    "design-system:build": "pnpm -r --filter @danskernesdigitalebibliotek/dpl-design-system \"/^build.*/\""
-  }
+  "packageManager": "pnpm@11.5.2"
 }
