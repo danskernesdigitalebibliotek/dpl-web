@@ -18,9 +18,7 @@ const Authors = ({ creators }: AuthorsProps) => {
   return (
     <>
       {!!workCreators.length && (
-        <h2
-          className="mt-grid-gap-2 text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90
-            lg:mt-7">
+        <h2 className="mt-grid-gap-2 text-typo-subtitle-sm text-foreground-muted lg:mt-7">
           {"Af "}
           {workCreators.map((creator, index) => {
             return (

@@ -19,7 +19,8 @@ const SupportId = ({ className }: SupportIdProps) => {
   }
 
   return (
-    <div className={cn("text-typo-subtitle-sm text-foreground/70 col-span-full pb-5", className)}>
+    <div
+      className={cn("text-typo-subtitle-sm text-foreground-muted col-span-full pb-5", className)}>
       {`Support ID: ${data.userData.friendlyCardNumber}`}
     </div>
   )

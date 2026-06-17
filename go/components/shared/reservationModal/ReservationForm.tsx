@@ -55,11 +55,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
 
         <div className="mt-auto flex flex-1 flex-col gap-2 text-center lg:text-left">
           <p className="text-typo-heading-5">{manifestationTitle}</p>
-          {authorLabel && (
-            <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90">
-              {authorLabel}
-            </p>
-          )}
+          {authorLabel && <p className="text-typo-subtitle-sm text-foreground-muted">{authorLabel}</p>}
         </div>
       </div>
 
@@ -88,9 +84,7 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
           value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adressse."}
         />
 
-        <p
-          className="text-typo-caption text-foreground/70 dark:text-foreground/90 max-w-prose
-            text-center">
+        <p className="text-typo-caption text-foreground-muted max-w-prose text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
           <a className="text-foreground underline" href={adultSiteUrl}>
             voksen-hjemmesiden
@@ -109,7 +103,7 @@ const InfoCard = ({ icon, title, value }: { icon: string; title: string; value: 
     <Icon name={icon} className="text-foreground h-7 w-7 shrink-0" />
     <div className="flex flex-col gap-1">
       <p className="text-typo-subtitle-sm font-medium">{title}</p>
-      <p className="text-typo-subtitle-sm text-foreground/70 dark:text-foreground/90">{value}</p>
+      <p className="text-typo-subtitle-sm text-foreground-muted">{value}</p>
     </div>
   </div>
 )

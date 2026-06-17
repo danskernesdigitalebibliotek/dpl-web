@@ -46,7 +46,7 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
         <h2 className="text-typo-heading-4 mt-2 first-letter:uppercase">
           {getManifestationLabel(manifestation, "definite")} er nu reserveret til dig!
         </h2>
-        <p className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90">
+        <p className="text-typo-subtitle-md text-foreground-muted">
           &ldquo;{title}&rdquo; er reserveret til dig.
         </p>
       </div>
@@ -70,11 +70,7 @@ const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) 
 const ReceiptStat = ({ term, value, dataCy }: { term: string; value: string; dataCy: string }) => (
   // eslint-disable-next-line no-restricted-syntax -- dataCy comes from cyKeys at call site
   <div className="bg-background-skeleton/40 rounded-base px-6 py-5 text-center" data-cy={dataCy}>
-    <dt
-      className="text-typo-caption text-foreground/70 dark:text-foreground/90
-        first-letter:uppercase">
-      {term}
-    </dt>
+    <dt className="text-typo-caption text-foreground-muted first-letter:uppercase">{term}</dt>
     <dd className="text-typo-heading-5 mt-2">{value}</dd>
   </div>
 )

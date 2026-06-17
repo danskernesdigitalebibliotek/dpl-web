@@ -44,9 +44,7 @@ const ReservationUniloginModal = ({ open, onClose, wid, pid }: ReservationUnilog
           Du kan ikke reservere bøger på biblioteket med UNI-login.
         </p>
 
-        <ul
-          className="text-typo-subtitle-md text-foreground/70 dark:text-foreground/90 unordered-list
-            space-y-3">
+        <ul className="text-typo-subtitle-md text-foreground-muted unordered-list space-y-3">
           <li>Brug dit bibliotekslogin i stedet for UNI-login.</li>
           <li>
             Hvis du ikke har et bibliotekslogin, kan du få det lavet sammen med en forælder/værge på

@@ -139,6 +139,7 @@
     --background-overlay-solid: var(--beige-overlay-solid);
     --background-skeleton: var(--beige-skeleton);
     --foreground: var(--black);
+    --foreground-muted: hsla(0, 0%, 10.2%, 0.7);
 
     /* TRANSITION DURATIONS */
     --dark-mode-transition: 1000ms;
@@ -353,6 +354,7 @@
     --background-overlay-solid: var(--blue-overlay-solid);
     --background-skeleton: var(--blue-skeleton);
     --foreground: var(--beige);
+    --foreground-muted: hsla(36, 45%, 98%, 0.9);
     --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
   }
 
@@ -421,7 +423,7 @@
   }
 
   .wysiwyg p {
-    @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4;
+    @apply text-typo-body-md text-foreground-muted my-4;
   }
 
   .wysiwyg a {
@@ -430,7 +432,7 @@
 
   .wysiwyg ul,
   .wysiwyg ol {
-    @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4 space-y-2 font-light;
+    @apply text-typo-body-md text-foreground-muted my-4 space-y-2 font-light;
   }
 
   .wysiwyg ul {

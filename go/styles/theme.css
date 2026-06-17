@@ -135,6 +135,7 @@
   --color-background-skeleton: var(--background-skeleton);
 
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
   --color-blue: var(--blue);
   --color-border: var(--border);
   --color-reader-grey: var(--reader-grey);

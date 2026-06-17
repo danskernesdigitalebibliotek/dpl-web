@@ -37,7 +37,7 @@ const LoginPanel = ({
       {icon && <Icon name={icon} className="mb-4" />}
       <div className="text-typo-heading-5 text-foreground text-center">{heading}</div>
       {description && (
-        <p className="text-typo-body-sm text-foreground/70 text-center">{description}</p>
+        <p className="text-typo-body-sm text-foreground-muted text-center">{description}</p>
       )}
       <div>
         <Button
