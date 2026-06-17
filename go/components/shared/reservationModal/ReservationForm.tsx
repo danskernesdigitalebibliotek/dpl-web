@@ -14,6 +14,8 @@ import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
+const USER_PROFILE_PATH = "/user/me"
+
 type Work = NonNullable<GetMaterialQuery["work"]>
 type Manifestation = NonNullable<Work["manifestations"]["all"]>[number]
 
@@ -26,7 +28,8 @@ type ReservationFormProps = {
 
 const ReservationForm = ({ work, manifestation, patron, errorMessage }: ReservationFormProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
-  const adultSiteUrl = dplCmsConfig?.libraryInfo?.baseURL ?? "#"
+  const baseURL = dplCmsConfig?.libraryInfo?.baseURL
+  const adultSiteUrl = baseURL ? `${baseURL.replace(/\/$/, "")}${USER_PROFILE_PATH}` : "#"
   const creators = work?.creators ?? manifestation.contributors ?? []
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
