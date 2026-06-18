@@ -10,9 +10,7 @@ type ManifestationCoverProps = {
   cover: Cover
   iconName: MaterialTypeIconNamesType
   alt?: string
-  /** Outer relative container — set width/height/aspect here. */
   className?: string
-  /** Material-type badge — set bottom/left offsets here. Defaults to `-bottom-6`. */
   badgeClassName?: string
 }
 
