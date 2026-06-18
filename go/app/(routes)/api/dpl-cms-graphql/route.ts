@@ -12,7 +12,10 @@ export async function POST(request: NextRequest) {
     const body = await request.text()
     const baseUrl = getEnv("DPL_CMS_BASE_URL")
     if (!baseUrl) {
-      return NextResponse.json({ errors: [{ message: "DPL_CMS_BASE_URL not configured" }] }, { status: 500 })
+      return NextResponse.json(
+        { errors: [{ message: "DPL_CMS_BASE_URL not configured" }] },
+        { status: 500 }
+      )
     }
 
     const upstream = await fetch(`${baseUrl}/graphql`, {
@@ -30,10 +33,13 @@ export async function POST(request: NextRequest) {
     if (cacheTags) responseHeaders[cacheTagsHeader] = cacheTags
 
     const text = await upstream.text()
-    return new NextResponse(text || JSON.stringify({ errors: [{ message: "Empty upstream body" }] }), {
-      status: upstream.status,
-      headers: responseHeaders,
-    })
+    return new NextResponse(
+      text || JSON.stringify({ errors: [{ message: "Empty upstream body" }] }),
+      {
+        status: upstream.status,
+        headers: responseHeaders,
+      }
+    )
   } catch (error) {
     console.error("DPL CMS proxy error:", error)
     return NextResponse.json(

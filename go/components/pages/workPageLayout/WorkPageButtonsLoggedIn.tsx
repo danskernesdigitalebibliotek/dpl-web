@@ -163,7 +163,8 @@ const PhysicalReservationButton = ({
     return (
       <>
         <div
-          className="text-typo-caption text-foreground-muted flex w-full justify-center lg:ml-auto lg:max-w-80">
+          className="text-typo-caption text-foreground-muted flex w-full justify-center lg:ml-auto
+            lg:max-w-prose">
           Bogen er reserveret til dig
         </div>
         <WorkPageButton

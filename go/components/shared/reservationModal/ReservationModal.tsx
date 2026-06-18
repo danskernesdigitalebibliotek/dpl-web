@@ -131,7 +131,10 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>
             {failureResult ? (
-              <ReservationErrorContent manifestation={manifestation} reason={failureResult.reason} />
+              <ReservationErrorContent
+                manifestation={manifestation}
+                reason={failureResult.reason}
+              />
             ) : isReceiptStep && derivedResult ? (
               <ReservationReceiptContent manifestation={manifestation} result={derivedResult} />
             ) : (
