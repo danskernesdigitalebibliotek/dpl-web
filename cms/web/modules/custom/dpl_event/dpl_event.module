@@ -544,6 +544,20 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
   }
   // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
 
+  // We only want to show the field description if it's not an "online" event.
+  $form['field_branch']['description'] = [
+    '#type' => 'container',
+    '#attributes' => ['class' => ['form-item__description']],
+    '#states' => [
+      'invisible' => [
+        ':input[name="field_event_location_type"]' => ['value' => 'online'],
+      ],
+    ],
+    'message' => [
+      '#markup' => t('When selecting a branch, we will use the address from the branch, unless you select “Other location”.', [], ['context' => 'dpl_event']),
+    ],
+  ];
+
   if (isset($form['field_event_location'])) {
     $form['field_event_location']['#states']['visible'] = $physical_state;
     $form['field_event_location']['widget'][0]['value']['#states']['required'] = $physical_state;

@@ -10,7 +10,7 @@ field_name: field_branch
 entity_type: eventseries
 bundle: default
 label: Branch
-description: 'When selecting a branch, we will use the address from the branch, unless you select “Other location”.'
+description: ''
 required: true
 translatable: false
 default_value: {  }

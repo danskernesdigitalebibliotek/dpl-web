@@ -220,10 +220,16 @@ body:has(.eventseries-form--confirm) .form-actions {
   Tweaking the design of the event edit forms.
  */
 .dpl-event-locations {
+  .form-item--field-branch {
+    margin-bottom: 0;
+  }
+
+  [data-drupal-selector="edit-field-branch-wrapper"] {
+    margin-bottom: var(--space-l);
+  }
 
   [data-drupal-selector="edit-group-location"] {
     padding: 10px 25px !important;
-
   }
 
   .form-item__description, .fieldset__description {
