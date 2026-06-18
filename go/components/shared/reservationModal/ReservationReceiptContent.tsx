@@ -1,6 +1,9 @@
 "use client"
 
-import type { CreateReservationSuccess } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import type {
+  CreateReservationSuccess,
+  Patron,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import {
@@ -19,9 +22,10 @@ type Manifestation = NonNullable<
 type ReservationReceiptProps = {
   manifestation: Manifestation
   result: CreateReservationSuccess
+  patron: Patron | undefined
 }
 
-const ReservationReceiptContent = ({ manifestation, result }: ReservationReceiptProps) => {
+const ReservationReceiptContent = ({ manifestation, result, patron }: ReservationReceiptProps) => {
   const title = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
   const { data: branch, isSuccess: branchLoaded } = useGetBranchQuery(
     { isilId: result.pickupBranchId },
@@ -49,6 +53,11 @@ const ReservationReceiptContent = ({ manifestation, result }: ReservationReceipt
         <p className="text-typo-subtitle-md text-foreground-muted">
           &ldquo;{title}&rdquo; er reserveret til dig.
         </p>
+        <NotificationLine
+          email={patron?.emailAddress}
+          phone={patron?.phoneNumber}
+          branchName={pickupBranchName}
+        />
       </div>
 
       <dl className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
@@ -64,6 +73,42 @@ const ReservationReceiptContent = ({ manifestation, result }: ReservationReceipt
         />
       </dl>
     </div>
+  )
+}
+
+const NotificationLine = ({
+  email,
+  phone,
+  branchName,
+}: {
+  email: string | undefined
+  phone: string | undefined
+  branchName: string
+}) => {
+  if (!email && !phone) return null
+  if (!branchName) return null
+
+  const branchSuffix = (
+    <>
+      , når bogen er klar til afhentning på <span className="font-medium">{branchName}</span>.
+    </>
+  )
+
+  if (email && phone) {
+    return (
+      <p className="text-typo-subtitle-md text-foreground-muted">
+        Du får besked på <span className="font-medium">{email}</span> og på{" "}
+        <span className="font-medium">{phone}</span>
+        {branchSuffix}
+      </p>
+    )
+  }
+
+  return (
+    <p className="text-typo-subtitle-md text-foreground-muted">
+      Du får besked på <span className="font-medium">{email ?? phone}</span>
+      {branchSuffix}
+    </p>
   )
 }
 

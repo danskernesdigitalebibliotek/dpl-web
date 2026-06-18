@@ -136,7 +136,11 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
                 reason={failureResult.reason}
               />
             ) : isReceiptStep && derivedResult ? (
-              <ReservationReceiptContent manifestation={manifestation} result={derivedResult} />
+              <ReservationReceiptContent
+                manifestation={manifestation}
+                result={derivedResult}
+                patron={patron}
+              />
             ) : (
               <ReservationFormContent work={work} manifestation={manifestation} patron={patron} />
             )}
