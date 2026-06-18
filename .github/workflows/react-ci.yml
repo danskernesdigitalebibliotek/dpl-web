@@ -1,0 +1,327 @@
+name: React / CI
+
+# Consolidated React CI. Replaces:
+#   - react-pull_request.yml  (stylelint, typescript, eslint, markdownlint)
+#   - react-codegen.yml       (codegen + drift check)
+#   - react-tests.yml         (integration matrix + unit)
+#   - react-relative_ci.yml   (webpack stats → RelativeCI)
+#   - react-pages.yml         (Storybook → GitHub Pages)
+#
+# The design-system is built ONCE in the `design-system` job and shared with
+# every build-consuming job via an artifact, instead of each job rebuilding it.
+# Jobs that only need node_modules (lint, typecheck, codegen) skip that
+# dependency entirely and start immediately.
+
+on:
+  push:
+    # No branch filter: relative-ci historically ran on every push. Jobs that
+    # were branch-scoped (tests, pages) reproduce that with per-job `if:`.
+    paths:
+      - 'react/**'
+      - '.github/workflows/react-ci.yml'
+      - '.github/actions/**'
+      - 'schemas/openapi/**'
+      - 'schemas/graphql/dbc-fbi.temp-next.graphql'
+      - 'cms/openapi.json'
+  pull_request:
+    paths:
+      - 'react/**'
+      - '.github/workflows/react-ci.yml'
+      - '.github/actions/**'
+      - 'schemas/openapi/**'
+      - 'schemas/graphql/dbc-fbi.temp-next.graphql'
+      - 'cms/openapi.json'
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Build the design-system once. Everything downstream downloads this artifact
+  # instead of running `task dev:design-system:build` itself.
+  # ---------------------------------------------------------------------------
+  design-system:
+    name: React / Build design-system
+    if: '!github.event.deleted'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/build-design-system
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload design-system build
+        uses: actions/upload-artifact@v6
+        with:
+          name: design-system-build
+          path: design-system/build
+          retention-days: 1
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # Lint / typecheck / codegen — only need node_modules (pnpm cache), so they
+  # do NOT depend on the design-system job and run in parallel from the start.
+  # PR-only, matching the original react-pull_request.yml / react-codegen.yml.
+  # ---------------------------------------------------------------------------
+  stylelint:
+    name: React / Lint .scss
+    if: github.event_name == 'pull_request' && !github.event.deleted
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: stylelint
+        uses: reviewdog/action-stylelint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          stylelint_input: 'src/**/*.scss'
+          workdir: 'react'
+      - name: Lint SCSS
+        run: pnpm run lint:scss
+
+  typescript:
+    name: React / Typescript compile check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run typescript compile check
+        run: pnpm exec tsc --noEmit
+
+  eslint:
+    name: React / Lint .js and .jsx
+    if: github.event_name == 'pull_request' && !github.event.deleted
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: eslint
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          eslint_flags: '.'
+          workdir: react
+      - name: Lint Javascript
+        run: pnpm run lint:js
+
+  markdownlint:
+    name: React / Lint markdown
+    if: github.event_name == 'pull_request' && !github.event.deleted
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install problem matcher
+        uses: xt0rted/markdownlint-problem-matcher@v3
+      - name: Lint markdown
+        run: pnpm run lint:markdown
+
+  codegen:
+    name: React / Generated clients
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.repository_id }}-${{ github.workflow }}-codegen-${{ github.ref }}
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Codegen - DBC gateway GraphQL
+        run: task codegen:dbc:gateway
+      - name: Codegen - REST services
+        run: task codegen:rest-services
+      - name: Codegen - FBS client
+        run: task codegen:client:fbs
+      - name: Codegen - Publizon client
+        run: task codegen:client:publizon
+      - name: Codegen - dpl-cms client
+        run: task codegen:client:dpl-cms
+      - name: Ensure generated client code has not drifted
+        run: git diff --exit-code
+
+  # ---------------------------------------------------------------------------
+  # Build-consuming jobs: depend on the single design-system build and download
+  # it into design-system/build, where the workspace symlink resolves it.
+  # ---------------------------------------------------------------------------
+  integration:
+    name: React / Integration test
+    needs: design-system
+    if: >-
+      !github.event.deleted &&
+      (github.event_name == 'pull_request' ||
+       (github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'develop')))
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Copenhagen
+    strategy:
+      # When one test fails, DO NOT cancel the other containers, because this
+      # will kill Cypress processes leaving Cypress Cloud hanging.
+      # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
+      matrix:
+        # Run 3 copies of the current job in parallel
+        containers: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download design-system build
+        uses: actions/download-artifact@v6
+        with:
+          name: design-system-build
+          path: design-system/build
+
+      - name: Install Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v7
+        with:
+          install: false
+          start: pnpm run start:storybook:test
+          wait-on: 'http://localhost:57021'
+          browser: ${{ steps.setup-chrome.outputs.chrome-path }}
+          group: 'Integration tests'
+          parallel: true
+          working-directory: react
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.containers }}
+          path: react/cypress/screenshots
+      - name: Upload videos
+        uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: cypress-videos-${{ matrix.containers }}
+          path: react/cypress/videos
+      - run: mkdir -p .nyc_output
+      - name: Generate code coverage report
+        run: pnpm run nyc report --reporter=clover --reporter=text --report-dir=./coverage
+        working-directory: react
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: react/coverage/
+          flags: integration
+          fail_ci_if_error: false
+
+  unit:
+    name: React / Unit test
+    needs: design-system
+    if: '!github.event.deleted'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download design-system build
+        uses: actions/download-artifact@v6
+        with:
+          name: design-system-build
+          path: design-system/build
+      - name: Run unit tests
+        run: pnpm run test:unit
+        working-directory: react
+
+  relative-ci:
+    name: React / Build artifacts
+    needs: design-system
+    if: '!github.event.deleted'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Required to fetch all commits and tags
+          fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download design-system build
+        uses: actions/download-artifact@v6
+        with:
+          name: design-system-build
+          path: design-system/build
+      - name: Build artifacts
+        run: |
+          pnpm run build:css:prod
+          VERSION_FILE_NAME=$GITHUB_REPOSITORY \
+          VERSION_FILE_VERSION=$(git describe --tags --exclude=latest) \
+          pnpm run build:js:prod --json webpack-stats.json
+      - name: Send webpack stats to RelativeCI
+        uses: relative-ci/agent-action@v3
+        with:
+          key: ${{ secrets.RELATIVE_CI_KEY_REACT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          webpackStatsFile: ./react/webpack-stats.json
+
+  github-pages:
+    name: React / GitHub pages
+    needs: design-system
+    if: github.event_name == 'push' && github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download design-system build
+        uses: actions/download-artifact@v6
+        with:
+          name: design-system-build
+          path: design-system/build
+      - run: pnpm run build:storybook
+        working-directory: react
+        env:
+          STORYBOOK_CLIENT_ID: ${{ secrets.STORYBOOK_CLIENT_ID }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./react/dev
+          destination_dir: react
+          # Don't wipe out other projects folder when deploying this.
+          keep_files: true
