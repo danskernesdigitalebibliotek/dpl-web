@@ -80,7 +80,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
               ? "Du får en e-mail når du kan hente bogen"
               : "Du får ikke en e-mail"
           }
-          value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adressse."}
+          value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adresse."}
         />
 
         <p className="text-typo-caption text-foreground-muted max-w-prose text-center">
