@@ -1,0 +1,8 @@
+name: 'DPL App support'
+type: module
+description: 'Functionality supporting the mobile apps'
+package: 'DPL'
+core_version_requirement: ^10 || ^11
+dependencies:
+  - graphql:graphql
+  - autowire_plugin_trait:autowire_plugin_trait

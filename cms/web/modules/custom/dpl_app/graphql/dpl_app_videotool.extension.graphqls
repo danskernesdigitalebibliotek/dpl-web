@@ -1,0 +1,7 @@
+extend type MediaVideotool {
+  streamingUrl: String
+}
+
+extend type MediaVideotoolVertical {
+  streamingUrl: String
+}

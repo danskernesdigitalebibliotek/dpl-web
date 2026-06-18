@@ -4,7 +4,6 @@ namespace Drupal\media_videotool;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Site\Settings;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
