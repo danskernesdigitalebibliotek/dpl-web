@@ -94,9 +94,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
             ) : (
               <div className="flex flex-col gap-y-3">
                 <p className="text-typo-heading-5">Vil du slette din reservering?</p>
-                <p className="text-typo-caption text-foreground-muted max-w-prose text-center">
-                  Du kan ikke fortryde.
-                </p>
+                <p className="text-typo-subtitle-md text-foreground-muted">Du kan ikke fortryde.</p>
                 {errorMessage && <p className="text-typo-body-sm text-red-600">{errorMessage}</p>}
               </div>
             )}
