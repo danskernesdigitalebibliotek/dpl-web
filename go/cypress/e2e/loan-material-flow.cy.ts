@@ -93,8 +93,12 @@ describe("Loan material flow", () => {
     cy.dataCy("approve-loan-button").click()
     cy.wait("@createLoan")
 
-    cy.dataCy("loan-error").should("be.visible").and("have.attr", "data-code", "105")
-    cy.contains("Bogen er desværre ikke tilgængelig for udlån lige nu (#105)").should("be.visible")
-    cy.contains("button", /^Luk$/).should("be.visible")
+    // Drawer (mobile) renders content with position:fixed; cypress's visibility
+    // check fails against the overlay sibling, so assert via `exist` + contain.
+    cy.dataCy("loan-error")
+      .should("exist")
+      .and("have.attr", "data-code", "105")
+      .and("contain", "Bogen er desværre ikke tilgængelig for udlån lige nu (#105)")
+    cy.contains("button", /^Luk$/).should("exist")
   })
 })

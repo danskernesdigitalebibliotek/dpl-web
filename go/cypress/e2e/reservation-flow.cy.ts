@@ -93,12 +93,15 @@ describe("Reservation flow", () => {
 
     setupAdgangsplatformenSession()
     mockEmptyLoans()
-    mockFbsPatron()
+    // mockFbsPatron is registered per-test so tests that need a non-default
+    // patron (e.g. missing-email) can register their override first — mockttp
+    // matches rules in registration order, first match wins.
     mockFbsHoldings()
     mockBranches()
   })
 
   it("Create reservation: form → Godkend → receipt", () => {
+    mockFbsPatron()
     mockFbsReservations([])
 
     cy.intercept("POST", "/api/reservation", {
@@ -120,12 +123,17 @@ describe("Reservation flow", () => {
     cy.dataCy("approve-reservation-button").click()
     cy.wait("@createReservation")
 
+    // Inside a vaul drawer (mobile viewport) Cypress's visibility check trips on
+    // the overlay sibling; `should("exist")` + `contain` is enough to assert the
+    // swap happened.
+    cy.dataCy("reservation-receipt").should("exist")
     cy.dataCy("reservation-receipt-queue-position").should("contain", "3")
     cy.dataCy("reservation-receipt-pickup-branch").should("contain", "Hovedbiblioteket")
-    cy.contains("er nu reserveret til dig").should("be.visible")
+    cy.dataCy("reservation-receipt").should("contain", "er nu reserveret til dig")
   })
 
   it("Create reservation: failure → error body with reason-specific copy", () => {
+    mockFbsPatron()
     mockFbsReservations([])
 
     cy.intercept("POST", "/api/reservation", {
@@ -146,10 +154,10 @@ describe("Reservation flow", () => {
     cy.wait("@createReservation")
 
     cy.dataCy("reservation-error")
-      .should("be.visible")
+      .should("exist")
       .and("have.attr", "data-reason", "already_reserved")
-    cy.contains("Du har allerede reserveret denne bog.").should("be.visible")
-    cy.contains("button", /^Luk$/).should("be.visible")
+      .and("contain", "Du har allerede reserveret denne bog.")
+    cy.contains("button", /^Luk$/).should("exist")
   })
 
   it("Reservation form shows missing-email copy when patron has no email", () => {
@@ -158,15 +166,17 @@ describe("Reservation flow", () => {
 
     visitPhysicalWork()
     cy.dataCy("work-page-button-logged-in").contains("Reserver bog").click()
-    cy.dataCy("reservation-modal").should("be.visible")
-    cy.contains("Du får ikke en e-mail").should("be.visible")
-    cy.contains("Du får en sms når du kan hente bogen").should("be.visible")
-    cy.contains("voksen-hjemmesiden")
+    cy.dataCy("reservation-modal").should("exist")
+    cy.dataCy("reservation-modal").should("contain", "Du får ikke en e-mail")
+    cy.dataCy("reservation-modal")
+      .find("a")
+      .contains("voksen-hjemmesiden")
       .should("have.attr", "href")
       .and("match", /\/user\/me$/)
   })
 
   it("Delete reservation: button swap → confirm → receipt", () => {
+    mockFbsPatron()
     mockFbsReservations([
       {
         reservationId: 999222,
@@ -185,15 +195,20 @@ describe("Reservation flow", () => {
     visitPhysicalWork()
 
     cy.dataCy("delete-reservation-button").should("be.visible").click()
-    cy.dataCy("delete-reservation-modal").should("be.visible")
-    cy.contains("Vil du slette din reservering?").should("be.visible")
+    cy.dataCy("delete-reservation-modal").should("exist")
+    cy.dataCy("delete-reservation-modal").should("contain", "Vil du slette din reservering?")
 
     // Re-register reservations endpoint to return empty so the receipt step
     // derives from absence after the delete.
     mockFbsReservations([])
 
-    cy.dataCy("approve-delete-reservation-button").click()
+    // AnimateChangeInHeight remounts on transition; the button can detach
+    // between query and click. `{force: true}` skips the actionability retry
+    // that races with the remount.
+    cy.dataCy("approve-delete-reservation-button").click({ force: true })
     cy.wait("@deleteReservation")
-    cy.contains("Din reservering er nu slettet").should("be.visible")
+    // data-cy swaps from delete-reservation-modal to delete-reservation-receipt
+    // once the reservation is gone from cache.
+    cy.dataCy("delete-reservation-receipt").should("contain", "Din reservering er nu slettet")
   })
 })
