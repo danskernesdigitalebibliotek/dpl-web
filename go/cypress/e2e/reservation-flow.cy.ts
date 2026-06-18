@@ -125,6 +125,33 @@ describe("Reservation flow", () => {
     cy.contains("er nu reserveret til dig").should("be.visible")
   })
 
+  it("Create reservation: failure → error body with reason-specific copy", () => {
+    mockFbsReservations([])
+
+    cy.intercept("POST", "/api/reservation", {
+      statusCode: 200,
+      body: {
+        result: {
+          status: "failed",
+          recordId: RECORD_ID,
+          reason: "already_reserved",
+        },
+      },
+    }).as("createReservation")
+
+    visitPhysicalWork()
+    cy.dataCy("work-page-button-logged-in").contains("Reserver bog").click()
+    cy.dataCy("reservation-modal").should("be.visible")
+    cy.dataCy("approve-reservation-button").click()
+    cy.wait("@createReservation")
+
+    cy.dataCy("reservation-error")
+      .should("be.visible")
+      .and("have.attr", "data-reason", "already_reserved")
+    cy.contains("Du har allerede reserveret denne bog.").should("be.visible")
+    cy.contains("button", /^Luk$/).should("be.visible")
+  })
+
   it("Reservation form shows missing-email copy when patron has no email", () => {
     mockFbsPatron({ emailAddress: null })
     mockFbsReservations([])

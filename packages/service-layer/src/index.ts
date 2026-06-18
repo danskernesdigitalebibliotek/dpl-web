@@ -8,8 +8,11 @@ export type {
   CreateReservationResult,
   CreateReservationSuccess,
   CreateReservationFailed,
+  FailureReason,
   Reservation,
 } from "./types"
+
+export { RESERVATION_FAILURE_REASONS } from "./types"
 
 // React provider — wraps an app subtree and supplies config to the hooks.
 export { ServiceLayerProvider } from "./context/ServiceLayerContext"

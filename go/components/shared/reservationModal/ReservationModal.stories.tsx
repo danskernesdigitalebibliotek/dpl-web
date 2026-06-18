@@ -198,6 +198,50 @@ export const PatronWithoutPhone: Story = {
   },
 }
 
+// Error step: stories below stub the POST to return a failed result, then
+// auto-click "Godkend reservering" so the modal renders ReservationErrorContent on
+// load. Each story exercises a different copy bucket (incl. the unknown fallback).
+const errorStory = (reason: string): Story => ({
+  decorators: [
+    withQueryClient(
+      seedClient({ patron: fixturePatron, availability: fixtureAvailability, reservations: [] })
+    ),
+  ],
+  beforeEach: () => {
+    const original = window.fetch
+    window.fetch = ((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input.toString()
+      if (url.includes("/api/reservation") && init?.method === "POST") {
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({ result: { status: "failed", recordId: "12345678", reason } }),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+          )
+        )
+      }
+      return original(input, init)
+    }) as typeof fetch
+    return () => {
+      // Restore original fetch when story unmounts so other stories aren't affected.
+      window.fetch = original
+    }
+  },
+  play: async () => {
+    // ResponsiveDialog renders to a portal, so the button is outside
+    // canvasElement. Query against document.body via screen instead.
+    const { screen, userEvent } = await import("@storybook/test")
+    const button = await screen.findByRole("button", { name: /godkend reservering/i })
+    await userEvent.click(button)
+  },
+  args: { open: true, onClose: () => {}, wid, pid },
+})
+
+export const ErrorAlreadyReserved = errorStory("already_reserved")
+export const ErrorPatronIsBlocked = errorStory("patron_is_blocked")
+export const ErrorMaterialNotReservable = errorStory("material_not_reservable")
+export const ErrorExceedsMaxReservations = errorStory("exceeds_max_reservations")
+export const ErrorUnknownReason = errorStory("some_undocumented_code")
+
 // Receipt step is derived from server state: when a reservation for the
 // manifestation already exists in cache, the modal renders the receipt
 // instead of the form.

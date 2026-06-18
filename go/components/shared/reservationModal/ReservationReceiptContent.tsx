@@ -21,7 +21,7 @@ type ReservationReceiptProps = {
   result: CreateReservationSuccess
 }
 
-const ReservationReceipt = ({ manifestation, result }: ReservationReceiptProps) => {
+const ReservationReceiptContent = ({ manifestation, result }: ReservationReceiptProps) => {
   const title = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
   const { data: branch, isSuccess: branchLoaded } = useGetBranchQuery(
     { isilId: result.pickupBranchId },
@@ -75,4 +75,4 @@ const ReceiptStat = ({ term, value, dataCy }: { term: string; value: string; dat
   </div>
 )
 
-export default ReservationReceipt
+export default ReservationReceiptContent

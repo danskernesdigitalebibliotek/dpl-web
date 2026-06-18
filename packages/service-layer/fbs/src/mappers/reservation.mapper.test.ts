@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
 
+import { RESERVATION_FAILURE_REASONS } from "../../../src/types"
 import { parseAndMapReservation } from "./reservation.mapper"
 
 const successBody = {
@@ -58,13 +59,44 @@ describe("parseAndMapReservation", () => {
     expect(
       parseAndMapReservation({
         success: false,
-        reservationResults: [{ recordId: "12345678", result: "patron_blocked" }],
+        reservationResults: [{ recordId: "12345678", result: "patron_is_blocked" }],
       })
     ).toEqual({
       status: "failed",
       recordId: "12345678",
-      reason: "patron_blocked",
+      reason: "patron_is_blocked",
     })
+  })
+
+  it.each(RESERVATION_FAILURE_REASONS.filter(r => r !== "unknown"))(
+    "maps documented failure code %s to itself",
+    code => {
+      expect(
+        parseAndMapReservation({
+          success: false,
+          reservationResults: [{ recordId: "12345678", result: code }],
+        })
+      ).toEqual({ status: "failed", recordId: "12345678", reason: code })
+    }
+  )
+
+  it("normalises mixed-case codes from FBS to the canonical lowercase form", () => {
+    // The spec lists "material_Discarded" with capital D — guard against it.
+    expect(
+      parseAndMapReservation({
+        success: false,
+        reservationResults: [{ recordId: "12345678", result: "material_Discarded" }],
+      })
+    ).toEqual({ status: "failed", recordId: "12345678", reason: "material_discarded" })
+  })
+
+  it("coerces undocumented failure codes to reason=unknown", () => {
+    expect(
+      parseAndMapReservation({
+        success: false,
+        reservationResults: [{ recordId: "12345678", result: "some_new_code_added_later" }],
+      })
+    ).toEqual({ status: "failed", recordId: "12345678", reason: "unknown" })
   })
 
   it("returns status=failed when success is true but reservationDetails is missing", () => {
@@ -78,6 +110,15 @@ describe("parseAndMapReservation", () => {
       recordId: "12345678",
       reason: "already_reserved",
     })
+  })
+
+  it("coerces unparsable garbage reason via the unknown bucket", () => {
+    expect(
+      parseAndMapReservation({
+        success: true,
+        reservationResults: [{ recordId: "12345678", result: "" }],
+      })
+    ).toEqual({ status: "failed", recordId: "12345678", reason: "unknown" })
   })
 
   it("throws when reservationResults is empty", () => {

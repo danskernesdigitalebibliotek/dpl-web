@@ -34,11 +34,34 @@ export type CreateReservationSuccess = {
   numberInQueue: number | undefined
 }
 
-// Failed branch is intentionally minimal — error mapping arrives in a later slice.
+// FBS-documented failure codes. Unknown values from the API are coerced to "unknown"
+// so callers can render a generic fallback while staying inside the union.
+export const RESERVATION_FAILURE_REASONS = [
+  "patron_is_blocked",
+  "patron_not_found",
+  "already_reserved",
+  "already_loaned",
+  "material_not_loanable",
+  "material_not_reservable",
+  "material_lost",
+  "material_discarded",
+  "loaning_profile_not_found",
+  "material_not_found",
+  "material_part_of_collection",
+  "not_reservable",
+  "no_reservable_materials",
+  "interlibrary_material_not_reservable",
+  "previously_loaned_by_homebound_patron",
+  "exceeds_max_reservations",
+  "unknown",
+] as const
+
+export type FailureReason = (typeof RESERVATION_FAILURE_REASONS)[number]
+
 export type CreateReservationFailed = {
   status: "failed"
   recordId: string
-  reason: string
+  reason: FailureReason
 }
 
 export type CreateReservationResult = CreateReservationSuccess | CreateReservationFailed

@@ -234,14 +234,14 @@ describe("createFbsClient.createReservation", () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       mockJsonResponse({
         success: false,
-        reservationResults: [{ recordId: "12345678", result: "patron_blocked" }],
+        reservationResults: [{ recordId: "12345678", result: "patron_is_blocked" }],
       })
     )
 
     await expect(buildClient().createReservation({ recordId: "12345678" })).resolves.toEqual({
       status: "failed",
       recordId: "12345678",
-      reason: "patron_blocked",
+      reason: "patron_is_blocked",
     })
   })
 })

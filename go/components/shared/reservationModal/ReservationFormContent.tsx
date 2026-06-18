@@ -19,14 +19,13 @@ const USER_PROFILE_PATH = "/user/me"
 type Work = NonNullable<GetMaterialQuery["work"]>
 type Manifestation = NonNullable<Work["manifestations"]["all"]>[number]
 
-type ReservationFormProps = {
+type ReservationFormContentProps = {
   work: Work
   manifestation: Manifestation
   patron: Patron | undefined
-  errorMessage?: string
 }
 
-const ReservationForm = ({ work, manifestation, patron, errorMessage }: ReservationFormProps) => {
+const ReservationFormContent = ({ work, manifestation, patron }: ReservationFormContentProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const baseURL = dplCmsConfig?.libraryInfo?.baseURL
   const adultSiteUrl = baseURL ? `${baseURL.replace(/\/$/, "")}${USER_PROFILE_PATH}` : "#"
@@ -92,8 +91,6 @@ const ReservationForm = ({ work, manifestation, patron, errorMessage }: Reservat
           .
         </p>
       </div>
-
-      {errorMessage && <p className="text-typo-body-sm text-center text-red-600">{errorMessage}</p>}
     </div>
   )
 }
@@ -108,4 +105,4 @@ const InfoCard = ({ icon, title, value }: { icon: string; title: string; value: 
   </div>
 )
 
-export default ReservationForm
+export default ReservationFormContent

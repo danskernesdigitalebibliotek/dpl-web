@@ -6,9 +6,10 @@ import {
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
+import LoanAlreadyLoanedContent from "@/components/shared/loanMaterialModal/LoanAlreadyLoanedContent"
+import LoanErrorContent from "@/components/shared/loanMaterialModal/LoanErrorContent"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
@@ -19,8 +20,6 @@ import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/ge
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
-
-import { publizonErrorMessageMap } from "./helper"
 
 const LoanMaterialModal = ({
   open,
@@ -80,25 +79,26 @@ const LoanMaterialModal = ({
       <AnimateChangeInHeight>
         {manifestation && (
           <div className="mx-auto max-w-prose" data-cy={cyKeys["loan-material-modal"]}>
-            <ManifestationCover
-              cover={manifestation.cover}
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              className="rounded-base flex aspect-1/1 h-36 w-full flex-col items-center
-                justify-center lg:aspect-4/5"
-            />
-
-            <div className="mx-auto mt-10 mb-5 w-full space-y-4">
-              <h3 className="text-typo-heading-5 text-center">
-                {`Er du sikker på, at du vil låne${` ${getManifestationLabel(manifestation, "definite")}?`}`}
-              </h3>
-              {isAlreadyLoaned && (
-                <AlertBox
-                  variant="warning"
-                  message={`Du har allerede lånt denne ${getManifestationLabel(manifestation)}. Find den på Min side.`}
+            {publizonError ? (
+              <LoanErrorContent manifestation={manifestation} code={publizonError.code} />
+            ) : isAlreadyLoaned ? (
+              <LoanAlreadyLoanedContent manifestation={manifestation} />
+            ) : (
+              <>
+                <ManifestationCover
+                  cover={manifestation.cover}
+                  iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                  className="rounded-base flex aspect-1/1 h-36 w-full flex-col items-center
+                    justify-center lg:aspect-4/5"
                 />
-              )}
-              {publizonError && <AlertBox message={publizonErrorMessageMap[publizonError.code]} />}
-            </div>
+
+                <div className="mx-auto mt-10 mb-5 w-full space-y-4">
+                  <h3 className="text-typo-heading-5 text-center">
+                    {`Er du sikker på, at du vil låne${` ${getManifestationLabel(manifestation, "definite")}?`}`}
+                  </h3>
+                </div>
+              </>
+            )}
           </div>
         )}
       </AnimateChangeInHeight>

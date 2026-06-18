@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  type CreateReservationFailed,
   type CreateReservationInput,
   type CreateReservationResult,
   type CreateReservationSuccess,
@@ -19,8 +20,9 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import ReservationForm from "@/components/shared/reservationModal/ReservationForm"
-import ReservationReceipt from "@/components/shared/reservationModal/ReservationReceipt"
+import ReservationErrorContent from "@/components/shared/reservationModal/ReservationErrorContent"
+import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
+import ReservationReceiptContent from "@/components/shared/reservationModal/ReservationReceiptContent"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
@@ -72,7 +74,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
 
   const queryClient = useQueryClient()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | undefined>()
+  const [failureResult, setFailureResult] = useState<CreateReservationFailed | null>(null)
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
 
   // The receipt step is derivable: either we just succeeded (local state)
@@ -95,7 +97,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const handleApprove = useCallback(async () => {
     if (!recordId || isSubmitting) return
     setIsSubmitting(true)
-    setErrorMessage(undefined)
+    setFailureResult(null)
     try {
       const result = await postReservation({
         recordId,
@@ -106,10 +108,13 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
         queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey(wid) })
         queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
       } else {
-        setErrorMessage(`Reservationen kunne ikke gennemføres (${result.reason}).`)
+        setFailureResult(result)
       }
-    } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "Reservationen kunne ikke gennemføres.")
+    } catch {
+      // Network / 500 / non-JSON — surface via the "unknown" copy bucket. The
+      // recordId is non-null here (guarded above) so this preserves the shape
+      // the error view expects.
+      setFailureResult({ status: "failed", recordId, reason: "unknown" })
     } finally {
       setIsSubmitting(false)
     }
@@ -125,22 +130,23 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       <AnimateChangeInHeight>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>
-            {isReceiptStep && derivedResult ? (
-              <ReservationReceipt manifestation={manifestation} result={derivedResult} />
+            {failureResult ? (
+              <ReservationErrorContent manifestation={manifestation} reason={failureResult.reason} />
+            ) : isReceiptStep && derivedResult ? (
+              <ReservationReceiptContent manifestation={manifestation} result={derivedResult} />
             ) : (
-              <ReservationForm
-                work={work}
-                manifestation={manifestation}
-                patron={patron}
-                errorMessage={errorMessage}
-              />
+              <ReservationFormContent work={work} manifestation={manifestation} patron={patron} />
             )}
           </div>
         )}
       </AnimateChangeInHeight>
 
       <ResponsiveDialog.Actions>
-        {isReceiptStep ? (
+        {failureResult ? (
+          <Button theme="primary" size="lg" onClick={onClose}>
+            Luk
+          </Button>
+        ) : isReceiptStep ? (
           <Button theme="primary" size="lg" onClick={onClose}>
             OK
           </Button>
