@@ -84,7 +84,7 @@ describe("useNotificationMessage hook", () => {
           <img
             alt=""
             class="ml-4"
-            src="/node_modules/@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-info.svg"
+            src="/@fs/home/mikl/Projects/Reload/DPL/dpl-web/design-system/build/icons/basic/icon-info.svg"
           />
           <p
             class="text-small-caption"

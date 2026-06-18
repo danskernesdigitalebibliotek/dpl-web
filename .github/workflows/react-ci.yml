@@ -14,23 +14,26 @@ name: React / CI
 
 on:
   push:
-    # No branch filter: relative-ci historically ran on every push. Jobs that
-    # were branch-scoped (tests, pages) reproduce that with per-job `if:`.
+    # Only run on long-lived branches (or on pull request events, below).
+    branches:
+      - main
+      - develop
+      - release/*
     paths:
-      - 'react/**'
-      - '.github/workflows/react-ci.yml'
-      - '.github/actions/**'
-      - 'schemas/openapi/**'
-      - 'schemas/graphql/dbc-fbi.temp-next.graphql'
-      - 'cms/openapi.json'
+      - "react/**"
+      - ".github/workflows/react-ci.yml"
+      - ".github/actions/**"
+      - "schemas/openapi/**"
+      - "schemas/graphql/dbc-fbi.temp-next.graphql"
+      - "cms/openapi.json"
   pull_request:
     paths:
-      - 'react/**'
-      - '.github/workflows/react-ci.yml'
-      - '.github/actions/**'
-      - 'schemas/openapi/**'
-      - 'schemas/graphql/dbc-fbi.temp-next.graphql'
-      - 'cms/openapi.json'
+      - "react/**"
+      - ".github/workflows/react-ci.yml"
+      - ".github/actions/**"
+      - "schemas/openapi/**"
+      - "schemas/graphql/dbc-fbi.temp-next.graphql"
+      - "cms/openapi.json"
 
 jobs:
   # ---------------------------------------------------------------------------
@@ -39,7 +42,7 @@ jobs:
   # ---------------------------------------------------------------------------
   design-system:
     name: React / Build design-system
-    if: '!github.event.deleted'
+    if: "!github.event.deleted"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -76,8 +79,8 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-          stylelint_input: 'src/**/*.scss'
-          workdir: 'react'
+          stylelint_input: "src/**/*.scss"
+          workdir: "react"
       - name: Lint SCSS
         run: pnpm run lint:scss
 
@@ -113,7 +116,7 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-          eslint_flags: '.'
+          eslint_flags: "."
           workdir: react
       - name: Lint Javascript
         run: pnpm run lint:js
@@ -211,9 +214,9 @@ jobs:
         with:
           install: false
           start: pnpm run start:storybook:test
-          wait-on: 'http://localhost:57021'
+          wait-on: "http://localhost:57021"
           browser: ${{ steps.setup-chrome.outputs.chrome-path }}
-          group: 'Integration tests'
+          group: "Integration tests"
           parallel: true
           working-directory: react
           record: true
@@ -248,7 +251,7 @@ jobs:
   unit:
     name: React / Unit test
     needs: design-system
-    if: '!github.event.deleted'
+    if: "!github.event.deleted"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -267,7 +270,7 @@ jobs:
   relative-ci:
     name: React / Build artifacts
     needs: design-system
-    if: '!github.event.deleted'
+    if: "!github.event.deleted"
     runs-on: ubuntu-latest
     defaults:
       run:
