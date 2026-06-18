@@ -568,3 +568,15 @@ function dpl_update_deploy_add_audience_permissions(): string {
 
   return 'Allow editors to use edit audiences';
 }
+
+/**
+ * Make sure roles that can create eventseries also can clone eventseries.
+ */
+function dpl_update_deploy_clone_eventseries_permission(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator', 'editor', 'mediator'],
+    ['clone eventseries entity'],
+    TRUE);
+
+  return 'Allow all types of editors to clone eventseries entities.';
+}
