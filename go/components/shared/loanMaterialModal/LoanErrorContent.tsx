@@ -2,10 +2,7 @@
 
 import React from "react"
 
-import {
-  getManifestationLabel,
-  getManifestationMaterialTypeIcon,
-} from "@/components/pages/workPageLayout/helper"
+import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { cyKeys } from "@/cypress/support/constants"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"

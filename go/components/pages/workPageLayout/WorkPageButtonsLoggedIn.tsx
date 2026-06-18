@@ -9,9 +9,7 @@ import {
   getManifestationLabel,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -155,7 +153,7 @@ const PhysicalReservationButton = ({
   reservationModal: TModalType
   onOpen: (modal: TModalType) => void
 }) => {
-  const { data: reservations, isLoading, isError, error } = useReservations()
+  const { data: reservations } = useReservations()
   const recordId = pidToFaust(selectedManifestation.pid)
   const existing = getReservationByRecordId(reservations, recordId)
 
