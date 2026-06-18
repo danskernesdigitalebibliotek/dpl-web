@@ -21,6 +21,8 @@ export { ServiceLayerProvider } from "./context/ServiceLayerContext"
 export { usePatron } from "./hooks/usePatron"
 export { useMaterialAvailability } from "./hooks/useMaterialAvailability"
 export { useReservations } from "./hooks/useReservations"
+export { useCreateReservation } from "./hooks/useCreateReservation"
+export { useDeleteReservation } from "./hooks/useDeleteReservation"
 
 // queryOptions factories — for prefetchQuery / setQueryData in non-hook contexts.
 export { patronQuery } from "./queries/patron"

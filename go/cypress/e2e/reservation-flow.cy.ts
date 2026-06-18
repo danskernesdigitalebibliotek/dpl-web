@@ -104,24 +104,32 @@ describe("Reservation flow", () => {
     mockFbsPatron()
     mockFbsReservations([])
 
-    cy.intercept("POST", "/api/reservation", {
-      statusCode: 200,
-      body: {
-        result: {
-          status: "success",
-          recordId: RECORD_ID,
-          reservationId: 999111,
-          pickupBranchId: PICKUP_BRANCH_ID,
-          numberInQueue: 3,
-        },
+    // Client calls the service-layer hook which fetches via the AP-service proxy
+    // to mockttp. Mock at the FBS layer with the raw FBS response shape — the
+    // mapper translates to our domain CreateReservationResult.
+    cy.mockServerRest({
+      method: "POST",
+      path: "/external/v1/agencyid/patrons/patronid/reservations/v2",
+      data: {
+        success: true,
+        reservationResults: [
+          {
+            recordId: RECORD_ID,
+            result: "reserved",
+            reservationDetails: {
+              reservationId: 999111,
+              pickupBranch: PICKUP_BRANCH_ID,
+              numberInQueue: 3,
+            },
+          },
+        ],
       },
-    }).as("createReservation")
+    })
 
     visitPhysicalWork()
     cy.dataCy("work-page-button-logged-in").contains("Reserver bog").click()
     cy.dataCy("reservation-modal").should("be.visible")
     cy.dataCy("approve-reservation-button").click()
-    cy.wait("@createReservation")
 
     // Inside a vaul drawer (mobile viewport) Cypress's visibility check trips on
     // the overlay sibling; `should("exist")` + `contain` is enough to assert the
@@ -136,22 +144,19 @@ describe("Reservation flow", () => {
     mockFbsPatron()
     mockFbsReservations([])
 
-    cy.intercept("POST", "/api/reservation", {
-      statusCode: 200,
-      body: {
-        result: {
-          status: "failed",
-          recordId: RECORD_ID,
-          reason: "already_reserved",
-        },
+    cy.mockServerRest({
+      method: "POST",
+      path: "/external/v1/agencyid/patrons/patronid/reservations/v2",
+      data: {
+        success: false,
+        reservationResults: [{ recordId: RECORD_ID, result: "already_reserved" }],
       },
-    }).as("createReservation")
+    })
 
     visitPhysicalWork()
     cy.dataCy("work-page-button-logged-in").contains("Reserver bog").click()
     cy.dataCy("reservation-modal").should("be.visible")
     cy.dataCy("approve-reservation-button").click()
-    cy.wait("@createReservation")
 
     cy.dataCy("reservation-error")
       .should("exist")
@@ -187,10 +192,11 @@ describe("Reservation flow", () => {
       },
     ])
 
-    cy.intercept("DELETE", "/api/reservation/999222", {
-      statusCode: 200,
-      body: { ok: true },
-    }).as("deleteReservation")
+    cy.mockServerRest({
+      method: "DELETE",
+      path: "/external/v1/agencyid/patrons/patronid/reservations",
+      data: { ok: true },
+    })
 
     visitPhysicalWork()
 
@@ -206,7 +212,6 @@ describe("Reservation flow", () => {
     // between query and click. `{force: true}` skips the actionability retry
     // that races with the remount.
     cy.dataCy("approve-delete-reservation-button").click({ force: true })
-    cy.wait("@deleteReservation")
     // data-cy swaps from delete-reservation-modal to delete-reservation-receipt
     // once the reservation is gone from cache.
     cy.dataCy("delete-reservation-receipt").should("contain", "Din reservering er nu slettet")

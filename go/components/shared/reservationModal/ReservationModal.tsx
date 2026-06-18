@@ -2,16 +2,13 @@
 
 import {
   type CreateReservationFailed,
-  type CreateReservationInput,
   type CreateReservationResult,
   type CreateReservationSuccess,
-  materialAvailabilityQueryKey,
-  reservationsQueryKey,
+  useCreateReservation,
   useMaterialAvailability,
   usePatron,
   useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useState } from "react"
 
 import {
@@ -37,23 +34,6 @@ type ReservationModalProps = {
   pid: string
 }
 
-async function postReservation(input: CreateReservationInput): Promise<CreateReservationResult> {
-  const response = await fetch("/api/reservation", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(input),
-  })
-  const body: unknown = await response.json().catch(() => ({}))
-  if (!response.ok) {
-    const message =
-      typeof body === "object" && body !== null && "error" in body
-        ? String((body as { error: unknown }).error)
-        : `Reservationen fejlede (${response.status})`
-    throw new Error(message)
-  }
-  return (body as { result: CreateReservationResult }).result
-}
-
 const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const work = data?.work
@@ -72,8 +52,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   })
   const { data: reservations } = useReservations({ refetchOnMount: "always" })
 
-  const queryClient = useQueryClient()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
   const [failureResult, setFailureResult] = useState<CreateReservationFailed | null>(null)
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
 
@@ -94,31 +73,29 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       : null)
   const isReceiptStep = derivedResult !== null
 
-  const handleApprove = useCallback(async () => {
+  const handleApprove = useCallback(() => {
     if (!recordId || isSubmitting) return
-    setIsSubmitting(true)
     setFailureResult(null)
-    try {
-      const result = await postReservation({
+    createReservation(
+      {
         recordId,
         ...(patron?.pickupBranchId ? { pickupBranchId: patron.pickupBranchId } : {}),
-      })
-      if (result.status === "success") {
-        setSuccessResult(result)
-        queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey(wid) })
-        queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
-      } else {
-        setFailureResult(result)
+      },
+      {
+        onSuccess: (result: CreateReservationResult) => {
+          if (result.status === "success") {
+            setSuccessResult(result)
+          } else {
+            setFailureResult(result)
+          }
+        },
+        onError: () => {
+          // Network / non-JSON — surface via the "unknown" copy bucket.
+          setFailureResult({ status: "failed", recordId, reason: "unknown" })
+        },
       }
-    } catch {
-      // Network / 500 / non-JSON — surface via the "unknown" copy bucket. The
-      // recordId is non-null here (guarded above) so this preserves the shape
-      // the error view expects.
-      setFailureResult({ status: "failed", recordId, reason: "unknown" })
-    } finally {
-      setIsSubmitting(false)
-    }
-  }, [recordId, isSubmitting, patron?.pickupBranchId, queryClient, wid])
+    )
+  }, [recordId, isSubmitting, patron?.pickupBranchId, createReservation])
 
   const submitDisabled = isSubmitting || !recordId
 

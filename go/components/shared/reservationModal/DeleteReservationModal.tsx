@@ -1,11 +1,9 @@
 "use client"
 
 import {
-  materialAvailabilityQueryKey,
-  reservationsQueryKey,
+  useDeleteReservation,
   useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useState } from "react"
 
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
@@ -25,18 +23,6 @@ type Props = {
   pid: string
 }
 
-async function deleteReservationRequest(reservationId: number): Promise<void> {
-  const response = await fetch(`/api/reservation/${reservationId}`, { method: "DELETE" })
-  if (!response.ok) {
-    const body: unknown = await response.json().catch(() => ({}))
-    const message =
-      typeof body === "object" && body !== null && "error" in body
-        ? String((body as { error: unknown }).error)
-        : `Sletning fejlede (${response.status})`
-    throw new Error(message)
-  }
-}
-
 const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const manifestation = getManifestationByPid(data?.work, pid)
@@ -45,8 +31,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const { data: reservations } = useReservations({ refetchOnMount: "always" })
   const reservation = getReservationByRecordId(reservations, recordId)
 
-  const queryClient = useQueryClient()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { mutate: deleteReservation, isPending: isSubmitting } = useDeleteReservation()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [justDeleted, setJustDeleted] = useState(false)
 
@@ -56,21 +41,15 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const isReceiptStep =
     justDeleted || (reservations !== undefined && recordId !== null && !reservation)
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = useCallback(() => {
     if (!reservation || isSubmitting) return
-    setIsSubmitting(true)
     setErrorMessage(undefined)
-    try {
-      await deleteReservationRequest(reservation.reservationId)
-      setJustDeleted(true)
-      queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
-      queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey(wid) })
-    } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "Reservationen kunne ikke slettes.")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }, [reservation, isSubmitting, queryClient, wid])
+    deleteReservation(reservation.reservationId, {
+      onSuccess: () => setJustDeleted(true),
+      onError: err =>
+        setErrorMessage(err instanceof Error ? err.message : "Reservationen kunne ikke slettes."),
+    })
+  }, [reservation, isSubmitting, deleteReservation])
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Slet reservering">
