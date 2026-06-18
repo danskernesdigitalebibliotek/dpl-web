@@ -69,7 +69,7 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     }
   }
 
-  if (!$is_physical && $entity->hasField('field_event_place')) {
+  if ($location_type === 'online' && $entity->hasField('field_event_place')) {
     $entity->set('field_event_place', ' ');
   }
 
