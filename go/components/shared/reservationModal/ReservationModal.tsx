@@ -23,8 +23,8 @@ import ReservationReceiptContent from "@/components/shared/reservationModal/Rese
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
-import { getReservationByRecordId } from "@/lib/graphql/selectors/reservation"
+import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
+import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 type ReservationModalProps = {
@@ -37,7 +37,7 @@ type ReservationModalProps = {
 const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const work = data?.work
-  const manifestation = getManifestationByPid(work, pid)
+  const manifestation = findManifestationByPid(work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
   const physicalManifestations =
@@ -59,7 +59,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   // The receipt step is derivable: either we just succeeded (local state)
   // or the patron already has a reservation for this manifestation
   // (server state).
-  const existingReservation = getReservationByRecordId(reservations, recordId)
+  const existingReservation = findReservationByRecordId(reservations, recordId)
   const derivedResult: CreateReservationSuccess | null =
     successResult ??
     (existingReservation

@@ -12,8 +12,8 @@ import ManifestationCover from "@/components/shared/manifestationCover/Manifesta
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
-import { getReservationByRecordId } from "@/lib/graphql/selectors/reservation"
+import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
+import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { pidToFaust } from "@/lib/helpers/ids"
 
 type Props = {
@@ -25,11 +25,11 @@ type Props = {
 
 const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
-  const manifestation = getManifestationByPid(data?.work, pid)
+  const manifestation = findManifestationByPid(data?.work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
   const { data: reservations } = useReservations({ refetchOnMount: "always" })
-  const reservation = getReservationByRecordId(reservations, recordId)
+  const reservation = findReservationByRecordId(reservations, recordId)
 
   const { mutate: deleteReservation, isPending: isSubmitting } = useDeleteReservation()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()

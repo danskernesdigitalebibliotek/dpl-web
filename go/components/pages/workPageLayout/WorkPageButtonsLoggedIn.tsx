@@ -13,7 +13,7 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { getReservationByRecordId } from "@/lib/graphql/selectors/reservation"
+import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { pidToFaust } from "@/lib/helpers/ids"
 import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
@@ -155,7 +155,7 @@ const PhysicalReservationButton = ({
 }) => {
   const { data: reservations } = useReservations()
   const recordId = pidToFaust(selectedManifestation.pid)
-  const existing = getReservationByRecordId(reservations, recordId)
+  const existing = findReservationByRecordId(reservations, recordId)
 
   if (existing) {
     return (

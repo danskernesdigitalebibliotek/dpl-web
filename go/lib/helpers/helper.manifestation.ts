@@ -8,7 +8,7 @@ type Work = NonNullable<GetMaterialQuery["work"]>
 // Find the manifestation matching a pid within a work. Encapsulates the
 // `work.manifestations.all` shape so callers don't traverse it themselves —
 // a schema change to the manifestations container is a single-file edit.
-export const getManifestationByPid = (
+export const findManifestationByPid = (
   work: Work | null | undefined,
   pid: string
 ): ManifestationWorkPageFragment | undefined => {

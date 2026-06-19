@@ -2,7 +2,7 @@ import { first } from "lodash"
 
 import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { getManifestationByPid } from "@/lib/graphql/selectors/manifestation"
+import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 import Player from "../publizonPlayer/PublizonPlayer"
@@ -20,7 +20,7 @@ function PlayerModal({
   pid: string
 }) {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
-  const manifestation = getManifestationByPid(data?.work, pid)
+  const manifestation = findManifestationByPid(data?.work, pid)
   const { data: loansData } = useGetV1UserLoans()
   const identifier = first(manifestation?.identifiers)?.value
   const orderId = loansData?.loans?.find(
