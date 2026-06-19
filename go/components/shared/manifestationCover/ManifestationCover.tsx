@@ -11,7 +11,6 @@ type ManifestationCoverProps = {
   iconName: MaterialTypeIconNamesType
   alt?: string
   className?: string
-  badgeClassName?: string
 }
 
 const ManifestationCover = ({
