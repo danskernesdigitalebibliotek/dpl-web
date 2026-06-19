@@ -77,8 +77,8 @@ describe('Varnish', () => {
         cy.findByRole('link', {
           name: `Edit ${node.title}`,
         }).click();
+        cy.findByRole('button', { name: 'More actions' }).click();
         cy.findByRole('button', { name: 'More actions' })
-          .click()
           .parent()
           .findByRole('link', { name: 'Delete' })
           .click();

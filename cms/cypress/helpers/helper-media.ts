@@ -20,7 +20,8 @@ export const mediaLibrarySelect = (
   cy.wait(`@${mediaNodeEditAjax}`).its('response.statusCode').should('eq', 200);
 
   cy.get('.media-library-widget-modal').within(() => {
-    cy.get('.views-exposed-form input[name="search"]').clear().type(fileName);
+    cy.get('.views-exposed-form input[name="search"]').clear();
+    cy.get('.views-exposed-form input[name="search"]').type(fileName);
     cy.get('.views-exposed-form input[type="submit"]').click();
     cy.wait(`@${viewsAjax}`, { timeout: 10000 })
       .its('response.statusCode')

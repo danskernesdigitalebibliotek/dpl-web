@@ -67,15 +67,15 @@ describe('Events', () => {
     // Login as admin.
     cy.drupalLogin('/events/add/default');
     setDate('Start date', events.singleEvent.start);
+    cy.findByText('End date').siblings().findByLabelText('Date').focus();
     cy.findByText('End date')
       .siblings()
       .findByLabelText('Date')
-      .focus()
       .should('have.value', events.singleEvent.start.format('YYYY-MM-DD'));
+    cy.findByText('End date').siblings().findByLabelText('Time').focus();
     cy.findByText('End date')
       .siblings()
       .findByLabelText('Time')
-      .focus()
       .should(
         'have.value',
         events.singleEvent.start.add(1, 'hour').format('HH:mm'),

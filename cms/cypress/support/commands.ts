@@ -66,17 +66,15 @@ Cypress.Commands.add('drupalLogin', (url?: string) => {
   cy.session({ username, password }, () => {
     cy.visit('/user/login');
 
-    cy.get('[name="name"]')
-      .type(username)
-      .parent()
-      .get('[name="pass"]')
-      .type(password);
+    cy.get('[name="name"]').type(username);
+    cy.get('[name="pass"]').type(password);
     cy.get('.button-login').click();
 
     cy.visit('/user/edit');
 
     // Making sure the required author field is filled out.
-    cy.get('[name="field_author_name[0][value]"]').clear().type(username);
+    cy.get('[name="field_author_name[0][value]"]').clear();
+    cy.get('[name="field_author_name[0][value]"]').type(username);
 
     // Making sure the interface language is set to english, to simplify our
     // tests using "contains".
