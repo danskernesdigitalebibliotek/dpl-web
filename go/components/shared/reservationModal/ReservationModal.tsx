@@ -9,7 +9,7 @@ import {
   usePatron,
   useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import {
   getManifestationLabel,
@@ -81,11 +81,12 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       : null)
   const isReceiptStep = derivedResult !== null
 
-  const handleApprove = useCallback(() => {
+  const handleApprove = () => {
     if (!recordId || isSubmitting) return
     setFailureResult(null)
     createReservation(
       {
+        workId: wid,
         recordId,
         ...(patron?.pickupBranchId ? { pickupBranchId: patron.pickupBranchId } : {}),
       },
@@ -103,7 +104,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
         },
       }
     )
-  }, [recordId, isSubmitting, patron?.pickupBranchId, createReservation])
+  }
 
   const submitDisabled = isSubmitting || !recordId
 

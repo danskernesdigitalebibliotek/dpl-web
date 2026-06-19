@@ -4,7 +4,7 @@ import {
   useDeleteReservation,
   useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import React, { useCallback, useState } from "react"
+import React, { useState } from "react"
 
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
@@ -41,7 +41,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   // deleted, cold cache reopen).
   const isReceiptStep = deletionSucceeded
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (!reservation || isSubmitting) return
     setErrorMessage(undefined)
     deleteReservation(reservation.reservationId, {
@@ -49,7 +49,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
       onError: err =>
         setErrorMessage(err instanceof Error ? err.message : "Reservationen kunne ikke slettes."),
     })
-  }, [reservation, isSubmitting, deleteReservation])
+  }
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Slet reservering">
