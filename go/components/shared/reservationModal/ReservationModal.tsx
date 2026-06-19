@@ -9,7 +9,7 @@ import {
   usePatron,
   useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import {
   getManifestationLabel,
@@ -50,11 +50,19 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const { data: availability } = useMaterialAvailability(wid, recordIds, {
     enabled: recordIds.length > 0,
   })
-  const { data: reservations } = useReservations({ refetchOnMount: "always" })
+  const { data: reservations } = useReservations()
 
   const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
   const [failureResult, setFailureResult] = useState<CreateReservationFailed | null>(null)
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
+
+  // Local results are pinned to the current recordId. Reset when the user
+  // navigates the modal to a different manifestation so a previous book's
+  // receipt/error doesn't bleed into the new one.
+  useEffect(() => {
+    setSuccessResult(null)
+    setFailureResult(null)
+  }, [recordId])
 
   // The receipt step is derivable: either we just succeeded (local state)
   // or the patron already has a reservation for this manifestation

@@ -27,19 +27,21 @@ export async function POST(request: NextRequest) {
       body,
     })
 
-    const responseHeaders: Record<string, string> = { "Content-Type": "application/json" }
+    const responseHeaders: Record<string, string> = {}
+    const upstreamContentType = upstream.headers.get("content-type")
+    if (upstreamContentType) responseHeaders["Content-Type"] = upstreamContentType
     const cacheTagsHeader = goConfig("caching.dpl-cms.cachetags-header")
     const cacheTags = upstream.headers.get(cacheTagsHeader)
     if (cacheTags) responseHeaders[cacheTagsHeader] = cacheTags
 
+    // Pass through the upstream body and status verbatim. Don't synthesize a
+    // JSON error envelope for empty bodies — that would corrupt a legitimate
+    // 204 No Content and mask non-JSON error pages.
     const text = await upstream.text()
-    return new NextResponse(
-      text || JSON.stringify({ errors: [{ message: "Empty upstream body" }] }),
-      {
-        status: upstream.status,
-        headers: responseHeaders,
-      }
-    )
+    return new NextResponse(text || null, {
+      status: upstream.status,
+      headers: responseHeaders,
+    })
   } catch (error) {
     console.error("DPL CMS proxy error:", error)
     return NextResponse.json(

@@ -28,18 +28,18 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const manifestation = findManifestationByPid(data?.work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
-  const { data: reservations } = useReservations({ refetchOnMount: "always" })
+  const { data: reservations } = useReservations()
   const reservation = findReservationByRecordId(reservations, recordId)
 
   const { mutate: deleteReservation, isPending: isSubmitting } = useDeleteReservation()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [deletionSucceeded, setDeletionSucceeded] = useState(false)
 
-  // Receipt is derivable: either we just deleted, or the reservation is gone
-  // from server state. Guard on having a recordId and a resolved reservations
-  // list so we don't flash receipt during initial hydration.
-  const isReceiptStep =
-    deletionSucceeded || (reservations !== undefined && recordId !== null && !reservation)
+  // Receipt is only shown after the user actually confirmed deletion in this
+  // session. Inferring it from cache absence would flash the success state
+  // whenever the cached reservations list is already stale (e.g. another tab
+  // deleted, cold cache reopen).
+  const isReceiptStep = deletionSucceeded
 
   const handleDelete = useCallback(() => {
     if (!reservation || isSubmitting) return

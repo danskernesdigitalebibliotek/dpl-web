@@ -26,10 +26,13 @@ export const useCreateReservation = (
   return useMutation({
     mutationFn: input => createReservation(config, input),
     onSuccess: (data, variables, onMutateResult, context) => {
-      // Bust reservations + availability so consumers re-fetch fresh state.
-      // Prefix match (no workId arg) invalidates every materialAvailability key.
-      queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
-      queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey() })
+      // FBS returns CreateReservationResult with `status: "success" | "failed"`.
+      // A `failed` result is still a resolved Promise — only bust caches on a
+      // real server-side change.
+      if (data.status === "success") {
+        queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
+        queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey() })
+      }
       options?.onSuccess?.(data, variables, onMutateResult, context)
     },
     ...options,

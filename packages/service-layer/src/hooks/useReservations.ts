@@ -20,6 +20,10 @@ export const useReservations = (
   const config = useServiceLayerConfig()
   return useQuery({
     ...reservationsQuery(config),
+    // Reservations gate UI decisions in modals that open on top of cached
+    // data (form-vs-receipt, delete confirm). Always refetch on mount unless
+    // a consumer explicitly opts out.
+    refetchOnMount: "always",
     ...options,
   })
 }
