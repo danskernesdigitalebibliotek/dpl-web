@@ -45,7 +45,6 @@ dependencies:
     - dpl_library_agency
     - dpl_mapp
     - dpl_opening_hours
-    - dpl_unilogin
     - dpl_url_proxy
     - dpl_webform
     - entity_clone
@@ -130,7 +129,6 @@ permissions:
   - 'administer software updates'
   - 'administer themes'
   - 'administer themes novel'
-  - 'administer unilogin settings'
   - 'administer url proxy configuration'
   - 'administer webform'
   - 'administer webform element access'

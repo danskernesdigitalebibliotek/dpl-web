@@ -42,7 +42,6 @@ dependencies:
     - dpl_library_agency
     - dpl_mapp
     - dpl_opening_hours
-    - dpl_unilogin
     - dpl_url_proxy
     - dpl_webform
     - entity_clone
@@ -106,7 +105,6 @@ permissions:
   - 'administer site configuration'
   - 'administer themes'
   - 'administer themes novel'
-  - 'administer unilogin settings'
   - 'administer url proxy configuration'
   - 'bnf export nodes'
   - 'bnf import nodes'

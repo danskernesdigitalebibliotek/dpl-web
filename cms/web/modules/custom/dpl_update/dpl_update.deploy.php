@@ -580,3 +580,16 @@ function dpl_update_deploy_clone_eventseries_permission(): string {
 
   return 'Allow all types of editors to clone eventseries entities.';
 }
+
+/**
+ * Remove unilogin permission.
+ */
+function dpl_update_deploy_remove_unilogin_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator'],
+    ['administer unilogin settings'],
+    FALSE,
+  );
+
+  return 'Remove unilogin permission';
+}
