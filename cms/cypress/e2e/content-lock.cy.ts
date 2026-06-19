@@ -6,9 +6,12 @@ describe('Testing content_lock contrib module', () => {
     // We need to add force, as Gin adds pointer-events: none, meaning the
     // element should not be clickable by keyboard.
     cy.get('[title="Select all rows in this table"]').check({ force: true });
-    cy.get('#edit-bulk-actions-container [data-drupal-selector="edit-action"]')
-      .select('node_break_lock_action')
-      .should('have.value', 'node_break_lock_action');
+    cy.get(
+      '#edit-bulk-actions-container [data-drupal-selector="edit-action"]',
+    ).select('node_break_lock_action');
+    cy.get(
+      '#edit-bulk-actions-container [data-drupal-selector="edit-action"]',
+    ).should('have.value', 'node_break_lock_action');
     cy.get('[value="Apply to selected items"]').click({ force: true });
 
     cy.visit(`/admin/content?cachebuster=${Math.random()}`);

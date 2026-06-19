@@ -15,8 +15,10 @@ describe('User journey', () => {
 
   it('Can fill out the search form, translate it into CQL & switch to CQL search with the same translation', () => {
     cy.visit('/advanced-search');
-    cy.getBySel('advanced-search-header-row').first().click().type('Harry');
-    cy.getBySel('advanced-search-header-row').eq(1).click().type('Prince');
+    cy.getBySel('advanced-search-header-row').first().click();
+    cy.getBySel('advanced-search-header-row').first().type('Harry');
+    cy.getBySel('advanced-search-header-row').eq(1).click();
+    cy.getBySel('advanced-search-header-row').eq(1).type('Prince');
     cy.getBySel('advanced-search-header-row')
       .eq(1)
       .getBySel('clauses')
@@ -34,8 +36,10 @@ describe('User journey', () => {
 
   it('Can search and show search results', () => {
     cy.visit('/advanced-search');
-    cy.getBySel('advanced-search-header-row').first().click().type('Harry');
-    cy.getBySel('advanced-search-header-row').eq(1).click().type('Prince');
+    cy.getBySel('advanced-search-header-row').first().click();
+    cy.getBySel('advanced-search-header-row').first().type('Harry');
+    cy.getBySel('advanced-search-header-row').eq(1).click();
+    cy.getBySel('advanced-search-header-row').eq(1).type('Prince');
     cy.getBySel('search-button').click();
     cy.getBySel('search-result-list').should('exist');
     cy.getBySel('card-list-item').should('exist');

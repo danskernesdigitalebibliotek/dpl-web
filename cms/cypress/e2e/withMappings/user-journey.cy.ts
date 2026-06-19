@@ -1,15 +1,13 @@
 describe('User journey', () => {
   it('Shows search suggestions & redirects to search result page', () => {
-    cy.visit('/arrangementer')
-      .getBySel('search-header-input')
-      .type('harry')
-      .getBySel('autosuggest')
-      .should('be.visible')
-      .getBySel('autosuggest-text-item')
+    cy.visit('/arrangementer');
+    cy.getBySel('search-header-input').type('harry');
+    cy.getBySel('autosuggest').should('be.visible');
+    cy.getBySel('autosuggest-text-item')
       .first()
       .should('contain', 'Harry Potter (Topic)')
-      .click()
-      .url()
+      .click();
+    cy.url()
       .should('include', 'search?q=*&facets=')
       .and('include', 'subjects')
       .and('include', 'harry+potter');
@@ -22,18 +20,16 @@ describe('User journey', () => {
       .getBySel('card-list-item-availability')
       .should('exist');
 
-    cy.getBySel('card-list-item')
-      .first()
-      .click()
-      .url()
-      .should('include', 'work/work-of:870970-basis:54181744');
+    cy.getBySel('card-list-item').first().click();
+    cy.url().should('include', 'work/work-of:870970-basis:54181744');
   });
 
   it('Shows material page & reservation button is rendered', () => {
-    cy.visit('/work/work-of:870970-basis:25245784')
-      .getBySel('material-header-content')
-      .scrollIntoView()
-      .contains('Harry Potter og Fønixordenen');
+    cy.visit('/work/work-of:870970-basis:25245784');
+    cy.getBySel('material-header-content').scrollIntoView();
+    cy.getBySel('material-header-content').contains(
+      'Harry Potter og Fønixordenen',
+    );
     // Wait for service to fill reserve button with the right text.
     // TODO: Consider using the pipe package in the future...
     // eslint-disable-next-line cypress/no-unnecessary-waiting
