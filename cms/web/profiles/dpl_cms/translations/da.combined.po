@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-19 13:16+0200\n"
-"PO-Revision-Date: 2026-06-19 13:16+0200\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-19 13:17+0200\n"
-"PO-Revision-Date: 2026-06-19 13:17+0200\n"
+"POT-Creation-Date: 2026-06-19 14:49+0200\n"
+"PO-Revision-Date: 2026-06-19 14:49+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1864,42 +1852,6 @@ msgid "Any specific times below will be ignored when \"All day\" is enabled"
 msgstr ""
 "Når \"Hele dagen\" er slået til, vil specifikke tidspunkter nedenfor blive "
 "ignoreret."
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin API configuration"
-msgstr "UNI-login API-konfiguration"
-
-msgctxt "Unilogin configuration"
-msgid "API credentials"
-msgstr "API legitimationsoplysninger"
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin API client secret."
-msgstr "UNI-login API-klienthemmelighed."
-
-msgctxt "Unilogin configuration"
-msgid "The Unilogin API client secret."
-msgstr "UNI-login API-klienthemmelighed."
-
-msgctxt "Unilogin configuration"
-msgid "PubHub configuration"
-msgstr "PubHub-konfiguration"
-
-msgctxt "Unilogin configuration"
-msgid "Retailer key code."
-msgstr "Forhandlernøglekode."
-
-msgctxt "Unilogin configuration"
-msgid "The PubHub retailer key code."
-msgstr "PubHub-forhandlernøglekode."
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin municipality ID."
-msgstr "UNI-login kommune-ID."
-
-msgctxt "Unilogin configuration"
-msgid "The Unilogin municipality ID."
-msgstr "UNI-login kommune-ID."
 
 msgctxt "Global (Aria)"
 msgid "Close blocked patron modal"
@@ -6310,12 +6262,6 @@ msgstr "Eksempelindhold for DPL CMS"
 msgid "Provides example content for demo sites."
 msgstr "Indeholder eksempelindhold til demosider."
 
-msgid "UniLogin configuration"
-msgstr "UniLogin configuration"
-
-msgid "Change UniLogin configuration"
-msgstr "Change UniLogin configuration"
-
 msgid "DPL UniLogin"
 msgstr ""
 "\n"
@@ -6323,9 +6269,6 @@ msgstr ""
 
 msgid "Module containing unilogin configuration"
 msgstr "Module containing unilogin configuration"
-
-msgid "Unilogin configuration"
-msgstr "Unilogin configuration"
 
 msgid "DPL publication"
 msgstr "DPL publikation"
