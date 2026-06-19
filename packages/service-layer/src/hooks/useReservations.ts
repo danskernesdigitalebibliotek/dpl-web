@@ -4,7 +4,7 @@ import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/r
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import { reservationsQuery } from "../queries/reservations"
-import type { reservationsQueryKey } from "../queryKeys"
+import type { reservationsQueryKey } from "../queries/reservations"
 import type { Reservation } from "../types"
 
 type ReservationsQueryKey = ReturnType<typeof reservationsQueryKey>

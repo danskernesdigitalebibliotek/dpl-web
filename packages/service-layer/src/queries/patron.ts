@@ -1,8 +1,9 @@
 import { queryOptions } from "@tanstack/react-query"
 
 import { getPatron } from "../patron"
-import { patronQueryKey } from "../queryKeys"
 import type { ServiceLayerConfig } from "../types"
+
+export const patronQueryKey = () => ["serviceLayer", "patron"] as const
 
 export const patronQuery = (config: ServiceLayerConfig) =>
   queryOptions({

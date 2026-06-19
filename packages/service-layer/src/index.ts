@@ -30,7 +30,9 @@ export { materialAvailabilityQuery } from "./queries/availability"
 export { reservationsQuery } from "./queries/reservations"
 
 // Query keys — for cache mutations (tests, stories, setQueryData).
-export { patronQueryKey, materialAvailabilityQueryKey, reservationsQueryKey } from "./queryKeys"
+export { patronQueryKey } from "./queries/patron"
+export { materialAvailabilityQueryKey } from "./queries/availability"
+export { reservationsQueryKey } from "./queries/reservations"
 
 // Imperative fetchers — for non-react-query contexts (e.g. baking patron name into session).
 export { getPatron } from "./patron"

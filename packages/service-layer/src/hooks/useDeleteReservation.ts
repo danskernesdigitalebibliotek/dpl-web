@@ -8,7 +8,8 @@ import {
 } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import { reservationsQueryKey } from "../queryKeys"
+import { materialAvailabilityQueryKey } from "../queries/availability"
+import { reservationsQueryKey } from "../queries/reservations"
 import { deleteReservation } from "../reservations"
 
 type UseDeleteReservationOptions = Omit<
@@ -25,7 +26,7 @@ export const useDeleteReservation = (
     mutationFn: reservationId => deleteReservation(config, reservationId),
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
-      queryClient.invalidateQueries({ queryKey: ["serviceLayer", "materialAvailability"] })
+      queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey() })
       options?.onSuccess?.(data, variables, onMutateResult, context)
     },
     ...options,

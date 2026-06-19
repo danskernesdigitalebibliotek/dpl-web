@@ -4,7 +4,7 @@ import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/r
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import { materialAvailabilityQuery } from "../queries/availability"
-import type { materialAvailabilityQueryKey } from "../queryKeys"
+import type { materialAvailabilityQueryKey } from "../queries/availability"
 import type { MaterialAvailability } from "../types"
 
 type MaterialAvailabilityQueryKey = ReturnType<typeof materialAvailabilityQueryKey>

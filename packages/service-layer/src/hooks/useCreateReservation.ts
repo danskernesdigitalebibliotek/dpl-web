@@ -8,8 +8,9 @@ import {
 } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
+import { materialAvailabilityQueryKey } from "../queries/availability"
+import { reservationsQueryKey } from "../queries/reservations"
 import { createReservation } from "../reservation"
-import { reservationsQueryKey } from "../queryKeys"
 import type { CreateReservationInput, CreateReservationResult } from "../types"
 
 type UseCreateReservationOptions = Omit<
@@ -26,9 +27,9 @@ export const useCreateReservation = (
     mutationFn: input => createReservation(config, input),
     onSuccess: (data, variables, onMutateResult, context) => {
       // Bust reservations + availability so consumers re-fetch fresh state.
-      // Prefix match invalidates every materialAvailability key regardless of workId.
+      // Prefix match (no workId arg) invalidates every materialAvailability key.
       queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
-      queryClient.invalidateQueries({ queryKey: ["serviceLayer", "materialAvailability"] })
+      queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey() })
       options?.onSuccess?.(data, variables, onMutateResult, context)
     },
     ...options,
