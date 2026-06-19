@@ -34,33 +34,31 @@ function ResponsiveDialog({
 }) {
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
-  return (
-    <div>
-      {isDesktop && (
-        <Dialog open={open} onOpenChange={onClose}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              {description && <DialogDescription>{description}</DialogDescription>}
-              <hr className="mt-5 mb-10" />
-            </DialogHeader>
-            <DialogBody>{children}</DialogBody>
-          </DialogContent>
-        </Dialog>
-      )}
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={onClose}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            {description && <DialogDescription>{description}</DialogDescription>}
+            <hr className="mt-5 mb-10" />
+          </DialogHeader>
+          <DialogBody>{children}</DialogBody>
+        </DialogContent>
+      </Dialog>
+    )
+  }
 
-      {!isDesktop && (
-        <Drawer open={open} onOpenChange={onClose}>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>{title}</DrawerTitle>
-              {description && <DrawerDescription>{description}</DrawerDescription>}
-            </DrawerHeader>
-            {children}
-          </DrawerContent>
-        </Drawer>
-      )}
-    </div>
+  return (
+    <Drawer open={open} onOpenChange={onClose}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{title}</DrawerTitle>
+          {description && <DrawerDescription>{description}</DrawerDescription>}
+        </DrawerHeader>
+        {children}
+      </DrawerContent>
+    </Drawer>
   )
 }
 

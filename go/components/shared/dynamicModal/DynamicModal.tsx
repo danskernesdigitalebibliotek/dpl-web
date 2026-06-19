@@ -37,6 +37,25 @@ export function DynamicModal() {
     }
   }, [modalType, wid, pid])
 
+  // Make all non-portal body children inert while the modal is open so that
+  // keyboard focus cannot escape the dialog — even into cross-origin iframes
+  // where Radix's FocusScope sentinels can't intercept Tab navigation.
+  useEffect(() => {
+    if (!open) return
+
+    const siblings = Array.from(document.body.children).filter(
+      el => !el.hasAttribute("data-radix-portal")
+    ) as HTMLElement[]
+
+    siblings.forEach(el => {
+      el.inert = true
+    })
+    return () =>
+      siblings.forEach(el => {
+        el.inert = false
+      })
+  }, [open])
+
   const closeModal = useCallback(() => {
     setModal({ modal: null, modalProps: null })
   }, [setModal])
