@@ -12,10 +12,7 @@ import { materialAvailabilityQueryKey } from "../queries/availability"
 import { reservationsQueryKey } from "../queries/reservations"
 import { deleteReservation } from "../reservations"
 
-type UseDeleteReservationOptions = Omit<
-  UseMutationOptions<void, Error, number>,
-  "mutationFn"
->
+type UseDeleteReservationOptions = Omit<UseMutationOptions<void, Error, number>, "mutationFn">
 
 export const useDeleteReservation = (
   options?: UseDeleteReservationOptions

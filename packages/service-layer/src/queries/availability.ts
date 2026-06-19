@@ -4,9 +4,9 @@ import { getMaterialAvailability } from "../availability"
 import type { ServiceLayerConfig } from "../types"
 
 export const materialAvailabilityQueryKey = (workId?: string) =>
-  (workId === undefined
+  workId === undefined
     ? (["serviceLayer", "materialAvailability"] as const)
-    : (["serviceLayer", "materialAvailability", workId] as const))
+    : (["serviceLayer", "materialAvailability", workId] as const)
 
 export const materialAvailabilityQuery = (
   config: ServiceLayerConfig,
