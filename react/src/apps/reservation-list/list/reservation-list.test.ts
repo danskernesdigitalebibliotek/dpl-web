@@ -7,10 +7,9 @@ describe("Reservation list", () => {
 
     const wednesday20220603 = new Date("2023-02-03T12:30:00.000Z").getTime();
 
-    // Sets time to a specific date
-    // https://github.com/cypress-io/cypress/issues/7577
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    cy.clock(wednesday20220603).then((clock: any) => clock.bind(window));
+    // Sets time to a specific date. cy.clock() applies to the application
+    // under test automatically when called before cy.visit().
+    cy.clock(wednesday20220603);
 
     cy.interceptRest({
       aliasName: "work",
