@@ -33,19 +33,19 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
 
   const { mutate: deleteReservation, isPending: isSubmitting } = useDeleteReservation()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
-  const [justDeleted, setJustDeleted] = useState(false)
+  const [deletionSucceeded, setDeletionSucceeded] = useState(false)
 
   // Receipt is derivable: either we just deleted, or the reservation is gone
   // from server state. Guard on having a recordId and a resolved reservations
   // list so we don't flash receipt during initial hydration.
   const isReceiptStep =
-    justDeleted || (reservations !== undefined && recordId !== null && !reservation)
+    deletionSucceeded || (reservations !== undefined && recordId !== null && !reservation)
 
   const handleDelete = useCallback(() => {
     if (!reservation || isSubmitting) return
     setErrorMessage(undefined)
     deleteReservation(reservation.reservationId, {
-      onSuccess: () => setJustDeleted(true),
+      onSuccess: () => setDeletionSucceeded(true),
       onError: err =>
         setErrorMessage(err instanceof Error ? err.message : "Reservationen kunne ikke slettes."),
     })
