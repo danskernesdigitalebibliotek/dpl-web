@@ -5,6 +5,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Get Work.
   await import("./data/fbi/getMaterial.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "POST",
         urlPattern: "/next.*/graphql",
@@ -25,6 +28,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Work for proxy-url.cy.ts
   await import("./data/fbi/getMaterialOnline.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "POST",
         urlPattern: "/next.*/graphql",
@@ -42,6 +48,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Get work info for work.cy.ts.
   await import("./data/fbi/WorkInfo.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "POST",
         urlPattern: "/next.*/graphql",
@@ -59,6 +68,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Get work info for proxy-url.cy.ts.
   await import("./data/fbi/WorkInfoOnline.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "POST",
         urlPattern: "/next.*/graphql",
@@ -76,6 +88,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Get Infomedia.
   await import("./data/fbi/getInfomedia.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "POST",
         urlPattern: "/next.*/graphql",
@@ -94,6 +109,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Get holdings.
   await import("./data/fbs/holdings.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "GET",
         urlPattern:
@@ -106,6 +124,9 @@ export default async (baseUri?: string, options?: Options) => {
   );
 
   await wiremock(baseUri, options).mappings.createMapping({
+    // Persistent so it survives cy.resetMappings() (the login/session flow
+    // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+    persistent: true,
     request: {
       method: "POST",
       urlPattern: "/next.*/graphql",

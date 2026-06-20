@@ -39,6 +39,7 @@ jobs:
 
       - name: Archive videoes
         if: always()
+        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
           name: cypress-${{ inputs.id }}-videos

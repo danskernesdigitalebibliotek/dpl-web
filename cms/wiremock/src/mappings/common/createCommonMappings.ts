@@ -4,6 +4,9 @@ import wiremock, { matchGraphqlQuery } from "../../lib/general";
 export default async (baseUri?: string, options?: Options) => {
   // Mapping for covers.
   await wiremock(baseUri, options).mappings.createMapping({
+    // Persistent so it survives cy.resetMappings() (the login/session flow
+    // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+    persistent: true,
     request: {
       method: "GET",
       urlPattern: "/api/v2/covers.*",
@@ -33,6 +36,9 @@ export default async (baseUri?: string, options?: Options) => {
 
   // Mapping for material list.
   await wiremock(baseUri, options).mappings.createMapping({
+    // Persistent so it survives cy.resetMappings() (the login/session flow
+    // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+    persistent: true,
     request: {
       method: "HEAD",
       urlPattern: "/list/default/.*",
@@ -44,6 +50,9 @@ export default async (baseUri?: string, options?: Options) => {
 
   // Mapping for availability.
   await wiremock(baseUri, options).mappings.createMapping({
+    // Persistent so it survives cy.resetMappings() (the login/session flow
+    // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+    persistent: true,
     request: {
       method: "GET",
       urlPattern: "/external/agencyid/catalog/availability/v3\\?recordid=.*",
@@ -69,6 +78,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Mapings for branches
   await import("./data/fbs/getBranches.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "GET",
         urlPattern: "/external/v1/agencyid/branches",
@@ -111,6 +123,9 @@ export default async (baseUri?: string, options?: Options) => {
   // Mapings for autosuggest
   await import("../search/data/fbi/autosugggest.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
+      // Persistent so it survives cy.resetMappings() (the login/session flow
+      // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
+      persistent: true,
       request: {
         method: "POST",
         urlPattern: "/next.*/graphql",

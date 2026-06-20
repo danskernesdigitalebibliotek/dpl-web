@@ -188,16 +188,16 @@ jobs:
       (github.event_name == 'pull_request' ||
        (github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'develop')))
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       TZ: Europe/Copenhagen
     strategy:
-      # When one test fails, DO NOT cancel the other containers, because this
-      # will kill Cypress processes leaving Cypress Cloud hanging.
-      # https://github.com/cypress-io/github-action/issues/48
       fail-fast: false
       matrix:
-        # Run 3 copies of the current job in parallel
-        containers: [1, 2, 3]
+        # The pnpm migration caused the tests to finish faster and that often
+        # leads to one runner hanging due to race conditions with Cypress Cloud.
+        # To avoid that, parallel tests are disabled for now.
+        containers: [1]
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/common-setup-js
@@ -222,13 +222,13 @@ jobs:
           start: pnpm run start:storybook:test
           wait-on: "http://localhost:57021"
           browser: ${{ steps.setup-chrome.outputs.chrome-path }}
-          group: "Integration tests"
-          parallel: true
           working-directory: react
-          record: true
+          # Disabled Cloud recording to diagnose the CI hang. Even with Test
+          # Replay disabled, something in Cypress Cloud's per-run API traffic
+          # appears to be blocking the runner between tests. Disabling record
+          # entirely removes all Cloud IPC to confirm or rule out that theory.
+          record: false
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v6

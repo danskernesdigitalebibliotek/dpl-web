@@ -283,14 +283,37 @@ describe("Material buttons", () => {
       fixtureFilePath: "material/availability.json"
     });
 
+    // Use middleware:true so these handlers run before any accumulated regular
+    // handlers from previous specs, regardless of LIFO ordering.
+    cy.interceptGraphql({
+      operationName: "getReviewManifestations",
+      fixtureFilePath: "material/reviews.json",
+      middleware: true
+    });
+
+    cy.interceptGraphql({
+      operationName: "getMaterialGlobally",
+      fixtureFilePath: "material-buttons/material-buttons-fbi-api.json",
+      middleware: true
+    });
+
     cy.interceptGraphql({
       operationName: "WorkRecommendations",
-      fixtureFilePath: "material/material-grid-related-recommendations.json"
+      fixtureFilePath: "material/material-grid-related-recommendations.json",
+      middleware: true
+    });
+
+    cy.interceptGraphql({
+      operationName: "complexSearchWithPagination",
+      fixtureFilePath:
+        "material/material-grid-related-author-recommendations.json",
+      middleware: true
     });
 
     cy.interceptGraphql({
       operationName: "GetCoversByPids",
-      fixtureFilePath: "cover/cover.json"
+      fixtureFilePath: "cover/cover.json",
+      middleware: true
     });
 
     // Intercept like button
