@@ -1,9 +1,9 @@
 import { Options } from 'wiremock-rest-client/dist/model/options.model';
 import wiremock from '../../lib/general';
 
-export default (baseUri?: string, options?: Options) => {
+export default async (baseUri?: string, options?: Options) => {
   // Get user info.
-  import('./data/fbi/patron.json').then((json) => {
+  await import('./data/fbi/patron.json').then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         urlPattern: '/external/agencyid/patrons/patronid/v4',
@@ -11,11 +11,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json,
       },
-    });
-  });
+    })
+  );
 
   // Get reservations.
-  import('./data/fbs/reservations.json').then((json) => {
+  await import('./data/fbs/reservations.json').then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: 'POST',
@@ -24,6 +24,6 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json.default,
       },
-    });
-  });
+    })
+  );
 };

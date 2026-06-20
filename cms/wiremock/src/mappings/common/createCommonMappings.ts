@@ -1,9 +1,9 @@
 import { Options } from "wiremock-rest-client/dist/model/options.model";
 import wiremock, { matchGraphqlQuery } from "../../lib/general";
 
-export default (baseUri?: string, options?: Options) => {
+export default async (baseUri?: string, options?: Options) => {
   // Mapping for covers.
-  wiremock(baseUri, options).mappings.createMapping({
+  await wiremock(baseUri, options).mappings.createMapping({
     request: {
       method: "GET",
       urlPattern: "/api/v2/covers.*",
@@ -32,7 +32,7 @@ export default (baseUri?: string, options?: Options) => {
   });
 
   // Mapping for material list.
-  wiremock(baseUri, options).mappings.createMapping({
+  await wiremock(baseUri, options).mappings.createMapping({
     request: {
       method: "HEAD",
       urlPattern: "/list/default/.*",
@@ -43,7 +43,7 @@ export default (baseUri?: string, options?: Options) => {
   });
 
   // Mapping for availability.
-  wiremock(baseUri, options).mappings.createMapping({
+  await wiremock(baseUri, options).mappings.createMapping({
     request: {
       method: "GET",
       urlPattern: "/external/agencyid/catalog/availability/v3\\?recordid=.*",
@@ -67,7 +67,7 @@ export default (baseUri?: string, options?: Options) => {
   });
 
   // Mapings for branches
-  import("./data/fbs/getBranches.json").then((json) => {
+  await import("./data/fbs/getBranches.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "GET",
@@ -76,13 +76,13 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json.default,
       },
-    });
-  });
+    })
+  );
 
   // Mapping for GSearch / Dataforsyningen address API.
   // The GSearch module calls this server-side when resolving addresses.
   // Persistent so it survives cy.resetMappings() from other Cypress specs.
-  import("./data/gsearch/getAdresse.json").then((json) => {
+  await import("./data/gsearch/getAdresse.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       persistent: true,
       request: {
@@ -92,10 +92,10 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json.default,
       },
-    });
-  });
+    })
+  );
 
-  import('./data/gsearch/getHusnummer.json').then((json) => {
+  await import('./data/gsearch/getHusnummer.json').then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       persistent: true,
       request: {
@@ -105,11 +105,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json.default,
       },
-    });
-  });
+    })
+  );
 
   // Mapings for autosuggest
-  import("../search/data/fbi/autosugggest.json").then((json) => {
+  await import("../search/data/fbi/autosugggest.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
@@ -123,6 +123,6 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json.default,
       },
-    });
-  });
+    })
+  );
 };
