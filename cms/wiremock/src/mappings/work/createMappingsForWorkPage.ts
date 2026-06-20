@@ -1,9 +1,9 @@
 import { Options } from "wiremock-rest-client/dist/model/options.model";
 import wiremock, { matchGraphqlQuery, matchWidVariable } from "../../lib/general";
 
-export default (baseUri?: string, options?: Options) => {
+export default async (baseUri?: string, options?: Options) => {
   // Get Work.
-  import("./data/fbi/getMaterial.json").then((json) => {
+  await import("./data/fbi/getMaterial.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
@@ -19,11 +19,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json,
       },
-    });
-  });
+    })
+  );
 
   // Work for proxy-url.cy.ts
-  import("./data/fbi/getMaterialOnline.json").then((json) => {
+  await import("./data/fbi/getMaterialOnline.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
@@ -36,11 +36,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json,
       },
-    });
-  });
+    })
+  );
 
   // Get work info for work.cy.ts.
-  import("./data/fbi/WorkInfo.json").then((json) => {
+  await import("./data/fbi/WorkInfo.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
@@ -53,11 +53,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json,
       },
-    });
-  });
+    })
+  );
 
-    // Get work info for proxy-url.cy.ts.
-  import("./data/fbi/WorkInfoOnline.json").then((json) => {
+  // Get work info for proxy-url.cy.ts.
+  await import("./data/fbi/WorkInfoOnline.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
@@ -70,11 +70,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json,
       },
-    });
-  });
+    })
+  );
 
   // Get Infomedia.
-  import("./data/fbi/getInfomedia.json").then((json) => {
+  await import("./data/fbi/getInfomedia.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
@@ -88,11 +88,11 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json,
       },
-    });
-  });
+    })
+  );
 
   // Get holdings.
-  import("./data/fbs/holdings.json").then((json) => {
+  await import("./data/fbs/holdings.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "GET",
@@ -102,19 +102,19 @@ export default (baseUri?: string, options?: Options) => {
       response: {
         jsonBody: json.default,
       },
-    });
-  });
-
-  wiremock(baseUri, options).mappings.createMapping({
-      request: {
-        method: "POST",
-        urlPattern: "/next.*/graphql",
-        bodyPatterns: [
-          {matchesJsonPath: matchGraphqlQuery("WorkRecommendations")},
-        ],
-      },
-      response: {
-        jsonBody: {"data":{"recommend":{"result":[]}}},
-      },
     })
+  );
+
+  await wiremock(baseUri, options).mappings.createMapping({
+    request: {
+      method: "POST",
+      urlPattern: "/next.*/graphql",
+      bodyPatterns: [
+        {matchesJsonPath: matchGraphqlQuery("WorkRecommendations")},
+      ],
+    },
+    response: {
+      jsonBody: {"data":{"recommend":{"result":[]}}},
+    },
+  });
 };
