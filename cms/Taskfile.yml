@@ -520,6 +520,14 @@ tasks:
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm --config.verify-deps-before-run=false run wiremock:create-mappings
 
+  # Dump the wiremock container's (--verbose) logs. On a mismatch wiremock logs
+  # the incoming request plus the closest stub and a diff, which is what we need
+  # to see why an FBI GraphQL request returned 404 in CI.
+  ci:debug:wiremock-logs:
+    desc: Dump wiremock container logs (unmatched-request diffs)
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} logs --no-color wiremock
+
   ci:lighthouse:
     desc: Run Lighthouse to test performance
     deps: [ci:wiremock:create-mappings]
