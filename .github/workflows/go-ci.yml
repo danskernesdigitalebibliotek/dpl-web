@@ -45,7 +45,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Required to retrieve git history
       - uses: ./.github/actions/common-setup-js
@@ -77,7 +77,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Required to retrieve git history
       - uses: ./.github/actions/common-setup-js
@@ -94,7 +94,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Required to retrieve git history
       - uses: ./.github/actions/common-setup-js
@@ -114,7 +114,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
@@ -150,7 +150,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Load environment variables
@@ -179,7 +179,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: ./.github/actions/common-setup-js
@@ -216,7 +216,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Load environment variables
@@ -253,7 +253,7 @@ jobs:
       run:
         working-directory: go
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Required to retrieve git history
       - uses: ./.github/actions/common-setup-js
