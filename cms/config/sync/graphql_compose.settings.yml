@@ -18,6 +18,7 @@ entity_config:
     article:
       enabled: true
       query_load_enabled: true
+      routes_enabled: true
     branch:
       enabled: false
     campaign:
