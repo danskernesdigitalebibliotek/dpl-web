@@ -324,6 +324,7 @@ export type MediaVideotool = MediaInterface & {
   name: Scalars['String']['output'];
   path?: Maybe<Scalars['String']['output']>;
   status: Scalars['Boolean']['output'];
+  streamingUrl?: Maybe<Scalars['String']['output']>;
   thumbnail: Scalars['String']['output'];
 };
 
@@ -337,6 +338,7 @@ export type MediaVideotoolVertical = MediaInterface & {
   name: Scalars['String']['output'];
   path?: Maybe<Scalars['String']['output']>;
   status: Scalars['Boolean']['output'];
+  streamingUrl?: Maybe<Scalars['String']['output']>;
   thumbnail: Scalars['String']['output'];
 };
 
