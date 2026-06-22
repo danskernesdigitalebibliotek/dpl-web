@@ -14023,10 +14023,10 @@ react-is@^18.3.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
 
-react-parallax-tilt@^1.7.331:
-  version "1.7.331"
-  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.331.tgz#df7522134b0606c01d1f36ee6d0ad157509abcd2"
-  integrity sha512-fbJuhofF3HfMVNXymNGlSr+9/OhXJlCkxxmluWQ3GkeT540Qf3dyMF6+na2c+cp87YCKy71She5uTYd9/Px5Fg==
+react-parallax-tilt@^1.7.332:
+  version "1.7.332"
+  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.332.tgz#9f4c3dba83db7593cd4cd98c67bad6521fe8e888"
+  integrity sha512-8WEc//DxnvKEQfgxSeWmCTLzu1cdql7zUr8Asd6mmSx67d9AlbrL1yaeQvV81lvxt+bjRwiW4UA0H2zatyHfLA==
 
 react-refresh@^0.14.0:
   version "0.14.2"
