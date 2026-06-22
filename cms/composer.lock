@@ -2574,29 +2574,29 @@
         },
         {
             "name": "drupal/autowire_plugin_trait",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/autowire_plugin_trait.git",
-                "reference": "1.0.0"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/autowire_plugin_trait-1.0.0.zip",
-                "reference": "1.0.0",
-                "shasum": "dda1fa378669817a7b0089b92570b276c37f05a5"
+                "url": "https://ftp.drupal.org/files/projects/autowire_plugin_trait-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "c94020db865a4f8900d5ec9fa364c56320a5344c"
             },
             "require": {
-                "drupal/core": "^10 || ^11"
+                "drupal/core": "^10 || >=11 <11.3"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0",
-                    "datestamp": "1718100412",
+                    "version": "1.1.0",
+                    "datestamp": "1781759925",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
