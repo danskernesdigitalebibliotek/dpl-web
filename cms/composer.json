@@ -265,7 +265,7 @@
         "phpunit/phpunit": "^9.6",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "timeweb/phpstan-enum": "^3.1",
-        "vincentlanglet/twig-cs-fixer": "^3.8.0"
+        "vincentlanglet/twig-cs-fixer": "^4.0.1"
     },
     "conflict": {
         "drupal/drupal": "*",
