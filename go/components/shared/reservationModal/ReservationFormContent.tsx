@@ -9,7 +9,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import Icon from "@/components/shared/icon/Icon"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
-import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { useBranchTitle } from "@/hooks/useBranchTitle"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
@@ -33,17 +33,10 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
   const manifestationTitle = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
-  const { data: branch, isSuccess: branchLoaded } = useGetBranchQuery(
-    { isilId: patron?.pickupBranchId ?? "" },
-    {
-      enabled: !!patron?.pickupBranchId,
-      staleTime: Infinity,
-      select: data => data.getBranch,
-    }
-  )
+  const { data: branchTitle, isSuccess: branchLoaded } = useBranchTitle(patron?.pickupBranchId)
   const pickupBranchName = !patron?.pickupBranchId
     ? "Afhentningssted ikke valgt"
-    : (branch?.title ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : ""))
+    : (branchTitle ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : ""))
 
   return (
     <div className="mx-auto max-w-prose space-y-8">

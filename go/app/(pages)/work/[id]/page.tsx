@@ -11,8 +11,9 @@ import React, { Suspense } from "react"
 
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import { isPhysicalMaterialType } from "@/components/pages/workPageLayout/helper"
+import { branchTitleQueryKey } from "@/hooks/useBranchTitle"
+import { getBranchTitle } from "@/lib/actions/getBranchTitle"
 import getQueryClient from "@/lib/getQueryClient"
-import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn, getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
@@ -72,8 +73,8 @@ async function WorkPage({ params }: TWorkPageProps) {
       if (isilId) {
         await queryClient
           .prefetchQuery({
-            queryKey: useGetBranchQuery.getKey({ isilId }),
-            queryFn: useGetBranchQuery.fetcher({ isilId }),
+            queryKey: branchTitleQueryKey(isilId),
+            queryFn: () => getBranchTitle(isilId),
           })
           .catch(() => {})
       }

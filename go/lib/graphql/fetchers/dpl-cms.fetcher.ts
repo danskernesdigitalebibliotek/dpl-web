@@ -31,20 +31,13 @@ export function fetcher<TData, TVariables>(
 ) {
   const { next, headers } = options || {}
 
-  // Server runs use DPL_CMS_BASE_URL directly. Browser runs go through the
-  // /api/dpl-cms-graphql proxy so the URL + basic auth stay server-side.
-  const isServer = typeof window === "undefined"
-  const dplCmsGraphqlEndpoint = isServer
-    ? `${getEnv("DPL_CMS_BASE_URL")}/graphql`
-    : "/api/dpl-cms-graphql"
+  const dplCmsGraphqlEndpoint = `${getEnv("DPL_CMS_BASE_URL")}/graphql`
 
   return async (): Promise<TData> => {
     try {
       const res = await fetch(dplCmsGraphqlEndpoint, {
         method: "POST",
-        headers: isServer
-          ? getHeaders(headers)
-          : { "Content-Type": "application/json", ...(headers ?? {}) },
+        headers: getHeaders(headers),
         body: JSON.stringify({ query, variables }),
         next,
       })

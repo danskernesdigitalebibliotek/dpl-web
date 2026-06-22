@@ -12,7 +12,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { cyKeys } from "@/cypress/support/constants"
-import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { useBranchTitle } from "@/hooks/useBranchTitle"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 type Manifestation = NonNullable<
@@ -27,15 +27,8 @@ type ReservationReceiptProps = {
 
 const ReservationReceiptContent = ({ manifestation, result, patron }: ReservationReceiptProps) => {
   const title = manifestation.titles?.full?.[0] ?? getManifestationLabel(manifestation)
-  const { data: branch, isSuccess: branchLoaded } = useGetBranchQuery(
-    { isilId: result.pickupBranchId },
-    {
-      enabled: !!result.pickupBranchId,
-      staleTime: Infinity,
-      select: data => data.getBranch,
-    }
-  )
-  const pickupBranchName = branch?.title ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : "")
+  const { data: branchTitle, isSuccess: branchLoaded } = useBranchTitle(result.pickupBranchId)
+  const pickupBranchName = branchTitle ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : "")
 
   return (
     <div

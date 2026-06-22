@@ -66,11 +66,8 @@ const mockFbsReservations = (reservations: unknown[]) => {
 }
 
 const mockBranches = () => {
-  cy.interceptGraphql({
-    operationName: "getBranch",
-    data: { getBranch: { isilId: PICKUP_BRANCH_ID, title: "Hovedbiblioteket" } },
-  })
-
+  // Branch lookup runs entirely server-side via the getBranchTitle server
+  // action, so only the server-side (MSW) GraphQL mock is needed.
   cy.mockServerGraphQLQuery({
     operationName: "getBranch",
     data: { getBranch: { isilId: PICKUP_BRANCH_ID, title: "Hovedbiblioteket" } },
