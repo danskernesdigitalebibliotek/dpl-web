@@ -8076,17 +8076,17 @@
         },
         {
             "name": "drupal/select2_multicheck",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/select2_multicheck.git",
-                "reference": "1.0.5"
+                "reference": "1.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/select2_multicheck-1.0.5.zip",
-                "reference": "1.0.5",
-                "shasum": "66c4ddbcd82aaa642b8e4fb5e6eae8edb147df60"
+                "url": "https://ftp.drupal.org/files/projects/select2_multicheck-1.0.6.zip",
+                "reference": "1.0.6",
+                "shasum": "4003ac1c944ad9e2c304ad7036095b6fe497c242"
             },
             "require": {
                 "drupal/core": "^8 || ^9 || ^10",
@@ -8095,8 +8095,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.5",
-                    "datestamp": "1691860594",
+                    "version": "1.0.6",
+                    "datestamp": "1781882476",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8127,10 +8127,6 @@
                 {
                     "name": "pmaiacar",
                     "homepage": "https://www.drupal.org/user/3575425"
-                },
-                {
-                    "name": "raqfialho",
-                    "homepage": "https://www.drupal.org/user/3612403"
                 },
                 {
                     "name": "ricardotenreiro",
@@ -17301,16 +17297,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "9007ea6f45ecf352a9422b36644e4bfc039b9155"
+                "reference": "2ccb7c2e821038c03a3e6e1700c570c158c55f70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9007ea6f45ecf352a9422b36644e4bfc039b9155",
-                "reference": "9007ea6f45ecf352a9422b36644e4bfc039b9155",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/2ccb7c2e821038c03a3e6e1700c570c158c55f70",
+                "reference": "2ccb7c2e821038c03a3e6e1700c570c158c55f70",
                 "shasum": ""
             },
             "require": {
@@ -17361,9 +17357,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.4.0"
+                "source": "https://github.com/webmozarts/assert/tree/2.4.1"
             },
-            "time": "2026-05-20T13:07:01+00:00"
+            "time": "2026-06-15T15:31:57+00:00"
         },
         {
             "name": "webonyx/graphql-php",
