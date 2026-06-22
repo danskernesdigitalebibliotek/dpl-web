@@ -1024,7 +1024,7 @@ export type Route = {
   url: Scalars['String']['output'];
 };
 
-export type RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage;
+export type RouteEntityUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage;
 
 export type RouteExternal = Route & {
   __typename?: 'RouteExternal';
@@ -1800,6 +1800,7 @@ export type GetArticleByPathQueryVariables = Exact<{
 export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
     | { __typename: 'RouteExternal' }
     | { __typename: 'RouteInternal', url: string, entity?:
+        | { __typename?: 'NodeArticle' }
         | { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?:
             | { __typename?: 'MediaAudio' }
             | { __typename?: 'MediaDocument' }
@@ -1974,6 +1975,7 @@ export type GetCategoryPageByPathQueryVariables = Exact<{
 export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
     | { __typename: 'RouteExternal' }
     | { __typename: 'RouteInternal', url: string, entity?:
+        | { __typename?: 'NodeArticle' }
         | { __typename?: 'NodeGoArticle' }
         | { __typename: 'NodeGoCategory', id: string, path?: string | null, title: string, paragraphs?: Array<
             | { __typename?: 'ParagraphAccordion' }
@@ -2133,6 +2135,7 @@ export type GetPageByPathQueryVariables = Exact<{
 export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
     | { __typename: 'RouteExternal' }
     | { __typename: 'RouteInternal', url: string, entity?:
+        | { __typename?: 'NodeArticle' }
         | { __typename?: 'NodeGoArticle' }
         | { __typename?: 'NodeGoCategory' }
         | { __typename: 'NodeGoPage', paragraphs?: Array<
