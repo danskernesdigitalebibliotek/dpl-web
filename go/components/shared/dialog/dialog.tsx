@@ -43,9 +43,9 @@ const DialogContent = React.forwardRef<
       className={cn(
         `z-dialog bg-background data-[state=closed]:animate-out data-[state=closed]:fade-out-0
         data-[state=closed]:zoom-out-30 data-[state=open]:animate-dialog-open fixed top-[50%]
-        left-[50%] m-auto grid max-h-[95vh] w-[calc(100%-var(--grid-edge)*2)] max-w-[750px]
+        left-[50%] m-auto grid max-h-[95dvh] w-[calc(100%-var(--grid-edge)*2)] max-w-[750px]
         translate-x-[-50%] translate-y-[-50%] overflow-y-scroll rounded-xl shadow-lg
-        lg:min-h-[60vh]`,
+        lg:min-h-[60dvh]`,
         className
       )}
       {...props}>

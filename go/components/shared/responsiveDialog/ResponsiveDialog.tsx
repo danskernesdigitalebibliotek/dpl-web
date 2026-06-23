@@ -49,7 +49,7 @@ function ResponsiveDialog({ title, description, children, open, onClose }: Respo
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="flex max-h-[95vh] flex-col gap-0 overflow-hidden p-0 lg:min-h-0">
+        <DialogContent className="flex max-h-[95dvh] flex-col gap-0 overflow-hidden p-0 lg:min-h-0">
           <div
             className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 shrink-0
               border-b lg:mx-10 lg:pt-10 lg:pb-6">
@@ -77,7 +77,7 @@ function ResponsiveDialog({ title, description, children, open, onClose }: Respo
 
   return (
     <Drawer open={open} onOpenChange={onClose}>
-      <DrawerContent className="flex max-h-[95vh] min-h-0 flex-col overflow-hidden">
+      <DrawerContent className="flex max-h-[95dvh] min-h-0 flex-col overflow-hidden">
         <DrawerHeader className="shrink-0">
           <DrawerTitle>{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}
