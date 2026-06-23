@@ -13,7 +13,10 @@ import { FaustId, Pid } from "../types/ids";
 import { getUrlQueryParam } from "./url";
 import { LoanType } from "../types/loan-type";
 import { ListType } from "../types/list-type";
-import { ManifestationReviewFieldsFragment } from "../../dbc-gateway/generated/graphql";
+import {
+  FictionNonfictionCodeEnum,
+  ManifestationReviewFieldsFragment
+} from "../../dbc-gateway/generated/graphql";
 import { FeeV2 } from "../../fbs/model/feeV2";
 import { ReservationType } from "../types/reservation-type";
 import { ManifestationMaterialType } from "../types/material-type";
@@ -275,7 +278,13 @@ export const stringifyValue = (value: string | null | undefined) =>
 
 export const materialIsFiction = ({
   fictionNonfiction
-}: Work | Manifestation) => fictionNonfiction?.code === "FICTION";
+}: Work | Manifestation) =>
+  fictionNonfiction?.code === FictionNonfictionCodeEnum.Fiction;
+
+export const materialFictionNonfictionIsNotSpecified = ({
+  fictionNonfiction
+}: Work | Manifestation) =>
+  fictionNonfiction?.code === FictionNonfictionCodeEnum.NotSpecified;
 
 export const getListItems = (list: ListType[], itemsShown: number) => {
   return [...list].splice(0, itemsShown);
