@@ -1,4 +1,5 @@
 import { buildGetMaterialResponse } from "../../factories/material/material.factory";
+import { fictionNonfictionNotSpecifiedMaterial } from "../../factories/material/variants/fictionNonfictionNotSpecifiedMaterial";
 import { musicMaterial } from "../../factories/material/variants/musicMaterial";
 import { nonFictionMaterial } from "../../factories/material/variants/nonFictionMaterial";
 import { periodicalMaterial } from "../../factories/material/variants/periodicalMaterial";
@@ -28,5 +29,12 @@ export const givenAPeriodical = () => {
   cy.interceptGraphql({
     operationName: "getMaterial",
     body: buildGetMaterialResponse(periodicalMaterial)
+  });
+};
+
+export const givenAFictionNonfictionNotSpecifiedMaterial = () => {
+  cy.interceptGraphql({
+    operationName: "getMaterial",
+    body: buildGetMaterialResponse(fictionNonfictionNotSpecifiedMaterial)
   });
 };

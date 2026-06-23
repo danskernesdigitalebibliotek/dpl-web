@@ -9,7 +9,7 @@ id: eventseries.default.field_event_location
 field_name: field_event_location
 entity_type: eventseries
 bundle: default
-label: Location
+label: 'Location name'
 description: ''
 required: false
 translatable: false
