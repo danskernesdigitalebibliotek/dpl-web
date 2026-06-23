@@ -13,6 +13,7 @@ on:
       - main
       - go-demo
       - go-playground
+      - app-playground
     paths:
       - 'cms/**'
       - 'go/**'
@@ -45,7 +46,7 @@ jobs:
     name: Go / Build Go base image
     needs: [BranchNameLength]
     # Narrow the main workflow conditions to only run when a PR is opened or updated, or when a push is made to the special branches.
-    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
+    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground' || github.ref_name == 'app-playground')) }}
     uses: ./.github/workflows/go-build-base-image.yml
 
   # Creating the deployment that Lagoon will look for, and add status to.
