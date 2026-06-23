@@ -65,6 +65,24 @@ export type AdgangsplatformenUserToken = {
   token?: Maybe<Scalars['String']['output']>;
 };
 
+export type AppCategory = {
+  __typename?: 'AppCategory';
+  elements: Array<AppContentElement>;
+  icon: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  uuid: Scalars['String']['output'];
+};
+
+export type AppContentElement = {
+  __typename?: 'AppContentElement';
+  uuid: Scalars['String']['output'];
+};
+
+export type AppType =
+  | 'BIBLO'
+  | 'BIBLOGO'
+  | 'MYBIBLO';
+
 export type BetweenFloatInput = {
   max?: InputMaybe<Scalars['Float']['input']>;
   min?: InputMaybe<Scalars['Float']['input']>;
@@ -949,6 +967,7 @@ export type ParagraphWebform = ParagraphInterface & {
 export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
+  getAppCategories: Array<AppCategory>;
   getBranches: Array<Branch>;
   goCategories?: Maybe<GoCategoriesResult>;
   goConfiguration?: Maybe<GoConfiguration>;
@@ -959,6 +978,12 @@ export type Query = { go: { cacheTags: string[] } } & {
   preview?: Maybe<NodeUnion>;
   reservationSettings: ReservationSettings;
   route?: Maybe<RouteUnion>;
+};
+
+
+export type QueryGetAppCategoriesArgs = {
+  type: AppType;
+  uuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 

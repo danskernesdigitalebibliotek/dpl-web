@@ -1,0 +1,24 @@
+"""
+A mobile app category.
+"""
+type AppCategory {
+  uuid: String!
+  title: String!
+  icon: String!
+  elements: [AppContentElement!]!
+}
+
+enum AppType {
+  MYBIBLO
+  BIBLO
+  BIBLOGO
+}
+
+"""
+An AppContentElement.
+
+This is an app mapping of Paragraphs.
+"""
+type AppContentElement {
+  uuid: String!
+}

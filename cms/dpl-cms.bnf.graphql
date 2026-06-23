@@ -34,6 +34,23 @@ type AdgangsplatformenUserToken {
   token: String
 }
 
+type AppCategory {
+  elements: [AppContentElement!]!
+  icon: String!
+  title: String!
+  uuid: String!
+}
+
+type AppContentElement {
+  uuid: String!
+}
+
+enum AppType {
+  BIBLO
+  BIBLOGO
+  MYBIBLO
+}
+
 input BetweenFloatInput {
   max: Float
   min: Float
@@ -838,6 +855,7 @@ scalar PhoneNumber
 
 type Query {
   dplTokens: DplTokens
+  getAppCategories(type: AppType!, uuid: String): [AppCategory!]!
   getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
   goCategories(page: Int = 0): GoCategoriesResult
   goConfiguration: GoConfiguration
