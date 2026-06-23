@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_app\Plugin\GraphQL\DataProducer;
 
+use Drupal\taxonomy\Entity\Term;
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_app\AppType;
@@ -70,6 +71,8 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
     $type = AppType::tryFrom($type);
 
     return match ($type) {
+      AppType::Biblo => $this->getTermCategories($type, $uuid),
+      AppType::MyBiblo => $this->getTermCategories($type, $uuid),
       AppType::BibloGo => $this->getGoCategories($uuid),
       default => [],
     };
@@ -101,6 +104,65 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
 
     // Get the values so they're indexed from 0.
     return array_values($storage->loadMultiple($nids));
+  }
+
+  /**
+   * Get Biblo/MyBiblo categories by term.
+   *
+   * @return \Drupal\Core\Entity\ContentEntityInterface[]
+   *   The categories.
+   */
+  protected function getTermCategories(AppType $type, ?string $uuid): array {
+    $term = $this->getTermByAppType($type);
+
+    if (!$term) {
+      return [];
+    }
+
+    $storage = $this->entititypeManager->getStorage('node');
+    $query = $storage->getQuery();
+    $query->condition('status', 1)
+      ->condition('field_tags', $term->id())
+      ->sort('changed', 'DESC');
+
+    if ($uuid) {
+      $query->condition('uuid', $uuid);
+    }
+
+    $nids = $query->accessCheck(TRUE)
+      ->execute();
+
+    if (!$nids) {
+      return [];
+    }
+
+    // Get the values so they're indexed from 0.
+    return array_values($storage->loadMultiple($nids));
+  }
+
+  /**
+   * Get the category term for the app type.
+   */
+  protected function getTermByAppType(AppType $type): ?Term {
+    $termName = match ($type) {
+      AppType::Biblo => 'app-biblo',
+      AppType::MyBiblo => 'app-mitbiblo',
+      default => '',
+    };
+
+    if (!$termName) {
+      return NULL;
+    }
+
+    $term = $this->entititypeManager->getStorage('taxonomy_term')->loadByProperties([
+      'name' => $termName,
+    ]);
+
+    if (!$term) {
+      return NULL;
+    }
+
+    return reset($term);
   }
 
 }

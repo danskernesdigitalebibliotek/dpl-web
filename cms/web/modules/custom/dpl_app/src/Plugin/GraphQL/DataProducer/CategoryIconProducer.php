@@ -66,7 +66,16 @@ class CategoryIconProducer extends DataProducerPluginBase implements ContainerFa
     $media = NULL;
 
     if ($entity->hasField('field_category_menu_image')) {
+      // Applies to go_category.
       $medias = $entity->get('field_category_menu_image');
+      if ($medias instanceof EntityReferenceFieldItemList) {
+        /** @var \Drupal\media\Entity\Media $media */
+        $media = $medias->referencedEntities()[0];
+      }
+    }
+    elseif ($entity->hasField('field_teaser_image')) {
+      // Applies to article and page.
+      $medias = $entity->get('field_teaser_image');
       if ($medias instanceof EntityReferenceFieldItemList) {
         /** @var \Drupal\media\Entity\Media $media */
         $media = $medias->referencedEntities()[0];
