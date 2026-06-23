@@ -70,9 +70,11 @@ export const usePaginatedResults = ({
       offset: page * pageSize,
       limit: pageSize,
       filters: {
+        // Always exclude search-blacklisted branches so works held only at
+        // blacklisted branches are filtered out of the results.
+        branchId: cleanBranches,
         ...(onShelf && {
-          status: [CsHoldingsStatusEnum.Onshelf],
-          branchId: cleanBranches
+          status: [CsHoldingsStatusEnum.Onshelf]
         })
       },
       sort: getSortInput(sort)
