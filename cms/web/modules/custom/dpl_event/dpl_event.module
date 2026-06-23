@@ -69,8 +69,17 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     }
   }
 
-  if (!$is_physical && $entity->hasField('field_event_place')) {
-    $entity->set('field_event_place', ' ');
+  // If an event is fully online, we do not want place to be set.
+  if ($location_type === 'online' && $entity->hasField('field_event_place')) {
+    // On eventinstances we cannot just set the value to NULL, as then we'll
+    // be inheriting the value from the series. To get around that, we set it
+    // to an empty space.
+    if ($entity instanceof EventInstance) {
+      $entity->set('field_event_place', ' ');
+    }
+    else {
+      $entity->set('field_event_place', NULL);
+    }
   }
 
   if (!$show_non_branch_toggle && $entity->hasField('field_event_non_branch_location')) {
