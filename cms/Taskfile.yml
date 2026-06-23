@@ -648,8 +648,8 @@ tasks:
   source:build:
     summary: Build core source image.
     cmds:
-      - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --tag dpl-cms-cli:0.0.0 .
-      - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .RELEASE_FULL_NAME }} .
+      - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --tag dpl-cms-cli:0.0.0 ..
+      - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .RELEASE_FULL_NAME }} ..
 
   source:push:
     summary: Push core source image to container registry.
