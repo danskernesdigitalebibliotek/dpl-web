@@ -1,6 +1,7 @@
 import { MaterialPage } from "../../../cypress/page-objects/material/MaterialPage";
 import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
 import {
+  givenAFictionNonfictionNotSpecifiedMaterial,
   givenAMaterial,
   givenAMaterialMusic,
   givenANonFictionMaterial,
@@ -156,6 +157,34 @@ describe("Material Page Object Test", () => {
       materialPage.elements
         .fictionNonfiction()
         .shouldContainAll(["skønlitteratur"]);
+    });
+
+    describe("Fiction/non-fiction row", () => {
+      it("Should show the row for a known fictionNonfiction code", () => {
+        // Given: A material whose fictionNonfiction code is FICTION (skønlitteratur)
+        materialPage = new MaterialPage();
+        givenAMaterial();
+
+        // When: The user visits the material page
+        materialPage.visit([]);
+
+        // Then: The Fiction/non-fiction row should be rendered with the display value
+        materialPage.elements
+          .fictionNonfiction()
+          .shouldContainAll(["skønlitteratur"]);
+      });
+
+      it("Should hide the row when fictionNonfiction is not specified", () => {
+        // Given: A material whose fictionNonfiction code is NOT_SPECIFIED
+        materialPage = new MaterialPage();
+        givenAFictionNonfictionNotSpecifiedMaterial();
+
+        // When: The user visits the material page
+        materialPage.visit([]);
+
+        // Then: The Fiction/non-fiction row should not be rendered
+        materialPage.elements.fictionNonfiction().should("not.exist");
+      });
     });
 
     describe("Header Buttons", () => {

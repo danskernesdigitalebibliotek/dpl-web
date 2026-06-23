@@ -1,0 +1,29 @@
+uuid: 695e5cc0-1161-473b-87d2-4920b5977ef3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_audiences
+    - paragraphs.paragraphs_type.filtered_event_list
+    - taxonomy.vocabulary.audiences
+id: paragraph.filtered_event_list.field_filter_audiences
+field_name: field_filter_audiences
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Filter by audiences'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      audiences: audiences
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

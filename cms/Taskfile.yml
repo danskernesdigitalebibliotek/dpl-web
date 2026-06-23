@@ -335,11 +335,11 @@ tasks:
     cmds:
       - cmd: |
           docker run --rm \
-          -v ${PWD}:/local \
+          -v ${PWD}/..:/local \
           openapitools/openapi-generator-cli:v7.1.0 generate \
-          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-web/refs/heads/main/react/src/core/fbs/fbs-adapter.yaml \
-          -g php -o /local/packages/fbs-client \
-          -c /local/.openapi-generator/fbs.config.yaml \
+          -i /local/schemas/openapi/fbs-adapter.yaml \
+          -g php -o /local/cms/packages/fbs-client \
+          -c /local/cms/.openapi-generator/fbs.config.yaml \
           --skip-validate-spec
 
   dev:codegen:dpl-cms:
@@ -360,13 +360,30 @@ tasks:
     cmds:
       - task dev:bnfcli -- drush sailor:introspect bnf
       - task dev:bnfcli -- drush sailor:codegen bnf
-      - task dev:bnfcli -- npx node dev-scripts/stripGraphqlDescriptions.js web/modules/custom/bnf/schema/bnf.graphql
+      - task dev:bnfcli -- node dev-scripts/stripGraphqlDescriptions.js dpl-cms.bnf.graphql
+      # sailor:introspect doesn't emit fields in a deterministic order
+      # — Drupal's schema-build order varies with module load and cache
+      # state, so two clean introspections can produce semantically
+      # identical SDL with different field ordering. Normalize via the
+      # `graphql` package so the committed file is stable regardless of
+      # which environment ran the introspection.
+      - task dev:bnfcli -- node dev-scripts/normalizeGraphqlSchema.js dpl-cms.bnf.graphql
 
   dev:codegen:fbi-graphql:
-    desc: Generate graphQL client classes for dpl_fbi.
+    desc: Generate dpl_fbi graphQL classes (reads /schemas/graphql/dbc-fbi.fbcms-go.graphql).
     cmds:
-      - task dev:cli -- drush sailor:introspect dpl_fbi
       - task dev:cli -- drush sailor:codegen dpl_fbi
+
+  dev:codegen:proxy-classes:
+    desc: Regenerate Drupal lazy-service proxy classes for custom modules.
+    # Add an entry per service marked `lazy: true` in any custom module's
+    # *.services.yml: "<fully qualified class>|<namespace root relative to
+    # web/>". CheckProxyClasses verifies the result matches what is committed.
+    cmds:
+      - for:
+          - 'Drupal\dpl_go\GoSite|modules/custom/dpl_go/src'
+        cmd: |
+          docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm --workdir /app/cms/web cli php core/scripts/generate-proxy-class.php '{{ splitList "|" .ITEM | first }}' {{ splitList "|" .ITEM | last }}
 
   dev:composer:update-design-system:
     desc: Update the DPL design system package to a specific version or branch release.

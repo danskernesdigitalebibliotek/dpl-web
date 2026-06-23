@@ -19,9 +19,7 @@ export default defineConfig({
       prettier: true
     },
     input: {
-      target:
-        // This should come from a url that will be updated if there are any changes
-        "https://raw.githubusercontent.com/danskernesdigitalebibliotek/ddb-material-list/develop/spec/material-list-2.0.0.yaml",
+      target: "../schemas/openapi/material-list.yaml",
       converterOptions: {
         indent: 2
       }
@@ -52,7 +50,7 @@ export default defineConfig({
       prettier: true
     },
     input: {
-      target: "src/core/fbs/fbs-adapter.yaml",
+      target: "../schemas/openapi/fbs-adapter.yaml",
       converterOptions: {
         indent: 2
       }
@@ -83,7 +81,7 @@ export default defineConfig({
       prettier: true
     },
     input: {
-      target: "src/core/publizon/publizon-adapter.yaml",
+      target: "../schemas/openapi/publizon-adapter.yaml",
       converterOptions: {
         indent: 2
       }

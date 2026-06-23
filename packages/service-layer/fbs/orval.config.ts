@@ -10,7 +10,7 @@ export default defineConfig({
       prettier: true,
     },
     input: {
-      target: "src/fbs-adapter.yaml",
+      target: "../../../schemas/openapi/fbs-adapter.yaml",
       converterOptions: {
         indent: 2,
       },

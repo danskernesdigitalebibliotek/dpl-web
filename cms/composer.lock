@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3291fb952f5768b1e910fd6721aba127",
+    "content-hash": "ed818a47d9cc4d8b50d90cd094567760",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2473,17 +2473,17 @@
         },
         {
             "name": "drupal/antibot",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/antibot.git",
-                "reference": "2.0.4"
+                "reference": "2.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/antibot-2.0.4.zip",
-                "reference": "2.0.4",
-                "shasum": "58b215291b250ea410194693cbac2da6f54a8530"
+                "url": "https://ftp.drupal.org/files/projects/antibot-2.0.5.zip",
+                "reference": "2.0.5",
+                "shasum": "d0110ac287ab10068b90d7128554747fceb088c9"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10 || ^11"
@@ -2491,8 +2491,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.4",
-                    "datestamp": "1723819813",
+                    "version": "2.0.5",
+                    "datestamp": "1782077376",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2574,29 +2574,29 @@
         },
         {
             "name": "drupal/autowire_plugin_trait",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/autowire_plugin_trait.git",
-                "reference": "1.0.0"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/autowire_plugin_trait-1.0.0.zip",
-                "reference": "1.0.0",
-                "shasum": "dda1fa378669817a7b0089b92570b276c37f05a5"
+                "url": "https://ftp.drupal.org/files/projects/autowire_plugin_trait-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "c94020db865a4f8900d5ec9fa364c56320a5344c"
             },
             "require": {
-                "drupal/core": "^10 || ^11"
+                "drupal/core": "^10 || >=11 <11.3"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0",
-                    "datestamp": "1718100412",
+                    "version": "1.1.0",
+                    "datestamp": "1781759925",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -2618,20 +2618,20 @@
         },
         {
             "name": "drupal/azure_mailer",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/azure_mailer.git",
-                "reference": "2.0.0"
+                "reference": "2.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/azure_mailer-2.0.0.zip",
-                "reference": "2.0.0",
-                "shasum": "b5ec69a0dbee765979baa4fe9f1e9523a04eb9f0"
+                "url": "https://ftp.drupal.org/files/projects/azure_mailer-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "60250e7032c76360c9f196ef22b02763f1b1bcf8"
             },
             "require": {
-                "drupal/core": "^10 || ^11",
+                "drupal/core": "^10 || ^11 || ^12",
                 "drupal/mailsystem": "^4.1.0",
                 "mobomo/guzzle-azure-hmac-auth": "dev-main",
                 "php": ">=8.1.0"
@@ -2639,8 +2639,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0",
-                    "datestamp": "1721923208",
+                    "version": "2.0.1",
+                    "datestamp": "1781308546",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6066,26 +6066,26 @@
         },
         {
             "name": "drupal/linkit",
-            "version": "7.0.15",
+            "version": "7.0.16",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/linkit.git",
-                "reference": "7.0.15"
+                "reference": "7.0.16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/linkit-7.0.15.zip",
-                "reference": "7.0.15",
-                "shasum": "d3bfd8cb99d838d6489b4682b6977c390eef60d2"
+                "url": "https://ftp.drupal.org/files/projects/linkit-7.0.16.zip",
+                "reference": "7.0.16",
+                "shasum": "72e598acf5ba56db25989754393bbce6597a29af"
             },
             "require": {
-                "drupal/core": "^10.1 || ^11"
+                "drupal/core": "^10.2 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "7.0.15",
-                    "datestamp": "1778859808",
+                    "version": "7.0.16",
+                    "datestamp": "1781283687",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7948,17 +7948,17 @@
         },
         {
             "name": "drupal/search_api",
-            "version": "1.40.0",
+            "version": "1.41.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/search_api.git",
-                "reference": "8.x-1.40"
+                "reference": "8.x-1.41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.40.zip",
-                "reference": "8.x-1.40",
-                "shasum": "64ac71887786da63ced27a43e37342ea3b765a88"
+                "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.41.zip",
+                "reference": "8.x-1.41",
+                "shasum": "bb030951ee9a09fac67e8cde5b495c3b67e2949d"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11"
@@ -7980,8 +7980,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.40",
-                    "datestamp": "1762031191",
+                    "version": "8.x-1.41",
+                    "datestamp": "1780907071",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8076,17 +8076,17 @@
         },
         {
             "name": "drupal/select2_multicheck",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/select2_multicheck.git",
-                "reference": "1.0.5"
+                "reference": "1.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/select2_multicheck-1.0.5.zip",
-                "reference": "1.0.5",
-                "shasum": "66c4ddbcd82aaa642b8e4fb5e6eae8edb147df60"
+                "url": "https://ftp.drupal.org/files/projects/select2_multicheck-1.0.6.zip",
+                "reference": "1.0.6",
+                "shasum": "4003ac1c944ad9e2c304ad7036095b6fe497c242"
             },
             "require": {
                 "drupal/core": "^8 || ^9 || ^10",
@@ -8095,8 +8095,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.5",
-                    "datestamp": "1691860594",
+                    "version": "1.0.6",
+                    "datestamp": "1781882476",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8127,10 +8127,6 @@
                 {
                     "name": "pmaiacar",
                     "homepage": "https://www.drupal.org/user/3575425"
-                },
-                {
-                    "name": "raqfialho",
-                    "homepage": "https://www.drupal.org/user/3612403"
                 },
                 {
                     "name": "ricardotenreiro",
@@ -8837,17 +8833,17 @@
         },
         {
             "name": "drupal/upgrade_status",
-            "version": "4.3.9",
+            "version": "4.3.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/upgrade_status.git",
-                "reference": "4.3.9"
+                "reference": "4.3.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/upgrade_status-4.3.9.zip",
-                "reference": "4.3.9",
-                "shasum": "bef9e5e08a3b6ecc6a5c380107e624fb4b5f03ef"
+                "url": "https://ftp.drupal.org/files/projects/upgrade_status-4.3.10.zip",
+                "reference": "4.3.10",
+                "shasum": "977dbf24874b2394b74fd6c7f9787bcc508a4e37"
             },
             "require": {
                 "dekor/php-array-table": "^2.0",
@@ -8864,8 +8860,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.3.9",
-                    "datestamp": "1771841606",
+                    "version": "4.3.10",
+                    "datestamp": "1780927635",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -17301,16 +17297,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "9007ea6f45ecf352a9422b36644e4bfc039b9155"
+                "reference": "2ccb7c2e821038c03a3e6e1700c570c158c55f70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9007ea6f45ecf352a9422b36644e4bfc039b9155",
-                "reference": "9007ea6f45ecf352a9422b36644e4bfc039b9155",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/2ccb7c2e821038c03a3e6e1700c570c158c55f70",
+                "reference": "2ccb7c2e821038c03a3e6e1700c570c158c55f70",
                 "shasum": ""
             },
             "require": {
@@ -17361,9 +17357,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.4.0"
+                "source": "https://github.com/webmozarts/assert/tree/2.4.1"
             },
-            "time": "2026-05-20T13:07:01+00:00"
+            "time": "2026-06-15T15:31:57+00:00"
         },
         {
             "name": "webonyx/graphql-php",
@@ -23075,16 +23071,16 @@
         },
         {
             "name": "vincentlanglet/twig-cs-fixer",
-            "version": "3.14.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VincentLanglet/Twig-CS-Fixer.git",
-                "reference": "599f110f192c31af5deb5736d6c1a970afdf51f3"
+                "reference": "366f7cca494a6f95c5f410ae542aef9c164d329e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/zipball/599f110f192c31af5deb5736d6c1a970afdf51f3",
-                "reference": "599f110f192c31af5deb5736d6c1a970afdf51f3",
+                "url": "https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/zipball/366f7cca494a6f95c5f410ae542aef9c164d329e",
+                "reference": "366f7cca494a6f95c5f410ae542aef9c164d329e",
                 "shasum": ""
             },
             "require": {
@@ -23095,7 +23091,7 @@
                 "symfony/filesystem": "^5.4 || ^6.4 || ^7.0 || ^8.0",
                 "symfony/finder": "^5.4 || ^6.4 || ^7.0 || ^8.0",
                 "symfony/string": "^5.4.42 || ^6.4.10 || ~7.0.10 || ^7.1.3 || ^8.0",
-                "twig/twig": "^3.4",
+                "twig/twig": "^3.15",
                 "webmozart/assert": "^1.10 || ^2.0"
             },
             "require-dev": {
@@ -23140,7 +23136,7 @@
             "homepage": "https://github.com/VincentLanglet/Twig-CS-Fixer",
             "support": {
                 "issues": "https://github.com/VincentLanglet/Twig-CS-Fixer/issues",
-                "source": "https://github.com/VincentLanglet/Twig-CS-Fixer/tree/3.14.0"
+                "source": "https://github.com/VincentLanglet/Twig-CS-Fixer/tree/4.0.1"
             },
             "funding": [
                 {
@@ -23148,7 +23144,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-23T13:21:35+00:00"
+            "time": "2026-06-18T15:31:27+00:00"
         }
     ],
     "aliases": [],

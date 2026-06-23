@@ -1,6 +1,6 @@
-import { promises as fs } from "fs"
 import { isEmpty } from "lodash"
 import { NextResponse, connection } from "next/server"
+import { readFile } from "node:fs/promises"
 
 import goConfig from "@/lib/config/goConfig"
 import { loadPageData } from "@/lib/helpers/dpl-cms-content"
@@ -8,7 +8,7 @@ import { loadPageData } from "@/lib/helpers/dpl-cms-content"
 type TRequestsNames = "frontpage"
 
 type THealthStatusRequestBody = {
-  version: "unknown" | `${number}.${number}.${number}`
+  version: "unknown" | string
   requests:
     | {
         [key in TRequestsNames]: {
@@ -27,9 +27,9 @@ async function getHealthStatus() {
   }
 
   try {
-    // Get version from .version json file in root of project. .version file should only exist in lagoon.
-    const jsonFile = await fs.readFile(".version", "utf8")
-    requestBody.version = JSON.parse(jsonFile).version
+    // /app/VERSION is baked into the base image at build time
+    // (see go/lagoon/base.dockerfile).
+    requestBody.version = (await readFile("/app/VERSION", "utf8")).trim()
   } catch {}
 
   try {

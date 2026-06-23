@@ -3,7 +3,7 @@ import goConfig from "@/lib/config/goConfig"
 
 import AccessForbiddenError from "./AccessForbiddenError"
 
-export const getDplcmsGraphqlBasicAuthToken = () =>
+const getDplcmsGraphqlBasicAuthToken = () =>
   Buffer.from(
     `${getEnv("GO_GRAPHQL_CONSUMER_USER_NAME")}:${getEnv("GO_GRAPHQL_CONSUMER_USER_PASSWORD")}`
   ).toString("base64")

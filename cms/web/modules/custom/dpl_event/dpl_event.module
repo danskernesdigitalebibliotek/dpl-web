@@ -69,8 +69,17 @@ function dpl_event_entity_presave(EntityInterface $entity): void {
     }
   }
 
-  if (!$is_physical && $entity->hasField('field_event_place')) {
-    $entity->set('field_event_place', ' ');
+  // If an event is fully online, we do not want place to be set.
+  if ($location_type === 'online' && $entity->hasField('field_event_place')) {
+    // On eventinstances we cannot just set the value to NULL, as then we'll
+    // be inheriting the value from the series. To get around that, we set it
+    // to an empty space.
+    if ($entity instanceof EventInstance) {
+      $entity->set('field_event_place', ' ');
+    }
+    else {
+      $entity->set('field_event_place', NULL);
+    }
   }
 
   if (!$show_non_branch_toggle && $entity->hasField('field_event_non_branch_location')) {
@@ -534,19 +543,29 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     'and',
     [
       [':input[name="field_event_non_branch_location[value]"]' => ['checked' => TRUE]],
-      'or',
-      [':input[name="field_branch"]' => ['value' => '']],
     ],
   ];
 
   if (isset($form['field_event_non_branch_location'])) {
     $form['field_event_non_branch_location']['#states']['visible'] = [
       ':input[name="field_event_location_type"]' => ['value' => 'physical'],
-      'and',
-      ':input[name="field_branch"]' => ['!value' => ''],
     ];
   }
   // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+
+  // We only want to show the field description if it's not an "online" event.
+  $form['field_branch']['description'] = [
+    '#type' => 'container',
+    '#attributes' => ['class' => ['form-item__description']],
+    '#states' => [
+      'invisible' => [
+        ':input[name="field_event_location_type"]' => ['value' => 'online'],
+      ],
+    ],
+    'message' => [
+      '#markup' => t('When selecting a branch, we will use the address from the branch, unless you select “Other location”.', [], ['context' => 'dpl_event']),
+    ],
+  ];
 
   if (isset($form['field_event_location'])) {
     $form['field_event_location']['#states']['visible'] = $physical_state;

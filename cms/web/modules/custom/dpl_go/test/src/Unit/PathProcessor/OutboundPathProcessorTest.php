@@ -6,7 +6,7 @@ namespace Drupal\Tests\dpl_go\Unit\PathProcessor;
 
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\AdminContext;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 use Drupal\dpl_go\PathProcessor\OutboundPathProcessor;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -20,7 +20,7 @@ class OutboundPathProcessorTest extends UnitTestCase {
   /**
    * GoSite mock.
    *
-   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\dpl_go\GoSite>
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\dpl_go\GoSiteInterface>
    */
   protected ObjectProphecy $goSite;
 
@@ -42,7 +42,7 @@ class OutboundPathProcessorTest extends UnitTestCase {
   public function setUp(): void {
     parent::setUp();
 
-    $this->goSite = $this->prophesize(GoSite::class);
+    $this->goSite = $this->prophesize(GoSiteInterface::class);
     $this->goSite->getCmsBaseUrl()->willReturn('https://cms.site');
     $this->goSite->getGoBaseUrl()->willReturn('https://go.cms.site');
 

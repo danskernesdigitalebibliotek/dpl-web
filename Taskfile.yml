@@ -2,13 +2,6 @@ version: '3'
 
 output: prefixed
 
-# Sub-project Taskfiles have dotenv declarations which Task v3
-# does not allow in included files. We only include migration
-# (no dotenv) and use `task -d <dir>` for sub-project tasks.
-includes:
-  migration:
-    taskfile: ./migration/Taskfile.migration.yml
-
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react

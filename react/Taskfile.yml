@@ -3,9 +3,6 @@ version: '3'
 dotenv: [".task.env"]
 
 vars:
-  COMMIT_COUNT:
-    sh: git rev-list --count origin/main
-
   # Constructing docker image name.
   DOCKER_IMAGE_PREFIX: "{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
 
@@ -22,7 +19,7 @@ tasks:
     summary: Use project Node.js version with nvm
     silent: true
     cmds:
-      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm use'
+      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm install && nvm use'
 
   dev:install:
     summary: Install packages
@@ -105,3 +102,33 @@ tasks:
       - yarn lint:js --fix
       - yarn lint:scss --fix
       - yarn lint:markdown --fix
+
+  codegen:dbc:gateway:
+    desc: Regenerate DBC gateway GraphQL client.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:dbc:gateway
+
+  codegen:rest-services:
+    desc: Regenerate REST service clients via orval.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:rest-services
+
+  codegen:client:fbs:
+    desc: Regenerate FBS REST client.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:client:fbs
+
+  codegen:client:publizon:
+    desc: Regenerate Publizon REST client.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:client:publizon
+
+  codegen:client:dpl-cms:
+    desc: Regenerate dpl-cms REST client.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:client:dpl-cms

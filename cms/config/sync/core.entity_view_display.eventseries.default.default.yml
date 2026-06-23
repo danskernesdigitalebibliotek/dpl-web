@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_audiences
     - field.field.eventseries.default.field_automatic_list_hide
     - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
@@ -28,6 +29,7 @@ dependencies:
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
+    - address
     - dpl_event
     - entity_reference_revisions
     - link
@@ -39,6 +41,14 @@ targetEntityType: eventseries
 bundle: default
 mode: default
 content:
+  field_audiences:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 20
+    region: content
   field_branch:
     type: entity_reference_label
     label: hidden
@@ -63,10 +73,10 @@ content:
     weight: 14
     region: content
   field_event_address:
-    type: dpl_branch_address
+    type: address_default
     label: hidden
     settings:
-      skip_domestic_country: '1'
+      skip_domestic_country: true
       domestic_country: site_default
     third_party_settings: {  }
     weight: 2
@@ -74,9 +84,7 @@ content:
   field_event_address_gsearch:
     type: dpl_branch_address
     label: hidden
-    settings:
-      skip_domestic_country: '1'
-      domestic_country: site_default
+    settings: {  }
     third_party_settings: {  }
     weight: 18
     region: content

@@ -61,7 +61,7 @@ jobs:
             echo "dist_filename=$DIST_FILENAME"
           } >> "$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.sha }}
 
@@ -97,7 +97,7 @@ jobs:
       group: release-write-${{ github.repository }}-${{ github.ref_name }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download release artifact
         uses: actions/download-artifact@v7
@@ -153,7 +153,7 @@ jobs:
       group: release-write-${{ github.repository }}-${{ github.ref_name }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download release artifact
         uses: actions/download-artifact@v7
@@ -166,7 +166,7 @@ jobs:
 
       - name: Create Release
         id: create-release
-        uses: softprops/action-gh-release@v3.0.0
+        uses: softprops/action-gh-release@v3.0.1
         with:
           files: ${{ needs.build-release.outputs.dist_filename }}
 

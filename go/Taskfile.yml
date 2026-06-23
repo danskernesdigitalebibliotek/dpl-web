@@ -31,7 +31,7 @@ tasks:
     summary: Use project Node.js version with nvm
     silent: true
     cmds:
-      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm use'
+      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm install && nvm use'
 
   ghcr:login:
     summary: Login into Github Container Registry
@@ -64,3 +64,33 @@ tasks:
       - task dev:nvm:use
       - yarn
       - yarn dev:https
+
+  codegen:rest-services:
+    desc: Regenerate REST service clients via orval.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:all-rest-services
+
+  codegen:graphql:
+    desc: Regenerate dpl-cms + FBI GraphQL clients from the committed SDL in /schemas/graphql/.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:graphql
+
+  codegen:publizon:
+    desc: Regenerate Publizon REST client.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:publizon
+
+  codegen:pubhub:
+    desc: Regenerate Pubhub SOAP client from WSDL.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:pubhub
+
+  codegen:unilogin:
+    desc: Regenerate Unilogin SOAP client from WSDL.
+    cmds:
+      - task dev:nvm:use
+      - yarn codegen:unilogin

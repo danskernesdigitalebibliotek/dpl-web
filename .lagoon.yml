@@ -36,12 +36,12 @@ tasks:
           echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
 
           echo "Creating a initial pending deployment status."
-          ./dev-scripts/lagoon-set-gh-deploy-status.sh "in_progress"
+          /app/cms/dev-scripts/lagoon-set-gh-deploy-status.sh "in_progress"
         service: cli
     - run:
         name: Ensure Drupal is installed
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
           if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
             if [[ "$LAGOON_PROJECT" == "dpl-web-bnf" ]]; then
@@ -84,9 +84,9 @@ tasks:
     - run:
         name: drush deploy
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
-          if [[ -f config/sync/system.site.yml ]]; then
+          if [[ -f /app/cms/config/sync/system.site.yml ]]; then
             echo "Config detected, doing a drush deploy"
             drush deploy
 
@@ -105,9 +105,9 @@ tasks:
         # it will be gone.
         name: Create module upload directory in public files
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
-          if [[ ! -d "web/sites/default/files/modules_local" ]]; then
+          if [[ ! -d "/app/cms/web/sites/default/files/modules_local" ]]; then
             echo "Creating directory for module uploads"
             mkdir -p /app/cms/web/sites/default/files/modules_local
           fi
@@ -115,7 +115,7 @@ tasks:
     - run:
         name: Import translations
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
           mkdir -p /app/cms/web/sites/default/files/translations
           drush locale-check
@@ -124,21 +124,21 @@ tasks:
     - run:
         name: Import config translations
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
           drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
         service: cli
     - run:
         name: Clear GraphQL AST cache
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
           drush cc bin graphql.ast
         service: cli
     - run:
         name: Create test users
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
           # Only create test users if they do not exist already.
           if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
@@ -163,7 +163,7 @@ tasks:
     - run:
         name: Enable example content
         command: |
-          source dev-scripts/lagoon-error-handling.sh
+          source /app/cms/dev-scripts/lagoon-error-handling.sh
 
           drush en -y dpl_example_content
         service: cli
@@ -172,7 +172,7 @@ tasks:
         command: |
           DRUPAL_URL=$(drush browse)
 
-          ./dev-scripts/lagoon-set-gh-deploy-status.sh "success" "$DRUPAL_URL"
+          /app/cms/dev-scripts/lagoon-set-gh-deploy-status.sh "success" "$DRUPAL_URL"
         service: cli
 
 environments:
