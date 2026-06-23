@@ -113,15 +113,16 @@ third_party_settings:
         weight: 0
     group_library:
       children:
-        - field_branch
+        - field_event_location_type
         - group_location
-      label: Library
+        - field_event_place
+      label: 'Event location'
       region: content
       parent_name: ''
       weight: 3
       format_type: details
       format_settings:
-        classes: ''
+        classes: dpl-event-locations
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -136,7 +137,7 @@ third_party_settings:
       label: Tickets
       region: content
       parent_name: ''
-      weight: 4
+      weight: 5
       format_type: details
       format_settings:
         classes: ''
@@ -152,7 +153,7 @@ third_party_settings:
       label: Partners
       region: content
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: details
       format_settings:
         classes: ''
@@ -181,18 +182,17 @@ third_party_settings:
         required_fields: false
     group_location:
       children:
-        - field_event_location_type
+        - field_branch
         - field_event_non_branch_location
         - field_event_location
         - field_event_address_gsearch
-        - field_event_place
       label: Locations
       region: content
       parent_name: group_library
-      weight: 2
+      weight: 20
       format_type: html_element
       format_settings:
-        classes: dpl-event-locations
+        classes: ''
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -227,7 +227,7 @@ content:
     third_party_settings: {  }
   field_branch:
     type: select2_entity_reference
-    weight: 0
+    weight: 20
     region: content
     settings:
       width: 100%
@@ -255,7 +255,7 @@ content:
     third_party_settings: {  }
   field_event_address_gsearch:
     type: address_gsearch
-    weight: 22
+    weight: 23
     region: content
     settings:
       size: 60
@@ -288,7 +288,7 @@ content:
     third_party_settings: {  }
   field_event_location:
     type: string_textfield
-    weight: 21
+    weight: 22
     region: content
     settings:
       size: 60
@@ -302,14 +302,14 @@ content:
     third_party_settings: {  }
   field_event_non_branch_location:
     type: boolean_checkbox
-    weight: 20
+    weight: 21
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 8
+    weight: 9
     region: content
     settings:
       title: Paragraph
@@ -347,7 +347,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 24
+    weight: 21
     region: content
     settings:
       size: 60
@@ -455,13 +455,13 @@ content:
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 7
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 6
+    weight: 7
     region: content
     settings:
       display_label: true
