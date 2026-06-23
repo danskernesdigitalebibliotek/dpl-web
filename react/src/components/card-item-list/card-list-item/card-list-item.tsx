@@ -14,7 +14,6 @@ import {
   flattenCreators,
   getReleaseYearSearchResult,
   materialIsFiction,
-  materialFictionNonfictionIsNotSpecified,
   getManifestationsPids
 } from "../../../core/utils/helpers/general";
 import CardListItemCover from "./card-list-item-cover";
@@ -160,16 +159,12 @@ const CardListItem: React.FC<CardListItemProps> = ({
             workId={workId}
           />
         </div>
-        {/* Suppress classmark for both FICTION and NOT_SPECIFIED — the latter would
-           otherwise render the meaningless "UDEN KLASSEMÆRKE" placeholder. */}
-        {!materialIsFiction(bestRepresentation) &&
-          !materialFictionNonfictionIsNotSpecified(bestRepresentation) &&
-          shelfmark && (
-            <SubjectNumber
-              className="text-tags color-secondary-gray mt-8"
-              shelfmark={shelfmark}
-            />
-          )}
+        {!materialIsFiction(bestRepresentation) && shelfmark && (
+          <SubjectNumber
+            className="text-tags color-secondary-gray mt-8"
+            shelfmark={shelfmark}
+          />
+        )}
 
         <h2
           className="card-list-item__title text-header-h4 mb-4"
