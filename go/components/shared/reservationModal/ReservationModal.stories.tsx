@@ -13,7 +13,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import ReservationModal from "@/components/shared/reservationModal/ReservationModal"
-import { useGetBranchQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { branchTitleQueryKey } from "@/hooks/useBranchTitle"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 import workMock from "@/lib/mocks/work/infoBox.mock"
@@ -77,9 +77,7 @@ const seedClient = ({
   if (reservations) client.setQueryData(reservationsQueryKey(), reservations)
   // Seed the CMS branch lookup so both the form (patron's pickup branch) and
   // the receipt ("Bogen skal hentes på") render with a friendly name.
-  client.setQueryData(useGetBranchQuery.getKey({ isilId: fixtureBranch.isilId }), {
-    getBranch: fixtureBranch,
-  })
+  client.setQueryData(branchTitleQueryKey(fixtureBranch.isilId), fixtureBranch.title)
   return client
 }
 
