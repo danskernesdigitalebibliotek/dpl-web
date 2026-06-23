@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-22 12:45+0200\n"
-"PO-Revision-Date: 2026-06-22 12:45+0200\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-22 12:46+0200\n"
-"PO-Revision-Date: 2026-06-22 12:46+0200\n"
+"POT-Creation-Date: 2026-06-23 08:14+0200\n"
+"PO-Revision-Date: 2026-06-23 08:14+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1627,6 +1615,11 @@ msgstr ""
 msgctxt "dpl_library_agency"
 msgid "This agency branch ID is already in use by @title"
 msgstr "Dette agency branch ID er allerede i brug af @title."
+
+msgid ""
+"Failed to fetch streaming URL VideoTool API. Ensure credentials are set and "
+"the URL is valid."
+msgstr ""
 
 msgid "Name"
 msgstr "Navn"
@@ -6390,6 +6383,12 @@ msgstr "DPL noget der ligner"
 
 msgid "Something similar component"
 msgstr "Komponenten \"Noget der ligner\""
+
+msgid "DPL App support"
+msgstr ""
+
+msgid "Functionality supporting the mobile apps"
+msgstr ""
 
 msgid "Footer Settings"
 msgstr "Footerindstillinger"
