@@ -59,7 +59,9 @@ const WorkPageButtonsLoggedOut = ({
           Lån {label}
         </WorkPageButton>
         <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isDisabled}>
-          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
+            Prøv {label}
+          </SmartLink>
         </WorkPageButton>
       </WorkPageButtons>
     )

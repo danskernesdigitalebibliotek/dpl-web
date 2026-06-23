@@ -76,7 +76,9 @@ const WorkPageButtonsLoggedIn = ({
       return (
         <WorkPageButtons>
           <WorkPageButton ariaLabel={`Læs ${label}`} theme="primary" dataCy={dataCy} asChild>
-            <SmartLink href={getEbookReadUrl(workId, loan.orderId || "")}>Læs {label}</SmartLink>
+            <SmartLink href={getEbookReadUrl(workId, loan.orderId || "")} reload>
+              Læs {label}
+            </SmartLink>
           </WorkPageButton>
         </WorkPageButtons>
       )
@@ -92,7 +94,9 @@ const WorkPageButtonsLoggedIn = ({
           Lån {label}
         </WorkPageButton>
         <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
-          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
+            Prøv {label}
+          </SmartLink>
         </WorkPageButton>
       </WorkPageButtons>
     )
