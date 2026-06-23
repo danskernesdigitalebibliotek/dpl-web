@@ -269,6 +269,7 @@ type MediaVideotool implements MediaInterface {
   name: String!
   path: String
   status: Boolean!
+  streamingUrl: String
   thumbnail: String!
 }
 
@@ -281,6 +282,7 @@ type MediaVideotoolVertical implements MediaInterface {
   name: String!
   path: String
   status: Boolean!
+  streamingUrl: String
   thumbnail: String!
 }
 
