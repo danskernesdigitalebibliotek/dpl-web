@@ -33,6 +33,9 @@ import editionSwitchModalArgs, {
 import materialContentsArgs, {
   argTypes as materialContentsArgTypes
 } from "../../components/material/MaterialContents/MaterialContentsArgs";
+import playerModalArgs, {
+  argTypes as playerModalArgTypes
+} from "../../core/storybook/playerModalArgs";
 
 const meta: Meta<typeof MaterialEntry> = {
   title: "Apps / Material",
@@ -51,6 +54,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...reservationListArgTypes,
     ...editionSwitchModalArgTypes,
     ...materialContentsArgTypes,
+    ...playerModalArgTypes,
     searchUrl: {
       description: "Path to the search result page",
       control: { type: "text" }
@@ -147,14 +151,6 @@ const meta: Meta<typeof MaterialEntry> = {
     },
     periodicalSelectEditionText: {
       description: "Edition/Week",
-      control: { type: "text" }
-    },
-    playerModalCloseButtonText: {
-      description: "Close",
-      control: { type: "text" }
-    },
-    playerModalDescriptionText: {
-      description: "Player modal description text",
       control: { type: "text" }
     },
     reserveBookText: {
@@ -898,6 +894,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...reservationListArgs,
     ...editionSwitchModalArgs,
     ...materialContentsArgs,
+    ...playerModalArgs,
     searchUrl: "/search",
     materialUrl: "/work/:workid",
     advancedSearchUrl: "/advancedsearch",
@@ -926,8 +923,6 @@ const meta: Meta<typeof MaterialEntry> = {
     materialGridRelatedSelectAriaLabelText: "Select material filter",
     periodicalSelectYearText: "Year",
     periodicalSelectEditionText: "Edition",
-    playerModalDescriptionText: "Modal for player",
-    playerModalCloseButtonText: "Close",
     reserveBookText: "Reserve book",
     reserveText: "Reserve",
     reserveWithMaterialTypeText: "Reserve @materialType",

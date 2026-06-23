@@ -1,0 +1,29 @@
+uuid: 107c76e3-cd95-4450-9fd3-571033440987
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_audiences
+    - recurring_events.eventinstance_type.default
+    - taxonomy.vocabulary.audiences
+id: eventinstance.default.field_audiences
+field_name: field_audiences
+entity_type: eventinstance
+bundle: default
+label: Audiences
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      audiences: audiences
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

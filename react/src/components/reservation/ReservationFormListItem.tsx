@@ -41,7 +41,7 @@ const ReservationFormListItem: React.FC<ReservationFormListItemProps> = ({
         <button
           onClick={changeHandler}
           type="button"
-          className="link-tag text-small-caption cursor-pointer"
+          className="link-tag text-small-caption"
           aria-label={buttonAriaLabel}
         >
           {t("shiftText")}

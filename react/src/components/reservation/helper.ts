@@ -13,7 +13,7 @@ import {
   getManifestationPublicationYear,
   materialIsFiction
 } from "../../core/utils/helpers/general";
-import { Manifestation } from "../../core/utils/types/entities";
+import { Manifestation, Patron } from "../../core/utils/types/entities";
 import { PeriodicalEdition } from "../material/periodical/helper";
 import { ModalReservationFormTextType } from "./forms/helper";
 import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
@@ -22,6 +22,20 @@ import { Periods } from "./types";
 
 export const isConfigValueOne = (configValue: string | undefined | string[]) =>
   configValue === "1";
+
+// Interlibrary loan ("overbygningsmateriale") requires an email on the patron
+// profile so the OpenOrder mutation's userMail field is populated. Submitting
+// without one results in orders that the receiving library cannot fulfil.
+export const canSubmitOpenOrderReservation = ({
+  materialIsReservableFromAnotherLibrary,
+  patron
+}: {
+  materialIsReservableFromAnotherLibrary: boolean;
+  patron: Pick<Patron, "emailAddress"> | null | undefined;
+}): boolean =>
+  Boolean(
+    materialIsReservableFromAnotherLibrary && patron && patron.emailAddress
+  );
 
 export const getPreferredBranch = (id: string, array: AgencyBranch[]) => {
   const locationItem = array.find((item) => item.branchId === id);

@@ -52,6 +52,7 @@
   display: inline-block;
   width: fit-content;
   line-height: normal;
+  cursor: pointer;
 
   // Hide arrow
   &::after {

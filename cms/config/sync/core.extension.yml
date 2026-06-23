@@ -32,6 +32,7 @@ module:
   decoupled_router: 0
   default_content: 0
   dpl_admin: 0
+  dpl_app: 0
   dpl_article: 0
   dpl_breadcrumb: 0
   dpl_cache_settings: 0
@@ -83,6 +84,7 @@ module:
   dpl_static_content_20240404_opening_hours: 0
   dpl_static_content_20240418_views_aliases: 0
   dpl_static_content_20240422_contact_page: 0
+  dpl_static_content_20260528_audiences: 0
   dpl_unilogin: 0
   dpl_update: 0
   dpl_url_proxy: 0

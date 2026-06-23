@@ -36,6 +36,14 @@ field_settings:
     dependencies:
       module:
         - recurring_events
+  event_audiences:
+    label: 'Event audiences'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_audiences
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
   event_automatic_list_hide:
     label: 'Event Hide in automatic lists'
     datasource_id: 'entity:eventinstance'

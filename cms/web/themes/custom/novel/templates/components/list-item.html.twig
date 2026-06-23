@@ -1,21 +1,10 @@
-{% set status_classes = [
-  'tag',
-  'tag--fill',
-  'tag--small',
-  'status',
-  status_value == 'TicketSaleNotOpen' ? 'status--not-for-sale',
-  status_value == 'SoldOut' ? 'status--sold-out',
-  status_value == 'Cancelled' ? 'status--cancelled',
-  status_value == 'Occurred' ? 'status--occurred',
-] %}
-
 <a
   class="content-list-item content-list-item-grid arrow__hover--right-small" {{ attributes.addClass(classes).setAttribute('href', url) }}>
-  <div
-    class="content-list-item__image-container content-list-item--status-parent">
-    {% if status_value and status_value != 'Active' %}
-      <span class="{{ status_classes|join(' ') }}">{{ status }}</span>
-    {% endif %}
+  <div class="content-list-item__image-container status-parent status-parent--media-container">
+    {{ include('@novel/components/event-status.html.twig', {
+      status: status,
+      status_value: status_value,
+    }, false) }}
     {{ include('@novel/components/media-container.html.twig'
       , {
         attributes: create_attribute(),

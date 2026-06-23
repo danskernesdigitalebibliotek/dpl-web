@@ -48,6 +48,8 @@ export type EventsGET200Item = {
   address?: EventsGET200ItemAddress;
   /** The categories associated with the event. */
   categories?: string[];
+  /** The audiences associated with the event. */
+  audiences?: string[];
   /** The tags associated with the event. */
   tags?: string[];
   /** The partners associated with the event. */

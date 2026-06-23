@@ -4,6 +4,8 @@ globs:
 ignores:
   - "./node_modules/**/*"
   - "./.github/**/*"
+  - "**/AGENTS.md"
+  - "**/CLAUDE.md"
 
 config:
   MD033:

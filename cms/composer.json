@@ -138,7 +138,7 @@
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
-        "doctrine/annotations": "^2.0",
+        "doctrine/annotations": "^1",
         "drupal/address": "^2.0",
         "drupal/address_dawa": "dev-2.x",
         "drupal/admin_toolbar": "^3.6",
@@ -265,7 +265,7 @@
         "phpunit/phpunit": "^9.6",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "timeweb/phpstan-enum": "^3.1",
-        "vincentlanglet/twig-cs-fixer": "^3.8.0"
+        "vincentlanglet/twig-cs-fixer": "^4.0.1"
     },
     "conflict": {
         "drupal/drupal": "*",
@@ -341,6 +341,7 @@
                 "amazeeio/drupal_integrations"
             ],
             "file-mapping": {
+                "[project-root]/.editorconfig": false,
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/all.services.yml": "assets/all.services.yml",
                 "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
@@ -369,95 +370,92 @@
                 "2753899: Hide domestic country": "patches/2753899-address-hide-domestic.patch"
             },
             "drupal/address_dawa": {
-                "3407189: Automated Drupal 10 compatibility fixes": "https://www.drupal.org/files/issues/2023-12-09/address_dawa.2.0.1.rector.patch",
-                "3550696: Update API endpoints.": "https://git.drupalcode.org/project/address_dawa/-/commit/330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
-            },
-            "drupal/azure_mailer": {
-                "3541803: Error: Call to a member function addError() on null": "https://www.drupal.org/files/issues/2025-08-18/3541803-azure_mailer-fix_call_to_member_on_null.patch"
+                "3407189: Automated Drupal 10 compatibility fixes": "patches/vendor/address_dawa.2.0.1.rector.patch",
+                "3550696: Update API endpoints.": "patches/vendor/address_dawa-330964eb0004c59eb45d1ca5d038cd53024944c1.patch"
             },
             "drupal/multivalue_form_element": {
-                "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
+                "3199172: multivalue_form_element-3199172": "patches/vendor/nested_elements-3199172-14.patch"
             },
             "drupal/views_infinite_scroll": {
                 "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch"
             },
             "drupal/core": {
-                "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
-                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
-                "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
+                "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "patches/vendor/2280639-d10-reroll-156.patch",
+                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "patches/vendor/core-61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
+                "3035578: Add details for AJAX response errors": "patches/vendor/3035578-26.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch",
                 "Don't check for file owner in update": "patches/dont-check-fileowner.patch"
             },
             "drupal/config_translation_po": {
-                "3426797: Problem: Untranslated string used as source": "https://git.drupalcode.org/project/config_translation_po/-/merge_requests/5.patch"
+                "3426797: Problem: Untranslated string used as source": "patches/vendor/config_translation_po-5.patch"
             },
             "drupal/date_range_formatter": {
-                "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
+                "3309324: Fails when start and end date are identical": "patches/vendor/date_range_formatter_3309324_1.patch"
             },
             "drupal/default_content": {
-                "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/commit/52a8827e43ebe1e4cbfd99b3f2c896c20122c220.patch"
+                "3200212: Overwrite files on import": "patches/vendor/default_content-52a8827e43ebe1e4cbfd99b3f2c896c20122c220.patch"
             },
             "drupal/dynamic_entity_reference": {
-                "3396393: Entity with a dynamic entity reference field can't be cloned using entity_clone": "https://www.drupal.org/files/issues/2023-10-24/3396393-2.patch"
+                "3396393: Entity with a dynamic entity reference field can't be cloned using entity_clone": "patches/vendor/3396393-2.patch"
             },
             "drupal/entity_clone": {
-                "2708731: Allow redirect to edit form after cloning": "https://www.drupal.org/files/issues/2024-07-25/improve-workflow-of-cloned-entity-2708731-40_patch.patch"
+                "2708731: Allow redirect to edit form after cloning": "patches/vendor/improve-workflow-of-cloned-entity-2708731-40_patch.patch"
             },
             "drupal/entity_reference_revisions": {
-                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/vendor/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
             },
             "drupal/facets": {
                 "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
             },
             "drupal/field_inheritance": {
-                "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
+                "3454350: Create seperate permission for adding field inheritance": "patches/vendor/field_inheritance_permission.patch"
             },
             "drupal/job_scheduler": {
-                "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/commit/da200da280c4c95e6e91f2416581ad3797ab1428.patch"
+                "3426366: Callables as worker callbacks": "patches/vendor/job_scheduler-da200da280c4c95e6e91f2416581ad3797ab1428.patch"
             },
             "drupal/jsonlog": {
-                "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
+                "3251587: Change logging from stdout to stderr": "patches/vendor/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
             "drupal/openapi": {
-                "3480050: Update oauth2 security definitions to match openapi v2 specification": "https://www.drupal.org/files/issues/2024-10-11/openapi-add-oauth2-accesscode-flow-3480050-3.patch"
+                "3480050: Update oauth2 security definitions to match openapi v2 specification": "patches/vendor/openapi-add-oauth2-accesscode-flow-3480050-3.patch"
             },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
-                "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
+                "3343816: Specification includes disabled resources": "patches/vendor/openapi_rest-6618157334feca93fad1041583375eed660b9085.patch"
             },
             "drupal/openid_connect": {
-                "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "https://git.drupalcode.org/project/openid_connect/-/commit/312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch"
+                "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "patches/vendor/openid_connect-312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch"
             },
             "drupal/paragraphs_ee": {
-                "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch"
+                "3106254: Sorting paragraph list alphabetically in modal": "patches/vendor/paragraphs_ee_sort.patch"
             },
             "drupal/potion": {
-                "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
-                "3348283: Fix wrongly placed parameters in implode functions": "https://www.drupal.org/files/issues/2023-03-15/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
+                "3201365: Allow setting a default write mode when running potion:generate": "patches/vendor/potion-allow_setting_a_default_write_mode-3201365-2.patch",
+                "3348283: Fix wrongly placed parameters in implode functions": "patches/vendor/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
                 "Update with Rector": "patches/potion-rector.patch",
                 "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
                 "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch",
-                "3413314: Include .links.menu.yml files in YamlExtractor.php": "https://www.drupal.org/files/issues/2024-01-08/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
+                "3413314: Include .links.menu.yml files in YamlExtractor.php": "patches/vendor/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
             },
             "drupal/purge": {
                 "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",
-                "3462078: Disabling late runtime processor when using CLI": "https://git.drupalcode.org/project/purge/-/commit/14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
+                "3462078: Disabling late runtime processor when using CLI": "patches/vendor/purge-14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
             },
             "drupal/recurring_events": {
-                "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/commit/35045cb17c7bbd1184553f83771939047175bc24.patch",
-                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch",
-                "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "https://git.drupalcode.org/project/recurring_events/-/commit/67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
-                "3468521: (2/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
-                "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
-                "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
-                "3468300: Update EventSeriesSettings to use datetime form element.": "https://git.drupalcode.org/project/recurring_events/-/commit/5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
-                "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch",
-                "3504806: Clean up orphaned eventinstances automatically": "https://www.drupal.org/files/issues/2025-02-06/reccuring_events_auto_delete_orphaned.patch",
-                "3515976: EventUserTrait may return NULL if owner has been deleted": "https://git.drupalcode.org/issue/recurring_events-3515976/-/commit/4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch"
+                "3178696: Make compatible with Scheduler": "patches/vendor/recurring_events-35045cb17c7bbd1184553f83771939047175bc24.patch",
+                "3461740: Fatal error when using 'Event series start date' filter in views": "patches/vendor/reccuring_events_event_start_date.patch",
+                "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "patches/vendor/recurring_events-67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
+                "3468521: (2/4)": "patches/vendor/recurring_events-603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
+                "3468521: (3/4)": "patches/vendor/recurring_events-ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
+                "3468521: (4/4)": "patches/vendor/recurring_events-ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
+                "3468300: Update EventSeriesSettings to use datetime form element.": "patches/vendor/recurring_events-5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
+                "3487412: Fix WSOD when EventInstance has invalid translation.": "patches/vendor/recurring_events-996052eeb7518ce591df968a0bb12c4819fb4edf.patch",
+                "3504806: Clean up orphaned eventinstances automatically": "patches/vendor/reccuring_events_auto_delete_orphaned.patch",
+                "3515976: EventUserTrait may return NULL if owner has been deleted": "patches/vendor/recurring_events-4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch"
             },
             "drupal/theme_permission": {
-                "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
+                "3105637: Edit, install and uninstall permission": "patches/vendor/theme-permission-edit-install-uninstall-3105637-7.patch"
             }
         }
     }

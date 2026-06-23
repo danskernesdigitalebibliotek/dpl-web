@@ -11,8 +11,6 @@ import { ZodObject, z } from "zod"
 function getEnvs() {
   return {
     // Public environment variables.
-    CODEGEN_LIBRARY_TOKEN: process.env.NEXT_PUBLIC_CODEGEN_LIBRARY_TOKEN,
-    CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: process.env.CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI,
     DPL_GO_BASE_URL: process.env.DPL_GO_BASE_URL,
     DPL_CMS_BASE_URL: process.env.DPL_CMS_BASE_URL,
     FBS_BASE_URL: process.env.FBS_BASE_URL,
@@ -40,8 +38,6 @@ function getEnvs() {
 
 const EnvPublicSchema = z.object({
   DPL_GO_BASE_URL: z.url(),
-  CODEGEN_LIBRARY_TOKEN: z.string().optional(),
-  CODEGEN_GRAPHQL_SCHEMA_ENDPOINT_FBI: z.url().optional(),
   DPL_CMS_BASE_URL: z.url(),
   FBS_BASE_URL: z.url().optional(),
   GO_GRAPHQL_CONSUMER_USER_NAME: z.string(),

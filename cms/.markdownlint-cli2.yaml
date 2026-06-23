@@ -15,3 +15,5 @@ ignores:
   - './.github/**/*'
   - '.cache'
   - '.history'
+  - '**/AGENTS.md'
+  - '**/CLAUDE.md'

@@ -16,14 +16,10 @@ describe('Mapp Tracking', () => {
     // our test and also use cookie debugging to help understand the process.
     cy.clearCookies();
     cy.drupalLogin();
-    cy.visit('/admin/config/system/dpl-mapp')
-      .get('[name="id"]')
-      .clear()
-      .type(customerId)
-      .parent()
-      .get('[value="Save configuration"]')
-      .first()
-      .click();
+    cy.visit('/admin/config/system/dpl-mapp');
+    cy.get('[name="id"]').clear();
+    cy.get('[name="id"]').type(customerId);
+    cy.get('[value="Save configuration"]').first().click();
     cy.visit('/');
     cy.getRequestCount({
       urlPathPattern: `^/resp/api/get/${customerId}.*`,

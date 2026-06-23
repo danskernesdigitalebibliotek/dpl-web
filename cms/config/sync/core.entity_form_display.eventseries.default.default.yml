@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_audiences
     - field.field.eventseries.default.field_automatic_list_hide
     - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
@@ -81,10 +82,11 @@ third_party_settings:
       children:
         - field_event_image
         - field_event_state
+        - field_audiences
       label: 'Event details'
       region: content
       parent_name: ''
-      weight: 15
+      weight: 14
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -234,6 +236,16 @@ content:
     weight: 6
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_audiences:
+    type: select2_entity_reference
+    weight: 39
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_automatic_list_hide:
     type: boolean_checkbox
@@ -394,7 +406,7 @@ content:
     third_party_settings: {  }
   field_tags:
     type: select2_entity_reference
-    weight: 34
+    weight: 33
     region: content
     settings:
       width: 100%
@@ -462,13 +474,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 14
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -480,18 +492,18 @@ content:
       width: 100%
     third_party_settings: {  }
   scheduler_settings:
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 9
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 10
+    weight: 9
     region: content
     settings:
       display_label: true
@@ -516,7 +528,7 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 12
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }

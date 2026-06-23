@@ -1,0 +1,14 @@
+services:
+  logger.channel.media_videotool:
+    parent: logger.channel_base
+    arguments: ['media_videotool']
+  media_videotool.videotool:
+    class: Drupal\media_videotool\VideoTool
+    arguments:
+      [
+        '@http_client',
+        '@config.factory',
+        '@logger.channel.media_videotool',
+        '@datetime.time',
+      ]
+  Drupal\media_videotool\VideoTool: '@media_videotool.videotool'

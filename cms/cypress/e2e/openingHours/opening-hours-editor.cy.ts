@@ -107,14 +107,17 @@ const fillOpeningHourForm = ({
     cy.getBySel('opening-hours-editor-form-select').select(openingHourCategory);
   }
   if (start) {
-    cy.getBySel('opening-hours-editor-form-start-time').focus().type(start);
+    cy.getBySel('opening-hours-editor-form-start-time').focus();
+    cy.getBySel('opening-hours-editor-form-start-time').type(start);
   }
   if (end) {
-    cy.getBySel('opening-hours-editor-form-end-time').focus().type(end);
+    cy.getBySel('opening-hours-editor-form-end-time').focus();
+    cy.getBySel('opening-hours-editor-form-end-time').type(end);
   }
   if (endDate) {
     cy.getBySel('opening-hours-editor-form-repeated').check();
-    cy.getBySel('opening-hours-editor-form-end-date').focus().type(endDate);
+    cy.getBySel('opening-hours-editor-form-end-date').focus();
+    cy.getBySel('opening-hours-editor-form-end-date').type(endDate);
   }
 };
 
@@ -143,8 +146,8 @@ const validateOpeningHoursPage = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
+  cy.getBySel('opening-hours-week-list').scrollIntoView();
   cy.getBySel('opening-hours-week-list')
-    .scrollIntoView()
     .should('be.visible')
     .and('contain', openingHourCategory)
     .and('contain', `${start} - ${end}`);

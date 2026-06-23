@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "packages/**"
+      - "schemas/openapi/fbs-adapter.yaml"
       - ".github/workflows/service-layer-ci.yml"
 
 concurrency:
@@ -19,7 +20,7 @@ jobs:
       run:
         working-directory: packages/service-layer
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v6
@@ -35,7 +36,7 @@ jobs:
       run:
         working-directory: packages/service-layer
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v6
@@ -51,7 +52,7 @@ jobs:
       run:
         working-directory: packages/service-layer
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v6
@@ -67,7 +68,7 @@ jobs:
       run:
         working-directory: packages/service-layer
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v6
@@ -83,7 +84,7 @@ jobs:
       run:
         working-directory: packages/service-layer
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v6

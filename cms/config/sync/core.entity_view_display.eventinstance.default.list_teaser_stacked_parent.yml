@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.list_teaser_stacked_parent
+    - field.field.eventinstance.default.field_audiences
     - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
@@ -87,6 +88,14 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     weight: 15
+    region: content
+  event_audiences:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 54
     region: content
   event_automatic_list_hide:
     type: boolean
@@ -257,6 +266,7 @@ hidden:
   body: true
   description: true
   event_state: true
+  field_audiences: true
   field_branch: true
   field_categories: true
   field_description: true

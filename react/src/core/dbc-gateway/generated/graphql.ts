@@ -32,7 +32,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: unknown; output: unknown };
+  /** An integer in the range from 1 to 100 */
   PaginationLimitScalar: { input: unknown; output: unknown };
 };
 
@@ -103,7 +105,7 @@ export type Audience = {
   lix?: Maybe<Scalars["String"]["output"]>;
   /** Media council age recommendation */
   mediaCouncilAgeRestriction?: Maybe<MediaCouncilAgeRestriction>;
-  /** PEGI age rating for games  */
+  /** PEGI age rating for games */
   pegi?: Maybe<Pegi>;
   /** Number of players in the game. */
   players?: Maybe<Players>;
@@ -270,7 +272,7 @@ export type ComplexSearchFiltersInput = {
   agencyId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Name of the branch. */
   branch?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  /** BranchId.  */
+  /** BranchId. */
   branchId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** The circulationrule of the item */
   circulationRule?: InputMaybe<Array<Scalars["String"]["input"]>>;
@@ -533,7 +535,7 @@ export type CoverDetails = {
 export type CreatorInterface = {
   /** Name of the creator */
   display: Scalars["String"]["output"];
-  /** Name of the creator which can be used to sort after  */
+  /** Name of the creator which can be used to sort after */
   nameSort: Scalars["String"]["output"];
   /** A list of which kinds of contributions this creator made to this creation */
   roles: Array<Role>;
@@ -963,7 +965,7 @@ export type Manifestation = {
   creators: Array<CreatorInterface>;
   /** Additional creators of this manifestation as described on the publication. E.g. 'tekst af William Warren' */
   creatorsFromDescription: Array<Scalars["String"]["output"]>;
-  /** The year for the publication of the first edition for this work  */
+  /** The year for the publication of the first edition for this work */
   dateFirstEdition?: Maybe<PublicationYear>;
   /** Edition details for this manifestation */
   edition?: Maybe<Edition>;
@@ -1075,7 +1077,7 @@ export type ManifestationTitles = {
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
   /** Danish translation of the main title */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
-  /** detailed title for tv series  */
+  /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
 };
 
@@ -1304,7 +1306,7 @@ export type Note = {
   display: Array<Scalars["String"]["output"]>;
   /** Heading before note */
   heading?: Maybe<Scalars["String"]["output"]>;
-  /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.  */
+  /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. */
   type: NoteTypeEnum;
   /** A link and possible link text */
   urls?: Maybe<Array<Maybe<AccessUrl>>>;
@@ -1825,13 +1827,13 @@ export type Series = {
   description?: Maybe<Scalars["String"]["output"]>;
   /** The number of members in the series */
   hitcount: Scalars["Int"]["output"];
-  /** Additional information  */
+  /** Additional information */
   identifyingAddition?: Maybe<Scalars["String"]["output"]>;
   /** Whether this is a popular series or general series */
   isPopular?: Maybe<Scalars["Boolean"]["output"]>;
   /** MainLanguages of the series */
   mainLanguages: Array<Scalars["String"]["output"]>;
-  /** Members of this serie.  */
+  /** Members of this serie. */
   members: Array<SerieWork>;
   /** The number in the series as text qoutation */
   numberInSeries?: Maybe<Scalars["String"]["output"]>;
@@ -1938,7 +1940,7 @@ export type SubjectContainer = {
 
 export type SubjectInterface = {
   display: Scalars["String"]["output"];
-  /** Language of the subject - contains display and isoCode  */
+  /** Language of the subject - contains display and isoCode */
   language?: Maybe<Language>;
   local?: Maybe<Scalars["Boolean"]["output"]>;
   /** The type of subject - 'location', 'time period' etc., 'topic' if not specific kind of subject term */
@@ -2294,7 +2296,7 @@ export type WorkTitles = {
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
   /** Danish translation of the main title */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
-  /** detailed title for tv series  */
+  /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
 };
 

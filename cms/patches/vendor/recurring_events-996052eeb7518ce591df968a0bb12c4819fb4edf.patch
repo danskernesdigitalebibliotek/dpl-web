@@ -1,0 +1,36 @@
+From 996052eeb7518ce591df968a0bb12c4819fb4edf Mon Sep 17 00:00:00 2001
+From: Benjamin Rasmussen <rasben@users.noreply.github.com>
+Date: Thu, 14 Nov 2024 09:22:08 +0100
+Subject: [PATCH] 3487412: Fix WSOD when EventInstance has invalid translation.
+
+I have a site, where an eventinstance somehow ended up in a wrong translation state.
+That means that now, I'm stuck - unable to edit, delete nor view the eventseries.
+
+I cant even use "drush entity:delete" as it fails:
+
+InvalidArgumentException: Invalid translation language (da) specified. in Drupal\Core\Entity\ContentEntityBase->getTranslation() (line 903 of core/lib/Drupal/Core/Entity/ContentEntityBase.php).
+
+I've debugged my way to /src/Plugin/ComputedField/EventInstances.php where I can see that we use ->getTranslation without checking if it exists.
+---
+ src/Plugin/ComputedField/EventInstances.php | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/Plugin/ComputedField/EventInstances.php b/src/Plugin/ComputedField/EventInstances.php
+index 769412b..a45a720 100644
+--- a/src/Plugin/ComputedField/EventInstances.php
++++ b/src/Plugin/ComputedField/EventInstances.php
+@@ -29,7 +29,10 @@ class EventInstances extends EntityReferenceFieldItemList {
+       });
+ 
+       foreach ($instances as $key => $instance) {
+-        $this->list[$key] = $this->createItem($key, $instance->getTranslation($this->getLangcode()));
++        $lang_code = $this->getLangcode();
++        if ($instance->hasTranslation($lang_code)) {
++          $this->list[$key] = $this->createItem($key, $instance->getTranslation($lang_code));
++        }
+       }
+     }
+   }
+-- 
+GitLab
+

@@ -2,13 +2,6 @@ version: '3'
 
 output: prefixed
 
-# Sub-project Taskfiles have dotenv declarations which Task v3
-# does not allow in included files. We only include migration
-# (no dotenv) and use `task -d <dir>` for sub-project tasks.
-includes:
-  migration:
-    taskfile: ./migration/Taskfile.migration.yml
-
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
@@ -23,6 +16,62 @@ tasks:
     summary: Lint GitHub Actions workflows with actionlint
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
+
+  # ---------------------------------------------------------------------------
+  # Tokens
+  # ---------------------------------------------------------------------------
+
+  token:generate:
+    desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in first-level .env files"
+    dotenv: ['.env']
+    silent: true
+    cmds:
+      - |
+        set -eu
+        : "${ADGANGSPLATFORMEN_CLIENT_ID:?missing in root .env}"
+        : "${ADGANGSPLATFORMEN_CLIENT_SECRET:?missing in root .env}"
+        : "${ADGANGSPLATFORMEN_AGENCY_ID:?missing in root .env}"
+
+        echo "Requesting new library token from login.bib.dk..."
+        response=$(curl -sS -X POST "https://login.bib.dk/oauth/token" \
+          -H "Content-Type: application/x-www-form-urlencoded" \
+          --data-urlencode "grant_type=password" \
+          --data-urlencode "client_id=${ADGANGSPLATFORMEN_CLIENT_ID}" \
+          --data-urlencode "client_secret=${ADGANGSPLATFORMEN_CLIENT_SECRET}" \
+          --data-urlencode "username=@${ADGANGSPLATFORMEN_AGENCY_ID}" \
+          --data-urlencode "password=@${ADGANGSPLATFORMEN_AGENCY_ID}")
+
+        token=$(echo "$response" | jq -r .access_token)
+        if [ -z "$token" ] || [ "$token" = "null" ]; then
+          echo "Failed to obtain access token. Response:" >&2
+          echo "$response" >&2
+          exit 1
+        fi
+
+        if ! command -v perl >/dev/null 2>&1; then
+          echo "perl not found on PATH — skipping automatic .env updates."
+          echo "Paste the token below into the *LIBRARY_TOKEN entries of your .env files manually."
+        else
+          updated=0
+          for envfile in */.env; do
+            [ -f "$envfile" ] || continue
+            if grep -qE '^[A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
+              TOKEN="$token" perl -i -pe 's/^([A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
+              echo "  updated $envfile"
+              updated=$((updated + 1))
+            fi
+          done
+
+          if [ "$updated" -eq 0 ]; then
+            echo "No *LIBRARY_TOKEN entries found in first-level .env files." >&2
+          else
+            echo "Done. Updated $updated file(s)."
+          fi
+        fi
+
+        echo
+        echo "Token:"
+        echo "$token"
 
   # ---------------------------------------------------------------------------
   # Sub-project starters (delegates to each project's own Taskfile)

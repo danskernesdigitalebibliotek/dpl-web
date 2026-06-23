@@ -6,10 +6,9 @@ describe("Loan list", () => {
     cy.window().then((win) => {
       const wednesday20220603 = new Date("2022-10-21T10:00:00.000").getTime();
 
-      // Sets time to a specific date
-      // https://github.com/cypress-io/cypress/issues/7577
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      cy.clock(wednesday20220603).then((clock: any) => clock.bind(window));
+      // Sets time to a specific date. cy.clock() applies to the application
+      // under test automatically when called before cy.visit().
+      cy.clock(wednesday20220603);
       win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
     });
 
@@ -334,7 +333,7 @@ describe("Loan list", () => {
     cy.get(".list-reservation-container")
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .should("have.text", "Dummy Some Title");
 
     // ID 42 2.d. authors & ID 42 2.f. year published
@@ -489,7 +488,7 @@ describe("Loan list", () => {
       .eq(1)
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .should("have.text", "Mordet i det blå tog");
 
     // ID 42 2.d. authors & ID 42 2.f. year published
@@ -605,7 +604,7 @@ describe("Loan list", () => {
       .eq(1)
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .click();
     cy.get(".modal-details").should("be.visible");
   });
@@ -634,7 +633,7 @@ describe("Loan list", () => {
       .eq(0)
       .find(".list-reservation")
       .eq(0)
-      .find(".list-reservation__header")
+      .find(".list-reservation__title")
       .click();
     cy.get(".modal-details").should("be.visible");
   });
@@ -716,7 +715,7 @@ describe("Loan list", () => {
 
     cy.get(".list-reservation-container")
       .find(".list-reservation")
-      .get(".list-reservation__header")
+      .get(".list-reservation__title")
       // The title should be the one returned by ilBibliographicRecord property
       // on the reservation.
       .should("contain", "Supermac : the life of Harold Macmillan")

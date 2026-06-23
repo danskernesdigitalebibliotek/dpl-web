@@ -207,6 +207,18 @@ class EventsGET200ResponseInner
     protected ?array $categories = null;
 
     /**
+     * The audiences associated with the event.
+     *
+     * @var string[]|null
+     * @SerializedName("audiences")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $audiences = null;
+
+    /**
      * The tags associated with the event.
      *
      * @var string[]|null
@@ -313,6 +325,7 @@ class EventsGET200ResponseInner
             $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
             $this->categories = array_key_exists('categories', $data) ? $data['categories'] : $this->categories;
+            $this->audiences = array_key_exists('audiences', $data) ? $data['audiences'] : $this->audiences;
             $this->tags = array_key_exists('tags', $data) ? $data['tags'] : $this->tags;
             $this->partners = array_key_exists('partners', $data) ? $data['partners'] : $this->partners;
             $this->ticketCategories = array_key_exists('ticketCategories', $data) ? $data['ticketCategories'] : $this->ticketCategories;
@@ -736,6 +749,32 @@ class EventsGET200ResponseInner
     public function setCategories(?array $categories = null): self
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Gets audiences.
+     *
+     * @return string[]|null
+     */
+    public function getAudiences(): ?array
+    {
+        return $this->audiences;
+    }
+
+
+
+    /**
+     * Sets audiences.
+     *
+     * @param string[]|null $audiences  The audiences associated with the event.
+     *
+     * @return $this
+     */
+    public function setAudiences(?array $audiences = null): self
+    {
+        $this->audiences = $audiences;
 
         return $this;
     }

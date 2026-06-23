@@ -25,6 +25,12 @@ import globalConfigArgs, {
 import blockedArgs, {
   argTypes as blockedArgTypes
 } from "../../../core/storybook/blockedArgs";
+import playerModalArgs, {
+  argTypes as playerModalArgTypes
+} from "../../../core/storybook/playerModalArgs";
+import onlineMaterialArgs, {
+  argTypes as onlineMaterialArgTypes
+} from "../../../core/storybook/onlineMaterialArgs";
 
 const meta: Meta<typeof LoanList> = {
   title: "Apps / Loan list",
@@ -40,6 +46,8 @@ const meta: Meta<typeof LoanList> = {
     ...renewalArgTypes,
     ...materialDetailsModalArgTypes,
     ...blockedArgTypes,
+    ...playerModalArgTypes,
+    ...onlineMaterialArgTypes,
     // Config
     pageSizeDesktop: {
       control: { type: "number" }
@@ -68,6 +76,9 @@ const meta: Meta<typeof LoanList> = {
       control: { type: "text" }
     },
     loanListDueDateModalAriaLabelText: {
+      control: { type: "text" }
+    },
+    loanListLoanDetailsText: {
       control: { type: "text" }
     },
     loanListMaterialLateFeeText: {
@@ -156,6 +167,8 @@ export const Primary: Story = {
     ...renewalArgs,
     ...materialDetailsModalArgs,
     ...blockedArgs,
+    ...playerModalArgs,
+    ...onlineMaterialArgs,
     pageSizeDesktop: 10,
     pageSizeMobile: 5,
     // Config
@@ -170,6 +183,7 @@ export const Primary: Story = {
     loanListDigitalPhysicalLoansEmptyListText: "You have 0 loans at the moment",
     loanListDueDateModalAriaLabelText:
       "This button opens a modal that covers the entire page and contains loans with the same due date as the loan currently in focus",
+    loanListLoanDetailsText: "Loan details",
     loanListMaterialLateFeeText:
       "You will be charged a fee, when the item is returned",
     loanListMaterialDaysText: "days",
