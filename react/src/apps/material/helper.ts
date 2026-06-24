@@ -644,18 +644,22 @@ export const getManifestationBasedOnType = (
   return bestRepresentation;
 };
 
-// Returns the requested material type only when the work actually has a
-// manifestation of that type. If it does not, returns undefined so callers
+// Returns the requested material type only when the given manifestation
+// actually has that type. If it does not, returns undefined so callers
 // (e.g. URL construction) can fall back to the website's normal logic instead
 // of forcing a type the work cannot satisfy.
+//
+// Pass the manifestation already resolved via getManifestationBasedOnType:
+// that helper falls back to the best representation when the work has no
+// manifestation of the requested type, so a non-matching type here means the
+// work cannot satisfy it.
 export const getAvailablePriorityMaterialType = (
-  work: Work,
+  manifestation: Manifestation,
   materialType?: ManifestationMaterialType
 ): ManifestationMaterialType | undefined => {
   if (!materialType) {
     return undefined;
   }
-  const manifestation = getManifestationBasedOnType(work, materialType);
   return getManifestationMaterialTypes(manifestation) === materialType
     ? materialType
     : undefined;

@@ -57,7 +57,6 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const {
     work: {
       titles: { full: fullTitle },
-      manifestations: { bestRepresentation },
       creators
     }
   } = data;
@@ -65,15 +64,19 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const work = data.work as Work;
   const materialManifestationForDisplay = materialType
     ? getManifestationBasedOnType(work, materialType)
-    : bestRepresentation;
+    : work.manifestations.bestRepresentation;
 
   const { pid } = materialManifestationForDisplay;
 
   const author = creatorsToString(flattenCreators(creators), t);
 
   // Only add the type to the URL when the work actually has it; otherwise let
-  // the work page apply its normal logic.
-  const urlMaterialType = getAvailablePriorityMaterialType(work, materialType);
+  // the work page apply its normal logic. Reuse the manifestation already
+  // resolved for display instead of resolving it a second time.
+  const urlMaterialType = getAvailablePriorityMaterialType(
+    materialManifestationForDisplay,
+    materialType
+  );
   const materialFullUrl = constructMaterialUrl(
     materialUrl,
     wid,

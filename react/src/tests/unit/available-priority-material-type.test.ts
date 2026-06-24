@@ -1,8 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { getAvailablePriorityMaterialType } from "../../apps/material/helper";
+import {
+  getAvailablePriorityMaterialType,
+  getManifestationBasedOnType
+} from "../../apps/material/helper";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { Pid } from "../../core/utils/types/ids";
+
+// Mirrors how the recommended-material component composes the two helpers:
+// resolve the manifestation for the requested type, then validate it.
+const priorityTypeFor = (work: Work, type?: ManifestationMaterialType) =>
+  getAvailablePriorityMaterialType(
+    type
+      ? getManifestationBasedOnType(work, type)
+      : work.manifestations.bestRepresentation,
+    type
+  );
 
 const manifestation = (
   pid: string,
@@ -38,33 +51,30 @@ describe("getAvailablePriorityMaterialType", () => {
 
   it("returns the type when the best representation already matches it", () => {
     const work = workWith(ebog, [ebog, bog]);
-    expect(
-      getAvailablePriorityMaterialType(work, ManifestationMaterialType.ebook)
-    ).toBe(ManifestationMaterialType.ebook);
+    expect(priorityTypeFor(work, ManifestationMaterialType.ebook)).toBe(
+      ManifestationMaterialType.ebook
+    );
   });
 
   it("returns the type when another manifestation has it", () => {
     const work = workWith(bog, [bog, lydbog]);
-    expect(
-      getAvailablePriorityMaterialType(
-        work,
-        ManifestationMaterialType.audioBook
-      )
-    ).toBe(ManifestationMaterialType.audioBook);
+    expect(priorityTypeFor(work, ManifestationMaterialType.audioBook)).toBe(
+      ManifestationMaterialType.audioBook
+    );
   });
 
   it("returns undefined when the work has no manifestation of that type", () => {
     const work = workWith(bog, [bog]);
     expect(
-      getAvailablePriorityMaterialType(work, ManifestationMaterialType.ebook)
+      priorityTypeFor(work, ManifestationMaterialType.ebook)
     ).toBeUndefined();
   });
 
   it("returns undefined when no material type is requested", () => {
     const work = workWith(bog, [bog, ebog]);
-    expect(getAvailablePriorityMaterialType(work, undefined)).toBeUndefined();
+    expect(priorityTypeFor(work, undefined)).toBeUndefined();
     expect(
-      getAvailablePriorityMaterialType(work, "" as ManifestationMaterialType)
+      priorityTypeFor(work, "" as ManifestationMaterialType)
     ).toBeUndefined();
   });
 });
