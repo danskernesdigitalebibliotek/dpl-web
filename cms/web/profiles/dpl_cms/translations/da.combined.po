@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-23 13:32+0200\n"
-"PO-Revision-Date: 2026-06-23 13:32+0200\n"
+"POT-Creation-Date: 2026-06-24 09:44+0200\n"
+"PO-Revision-Date: 2026-06-24 09:44+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-06-24 09:45+0200\n"
+"PO-Revision-Date: 2026-06-24 09:45+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2922,19 +2934,19 @@ msgstr "2 måneder"
 
 msgctxt "Player modal"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 msgctxt "Player modal"
 msgid "Modal for player"
-msgstr ""
+msgstr "Afspiller modal"
 
 msgctxt "Online material"
 msgid "Listen to @materialType"
-msgstr ""
+msgstr "Lyt til @materialType"
 
 msgctxt "Online material"
 msgid "Read @materialType"
-msgstr ""
+msgstr "Læs @materialType"
 
 msgctxt "Search Result"
 msgid "+ more filters"
@@ -3839,7 +3851,7 @@ msgstr "Forfattere"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Nr."
+msgstr "Udgave"
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -4338,7 +4350,7 @@ msgstr "Digital kopi er bestilt"
 
 msgctxt "Work Page - periodical"
 msgid "Edition"
-msgstr ""
+msgstr "Nr."
 
 msgctxt "Work Page"
 msgid "Year"
@@ -5499,7 +5511,7 @@ msgstr ""
 
 msgctxt "Loan list"
 msgid "Loan details"
-msgstr ""
+msgstr "Se detaljer om lån"
 
 msgctxt "Loan list"
 msgid "day"
