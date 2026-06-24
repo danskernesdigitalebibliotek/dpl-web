@@ -164,10 +164,12 @@ const PhysicalReservationButton = ({
   if (existing) {
     return (
       <>
-        <div
-          className="text-typo-caption text-foreground-muted flex w-full justify-center lg:ml-auto
-            lg:max-w-prose">
-          Bogen er reserveret til dig
+        <div className="w-full lg:max-w-80 lg:min-w-72">
+          <div
+            className="text-typo-caption text-foreground-muted flex w-full justify-center
+              lg:ml-auto">
+            Bogen er reserveret til dig
+          </div>
         </div>
         <WorkPageButton
           ariaLabel="Slet reservering"
