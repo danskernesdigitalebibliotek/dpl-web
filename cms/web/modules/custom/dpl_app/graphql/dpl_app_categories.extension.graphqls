@@ -1,0 +1,9 @@
+extend type Query {
+  "Get mobile app categories."
+  getAppCategories(
+    "App type to get categories for."
+    type: AppType!
+    "Optional single category to return"
+    uuid: String
+  ): [AppCategory!]!
+}

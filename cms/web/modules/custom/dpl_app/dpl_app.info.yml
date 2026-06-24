@@ -4,5 +4,6 @@ description: 'Functionality supporting the mobile apps'
 package: 'DPL'
 core_version_requirement: ^10 || ^11
 dependencies:
+  - dpl_library_agency:dpl_library_agency
   - graphql:graphql
   - autowire_plugin_trait:autowire_plugin_trait
