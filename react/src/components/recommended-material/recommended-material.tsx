@@ -2,7 +2,10 @@ import clsx from "clsx";
 import * as React from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
-import { getManifestationBasedOnType } from "../../apps/material/helper";
+import {
+  getAvailablePriorityMaterialType,
+  getManifestationBasedOnType
+} from "../../apps/material/helper";
 import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
 import Link from "../../components/atoms/links/Link";
 import ButtonFavourite, {
@@ -68,7 +71,14 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
 
   const author = creatorsToString(flattenCreators(creators), t);
 
-  const materialFullUrl = constructMaterialUrl(materialUrl, wid, materialType);
+  // Only add the type to the URL when the work actually has it; otherwise let
+  // the work page apply its normal logic.
+  const urlMaterialType = getAvailablePriorityMaterialType(work, materialType);
+  const materialFullUrl = constructMaterialUrl(
+    materialUrl,
+    wid,
+    urlMaterialType
+  );
   const addToListRequest = (id: ButtonFavouriteId) => {
     dispatch(
       guardedRequest({

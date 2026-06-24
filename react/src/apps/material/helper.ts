@@ -644,6 +644,23 @@ export const getManifestationBasedOnType = (
   return bestRepresentation;
 };
 
+// Returns the requested material type only when the work actually has a
+// manifestation of that type. If it does not, returns undefined so callers
+// (e.g. URL construction) can fall back to the website's normal logic instead
+// of forcing a type the work cannot satisfy.
+export const getAvailablePriorityMaterialType = (
+  work: Work,
+  materialType?: ManifestationMaterialType
+): ManifestationMaterialType | undefined => {
+  if (!materialType) {
+    return undefined;
+  }
+  const manifestation = getManifestationBasedOnType(work, materialType);
+  return getManifestationMaterialTypes(manifestation) === materialType
+    ? materialType
+    : undefined;
+};
+
 export const getWorkTitle = (work: Work): string => {
   const { titles, mainLanguages } = work;
   // For movies and TV series, use the full title directly.
