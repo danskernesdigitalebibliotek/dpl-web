@@ -4,6 +4,6 @@ extend type Query {
     "App type to get categories for."
     type: AppType!
     "Optional single category to return"
-    uuid: String
+    id: String
   ): [AppCategory!]!
 }

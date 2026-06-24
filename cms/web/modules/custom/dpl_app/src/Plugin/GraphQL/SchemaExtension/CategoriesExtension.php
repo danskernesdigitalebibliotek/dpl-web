@@ -39,10 +39,10 @@ class CategoriesExtension extends SdlSchemaExtensionPluginBase {
     $registry->addFieldResolver('Query', 'getAppCategories',
     $builder->produce('get_app_categories_producer')
       ->map('type', $builder->fromArgument('type'))
-      ->map('uuid', $builder->fromArgument('uuid'))
+      ->map('id', $builder->fromArgument('id'))
     );
 
-    $registry->addFieldResolver('AppCategory', 'uuid',
+    $registry->addFieldResolver('AppCategory', 'id',
       $builder->callback(fn(ContentEntityInterface $category) => $category->uuid())
     );
 
