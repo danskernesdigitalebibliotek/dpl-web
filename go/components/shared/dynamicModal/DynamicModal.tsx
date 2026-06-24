@@ -10,11 +10,11 @@ import {
   modalParsers,
 } from "@/lib/helpers/modal-url"
 
+import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
 import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
-import DeleteReservationModal from "../reservationModal/DeleteReservationModal"
 import ReservationLoginModal from "../reservationModal/ReservationLoginModal"
 import ReservationModal from "../reservationModal/ReservationModal"
 import ReservationUniloginModal from "../reservationModal/ReservationUniloginModal"

@@ -48,6 +48,7 @@ export const cyKeys = {
   "delete-reservation-button": "delete-reservation-button",
   "delete-reservation-modal": "delete-reservation-modal",
   "delete-reservation-receipt": "delete-reservation-receipt",
+  "delete-reservation-error": "delete-reservation-error",
   "approve-delete-reservation-button": "approve-delete-reservation-button",
 } as const
 
