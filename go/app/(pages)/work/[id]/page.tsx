@@ -11,7 +11,7 @@ import React, { Suspense } from "react"
 
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import { isPhysicalMaterialType } from "@/components/pages/workPageLayout/helper"
-import { branchTitleQueryKey } from "@/hooks/useBranchTitle"
+import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { getBranchTitle } from "@/lib/actions/getBranchTitle"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"

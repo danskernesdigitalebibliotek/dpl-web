@@ -13,7 +13,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import ReservationModal from "@/components/shared/reservationModal/ReservationModal"
-import { branchTitleQueryKey } from "@/hooks/useBranchTitle"
+import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 import workMock from "@/lib/mocks/work/infoBox.mock"

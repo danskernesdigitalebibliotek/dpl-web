@@ -2,9 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query"
 
+import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { getBranchTitle } from "@/lib/actions/getBranchTitle"
-
-export const branchTitleQueryKey = (isilId: string) => ["branchTitle", isilId] as const
 
 // Reactive ISIL -> branch title, backed by the getBranchTitle server action.
 // Replaces the browser-side CMS GraphQL query so no GraphQL passthrough is
