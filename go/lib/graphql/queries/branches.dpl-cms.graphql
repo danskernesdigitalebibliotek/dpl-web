@@ -1,12 +1,5 @@
-query getBranches {
-  getBranches {
-    isilId
-    title
-  }
-}
-
-query getBranch($isilId: String!) {
-  getBranch(isilId: $isilId) {
+query getBranches($isilId: String) {
+  getBranches(isilId: $isilId) {
     isilId
     title
   }
