@@ -6,6 +6,10 @@ import {
   useComplexSearchWithPaginationQuery
 } from "../../../core/dbc-gateway/generated/graphql";
 import useGetSearchBranches from "../../../core/utils/branches";
+import {
+  useGetPhysicalHoldingsFilters,
+  hasActivePhysicalHoldingsFilter
+} from "../../../core/utils/useGetPhysicalHoldingsFilters";
 import { useText } from "../../../core/utils/text";
 import { WorkId } from "../../../core/utils/types/ids";
 import { commaSeparatedStringToArray } from "../../advanced-search/helpers";
@@ -43,6 +47,18 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   const t = useText();
   const buttonText = t("buttonText");
   const cleanBranches = useGetSearchBranches();
+  const physicalHoldingsFilters = useGetPhysicalHoldingsFilters();
+
+  // When the editor filters on physical holdings we must also exclude online
+  // editions and restrict to the site's own agency, so the grid only shows the
+  // library's own physical materials.
+  const hasPhysicalHoldingsFilter = hasActivePhysicalHoldingsFilter({
+    onShelf: onshelf,
+    branch,
+    department,
+    location,
+    sublocation
+  });
 
   const { data, isLoading } = useComplexSearchWithPaginationQuery({
     cql,
@@ -61,7 +77,8 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
       ...(onshelf ? { status: [CsHoldingsStatusEnum.Onshelf] } : {}),
       ...(firstaccessiondateitem
         ? { firstAccessionDate: decodeURIComponent(firstaccessiondateitem) }
-        : {})
+        : {}),
+      ...(hasPhysicalHoldingsFilter ? physicalHoldingsFilters : {})
     },
     ...(sort ? { sort: advancedSortMap[sort as AdvancedSortMapStrings] } : {})
   });
