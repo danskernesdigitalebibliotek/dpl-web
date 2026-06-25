@@ -52,6 +52,11 @@ jobs:
           RELEASE_TAG: snapshot-refresh
           RELEASE_IMAGE_TAG: snapshot-refresh
           RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+          # Dummy values — site install only needs these to be present, not
+          # valid (no real OpenID auth happens during the snapshot build).
+          OPENID_CLIENT_ID: "1"
+          OPENID_CLIENT_SECRET: "1"
+          OPENID_AGENCY_ID: "1"
         run: |
           echo "Refreshing database snapshot (latest-default) from a clean install"
           task dev:start
