@@ -60,3 +60,14 @@ type AppContentElementVideoBundleManual implements AppContentElement {
   workIds: [String!]!
   video: AppVideo!
 }
+
+"""
+A bundle with a video and a material search string.
+"""
+type AppContentElementVideoBundleAutomatic implements AppContentElement {
+  id: String!
+  title: String!
+  cql: String!
+  limit: Int!
+  video: AppVideo!
+}
