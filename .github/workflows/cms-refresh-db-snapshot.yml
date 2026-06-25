@@ -1,0 +1,71 @@
+---
+# TEMPORARY workflow — do not merge.
+# Rebuilds and republishes the CMS database snapshot image
+# (`dpl-cms-database-snapshot:latest-default`) from a clean site install,
+# without cutting a real release. Triggered by pushing the
+# `refresh-db-snapshot` branch. Delete the branch + this file when done.
+name: CMS / Refresh database snapshot (temporary)
+on:
+  push:
+    branches:
+      - refresh-db-snapshot
+  workflow_dispatch:
+
+jobs:
+  publish_db_snapshot:
+    name: CMS / Publish database snapshot
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Build design-system + React and copy them into the CMS source tree so
+      # the installed site serves the current assets.
+      - name: Build CMS frontend assets
+        uses: ./.github/actions/build-cms-assets
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install site
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          # Not a real release — a fixed tag keeps DB_SNAPSHOT_FULL_NAME a
+          # valid Docker tag. `latest-default` is published regardless and is
+          # what `task dev:reset` / CI consume.
+          VERSION: snapshot-refresh
+          RELEASE: snapshot-refresh
+          RELEASE_TAG: snapshot-refresh
+          RELEASE_IMAGE_TAG: snapshot-refresh
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
+          echo "Refreshing database snapshot (latest-default) from a clean install"
+          task dev:start
+          task dev:cli -- composer install
+          task dev:cli -- ./dev-scripts/install-site.sh --install-only
+
+      - name: Generate and publish database snapshot image
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: snapshot-refresh
+          RELEASE: snapshot-refresh
+          RELEASE_TAG: snapshot-refresh
+          RELEASE_IMAGE_TAG: snapshot-refresh
+          RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+        run: |
+          task database-snapshot:deploy
