@@ -7,7 +7,7 @@ import { Button } from "../../../components/Buttons/Button";
 import { RequestStatus } from "../../../core/utils/types/request";
 import { RenewedLoanV2 } from "../../../core/fbs/model";
 import { getRenewButtonLabel } from "../../../core/utils/helpers/renewal";
-import { useEventStatistics } from "../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../core/statistics/useStatistics";
 import { statistics } from "../../../core/statistics/statistics";
 import StatusMessage from "../materials/selectable-material/StatusMessage";
 
@@ -35,7 +35,6 @@ const RenewButton: FC<RenewButtonProps> = ({
   setRenewingResponse
 }) => {
   const t = useText();
-  const { track } = useEventStatistics();
   const queryClient = useQueryClient();
   const { mutate } = useRenewLoansV2();
   const label = getRenewButtonLabel({
@@ -44,7 +43,7 @@ const RenewButton: FC<RenewButtonProps> = ({
     t
   });
   const trackRenewal = () => {
-    track("click", {
+    trackEvent("click", {
       id: statistics.renewSelectedMaterials.id,
       name: statistics.renewSelectedMaterials.name,
       trackedData: "Forny_valgte_materialer"

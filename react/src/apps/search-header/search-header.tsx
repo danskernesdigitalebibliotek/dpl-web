@@ -26,7 +26,7 @@ import {
   getAutosuggestCategoryList,
   getInitialSearchQuery
 } from "./helpers";
-import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { trackEvent } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 import HeaderDropdown from "../../components/header-dropdown/HeaderDropdown";
 import useFilterHandler from "../search-result/useFilterHandler";
@@ -66,7 +66,6 @@ const SearchHeader: React.FC = () => {
   const [highlightedIndexAfterClick, setHighlightedIndexAfterClick] = useState<
     number | null
   >(null);
-  const { track } = useEventStatistics();
 
   // Make sure to only assign the data once.
   useEffect(() => {
@@ -215,7 +214,7 @@ const SearchHeader: React.FC = () => {
     // determine if that was the case first.
     // If this item is shown as one of work suggestions redirect to material page.
     if (selectedItem.work?.workId && materialData.includes(selectedItem)) {
-      track("click", {
+      trackEvent("click", {
         id: statistics.autosuggestClick.id,
         name: statistics.autosuggestClick.name,
         trackedData: selectedItem.work.titles.main.join(", ")
@@ -240,7 +239,7 @@ const SearchHeader: React.FC = () => {
       const highlightedCategoryIndex =
         highlightedIndexAfterClick - (textData.length + materialData.length);
       const selectedItemString = determineSuggestionTerm(changes.selectedItem);
-      track("click", {
+      trackEvent("click", {
         id: statistics.autosuggestClick.id,
         name: statistics.autosuggestClick.name,
         trackedData: selectedItemString
@@ -290,7 +289,7 @@ const SearchHeader: React.FC = () => {
           break;
       }
 
-      track("click", {
+      trackEvent("click", {
         id: statistics.autosuggestClick.id,
         name: statistics.autosuggestClick.name,
         trackedData: selectedItemString
@@ -303,7 +302,7 @@ const SearchHeader: React.FC = () => {
     }
 
     // Otherwise redirect to search result page & track autosuggest click.
-    track("click", {
+    trackEvent("click", {
       id: statistics.autosuggestClick.id,
       name: statistics.autosuggestClick.name,
       trackedData: determineSuggestionTerm(selectedItem)

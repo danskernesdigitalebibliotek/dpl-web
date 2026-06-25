@@ -21,7 +21,7 @@ import MaterialButtons from "./material-buttons/MaterialButtons";
 import MaterialPeriodical from "./periodical/MaterialPeriodical";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { PeriodicalEdition } from "./periodical/helper";
-import { useCollectPageStatistics } from "../../core/statistics/useStatistics";
+import { collectPageStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 import {
   getManifestationLanguageCode,
@@ -73,7 +73,6 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
   const title = getWorkTitle(work);
   const pid = getWorkPid(work);
   const coverPids = getManifestationsPids(selectedManifestations);
-  const { collectPageStatistics } = useCollectPageStatistics();
   // This is used to track whether the user is changing between material types or just clicking the same button over
   const manifestationMaterialTypes = getMaterialTypes(selectedManifestations);
 

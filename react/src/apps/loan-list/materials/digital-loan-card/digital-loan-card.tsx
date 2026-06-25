@@ -13,7 +13,7 @@ import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
 import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
 import { getReaderPlayerTypeFromPublizonProductType } from "../../../../components/reader-player/helper";
-import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 
 export interface DigitalLoanCardProps {
@@ -32,7 +32,6 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
 }) => {
   const { dueDate, loanDate, identifier, periodical, orderId } = loan;
   const t = useText();
-  const { track } = useEventStatistics();
 
   const readerPlayerType = getReaderPlayerTypeFromPublizonProductType(
     material?.digitalProductType
@@ -67,7 +66,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
           size="small"
           dataCy="loan-list-reader-button"
           trackClick={() =>
-            track("click", {
+            trackEvent("click", {
               id: statistics.publizonReadListen.id,
               name: statistics.publizonReadListen.name,
               trackedData: orderId
@@ -91,7 +90,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
         size="small"
         collapsible={false}
         onClick={() => {
-          track("click", {
+          trackEvent("click", {
             id: statistics.publizonReadListen.id,
             name: statistics.publizonReadListen.name,
             trackedData: orderId

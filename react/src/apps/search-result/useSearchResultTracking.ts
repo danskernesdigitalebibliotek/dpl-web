@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
-  useCollectPageStatistics,
-  useEventStatistics
+  collectPageStatistics,
+  trackEvent
 } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
@@ -16,7 +16,6 @@ const useSearchResultTracking = ({
   q: string;
   hitcount: number;
 }) => {
-  const { collectPageStatistics } = useCollectPageStatistics();
   const [canTrackHitcount, setCanTrackHitcount] = useState(false);
 
   // Track search query when it changes.
@@ -25,7 +24,6 @@ const useSearchResultTracking = ({
       ...statistics.searchQuery,
       trackedData: q
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q]);
 
   // Track search result count when it changes.
@@ -49,8 +47,6 @@ const useSearchResultTracking = ({
  * to match the format used by the old search result.
  */
 export const useFacetTracking = () => {
-  const { track } = useEventStatistics();
-
   const trackFacetChange = useCallback(
     (facets: { facetName: string; selectedValues: string[] }[]) => {
       const trackedData = facets
@@ -59,13 +55,13 @@ export const useFacetTracking = () => {
         )
         .join(";");
 
-      track("click", {
+      trackEvent("click", {
         id: statistics.searchFacets.id,
         name: statistics.searchFacets.name,
         trackedData
       });
     },
-    [track]
+    []
   );
 
   return { trackFacetChange };

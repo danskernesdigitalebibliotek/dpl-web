@@ -38,27 +38,22 @@ export type TrackParameters = {
 
 export type EventAction = "send";
 
-export const useCollectPageStatistics = () => {
-  const collectPageStatistics = ({ parameterName, trackedData }: EventData) => {
-    // eslint-disable-next-line no-underscore-dangle
-    window._ti = window._ti || {};
-    // eslint-disable-next-line no-underscore-dangle
-    window._ti[parameterName as string] = trackedData;
-  };
+export const collectPageStatistics = ({
+  parameterName,
+  trackedData
+}: EventData) => {
+  // eslint-disable-next-line no-underscore-dangle
+  window._ti = window._ti || {};
+  // eslint-disable-next-line no-underscore-dangle
+  window._ti[parameterName as string] = trackedData;
+};
 
-  const resetAndCollectPageStatistics = ({
-    parameterName,
-    trackedData
-  }: EventData) => {
-    // eslint-disable-next-line no-underscore-dangle
-    window._ti = {};
-    collectPageStatistics({ parameterName, trackedData });
-  };
-
-  return {
-    collectPageStatistics,
-    resetAndCollectPageStatistics
-  };
+// Clears the accumulated page parameters. Call this before collecting when a
+// page re-tracks without a reload (e.g. a new search on the same page) so the
+// payload holds only the current parameters and not leftovers from before.
+export const resetPageStatistics = () => {
+  // eslint-disable-next-line no-underscore-dangle
+  window._ti = {};
 };
 
 export function usePageStatistics() {
@@ -113,9 +108,9 @@ export function usePageStatistics() {
   };
 }
 
-export const useEventStatistics = () => {
-  // If the global wts object doesn't exist, it means we are in dev environment.
-  // Here instead of actually tracking we just log the data to the console.
+// If the global wts object doesn't exist, it means we are in dev environment.
+// Here instead of actually tracking we just log the data to the console.
+const ensureWtsShim = () => {
   if (!window.wts) {
     window.wts = {
       push([action, type, data]: [EventAction, EventType, EventData]) {
@@ -124,55 +119,52 @@ export const useEventStatistics = () => {
       }
     };
   }
+};
 
-  const track = (eventType: EventType, trackParameters: TrackParameters) => {
-    const eventData: EventDataWithCustomClickParameter = {
-      linkId: trackParameters.name,
-      customClickParameter: {}
-    };
-    eventData.customClickParameter[trackParameters.id] =
-      trackParameters.trackedData;
-    window.wts.push(["send", eventType, eventData]);
+export const trackEvent = (
+  eventType: EventType,
+  trackParameters: TrackParameters
+) => {
+  ensureWtsShim();
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("resolved");
-      }, 500);
-    });
+  const eventData: EventDataWithCustomClickParameter = {
+    linkId: trackParameters.name,
+    customClickParameter: {}
   };
+  eventData.customClickParameter[trackParameters.id] =
+    trackParameters.trackedData;
+  window.wts.push(["send", eventType, eventData]);
 
-  return {
-    track
-  };
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("resolved");
+    }, 500);
+  });
 };
 
 // URL tracking
 // This function redirects to a campaign URL with a specified parameter `u_navigatedby` and value.
 // When the Mapp script is loaded, this URL parameter will automatically be captured
 // and sent in the same way as page parameters
-export const useUrlStatistics = () => {
-  const redirectWithUrlTracking = ({
-    campaignUrl,
-    parameterValue,
-    openInNewTab = true
-  }: {
-    campaignUrl: string;
-    parameterValue: string;
-    openInNewTab?: boolean;
-  }) => {
-    if (!isUrlValid(campaignUrl)) {
-      return;
-    }
+export const redirectWithUrlTracking = ({
+  campaignUrl,
+  parameterValue,
+  openInNewTab = true
+}: {
+  campaignUrl: string;
+  parameterValue: string;
+  openInNewTab?: boolean;
+}) => {
+  if (!isUrlValid(campaignUrl)) {
+    return;
+  }
 
-    const url = new URL(campaignUrl);
-    const params = new URLSearchParams(url.search);
-    params.set("u_navigatedby", parameterValue);
-    url.search = params.toString();
+  const url = new URL(campaignUrl);
+  const params = new URLSearchParams(url.search);
+  params.set("u_navigatedby", parameterValue);
+  url.search = params.toString();
 
-    redirectTo(url, openInNewTab);
-  };
-
-  return { redirectWithUrlTracking };
+  redirectTo(url, openInNewTab);
 };
 
 export default {};

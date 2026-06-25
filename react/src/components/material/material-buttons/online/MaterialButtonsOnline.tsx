@@ -4,7 +4,7 @@ import { first } from "lodash";
 import { AccessUrl } from "../../../../core/dbc-gateway/generated/graphql";
 import InvalidUrlError from "../../../../core/errors/InvalidUrlError";
 import { statistics } from "../../../../core/statistics/statistics";
-import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../../core/statistics/useStatistics";
 import { isUrlValid } from "../../../../core/utils/helpers/url";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import { Manifestation } from "../../../../core/utils/types/entities";
@@ -35,9 +35,8 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
   ariaLabelledBy,
   isEditionPicker = false
 }) => {
-  const { track } = useEventStatistics();
   const trackOnlineView = () => {
-    return track("click", {
+    return trackEvent("click", {
       id: statistics.onlineReservation.id,
       name: statistics.onlineReservation.name,
       trackedData: workId

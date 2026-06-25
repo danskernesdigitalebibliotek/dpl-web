@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { usePlaceCopyMutation } from "../../../core/dbc-gateway/generated/graphql";
 import { statistics } from "../../../core/statistics/statistics";
-import { useEventStatistics } from "../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../core/statistics/useStatistics";
 import Modal from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
 import { Pid, WorkId } from "../../../core/utils/types/ids";
@@ -23,7 +23,6 @@ const DigitalModal: React.FunctionComponent<DigitalModalProps> = ({
   const modalId = createDigitalModalId(pid);
   const t = useText();
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const { track } = useEventStatistics();
 
   const {
     mutate: articleOrder,
@@ -44,7 +43,7 @@ const DigitalModal: React.FunctionComponent<DigitalModalProps> = ({
       {
         onSuccess: () => {
           // Track only if the reservation has been successfully saved.
-          track("click", {
+          trackEvent("click", {
             id: statistics.orderDigitalCopy.id,
             name: statistics.orderDigitalCopy.name,
             trackedData: workId

@@ -5,7 +5,7 @@ import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import MaterialListItem from "../card-item-list/MaterialListItem";
 import RecommendedMaterial from "../../apps/recommended-material/RecommendedMaterial";
-import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { trackEvent } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
 export type MaterialGridItemProps = {
@@ -36,7 +36,6 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
   initialMaximumDisplay = defaultIncrement
 }) => {
   const firstNewItemRef = React.useRef<HTMLLIElement>(null);
-  const { track } = useEventStatistics();
 
   const moreMaterialsThanInitialMaximum =
     materials.length > initialMaximumDisplay;
@@ -61,7 +60,7 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
     // Tracked under the same Mapp event (47) as material clicks so DDF can see
     // grid engagement as a whole. A fixed marker distinguishes the "show more"
     // interaction from clicks on the materials themselves.
-    track("click", {
+    trackEvent("click", {
       id: statistics.materialGridClick.id,
       name: statistics.materialGridClick.name,
       trackedData: "Klik på Materiale grids vis mere"
