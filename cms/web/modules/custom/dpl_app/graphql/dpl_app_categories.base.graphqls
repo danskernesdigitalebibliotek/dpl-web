@@ -8,6 +8,9 @@ type AppCategory {
   elements: [AppContentElement!]!
 }
 
+"""
+Type of app.
+"""
 enum AppType {
   MYBIBLO
   BIBLO
