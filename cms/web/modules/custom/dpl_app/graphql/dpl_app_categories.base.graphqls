@@ -19,6 +19,14 @@ An AppContentElement.
 
 This is an app mapping of Paragraphs.
 """
-type AppContentElement {
+interface AppContentElement {
   id: String!
+}
+
+"""
+A text content element.
+"""
+type AppContentElementText implements AppContentElement {
+  id: String!
+  body: String!
 }

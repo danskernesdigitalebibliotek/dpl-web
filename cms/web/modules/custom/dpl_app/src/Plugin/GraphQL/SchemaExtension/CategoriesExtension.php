@@ -55,10 +55,20 @@ class CategoriesExtension extends SdlSchemaExtensionPluginBase {
       ->map('entity', $builder->fromParent())
     );
 
-    // @todo implement
     $registry->addFieldResolver('AppCategory', 'elements',
-    $builder->callback(fn(ContentEntityInterface $category) => [])
+    $builder->produce('app_elements_producer')
+      ->map('entity', $builder->fromParent())
     );
+
+    // Without a resolver, graphql.module can't tell what the type of the
+    // elements the app_elements_producer returns is.
+    $registry->addTypeResolver('AppContentElement', function ($value) {
+      if (is_array($value) && isset($value['__type'])) {
+        return $value['__type'];
+      }
+
+      return NULL;
+    });
   }
 
 }
