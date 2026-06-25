@@ -107,6 +107,28 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           ];
         }
       }
+      elseif (in_array(
+        $paragraph->bundle(),
+        ['go_video_bundle_manual', 'go_video_bundle_vertical_manual'],
+      )) {
+        $video = $this->extractVideo($paragraph, ['field_embed_video'], $field_context);
+        if ($video) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $workIds = [];
+          foreach ($paragraph->get('field_video_bundle_work_ids') as $item) {
+            $workIds[] = $item->value;
+          }
+
+          $result[] = [
+            '__type' => 'AppContentElementVideoBundleManual',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_go_video_title')->value,
+            'workIds' => $workIds,
+            'video' => $video,
+          ];
+        }
+      }
     }
 
     return $result;

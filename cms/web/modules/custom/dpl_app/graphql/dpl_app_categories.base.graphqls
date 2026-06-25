@@ -50,3 +50,13 @@ type AppContentElementVideo implements AppContentElement {
   title: String
   video: AppVideo!
 }
+
+"""
+A bundle with a video and manually selected materials.
+"""
+type AppContentElementVideoBundleManual implements AppContentElement {
+  id: String!
+  title: String!
+  workIds: [String!]!
+  video: AppVideo!
+}
