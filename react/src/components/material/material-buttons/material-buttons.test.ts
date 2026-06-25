@@ -321,7 +321,7 @@ describe("Material buttons", () => {
       statusCode: 404
     }).as("Favorite list service");
 
-    // Intercept url "translation". The dpl-cms.docker host resolves to a
+    // Intercept url "translation". The dpl-cms.local host resolves to a
     // private IP via /etc/hosts which Chrome bypasses the Cypress proxy for,
     // so cy.intercept cannot catch it. Instead stub fetch directly at the
     // browser level before the page loads.
