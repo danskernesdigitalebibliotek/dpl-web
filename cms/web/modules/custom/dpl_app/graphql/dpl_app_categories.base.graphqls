@@ -18,6 +18,14 @@ enum AppType {
 }
 
 """
+A video, for the app.
+"""
+type AppVideo {
+  url: String!
+  thumbnail: String!
+}
+
+"""
 An AppContentElement.
 
 This is an app mapping of Paragraphs.
@@ -32,4 +40,13 @@ A text content element.
 type AppContentElementText implements AppContentElement {
   id: String!
   body: String!
+}
+
+"""
+A video element.
+"""
+type AppContentElementVideo implements AppContentElement {
+  id: String!
+  title: String
+  video: AppVideo!
 }
