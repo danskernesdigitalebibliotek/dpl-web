@@ -69,13 +69,18 @@ export type AppCategory = {
   __typename?: 'AppCategory';
   elements: Array<AppContentElement>;
   icon: Scalars['String']['output'];
+  id: Scalars['String']['output'];
   title: Scalars['String']['output'];
-  uuid: Scalars['String']['output'];
 };
 
 export type AppContentElement = {
-  __typename?: 'AppContentElement';
-  uuid: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+};
+
+export type AppContentElementText = AppContentElement & {
+  __typename?: 'AppContentElementText';
+  body: Scalars['String']['output'];
+  id: Scalars['String']['output'];
 };
 
 export type AppType =
@@ -982,8 +987,8 @@ export type Query = { go: { cacheTags: string[] } } & {
 
 
 export type QueryGetAppCategoriesArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
   type: AppType;
-  uuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 
