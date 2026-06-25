@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import {
   TModalType,
@@ -24,6 +24,17 @@ export function DynamicModal() {
   const [open, setOpen] = useState(!!modalType)
   const [activeModal, setActiveModal] = useState<TModalType | null>(modalType)
   const [activeParams, setActiveParams] = useState<TModalUrlParams[TModalType] | null>(modalProps)
+  const triggerRef = useRef<HTMLElement | null>(null)
+
+  // Capture the trigger element in a layout effect (before paint) so
+  // document.activeElement still points at the button that opened the
+  // modal.  A regular useEffect runs after paint, by which time
+  // nuqs / Next.js may have shifted focus via startTransition.
+  useLayoutEffect(() => {
+    if (modalType && wid && pid) {
+      triggerRef.current = document.activeElement as HTMLElement
+    }
+  }, [modalType, wid, pid])
 
   useEffect(() => {
     if (modalType && wid && pid) {
@@ -36,6 +47,16 @@ export function DynamicModal() {
       return () => clearTimeout(timer)
     }
   }, [modalType, wid, pid])
+
+  // Restore focus after the modal fully unmounts.  Passive effects run
+  // after all cleanup effects, so Radix's deferred FocusScope cleanup
+  // (which fires in a setTimeout(0)) has already executed by this point.
+  useEffect(() => {
+    if (!activeModal && triggerRef.current) {
+      triggerRef.current.focus()
+      triggerRef.current = null
+    }
+  }, [activeModal])
 
   const closeModal = useCallback(() => {
     setModal({ modal: null, modalProps: null })
