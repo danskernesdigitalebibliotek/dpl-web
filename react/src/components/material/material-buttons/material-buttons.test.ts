@@ -298,11 +298,28 @@ describe("Material buttons", () => {
       statusCode: 404
     }).as("Favorite list service");
 
-    // Intercept url "translation".
-    cy.interceptRest({
-      aliasName: "UrlProxy",
-      url: "**/dpl-url-proxy?url=**",
-      fixtureFilePath: "material/dpl-url-proxy.json"
+    // Intercept url "translation". The dpl-cms.local host resolves to a
+    // private IP via /etc/hosts which Chrome bypasses the Cypress proxy for,
+    // so cy.intercept cannot catch it. Instead stub fetch directly at the
+    // browser level before the page loads.
+    cy.on("window:before:load", (win) => {
+      const originalFetch = win.fetch.bind(win);
+      // eslint-disable-next-line no-param-reassign
+      win.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+        const url = typeof input === "string" ? input : input.toString();
+        if (url.includes("/dpl-url-proxy")) {
+          return Promise.resolve(
+            new win.Response(
+              JSON.stringify({ data: { url: "http://www.example.com" } }),
+              {
+                status: 200,
+                headers: { "Content-Type": "application/json" }
+              }
+            )
+          );
+        }
+        return originalFetch(input, init);
+      };
     });
 
     cy.interceptGraphql({
