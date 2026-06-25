@@ -27,7 +27,7 @@ use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
  *       label = "App type categories",
  *       required = true
  *     ),
- *     "uuid" = @ContextDefinition("any",
+ *     "id" = @ContextDefinition("any",
  *       label = "Get selected category",
  *       required = false
  *     )
@@ -55,8 +55,8 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
    *
    * @param string $type
    *   The app type to get categories for.
-   * @param string|null $uuid
-   *   Optional single category UUID to return.
+   * @param string|null $id
+   *   Optional UUID of single category to return.
    * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
    *   The field context for adding cache metadata.
    *
@@ -65,15 +65,15 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
    */
   public function resolve(
     string $type,
-    ?string $uuid,
+    ?string $id,
     FieldContext $field_context,
   ): array {
     $type = AppType::tryFrom($type);
 
     return match ($type) {
-      AppType::Biblo => $this->getTermCategories($type, $uuid),
-      AppType::MyBiblo => $this->getTermCategories($type, $uuid),
-      AppType::BibloGo => $this->getGoCategories($uuid),
+      AppType::Biblo => $this->getTermCategories($type, $id),
+      AppType::MyBiblo => $this->getTermCategories($type, $id),
+      AppType::BibloGo => $this->getGoCategories($id),
       default => [],
     };
   }
@@ -84,15 +84,15 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
    * @return \Drupal\Core\Entity\ContentEntityInterface[]
    *   The categories.
    */
-  protected function getGoCategories(?string $uuid): array {
+  protected function getGoCategories(?string $id): array {
     $storage = $this->entititypeManager->getStorage('node');
     $query = $storage->getQuery();
     $query->condition('type', 'go_category')
       ->condition('status', TRUE)
       ->sort('changed', 'DESC');
 
-    if ($uuid) {
-      $query->condition('uuid', $uuid);
+    if ($id) {
+      $query->condition('uuid', $id);
     }
 
     $nids = $query->accessCheck(TRUE)
@@ -112,7 +112,7 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
    * @return \Drupal\Core\Entity\ContentEntityInterface[]
    *   The categories.
    */
-  protected function getTermCategories(AppType $type, ?string $uuid): array {
+  protected function getTermCategories(AppType $type, ?string $id): array {
     $term = $this->getTermByAppType($type);
 
     if (!$term) {
@@ -125,8 +125,8 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
       ->condition('field_tags', $term->id())
       ->sort('changed', 'DESC');
 
-    if ($uuid) {
-      $query->condition('uuid', $uuid);
+    if ($id) {
+      $query->condition('uuid', $id);
     }
 
     $nids = $query->accessCheck(TRUE)

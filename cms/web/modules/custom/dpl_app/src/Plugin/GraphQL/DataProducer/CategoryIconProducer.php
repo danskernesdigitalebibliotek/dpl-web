@@ -6,7 +6,6 @@ namespace Drupal\dpl_app\Plugin\GraphQL\DataProducer;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\file\Entity\File;
@@ -33,18 +32,6 @@ use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 class CategoryIconProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
 
   use AutowirePluginTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(
-    array $configuration,
-    string $pluginId,
-    mixed $pluginDefinition,
-    protected EntityTypeManagerInterface $entititypeManager,
-  ) {
-    parent::__construct($configuration, $pluginId, $pluginDefinition);
-  }
 
   /**
    * Resolves the icon.
