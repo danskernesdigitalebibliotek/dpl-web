@@ -1,6 +1,7 @@
 import React from "react";
 import GuardedApp from "../../../components/guarded-app";
 import { GlobalEntryTextProps } from "../../../core/storybook/globalTextArgs";
+import { GlobalConfigProps } from "../../../core/storybook/globalConfigArgs";
 import { withConfig } from "../../../core/utils/config";
 import { withText } from "../../../core/utils/text";
 import { withUrls } from "../../../core/utils/url";
@@ -15,7 +16,10 @@ interface MaterialGridAutomaticEntryConfigProps {
 }
 
 export interface MaterialGridAutomaticEntryProps
-  extends GlobalEntryTextProps, MaterialGridAutomaticEntryConfigProps {
+  extends
+    GlobalEntryTextProps,
+    GlobalConfigProps,
+    MaterialGridAutomaticEntryConfigProps {
   cql: string;
   location?: string;
   sublocation?: string;
