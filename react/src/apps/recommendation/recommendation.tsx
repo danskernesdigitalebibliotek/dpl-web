@@ -4,7 +4,7 @@ import Arrow from "../../components/atoms/icons/arrow/arrow";
 import Link from "../../components/atoms/links/Link";
 import { useGetMaterialQuery } from "../../core/dbc-gateway/generated/graphql";
 import { statistics } from "../../core/statistics/statistics";
-import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { trackEvent } from "../../core/statistics/useStatistics";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
@@ -29,7 +29,6 @@ const Recommendation: React.FC<RecommendationProps> = ({
   description
 }) => {
   const u = useUrls();
-  const { track } = useEventStatistics();
 
   const materialUrl = u("materialUrl");
 
@@ -57,7 +56,7 @@ const Recommendation: React.FC<RecommendationProps> = ({
   const activeDescription = !description ? materialDescription : description;
 
   const trackRecommendationClick = () =>
-    track("click", {
+    trackEvent("click", {
       id: statistics.recommendationParagraphClick.id,
       name: statistics.recommendationParagraphClick.name,
       trackedData: wid

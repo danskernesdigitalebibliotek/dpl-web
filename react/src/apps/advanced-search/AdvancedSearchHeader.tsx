@@ -16,7 +16,8 @@ import { Button } from "../../components/Buttons/Button";
 import CheckBox from "../../components/checkbox/Checkbox";
 import { LocationFilter } from "./LocationFilter";
 import {
-  useCollectPageStatistics,
+  collectPageStatistics,
+  resetPageStatistics,
   usePageStatistics
 } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
@@ -74,7 +75,6 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
   const [rawCql, setRawCql] = useState<string>("");
   const [focusedRow, setFocusedRow] = useState<number | null>(null);
   const { updatePageStatistics } = usePageStatistics();
-  const { resetAndCollectPageStatistics } = useCollectPageStatistics();
 
   const handleOnShelfChange = (checked: boolean) => {
     setOnShelf(checked);
@@ -102,9 +102,12 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
     }
   };
   const handleSearch = () => {
+    // This page re-tracks on the same page without a reload, so start from a
+    // clean slate to avoid carrying over a previous search's parameter.
+    resetPageStatistics();
     // CQL search (free text mode)
     if (rawCql.trim() !== "" && !isFormMode) {
-      resetAndCollectPageStatistics({
+      collectPageStatistics({
         ...statistics.advancedSearchCql,
         trackedData: rawCql
       });
@@ -117,7 +120,7 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
       return;
     }
     // Advanced search (form mode)
-    resetAndCollectPageStatistics({
+    collectPageStatistics({
       ...statistics.advancedSearchTerm,
       trackedData: translatedCql
     });
@@ -150,20 +153,21 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
   }, [internalSearchObject, rawCql, isFormMode]);
 
   useEffect(() => {
+    resetPageStatistics();
     if (!isFormMode) {
-      resetAndCollectPageStatistics({
+      collectPageStatistics({
         ...statistics.advancedSearchCql,
         trackedData: rawCql
       });
     }
 
     if (isFormMode) {
-      resetAndCollectPageStatistics({
+      collectPageStatistics({
         ...statistics.advancedSearchTerm,
         trackedData: translatedCql
       });
     }
-  }, [isFormMode, rawCql, resetAndCollectPageStatistics, translatedCql]);
+  }, [isFormMode, rawCql, translatedCql]);
 
   return (
     <form action={handleSearch}>

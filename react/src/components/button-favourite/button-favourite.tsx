@@ -10,7 +10,7 @@ import {
 import { useText } from "../../core/utils/text";
 import { Pid, WorkId } from "../../core/utils/types/ids";
 import { isAnonymous } from "../../core/utils/helpers/user";
-import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { trackEvent } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
 export type ButtonFavouriteId = WorkId | Pid;
@@ -34,7 +34,6 @@ const ButtonFavourite: React.FC<ButtonFavouriteProps> = ({
   const t = useText();
   const { mutate: hasItem } = useHasItem();
   const { mutate: removeItem } = useRemoveItem();
-  const { track } = useEventStatistics();
   const queryClient = useQueryClient();
 
   const listId = "default";
@@ -84,7 +83,7 @@ const ButtonFavourite: React.FC<ButtonFavouriteProps> = ({
           }
         );
       } else {
-        track("click", {
+        trackEvent("click", {
           id: statistics.addToFavorites.id,
           name: statistics.addToFavorites.name,
           trackedData: id
@@ -96,7 +95,7 @@ const ButtonFavourite: React.FC<ButtonFavouriteProps> = ({
       // this wont interfere with their click handler.
       e.stopPropagation();
     },
-    [addToListRequest, fillState, id, removeItem, track, queryClient]
+    [addToListRequest, fillState, id, removeItem, queryClient]
   );
 
   return (

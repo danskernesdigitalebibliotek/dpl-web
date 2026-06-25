@@ -20,7 +20,7 @@ import {
   constructModalId,
   getModalIds
 } from "../../core/utils/helpers/modal-helpers";
-import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { trackEvent } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
 interface LoansGroupModalProps {
@@ -61,7 +61,6 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
   const [renewingResponse, setRenewingResponse] = useState<
     RenewedLoanV2[] | null
   >(null);
-  const { track } = useEventStatistics();
   const {
     handler: renew,
     requestStatus: renewingStatus,
@@ -102,7 +101,7 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
       renewableMaterials === materialsToRenew.length
         ? `Forny_alle_materialer ${`(${materialsToRenew.length})`}`
         : `Forny_valgte_materialer ${`(${materialsToRenew.length})`}`;
-    track("click", {
+    trackEvent("click", {
       id: statistics[renewWhatMaterials].id,
       name: statistics[renewWhatMaterials].name,
       trackedData

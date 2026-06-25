@@ -6,7 +6,7 @@ import { ButtonSize } from "../../../../core/utils/types/button";
 import { FaustId, WorkId } from "../../../../core/utils/types/ids";
 import { useUrls } from "../../../../core/utils/url";
 import { Button } from "../../../Buttons/Button";
-import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 
 export interface MaterialButtonReservableFromAnotherLibraryProps {
@@ -29,11 +29,10 @@ const MaterialButtonReservableFromAnotherLibrary: FC<
   const t = useText();
   const u = useUrls();
   const authUrl = u("authUrl");
-  const { track } = useEventStatistics();
   const { openGuarded } = useModalButtonHandler();
 
   const onClick = () => {
-    track("click", {
+    trackEvent("click", {
       id: statistics.orderFromAnotherLibrary.id,
       name: statistics.orderFromAnotherLibrary.name,
       trackedData: `${workId} ${manifestationMaterialType}`

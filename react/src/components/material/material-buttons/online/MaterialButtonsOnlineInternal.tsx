@@ -19,7 +19,7 @@ import useOnlineInternalHandleLoanReservation from "../../../../core/utils/useOn
 import { ApiResult, CreateLoanResult } from "../../../../core/publizon/model";
 import { getFirstManifestation } from "../../../../apps/material/helper";
 import { WorkId } from "../../../../core/utils/types/ids";
-import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
@@ -50,7 +50,6 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   workId,
   isEditionPicker = false
 }) => {
-  const { track } = useEventStatistics();
   const t = useText();
   const { open } = useModalButtonHandler();
   const modalsToClose = useModalIdsToCloseForReservation();
@@ -134,7 +133,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
           size={size || "large"}
           dataCy={`${dataCy}-reader`}
           trackClick={() =>
-            track("click", {
+            trackEvent("click", {
               id: statistics.publizonReadListen.id,
               name: statistics.publizonReadListen.name,
               trackedData: workId
@@ -180,7 +179,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
           }
           dataCy={`${dataCy}-reader-teaser`}
           trackClick={() =>
-            track("click", {
+            trackEvent("click", {
               id: statistics.publizonTry.id,
               name: statistics.publizonTry.name,
               trackedData: workId
@@ -229,7 +228,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
             variant="filled"
             size={size || "large"}
             onClick={() => {
-              track("click", {
+              trackEvent("click", {
                 id: statistics.publizonReadListen.id,
                 name: statistics.publizonReadListen.name,
                 trackedData: workId
@@ -273,7 +272,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
             label={tryLabel}
             size={size || "large"}
             onClick={() => {
-              track("click", {
+              trackEvent("click", {
                 id: statistics.publizonTry.id,
                 name: statistics.publizonTry.name,
                 trackedData: workId

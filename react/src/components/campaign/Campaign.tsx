@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
 import { CampaignMatchPOST200Data } from "../../core/dpl-cms/model";
-import { useUrlStatistics } from "../../core/statistics/useStatistics";
+import { redirectWithUrlTracking } from "../../core/statistics/useStatistics";
 import Arrow from "../atoms/icons/arrow/arrow";
 
 export interface CampaignProps {
@@ -9,7 +9,6 @@ export interface CampaignProps {
 }
 
 const Campaign: FC<CampaignProps> = ({ campaignData }) => {
-  const { redirectWithUrlTracking } = useUrlStatistics();
   if (!campaignData.title) {
     return null;
   }

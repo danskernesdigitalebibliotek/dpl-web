@@ -22,7 +22,7 @@ import { Work } from "../../core/utils/types/entities";
 import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { useUrls } from "../../core/utils/url";
-import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { trackEvent } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
 export type RecommendedMaterialProps = {
@@ -38,7 +38,6 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
 }) => {
   const t = useText();
   const u = useUrls();
-  const { track } = useEventStatistics();
   const materialUrl = u("materialUrl");
   const dispatch = useDispatch<TypedDispatch>();
   const queryClient = useQueryClient();
@@ -86,7 +85,7 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     : statistics.recommendedMaterial;
 
   const trackData = () =>
-    track("click", {
+    trackEvent("click", {
       id: clickStatistics.id,
       name: clickStatistics.name,
       trackedData: wid

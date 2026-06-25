@@ -7,7 +7,7 @@ import { ButtonSize } from "../../../../core/utils/types/button";
 import { Pid } from "../../../../core/utils/types/ids";
 import { useUrls } from "../../../../core/utils/url";
 import { Button } from "../../../Buttons/Button";
-import { useEventStatistics } from "../../../../core/statistics/useStatistics";
+import { trackEvent } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 import { first } from "lodash";
 import { convertPostIdsToFaustIds } from "../../../../core/utils/helpers/general";
@@ -29,7 +29,6 @@ const MaterialButtonPhysical: FC<MaterialButtonPhysicalProps> = ({
   pids,
   isEditionPicker = false
 }) => {
-  const { track } = useEventStatistics();
   const t = useText();
   const u = useUrls();
   const authUrl = u("authUrl");
@@ -53,7 +52,7 @@ const MaterialButtonPhysical: FC<MaterialButtonPhysicalProps> = ({
 
   const onClick = () => {
     if (isSpecificManifestation && first(pids)) {
-      track("click", {
+      trackEvent("click", {
         id: statistics.reserveSpecificManifestation.id,
         name: statistics.reserveSpecificManifestation.name,
         trackedData: `${first(pids)}`

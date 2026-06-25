@@ -18,7 +18,7 @@ import MaterialSkeleton from "../../components/material/MaterialSkeleton";
 import { PeriodicalEdition } from "../../components/material/periodical/helper";
 import { statistics } from "../../core/statistics/statistics";
 import {
-  useCollectPageStatistics,
+  collectPageStatistics,
   usePageStatistics
 } from "../../core/statistics/useStatistics";
 import { getAllFaustIds, getWorkPid } from "../../core/utils/helpers/general";
@@ -67,7 +67,6 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
   const { data: userData } = usePatronData();
   const [isUserBlocked, setIsUserBlocked] = useState<boolean | null>(null);
   const { updatePageStatistics } = usePageStatistics();
-  const { collectPageStatistics } = useCollectPageStatistics();
   const disclosureOpenStates = getDisclosureOpenStatesFromUrl();
   const { handleReserveFirstAvailable } = useEditionSwitch(
     selectedManifestations
@@ -117,7 +116,6 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
       });
     }
     // In this case we only want to track once - on work data load
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
