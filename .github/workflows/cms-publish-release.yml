@@ -104,6 +104,13 @@ jobs:
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+          # Dummy values — the dev settings files apply these as runtime
+          # OpenID config overrides via getenv(); they are never persisted to
+          # the database, so they are not baked into the published snapshot.
+          # They only need to be present for the site install to succeed.
+          OPENID_CLIENT_ID: "1"
+          OPENID_CLIENT_SECRET: "1"
+          OPENID_AGENCY_ID: "1"
         run: |
           echo "Publishing database snapshot for tag: $RELEASE_TAG"
           task dev:start
