@@ -72,11 +72,18 @@ export function createFbsClient(config: FbsConfig) {
         },
         body: JSON.stringify(body),
       })
-      if (!response.ok) {
-        throw new Error(`FBS createReservation failed: ${response.status} ${response.statusText}`)
+      const raw: unknown = await response.json().catch(() => undefined)
+
+      // FBS may report failures (e.g. already_reserved) with a non-2xx status
+      // but a structured body. Map the body first; only throw if it isn't one.
+      try {
+        return parseAndMapReservation(raw)
+      } catch (parseError) {
+        if (!response.ok) {
+          throw new Error(`FBS createReservation failed: ${response.status} ${response.statusText}`)
+        }
+        throw parseError
       }
-      const raw: unknown = await response.json()
-      return parseAndMapReservation(raw)
     },
 
     getReservations: async (): Promise<Reservation[]> => {

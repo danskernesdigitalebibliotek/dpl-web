@@ -244,6 +244,24 @@ describe("createFbsClient.createReservation", () => {
       reason: "patron_is_blocked",
     })
   })
+
+  it("maps a structured failure body even when FBS uses a non-2xx status", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse(
+        {
+          success: false,
+          reservationResults: [{ recordId: "12345678", result: "already_reserved" }],
+        },
+        409
+      )
+    )
+
+    await expect(buildClient().createReservation({ recordId: "12345678" })).resolves.toEqual({
+      status: "failed",
+      recordId: "12345678",
+      reason: "already_reserved",
+    })
+  })
 })
 
 describe("createFbsClient.getReservations", () => {
