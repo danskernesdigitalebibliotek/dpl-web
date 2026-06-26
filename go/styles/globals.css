@@ -78,6 +78,8 @@
     --black: hsla(0, 0%, 10.2%, 1);
     --white: hsla(255, 100%, 100%, 1);
 
+    --backdrop: hsla(0, 0%, 10.2%, 0.5);
+
     --beige: hsla(36, 45%, 98%, 1);
     --beige-overlay: hsla(42, 25%, 35%, 0.05);
     --beige-overlay-solid: hsl(26, 28%, 95%);
@@ -420,14 +422,26 @@
   }
 
   .wysiwyg ul {
-    @apply ml-4 list-disc lg:ml-5;
+    @apply list-outside list-decimal pl-[1.5em];
   }
 
   .wysiwyg ol {
-    @apply list-inside list-decimal;
+    @apply list-outside list-disc pl-[1.2em];
   }
 
   .wysiwyg li::marker {
+    @apply font-headline;
+  }
+
+  ol.ordered-list {
+    @apply list-outside list-decimal pl-[1.5em];
+  }
+
+  ul.unordered-list {
+    @apply list-outside list-disc pl-[1.2em];
+  }
+
+  .ordered-list li {
     @apply font-headline;
   }
 }

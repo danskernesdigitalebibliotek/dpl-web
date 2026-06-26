@@ -1,22 +1,15 @@
 import { first } from "lodash"
-import { usePathname, useSearchParams } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React from "react"
 
 import {
+  getEbookPreviewUrl,
   getManifestationLabel,
-  isAudioMaterialType,
-  isEbookMaterialType,
-  isPhysicalMaterialType,
-  isPodcastMaterialType,
+  getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
-import { createModalUrl, modalParsers } from "@/lib/helpers/modal-url"
-import { sheetStore } from "@/store/sheet.store"
+import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -30,87 +23,69 @@ const WorkPageButtonsLoggedOut = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
-  const identifier = first(selectedManifestation?.identifiers)?.value
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
-  const { openSheet } = sheetStore.trigger
-
-  const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
+  const identifier = first(selectedManifestation?.identifiers)?.value
   const label = getManifestationLabel(selectedManifestation)
+  const category = getMaterialCategory(
+    selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
+  )
+  const isDisabled = !identifier
 
-  const getLoanRedirectPath = () =>
-    createModalUrl(`${pathname}?${searchParams}`, {
-      modal: "LoanMaterialModal",
-      modalProps: { wid: workId, pid: selectedManifestation.pid },
-    })
+  const open = (modal: TModalType) =>
+    setModal({ modal, modalProps: { wid: workId, pid: selectedManifestation.pid } })
 
-  if (isPhysicalMaterialType(materialTypeCode)) {
+  if (category === "physical") {
     return (
-      <AlertBox
-        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
-        variant="warning"
-      />
+      <WorkPageButtons>
+        <WorkPageButton
+          ariaLabel={`Reservér ${label}`}
+          theme="primary"
+          onClick={() => open("ReservationLoginModal")}>
+          Reservér {label}
+        </WorkPageButton>
+      </WorkPageButtons>
     )
   }
 
-  if (isEbookMaterialType(materialTypeCode)) {
-    const previewUrl = resolveUrl({
-      routeParams: { work: "work", ":wid": workId, read: "read" },
-      queryParams: { id: identifier || "" },
-    })
-
+  if (category === "ebook") {
     return (
       <WorkPageButtons>
-        <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={!identifier}>
-          <SmartLink href={previewUrl}>Prøv {label}</SmartLink>
+        <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isDisabled}>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
-          theme={"primary"}
-          disabled={!identifier}
-          onClick={() => {
-            openSheet({
-              sheetType: "LoginSheet",
-              props: { onLogin: () => setLoginRedirectCookie(getLoanRedirectPath()) },
-            })
-          }}>
+          theme="primary"
+          disabled={isDisabled}
+          onClick={() => open("LoanLoginModal")}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
     )
   }
 
-  if (isAudioMaterialType(materialTypeCode) || isPodcastMaterialType(materialTypeCode)) {
+  if (category === "audio") {
     return (
       <WorkPageButtons>
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
-          disabled={!identifier}
-          onClick={() =>
-            setModal({
-              modal: "PlayerPreviewModal",
-              modalProps: { wid: workId, pid: selectedManifestation.pid },
-            })
-          }>
+          disabled={isDisabled}
+          onClick={() => open("PlayerPreviewModal")}>
           Prøv {label}
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
-          theme={"primary"}
-          disabled={!identifier}
-          onClick={() => {
-            openSheet({
-              sheetType: "LoginSheet",
-              props: { onLogin: () => setLoginRedirectCookie(getLoanRedirectPath()) },
-            })
-          }}>
+          theme="primary"
+          disabled={isDisabled}
+          onClick={() => open("LoanLoginModal")}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
     )
   }
+
+  return null
 }
 
 export default WorkPageButtonsLoggedOut

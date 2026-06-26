@@ -6,10 +6,29 @@ import institution from "../factories/unilogin/institution"
 import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
 import userinfo from "../factories/unilogin/userinfo"
-import { mockAPProfilePage, mockFrontpage, mockUniloginProfilePage } from "../support/mocks"
+import {
+  mockAPProfilePage,
+  mockConfig,
+  mockFrontpage,
+  mockUniloginProfilePage,
+} from "../support/mocks"
+
+// On desktop the login UI renders as a side-anchored Sheet; on mobile it
+// renders as a bottom Drawer. Desktop has a close button, the mobile drawer
+// is dismissed by clicking the overlay.
+const isMobile = Cypress.env("viewport") === "mobile"
+const loginContainerKey = isMobile ? "global-drawer" : "global-sheet"
+const closeLoginContainer = () => {
+  if (isMobile) {
+    cy.dataCy("global-drawer-overlay").click({ force: true })
+  } else {
+    cy.dataCy("global-sheet-close-button").click()
+  }
+}
 
 describe("Login / Logout UI Tests", () => {
   beforeEach(() => {
+    mockConfig()
     mockFrontpage()
     cy.visit("/")
 
@@ -23,13 +42,13 @@ describe("Login / Logout UI Tests", () => {
     cy.dataCy("profile-button").click()
 
     // Check if login modal is open and visible
-    cy.dataCy("global-sheet").should("be.visible")
+    cy.dataCy(loginContainerKey).should("be.visible")
 
-    // Close login modal
-    cy.dataCy("global-sheet-close-button").click()
+    // Close login modal (desktop: close button, mobile: click overlay)
+    closeLoginContainer()
 
     // Check if login modal is closed
-    cy.dataCy("global-sheet").should("not.exist")
+    cy.dataCy(loginContainerKey).should("not.exist")
   })
 
   it("Should open unilogin page", () => {
@@ -37,7 +56,7 @@ describe("Login / Logout UI Tests", () => {
     cy.dataCy("profile-button").click()
 
     // Check if login modal is open and visible
-    cy.dataCy("global-sheet").should("be.visible")
+    cy.dataCy(loginContainerKey).should("be.visible")
 
     const uniloginUrl = routes["routes.login.unilogin"]
 
@@ -60,7 +79,7 @@ describe("Login / Logout UI Tests", () => {
     cy.dataCy("profile-button").click()
 
     // Check if login modal is open and visible
-    cy.dataCy("global-sheet").should("be.visible")
+    cy.dataCy(loginContainerKey).should("be.visible")
 
     // Intercept mocked adgangsplatformen login page
     cy.intercept("GET", "/mocked/login*", {
@@ -79,6 +98,7 @@ describe("Login / Logout UI Tests", () => {
 
 describe("UNI•Login: Login / Logout API Tests", () => {
   beforeEach(() => {
+    mockConfig()
     mockFrontpage()
     cy.visit("/")
 
@@ -128,7 +148,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
     cy.dataCy("profile-button").click()
 
     // Check if login modal is open and visible
-    cy.dataCy("global-sheet").should("be.visible")
+    cy.dataCy(loginContainerKey).should("be.visible")
 
     performLoginCallback()
 
@@ -150,7 +170,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
     cy.dataCy("profile-button").click()
 
     // Check if login modal is open and visible
-    cy.dataCy("global-sheet").should("be.visible")
+    cy.dataCy(loginContainerKey).should("be.visible")
 
     performLoginCallback()
     mockUniloginProfilePage()
@@ -163,6 +183,7 @@ describe("UNI•Login: Login / Logout API Tests", () => {
 
 describe("Adgangsplatformen: Login / Logout API Tests", () => {
   beforeEach(() => {
+    mockConfig()
     mockFrontpage()
     cy.visit("/")
 

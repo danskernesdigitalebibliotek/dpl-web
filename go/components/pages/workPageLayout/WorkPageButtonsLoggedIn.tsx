@@ -1,19 +1,18 @@
 import { first } from "lodash"
 import { useQueryStates } from "nuqs"
-import React, { useMemo } from "react"
+import React from "react"
 
 import {
+  getEbookPreviewUrl,
+  getEbookReadUrl,
   getManifestationLabel,
-  isAudioMaterialType,
-  isEbookMaterialType,
-  isPhysicalMaterialType,
-  isPodcastMaterialType,
+  getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { cyKeys } from "@/cypress/support/constants"
+import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { modalParsers } from "@/lib/helpers/modal-url"
+import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 import WorkPageButton from "./WorkPageButton"
@@ -28,129 +27,111 @@ const WorkPageButtonsLoggedIn = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
-  const identifier = first(selectedManifestation?.identifiers)?.value
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
-
+  const { session } = useSession()
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
-  const isLoanButtonDisabled = isLoadingLoans || isErrorLoans || !identifier
-  const loan = useMemo(() => {
-    return dataLoans?.loans?.find(loan => {
-      return loan.libraryBook?.identifier === identifier
-    })
-  }, [dataLoans?.loans, identifier])
-  const isLoaned = !!loan
 
   if (isLoadingLoans) {
+    return <WorkPageButtons.Skeleton />
+  }
+
+  const identifier = first(selectedManifestation?.identifiers)?.value
+  const label = getManifestationLabel(selectedManifestation)
+  const category = getMaterialCategory(
+    selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
+  )
+  const loan = dataLoans?.loans?.find(l => l.libraryBook?.identifier === identifier)
+  const isLoaned = !!loan
+  const isDisabled = isErrorLoans || !identifier
+
+  const open = (modal: TModalType) =>
+    setModal({ modal, modalProps: { wid: workId, pid: selectedManifestation.pid } })
+
+  // data-cy on each rendered WorkPageButton lets cypress wait for the logged-in
+  // branch to mount before clicking — the LoggedOut buttons (same label text)
+  // don't carry it, so the selector reliably picks the right one.
+  const dataCy = cyKeys["work-page-button-logged-in"]
+
+  if (category === "physical") {
+    const reservationModal: TModalType =
+      session?.type === "unilogin" ? "ReservationUniloginModal" : "ReservationModal"
     return (
       <WorkPageButtons>
-        <div className="bg-background-skeleton h-12 w-full animate-pulse rounded-full lg:w-80" />
-        <div className="bg-background-skeleton h-12 w-full animate-pulse rounded-full lg:w-80" />
+        <WorkPageButton
+          ariaLabel={`Reservér ${label}`}
+          theme="primary"
+          dataCy={dataCy}
+          onClick={() => open(reservationModal)}>
+          Reservér {label}
+        </WorkPageButton>
       </WorkPageButtons>
     )
   }
 
-  const materialTypeCode = selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
-  const label = getManifestationLabel(selectedManifestation)
-
-  if (isPhysicalMaterialType(materialTypeCode)) {
-    return (
-      <AlertBox
-        message={`Dette er en fysisk ${label}. Den kan lånes på dit lokale bibliotek`}
-        variant="warning"
-      />
-    )
-  }
-
-  if (isEbookMaterialType(materialTypeCode)) {
-    const previewUrl = resolveUrl({
-      routeParams: { work: "work", ":wid": workId, read: "read" },
-      queryParams: { id: identifier || "" },
-    })
-
-    const loanUrl = resolveUrl({
-      routeParams: { work: "work", ":wid": workId, read: "read" },
-      queryParams: { orderId: loan?.orderId || "" },
-    })
-
+  if (category === "ebook") {
     if (isLoaned) {
       return (
         <WorkPageButtons>
-          <WorkPageButton ariaLabel={`Læs ${label}`} theme={"primary"} asChild>
-            <SmartLink href={loanUrl}>Læs {label}</SmartLink>
+          <WorkPageButton ariaLabel={`Læs ${label}`} theme="primary" dataCy={dataCy} asChild>
+            <SmartLink href={getEbookReadUrl(workId, loan.orderId || "")}>Læs {label}</SmartLink>
           </WorkPageButton>
         </WorkPageButtons>
       )
     }
-
     return (
       <WorkPageButtons>
-        <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isLoanButtonDisabled}>
-          <SmartLink href={previewUrl}>Prøv {label}</SmartLink>
+        <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")}>Prøv {label}</SmartLink>
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
-          theme={"primary"}
-          disabled={isLoanButtonDisabled}
-          onClick={() =>
-            setModal({
-              modal: "LoanMaterialModal",
-              modalProps: { wid: workId, pid: selectedManifestation.pid },
-            })
-          }>
+          theme="primary"
+          dataCy={dataCy}
+          disabled={isDisabled}
+          onClick={() => open("LoanMaterialModal")}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
     )
   }
 
-  if (isAudioMaterialType(materialTypeCode) || isPodcastMaterialType(materialTypeCode)) {
+  if (category === "audio") {
     if (isLoaned) {
       return (
         <WorkPageButtons>
           <WorkPageButton
             ariaLabel={`Lyt til ${label}`}
-            theme={"primary"}
-            disabled={isLoanButtonDisabled}
-            onClick={() =>
-              setModal({
-                modal: "PlayerModal",
-                modalProps: { wid: workId, pid: selectedManifestation.pid },
-              })
-            }>
+            theme="primary"
+            dataCy={dataCy}
+            disabled={isDisabled}
+            onClick={() => open("PlayerModal")}>
             Lyt til {label}
           </WorkPageButton>
         </WorkPageButtons>
       )
     }
-
     return (
       <WorkPageButtons>
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
-          disabled={isLoanButtonDisabled}
-          onClick={() =>
-            setModal({
-              modal: "PlayerPreviewModal",
-              modalProps: { wid: workId, pid: selectedManifestation.pid },
-            })
-          }>
+          dataCy={dataCy}
+          disabled={isDisabled}
+          onClick={() => open("PlayerPreviewModal")}>
           Prøv {label}
         </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
-          theme={"primary"}
-          disabled={isLoanButtonDisabled}
-          onClick={() =>
-            setModal({
-              modal: "LoanMaterialModal",
-              modalProps: { wid: workId, pid: selectedManifestation.pid },
-            })
-          }>
+          theme="primary"
+          dataCy={dataCy}
+          disabled={isDisabled}
+          onClick={() => open("LoanMaterialModal")}>
           Lån {label}
         </WorkPageButton>
       </WorkPageButtons>
     )
   }
+
+  return null
 }
 
 export default WorkPageButtonsLoggedIn

@@ -32,19 +32,24 @@ function ResponsiveDialog({
   open: boolean
   onClose: () => void
 }) {
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   return (
     <div>
       {isDesktop && (
         <Dialog open={open} onOpenChange={onClose}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              {description && <DialogDescription>{description}</DialogDescription>}
-              <hr className="mt-5 mb-10" />
-            </DialogHeader>
-            <DialogBody>{children}</DialogBody>
+          <DialogContent className="flex flex-col gap-0 overflow-hidden p-0">
+            <div
+              className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 sticky top-0
+                z-10 shrink-0 border-b lg:mx-10 lg:pt-10 lg:pb-6">
+              <DialogHeader>
+                <DialogTitle className="px-10">{title}</DialogTitle>
+                {description && <DialogDescription>{description}</DialogDescription>}
+              </DialogHeader>
+            </div>
+            <div className="px-grid-edge pb-grid-edge flex-1 overflow-y-auto lg:p-10">
+              <DialogBody>{children}</DialogBody>
+            </div>
           </DialogContent>
         </Dialog>
       )}
@@ -56,7 +61,10 @@ function ResponsiveDialog({
               <DrawerTitle>{title}</DrawerTitle>
               {description && <DrawerDescription>{description}</DrawerDescription>}
             </DrawerHeader>
-            {children}
+            <div className="px-grid-edge shrink-0">
+              <hr />
+            </div>
+            <div className="px-grid-edge flex-1 overflow-y-auto py-6">{children}</div>
           </DrawerContent>
         </Drawer>
       )}

@@ -80,7 +80,7 @@ const LoanMaterialModal = ({
       title={(manifestation && `Lån ${getManifestationLabel(manifestation)}`) || ""}>
       <AnimateChangeInHeight>
         {manifestation && (
-          <>
+          <div data-cy={cyKeys["loan-material-modal"]}>
             <div
               className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
                 justify-center lg:aspect-4/5">
@@ -136,7 +136,7 @@ const LoanMaterialModal = ({
                 )}
               </Button>
             </div>
-          </>
+          </div>
         )}
       </AnimateChangeInHeight>
     </ResponsiveDialog>

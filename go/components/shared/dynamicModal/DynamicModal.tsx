@@ -10,9 +10,13 @@ import {
   modalParsers,
 } from "@/lib/helpers/modal-url"
 
+import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
+import ReservationLoginModal from "../reservationModal/ReservationLoginModal"
+import ReservationModal from "../reservationModal/ReservationModal"
+import ReservationUniloginModal from "../reservationModal/ReservationUniloginModal"
 
 export function DynamicModal() {
   const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, { scroll: false })
@@ -54,6 +58,17 @@ export function DynamicModal() {
     )
   }
 
+  if (activeModal === "LoanLoginModal") {
+    return (
+      <LoanLoginModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
   if (activeModal === "PlayerPreviewModal") {
     return (
       <PlayerPreviewModal
@@ -68,6 +83,39 @@ export function DynamicModal() {
   if (activeModal === "PlayerModal") {
     return (
       <PlayerModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
+    )
+  }
+
+  if (activeModal === "ReservationModal") {
+    return (
+      <ReservationModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
+  if (activeModal === "ReservationLoginModal") {
+    return (
+      <ReservationLoginModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
+    )
+  }
+
+  if (activeModal === "ReservationUniloginModal") {
+    return (
+      <ReservationUniloginModal
+        open={open}
+        onClose={closeModal}
+        wid={activeParams.wid}
+        pid={activeParams.pid}
+      />
     )
   }
 

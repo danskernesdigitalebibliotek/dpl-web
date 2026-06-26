@@ -11,6 +11,7 @@
 
   --radius-*: initial;
   --radius-full: 9999px;
+  --radius-xl: calc(var(--base-radius) + 15px);
   --radius-lg: calc(var(--base-radius) + 10px);
   --radius-md: calc(var(--base-radius) + 5px);
   --radius-base: var(--base-radius);
@@ -126,6 +127,7 @@
   --color-*: initial;
   --color-black: var(--black);
   --color-white: var(--white);
+  --color-backdrop: var(--backdrop);
 
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
