@@ -63,7 +63,7 @@ const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
         </div>
 
         <LoginPanel
-          heading="Log ind med UNI•Login"
+          heading="Log ind med Unilogin"
           ariaLabel="Log ind med UNILogin"
           onLogin={handleUniLogin}
           dataCy={cyKeys["loan-login-modal-unilogin-button"]}

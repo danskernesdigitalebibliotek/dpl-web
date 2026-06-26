@@ -67,7 +67,7 @@ describe("Login / Logout UI Tests", () => {
       headers: { "content-type": "text/html" },
     })
 
-    // Click UNI•Login button
+    // Click Unilogin button
     cy.dataCy("login-sheet-unilogin-button").click()
 
     // Check if mocked unilogin page is open
@@ -96,7 +96,7 @@ describe("Login / Logout UI Tests", () => {
   })
 })
 
-describe("UNI•Login: Login / Logout API Tests", () => {
+describe("Unilogin: Login / Logout API Tests", () => {
   beforeEach(() => {
     mockConfig()
     mockFrontpage()

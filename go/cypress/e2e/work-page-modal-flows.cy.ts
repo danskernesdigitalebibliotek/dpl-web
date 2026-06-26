@@ -92,13 +92,13 @@ describe("Work page → modal shown for each (material × login state)", () => {
     })
   })
 
-  describe("Logged in via UNI•Login", () => {
+  describe("Logged in via Unilogin", () => {
     beforeEach(() => {
       setSessionType("unilogin")
       mockEmptyLoans()
     })
 
-    it("Physical book → ReservationUniloginModal (UNI•Login cannot reserve physical)", () => {
+    it("Physical book → ReservationUniloginModal (Unilogin cannot reserve physical)", () => {
       visitWork("BOOK")
       clickLoggedInButton("Reserver bog")
       cy.dataCy("reservation-unilogin-modal").should("be.visible")

@@ -23,7 +23,7 @@ describe("Login redirect after loan attempt", () => {
     cy.visit("/")
   })
 
-  it("Should redirect to loan modal after UNI•Login when loan was attempted", () => {
+  it("Should redirect to loan modal after Unilogin when loan was attempted", () => {
     cy.interceptGraphql({
       operationName: "getMaterial",
       data: getMaterial.build(),
@@ -40,14 +40,14 @@ describe("Login redirect after loan attempt", () => {
     // LoanLoginModal should be visible
     cy.dataCy("loan-login-modal").should("be.visible")
 
-    // Intercept UNI•Login URL to prevent leaving the test domain
+    // Intercept Unilogin URL to prevent leaving the test domain
     cy.intercept("GET", routes["routes.login.unilogin"], {
       statusCode: 200,
       body: "<html>I am login page</html>",
       headers: { "content-type": "text/html" },
     })
 
-    // Click UNI•Login button — this sets the redirect cookie, then navigates
+    // Click Unilogin button — this sets the redirect cookie, then navigates
     cy.dataCy("loan-login-modal-unilogin-button").click()
 
     // Verify we arrived at the login page (cookie is now set)
@@ -59,7 +59,7 @@ describe("Login redirect after loan attempt", () => {
       data: getMaterial.build(),
     })
 
-    // Mock UNI•Login OAuth endpoints
+    // Mock Unilogin OAuth endpoints
     const mockedCallbackUrl =
       "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
 
