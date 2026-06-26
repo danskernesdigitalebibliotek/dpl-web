@@ -94,7 +94,7 @@ updates:
   # CMS - npm dependencies
   - package-ecosystem: npm
     directory: "/cms"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     groups:
       typescript-eslint:
         patterns:
@@ -119,7 +119,7 @@ updates:
   # Design System - npm dependencies
   - package-ecosystem: npm
     directory: "/design-system"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     versioning-strategy: increase
     schedule:
       interval: weekly
@@ -163,7 +163,7 @@ updates:
   # Go (Next.js) - npm dependencies
   - package-ecosystem: npm
     directory: "/go"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     versioning-strategy: increase
     schedule:
       interval: weekly
@@ -260,7 +260,7 @@ updates:
   # React - npm dependencies
   - package-ecosystem: npm
     directory: "/react"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     versioning-strategy: increase
     schedule:
       interval: weekly
