@@ -99,6 +99,26 @@ describe("parseAndMapReservation", () => {
     ).toEqual({ status: "failed", recordId: "12345678", reason: "unknown" })
   })
 
+  it("handles a real FBS failure body where reservationDetails is null", () => {
+    expect(
+      parseAndMapReservation({
+        success: false,
+        reservationResults: [
+          {
+            periodical: null,
+            recordId: "61636935",
+            reservationDetails: null,
+            result: "already_reserved",
+          },
+        ],
+      })
+    ).toEqual({
+      status: "failed",
+      recordId: "61636935",
+      reason: "already_reserved",
+    })
+  })
+
   it("returns status=failed when success is true but reservationDetails is missing", () => {
     expect(
       parseAndMapReservation({

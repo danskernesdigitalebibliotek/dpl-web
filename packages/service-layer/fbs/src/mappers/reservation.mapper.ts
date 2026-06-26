@@ -12,7 +12,8 @@ const ReservationDetailsSchema = z.object({
 const ReservationResultSchema = z.object({
   recordId: z.string(),
   result: z.string(),
-  reservationDetails: ReservationDetailsSchema.optional(),
+  // FBS sends reservationDetails: null (not absent) on failures.
+  reservationDetails: ReservationDetailsSchema.nullish(),
 })
 
 const ReservationResponseSchema = z.object({
