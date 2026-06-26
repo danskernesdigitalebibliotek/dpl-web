@@ -62,7 +62,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
         <InfoCard
           icon="chat"
           title={
-            patron?.phoneNumber ? "Du får en sms når du kan hente bogen" : "Du får ikke en sms"
+            patron?.phoneNumber ? "Du får en sms, når du kan hente bogen" : "Du får ikke en sms"
           }
           value={patron?.phoneNumber ?? "Der er ikke registreret et telefonnummer."}
         />
@@ -70,7 +70,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
           icon="envelope"
           title={
             patron?.emailAddress
-              ? "Du får en e-mail når du kan hente bogen"
+              ? "Du får en e-mail, når du kan hente bogen"
               : "Du får ikke en e-mail"
           }
           value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adresse."}
