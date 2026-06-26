@@ -117,6 +117,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
 
           $workIds = [];
           foreach ($paragraph->get('field_video_bundle_work_ids') as $item) {
+            // @phpstan-ignore property.notFound (magic property)
             $workIds[] = $item->value;
           }
 
@@ -162,8 +163,11 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    *   Paragraph to extract from.
    * @param string[] $fieldNames
    *   Field names to try.
+   * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
+   *   The field context for adding cache metadata.
    *
    * @return array{url: string, thumbnail: string}|null
+   *   Stream URL and thumbnail.
    */
   protected function extractVideo(
     ContentEntityInterface $paragraph,
@@ -177,7 +181,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     // the app.
     $ttl = 86400;
 
-    foreach ($fieldNames as $fieldName){
+    foreach ($fieldNames as $fieldName) {
       $field = $paragraph->get($fieldName);
 
       if ($field instanceof EntityReferenceFieldItemList) {
@@ -192,12 +196,13 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
 
     /** @var \Drupal\file\Entity\File|null $thumbnailFile */
     $thumbnailFile = $media->get('thumbnail')->entity;
+    $thumbnailFileUri = $thumbnailFile?->getFileUri();
 
-    if (!$thumbnailFile) {
+    if (!$thumbnailFileUri) {
       return NULL;
     }
 
-    $thumbnail = $this->fileUrlGenerator->generateAbsoluteString($thumbnailFile->getFileUri());
+    $thumbnail = $this->fileUrlGenerator->generateAbsoluteString($thumbnailFileUri);
 
     $videotoolFields = [
       'field_media_videotool',
@@ -221,7 +226,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     }
 
     $field_context->addCacheableDependency($media);
-    $field_context->addCacheableDependency($thumbnail);
+    $field_context->addCacheableDependency($thumbnailFile);
 
     return ['url' => $url, 'thumbnail' => $thumbnail];
   }
