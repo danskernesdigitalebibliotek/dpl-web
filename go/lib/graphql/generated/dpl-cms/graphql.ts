@@ -83,10 +83,40 @@ export type AppContentElementText = AppContentElement & {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementVideo = AppContentElement & {
+  __typename?: 'AppContentElementVideo';
+  id: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  video: AppVideo;
+};
+
+export type AppContentElementVideoBundleAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementVideoBundleAutomatic';
+  cql: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  video: AppVideo;
+};
+
+export type AppContentElementVideoBundleManual = AppContentElement & {
+  __typename?: 'AppContentElementVideoBundleManual';
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  video: AppVideo;
+  workIds: Array<Scalars['String']['output']>;
+};
+
 export type AppType =
   | 'BIBLO'
   | 'BIBLOGO'
   | 'MYBIBLO';
+
+export type AppVideo = {
+  __typename?: 'AppVideo';
+  thumbnail: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
 
 export type BetweenFloatInput = {
   max?: InputMaybe<Scalars['Float']['input']>;

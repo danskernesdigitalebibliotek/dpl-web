@@ -50,10 +50,36 @@ type AppContentElementText implements AppContentElement {
   id: String!
 }
 
+type AppContentElementVideo implements AppContentElement {
+  id: String!
+  title: String
+  video: AppVideo!
+}
+
+type AppContentElementVideoBundleAutomatic implements AppContentElement {
+  cql: String!
+  id: String!
+  limit: Int!
+  title: String!
+  video: AppVideo!
+}
+
+type AppContentElementVideoBundleManual implements AppContentElement {
+  id: String!
+  title: String!
+  video: AppVideo!
+  workIds: [String!]!
+}
+
 enum AppType {
   BIBLO
   BIBLOGO
   MYBIBLO
+}
+
+type AppVideo {
+  thumbnail: String!
+  url: String!
 }
 
 input BetweenFloatInput {
