@@ -41,11 +41,11 @@ const ReservationUniloginModal = ({ open, onClose, wid, pid }: ReservationUnilog
         className="mx-auto w-full max-w-prose space-y-6"
         data-cy={cyKeys["reservation-unilogin-modal"]}>
         <p className="text-typo-heading-5">
-          Du kan ikke reservere bøger på biblioteket med UNI-login.
+          Du kan ikke reservere bøger på biblioteket med Unilogin.
         </p>
 
         <ul className="text-typo-subtitle-md text-foreground-muted unordered-list space-y-3">
-          <li>Brug dit bibliotekslogin i stedet for UNI-login.</li>
+          <li>Brug dit bibliotekslogin i stedet for Unilogin.</li>
           <li>
             Hvis du ikke har et bibliotekslogin, kan du få det lavet sammen med en forælder/værge på
             dit lokale bibliotek eller på bibliotekets hjemmeside.

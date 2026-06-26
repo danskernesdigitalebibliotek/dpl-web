@@ -58,7 +58,7 @@ const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
         <div className="space-y-4">
           <p className="text-typo-heading-5">Du skal logge ind for at låne {label}</p>
           <p className="text-typo-subtitle-md text-foreground-muted">
-            Brug dit bibliotekslogin eller dit UNI-login for at komme videre.
+            Brug dit bibliotekslogin eller dit Unilogin for at komme videre.
           </p>
         </div>
 

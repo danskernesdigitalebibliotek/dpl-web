@@ -40,11 +40,13 @@ const ReservationLoginModal = ({ open, onClose, wid, pid }: ReservationLoginModa
       <div
         className="mx-auto w-full max-w-prose space-y-6"
         data-cy={cyKeys["reservation-login-modal"]}>
-        <p className="text-typo-heading-5">4 nemme steps til lån af bog på biblioteket.</p>
+        <h5 className="text-typo-heading-5 text-pretty!">
+          4 nemme steps til lån af bog på biblioteket.
+        </h5>
 
         <ol className="text-typo-subtitle-md text-foreground-muted ordered-list space-y-3">
           <li>
-            For at låne en fysisk bog skal du logge ind med et bibliotekslogin (ikke UNI-login).
+            For at låne en fysisk bog skal du logge ind med et bibliotekslogin (ikke Unilogin).
           </li>
           <li>Tryk på Reserver bog.</li>
           <li>Du får besked, når bogen kan hentes.</li>
