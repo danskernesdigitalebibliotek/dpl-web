@@ -13,7 +13,7 @@ import {
 import { Work } from "../../core/utils/types/entities";
 import { getCurrentLocation, redirectTo } from "../../core/utils/helpers/url";
 import { useText } from "../../core/utils/text";
-import { cleanBranchesId, TBranch } from "../../core/utils/branches";
+import useGetSearchBranches from "../../core/utils/branches";
 import SearchResultInvalidSearch from "./search-result-not-valid-search";
 import { useUrls } from "../../core/utils/url";
 import { useConfig } from "../../core/utils/config";
@@ -42,10 +42,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   const [hitcount, setHitCount] = useState<number>(0);
   const minimalQueryLength = 1;
   const config = useConfig();
-  const branches = config<TBranch[]>("branchesConfig", {
-    transformer: "jsonParse"
-  });
-  const cleanBranches = cleanBranchesId(branches);
+  // Exclude search-blacklisted branches so works held only at blacklisted
+  // branches are filtered out of the results.
+  const cleanBranches = useGetSearchBranches();
 
   const { openDialogWithContent, closeDialog, dialogRef } = useDialog();
 

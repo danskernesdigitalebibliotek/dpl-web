@@ -9,7 +9,7 @@ id: eventinstance.default.field_event_location
 field_name: field_event_location
 entity_type: eventinstance
 bundle: default
-label: Location
+label: 'Location name'
 description: ''
 required: false
 translatable: false

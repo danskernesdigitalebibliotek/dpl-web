@@ -34,6 +34,54 @@ type AdgangsplatformenUserToken {
   token: String
 }
 
+type AppCategory {
+  elements: [AppContentElement!]!
+  icon: String!
+  id: String!
+  title: String!
+}
+
+interface AppContentElement {
+  id: String!
+}
+
+type AppContentElementText implements AppContentElement {
+  body: String!
+  id: String!
+}
+
+type AppContentElementVideo implements AppContentElement {
+  id: String!
+  title: String
+  video: AppVideo!
+}
+
+type AppContentElementVideoBundleAutomatic implements AppContentElement {
+  cql: String!
+  id: String!
+  limit: Int!
+  title: String!
+  video: AppVideo!
+}
+
+type AppContentElementVideoBundleManual implements AppContentElement {
+  id: String!
+  title: String!
+  video: AppVideo!
+  workIds: [String!]!
+}
+
+enum AppType {
+  BIBLO
+  BIBLOGO
+  MYBIBLO
+}
+
+type AppVideo {
+  thumbnail: String!
+  url: String!
+}
+
 input BetweenFloatInput {
   max: Float
   min: Float
@@ -269,6 +317,7 @@ type MediaVideotool implements MediaInterface {
   name: String!
   path: String
   status: Boolean!
+  streamingUrl: String
   thumbnail: String!
 }
 
@@ -281,6 +330,7 @@ type MediaVideotoolVertical implements MediaInterface {
   name: String!
   path: String
   status: Boolean!
+  streamingUrl: String
   thumbnail: String!
 }
 
@@ -836,6 +886,7 @@ scalar PhoneNumber
 
 type Query {
   dplTokens: DplTokens
+  getAppCategories(id: String, type: AppType!): [AppCategory!]!
   getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
   goCategories(page: Int = 0): GoCategoriesResult
   goConfiguration: GoConfiguration

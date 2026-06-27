@@ -1,0 +1,73 @@
+"""
+A mobile app category.
+"""
+type AppCategory {
+  id: String!
+  title: String!
+  icon: String!
+  elements: [AppContentElement!]!
+}
+
+"""
+Type of app.
+"""
+enum AppType {
+  MYBIBLO
+  BIBLO
+  BIBLOGO
+}
+
+"""
+A video, for the app.
+"""
+type AppVideo {
+  url: String!
+  thumbnail: String!
+}
+
+"""
+An AppContentElement.
+
+This is an app mapping of Paragraphs.
+"""
+interface AppContentElement {
+  id: String!
+}
+
+"""
+A text content element.
+"""
+type AppContentElementText implements AppContentElement {
+  id: String!
+  body: String!
+}
+
+"""
+A video element.
+"""
+type AppContentElementVideo implements AppContentElement {
+  id: String!
+  title: String
+  video: AppVideo!
+}
+
+"""
+A bundle with a video and manually selected materials.
+"""
+type AppContentElementVideoBundleManual implements AppContentElement {
+  id: String!
+  title: String!
+  workIds: [String!]!
+  video: AppVideo!
+}
+
+"""
+A bundle with a video and a material search string.
+"""
+type AppContentElementVideoBundleAutomatic implements AppContentElement {
+  id: String!
+  title: String!
+  cql: String!
+  limit: Int!
+  video: AppVideo!
+}

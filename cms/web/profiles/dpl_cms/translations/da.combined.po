@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-22 12:45+0200\n"
-"PO-Revision-Date: 2026-06-22 12:45+0200\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-22 12:46+0200\n"
-"PO-Revision-Date: 2026-06-22 12:46+0200\n"
+"POT-Creation-Date: 2026-06-26 10:19+0200\n"
+"PO-Revision-Date: 2026-06-26 10:19+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1628,6 +1616,11 @@ msgctxt "dpl_library_agency"
 msgid "This agency branch ID is already in use by @title"
 msgstr "Dette agency branch ID er allerede i brug af @title."
 
+msgid ""
+"Failed to fetch streaming URL VideoTool API. Ensure credentials are set and "
+"the URL is valid."
+msgstr ""
+
 msgid "Name"
 msgstr "Navn"
 
@@ -1864,6 +1857,12 @@ msgid "Any specific times below will be ignored when \"All day\" is enabled"
 msgstr ""
 "Når \"Hele dagen\" er slået til, vil specifikke tidspunkter nedenfor blive "
 "ignoreret."
+
+msgctxt "dpl_event"
+msgid ""
+"When selecting a branch, we will use the address from the branch, unless you "
+"select “Other location”."
+msgstr ""
 
 msgctxt "Global (Aria)"
 msgid "Close blocked patron modal"
@@ -2923,19 +2922,19 @@ msgstr "2 måneder"
 
 msgctxt "Player modal"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 msgctxt "Player modal"
 msgid "Modal for player"
-msgstr ""
+msgstr "Afspiller modal"
 
 msgctxt "Online material"
 msgid "Listen to @materialType"
-msgstr ""
+msgstr "Lyt til @materialType"
 
 msgctxt "Online material"
 msgid "Read @materialType"
-msgstr ""
+msgstr "Læs @materialType"
 
 msgctxt "Search Result"
 msgid "+ more filters"
@@ -3840,7 +3839,7 @@ msgstr "Forfattere"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Nr."
+msgstr "Udgave"
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -4339,7 +4338,7 @@ msgstr "Digital kopi er bestilt"
 
 msgctxt "Work Page - periodical"
 msgid "Edition"
-msgstr ""
+msgstr "Nr."
 
 msgctxt "Work Page"
 msgid "Year"
@@ -5500,7 +5499,7 @@ msgstr ""
 
 msgctxt "Loan list"
 msgid "Loan details"
-msgstr ""
+msgstr "Se detaljer om lån"
 
 msgctxt "Loan list"
 msgid "day"
@@ -6390,6 +6389,12 @@ msgstr "DPL noget der ligner"
 
 msgid "Something similar component"
 msgstr "Komponenten \"Noget der ligner\""
+
+msgid "DPL App support"
+msgstr ""
+
+msgid "Functionality supporting the mobile apps"
+msgstr ""
 
 msgid "Footer Settings"
 msgstr "Footerindstillinger"
@@ -20820,7 +20825,7 @@ msgid "Infoscreen"
 msgstr ""
 
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
-msgid "Library"
+msgid "Event location"
 msgstr ""
 
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_tickets:label"
@@ -20876,7 +20881,7 @@ msgid "Infoscreen"
 msgstr ""
 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
-msgid "Library"
+msgid "Event location"
 msgstr ""
 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_tickets:label"
@@ -21522,13 +21527,6 @@ msgctxt "field.field.eventinstance.default.field_branch:label"
 msgid "Branch"
 msgstr ""
 
-msgctxt "field.field.eventinstance.default.field_branch:description"
-msgid ""
-"When connecting a branch, it will also use the address of this branch as the "
-"event address. If you want to use another address then provide an event "
-"address."
-msgstr ""
-
 msgctxt "field.field.eventinstance.default.field_categories:label"
 msgid "Categories"
 msgstr ""
@@ -21579,7 +21577,7 @@ msgid "Please enter the URL where attendees can buy tickets for this event."
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_location:label"
-msgid "Location"
+msgid "Location name"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_location_type:label"
@@ -21718,12 +21716,6 @@ msgctxt "field.field.eventseries.default.field_branch:label"
 msgid "Branch"
 msgstr ""
 
-msgctxt "field.field.eventseries.default.field_branch:description"
-msgid ""
-"When selecting a branch, we will use the address from the branch, unless you "
-"select “Other location”."
-msgstr ""
-
 msgctxt "field.field.eventseries.default.field_categories:label"
 msgid "Categories"
 msgstr ""
@@ -21775,7 +21767,7 @@ msgid ""
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_location:label"
-msgid "Location"
+msgid "Location name"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_location_type:label"

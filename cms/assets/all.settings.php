@@ -24,6 +24,9 @@ $config['system.site']['mail'] = 'mail@folkebibliotekernescms.dk';
 // Configure GSearch to use our supplied Dataforsyningen token.
 $config['gsearch.settings']['token'] = getenv('DATAFORSYNINGEN_TOKEN');
 
+$config['media_videotool.settings']['public_key'] = getenv('VIDEOTOOL_PUBLIC_KEY');
+$config['media_videotool.settings']['private_key'] = getenv('VIDEOTOOL_PRIVATE_KEY');
+
 // Configure logging using the project name and environment from the Lagoon
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
