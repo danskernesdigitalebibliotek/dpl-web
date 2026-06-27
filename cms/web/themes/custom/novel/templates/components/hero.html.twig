@@ -18,12 +18,19 @@
 
 <div {{ attributes.addClass(classes) }}>
   <div class="hero__image">
-    {{ include('@novel/components/media-container.html.twig', {
-      attributes: create_attribute(),
-      media: media,
-      has_media: media,
-      placeholder_text: placeholder_text,
-    }, false) }}
+    <div class="status-parent status-parent--fill status-parent--media-container">
+      {{ include('@novel/components/event-status.html.twig', {
+        status: status,
+        status_value: status_value,
+        size: 'large',
+      }, false) }}
+      {{ include('@novel/components/media-container.html.twig', {
+        attributes: create_attribute(),
+        media: media,
+        has_media: media,
+        placeholder_text: placeholder_text,
+      }, false) }}
+    </div>
   </div>
 
   <{{ content_tag }} {% if arrow_link %}href="{{ url }}" target="{{ target|default('_self') }}"{% endif %}

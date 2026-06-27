@@ -32,7 +32,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: unknown; output: unknown };
+  /** An integer in the range from 1 to 100 */
   PaginationLimitScalar: { input: unknown; output: unknown };
 };
 
@@ -83,14 +85,6 @@ export enum AccessUrlTypeEnum {
   Thumbnail = "THUMBNAIL"
 }
 
-export type AddBookmarksResponse = {
-  __typename?: "AddBookmarksResponse";
-  /** A list of materials for which bookmark addition failed. */
-  items: Array<BookmarksStatusItem>;
-  /** The overall status of the bookmark addition operation. */
-  status: BookmarksOverallStatusEnum;
-};
-
 export type Audience = {
   __typename?: "Audience";
   /** Range of numbers with either beginning of range or end of range or both e.g. 6-10, 1980-1999 */
@@ -111,7 +105,7 @@ export type Audience = {
   lix?: Maybe<Scalars["String"]["output"]>;
   /** Media council age recommendation */
   mediaCouncilAgeRestriction?: Maybe<MediaCouncilAgeRestriction>;
-  /** PEGI age rating for games  */
+  /** PEGI age rating for games */
   pegi?: Maybe<Pegi>;
   /** Number of players in the game. */
   players?: Maybe<Players>;
@@ -136,91 +130,6 @@ export type BibliographicCategory = {
   code?: Maybe<Scalars["String"]["output"]>;
   /** The code as displayable text */
   display?: Maybe<Scalars["String"]["output"]>;
-};
-
-export type BookmarkItem = {
-  __typename?: "BookmarkItem";
-  /** The application the bookmark belongs to */
-  application: BookmarksApplicationEnum;
-  /** creation date of the bookmark */
-  createdAt: Scalars["DateTime"]["output"];
-  /** The unique identifier for the bookmark */
-  id: Scalars["String"]["output"];
-  /** The bibliographic record associated with the bookmark, if it can still be resolved. */
-  material?: Maybe<MaterialUnion>;
-  /** The unique identifier for the material this bookmark points to. */
-  materialId?: Maybe<Scalars["String"]["output"]>;
-  /** Stored metadata captured when the bookmark was created. */
-  snapshot?: Maybe<BookmarkSnapshot>;
-};
-
-export type BookmarkSnapshot = {
-  __typename?: "BookmarkSnapshot";
-  /** Stored creator from when the bookmark was created. */
-  creator?: Maybe<Scalars["String"]["output"]>;
-  /** Stored material type from when the bookmark was created. */
-  materialType?: Maybe<Scalars["String"]["output"]>;
-  /** Stored title from when the bookmark was created. */
-  title?: Maybe<Scalars["String"]["output"]>;
-  /** Stored work id from when the bookmark was created. */
-  workId?: Maybe<Scalars["String"]["output"]>;
-  /** Stored work type from when the bookmark was created. */
-  workType?: Maybe<Scalars["String"]["output"]>;
-};
-
-export type Bookmarks = {
-  __typename?: "Bookmarks";
-  /** The total number of bookmarks for the patron */
-  hitcount: Scalars["Int"]["output"];
-  /** The list of bookmarks for the patron */
-  items: Array<BookmarkItem>;
-  /** The overall status of the bookmarks */
-  status: BookmarksOverallStatusEnum;
-};
-
-export type BookmarksItemsArgs = {
-  limit?: InputMaybe<Scalars["PaginationLimitScalar"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  orderBy?: InputMaybe<OrderBookmarksByEnum>;
-};
-
-export enum BookmarksApplicationEnum {
-  Bibliotekdk = "BIBLIOTEKDK",
-  Studiesoeg = "STUDIESOEG",
-  Unknown = "UNKNOWN"
-}
-
-export type BookmarksInput = {
-  /** The unique identifier for the material being bookmarked (e.g., a PID or work ID). */
-  materialId: Scalars["String"]["input"];
-};
-
-export enum BookmarksOverallStatusEnum {
-  ErrorMissingClientConfiguration = "ERROR_MISSING_CLIENT_CONFIGURATION",
-  ErrorUnauthenticatedToken = "ERROR_UNAUTHENTICATED_TOKEN",
-  Failed = "FAILED",
-  Ok = "OK",
-  PartiallyFailed = "PARTIALLY_FAILED"
-}
-
-export enum BookmarksStatusEnum {
-  AlreadyExists = "ALREADY_EXISTS",
-  Failed = "FAILED",
-  NotFound = "NOT_FOUND",
-  Ok = "OK",
-  UnknownError = "UNKNOWN_ERROR"
-}
-
-export type BookmarksStatusItem = {
-  __typename?: "BookmarksStatusItem";
-  /** The unique identifier for the bookmark that was attempted to be added or deleted. */
-  id?: Maybe<Scalars["String"]["output"]>;
-  /** The material for which bookmark addition failed. */
-  material?: Maybe<MaterialUnion>;
-  /** The unique identifier for the material for which bookmark addition failed (e.g., a PID or work ID). */
-  materialId?: Maybe<Scalars["String"]["output"]>;
-  /** Status of the bookmark addition or deletion attempt for a specific material. */
-  status: BookmarksStatusEnum;
 };
 
 export enum CsHoldingsStatusEnum {
@@ -287,12 +196,6 @@ export type Classification = {
   entryType?: Maybe<EntryTypeEnum>;
   /** Name of the classification system */
   system: Scalars["String"]["output"];
-};
-
-/** CQL based filters. Mutually exclusive with ComplexSearchFiltersInput. */
-export type ComplexSearchCqlFiltersInput = {
-  /** A CQL expression used to filter the search result. */
-  cqlfilterquery?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 /** The complete facet in response */
@@ -369,7 +272,7 @@ export type ComplexSearchFiltersInput = {
   agencyId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Name of the branch. */
   branch?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  /** BranchId.  */
+  /** BranchId. */
   branchId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** The circulationrule of the item */
   circulationRule?: InputMaybe<Array<Scalars["String"]["input"]>>;
@@ -377,16 +280,12 @@ export type ComplexSearchFiltersInput = {
   department?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Date of first accession */
   firstAccessionDate?: InputMaybe<Scalars["String"]["input"]>;
-  /** The floatgroup of the item */
-  floatGroup?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Local id of the item. */
   itemId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  /** The section which the item belongs to */
-  section?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Onloan or OnShelf. */
   status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
@@ -636,7 +535,7 @@ export type CoverDetails = {
 export type CreatorInterface = {
   /** Name of the creator */
   display: Scalars["String"]["output"];
-  /** Name of the creator which can be used to sort after  */
+  /** Name of the creator which can be used to sort after */
   nameSort: Scalars["String"]["output"];
   /** A list of which kinds of contributions this creator made to this creation */
   roles: Array<Role>;
@@ -658,14 +557,6 @@ export type Debug = {
   __typename?: "Debug";
   complexity: Complexity;
   depth: Depth;
-};
-
-export type DeleteBookmarksResponse = {
-  __typename?: "DeleteBookmarksResponse";
-  /** Number of failed bookmark deletions (e.g., due to non-existent bookmark IDs). */
-  items: Array<BookmarksStatusItem>;
-  /** The overall status of the bookmark deletion operation. */
-  status: BookmarksOverallStatusEnum;
 };
 
 export type Depth = {
@@ -1074,7 +965,7 @@ export type Manifestation = {
   creators: Array<CreatorInterface>;
   /** Additional creators of this manifestation as described on the publication. E.g. 'tekst af William Warren' */
   creatorsFromDescription: Array<Scalars["String"]["output"]>;
-  /** The year for the publication of the first edition for this work  */
+  /** The year for the publication of the first edition for this work */
   dateFirstEdition?: Maybe<PublicationYear>;
   /** Edition details for this manifestation */
   edition?: Maybe<Edition>;
@@ -1186,7 +1077,7 @@ export type ManifestationTitles = {
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
   /** Danish translation of the main title */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
-  /** detailed title for tv series  */
+  /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
 };
 
@@ -1217,9 +1108,6 @@ export type MaterialType = {
   /** jed 1.1 - the specific materialtType */
   materialTypeSpecific: SpecificMaterialType;
 };
-
-/** Union type for different material types that can be bookmarked */
-export type MaterialUnion = Manifestation | Work;
 
 export type MediaCouncilAgeRestriction = {
   __typename?: "MediaCouncilAgeRestriction";
@@ -1396,8 +1284,6 @@ export type MusicShelf = {
 export type Mutation = {
   __typename?: "Mutation";
   elba: ElbaServices;
-  /** Updates patron information, such as adding or removing bookmarks. */
-  patron?: Maybe<PatronMutation>;
   submitOrder?: Maybe<SubmitOrder>;
 };
 
@@ -1420,7 +1306,7 @@ export type Note = {
   display: Array<Scalars["String"]["output"]>;
   /** Heading before note */
   heading?: Maybe<Scalars["String"]["output"]>;
-  /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.  */
+  /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. */
   type: NoteTypeEnum;
   /** A link and possible link text */
   urls?: Maybe<Array<Maybe<AccessUrl>>>;
@@ -1447,14 +1333,6 @@ export enum NoteTypeEnum {
   WithdrawnPublication = "WITHDRAWN_PUBLICATION"
 }
 
-/** Enum for sorting bookmarks */
-export enum OrderBookmarksByEnum {
-  CreatedatAsc = "CREATEDAT_ASC",
-  CreatedatDesc = "CREATEDAT_DESC",
-  TitleAsc = "TITLE_ASC",
-  TitleDesc = "TITLE_DESC"
-}
-
 export enum OrderTypeEnum {
   Estimate = "ESTIMATE",
   Hold = "HOLD",
@@ -1470,30 +1348,6 @@ export type Pegi = {
   display?: Maybe<Scalars["String"]["output"]>;
   /** Minimum age to play the game. PEGI rating */
   minimumAge?: Maybe<Scalars["Int"]["output"]>;
-};
-
-export type Patron = {
-  __typename?: "Patron";
-  /** Retrieves the list of bookmarks for the patron, including pagination and sorting options. */
-  bookmarks: Bookmarks;
-};
-
-export type PatronMutation = {
-  __typename?: "PatronMutation";
-  /** Adds one or more bookmarks for the patron. If a bookmark already exists, it will be ignored. */
-  addBookmarks: AddBookmarksResponse;
-  /** Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored. */
-  deleteBookmarks: DeleteBookmarksResponse;
-};
-
-export type PatronMutationAddBookmarksArgs = {
-  bookmarks: Array<BookmarksInput>;
-  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
-};
-
-export type PatronMutationDeleteBookmarksArgs = {
-  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
-  ids: Array<Scalars["String"]["input"]>;
 };
 
 export type PeriodicalType = {
@@ -1608,8 +1462,6 @@ export type Query = {
   manifestation?: Maybe<Manifestation>;
   manifestations: Array<Maybe<Manifestation>>;
   mood: MoodQueries;
-  /** Retrieves information about the patron, such as bookmarks, reservations, and loans. */
-  patron?: Maybe<Patron>;
   /** Get recommendations */
   recommend: RecommendationResponse;
   /** Access to various types of recommendations. */
@@ -1626,7 +1478,6 @@ export type Query = {
 
 export type QueryComplexSearchArgs = {
   cql: Scalars["String"]["input"];
-  cqlfilter?: InputMaybe<ComplexSearchCqlFiltersInput>;
   facets?: InputMaybe<ComplexSearchFacetsInput>;
   filters?: InputMaybe<ComplexSearchFiltersInput>;
 };
@@ -1976,13 +1827,13 @@ export type Series = {
   description?: Maybe<Scalars["String"]["output"]>;
   /** The number of members in the series */
   hitcount: Scalars["Int"]["output"];
-  /** Additional information  */
+  /** Additional information */
   identifyingAddition?: Maybe<Scalars["String"]["output"]>;
   /** Whether this is a popular series or general series */
   isPopular?: Maybe<Scalars["Boolean"]["output"]>;
   /** MainLanguages of the series */
   mainLanguages: Array<Scalars["String"]["output"]>;
-  /** Members of this serie.  */
+  /** Members of this serie. */
   members: Array<SerieWork>;
   /** The number in the series as text qoutation */
   numberInSeries?: Maybe<Scalars["String"]["output"]>;
@@ -2089,7 +1940,7 @@ export type SubjectContainer = {
 
 export type SubjectInterface = {
   display: Scalars["String"]["output"];
-  /** Language of the subject - contains display and isoCode  */
+  /** Language of the subject - contains display and isoCode */
   language?: Maybe<Language>;
   local?: Maybe<Scalars["Boolean"]["output"]>;
   /** The type of subject - 'location', 'time period' etc., 'topic' if not specific kind of subject term */
@@ -2445,7 +2296,7 @@ export type WorkTitles = {
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
   /** Danish translation of the main title */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
-  /** detailed title for tv series  */
+  /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
 };
 

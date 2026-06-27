@@ -4,7 +4,7 @@ namespace Drupal\dpl_go\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -15,7 +15,7 @@ class GoController extends ControllerBase {
    * DdplReactAppsController constructor.
    */
   public function __construct(
-    protected GoSite $goSite,
+    protected GoSiteInterface $goSite,
   ) {}
 
   /**

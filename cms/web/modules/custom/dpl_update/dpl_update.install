@@ -1114,3 +1114,10 @@ function dpl_update_update_10070(): string {
 function dpl_update_update_10071(): string {
   return _dpl_update_install_modules(['dpl_logging']);
 }
+
+/**
+ * Enable dpl_app module.
+ */
+function dpl_update_update_10072(): string {
+  return _dpl_update_install_modules(['dpl_app']);
+}

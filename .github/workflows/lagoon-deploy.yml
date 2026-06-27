@@ -110,10 +110,27 @@ jobs:
   # legitimate contributions.
   # The integration is controlled by creating synthetic events related to select
   # pull-request events, and send them to Lagoon.
-  InformLagoon:
-    name: Lagoon / Send synthetic event to Lagoon
+  # Deploys must wait for the Go base image to be pushed, or Lagoon's build
+  # pulls an image that does not exist yet. Skipped on close (nothing to build).
+  InformLagoonDeploy:
+    name: Lagoon / Send deploy event to Lagoon
     runs-on: ubuntu-latest
     needs: [BuildGoBaseImage]
+    steps:
+      - name: Send pull request event
+        uses: distributhor/workflow-webhook@v3
+        env:
+          webhook_url: ${{ secrets.LAGOON_WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.LAGOON_WEBHOOK_SECRET }}
+          webhook_type: 'json-extended'
+
+  # Closing a PR has no build to wait for, so inform Lagoon directly to tear
+  # down the environment.
+  InformLagoonClose:
+    name: Lagoon / Send close event to Lagoon
+    runs-on: ubuntu-latest
+    needs: [BranchNameLength]
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
     steps:
       - name: Send pull request event
         uses: distributhor/workflow-webhook@v3

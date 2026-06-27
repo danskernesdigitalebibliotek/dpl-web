@@ -1,0 +1,3357 @@
+"""
+Complexity directive to evaluate query complexity
+"""
+directive @complexity(multipliers: [String!], value: Int!) on FIELD_DEFINITION
+
+directive @fallback on ENUM_VALUE
+
+type AccessType {
+  code: AccessTypeCodeEnum!
+  display: String!
+}
+
+enum AccessTypeCodeEnum {
+  ONLINE
+  PHYSICAL
+  UNKNOWN
+}
+
+union AccessUnion =
+  | AccessUrl
+  | DigitalArticleService
+  | Ereol
+  | InfomediaService
+  | InterLibraryLoan
+  | Publizon
+
+type AccessUrl {
+  """
+  If the resource requires login
+  """
+  loginRequired: Boolean!
+
+  """
+  Notes for the resource
+  """
+  note: String
+
+  """
+  The origin, e.g. "DBC Webarkiv"
+  """
+  origin: String!
+
+  """
+  Status from linkcheck
+  """
+  status: LinkStatusEnum!
+
+  """
+  The type of content that can be found at this URL
+  """
+  type: AccessUrlTypeEnum
+
+  """
+  The url where manifestation is located
+  """
+  url: String!
+
+  """
+  Description/type of URL
+  """
+  urlText: String
+}
+
+enum AccessUrlTypeEnum {
+  IMAGE
+  OTHER
+  RESOURCE
+  SAMPLE
+  TABLE_OF_CONTENTS
+  THUMBNAIL
+}
+
+type Audience {
+  """
+  Range of numbers with either beginning of range or end of range or both e.g. 6-10, 1980-1999
+  """
+  ages: [Range!]!
+
+  """
+  Appropriate audience for this manifestation
+  """
+  audienceGeneral: [AudienceGeneral!]!
+
+  """
+  Is this material for children or adults
+  """
+  childrenOrAdults: [ChildOrAdult!]!
+
+  """
+  Appropriate audience for this manifestation
+  """
+  generalAudience: [String!]!
+
+  """
+  LET number of this manifestion, defines the reability level, LET stands for læseegnethedstal
+  """
+  let: String
+
+  """
+  Level of difficulty, illustrations, length, and realism in children's literature
+  """
+  levelForChildren8to12: LevelForAudience
+
+  """
+  Appropriate audience as recommended by the library
+  """
+  libraryRecommendation: String
+
+  """
+  Lix number of this manifestion, defines the reability level, Lix stands for læsbarhedsindex
+  """
+  lix: String
+
+  """
+  Media council age recommendation
+  """
+  mediaCouncilAgeRestriction: MediaCouncilAgeRestriction
+
+  """
+  PEGI age rating for games
+  """
+  pegi: PEGI
+
+  """
+  Number of players in the game.
+  """
+  players: Players
+
+  """
+  Primary target audience for this manifestation
+  """
+  primaryTarget: [String!]!
+
+  """
+  Is this material for use in schools (folkeskole/ungdomsuddannelse) or is this material for use in schools by the teacher (folkeskole only)
+  """
+  schoolUse: [SchoolUse!]!
+}
+
+"""
+A single general audience object containing a subject word and a possible associated language
+"""
+type AudienceGeneral {
+  """
+  Appropriate audience for this manifestation
+  """
+  display: String
+
+  """
+  The associated language of the audience term, if applicable
+  """
+  language: Language
+}
+
+type BibliographicCategory {
+  """
+  Code for bibliographic category
+  """
+  code: String
+
+  """
+  The code as displayable text
+  """
+  display: String
+}
+
+enum CSHoldingsStatusEnum {
+  """
+  Item is discarded by the branch
+  """
+  DISCARDED
+
+  """
+  Item is lost by the branch and not available
+  """
+  LOST
+
+  """
+  Item is not for loan by the branch
+  """
+  NOTFORLOAN
+
+  """
+  Item is on loan and not available
+  """
+  ONLOAN
+
+  """
+  Item is on order by the branch
+  """
+  ONORDER
+
+  """
+  Item is physically available at the branch
+  """
+  ONSHELF
+}
+
+type CatalogueCodes {
+  """
+  CatalogueCodes from the national registers
+  """
+  nationalBibliography: [String!]!
+
+  """
+  CatalogueCodes from local bibliographies or catalogues that the manifestation belongs to
+  """
+  otherCatalogues: [String!]!
+}
+
+type CataloguedPublicationStatus {
+  """
+  The code representing the catalogued publication status.
+  """
+  code: CataloguedPublicationStatusEnum!
+
+  """
+  The display text corresponding to the publication status code.
+  """
+  display: String!
+}
+
+"""
+Represents the publication status of a catalogued manifestation.
+"""
+enum CataloguedPublicationStatusEnum {
+  """
+  New title
+  """
+  NT
+
+  """
+  New edition
+  """
+  NU
+
+  """
+  New print run
+  """
+  OP
+}
+
+type ChildOrAdult {
+  code: ChildOrAdultCodeEnum!
+  display: String!
+}
+
+enum ChildOrAdultCodeEnum {
+  FOR_ADULTS
+  FOR_CHILDREN
+}
+
+type Classification {
+  """
+  The classification code
+  """
+  code: String!
+
+  """
+  Descriptive text for the classification code (DK5 only)
+  """
+  display: String!
+
+  """
+  The dk5Heading for the classification (DK5 only)
+  """
+  dk5Heading: String
+
+  """
+  For DK5 only. The DK5 entry type: main entry, national entry, or additional entry
+  """
+  entryType: EntryTypeEnum
+
+  """
+  Name of the classification system
+  """
+  system: String!
+}
+
+"""
+The complete facet in response
+"""
+type ComplexSearchFacetResponse {
+  name: String
+  values: [ComplexSearchFacetValue!]
+}
+
+"""
+A Facet value in response
+"""
+type ComplexSearchFacetValue {
+  key: String!
+  score: Int!
+  traceId: String
+}
+
+"""
+The supported facet fields
+"""
+enum ComplexSearchFacetsEnum {
+  ACCESSTYPE
+  AGES
+  CATALOGUECODE
+  CHAMBERMUSICTYPE
+  CHOIRTYPE
+  CONTRIBUTOR
+  CONTRIBUTORFUNCTION
+  CREATOR
+  CREATORCONTRIBUTOR
+  CREATORCONTRIBUTORFUNCTION
+  CREATORFUNCTION
+  DATEFIRSTEDITION
+  FICTIONALCHARACTER
+  FILMNATIONALITY
+  GAMEPLATFORM
+  GENERALAUDIENCE
+  GENERALMATERIALTYPE
+  GENREANDFORM
+  HOSTPUBLICATION
+  HOSTPUBLICATIONTYPE
+  INSTRUMENT
+  ISSUE
+  LANGUAGE
+  LET
+  LIBRARYRECOMMENDATION
+  LIX
+  MAINLANGUAGE
+  MEDIACOUNCILAGERESTRICTION
+  MOOD
+  MUSICALENSEMBLEORCAST
+  NARRATIVETECHNIQUE
+  PEGI
+  PLAYERS
+  PRIMARYTARGET
+  PUBLICATIONYEAR
+  SERIES
+  SETTING
+  SOURCE
+  SPECIFICMATERIALTYPE
+  SPOKENLANGUAGE
+  SUBJECT
+  SUBTITLELANGUAGE
+  TYPEOFSCORE
+}
+
+"""
+The facets to ask for
+"""
+input ComplexSearchFacetsInput {
+  facetLimit: Int!
+  facets: [ComplexSearchFacetsEnum!]
+}
+
+"""
+Search Filters
+"""
+input ComplexSearchFiltersInput {
+  """
+  Id of agency.
+  """
+  agencyId: [String!]
+
+  """
+  Name of the branch.
+  """
+  branch: [String!]
+
+  """
+  BranchId.
+  """
+  branchId: [String!]
+
+  """
+  The circulationrule of the item
+  """
+  circulationRule: [String!]
+
+  """
+  Overall location in library (eg. Voksne).
+  """
+  department: [String!]
+
+  """
+  Date of first accession
+  """
+  firstAccessionDate: String
+
+  """
+  Id of publishing issue.
+  """
+  issueId: [String!]
+
+  """
+  Local id of the item.
+  """
+  itemId: [String!]
+
+  """
+  Where is the book physically located  (eg. skønlitteratur).
+  """
+  location: [String!]
+
+  """
+  Onloan or OnShelf.
+  """
+  status: [CSHoldingsStatusEnum!]
+
+  """
+  More specific location (eg. Fantasy).
+  """
+  sublocation: [String!]
+
+  """
+  Boolean to denote whether to include or exclude online holdingsitems
+  """
+  useOnlineHoldings: Boolean
+}
+
+type ComplexSearchIndex {
+  """
+  Aliases for this index
+  """
+  aliases: [String!]
+
+  """
+  Can be used for faceting
+  """
+  facet: Boolean!
+
+  """
+  The name of a Complex Search index
+  """
+  index: String!
+
+  """
+  Can be used for searching
+  """
+  search: Boolean!
+
+  """
+  Can be used for sorting
+  """
+  sort: Boolean!
+}
+
+"""
+The search response
+"""
+type ComplexSearchResponse {
+  """
+  Error message, for instance if CQL is invalid
+  """
+  errorMessage: String
+
+  """
+  Facets for this response
+  """
+  facets: [ComplexSearchFacetResponse!]
+
+  """
+  Total number of works found. May be used for pagination.
+  """
+  hitcount: Int!
+
+  """
+  The works matching the given search query. Use offset and limit for pagination.
+  """
+  works(
+    limit: PaginationLimitScalar!
+    offset: Int!
+    sort: [SortInput!]
+  ): [Work!]!
+}
+
+type ComplexSearchSuggestion {
+  """
+  The suggested term which can be searched for
+  """
+  term: String!
+
+  """
+  A unique identifier for tracking user interactions with this suggestion.
+  It is generated in the response and should be included in subsequent
+  API calls when this suggestion is selected.
+  """
+  traceId: String!
+
+  """
+  The type of suggestion
+  """
+  type: String!
+
+  """
+  A work related to the term
+  """
+  work: Work
+}
+
+type ComplexSuggestResponse {
+  result: [ComplexSearchSuggestion!]!
+}
+
+enum ComplexSuggestionTypeEnum {
+  CONTRIBUTORFUNCTION
+  CREATOR
+  CREATORCONTRIBUTOR
+  CREATORCONTRIBUTORFUNCTION
+  CREATORFUNCTION
+  DEFAULT
+  FICTIONALCHARACTER
+  HOSTPUBLICATION
+  PUBLISHER
+  SERIES
+  SUBJECT
+  TITLE
+}
+
+type Complexity {
+  class: String!
+  max: Int!
+  value: Int!
+}
+
+type ContentEntry {
+  """
+  Additional 'authors' (lyricists, arrangers, performers/soloists etc.), quoted as strings (including possible author's statement) from the record
+  """
+  contributors: [String!]
+
+  """
+  Main creator(s) of the entry i.e. composer (classical music), artist/band (rhythmic music), author (fiction, articles). For music and sheet music always only 1 creator, for articles and fiction possibly more than 1
+  """
+  creators: ContentEntryCreators
+
+  """
+  Playing time for music tracks, quoted from the record
+  """
+  playingTime: String
+
+  """
+  Possible entry data (title, creators, contributors, playingtime) subordinate to the entry's top level
+  """
+  sublevel: [ContentSublevel!]
+
+  """
+  Top level title of the entry
+  """
+  title: ContentEntryTitle!
+}
+
+type ContentEntryCreators {
+  """
+  Details about a corporation or conference, name, role, etc.
+  """
+  corporations: [Corporation!]
+
+  """
+  Details about a person, name, role etc.
+  """
+  persons: [Person!]
+}
+
+type ContentEntryTitle {
+  """
+  Title of the content entry
+  """
+  display: String!
+}
+
+type ContentSublevel {
+  """
+  Additional 'authors' (lyricists, arrangers, performers/soloists etc.) related to the title on sublevel 1, quoted as strings (including possible author's statement) from the record
+  """
+  contributors: [String!]
+
+  """
+  Playing time for music tracks
+  """
+  playingTime: String
+
+  """
+  Possible entry data (title, contributors, playingtime) subordinate to the entry's sublevel 1
+  """
+  sublevel: [ContentSublevelLast!]
+
+  """
+  Title subordinate to the title in the entry's top level
+  """
+  title: ContentEntryTitle!
+}
+
+type ContentSublevelLast {
+  """
+  Additional 'authors' (lyricists, arrangers, performers/soloists etc.) related to the title on sublevel 1, quoted as strings (including possible author's statement) from the record
+  """
+  contributors: [String!]
+
+  """
+  Playing time for music tracks
+  """
+  playingTime: String
+
+  """
+  Title subordinate to the title in the entry's top level
+  """
+  title: ContentEntryTitle!
+}
+
+type ContentsEntity {
+  """
+  Content entry with title and possible creator(s), contributors and (for some music and movies) playing time
+  """
+  entries: [ContentEntry!]
+
+  """
+  Heading for the contents of this entity
+  """
+  heading: String!
+
+  """
+  Contents text note quoted as it is from the marc field. Used for non-machine-decipherable content notes (un)formatted in only 1 subfield)
+  """
+  raw: String
+
+  """
+  ENUM for type of content entries (music tracks, articles, fiction etc.) in this entity
+  """
+  type: ContentsEntityEnum!
+}
+
+enum ContentsEntityEnum {
+  ARTICLES
+  CHAPTERS
+  FICTION
+  MUSIC_TRACKS
+  NOT_SPECIFIED
+  SHEET_MUSIC
+}
+
+input CopyRequestInput {
+  authorOfComponent: String
+  issueOfComponent: String
+  openURL: String
+  pagesOfComponent: String
+  pickUpAgencySubdivision: String
+
+  """
+  The pid of an article or periodica
+  """
+  pid: String!
+  publicationDateOfComponent: String
+  publicationTitle: String
+  publicationYearOfComponent: String
+  titleOfComponent: String
+  userInterestDate: String
+  userMail: String
+  userName: String
+  volumeOfComponent: String
+}
+
+type CopyRequestResponse {
+  status: CopyRequestStatusEnum!
+}
+
+enum CopyRequestStatusEnum {
+  BORCHK_USER_BLOCKED_BY_AGENCY
+  BORCHK_USER_NOT_VERIFIED
+  BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY
+  ERROR_AGENCY_NOT_SUBSCRIBED
+  ERROR_INVALID_PICKUP_BRANCH
+  ERROR_MISSING_CLIENT_CONFIGURATION
+  ERROR_MISSING_MUNICIPALITYAGENCYID
+  ERROR_MUNICIPALITYAGENCYID_NOT_FOUND
+  ERROR_PID_NOT_RESERVABLE
+  ERROR_UNAUTHENTICATED_USER
+  INTERNAL_ERROR
+  OK
+  UNKNOWN_USER
+}
+
+type Corporation implements CreatorInterface & SubjectInterface {
+  """
+  Added information about the corporation, like M. Folmer Andersen (firma)
+  """
+  attributeToName: String
+
+  """
+  The full corporation or conference name
+  """
+  display: String!
+  language: Language
+  local: Boolean
+
+  """
+  Location or jurisdiction of the corporation or conference, like Københavns Kommune, Statistisk Kontor
+  """
+  location: String
+
+  """
+  Main corporation or conference
+  """
+  main: String
+
+  """
+  The full corporation or conference name to sort after
+  """
+  nameSort: String!
+
+  """
+  Number of the conference
+  """
+  number: String
+
+  """
+  A list of which kinds of contributions this corporation made to this creation
+  """
+  roles: [Role!]!
+
+  """
+  Sub corporation or conference/meeting
+  """
+  sub: String
+  type: SubjectTypeEnum!
+
+  """
+  VIAF identifier of the creator
+  """
+  viafid: String
+
+  """
+  Year of the conference
+  """
+  year: String
+}
+
+type Cover {
+  detail: String
+  detail_42: String
+  detail_117: String
+  detail_207: String
+  detail_500: String
+  large: CoverDetails
+  medium: CoverDetails
+  origin: String
+  original: CoverDetails
+  small: CoverDetails
+  thumbnail: String
+  xSmall: CoverDetails
+}
+
+type CoverDetails {
+  height: Int
+  url: String
+  width: Int
+}
+
+interface CreatorInterface {
+  """
+  Name of the creator
+  """
+  display: String!
+
+  """
+  Name of the creator which can be used to sort after
+  """
+  nameSort: String!
+
+  """
+  A list of which kinds of contributions this creator made to this creation
+  """
+  roles: [Role!]!
+
+  """
+  VIAF identifier of the creator
+  """
+  viafid: String
+}
+
+type DK5MainEntry {
+  """
+  Main DK5 classification code
+  """
+  code: String!
+
+  """
+  Displayable main DK5 classification
+  """
+  display: String!
+
+  """
+  The dk5Heading for the classification
+  """
+  dk5Heading: String!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Debug {
+  complexity: Complexity!
+  depth: Depth!
+}
+
+type Depth {
+  max: Int!
+  value: Int!
+}
+
+type DidYouMean {
+  """
+  An alternative query
+  """
+  query: String!
+
+  """
+  A probability score between 0-1 indicating how relevant the query is
+  """
+  score: Float!
+
+  """
+  A unique identifier for tracking user interactions with this didYouMean value.
+  It is generated in the response and should be included in subsequent
+  API calls when this manifestation is selected.
+  """
+  traceId: String!
+}
+
+type DigitalArticleService {
+  """
+  Issn which can be used to order article through Digital Article Service
+  """
+  issn: String!
+}
+
+type Edition {
+  """
+  Quotation of contributor statements related to the edition
+  """
+  contributors: [String!]!
+
+  """
+  The edition number and name
+  """
+  edition: String
+
+  """
+  A note about this specific edition
+  """
+  note: String
+
+  """
+  A year as displayable text and as number
+  """
+  publicationYear: PublicationYear
+
+  """
+  Properties 'edition', 'contributorsToEdition' and 'publicationYear' as one string, e.g.: '3. udgave, revideret af Hugin Eide, 2005'
+  """
+  summary: String!
+}
+
+type ElbaServices {
+  placeCopyRequest(
+    """
+    If this is true, the copy request will not be send to the elba service
+    Use it for testing
+    """
+    dryRun: Boolean
+    input: CopyRequestInput!
+  ): CopyRequestResponse!
+}
+
+enum EntryTypeEnum {
+  ADDITIONAL_ENTRY
+  MAIN_ENTRY
+  NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY
+  NATIONAL_BIBLIOGRAPHY_ENTRY
+}
+
+type Ereol {
+  """
+  Is this a manifestation that always can be loaned on ereolen.dk even if you've run out of loans this month
+  """
+  canAlwaysBeLoaned: Boolean!
+
+  """
+  Notes for the resource
+  """
+  note: String
+
+  """
+  The origin, e.g. "Ereolen" or "Ereolen Go"
+  """
+  origin: String!
+
+  """
+  The url where manifestation is located
+  """
+  url: String!
+}
+
+"""
+The supported facet fields
+"""
+enum FacetFieldEnum {
+  ACCESSTYPES
+  AGE
+  CANALWAYSBELOANED
+  CHILDRENORADULTS
+  CREATORS
+  DK5
+  FICTIONALCHARACTERS
+  FICTIONNONFICTION
+  GAMEPLATFORM
+  GENERALAUDIENCE
+  GENREANDFORM
+  LET
+  LIBRARYRECOMMENDATION
+  LIX
+  MAINLANGUAGES
+  MATERIALTYPESGENERAL
+  MATERIALTYPESSPECIFIC
+  SUBJECTS
+  WORKTYPES
+  YEAR
+}
+
+"""
+The result for a specific facet
+"""
+type FacetResult {
+  """
+  The name of the facet.
+  """
+  name: String!
+
+  """
+  The enum type of the facet.
+  """
+  type: FacetFieldEnum!
+
+  """
+  The values of thie facet result
+  """
+  values(limit: Int!): [FacetValue!]!
+}
+
+"""
+A facet value consists of a term and a count.
+"""
+type FacetValue {
+  """
+  Use the key when applying filters
+  """
+  key: String!
+
+  """
+  A score indicating relevance
+  """
+  score: Int
+
+  """
+  A value of a facet field
+  """
+  term: String!
+
+  """
+  A unique identifier for tracking user interactions with this facet value.
+  It is generated in the response and should be included in subsequent
+  API calls when this manifestation is selected.
+  """
+  traceId: String!
+}
+
+type FictionNonfiction {
+  """
+  Binary code fiction/nonfiction used for filtering
+  """
+  code: FictionNonfictionCodeEnum!
+
+  """
+  Displayable overall category/genre. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types.
+  """
+  display: String!
+}
+
+enum FictionNonfictionCodeEnum {
+  FICTION
+  NONFICTION
+  NOT_SPECIFIED
+}
+
+type GeneralMaterialType {
+  """
+  code for materialType # @TODO - is this a finite list ?? - and where to get it
+  """
+  code: GeneralMaterialTypeCodeEnum!
+
+  """
+  Ths string to display
+  """
+  display: String!
+}
+
+enum GeneralMaterialTypeCodeEnum {
+  ARTICLES
+  AUDIO_BOOKS
+  BOARD_GAMES
+  BOOKS
+  COMICS
+  COMPUTER_GAMES
+  EBOOKS
+  FILMS
+  IMAGE_MATERIALS
+  MUSIC
+  NEWSPAPER_JOURNALS
+  OTHER
+  PODCASTS
+  SHEET_MUSIC
+  TV_SERIES
+}
+
+type GenreForm {
+  """
+  The genre/form term
+  """
+  display: String
+
+  """
+  Language of the genre/form term, if applicable
+  """
+  language: Language
+}
+
+enum HoldingsStatusEnum {
+  """
+  Holding is on loan
+  """
+  ONLOAN
+
+  """
+  Holding is physically available at the branch
+  """
+  ONSHELF
+}
+
+type HostPublication {
+  """
+  Creator of the host publication if host publication is book
+  """
+  creator: String
+
+  """
+  Edition statement for the host publication
+  """
+  edition: String
+
+  """
+  ISBN of the publication this manifestation can be found in
+  """
+  isbn: String
+
+  """
+  ISSN of the publication this manifestation can be found in
+  """
+  issn: String
+
+  """
+  The issue of the publication this manifestation can be found in
+  """
+  issue: String
+
+  """
+  Notes about the publication where this manifestation can be found in
+  """
+  notes: [String!]
+
+  """
+  The pages in the publication where this manifestation can be found in
+  """
+  pages: String
+
+  """
+  The publisher of the publication where this manifestation can be found in
+  """
+  publisher: String
+
+  """
+  Series of the publication this manifestation can be found in
+  """
+  series: Series
+
+  """
+  All details about the publication this manifestation can be found in
+  """
+  summary: String!
+
+  """
+  Publication this manifestation can be found in
+  """
+  title: String!
+
+  """
+  The publication year of the publication this manifestation can be found in
+  """
+  year: PublicationYear
+}
+
+type Identifier {
+  """
+  The type of identifier
+  """
+  type: IdentifierTypeEnum!
+
+  """
+  The actual identifier
+  """
+  value: String!
+}
+
+enum IdentifierTypeEnum {
+  BARCODE
+  DOI
+  ISBN
+  ISMN
+  ISSN
+  MOVIE
+  MUSIC
+  NOT_SPECIFIED
+  ORDER_NUMBER
+  PUBLIZON
+  UPC
+  URI
+}
+
+type IllAutomationMaterialGroup {
+  """
+  The material group (1-9)
+  """
+  id: Int!
+
+  """
+  The name of the material group
+  """
+  name: String!
+}
+
+type InfomediaArticle {
+  byLine: String
+  dateLine: String
+  headLine: String
+  hedLine: String
+  html: String
+  id: String!
+  logo: String
+  paper: String
+  subHeadLine: String
+  text: String
+}
+
+enum InfomediaErrorEnum {
+  BORROWERCHECK_NOT_ALLOWED
+  BORROWER_NOT_FOUND
+  BORROWER_NOT_IN_MUNICIPALITY
+  BORROWER_NOT_LOGGED_IN
+  ERROR_IN_REQUEST
+  INTERNAL_SERVER_ERROR
+  LIBRARY_NOT_FOUND
+  NO_AGENCYID
+  SERVICE_NOT_LICENSED
+  SERVICE_UNAVAILABLE
+}
+
+type InfomediaResponse {
+  article: InfomediaArticle
+
+  """
+  Infomedia error
+  """
+  error: InfomediaErrorEnum
+}
+
+type InfomediaService {
+  """
+  Infomedia ID which can be used to fetch article through Infomedia Service
+  """
+  id: String!
+}
+
+type InterLibraryLoan {
+  """
+  Is newly added - nice to know if there are no localizations
+  """
+  accessNew: Boolean!
+
+  """
+  Is true when manifestation can be borrowed via ill
+  """
+  loanIsPossible: Boolean!
+}
+
+input KidRecommenderTagsInput {
+  tag: String
+  weight: Int
+}
+
+type Language {
+  """
+  Language as displayable text
+  """
+  display: String!
+
+  """
+  ISO639-1 language code (2 letters)
+  """
+  iso639Set1: String!
+
+  """
+  ISO639-2 language code (3 letters)
+  """
+  iso639Set2: String!
+
+  """
+  ISO639-2 language code
+  """
+  isoCode: String!
+}
+
+enum LanguageCodeEnum {
+  DA
+  EN
+}
+
+type Languages {
+  """
+  Summary/abstract languages of this manifestation, if the manifestation contains short summaries of the content in another language
+  """
+  abstract: [Language!]
+
+  """
+  Main language of this manifestation
+  """
+  main: [Language!]
+
+  """
+  Notes of the languages that describe subtitles, spoken/written (original, dubbed/synchonized), visual interpretation, parallel (notes are written in Danish)
+  """
+  notes: [String!]
+
+  """
+  Original language of this manifestation
+  """
+  original: [Language!]
+
+  """
+  Parallel languages of this manifestation, if more languages are printed in the same book
+  """
+  parallel: [Language!]
+
+  """
+  Spoken language in this manifestation e.g. dubbed/syncronized language in movie
+  """
+  spoken: [Language!]
+
+  """
+  Subtitles in this manifestation
+  """
+  subtitles: [Language!]
+}
+
+type LevelForAudience {
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
+  difficulty: Int
+
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
+  illustrationsLevel: Int
+
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
+  length: Int
+
+  """
+  Level expressed as integer on a scale from 1 to 5
+  """
+  realisticVsFictional: Int
+}
+
+type LinkCheckResponse {
+  brokenSince: DateTime
+  lastCheckedAt: DateTime
+  status: LinkCheckStatusEnum!
+  url: String!
+}
+
+type LinkCheckService {
+  checks(urls: [String!]): [LinkCheckResponse!]!
+}
+
+enum LinkCheckStatusEnum {
+  BROKEN
+  GONE
+  INVALID
+  OK
+}
+
+enum LinkStatusEnum {
+  BROKEN
+  GONE
+  INVALID
+  OK
+}
+
+type LocalSuggestResponse {
+  result: [Suggestion!]!
+}
+
+type Manifestation {
+  """
+  Abstract of the entity
+  """
+  abstract: [String!]!
+
+  """
+  Different options to access manifestation
+  """
+  access: [AccessUnion!]!
+
+  """
+  Access type of this manifestation
+  """
+  accessTypes: [AccessType!]!
+
+  """
+  Different kinds of definitions of appropriate audience for this manifestation
+  """
+  audience: Audience
+
+  """
+  Code for bibliographic category
+  """
+  bibliographicCategory: BibliographicCategory
+
+  """
+  CatalogueCodes divided in codes from the national bibliography and other codes
+  """
+  catalogueCodes: CatalogueCodes!
+
+  """
+  The publication status of a catalogued manifestation.
+  """
+  cataloguedPublicationStatus: CataloguedPublicationStatus
+
+  """
+  Classification codes for this manifestation from any classification system
+  """
+  classifications: [Classification!]!
+
+  """
+  Content title entries with possible creators, contributors and playing time for music tracks, sheet music titles, articles, poems, short stories etc.
+  """
+  contents: [ContentsEntity!]
+
+  """
+  Contributors to the manifestation, actors, illustrators etc
+  """
+  contributors: [CreatorInterface!]!
+
+  """
+  Additional contributors of this manifestation as described on the publication. E.g. 'på dansk ved Vivi Berendt'
+  """
+  contributorsFromDescription: [String!]!
+
+  """
+  Cover for this manifestation
+  """
+  cover: Cover!
+
+  """
+  Primary creators of the manifestation e.g. authors, directors, musicians etc
+  """
+  creators: [CreatorInterface!]!
+
+  """
+  Additional creators of this manifestation as described on the publication. E.g. 'tekst af William Warren'
+  """
+  creatorsFromDescription: [String!]!
+
+  """
+  The year for the publication of the first edition for this work
+  """
+  dateFirstEdition: PublicationYear
+
+  """
+  Edition details for this manifestation
+  """
+  edition: Edition
+
+  """
+  Overall literary category/genre of this manifestation. e.g. fiction or nonfiction. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types.
+  """
+  fictionNonfiction: FictionNonfiction
+
+  """
+  The genre, (literary) form, type etc. of this manifestation
+  """
+  genreAndForm: [String!]!
+
+  """
+  The genre and (literary) form of this manifestation
+  """
+  genreForm: [GenreForm!]!
+
+  """
+  Details about the host publications of this manifestation
+  """
+  hostPublication: HostPublication
+
+  """
+  Identifiers for this manifestation - often used for search indexes
+  """
+  identifiers: [Identifier!]!
+
+  """
+  automation material group info
+  """
+  illAutomationMaterialGroup: IllAutomationMaterialGroup
+
+  """
+  Languages in this manifestation
+  """
+  languages: Languages
+
+  """
+  Details about the latest printing of this manifestation
+  """
+  latestPrinting: Printing
+
+  """
+  Identification of the local id of this manifestation
+  """
+  localId: String
+
+  """
+  The type of material of the manifestation based on bibliotek.dk types
+  """
+  materialTypes: [MaterialType!]!
+
+  """
+  Information on music shelving
+  """
+  musicShelf: MusicShelf
+
+  """
+  Notes about the manifestation
+  """
+  notes: [Note!]!
+
+  """
+  The work that this manifestation is part of
+  """
+  ownerWork: Work!
+
+  """
+  Code for type of periodical
+  """
+  periodicalType: PeriodicalType
+
+  """
+  Physical description  of this manifestation like extent (pages/minutes), illustrations etc.
+  """
+  physicalDescription: PhysicalUnitDescription
+
+  """
+  Unique identification of the manifestation e.g 870970-basis:54029519
+  """
+  pid: String!
+
+  """
+  The city or place where the item was published
+  """
+  placeOfPublication: [String!]!
+
+  """
+  Publisher of this manifestion
+  """
+  publisher: [String!]!
+
+  """
+  The creation date of the record describing this manifestation in the format YYYYMMDD
+  """
+  recordCreationDate: String!
+
+  """
+  Notes about relations to this book/periodical/journal, - like previous names or related journals
+  """
+  relatedPublications: [RelatedPublication!]!
+
+  """
+  Relations to other manifestations
+  """
+  relations: Relations!
+
+  """
+  Some review data, if this manifestation is a review
+  """
+  review: ManifestationReview
+
+  """
+  Series for this manifestation
+  """
+  series: [Series!]!
+
+  """
+  Material that can be identified as sheet music
+  """
+  sheetMusicCategories: SheetMusicCategory
+
+  """
+  The creator of the manifestation that the material can be located under on the shelf
+  """
+  shelfCreator: ShelfCreator
+
+  """
+  Information about on which shelf in the library this manifestation can be found
+  """
+  shelfmark: Shelfmark
+
+  """
+  The records type of sound recording - excluding music recordings and its material
+  """
+  soundRecording: SoundRecording
+
+  """
+  The source of the manifestation, e.g. own library catalogue (Bibliotekskatalog) or online source e.g. Filmstriben, Ebook Central, eReolen Global etc.
+  """
+  source: [String!]!
+
+  """
+  Code for comics, children's picture books and drama
+  """
+  specialMaterialGroup: SpecialMaterialGroup
+
+  """
+  Subjects for this manifestation
+  """
+  subjects: SubjectContainer!
+
+  """
+  Different kinds of titles for this work
+  """
+  titles: ManifestationTitles!
+
+  """
+  A unique identifier for tracking user interactions with this manifestation.
+  It is generated in the response and should be included in subsequent
+  API calls when this manifestation is selected.
+  """
+  traceId: String!
+
+  """
+  id of the manifestaion unit
+  """
+  unit: Unit
+
+  """
+  Universes for this manifestation
+  """
+  universes: [Universe!]!
+
+  """
+  Information about on which volume this manifestation is in multi volume work
+  """
+  volume: String
+
+  """
+  Worktypes for this manifestations work
+  """
+  workTypes: [WorkTypeEnum!]!
+
+  """
+  The year this manifestation was originally published or produced
+  """
+  workYear: PublicationYear
+}
+
+type ManifestationReview {
+  rating: String
+  reviewByLibrarians: [ReviewElement]
+}
+
+type ManifestationTitles {
+  """
+  Alternative titles for this manifestation e.g. a title in a different language
+  """
+  alternative: [String!]!
+
+  """
+  The full title(s) of the manifestation including subtitles etc
+  """
+  full: [String!]!
+
+  """
+  Information that distinguishes this manifestation from a similar manifestation with same title, e.g. 'illustrated by Ted Kirby'
+  """
+  identifyingAddition: String
+
+  """
+  The main title(s) of the work
+  """
+  main: [String!]!
+
+  """
+  The title of the work that this expression/manifestation is translated from or based on. The original title(s) of a film which has a different distribution title.
+  """
+  original: [String!]
+
+  """
+  Titles (in other languages) parallel to the main 'title' of the manifestation
+  """
+  parallel: [String!]!
+
+  """
+  The sorted title of the entity
+  """
+  sort: String!
+
+  """
+  The standard title of the entity, used for music and movies
+  """
+  standard: String
+
+  """
+  The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles.
+  """
+  titlePlusLanguage: String
+
+  """
+  Danish translation of the main title
+  """
+  translated: [String!]
+
+  """
+  detailed title for tv series
+  """
+  tvSeries: TvSeries
+}
+
+type Manifestations {
+  all: [Manifestation!]!
+
+  """
+  The best representation of all manifestations. Corresponds to the first element in the bestRepresentations list.
+  """
+  bestRepresentation: Manifestation!
+
+  """
+  All manifestations sorted after best representation. Newer is better. Records from DBC or KB are considered better. MaterialType.specific 'bog', 'music (cd)', and 'film (dvd)' are also considered better
+  """
+  bestRepresentations: [Manifestation!]!
+  first: Manifestation!
+  latest: Manifestation!
+  mostRelevant: [Manifestation!]!
+
+  """
+  A list of manifestations that matched the search query.
+
+  This field is populated only when a work is retrieved within a search context.
+  Each entry is a SearchHit object representing a manifestation that matched the search criteria.
+  Only one manifestation per unit is returned.
+  """
+  searchHits: [SearchHit!]
+}
+
+type MaterialType {
+  """
+  jed 1.1 - the general materialtype
+  """
+  materialTypeGeneral: GeneralMaterialType!
+
+  """
+  jed 1.1 - the specific materialtType
+  """
+  materialTypeSpecific: SpecificMaterialType!
+}
+
+type MediaCouncilAgeRestriction {
+  """
+  Display string for minimum age
+  """
+  display: String
+
+  """
+  Minimum age
+  """
+  minimumAge: Int
+}
+
+type Mood implements SubjectInterface {
+  display: String!
+  language: Language
+  local: Boolean
+  type: SubjectTypeEnum!
+}
+
+input MoodKidsRecommendFiltersInput {
+  difficulty: [Int!]
+  fictionNonfiction: FictionNonfictionCodeEnum
+  illustrationsLevel: [Int!]
+  length: [Int!]
+  realisticVsFictional: [Int!]
+}
+
+type MoodQueries {
+  moodRecommendKids(
+    dislikes: [String!]
+    filters: MoodKidsRecommendFiltersInput
+    limit: Int
+    offset: Int
+    tags: [KidRecommenderTagsInput!]
+    work: String
+  ): MoodRecommendKidsResponse!
+  moodSearch(
+    field: MoodSearchFieldValuesEnum
+    limit: Int
+    offset: Int
+    q: String!
+  ): MoodSearchResponse!
+  moodSearchKids(
+    field: MoodSearchFieldValuesEnum
+    limit: Int
+    offset: Int
+    q: String!
+  ): MoodSearchKidsResponse!
+  moodSuggest(limit: Int, q: String!): MoodSuggestResponse!
+  moodTagRecommend(
+    hasCover: Boolean
+    limit: Int
+    minus: [String!]
+    plus: [String!]
+    tags: [String!]!
+  ): [MoodTagRecommendResponse]!
+  moodWorkRecommend(
+    dislikes: [String!]
+    hasCover: Boolean
+    likes: [String!]!
+    limit: Int
+    maxAuthorRecommendations: Int
+    offset: Int
+    threshold: Float
+  ): [MoodTagRecommendResponse]!
+}
+
+"""
+The reponse from moodrecommenkids
+"""
+type MoodRecommendKidsResponse {
+  works(limit: PaginationLimitScalar!, offset: Int!): [Work!]!
+}
+
+"""
+Supported fields for moodsearch request
+"""
+enum MoodSearchFieldValuesEnum {
+  ALL
+  ALLTAGS
+  CREATOR
+  MOODTAGS
+  TITLE
+}
+
+"""
+The reponse from moodsearchkids
+"""
+type MoodSearchKidsResponse {
+  works(limit: PaginationLimitScalar!, offset: Int!): [Work!]!
+}
+
+"""
+The response from moodsearch
+"""
+type MoodSearchResponse {
+  """
+  The works matching the given search query. Use offset and limit for pagination.
+  """
+  works(limit: PaginationLimitScalar!, offset: Int!): [Work!]!
+}
+
+"""
+Type of moodSuggest response
+"""
+enum MoodSuggestEnum {
+  CREATOR
+  TAG
+  TITLE
+}
+
+"""
+MoodSuggest item
+"""
+type MoodSuggestItem {
+  """
+  Suggestion
+  """
+  term: String!
+
+  """
+  A unique identifier for tracking user interactions with this suggestion.
+  It is generated in the response and should be included in subsequent
+  API calls when this manifestation is selected.
+  """
+  traceId: String!
+
+  """
+  The type of suggestion title/creator/tag
+  """
+  type: MoodSuggestEnum!
+
+  """
+  A work associated with the suggestion
+  """
+  work: Work
+}
+
+"""
+The response type for moodSuggest
+"""
+type MoodSuggestResponse {
+  """
+  Response is an array of MoodSuggestResponse
+  """
+  response: [MoodSuggestItem!]!
+}
+
+"""
+Response type for moodTagRecommend
+"""
+type MoodTagRecommendResponse {
+  similarity: Float
+  work: Work!
+}
+
+type MusicShelf {
+  """
+  The shelf where the material can be found
+  """
+  display: String
+
+  """
+  The sort version of 'display'
+  """
+  sort: String
+}
+
+type Mutation {
+  elba: ElbaServices!
+  submitOrder(dryRun: Boolean, input: SubmitOrderInput!): SubmitOrder
+}
+
+type NarrativeTechnique implements SubjectInterface {
+  display: String!
+  language: Language
+  local: Boolean
+  type: SubjectTypeEnum!
+}
+
+type Note {
+  """
+  The actual notes
+  """
+  display: [String!]!
+
+  """
+  Heading before note
+  """
+  heading: String
+
+  """
+  The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.
+  """
+  type: NoteTypeEnum!
+
+  """
+  A link and possible link text
+  """
+  urls: [AccessUrl]
+}
+
+enum NoteTypeEnum {
+  CONNECTION_TO_OTHER_WORKS
+  CONTAINS_AI_GENERATED_CONTENT
+  DESCRIPTION_OF_MATERIAL
+  DISSERTATION
+  EDITION
+  ESTIMATED_PLAYING_TIME_FOR_GAMES
+  EXPECTED_PUBLICATION_DATE
+  FREQUENCY
+  MUSICAL_ENSEMBLE_OR_CAST
+  NOT_SPECIFIED
+  OCCASION_FOR_PUBLICATION
+  ORIGINAL_TITLE
+  ORIGINAL_VERSION
+  REFERENCES
+  RESTRICTIONS_ON_USE
+  TECHNICAL_REQUIREMENTS
+  TYPE_OF_SCORE
+  WITHDRAWN_PUBLICATION
+}
+
+enum OrderTypeEnum {
+  ESTIMATE
+  HOLD
+  LOAN
+  NON_RETURNABLE_COPY
+  NORMAL
+  STACK_RETRIEVAL
+}
+
+type PEGI {
+  """
+  Display string for PEGI minimum age
+  """
+  display: String
+
+  """
+  Minimum age to play the game. PEGI rating
+  """
+  minimumAge: Int
+}
+
+"""
+An integer in the range from 1 to 100
+"""
+scalar PaginationLimitScalar
+
+type PeriodicalType {
+  """
+  A code for the type of periodical
+  """
+  code: String
+
+  """
+  The code as displayable text
+  """
+  display: String
+}
+
+type Person implements CreatorInterface & SubjectInterface {
+  """
+  Creator aliases, creators behind used pseudonym
+  """
+  aliases: [Person!]!
+
+  """
+  Added information about the person, like Henri, konge af Frankrig
+  """
+  attributeToName: String
+
+  """
+  Birth year of the person
+  """
+  birthYear: String
+
+  """
+  The person's whole name in normal order
+  """
+  display: String!
+
+  """
+  First name of the person
+  """
+  firstName: String
+  language: Language
+
+  """
+  Last name of the person
+  """
+  lastName: String
+  local: Boolean
+
+  """
+  The person's full name inverted
+  """
+  nameSort: String!
+
+  """
+  A list of which kinds of contributions this person made to this creation
+  """
+  roles: [Role!]!
+
+  """
+  A roman numeral added to the person, like Christian IV
+  """
+  romanNumeral: String
+  type: SubjectTypeEnum!
+
+  """
+  VIAF identifier of the creator
+  """
+  viafid: String
+}
+
+type PhysicalUnitDescription {
+  """
+  Material that comes with the manifestation (bilag)
+  """
+  accompanyingMaterial: String
+
+  """
+  List of units contained within the material
+  """
+  materialUnits: [UnitDescription!]
+
+  """
+  Number of pages of the manifestation as number
+  """
+  numberOfPages: Int
+
+  """
+  A summary of the physical description of this manifestation like extent (pages/minutes), illustrations etc.
+  """
+  summaryFull: String
+}
+
+type Players {
+  """
+  Number of players interval begin.
+  """
+  begin: Int
+
+  """
+  Display name for the number of players.
+  """
+  display: String
+
+  """
+  Number of players interval end.
+  """
+  end: Int
+}
+
+type Printing {
+  """
+  The printing number and name
+  """
+  printing: String!
+
+  """
+  A year as displayable text and as number
+  """
+  publicationYear: PublicationYear
+
+  """
+  Publisher of printing when other than the original publisher of the edition (260*b)
+  """
+  publisher: String
+
+  """
+  Properties 'printing' and 'publicationYear' as one string, e.g.: '11. oplag, 2020'
+  """
+  summary: String!
+}
+
+type PublicationYear {
+  display: String!
+  endYear: Int
+  frequency: String
+  year: Int
+}
+
+type Publizon {
+  """
+  URL to the material on the public library's website, built from the agency's lookupUrl and the manifestation workId. Defaults to the logged-in user's municipality agency.
+  """
+  agencyUrl(agencyId: String): String
+
+  """
+  The total duration of the resource in seconds, if available.
+  """
+  durationInSeconds: Int
+
+  """
+  The file size of the resource in bytes, if available.
+  """
+  fileSizeInBytes: Int
+
+  """
+  The file format of the Publizon resource (e.g., "epub", "mp3").
+  """
+  format: String
+
+  """
+  URL of the sample provided by Publizon (Pubhub), typically a preview
+  of the e-book or audiobook content.
+  """
+  sample: String!
+}
+
+type Query {
+  complexSearch(
+    cql: String!
+    facets: ComplexSearchFacetsInput
+    filters: ComplexSearchFiltersInput
+  ): ComplexSearchResponse!
+
+  """
+  All indexes in complex search
+  """
+  complexSearchIndexes: [ComplexSearchIndex!]
+  complexSuggest(
+    """
+    The query to get suggestions for
+    """
+    q: String!
+
+    """
+    the type of index to get suggestions from
+    """
+    type: ComplexSuggestionTypeEnum!
+  ): ComplexSuggestResponse!
+  debug: Debug
+  infomedia(id: String!): InfomediaResponse!
+  linkCheck: LinkCheckService!
+  localSuggest(
+    """
+    Id of branch to filter by
+    """
+    branchId: String
+
+    """
+    Number of items to return
+    """
+    limit: Int
+
+    """
+    The query to get suggestions from
+    """
+    q: String!
+
+    """
+    suggest type to include in result
+    """
+    suggestType: [SuggestionTypeEnum!]
+  ): LocalSuggestResponse!
+  manifestation(faust: String, pid: String): Manifestation
+  manifestations(faust: [String!], pid: [String!]): [Manifestation]!
+  mood: MoodQueries!
+
+  """
+  Get recommendations
+  """
+  recommend(
+    branchId: String
+    faust: String
+    id: String
+    limit: Int
+    pid: String
+  ): RecommendationResponse!
+
+  """
+  Access to various types of recommendations.
+  """
+  recommendations: Recommendations!
+  refWorks(pids: [String!]!): String!
+  ris(pids: [String!]!): String!
+  search(
+    filters: SearchFiltersInput
+    q: SearchQueryInput!
+    search_exact: Boolean
+  ): SearchResponse!
+  series(seriesId: String!): Series
+  suggest(
+    """
+    Number of items to return
+    """
+    limit: Int
+
+    """
+    The query to get suggestions from
+    """
+    q: String!
+
+    """
+    suggest type to include in result
+    """
+    suggestType: SuggestionTypeEnum
+
+    """
+    suggest types to include in result
+    """
+    suggestTypes: [SuggestionTypeEnum!]
+    workType: WorkTypeEnum
+  ): SuggestResponse!
+  universe(key: String, universeId: String): Universe
+  work(
+    faust: String
+    id: String
+    language: LanguageCodeEnum
+    oclc: String
+    pid: String
+  ): Work
+  works(
+    faust: [String!]
+    id: [String!]
+    language: LanguageCodeEnum
+    oclc: [String!]
+    pid: [String!]
+  ): [Work]!
+}
+
+type Range {
+  begin: Int
+  display: String!
+  end: Int
+}
+
+type Recommendation {
+  """
+  The recommended manifestation
+  """
+  manifestation: Manifestation!
+
+  """
+  Info on how this recommendation was generated
+  """
+  reader: [String!]!
+
+  """
+  The recommended work
+  """
+  work: Work!
+}
+
+type RecommendationResponse {
+  result: [Recommendation!]!
+}
+
+"""
+Get different kinds of recommendations
+"""
+type Recommendations {
+  """
+  Retrieve subject-based recommendations based on a list of query strings and an optional limit.
+  - q: An array of strings used to generate subject recommendations.
+  - limit: The maximum number of recommendations to return.
+  """
+  subjects(limit: Int, q: [String!]!): [SubjectRecommendation!]
+}
+
+type RelatedPublication {
+  """
+  Faust of the related publication
+  """
+  faust: String
+
+  """
+  Notes describing the relation of the related periodical/journal/publication
+  """
+  heading: String!
+
+  """
+  ISBN of the related publication
+  """
+  isbn: String
+
+  """
+  ISSN of the related periodical/journal/publication
+  """
+  issn: String
+
+  """
+  Title of the related periodical/journal
+  """
+  title: [String!]!
+
+  """
+  The first URL of the urls in related publications
+  """
+  url: String
+
+  """
+  Note regarding the URL of the related publication
+  """
+  urlText: String
+
+  """
+  Alle urls of the related publication
+  """
+  urls: [String]!
+}
+
+type Relations {
+  """
+  The story of this article is continued in this or these other article(s)
+  """
+  continuedIn: [Manifestation!]!
+
+  """
+  This story of this article actually started in this or these other article(s)
+  """
+  continues: [Manifestation!]!
+
+  """
+  The contents of this articles is also discussed in these articles
+  """
+  discussedIn: [Manifestation!]!
+
+  """
+  The article discusses the content of these articles
+  """
+  discusses: [Manifestation!]!
+
+  """
+  This story is adapted in this or these movie(s)
+  """
+  hasAdaptation: [Manifestation!]!
+
+  """
+  The contents of this manifestation is analysed in these manifestations
+  """
+  hasAnalysis: [Manifestation!]!
+
+  """
+  The creator of this manifestation is portrayed in these manifestations
+  """
+  hasCreatorDescription: [Manifestation!]!
+
+  """
+  The publisher of this manifestation has made a description of the content
+  """
+  hasDescriptionFromPublisher: [Manifestation!]!
+
+  """
+  This movie is based on this manuscript
+  """
+  hasManuscript: [Manifestation!]!
+
+  """
+  This manifestation has a 'materialevurdering' that was originally made for another manifestation, but it is still relevant (e.g. book/ebook)
+  """
+  hasReusedReview: [Manifestation!]!
+
+  """
+  This manifestation has these reviews
+  """
+  hasReview: [Manifestation!]!
+
+  """
+  This movie or game has this sound track
+  """
+  hasSoundtrack: [Manifestation!]!
+
+  """
+  This album has these tracks
+  """
+  hasTrack: [Manifestation!]!
+
+  """
+  This movie is based on this or these books
+  """
+  isAdaptationOf: [Manifestation!]!
+
+  """
+  This manifestation is an analysis of these manifestations
+  """
+  isAnalysisOf: [Manifestation!]!
+
+  """
+  This is a description from the original publisher of these manifestations
+  """
+  isDescriptionFromPublisherOf: [Manifestation!]!
+
+  """
+  This movie is based on this manuscript
+  """
+  isManuscriptOf: [Manifestation!]!
+
+  """
+  This music track is part of these albums
+  """
+  isPartOfAlbum: [Manifestation!]!
+
+  """
+  This article or book part can be found in these manifestations
+  """
+  isPartOfManifestation: [Manifestation!]!
+
+  """
+  This 'materialevurdering' can also be used to review these relevant manifestations, even though it was originally made for another publication
+  """
+  isReusedReviewOf: [Manifestation!]!
+
+  """
+  This manifestation is a review of these manifestations
+  """
+  isReviewOf: [Manifestation!]!
+
+  """
+  This sound track for a game is related to these games
+  """
+  isSoundtrackOfGame: [Manifestation!]!
+
+  """
+  This sound track for a movie is related to these movies
+  """
+  isSoundtrackOfMovie: [Manifestation!]!
+}
+
+type ReviewElement {
+  content: String
+
+  """
+  This is a paragraph containing markup where links to manifestations
+  can be inserted. For instance '"Axel Steens nye job minder om [870970-basis:20307021] fra ...'.
+  Relevant manifestations are located in the manifestations field.
+  """
+  contentSubstitute: String
+  heading: String
+
+  """
+  Manifestations that can be used to generate and insert links into 'contentSubsitute'.
+  """
+  manifestations: [Manifestation]
+  type: ReviewElementTypeEnum
+}
+
+enum ReviewElementTypeEnum {
+  ABSTRACT
+  ACQUISITION_RECOMMENDATIONS
+  AUDIENCE
+  CONCLUSION
+  DESCRIPTION
+  EVALUATION
+  SIMILAR_MATERIALS
+}
+
+type Role {
+  """
+  The type of creator/contributor as text in singular and plural in Danish, e.g. forfatter/forfattere, komponist/komponister etc
+  """
+  function: Translation!
+
+  """
+  The code for the type of creator or contributor, e.g. 'aut' for author, 'ill' for illustrator etc
+  """
+  functionCode: String!
+}
+
+type SchoolUse {
+  code: SchoolUseCodeEnum!
+  display: String!
+}
+
+enum SchoolUseCodeEnum {
+  FOR_SCHOOL_USE
+  FOR_TEACHER
+}
+
+"""
+Search Filters
+"""
+input SearchFiltersInput {
+  accessTypes: [String!]
+  age: [String!]
+  ageRange: [String!]
+  branchId: [String!]
+  canAlwaysBeLoaned: [String!]
+  childrenOrAdults: [String!]
+  creators: [String!]
+  department: [String!]
+  dk5: [String!]
+  fictionNonfiction: [String!]
+  fictionalCharacters: [String!]
+  gamePlatform: [String!]
+  generalAudience: [String!]
+  genreAndForm: [String!]
+  letRange: [String!]
+  libraryRecommendation: [String!]
+  lixRange: [String!]
+  location: [String!]
+  mainLanguages: [String!]
+  materialTypesGeneral: [String!]
+  materialTypesSpecific: [String!]
+  status: [HoldingsStatusEnum!]
+  subjects: [String!]
+  sublocation: [String!]
+  workTypes: [String!]
+  year: [String!]
+}
+
+"""
+A search hit that encapsulates a matched manifestation from a search query.
+"""
+type SearchHit {
+  """
+  The manifestation that was matched during the search.
+  """
+  match: Manifestation
+}
+
+"""
+The supported fields to query
+"""
+input SearchQueryInput {
+  """
+  Search for title, creator, subject or a combination.
+  This is typically used where a single search box is desired.
+  """
+  all: String
+
+  """
+  Search for creator
+  """
+  creator: String
+
+  """
+  Search for specific subject
+  """
+  subject: String
+
+  """
+  Search for specific title
+  """
+  title: String
+}
+
+"""
+The simple search response
+"""
+type SearchResponse {
+  """
+  A list of alternative search queries
+  """
+  didYouMean(limit: Int): [DidYouMean!]!
+
+  """
+  Make sure only to fetch this when needed
+  This may take seconds to complete
+  """
+  facets(facets: [FacetFieldEnum!]!): [FacetResult!]!
+
+  """
+  Total number of works found. May be used for pagination.
+  """
+  hitcount: Int!
+
+  """
+  Will return the facets that best match the input query and filters
+  """
+  intelligentFacets(limit: Int): [FacetResult!]!
+
+  """
+  The works matching the given search query. Use offset and limit for pagination.
+  """
+  works(limit: PaginationLimitScalar!, offset: Int!): [Work!]!
+}
+
+type SerieWork {
+  """
+  The number of work in the series as a number (as text)
+  """
+  numberInSeries: String
+
+  """
+  Information about whether this work in the series should be read first
+  """
+  readThisFirst: Boolean
+
+  """
+  Information about whether this work in the series can be read without considering the order of the series, it can be read at any time
+  """
+  readThisWhenever: Boolean
+
+  """
+  Work of a serieWork
+  """
+  work: Work!
+}
+
+type Series {
+  """
+  A alternative title to the main 'title' of the series
+  """
+  alternativeTitles: [String!]!
+
+  """
+  Description of the series
+  """
+  description: String
+
+  """
+  The number of members in the series
+  """
+  hitcount: Int!
+
+  """
+  Additional information
+  """
+  identifyingAddition: String
+
+  """
+  Whether this is a popular series or general series
+  """
+  isPopular: Boolean
+
+  """
+  MainLanguages of the series
+  """
+  mainLanguages: [String!]!
+
+  """
+  Members of this serie.
+  """
+  members(limit: Int, offset: Int): [SerieWork!]!
+
+  """
+  The number in the series as text qoutation
+  """
+  numberInSeries: String
+
+  """
+  A parallel title to the main 'title' of the series, in a different language
+  """
+  parallelTitles: [String!]!
+
+  """
+  Information about whether this work in the series should be read first
+  """
+  readThisFirst: Boolean
+
+  """
+  Information about whether this work in the series can be read without considering the order of the series, it can be read at any time
+  """
+  readThisWhenever: Boolean
+
+  """
+  Identifier for the series
+  """
+  seriesId: String
+
+  """
+  The title of the series
+  """
+  title: String!
+
+  """
+  Traceid for tracking
+  """
+  traceId: String!
+
+  """
+  WorkTypes for the series
+  """
+  workTypes: [String!]!
+}
+
+type Setting implements SubjectInterface {
+  display: String!
+  language: Language
+  local: Boolean
+  type: SubjectTypeEnum!
+}
+
+type SheetMusicCategory {
+  """
+  The types of chamber music material covers
+  """
+  chamberMusicTypes: [String!]!
+
+  """
+  The types of choir material covers
+  """
+  choirTypes: [String!]!
+
+  """
+  I this node for exercises
+  """
+  forMusicalExercise: Boolean
+
+  """
+  The types of instruments material covers
+  """
+  instruments: [String!]!
+
+  """
+  The types of orchestra material covers
+  """
+  orchestraTypes: [String!]!
+}
+
+type ShelfCreator {
+  """
+  The display name of the creator
+  """
+  display: String
+
+  """
+  The sort version of the creator name
+  """
+  sort: String
+}
+
+type Shelfmark {
+  """
+  A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935
+  """
+  postfix: String
+
+  """
+  The actual shelfmark - e.g. information about on which shelf in the library this manifestation can be found, e.g. 99.4
+  """
+  shelfmark: String!
+}
+
+input SortInput {
+  index: String!
+  order: SortOrderEnum!
+}
+
+enum SortOrderEnum {
+  ASC
+  DESC
+}
+
+type SoundRecording {
+  """
+  A code for the type of sound recording
+  """
+  code: String
+
+  """
+  The code as displayable text
+  """
+  display: String
+}
+
+type SpecialMaterialGroup {
+  """
+  A code for the type of the special material group
+  """
+  code: String
+
+  """
+  The code as displayable text
+  """
+  display: String
+}
+
+type SpecificMaterialType {
+  """
+  code for materialType
+  """
+  code: String!
+
+  """
+  Ths string to display
+  """
+  display: String!
+}
+
+type SubjectContainer {
+  """
+  All subjects
+  """
+  all: [SubjectInterface!]!
+
+  """
+  Only DBC verified subjects
+  """
+  dbcVerified: [SubjectInterface!]!
+}
+
+interface SubjectInterface {
+  display: String!
+
+  """
+  Language of the subject - contains display and isoCode
+  """
+  language: Language
+  local: Boolean
+
+  """
+  The type of subject - 'location', 'time period' etc., 'topic' if not specific kind of subject term
+  """
+  type: SubjectTypeEnum!
+}
+
+"""
+Details about a single subject recommendation.
+"""
+type SubjectRecommendation {
+  """
+  The recommended subject.
+  """
+  subject: String!
+
+  """
+  A unique identifier for tracking user interactions with this subject recommendation.
+  It is generated in the response and should be included in subsequent
+  API calls when this suggestion is selected.
+  """
+  traceId: String!
+}
+
+type SubjectText implements SubjectInterface {
+  display: String!
+  language: Language
+  local: Boolean
+  type: SubjectTypeEnum!
+}
+
+enum SubjectTypeEnum {
+  CORPORATION
+  ENVIRONMENT
+  FICTIONAL_CHARACTER
+  FICTIONAL_LOCATION
+  FILM_NATIONALITY
+  LAESEKOMPASSET
+  LIBRARY_OF_CONGRESS_SUBJECT_HEADING
+  LOCATION
+  MEDICAL_SUBJECT_HEADING
+  MOOD
+  MOOD_CHILDREN
+  MUSICAL_INSTRUMENTATION
+  MUSIC_COUNTRY_OF_ORIGIN
+  MUSIC_TIME_PERIOD
+  NATIONAL_AGRICULTURAL_LIBRARY
+
+  """
+  added for manifestation.parts.creators/person - they get a type from small-rye
+  """
+  PERSON
+  PERSPECTIVE
+  REALITY
+  STYLE
+  TEMPO
+  TIME_PERIOD
+  TITLE
+  TOPIC
+
+  """
+  Subject describing selected topics for children, and a rating.
+  """
+  TOPIC_CHILDREN
+}
+
+type SubjectWithRating implements SubjectInterface {
+  display: String!
+  language: Language
+  local: Boolean
+
+  """
+  Expressed as integer on a scale from 1 to 5
+  """
+  rating: Int
+  type: SubjectTypeEnum!
+}
+
+type SubmitOrder {
+  deleted: Boolean
+  message: String
+
+  """
+  if order was submitted successfully
+  """
+  ok: Boolean
+  orderId: String
+  orsId: String
+  status: SubmitOrderStatusEnum!
+}
+
+input SubmitOrderInput {
+  author: String
+  authorOfComponent: String
+  exactEdition: Boolean
+
+  """
+  expires is required to be iso 8601 dateTime eg. "2024-03-15T12:24:32Z"
+  """
+  expires: String
+  key: String
+  orderType: OrderTypeEnum
+  pagination: String
+  pickUpBranch: String!
+  pids: [String!]!
+  publicationDate: String
+  publicationDateOfComponent: String
+  title: String
+  titleOfComponent: String
+  userParameters: SubmitOrderUserParametersInput!
+  volume: String
+}
+
+enum SubmitOrderStatusEnum {
+  """
+  Authentication error
+  """
+  AUTHENTICATION_ERROR
+
+  """
+  Borchk: User is blocked by agency
+  """
+  BORCHK_USER_BLOCKED_BY_AGENCY
+
+  """
+  Borchk: User could not be verified
+  """
+  BORCHK_USER_NOT_VERIFIED
+
+  """
+  Borchk: User is no longer loaner at the provided pickupbranch
+  """
+  BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY
+
+  """
+  Pincode was not found in arguments
+  """
+  ERROR_MISSING_PINCODE
+
+  """
+  Order does not validate
+  """
+  INVALID_ORDER
+
+  """
+  Item not available at pickupAgency, item localised for ILL
+  """
+  NOT_OWNED_ILL_LOC
+
+  """
+  Item not available at pickupAgency, item not localised for ILL
+  """
+  NOT_OWNED_NO_ILL_LOC
+
+  """
+  Item not available at pickupAgency, ILL of mediumType not accepted
+  """
+  NOT_OWNED_WRONG_ILL_MEDIUMTYPE
+
+  """
+  ServiceRequester is obligatory
+  """
+  NO_SERVICEREQUESTER
+
+  """
+  Error sending order to ORS
+  """
+  ORS_ERROR
+
+  """
+  Item available at pickupAgency, order accepted
+  """
+  OWNED_ACCEPTED
+
+  """
+  Item available at pickupAgency, item may be ordered through the library's catalogue
+  """
+  OWNED_OWN_CATALOGUE
+
+  """
+  Item available at pickupAgency, order of mediumType not accepted
+  """
+  OWNED_WRONG_MEDIUMTYPE
+
+  """
+  Service unavailable
+  """
+  SERVICE_UNAVAILABLE
+
+  """
+  Unknown error occured, status is unknown
+  """
+  UNKNOWN_ERROR
+
+  """
+  PickupAgency not found
+  """
+  UNKNOWN_PICKUPAGENCY
+
+  """
+  User not found
+  """
+  UNKNOWN_USER
+}
+
+input SubmitOrderUserParametersInput {
+  barcode: String
+  cardno: String
+  cpr: String
+  customId: String
+  pincode: String
+  userAddress: String
+  userDateOfBirth: String
+  userId: String
+  userMail: String
+  userName: String
+  userTelephone: String
+}
+
+type SuggestResponse {
+  result: [Suggestion!]!
+}
+
+type Suggestion {
+  """
+  The suggested term which can be searched for
+  """
+  term: String!
+
+  """
+  A unique identifier for tracking user interactions with this suggestion.
+  It is generated in the response and should be included in subsequent
+  API calls when this suggestion is selected.
+  """
+  traceId: String!
+
+  """
+  The type of suggestion: creator, subject or title
+  """
+  type: SuggestionTypeEnum!
+
+  """
+  A work related to the term
+  """
+  work: Work
+}
+
+enum SuggestionTypeEnum {
+  COMPOSIT
+  CREATOR
+  SUBJECT
+  TITLE
+}
+
+type TimePeriod implements SubjectInterface {
+  display: String!
+  language: Language
+  local: Boolean
+  period: Range!
+  type: SubjectTypeEnum!
+}
+
+type Translation {
+  """
+  Translation in plural form, e.g. forfattere, komponister, instruktører etc.
+  """
+  plural: String!
+
+  """
+  Translation in singular form, e.g. forfatter, komponist, instruktør
+  """
+  singular: String!
+}
+
+type TvSeries {
+  """
+  Dansih translated title of the tv serie
+  """
+  danishLaunchTitle: String
+
+  """
+  Detailed information about the disc
+  """
+  disc: TvSeriesDetails
+
+  """
+  Detailed information about the episode
+  """
+  episode: TvSeriesDetails
+
+  """
+  Episode titles
+  """
+  episodeTitles: [String!]
+
+  """
+  Detailed information about the season
+  """
+  season: TvSeriesDetails
+
+  """
+  Title of the tv serie
+  """
+  title: String
+
+  """
+  Detailed information about the volume
+  """
+  volume: TvSeriesDetails
+}
+
+type TvSeriesDetails {
+  display: String
+  numbers: [Int!]
+}
+
+type Unit {
+  id: String!
+  manifestations: [Manifestation!]!
+}
+
+type UnitDescription {
+  """
+  Other physical description, eg. illustrations, color or b/w, mono/stereo, rpm
+  """
+  additionalDescription: String
+
+  """
+  Number of pages, tab (books, articles etc.) or playingtime (cd, dvd etc.)
+  """
+  extent: String
+
+  """
+  Technical formats, e.g. Playstation 4, blu-ray
+  """
+  numberAndType: String
+
+  """
+  Size of the material unit
+  """
+  size: String
+
+  """
+  Assemblance of the data from all the other properties, separated by a comma
+  """
+  summary: String!
+
+  """
+  Technical formats, e.g. Playstation 4, blu-ray
+  """
+  technicalInformation: String
+}
+
+type Universe {
+  """
+  A alternative title to the main 'title' of the universe
+  """
+  alternativeTitles: [String!]
+
+  """
+  both series and works in a list
+  """
+  content(
+    limit: Int
+    offset: Int
+    workType: WorkTypeEnum
+  ): UniverseContentResult!
+
+  """
+  Description of the universe
+  """
+  description: String
+
+  """
+  A key that identifies a universe.
+  """
+  key: String
+
+  """
+  All series within the universe
+  """
+  series(limit: Int, offset: Int, workType: WorkTypeEnum): [Series!]!
+
+  """
+  Literary/movie universe this work is part of e.g. Wizarding World, Marvel Cinematic Universe
+  """
+  title: String!
+
+  """
+  A unique identifier for tracking user interactions with this universe.
+  It is generated in the response and should be included in subsequent
+  API calls when this work is selected.
+  """
+  traceId: String!
+
+  """
+  An id that identifies a universe.
+  """
+  universeId: String
+
+  """
+  work types that are in this universe
+  """
+  workTypes: [WorkTypeEnum!]!
+
+  """
+  All works within the universe but not in any series
+  """
+  works(limit: Int, offset: Int, workType: WorkTypeEnum): [Work!]!
+}
+
+type UniverseContentResult {
+  entries: [UniverseContentUnion!]!
+  hitcount: Int!
+}
+
+union UniverseContentUnion = Series | Work
+
+type Work {
+  """
+  Abstract of the entity
+  """
+  abstract: [String!]
+
+  """
+  Creators
+  """
+  creators: [CreatorInterface!]!
+
+  """
+  DK5 main entry for this work
+  """
+  dk5MainEntry: DK5MainEntry
+
+  """
+  Overall literary category/genre of this work. e.g. fiction or nonfiction. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types.
+  """
+  fictionNonfiction: FictionNonfiction
+
+  """
+  The genre, (literary) form, type etc. of this work
+  """
+  genreAndForm: [String!]!
+
+  """
+  Date of latest publication
+  """
+  latestPublicationDate: String
+
+  """
+  The main language(s) of the work's content
+  """
+  mainLanguages: [Language!]!
+
+  """
+  Details about the manifestations of this work
+  """
+  manifestations: Manifestations!
+
+  """
+  The type of material of the manifestation based on bibliotek.dk types
+  """
+  materialTypes: [MaterialType!]!
+
+  """
+  Relations to other manifestations
+  """
+  relations: Relations!
+
+  """
+  Series for this work
+  """
+  series: [Series!]!
+
+  """
+  Subjects for this work
+  """
+  subjects: SubjectContainer!
+  titles: WorkTitles!
+
+  """
+  A unique identifier for tracking user interactions with this work.
+  It is generated in the response and should be included in subsequent
+  API calls when this work is selected.
+  """
+  traceId: String!
+
+  """
+  Literary/movie universes this work is part of, e.g. Wizarding World, Marvel Universe
+  """
+  universes: [Universe!]!
+
+  """
+  Unique identification of the work based on work-presentation id e.g work-of:870970-basis:54029519
+  """
+  workId: String!
+
+  """
+  Worktypes for this work - 'none' replaced by 'other'
+  """
+  workTypes: [WorkTypeEnum!]!
+
+  """
+  The year this work was originally published or produced
+  """
+  workYear: PublicationYear
+}
+
+type WorkTitles {
+  """
+  The full title(s) of the work including subtitles etc
+  """
+  full: [String!]!
+
+  """
+  The main title(s) of the work
+  """
+  main: [String!]!
+
+  """
+  The title of the work that this expression/manifestation is translated from or based on. The original title(s) of a film which has a different distribution title.
+  """
+  original: [String!]
+
+  """
+  Titles (in other languages) parallel to the main 'title' of the work
+  """
+  parallel: [String!]!
+
+  """
+  The sorted title of the entity
+  """
+  sort: String!
+
+  """
+  The standard title of the entity, used for music and movies
+  """
+  standard: String
+
+  """
+  The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles.
+  """
+  titlePlusLanguage: String
+
+  """
+  Danish translation of the main title
+  """
+  translated: [String!]
+
+  """
+  detailed title for tv series
+  """
+  tvSeries: TvSeries
+}
+
+enum WorkTypeEnum {
+  ANALYSIS
+  ARTICLE
+  BOOKDESCRIPTION
+  GAME
+  LITERATURE
+  MAP
+  MOVIE
+  MUSIC
+  OTHER
+  PERIODICA
+  PORTRAIT
+  REVIEW
+  SHEETMUSIC
+  TRACK
+}

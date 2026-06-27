@@ -1,4 +1,5 @@
 import * as dayjs from 'dayjs';
+import 'dayjs/locale/da';
 import 'cypress-if';
 import { typeInCkEditor } from '../../helpers/helper-ckeditor';
 import { addParagraph } from '../../helpers/helper-paragraph';
@@ -19,6 +20,18 @@ const events = {
     end: dayjs('2030-01-30'),
     daysOfWeek: ['monday', 'thursday'],
   },
+};
+
+// The site renders dates in its own language — Danish locally, English in CI —
+// while dayjs formats in English by default. Build a regex that matches the
+// date in either locale so assertions don't depend on the running language.
+const dateInAnyLocale = (date: dayjs.Dayjs, format: string) => {
+  const escape = (value: string) =>
+    value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const variants = ['en', 'da'].map((locale) =>
+    escape(date.locale(locale).format(format)),
+  );
+  return new RegExp(variants.join('|'));
 };
 
 const setDate = (field: 'Start date' | 'End date', date: dayjs.Dayjs) => {
@@ -55,7 +68,7 @@ describe('Events', () => {
     // Ensure that the core data from the event is displayed on the resulting page.
     // @todo This should probably be replaced by a visual regression test.
     cy.contains(events.singleEvent.title);
-    cy.contains(events.singleEvent.start.format('D. MMMM YYYY'));
+    cy.contains(dateInAnyLocale(events.singleEvent.start, 'D. MMMM YYYY'));
     cy.contains(
       `${events.singleEvent.start.format(
         'HH:mm',
@@ -67,15 +80,15 @@ describe('Events', () => {
     // Login as admin.
     cy.drupalLogin('/events/add/default');
     setDate('Start date', events.singleEvent.start);
+    cy.findByText('End date').siblings().findByLabelText('Date').focus();
     cy.findByText('End date')
       .siblings()
       .findByLabelText('Date')
-      .focus()
       .should('have.value', events.singleEvent.start.format('YYYY-MM-DD'));
+    cy.findByText('End date').siblings().findByLabelText('Time').focus();
     cy.findByText('End date')
       .siblings()
       .findByLabelText('Time')
-      .focus()
       .should(
         'have.value',
         events.singleEvent.start.add(1, 'hour').format('HH:mm'),
@@ -228,30 +241,37 @@ describe('Events', () => {
       'online',
     );
 
-    // Initially, no branch has been selected, so location fields should be
-    // visible, and required.
-    cy.get('@location').should('be.visible');
-    cy.get('@location').should('have.attr', 'required');
-    cy.get('@address').should('be.visible');
-    cy.get('@non_branch').should('not.be.visible');
-
-    // Selecting a branch should make the fields optional and hidden.
-    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-      // We have to use force when using Select2.
-      force: true,
-    });
+    cy.log(`
+      Initially, no branch has been selected, so location/address should not be
+      visible, but "non-branch location" can be visible.
+    `);
     cy.get('@location').should('not.be.visible');
-    cy.get('@location').should('not.have.attr', 'required');
     cy.get('@address').should('not.be.visible');
     cy.get('@non_branch').should('be.visible');
 
-    // Choosing to override the branch address should make the fields visible.
+    cy.log(`
+      Choosing to override the branch address should make the fields visible,
+      and the location required.
+    `);
     cy.get('@non_branch').click();
     cy.get('@location').should('be.visible');
     cy.get('@location').should('have.attr', 'required');
     cy.get('@address').should('be.visible');
 
-    // Setting the event to online should mean all location fields are hidden.
+    cy.log(
+      `Selecting a branch should not have any affect on the surrounding fields.`,
+    );
+    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
+      // We have to use force when using Select2.
+      force: true,
+    });
+    cy.get('@location').should('be.visible');
+    cy.get('@location').should('have.attr', 'required');
+    cy.get('@address').should('be.visible');
+
+    cy.log(
+      `Setting the event to online should mean all location fields are hidden.`,
+    );
     cy.get('@online').click();
     cy.get('@location').should('not.be.visible');
     cy.get('@location').should('not.have.attr', 'required');
@@ -287,43 +307,65 @@ describe('Events', () => {
       postalName: '',
     };
 
-    const gsearchField = (suffix: string) =>
-      cy.get(
-        `[data-drupal-selector="edit-field-event-address-gsearch-0-${suffix}"]`,
+    // The location widgets are re-rendered on every page load, so Cypress
+    // element aliases have to be re-established after each navigation. Call
+    // this whenever a fresh instance edit form is on screen, then refer to the
+    // fields by their @alias for the rest of the test.
+    const aliasLocationFields = () => {
+      cy.get('[data-drupal-selector="edit-field-event-location-0-value"]').as(
+        'location',
       );
-    const gsearchWrapper = () =>
       cy.get(
         '[data-drupal-selector="edit-field-event-address-gsearch-wrapper"]',
-      );
-    const locationTypeRadio = (value: string) =>
-      cy.get(`input[name="field_event_location_type"][value="${value}"]`);
+      ).as('address');
+      cy.get(
+        '[data-drupal-selector="edit-field-event-non-branch-location-value"]',
+      ).as('overrideBranchAddress');
+      cy.get(
+        '[data-drupal-selector="edit-field-event-address-gsearch-0-main-enable-freetext"]',
+      ).as('freetextToggle');
+      cy.get(
+        '[data-drupal-selector="edit-field-event-address-gsearch-0-freetext-address"]',
+      ).as('street');
+      cy.get(
+        '[data-drupal-selector="edit-field-event-address-gsearch-0-freetext-postal-code"]',
+      ).as('postalCode');
+      cy.get(
+        '[data-drupal-selector="edit-field-event-address-gsearch-0-freetext-postal-name"]',
+      ).as('postalName');
+    };
+
+    const setLocationType = (value: 'physical' | 'online' | '_none') =>
+      cy
+        .get(`input[name="field_event_location_type"][value="${value}"]`)
+        .check();
 
     // Use the freetext path of the gsearch widget so the test doesn't depend
     // on the live GSearch autocomplete endpoint.
     const fillFreetextAddress = (address: Address) => {
-      gsearchField('main-enable-freetext').check();
-      gsearchField('freetext-address').clear().type(address.street);
-      gsearchField('freetext-postal-code').clear().type(address.postalCode);
-      gsearchField('freetext-postal-name').clear().type(address.postalName);
+      cy.get('@freetextToggle').check();
+      cy.get('@street').clear().type(address.street);
+      cy.get('@postalCode').clear().type(address.postalCode);
+      cy.get('@postalName').clear().type(address.postalName);
     };
 
     const assertFreetextAddress = (address: Address) => {
-      gsearchField('freetext-address').should('have.value', address.street);
-      gsearchField('freetext-postal-code').should(
-        'have.value',
-        address.postalCode,
-      );
-      gsearchField('freetext-postal-name').should(
-        'have.value',
-        address.postalName,
-      );
+      cy.get('@street').should('have.value', address.street);
+      cy.get('@postalCode').should('have.value', address.postalCode);
+      cy.get('@postalName').should('have.value', address.postalName);
+    };
+
+    // The custom-address widget is hidden by #states until location-type is
+    // "In person" *and* the "override branch address" toggle is checked (see
+    // dpl_event_form_alter). Reveal it so the freetext fields are interactive.
+    const revealCustomAddress = () => {
+      setLocationType('physical');
+      cy.get('@overrideBranchAddress').check();
+      cy.get('@address').should('be.visible');
     };
 
     // Create the parent series (branch set, no custom address) and open the
-    // first instance for editing. The series's branch is inherited by the
-    // instance, but the instance's own field_branch stays empty, so the form's
-    // #states show the custom-address widget — the condition both regressions
-    // live under.
+    // first instance for editing, leaving the form aliased and ready to use.
     //
     // A Weekly Event spanning multiple days is used so the series produces
     // more than one instance: Drupal redirects to the series page when an
@@ -360,22 +402,23 @@ describe('Events', () => {
       cy.contains('Edit Instances').click();
       cy.get(`a[aria-label="Edit ${title}"]`).first().click();
 
-      // field_event_location_type on eventinstance has no default, so a fresh
-      // instance form lands on "- None -" which hides the address widget via
-      // #states. Flip to "In person" so the rest of the test can interact.
-      locationTypeRadio('physical').check();
+      aliasLocationFields();
     };
 
     it('keeps a custom address when the address widget is visible', () => {
       const title = `${seriesTitle} - kept`;
       createSeriesAndOpenInstance(title);
 
-      gsearchWrapper().should('be.visible');
+      cy.log('Reveal the custom-address widget and enter an address.');
+      revealCustomAddress();
       fillFreetextAddress(customAddress);
       cy.clickSaveButton();
 
-      // Re-open the same instance and confirm the address survived presave.
+      cy.log(
+        'Re-open the same instance and confirm the address survived presave.',
+      );
       cy.go('back');
+      aliasLocationFields();
       assertFreetextAddress(customAddress);
     });
 
@@ -384,8 +427,8 @@ describe('Events', () => {
     // They take different code paths internally (the empty branch used to
     // early-return), so we cover both.
     const hidingTransitions = [
-      { label: 'Online', slug: 'online', radioValue: 'online' },
-      { label: '"- None -"', slug: 'none', radioValue: '_none' },
+      { label: 'Online', slug: 'online', radioValue: 'online' as const },
+      { label: '"- None -"', slug: 'none', radioValue: '_none' as const },
     ];
 
     hidingTransitions.forEach(({ label, slug, radioValue }) => {
@@ -393,20 +436,23 @@ describe('Events', () => {
         const title = `${seriesTitle} - cleared-${slug}`;
         createSeriesAndOpenInstance(title);
 
-        // Save an address first so we have something to clear.
-        cy.get(
-          '[data-drupal-selector="edit-field-event-location-0-value"]',
-        ).type('Some location');
+        cy.log('Save an address first so we have something to clear.');
+        revealCustomAddress();
+        cy.get('@location').type('Some location');
         fillFreetextAddress(customAddress);
         cy.clickSaveButton();
+
         cy.go('back');
+        aliasLocationFields();
         assertFreetextAddress(customAddress);
 
-        locationTypeRadio(radioValue).check();
-        gsearchWrapper().should('not.be.visible');
+        cy.log(`Switching to ${label} hides the widget, so presave clears it.`);
+        setLocationType(radioValue);
+        cy.get('@address').should('not.be.visible');
         cy.clickSaveButton();
 
         cy.go('back');
+        aliasLocationFields();
         assertFreetextAddress(emptyAddress);
       });
     });

@@ -3,7 +3,7 @@
 namespace Drupal\dpl_go\EventSubscriber;
 
 use Drupal\Core\Url;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 use Drupal\node\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class GoNodeRedirect implements EventSubscriberInterface {
 
-  public function __construct(protected GoSite $goSite) {}
+  public function __construct(protected GoSiteInterface $goSite) {}
 
   /**
    * {@inheritDoc}

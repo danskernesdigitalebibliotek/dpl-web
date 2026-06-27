@@ -21,10 +21,9 @@ describe("Reservation details modal", () => {
       "Wed Feb 08 2023 20:10:25 GMT+0200 (Central European Summer Time)"
     ).getTime();
 
-    // Sets time to a specific date
-    // https://github.com/cypress-io/cypress/issues/7577
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    cy.clock(clockDate).then((clock: any) => clock.bind(window));
+    // Sets time to a specific date. cy.clock() applies to the application
+    // under test automatically when called before cy.visit().
+    cy.clock(clockDate);
 
     cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
       statusCode: 200,

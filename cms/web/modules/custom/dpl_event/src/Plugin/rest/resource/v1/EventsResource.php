@@ -207,6 +207,14 @@ final class EventsResource extends EventResourceBase {
                       'description' => 'The name of a category.',
                     ],
                   ],
+                  'audiences' => [
+                    'type' => 'array',
+                    'description' => 'The audiences associated with the event.',
+                    'items' => [
+                      'type' => 'string',
+                      'description' => 'The name of an audience.',
+                    ],
+                  ],
                   'tags' => [
                     'type' => 'array',
                     'description' => 'The tags associated with the event.',

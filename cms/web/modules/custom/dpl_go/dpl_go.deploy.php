@@ -11,7 +11,7 @@ function dpl_go_deploy_0001_create_next_go_site_configuration(): string {
     throw new \Exception('The secrets DRUPAL_PREVIEW_SECRET and DRUPAL_REVALIDATE_SECRET must be set in production.');
   }
 
-  /** @var \Drupal\dpl_go\GoSite $go_site */
+  /** @var \Drupal\dpl_go\GoSiteInterface $go_site */
   $go_site = \Drupal::service('dpl_go.go_site');
   if (!$base_url = $go_site->getGoBaseUrl()) {
     return 'Could not determine the Go base URL.';

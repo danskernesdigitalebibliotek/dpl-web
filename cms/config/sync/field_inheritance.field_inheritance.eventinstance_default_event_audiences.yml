@@ -1,0 +1,14 @@
+uuid: 009b495a-19b4-4bed-a566-d839277a8644
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_audiences
+label: 'Event audiences'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_audiences
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_audiences
+plugin: entity_reference_inheritance

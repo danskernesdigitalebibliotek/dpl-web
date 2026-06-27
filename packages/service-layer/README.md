@@ -16,9 +16,8 @@ packages/service-layer/
     types.ts                  # domain DTOs (PatronInfo, AuthenticatedPatronInfo, ...)
     patron.ts                 # composed functions (getPatron, ...)
   fbs/                        # internal adapter for FBS
-    orval.config.ts
+    orval.config.ts           # input points at /schemas/openapi/fbs-adapter.yaml
     src/
-      fbs-adapter.yaml        # OpenAPI spec (source of truth)
       generated/              # Orval output (internal, never exported)
       mappers/                # Raw FBS -> domain DTOs
       client.ts               # createFbsClient — internal
@@ -27,6 +26,8 @@ packages/service-layer/
 ```
 
 The `fbs/` folder is an **internal adapter**. There is no public `./fbs` subpath — consumers cannot import from it.
+
+The OpenAPI spec is **not** vendored here. It lives at `/schemas/openapi/fbs-adapter.yaml` in the repo root, which is the single source of truth shared with `react/`, `cms/`, and `go/`. See `/schemas/README.md`.
 
 ## Design principles
 
@@ -96,7 +97,7 @@ const patron = await getPatron({
 
 ## How to add a new upstream adapter (e.g., publizon)
 
-1. Create `publizon/` next to `fbs/` with the same shape (`orval.config.ts` + `src/{client,types,mappers,generated}.ts`, `src/<api>-adapter.yaml`).
+1. Create `publizon/` next to `fbs/` with the same shape (`orval.config.ts` + `src/{client,types,mappers,generated}.ts`). The OpenAPI spec lives at `/schemas/openapi/<api>-adapter.yaml`, not inside the adapter folder — `orval.config.ts` points at it via a relative path.
 2. Run codegen for the new adapter (add a `codegen:publizon` script).
 3. Domain DTOs go in the package-level `src/types.ts`, not the adapter.
 4. Compose data in `src/<domain>.ts` — combine `fbs` and `publizon` as needed.

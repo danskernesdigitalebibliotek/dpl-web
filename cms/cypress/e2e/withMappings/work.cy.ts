@@ -5,9 +5,10 @@ describe('Work page', () => {
     const work = new WorkPage();
 
     work.visit(['work-of:870970-basis:25245784']);
-    cy.getBySel('material-header-content')
-      .scrollIntoView()
-      .contains('Harry Potter og Fønixordenen');
+    cy.getBySel('material-header-content').scrollIntoView();
+    cy.getBySel('material-header-content').contains(
+      'Harry Potter og Fønixordenen',
+    );
 
     work.elements
       .page_title()

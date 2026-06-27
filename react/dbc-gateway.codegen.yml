@@ -1,8 +1,5 @@
 overwrite: true
-schema:
-  - "https://temp.fbi-api.dbc.dk/${CODEGEN_SCHEMA_PROFILE}/graphql":
-      headers:
-        Authorization: "Bearer ${STORYBOOK_LIBRARY_TOKEN}"
+schema: "../schemas/graphql/dbc-fbi.temp-next.graphql"
 documents: "src/**/*.graphql"
 generates:
   src/core/dbc-gateway/generated/graphql.ts:

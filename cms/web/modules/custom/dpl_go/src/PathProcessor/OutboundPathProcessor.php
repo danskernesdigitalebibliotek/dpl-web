@@ -7,7 +7,7 @@ namespace Drupal\dpl_go\PathProcessor;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\AdminContext;
-use Drupal\dpl_go\GoSite;
+use Drupal\dpl_go\GoSiteInterface;
 use Symfony\Component\HttpFoundation\Request;
 use function Safe\preg_match;
 
@@ -20,7 +20,7 @@ use function Safe\preg_match;
 class OutboundPathProcessor implements OutboundPathProcessorInterface {
 
   public function __construct(
-    protected GoSite $goSite,
+    protected GoSiteInterface $goSite,
     protected AdminContext $adminContext,
   ) {
   }

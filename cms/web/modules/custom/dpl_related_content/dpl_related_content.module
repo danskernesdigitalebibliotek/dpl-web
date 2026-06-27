@@ -35,7 +35,6 @@ function dpl_related_content_preprocess_page(array &$variables): void {
   if (!($entity instanceof FieldableEntityInterface)) {
     return;
   }
-
   try {
     $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
     $service->setListStyle(RelatedContentListStyle::Slider);
@@ -181,6 +180,10 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
 
     if ($paragraph->hasField('field_filter_branches') && !$paragraph->get('field_filter_branches')->isEmpty()) {
       $service->setBranches($paragraph->get('field_filter_branches')->referencedEntities());
+    }
+
+    if ($paragraph->hasField('field_filter_audiences') && !$paragraph->get('field_filter_audiences')->isEmpty()) {
+      $service->setAudiences($paragraph->get('field_filter_audiences')->referencedEntities());
     }
 
     if ($paragraph->hasField('field_max_item_amount') && !$paragraph->get('field_max_item_amount')->isEmpty()) {

@@ -422,6 +422,7 @@ display:
         - url.query_args
         - user.permissions
       tags:
+        - 'config:facets.facet.audience'
         - 'config:facets.facet.branch'
         - 'config:facets.facet.event_categories'
         - 'config:search_api.index.events'

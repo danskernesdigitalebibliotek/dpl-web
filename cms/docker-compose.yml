@@ -15,7 +15,10 @@ x-volumes:
   &default-volumes
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
-      - 'projectroot:/app'
+      - '../:/app'
+      # /schemas/ read-only for drush sailor:codegen (local-dev only —
+      # Lagoon's injected docker-compose doesn't have this mount).
+      - '../schemas:/schemas:ro'
 
 x-user:
   &default-user
@@ -30,7 +33,7 @@ x-environment:
     LAGOON_PROJECT: 'dplcms'
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
-    WEBROOT: web
+    WEBROOT: cms/web
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
 
@@ -45,11 +48,11 @@ services:
     labels:
       lagoon.type: none
     volumes:
-      - 'projectroot:/app'
+      - '../:/app'
       - '${HOME}/.local/share/mkcert:/rootCA:ro'
       - '${HOME}/.local/share/dev_certificates:/cert:rw'
     environment:
-      NGINX_DOCUMENT_ROOT: /app/web
+      NGINX_DOCUMENT_ROOT: /app/cms/web
       NGINX_PROXY_PASS: http://varnish:8080
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
@@ -60,8 +63,8 @@ services:
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
     # https://docs.lagoon.sh/lagoon/docker-images/varnish
     build:
-      context: .
-      dockerfile: lagoon/varnish.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/varnish.dockerfile
     depends_on:
       - nginx
     labels:
@@ -83,8 +86,8 @@ services:
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
-      context: .
-      dockerfile: lagoon/cli.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/cli.dockerfile
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:
@@ -95,13 +98,13 @@ services:
       # Lagoon Labels
       lagoon.type: cli-persistent
       lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+      lagoon.persistent: /app/cms/web/sites/default/files/ # location where the persistent storage should be mounted
 
   nginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
-      context: .
-      dockerfile: lagoon/nginx.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/nginx.dockerfile
     depends_on:
       - php
     # loads the defined volumes and user from the top
@@ -112,14 +115,14 @@ services:
       VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
     labels:
       lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+      lagoon.persistent: /app/cms/web/sites/default/files/ # location where the persistent storage should be mounted
       lagoon.persistent.size: 10Gi
 
   php: # php-fpm server that executes php requests.
     # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
     build:
-      context: .
-      dockerfile: lagoon/php.dockerfile
+      context: ..
+      dockerfile: cms/lagoon/php.dockerfile
     depends_on:
       redis:
         condition: service_started
@@ -133,7 +136,7 @@ services:
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
-      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+      lagoon.persistent: /app/cms/web/sites/default/files/ # location where the persistent storage should be mounted
 
   mariadb: # Main site database.
     # https://docs.lagoon.sh/lagoon/docker-images/mariadb/mariadb-drupal
@@ -161,11 +164,3 @@ services:
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
-
-volumes:
-  projectroot:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}
-      o: bind

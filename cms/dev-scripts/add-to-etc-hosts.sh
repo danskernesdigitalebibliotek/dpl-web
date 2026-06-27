@@ -11,6 +11,11 @@ EOF
   exit 1;
 fi
 
+if [[ -n "$SKIP_ETC_HOSTS_MODIFICATION" ]]; then
+  echo "SKIP_ETC_HOSTS_MODIFICATION is set, skipping modification."
+  exit 0;
+fi
+
 CONTAINER_NAME=$1
 DOMAIN=$2
 DOCKER_COMPOSE_FILES=${DOCKER_COMPOSE_FILES:-}

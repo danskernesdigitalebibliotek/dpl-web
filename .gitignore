@@ -2,3 +2,4 @@ node_modules
 # Task checksum cache
 .task/
 .env
+.envrc

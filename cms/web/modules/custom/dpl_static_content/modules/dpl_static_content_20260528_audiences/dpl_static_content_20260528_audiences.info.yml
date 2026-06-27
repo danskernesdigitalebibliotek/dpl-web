@@ -1,0 +1,15 @@
+name: 'DPL static content: Audiences'
+type: module
+description: Adds default audiences
+package: DPL
+core_version_requirement: ^10 || ^11
+dependencies:
+  - default_content:default_content
+
+hidden: true
+
+default_content:
+  taxonomy_term:
+    - ff5f6bfc-2d22-4292-904a-a27144a5ec11
+    - f7e7feb0-eb8c-415c-ad3b-3b5d857c3887
+    - 3a42f85f-fede-42c5-852d-64e03d242bd0

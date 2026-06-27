@@ -15,7 +15,7 @@ use function Safe\parse_url;
 /**
  * Service for getting Go site information.
  */
-class GoSite {
+class GoSite implements GoSiteInterface {
 
   /**
    * Node storage.

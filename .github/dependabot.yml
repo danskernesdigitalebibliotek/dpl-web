@@ -59,6 +59,9 @@ updates:
       # Drupal 10.6.x breaks the CMS opening-hours Cypress flow.
       - dependency-name: "drupal/core*"
         versions: [">=10.6.0"]
+      # `potion` isn't compatible with newer versions of `annotations`.
+      - dependency-name: "doctrine/annotations"
+        versions: [">=2.0.0"]
     schedule:
       interval: weekly
       day: monday
@@ -71,8 +74,13 @@ updates:
 
   # CMS dev-scripts - Composer dependencies
   - package-ecosystem: composer
-    directory: "/cms/dev-scripts"
+    directory: "/cms/dev-scripts/dpl-react"
     open-pull-requests-limit: 20
+    ignore:
+      # symfony/console 7.x requires PHP >=8.4.1, but the platform still runs
+      # PHP 8.3. Unblock once the PHP 8.3 => 8.4 upgrade lands. See DDFNEXT-1523.
+      - dependency-name: "symfony/console"
+        versions: [">=7.0.0"]
     schedule:
       interval: weekly
       day: monday
@@ -86,7 +94,7 @@ updates:
   # CMS - npm dependencies
   - package-ecosystem: npm
     directory: "/cms"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     groups:
       typescript-eslint:
         patterns:
@@ -111,7 +119,7 @@ updates:
   # Design System - npm dependencies
   - package-ecosystem: npm
     directory: "/design-system"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     versioning-strategy: increase
     schedule:
       interval: weekly
@@ -155,7 +163,7 @@ updates:
   # Go (Next.js) - npm dependencies
   - package-ecosystem: npm
     directory: "/go"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     versioning-strategy: increase
     schedule:
       interval: weekly
@@ -252,7 +260,7 @@ updates:
   # React - npm dependencies
   - package-ecosystem: npm
     directory: "/react"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
     versioning-strategy: increase
     schedule:
       interval: weekly
@@ -345,6 +353,10 @@ updates:
       # codegen breaks with these versions. DDFNEXT-1455
       # typescript / typescript-operations v6 emit a second set of input/enum
       # types that collide with typescript-react-query@6 legacyMode output.
+      # graphql 17 is also unsupported by the pinned codegen toolchain (all
+      # plugins peer-require graphql ^16), so codegen crashes on it.
+      - dependency-name: "graphql"
+        versions: [">=17.0.0"]
       - dependency-name: "@graphql-codegen/add"
         versions: [">=7.0.0"]
       - dependency-name: "@graphql-codegen/cli"

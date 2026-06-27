@@ -115,6 +115,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                         routeParams: { work: "work", wid: work.workId },
                         queryParams: {
                           type: manifestation.materialTypes[0].materialTypeSpecific.code,
+                          u_navigatedby_go_mat: 1,
                         },
                       })
                     : ""

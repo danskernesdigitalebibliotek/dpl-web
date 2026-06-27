@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventseries.nav_spot
+    - field.field.eventseries.default.field_audiences
     - field.field.eventseries.default.field_automatic_list_hide
     - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
@@ -67,6 +68,7 @@ hidden:
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_audiences: true
   field_automatic_list_hide: true
   field_branch: true
   field_categories: true

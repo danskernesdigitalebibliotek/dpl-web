@@ -16,6 +16,7 @@
     "**/web/modules/local/",
     "**/web/modules/custom/bnf/bnf_example_content/content/",
     "**/web/modules/custom/dpl_example_content/content/",
-    "**/web/modules/custom/dpl_static_content/content/"
+    "**/web/modules/custom/dpl_static_content/content/",
+    "**/web/modules/custom/dpl_static_content/modules/dpl_static_content_20260528_audiences/content/"
   ]
 }

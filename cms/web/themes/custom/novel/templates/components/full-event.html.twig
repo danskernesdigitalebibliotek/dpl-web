@@ -9,6 +9,8 @@
     cta: cta,
     items: hero_items,
     placeholder_text: teaser_text,
+    status: status,
+    status_value: status_value,
   }, false) }}
 
   <div class="event-description">
@@ -16,6 +18,7 @@
       <div class="event-description__description">{{ description }}</div>
       <div class="event-description__links">
         {{ tags }}
+        {{ audiences }}
         {{ branch }}
         {{ partners }}
       </div>
