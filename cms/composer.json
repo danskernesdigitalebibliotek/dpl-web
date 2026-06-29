@@ -59,7 +59,7 @@
                 "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-250-quota-fudging/dist-react.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-341-physical-holdings-filters/dist-react.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -86,7 +86,7 @@
                 "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-250-quota-fudging/dist-react.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-341-physical-holdings-filters/dist-react.zip",
                     "type": "zip"
                 },
                 "require": {

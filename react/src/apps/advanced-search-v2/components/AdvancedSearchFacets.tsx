@@ -14,6 +14,7 @@ import {
   useComplexFacetSearchQuery,
   CsHoldingsStatusEnum
 } from "../../../core/dbc-gateway/generated/graphql";
+import { useGetPhysicalHoldingsFilters } from "../../../core/utils/useGetPhysicalHoldingsFilters";
 import { FACETS_CONFIG, FACET_FIELDS } from "../lib/facet-configs";
 import { isValidFacetState } from "../lib/validation";
 import { sortFacetValues } from "../lib/facet-sort-utils";
@@ -43,6 +44,7 @@ const AGE_GROUP_OPTIONS: AgeGroupFilterOptions[] = [
 
 const AdvancedSearchFacets: React.FC<AdvancedSearchFacetsProps> = ({ cql }) => {
   const t = useText();
+  const physicalHoldingsFilters = useGetPhysicalHoldingsFilters();
 
   // Toggle states
   const [onShelf, setOnShelf] = useQueryState(
@@ -71,7 +73,15 @@ const AdvancedSearchFacets: React.FC<AdvancedSearchFacetsProps> = ({ cql }) => {
   const { data: facetData } = useComplexFacetSearchQuery({
     cql,
     facets: { facets: FACET_FIELDS, facetLimit: 50 },
-    ...(onShelf && { filters: { status: [CsHoldingsStatusEnum.Onshelf] } })
+    // Keep facet counts consistent with the result list: when filtering
+    // on-shelf, also exclude online editions and restrict to the site's own
+    // agency.
+    ...(onShelf && {
+      filters: {
+        status: [CsHoldingsStatusEnum.Onshelf],
+        ...physicalHoldingsFilters
+      }
+    })
   });
 
   const facetsResponse = facetData?.complexSearch?.facets ?? [];

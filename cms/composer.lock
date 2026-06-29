@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed818a47d9cc4d8b50d90cd094567760",
+    "content-hash": "bb327ea2a99ff56d6fe265405ecc9bac",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1059,7 +1059,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-250-quota-fudging/dist-react.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-341-physical-holdings-filters/dist-react.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
