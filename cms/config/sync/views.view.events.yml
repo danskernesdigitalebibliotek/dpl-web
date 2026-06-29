@@ -425,5 +425,6 @@ display:
         - 'config:facets.facet.audience'
         - 'config:facets.facet.branch'
         - 'config:facets.facet.event_categories'
+        - 'config:facets.facet.event_date'
         - 'config:search_api.index.events'
         - 'search_api_list:events'
