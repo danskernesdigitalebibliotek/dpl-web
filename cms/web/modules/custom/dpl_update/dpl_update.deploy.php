@@ -593,3 +593,10 @@ function dpl_update_deploy_remove_unilogin_permissions(): string {
 
   return 'Remove unilogin permission';
 }
+
+/**
+ * Link new field inheritances on eventinstances.
+ */
+function dpl_update_deploy_event_audiences_field_inheritance(): string {
+  return _dpl_update_field_inheritance('event_audiences');
+}
