@@ -15,7 +15,7 @@ import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import OnlineInternalModalUserListItems from "./OnlineInternalModalUserListItems";
 import MaterialButtonsOnlineInternal from "../material/material-buttons/online/MaterialButtonsOnlineInternal";
 import {
-  getFirstManifestation,
+  getLoanableManifestation,
   onlineInternalModalId
 } from "../../apps/material/helper";
 import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
@@ -49,7 +49,7 @@ const OnlineInternalModalBody = ({
 
   const { data: userData } = usePatronData();
   const { identifier, canBeReserved } = useReaderPlayer(
-    getFirstManifestation(selectedManifestations)
+    getLoanableManifestation(selectedManifestations)
   );
 
   if (loanStatus === "success" && loanResponse?.expirationDateUtc) {
