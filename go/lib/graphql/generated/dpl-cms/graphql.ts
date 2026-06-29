@@ -77,6 +77,21 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementNavSpotsManual = AppContentElement & {
+  __typename?: 'AppContentElementNavSpotsManual';
+  id: Scalars['String']['output'];
+  linkedPages: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementRecommendation = AppContentElement & {
+  __typename?: 'AppContentElementRecommendation';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  imagePositionRight: Scalars['Boolean']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workId: Scalars['String']['output'];
+};
+
 export type AppContentElementText = AppContentElement & {
   __typename?: 'AppContentElementText';
   body: Scalars['String']['output'];
