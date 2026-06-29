@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-29 09:55+0200\n"
-"PO-Revision-Date: 2026-06-29 09:55+0200\n"
+"POT-Creation-Date: 2026-06-29 10:38+0200\n"
+"PO-Revision-Date: 2026-06-29 10:38+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8034,19 +8034,14 @@ msgid "BEF Test"
 msgstr "BEF Test"
 
 msgid ""
-"This content translation is being edited by the user @name and is therefore "
-"locked to prevent other users changes. This lock is in place since @date."
+"This content translation is being edited by the user %name and is therefore "
+"locked to prevent changes by other users. This lock has been active for @age."
 msgstr ""
-"Denne indholdsoversættelse bliver redigeret af brugeren @name og er derfor "
-"låst for at forhindre andre brugeres ændringer. Denne lås har været på plads "
-"siden @date."
 
 msgid ""
-"This content is being edited by the user @name and is therefore locked to "
-"prevent other users changes. This lock is in place since @date."
+"This content is being edited by the user %name and is therefore locked to "
+"prevent changes by other users. This lock has been active for @age."
 msgstr ""
-"Dette indhold bliver redigeret af @name og er derfor låst. Denne lås er "
-"aktiveret @date."
 
 msgid ""
 "This content translation is now locked against simultaneous editing. This "
@@ -8065,11 +8060,8 @@ msgstr ""
 "Dette indhold er nu låst for samtidig redigering. Indholdet vil forblive "
 "låst, hvis du forlader siden uden at gemme."
 
-msgid "Break lock"
-msgstr "Bryd lås"
-
-msgid "Click here to @link"
-msgstr "Klik her for @link"
+msgid "Break the lock."
+msgstr ""
 
 msgid ""
 "This content translation is now locked by you against simultaneous editing. "
@@ -8088,8 +8080,27 @@ msgstr ""
 "Dette indhold er nu låst af dig for samtidig redigering. Indholdet vil "
 "forblive låst, hvis du forlader siden uden at gemme."
 
+msgid "This content is being edited by another user."
+msgstr ""
+
 msgid "Unlock"
 msgstr "Lås op"
+
+msgid "Break Lock"
+msgstr "Bryd lås"
+
+msgid "Break lock"
+msgstr "Bryd lås"
+
+msgid "Content lock access check"
+msgstr ""
+
+msgid ""
+"Checks if user has access to a specified permission and if the view's entity "
+"type is lockable."
+msgstr ""
+"Tjekker om bruger har adgang til en specifik tilladelse, og om view’ets "
+"enhedstype kan låses."
 
 msgid "Unlocked. Anyone can now edit this content translation."
 msgstr "Ulåst. Alle kan nu redigere denne indholdsoversættelse."
@@ -8145,18 +8156,6 @@ msgstr ""
 "For at tillade redigere af flere oversættelser på samme tid skal du "
 "installere %module"
 
-msgid "Lock form using JS."
-msgstr "Lås formular ved hjælp af JS."
-
-msgid ""
-"Activating this options activates the lock when the user is on the form. "
-"This helps if modules interacting with form without a user interacting with "
-"the form, like the prefetch_cache module."
-msgstr ""
-"Aktivering af denne mulighed aktiverer låsen, når brugeren er på formularen. "
-"Dette hjælper, hvis moduler interagerer med formularen uden en bruger, der "
-"interagerer med formularen, som prefetch_cache-modulet."
-
 msgid "Lock only on entity form operation level."
 msgstr "Lås kun på niveauet for enhedsformularoperation."
 
@@ -8179,55 +8178,19 @@ msgstr ""
 msgid "Form operations"
 msgstr "Formularoperationer"
 
-msgid "Lock Timeouts"
-msgstr "Lås timeouts"
-
-msgid "Configure automatic stale lock breaking."
-msgstr "Konfigurer automatisk brud på forældede låse."
-
 msgid "Lock timeout"
 msgstr "Lås timeout"
 
 msgid ""
 "The maximum time in minutes that each lock may be kept. To disable breaking "
-"locks after a timeout, please %disable the Content Lock Timeout module."
+"locks after a timeout, clear the value. It is recommended for user "
+"experience to set this value."
 msgstr ""
-"Den maksimale tid i minutter, som hver lås kan opretholdes. For at "
-"deaktivere låsebrydning efter en timeout, venligst %deaktiver Content Lock "
-"Timeout-modulet."
-
-msgid "disable"
-msgstr "deaktivér"
-
-msgid "Break stale locks on edit"
-msgstr "Bryd forældede låse ved redigering"
 
 msgid ""
-"By default, stale locks will be broken when cron is run. This option enables "
-"checking for stale locks when a user clicks a node's Edit link, enabling "
-"lower lock timeout values without having to run cron every few minutes."
+"The Content Lock module prevents multiple users from trying to edit a single "
+"node simultaneously to prevent edit conflicts."
 msgstr ""
-"Som standard vil forældede låse blive brudt, når cron køres. Denne mulighed "
-"gør det muligt at tjekke for forældede låse, når en bruger klikker på en "
-"nodes rediger-link, hvilket muliggør lavere låsetidsværdier uden at skulle "
-"køre cron med få minutters mellemrum."
-
-msgid ""
-"Breaking existing lock by @name so that you may edit this node. (This lock "
-"was set @date ago and was stale since @stale_time.)"
-msgstr ""
-"Bryder eksisterende lås til @name så du kan redigere dette indhold. (Denne "
-"lås blev sat @date og har været inaktiv siden @stale_time.)"
-
-msgid ""
-"Prevents multiple users from trying to edit a single node simultaneously to "
-"prevent edit conflicts."
-msgstr ""
-"Forhindrer flere brugere i at forsøge at redigere en enkelt node samtidigt "
-"for at forhindre redigeringskonflikter."
-
-msgid "@entity cannot be deleted because it was locked by @user since @time."
-msgstr "@entity kan ikke slettes, fordi den blev låst af @user fra @time"
 
 msgid "Content lock"
 msgstr "Indholdslås"
@@ -8286,30 +8249,17 @@ msgstr ""
 "indholdslås-information. Den valgte caching-mekanisme er derfor ændret til "
 "\"ingen\" for viewet %view."
 
+msgid ""
+"The content lock timeout is currently disabled. It is recommended that "
+"administrators <a href=\":settings\">set the timeout value</a> so that "
+"content locks automatically expire."
+msgstr ""
+
 msgid "Content Lock access check"
 msgstr "Tjek af adgang til indholdslås"
 
-msgid ""
-"Checks if user has access to a specified permission and if the view's entity "
-"type is lockable."
-msgstr ""
-"Tjekker om bruger har adgang til en specifik tilladelse, og om view’ets "
-"enhedstype kan låses."
-
 msgid "General"
 msgstr "Generelt"
-
-msgid "Content lock timeout settings"
-msgstr "Indstillinger for indholdslås timeout"
-
-msgid "Content lock timeout test"
-msgstr "Test af indholdslås timeout"
-
-msgid "Provides test classes."
-msgstr "Leverer testklasser."
-
-msgid "Timeout settings"
-msgstr "Timeout-indstillinger"
 
 msgid "Content Lock Timeout"
 msgstr "Indholdslås timeout"
@@ -8343,8 +8293,11 @@ msgstr "Tests af hooks for indholdslås"
 msgid "Provides test support for content_lock hooks."
 msgstr "Leverer testunderstøttelse for content_lock hooks."
 
-msgid "Prefetch cache test"
-msgstr "Prefetch cache test"
+msgid "Content lock timeout test"
+msgstr "Test af indholdslås timeout"
+
+msgid "Provides test classes."
+msgstr "Leverer testklasser."
 
 msgid "Settings"
 msgstr "Indstillinger"
@@ -8354,9 +8307,6 @@ msgstr "Test af indholdslås"
 
 msgid "compact"
 msgstr "kompakt"
-
-msgid "Break Lock"
-msgstr "Bryd lås"
 
 msgid "uses <em>@data.crop_type</em> crop type"
 msgstr "Bruger <em>@data.crop_type</em> beskæringstype"
