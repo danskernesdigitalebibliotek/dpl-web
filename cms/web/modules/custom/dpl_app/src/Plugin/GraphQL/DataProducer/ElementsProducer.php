@@ -157,6 +157,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
             '__type' => 'AppContentElementRecommendation',
             'id' => $paragraph->uuid(),
             'imagePositionRight' => (bool) $paragraph->get('field_image_position_right')->value,
+            // @phpstan-ignore property.notFound (magic property)
             'title' => $paragraph->get('field_recommendation_title')->processed,
             'description' => $paragraph->get('field_recommendation_description')->value,
             'workId' => $workId,
