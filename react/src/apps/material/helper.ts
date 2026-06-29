@@ -200,8 +200,8 @@ export const getManifestationOriginalTitle = (manifestation: Manifestation) => {
   if (manifestation.titles?.original?.length) {
     return manifestation.titles.original.join(", ");
   }
-  // This should never happen, so therefore ist not translated.
-  return "Unknown title";
+  // No original title delivered — return empty so the details row is hidden
+  return "";
 };
 
 export const materialContainsDanish = (work: Work) => {
@@ -924,6 +924,32 @@ if (import.meta.vitest) {
 
       const title = getManifestationTitle(manifestation);
       expect(title).toMatchInlineSnapshot(`"Unknown title"`);
+    });
+  });
+
+  describe("getManifestationOriginalTitle", () => {
+    it("returns the original titles joined by a comma", () => {
+      const manifestation = {
+        titles: {
+          original: ["Some Original Title", "Another Original Title"]
+        }
+      } as unknown as Manifestation;
+
+      const title = getManifestationOriginalTitle(manifestation);
+      expect(title).toMatchInlineSnapshot(
+        `"Some Original Title, Another Original Title"`
+      );
+    });
+
+    it("returns an empty string when no original title is available so the details row is hidden (DDF-366)", () => {
+      const manifestation = {
+        titles: {
+          original: []
+        }
+      } as unknown as Manifestation;
+
+      const title = getManifestationOriginalTitle(manifestation);
+      expect(title).toMatchInlineSnapshot(`""`);
     });
   });
 }
