@@ -1,5 +1,4 @@
 import { useQueryClient } from "@tanstack/react-query"
-import { first } from "lodash"
 import React, { useState } from "react"
 
 import {
@@ -15,7 +14,7 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
@@ -45,16 +44,15 @@ const LoanMaterialModal = ({
     message: string
   } | null>(null)
 
-  const identifier = first(manifestation?.identifiers)?.value
+  const identifier = getPublizonIdentifierFromManifestation(manifestation)
   const isAlreadyLoaned =
     loansData?.loans?.some(loan => loan.libraryBook?.identifier === identifier) ?? false
 
   const handleLoanMaterial = () => {
-    if (!manifestation) return
-    const isbns = getIsbnsFromManifestation(manifestation)
+    if (!manifestation || !identifier) return
     setIsHandlingLoan(true)
     mutate(
-      { identifier: isbns[0] },
+      { identifier },
       {
         onSuccess: () => {
           // Refetch data to update the UI for WorkPageButtons
