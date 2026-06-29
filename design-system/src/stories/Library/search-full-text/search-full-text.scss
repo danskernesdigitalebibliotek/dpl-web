@@ -6,11 +6,7 @@
   border: $color__global-tertiary-1 1px solid;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-
-  @include media-query__small {
-    width: fit-content;
-  }
+  padding: 0 16px;
 }
 
 .search-full-text__input {

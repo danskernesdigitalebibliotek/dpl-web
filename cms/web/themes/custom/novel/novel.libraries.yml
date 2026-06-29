@@ -42,3 +42,24 @@ footer-accordions:
 show-more:
   js:
     assets/dpl-design-system/js/show-more.js: {}
+
+flatpickr:
+  remote: 'https://github.com/flatpickr/flatpickr.git'
+  license:
+    name: MIT
+    url: https://github.com/flatpickr/flatpickr/blob/master/LICENSE.md
+    gpl-compatible: true
+  js:
+    /libraries/flatpickr/dist/flatpickr.min.js: { minified: true }
+  css:
+    theme:
+      /libraries/flatpickr/dist/flatpickr.min.css: { minified: true }
+
+date-range-facet:
+  js:
+    js/date-range-facet.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+    - novel/flatpickr

@@ -164,3 +164,35 @@
     }
   }
 }
+
+%facet-input {
+  $_padding: 16px;
+
+  @include typography($typo__button);
+
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: $form_input_height;
+  cursor: pointer;
+  background-color: transparent;
+  color: $color__global-black;
+  border-radius: 0;
+  border: 1px solid;
+  // Inherit the border colour from the parent (e.g. `.dropdown` is black,
+  // `.dropdown--grey-borders` is grey). Consumers without such a wrapper
+  // (e.g. `.date-range-facet`) set their own border-colour.
+  border-color: inherit;
+  padding: 0;
+  padding-left: $_padding;
+  padding-right: $form_input_height + $_padding;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: none;
+
+  display: grid;
+  place-content: center;
+
+  // Chromeium based browsers will trigger focus when opening the dropdown
+  @extend %default-focus-visible;
+}

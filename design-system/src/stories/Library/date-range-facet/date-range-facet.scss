@@ -1,0 +1,53 @@
+.date-range-facet {
+  position: relative;
+}
+
+.date-range-facet__input {
+  @extend %facet-input;
+
+  // Not wrapped in a `.dropdown`, so set the grey border explicitly to match
+  // the grey-bordered dropdowns it sits beside in the filter row.
+  border-color: $color__global-tertiary-1;
+}
+
+// Calendar and clear share a bordered, full-height box on the right edge,
+// mirroring .dropdown__arrows so the divider matches the dropdowns.
+.date-range-facet__icon,
+.date-range-facet__clear {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: $form_input_height;
+  width: $form_input_height;
+  place-content: center;
+  border: none;
+  border-left: 1px solid $color__global-tertiary-1;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+}
+
+// Calendar icon: shown while no range is selected. Non-interactive so clicks
+// fall through to the input and open the picker.
+.date-range-facet__icon {
+  display: grid;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 2.25C16.6982 2.25 17.3008 2.65883 17.5817 3.25015L20 3.25C20.9665 3.25 21.75 4.0335 21.75 5V19C21.75 19.9665 20.9665 20.75 20 20.75H4C3.0335 20.75 2.25 19.9665 2.25 19V5C2.25 4.0335 3.0335 3.25 4 3.25L6.41834 3.25015C6.69917 2.65883 7.30184 2.25 8 2.25C8.69816 2.25 9.30083 2.65883 9.58166 3.25015H14.4183C14.6992 2.65883 15.3018 2.25 16 2.25ZM20.25 8.75H3.75V19C3.75 19.1183 3.83223 19.2175 3.94268 19.2434L4 19.25H20C20.1381 19.25 20.25 19.1381 20.25 19V8.75ZM6.41881 4.75085L4 4.75C3.86193 4.75 3.75 4.86193 3.75 5V7.25H20.25V5C20.25 4.88165 20.1678 4.78251 20.0573 4.7566L20 4.75L17.5812 4.75085C17.3001 5.34163 16.6978 5.75 16 5.75C15.3022 5.75 14.6999 5.34163 14.4188 4.75085H9.58119C9.30015 5.34163 8.69776 5.75 8 5.75C7.30224 5.75 6.69985 5.34163 6.41881 4.75085Z' fill='black'/%3E%3C/svg%3E");
+}
+
+// Clear button: shown while a range is selected, replacing the calendar.
+.date-range-facet__clear {
+  display: none;
+  padding: 0;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.44621 6.39705L7.53033 6.46967L12 10.939L16.4697 6.46967C16.7626 6.17678 17.2374 6.17678 17.5303 6.46967C17.7966 6.73594 17.8208 7.1526 17.6029 7.44621L17.5303 7.53033L13.061 12L17.5303 16.4697C17.8232 16.7626 17.8232 17.2374 17.5303 17.5303C17.2641 17.7966 16.8474 17.8208 16.5538 17.6029L16.4697 17.5303L12 13.061L7.53033 17.5303C7.23744 17.8232 6.76256 17.8232 6.46967 17.5303C6.2034 17.2641 6.1792 16.8474 6.39705 16.5538L6.46967 16.4697L10.939 12L6.46967 7.53033C6.17678 7.23744 6.17678 6.76256 6.46967 6.46967C6.73594 6.2034 7.1526 6.1792 7.44621 6.39705Z' fill='black'/%3E%3C/svg%3E");
+}
+
+.date-range-facet--active .date-range-facet__icon {
+  display: none;
+}
+
+.date-range-facet--active .date-range-facet__clear {
+  display: grid;
+}
