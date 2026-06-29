@@ -79,3 +79,14 @@ type AppContentElementNavSpotsManual implements AppContentElement {
   id: String!
   linkedPages: [String!]!
 }
+
+"""
+A recommendation element.
+"""
+type AppContentElementRecommendation implements AppContentElement {
+  id: String!
+  imagePositionRight: Boolean!
+  title: String
+  description: String
+  workId: String!
+}
