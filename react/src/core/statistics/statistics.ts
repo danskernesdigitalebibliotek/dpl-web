@@ -174,6 +174,11 @@ export const statistics: Statistics = {
     id: 69,
     name: "Klik på recommendation-paragraphs",
     parameterName: ""
+  },
+  materialGridClick: {
+    id: 47,
+    name: "Klik på Materiale grids",
+    parameterName: ""
   }
 };
 
