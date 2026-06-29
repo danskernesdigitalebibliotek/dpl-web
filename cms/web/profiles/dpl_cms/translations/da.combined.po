@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-26 10:19+0200\n"
-"PO-Revision-Date: 2026-06-26 10:19+0200\n"
+"POT-Creation-Date: 2026-06-29 07:16+0200\n"
+"PO-Revision-Date: 2026-06-29 07:16+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8844,9 +8844,65 @@ msgstr "Issue-kø"
 msgid "to report problems."
 msgstr "til at reportere problemer."
 
+msgid "Dynamic entity reference"
+msgstr "Dynamisk enhedsreference"
+
+msgid "Other…"
+msgstr "Anden…"
+
+msgid "@id (@type)"
+msgstr "@id (@type)"
+
+msgid "Entity ID: @id (@type)"
+msgstr "Enheds-ID: @id (@type)"
+
+msgid "Label"
+msgstr "Etiket"
+
 msgctxt "Entity type group"
 msgid "Content"
 msgstr "Indhold"
+
+msgid "@entity view mode: @mode"
+msgstr "@entity visningstilstand: @mode"
+
+msgid "View mode for %entity"
+msgstr ""
+"\n"
+"Visningstilstand for %entity"
+
+msgid "Target Entity Type"
+msgstr "Målenhedstype"
+
+msgid "Entity"
+msgstr "Entity"
+
+msgid "The referenced entity"
+msgstr "Link til den refererede entity"
+
+msgid "Exclude the selected items"
+msgstr "Udeluk de valgte emner"
+
+msgid "Select items"
+msgstr "Vælg"
+
+msgid "Select at least one entity type ID."
+msgstr "Vælg mindst én enhedstype ID."
+
+msgid "Reference type for @target_type"
+msgstr "Referencetype for @target_type"
+
+msgid "Reference type"
+msgstr "Referencetype"
+
+msgid "Reference method"
+msgstr "Referencemetode"
+
+msgid "Change handler"
+msgstr "Skift handler"
+
+msgid "Reference types: @entity_types"
+msgstr "Referencetyper: @entity_types"
 
 msgid "@label referenced from @field_name"
 msgstr "@label refereret fra @field_name"
@@ -8889,64 +8945,8 @@ msgstr ""
 "Omvendt reference fra @target_label enheder refereret af @field_name @type "
 "på @origin_label enheder."
 
-msgid "Dynamic entity reference"
-msgstr "Dynamisk enhedsreference"
-
-msgid "Other…"
-msgstr "Anden…"
-
 msgid "Dynamic Reference"
 msgstr "Dynamisk reference"
-
-msgid "@id (@type)"
-msgstr "@id (@type)"
-
-msgid "Entity ID: @id (@type)"
-msgstr "Enheds-ID: @id (@type)"
-
-msgid "Label"
-msgstr "Etiket"
-
-msgid "@entity view mode: @mode"
-msgstr "@entity visningstilstand: @mode"
-
-msgid "View mode for %entity"
-msgstr ""
-"\n"
-"Visningstilstand for %entity"
-
-msgid "Target Entity Type"
-msgstr "Målenhedstype"
-
-msgid "Entity"
-msgstr "Entity"
-
-msgid "The referenced entity"
-msgstr "Link til den refererede entity"
-
-msgid "Exclude the selected items"
-msgstr "Udeluk de valgte emner"
-
-msgid "Select items"
-msgstr "Vælg"
-
-msgid "Select at least one entity type ID."
-msgstr "Vælg mindst én enhedstype ID."
-
-msgid "Reference type for @target_type"
-msgstr "Referencetype for @target_type"
-
-msgid "Reference type"
-msgstr "Referencetype"
-
-msgid "Reference method"
-msgstr "Referencemetode"
-
-msgid "Change handler"
-msgstr "Skift handler"
-
-msgid "Reference types: @entity_types"
-msgstr "Referencetyper: @entity_types"
 
 msgid "The referenced entity (%type: %id) does not exist."
 msgstr "Den refererede entity (%type: %id) eksisterer ikke."
