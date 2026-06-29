@@ -56,6 +56,19 @@ type AppContentElementVideo implements AppContentElement {
   video: AppVideo!
 }
 
+type AppContentElementNavSpotsManual implements AppContentElement {
+  id: String!
+  linkedPages: [String!]!
+}
+
+type AppContentElementRecommendation implements AppContentElement {
+  description: String
+  id: String!
+  imagePositionRight: Boolean!
+  title: String
+  workId: String!
+}
+
 type AppContentElementVideoBundleAutomatic implements AppContentElement {
   cql: String!
   id: String!
