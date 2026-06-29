@@ -72,9 +72,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0",
+                "version": "0.0.0-dev",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-307-date-filtering/dist-design-system.zip",
                     "type": "zip"
                 }
             }
@@ -99,9 +99,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0",
+                "version": "0.0.0-dev",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-307-date-filtering/dist-design-system.zip",
                     "type": "zip"
                 }
             }
@@ -133,7 +133,7 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
         "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
@@ -171,6 +171,7 @@
         "drupal/evac": "^1.0",
         "drupal/externalauth": "^2.0",
         "drupal/facets": "^3.0",
+        "drupal/facets_date_range": "^1.0@beta",
         "drupal/field_group": "^4.0",
         "drupal/field_inheritance": "^2.0",
         "drupal/flat_taxonomy": "^2.0",
