@@ -1,0 +1,72 @@
+uuid: 0398731f-0b8b-442c-883d-21e1dabfc0e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_priority_material_type
+field_name: field_priority_material_type
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: bog
+      label: Bog
+    -
+      value: e-bog
+      label: E-bog
+    -
+      value: 'lydbog (online)'
+      label: 'Lydbog (online)'
+    -
+      value: billedbog
+      label: Billedbog
+    -
+      value: 'billedbog (online)'
+      label: 'Billedbog (online)'
+    -
+      value: tegneserie
+      label: Tegneserie
+    -
+      value: 'tegneserie (online)'
+      label: 'Tegneserie (online)'
+    -
+      value: 'musik (cd)'
+      label: 'Musik (cd)'
+    -
+      value: 'musik (grammofonplade)'
+      label: 'Musik (grammofonplade)'
+    -
+      value: 'film (blu-ray)'
+      label: 'Film (blu-ray)'
+    -
+      value: 'film (blu-ray 4K)'
+      label: 'Film (blu-ray 4K)'
+    -
+      value: 'film (dvd)'
+      label: 'Film (dvd)'
+    -
+      value: 'film (online)'
+      label: 'Film (online)'
+    -
+      value: 'tv-serie (blu-ray)'
+      label: 'Tv-serie (blu-ray)'
+    -
+      value: 'tv-serie (blu-ray 4K)'
+      label: 'Tv-serie (blu-ray 4K)'
+    -
+      value: 'tv-serie (dvd)'
+      label: 'Tv-serie (dvd)'
+    -
+      value: 'tv-serie (online)'
+      label: 'Tv-serie (online)'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
