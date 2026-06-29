@@ -45,17 +45,6 @@ interface AppContentElement {
   id: String!
 }
 
-type AppContentElementText implements AppContentElement {
-  body: String!
-  id: String!
-}
-
-type AppContentElementVideo implements AppContentElement {
-  id: String!
-  title: String
-  video: AppVideo!
-}
-
 type AppContentElementNavSpotsManual implements AppContentElement {
   id: String!
   linkedPages: [String!]!
@@ -67,6 +56,17 @@ type AppContentElementRecommendation implements AppContentElement {
   imagePositionRight: Boolean!
   title: String
   workId: String!
+}
+
+type AppContentElementText implements AppContentElement {
+  body: String!
+  id: String!
+}
+
+type AppContentElementVideo implements AppContentElement {
+  id: String!
+  title: String
+  video: AppVideo!
 }
 
 type AppContentElementVideoBundleAutomatic implements AppContentElement {
