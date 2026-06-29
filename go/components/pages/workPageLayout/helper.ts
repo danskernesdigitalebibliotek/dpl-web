@@ -7,6 +7,7 @@ import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LibraryProfile, LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { MaterialTypeIconNamesType } from "@/lib/types/icons"
 
@@ -177,12 +178,47 @@ export const isAudioMaterialType = (code: string): boolean => audioMaterialTypeC
 export const isPodcastMaterialType = (code: string): boolean =>
   podcastMaterialTypeCodes.includes(code)
 
+export type TMaterialCategory = "physical" | "ebook" | "audio" | null
+
+// Collapses the four material-type predicates into the three categories the
+// loan / reservation UI actually branches on.
+export const getMaterialCategory = (code: string | undefined): TMaterialCategory => {
+  if (!code) return null
+  if (isPhysicalMaterialType(code)) return "physical"
+  if (isEbookMaterialType(code)) return "ebook"
+  if (isAudioMaterialType(code) || isPodcastMaterialType(code)) return "audio"
+  return null
+}
+
+export const getEbookPreviewUrl = (workId: string, identifier: string) =>
+  resolveUrl({
+    routeParams: { work: "work", ":wid": workId, read: "read" },
+    queryParams: { id: identifier },
+  })
+
+export const getEbookReadUrl = (workId: string, orderId: string) =>
+  resolveUrl({
+    routeParams: { work: "work", ":wid": workId, read: "read" },
+    queryParams: { orderId },
+  })
+
+export type ManifestationLabelForm = "indefinite" | "definite"
+
 export const getManifestationLabel = (
-  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+  manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
+  form: ManifestationLabelForm = "indefinite"
 ): string => {
   const code = manifestation.materialTypes[0]?.materialTypeSpecific.code
-  return translateMaterialTypesStringForRender(code)?.toLowerCase() || ""
+  const label = translateMaterialTypesStringForRender(code)?.toLowerCase() || ""
+  if (!label || form === "indefinite") return label
+  return toDanishDefinite(label)
 }
+
+// Danish definite-article suffix for common-gender material labels.
+// Words ending in unstressed -e take -n (tegneserie → tegneserien);
+// everything else takes -en (bog → bogen, podcast → podcasten).
+const toDanishDefinite = (label: string): string =>
+  label.endsWith("e") ? `${label}n` : `${label}en`
 
 export const getManifestationByMaterialType = (
   work: WorkFullWorkPageFragment,

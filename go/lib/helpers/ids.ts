@@ -24,3 +24,13 @@ export const getIsbnsFromWork = (work: WorkFullWorkPageFragment) => {
   )
   return filterFalsyValuesFromArray(flatten(isbnsNested))
 }
+
+const FAUST_FROM_PID_REGEX = /^[0-9]+-[a-z]+:([a-zA-Z0-9-_.]+)$/
+
+export const pidToFaust = (pid: string): string | null => {
+  const match = pid.match(FAUST_FROM_PID_REGEX)
+  return match?.[1] ?? null
+}
+
+export const getFaustIdsFromManifestations = (manifestations: { pid: string }[]): string[] =>
+  filterFalsyValuesFromArray(manifestations.map(m => pidToFaust(m.pid)))

@@ -4,6 +4,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
 import * as React from "react"
 
+import { Button } from "@/components/shared/button/Button"
+import { cyKeys } from "@/cypress/support/constants"
 import { cn } from "@/lib/shadcn/utils"
 
 const Dialog = DialogPrimitive.Root
@@ -22,7 +24,7 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       `z-dialog data-[state=open]:animate-in data-[state=closed]:animate-out
-      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 bg-foreground/70 fixed inset-0`,
+      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 bg-backdrop fixed inset-0`,
       className
     )}
     {...props}
@@ -39,22 +41,15 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        `z-dialog gap-grid-edge bg-background p-grid-edge data-[state=closed]:animate-out
-        data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-30
-        data-[state=open]:animate-dialog-open fixed top-[50%] left-[50%] m-auto grid max-h-[95vh]
-        w-[calc(100%-var(--grid-edge)*2)] max-w-250 translate-x-[-50%] translate-y-[-50%]
-        overflow-y-scroll rounded-md shadow-lg lg:min-h-[60vh] lg:gap-6 lg:px-6 lg:py-10`,
+        `z-dialog bg-background data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+        data-[state=closed]:zoom-out-30 data-[state=open]:animate-dialog-open fixed top-[50%]
+        left-[50%] m-auto grid max-h-[95dvh] w-[calc(100%-var(--grid-edge)*2)] max-w-[750px]
+        translate-x-[-50%] translate-y-[-50%] overflow-y-scroll rounded-xl shadow-lg
+        lg:min-h-[60dvh]`,
         className
       )}
       {...props}>
       {children}
-      <DialogPrimitive.Close
-        className="right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-accent
-          data-[state=open]:text-muted-foreground focus-visible absolute rounded-full
-          transition-opacity hover:cursor-pointer disabled:pointer-events-none lg:top-6 lg:right-6">
-        <Cross2Icon className="h-8 w-8" />
-        <span className="sr-only">Luk</span>
-      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
 ))
@@ -82,7 +77,18 @@ const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title ref={ref} className={cn("text-typo-heading-3", className)} {...props} />
+  <div className="relative flex items-center justify-center gap-4">
+    <DialogPrimitive.Title ref={ref} className={cn("text-typo-heading-3", className)} {...props} />
+    <DialogPrimitive.Close className="absolute right-0" asChild>
+      <Button
+        variant="icon"
+        theme="secondary"
+        ariaLabel="Luk"
+        data-cy={cyKeys["global-sheet-close-button"]}>
+        <Cross2Icon className="h-5 w-5" />
+      </Button>
+    </DialogPrimitive.Close>
+  </div>
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 

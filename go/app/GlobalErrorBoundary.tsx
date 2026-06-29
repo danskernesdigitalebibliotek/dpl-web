@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Component, ReactNode } from "react"
+import { Component, ReactNode, RefObject, createRef } from "react"
 
 import ErrorPageLayout from "@/components/pages/errorPageLayout/ErrorPageLayout"
 
@@ -18,12 +18,12 @@ interface GlobalErrorProps {
 // - https://medium.com/@kaiqueperezz/handling-errors-in-the-frontend-with-next-js-improving-ux-and-avoiding-surprises-3970d3f88821
 
 class GlobalErrorBoundary extends Component<GlobalErrorProps, GlobalErrorState> {
-  contentRef: React.RefObject<HTMLDivElement>
+  contentRef: RefObject<HTMLDivElement>
 
   constructor(props: Record<string, unknown>) {
     super(props)
     this.state = { hasError: false }
-    this.contentRef = React.createRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>
+    this.contentRef = createRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>
   }
 
   static getDerivedStateFromError() {

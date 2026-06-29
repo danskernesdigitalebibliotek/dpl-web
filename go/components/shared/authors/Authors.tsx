@@ -18,8 +18,8 @@ const Authors = ({ creators }: AuthorsProps) => {
   return (
     <>
       {!!workCreators.length && (
-        <h2 className="mt-grid-gap-2 text-typo-subtitle-sm uppercase lg:mt-7">
-          {"af "}
+        <h2 className="mt-grid-gap-2 text-typo-subtitle-sm text-foreground-muted lg:mt-7">
+          {"Af "}
           {workCreators.map((creator, index) => {
             return (
               <React.Fragment key={index}>

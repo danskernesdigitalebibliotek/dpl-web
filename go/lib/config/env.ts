@@ -13,6 +13,7 @@ function getEnvs() {
     // Public environment variables.
     DPL_GO_BASE_URL: process.env.DPL_GO_BASE_URL,
     DPL_CMS_BASE_URL: process.env.DPL_CMS_BASE_URL,
+    FBS_BASE_URL: process.env.FBS_BASE_URL,
     GO_GRAPHQL_CONSUMER_USER_NAME: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_NAME,
     GO_GRAPHQL_CONSUMER_USER_PASSWORD: process.env.NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
@@ -38,6 +39,7 @@ function getEnvs() {
 const EnvPublicSchema = z.object({
   DPL_GO_BASE_URL: z.url(),
   DPL_CMS_BASE_URL: z.url(),
+  FBS_BASE_URL: z.url().optional(),
   GO_GRAPHQL_CONSUMER_USER_NAME: z.string(),
   GO_GRAPHQL_CONSUMER_USER_PASSWORD: z.string(),
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),

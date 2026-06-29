@@ -1,0 +1,6 @@
+query getBranches($isilId: String) {
+  getBranches(isilId: $isilId) {
+    isilId
+    title
+  }
+}

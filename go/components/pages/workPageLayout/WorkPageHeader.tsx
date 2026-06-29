@@ -37,7 +37,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     ? getIsbnsFromManifestation(selectedManifestation)
     : []
   const languageCode = getManifestationLanguageCode(selectedManifestation)
-  const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
 
   const sortedManifestations = sortManifestationsBySortPriority(manifestations)
 
@@ -122,7 +121,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             </Badge>
           ) : null}
           <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
-            {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
+            {selectedManifestation?.titles?.full || ""}
           </h1>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>

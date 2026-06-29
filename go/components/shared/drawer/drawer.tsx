@@ -3,6 +3,7 @@
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
+import { cyKeys } from "@/cypress/support/constants"
 import { cn } from "@/lib/shadcn/utils"
 
 const Drawer = ({
@@ -25,8 +26,9 @@ const DrawerOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Overlay
     ref={ref}
-    className={cn("z-drawer bg-foreground/80 fixed inset-0", className)}
+    className={cn("z-drawer bg-backdrop fixed inset-0", className)}
     {...props}
+    data-cy={cyKeys["global-drawer-overlay"]}
   />
 ))
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
@@ -40,12 +42,13 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        `z-drawer bg-background px-grid-edge pb-grid-edge fixed inset-x-0 bottom-0 mt-24 flex h-auto
-        min-h-[80vh] flex-col rounded-t-md`,
+        `z-drawer bg-background fixed inset-x-0 bottom-0 mt-24 flex h-auto max-h-[95dvh]
+        min-h-[80dvh] flex-col overflow-hidden rounded-t-xl`,
         className
       )}
-      {...props}>
-      <div className="bg-background-overlay mx-auto mt-4 h-[6px] w-[100px] rounded-full" />
+      {...props}
+      data-cy={cyKeys["global-drawer"]}>
+      <div className="bg-background-overlay mx-auto mt-4 h-[6px] w-[100px] shrink-0 rounded-full" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -53,7 +56,7 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = "DrawerContent"
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("grid gap-1.5 p-4 text-center", className)} {...props} />
+  <div className={cn("grid shrink-0 gap-1.5 p-4 text-center", className)} {...props} />
 )
 DrawerHeader.displayName = "DrawerHeader"
 
@@ -66,7 +69,7 @@ const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Title ref={ref} className={cn("text-typo-heading-5", className)} {...props} />
+  <DrawerPrimitive.Title ref={ref} className={cn("text-typo-heading-3", className)} {...props} />
 ))
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = setPageMetadata("Login fejlede")
 const descriptionComponent = (
   <>
     <p>
-      Vi kunne ikke logge dig ind med UNI-login. Prøv igen om lidt eller spørg din lærer om hjælp.
+      Vi kunne ikke logge dig ind med Unilogin. Prøv igen om lidt eller spørg din lærer om hjælp.
     </p>
     <p>
       Hvis du bliver ved at opleve fejl, må du meget gerne kontakte vores{" "}
@@ -23,7 +23,7 @@ const descriptionComponent = (
 
 const LoginNotAuthorized = () => (
   <ErrorPageLayout
-    title="Fejl ved login med UNI-login"
+    title="Fejl ved login med Unilogin"
     description={descriptionComponent}
     buttonText="Gå til forsiden"
     buttonLink="/"

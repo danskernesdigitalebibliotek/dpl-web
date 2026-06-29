@@ -35,7 +35,7 @@ export default function Footer() {
                   href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/6/article/301826049"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
-                  Skoler og UNI-login
+                  Skoler og Unilogin
                 </SmartLink>
               </li>
               <li>

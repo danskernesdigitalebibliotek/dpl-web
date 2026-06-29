@@ -2010,6 +2010,13 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
     | { __typename: 'RouteRedirect', url: string }
    | null };
 
+export type GetBranchesQueryVariables = Exact<{
+  isilId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetBranchesQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', getBranches: Array<{ __typename?: 'Branch', isilId: string, title: string }> };
+
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3093,6 +3100,54 @@ useSuspenseGetArticleByPathQuery.getKey = (variables: GetArticleByPathQueryVaria
 
 useGetArticleByPathQuery.fetcher = (variables: GetArticleByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables, options);
 
+export const GetBranchesDocument = `
+    query getBranches($isilId: String) {
+  getBranches(isilId: $isilId) {
+    isilId
+    title
+  }
+}
+    `;
+
+export const useGetBranchesQuery = <
+      TData = GetBranchesQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesQueryVariables,
+      options?: Omit<UseQueryOptions<GetBranchesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBranchesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBranchesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getBranches'] : ['getBranches', variables],
+    queryFn: fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables),
+    ...options
+  }
+    )};
+
+useGetBranchesQuery.getKey = (variables?: GetBranchesQueryVariables) => variables === undefined ? ['getBranches'] : ['getBranches', variables];
+
+export const useSuspenseGetBranchesQuery = <
+      TData = GetBranchesQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetBranchesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetBranchesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetBranchesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getBranches'] : ['getBranches', variables],
+    queryFn: fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetBranchesQuery.getKey = (variables?: GetBranchesQueryVariables) => variables === undefined ? ['getBranches'] : ['getBranches', variables];
+
+
+useGetBranchesQuery.fetcher = (variables?: GetBranchesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables, options);
+
 export const GetCategoriesDocument = `
     query getCategories {
   goCategories {
@@ -3708,6 +3763,7 @@ useGetLogoutUrlsQuery.fetcher = (variables?: GetLogoutUrlsQueryVariables, option
 export const operationNames = {
   Query: {
     getArticleByPath: 'getArticleByPath',
+    getBranches: 'getBranches',
     getCategories: 'getCategories',
     getCategoryPageByPath: 'getCategoryPageByPath',
     getDplCmsPrivateConfiguration: 'getDplCmsPrivateConfiguration',
