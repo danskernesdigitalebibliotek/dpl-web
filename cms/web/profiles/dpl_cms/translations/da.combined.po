@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-29 09:44+0200\n"
-"PO-Revision-Date: 2026-06-29 09:44+0200\n"
+"POT-Creation-Date: 2026-06-29 09:55+0200\n"
+"PO-Revision-Date: 2026-06-29 09:55+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -22870,6 +22870,17 @@ msgid ""
 "title. "
 msgstr ""
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:label"
+msgid "Prioritised material type"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:description"
+msgid ""
+"Select which material type should be prioritised when borrowers click a "
+"material. If the material has a manifestation with that material type, it "
+"will be opened. Otherwise the website's normal logic applies."
+msgstr ""
+
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_amount_of_materials:label"
 msgid "Amount of materials (Deprecated - will be deleted!)"
 msgstr ""
@@ -23612,6 +23623,74 @@ msgstr ""
 
 msgctxt "field.storage.paragraph.field_max_item_amount:settings:allowed_values:15:label"
 msgid "16"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:0:label"
+msgid "Bog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:1:label"
+msgid "E-bog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:2:label"
+msgid "Lydbog (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
+msgid "Billedbog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:4:label"
+msgid "Billedbog (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:5:label"
+msgid "Tegneserie"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:6:label"
+msgid "Tegneserie (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:7:label"
+msgid "Musik (cd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:8:label"
+msgid "Musik (grammofonplade)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:9:label"
+msgid "Film (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:10:label"
+msgid "Film (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:11:label"
+msgid "Film (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:12:label"
+msgid "Film (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:13:label"
+msgid "Tv-serie (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:14:label"
+msgid "Tv-serie (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:15:label"
+msgid "Tv-serie (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:16:label"
+msgid "Tv-serie (online)"
 msgstr ""
 
 msgctxt "field.storage.taxonomy_term.field_opening_hours_color:settings:format"
