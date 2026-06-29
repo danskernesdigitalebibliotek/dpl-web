@@ -1121,3 +1121,10 @@ function dpl_update_update_10071(): string {
 function dpl_update_update_10072(): string {
   return _dpl_update_install_modules(['dpl_app']);
 }
+
+/**
+ * Enable facets_date_range module.
+ */
+function dpl_update_update_10073(): string {
+  return _dpl_update_install_modules(['facets_date_range']);
+}

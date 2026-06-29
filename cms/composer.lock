@@ -11694,6 +11694,18 @@
             "time": "2025-12-06T11:56:16+00:00"
         },
         {
+            "name": "npm-asset/flatpickr",
+            "version": "4.6.13",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/flatpickr/-/flatpickr-4.6.13.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "npm-asset/select2",
             "version": "4.1.0",
             "dist": {

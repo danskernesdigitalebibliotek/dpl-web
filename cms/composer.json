@@ -240,6 +240,7 @@
         "drush/drush": "^13",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
+        "npm-asset/flatpickr": "^4.6.13",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
