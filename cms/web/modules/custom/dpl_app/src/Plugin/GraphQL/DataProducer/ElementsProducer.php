@@ -148,6 +148,22 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           ];
         }
       }
+      elseif ($paragraph->bundle() == 'nav_spots_manual') {
+        $field = $paragraph->get('field_nav_spots_content');
+        if ($field instanceof EntityReferenceFieldItemList) {
+          $field_context->addCacheableDependency($paragraph);
+          $linkedPages = [];
+
+          foreach ($field->referencedEntities() as $entity) {
+            $linkedPages[] = $entity->uuid();
+          }
+          $result[] = [
+            '__type' => 'AppContentElementNavSpotsManual',
+            'id' => $paragraph->uuid(),
+            'linkedPages' => $linkedPages,
+          ];
+        }
+      }
     }
 
     return $result;

@@ -71,3 +71,11 @@ type AppContentElementVideoBundleAutomatic implements AppContentElement {
   limit: Int!
   video: AppVideo!
 }
+
+"""
+A navigation spots element with manually selected content.
+"""
+type AppContentElementNavSpotsManual implements AppContentElement {
+  id: String!
+  linkedPages: [String!]!
+}
