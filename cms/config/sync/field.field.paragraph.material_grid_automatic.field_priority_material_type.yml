@@ -1,0 +1,21 @@
+uuid: 4a32d085-98c3-47f5-b2fa-df84f6e813a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_priority_material_type
+    - paragraphs.paragraphs_type.material_grid_automatic
+  module:
+    - options
+id: paragraph.material_grid_automatic.field_priority_material_type
+field_name: field_priority_material_type
+entity_type: paragraph
+bundle: material_grid_automatic
+label: 'Prioritised material type'
+description: "Select which material type should be prioritised when borrowers click a material. If the material has a manifestation with that material type, it will be opened. Otherwise the website's normal logic applies."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

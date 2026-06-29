@@ -99,18 +99,8 @@ class ContentLockHooks implements ContainerInjectionInterface {
       return;
     }
 
-    $entity_id = $entity->id();
-    if ($entity_id === NULL) {
-      return;
-    }
-
     /** @var object{uid: int|string, timestamp: int}|false $lock_data */
-    $lock_data = $this->contentLock->fetchLock(
-      (int) $entity_id,
-      $entity->language()->getId(),
-      NULL,
-      $entity->getEntityTypeId()
-    );
+    $lock_data = $this->contentLock->fetchLock($entity);
 
     if (!is_object($lock_data)) {
       return;
@@ -176,19 +166,8 @@ class ContentLockHooks implements ContainerInjectionInterface {
     /** @var \Drupal\content_lock\ContentLock\ContentLock $contentLock */
     $contentLock = \Drupal::service('content_lock');
 
-    $entity_id = $entity->id();
-    if ($entity_id === NULL) {
-      return;
-    }
-
     // Release all locks on this entity to allow deletion.
-    $contentLock->release(
-      (int) $entity_id,
-      $entity->language()->getId(),
-      NULL,
-      NULL,
-      $entity->getEntityTypeId()
-    );
+    $contentLock->release($entity);
   }
 
 }
