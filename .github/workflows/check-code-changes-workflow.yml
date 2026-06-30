@@ -1,4 +1,8 @@
 ---
+# Check if specific code is present, if certain files have been changed.
+# This is especially useful in the CMS, as certain config changes requires us
+# to also run an update hook.
+
 on:
   workflow_call:
     inputs:
