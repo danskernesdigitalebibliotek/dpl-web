@@ -180,6 +180,77 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           ];
         }
       }
+      elseif ($paragraph->bundle() == 'go_material_slider_automatic') {
+        $cql = $paragraph->get('field_cql_search')->value;
+        if ($cql) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementGoMaterialSliderAutomatic',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_title')->value,
+            'cql' => $cql,
+            'limit' => (int) $paragraph->get('field_slider_amount_of_materials')->value,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'go_material_slider_manual') {
+        $workIds = [];
+        foreach ($paragraph->get('field_material_slider_work_ids') as $item) {
+          // @phpstan-ignore property.notFound (magic property)
+          if ($item->value) {
+            $workIds[] = $item->value;
+          }
+        }
+
+        if (!empty($workIds)) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementGoMaterialSliderManual',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_title')->value,
+            'workIds' => $workIds,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'material_grid_automatic') {
+        $cql = $paragraph->get('field_cql_search')->value;
+        if ($cql) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementMaterialGridAutomatic',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_material_grid_title')->value,
+            'description' => $paragraph->get('field_material_grid_description')->value,
+            'cql' => $cql,
+            'limit' => (int) $paragraph->get('field_material_amount')->value,
+            'priorityMaterialType' => $paragraph->get('field_priority_material_type')->value,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'material_grid_manual') {
+        $workIds = [];
+        foreach ($paragraph->get('field_material_grid_work_ids') as $item) {
+          // @phpstan-ignore property.notFound (magic property)
+          if ($item->value) {
+            $workIds[] = $item->value;
+          }
+        }
+
+        if (!empty($workIds)) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementMaterialGridManual',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_material_grid_title')->value,
+            'description' => $paragraph->get('field_material_grid_description')->value,
+            'workIds' => $workIds,
+          ];
+        }
+      }
     }
 
     return $result;
