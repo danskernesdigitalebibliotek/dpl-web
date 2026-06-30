@@ -6,7 +6,9 @@ _meta:
   default_langcode: da
   depends:
     e00e1460-169e-468d-9835-d664f06d0969: file
-    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+    ba5dbc83-f886-4414-b89c-45dbe45804b1: media
+    ddd4f544-aff0-40d4-8c8e-651ca39e8db6: media
+    5b67227c-adfb-46bd-8808-afc5494b24f9: node
 default:
   revision_uid:
     -
@@ -29,9 +31,6 @@ default:
   sticky:
     -
       value: false
-  revision_translation_affected:
-    -
-      value: true
   bnf_state:
     -
       value: 0
@@ -45,12 +44,6 @@ default:
       title: ''
       width: 640
       height: 443
-  metatag:
-    -
-      tag: meta
-      attributes:
-        name: title
-        content: 'Gaming | DPL CMS'
   path:
     -
       alias: /kategori/gaming
@@ -58,10 +51,69 @@ default:
       pathauto: 1
   field_category_menu_image:
     -
-      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+      entity: ba5dbc83-f886-4414-b89c-45dbe45804b1
   field_category_menu_title:
     -
       value: Gaming
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 270f1b22-1867-4a7b-92e4-412566b65c80
+          bundle: go_linkbox
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1782736455
+          behavior_settings:
+            -
+              value: {  }
+          field_go_description:
+            -
+              value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet nibh risus. Suspendisse pulvinar semper justo, non varius dui laoreet vel. Ut interdum sapien quis suscipit dictum. Proin vitae aliquam tortor. Fusce fermentum eros eget ultrices placerat. Nullam auctor convallis semper. Pellentesque ipsum mi, faucibus ullamcorper mauris sit amet, molestie lacinia libero. Sed a orci neque. Nunc diam arcu, tristique et luctus a, accumsan sit amet felis. '
+          field_go_image:
+            -
+              entity: ddd4f544-aff0-40d4-8c8e-651ca39e8db6
+          field_go_link_paragraph:
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: ac57f2a6-6115-42db-b4e9-5dd704057721
+                  bundle: go_link
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1782736455
+                  behavior_settings:
+                    -
+                      value: {  }
+                  field_go_link:
+                    -
+                      target_uuid: 5b67227c-adfb-46bd-8808-afc5494b24f9
+                      title: 'Forside link'
+                      options:
+                        href: /node/34
+                        data-entity-type: node
+                        data-entity-uuid: 5b67227c-adfb-46bd-8808-afc5494b24f9
+                        data-entity-substitution: canonical
+                  field_target_blank:
+                    -
+                      value: false
+          field_title:
+            -
+              value: Gaming
   field_publication_date:
     -
       value: '2025-05-06'
