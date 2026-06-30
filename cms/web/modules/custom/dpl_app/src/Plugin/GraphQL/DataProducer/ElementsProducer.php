@@ -198,7 +198,9 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
         $workIds = [];
         foreach ($paragraph->get('field_material_slider_work_ids') as $item) {
           // @phpstan-ignore property.notFound (magic property)
-          $workIds[] = $item->value;
+          if ($item->value) {
+            $workIds[] = $item->value;
+          }
         }
 
         if (!empty($workIds)) {
@@ -232,7 +234,9 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
         $workIds = [];
         foreach ($paragraph->get('field_material_grid_work_ids') as $item) {
           // @phpstan-ignore property.notFound (magic property)
-          $workIds[] = $item->value;
+          if ($item->value) {
+            $workIds[] = $item->value;
+          }
         }
 
         if (!empty($workIds)) {
