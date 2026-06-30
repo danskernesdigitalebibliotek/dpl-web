@@ -1,9 +1,4 @@
 # Unified Dependabot configuration for DPL Web monorepo
-# This configuration manages dependency updates for all four projects:
-# - cms (Drupal CMS with Composer and npm)
-# - design-system (React/Storybook with npm)
-# - go (Next.js with npm)
-# - react (React components with npm)
 version: 2
 updates:
   # GitHub Actions - applies to all workflows in .github/workflows
@@ -72,186 +67,79 @@ updates:
       - "cms"
       - "drupal"
 
-  # CMS - npm dependencies
+  # JavaScript / TypeScript - the whole pnpm workspace (cms, design-system, go,
+  # react and packages/*), managed from the workspace root.
   - package-ecosystem: npm
-    directory: "/cms"
-    open-pull-requests-limit: 0
+    directory: "/"
+    open-pull-requests-limit: 20
+    versioning-strategy: increase
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "javascript"
     groups:
       typescript-eslint:
         patterns:
           - "@typescript-eslint/*"
-    ignore:
-      # @types/node are linked to the Node version used within the project.
-      # Bump the package manually when upgrading to a new Node version.
-      - dependency-name: "@types/node"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
-    schedule:
-      interval: weekly
-      day: monday
-      time: "04:00"
-      timezone: Europe/Copenhagen
-    labels:
-      - "dependencies"
-      - "cms"
-      - "js-dependencies"
-
-  # Design System - npm dependencies
-  - package-ecosystem: npm
-    directory: "/design-system"
-    open-pull-requests-limit: 0
-    versioning-strategy: increase
-    schedule:
-      interval: weekly
-      day: monday
-      time: "04:00"
-      timezone: Europe/Copenhagen
-    labels:
-      - "dependencies"
-      - "design-system"
-    groups:
-      react:
-        patterns:
-          - "react"
-          - "@types/react"
-          - "react-dom"
-          - "@types/react-dom"
-      storybook:
-        patterns:
-          - "storybook"
-          - "@storybook/*"
-    ignore:
-      - dependency-name: "@types/node"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "react"
-        versions: [">=18"]
-      - dependency-name: "@types/react"
-        versions: [">=18"]
-      - dependency-name: "react-dom"
-        versions: [">=18"]
-      - dependency-name: "@types/react-dom"
-        versions: [">=18"]
-      - dependency-name: "stylelint-config-recommended-scss"
-        versions: [">=16"]
-      - dependency-name: "storybook"
-        versions: [">=10"]
-      - dependency-name: "@storybook/*"
-        versions: [">=10"]
-      - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
-
-  # Go (Next.js) - npm dependencies
-  - package-ecosystem: npm
-    directory: "/go"
-    open-pull-requests-limit: 0
-    versioning-strategy: increase
-    schedule:
-      interval: weekly
-      day: monday
-      time: "04:00"
-      timezone: Europe/Copenhagen
-    labels:
-      - "dependencies"
-      - "go"
-    groups:
-      radix-ui:
-        patterns:
-          - "@radix-ui/*"
-      graphql-codegen:
-        patterns:
-          - "@graphql-codegen/*"
       typescript:
         patterns:
           - "typescript"
           - "tsx"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/js"
+      prettier:
+        patterns:
+          - "prettier"
+          - "eslint-config-prettier"
       react:
         patterns:
           - "react"
           - "react-dom"
           - "@types/react"
           - "@types/react-dom"
+      react-query:
+        patterns:
+          - "@tanstack/react-query"
+          - "@tanstack/react-query-devtools"
+      redux:
+        patterns:
+          - "@reduxjs/toolkit"
+          - "@types/react-redux"
+          - "react-redux"
+          - "redux"
+          - "redux-persist"
       next:
         patterns:
           - "next"
           - "@next/env"
           - "eslint-config-next"
           - "@next/eslint-plugin-next"
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
       tailwindcss:
         patterns:
           - "tailwindcss"
           - "@tailwindcss/*"
           - "tailwindcss-animate"
-      prettier:
-        patterns:
-          - "prettier"
-          - "eslint-config-prettier"
       cva:
         patterns:
           - "class-variance-authority"
           - "clsx"
-      storybook:
-        patterns:
-          - "storybook"
-          - "@storybook/*"
-          - "eslint-plugin-storybook"
       xstate:
         patterns:
           - "xstate"
           - "@xstate/*"
-      react-query:
-        patterns:
-          - "@tanstack/react-query"
-          - "@tanstack/react-query-devtools"
       jwt-simple:
         patterns:
           - "jwt-simple"
           - "@types/jwt-simple"
-      eslint:
-        patterns:
-          - "eslint"
-          - "@eslint/js"
-    ignore:
-      - dependency-name: "@types/node"
-        update-types: ["version-update:semver-major"]
-      # @vitejs/plugin-react 6 expects a newer Vite major than the current Go frontend uses.
-      - dependency-name: "@vitejs/plugin-react"
-        versions: [">=6.0.0"]
-      # The Go lint stack still depends on packages that only support ESLint 8/9.
-      - dependency-name: "eslint"
-        versions: [">=10.0.0"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/typescript-react-query"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/cli"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/client-preset"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/introspection"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/schema-ast"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
-      # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
-      - dependency-name: "orval"
-        update-types: ["version-update:semver-major"]
-
-  # React - npm dependencies
-  - package-ecosystem: npm
-    directory: "/react"
-    open-pull-requests-limit: 0
-    versioning-strategy: increase
-    schedule:
-      interval: weekly
-      day: monday
-      time: "04:00"
-      timezone: Europe/Copenhagen
-    labels:
-      - "dependencies"
-      - "react"
-    groups:
       babel:
         patterns:
           - "@babel/*"
@@ -264,23 +152,11 @@ updates:
           - "@graphql-typed-document-node/core"
           - "replace-in-file"
           - "typescript-graphql-typed-files-modules"
-      react:
-        patterns:
-          - "react"
-          - "@types/react"
-          - "react-dom"
-          - "@types/react-dom"
-      redux:
-        patterns:
-          - "@reduxjs/toolkit"
-          - "@types/react-redux"
-          - "react-redux"
-          - "redux"
-          - "redux-persist"
       storybook:
         patterns:
           - "storybook"
           - "@storybook/*"
+          - "eslint-plugin-storybook"
       testing-library:
         patterns:
           - "@testing-library/*"
@@ -289,58 +165,58 @@ updates:
           - "cypress"
           - "@cypress/*"
     ignore:
+      # @types/node tracks the Node version used by the workspace; bump manually
+      # when upgrading Node.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "storybook"
-        versions: [">=9"]
-      - dependency-name: "@storybook/react"
-        versions: [">=9.0.0"]
-      - dependency-name: "@storybook/react-webpack5"
-        versions: [">=9"]
-      - dependency-name: "@storybook/addon-queryparams"
-        versions: [">=9.0.0"]
-      - dependency-name: "@chromatic-com/storybook"
-        versions: [">=4"]
-      # The current React Cypress stack is not compatible with Cypress 14.4+ or code-coverage 4.
+      # TypeScript majors are upgraded deliberately (cms is on 6, the JS apps and
+      # service-layer are on 5).
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # Cypress majors are upgraded deliberately across the workspace.
       - dependency-name: "cypress"
-        versions: [">=14.4.0"]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "@cypress/code-coverage"
         versions: [">=4.0.0"]
-      - dependency-name: "dotenv"
-        update-types: ["version-update:semver-major"]
-      # Vitest 3 changes unit-test asset rendering and timer behavior in the React snapshot suite.
-      - dependency-name: "vitest"
-        versions: [">=3.0.0"]
-      # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
+      # The lint stacks still depend on plugins that only support ESLint 8/9.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
-      # eslint-plugin-cypress v6 uses a flat-config shape that the current ESLint setup rejects.
       - dependency-name: "eslint-plugin-cypress"
         versions: [">=6.0.0"]
+      - dependency-name: "eslint-plugin-react-hooks"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@chromatic-com/storybook"
+        versions: [">=4"]
+      # @vitejs/plugin-react 6 expects a newer Vite major than the Go frontend uses.
+      - dependency-name: "@vitejs/plugin-react"
+        versions: [">=6.0.0"]
+      - dependency-name: "dotenv"
+        update-types: ["version-update:semver-major"]
+      # Vitest 3 changes unit-test asset rendering and timer behaviour in the
+      # React snapshot suite.
+      - dependency-name: "vitest"
+        versions: [">=3.0.0"]
       # DDFNEXT-1501 - conflicts with current setup.
       - dependency-name: "downshift"
         versions: [">=9.0.9"]
-      - dependency-name: "eslint-plugin-react-hooks"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/typescript-react-query"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "typescript"
+      - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
       - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "stylelint-config-recommended-scss"
-        update-types: ["version-update:semver-major"]
-      # codegen breaks with these versions. DDFNEXT-1455
-      # typescript / typescript-operations v6 emit a second set of input/enum
-      # types that collide with typescript-react-query@6 legacyMode output.
-      # graphql 17 is also unsupported by the pinned codegen toolchain (all
-      # plugins peer-require graphql ^16), so codegen crashes on it.
+      # The pinned GraphQL codegen toolchain peer-requires graphql ^16 and the
+      # v6/v7 plugin majors emit colliding types. See DDFNEXT-1455.
       - dependency-name: "graphql"
         versions: [">=17.0.0"]
-      - dependency-name: "@graphql-codegen/add"
-        versions: [">=7.0.0"]
       - dependency-name: "@graphql-codegen/cli"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/client-preset"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/schema-ast"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/typescript-react-query"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@graphql-codegen/add"
         versions: [">=7.0.0"]
       - dependency-name: "@graphql-codegen/introspection"
         versions: [">=6.0.0"]
