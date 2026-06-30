@@ -937,7 +937,7 @@ interface Route {
   url: String!
 }
 
-union RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
+union RouteEntityUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage | NodePage
 
 type RouteExternal implements Route {
   internal: Boolean!
