@@ -53,7 +53,7 @@ README for the design rules and the refresh flow.
 Check the individual project documentation for specific requirements. Generally you'll need:
 
 - Node.js (check `.nvmrc` files in each project)
-- Yarn
+- pnpm
 - Docker
 - go-task (optional, for task runner)
 - Composer (for CMS)

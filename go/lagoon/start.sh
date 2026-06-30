@@ -3,4 +3,4 @@ if [ ! -f .env.local ]; then
   node ./scripts/prepare-docker-env-vars.mjs
 fi
 
-exec yarn start
+exec /app/go/node_modules/.bin/next

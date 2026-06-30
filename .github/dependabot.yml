@@ -72,25 +72,6 @@ updates:
       - "cms"
       - "drupal"
 
-  # CMS dev-scripts - Composer dependencies
-  - package-ecosystem: composer
-    directory: "/cms/dev-scripts/dpl-react"
-    open-pull-requests-limit: 20
-    ignore:
-      # symfony/console 7.x requires PHP >=8.4.1, but the platform still runs
-      # PHP 8.3. Unblock once the PHP 8.3 => 8.4 upgrade lands. See DDFNEXT-1523.
-      - dependency-name: "symfony/console"
-        versions: [">=7.0.0"]
-    schedule:
-      interval: weekly
-      day: monday
-      time: "04:00"
-      timezone: Europe/Copenhagen
-    labels:
-      - "dependencies"
-      - "cms"
-      - "dev-scripts"
-
   # CMS - npm dependencies
   - package-ecosystem: npm
     directory: "/cms"

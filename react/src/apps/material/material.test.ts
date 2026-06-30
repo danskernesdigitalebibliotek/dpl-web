@@ -50,6 +50,12 @@ describe("Material", () => {
   });
 
   it("Renders only first 3 horizontal lines items", () => {
+    cy.interceptGraphql({
+      operationName: "getMaterial",
+      fixtureFilePath: "material/fbi-api.json"
+    });
+    cy.visit("/iframe.html?id=apps-material--default&viewMode=story&type=bog");
+    cy.getBySel("material-header-content").scrollIntoView({ duration: 100 });
     cy.getBySel("material-description-series-members")
       .should("be.visible")
       .find("span")
@@ -57,6 +63,12 @@ describe("Material", () => {
   });
 
   it("Renders additional horizontal lines items after button click", () => {
+    cy.interceptGraphql({
+      operationName: "getMaterial",
+      fixtureFilePath: "material/fbi-api.json"
+    });
+    cy.visit("/iframe.html?id=apps-material--default&viewMode=story&type=bog");
+    cy.getBySel("material-header-content").scrollIntoView({ duration: 100 });
     cy.getBySel("material-description-series-members").find("button").click();
 
     cy.getBySel("material-description-series-members")
