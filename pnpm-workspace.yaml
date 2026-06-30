@@ -18,7 +18,6 @@ allowBuilds:
   core-js-pure: true
   cypress: true
   esbuild: true
-  iron-session: true
   puppeteer: true
   sharp: true
   unrs-resolver: true
