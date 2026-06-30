@@ -76,7 +76,7 @@
         "ext-dom": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
-        "composer/installers": "1.12.0",
+        "composer/installers": "2.3.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/fbs-client": "*",
