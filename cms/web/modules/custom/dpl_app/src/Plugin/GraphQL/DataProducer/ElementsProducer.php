@@ -148,6 +148,38 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           ];
         }
       }
+      elseif ($paragraph->bundle() == 'recommendation') {
+        $workId = $paragraph->get('field_recommendation_work_id')->value;
+        if ($workId) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementRecommendation',
+            'id' => $paragraph->uuid(),
+            'imagePositionRight' => (bool) $paragraph->get('field_image_position_right')->value,
+            // @phpstan-ignore property.notFound (magic property)
+            'title' => $paragraph->get('field_recommendation_title')->processed,
+            'description' => $paragraph->get('field_recommendation_description')->value,
+            'workId' => $workId,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'nav_spots_manual') {
+        $field = $paragraph->get('field_nav_spots_content');
+        if ($field instanceof EntityReferenceFieldItemList) {
+          $field_context->addCacheableDependency($paragraph);
+          $linkedPages = [];
+
+          foreach ($field->referencedEntities() as $entity) {
+            $linkedPages[] = $entity->uuid();
+          }
+          $result[] = [
+            '__type' => 'AppContentElementNavSpotsManual',
+            'id' => $paragraph->uuid(),
+            'linkedPages' => $linkedPages,
+          ];
+        }
+      }
     }
 
     return $result;

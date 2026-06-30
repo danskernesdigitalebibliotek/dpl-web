@@ -45,6 +45,19 @@ interface AppContentElement {
   id: String!
 }
 
+type AppContentElementNavSpotsManual implements AppContentElement {
+  id: String!
+  linkedPages: [String!]!
+}
+
+type AppContentElementRecommendation implements AppContentElement {
+  description: String
+  id: String!
+  imagePositionRight: Boolean!
+  title: String
+  workId: String!
+}
+
 type AppContentElementText implements AppContentElement {
   body: String!
   id: String!
