@@ -84,6 +84,13 @@ type AppContentElementVideoBundleManual implements AppContentElement {
   workIds: [String!]!
 }
 
+type AppPage {
+  elements: [AppContentElement!]!
+  image: String
+  subtitle: String
+  title: String!
+}
+
 enum AppType {
   BIBLO
   BIBLOGO
@@ -900,6 +907,7 @@ scalar PhoneNumber
 type Query {
   dplTokens: DplTokens
   getAppCategories(id: String, type: AppType!): [AppCategory!]!
+  getAppPage(id: String!): AppPage
   getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
   goCategories(page: Int = 0): GoCategoriesResult
   goConfiguration: GoConfiguration
