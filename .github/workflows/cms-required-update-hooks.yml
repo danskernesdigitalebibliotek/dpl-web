@@ -1,0 +1,33 @@
+---
+name: CMS / Check for required update hooks
+on:
+  pull_request:
+    paths:
+      - 'cms/config/sync/core.extension.yml'
+      - 'cms/config/sync/user.role.*.yml'
+      - 'cms/config/sync/field_inheritance.field_inheritance.*.yml'
+jobs:
+  # Needed for webmaster sites, as user roles are in config_ignore.
+  checkRoles:
+    name: CMS / Check roles has been updated correctly
+    uses: ./.github/workflows/check-code-changes-workflow.yml
+    with:
+      trigger-path: 'cms/config/sync/user.role.*.yml'
+      target-code: '_dpl_update_alter_permissions'
+
+  # Needed for webmaster sites, as core.extension is in config_ignore.
+  checkModules:
+    name: CMS / Check roles has been updated correctly
+    uses: ./.github/workflows/check-code-changes-workflow.yml
+    with:
+      trigger-path: 'cms/config/sync/core.extension.yml'
+      target-code: '_dpl_update_(un)?install_modules'
+
+  # When updating field inheritance for eventinstances, we need to make sure
+  # that an update hook has run, to apply it on existing instances.
+  checkFieldInheritance:
+    name: CMS / Check field inheritance has been updated correctly
+    uses: ./.github/workflows/check-code-changes-workflow.yml
+    with:
+      trigger-path: 'cms/config/sync/field_inheritance.field_inheritance.*.yml'
+      target-code: '_dpl_update_field_inheritance'

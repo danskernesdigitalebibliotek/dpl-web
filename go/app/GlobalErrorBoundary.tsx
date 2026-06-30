@@ -1,6 +1,6 @@
 "use client"
 
-import { Component, ReactNode, RefObject, createRef } from "react"
+import React, { Component, ReactNode, createRef } from "react"
 
 import ErrorPageLayout from "@/components/pages/errorPageLayout/ErrorPageLayout"
 

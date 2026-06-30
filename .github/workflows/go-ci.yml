@@ -1,0 +1,282 @@
+name: Go / CI
+
+# The Storybook static build is produced ONCE in the `storybook` job and shared
+# with both the accessibility and chromatic jobs via an artifact. The Next.js
+# build has a single consumer (e2e) so it stays inline there — nothing to share.
+# Lint/typecheck/unit/codegen only need node_modules (pnpm cache) and committed
+# generated code, so they have no `needs:` and start in parallel immediately.
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - release/*
+    paths:
+      - 'go/**'
+      - 'packages/**'
+      - '.github/workflows/go-ci.yml'
+      - '.github/actions/**'
+      - 'schemas/openapi/publizon-adapter.yaml'
+      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'cms/dpl-cms.bnf.graphql'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'go/**'
+      - 'packages/**'
+      - '.github/workflows/go-ci.yml'
+      - '.github/actions/**'
+      - 'schemas/openapi/publizon-adapter.yaml'
+      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'cms/dpl-cms.bnf.graphql'
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Node-only checks: need only node_modules (pnpm cache) and the committed
+  # generated code. No `needs:`, so they run in parallel from the start.
+  # PR-only, matching the original go-*-check workflows.
+  # ---------------------------------------------------------------------------
+  eslint:
+    name: Go / ESLint check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run linter
+        run: pnpm run lint
+
+  prettier:
+    name: Go / Prettier check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check Prettier formatting
+        run: pnpm run format:check
+
+  typecheck:
+    name: Go / Type check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run typescript compile check
+        run: pnpm exec tsc --noEmit
+
+  unit:
+    name: Go / Unit test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run unit tests
+        run: pnpm run test:unit:once
+
+  codegen:
+    name: Go / Generated clients
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.repository_id }}-${{ github.workflow }}-codegen-${{ github.ref }}
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Codegen - REST services
+        run: task codegen:rest-services
+      - name: Codegen - dpl-cms GraphQL
+        run: task codegen:graphql
+      - name: Codegen - Publizon
+        run: task codegen:publizon
+      - name: Codegen - Pubhub
+        run: task codegen:pubhub
+      - name: Codegen - Unilogin
+        run: task codegen:unilogin
+      - name: Ensure generated client code has not drifted
+        run: git diff --exit-code
+
+  # ---------------------------------------------------------------------------
+  # Build Storybook once; accessibility and chromatic both consume the artifact.
+  # Runs on every trigger so whichever consumer is active has its input ready.
+  # ---------------------------------------------------------------------------
+  storybook:
+    name: Go / Build Storybook
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: 'go/.env.test'
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Storybook
+        run: pnpm run build-storybook --quiet
+      - name: Upload Storybook build
+        uses: actions/upload-artifact@v6
+        with:
+          name: go-storybook-static
+          path: go/storybook-static
+          retention-days: 1
+          if-no-files-found: error
+
+  accessibility:
+    name: Go / Accessibility tests
+    needs: storybook
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: 'go/.env.test'
+      - name: Install Playwright
+        run: pnpm exec playwright install --with-deps chromium
+        timeout-minutes: 5
+      - name: Download Storybook build
+        uses: actions/download-artifact@v6
+        with:
+          name: go-storybook-static
+          path: go/storybook-static
+      - name: Serve Storybook and run tests
+        run: |
+          export FORCE_COLOR=1
+          pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm dlx http-server storybook-static --port 6006 --silent" \
+            "pnpm dlx wait-on tcp:6006 && pnpm run test:storybook"
+
+  chromatic:
+    name: Go / Chromatic
+    needs: storybook
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.repository_id }}-${{ github.workflow }}-chromatic-${{ github.ref }}
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: 'go/.env.test'
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download Storybook build
+        uses: actions/download-artifact@v6
+        with:
+          name: go-storybook-static
+          path: go/storybook-static
+      - name: Publish to Chromatic
+        uses: chromaui/action@v17
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_GO }}
+          workingDir: go
+          # Use the prebuilt Storybook from the `storybook` job instead of
+          # rebuilding it here.
+          storybookBuildDir: storybook-static
+          autoAcceptChanges: ${{ github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' }}
+
+  # ---------------------------------------------------------------------------
+  # E2E builds the Next.js app itself (single consumer → nothing to share).
+  # ---------------------------------------------------------------------------
+  e2e:
+    name: Go / E2E job with Cypress
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: 'go/.env.test'
+      - name: Build the Nextjs app and run Cypress tests
+        uses: cypress-io/github-action@v7
+        env:
+          # A bug in the current version of Nextjs causes NODE_ENV=test to brick the build
+          # By overridding the variables here we can ensure that the correct urls are set
+          TEST_MODE: true
+          DPL_CMS_BASE_URL: http://localhost:9000
+          UNILOGIN_CLIENT_ID: http://localhost:9000/client
+          UNILOGIN_WELLKNOWN_URL: http://localhost:9000
+          DPL_GO_BASE_URL: http://localhost:3000
+        with:
+          install: false
+          build: pnpm run build
+          start: pnpm run start
+          command: pnpm run cypress:run
+          browser: chrome
+          working-directory: go

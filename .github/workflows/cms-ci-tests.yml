@@ -132,23 +132,25 @@ jobs:
   LightHouse:
     name: CMS / Test site performance using Lighthouse
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
       - uses: actions/checkout@v7
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
+        working-directory: cms
       - name: Run Lighthouse test
         run: task ci:lighthouse
+        working-directory: cms
       - name: Archive logs
         uses: actions/upload-artifact@v7
         with:
@@ -158,23 +160,25 @@ jobs:
   Pa11y:
     name: CMS / Test accessibility using Pa11y
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
       - uses: actions/checkout@v7
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
+        working-directory: cms
       - name: Run Pa11y
         run: task ci:pa11y
+        working-directory: cms
       - name: Archive screenshots
         if: ${{ always() }}
         uses: actions/upload-artifact@v7
@@ -236,17 +240,13 @@ jobs:
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
-        run: npx markdownlint-cli2
+        run: pnpm dlx markdownlint-cli2
 
   Shellcheck:
     name: CMS / Shellcheck
@@ -283,60 +283,52 @@ jobs:
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ESLint
-        run: npx eslint web -c .eslintrc.json
+        run: pnpm exec eslint web -c .eslintrc.json
 
   EslintCypress:
     name: CMS / Lint Cypress tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
       - uses: actions/checkout@v7
         # git with HTTP authentication provides an easy way for us to install
         # unreleased commits of NPM projects. Currently: Pa11yCI
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: ./.github/actions/common-setup-js
         with:
-          cache: 'yarn'
-          cache-dependency-path: 'cms/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ESLint
-        run: npx eslint cypress -c cypress/.eslintrc.json
+        working-directory: cms
+        run: pnpm exec eslint cypress -c cypress/.eslintrc.json
 
   CheckDrupalConfig:
     name: CMS / Check Drupal Config
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
       - uses: actions/checkout@v7
         with:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset:clean
+        working-directory: cms
       - name: Export configuration
         run: task dev:cli -- drush config-export -y
+        working-directory: cms
       - name: Check for uncommited configuration after install
-        run: git diff --ignore-space-at-eol --exit-code config/sync/*.yml
+        run: git diff --ignore-space-at-eol --exit-code cms/config/sync/*.yml
 
   CheckPhpVersion:
     name: CMS / Check PHP version

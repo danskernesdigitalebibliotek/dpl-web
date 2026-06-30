@@ -64,7 +64,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
           data-cy={dataCy}
           type="text"
           placeholder={t("inputPlaceholderText")}
-          aria-label={t("inputPlaceholderText")}
           onKeyUp={(e) => {
             // Only redirect if there is no selected item in autosuggest + query has length above 0 characters
             if (e.key === "Enter" && qWithoutQuery === q && !!q.length) {

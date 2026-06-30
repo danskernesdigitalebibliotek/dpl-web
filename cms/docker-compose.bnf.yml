@@ -12,7 +12,7 @@ x-user:
 x-environment:
   &default-environment
     # This is the only that differs from docker-compose.yml
-    LAGOON_ROUTE: &default-url https://bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+    LAGOON_ROUTE: &default-url https://bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     LAGOON_PROJECT: 'bnf'
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
@@ -42,7 +42,7 @@ services:
       NGINX_PROXY_PASS: http://bnfvarnish:8080
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
-        bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+        bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     working_dir: /app
 
   bnfvarnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
@@ -62,7 +62,7 @@ services:
       << : *default-environment
       # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
       # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy)
-      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-bnfvarnish.${DEV_TLD:-docker}
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-bnfvarnish.${DEV_TLD:-local}
       VIRTUAL_PORT: 8080
       SERVICE_NAME: bnfvarnish
 
@@ -90,7 +90,7 @@ services:
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
-      VIRTUAL_HOST: bnfnginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+      VIRTUAL_HOST: bnfnginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
 
   bnfphp: # php-fpm server that executes php requests.
     # https://docs.lagoon.sh/lagoon/docker-images/php-fpm

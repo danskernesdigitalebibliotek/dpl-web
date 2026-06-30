@@ -1,4 +1,4 @@
-describe("Patron page", () => {
+describe("Patron page", { testIsolation: false }, () => {
   before(() => {
     cy.createFakeAuthenticatedSession();
     cy.createFakeLibrarySession();

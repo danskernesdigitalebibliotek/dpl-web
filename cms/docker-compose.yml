@@ -28,7 +28,7 @@ x-user:
 x-environment:
   &default-environment
     # Lagoon ensures that Drush knows the local site URI using this variable.
-    LAGOON_ROUTE: &default-url https://${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+    LAGOON_ROUTE: https://${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     # Environment variables which mimic what will be set in a Lagoon cluster locally
     LAGOON_PROJECT: 'dplcms'
     LAGOON_ENVIRONMENT: 'local'
@@ -56,7 +56,7 @@ services:
       NGINX_PROXY_PASS: http://varnish:8080
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
-        ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+        ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
         dpl-cms.docker
     working_dir: /app
 
@@ -80,7 +80,7 @@ services:
       << : *default-environment
       # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
       # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy)
-      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-varnish.${DEV_TLD:-docker}
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-varnish.${DEV_TLD:-local}
       VIRTUAL_PORT: 8080
 
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
@@ -112,7 +112,7 @@ services:
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
-      VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+      VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/cms/web/sites/default/files/ # location where the persistent storage should be mounted

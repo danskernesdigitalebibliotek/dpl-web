@@ -1,4 +1,4 @@
-describe("Reservation list pagination", () => {
+describe("Reservation list pagination", { testIsolation: false }, () => {
   before(() => {
     cy.createFakeAuthenticatedSession();
     cy.createFakeLibrarySession();

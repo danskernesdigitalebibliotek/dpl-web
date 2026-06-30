@@ -65,6 +65,82 @@ export type AdgangsplatformenUserToken = {
   token?: Maybe<Scalars['String']['output']>;
 };
 
+export type AppCategory = {
+  __typename?: 'AppCategory';
+  elements: Array<AppContentElement>;
+  icon: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type AppContentElement = {
+  id: Scalars['String']['output'];
+};
+
+export type AppContentElementNavSpotsManual = AppContentElement & {
+  __typename?: 'AppContentElementNavSpotsManual';
+  id: Scalars['String']['output'];
+  linkedPages: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementRecommendation = AppContentElement & {
+  __typename?: 'AppContentElementRecommendation';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  imagePositionRight: Scalars['Boolean']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workId: Scalars['String']['output'];
+};
+
+export type AppContentElementText = AppContentElement & {
+  __typename?: 'AppContentElementText';
+  body: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+};
+
+export type AppContentElementVideo = AppContentElement & {
+  __typename?: 'AppContentElementVideo';
+  id: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  video: AppVideo;
+};
+
+export type AppContentElementVideoBundleAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementVideoBundleAutomatic';
+  cql: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  video: AppVideo;
+};
+
+export type AppContentElementVideoBundleManual = AppContentElement & {
+  __typename?: 'AppContentElementVideoBundleManual';
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  video: AppVideo;
+  workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppPage = {
+  __typename?: 'AppPage';
+  elements: Array<AppContentElement>;
+  image?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
+export type AppType =
+  | 'BIBLO'
+  | 'BIBLOGO'
+  | 'MYBIBLO';
+
+export type AppVideo = {
+  __typename?: 'AppVideo';
+  thumbnail: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
 export type BetweenFloatInput = {
   max?: InputMaybe<Scalars['Float']['input']>;
   min?: InputMaybe<Scalars['Float']['input']>;
@@ -949,6 +1025,8 @@ export type ParagraphWebform = ParagraphInterface & {
 export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
+  getAppCategories: Array<AppCategory>;
+  getAppPage?: Maybe<AppPage>;
   getBranches: Array<Branch>;
   goCategories?: Maybe<GoCategoriesResult>;
   goConfiguration?: Maybe<GoConfiguration>;
@@ -959,6 +1037,17 @@ export type Query = { go: { cacheTags: string[] } } & {
   preview?: Maybe<NodeUnion>;
   reservationSettings: ReservationSettings;
   route?: Maybe<RouteUnion>;
+};
+
+
+export type QueryGetAppCategoriesArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  type: AppType;
+};
+
+
+export type QueryGetAppPageArgs = {
+  id: Scalars['String']['input'];
 };
 
 

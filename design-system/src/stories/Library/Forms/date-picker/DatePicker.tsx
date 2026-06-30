@@ -4,7 +4,7 @@ import flatpickr from "flatpickr";
 import { english } from "flatpickr/dist/l10n/default";
 import { Danish } from "flatpickr/dist/l10n/da";
 import { Instance } from "flatpickr/dist/types/instance";
-import { MutableRefObject, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { BaseOptions } from "flatpickr/dist/types/options";
 import { ReactComponent as ExpandMoreIcon } from "../../../../public/icons/collection/ExpandMore.svg";
 
@@ -14,7 +14,7 @@ export type DatePickerProps = {
 
 const DatePicker = (props: DatePickerProps) => {
   const { locale = "en" } = props;
-  const picker = useRef() as MutableRefObject<Instance>;
+  const picker = useRef<Instance | null>(null);
 
   const pickerRef = useCallback(
     (node: Node | null) => {

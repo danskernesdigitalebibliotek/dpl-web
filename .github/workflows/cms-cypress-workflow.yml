@@ -12,9 +12,6 @@ jobs:
   Cypress:
     name: CMS / Cypress / ${{ inputs.id }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
 
     steps:
       - uses: actions/checkout@v7
@@ -23,6 +20,10 @@ jobs:
           # certain vars.
           fetch-depth: 0
 
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
@@ -30,12 +31,15 @@ jobs:
 
       - name: Setup site
         run: task ci:reset
+        working-directory: cms
 
       - name: Run Cypress
         run: task ci:cypress:${{ inputs.id }}
+        working-directory: cms
 
       - name: Archive videoes
         if: always()
+        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
           name: cypress-${{ inputs.id }}-videos

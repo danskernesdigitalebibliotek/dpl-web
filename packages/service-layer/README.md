@@ -46,10 +46,10 @@ The OpenAPI spec is **not** vendored here. It lives at `/schemas/openapi/fbs-ada
 ## Available scripts
 
 ```bash
-yarn codegen:fbs    # Generate FBS types from OpenAPI spec
-yarn test           # Run all tests
-yarn test:watch     # Run tests in watch mode
-yarn typecheck      # Run TypeScript type checking
+pnpm run codegen:fbs    # Generate FBS types from OpenAPI spec
+pnpm run test           # Run all tests
+pnpm run test:watch     # Run tests in watch mode
+pnpm run typecheck      # Run TypeScript type checking
 ```
 
 ## How consuming apps import

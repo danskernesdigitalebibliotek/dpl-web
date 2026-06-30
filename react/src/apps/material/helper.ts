@@ -200,8 +200,8 @@ export const getManifestationOriginalTitle = (manifestation: Manifestation) => {
   if (manifestation.titles?.original?.length) {
     return manifestation.titles.original.join(", ");
   }
-  // This should never happen, so therefore ist not translated.
-  return "Unknown title";
+  // No original title delivered — return empty so the details row is hidden
+  return "";
 };
 
 export const materialContainsDanish = (work: Work) => {
@@ -644,6 +644,27 @@ export const getManifestationBasedOnType = (
   return bestRepresentation;
 };
 
+// Returns the requested material type only when the given manifestation
+// actually has that type. If it does not, returns undefined so callers
+// (e.g. URL construction) can fall back to the website's normal logic instead
+// of forcing a type the work cannot satisfy.
+//
+// Pass the manifestation already resolved via getManifestationBasedOnType:
+// that helper falls back to the best representation when the work has no
+// manifestation of the requested type, so a non-matching type here means the
+// work cannot satisfy it.
+export const getAvailablePriorityMaterialType = (
+  manifestation: Manifestation,
+  materialType?: ManifestationMaterialType
+): ManifestationMaterialType | undefined => {
+  if (!materialType) {
+    return undefined;
+  }
+  return getManifestationMaterialTypes(manifestation) === materialType
+    ? materialType
+    : undefined;
+};
+
 export const getWorkTitle = (work: Work): string => {
   const { titles, mainLanguages } = work;
   // For movies and TV series, use the full title directly.
@@ -924,6 +945,32 @@ if (import.meta.vitest) {
 
       const title = getManifestationTitle(manifestation);
       expect(title).toMatchInlineSnapshot(`"Unknown title"`);
+    });
+  });
+
+  describe("getManifestationOriginalTitle", () => {
+    it("returns the original titles joined by a comma", () => {
+      const manifestation = {
+        titles: {
+          original: ["Some Original Title", "Another Original Title"]
+        }
+      } as unknown as Manifestation;
+
+      const title = getManifestationOriginalTitle(manifestation);
+      expect(title).toMatchInlineSnapshot(
+        `"Some Original Title, Another Original Title"`
+      );
+    });
+
+    it("returns an empty string when no original title is available so the details row is hidden (DDF-366)", () => {
+      const manifestation = {
+        titles: {
+          original: []
+        }
+      } as unknown as Manifestation;
+
+      const title = getManifestationOriginalTitle(manifestation);
+      expect(title).toMatchInlineSnapshot(`""`);
     });
   });
 }

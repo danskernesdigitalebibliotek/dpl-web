@@ -8,8 +8,7 @@ Danish public libraries.
 ### Requirements
 
 - [go-task](https://github.com/go-task/task)
-- [nvm](https://github.com/nvm-sh/nvm)
-- [yarn 1.x](https://classic.yarnpkg.com/lang/en/)
+- [pnpm](https://pnpm.io/)
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Dory](https://github.com/FreedomBen/dory)
 
@@ -17,16 +16,16 @@ Before you can install the project you need to create the file `~/.npmrc` to
 [access the GitHub package registry as described using a personal access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
 [The token must be created with the required scopes: `repo` and `read:packages`](https://github.com/settings/tokens/new?description=npm&scopes=repo,read:packages)
 
-If you have npm installed locally this can be achieved by running the following
-command and using the token when prompted for password.
+This can be achieved by running the following command and using the token when
+prompted for password.
 
 ```bash
-npm login --registry=https://npm.pkg.github.com
+pnpm login --registry=https://npm.pkg.github.com
 ```
 
 ### Howto
 
-1. Ensure that your Node version matches what is specified in `.nvmrc`.
+1. Run `pnpm install` from the **repository root** to install dependencies for all workspace members.
 2. Run `task dev:start`
    - Storybook will open automatically in a browser
    - The console will contain build and lint information
@@ -179,13 +178,13 @@ export function WithoutData() {
   <summary>5. Run the development environment</summary>
 
 ```bash
-  yarn dev
+  pnpm run dev
 ```
 
 OR depending on your dev environment (docker or not)
 
 ```bash
-  sudo yarn dev
+  sudo pnpm run dev
 ```
 
 </details>
@@ -298,57 +297,23 @@ export function WithoutData() {
 
 ### Style using the DPL design system
 
-This project includes styling created by its sister repository -
-[the design system](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/design-system)
-as a npm package.
+This project is styled by its sibling in the monorepo,
+[the design system](https://github.com/danskernesdigitalebibliotek/dpl-web/tree/main/design-system).
+It is a pnpm workspace dependency (`workspace:*`), so React always builds
+against the design system source in the same checkout — there is no separate
+package to install or update.
 
-By default the project should include a release of the design system matching
-the current state of the project.
+React imports the design system's *built* assets, e.g.
+`@danskernesdigitalebibliotek/dpl-design-system/build/icons/...`, so the design
+system must be built before React. The root `task dev:cms-react` (and the CI
+build) handle this ordering automatically.
 
-To update the design system to the latest stable release of the design system
-run:
+#### Working against a design system branch
 
-```bash
-yarn add @danskernesdigitalebibliotek/dpl-design-system@latest
-```
-
-This command installs the latest released version of the package. Whenever a
-new version of the design system package is released, it is necessary
-to reinstall the package in this project using the same command to get the
-newest styling, because yarn adds a specific version number to the package name
-in package.json.
-
-#### Using unreleased design
-
-If you need to work with published but unreleased code from a specific branch
-of the design system, you can also use the branch name as the tag for the npm
-package, replacing all special characters with dashes (`-`).
-
-Example: To use the latest styling from a branch in the design system called
-`feature/availability-label`, run:
-
-```bash
-yarn add @danskernesdigitalebibliotek/dpl-design-system@feature-availability-label
-```
-
-If the branch resides in a fork (usually before a pull request is merged) you
-can use [aliasing](https://classic.yarnpkg.com/lang/en/docs/cli/add/#toc-yarn-add-alias)
-and run:
-
-```bash
-yarn config set "@my-fork:registry" "https://npm.pkg.github.com"
-yarn add @danskernesdigitalebibliotek/dpl-design-system@npm:@my-fork/dpl-design-system@feature-availability-label
-```
-
-If the branch is updated and you want the latest changes to take effect locally
-update the release used:
-
-```bash
-yarn upgrade @danskernesdigitalebibliotek/dpl-design-system
-```
-
-Note that references to unreleased code should never make it into official
-versions of the project.
+Because everything lives in one repository, to try out unreleased design
+system changes you check out the relevant branch and rebuild — no package
+juggling required. See
+[the cross-project development guide](../development.md).
 
 ### Cross application components
 

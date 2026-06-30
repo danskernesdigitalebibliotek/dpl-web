@@ -4,10 +4,8 @@ import HorizontalTermLine, {
   HorizontalTermLineProps,
 } from "../../Library/horizontal-term-line/HorizontalTermLine";
 
-import {
-  Page as Hero,
-  PageArgs as HeroArgs,
-} from "../../Library/hero/Hero.stories";
+import Hero from "../../Library/hero/Hero";
+import { PageArgs as HeroArgs } from "../../Library/hero/Hero.stories";
 
 type PageProps = {
   tags?: string[];

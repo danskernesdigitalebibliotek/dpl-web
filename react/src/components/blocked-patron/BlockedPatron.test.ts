@@ -1,6 +1,6 @@
 import { resetPersistedData } from "../../core/store";
 
-describe("Patron page", () => {
+describe("Patron page", { testIsolation: false }, () => {
   before(() => {
     // check if the resetPersistedData function is defined
     expect(resetPersistedData).to.be.a("function");

@@ -2,7 +2,10 @@ import clsx from "clsx";
 import * as React from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
-import { getManifestationBasedOnType } from "../../apps/material/helper";
+import {
+  getAvailablePriorityMaterialType,
+  getManifestationBasedOnType
+} from "../../apps/material/helper";
 import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
 import Link from "../../components/atoms/links/Link";
 import ButtonFavourite, {
@@ -54,7 +57,6 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const {
     work: {
       titles: { full: fullTitle },
-      manifestations: { bestRepresentation },
       creators
     }
   } = data;
@@ -62,13 +64,24 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const work = data.work as Work;
   const materialManifestationForDisplay = materialType
     ? getManifestationBasedOnType(work, materialType)
-    : bestRepresentation;
+    : work.manifestations.bestRepresentation;
 
   const { pid } = materialManifestationForDisplay;
 
   const author = creatorsToString(flattenCreators(creators), t);
 
-  const materialFullUrl = constructMaterialUrl(materialUrl, wid, materialType);
+  // Only add the type to the URL when the work actually has it; otherwise let
+  // the work page apply its normal logic. Reuse the manifestation already
+  // resolved for display instead of resolving it a second time.
+  const urlMaterialType = getAvailablePriorityMaterialType(
+    materialManifestationForDisplay,
+    materialType
+  );
+  const materialFullUrl = constructMaterialUrl(
+    materialUrl,
+    wid,
+    urlMaterialType
+  );
   const addToListRequest = (id: ButtonFavouriteId) => {
     dispatch(
       guardedRequest({

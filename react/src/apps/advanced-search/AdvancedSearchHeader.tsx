@@ -166,7 +166,12 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
   }, [isFormMode, rawCql, resetAndCollectPageStatistics, translatedCql]);
 
   return (
-    <form action={handleSearch}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch();
+      }}
+    >
       {isFormMode && (
         <>
           <h1 className="text-header-h2 advanced-search__title capitalize-first">
