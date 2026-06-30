@@ -4,6 +4,8 @@ import DisclosureControllable from "../Disclosures/DisclosureControllable";
 import InstantLoanSummary from "./InstantLoanSummary";
 import { HoldingsLogisticsV1 } from "../../core/fbs/model";
 import InstantLoanBranch from "./InstantLoanBranch";
+import { useEventStatistics } from "../../core/statistics/useStatistics";
+import { statistics } from "../../core/statistics/statistics";
 
 type InstantLoanProps = {
   manifestation: Manifestation;
@@ -16,11 +18,20 @@ const InstantLoan: React.FunctionComponent<InstantLoanProps> = ({
 }) => {
   const { pid, materialTypes } = manifestation;
   const materialType = materialTypes[0].materialTypeSpecific.display;
+  const { track } = useEventStatistics();
+
+  const trackInstantLoanClick = () =>
+    track("click", {
+      id: statistics.instantLoanClick.id,
+      name: statistics.instantLoanClick.name,
+      trackedData: pid
+    });
 
   return (
     <DisclosureControllable
       id="instant-loan"
       detailsClassName="disclosure text-body-large pagefold-parent--small"
+      onOpen={trackInstantLoanClick}
       summary={
         <InstantLoanSummary
           pid={pid}
