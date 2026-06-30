@@ -26,3 +26,6 @@ allowBuilds:
 # To mitigate the risk of supply chain attacks, wait two days before accepting
 # a new version of a package.
 minimumReleaseAge: 2880
+
+# Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
+blockExoticSubdeps: true
