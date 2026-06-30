@@ -53,60 +53,6 @@
             "url": "https://asset-packagist.org"
         },
         {
-            "type": "package",
-            "package": {
-                "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-250-quota-fudging/dist-react.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "^1.2.0"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "danskernesdigitalebibliotek/dpl-design-system",
-                "type": "drupal-library",
-                "version": "0.0.0",
-                "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
-                    "type": "zip"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-ddf-250-quota-fudging/dist-react.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "^1.2.0"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "danskernesdigitalebibliotek/dpl-design-system",
-                "type": "drupal-library",
-                "version": "0.0.0",
-                "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-web/releases/download/branch-develop/dist-design-system.zip",
-                    "type": "zip"
-                }
-            }
-        },
-        {
             "type": "path",
             "url": "packages/fbs-client",
             "options": {
@@ -133,8 +79,6 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -155,7 +99,7 @@
         "drupal/config_perms": "^2.3",
         "drupal/config_translation_po": "^1.0",
         "drupal/consumers": "^1.19",
-        "drupal/content_lock": "^2.4",
+        "drupal/content_lock": "^3.0",
         "drupal/cookieinformation": "^2.1",
         "drupal/core": "10.6.9",
         "drupal/core-composer-scaffold": "10.6.9",
@@ -305,9 +249,6 @@
             "npm-asset"
         ],
         "installer-paths": {
-            "web/themes/custom/novel/assets/{$name}": [
-                "danskernesdigitalebibliotek/dpl-design-system"
-            ],
             "web/core": [
                 "type:drupal-core"
             ],

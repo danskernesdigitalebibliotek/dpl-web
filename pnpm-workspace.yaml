@@ -1,0 +1,28 @@
+packages:
+  - cms
+  - design-system
+  - go
+  - packages/*
+  - react
+
+overrides:
+  "@types/react": "19.2.17"
+  "@types/react-dom": "19.2.3"
+
+# Whitelist of packages that are allowed to run build scripts.
+allowBuilds:
+  '@parcel/watcher': true
+  '@playwright/browser-chromium': true
+  '@swc/core': true
+  core-js: true
+  core-js-pure: true
+  cypress: true
+  esbuild: true
+  iron-session: true
+  puppeteer: true
+  sharp: true
+  unrs-resolver: true
+
+# To mitigate the risk of supply chain attacks, wait two days before accepting
+# a new version of a package.
+minimumReleaseAge: 2880

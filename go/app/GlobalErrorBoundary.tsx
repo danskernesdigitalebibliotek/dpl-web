@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Component, ReactNode } from "react"
+import React, { Component, ReactNode, createRef } from "react"
 
 import ErrorPageLayout from "@/components/pages/errorPageLayout/ErrorPageLayout"
 
@@ -23,7 +23,7 @@ class GlobalErrorBoundary extends Component<GlobalErrorProps, GlobalErrorState> 
   constructor(props: Record<string, unknown>) {
     super(props)
     this.state = { hasError: false }
-    this.contentRef = React.createRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>
+    this.contentRef = createRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>
   }
 
   static getDerivedStateFromError() {

@@ -30,7 +30,6 @@ services:
     environment:
       <<: *git-safe-directory
       CYPRESS_INSTALL_BINARY: 0
-      YARN_CACHE_FOLDER: "/app/cms/.cache/yarn"
 
   cypress:
     image: cypress/included:15.14.0
@@ -61,7 +60,7 @@ services:
       - 80
       - 443
     environment:
-      VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+      VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
       VIRTUAL_PORT: 80
 
   cli:

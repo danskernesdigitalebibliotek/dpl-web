@@ -31,6 +31,10 @@ if [[ -z "$POST_INSTALL_ONLY" ]]; then
     echo "Drupal site already installed, skipping drush site-install"
   else
     drush site-install --existing-config --account-mail="dev@folkebibliotekernescms.dk" --site-mail="dev@folkebibliotekernescms.dk" -y
+    # Site-install bypasses the Redis cache backend, so to avoid stale cache
+    # entries from the Drush bootstrap, flush Redis directly before cache:rebuild.
+    php dev-scripts/flush-redis-cache.php
+    drush cache:rebuild
   fi
 fi
 

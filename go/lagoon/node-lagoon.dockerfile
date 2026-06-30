@@ -27,7 +27,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN node ./scripts/prepare-docker-env-vars.mjs && \
-    yarn run build:stage2
+    corepack pnpm run build:stage2
 
 FROM uselagoon/node-24:latest AS runner
 # start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.

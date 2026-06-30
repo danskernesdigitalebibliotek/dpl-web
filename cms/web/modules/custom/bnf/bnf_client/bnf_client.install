@@ -13,6 +13,21 @@ use Drupal\drupal_typed\DrupalTyped;
  * Implements hook_install().
  */
 function bnf_client_install(): void {
+  // Install the base fields this module bolts onto the node entity. Drupal does
+  // not create storage for base fields added to other modules' entity types via
+  // hook_entity_base_field_info() when the providing module is enabled, so we
+  // have to install them explicitly. Without this, enabling bnf_client (e.g.
+  // via dpl_update_deploy_bnf()) leaves node__bnf_source_subscriptions missing
+  // and every node load fails. This mirrors bnf_client_update_10105() for sites
+  // that upgrade in-place; the guard keeps it idempotent for those.
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach (_bnf_client_node_field_definitions() as $key => $field) {
+    if (!$definition_manager->getFieldStorageDefinition($key, 'node')) {
+      $definition_manager->installFieldStorageDefinition($key, 'node', 'bnf_client', $field);
+    }
+  }
+
   // Rebuild scheduler info so it notices our periodic job.
   job_scheduler_rebuild_all();
 }

@@ -3,10 +3,8 @@ import EventDescription, {
   EventDescriptionProps,
 } from "../../Library/event-description/EventDescription";
 import { EventParagraphs } from "../../Library/paragraphs/Paragraphs";
-import {
-  Event as Hero,
-  EventArgs as HeroArgs,
-} from "../../Library/hero/Hero.stories";
+import Hero from "../../Library/hero/Hero";
+import { EventArgs as HeroArgs } from "../../Library/hero/Hero.stories";
 
 type EventPageProps = EventDescriptionProps;
 

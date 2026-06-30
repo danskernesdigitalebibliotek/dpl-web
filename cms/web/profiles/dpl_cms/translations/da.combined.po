@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-25 11:18+0200\n"
-"PO-Revision-Date: 2026-06-25 11:18+0200\n"
+"POT-Creation-Date: 2026-06-29 14:17+0200\n"
+"PO-Revision-Date: 2026-06-29 14:17+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8034,19 +8034,14 @@ msgid "BEF Test"
 msgstr "BEF Test"
 
 msgid ""
-"This content translation is being edited by the user @name and is therefore "
-"locked to prevent other users changes. This lock is in place since @date."
+"This content translation is being edited by the user %name and is therefore "
+"locked to prevent changes by other users. This lock has been active for @age."
 msgstr ""
-"Denne indholdsoversættelse bliver redigeret af brugeren @name og er derfor "
-"låst for at forhindre andre brugeres ændringer. Denne lås har været på plads "
-"siden @date."
 
 msgid ""
-"This content is being edited by the user @name and is therefore locked to "
-"prevent other users changes. This lock is in place since @date."
+"This content is being edited by the user %name and is therefore locked to "
+"prevent changes by other users. This lock has been active for @age."
 msgstr ""
-"Dette indhold bliver redigeret af @name og er derfor låst. Denne lås er "
-"aktiveret @date."
 
 msgid ""
 "This content translation is now locked against simultaneous editing. This "
@@ -8065,11 +8060,8 @@ msgstr ""
 "Dette indhold er nu låst for samtidig redigering. Indholdet vil forblive "
 "låst, hvis du forlader siden uden at gemme."
 
-msgid "Break lock"
-msgstr "Bryd lås"
-
-msgid "Click here to @link"
-msgstr "Klik her for @link"
+msgid "Break the lock."
+msgstr ""
 
 msgid ""
 "This content translation is now locked by you against simultaneous editing. "
@@ -8088,8 +8080,27 @@ msgstr ""
 "Dette indhold er nu låst af dig for samtidig redigering. Indholdet vil "
 "forblive låst, hvis du forlader siden uden at gemme."
 
+msgid "This content is being edited by another user."
+msgstr ""
+
 msgid "Unlock"
 msgstr "Lås op"
+
+msgid "Break Lock"
+msgstr "Bryd lås"
+
+msgid "Break lock"
+msgstr "Bryd lås"
+
+msgid "Content lock access check"
+msgstr ""
+
+msgid ""
+"Checks if user has access to a specified permission and if the view's entity "
+"type is lockable."
+msgstr ""
+"Tjekker om bruger har adgang til en specifik tilladelse, og om view’ets "
+"enhedstype kan låses."
 
 msgid "Unlocked. Anyone can now edit this content translation."
 msgstr "Ulåst. Alle kan nu redigere denne indholdsoversættelse."
@@ -8145,18 +8156,6 @@ msgstr ""
 "For at tillade redigere af flere oversættelser på samme tid skal du "
 "installere %module"
 
-msgid "Lock form using JS."
-msgstr "Lås formular ved hjælp af JS."
-
-msgid ""
-"Activating this options activates the lock when the user is on the form. "
-"This helps if modules interacting with form without a user interacting with "
-"the form, like the prefetch_cache module."
-msgstr ""
-"Aktivering af denne mulighed aktiverer låsen, når brugeren er på formularen. "
-"Dette hjælper, hvis moduler interagerer med formularen uden en bruger, der "
-"interagerer med formularen, som prefetch_cache-modulet."
-
 msgid "Lock only on entity form operation level."
 msgstr "Lås kun på niveauet for enhedsformularoperation."
 
@@ -8179,55 +8178,19 @@ msgstr ""
 msgid "Form operations"
 msgstr "Formularoperationer"
 
-msgid "Lock Timeouts"
-msgstr "Lås timeouts"
-
-msgid "Configure automatic stale lock breaking."
-msgstr "Konfigurer automatisk brud på forældede låse."
-
 msgid "Lock timeout"
 msgstr "Lås timeout"
 
 msgid ""
 "The maximum time in minutes that each lock may be kept. To disable breaking "
-"locks after a timeout, please %disable the Content Lock Timeout module."
+"locks after a timeout, clear the value. It is recommended for user "
+"experience to set this value."
 msgstr ""
-"Den maksimale tid i minutter, som hver lås kan opretholdes. For at "
-"deaktivere låsebrydning efter en timeout, venligst %deaktiver Content Lock "
-"Timeout-modulet."
-
-msgid "disable"
-msgstr "deaktivér"
-
-msgid "Break stale locks on edit"
-msgstr "Bryd forældede låse ved redigering"
 
 msgid ""
-"By default, stale locks will be broken when cron is run. This option enables "
-"checking for stale locks when a user clicks a node's Edit link, enabling "
-"lower lock timeout values without having to run cron every few minutes."
+"The Content Lock module prevents multiple users from trying to edit a single "
+"node simultaneously to prevent edit conflicts."
 msgstr ""
-"Som standard vil forældede låse blive brudt, når cron køres. Denne mulighed "
-"gør det muligt at tjekke for forældede låse, når en bruger klikker på en "
-"nodes rediger-link, hvilket muliggør lavere låsetidsværdier uden at skulle "
-"køre cron med få minutters mellemrum."
-
-msgid ""
-"Breaking existing lock by @name so that you may edit this node. (This lock "
-"was set @date ago and was stale since @stale_time.)"
-msgstr ""
-"Bryder eksisterende lås til @name så du kan redigere dette indhold. (Denne "
-"lås blev sat @date og har været inaktiv siden @stale_time.)"
-
-msgid ""
-"Prevents multiple users from trying to edit a single node simultaneously to "
-"prevent edit conflicts."
-msgstr ""
-"Forhindrer flere brugere i at forsøge at redigere en enkelt node samtidigt "
-"for at forhindre redigeringskonflikter."
-
-msgid "@entity cannot be deleted because it was locked by @user since @time."
-msgstr "@entity kan ikke slettes, fordi den blev låst af @user fra @time"
 
 msgid "Content lock"
 msgstr "Indholdslås"
@@ -8286,30 +8249,17 @@ msgstr ""
 "indholdslås-information. Den valgte caching-mekanisme er derfor ændret til "
 "\"ingen\" for viewet %view."
 
+msgid ""
+"The content lock timeout is currently disabled. It is recommended that "
+"administrators <a href=\":settings\">set the timeout value</a> so that "
+"content locks automatically expire."
+msgstr ""
+
 msgid "Content Lock access check"
 msgstr "Tjek af adgang til indholdslås"
 
-msgid ""
-"Checks if user has access to a specified permission and if the view's entity "
-"type is lockable."
-msgstr ""
-"Tjekker om bruger har adgang til en specifik tilladelse, og om view’ets "
-"enhedstype kan låses."
-
 msgid "General"
 msgstr "Generelt"
-
-msgid "Content lock timeout settings"
-msgstr "Indstillinger for indholdslås timeout"
-
-msgid "Content lock timeout test"
-msgstr "Test af indholdslås timeout"
-
-msgid "Provides test classes."
-msgstr "Leverer testklasser."
-
-msgid "Timeout settings"
-msgstr "Timeout-indstillinger"
 
 msgid "Content Lock Timeout"
 msgstr "Indholdslås timeout"
@@ -8343,8 +8293,11 @@ msgstr "Tests af hooks for indholdslås"
 msgid "Provides test support for content_lock hooks."
 msgstr "Leverer testunderstøttelse for content_lock hooks."
 
-msgid "Prefetch cache test"
-msgstr "Prefetch cache test"
+msgid "Content lock timeout test"
+msgstr "Test af indholdslås timeout"
+
+msgid "Provides test classes."
+msgstr "Leverer testklasser."
 
 msgid "Settings"
 msgstr "Indstillinger"
@@ -8354,9 +8307,6 @@ msgstr "Test af indholdslås"
 
 msgid "compact"
 msgstr "kompakt"
-
-msgid "Break Lock"
-msgstr "Bryd lås"
 
 msgid "uses <em>@data.crop_type</em> crop type"
 msgstr "Bruger <em>@data.crop_type</em> beskæringstype"
@@ -8844,9 +8794,65 @@ msgstr "Issue-kø"
 msgid "to report problems."
 msgstr "til at reportere problemer."
 
+msgid "Dynamic entity reference"
+msgstr "Dynamisk enhedsreference"
+
+msgid "Other…"
+msgstr "Anden…"
+
+msgid "@id (@type)"
+msgstr "@id (@type)"
+
+msgid "Entity ID: @id (@type)"
+msgstr "Enheds-ID: @id (@type)"
+
+msgid "Label"
+msgstr "Etiket"
+
 msgctxt "Entity type group"
 msgid "Content"
 msgstr "Indhold"
+
+msgid "@entity view mode: @mode"
+msgstr "@entity visningstilstand: @mode"
+
+msgid "View mode for %entity"
+msgstr ""
+"\n"
+"Visningstilstand for %entity"
+
+msgid "Target Entity Type"
+msgstr "Målenhedstype"
+
+msgid "Entity"
+msgstr "Entity"
+
+msgid "The referenced entity"
+msgstr "Link til den refererede entity"
+
+msgid "Exclude the selected items"
+msgstr "Udeluk de valgte emner"
+
+msgid "Select items"
+msgstr "Vælg"
+
+msgid "Select at least one entity type ID."
+msgstr "Vælg mindst én enhedstype ID."
+
+msgid "Reference type for @target_type"
+msgstr "Referencetype for @target_type"
+
+msgid "Reference type"
+msgstr "Referencetype"
+
+msgid "Reference method"
+msgstr "Referencemetode"
+
+msgid "Change handler"
+msgstr "Skift handler"
+
+msgid "Reference types: @entity_types"
+msgstr "Referencetyper: @entity_types"
 
 msgid "@label referenced from @field_name"
 msgstr "@label refereret fra @field_name"
@@ -8889,64 +8895,8 @@ msgstr ""
 "Omvendt reference fra @target_label enheder refereret af @field_name @type "
 "på @origin_label enheder."
 
-msgid "Dynamic entity reference"
-msgstr "Dynamisk enhedsreference"
-
-msgid "Other…"
-msgstr "Anden…"
-
 msgid "Dynamic Reference"
 msgstr "Dynamisk reference"
-
-msgid "@id (@type)"
-msgstr "@id (@type)"
-
-msgid "Entity ID: @id (@type)"
-msgstr "Enheds-ID: @id (@type)"
-
-msgid "Label"
-msgstr "Etiket"
-
-msgid "@entity view mode: @mode"
-msgstr "@entity visningstilstand: @mode"
-
-msgid "View mode for %entity"
-msgstr ""
-"\n"
-"Visningstilstand for %entity"
-
-msgid "Target Entity Type"
-msgstr "Målenhedstype"
-
-msgid "Entity"
-msgstr "Entity"
-
-msgid "The referenced entity"
-msgstr "Link til den refererede entity"
-
-msgid "Exclude the selected items"
-msgstr "Udeluk de valgte emner"
-
-msgid "Select items"
-msgstr "Vælg"
-
-msgid "Select at least one entity type ID."
-msgstr "Vælg mindst én enhedstype ID."
-
-msgid "Reference type for @target_type"
-msgstr "Referencetype for @target_type"
-
-msgid "Reference type"
-msgstr "Referencetype"
-
-msgid "Reference method"
-msgstr "Referencemetode"
-
-msgid "Change handler"
-msgstr "Skift handler"
-
-msgid "Reference types: @entity_types"
-msgstr "Referencetyper: @entity_types"
 
 msgid "The referenced entity (%type: %id) does not exist."
 msgstr "Den refererede entity (%type: %id) eksisterer ikke."
@@ -22870,6 +22820,17 @@ msgid ""
 "title. "
 msgstr ""
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:label"
+msgid "Prioritised material type"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:description"
+msgid ""
+"Select which material type should be prioritised when borrowers click a "
+"material. If the material has a manifestation with that material type, it "
+"will be opened. Otherwise the website's normal logic applies."
+msgstr ""
+
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_amount_of_materials:label"
 msgid "Amount of materials (Deprecated - will be deleted!)"
 msgstr ""
@@ -23612,6 +23573,74 @@ msgstr ""
 
 msgctxt "field.storage.paragraph.field_max_item_amount:settings:allowed_values:15:label"
 msgid "16"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:0:label"
+msgid "Bog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:1:label"
+msgid "E-bog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:2:label"
+msgid "Lydbog (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
+msgid "Billedbog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:4:label"
+msgid "Billedbog (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:5:label"
+msgid "Tegneserie"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:6:label"
+msgid "Tegneserie (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:7:label"
+msgid "Musik (cd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:8:label"
+msgid "Musik (grammofonplade)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:9:label"
+msgid "Film (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:10:label"
+msgid "Film (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:11:label"
+msgid "Film (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:12:label"
+msgid "Film (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:13:label"
+msgid "Tv-serie (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:14:label"
+msgid "Tv-serie (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:15:label"
+msgid "Tv-serie (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:16:label"
+msgid "Tv-serie (online)"
 msgstr ""
 
 msgctxt "field.storage.taxonomy_term.field_opening_hours_color:settings:format"

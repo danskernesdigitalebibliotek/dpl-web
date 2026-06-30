@@ -45,6 +45,19 @@ interface AppContentElement {
   id: String!
 }
 
+type AppContentElementNavSpotsManual implements AppContentElement {
+  id: String!
+  linkedPages: [String!]!
+}
+
+type AppContentElementRecommendation implements AppContentElement {
+  description: String
+  id: String!
+  imagePositionRight: Boolean!
+  title: String
+  workId: String!
+}
+
 type AppContentElementText implements AppContentElement {
   body: String!
   id: String!
@@ -69,6 +82,13 @@ type AppContentElementVideoBundleManual implements AppContentElement {
   title: String!
   video: AppVideo!
   workIds: [String!]!
+}
+
+type AppPage {
+  elements: [AppContentElement!]!
+  image: String
+  subtitle: String
+  title: String!
 }
 
 enum AppType {
@@ -887,6 +907,7 @@ scalar PhoneNumber
 type Query {
   dplTokens: DplTokens
   getAppCategories(id: String, type: AppType!): [AppCategory!]!
+  getAppPage(id: String!): AppPage
   getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
   goCategories(page: Int = 0): GoCategoriesResult
   goConfiguration: GoConfiguration

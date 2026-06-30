@@ -5,22 +5,10 @@ on:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
 jobs:
-  design_create_release:
-    name: CMS / Prepare design-release
-    uses: ./.github/workflows/design-system-release-tag-workflow.yml
-
-  react_create_release:
-    name: CMS / Prepare react-release
-    needs: [design_create_release]
-    uses: ./.github/workflows/react-release-tag-workflow.yml
-
   publish_source:
     name: CMS / Publish source
     runs-on: ubuntu-latest
     permissions: write-all
-    # We need to wait for design/react releases to finish building, so we can
-    # composer require them as part of building the CMS package.
-    needs: [design_create_release, react_create_release]
 
     defaults:
       run:
@@ -40,14 +28,15 @@ jobs:
         run: |
           echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
 
-      # Install go-task, as we will use Taskfile.yml
-      - name: Install go-task
-        uses: arduino/setup-task@v2
+      # Build design-system + React and copy them into the CMS source tree so
+      # they get baked into the source image (no Composer package download).
+      - name: Build CMS frontend assets
+        uses: ./.github/actions/build-cms-assets
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Setup composer.json to target our built design-system-dist.zip and
-      # react-dist.zip files, and build + publish the source.
+      # Build + publish the source image. The prebuilt design-system/React
+      # assets are picked up by `COPY cms /app/cms` in cli.dockerfile.
       - name: Build and publish source
         env:
           GH_TOKEN: ${{ github.token }}
@@ -59,8 +48,6 @@ jobs:
           RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
         run: |
           echo "Publishing tag: $RELEASE_TAG"
-          task dev:composer:update-design-system
-          task dev:composer:update-react
           task source:deploy
 
   publish_db_snapshot:
@@ -69,7 +56,6 @@ jobs:
     permissions:
       contents: write
       packages: write
-    needs: [design_create_release, react_create_release]
 
     defaults:
       run:
@@ -90,10 +76,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Install go-task
-        uses: arduino/setup-task@v2
+      # Build design-system + React and copy them into the CMS source tree so
+      # the installed site serves the current assets.
+      - name: Build CMS frontend assets
+        uses: ./.github/actions/build-cms-assets
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install site
         env:
@@ -104,11 +92,16 @@ jobs:
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_IMAGE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner}}"
+          # Dummy values — the dev settings files apply these as runtime
+          # OpenID config overrides via getenv(); they are never persisted to
+          # the database, so they are not baked into the published snapshot.
+          # They only need to be present for the site install to succeed.
+          OPENID_CLIENT_ID: "1"
+          OPENID_CLIENT_SECRET: "1"
+          OPENID_AGENCY_ID: "1"
         run: |
           echo "Publishing database snapshot for tag: $RELEASE_TAG"
           task dev:start
-          task dev:composer:update-design-system
-          task dev:composer:update-react
           task dev:cli -- composer install
           task dev:cli -- ./dev-scripts/install-site.sh --install-only
 
