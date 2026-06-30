@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Manifestation } from "../../core/utils/types/entities";
 import DisclosureControllable from "../Disclosures/DisclosureControllable";
 import InstantLoanSummary from "./InstantLoanSummary";
@@ -20,12 +20,15 @@ const InstantLoan: React.FunctionComponent<InstantLoanProps> = ({
   const materialType = materialTypes[0].materialTypeSpecific.display;
   const { track } = useEventStatistics();
 
-  const trackInstantLoanClick = () =>
-    track("click", {
-      id: statistics.instantLoanClick.id,
-      name: statistics.instantLoanClick.name,
-      trackedData: pid
-    });
+  const trackInstantLoanClick = useCallback(
+    () =>
+      track("click", {
+        id: statistics.instantLoanClick.id,
+        name: statistics.instantLoanClick.name,
+        trackedData: pid
+      }),
+    [pid, track]
+  );
 
   return (
     <DisclosureControllable
