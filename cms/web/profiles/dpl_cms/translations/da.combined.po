@@ -12564,7 +12564,7 @@ msgstr "Automatisk udfyld linktekst fra enhedsetiketten: @auto_link_text"
 
 #: 
 msgid "Start typing to find content or paste a URL and click on the suggestion below."
-msgstr "Begynd at skrive for at finde indhold eller indsæt en URL og klik på et forslag nedenunder."
+msgstr "Begynd at skrive for at finde indhold eller indsæt en URL og klik på et forslag nedenunder. URL er obligatorisk, hvis Linktekst er udfyldt."
 
 #: 
 msgid "Profile"
