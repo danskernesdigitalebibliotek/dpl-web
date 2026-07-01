@@ -1,0 +1,33 @@
+# TEMPORARY devenv override of the reload/https-proxy `:proxy` nginx template.
+# Only difference from upstream: it forwards the real Host (with port) and
+# scheme so Drupal emits correct absolute URLs when served on :37102.
+# Upstreamed as reload/https-proxy#81 — once that ships in a released image,
+# DELETE this file and its volume mount in docker-compose.devenv.yml.
+server {
+
+    include include.d/ssl.conf;
+
+    root ${NGINX_DOCUMENT_ROOT};
+
+    location / {
+        proxy_pass ${NGINX_PROXY_PASS};
+        # devenv override: forward the Host header *with* the port ($http_host,
+        # not the stock $host, which strips it). The dev stack serves the CMS on
+        # dpl-cms.local:37102; with $host, Drupal only ever sees dpl-cms.local
+        # and generates port-less absolute URLs (login, logout, image/file URLs)
+        # that 404 in the browser. $http_host preserves dpl-cms.local:37102 all
+        # the way to Drupal so every generated absolute URL carries the port.
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # This server block only ever serves TLS (see ssl.conf), so tell Drupal
+        # the public scheme is https. Without it, some absolute URLs come back
+        # as http://…:37102, which fails because :37102 only speaks TLS.
+        proxy_set_header X-Forwarded-Proto https;
+        # Increase buffer sizes, the defaults can be too tight for
+        # modern applications.
+        proxy_buffer_size 16k;
+        proxy_buffers 4 16k;
+        proxy_busy_buffers_size 32k;
+    }
+}

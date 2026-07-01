@@ -1,0 +1,8 @@
+# devenv.sh input pinning.
+# https://devenv.sh/reference/yaml-options/
+inputs:
+  nixpkgs:
+    url: github:cachix/devenv-nixpkgs/rolling
+
+# Allow `languages.javascript` + docker tooling from nixpkgs.
+allowUnfree: true
