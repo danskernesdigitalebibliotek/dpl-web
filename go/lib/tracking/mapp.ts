@@ -77,11 +77,15 @@ export const trackEvent = (
       eventType,
       { linkId: name, customClickParameter: { [id]: trackedData } },
     ])
+
+    // Give the beacon a moment to fire before a caller navigates away.
+    return new Promise(resolve => {
+      setTimeout(resolve, 500)
+    })
   }
 
-  return new Promise(resolve => {
-    setTimeout(resolve, 500)
-  })
+  // Nothing was sent — resolve immediately, no artificial delay.
+  return Promise.resolve()
 }
 
 /** Flushes collected page parameters to Mapp as a page update. */

@@ -15,7 +15,6 @@ export default function MappTracking() {
   const isInitialLoad = useRef(true)
 
   const searchQuery = searchParams.get("q")
-  const isSearchPage = pathname === `/${goConfig("routes.search")}`
 
   const domain = config?.mapp?.domain
   const id = config?.mapp?.id
@@ -80,6 +79,8 @@ export default function MappTracking() {
   // triggers a pageupdate. Collect the on-site search term (OSS) while on the
   // search page so the page view carries it — reused from the React apps.
   useEffect(() => {
+    const isSearchPage = pathname === `/${goConfig("routes.search")}`
+
     if (isSearchPage && searchQuery) {
       collectPageStatistics(statistics.searchQuery, searchQuery)
     } else {
@@ -94,7 +95,7 @@ export default function MappTracking() {
     }
 
     sendPageUpdate()
-  }, [pathname, searchQuery, isSearchPage])
+  }, [pathname, searchQuery])
 
   return null
 }
