@@ -4,6 +4,14 @@ on:
     paths:
       - 'cms/**'
       - 'go/**'
+      # The Lagoon image builds design-system and React from source into the
+      # CMS image (see cms/lagoon/{cli,nginx}.dockerfile), so changes here
+      # affect the deployed environment and must trigger a deploy too.
+      - 'react/**'
+      - 'design-system/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
       - '.lagoon.yml'
       - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
@@ -16,6 +24,13 @@ on:
     paths:
       - 'cms/**'
       - 'go/**'
+      # Keep in sync with the pull_request paths above: the CMS image bundles
+      # design-system and React built from source.
+      - 'react/**'
+      - 'design-system/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
       - '.lagoon.yml'
       - 'docker-compose.lagoon.yml'
       - '.github/workflows/cms-*.yml'
