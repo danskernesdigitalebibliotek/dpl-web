@@ -6,7 +6,8 @@ _meta:
   default_langcode: da
   depends:
     e00e1460-169e-468d-9835-d664f06d0969: file
-    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+    af8bad8a-b0c9-4957-a64a-54603b1ad6ac: media
+    d219e4de-4984-487e-8e21-9f56c0a0335c: media
 default:
   revision_uid:
     -
@@ -29,9 +30,6 @@ default:
   sticky:
     -
       value: false
-  revision_translation_affected:
-    -
-      value: true
   bnf_state:
     -
       value: 0
@@ -45,12 +43,6 @@ default:
       title: ''
       width: 640
       height: 443
-  metatag:
-    -
-      tag: meta
-      attributes:
-        name: title
-        content: 'Sport | DPL CMS'
   path:
     -
       alias: /kategori/sport
@@ -58,10 +50,49 @@ default:
       pathauto: 1
   field_category_menu_image:
     -
-      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+      entity: af8bad8a-b0c9-4957-a64a-54603b1ad6ac
   field_category_menu_title:
     -
       value: Sport
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 8fb1dcdc-0515-438b-98a4-54339118b381
+          bundle: go_video_bundle_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1782736162
+          behavior_settings:
+            -
+              value: {  }
+          field_cql_search:
+            -
+              value: "'sport'"
+              location: ''
+              sublocation: ''
+              branch: ''
+              department: ''
+              onshelf: false
+              sort: relevance
+              first_accession_date_value: ''
+              first_accession_date_operator: ''
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: Sport
+          field_video_amount_of_materials:
+            -
+              value: 5
   field_publication_date:
     -
       value: '2025-05-06'

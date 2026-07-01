@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 0ec24a0b-c153-4619-a4f6-47dd8bb7f296
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: gaming.png
+  uri:
+    -
+      value: 'public://2026-06/gaming_0.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 94895
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1782741823

@@ -6,7 +6,7 @@ _meta:
   default_langcode: da
   depends:
     e00e1460-169e-468d-9835-d664f06d0969: file
-    109347b3-c3df-4b2d-a8fb-d4e379c2cc50: media
+    564cd1d3-768c-4af6-8bdd-0f88b08a264a: media
     d219e4de-4984-487e-8e21-9f56c0a0335c: media
 default:
   revision_uid:
@@ -30,9 +30,6 @@ default:
   sticky:
     -
       value: false
-  revision_translation_affected:
-    -
-      value: true
   bnf_state:
     -
       value: 0
@@ -46,12 +43,6 @@ default:
       title: ''
       width: 640
       height: 443
-  metatag:
-    -
-      tag: meta
-      attributes:
-        name: title
-        content: 'Science fiction | DPL CMS'
   path:
     -
       alias: /kategori/science-fiction
@@ -59,7 +50,7 @@ default:
       pathauto: 1
   field_category_menu_image:
     -
-      entity: 109347b3-c3df-4b2d-a8fb-d4e379c2cc50
+      entity: 564cd1d3-768c-4af6-8bdd-0f88b08a264a
   field_category_menu_title:
     -
       value: Sci-Fi
@@ -82,9 +73,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_embed_video:
             -
               entity: d219e4de-4984-487e-8e21-9f56c0a0335c
@@ -109,12 +97,17 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_cql_search:
             -
               value: "'star wars'"
+              location: ''
+              sublocation: ''
+              branch: ''
+              department: ''
+              onshelf: false
+              sort: ''
+              first_accession_date_value: ''
+              first_accession_date_operator: ''
           field_slider_amount_of_materials:
             -
               value: 8
@@ -139,9 +132,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_material_slider_work_ids:
             -
               value: 'work-of:870970-basis:51919165'

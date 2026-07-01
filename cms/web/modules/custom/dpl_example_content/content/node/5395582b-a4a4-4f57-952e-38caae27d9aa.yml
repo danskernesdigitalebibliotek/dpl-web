@@ -9,6 +9,7 @@ _meta:
     ddd4f544-aff0-40d4-8c8e-651ca39e8db6: media
     e8283d3c-968a-4e74-ae02-9f02b76bb839: media
     d219e4de-4984-487e-8e21-9f56c0a0335c: media
+    e86cc9e0-24ea-4ccd-aef3-377122167d67: media
 default:
   revision_uid:
     -
@@ -31,9 +32,6 @@ default:
   sticky:
     -
       value: false
-  revision_translation_affected:
-    -
-      value: true
   bnf_state:
     -
       value: 0
@@ -47,12 +45,6 @@ default:
       title: ''
       width: 3944
       height: 2616
-  metatag:
-    -
-      tag: meta
-      attributes:
-        name: title
-        content: 'GO Paragraphs | DPL CMS'
   path:
     -
       alias: /go-paragraphs
@@ -77,9 +69,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_go_color:
             -
               value: content_color_1
@@ -108,9 +97,6 @@ default:
                   behavior_settings:
                     -
                       value: {  }
-                  revision_translation_affected:
-                    -
-                      value: true
                   field_aria_label:
                     -
                       value: 'Læs mere om BogBattle'
@@ -122,7 +108,7 @@ default:
                         href: 'https://www.google.com/'
                         data-entity-type: ''
                         data-entity-uuid: ''
-                        data-entity-substitution: ''
+                        data-entity-substitution: canonical
                   field_target_blank:
                     -
                       value: false
@@ -147,9 +133,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_go_color:
             -
               value: content_color_2
@@ -178,9 +161,6 @@ default:
                   behavior_settings:
                     -
                       value: {  }
-                  revision_translation_affected:
-                    -
-                      value: true
                   field_aria_label:
                     -
                       value: 'Se mere om Eventyr i skoven og sjove naturaktiviteter for børn'
@@ -217,9 +197,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_embed_video:
             -
               entity: d219e4de-4984-487e-8e21-9f56c0a0335c
@@ -244,12 +221,17 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_cql_search:
             -
               value: "'harry'"
+              location: ''
+              sublocation: ''
+              branch: ''
+              department: ''
+              onshelf: false
+              sort: ''
+              first_accession_date_value: ''
+              first_accession_date_operator: ''
           field_slider_amount_of_materials:
             -
               value: 8
@@ -274,12 +256,17 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_cql_search:
             -
               value: "'emilie'"
+              location: ''
+              sublocation: ''
+              branch: ''
+              department: ''
+              onshelf: false
+              sort: relevance
+              first_accession_date_value: ''
+              first_accession_date_operator: ''
           field_embed_video:
             -
               entity: d219e4de-4984-487e-8e21-9f56c0a0335c
@@ -307,9 +294,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_material_slider_work_ids:
             -
               value: 'work-of:870970-basis:139690508'
@@ -344,9 +328,6 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_embed_video:
             -
               entity: d219e4de-4984-487e-8e21-9f56c0a0335c
@@ -363,6 +344,75 @@ default:
             -
               value: 'work-of:870970-basis:27654053'
               material_type: billedbog
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: e3989f98-eac7-4c00-bf3a-448802e6f1af
+          bundle: go_video_bundle_vertical_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1782734490
+          behavior_settings:
+            -
+              value: {  }
+          field_embed_video:
+            -
+              entity: e86cc9e0-24ea-4ccd-aef3-377122167d67
+          field_go_video_title:
+            -
+              value: ' GO Video Bundle Vertical - Manual'
+          field_video_bundle_work_ids:
+            -
+              value: 'work-of:800010-katalog:99122611975405763'
+              material_type: ''
+            -
+              value: 'work-of:870970-basis:136024353'
+              material_type: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 1890b38c-6d14-4eb3-8131-601e8a24c713
+          bundle: go_video_bundle_vertical_auto
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1782734670
+          behavior_settings:
+            -
+              value: {  }
+          field_cql_search:
+            -
+              value: "'denne gang er det ægte'"
+              location: ''
+              sublocation: ''
+              branch: ''
+              department: ''
+              onshelf: false
+              sort: relevance
+              first_accession_date_value: ''
+              first_accession_date_operator: ''
+          field_embed_video:
+            -
+              entity: e86cc9e0-24ea-4ccd-aef3-377122167d67
+          field_go_video_title:
+            -
+              value: 'Go Video Bundle Vertical Automatic'
+          field_video_amount_of_materials:
+            -
+              value: 5
   field_publication_date:
     -
       value: '2025-02-17'

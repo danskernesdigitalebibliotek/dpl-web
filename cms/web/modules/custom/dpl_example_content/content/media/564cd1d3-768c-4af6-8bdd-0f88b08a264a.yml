@@ -1,0 +1,36 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 564cd1d3-768c-4af6-8bdd-0f88b08a264a
+  bundle: image
+  default_langcode: da
+  depends:
+    de7cfbef-2dd1-41f2-af8d-159df25c79c1: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: sci-fi.png
+  created:
+    -
+      value: 1782741861
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 0
+  field_byline:
+    -
+      value: sci-fi
+  field_media_image:
+    -
+      entity: de7cfbef-2dd1-41f2-af8d-159df25c79c1
+      alt: ''
+      title: ''
+      width: 300
+      height: 300
