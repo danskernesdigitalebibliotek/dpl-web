@@ -1,0 +1,22 @@
+# devenv-only override for the CMS stack.
+#
+# Layered on top of docker-compose.yml (via COMPOSE_FILE in devenv.nix) so the
+# tracked compose file — and the normal `task cms dev:*` workflow — stay
+# untouched. It (a) pins the https proxy to a fixed localhost port so the whole
+# dev stack lives on one domain varying only by port, and (b) makes the proxy
+# forward the real Host (with port) + scheme so Drupal emits correct absolute
+# URLs (login/logout/image URLs) carrying :37102.
+#
+# The base file already publishes 443 on a random host port; compose merges
+# `ports` by concatenation, so this just adds a second, fixed mapping.
+services:
+  https:
+    ports:
+      - "37102:443"
+    # Forward the Host header with its port (and the scheme) so Drupal generates
+    # absolute URLs carrying :37102. See the template for details. Overrides the
+    # stock template that hard-codes `proxy_set_header Host $host` (which strips
+    # the port). Upstreamed as reload/https-proxy#81 — once a new image ships
+    # with that change, this mount can be dropped.
+    volumes:
+      - "./https-proxy.devenv.conf.template:/etc/nginx/templates/default.conf.template:ro"
