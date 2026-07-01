@@ -1,0 +1,19 @@
+name: Build design system
+description: Reusable action to build the design system.
+inputs:
+  token:
+    description: GitHub token for authenticating with the npm registry.
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/common-setup-js
+      with:
+        token: ${{ inputs.token }}
+    - name: Install go-task
+      uses: arduino/setup-task@v2
+      with:
+        repo-token: ${{ inputs.token }}
+    - name: Build design system
+      shell: bash
+      run: task dev:design-system:build

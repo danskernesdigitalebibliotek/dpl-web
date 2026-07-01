@@ -148,6 +148,109 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           ];
         }
       }
+      elseif ($paragraph->bundle() == 'recommendation') {
+        $workId = $paragraph->get('field_recommendation_work_id')->value;
+        if ($workId) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementRecommendation',
+            'id' => $paragraph->uuid(),
+            'imagePositionRight' => (bool) $paragraph->get('field_image_position_right')->value,
+            // @phpstan-ignore property.notFound (magic property)
+            'title' => $paragraph->get('field_recommendation_title')->processed,
+            'description' => $paragraph->get('field_recommendation_description')->value,
+            'workId' => $workId,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'nav_spots_manual') {
+        $field = $paragraph->get('field_nav_spots_content');
+        if ($field instanceof EntityReferenceFieldItemList) {
+          $field_context->addCacheableDependency($paragraph);
+          $linkedPages = [];
+
+          foreach ($field->referencedEntities() as $entity) {
+            $linkedPages[] = $entity->uuid();
+          }
+          $result[] = [
+            '__type' => 'AppContentElementNavSpotsManual',
+            'id' => $paragraph->uuid(),
+            'linkedPages' => $linkedPages,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'go_material_slider_automatic') {
+        $cql = $paragraph->get('field_cql_search')->value;
+        if ($cql) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementGoMaterialSliderAutomatic',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_title')->value,
+            'cql' => $cql,
+            'limit' => (int) $paragraph->get('field_slider_amount_of_materials')->value,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'go_material_slider_manual') {
+        $workIds = [];
+        foreach ($paragraph->get('field_material_slider_work_ids') as $item) {
+          // @phpstan-ignore property.notFound (magic property)
+          if ($item->value) {
+            $workIds[] = $item->value;
+          }
+        }
+
+        if (!empty($workIds)) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementGoMaterialSliderManual',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_title')->value,
+            'workIds' => $workIds,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'material_grid_automatic') {
+        $cql = $paragraph->get('field_cql_search')->value;
+        if ($cql) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementMaterialGridAutomatic',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_material_grid_title')->value,
+            'description' => $paragraph->get('field_material_grid_description')->value,
+            'cql' => $cql,
+            'limit' => (int) $paragraph->get('field_material_amount')->value,
+            'priorityMaterialType' => $paragraph->get('field_priority_material_type')->value,
+          ];
+        }
+      }
+      elseif ($paragraph->bundle() == 'material_grid_manual') {
+        $workIds = [];
+        foreach ($paragraph->get('field_material_grid_work_ids') as $item) {
+          // @phpstan-ignore property.notFound (magic property)
+          if ($item->value) {
+            $workIds[] = $item->value;
+          }
+        }
+
+        if (!empty($workIds)) {
+          $field_context->addCacheableDependency($paragraph);
+
+          $result[] = [
+            '__type' => 'AppContentElementMaterialGridManual',
+            'id' => $paragraph->uuid(),
+            'title' => $paragraph->get('field_material_grid_title')->value,
+            'description' => $paragraph->get('field_material_grid_description')->value,
+            'workIds' => $workIds,
+          ];
+        }
+      }
     }
 
     return $result;

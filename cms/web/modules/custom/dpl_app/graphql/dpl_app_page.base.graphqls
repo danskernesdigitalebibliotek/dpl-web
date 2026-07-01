@@ -1,0 +1,9 @@
+"""
+A mobile app page.
+"""
+type AppPage {
+  title: String!
+  subtitle: String
+  image: String
+  elements: [AppContentElement!]!
+}

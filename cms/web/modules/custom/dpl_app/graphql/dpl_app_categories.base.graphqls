@@ -71,3 +71,63 @@ type AppContentElementVideoBundleAutomatic implements AppContentElement {
   limit: Int!
   video: AppVideo!
 }
+
+"""
+A navigation spots element with manually selected content.
+"""
+type AppContentElementNavSpotsManual implements AppContentElement {
+  id: String!
+  linkedPages: [String!]!
+}
+
+"""
+A recommendation element.
+"""
+type AppContentElementRecommendation implements AppContentElement {
+  id: String!
+  imagePositionRight: Boolean!
+  title: String
+  description: String
+  workId: String!
+}
+
+"""
+A material slider with automatically selected materials based on a CQL search.
+"""
+type AppContentElementGoMaterialSliderAutomatic implements AppContentElement {
+  id: String!
+  title: String!
+  cql: String!
+  limit: Int!
+}
+
+"""
+A material slider with manually selected materials.
+"""
+type AppContentElementGoMaterialSliderManual implements AppContentElement {
+  id: String!
+  title: String!
+  workIds: [String!]!
+}
+
+"""
+A material grid with automatically selected materials based on a CQL search.
+"""
+type AppContentElementMaterialGridAutomatic implements AppContentElement {
+  id: String!
+  title: String
+  description: String
+  cql: String!
+  limit: Int!
+  priorityMaterialType: String
+}
+
+"""
+A material grid with manually selected materials.
+"""
+type AppContentElementMaterialGridManual implements AppContentElement {
+  id: String!
+  title: String
+  description: String
+  workIds: [String!]!
+}

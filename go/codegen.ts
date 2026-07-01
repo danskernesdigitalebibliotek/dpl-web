@@ -41,7 +41,7 @@ const config: CodegenConfig = {
       hooks: {
         // Correcting the codegen output.
         // First off, we correct the type of the options for the fetcher.
-        afterOneFileWrite: ["yarn post-process-dpl-cms-graphql", "yarn eslint --fix"],
+        afterOneFileWrite: ["pnpm run post-process-dpl-cms-graphql", "pnpm run lint --fix"],
       },
     },
     "lib/graphql/generated/fbi/graphql.ts": {
@@ -70,7 +70,7 @@ const config: CodegenConfig = {
         useConsts: true,
       },
       hooks: {
-        afterOneFileWrite: ["yarn eslint --fix"],
+        afterOneFileWrite: ["pnpm run lint --fix"],
       },
     },
   },

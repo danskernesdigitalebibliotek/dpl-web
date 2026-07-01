@@ -344,9 +344,12 @@ describe('Events', () => {
     // on the live GSearch autocomplete endpoint.
     const fillFreetextAddress = (address: Address) => {
       cy.get('@freetextToggle').check();
-      cy.get('@street').clear().type(address.street);
-      cy.get('@postalCode').clear().type(address.postalCode);
-      cy.get('@postalName').clear().type(address.postalName);
+      cy.get('@street').clear();
+      cy.get('@street').type(address.street);
+      cy.get('@postalCode').clear();
+      cy.get('@postalCode').type(address.postalCode);
+      cy.get('@postalName').clear();
+      cy.get('@postalName').type(address.postalName);
     };
 
     const assertFreetextAddress = (address: Address) => {

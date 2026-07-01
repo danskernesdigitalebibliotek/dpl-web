@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 
 import { BaseOptions } from "flatpickr/dist/types/options";
 import { Instance } from "flatpickr/dist/types/instance";
@@ -23,7 +23,7 @@ export const ModalPause: React.FC<ModalPauseProps> = ({
   textWithLink,
   linkText,
 }) => {
-  const picker = useRef() as MutableRefObject<Instance>;
+  const picker = useRef<Instance | null>(null);
 
   const calendar = useCallback((node: Node | null) => {
     const options: Partial<BaseOptions> = {

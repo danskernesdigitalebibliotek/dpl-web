@@ -77,6 +77,21 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementNavSpotsManual = AppContentElement & {
+  __typename?: 'AppContentElementNavSpotsManual';
+  id: Scalars['String']['output'];
+  linkedPages: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementRecommendation = AppContentElement & {
+  __typename?: 'AppContentElementRecommendation';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  imagePositionRight: Scalars['Boolean']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workId: Scalars['String']['output'];
+};
+
 export type AppContentElementText = AppContentElement & {
   __typename?: 'AppContentElementText';
   body: Scalars['String']['output'];
@@ -105,6 +120,14 @@ export type AppContentElementVideoBundleManual = AppContentElement & {
   title: Scalars['String']['output'];
   video: AppVideo;
   workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppPage = {
+  __typename?: 'AppPage';
+  elements: Array<AppContentElement>;
+  image?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type AppType =
@@ -1003,6 +1026,7 @@ export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
   getAppCategories: Array<AppCategory>;
+  getAppPage?: Maybe<AppPage>;
   getBranches: Array<Branch>;
   goCategories?: Maybe<GoCategoriesResult>;
   goConfiguration?: Maybe<GoConfiguration>;
@@ -1019,6 +1043,11 @@ export type Query = { go: { cacheTags: string[] } } & {
 export type QueryGetAppCategoriesArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   type: AppType;
+};
+
+
+export type QueryGetAppPageArgs = {
+  id: Scalars['String']['input'];
 };
 
 
