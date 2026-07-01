@@ -1,24 +1,21 @@
 on:
   pull_request:
     types: [ opened, synchronize, reopened, closed, edited ]
-    paths:
-      - 'cms/**'
-      - 'go/**'
-      - '.lagoon.yml'
-      - 'docker-compose.lagoon.yml'
-      - '.github/workflows/cms-*.yml'
+    # The Lagoon image builds cms, go, react and design-system from source (see
+    # cms/lagoon/{cli,nginx}.dockerfile), so almost any change affects the
+    # deployed environment. Deploy on everything except docs-only changes rather
+    # than maintaining an allowlist that has to grow with every new project.
+    paths-ignore:
+      - 'docs/**'
   push:
     branches:
       - develop
       - main
       - go-demo
       - go-playground
-    paths:
-      - 'cms/**'
-      - 'go/**'
-      - '.lagoon.yml'
-      - 'docker-compose.lagoon.yml'
-      - '.github/workflows/cms-*.yml'
+    # Keep in sync with the pull_request filter above.
+    paths-ignore:
+      - 'docs/**'
 name: Lagoon / Deploy application
 
 env:
