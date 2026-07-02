@@ -91,7 +91,7 @@ msgstr "Overskredet"
 #: 
 msgctxt "Loan list"
 msgid "Expiring soon"
-msgstr "Under 6 dage"
+msgstr "Skal snart afleveres"
 
 #: 
 msgctxt "Loan list"
@@ -1665,7 +1665,7 @@ msgstr "Overskredne lån"
 #: 
 msgctxt "Patron menu"
 msgid "loans expiring soon"
-msgstr "Under 6 dage"
+msgstr "Skal snart afleveres"
 
 #: 
 msgctxt "Patron menu"
@@ -2143,7 +2143,7 @@ msgstr "Henter..."
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
-msgstr "Advarsel om at udløbsdato nærmer sig"
+msgstr "Advarsel om at afleveringsdato nærmer sig"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -3061,7 +3061,7 @@ msgstr "Henvendt dig venligst til biblioteket for at høre hvordan du betaler."
 #: 
 msgctxt "Search Result"
 msgid "Can always be loaned"
-msgstr "Kan altid lånes"
+msgstr "Lån udenfor kvoten"
 
 #: 
 msgctxt "Search Result"
