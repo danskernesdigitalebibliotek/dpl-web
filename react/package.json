@@ -6,9 +6,8 @@
   },
   "engines": {
     "node": "24.15.0",
-    "pnpm": "^11"
+    "pnpm": "^10"
   },
-  "packageManager": "pnpm@11.5.2",
   "scripts": {
     "fmt": "prettier --config ./.prettierrc --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:js": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --max-warnings 0 --cache  --cache-location \".cache/eslint/\"",
