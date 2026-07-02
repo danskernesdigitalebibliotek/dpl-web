@@ -9,6 +9,12 @@ overrides:
   "@types/react": "19.2.17"
   "@types/react-dom": "19.2.3"
 
+# Give each workspace package its own pnpm-lock.yaml instead of a single shared
+# lockfile at the repo root. This keeps the lockfiles in a single-document format
+# that Dependabot can parse, and lets its per-directory update entries find and
+# update the lockfile next to each package.json.
+sharedWorkspaceLockfile: false
+
 # Whitelist of packages that are allowed to run build scripts.
 onlyBuiltDependencies:
   - '@parcel/watcher'
@@ -22,8 +28,12 @@ onlyBuiltDependencies:
   - sharp
   - unrs-resolver
 
-# To mitigate the risk of supply chain attacks, wait two days before accepting
-# a new version of a package.
+# Supply chain risk mitigation: wait two days before accepting a new version of a
+# package.
+# NOTE: pnpm 10.x silently ignores minimumReleaseAge when sharedWorkspaceLockfile
+# is false (see the pnpm changelog), so this is currently NOT enforced. It is
+# kept here so the protection returns once that bug is fixed or we move off split
+# lockfiles.
 minimumReleaseAge: 2880
 
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
