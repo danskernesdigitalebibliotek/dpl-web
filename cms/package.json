@@ -30,7 +30,7 @@
     "jsome": "^2.5.0",
     "markdownlint-cli2": "^0.22.1",
     "pa11y-ci": "github:pa11y/pa11y-ci#5c842cf1b9fe2867b70ff5354851d985be8d71c4",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.4",
     "typescript": "^6.0.3",
     "wiremock-rest-client": "^1.11.0"
   },
