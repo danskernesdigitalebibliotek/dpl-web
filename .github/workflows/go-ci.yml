@@ -119,13 +119,13 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Codegen - REST services
         run: task codegen:rest-services
       - name: Codegen - dpl-cms GraphQL
