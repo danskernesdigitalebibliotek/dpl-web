@@ -77,6 +77,39 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementGoMaterialSliderAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementGoMaterialSliderAutomatic';
+  cql: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type AppContentElementGoMaterialSliderManual = AppContentElement & {
+  __typename?: 'AppContentElementGoMaterialSliderManual';
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementMaterialGridAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementMaterialGridAutomatic';
+  cql: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  priorityMaterialType?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type AppContentElementMaterialGridManual = AppContentElement & {
+  __typename?: 'AppContentElementMaterialGridManual';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workIds: Array<Scalars['String']['output']>;
+};
+
 export type AppContentElementNavSpotsManual = AppContentElement & {
   __typename?: 'AppContentElementNavSpotsManual';
   id: Scalars['String']['output'];
@@ -1022,7 +1055,7 @@ export type ParagraphWebform = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
-export type Query = { go: { cacheTags: string[] } } & {
+export type Query = {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
   getAppCategories: Array<AppCategory>;
@@ -1888,7 +1921,7 @@ export type GetArticleByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
+export type GetArticleByPathQuery = { __typename?: 'Query', route?:
     | { __typename: 'RouteExternal' }
     | { __typename: 'RouteInternal', url: string, entity?:
         | { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?:
@@ -2042,7 +2075,7 @@ export type GetArticleByPathQuery = { go: { cacheTags: string[] } } & { __typena
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goCategories?: { __typename?: 'GoCategoriesResult', results: Array<
+export type GetCategoriesQuery = { __typename?: 'Query', goCategories?: { __typename?: 'GoCategoriesResult', results: Array<
       | { __typename?: 'NodeArticle' }
       | { __typename?: 'NodeGoArticle' }
       | { __typename?: 'NodeGoCategory', id: string, path?: string | null, categoryMenuTitle: string, categoryMenuImage:
@@ -2062,7 +2095,7 @@ export type GetCategoryPageByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
+export type GetCategoryPageByPathQuery = { __typename?: 'Query', route?:
     | { __typename: 'RouteExternal' }
     | { __typename: 'RouteInternal', url: string, entity?:
         | { __typename?: 'NodeGoArticle' }
@@ -2209,19 +2242,19 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
 export type GetDplCmsPrivateConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', private?: { __typename?: 'GoConfigurationPrivate', unilogin?: { __typename?: 'UniloginConfigurationPrivate', clientSecret?: string | null, pubHubRetailerKeyCode?: string | null } | null } | null } | null };
+export type GetDplCmsPrivateConfigurationQuery = { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', private?: { __typename?: 'GoConfigurationPrivate', unilogin?: { __typename?: 'UniloginConfigurationPrivate', clientSecret?: string | null, pubHubRetailerKeyCode?: string | null } | null } | null } | null };
 
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
 }>;
 
 
-export type GetPageByPathQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', route?:
+export type GetPageByPathQuery = { __typename?: 'Query', route?:
     | { __typename: 'RouteExternal' }
     | { __typename: 'RouteInternal', url: string, entity?:
         | { __typename?: 'NodeGoArticle' }
@@ -2371,7 +2404,7 @@ export type GetPreviewPageByIddQueryVariables = Exact<{
 }>;
 
 
-export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typename: 'Query', preview?:
+export type GetPreviewPageByIddQuery = { __typename: 'Query', preview?:
     | { __typename: 'NodeArticle' }
     | { __typename: 'NodeGoArticle', id: string, title: string, subtitle?: string | null, goArticleImage?:
         | { __typename?: 'MediaAudio' }
@@ -2788,22 +2821,22 @@ export type GetPreviewPageByIddQuery = { go: { cacheTags: string[] } } & { __typ
 export type GetAdgangsplatformenLibraryTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenLibraryTokenQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', library?: { __typename?: 'AdgangsplatformenLibraryToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
+export type GetAdgangsplatformenLibraryTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', library?: { __typename?: 'AdgangsplatformenLibraryToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
 
 export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenUserTokenQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
+export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
 
 export type GetLoginUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLoginUrlsQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null } | null } | null };
+export type GetLoginUrlsQuery = { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null } | null } | null };
 
 export type GetLogoutUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLogoutUrlsQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null } | null } | null };
+export type GetLogoutUrlsQuery = { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null } | null } | null };
 
 
 export const MediaVideotoolFragmentFragmentDoc = `
@@ -3120,7 +3153,7 @@ export const useSuspenseGetArticleByPathQuery = <
 useSuspenseGetArticleByPathQuery.getKey = (variables: GetArticleByPathQueryVariables) => ['getArticleByPath', variables];
 
 
-useGetArticleByPathQuery.fetcher = (variables: GetArticleByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables, options);
+useGetArticleByPathQuery.fetcher = (variables: GetArticleByPathQueryVariables, options?: RequestInit['headers']) => fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables, options);
 
 export const GetCategoriesDocument = `
     query getCategories {
@@ -3191,7 +3224,7 @@ export const useSuspenseGetCategoriesQuery = <
 useSuspenseGetCategoriesQuery.getKey = (variables?: GetCategoriesQueryVariables) => variables === undefined ? ['getCategories'] : ['getCategories', variables];
 
 
-useGetCategoriesQuery.fetcher = (variables?: GetCategoriesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, variables, options);
+useGetCategoriesQuery.fetcher = (variables?: GetCategoriesQueryVariables, options?: RequestInit['headers']) => fetcher<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, variables, options);
 
 export const GetCategoryPageByPathDocument = `
     query getCategoryPageByPath($path: String!) {
@@ -3259,7 +3292,7 @@ export const useSuspenseGetCategoryPageByPathQuery = <
 useSuspenseGetCategoryPageByPathQuery.getKey = (variables: GetCategoryPageByPathQueryVariables) => ['getCategoryPageByPath', variables];
 
 
-useGetCategoryPageByPathQuery.fetcher = (variables: GetCategoryPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetCategoryPageByPathQuery, GetCategoryPageByPathQueryVariables>(GetCategoryPageByPathDocument, variables, options);
+useGetCategoryPageByPathQuery.fetcher = (variables: GetCategoryPageByPathQueryVariables, options?: RequestInit['headers']) => fetcher<GetCategoryPageByPathQuery, GetCategoryPageByPathQueryVariables>(GetCategoryPageByPathDocument, variables, options);
 
 export const GetDplCmsPrivateConfigurationDocument = `
     query getDplCmsPrivateConfiguration {
@@ -3311,7 +3344,7 @@ export const useSuspenseGetDplCmsPrivateConfigurationQuery = <
 useSuspenseGetDplCmsPrivateConfigurationQuery.getKey = (variables?: GetDplCmsPrivateConfigurationQueryVariables) => variables === undefined ? ['getDplCmsPrivateConfiguration'] : ['getDplCmsPrivateConfiguration', variables];
 
 
-useGetDplCmsPrivateConfigurationQuery.fetcher = (variables?: GetDplCmsPrivateConfigurationQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetDplCmsPrivateConfigurationQuery, GetDplCmsPrivateConfigurationQueryVariables>(GetDplCmsPrivateConfigurationDocument, variables, options);
+useGetDplCmsPrivateConfigurationQuery.fetcher = (variables?: GetDplCmsPrivateConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetDplCmsPrivateConfigurationQuery, GetDplCmsPrivateConfigurationQueryVariables>(GetDplCmsPrivateConfigurationDocument, variables, options);
 
 export const GetDplCmsPublicConfigurationDocument = `
     query getDplCmsPublicConfiguration {
@@ -3375,7 +3408,7 @@ export const useSuspenseGetDplCmsPublicConfigurationQuery = <
 useSuspenseGetDplCmsPublicConfigurationQuery.getKey = (variables?: GetDplCmsPublicConfigurationQueryVariables) => variables === undefined ? ['getDplCmsPublicConfiguration'] : ['getDplCmsPublicConfiguration', variables];
 
 
-useGetDplCmsPublicConfigurationQuery.fetcher = (variables?: GetDplCmsPublicConfigurationQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetDplCmsPublicConfigurationQuery, GetDplCmsPublicConfigurationQueryVariables>(GetDplCmsPublicConfigurationDocument, variables, options);
+useGetDplCmsPublicConfigurationQuery.fetcher = (variables?: GetDplCmsPublicConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetDplCmsPublicConfigurationQuery, GetDplCmsPublicConfigurationQueryVariables>(GetDplCmsPublicConfigurationDocument, variables, options);
 
 export const GetPageByPathDocument = `
     query getPageByPath($path: String!) {
@@ -3456,7 +3489,7 @@ export const useSuspenseGetPageByPathQuery = <
 useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPath', variables];
 
 
-useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
+useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit['headers']) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
 
 export const GetPreviewPageByIddDocument = `
     query getPreviewPageByIdd($id: ID!, $token: String!) {
@@ -3522,7 +3555,7 @@ export const useSuspenseGetPreviewPageByIddQuery = <
 useSuspenseGetPreviewPageByIddQuery.getKey = (variables: GetPreviewPageByIddQueryVariables) => ['getPreviewPageByIdd', variables];
 
 
-useGetPreviewPageByIddQuery.fetcher = (variables: GetPreviewPageByIddQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPreviewPageByIddQuery, GetPreviewPageByIddQueryVariables>(GetPreviewPageByIddDocument, variables, options);
+useGetPreviewPageByIddQuery.fetcher = (variables: GetPreviewPageByIddQueryVariables, options?: RequestInit['headers']) => fetcher<GetPreviewPageByIddQuery, GetPreviewPageByIddQueryVariables>(GetPreviewPageByIddDocument, variables, options);
 
 export const GetAdgangsplatformenLibraryTokenDocument = `
     query getAdgangsplatformenLibraryToken {
@@ -3576,7 +3609,7 @@ export const useSuspenseGetAdgangsplatformenLibraryTokenQuery = <
 useSuspenseGetAdgangsplatformenLibraryTokenQuery.getKey = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenLibraryToken'] : ['getAdgangsplatformenLibraryToken', variables];
 
 
-useGetAdgangsplatformenLibraryTokenQuery.fetcher = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables, options);
+useGetAdgangsplatformenLibraryTokenQuery.fetcher = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables, options?: RequestInit['headers']) => fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables, options);
 
 export const GetAdgangsplatformenUserTokenDocument = `
     query getAdgangsplatformenUserToken {
@@ -3630,7 +3663,7 @@ export const useSuspenseGetAdgangsplatformenUserTokenQuery = <
 useSuspenseGetAdgangsplatformenUserTokenQuery.getKey = (variables?: GetAdgangsplatformenUserTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables];
 
 
-useGetAdgangsplatformenUserTokenQuery.fetcher = (variables?: GetAdgangsplatformenUserTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables, options);
+useGetAdgangsplatformenUserTokenQuery.fetcher = (variables?: GetAdgangsplatformenUserTokenQueryVariables, options?: RequestInit['headers']) => fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables, options);
 
 export const GetLoginUrlsDocument = `
     query getLoginUrls {
@@ -3681,7 +3714,7 @@ export const useSuspenseGetLoginUrlsQuery = <
 useSuspenseGetLoginUrlsQuery.getKey = (variables?: GetLoginUrlsQueryVariables) => variables === undefined ? ['getLoginUrls'] : ['getLoginUrls', variables];
 
 
-useGetLoginUrlsQuery.fetcher = (variables?: GetLoginUrlsQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetLoginUrlsQuery, GetLoginUrlsQueryVariables>(GetLoginUrlsDocument, variables, options);
+useGetLoginUrlsQuery.fetcher = (variables?: GetLoginUrlsQueryVariables, options?: RequestInit['headers']) => fetcher<GetLoginUrlsQuery, GetLoginUrlsQueryVariables>(GetLoginUrlsDocument, variables, options);
 
 export const GetLogoutUrlsDocument = `
     query getLogoutUrls {
@@ -3732,7 +3765,7 @@ export const useSuspenseGetLogoutUrlsQuery = <
 useSuspenseGetLogoutUrlsQuery.getKey = (variables?: GetLogoutUrlsQueryVariables) => variables === undefined ? ['getLogoutUrls'] : ['getLogoutUrls', variables];
 
 
-useGetLogoutUrlsQuery.fetcher = (variables?: GetLogoutUrlsQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetLogoutUrlsQuery, GetLogoutUrlsQueryVariables>(GetLogoutUrlsDocument, variables, options);
+useGetLogoutUrlsQuery.fetcher = (variables?: GetLogoutUrlsQueryVariables, options?: RequestInit['headers']) => fetcher<GetLogoutUrlsQuery, GetLogoutUrlsQueryVariables>(GetLogoutUrlsDocument, variables, options);
 
 export const operationNames = {
   Query: {
