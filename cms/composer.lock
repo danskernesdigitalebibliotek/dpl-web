@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a1f0bac36e99321b4f25f04d61f81bd",
+    "content-hash": "090b36120f4949eccdcaf046d5c28732",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -4545,6 +4545,76 @@
                 "source": "https://git.drupalcode.org/project/facets.git",
                 "issues": "https://www.drupal.org/project/issues/facets",
                 "irc": "irc://irc.freenode.org/drupal-search-api"
+            }
+        },
+        {
+            "name": "drupal/facets_date_range",
+            "version": "1.0.0-beta3",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/facets_date_range.git",
+                "reference": "1.0.0-beta3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/facets_date_range-1.0.0-beta3.zip",
+                "reference": "1.0.0-beta3",
+                "shasum": "7ccee8e419da721f38559e7ece88bb5d523e81d3"
+            },
+            "require": {
+                "drupal/core": "^8.9 || ^9.2 || ^10 || ^11",
+                "drupal/facets": "^1.6 || ^2.0 || ^3.0",
+                "php": "^7.4 || ^8"
+            },
+            "require-dev": {
+                "drupal/search_api": "^1.24"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0-beta3",
+                    "datestamp": "1720514761",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Dias",
+                    "homepage": "https://www.drupal.org/u/saidatom"
+                },
+                {
+                    "name": "Claudiu Cristea",
+                    "homepage": "https://www.drupal.org/u/claudiu.cristea"
+                },
+                {
+                    "name": "Ilias Dimopoulos",
+                    "homepage": "https://www.drupal.org/u/idimopoulos-0"
+                },
+                {
+                    "name": "Pieter Frenssen",
+                    "homepage": "https://www.drupal.org/u/pfrenssen"
+                },
+                {
+                    "name": "pfrenssen",
+                    "homepage": "https://www.drupal.org/user/382067"
+                },
+                {
+                    "name": "saidatom",
+                    "homepage": "https://www.drupal.org/user/1846674"
+                }
+            ],
+            "description": "Provides a Date Range widget in facets.",
+            "homepage": "https://drupal.org/project/facets_date_range",
+            "support": {
+                "source": "https://git.drupalcode.org/project/facets_date_range",
+                "issues": "https://drupal.org/project/issues/facets_date_range"
             }
         },
         {
@@ -11666,6 +11736,18 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.7.0"
             },
             "time": "2025-12-06T11:56:16+00:00"
+        },
+        {
+            "name": "npm-asset/flatpickr",
+            "version": "4.6.13",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/flatpickr/-/flatpickr-4.6.13.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "npm-asset/select2",
@@ -23149,6 +23231,7 @@
     "stability-flags": {
         "drupal/address_dawa": 20,
         "drupal/default_content": 15,
+        "drupal/facets_date_range": 10,
         "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
         "drupal/potion": 20
