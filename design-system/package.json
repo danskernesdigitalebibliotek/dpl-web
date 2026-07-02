@@ -76,7 +76,7 @@
     "globals": "^17",
     "json": "^11.0.0",
     "markdownlint-cli2": "^0.22.0",
-    "playwright": "^1.52.0",
+    "playwright": "^1.61.1",
     "postcss": "^8.5.15",
     "prettier": "^3.8.4",
     "react": "^18.3.1",
