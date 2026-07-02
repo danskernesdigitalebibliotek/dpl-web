@@ -9,11 +9,11 @@ ENV CYPRESS_INSTALL_BINARY=0
 ENV PUPPETEER_SKIP_DOWNLOAD=true
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY design-system/package.json ./design-system/
-COPY react/package.json ./react/
-COPY go/package.json ./go/
-COPY packages/service-layer/package.json ./packages/service-layer/
-COPY cms/package.json ./cms/
+COPY design-system/package.json design-system/pnpm-lock.yaml ./design-system/
+COPY react/package.json react/pnpm-lock.yaml ./react/
+COPY go/package.json go/pnpm-lock.yaml ./go/
+COPY packages/service-layer/package.json packages/service-layer/pnpm-lock.yaml ./packages/service-layer/
+COPY cms/package.json cms/pnpm-lock.yaml ./cms/
 
 RUN pnpm install --frozen-lockfile
 
