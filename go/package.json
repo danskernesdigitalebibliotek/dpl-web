@@ -142,7 +142,7 @@
     "node-mocks-http": "^1.17.2",
     "orval": "^7.21.0",
     "playwright": "^1.52.0",
-    "postcss": "^8.5.15",
+    "postcss": "^8.5.16",
     "prepend-file": "^2.0.1",
     "prettier": "^3.8.3",
     "prettier-plugin-classnames": "^0.10.2",
