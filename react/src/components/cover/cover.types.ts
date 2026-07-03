@@ -13,12 +13,7 @@ export type FbiCoverImageSizeKey = Extract<
  * The sizes used in the CSS classes for styling defined in the design system.
  */
 export type DisplaySize =
-  | "2xsmall"
-  | "xsmall"
-  | "small"
-  | "medium"
-  | "large"
-  | "xlarge";
+  "2xsmall" | "xsmall" | "small" | "medium" | "large" | "xlarge";
 
 /**
  * Maps GraphQL size keys (`FbiCoverImageSizeKey`) to corresponding
