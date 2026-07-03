@@ -8,7 +8,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
 use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * App categories extension.
@@ -21,14 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class CategoriesExtension extends SdlSchemaExtensionPluginBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
-    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-    return $instance;
-  }
 
   /**
    * {@inheritdoc}
