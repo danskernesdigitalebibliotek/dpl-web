@@ -91,7 +91,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
         $result[] = [
           '__type' => 'AppContentElementText',
           'id' => $paragraph->uuid(),
-          'body' => $paragraph->get('field_body')->value,
+          'body' => $paragraph->get('field_body')->processed,
         ];
       }
       elseif ($paragraph->bundle() == 'video') {
