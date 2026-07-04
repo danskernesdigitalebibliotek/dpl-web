@@ -33,8 +33,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(redux@5.0.1)
       '@reloaddk/wsdl-tsclient':
-        specifier: ^2.0.6
-        version: 2.0.6
+        specifier: ^2.0.7
+        version: 2.0.7
       '@tanstack/react-query':
         specifier: ^5.101.0
         version: 5.101.2(react@19.2.7)
@@ -3135,8 +3135,8 @@ packages:
     peerDependencies:
       redux: ^3.1.0 || ^4.0.0 || ^5.0.0
 
-  '@reloaddk/wsdl-tsclient@2.0.6':
-    resolution: {integrity: sha512-dJlgZ0gWVOzozXWMwaXWUgoA/nP0I1vFUTu8L9QBtb+IoEfeCxpX/ljo2aGt4Q3p1O+9qHYOndrHpd0Tz0CP7Q==}
+  '@reloaddk/wsdl-tsclient@2.0.7':
+    resolution: {integrity: sha512-ddC6i8w8g7kisDX6SuK/fhQhhoq4DcAdz0L5DleUxfwRORQ9aFYZDARsT+6huEg/YbI43OhHPgfuDP795Fy3uQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
@@ -6707,7 +6707,7 @@ packages:
     engines: {node: '>= 0.10'}
 
   iron-session@https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f:
-    resolution: {gitHosted: true, integrity: sha512-LG+tm3n1AyrXQuvvTqOG9mQZKkA9vYqiX5AO2/wyytHv7s6pWRPdODSrrVwjYtlDxWmSXliIUeLaFozSKyPgCg==, tarball: https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f}
     version: 8.0.4
 
   iron-webcrypto@1.2.1:
@@ -13271,7 +13271,7 @@ snapshots:
     dependencies:
       redux: 5.0.1
 
-  '@reloaddk/wsdl-tsclient@2.0.6':
+  '@reloaddk/wsdl-tsclient@2.0.7':
     dependencies:
       camelcase: 9.0.0
       chalk: 5.6.2
