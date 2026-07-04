@@ -75,7 +75,7 @@
     "flatpickr": "^4.6.13",
     "globals": "^17",
     "json": "^11.0.0",
-    "markdownlint-cli2": "^0.22.0",
+    "markdownlint-cli2": "^0.23.0",
     "playwright": "^1.52.0",
     "postcss": "^8.5.15",
     "prettier": "^3.8.4",
