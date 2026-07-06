@@ -9,6 +9,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_paragraphs\Entity\TextBody;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Drupal\media\Entity\Media;
@@ -85,13 +86,13 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       // element is coupled to the type we define in
       // dpl_app_categories.base.graphqls, and it would be nice if they where
       // near each other.
-      if ($paragraph->bundle() == 'text_body') {
+      if ($paragraph instanceof TextBody) {
         $field_context->addCacheableDependency($paragraph);
 
         $result[] = [
           '__typename' => 'AppContentElementText',
           'id' => $paragraph->uuid(),
-          'body' => $paragraph->get('field_body')->processed,
+          'body' => $paragraph->getBody(),
         ];
       }
       elseif ($paragraph->bundle() == 'video') {
