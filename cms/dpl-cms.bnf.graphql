@@ -45,6 +45,35 @@ interface AppContentElement {
   id: String!
 }
 
+type AppContentElementGoMaterialSliderAutomatic implements AppContentElement {
+  cql: String!
+  id: String!
+  limit: Int!
+  title: String!
+}
+
+type AppContentElementGoMaterialSliderManual implements AppContentElement {
+  id: String!
+  title: String!
+  workIds: [String!]!
+}
+
+type AppContentElementMaterialGridAutomatic implements AppContentElement {
+  cql: String!
+  description: String
+  id: String!
+  limit: Int!
+  priorityMaterialType: String
+  title: String
+}
+
+type AppContentElementMaterialGridManual implements AppContentElement {
+  description: String
+  id: String!
+  title: String
+  workIds: [String!]!
+}
+
 type AppContentElementNavSpotsManual implements AppContentElement {
   id: String!
   linkedPages: [String!]!
