@@ -18,10 +18,8 @@ export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFr
   }, [] as string[])
 }
 
-// Identifier sent to Publizon when loaning/reserving a digital material. The
-// loanable edition is keyed by its PUBLIZON identifier; a work can also expose
-// a deselected ("fravalgt") PDF edition that only has an ISBN and is not on the
-// agreement. Prefer the PUBLIZON identifier, fall back to the ISBN.
+// Identifier sent to Publizon. Prefer the PUBLIZON identifier (the loanable
+// edition); fall back to the ISBN.
 export const getPublizonIdentifierFromManifestation = (
   manifestation: ManifestationWorkPageFragment | undefined
 ) => {
