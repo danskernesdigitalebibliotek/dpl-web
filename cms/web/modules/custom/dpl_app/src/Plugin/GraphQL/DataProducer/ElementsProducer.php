@@ -9,7 +9,9 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_media\Entity\Videotool as VideotoolMedia;
 use Drupal\dpl_paragraphs\Entity\TextBody;
+use Drupal\dpl_paragraphs\Entity\Video;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Drupal\media\Entity\Media;
@@ -75,6 +77,11 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       return $result;
     }
 
+    // Streaming URLs are only valid for a requested time (minimum one minute,
+    // maximum 31 days). We'll go with 24 hours, should leave enough time for
+    // the app.
+    $ttl = 86400;
+
     $field_context->addCacheableDependency($entity);
 
     /** @var \Drupal\Core\Entity\ContentEntityInterface $paragraph */
@@ -95,17 +102,25 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           'body' => $paragraph->getBody(),
         ];
       }
-      elseif ($paragraph->bundle() == 'video') {
+      elseif ($paragraph instanceof Video) {
+        $media = $paragraph->getVideoMedia();
 
-        $video = $this->extractVideo($paragraph, ['field_embed_video'], $field_context);
-        if ($video) {
-          $field_context->addCacheableDependency($paragraph);
-          $result[] = [
-            '__typename' => 'AppContentElementVideo',
-            'id' => $paragraph->uuid(),
-            'title' => NULL,
-            'video' => $video,
-          ];
+        if ($media instanceof VideotoolMedia) {
+          $thumbnail = $media->getThumbnail();
+          if ($thumbnail->getFileUri()) {
+            $field_context->addCacheableDependency($media);
+            $field_context->addCacheableDependency($thumbnail);
+
+            $result[] = [
+              '__typename' => 'AppContentElementVideo',
+              'id' => $paragraph->uuid(),
+              'title' => $media->getThumbnail,
+              'video' => [
+                'url' => $this->videoTool->getVideoStreamUrl($media->getVideotoolUrl(), $ttl),
+                'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
+              ],
+            ];
+          }
         }
       }
       elseif (in_array(
