@@ -89,7 +89,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
         $field_context->addCacheableDependency($paragraph);
 
         $result[] = [
-          '__type' => 'AppContentElementText',
+          '__typename' => 'AppContentElementText',
           'id' => $paragraph->uuid(),
           'body' => $paragraph->get('field_body')->processed,
         ];
@@ -100,7 +100,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
         if ($video) {
           $field_context->addCacheableDependency($paragraph);
           $result[] = [
-            '__type' => 'AppContentElementVideo',
+            '__typename' => 'AppContentElementVideo',
             'id' => $paragraph->uuid(),
             'title' => NULL,
             'video' => $video,
@@ -122,7 +122,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           }
 
           $result[] = [
-            '__type' => 'AppContentElementVideoBundleManual',
+            '__typename' => 'AppContentElementVideoBundleManual',
             'id' => $paragraph->uuid(),
             'title' => $paragraph->get('field_go_video_title')->value,
             'workIds' => $workIds,
@@ -139,7 +139,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $field_context->addCacheableDependency($paragraph);
 
           $result[] = [
-            '__type' => 'AppContentElementVideoBundleAutomatic',
+            '__typename' => 'AppContentElementVideoBundleAutomatic',
             'id' => $paragraph->uuid(),
             'title' => $paragraph->get('field_go_video_title')->value,
             'cql' => $paragraph->get('field_cql_search')->value,
@@ -154,7 +154,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $field_context->addCacheableDependency($paragraph);
 
           $result[] = [
-            '__type' => 'AppContentElementRecommendation',
+            '__typename' => 'AppContentElementRecommendation',
             'id' => $paragraph->uuid(),
             'imagePositionRight' => (bool) $paragraph->get('field_image_position_right')->value,
             // @phpstan-ignore property.notFound (magic property)
@@ -174,7 +174,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
             $linkedPages[] = $entity->uuid();
           }
           $result[] = [
-            '__type' => 'AppContentElementNavSpotsManual',
+            '__typename' => 'AppContentElementNavSpotsManual',
             'id' => $paragraph->uuid(),
             'linkedPages' => $linkedPages,
           ];
@@ -186,7 +186,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $field_context->addCacheableDependency($paragraph);
 
           $result[] = [
-            '__type' => 'AppContentElementGoMaterialSliderAutomatic',
+            '__typename' => 'AppContentElementGoMaterialSliderAutomatic',
             'id' => $paragraph->uuid(),
             'title' => $paragraph->get('field_title')->value,
             'cql' => $cql,
@@ -207,7 +207,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $field_context->addCacheableDependency($paragraph);
 
           $result[] = [
-            '__type' => 'AppContentElementGoMaterialSliderManual',
+            '__typename' => 'AppContentElementGoMaterialSliderManual',
             'id' => $paragraph->uuid(),
             'title' => $paragraph->get('field_title')->value,
             'workIds' => $workIds,
@@ -220,7 +220,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $field_context->addCacheableDependency($paragraph);
 
           $result[] = [
-            '__type' => 'AppContentElementMaterialGridAutomatic',
+            '__typename' => 'AppContentElementMaterialGridAutomatic',
             'id' => $paragraph->uuid(),
             'title' => $paragraph->get('field_material_grid_title')->value,
             'description' => $paragraph->get('field_material_grid_description')->value,
@@ -243,7 +243,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $field_context->addCacheableDependency($paragraph);
 
           $result[] = [
-            '__type' => 'AppContentElementMaterialGridManual',
+            '__typename' => 'AppContentElementMaterialGridManual',
             'id' => $paragraph->uuid(),
             'title' => $paragraph->get('field_material_grid_title')->value,
             'description' => $paragraph->get('field_material_grid_description')->value,

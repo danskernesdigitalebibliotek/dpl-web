@@ -54,8 +54,8 @@ class CategoriesExtension extends SdlSchemaExtensionPluginBase {
     // Without a resolver, graphql.module can't tell what the type of the
     // elements the app_elements_producer returns is.
     $registry->addTypeResolver('AppContentElement', function ($value) {
-      if (is_array($value) && isset($value['__type'])) {
-        return $value['__type'];
+      if (is_array($value) && isset($value['__typename'])) {
+        return $value['__typename'];
       }
 
       return NULL;
