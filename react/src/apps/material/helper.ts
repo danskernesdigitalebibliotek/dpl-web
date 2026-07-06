@@ -96,12 +96,8 @@ export const hasPublizonIdentifier = (manifestation: Manifestation) =>
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   ) ?? false;
 
-// Picks the manifestation we should actually loan/reserve through Publizon.
-// A work opened as e.g. `type=e-bog` can expose several manifestations: a
-// deselected ("fravalgt") PDF edition that is not on the Publizon agreement
-// and the loanable EPUB edition. The loanable edition is the one carrying a
-// PUBLIZON identifier, so prefer it; otherwise fall back to the
-// first manifestation as before.
+// Picks the manifestation to loan/reserve through Publizon: prefer the one
+// carrying a PUBLIZON identifier (the loanable edition), else the first.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
   return (
     manifestations.find(hasPublizonIdentifier) ??
@@ -173,10 +169,7 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
 };
 
 // Identifier used for every Publizon call (loan, reservation, loan status,
-// order id). The loanable edition is keyed by its PUBLIZON identifier; fall
-// back to the ISBN for editions that only expose an ISBN. Routing
-// all derivations through this keeps the loan/reserve identifier consistent
-// with the loan-status and "already loaned/reserved" lookups.
+// order id). Prefer the PUBLIZON identifier; fall back to the ISBN.
 export const getManifestationPublizonIdentifier = (
   manifestation: Manifestation
 ) => {

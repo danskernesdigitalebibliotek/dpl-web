@@ -39,10 +39,8 @@ describe("getLoanableManifestation", () => {
   });
 });
 
-// Real FBI data for "Rodløs" (work-of:870970-basis:139675622): a single
-// e-book manifestation carrying the PUBLIZON value plus two ISBNs, where the
-// FIRST ISBN is the deselected PDF that triggered #139. The fix must return
-// the PUBLIZON value, not the leading ISBN.
+// Real FBI data for "Rodløs": one e-book manifestation carrying the PUBLIZON
+// value plus two ISBNs, where the first ISBN is a deselected PDF edition.
 const rodloesEbook = manifestation("pid:rodloes-ebook", [
   { type: IdentifierTypeEnum.Publizon, value: "9788797577646" },
   { type: IdentifierTypeEnum.Isbn, value: "9788797287996" },
