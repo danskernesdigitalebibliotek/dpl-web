@@ -8,6 +8,7 @@
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_paragraphs\Entity\TextBody;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\node\NodeForm;
@@ -15,6 +16,20 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 use function Safe\parse_url;
 use function Safe\preg_match;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @todo Use atttribute in Drupal 11.4.0.
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['paragraph']['text_body'])) {
+    $bundles['paragraph']['text_body']['class'] = TextBody::class;
+  }
+}
 
 /**
  * Implements hook_preprocess_paragraph().
