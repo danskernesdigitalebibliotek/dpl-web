@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\dpl_media\Entity\Video;
+use Drupal\dpl_media\Entity\Videotool;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @todo Use atttribute in Drupal 11.4.0.
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_media_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['media']['video'])) {
+    $bundles['media']['video']['class'] = Video::class;
+  }
+
+  if (isset($bundles['media']['videotool'])) {
+    $bundles['media']['videotool']['class'] = Videotool::class;
+  }
+}

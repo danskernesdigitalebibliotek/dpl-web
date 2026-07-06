@@ -1,0 +1,5 @@
+name: 'DPL Media'
+type: module
+description: 'DPL media support functionality'
+package: 'DPL'
+core_version_requirement: ^10 || ^11
