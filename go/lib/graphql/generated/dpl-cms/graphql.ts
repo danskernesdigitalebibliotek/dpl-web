@@ -77,6 +77,39 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementGoMaterialSliderAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementGoMaterialSliderAutomatic';
+  cql: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type AppContentElementGoMaterialSliderManual = AppContentElement & {
+  __typename?: 'AppContentElementGoMaterialSliderManual';
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementMaterialGridAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementMaterialGridAutomatic';
+  cql: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  priorityMaterialType?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type AppContentElementMaterialGridManual = AppContentElement & {
+  __typename?: 'AppContentElementMaterialGridManual';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workIds: Array<Scalars['String']['output']>;
+};
+
 export type AppContentElementNavSpotsManual = AppContentElement & {
   __typename?: 'AppContentElementNavSpotsManual';
   id: Scalars['String']['output'];
