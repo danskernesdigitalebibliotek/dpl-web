@@ -39,6 +39,17 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
   use AutowirePluginTrait;
 
   /**
+   * TTL for streaming URLs.
+   *
+   * Streaming URLs are only valid for a requested time (minimum one minute,
+   * maximum 31 days). We'll go with 24 hours, should leave enough time for
+   * the app.
+   *
+   * @var int
+   */
+  protected int $ttl = 86400;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(
@@ -77,11 +88,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       return $result;
     }
 
-    // Streaming URLs are only valid for a requested time (minimum one minute,
-    // maximum 31 days). We'll go with 24 hours, should leave enough time for
-    // the app.
-    $ttl = 86400;
-
     $field_context->addCacheableDependency($entity);
 
     /** @var \Drupal\Core\Entity\ContentEntityInterface $paragraph */
@@ -94,33 +100,12 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       // dpl_app_categories.base.graphqls, and it would be nice if they where
       // near each other.
       if ($paragraph instanceof TextBody) {
-        $field_context->addCacheableDependency($paragraph);
-
-        $result[] = [
-          '__typename' => 'AppContentElementText',
-          'id' => $paragraph->uuid(),
-          'body' => $paragraph->getBody(),
-        ];
+        $result[] = $this->handleTextBody($paragraph, $field_context);
       }
       elseif ($paragraph instanceof Video) {
-        $media = $paragraph->getVideoMedia();
-
-        if ($media instanceof VideotoolMedia) {
-          $thumbnail = $media->getThumbnail();
-          if ($thumbnail->getFileUri()) {
-            $field_context->addCacheableDependency($media);
-            $field_context->addCacheableDependency($thumbnail);
-
-            $result[] = [
-              '__typename' => 'AppContentElementVideo',
-              'id' => $paragraph->uuid(),
-              'title' => $media->getThumbnail,
-              'video' => [
-                'url' => $this->videoTool->getVideoStreamUrl($media->getVideotoolUrl(), $ttl),
-                'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
-              ],
-            ];
-          }
+        $res = $this->handleVideo($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif (in_array(
@@ -269,6 +254,54 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     }
 
     return $result;
+  }
+
+  /**
+   * Handle text_body paragraph.
+   *
+   * @return array<mixed>
+   *   GraphQL data.
+   */
+  protected function handleTextBody(TextBody $paragraph, FieldContext $field_context): array {
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementText',
+      'id' => $paragraph->uuid(),
+      'body' => $paragraph->getBody(),
+    ];
+  }
+
+  /**
+   * Handle video paragraph.
+   *
+   * @return array<mixed>
+   *   GraphQL data.
+   */
+  protected function handleVideo(Video $paragraph, FieldContext $field_context): ?array {
+    $media = $paragraph->getVideoMedia();
+    $field_context->addCacheableDependency($media);
+
+    if (!$media instanceof VideotoolMedia) {
+      return NULL;
+    }
+
+    $thumbnail = $media->getThumbnail();
+    if (!$thumbnail->getFileUri()) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($thumbnail);
+
+    return [
+      '__typename' => 'AppContentElementVideo',
+      'id' => $paragraph->uuid(),
+      'title' => $media->getThumbnail,
+      'video' => [
+        'url' => $this->videoTool->getVideoStreamUrl($media->getVideotoolUrl(), $this->ttl),
+        'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
+      ],
+    ];
   }
 
   /**
