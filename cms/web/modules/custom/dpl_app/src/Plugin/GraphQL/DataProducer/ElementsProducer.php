@@ -22,7 +22,6 @@ use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
-use Drupal\media\Entity\Media;
 use Drupal\media_videotool\VideoTool;
 
 /**
@@ -404,84 +403,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'url' => $url,
       'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
     ];
-  }
-
-  /**
-   * Get the url and thumbnail of a video referenced.
-   *
-   * This should not be here. It knows way too much about the structure of
-   * paragraphs and media. But the app needs data ASAP.
-   *
-   * @param \Drupal\Core\Entity\ContentEntityInterface $paragraph
-   *   Paragraph to extract from.
-   * @param string[] $fieldNames
-   *   Field names to try.
-   * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
-   *   The field context for adding cache metadata.
-   *
-   * @return array{url: string, thumbnail: string}|null
-   *   Stream URL and thumbnail.
-   */
-  protected function extractVideo(
-    ContentEntityInterface $paragraph,
-    array $fieldNames,
-    FieldContext $field_context,
-  ): ?array {
-    $media = NULL;
-    $thumbnail = NULL;
-    // Streaming URLs are only valid for a requested time (minimum one minute,
-    // maximum 31 days). We'll go with 24 hours, should leave enough time for
-    // the app.
-    $ttl = 86400;
-
-    foreach ($fieldNames as $fieldName) {
-      $field = $paragraph->get($fieldName);
-
-      if ($field instanceof EntityReferenceFieldItemList) {
-        /** @var \Drupal\media\Entity\Media $media */
-        $media = $field->referencedEntities()[0];
-      }
-    }
-
-    if (!$media instanceof Media) {
-      return NULL;
-    }
-
-    /** @var \Drupal\file\Entity\File|null $thumbnailFile */
-    $thumbnailFile = $media->get('thumbnail')->entity;
-    $thumbnailFileUri = $thumbnailFile?->getFileUri();
-
-    if (!$thumbnailFileUri) {
-      return NULL;
-    }
-
-    $thumbnail = $this->fileUrlGenerator->generateAbsoluteString($thumbnailFileUri);
-
-    $videotoolFields = [
-      'field_media_videotool',
-      'field_media_videotool_vertical',
-    ];
-    foreach ($videotoolFields as $videotoolField) {
-      if ($media->hasField($videotoolField)) {
-
-        $url = $media->get($videotoolField)->value;
-
-        if ($url) {
-          $url = $this->videoTool->getVideoStreamUrl($url, $ttl);
-        }
-
-        break;
-      }
-    }
-
-    if (empty($url) || empty($thumbnail)) {
-      return NULL;
-    }
-
-    $field_context->addCacheableDependency($media);
-    $field_context->addCacheableDependency($thumbnailFile);
-
-    return ['url' => $url, 'thumbnail' => $thumbnail];
   }
 
 }
