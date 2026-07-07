@@ -12,6 +12,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
+use Drupal\dpl_paragraphs\Entity\MaterialGridAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
 use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
@@ -150,20 +151,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif ($paragraph->bundle() == 'material_grid_automatic') {
-        $cql = $paragraph->get('field_cql_search')->value;
-        if ($cql) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $result[] = [
-            '__typename' => 'AppContentElementMaterialGridAutomatic',
-            'id' => $paragraph->uuid(),
-            'title' => $paragraph->get('field_material_grid_title')->value,
-            'description' => $paragraph->get('field_material_grid_description')->value,
-            'cql' => $cql,
-            'limit' => (int) $paragraph->get('field_material_amount')->value,
-            'priorityMaterialType' => $paragraph->get('field_priority_material_type')->value,
-          ];
+      elseif ($paragraph instanceof MaterialGridAutomaticParagraph) {
+        $res = $this->handleMaterialGridAutomatic($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif ($paragraph->bundle() == 'material_grid_manual') {
@@ -385,6 +376,31 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'id' => $paragraph->uuid(),
       'title' => $paragraph->getSliderTitle(),
       'workIds' => $workIds,
+    ];
+  }
+
+  /**
+   * Handle material_grid_automatic paragraphs.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleMaterialGridAutomatic(MaterialGridAutomaticParagraph $paragraph, FieldContext $field_context): ?array {
+    $cql = $paragraph->getCql();
+    if (!$cql) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementMaterialGridAutomatic',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getGridTitle(),
+      'description' => $paragraph->getGridDescription(),
+      'cql' => $cql,
+      'limit' => $paragraph->getLimit(),
+      'priorityMaterialType' => $paragraph->getPriorityMaterialType(),
     ];
   }
 
