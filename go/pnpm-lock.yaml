@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@danskernesdigitalebibliotek/dpl-service-layer':
         specifier: file:../packages/service-layer
-        version: file:../packages/service-layer
+        version: file:../packages/service-layer(@tanstack/react-query@5.101.2(react@19.2.7))(react@19.2.7)
       '@next/env':
         specifier: 16.2.9
         version: 16.2.9
@@ -1141,6 +1141,9 @@ packages:
 
   '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer':
     resolution: {directory: ../packages/service-layer, type: directory}
+    peerDependencies:
+      '@tanstack/react-query': ^5.101.0
+      react: ^18 || ^19
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -11198,8 +11201,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer':
+  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer(@tanstack/react-query@5.101.2(react@19.2.7))(react@19.2.7)':
     dependencies:
+      '@tanstack/react-query': 5.101.2(react@19.2.7)
+      react: 19.2.7
       zod: 4.4.3
 
   '@emnapi/core@1.10.0':
