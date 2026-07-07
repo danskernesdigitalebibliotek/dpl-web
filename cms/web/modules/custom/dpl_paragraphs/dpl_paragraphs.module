@@ -12,6 +12,7 @@ use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\MaterialGridAutomaticParagraph;
+use Drupal\dpl_paragraphs\Entity\MaterialGridManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalAutoParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalManualParagraph;
@@ -78,6 +79,10 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['material_grid_automatic'])) {
     $bundles['paragraph']['material_grid_automatic']['class'] = MaterialGridAutomaticParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['material_grid_manual'])) {
+    $bundles['paragraph']['material_grid_manual']['class'] = MaterialGridManualParagraph::class;
   }
 }
 
