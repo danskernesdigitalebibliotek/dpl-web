@@ -17,8 +17,7 @@ import { getFacetFieldTranslation } from "./helper";
 const CAN_ALWAYS_BE_LOANED_FACET_NAME = "canAlwaysBeLoaned";
 
 type AccessTypeFilterOptions =
-  | { value: "Digital"; label: "Online" }
-  | { value: "Fysisk"; label: "Fysisk" };
+  { value: "Digital"; label: "Online" } | { value: "Fysisk"; label: "Fysisk" };
 type FictionTypeFilterOptions =
   | { value: "Skønlitteratur"; label: "Fiktion" }
   | { value: "Faglitteratur"; label: "Non-fiktion" };

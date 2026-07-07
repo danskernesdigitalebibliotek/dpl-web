@@ -287,7 +287,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ESLint
-        run: pnpm exec eslint web -c .eslintrc.json
+        run: pnpm exec eslint web -c eslint.config.mjs
 
   EslintCypress:
     name: CMS / Lint Cypress tests
@@ -303,7 +303,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ESLint
         working-directory: cms
-        run: pnpm exec eslint cypress -c cypress/.eslintrc.json
+        run: pnpm exec eslint cypress -c cypress/eslint.config.mjs
 
   CheckDrupalConfig:
     name: CMS / Check Drupal Config

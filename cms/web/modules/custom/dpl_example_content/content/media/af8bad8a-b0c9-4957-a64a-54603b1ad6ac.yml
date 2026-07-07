@@ -1,0 +1,36 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: af8bad8a-b0c9-4957-a64a-54603b1ad6ac
+  bundle: image
+  default_langcode: da
+  depends:
+    052a2018-bb1f-4a9f-afb3-adb27ab369cf: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: sportny.png
+  created:
+    -
+      value: 1782741786
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 0
+  field_byline:
+    -
+      value: sportny
+  field_media_image:
+    -
+      entity: 052a2018-bb1f-4a9f-afb3-adb27ab369cf
+      alt: ''
+      title: ''
+      width: 300
+      height: 300

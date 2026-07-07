@@ -53,9 +53,7 @@ $_max-width-rich-text: $article-max-width;
       @include typography(
         $typo__h4,
         (
-          excludes: (
-            line-height,
-          ),
+          excludes: (line-height),
         )
       );
 

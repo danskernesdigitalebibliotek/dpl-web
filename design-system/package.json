@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "engines": {
     "node": "24.15.0",
-    "pnpm": "^11"
+    "pnpm": "^10"
   },
   "scripts": {
     "storybook": "DISABLE_ESLINT_PLUGIN=true storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",

@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 052a2018-bb1f-4a9f-afb3-adb27ab369cf
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: sportny.png
+  uri:
+    -
+      value: 'public://2026-06/sportny_0.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 75532
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1782741786

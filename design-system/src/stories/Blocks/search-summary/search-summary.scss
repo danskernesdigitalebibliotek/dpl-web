@@ -21,9 +21,7 @@
   @include typography(
     $typo__body-small,
     (
-      excludes: (
-        "line-height",
-      ),
+      excludes: ("line-height"),
     )
   );
 
@@ -79,9 +77,7 @@
   @include typography(
     $typo__body-small,
     (
-      excludes: (
-        "line-height",
-      ),
+      excludes: ("line-height"),
     )
   );
 
