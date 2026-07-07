@@ -23,7 +23,7 @@ abstract class GoVideoBundleAutomaticBase extends Paragraph {
   /**
    * Get the CQL search query.
    */
-  public function getCql(): string {
+  public function getCql(): ?string {
     return $this->get('field_cql_search')->value;
   }
 
