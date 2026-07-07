@@ -8,6 +8,7 @@
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalAutoParagraph;
@@ -63,6 +64,10 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['nav_spots_manual'])) {
     $bundles['paragraph']['nav_spots_manual']['class'] = NavSpotsManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_material_slider_automatic'])) {
+    $bundles['paragraph']['go_material_slider_automatic']['class'] = GoMaterialSliderAutomaticParagraph::class;
   }
 }
 
