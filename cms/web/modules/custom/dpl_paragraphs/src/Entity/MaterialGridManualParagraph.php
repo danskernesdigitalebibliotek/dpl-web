@@ -38,7 +38,10 @@ class MaterialGridManualParagraph extends Paragraph {
     $items = $this->get('field_material_grid_work_ids');
 
     foreach ($items as $item) {
-      $workIds[] = $item->get('value')->getValue();
+      $value = $item->get('value')->getValue();
+      if ($value) {
+        $workIds[] = $value;
+      }
     }
 
     return $workIds;
