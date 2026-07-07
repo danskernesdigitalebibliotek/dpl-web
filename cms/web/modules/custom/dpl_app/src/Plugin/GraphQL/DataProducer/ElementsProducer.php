@@ -362,6 +362,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'description' => $paragraph->getGridDescription(),
       'cql' => $cql,
       'limit' => $paragraph->getLimit(),
+      'priorityMaterialType' => $paragraph->getPriorityMaterialType(),
     ];
   }
 

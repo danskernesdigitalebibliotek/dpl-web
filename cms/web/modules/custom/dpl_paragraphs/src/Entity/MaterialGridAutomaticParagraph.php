@@ -43,7 +43,10 @@ class MaterialGridAutomaticParagraph extends Paragraph {
    * Get the priority material type.
    */
   public function getPriorityMaterialType(): ?string {
-    return $this->get('field_priority_material_type')->value;
+    // @todo This should be `$this->get('field_priority_material_type')->value;`
+    // when https://github.com/danskernesdigitalebibliotek/dpl-web/pull/1140
+    // lands.
+    return NULL;
   }
 
 }
