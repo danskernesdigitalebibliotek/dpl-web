@@ -7,6 +7,6 @@ namespace Drupal\dpl_paragraphs\Entity;
 /**
  * Bundle class for go_video_bundle_vertical_manual paragraphs.
  */
-class GoVideoBundleVerticalManual extends GoVideoBundleManualBase {
+class GoVideoBundleVerticalManualParagraph extends GoVideoBundleManualBase {
   // All shared with base class.
 }

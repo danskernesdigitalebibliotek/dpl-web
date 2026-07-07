@@ -11,7 +11,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 /**
  * Bundle class for video paragraphs.
  */
-class Video extends Paragraph {
+class VideoParagraph extends Paragraph {
 
   /**
    * Get the video media entity.
