@@ -12,6 +12,7 @@ use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalAutoParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalManualParagraph;
+use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
@@ -53,6 +54,10 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['go_video_bundle_vertical_auto'])) {
     $bundles['paragraph']['go_video_bundle_vertical_auto']['class'] = GoVideoBundleVerticalAutoParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['recommendation'])) {
+    $bundles['paragraph']['recommendation']['class'] = RecommendationParagraph::class;
   }
 }
 

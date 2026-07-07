@@ -12,6 +12,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
+use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
@@ -122,20 +123,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif ($paragraph->bundle() == 'recommendation') {
-        $workId = $paragraph->get('field_recommendation_work_id')->value;
-        if ($workId) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $result[] = [
-            '__typename' => 'AppContentElementRecommendation',
-            'id' => $paragraph->uuid(),
-            'imagePositionRight' => (bool) $paragraph->get('field_image_position_right')->value,
-            // @phpstan-ignore property.notFound (magic property)
-            'title' => $paragraph->get('field_recommendation_title')->processed,
-            'description' => $paragraph->get('field_recommendation_description')->value,
-            'workId' => $workId,
-          ];
+      elseif ($paragraph instanceof RecommendationParagraph) {
+        $res = $this->handleRecommendation($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif ($paragraph->bundle() == 'nav_spots_manual') {
@@ -330,6 +321,33 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'cql' => $paragraph->getCql(),
       'limit' => $paragraph->getLimit(),
       'video' => $video,
+    ];
+  }
+
+  /**
+   * Handle recommendation paragraphs.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleRecommendation(RecommendationParagraph $paragraph, FieldContext $field_context): ?array {
+    $workId = $paragraph->getWorkId();
+
+    // A recommendation without a material doesn't make much sense, but the
+    // field isn't required.
+    if (!$workId) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementRecommendation',
+      'id' => $paragraph->uuid(),
+      'imagePositionRight' => $paragraph->isImagePositionRight(),
+      'title' => $paragraph->getRecommendationTitle(),
+      'description' => $paragraph->getDescription(),
+      'workId' => $workId,
     ];
   }
 
