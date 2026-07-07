@@ -11,6 +11,7 @@ use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
+use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
 use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
@@ -143,24 +144,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif ($paragraph->bundle() == 'go_material_slider_manual') {
-        $workIds = [];
-        foreach ($paragraph->get('field_material_slider_work_ids') as $item) {
-          // @phpstan-ignore property.notFound (magic property)
-          if ($item->value) {
-            $workIds[] = $item->value;
-          }
-        }
-
-        if (!empty($workIds)) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $result[] = [
-            '__typename' => 'AppContentElementGoMaterialSliderManual',
-            'id' => $paragraph->uuid(),
-            'title' => $paragraph->get('field_title')->value,
-            'workIds' => $workIds,
-          ];
+      elseif ($paragraph instanceof GoMaterialSliderManualParagraph) {
+        $res = $this->handleGoMaterialSliderManual($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif ($paragraph->bundle() == 'material_grid_automatic') {
@@ -375,6 +362,28 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'title' => $paragraph->getSliderTitle(),
       'cql' => $cql,
       'limit' => $paragraph->getLimit(),
+    ];
+  }
+
+  /**
+   * Handle go_material_slider_manual paragraphs.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleGoMaterialSliderManual(GoMaterialSliderManualParagraph $paragraph, FieldContext $field_context): ?array {
+    $workIds = $paragraph->getWorkIds();
+    if (empty($workIds)) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementGoMaterialSliderManual',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getSliderTitle(),
+      'workIds' => $workIds,
     ];
   }
 
