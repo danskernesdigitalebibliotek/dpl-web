@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: de7cfbef-2dd1-41f2-af8d-159df25c79c1
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: sci-fi.png
+  uri:
+    -
+      value: 'public://2026-06/sci-fi_0.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 85082
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1782741861
