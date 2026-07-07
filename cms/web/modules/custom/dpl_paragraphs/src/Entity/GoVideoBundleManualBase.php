@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_paragraphs\Entity;
 
-use Drupal\dpl_media\Entity\Videotool;
-use Drupal\dpl_media\Entity\VideotoolVertical;
+use Drupal\dpl_media\Entity\VideotoolMedia;
+use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
@@ -41,12 +41,12 @@ abstract class GoVideoBundleManualBase extends Paragraph {
   /**
    * Get the video media entity.
    */
-  public function getVideoMedia(): VideoTool | VideotoolVertical {
+  public function getVideoMedia(): VideotoolMedia | VideotoolVerticalMedia {
     $medias = $this->get('field_embed_video')->referencedEntities();
 
     $media = reset($medias);
 
-    if (!$media instanceof Videotool && !$media instanceof VideotoolVertical) {
+    if (!$media instanceof VideotoolMedia && !$media instanceof VideotoolVerticalMedia) {
       throw new \RuntimeException('Required media not found');
     }
 

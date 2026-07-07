@@ -9,6 +9,6 @@ use Drupal\media\Entity\Media;
 /**
  * Bundle class for video media.
  */
-class Video extends Media {
+class VideoMedia extends Media {
   // Currently just used for typing. Remove this comment when adding getters.
 }
