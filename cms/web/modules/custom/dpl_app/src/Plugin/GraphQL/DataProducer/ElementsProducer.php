@@ -133,6 +133,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       }
 
       if ($response) {
+        $field_context->addCacheableDependency($paragraph);
         $result[] = $response;
       }
 
@@ -148,9 +149,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    *   GraphQL data.
    */
   protected function handleTextBody(TextBodyParagraph $paragraph, FieldContext $field_context): array {
-    // @todo resolve() should handle adding the paragraph.
-    $field_context->addCacheableDependency($paragraph);
-
     return [
       '__typename' => 'AppContentElementText',
       'id' => $paragraph->uuid(),
@@ -232,8 +230,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       return NULL;
     }
 
-    $field_context->addCacheableDependency($paragraph);
-
     return [
       '__typename' => 'AppContentElementVideoBundleAutomatic',
       'id' => $paragraph->uuid(),
@@ -259,8 +255,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       return NULL;
     }
 
-    $field_context->addCacheableDependency($paragraph);
-
     return [
       '__typename' => 'AppContentElementRecommendation',
       'id' => $paragraph->uuid(),
@@ -283,8 +277,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       return NULL;
     }
 
-    $field_context->addCacheableDependency($paragraph);
-
     return [
       '__typename' => 'AppContentElementNavSpotsManual',
       'id' => $paragraph->uuid(),
@@ -303,8 +295,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     if (!$cql) {
       return NULL;
     }
-
-    $field_context->addCacheableDependency($paragraph);
 
     return [
       '__typename' => 'AppContentElementGoMaterialSliderAutomatic',
@@ -327,8 +317,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       return NULL;
     }
 
-    $field_context->addCacheableDependency($paragraph);
-
     return [
       '__typename' => 'AppContentElementGoMaterialSliderManual',
       'id' => $paragraph->uuid(),
@@ -348,8 +336,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     if (!$cql) {
       return NULL;
     }
-
-    $field_context->addCacheableDependency($paragraph);
 
     return [
       '__typename' => 'AppContentElementMaterialGridAutomatic',
@@ -372,8 +358,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     if (empty($workIds)) {
       return NULL;
     }
-
-    $field_context->addCacheableDependency($paragraph);
 
     return [
       '__typename' => 'AppContentElementMaterialGridManual',
