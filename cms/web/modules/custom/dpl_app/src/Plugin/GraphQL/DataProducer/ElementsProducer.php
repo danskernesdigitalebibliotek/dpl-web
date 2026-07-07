@@ -177,7 +177,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     return [
       '__typename' => 'AppContentElementVideo',
       'id' => $paragraph->uuid(),
-      'title' => $media->getThumbnail,
+      'title' => NULL,
       'video' => $video,
     ];
   }
