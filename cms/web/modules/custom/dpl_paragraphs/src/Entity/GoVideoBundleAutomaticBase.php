@@ -37,13 +37,13 @@ abstract class GoVideoBundleAutomaticBase extends Paragraph {
   /**
    * Get the video media entity.
    */
-  public function getVideoMedia(): VideotoolMedia | VideotoolVerticalMedia {
+  public function getVideoMedia(): VideotoolMedia | VideotoolVerticalMedia | NULL {
     $medias = $this->get('field_embed_video')->referencedEntities();
 
     $media = reset($medias);
 
     if (!$media instanceof VideotoolMedia && !$media instanceof VideotoolVerticalMedia) {
-      throw new \RuntimeException('Required media not found');
+      return NULL;
     }
 
     return $media;
