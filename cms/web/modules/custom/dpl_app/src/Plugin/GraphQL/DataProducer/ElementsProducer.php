@@ -191,10 +191,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
   protected function handleGoVideoBundleManual(GoVideoBundleManualBase $paragraph, FieldContext $field_context): ?array {
     $media = $paragraph->getVideoMedia();
 
-    if (!$media instanceof VideotoolBase) {
-      return NULL;
-    }
-
     $video = $this->handleVideoElement($media, $field_context);
 
     if (!$video) {
@@ -218,10 +214,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    */
   protected function handleGoVideoBundleAutomatic(GoVideoBundleAutomaticBase $paragraph, FieldContext $field_context): ?array {
     $media = $paragraph->getVideoMedia();
-
-    if (!$media instanceof VideotoolBase) {
-      return NULL;
-    }
 
     $video = $this->handleVideoElement($media, $field_context);
 
@@ -380,10 +372,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    */
   protected function handleVideoElement(VideotoolBase $media, FieldContext $field_context): ?array {
     $field_context->addCacheableDependency($media);
-
-    if (!$media instanceof VideotoolBase) {
-      return NULL;
-    }
 
     $thumbnail = $media->getThumbnail();
     if (!$thumbnail->getFileUri()) {
