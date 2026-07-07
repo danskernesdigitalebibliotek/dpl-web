@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Drupal\dpl_media\Entity\Video;
-use Drupal\dpl_media\Entity\Videotool;
-use Drupal\dpl_media\Entity\VideotoolVertical;
+use Drupal\dpl_media\Entity\VideoMedia;
+use Drupal\dpl_media\Entity\VideotoolMedia;
+use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
 
 /**
  * Implements hook_entity_bundle_info_alter().
@@ -16,14 +16,14 @@ use Drupal\dpl_media\Entity\VideotoolVertical;
  */
 function dpl_media_entity_bundle_info_alter(array &$bundles): void {
   if (isset($bundles['media']['video'])) {
-    $bundles['media']['video']['class'] = Video::class;
+    $bundles['media']['video']['class'] = VideoMedia::class;
   }
 
   if (isset($bundles['media']['videotool'])) {
-    $bundles['media']['videotool']['class'] = Videotool::class;
+    $bundles['media']['videotool']['class'] = VideotoolMedia::class;
   }
 
   if (isset($bundles['media']['videotool_vertical'])) {
-    $bundles['media']['videotool_vertical']['class'] = VideotoolVertical::class;
+    $bundles['media']['videotool_vertical']['class'] = VideotoolVerticalMedia::class;
   }
 }
