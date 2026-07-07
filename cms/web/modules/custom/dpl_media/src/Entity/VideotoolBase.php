@@ -21,8 +21,14 @@ abstract class VideotoolBase extends Media {
    * Get video thumbnail.
    */
   public function getThumbnail(): FileInterface {
-    /** @var \Drupal\file\Entity\File $file */
+    /** @var \Drupal\file\Entity\File|null $file */
     $file = $this->get('thumbnail')->entity;
+
+    if (!$file) {
+      // Shouldn't really happen, Drupal ought to ensure that there's always at
+      // least a default thumbnail.
+      throw new \RuntimeException('No thumbnail on media?');
+    }
 
     return $file;
   }
