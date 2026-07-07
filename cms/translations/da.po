@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-15 10:14+0200\n"
-"PO-Revision-Date: 2026-06-15 10:14+0200\n"
+"POT-Creation-Date: 2026-07-07 16:54+0200\n"
+"PO-Revision-Date: 2026-07-07 16:54+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "Overskredet"
 
 msgctxt "Loan list"
 msgid "Expiring soon"
-msgstr "Under 6 dage"
+msgstr "Skal snart afleveres"
 
 msgctxt "Loan list"
 msgid "Your loans"
@@ -1448,7 +1448,7 @@ msgstr "Overskredne lån"
 
 msgctxt "Patron menu"
 msgid "loans expiring soon"
-msgstr "Under 6 dage"
+msgstr "Skal snart afleveres"
 
 msgctxt "Patron menu"
 msgid "reservations ready for pickup"
@@ -1839,7 +1839,7 @@ msgstr "Henter..."
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
-msgstr "Advarsel om at udløbsdato nærmer sig"
+msgstr "Advarsel om at afleveringsdato nærmer sig"
 
 msgctxt "Library Agency Configuration"
 msgid "Set expiration warning"
@@ -2643,7 +2643,7 @@ msgstr "Henvendt dig venligst til biblioteket for at høre hvordan du betaler."
 
 msgctxt "Search Result"
 msgid "Can always be loaned"
-msgstr "Kan altid lånes"
+msgstr "Lån udenfor kvoten"
 
 msgctxt "Search Result"
 msgid "Dk5"
@@ -4781,16 +4781,6 @@ msgstr ""
 msgid "BEF Test"
 msgstr "BEF Test"
 
-msgid ""
-"Prevents multiple users from trying to edit a single node "
-"simultaneously to prevent edit conflicts."
-msgstr ""
-"Forhindrer flere brugere i at forsøge at redigere en enkelt node "
-"samtidigt for at forhindre redigeringskonflikter."
-
-msgid "@entity cannot be deleted because it was locked by @user since @time."
-msgstr "@entity kan ikke slettes, fordi den blev låst af @user fra @time"
-
 msgid "Content lock"
 msgstr "Indholdslås"
 
@@ -4891,19 +4881,6 @@ msgstr ""
 "For at tillade redigere af flere oversættelser på samme tid skal du "
 "installere %module"
 
-msgid "Lock form using JS."
-msgstr "Lås formular ved hjælp af JS."
-
-msgid ""
-"Activating this options activates the lock when the user is on the "
-"form. This helps if modules interacting with form without a user "
-"interacting with the form, like the prefetch_cache module."
-msgstr ""
-"Aktivering af denne mulighed aktiverer låsen, når brugeren er på "
-"formularen. Dette hjælper, hvis moduler interagerer med formularen "
-"uden en bruger, der interagerer med formularen, som "
-"prefetch_cache-modulet."
-
 msgid "Lock only on entity form operation level."
 msgstr "Lås kun på niveauet for enhedsformularoperation."
 
@@ -4927,22 +4904,6 @@ msgid "Form operations"
 msgstr "Formularoperationer"
 
 msgid ""
-"This content translation is being edited by the user @name and is "
-"therefore locked to prevent other users changes. This lock is in place "
-"since @date."
-msgstr ""
-"Denne indholdsoversættelse bliver redigeret af brugeren @name og er "
-"derfor låst for at forhindre andre brugeres ændringer. Denne lås "
-"har været på plads siden @date."
-
-msgid ""
-"This content is being edited by the user @name and is therefore locked "
-"to prevent other users changes. This lock is in place since @date."
-msgstr ""
-"Dette indhold bliver redigeret af @name og er derfor låst. Denne lås "
-"er aktiveret @date."
-
-msgid ""
 "This content translation is now locked against simultaneous editing. "
 "This content translation will remain locked if you navigate away from "
 "this page without saving or unlocking it."
@@ -4958,9 +4919,6 @@ msgid ""
 msgstr ""
 "Dette indhold er nu låst for samtidig redigering. Indholdet vil "
 "forblive låst, hvis du forlader siden uden at gemme."
-
-msgid "Click here to @link"
-msgstr "Klik her for @link"
 
 msgid ""
 "This content translation is now locked by you against simultaneous "
@@ -4982,48 +4940,8 @@ msgstr ""
 msgid "Unlock"
 msgstr "Lås op"
 
-msgid ""
-"Breaking existing lock by @name so that you may edit this node. (This "
-"lock was set @date ago and was stale since @stale_time.)"
-msgstr ""
-"Bryder eksisterende lås til @name så du kan redigere dette indhold. "
-"(Denne lås blev sat @date og har været inaktiv siden @stale_time.)"
-
-msgid "Lock Timeouts"
-msgstr "Lås timeouts"
-
-msgid "Configure automatic stale lock breaking."
-msgstr "Konfigurer automatisk brud på forældede låse."
-
 msgid "Lock timeout"
 msgstr "Lås timeout"
-
-msgid ""
-"The maximum time in minutes that each lock may be kept. To disable "
-"breaking locks after a timeout, please %disable the Content Lock "
-"Timeout module."
-msgstr ""
-"Den maksimale tid i minutter, som hver lås kan opretholdes. For at "
-"deaktivere låsebrydning efter en timeout, venligst %deaktiver Content "
-"Lock Timeout-modulet."
-
-msgid "disable"
-msgstr "deaktivér"
-
-msgid "Break stale locks on edit"
-msgstr "Bryd forældede låse ved redigering"
-
-msgid ""
-"By default, stale locks will be broken when cron is run. This option "
-"enables checking for stale locks when a user clicks a node's Edit "
-"link, enabling lower lock timeout values without having to run cron "
-"every few minutes."
-msgstr ""
-"Som standard vil forældede låse blive brudt, når cron køres. Denne "
-"mulighed gør det muligt at tjekke for forældede låse, når en "
-"bruger klikker på en nodes rediger-link, hvilket muliggør lavere "
-"låsetidsværdier uden at skulle køre cron med få minutters "
-"mellemrum."
 
 msgid "Save configuration"
 msgstr "Gem indstillinger"
@@ -5036,12 +4954,6 @@ msgstr "Indholdslås"
 
 msgid "Administer content locking settings."
 msgstr "Administrer indstillinger for låsning af indhold."
-
-msgid "Content lock timeout settings"
-msgstr "Indstillinger for indholdslås timeout"
-
-msgid "Timeout settings"
-msgstr "Timeout-indstillinger"
 
 msgid "Content Lock Timeout"
 msgstr "Indholdslås timeout"
@@ -5071,9 +4983,6 @@ msgstr "Bryd lås"
 
 msgid "Content lock settings"
 msgstr "Indstillinger for indholdslås"
-
-msgid "Prefetch cache test"
-msgstr "Prefetch cache test"
 
 msgid "Settings"
 msgstr "Indstillinger"
@@ -7508,7 +7417,7 @@ msgid ""
 "suggestion below."
 msgstr ""
 "Begynd at skrive for at finde indhold eller indsæt en URL og klik på "
-"et forslag nedenunder."
+"et forslag nedenunder. URL er obligatorisk, hvis Linktekst er udfyldt."
 
 msgid "Profile"
 msgstr "Profil"
@@ -18289,15 +18198,6 @@ msgstr ""
 msgid "Module containing unilogin configuration"
 msgstr "Module containing unilogin configuration"
 
-msgid "UniLogin configuration"
-msgstr "UniLogin configuration"
-
-msgid "Change UniLogin configuration"
-msgstr "Change UniLogin configuration"
-
-msgid "Unilogin configuration"
-msgstr "Unilogin configuration"
-
 msgid "DPL GraphQL"
 msgstr ""
 "\n"
@@ -19471,42 +19371,6 @@ msgstr "GO-token forhåndsvisning iframe"
 
 msgid "Submitted by %author on %date"
 msgstr "Indsendt af %author den %date"
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin API configuration"
-msgstr "UNI-login API-konfiguration"
-
-msgctxt "Unilogin configuration"
-msgid "API credentials"
-msgstr "API legitimationsoplysninger"
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin API client secret."
-msgstr "UNI-login API-klienthemmelighed."
-
-msgctxt "Unilogin configuration"
-msgid "The Unilogin API client secret."
-msgstr "UNI-login API-klienthemmelighed."
-
-msgctxt "Unilogin configuration"
-msgid "PubHub configuration"
-msgstr "PubHub-konfiguration"
-
-msgctxt "Unilogin configuration"
-msgid "Retailer key code."
-msgstr "Forhandlernøglekode."
-
-msgctxt "Unilogin configuration"
-msgid "The PubHub retailer key code."
-msgstr "PubHub-forhandlernøglekode."
-
-msgctxt "Unilogin configuration"
-msgid "Unilogin municipality ID."
-msgstr "UNI-login kommune-ID."
-
-msgctxt "Unilogin configuration"
-msgid "The Unilogin municipality ID."
-msgstr "UNI-login kommune-ID."
 
 msgctxt "Work Page"
 msgid "You need to add an email address to reserve from another library."
@@ -21373,5 +21237,65 @@ msgid "Linkit Profile"
 msgstr ""
 
 msgid "Configurable dummy matcher"
+msgstr ""
+
+msgid "DPL static content: Audiences"
+msgstr ""
+
+msgid "Adds default audiences"
+msgstr ""
+
+msgid ""
+"Failed to fetch streaming URL VideoTool API. Ensure credentials are "
+"set and the URL is valid."
+msgstr ""
+
+msgid "DPL App support"
+msgstr ""
+
+msgid "Functionality supporting the mobile apps"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"When selecting a branch, we will use the address from the branch, "
+"unless you select “Other location”."
+msgstr ""
+
+msgid ""
+"This content translation is being edited by the user %name and is "
+"therefore locked to prevent changes by other users. This lock has been "
+"active for @age."
+msgstr ""
+
+msgid ""
+"This content is being edited by the user %name and is therefore locked "
+"to prevent changes by other users. This lock has been active for @age."
+msgstr ""
+
+msgid "Break the lock."
+msgstr "Bryd låsen."
+
+msgid "This content is being edited by another user."
+msgstr "Dette indhold er ved at blive redigeret af en anden bruger."
+
+msgid "Content lock access check"
+msgstr ""
+
+msgid ""
+"The maximum time in minutes that each lock may be kept. To disable "
+"breaking locks after a timeout, clear the value. It is recommended for "
+"user experience to set this value."
+msgstr ""
+
+msgid ""
+"The Content Lock module prevents multiple users from trying to edit a "
+"single node simultaneously to prevent edit conflicts."
+msgstr ""
+
+msgid ""
+"The content lock timeout is currently disabled. It is recommended that "
+"administrators <a href=\":settings\">set the timeout value</a> so that "
+"content locks automatically expire."
 msgstr ""
 

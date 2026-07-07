@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-06-15 10:14+0200\n"
-"PO-Revision-Date: 2026-06-15 10:14+0200\n"
+"POT-Creation-Date: 2026-07-07 16:54+0200\n"
+"PO-Revision-Date: 2026-07-07 16:54+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3674,116 +3674,6 @@ msgctxt "views.view.user_admin_people:display:page_1:display_options:tab_options
 msgid "Manage user accounts, roles, and permissions."
 msgstr "Administrer brugerkonti, roller og tilladelser."
 
-msgctxt "views.view.watchdog:label"
-msgid "Watchdog"
-msgstr ""
-"\n"
-"Watchdog"
-
-msgctxt "views.view.watchdog:description"
-msgid "Recent log messages"
-msgstr "Seneste logbeskeder"
-
-msgctxt "views.view.watchdog:display:default:display_title"
-msgid "Default"
-msgstr "Standard"
-
-msgctxt "views.view.watchdog:display:default:display_options:title"
-msgid "Recent log messages"
-msgstr "Nylige logbeskeder"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
-msgid "Icon"
-msgstr "Ikon"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
-msgid "WID"
-msgstr "WID"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
-msgid "Severity"
-msgstr "Alvorlighedsgrad"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
-msgid "Type"
-msgstr "Type"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
-msgid "Date"
-msgstr "Dato"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
-msgid "Message"
-msgstr "Besked"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
-msgid "admin/reports/dblog/event/{{ wid }}"
-msgstr "admin/reports/dblog/event/{{ wid }}"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
-msgid "{{ message }}"
-msgstr "{{ message }}"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
-msgid "User"
-msgstr "Bruger"
-
-msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
-msgid "Operations"
-msgstr "Handlinger"
-
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
-msgid "Items per page"
-msgstr "Enheder pr. side"
-
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
-msgid "- All -"
-msgstr "- Alle -"
-
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
-msgid "Offset"
-msgstr "Offset"
-
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
-msgid "Filter"
-msgstr "Filtrer"
-
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
-msgid "Reset"
-msgstr "Nulstil"
-
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
-msgid "Sort by"
-msgstr "Sorter efter"
-
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
-msgid "Asc"
-msgstr "Stigende"
-
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
-msgid "Desc"
-msgstr "Faldende"
-
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
-msgid "No log messages available."
-msgstr "Ingen logbeskeder tilgængelige."
-
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
-msgid "No log messages available."
-msgstr "Ingen logbeskeder tilgængelige."
-
-msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
-msgid "Type"
-msgstr "Type"
-
-msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
-msgid "Severity"
-msgstr "Alvorlighedsgrad"
-
-msgctxt "views.view.watchdog:display:page:display_title"
-msgid "Page"
-msgstr "Side"
-
 msgctxt "core.entity_form_display.node.page.default:third_party_settings:field_group:group_teaser_card:label"
 msgid "Teaser card"
 msgstr "Teaser card"
@@ -3827,16 +3717,6 @@ msgstr "- Alle -"
 msgctxt "facets.facet_source.search_api__views_page__events__all:name"
 msgid "search_api:views_page__events__all"
 msgstr "search_api:views_page__events__all"
-
-msgctxt "field.field.eventinstance.default.field_branch:description"
-msgid ""
-"When connecting a branch, it will also use the address of this branch "
-"as the event address. If you want to use another address then provide "
-"an event address."
-msgstr ""
-"Når du tilknytter en filial, vil denne filials adresse blive vist på "
-"arrangementet. Hvis du ønsker kan du overskrive adressen på "
-"arrangementet."
 
 msgctxt "field.field.eventinstance.default.field_teaser_image:description"
 msgid ""
@@ -7497,10 +7377,6 @@ msgctxt "metatag.metatag_defaults.eventseries__default:tags:title"
 msgid "[eventseries:title] | [site:name]"
 msgstr "[eventseries:title] | [site:name]"
 
-msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
-msgid "Library"
-msgstr "Bibliotek"
-
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_tickets:label"
 msgid "Tickets"
 msgstr "Billetter"
@@ -7516,10 +7392,6 @@ msgstr "Datoer"
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_location:label"
 msgid "Locations"
 msgstr "Steder"
-
-msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
-msgid "Library"
-msgstr "Bibliotek"
 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_tickets:label"
 msgid "Tickets"
@@ -7540,10 +7412,6 @@ msgstr "Steder"
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_location:settings:placeholder"
 msgid "E.g. “Museum of Architecture”, “The Student House”"
 msgstr "F.eks. \"Kunstmuseet\", \"Studenterhuset\""
-
-msgctxt "field.field.eventinstance.default.field_event_location:label"
-msgid "Location"
-msgstr "Lokationsnavn"
 
 msgctxt "field.field.eventinstance.default.field_event_location_type:label"
 msgid "In person or online?"
@@ -7587,19 +7455,6 @@ msgstr ""
 "Hvis 'Opret billet i billetsysten' under 'Billetter' er slået til, "
 "så vil denne status bliver ignoreret, og status fra billetsystemet "
 "vil blive brugt."
-
-msgctxt "field.field.eventseries.default.field_branch:description"
-msgid ""
-"When selecting a branch, we will use the address from the branch, "
-"unless you select “Other location”."
-msgstr ""
-"Når du vælger et bibliotek, bruger arrangementet bibliotekets "
-"adresse som afholdelsessted, medmindre du også vælger \"Anden "
-"lokation\"."
-
-msgctxt "field.field.eventseries.default.field_event_location:label"
-msgid "Location"
-msgstr "Lokationsnavn"
 
 msgctxt "field.field.eventseries.default.field_event_location_type:label"
 msgid "In person or online?"
@@ -8005,4 +7860,164 @@ msgstr "Til"
 msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_series:settings:off_label"
 msgid "Off"
 msgstr "Fra"
+
+msgctxt "facets.facet.audience:name"
+msgid "Audience"
+msgstr "Målgruppe"
+
+msgctxt "facets.facet.audience:missing_label"
+msgid "others"
+msgstr "andre"
+
+msgctxt "facets.facet.audience:url_alias"
+msgid "audience"
+msgstr "målgruppe"
+
+msgctxt "facets.facet.audience:widget:config:default_option_label"
+msgid "- Any -"
+msgstr "Alle"
+
+msgctxt "field.field.eventinstance.default.field_audiences:label"
+msgid "Audiences"
+msgstr "Målgrupper"
+
+msgctxt "field.field.eventseries.default.field_audiences:label"
+msgid "Audiences"
+msgstr "Målgrupper"
+
+msgctxt "field.field.paragraph.filtered_event_list.field_filter_audiences:label"
+msgid "Filter by audiences"
+msgstr "Filtrer efter målgrupper"
+
+msgctxt "taxonomy.vocabulary.audiences:name"
+msgid "Audiences"
+msgstr "Målgrupper"
+
+msgctxt "taxonomy.vocabulary.audiences:description"
+msgid "Målgrupper, f.eks \"børn\", \"unge\", \"voksne\""
+msgstr "Målgrupper, f.eks. \"Børn\", \"Unge\" eller \"Voksne\""
+
+msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
+msgid "Event location"
+msgstr ""
+
+msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
+msgid "Event location"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_event_location:label"
+msgid "Location name"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_event_location:label"
+msgid "Location name"
+msgstr ""
+
+msgctxt "views.view.watchdog:label"
+msgid "Watchdog"
+msgstr ""
+
+msgctxt "views.view.watchdog:description"
+msgid "Recent log messages"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:title"
+msgid "Recent log messages"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
+msgid "Icon"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
+msgid "WID"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
+msgid "Severity"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
+msgid "Type"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
+msgid "Date"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
+msgid "Message"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
+msgid "admin/reports/dblog/event/{{ wid }}"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
+msgid "{{ message }}"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
+msgid "User"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
+msgid "Operations"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
+msgid "Filter"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
+msgid "No log messages available."
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
+msgid "No log messages available."
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
+msgid "Type"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
+msgid "Severity"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:page:display_title"
+msgid "Page"
+msgstr ""
 
