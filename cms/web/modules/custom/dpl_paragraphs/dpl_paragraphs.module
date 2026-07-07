@@ -8,6 +8,8 @@
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleManual;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalManual;
 use Drupal\dpl_paragraphs\Entity\TextBody;
 use Drupal\dpl_paragraphs\Entity\Video;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
@@ -33,6 +35,14 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['video'])) {
     $bundles['paragraph']['video']['class'] = Video::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_manual'])) {
+    $bundles['paragraph']['go_video_bundle_manual']['class'] = GoVideoBundleManual::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_vertical_manual'])) {
+    $bundles['paragraph']['go_video_bundle_vertical_manual']['class'] = GoVideoBundleVerticalManual::class;
   }
 }
 

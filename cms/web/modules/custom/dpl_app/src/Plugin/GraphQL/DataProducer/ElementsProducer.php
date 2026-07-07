@@ -9,7 +9,8 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_media\Entity\Videotool as VideotoolMedia;
+use Drupal\dpl_media\Entity\VideotoolBase;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
 use Drupal\dpl_paragraphs\Entity\TextBody;
 use Drupal\dpl_paragraphs\Entity\Video;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
@@ -108,27 +109,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif (in_array(
-        $paragraph->bundle(),
-        ['go_video_bundle_manual', 'go_video_bundle_vertical_manual'],
-      )) {
-        $video = $this->extractVideo($paragraph, ['field_embed_video'], $field_context);
-        if ($video) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $workIds = [];
-          foreach ($paragraph->get('field_video_bundle_work_ids') as $item) {
-            // @phpstan-ignore property.notFound (magic property)
-            $workIds[] = $item->value;
-          }
-
-          $result[] = [
-            '__typename' => 'AppContentElementVideoBundleManual',
-            'id' => $paragraph->uuid(),
-            'title' => $paragraph->get('field_go_video_title')->value,
-            'workIds' => $workIds,
-            'video' => $video,
-          ];
+      elseif ($paragraph instanceof GoVideoBundleManualBase) {
+        $res = $this->handleGoVideoBundleManual($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif (in_array(
@@ -264,6 +248,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    *   GraphQL data.
    */
   protected function handleTextBody(TextBody $paragraph, FieldContext $field_context): array {
+    // @todo resolve() should handle adding the paragraph.
     $field_context->addCacheableDependency($paragraph);
 
     return [
@@ -281,9 +266,68 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    */
   protected function handleVideo(Video $paragraph, FieldContext $field_context): ?array {
     $media = $paragraph->getVideoMedia();
+
+    if (!$media instanceof VideotoolBase) {
+      return NULL;
+    }
+
+    $video = $this->handleVideoElement($media, $field_context);
+
+    if (!$video) {
+      return NULL;
+    }
+
+    return [
+      '__typename' => 'AppContentElementVideo',
+      'id' => $paragraph->uuid(),
+      'title' => $media->getThumbnail,
+      'video' => $video,
+    ];
+  }
+
+  /**
+   * Handle go_video_bundle paragraphs.
+   *
+   * @return array<mixed>
+   *   GraphQL data.
+   */
+  protected function handleGoVideoBundleManual(GoVideoBundleManualBase $paragraph, FieldContext $field_context): ?array {
+    $media = $paragraph->getVideoMedia();
+
+    if (!$media instanceof VideotoolBase) {
+      return NULL;
+    }
+
+    $video = $this->handleVideoElement($media, $field_context);
+
+    if (!$video) {
+      return NULL;
+    }
+
+    return [
+      '__typename' => 'AppContentElementVideoBundleManual',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getVideoTitle(),
+      'workIds' => $paragraph->getWorkIds(),
+      'video' => $video,
+    ];
+  }
+
+  /**
+   * Get the url and thumbnail of a video referenced.
+   *
+   * @param \Drupal\dpl_media\Entity\VideotoolBase $media
+   *   Paragraph to extract from.
+   * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
+   *   The field context for adding cache metadata.
+   *
+   * @return array{url: string, thumbnail: string}|null
+   *   Stream URL and thumbnail.
+   */
+  protected function handleVideoElement(VideotoolBase $media, FieldContext $field_context): ?array {
     $field_context->addCacheableDependency($media);
 
-    if (!$media instanceof VideotoolMedia) {
+    if (!$media instanceof VideotoolBase) {
       return NULL;
     }
 
@@ -294,14 +338,15 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
 
     $field_context->addCacheableDependency($thumbnail);
 
+    $url = $this->videoTool->getVideoStreamUrl($media->getVideotoolUrl(), $this->ttl);
+
+    if (!$url) {
+      return NULL;
+    }
+
     return [
-      '__typename' => 'AppContentElementVideo',
-      'id' => $paragraph->uuid(),
-      'title' => $media->getThumbnail,
-      'video' => [
-        'url' => $this->videoTool->getVideoStreamUrl($media->getVideotoolUrl(), $this->ttl),
-        'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
-      ],
+      'url' => $url,
+      'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
     ];
   }
 
