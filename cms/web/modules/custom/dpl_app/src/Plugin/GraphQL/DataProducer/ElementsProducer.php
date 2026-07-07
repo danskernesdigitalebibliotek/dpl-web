@@ -16,6 +16,7 @@ use Drupal\dpl_paragraphs\Entity\MaterialGridAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\MaterialGridManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
+use Drupal\dpl_paragraphs\Entity\GoVideoParagraph;
 use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
 use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
@@ -106,6 +107,9 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       elseif ($paragraph instanceof VideoParagraph) {
         $response = $this->handleVideo($paragraph, $field_context);
       }
+      elseif ($paragraph instanceof GoVideoParagraph) {
+        $response = $this->handleGoVideo($paragraph, $field_context);
+      }
       elseif ($paragraph instanceof GoVideoBundleManualBase) {
         $response = $this->handleGoVideoBundleManual($paragraph, $field_context);
       }
@@ -178,6 +182,29 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       '__typename' => 'AppContentElementVideo',
       'id' => $paragraph->uuid(),
       'title' => NULL,
+      'video' => $video,
+    ];
+  }
+
+  /**
+   * Handle go_video paragraph.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleGoVideo(GoVideoParagraph $paragraph, FieldContext $field_context): ?array {
+    $media = $paragraph->getVideoMedia();
+
+    $video = $this->handleVideoElement($media, $field_context);
+
+    if (!$video) {
+      return NULL;
+    }
+
+    return [
+      '__typename' => 'AppContentElementVideo',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getVideoTitle(),
       'video' => $video,
     ];
   }
