@@ -120,9 +120,19 @@ export const getEbookManifestationOrFallbackManifestation = (
   bestRepresentation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
   manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
 ): ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment => {
-  const ebookManifestation = manifestations.find(manifestation =>
-    isEbookMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
-  )
+  const isEbook = (
+    manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
+  ) => isEbookMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
+
+  // A work can expose several e-book editions, e.g. a deselected ("fravalgt")
+  // PDF and the loanable EPUB. The loanable edition carries a PUBLIZON
+  // identifier, so prefer it; otherwise keep the first e-book edition.
+  const ebookManifestation =
+    manifestations.find(
+      manifestation =>
+        isEbook(manifestation) &&
+        manifestation.identifiers.some(identifier => identifier.type === "PUBLIZON")
+    ) ?? manifestations.find(isEbook)
 
   if (ebookManifestation) {
     return ebookManifestation

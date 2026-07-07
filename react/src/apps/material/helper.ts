@@ -91,6 +91,20 @@ export const getFirstManifestation = (manifestations: Manifestation[]) => {
   return first(manifestations) || null;
 };
 
+export const hasPublizonIdentifier = (manifestation: Manifestation) =>
+  manifestation.identifiers?.some(
+    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
+  ) ?? false;
+
+// Picks the manifestation to loan/reserve through Publizon: prefer the one
+// carrying a PUBLIZON identifier (the loanable edition), else the first.
+export const getLoanableManifestation = (manifestations: Manifestation[]) => {
+  return (
+    manifestations.find(hasPublizonIdentifier) ??
+    getFirstManifestation(manifestations)
+  );
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getManifestationPlayingTime = (manifestation: Manifestation) => {
   return "";
@@ -152,6 +166,17 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
     (identifier) => identifier.type === IdentifierTypeEnum.Isbn
   );
   return isbnIdentifier?.value ?? "";
+};
+
+// Identifier used for every Publizon call (loan, reservation, loan status,
+// order id). Prefer the PUBLIZON identifier; fall back to the ISBN.
+export const getManifestationPublizonIdentifier = (
+  manifestation: Manifestation
+) => {
+  const publizonIdentifier = manifestation.identifiers?.find(
+    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
+  );
+  return publizonIdentifier?.value ?? getManifestationIsbn(manifestation);
 };
 
 export const getManifestationSource = (manifestation: Manifestation) => {

@@ -17,7 +17,7 @@ import DeleteReservationModal, {
 import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import useOnlineInternalHandleLoanReservation from "../../../../core/utils/useOnlineInternalHandleLoanReservation";
 import { ApiResult, CreateLoanResult } from "../../../../core/publizon/model";
-import { getFirstManifestation } from "../../../../apps/material/helper";
+import { getLoanableManifestation } from "../../../../apps/material/helper";
 import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
@@ -65,7 +65,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     canBeLoaned,
     canBeReserved,
     reservation
-  } = useReaderPlayer(getFirstManifestation(manifestations));
+  } = useReaderPlayer(getLoanableManifestation(manifestations));
 
   const handleModalLoanReservation = useOnlineInternalHandleLoanReservation({
     manifestations,

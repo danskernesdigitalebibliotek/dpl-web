@@ -18,6 +18,21 @@ export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFr
   }, [] as string[])
 }
 
+// Identifier sent to Publizon. Prefer the PUBLIZON identifier (the loanable
+// edition); fall back to the ISBN.
+export const getPublizonIdentifierFromManifestation = (
+  manifestation: ManifestationWorkPageFragment | undefined
+) => {
+  if (!manifestation) return undefined
+
+  const publizonIdentifier = manifestation.identifiers.find(
+    identifier => identifier.type === "PUBLIZON"
+  )
+  const isbnIdentifier = manifestation.identifiers.find(identifier => identifier.type === "ISBN")
+
+  return publizonIdentifier?.value ?? isbnIdentifier?.value
+}
+
 export const getIsbnsFromWork = (work: WorkFullWorkPageFragment) => {
   const isbnsNested = work.manifestations.all.map(manifestation =>
     getIsbnsFromManifestation(manifestation)

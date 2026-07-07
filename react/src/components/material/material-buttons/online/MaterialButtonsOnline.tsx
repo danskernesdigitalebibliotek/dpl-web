@@ -16,7 +16,7 @@ import MaterialButtonOnlineInfomediaArticle from "./MaterialButtonOnlineInfomedi
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
 import MaterialButtonsOnlineInternal from "./MaterialButtonsOnlineInternal";
 import { getReaderPlayerType } from "../../../reader-player/helper";
-import { getFirstManifestation } from "../../../../apps/material/helper";
+import { getLoanableManifestation } from "../../../../apps/material/helper";
 
 export interface MaterialButtonsOnlineProps {
   manifestations: Manifestation[];
@@ -44,7 +44,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
     });
   };
   const readerPlayerType = getReaderPlayerType(
-    getFirstManifestation(manifestations)
+    getLoanableManifestation(manifestations)
   );
 
   if (readerPlayerType === "player" || readerPlayerType === "reader") {

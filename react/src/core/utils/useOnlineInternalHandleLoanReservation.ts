@@ -11,7 +11,7 @@ import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import { useUrls } from "../../core/utils/url";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import {
-  getFirstManifestation,
+  getLoanableManifestation,
   onlineInternalModalId
 } from "../../apps/material/helper";
 import {
@@ -57,7 +57,7 @@ const useOnlineInternalHandleLoanReservation = ({
   const { data: userData } = usePatronData();
 
   const { canBeLoaned, canBeReserved, identifier } = useReaderPlayer(
-    getFirstManifestation(manifestations)
+    getLoanableManifestation(manifestations)
   );
 
   const handleModalLoanReservation = () => {

@@ -1,7 +1,6 @@
-import { first } from "lodash"
-
 import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 import Player from "../publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "../responsiveDialog/ResponsiveDialog"
@@ -19,7 +18,7 @@ function PlayerPreviewModal({
 }) {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
-  const identifier = first(manifestation?.identifiers)?.value
+  const identifier = getPublizonIdentifierFromManifestation(manifestation)
 
   return (
     <ResponsiveDialog
