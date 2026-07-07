@@ -8,7 +8,9 @@
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualParagraph;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalAutoParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalManualParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
@@ -43,6 +45,14 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['go_video_bundle_vertical_manual'])) {
     $bundles['paragraph']['go_video_bundle_vertical_manual']['class'] = GoVideoBundleVerticalManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_automatic'])) {
+    $bundles['paragraph']['go_video_bundle_automatic']['class'] = GoVideoBundleAutomaticParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_vertical_auto'])) {
+    $bundles['paragraph']['go_video_bundle_vertical_auto']['class'] = GoVideoBundleVerticalAutoParagraph::class;
   }
 }
 

@@ -10,6 +10,7 @@ use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
@@ -115,22 +116,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif (in_array(
-        $paragraph->bundle(),
-        ['go_video_bundle_automatic', 'go_video_bundle_vertical_auto'],
-      )) {
-        $video = $this->extractVideo($paragraph, ['field_embed_video'], $field_context);
-        if ($video) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $result[] = [
-            '__typename' => 'AppContentElementVideoBundleAutomatic',
-            'id' => $paragraph->uuid(),
-            'title' => $paragraph->get('field_go_video_title')->value,
-            'cql' => $paragraph->get('field_cql_search')->value,
-            'limit' => $paragraph->get('field_video_amount_of_materials')->value,
-            'video' => $video,
-          ];
+      elseif ($paragraph instanceof GoVideoBundleAutomaticBase) {
+        $res = $this->handleGoVideoBundleAutomatic($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif ($paragraph->bundle() == 'recommendation') {
@@ -308,6 +297,37 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'id' => $paragraph->uuid(),
       'title' => $paragraph->getVideoTitle(),
       'workIds' => $paragraph->getWorkIds(),
+      'video' => $video,
+    ];
+  }
+
+  /**
+   * Handle automatic go_video_bundle paragraphs.
+   *
+   * @return array<mixed>
+   *   GraphQL data.
+   */
+  protected function handleGoVideoBundleAutomatic(GoVideoBundleAutomaticBase $paragraph, FieldContext $field_context): ?array {
+    $media = $paragraph->getVideoMedia();
+
+    if (!$media instanceof VideotoolBase) {
+      return NULL;
+    }
+
+    $video = $this->handleVideoElement($media, $field_context);
+
+    if (!$video) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementVideoBundleAutomatic',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getVideoTitle(),
+      'cql' => $paragraph->getCql(),
+      'limit' => $paragraph->getLimit(),
       'video' => $video,
     ];
   }
