@@ -18,7 +18,7 @@ interface GlobalErrorProps {
 // - https://medium.com/@kaiqueperezz/handling-errors-in-the-frontend-with-next-js-improving-ux-and-avoiding-surprises-3970d3f88821
 
 class GlobalErrorBoundary extends Component<GlobalErrorProps, GlobalErrorState> {
-  contentRef: RefObject<HTMLDivElement>
+  contentRef: React.RefObject<HTMLDivElement>
 
   constructor(props: Record<string, unknown>) {
     super(props)
