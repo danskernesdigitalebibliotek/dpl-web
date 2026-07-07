@@ -10,6 +10,7 @@ use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
+use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
 use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
@@ -136,18 +137,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif ($paragraph->bundle() == 'go_material_slider_automatic') {
-        $cql = $paragraph->get('field_cql_search')->value;
-        if ($cql) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $result[] = [
-            '__typename' => 'AppContentElementGoMaterialSliderAutomatic',
-            'id' => $paragraph->uuid(),
-            'title' => $paragraph->get('field_title')->value,
-            'cql' => $cql,
-            'limit' => (int) $paragraph->get('field_slider_amount_of_materials')->value,
-          ];
+      elseif ($paragraph instanceof GoMaterialSliderAutomaticParagraph) {
+        $res = $this->handleGoMaterialSliderAutomatic($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif ($paragraph->bundle() == 'go_material_slider_manual') {
@@ -359,6 +352,29 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       '__typename' => 'AppContentElementNavSpotsManual',
       'id' => $paragraph->uuid(),
       'linkedPages' => $linkedPages,
+    ];
+  }
+
+  /**
+   * Handle go_material_slider_automatic paragraphs.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleGoMaterialSliderAutomatic(GoMaterialSliderAutomaticParagraph $paragraph, FieldContext $field_context): ?array {
+    $cql = $paragraph->getCql();
+    if (!$cql) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementGoMaterialSliderAutomatic',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getSliderTitle(),
+      'cql' => $cql,
+      'limit' => $paragraph->getLimit(),
     ];
   }
 
