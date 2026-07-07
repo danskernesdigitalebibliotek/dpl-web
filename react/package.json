@@ -115,7 +115,7 @@
     "globals": "^17.6.0",
     "happy-dom": "^20.10.6",
     "istanbul-lib-coverage": "^3.2.2",
-    "markdownlint-cli2": "^0.22.1",
+    "markdownlint-cli2": "^0.23.0",
     "mutationobserver-shim": "^0.3.7",
     "nyc": "^18.0.0",
     "orval": "^7.21.0",
