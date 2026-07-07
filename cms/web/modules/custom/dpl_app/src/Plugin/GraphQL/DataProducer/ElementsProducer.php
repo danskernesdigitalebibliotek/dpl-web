@@ -382,10 +382,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
   protected function handleVideoElement(VideotoolBase $media, FieldContext $field_context): ?array {
     $field_context->addCacheableDependency($media);
 
-    if (!$media instanceof VideotoolBase) {
-      return NULL;
-    }
-
     $thumbnail = $media->getThumbnail();
     if (!$thumbnail->getFileUri()) {
       return NULL;
