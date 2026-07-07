@@ -100,70 +100,42 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
 
     /** @var \Drupal\Core\Entity\ContentEntityInterface $paragraph */
     foreach ($paragraphs->referencedEntities() as $paragraph) {
-      // This is very naive implementation that'll become unwieldy when we've
-      // added a few more paragraph types, but it'll do for the first take.
-      // It would be nice to decouple the knowledge about the individual
-      // paragraphs from this class, but how the paragraph maps to the app
-      // element is coupled to the type we define in
-      // dpl_app_categories.base.graphqls, and it would be nice if they where
-      // near each other.
+      $response = NULL;
       if ($paragraph instanceof TextBodyParagraph) {
-        $result[] = $this->handleTextBody($paragraph, $field_context);
+        $response = $this->handleTextBody($paragraph, $field_context);
       }
       elseif ($paragraph instanceof VideoParagraph) {
-        $res = $this->handleVideo($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleVideo($paragraph, $field_context);
       }
       elseif ($paragraph instanceof GoVideoBundleManualBase) {
-        $res = $this->handleGoVideoBundleManual($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleGoVideoBundleManual($paragraph, $field_context);
       }
       elseif ($paragraph instanceof GoVideoBundleAutomaticBase) {
-        $res = $this->handleGoVideoBundleAutomatic($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleGoVideoBundleAutomatic($paragraph, $field_context);
       }
       elseif ($paragraph instanceof RecommendationParagraph) {
-        $res = $this->handleRecommendation($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleRecommendation($paragraph, $field_context);
       }
       elseif ($paragraph instanceof NavSpotsManualParagraph) {
-        $res = $this->handleNavSpotsManual($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleNavSpotsManual($paragraph, $field_context);
       }
       elseif ($paragraph instanceof GoMaterialSliderAutomaticParagraph) {
-        $res = $this->handleGoMaterialSliderAutomatic($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleGoMaterialSliderAutomatic($paragraph, $field_context);
       }
       elseif ($paragraph instanceof GoMaterialSliderManualParagraph) {
-        $res = $this->handleGoMaterialSliderManual($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleGoMaterialSliderManual($paragraph, $field_context);
       }
       elseif ($paragraph instanceof MaterialGridAutomaticParagraph) {
-        $res = $this->handleMaterialGridAutomatic($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleMaterialGridAutomatic($paragraph, $field_context);
       }
       elseif ($paragraph instanceof MaterialGridManualParagraph) {
-        $res = $this->handleMaterialGridManual($paragraph, $field_context);
-        if ($res) {
-          $result[] = $res;
-        }
+        $response = $this->handleMaterialGridManual($paragraph, $field_context);
       }
+
+      if ($response) {
+        $result[] = $response;
+      }
+
     }
 
     return $result;
