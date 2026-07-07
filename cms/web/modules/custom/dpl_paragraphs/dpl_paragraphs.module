@@ -12,6 +12,7 @@ use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalAutoParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalManualParagraph;
+use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
 use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
@@ -58,6 +59,10 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['recommendation'])) {
     $bundles['paragraph']['recommendation']['class'] = RecommendationParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['nav_spots_manual'])) {
+    $bundles['paragraph']['nav_spots_manual']['class'] = NavSpotsManualParagraph::class;
   }
 }
 

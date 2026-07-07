@@ -12,6 +12,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
+use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
 use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
@@ -129,20 +130,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif ($paragraph->bundle() == 'nav_spots_manual') {
-        $field = $paragraph->get('field_nav_spots_content');
-        if ($field instanceof EntityReferenceFieldItemList) {
-          $field_context->addCacheableDependency($paragraph);
-          $linkedPages = [];
-
-          foreach ($field->referencedEntities() as $entity) {
-            $linkedPages[] = $entity->uuid();
-          }
-          $result[] = [
-            '__typename' => 'AppContentElementNavSpotsManual',
-            'id' => $paragraph->uuid(),
-            'linkedPages' => $linkedPages,
-          ];
+      elseif ($paragraph instanceof NavSpotsManualParagraph) {
+        $res = $this->handleNavSpotsManual($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
       elseif ($paragraph->bundle() == 'go_material_slider_automatic') {
@@ -347,6 +338,27 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'title' => $paragraph->getRecommendationTitle(),
       'description' => $paragraph->getDescription(),
       'workId' => $workId,
+    ];
+  }
+
+  /**
+   * Handle nav_spots_manual paragraphs.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleNavSpotsManual(NavSpotsManualParagraph $paragraph, FieldContext $field_context): ?array {
+    $linkedPages = $paragraph->getLinkedPageUuids();
+    if (empty($linkedPages)) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementNavSpotsManual',
+      'id' => $paragraph->uuid(),
+      'linkedPages' => $linkedPages,
     ];
   }
 
