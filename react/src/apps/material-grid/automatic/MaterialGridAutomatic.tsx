@@ -8,7 +8,6 @@ import {
 import useGetSearchBranches from "../../../core/utils/branches";
 import { useText } from "../../../core/utils/text";
 import { WorkId } from "../../../core/utils/types/ids";
-import { ManifestationMaterialType } from "../../../core/utils/types/material-type";
 import { commaSeparatedStringToArray } from "../../advanced-search/helpers";
 import {
   advancedSortMap,
@@ -26,7 +25,6 @@ export type MaterialGridAutomaticProps = {
   onshelf?: boolean;
   sort?: string;
   firstaccessiondateitem?: string;
-  materialType?: ManifestationMaterialType;
 };
 
 const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
@@ -40,8 +38,7 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   title,
   description,
   requestedAmount,
-  firstaccessiondateitem,
-  materialType
+  firstaccessiondateitem
 }) => {
   const t = useText();
   const buttonText = t("buttonText");
@@ -76,8 +73,7 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   const resultWorks = data.complexSearch.works;
   const materials = resultWorks.map((work) => {
     return {
-      wid: work.workId as WorkId,
-      materialType
+      wid: work.workId as WorkId
     };
   });
 

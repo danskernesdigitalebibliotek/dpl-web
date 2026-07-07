@@ -63,7 +63,6 @@ type AppContentElementMaterialGridAutomatic implements AppContentElement {
   description: String
   id: String!
   limit: Int!
-  priorityMaterialType: String
   title: String
 }
 

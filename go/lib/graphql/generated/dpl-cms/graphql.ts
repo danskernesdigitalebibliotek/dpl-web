@@ -98,7 +98,6 @@ export type AppContentElementMaterialGridAutomatic = AppContentElement & {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   limit: Scalars['Int']['output'];
-  priorityMaterialType?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
