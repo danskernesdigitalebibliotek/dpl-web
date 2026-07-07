@@ -226,6 +226,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
             'description' => $paragraph->get('field_material_grid_description')->value,
             'cql' => $cql,
             'limit' => (int) $paragraph->get('field_material_amount')->value,
+            'priorityMaterialType' => $paragraph->get('field_priority_material_type')->value,
           ];
         }
       }
