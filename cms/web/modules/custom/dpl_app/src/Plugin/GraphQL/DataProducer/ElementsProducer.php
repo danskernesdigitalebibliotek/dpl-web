@@ -13,6 +13,7 @@ use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
 use Drupal\dpl_paragraphs\Entity\MaterialGridAutomaticParagraph;
+use Drupal\dpl_paragraphs\Entity\MaterialGridManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
 use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
@@ -157,25 +158,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
           $result[] = $res;
         }
       }
-      elseif ($paragraph->bundle() == 'material_grid_manual') {
-        $workIds = [];
-        foreach ($paragraph->get('field_material_grid_work_ids') as $item) {
-          // @phpstan-ignore property.notFound (magic property)
-          if ($item->value) {
-            $workIds[] = $item->value;
-          }
-        }
-
-        if (!empty($workIds)) {
-          $field_context->addCacheableDependency($paragraph);
-
-          $result[] = [
-            '__typename' => 'AppContentElementMaterialGridManual',
-            'id' => $paragraph->uuid(),
-            'title' => $paragraph->get('field_material_grid_title')->value,
-            'description' => $paragraph->get('field_material_grid_description')->value,
-            'workIds' => $workIds,
-          ];
+      elseif ($paragraph instanceof MaterialGridManualParagraph) {
+        $res = $this->handleMaterialGridManual($paragraph, $field_context);
+        if ($res) {
+          $result[] = $res;
         }
       }
     }
@@ -401,6 +387,29 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'cql' => $cql,
       'limit' => $paragraph->getLimit(),
       'priorityMaterialType' => $paragraph->getPriorityMaterialType(),
+    ];
+  }
+
+  /**
+   * Handle material_grid_manual paragraphs.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data.
+   */
+  protected function handleMaterialGridManual(MaterialGridManualParagraph $paragraph, FieldContext $field_context): ?array {
+    $workIds = $paragraph->getWorkIds();
+    if (empty($workIds)) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($paragraph);
+
+    return [
+      '__typename' => 'AppContentElementMaterialGridManual',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getGridTitle(),
+      'description' => $paragraph->getGridDescription(),
+      'workIds' => $workIds,
     ];
   }
 
