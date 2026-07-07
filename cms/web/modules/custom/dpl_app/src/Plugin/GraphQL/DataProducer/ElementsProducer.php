@@ -383,7 +383,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     $field_context->addCacheableDependency($media);
 
     $thumbnail = $media->getThumbnail();
-    if (!$thumbnail->getFileUri()) {
+    if (!$thumbnail || !$thumbnail->getFileUri()) {
       return NULL;
     }
 

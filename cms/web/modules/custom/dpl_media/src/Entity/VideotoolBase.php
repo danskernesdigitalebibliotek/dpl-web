@@ -20,8 +20,8 @@ abstract class VideotoolBase extends Media {
   /**
    * Get video thumbnail.
    */
-  public function getThumbnail(): FileInterface {
-    /** @var \Drupal\file\Entity\File $file */
+  public function getThumbnail(): ?FileInterface {
+    /** @var \Drupal\file\Entity\File|null $file */
     $file = $this->get('thumbnail')->entity;
 
     return $file;
