@@ -9,7 +9,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 /**
  * Bundle class for text_body paragraphs.
  */
-class TextBody extends Paragraph {
+class TextBodyParagraph extends Paragraph {
 
   /**
    * Get the processed body text.

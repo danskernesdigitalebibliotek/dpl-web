@@ -11,8 +11,8 @@ use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualBase;
-use Drupal\dpl_paragraphs\Entity\TextBody;
-use Drupal\dpl_paragraphs\Entity\Video;
+use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
+use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Drupal\media\Entity\Media;
@@ -100,10 +100,10 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       // element is coupled to the type we define in
       // dpl_app_categories.base.graphqls, and it would be nice if they where
       // near each other.
-      if ($paragraph instanceof TextBody) {
+      if ($paragraph instanceof TextBodyParagraph) {
         $result[] = $this->handleTextBody($paragraph, $field_context);
       }
-      elseif ($paragraph instanceof Video) {
+      elseif ($paragraph instanceof VideoParagraph) {
         $res = $this->handleVideo($paragraph, $field_context);
         if ($res) {
           $result[] = $res;
@@ -247,7 +247,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    * @return array<mixed>
    *   GraphQL data.
    */
-  protected function handleTextBody(TextBody $paragraph, FieldContext $field_context): array {
+  protected function handleTextBody(TextBodyParagraph $paragraph, FieldContext $field_context): array {
     // @todo resolve() should handle adding the paragraph.
     $field_context->addCacheableDependency($paragraph);
 
@@ -264,7 +264,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
    * @return array<mixed>
    *   GraphQL data.
    */
-  protected function handleVideo(Video $paragraph, FieldContext $field_context): ?array {
+  protected function handleVideo(VideoParagraph $paragraph, FieldContext $field_context): ?array {
     $media = $paragraph->getVideoMedia();
 
     if (!$media instanceof VideotoolBase) {
