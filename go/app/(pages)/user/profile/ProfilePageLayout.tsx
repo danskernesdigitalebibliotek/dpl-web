@@ -2,6 +2,8 @@ import React, { Suspense } from "react"
 
 import { LoanSliderSkeleton } from "@/app/(pages)/user/profile/LoanSlider"
 import LogoutButton from "@/app/(pages)/user/profile/LogoutButton"
+import { PhysicalLoanSliderSkeleton } from "@/app/(pages)/user/profile/PhysicalLoanSlider"
+import PhysicalLoans from "@/app/(pages)/user/profile/PhysicalLoans"
 import UserLoans from "@/app/(pages)/user/profile/UserLoans"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
 
@@ -25,6 +27,9 @@ const ProfilePageLayout = async () => {
       </Suspense>
       <Suspense fallback={<LoanSliderSkeleton />}>
         <UserLoans />
+      </Suspense>
+      <Suspense fallback={<PhysicalLoanSliderSkeleton />}>
+        <PhysicalLoans />
       </Suspense>
     </div>
   )
