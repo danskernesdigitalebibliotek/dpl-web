@@ -11,6 +11,7 @@ import {
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import ReceiptStat from "@/components/shared/receiptStat/ReceiptStat"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
@@ -104,13 +105,5 @@ const NotificationLine = ({
     </p>
   )
 }
-
-const ReceiptStat = ({ term, value, dataCy }: { term: string; value: string; dataCy: string }) => (
-  // eslint-disable-next-line no-restricted-syntax -- dataCy comes from cyKeys at call site
-  <div className="bg-background-skeleton/40 rounded-base px-6 py-5 text-center" data-cy={dataCy}>
-    <dt className="text-typo-caption text-foreground-muted first-letter:uppercase">{term}</dt>
-    <dd className="text-typo-heading-5 mt-2">{value}</dd>
-  </div>
-)
 
 export default ReservationReceiptContent

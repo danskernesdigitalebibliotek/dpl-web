@@ -7,8 +7,8 @@ import {
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
-import Icon from "@/components/shared/icon/Icon"
-import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import InfoCard from "@/components/shared/infoCard/InfoCard"
+import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -40,20 +40,12 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
 
   return (
     <div className="mx-auto max-w-prose space-y-8">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
-        <ManifestationCover
-          cover={manifestation.cover}
-          iconName={materialIcon}
-          className="mx-auto aspect-[4/5] w-32 shrink-0 lg:mx-0"
-        />
-
-        <div className="mt-auto flex flex-1 flex-col gap-2 text-center lg:text-left">
-          <p className="text-typo-heading-5">{manifestationTitle}</p>
-          {authorLabel && (
-            <p className="text-typo-subtitle-sm text-foreground-muted">{authorLabel}</p>
-          )}
-        </div>
-      </div>
+      <ModalMaterialHeader
+        cover={manifestation.cover}
+        iconName={materialIcon}
+        title={manifestationTitle}
+        subtitle={authorLabel}
+      />
 
       <hr className="border-foreground/10" />
 
@@ -87,15 +79,5 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
     </div>
   )
 }
-
-const InfoCard = ({ icon, title, value }: { icon: string; title: string; value: string }) => (
-  <div className="bg-background-skeleton/40 rounded-base flex items-center gap-4 px-6 py-4">
-    <Icon name={icon} className="text-foreground h-7 w-7 shrink-0" />
-    <div className="flex flex-col gap-1">
-      <p className="text-typo-subtitle-sm font-medium">{title}</p>
-      <p className="text-typo-subtitle-sm text-foreground-muted">{value}</p>
-    </div>
-  </div>
-)
 
 export default ReservationFormContent
