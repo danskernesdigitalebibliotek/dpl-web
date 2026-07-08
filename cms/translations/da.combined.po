@@ -5700,7 +5700,7 @@ msgstr "Nyhedskomponent - manuel"
 #: 
 msgctxt "paragraphs.paragraphs_type.content_slider:label"
 msgid "Content slider"
-msgstr "Slider"
+msgstr "Indholdsslider - manual"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.event_ticket_category:label"
@@ -24118,7 +24118,7 @@ msgstr "Arrangementliste - automatisk"
 #: 
 msgctxt "paragraphs.paragraphs_type.manual_event_list:label"
 msgid "Event list"
-msgstr "Arrangementliste"
+msgstr "Arrangementliste - manual"
 
 #: 
 msgid "Database collation status"
@@ -26735,17 +26735,17 @@ msgstr "Bestemmer antallet af materialer, der vises, baseret på CQL-strengen.<b
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_grid_description:label"
 msgid "Material grid description"
-msgstr "Material grid beskrivelse"
+msgstr "Materialekomponent beskrivelse"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_grid_description:description"
 msgid "This is the optional description for the material grid. <br />Leave blank if you do not want a description."
-msgstr "Dette er den valgfrie beskrivelse for dit material grid. <br/> Lad stå tomt, hvis du ikke ønsker en beskrivelse."
+msgstr "Dette er den valgfrie beskrivelse for dit Materialekomponent. <br/> Lad stå tomt, hvis du ikke ønsker en beskrivelse."
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_grid_link:label"
 msgid "Material grid link"
-msgstr "Material grid link"
+msgstr "Materialekomponent link"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_material_grid_title:label"
@@ -28076,7 +28076,7 @@ msgstr "Avancerede felter IKKE aktiveret"
 #: 
 msgctxt "dpl_fbi"
 msgid "Fill out fields using link (optional)"
-msgstr "Udfyld felter i material grid med link til CQL-søgning (valgfrit)"
+msgstr "Udfyld felter i Materialekomponent med link til CQL-søgning (valgfrit)"
 
 #: 
 msgctxt "dpl_fbi"
@@ -28141,7 +28141,7 @@ msgstr "Ugyldigt link"
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:label"
 msgid "Material grid automatic"
-msgstr "Material grid automatic"
+msgstr "Materialekomponent - automatisk"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:description"
@@ -28151,7 +28151,7 @@ msgstr "Et gitter med anbefalede materialer, baseret på en CQL-streng og filtre
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_link_automatic:label"
 msgid "Material grid link automatic (DEPRECATED - WILL BE DELETED)"
-msgstr "Material grid link automatic (DEPRECATED - WILL BE DELETED)"
+msgstr "Materialekomponent automatisk (BRUG IKKE - SKAL SLETTES)"
 
 #: 
 msgctxt "advanced search"
@@ -28236,7 +28236,7 @@ msgstr "Forfatter på siden"
 #: 
 msgctxt "views.view.firstaccessiondate_content_admin:display:default:display_options:fields:field_material_grid_title:label"
 msgid "Material grid title"
-msgstr "Titel på Material grid"
+msgstr "Titel på Materialekomponent"
 
 #: 
 msgctxt "views.view.firstaccessiondate_content_admin:display:default:display_options:fields:field_cql_search:label"
