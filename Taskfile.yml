@@ -8,6 +8,14 @@ vars:
   DESIGN_SYSTEM_BUILD: ./design-system/build
 
 tasks:
+  dev:cli:
+    summary: Performs command inside a container. Expects parameter(s).
+    # User id and group corresponds to the node user in the container.
+    # This is a stopgap measure until someone has time for
+    # https://reload.atlassian.net/browse/DDF-220
+    cmds:
+      - docker run --user $(id -u):$(id -g) --rm -v "{{.TASKFILE_DIR}}:/app" -w /app node:24.15 {{.CLI_ARGS}}
+
   # ---------------------------------------------------------------------------
   # CI
   # ---------------------------------------------------------------------------
@@ -119,7 +127,7 @@ tasks:
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
     cmds:
-      - corepack pnpm install
+      - task dev:cli -- corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration
@@ -154,7 +162,7 @@ tasks:
     cmds:
       # pnpm run build compiles SCSS into src/styles/css/.
       # We then assemble a clean build/ directory with the assets CMS needs.
-      - pnpm run build
+      - cd .. && task dev:cli -- sh -c "cd design-system && corepack pnpm run build"
       - rm -rf ./build
       - mkdir -p ./build/js
       - cp -r ./public/icons ./build/icons
@@ -188,7 +196,7 @@ tasks:
     generates:
       - 'dist/**/*.*'
     cmds:
-      - pnpm build
+      - cd .. && task dev:cli -- sh -c "cd react && corepack pnpm build"
 
   # ---------------------------------------------------------------------------
   # Copy assets into CMS

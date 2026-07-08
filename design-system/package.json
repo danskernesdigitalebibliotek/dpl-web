@@ -21,7 +21,7 @@
     "css:format": "concurrently 'pnpm run css:stylelint -- --fix' 'pnpm run css:prettier --write' --max-processes 1 --raw",
     "css:build": "sass base.scss:src/styles/css/base.css wysiwyg.scss:src/styles/css/wysiwyg.css admin-base.scss:src/styles/css/admin-base.css --style compressed",
     "css:watch": "pnpm run css:build -- --watch",
-    "build": "pnpm run css:build",
+    "build": "corepack pnpm run css:build",
     "markdown:lint": "markdownlint-cli2",
     "markdown:format": "markdownlint-cli2 --fix",
     "watch": "concurrently 'pnpm run js:lint:watch' 'pnpm run css:lint:watch'",
