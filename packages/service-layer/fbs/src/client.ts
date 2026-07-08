@@ -1,20 +1,26 @@
 import type {
   CreateReservationInput,
   CreateReservationResult,
+  Loan,
   MaterialAvailability,
   Patron,
+  RenewedLoan,
   Reservation,
 } from "../../src/types"
 import {
   getAddReservationsV2Url,
   getDeleteReservationsUrl,
   getGetHoldingsLogisticsV1Url,
+  getGetLoansV2Url,
   getGetPatronInformationByPatronIdV4Url,
   getGetReservationsV2Url,
+  getRenewLoansV2Url,
 } from "./generated/fbs"
 import type { CreateReservationBatchV2 } from "./generated/model/createReservationBatchV2"
 import { parseAndMapAvailability } from "./mappers/availability.mapper"
+import { parseAndMapLoans } from "./mappers/loans.mapper"
 import { parseAndMapPatron } from "./mappers/patron.mapper"
+import { parseAndMapRenewedLoans } from "./mappers/renewedLoans.mapper"
 import { parseAndMapReservation } from "./mappers/reservation.mapper"
 import { parseAndMapReservations } from "./mappers/reservations.mapper"
 import type { FbsConfig } from "./types"
@@ -100,6 +106,39 @@ export function createFbsClient(config: FbsConfig) {
       }
       const raw: unknown = await response.json()
       return parseAndMapReservations(raw)
+    },
+
+    getLoans: async (): Promise<Loan[]> => {
+      const authHeader = await config.getAuthHeader()
+      const response = await fetch(`${config.baseUrl}${getGetLoansV2Url()}`, {
+        method: "GET",
+        headers: { authorization: authHeader },
+      })
+      if (!response.ok) {
+        throw new Error(`FBS getLoans failed: ${response.status} ${response.statusText}`)
+      }
+      const raw: unknown = await response.json()
+      return parseAndMapLoans(raw)
+    },
+
+    renewLoans: async (loanIds: number[]): Promise<RenewedLoan[]> => {
+      if (loanIds.length === 0) {
+        return []
+      }
+      const authHeader = await config.getAuthHeader()
+      const response = await fetch(`${config.baseUrl}${getRenewLoansV2Url()}`, {
+        method: "POST",
+        headers: {
+          authorization: authHeader,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(loanIds),
+      })
+      if (!response.ok) {
+        throw new Error(`FBS renewLoans failed: ${response.status} ${response.statusText}`)
+      }
+      const raw: unknown = await response.json()
+      return parseAndMapRenewedLoans(raw)
     },
 
     deleteReservation: async (reservationId: number): Promise<void> => {

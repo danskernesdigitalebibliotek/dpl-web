@@ -6,6 +6,8 @@ const baseUrl = "https://fbs.example"
 const patronInfoUrl = `${baseUrl}/external/agencyid/patrons/patronid/v4`
 const holdingsBaseUrl = `${baseUrl}/external/agencyid/catalog/holdingsLogistics/v1`
 const reservationsUrl = `${baseUrl}/external/v1/agencyid/patrons/patronid/reservations/v2`
+const loansUrl = `${baseUrl}/external/agencyid/patrons/patronid/loans/v2`
+const renewLoansUrl = `${baseUrl}/external/agencyid/patrons/patronid/loans/renew/v2`
 
 const mockJsonResponse = (body: unknown, status = 200) =>
   ({
@@ -306,6 +308,136 @@ describe("createFbsClient.getReservations", () => {
   it("throws on non-2xx", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
     await expect(buildClient().getReservations()).rejects.toThrow(/401/)
+  })
+})
+
+describe("createFbsClient.getLoans", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("GETs the loans endpoint and returns mapped loans", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse([
+        {
+          isRenewable: true,
+          isLongtermLoan: false,
+          renewalStatusList: [],
+          loanDetails: {
+            loanId: 42,
+            recordId: "12345678",
+            dueDate: "2026-07-16",
+            loanDate: "2026-06-16",
+            loanType: "loan",
+            materialItemNumber: "5001234567",
+          },
+        },
+      ])
+    )
+
+    const result = await buildClient().getLoans()
+
+    expect(fetch).toHaveBeenCalledWith(loansUrl, {
+      method: "GET",
+      headers: { authorization: "Bearer abc" },
+    })
+    expect(result).toEqual([
+      {
+        loanId: 42,
+        recordId: "12345678",
+        dueDate: "2026-07-16",
+        loanDate: "2026-06-16",
+        materialItemNumber: "5001234567",
+        isRenewable: true,
+      },
+    ])
+  })
+
+  it("throws on non-2xx", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
+    await expect(buildClient().getLoans()).rejects.toThrow(/401/)
+  })
+
+  it("throws when the response shape fails validation", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ unexpected: "shape" }))
+    await expect(buildClient().getLoans()).rejects.toThrow()
+  })
+})
+
+describe("createFbsClient.renewLoans", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("short-circuits without calling fetch when given no loanIds", async () => {
+    const result = await buildClient().renewLoans([])
+
+    expect(fetch).not.toHaveBeenCalled()
+    expect(result).toEqual([])
+  })
+
+  it("POSTs the loanIds and returns mapped renewal results", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse([
+        {
+          renewalStatus: ["renewed"],
+          loanDetails: {
+            loanId: 42,
+            recordId: "12345678",
+            dueDate: "2026-08-16",
+            loanDate: "2026-07-16",
+            loanType: "loan",
+          },
+        },
+      ])
+    )
+
+    const result = await buildClient().renewLoans([42])
+
+    expect(fetch).toHaveBeenCalledWith(renewLoansUrl, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer abc",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify([42]),
+    })
+    expect(result).toEqual([
+      {
+        loanId: 42,
+        recordId: "12345678",
+        dueDate: "2026-08-16",
+        renewed: true,
+      },
+    ])
+  })
+
+  it("maps denied renewals to renewed=false", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse([
+        {
+          renewalStatus: ["deniedReserved"],
+          loanDetails: { loanId: 1, recordId: "1", dueDate: "2026-07-01" },
+        },
+      ])
+    )
+
+    await expect(buildClient().renewLoans([1])).resolves.toEqual([
+      { loanId: 1, recordId: "1", dueDate: "2026-07-01", renewed: false },
+    ])
+  })
+
+  it("throws on non-2xx", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 404))
+    await expect(buildClient().renewLoans([42])).rejects.toThrow(/404/)
   })
 })
 

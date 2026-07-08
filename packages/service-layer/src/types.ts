@@ -73,3 +73,19 @@ export type Reservation = {
   numberInQueue: number | undefined
   state: string
 }
+
+export type Loan = {
+  loanId: number
+  recordId: string
+  dueDate: string
+  loanDate: string
+  materialItemNumber: string
+  isRenewable: boolean
+}
+
+export type RenewedLoan = {
+  loanId: number
+  recordId: string
+  dueDate: string
+  renewed: boolean
+}
