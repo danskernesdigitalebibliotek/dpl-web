@@ -3613,7 +3613,7 @@ msgstr "Basisindstillinger"
 #: 
 msgctxt "Fees list settings form"
 msgid "Fees and Replacement costs URL"
-msgstr "URL"
+msgstr "Takster URL"
 
 #: 
 msgctxt "Fees list settings form"
