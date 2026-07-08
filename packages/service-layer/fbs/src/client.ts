@@ -80,7 +80,10 @@ export function createFbsClient(config: FbsConfig) {
         return parseAndMapReservation(raw)
       } catch (parseError) {
         if (!response.ok) {
-          throw new Error(`FBS createReservation failed: ${response.status} ${response.statusText}`)
+          throw new Error(
+            `FBS createReservation failed: ${response.status} ${response.statusText}`,
+            { cause: parseError }
+          )
         }
         throw parseError
       }
