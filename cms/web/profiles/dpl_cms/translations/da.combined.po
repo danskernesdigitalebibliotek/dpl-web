@@ -30846,7 +30846,7 @@ msgstr "målgruppe"
 #: 
 msgctxt "facets.facet.audience:widget:config:default_option_label"
 msgid "- Any -"
-msgstr "Alle"
+msgstr "- Alle -"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_audiences:label"
