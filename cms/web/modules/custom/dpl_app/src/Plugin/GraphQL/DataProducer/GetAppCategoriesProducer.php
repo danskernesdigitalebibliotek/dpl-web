@@ -70,12 +70,18 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
   ): array {
     $type = AppType::tryFrom($type);
 
-    return match ($type) {
+    $nodes = match ($type) {
       AppType::Biblo => $this->getTermCategories($type, $id),
       AppType::MyBiblo => $this->getTermCategories($type, $id),
       AppType::BibloGo => $this->getGoCategories($id),
       default => [],
     };
+
+    foreach ($nodes as $node) {
+      $field_context->addCacheableDependency($node);
+    }
+
+    return $nodes;
   }
 
   /**
