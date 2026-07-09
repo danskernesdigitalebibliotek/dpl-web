@@ -14,6 +14,7 @@ import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight
 import { Button } from "@/components/shared/button/Button"
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
+import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
@@ -51,14 +52,17 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
     if (isRenewing) return
     renewLoans([loan.loanId], {
       onSuccess: renewedLoans => {
-        const renewed = renewedLoans.find(r => r.loanId === loan.loanId && r.renewed)
-        if (renewed) {
-          setRenewedLoan(renewed)
+        const result = renewedLoans.find(r => r.loanId === loan.loanId)
+        if (result?.renewed) {
+          setRenewedLoan(result)
         } else {
-          toast.error("Lånet kunne ikke fornys. Prøv igen senere.")
+          toast.error(getRenewalFailureMessage(result?.reason ?? "deniedOtherReason"))
         }
       },
-      onError: () => toast.error("Lånet kunne ikke fornys. Prøv igen senere."),
+      onError: () => {
+        // Network / non-JSON — surface via the generic copy bucket.
+        toast.error(getRenewalFailureMessage("deniedOtherReason"))
+      },
     })
   }
 

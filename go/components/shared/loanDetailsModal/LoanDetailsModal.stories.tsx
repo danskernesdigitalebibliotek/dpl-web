@@ -160,4 +160,9 @@ const renewalStory = (renewalStatus: string[]): Story => ({
 })
 
 export const RenewalSucceeds = renewalStory(["renewed"])
-export const RenewalDenied = renewalStory(["deniedReserved"])
+// Denial stories exercise the reason-specific toast copy buckets
+// (incl. the deniedOtherReason fallback for undocumented codes).
+export const RenewalDeniedReserved = renewalStory(["deniedReserved"])
+export const RenewalDeniedMaxRenewals = renewalStory(["deniedMaxRenewalsReached"])
+export const RenewalDeniedBlocked = renewalStory(["deniedLoanerIsBlocked"])
+export const RenewalDeniedUnknownReason = renewalStory(["someUndocumentedCode"])
