@@ -207,7 +207,7 @@ tasks:
       - task dev:cli -- composer drupal:scaffold
       # Build the design-system + React from source and copy them into the CMS
       # (theme assets + libraries).
-      - task -d {{.TASKFILE_DIR}}/.. dev:cms:link:design-system dev:cms:link:react
+      - task -d {{.TASKFILE_DIR}}/.. dev:cms:link
       - '{{ if ne .SKIP_SITE_INSTALL "true" }}task dev:cli -- ./dev-scripts/install-site.sh --install-only{{ end }}'
       - task dev:cli -- ./dev-scripts/install-site.sh --post-install-only {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
       # Possibly install the BNF site.

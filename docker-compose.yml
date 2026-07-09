@@ -1,0 +1,13 @@
+services:
+  cli:
+    image: node:24.15
+    init: true
+    working_dir: /app
+    volumes:
+      - .:/app
+    user: ${UID:-1000}:${GID:-1000}
+    environment:
+      - HOME=/tmp
+      - COREPACK_HOME=/tmp/corepack
+      - PNPM_HOME=/tmp/pnpm
+      - PATH=/tmp/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

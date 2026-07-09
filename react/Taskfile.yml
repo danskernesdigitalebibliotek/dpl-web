@@ -19,7 +19,8 @@ tasks:
     summary: Use project Node.js version with nvm
     silent: true
     cmds:
-      - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm install && nvm use'
+      - echo "ignoring"
+      # - bash -lc 'source "${NVM_DIR:-$HOME/.nvm}/nvm.sh" && nvm install && nvm use'
 
   dev:install:
     summary: Install packages
@@ -30,11 +31,12 @@ tasks:
   dev:start:
     summary: Install and run docker compose
     cmds:
-      - task dev:install
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
-      - task dev:nvm:use
-      - echo "React app is starting. This can take a moment."
-      - pnpm run dev
+
+  dev:build:
+    summary: Build React assets
+    cmds:
+      - task dev:cli -- corepack pnpm run build
 
   dev:stop:
     summary: Stop docker compose environment
@@ -132,3 +134,13 @@ tasks:
     cmds:
       - task dev:nvm:use
       - pnpm run codegen:client:dpl-cms
+
+  dev:cli:
+    summary: Performs command inside container. Expects parameter(s).
+    env:
+      UID:
+        sh: id -u
+      GID:
+        sh: id -g
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm node {{.CLI_ARGS}}

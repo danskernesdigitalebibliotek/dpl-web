@@ -8,6 +8,27 @@ vars:
   DESIGN_SYSTEM_BUILD: ./design-system/build
 
 tasks:
+  docker-clean:
+    summary: Clean out all docker compose containers
+    cmds:
+      - cd cms && docker compose down -v --remove-orphans
+      - cd react && docker compose down -v --remove-orphans
+      - cd go && docker compose down -v --remove-orphans
+      - cd design-system && docker compose down -v --remove-orphans
+
+  dev:cli:
+    summary: Performs command inside a container. Expects parameter(s).
+    # User id and group corresponds to the node user in the container.
+    # This is a stopgap measure until someone has time for
+    # https://reload.atlassian.net/browse/DDF-220
+    env:
+      UID:
+        sh: id -u
+      GID:
+        sh: id -g
+    cmds:
+      - docker compose run --rm cli {{.CLI_ARGS}}
+
   # ---------------------------------------------------------------------------
   # CI
   # ---------------------------------------------------------------------------
@@ -119,7 +140,7 @@ tasks:
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
     cmds:
-      - corepack pnpm install
+      - task dev:cli -- corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration
@@ -152,15 +173,7 @@ tasks:
     generates:
       - 'build/**/*.*'
     cmds:
-      # pnpm run build compiles SCSS into src/styles/css/.
-      # We then assemble a clean build/ directory with the assets CMS needs.
-      - pnpm run build
-      - rm -rf ./build
-      - mkdir -p ./build/js
-      - cp -r ./public/icons ./build/icons
-      - cp -r ./src/styles/css ./build/css
-      - cp -r ./src/styles/fonts ./build/fonts
-      - find ./src -name "*.js" | while read -r f; do cp "$f" ./build/js/"$(basename "$f")"; done
+      - task dev:build
 
   # ---------------------------------------------------------------------------
   # React
@@ -188,7 +201,7 @@ tasks:
     generates:
       - 'dist/**/*.*'
     cmds:
-      - pnpm build
+      - task dev:build
 
   # ---------------------------------------------------------------------------
   # Copy assets into CMS

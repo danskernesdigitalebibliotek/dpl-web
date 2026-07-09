@@ -1,36 +1,19 @@
-# This block is used for inclusion in the environment section of each container.
-x-volumes:
-  &default-volumes
-    # Define all volumes you would like to have real-time mounted into the docker containers
-    volumes:
-      - 'projectroot:/home/node/app'
-      - ~/.npmrc:/home/node/.npmrc
-
-
-x-user:
-  &default-user
-    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
-    user: '1000'
-
 services:
   node:
-  # Remember to keep version updated with the .nvmrc file.
-  # The .nvmrc file is used in Github Actions and for "dockerless" development.
-    image: node:24
-    user: node
+    image: node:24.15
     init: true
-    working_dir: /home/node/app
-    <<: [*default-volumes, *default-user]
-    labels:
-      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
-    expose:
-      - 80
-    command: 'corepack pnpm run dev'
+    working_dir: /app/design-system
+    volumes:
+      - ../:/app
+    user: ${UID:-1000}:${GID:-1000}
     environment:
+      HOME: /tmp
+      COREPACK_HOME: /tmp/corepack
+      PNPM_HOME: /tmp/pnpm
+      PATH: /tmp/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.local
       VIRTUAL_PORT: 6006
       STORYBOOK_CLIENT_ID: bdc1d425-9117-4867-acb9-c7307ddc2e0f
-      SHELL: /bin/sh
 
 volumes:
   projectroot:

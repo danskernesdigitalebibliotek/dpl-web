@@ -68,7 +68,6 @@ A few rules that override generic SCSS instincts:
 - `base.scss`, `wysiwyg.scss`, `admin-base.scss` — the three SCSS entry
   points (frontend, CKEditor, CMS admin).
 - `src/styles/scss/tools/` — design tokens and mixins.
-- `bundle.sh` — exactly what goes into the released package.
 - `.storybook/main.js`, `.storybook/preview.js`, `.storybook/modes.js` —
   Storybook configuration, viewports, Chromatic modes.
 
@@ -78,9 +77,6 @@ A few rules that override generic SCSS instincts:
   site, `wysiwyg.scss` for CKEditor inside the CMS, `admin-base.scss` for
   the CMS admin UI. Don't add a component to all three "just in case" —
   opt in deliberately. The editor bundle in particular should stay small.
-- **`bundle.sh`'s `.js` collector is flat and recursive** — every `*.js`
-  under `src/` ends up in `build/js/`. Same-basename files in different
-  folders will collide; name uniquely.
 - **Loose `.js` companion files are framework-agnostic on purpose** so the
   CMS Twig and the React preview can both use them. Don't rewrite them as
   React hooks.

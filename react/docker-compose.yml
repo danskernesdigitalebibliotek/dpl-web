@@ -1,6 +1,18 @@
-version: "3.7"
-
 services:
+  node:
+    image: node:24.15
+    init: true
+    working_dir: /app/react
+    volumes:
+      - ../:/app
+    environment:
+      HOME: /tmp
+      COREPACK_HOME: /tmp/corepack
+      PNPM_HOME: /tmp/pnpm
+      PATH: /tmp/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    user: ${UID:-1000}:${GID:-1000}
+    command: corepack pnpm run dev
+
   wiremock:
     image: up9inc/wiremock-studio:2.32.0-18
     ports:

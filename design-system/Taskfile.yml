@@ -84,7 +84,23 @@ tasks:
     cmds:
       - task dev:cli -- pnpm run chromatic
 
+  dev:build:
+    summary: Build design system assets
+    cmds:
+      - task dev:cli -- corepack pnpm run build
+      - rm -rf ./build
+      - mkdir -p ./build/js
+      - cp -r ./public/icons ./build/icons
+      - cp -r ./src/styles/css ./build/css
+      - cp -r ./src/styles/fonts ./build/fonts
+      - find ./src -name "*.js" | while read -r f; do cp "$f" ./build/js/"$(basename "$f")"; done
+
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
+    env:
+      UID:
+        sh: id -u
+      GID:
+        sh: id -g
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm node {{.CLI_ARGS}}
