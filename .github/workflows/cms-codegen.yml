@@ -27,9 +27,10 @@ jobs:
           # certain vars.
           fetch-depth: 0
 
-      - uses: ./.github/actions/common-setup-js
+      - name: Install go-task
+        uses: arduino/setup-task@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install go-task
         uses: arduino/setup-task@v3
