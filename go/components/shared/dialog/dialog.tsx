@@ -6,6 +6,7 @@ import * as React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import { cyKeys } from "@/cypress/support/constants"
+import { preventDismissOnToastInteraction } from "@/lib/helpers/helper.dismissal"
 import { cn } from "@/lib/shadcn/utils"
 
 const Dialog = DialogPrimitive.Root
@@ -35,11 +36,15 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, onPointerDownOutside, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
+      onPointerDownOutside={event => {
+        preventDismissOnToastInteraction(event)
+        onPointerDownOutside?.(event)
+      }}
       className={cn(
         `z-dialog bg-background data-[state=closed]:animate-out data-[state=closed]:fade-out-0
         data-[state=closed]:zoom-out-30 data-[state=open]:animate-dialog-open fixed top-[50%]

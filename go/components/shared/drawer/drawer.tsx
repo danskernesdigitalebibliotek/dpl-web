@@ -4,6 +4,7 @@ import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cyKeys } from "@/cypress/support/constants"
+import { preventDismissOnToastInteraction } from "@/lib/helpers/helper.dismissal"
 import { cn } from "@/lib/shadcn/utils"
 
 const Drawer = ({
@@ -36,11 +37,15 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, onPointerDownOutside, ...props }, ref) => (
   <DrawerPortal>
     <DrawerOverlay />
     <DrawerPrimitive.Content
       ref={ref}
+      onPointerDownOutside={event => {
+        preventDismissOnToastInteraction(event)
+        onPointerDownOutside?.(event)
+      }}
       className={cn(
         `z-drawer bg-background fixed inset-x-0 bottom-0 mt-24 flex h-auto max-h-[95dvh]
         min-h-[80dvh] flex-col overflow-hidden rounded-t-xl`,
