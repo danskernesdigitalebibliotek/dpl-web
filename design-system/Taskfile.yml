@@ -2,11 +2,6 @@ version: '3'
 
 dotenv: [".task.env"]
 
-vars:
-  # Docker file selection
-  DOCKER_COMPOSE_FILES_DEFAULT: '-f docker-compose.yml'
-  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
-
 tasks:
   dev:install:
     summary: Install packages
@@ -17,26 +12,26 @@ tasks:
     summary: Install and run docker compose
     cmds:
       - task dev:install
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
+      - docker compose up --detach
       - echo "Design System is starting. It can take a while before Storybook is ready."
       - echo "https://${COMPOSE_PROJECT_NAME:-design-system}.local will shotly be available."
 
   dev:stop:
     summary: Stop docker compose environment
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} stop
+      - docker compose stop
 
   dev:up:
     summary: Run docker compose
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
+      - docker compose up --detach
 
   dev:down:
     summary: Stop and remove docker compose environment
     cmds:
       # DNS proxies such as Dory may hang on to the network for a bit which
       # causes the process to fail. Wait and retry if that is the case
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
+      - docker compose down --volumes --remove-orphans || (sleep 3 && docker-compose down)
 
   dev:logs:
     summary: Tail docker compose logs for web-pack
@@ -93,4 +88,4 @@ tasks:
       GID:
         sh: id -g
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm node {{.CLI_ARGS}}
+      - docker compose run --rm node {{.CLI_ARGS}}

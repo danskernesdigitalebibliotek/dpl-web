@@ -2,11 +2,6 @@ version: '3'
 
 dotenv: [".task.env"]
 
-vars:
-  # Docker file selection
-  DOCKER_COMPOSE_FILES_DEFAULT: '-f docker-compose.yml'
-  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
-
 tasks:
   dev:nvm:use:
     summary: Use project Node.js version with nvm
@@ -24,7 +19,7 @@ tasks:
   dev:start:
     summary: Install and run docker compose
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
+      - docker compose up --detach
 
   dev:build:
     summary: Build React assets
@@ -34,33 +29,33 @@ tasks:
   dev:stop:
     summary: Stop docker compose environment
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} stop
+      - docker compose stop
 
   dev:up:
     summary: Install run docker compose
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up --detach
+      - docker compose up --detach
 
   dev:down:
     summary: Stop and remove docker compose environment
     cmds:
       # DNS proxies such as Dory may hang on to the network for a bit which
       # causes the process to fail. Wait and retry if that is the case
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
+      - docker compose down --volumes --remove-orphans || (sleep 3 && docker-compose down)
 
   dev:mocks:start:
     summary: Start wiremocks
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up wiremock-fbs --detach
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up wiremock-publizon --detach
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up wiremock --detach
+      - docker compose up wiremock-fbs --detach
+      - docker compose up wiremock-publizon --detach
+      - docker compose up wiremock --detach
 
   dev:mocks:stop:
     summary: Stop wiremocks
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} stop wiremock-fbs
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} stop wiremock-publizon
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} stop wiremock
+      - docker compose stop wiremock-fbs
+      - docker compose stop wiremock-publizon
+      - docker compose stop wiremock
 
   dev:storybook:
     summary: Run storybook in development mode
@@ -136,4 +131,4 @@ tasks:
       GID:
         sh: id -g
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm node {{.CLI_ARGS}}
+      - docker compose run --rm node {{.CLI_ARGS}}
