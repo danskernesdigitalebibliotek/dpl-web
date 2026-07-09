@@ -150,7 +150,7 @@ tasks:
     desc: "Build design-system + React, copy into CMS. Use --watch for live-reload."
     deps:
       - cms:start
-      - dev:react:setup
+      - dev:react:build
     cmds:
       - task: dev:cms:link
 
@@ -179,16 +179,11 @@ tasks:
   # React
   # ---------------------------------------------------------------------------
 
-  dev:react:setup:
-    desc: "Build design-system and React"
-    cmds:
-      - task: dev:design-system:build
-      - task: dev:react:build
-
   dev:react:build:
     desc: "Build React (pnpm build → dist/)"
     deps:
       - init:pnpm
+      - dev:design-system:build
     dir: ./react
     sources:
       - 'src/**/*.ts'
