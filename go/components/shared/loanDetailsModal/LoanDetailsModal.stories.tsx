@@ -5,6 +5,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 
@@ -69,6 +70,8 @@ const withServiceLayer =
       client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
       <ServiceLayerProvider config={storyServiceLayerConfig}>
         <Story />
+        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+        <Toaster duration={Infinity} />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )
@@ -157,4 +160,9 @@ const renewalStory = (renewalStatus: string[]): Story => ({
 })
 
 export const RenewalSucceeds = renewalStory(["renewed"])
-export const RenewalDenied = renewalStory(["deniedReserved"])
+// Denial stories exercise the reason-specific toast copy buckets
+// (incl. the deniedOtherReason fallback for undocumented codes).
+export const RenewalDeniedReserved = renewalStory(["deniedReserved"])
+export const RenewalDeniedMaxRenewals = renewalStory(["deniedMaxRenewalsReached"])
+export const RenewalDeniedBlocked = renewalStory(["deniedLoanerIsBlocked"])
+export const RenewalDeniedUnknownReason = renewalStory(["someUndocumentedCode"])

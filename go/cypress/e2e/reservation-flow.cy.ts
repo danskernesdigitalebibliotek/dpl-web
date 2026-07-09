@@ -137,7 +137,7 @@ describe("Reservation flow", () => {
     cy.dataCy("reservation-receipt").should("contain", "er nu reserveret til dig")
   })
 
-  it("Create reservation: failure → error body with reason-specific copy", () => {
+  it("Create reservation: failure → error toast with reason-specific copy", () => {
     mockFbsPatron()
     mockFbsReservations([])
 
@@ -155,11 +155,11 @@ describe("Reservation flow", () => {
     cy.dataCy("reservation-modal").should("be.visible")
     cy.dataCy("approve-reservation-button").click()
 
-    cy.dataCy("reservation-error")
+    cy.get('[data-sonner-toast][data-type="error"]')
       .should("exist")
-      .and("have.attr", "data-reason", "already_reserved")
       .and("contain", "Du har allerede reserveret denne bog.")
-    cy.contains("button", /^Luk$/).should("exist")
+    // The modal stays on the form step so the user can retry.
+    cy.dataCy("approve-reservation-button").should("exist")
   })
 
   it("Reservation form shows missing-email copy when patron has no email", () => {

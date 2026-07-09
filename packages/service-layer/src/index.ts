@@ -12,9 +12,12 @@ export type {
   Reservation,
   Loan,
   RenewedLoan,
+  RenewedLoanSuccess,
+  RenewedLoanFailed,
+  RenewalFailureReason,
 } from "./types"
 
-export { RESERVATION_FAILURE_REASONS } from "./types"
+export { RESERVATION_FAILURE_REASONS, RENEWAL_FAILURE_REASONS } from "./types"
 
 // React provider — wraps an app subtree and supplies config to the hooks.
 export { ServiceLayerProvider } from "./context/ServiceLayerContext"

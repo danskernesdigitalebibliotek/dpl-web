@@ -14,8 +14,10 @@ import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight
 import { Button } from "@/components/shared/button/Button"
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
+import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 
@@ -32,14 +34,12 @@ const formatLoanDate = (date: string) => format(new Date(date), "d. MMMM yyyy", 
 
 const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators }: Props) => {
   const { mutate: renewLoans, isPending: isRenewing } = useRenewLoans()
-  const [renewalFailed, setRenewalFailed] = useState(false)
   const [renewedLoan, setRenewedLoan] = useState<RenewedLoan | null>(null)
 
   // The modal stays mounted between openings; start each visit from a clean
   // slate so a previous renewal outcome doesn't leak into the next one.
   useEffect(() => {
     if (open) {
-      setRenewalFailed(false)
       setRenewedLoan(null)
     }
   }, [open])
@@ -50,17 +50,19 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
 
   const handleRenew = () => {
     if (isRenewing) return
-    setRenewalFailed(false)
     renewLoans([loan.loanId], {
       onSuccess: renewedLoans => {
-        const renewed = renewedLoans.find(r => r.loanId === loan.loanId && r.renewed)
-        if (renewed) {
-          setRenewedLoan(renewed)
+        const result = renewedLoans.find(r => r.loanId === loan.loanId)
+        if (result?.renewed) {
+          setRenewedLoan(result)
         } else {
-          setRenewalFailed(true)
+          toast.error(getRenewalFailureMessage(result?.reason ?? "deniedOtherReason"))
         }
       },
-      onError: () => setRenewalFailed(true),
+      onError: () => {
+        // Network / non-JSON — surface via the generic copy bucket.
+        toast.error(getRenewalFailureMessage("deniedOtherReason"))
+      },
     })
   }
 
@@ -103,30 +105,20 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
           <Button theme="primary" size="lg" onClick={onClose}>
             OK
           </Button>
+        ) : loan.isRenewable ? (
+          <Button
+            theme="primary"
+            size="lg"
+            isLoading={isRenewing}
+            ariaLabel={`Forny lån af ${title}`}
+            data-cy={cyKeys["approve-renew-loan-button"]}
+            onClick={handleRenew}>
+            Forny lån
+          </Button>
         ) : (
-          <div className="flex w-full flex-col items-center gap-3">
-            {renewalFailed && (
-              <p
-                className="text-typo-caption text-error-red-400 dark:text-error-red-200 text-center">
-                Lånet kunne ikke fornys
-              </p>
-            )}
-            {loan.isRenewable ? (
-              <Button
-                theme="primary"
-                size="lg"
-                isLoading={isRenewing}
-                ariaLabel={`Forny lån af ${title}`}
-                data-cy={cyKeys["approve-renew-loan-button"]}
-                onClick={handleRenew}>
-                Forny lån
-              </Button>
-            ) : (
-              <Button theme="primary" size="lg" onClick={onClose}>
-                Luk
-              </Button>
-            )}
-          </div>
+          <Button theme="primary" size="lg" onClick={onClose}>
+            Luk
+          </Button>
         )}
       </ResponsiveDialog.Actions>
     </ResponsiveDialog>

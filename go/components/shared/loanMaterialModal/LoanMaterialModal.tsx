@@ -9,9 +9,10 @@ import {
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import LoanAlreadyLoanedContent from "@/components/shared/loanMaterialModal/LoanAlreadyLoanedContent"
-import LoanErrorContent from "@/components/shared/loanMaterialModal/LoanErrorContent"
+import { publizonErrorMessageMap } from "@/components/shared/loanMaterialModal/helper"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
@@ -38,10 +39,6 @@ const LoanMaterialModal = ({
   const { mutate } = usePostV1UserLoansIdentifier()
   const { data: loansData, isLoading: isLoadingLoans } = useGetV1UserLoans()
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
-  const [publizonError, setPublizonError] = useState<{
-    code: ApiResponseCode
-    message: string
-  } | null>(null)
 
   const identifier = first(manifestation?.identifiers)?.value
   const isAlreadyLoaned =
@@ -61,11 +58,19 @@ const LoanMaterialModal = ({
           onClose()
         },
         onError: error => {
+          setIsHandlingLoan(false)
+          let code: ApiResponseCode | undefined
           if (error instanceof Error) {
-            const errorData = JSON.parse(error.message)
-            setPublizonError(errorData)
-            setIsHandlingLoan(false)
+            try {
+              code = (JSON.parse(error.message) as { code?: ApiResponseCode }).code
+            } catch {
+              // Non-JSON error message — fall through to the generic copy.
+            }
           }
+          toast.error(
+            (code !== undefined && publizonErrorMessageMap[code]) ||
+              "Lånet kunne ikke gennemføres. Prøv igen senere."
+          )
         },
       }
     )
@@ -79,9 +84,7 @@ const LoanMaterialModal = ({
       <AnimateChangeInHeight>
         {manifestation && (
           <div className="mx-auto max-w-prose" data-cy={cyKeys["loan-material-modal"]}>
-            {publizonError ? (
-              <LoanErrorContent manifestation={manifestation} code={publizonError.code} />
-            ) : isAlreadyLoaned ? (
+            {isAlreadyLoaned ? (
               <LoanAlreadyLoanedContent manifestation={manifestation} />
             ) : (
               <>
@@ -105,7 +108,7 @@ const LoanMaterialModal = ({
 
       {manifestation && (
         <ResponsiveDialog.Actions>
-          {!isAlreadyLoaned && !publizonError && (
+          {!isAlreadyLoaned && (
             <Button
               theme="primary"
               size="lg"
@@ -117,7 +120,7 @@ const LoanMaterialModal = ({
             </Button>
           )}
           <Button size="lg" disabled={isHandlingLoan || isLoadingLoans} onClick={() => onClose()}>
-            {publizonError || isAlreadyLoaned ? "Luk" : "Nej"}
+            {isAlreadyLoaned ? "Luk" : "Nej"}
           </Button>
         </ResponsiveDialog.Actions>
       )}

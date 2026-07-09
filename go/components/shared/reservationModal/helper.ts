@@ -1,21 +1,4 @@
-"use client"
-
 import type { FailureReason } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import React from "react"
-
-import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
-import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
-import { cyKeys } from "@/cypress/support/constants"
-import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-
-type Manifestation = NonNullable<
-  NonNullable<GetMaterialQuery["work"]>["manifestations"]["all"]
->[number]
-
-type ReservationErrorProps = {
-  manifestation: Manifestation
-  reason: FailureReason
-}
 
 const GENERIC_MESSAGE = "Reservationen kunne ikke gennemføres. Prøv igen senere."
 
@@ -42,25 +25,5 @@ const REASON_COPY: Record<FailureReason, string> = {
   unknown: GENERIC_MESSAGE,
 }
 
-const ReservationErrorContent = ({ manifestation, reason }: ReservationErrorProps) => {
-  const message = REASON_COPY[reason] ?? GENERIC_MESSAGE
-
-  return (
-    <div
-      data-cy={cyKeys["reservation-error"]}
-      data-reason={reason}
-      className="mx-auto flex max-w-prose flex-col items-center gap-y-8 text-center">
-      <ManifestationCover
-        cover={manifestation.cover}
-        iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-        className="aspect-[4/5] w-32 shrink-0"
-      />
-      <div className="flex flex-col gap-y-4">
-        <h2 className="text-typo-heading-4 mt-2">Reservationen kunne ikke gennemføres</h2>
-        <p className="text-typo-subtitle-md text-foreground-muted">{message}</p>
-      </div>
-    </div>
-  )
-}
-
-export default ReservationErrorContent
+export const getReservationFailureMessage = (reason: FailureReason): string =>
+  REASON_COPY[reason] ?? GENERIC_MESSAGE

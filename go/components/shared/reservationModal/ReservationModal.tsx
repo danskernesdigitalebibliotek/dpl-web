@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  type CreateReservationFailed,
   type CreateReservationResult,
   type CreateReservationSuccess,
   useCreateReservation,
@@ -17,10 +16,11 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import ReservationErrorContent from "@/components/shared/reservationModal/ReservationErrorContent"
 import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
 import ReservationReceiptContent from "@/components/shared/reservationModal/ReservationReceiptContent"
+import { getReservationFailureMessage } from "@/components/shared/reservationModal/helper"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
@@ -53,15 +53,13 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const { data: reservations } = useReservations()
 
   const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
-  const [failureResult, setFailureResult] = useState<CreateReservationFailed | null>(null)
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
 
   // Local results are pinned to the current recordId. Reset when the user
   // navigates the modal to a different manifestation so a previous book's
-  // receipt/error doesn't bleed into the new one.
+  // receipt doesn't bleed into the new one.
   useEffect(() => {
     setSuccessResult(null)
-    setFailureResult(null)
   }, [recordId])
 
   // The receipt step is derivable: either we just succeeded (local state)
@@ -83,7 +81,6 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
 
   const handleApprove = () => {
     if (!recordId || isSubmitting) return
-    setFailureResult(null)
     createReservation(
       {
         workId: wid,
@@ -95,12 +92,12 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
           if (result.status === "success") {
             setSuccessResult(result)
           } else {
-            setFailureResult(result)
+            toast.error(getReservationFailureMessage(result.reason))
           }
         },
         onError: () => {
           // Network / non-JSON — surface via the "unknown" copy bucket.
-          setFailureResult({ status: "failed", recordId, reason: "unknown" })
+          toast.error(getReservationFailureMessage("unknown"))
         },
       }
     )
@@ -116,12 +113,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       <AnimateChangeInHeight>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>
-            {failureResult ? (
-              <ReservationErrorContent
-                manifestation={manifestation}
-                reason={failureResult.reason}
-              />
-            ) : isReceiptStep && derivedResult ? (
+            {isReceiptStep && derivedResult ? (
               <ReservationReceiptContent
                 manifestation={manifestation}
                 result={derivedResult}
@@ -135,11 +127,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       </AnimateChangeInHeight>
 
       <ResponsiveDialog.Actions>
-        {failureResult ? (
-          <Button theme="primary" size="lg" onClick={onClose}>
-            Luk
-          </Button>
-        ) : isReceiptStep ? (
+        {isReceiptStep ? (
           <Button theme="primary" size="lg" onClick={onClose}>
             OK
           </Button>

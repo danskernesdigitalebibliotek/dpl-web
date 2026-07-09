@@ -12,6 +12,7 @@ import { Button } from "@/components/shared/button/Button"
 import DeleteReservationModal from "@/components/shared/deleteReservationModal/DeleteReservationModal"
 import DeleteReservationReceiptContent from "@/components/shared/deleteReservationModal/DeleteReservationReceiptContent"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 import workMock from "@/lib/mocks/work/infoBox.mock"
@@ -70,6 +71,8 @@ const withQueryClient =
     <QueryClientProvider client={client}>
       <ServiceLayerProvider config={storyServiceLayerConfig}>
         <Story />
+        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+        <Toaster duration={Infinity} />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )
@@ -123,8 +126,8 @@ export const Receipt: StoryObj<typeof DeleteReservationReceiptContent> = {
   args: { cover: physicalManifestation.cover },
 }
 
-// Failure case: stub the DELETE to fail, then click "Slet reservering" so the
-// real modal advances to its error step on load (mirrors the make-reservation
+// Failure case: stub the DELETE to fail, then click "Slet reservering" so an
+// error toast appears over the confirm step (mirrors the make-reservation
 // modal's error stories).
 export const Failure: Story = {
   decorators: [withQueryClient(seedClient({ reservations: [fixtureReservation] }))],
