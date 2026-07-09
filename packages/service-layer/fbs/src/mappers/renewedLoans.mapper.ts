@@ -1,6 +1,7 @@
 import { z } from "zod"
 
-import type { RenewedLoan } from "../../../src/types"
+import type { RenewalFailureReason, RenewedLoan } from "../../../src/types"
+import { RENEWAL_FAILURE_REASONS } from "../../../src/types"
 
 const RenewedLoanSchema = z.object({
   loanDetails: z.object({
@@ -13,14 +14,31 @@ const RenewedLoanSchema = z.object({
 
 const RenewedLoansResponseSchema = z.array(RenewedLoanSchema)
 
+const KNOWN_REASONS = new Map(RENEWAL_FAILURE_REASONS.map(reason => [reason.toLowerCase(), reason]))
+
+// Pick the first documented denial code from the status list; the FBS spec
+// says anything unrecognized must be treated as deniedOtherReason.
+const coerceReason = (statuses: string[]): RenewalFailureReason => {
+  for (const status of statuses) {
+    const known = KNOWN_REASONS.get(status.toLowerCase())
+    if (known) return known
+  }
+  return "deniedOtherReason"
+}
+
 export function parseAndMapRenewedLoans(raw: unknown): RenewedLoan[] {
   const parsed = RenewedLoansResponseSchema.parse(raw)
-  return parsed.map(l => ({
-    loanId: l.loanDetails.loanId,
-    recordId: l.loanDetails.recordId,
-    dueDate: l.loanDetails.dueDate,
+  return parsed.map(l => {
+    const base = {
+      loanId: l.loanDetails.loanId,
+      recordId: l.loanDetails.recordId,
+      dueDate: l.loanDetails.dueDate,
+    }
     // FBS signals the outcome per loan as a status list; "renewed" marks
     // success, anything else is a denial reason (e.g. deniedReserved).
-    renewed: l.renewalStatus.some(status => status.toLowerCase() === "renewed"),
-  }))
+    if (l.renewalStatus.some(status => status.toLowerCase() === "renewed")) {
+      return { ...base, renewed: true }
+    }
+    return { ...base, renewed: false, reason: coerceReason(l.renewalStatus) }
+  })
 }

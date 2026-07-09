@@ -83,9 +83,35 @@ export type Loan = {
   isRenewable: boolean
 }
 
-export type RenewedLoan = {
+// FBS-documented renewal denial codes. The spec instructs that unrecognized
+// values must be treated as "deniedOtherReason", so callers can render a
+// generic fallback while staying inside the union.
+export const RENEWAL_FAILURE_REASONS = [
+  "deniedReserved",
+  "deniedMaxRenewalsReached",
+  "deniedLoanerIsBlocked",
+  "deniedMaterialIsNotLoanable",
+  "deniedMaterialIsNotFound",
+  "deniedLoanerNotFound",
+  "deniedLoaningProfileNotFound",
+  "deniedOtherReason",
+] as const
+
+export type RenewalFailureReason = (typeof RENEWAL_FAILURE_REASONS)[number]
+
+export type RenewedLoanSuccess = {
   loanId: number
   recordId: string
   dueDate: string
-  renewed: boolean
+  renewed: true
 }
+
+export type RenewedLoanFailed = {
+  loanId: number
+  recordId: string
+  dueDate: string
+  renewed: false
+  reason: RenewalFailureReason
+}
+
+export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed

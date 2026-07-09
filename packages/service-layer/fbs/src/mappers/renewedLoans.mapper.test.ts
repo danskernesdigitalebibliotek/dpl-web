@@ -41,7 +41,7 @@ describe("parseAndMapRenewedLoans", () => {
     expect(parseAndMapRenewedLoans(raw)[0].renewed).toBe(true)
   })
 
-  it("marks a loan not renewed when only denial reasons are present", () => {
+  it("maps a denial to renewed=false with the documented reason", () => {
     const raw = [
       {
         renewalStatus: ["deniedReserved"],
@@ -49,8 +49,53 @@ describe("parseAndMapRenewedLoans", () => {
       },
     ]
     expect(parseAndMapRenewedLoans(raw)).toEqual([
-      { loanId: 1, recordId: "1", dueDate: "2026-07-01", renewed: false },
+      {
+        loanId: 1,
+        recordId: "1",
+        dueDate: "2026-07-01",
+        renewed: false,
+        reason: "deniedReserved",
+      },
     ])
+  })
+
+  it("coerces denial codes case-insensitively to their canonical form", () => {
+    const raw = [
+      {
+        renewalStatus: ["DENIEDMAXRENEWALSREACHED"],
+        loanDetails: { loanId: 1, recordId: "1", dueDate: "2026-07-01" },
+      },
+    ]
+    expect(parseAndMapRenewedLoans(raw)[0]).toMatchObject({
+      renewed: false,
+      reason: "deniedMaxRenewalsReached",
+    })
+  })
+
+  it("picks the first documented reason from a mixed status list", () => {
+    const raw = [
+      {
+        renewalStatus: ["somethingNew", "deniedLoanerIsBlocked"],
+        loanDetails: { loanId: 1, recordId: "1", dueDate: "2026-07-01" },
+      },
+    ]
+    expect(parseAndMapRenewedLoans(raw)[0]).toMatchObject({
+      renewed: false,
+      reason: "deniedLoanerIsBlocked",
+    })
+  })
+
+  it("treats unrecognized denial codes as deniedOtherReason", () => {
+    const raw = [
+      {
+        renewalStatus: ["somethingUndocumented"],
+        loanDetails: { loanId: 1, recordId: "1", dueDate: "2026-07-01" },
+      },
+    ]
+    expect(parseAndMapRenewedLoans(raw)[0]).toMatchObject({
+      renewed: false,
+      reason: "deniedOtherReason",
+    })
   })
 
   it("throws on non-array input", () => {

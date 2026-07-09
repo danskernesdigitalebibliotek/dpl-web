@@ -420,7 +420,7 @@ describe("createFbsClient.renewLoans", () => {
     ])
   })
 
-  it("maps denied renewals to renewed=false", async () => {
+  it("maps denied renewals to renewed=false with the denial reason", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       mockJsonResponse([
         {
@@ -431,7 +431,7 @@ describe("createFbsClient.renewLoans", () => {
     )
 
     await expect(buildClient().renewLoans([1])).resolves.toEqual([
-      { loanId: 1, recordId: "1", dueDate: "2026-07-01", renewed: false },
+      { loanId: 1, recordId: "1", dueDate: "2026-07-01", renewed: false, reason: "deniedReserved" },
     ])
   })
 
