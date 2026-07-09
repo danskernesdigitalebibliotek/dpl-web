@@ -11,6 +11,7 @@ import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
+import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -24,8 +25,8 @@ export type PhysicalLoanCardProps = {
   className?: string
 }
 
-const dueStatusText = (daysUntil: number) => {
-  if (daysUntil <= 0) {
+const dueStatusText = (daysUntil: number, danger: number) => {
+  if (daysUntil <= danger) {
     return "Skal afleveres nu"
   }
   return `Skal afleveres om ${daysUntil} ${daysUntil === 1 ? "dag" : "dage"}`
@@ -40,7 +41,11 @@ const PhysicalLoanCard = ({
   className,
 }: PhysicalLoanCardProps) => {
   const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
-  const isDueNow = daysUntil <= 0
+  // Same thresholds as dpl-react's loan list: red when due now/overdue,
+  // orange warning when the due date is getting close.
+  const { warning, danger } = useLoanThresholds()
+  const isDueNow = daysUntil <= danger
+  const isDueSoon = !isDueNow && daysUntil <= warning
   const [showLoanDetails, setShowLoanDetails] = useState(false)
 
   return (
@@ -49,7 +54,7 @@ const PhysicalLoanCard = ({
         <div className="block h-full w-full space-y-3 px-[15%]">
           <Link
             prefetch={false}
-            aria-label={`Tilgå værket ${title}. ${dueStatusText(daysUntil)}`}
+            aria-label={`Tilgå værket ${title}. ${dueStatusText(daysUntil, danger)}`}
             className="focus-visible outline-accent-foreground rounded-base relative block h-[85%]
               focus:outline-offset-2"
             href={resolveUrl({
@@ -70,17 +75,18 @@ const PhysicalLoanCard = ({
             />
           </Link>
           <p
-            className={cn(
-              "text-typo-subtitle-sm w-full text-center break-words",
-              isDueNow ? "text-error-red-400 dark:text-error-red-200" : "text-foreground-muted"
-            )}>
+            className={cn("text-typo-subtitle-sm w-full text-center break-words", {
+              "text-error-red-400 dark:text-error-red-200": isDueNow,
+              "text-warning-orange-400 dark:text-warning-orange-200": isDueSoon,
+              "text-foreground-muted": !isDueNow && !isDueSoon,
+            })}>
             {isDueNow && (
               <span
                 className="bg-error-red-400 dark:bg-error-red-200 mr-2 inline-block h-2 w-2
                   rounded-full"
               />
             )}
-            {dueStatusText(daysUntil)}
+            {dueStatusText(daysUntil, danger)}
           </p>
           {loan.isRenewable && (
             <div className="flex w-full justify-center">
