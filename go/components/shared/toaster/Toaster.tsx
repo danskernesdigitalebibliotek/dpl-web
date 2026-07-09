@@ -46,8 +46,8 @@ const Toaster = ({ toastOptions, style, ...props }: ToasterProps) => (
 type ToastType = "info" | "warning" | "error" | "success"
 
 const typeIcons: Record<ToastType, React.ReactNode> = {
-  info: <Icon name="info-circle" className="h-6 w-6" />,
-  warning: <Icon name="info-circle" className="h-6 w-6" />,
+  info: <Icon name="alert" className="h-6 w-6" />,
+  warning: <Icon name="alert" className="h-6 w-6" />,
   error: <Icon name="alert" className="h-6 w-6" />,
   success: <Icon name="check" className="h-6 w-6" />,
 }
