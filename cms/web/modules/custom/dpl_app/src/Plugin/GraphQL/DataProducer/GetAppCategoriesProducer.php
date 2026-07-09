@@ -95,7 +95,7 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
     $query = $storage->getQuery();
     $query->condition('type', 'go_category')
       ->condition('status', TRUE)
-      ->sort('changed', 'DESC');
+      ->sort('field_publication_date', 'DESC');
 
     if ($id) {
       $query->condition('uuid', $id);
@@ -129,7 +129,7 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
     $query = $storage->getQuery();
     $query->condition('status', 1)
       ->condition('field_tags', $term->id())
-      ->sort('changed', 'DESC');
+      ->sort('field_publication_date', 'DESC');
 
     if ($id) {
       $query->condition('uuid', $id);
