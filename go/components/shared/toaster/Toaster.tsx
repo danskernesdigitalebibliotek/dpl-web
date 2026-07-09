@@ -16,6 +16,8 @@ import Icon from "@/components/shared/icon/Icon"
 const Toaster = ({ toastOptions, style, ...props }: ToasterProps) => (
   <Sonner
     position="top-center"
+    // Toasts drop in from the top and are dismissed by swiping up.
+    swipeDirections={["top"]}
     // Widen sonner's 356px default; --width also drives its stacking and
     // swipe geometry, so override the variable rather than the class.
     style={{ "--width": "420px", ...style } as React.CSSProperties}
