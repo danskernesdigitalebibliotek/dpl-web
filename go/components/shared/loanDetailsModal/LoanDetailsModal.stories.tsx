@@ -5,6 +5,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 
@@ -69,6 +70,8 @@ const withServiceLayer =
       client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
       <ServiceLayerProvider config={storyServiceLayerConfig}>
         <Story />
+        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+        <Toaster duration={Infinity} />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )

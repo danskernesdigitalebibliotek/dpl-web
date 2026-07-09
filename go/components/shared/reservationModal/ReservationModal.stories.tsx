@@ -13,6 +13,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import ReservationModal from "@/components/shared/reservationModal/ReservationModal"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
@@ -100,6 +101,8 @@ const withQueryClient =
     <QueryClientProvider client={client}>
       <ServiceLayerProvider config={storyServiceLayerConfig}>
         <Story />
+        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+        <Toaster duration={Infinity} />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )
@@ -196,9 +199,9 @@ export const PatronWithoutPhone: Story = {
   },
 }
 
-// Error step: stories below stub the POST to return a failed result, then
-// auto-click "Godkend reservering" so the modal renders ReservationErrorContent on
-// load. Each story exercises a different copy bucket (incl. the unknown fallback).
+// Failure: stories below stub the POST to return a failed result, then
+// auto-click "Godkend reservering" so an error toast appears over the form.
+// Each story exercises a different copy bucket (incl. the unknown fallback).
 const errorStory = (reason: string): Story => ({
   decorators: [
     withQueryClient(
@@ -209,10 +212,15 @@ const errorStory = (reason: string): Story => ({
     const original = window.fetch
     window.fetch = ((input: RequestInfo | URL, init?: RequestInit) => {
       const url = typeof input === "string" ? input : input.toString()
-      if (url.includes("/api/reservation") && init?.method === "POST") {
+      if (url.includes("/reservations/v2") && init?.method === "POST") {
         return Promise.resolve(
           new Response(
-            JSON.stringify({ result: { status: "failed", recordId: "12345678", reason } }),
+            JSON.stringify({
+              success: false,
+              reservationResults: [
+                { recordId: "12345678", result: reason, reservationDetails: null },
+              ],
+            }),
             { status: 200, headers: { "Content-Type": "application/json" } }
           )
         )

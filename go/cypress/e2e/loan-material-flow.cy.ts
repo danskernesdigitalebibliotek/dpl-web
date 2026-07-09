@@ -80,7 +80,7 @@ describe("Loan material flow", () => {
     cy.contains("button", /^Luk$/).should("be.visible")
   })
 
-  it("Loan failure: swaps to LoanErrorContent with the code-specific copy", () => {
+  it("Loan failure: shows an error toast with the code-specific copy", () => {
     mockUserLoans([])
 
     cy.intercept("POST", new RegExp(`/v1/user/loans/${EBOOK_IDENTIFIER}(\\?.*)?$`), {
@@ -93,12 +93,10 @@ describe("Loan material flow", () => {
     cy.dataCy("approve-loan-button").click()
     cy.wait("@createLoan")
 
-    // Drawer (mobile) renders content with position:fixed; cypress's visibility
-    // check fails against the overlay sibling, so assert via `exist` + contain.
-    cy.dataCy("loan-error")
+    cy.get('[data-sonner-toast][data-type="error"]')
       .should("exist")
-      .and("have.attr", "data-code", "105")
       .and("contain", "Bogen er desværre ikke tilgængelig for udlån lige nu (#105)")
-    cy.contains("button", /^Luk$/).should("exist")
+    // The modal stays on the confirm step so the user can retry.
+    cy.dataCy("approve-loan-button").should("exist")
   })
 })

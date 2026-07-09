@@ -8,10 +8,10 @@ import React, { useState } from "react"
 
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import DeleteReservationErrorContent from "@/components/shared/deleteReservationModal/DeleteReservationErrorContent"
 import DeleteReservationReceiptContent from "@/components/shared/deleteReservationModal/DeleteReservationReceiptContent"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
@@ -34,7 +34,6 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
   const reservation = findReservationByRecordId(reservations, recordId)
 
   const { mutate: deleteReservation, isPending: isSubmitting } = useDeleteReservation()
-  const [hasFailed, setHasFailed] = useState(false)
   const [deletionSucceeded, setDeletionSucceeded] = useState(false)
 
   // Receipt is only shown after the user actually confirmed deletion in this
@@ -45,10 +44,9 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
 
   const handleDelete = () => {
     if (!reservation || isSubmitting) return
-    setHasFailed(false)
     deleteReservation(reservation.reservationId, {
       onSuccess: () => setDeletionSucceeded(true),
-      onError: () => setHasFailed(true),
+      onError: () => toast.error("Reservationen kunne ikke slettes. Prøv igen senere."),
     })
   }
 
@@ -56,9 +54,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
     <ResponsiveDialog open={open} onClose={onClose} title="Slet reservering">
       <AnimateChangeInHeight>
         {manifestation &&
-          (hasFailed ? (
-            <DeleteReservationErrorContent cover={manifestation.cover} />
-          ) : isReceiptStep ? (
+          (isReceiptStep ? (
             <DeleteReservationReceiptContent cover={manifestation.cover} />
           ) : (
             <div
@@ -78,11 +74,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
       </AnimateChangeInHeight>
 
       <ResponsiveDialog.Actions>
-        {hasFailed ? (
-          <Button theme="primary" size="lg" onClick={onClose}>
-            Luk
-          </Button>
-        ) : isReceiptStep ? (
+        {isReceiptStep ? (
           <Button theme="primary" size="lg" onClick={onClose}>
             OK
           </Button>

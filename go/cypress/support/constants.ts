@@ -51,13 +51,10 @@ export const cyKeys = {
   "reservation-receipt": "reservation-receipt",
   "reservation-receipt-queue-position": "reservation-receipt-queue-position",
   "reservation-receipt-pickup-branch": "reservation-receipt-pickup-branch",
-  "reservation-error": "reservation-error",
-  "loan-error": "loan-error",
   "loan-already-loaned": "loan-already-loaned",
   "delete-reservation-button": "delete-reservation-button",
   "delete-reservation-modal": "delete-reservation-modal",
   "delete-reservation-receipt": "delete-reservation-receipt",
-  "delete-reservation-error": "delete-reservation-error",
   "approve-delete-reservation-button": "approve-delete-reservation-button",
 } as const
 

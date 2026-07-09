@@ -4,6 +4,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import LoanMaterialModal from "@/components/shared/loanMaterialModal/LoanMaterialModal"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 import workMock from "@/lib/mocks/work/infoBox.mock"
@@ -59,6 +60,8 @@ const withQueryClient =
   (Story: React.ComponentType): React.ReactElement => (
     <QueryClientProvider client={client}>
       <Story />
+      {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+      <Toaster duration={Infinity} />
     </QueryClientProvider>
   )
 
@@ -89,7 +92,7 @@ export const AlreadyLoaned: Story = {
 }
 
 // Error stories: stub the publizon POST to throw a code-bearing Error so the
-// modal's onError handler populates publizonError, which swaps to LoanErrorContent.
+// modal's onError handler fires an error toast with the code-specific copy.
 // The mutation's fetcher throws `new Error(JSON.stringify({ code, message }))`.
 const errorStory = (code: number): Story => ({
   decorators: [withQueryClient(seedClient())],
