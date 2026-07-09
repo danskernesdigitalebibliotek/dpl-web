@@ -39,9 +39,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/build-design-system
+      - name: Install go-task
+        uses: arduino/setup-task@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build design system
+        run: task dev:design-system:build
       - name: Upload design-system build
         uses: actions/upload-artifact@v6
         with:
