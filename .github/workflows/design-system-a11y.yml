@@ -20,16 +20,21 @@ jobs:
         working-directory: design-system
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/common-setup-js
+
+      - name: Install go-task
+        uses: arduino/setup-task@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Design / Install dependencies
+        run: task dev:cli -- corepack pnpm install
 
       - name: Design / Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: task dev:cli -- corepack pnpm exec playwright install --with-deps chromium
         timeout-minutes: 5
 
       - name: Design / Compile styles
-        run: pnpm run css:build
+        run: task dev:cli -- corepack pnpm run css:build
 
       - name: Design / Run accessibility tests
-        run: pnpm run storybook:axe
+        run: task dev:cli -- corepack pnpm run storybook:axe
