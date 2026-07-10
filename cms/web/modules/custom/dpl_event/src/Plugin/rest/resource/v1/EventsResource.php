@@ -5,24 +5,25 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\drupal_typed\RequestTyped;
+use Drupal\rest\Attribute\RestResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * REST resource for listing events.
- *
- * @RestResource (
- *   id = "events",
- *   label = @Translation("Retrieve all events"),
- *   uri_paths = {
- *     "canonical" = "/api/v1/events",
- *   }
- * )
  */
+#[RestResource(
+  id: "events",
+  label: new TranslatableMarkup("Retrieve all events"),
+  uri_paths: [
+    "canonical" => "/api/v1/events",
+  ],
+)]
 final class EventsResource extends EventResourceBase {
 
   /**
