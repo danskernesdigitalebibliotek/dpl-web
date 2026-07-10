@@ -18,7 +18,7 @@
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
     "lint": "pnpm run lint:js && pnpm run lint:scss && pnpm run lint:markdown",
     "clean": "rm -r -f ./dist/* ./dev/* ./coverage/*",
-    "build": "pnpm run clean ; pnpm run \"/^(lint:scss:fix|build:js:prod|build:css:prod)\\$/\"",
+    "build": "corepack pnpm run clean ; corepack pnpm run \"/^(lint:scss:fix|build:js:prod|build:css:prod)\\$/\"",
     "build:js:dev": "webpack --mode=development --config webpack.config.js",
     "build:js:prod": "NODE_ENV=production webpack --mode=production --config webpack.config.js",
     "build:css:dev": "postcss ./src/apps/**/*.scss ./src/components/components.scss --ext css --dir ./dist",
