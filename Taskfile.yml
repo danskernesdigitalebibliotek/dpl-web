@@ -14,7 +14,7 @@ tasks:
     # This is a stopgap measure until someone has time for
     # https://reload.atlassian.net/browse/DDF-220
     cmds:
-      - docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm --rm -v "{{.TASKFILE_DIR}}:/app" -w /app node:24.15 {{.CLI_ARGS}}
+      - docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v "{{.TASKFILE_DIR}}:/app" -w /app node:24.15 {{.CLI_ARGS}}
 
   # ---------------------------------------------------------------------------
   # CI
