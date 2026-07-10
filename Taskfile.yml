@@ -6,6 +6,8 @@ vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
   DESIGN_SYSTEM_BUILD: ./design-system/build
+  CLI_PREFIX:
+    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
 
 tasks:
   dev:cli:
@@ -14,7 +16,7 @@ tasks:
     # This is a stopgap measure until someone has time for
     # https://reload.atlassian.net/browse/DDF-220
     cmds:
-      - docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v "{{.TASKFILE_DIR}}:/app" -w /app node:24.15 {{.CLI_ARGS}}
+      - "{{ .CLI_PREFIX }} {{ .CLI_ARGS }}"
 
   # ---------------------------------------------------------------------------
   # CI
