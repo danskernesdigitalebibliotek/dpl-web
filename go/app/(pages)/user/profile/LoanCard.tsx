@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
@@ -23,6 +24,16 @@ export type LoanCardProps = {
   className?: string
   setAudioLoans: React.Dispatch<React.SetStateAction<string[]>>
   setEbookLoans: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+// Digital loans aren't returned by the user — the loan period just runs out —
+// so the label stays "Udløber", but the due-soon coloring follows the same
+// thresholds as physical loans.
+const expiryStatusText = (daysUntil: number, danger: number) => {
+  if (daysUntil <= danger) {
+    return "Udløber i dag"
+  }
+  return `Udløber om ${daysUntil} ${daysUntil === 1 ? "dag" : "dage"}`
 }
 
 const LoanCard = ({
@@ -43,6 +54,9 @@ const LoanCard = ({
   const targetDate = new Date(loan?.loanExpireDateUtc || "")
   const today = new Date()
   const daysUntil = differenceInDays(targetDate, today)
+  const { warning, danger } = useLoanThresholds()
+  const isExpiringNow = daysUntil <= danger
+  const isExpiringSoon = !isExpiringNow && daysUntil <= warning
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
@@ -106,7 +120,20 @@ const LoanCard = ({
               costFree={isCostFree}
             />
           </div>
-          <p className="text-typo-subtitle-sm text-foreground-muted w-full text-center break-words">{`Udløber om ${daysUntil} dage`}</p>
+          <p
+            className={cn("text-typo-subtitle-sm w-full text-center break-words", {
+              "text-error-red-400 dark:text-error-red-200": isExpiringNow,
+              "text-warning-orange-400 dark:text-warning-orange-200": isExpiringSoon,
+              "text-foreground-muted": !isExpiringNow && !isExpiringSoon,
+            })}>
+            {isExpiringNow && (
+              <span
+                className="bg-error-red-400 dark:bg-error-red-200 mr-2 inline-block h-2 w-2
+                  rounded-full"
+              />
+            )}
+            {expiryStatusText(daysUntil, danger)}
+          </p>
           {isCostFree && (
             <div className="flex w-full justify-center">
               <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
