@@ -10,11 +10,30 @@ vars:
     sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
 
 tasks:
+
+  init:
+    summary: Initialize project
+    deps:
+      - dev:envfiles
+      - init:pnpm
+
   dockerinit:
     summary: Initialize project, using docker
     cmds:
       - touch .run-in-docker
-      - task init:pnpm
+      - task init
+
+  dev:envfiles:
+    sources:
+      - '.env.1pass'
+    generates:
+      - '.env'
+    cmds:
+      - op inject --force --in-file .env.1pass --out-file .env
+      - cp .env cms/.env
+    preconditions:
+      - sh: which op
+        msg: '1Password CLI command required'
 
   dev:cli:
     summary: Performs command inside a container. Expects parameter(s).
