@@ -70,12 +70,18 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
   ): array {
     $type = AppType::tryFrom($type);
 
-    return match ($type) {
+    $nodes = match ($type) {
       AppType::Biblo => $this->getTermCategories($type, $id),
       AppType::MyBiblo => $this->getTermCategories($type, $id),
       AppType::BibloGo => $this->getGoCategories($id),
       default => [],
     };
+
+    foreach ($nodes as $node) {
+      $field_context->addCacheableDependency($node);
+    }
+
+    return $nodes;
   }
 
   /**
@@ -89,7 +95,7 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
     $query = $storage->getQuery();
     $query->condition('type', 'go_category')
       ->condition('status', TRUE)
-      ->sort('changed', 'DESC');
+      ->sort('field_publication_date', 'DESC');
 
     if ($id) {
       $query->condition('uuid', $id);
@@ -123,7 +129,7 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
     $query = $storage->getQuery();
     $query->condition('status', 1)
       ->condition('field_tags', $term->id())
-      ->sort('changed', 'DESC');
+      ->sort('field_publication_date', 'DESC');
 
     if ($id) {
       $query->condition('uuid', $id);

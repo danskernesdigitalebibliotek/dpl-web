@@ -1121,3 +1121,10 @@ function dpl_update_update_10071(): string {
 function dpl_update_update_10072(): string {
   return _dpl_update_install_modules(['dpl_app']);
 }
+
+/**
+ * Enable dpl_media module.
+ */
+function dpl_update_update_10073(): string {
+  return _dpl_update_install_modules(['dpl_media']);
+}

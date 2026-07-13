@@ -1,4 +1,3 @@
-import { first } from "lodash"
 import { useQueryStates } from "nuqs"
 import React from "react"
 
@@ -9,6 +8,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
 
 import WorkPageButton from "./WorkPageButton"
@@ -25,7 +25,7 @@ const WorkPageButtonsLoggedOut = ({
 }: WorkPageButtonsLoggedOutProps) => {
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
-  const identifier = first(selectedManifestation?.identifiers)?.value
+  const identifier = getPublizonIdentifierFromManifestation(selectedManifestation)
   const label = getManifestationLabel(selectedManifestation)
   const category = getMaterialCategory(
     selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code

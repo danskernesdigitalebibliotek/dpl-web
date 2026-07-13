@@ -119,6 +119,7 @@ type AppContentElementMaterialGridAutomatic implements AppContentElement {
   description: String
   cql: String!
   limit: Int!
+  priorityMaterialType: String
 }
 
 """
