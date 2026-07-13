@@ -199,12 +199,13 @@
   '';
 
   enterShell = ''
-    echo "dpl-web devenv — Node $(node --version), pnpm $(pnpm --version)"
+    echo "dpl-web devenv – Node $(node --version), pnpm $(pnpm --version), PHP $(php -v | cut -d ' ' -f 2)"
     echo "  first run:  bootstrap && cms-reset"
     echo "  then:       devenv up"
-    echo "  plain HTTP on *.localhost (secure context — no certs, no /etc/hosts):"
-    echo "    cms http:37102 · go http:37103 · design-system http:37100 · react http:37101"
-    echo "    browser host: dpl-web.localhost   ·   go→cms (server-side): localhost:37102"
-    echo "  wiremock:   docker compose (react/docker-compose.yml, random ports)"
+    echo "  when running, following services should be available:"
+    echo "   - design system http://dpl-web.localhost:37100"
+    echo "   - react         http://dpl-web.localhost:37101"
+    echo "   - cms           http://dpl-web.localhost:37102"
+    echo "   - go            http://dpl-web.localhost:37103"
   '';
 }
