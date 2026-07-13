@@ -1,0 +1,13 @@
+# devenv-only override for the CMS stack.
+#
+# Layered on top of docker-compose.yml (via COMPOSE_FILE in devenv.nix) so the
+# tracked compose file — and the normal `task cms dev:*` workflow — stay
+# untouched. It pins the https proxy to a fixed localhost port so the whole
+# dev stack lives on one domain varying only by port.
+#
+# The base file already publishes 443 on a random host port; compose merges
+# `ports` by concatenation, so this just adds a second, fixed mapping.
+services:
+  https:
+    ports:
+      - "37102:443"
