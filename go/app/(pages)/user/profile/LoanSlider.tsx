@@ -4,9 +4,12 @@ import { useWindowSize } from "@uidotdev/usehooks"
 import { differenceInDays } from "date-fns"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
-import Link from "next/link"
 import React, { Suspense, useEffect, useState } from "react"
 
+import DigitalLoansModal, {
+  type SelectedLoan,
+  buildSelectedLoan,
+} from "@/app/(pages)/user/profile/DigitalLoansModal"
 import LoanCard from "@/app/(pages)/user/profile/LoanCard"
 import QuotasSection, { QuotasSectionSkeleton } from "@/app/(pages)/user/profile/QuotasSection"
 import { loanSliderOptions } from "@/app/(pages)/user/profile/helper"
@@ -18,7 +21,6 @@ import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 import FindBookButton from "./FindBookButton"
@@ -41,6 +43,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   }
   const [audioLoans, setAudioLoans] = useState<string[]>([])
   const [ebookLoans, setEbookLoans] = useState<string[]>([])
+  const [blueLoans, setBlueLoans] = useState<string[]>([])
+  const [showAllLoans, setShowAllLoans] = useState(false)
+  const [initialLoan, setInitialLoan] = useState<SelectedLoan | null>(null)
 
   useEffect(() => {
     internalSlider.current?.on("slideChanged", () => {
@@ -67,10 +72,10 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
 
   return (
     <div
-      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
-        py-10">
-      <div className="col-span-full flex items-center justify-between px-10">
-        <h2 className="text-typo-heading-4">Mine lån ({loanData.loans?.length})</h2>
+      className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
+        overflow-hidden md:p-8">
+      <div className="col-span-full flex items-center justify-between">
+        <h2 className="text-typo-heading-4">Digitale lån ({loanData.loans?.length})</h2>
         {!!loanData.loans?.length && (
           <div className="flex flex-row justify-end gap-x-4">
             <Button
@@ -107,29 +112,30 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
               : null
             return (
-              <Link
+              <button
+                type="button"
                 data-cy={cyKeys["loan-slider-work"]}
-                prefetch={false}
                 key={loanManifestation.pid}
-                aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}${daysUntil !== null ? `. Udløber om ${daysUntil} dage` : ""}`}
+                aria-label={`Se detaljer om dit lån af ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}${daysUntil !== null ? `. Udløber om ${daysUntil} dage` : ""}`}
                 className={cn(
                   `keen-slider__slide focus-visible outline-accent-foreground rounded-base flex
-                  items-center !overflow-visible focus:outline-offset-2`
+                  cursor-pointer items-center !overflow-visible focus:outline-offset-2`
                 )}
-                href={resolveUrl({
-                  routeParams: { work: "work", wid: work.workId },
-                  queryParams: {
-                    type: loanManifestation.materialTypes[0].materialTypeSpecific.code,
-                  },
-                })}>
+                onClick={() => {
+                  const selection = buildSelectedLoan(work, loanData)
+                  if (!selection) return
+                  setInitialLoan(selection)
+                  setShowAllLoans(true)
+                }}>
                 <LoanCard
                   manifestation={loanManifestation}
                   title={work.titles.full[0]}
                   className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
                   setAudioLoans={setAudioLoans}
                   setEbookLoans={setEbookLoans}
+                  setBlueLoans={setBlueLoans}
                 />
-              </Link>
+              </button>
             )
           })}
           {/* To avoid empty looking slider for one loan or no loans, we add visual indicators for more books. */}
@@ -165,8 +171,23 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         </div>
       </div>
       <Suspense fallback={<QuotasSectionSkeleton />}>
-        <QuotasSection audioLoans={audioLoans} ebookLoans={ebookLoans} />
+        <QuotasSection
+          audioLoans={audioLoans}
+          ebookLoans={ebookLoans}
+          blueLoans={blueLoans}
+          onViewAll={() => {
+            setInitialLoan(null)
+            setShowAllLoans(true)
+          }}
+        />
       </Suspense>
+      <DigitalLoansModal
+        open={showAllLoans}
+        onClose={() => setShowAllLoans(false)}
+        works={works}
+        loanData={loanData}
+        initialLoan={initialLoan}
+      />
     </div>
   )
 }
@@ -174,7 +195,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
 export const LoanSliderSkeleton = () => {
   return (
     <div
-      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
+      className="bg-background-overlay grid-go col-span-full space-y-8 overflow-hidden rounded-md
         py-10">
       <div className="col-span-full flex items-center justify-between px-10">
         {/* Headline */}
