@@ -14,15 +14,26 @@ import { EBookFactory } from "@/cypress/factories/fbi/factory-parts/works"
 const daysFromNow = (days: number) =>
   new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
 
-const buildCover = (color: string, text: string) => {
-  const url = (w: number, h: number) =>
-    `https://placehold.co/${w}x${h}/${color}/ffffff.jpg?text=${encodeURIComponent(text)}`
+// Real covers come in varying proportions; the fixtures rotate through a
+// tall, a standard and a near-square ratio so cover-edge-anchored details
+// (material type icon) are exercised against all of them.
+type CoverRatio = "tall" | "standard" | "square"
+
+const coverSizes: Record<CoverRatio, { width: number; height: number }> = {
+  tall: { width: 420, height: 720 },
+  standard: { width: 500, height: 720 },
+  square: { width: 660, height: 720 },
+}
+
+const buildCover = (ratio: CoverRatio) => {
+  const { width, height } = coverSizes[ratio]
+  const url = (scale: number) => `https://placehold.co/${width * scale}x${height * scale}.jpg`
   return coverFactory.build({
-    thumbnail: url(120, 173),
-    xSmall: { url: url(120, 173), width: 120, height: 173 },
-    small: { url: url(240, 346), width: 240, height: 346 },
-    medium: { url: url(480, 691), width: 480, height: 691 },
-    large: { url: url(500, 720), width: 500, height: 720 },
+    thumbnail: url(1),
+    xSmall: { url: url(1), width, height },
+    small: { url: url(1), width, height },
+    medium: { url: url(1), width, height },
+    large: { url: url(1), width, height },
   })
 }
 
@@ -31,17 +42,17 @@ const buildItem = ({
   title,
   dueInDays,
   isRenewable,
-  coverColor,
+  coverRatio = "standard",
 }: {
   faust: string
   title: string
   dueInDays: number
   isRenewable: boolean
-  coverColor: string
+  coverRatio?: CoverRatio
 }): PhysicalLoanItem => {
   const manifestation = eBookManifestationFactory.build({
     pid: `870970-basis:${faust}`,
-    cover: buildCover(coverColor, title),
+    cover: buildCover(coverRatio),
     materialTypes: [
       {
         materialTypeGeneral: { display: "bøger", code: "BOOKS" },
@@ -65,36 +76,56 @@ const buildItem = ({
   return { loan, work, manifestation }
 }
 
+// All possible status states a physical loan can be in: overdue (an exceeded
+// loan can no longer be renewed by FBS), due today / due soon (with and
+// without renewal), and neutral (with and without renewal).
 const fixtureItems: PhysicalLoanItem[] = [
+  buildItem({
+    faust: "12345670",
+    title: "Vildheks",
+    // Overdue: red "Afleveringsfrist overskredet" — never renewable.
+    dueInDays: -3,
+    isRenewable: false,
+    coverRatio: "tall",
+  }),
   buildItem({
     faust: "12345671",
     title: "Sjælerytterne",
+    // Due today, renewable.
     dueInDays: 0,
-    isRenewable: false,
-    coverColor: "5b4a8a",
+    isRenewable: true,
+    coverRatio: "square",
   }),
   buildItem({
     faust: "12345672",
-    title: "Den sultne larve Aldrigmæt",
-    dueInDays: 8,
+    title: "Vi snakker ikke om Jonathan",
+    // 1.5 days so differenceInDays yields a full day and the card shows the
+    // singular "om 1 dag" state instead of rounding down to "i dag".
+    dueInDays: 1.5,
     isRenewable: true,
-    coverColor: "3a7d44",
   }),
   buildItem({
     faust: "12345673",
-    title: "Vi snakker ikke om Jonathan",
-    // 1.5 days so differenceInDays yields a full day and the card shows the
-    // singular "om 1 dag" state instead of rounding down to "nu".
-    dueInDays: 1.5,
-    isRenewable: true,
-    coverColor: "d95d39",
+    title: "Den sultne larve Aldrigmæt",
+    // Due soon but not renewable (e.g. reserved by another patron).
+    dueInDays: 5.5,
+    isRenewable: false,
+    coverRatio: "tall",
   }),
   buildItem({
     faust: "12345674",
     title: "Den meget sultne larve",
+    // Neutral, renewable.
+    dueInDays: 14,
+    isRenewable: true,
+    coverRatio: "square",
+  }),
+  buildItem({
+    faust: "12345675",
+    title: "Halfdans ABC",
+    // Neutral, not renewable.
     dueInDays: 24,
     isRenewable: false,
-    coverColor: "2b6777",
   }),
 ]
 
