@@ -127,8 +127,14 @@
   # Starts the three mock backends the React apps hit (the react
   # `dev:mocks:start` set). Attached `up` so process-compose streams logs and
   # tears them down on shutdown.
+  #
+  # Own COMPOSE_PROJECT_NAME so the mocks don't share the global dpl-cms
+  # project with the CMS stack — otherwise the two concurrent `docker compose
+  # up` calls race on the shared network and each treats the other's
+  # containers as orphans.
   processes.wiremock.exec = ''
     cd "$DEVENV_ROOT/react"
+    export COMPOSE_PROJECT_NAME=dpl-react-mocks
     exec docker compose up wiremock wiremock-fbs wiremock-publizon
   '';
 
