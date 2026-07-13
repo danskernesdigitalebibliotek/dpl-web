@@ -9,6 +9,8 @@ const customTwMerge = extendTailwindMerge({
           text: [(value: string) => Boolean(value) && value.includes("typo")],
         },
       ],
+      // Custom radius tokens (theme.css) so conflicting rounded-* classes merge.
+      rounded: [{ rounded: ["base", "input"] }],
     },
   },
 })
