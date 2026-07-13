@@ -53,6 +53,7 @@ const buildFixture = ({
       title,
       setAudioLoans: () => {},
       setEbookLoans: () => {},
+      setBlueLoans: () => {},
     },
     isbn,
     expiresInDays,

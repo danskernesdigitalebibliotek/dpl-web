@@ -1,13 +1,18 @@
+import Link from "next/link"
 import React from "react"
 
+import { Badge } from "@/components/shared/badge/Badge"
+import { cyKeys } from "@/cypress/support/constants"
 import useGetV1LibraryProfile from "@/lib/rest/publizon/useGetV1LibraryProfile"
 
 export type QuotasSectionProps = {
   audioLoans: string[]
   ebookLoans: string[]
+  blueLoans: string[]
+  onViewAll: () => void
 }
 
-const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
+const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasSectionProps) => {
   const { data, isLoading } = useGetV1LibraryProfile()
 
   if (isLoading) {
@@ -15,43 +20,61 @@ const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
   }
 
   return (
-    <div
-      className="col-span-full mt-10 flex flex-row flex-wrap items-start justify-between gap-10
-        px-10 md:gap-0 lg:mt-12 lg:flex-nowrap lg:gap-0">
+    <div className="col-span-full">
       <div
-        className="bg-background duration-dark-mode col-span-6 w-full space-y-6 rounded-sm px-10
-          pt-6 pb-9 transition-all md:w-[49%]">
-        <h3 className="text-typo-subtitle-sm col-span-full opacity-70">Kvote</h3>
-        <div className="align-center flex w-full flex-row justify-between">
+        className="bg-background duration-dark-mode p-grid-edge rounded-base md:rounded-base w-full
+          space-y-4 transition-all md:p-8">
+        <div className="flex items-center justify-between">
+          <h3 className="text-typo-subtitle-sm opacity-70">Mine lån</h3>
+          <button
+            type="button"
+            onClick={onViewAll}
+            data-cy={cyKeys["view-all-digital-loans-button"]}
+            className="text-typo-link focus-visible cursor-pointer underline">
+            Vis alle
+          </button>
+        </div>
+        <div className="gap-grid-edge flex w-full flex-col md:gap-6 lg:flex-row">
           <div
-            className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center
-              gap-4 rounded-sm">
+            className="bg-background-overlay flex flex-1 flex-col items-center justify-center gap-2
+              rounded-sm p-6 md:min-h-36">
             <p className="text-typo-heading-3">
               {ebookLoans.length} af {data?.maxConcurrentEbookLoansPerBorrower || 0}
             </p>
-            <p className="text-typo-subtitle-sm opacity-70">E-bøger</p>
+            <div className="flex items-center">
+              <p className="text-typo-subtitle-sm opacity-70">E-bøger</p>
+            </div>
           </div>
           <div
-            className="bg-background-overlay flex h-36 w-[47%] flex-col items-center justify-center
-              gap-4 rounded-sm">
+            className="bg-background-overlay flex flex-1 flex-col items-center justify-center gap-2
+              rounded-sm p-6 md:min-h-36">
             <p className="text-typo-heading-3">
               {audioLoans.length} af {data?.maxConcurrentAudioLoansPerBorrower || 0}
             </p>
-            <p className="text-typo-subtitle-sm opacity-70">Lydbøger</p>
+            <div className="flex items-center">
+              <p className="text-typo-subtitle-sm opacity-70">Lydbøger</p>
+            </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="bg-background duration-dark-mode col-span-6 w-full space-y-6 rounded-sm px-10
-          pt-6 pb-9 transition-all md:w-[49%]">
-        <h3 className="text-typo-subtitle-sm col-span-full opacity-70">Blå titler</h3>
-        <div className="flex w-full flex-row justify-between">
           <div
-            className="bg-background-overlay flex h-36 w-full flex-col items-center justify-center
-              gap-4 rounded-sm px-10">
-            <p className="text-typo-subtitle-md px-2 text-center opacity-70">
+            className="bg-background-overlay flex flex-col items-center justify-center gap-2
+              rounded-sm p-6 md:min-h-36 lg:flex-[2] lg:flex-row lg:gap-12 lg:px-14">
+            <div className="flex shrink-0 flex-col items-center gap-2">
+              <p className="text-typo-heading-3">{blueLoans.length}</p>
+              <div className="flex items-center">
+                <Badge variant="blue-title" className="px-4 py-1.5">
+                  BLÅ
+                </Badge>
+              </div>
+            </div>
+            <p className="text-typo-subtitle-sm text-center opacity-70 lg:flex-1 lg:text-left">
               Bøger og podcasts med et blåt mærke kan du altid låne, selvom du har brugt alle dine
-              lån
+              lån. {/* TODO: point at a blue-titles search once that filter exists. */}
+              <Link
+                href="#"
+                className="text-foreground font-medium whitespace-nowrap underline
+                  underline-offset-2">
+                Find alle blå titler
+              </Link>
             </p>
           </div>
         </div>
@@ -62,17 +85,8 @@ const QuotasSection = ({ audioLoans, ebookLoans }: QuotasSectionProps) => {
 
 export const QuotasSectionSkeleton = () => {
   return (
-    <div
-      className="col-span-full mt-12 flex flex-row flex-wrap items-start justify-between gap-10
-        px-10 md:gap-0 lg:flex-nowrap lg:gap-0">
-      <div
-        className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm
-          px-10 pt-6 pb-9 md:w-[49%]"
-      />
-      <div
-        className="bg-background-skeleton col-span-6 h-36 w-full animate-pulse space-y-6 rounded-sm
-          px-10 pt-6 pb-9 md:w-[49%]"
-      />
+    <div className="col-span-full mt-10 px-10 lg:mt-12">
+      <div className="bg-background-skeleton rounded-base md:rounded-base h-56 w-full animate-pulse" />
     </div>
   )
 }

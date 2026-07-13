@@ -25,12 +25,13 @@ export type LoanCardProps = {
   className?: string
   setAudioLoans: React.Dispatch<React.SetStateAction<string[]>>
   setEbookLoans: React.Dispatch<React.SetStateAction<string[]>>
+  setBlueLoans: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 // Digital loans aren't returned by the user — the loan period just runs out —
 // so the label stays "Udløber", but the due-soon coloring follows the same
 // thresholds as physical loans.
-const expiryStatusText = (daysUntil: number, danger: number) => {
+export const expiryStatusText = (daysUntil: number, danger: number) => {
   if (daysUntil <= danger) {
     return "Udløber i dag"
   }
@@ -43,6 +44,7 @@ const LoanCard = ({
   className,
   setAudioLoans,
   setEbookLoans,
+  setBlueLoans,
 }: LoanCardProps) => {
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
 
@@ -85,6 +87,12 @@ const LoanCard = ({
             : [...prev, manifestationIsbn || "unknown isbn"]
         )
       }
+    } else {
+      setBlueLoans(prev =>
+        prev.includes(String(manifestationIsbn))
+          ? prev
+          : [...prev, manifestationIsbn || "unknown isbn"]
+      )
     }
     // We only want to run this useEffect if the manifestation changes or when the products are loaded
     // eslint-disable-next-line react-hooks/exhaustive-deps
