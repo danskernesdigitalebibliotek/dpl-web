@@ -113,8 +113,8 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                 key={loanManifestation.pid}
                 aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}${daysUntil !== null ? `. Udløber om ${daysUntil} dage` : ""}`}
                 className={cn(
-                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base
-                  !overflow-visible focus:outline-offset-2`
+                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base flex
+                  items-center !overflow-visible focus:outline-offset-2`
                 )}
                 href={resolveUrl({
                   routeParams: { work: "work", wid: work.workId },

@@ -103,7 +103,7 @@ const PhysicalLoanSlider = ({ items }: PhysicalLoanSliderProps) => {
             <div
               data-cy={cyKeys["physical-loan-slider-work"]}
               key={loan.loanId}
-              className="keen-slider__slide !overflow-visible">
+              className="keen-slider__slide flex items-center !overflow-visible">
               <PhysicalLoanCard
                 loan={loan}
                 manifestation={manifestation}
@@ -138,7 +138,7 @@ const PhysicalLoanSlider = ({ items }: PhysicalLoanSliderProps) => {
                 <div
                   className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col
                     items-center justify-center gap-5">
-                  <p className="text-typo-heading-3">Du har ikke lånt noget endnu</p>
+                  <p className="text-typo-heading-3 text-center">Du har ikke lånt noget endnu</p>
                   <FindBookButton />
                 </div>
               )}
