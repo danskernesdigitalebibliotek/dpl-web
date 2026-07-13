@@ -69,8 +69,8 @@ const PhysicalLoanSlider = ({ items }: PhysicalLoanSliderProps) => {
 
   return (
     <div
-      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
-        py-10">
+      className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
+        overflow-hidden md:p-8">
       <div className="col-span-full flex items-center justify-between px-10">
         <h2 className="text-typo-heading-4">Bøger jeg har lånt på biblioteket ({items.length})</h2>
         {!!items.length && (

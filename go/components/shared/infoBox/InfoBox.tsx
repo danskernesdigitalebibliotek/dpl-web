@@ -30,12 +30,9 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
       <section
-        className="bg-background-overlay mt-14 w-full rounded-md px-6 pt-8 pb-14 lg:flex-row
-          lg:px-14">
-        <h2 className="text-typo-heading-4 mb-10 lg:mb-24">Beskrivelse</h2>
-        <div
-          className="gap-grid-gap-3 flex w-full flex-col lg:flex-row
-            lg:gap-[calc(var(--grid-column)+var(--grid-gap))]">
+        className="bg-background-overlay rounded-base p-grid-edge mt-8 w-full md:p-8 lg:flex-row">
+        <h2 className="text-typo-heading-4 mb-8">Beskrivelse</h2>
+        <div className="gap-grid-edge flex w-full flex-col md:gap-8 lg:flex-row">
           <div className="flex-1">
             <div className="wysiwyg max-w-prose">
               {!work.abstract?.length ? (

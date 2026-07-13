@@ -52,7 +52,7 @@ export default function StatusLabel({ children, subline, variant, inverted, clas
     <div
       className={cn(
         statusLabelVariants({ variant, inverted }),
-        subline && "flex-col items-start gap-0.5 rounded-[8px] px-4 py-2.5",
+        subline && "rounded-base flex-col items-start gap-0.5 px-4 py-2.5",
         className
       )}>
       <span>{children}</span>
