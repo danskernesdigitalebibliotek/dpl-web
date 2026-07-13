@@ -9,7 +9,7 @@
   "license": "AGPL-3.0",
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^9.39.5",
     "@hammzj/cypress-page-object": "^2.3.0",
     "@lhci/cli": "^0.15.1",
     "@testing-library/cypress": "^10.1.3",
