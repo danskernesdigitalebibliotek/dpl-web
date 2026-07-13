@@ -22,8 +22,13 @@ export type UserLoansProps = {
 
 const UserLoans = ({ className }: UserLoansProps) => {
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
-  const userIsbns =
-    dataLoans?.loans?.map(loan => loan?.libraryBook?.identifier ?? "").filter(Boolean) || []
+  // Most urgent first: loans closest to expiry lead the slider.
+  const sortedLoans = [...(dataLoans?.loans ?? [])].sort(
+    (a, b) =>
+      new Date(a?.loanExpireDateUtc ?? 8640000000000000).getTime() -
+      new Date(b?.loanExpireDateUtc ?? 8640000000000000).getTime()
+  )
+  const userIsbns = sortedLoans.map(loan => loan?.libraryBook?.identifier ?? "").filter(Boolean)
   const cql = userIsbns.map(isbn => `term.isbn=${isbn}`).join(" OR ") || ""
 
   const { data: dataComplexSearch, isLoading: isLoadingComplexSearch } =

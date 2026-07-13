@@ -17,7 +17,11 @@ export type PhysicalLoansProps = {
 
 const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
   const { data: loans, isLoading: isLoadingLoans } = useLoans()
-  const loanFausts = loans?.map(loan => loan.recordId) || []
+  // Most urgent first: overdue loans, then loans closest to their due date.
+  const sortedLoans = [...(loans ?? [])].sort(
+    (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+  )
+  const loanFausts = sortedLoans.map(loan => loan.recordId)
   const cql = loanFausts.map(faust => `term.faust=${faust}`).join(" OR ") || ""
 
   const { data: dataComplexSearch, isLoading: isLoadingComplexSearch } =
@@ -33,7 +37,7 @@ const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
 
   // Pair each loan with the work + exact manifestation it was loaned as, by
   // matching the loan's FBS record id (FAUST) against the manifestation pid.
-  const loanItems = (loans || []).reduce<PhysicalLoanItem[]>((acc, loan) => {
+  const loanItems = sortedLoans.reduce<PhysicalLoanItem[]>((acc, loan) => {
     const work = dataComplexSearch?.complexSearch.works.find(w =>
       w.manifestations.all.some(manifestation => pidToFaust(manifestation.pid) === loan.recordId)
     )
