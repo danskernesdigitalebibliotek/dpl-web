@@ -128,6 +128,12 @@ tasks:
     cmds:
       - task -d cms dev:watch
 
+  cms:cli:
+    summary: "Run command in CMS container."
+    interactive: true
+    cmds:
+      - task -d cms dev:cli -- {{.CLI_ARGS}}
+
   react:start:
     desc: "Start React dev environment (runs react/Taskfile.yml dev:start)"
     cmds:
