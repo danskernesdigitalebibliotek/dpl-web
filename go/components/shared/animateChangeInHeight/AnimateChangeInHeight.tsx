@@ -37,7 +37,9 @@ export const AnimateChangeInHeight: React.FC<AnimateChangeInHeightProps> = ({
       className={cn(className)}
       style={{ height }}
       animate={{ height }}
-      transition={{ duration: 0.1 }}>
+      // A soft, bounce-free spring tracks content changes smoothly and stays
+      // in step with the 200ms view transitions inside modals and drawers.
+      transition={{ type: "spring", bounce: 0, duration: 0.35 }}>
       <div ref={containerRef}>{children}</div>
     </motion.div>
   )

@@ -2,9 +2,11 @@
 
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
+import { AnimatePresence, motion } from "framer-motion"
 import * as React from "react"
 
 import { Button } from "@/components/shared/button/Button"
+import Icon from "@/components/shared/icon/Icon"
 import { cyKeys } from "@/cypress/support/constants"
 import { preventDismissOnToastInteraction } from "@/lib/helpers/helper.dismissal"
 import { cn } from "@/lib/shadcn/utils"
@@ -80,9 +82,28 @@ DialogFooter.displayName = "DialogFooter"
 
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title> & { onBack?: () => void }
+>(({ className, onBack, ...props }, ref) => (
   <div className="relative flex items-center justify-center gap-4">
+    <AnimatePresence initial={false}>
+      {onBack && (
+        <motion.div
+          className="absolute left-0"
+          initial={{ opacity: 0, x: 8 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 8 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}>
+          <Button
+            variant="icon"
+            theme="secondary"
+            ariaLabel="Tilbage"
+            data-cy={cyKeys["modal-back-button"]}
+            onClick={onBack}>
+            <Icon name="arrow-left" className="h-5 w-5" />
+          </Button>
+        </motion.div>
+      )}
+    </AnimatePresence>
     <DialogPrimitive.Title ref={ref} className={cn("text-typo-heading-3", className)} {...props} />
     <DialogPrimitive.Close className="absolute right-0" asChild>
       <Button

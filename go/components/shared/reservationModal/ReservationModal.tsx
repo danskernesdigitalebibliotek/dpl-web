@@ -16,6 +16,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
+import { ModalViewTransition } from "@/components/shared/modalViewTransition/ModalViewTransition"
 import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
 import ReservationReceiptContent from "@/components/shared/reservationModal/ReservationReceiptContent"
 import { getReservationFailureMessage } from "@/components/shared/reservationModal/helper"
@@ -110,18 +111,22 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
       open={open}
       onClose={onClose}
       title={(manifestation && `Reserver ${getManifestationLabel(manifestation)}`) || ""}>
-      <AnimateChangeInHeight>
+      {/* The view transition only slides horizontally, so clip x only; the
+          negative margin + padding give cover shadows room at the edges. */}
+      <AnimateChangeInHeight className="-mx-6 overflow-x-clip px-6">
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>
-            {isReceiptStep && derivedResult ? (
-              <ReservationReceiptContent
-                manifestation={manifestation}
-                result={derivedResult}
-                patron={patron}
-              />
-            ) : (
-              <ReservationFormContent work={work} manifestation={manifestation} patron={patron} />
-            )}
+            <ModalViewTransition viewKey={isReceiptStep ? "receipt" : "form"}>
+              {isReceiptStep && derivedResult ? (
+                <ReservationReceiptContent
+                  manifestation={manifestation}
+                  result={derivedResult}
+                  patron={patron}
+                />
+              ) : (
+                <ReservationFormContent work={work} manifestation={manifestation} patron={patron} />
+              )}
+            </ModalViewTransition>
           </div>
         )}
       </AnimateChangeInHeight>

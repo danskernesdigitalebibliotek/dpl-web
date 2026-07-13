@@ -1,8 +1,10 @@
 "use client"
 
 import { useMediaQuery } from "@uidotdev/usehooks"
+import { AnimatePresence, motion } from "framer-motion"
 import React, { Children, isValidElement } from "react"
 
+import { Button } from "@/components/shared/button/Button"
 import {
   Dialog,
   DialogBody,
@@ -18,6 +20,9 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/shared/drawer/drawer"
+import Icon from "@/components/shared/icon/Icon"
+import { modalViewVariants } from "@/components/shared/modalViewTransition/ModalViewTransition"
+import { cyKeys } from "@/cypress/support/constants"
 
 // Marker subcomponent. ResponsiveDialog finds children whose type is Actions and
 // renders their children into a sticky footer slot; everything else flows into
@@ -26,14 +31,27 @@ const Actions = ({ children }: { children: React.ReactNode }) => <>{children}</>
 Actions.displayName = "ResponsiveDialog.Actions"
 
 type ResponsiveDialogProps = {
-  title: string
+  title: React.ReactNode
   description?: string
   children: React.ReactNode
   open: boolean
   onClose: () => void
+  // Renders a back button in the header for modals with internal views.
+  onBack?: () => void
+  // Direction of the current view navigation (1 forward, -1 back); the
+  // actions footer enters and exits with the same fade-and-slide.
+  viewDirection?: number
 }
 
-function ResponsiveDialog({ title, description, children, open, onClose }: ResponsiveDialogProps) {
+function ResponsiveDialog({
+  title,
+  description,
+  children,
+  open,
+  onClose,
+  onBack,
+  viewDirection = 1,
+}: ResponsiveDialogProps) {
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   let actions: React.ReactNode = null
@@ -54,22 +72,36 @@ function ResponsiveDialog({ title, description, children, open, onClose }: Respo
             className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 shrink-0
               border-b lg:mx-10 lg:pt-10 lg:pb-6">
             <DialogHeader>
-              <DialogTitle className="px-10">{title}</DialogTitle>
+              <DialogTitle className="px-10" onBack={onBack}>
+                {title}
+              </DialogTitle>
               {description && <DialogDescription>{description}</DialogDescription>}
             </DialogHeader>
           </div>
           <div className="px-grid-edge min-h-0 flex-1 overflow-y-auto py-6 lg:px-10 lg:py-10">
             <DialogBody>{bodyChildren}</DialogBody>
           </div>
-          {actions && (
-            <div
-              className="bg-background border-foreground/10 mx-grid-edge shrink-0 border-t py-4
-                lg:mx-10 lg:py-6">
-              <div className="flex flex-row-reverse flex-wrap items-center justify-center gap-4">
-                {actions}
-              </div>
-            </div>
-          )}
+          <AnimatePresence initial={false} custom={viewDirection}>
+            {actions && (
+              <motion.div
+                key="actions"
+                className="shrink-0 overflow-x-clip"
+                custom={viewDirection}
+                variants={modalViewVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.2, ease: "easeOut" }}>
+                <div
+                  className="bg-background border-foreground/10 mx-grid-edge border-t py-4 lg:mx-10
+                    lg:py-6">
+                  <div className="flex flex-row-reverse flex-wrap items-center justify-center gap-4">
+                    {actions}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </DialogContent>
       </Dialog>
     )
@@ -79,18 +111,51 @@ function ResponsiveDialog({ title, description, children, open, onClose }: Respo
     <Drawer open={open} onOpenChange={onClose}>
       <DrawerContent className="flex max-h-[95dvh] min-h-0 flex-col overflow-hidden">
         <DrawerHeader className="shrink-0">
-          <DrawerTitle>{title}</DrawerTitle>
+          <div className="relative flex items-center justify-center">
+            <AnimatePresence initial={false}>
+              {onBack && (
+                <motion.div
+                  className="absolute left-0"
+                  initial={{ opacity: 0, x: 8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 8 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}>
+                  <Button
+                    variant="icon"
+                    theme="secondary"
+                    ariaLabel="Tilbage"
+                    data-cy={cyKeys["modal-back-button"]}
+                    onClick={onBack}>
+                    <Icon name="arrow-left" className="h-5 w-5" />
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <DrawerTitle>{title}</DrawerTitle>
+          </div>
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
         <div className="px-grid-edge shrink-0">
           <hr />
         </div>
         <div className="px-grid-edge min-h-0 flex-1 overflow-y-auto py-6">{bodyChildren}</div>
-        {actions && (
-          <div className="border-foreground/10 px-grid-edge shrink-0 border-t py-4">
-            <div className="flex flex-col items-stretch gap-3">{actions}</div>
-          </div>
-        )}
+        <AnimatePresence initial={false} custom={viewDirection}>
+          {actions && (
+            <motion.div
+              key="actions"
+              className="shrink-0 overflow-x-clip"
+              custom={viewDirection}
+              variants={modalViewVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.2, ease: "easeOut" }}>
+              <div className="border-foreground/10 px-grid-edge border-t py-4">
+                <div className="flex flex-col items-stretch gap-3">{actions}</div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </DrawerContent>
     </Drawer>
   )
