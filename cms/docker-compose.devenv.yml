@@ -2,12 +2,42 @@
 #
 # Layered on top of docker-compose.yml (via COMPOSE_FILE in devenv.nix) so the
 # tracked compose file — and the normal `task cms dev:*` workflow — stay
-# untouched. It pins the https proxy to a fixed localhost port so the whole
-# dev stack lives on one domain varying only by port.
+# untouched.
 #
-# The base file already publishes 443 on a random host port; compose merges
-# `ports` by concatenation, so this just adds a second, fixed mapping.
+# What this override does:
+#   1. Serves the CMS over plain HTTP on a fixed localhost port by exposing the
+#      varnish edge (:8080) directly. http://*.localhost is a browser "secure
+#      context", so we get service-workers / crypto.subtle without any TLS —
+#      which lets us drop mkcert, the local CA and the /etc/hosts dance.
+#   2. Parks the TLS-terminating `https` proxy: its only job was to terminate
+#      TLS, and we no longer serve TLS. A compose profile keeps it out of
+#      `docker compose up` without deleting it from the base file.
+#   3. Pins Drupal's absolute base URL (LAGOON_ROUTE) to the browser-facing
+#      host:port so generated links resolve in the browser.
 services:
+  # The base file's `https` proxy only existed to terminate TLS and forward to
+  # varnish. With plain HTTP we hit varnish directly, so park the proxy behind
+  # a profile — `docker compose up` won't start it (nothing depends on it).
   https:
+    profiles: ["disabled"]
+
+  # Expose the varnish edge (plain HTTP, :8080) on a fixed host port. compose
+  # merges `ports` by concatenation, so this adds to the base file's random
+  # mapping. The browser reaches the CMS at http://dpl-web.localhost:37102.
+  varnish:
     ports:
-      - "37102:443"
+      - "37102:8080"
+
+  # Drupal derives its own absolute base URL from LAGOON_ROUTE. The base file
+  # sets it port-less over https (correct on a real Lagoon 443 cluster, wrong
+  # here). Pin it to the browser-facing http://dpl-web.localhost:37102 so
+  # absolute CMS URLs — notably the ones dpl_go forces for the Go frontend's
+  # GraphQL config (e.g. the Adgangsplatformen login link) — carry the right
+  # scheme, host and port. Only the containers that run Drupal (php serves
+  # web/GraphQL, cli runs drush/cron/queue) generate URLs, so only they need it.
+  cli:
+    environment:
+      LAGOON_ROUTE: "http://dpl-web.localhost:37102"
+  php:
+    environment:
+      LAGOON_ROUTE: "http://dpl-web.localhost:37102"
