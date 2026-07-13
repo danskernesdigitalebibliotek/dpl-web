@@ -9,6 +9,7 @@ import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLay
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
+import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
@@ -25,9 +26,9 @@ export type PhysicalLoanCardProps = {
   className?: string
 }
 
-const dueStatusText = (daysUntil: number, danger: number) => {
-  if (daysUntil <= danger) {
-    return "Skal afleveres nu"
+const dueStatusText = (daysUntil: number) => {
+  if (daysUntil <= 0) {
+    return "Skal afleveres i dag"
   }
   return `Skal afleveres om ${daysUntil} ${daysUntil === 1 ? "dag" : "dage"}`
 }
@@ -41,65 +42,67 @@ const PhysicalLoanCard = ({
   className,
 }: PhysicalLoanCardProps) => {
   const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
-  // Same thresholds as dpl-react's loan list: red when due now/overdue,
-  // orange warning when the due date is getting close.
+  // Same thresholds as dpl-react's loan list: red when the due date has
+  // passed, orange warning when it is getting close.
   const { warning, danger } = useLoanThresholds()
-  const isDueNow = daysUntil <= danger
-  const isDueSoon = !isDueNow && daysUntil <= warning
+  const isOverdue = daysUntil < danger
+  const isDueSoon = !isOverdue && daysUntil <= warning
+  // Compact single-line labels; the expanded (subline) StatusLabel form is
+  // reserved for modal contexts.
+  const statusText = isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
   const [showLoanDetails, setShowLoanDetails] = useState(false)
 
+  // The cover box adopts the cover's own aspect ratio so the box edge is the
+  // image edge — the icon straddles it and the labels below always sit at the
+  // same distance, letting the card (and slider) height follow the content.
+  const { width: coverWidth, height: coverHeight } = manifestation.cover.large ?? {}
+  const coverAspectRatio = coverWidth && coverHeight ? `${coverWidth} / ${coverHeight}` : "10 / 17"
+
   return (
-    <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
-      <div className="h-full w-full">
-        <div className="block h-full w-full space-y-3 px-[15%]">
-          <Link
-            prefetch={false}
-            aria-label={`Tilgå værket ${title}. ${dueStatusText(daysUntil, danger)}`}
-            className="focus-visible outline-accent-foreground rounded-base relative block h-[85%]
-              focus:outline-offset-2"
-            href={resolveUrl({
-              routeParams: { work: "work", wid: workId },
-              queryParams: {
-                type: manifestation.materialTypes[0].materialTypeSpecific.code,
-              },
-            })}>
-            <CoverPicture
-              covers={manifestation.cover}
-              alt={`${title} cover billede`}
-              withTilt={false}
-              className="select-none"
-            />
-            <MaterialTypeIconWrapper
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              className="bg-background-overlay-solid relative z-10 mx-auto -mt-14 outline-1"
-            />
-          </Link>
-          <p
-            className={cn("text-typo-subtitle-sm w-full text-center break-words", {
-              "text-error-red-400 dark:text-error-red-200": isDueNow,
-              "text-warning-orange-400 dark:text-warning-orange-200": isDueSoon,
-              "text-foreground-muted": !isDueNow && !isDueSoon,
-            })}>
-            {isDueNow && (
-              <span
-                className="bg-error-red-400 dark:bg-error-red-200 mr-2 inline-block h-2 w-2
-                  rounded-full"
+    <div className={cn("relative w-full", className)}>
+      <div className="w-full space-y-3 px-[15%]">
+        <Link
+          prefetch={false}
+          aria-label={`Tilgå værket ${title}. ${statusText}`}
+          style={{ aspectRatio: coverAspectRatio }}
+          className="focus-visible outline-accent-foreground rounded-base relative block w-full
+            focus:outline-offset-2"
+          href={resolveUrl({
+            routeParams: { work: "work", wid: workId },
+            queryParams: {
+              type: manifestation.materialTypes[0].materialTypeSpecific.code,
+            },
+          })}>
+          <CoverPicture
+            covers={manifestation.cover}
+            alt={`${title} cover billede`}
+            withTilt={false}
+            className="select-none"
+            badge={
+              <MaterialTypeIconWrapper
+                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                className="bg-background-overlay-solid outline-1"
               />
-            )}
-            {dueStatusText(daysUntil, danger)}
-          </p>
-          {loan.isRenewable && (
-            <div className="flex w-full justify-center">
-              <Button
-                size="sm"
-                ariaLabel={`Forny lån af ${title}`}
-                data-cy={cyKeys["renew-loan-button"]}
-                onClick={() => setShowLoanDetails(true)}>
-                Forny lån
-              </Button>
-            </div>
-          )}
+            }
+          />
+        </Link>
+        {/* pt clears the material-type icon straddling the cover's bottom edge. */}
+        <div className="flex w-full justify-center pt-5">
+          <StatusLabel variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}>
+            {statusText}
+          </StatusLabel>
         </div>
+        {loan.isRenewable && (
+          <div className="flex w-full justify-center">
+            <Button
+              size="sm"
+              ariaLabel={`Forny lån af ${title}`}
+              data-cy={cyKeys["renew-loan-button"]}
+              onClick={() => setShowLoanDetails(true)}>
+              Forny lån
+            </Button>
+          </div>
+        )}
       </div>
       <LoanDetailsModal
         open={showLoanDetails}

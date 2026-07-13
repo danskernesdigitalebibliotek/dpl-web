@@ -11,6 +11,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -54,9 +55,10 @@ const LoanCard = ({
   const targetDate = new Date(loan?.loanExpireDateUtc || "")
   const today = new Date()
   const daysUntil = differenceInDays(targetDate, today)
+  // Digital loans expire on their own, so there is no overdue (red) state —
+  // "expires today" is still just a warning.
   const { warning, danger } = useLoanThresholds()
-  const isExpiringNow = daysUntil <= danger
-  const isExpiringSoon = !isExpiringNow && daysUntil <= warning
+  const isExpiringSoon = daysUntil <= warning
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
@@ -98,50 +100,48 @@ const LoanCard = ({
     )
   }
 
+  // Same layout as PhysicalLoanCard: the cover box adopts the cover's own
+  // aspect ratio so the icon straddles the image edge and the labels below
+  // always sit at the same distance, with card height following the content.
+  const { width: coverWidth, height: coverHeight } = manifestation.cover.large ?? {}
+  const coverAspectRatio = coverWidth && coverHeight ? `${coverWidth} / ${coverHeight}` : "10 / 17"
+
   return (
-    <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
-      <div className="h-full w-full">
-        <div className="block h-full w-full space-y-3 px-[15%]">
-          <div className="relative h-[85%]">
-            <CoverPicture
-              covers={manifestation.cover}
-              alt={`${title} cover billede`}
-              withTilt={false}
-              className="select-none"
-            />
-            <MaterialTypeIconWrapper
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              className={cn(
-                "relative z-10 mx-auto -mt-14 outline-1",
-                isCostFree
-                  ? "bg-content-blue-100 dark:text-blue-title-dark"
-                  : "bg-background-overlay-solid"
-              )}
-              costFree={isCostFree}
-            />
-          </div>
-          <p
-            className={cn("text-typo-subtitle-sm w-full text-center break-words", {
-              "text-error-red-400 dark:text-error-red-200": isExpiringNow,
-              "text-warning-orange-400 dark:text-warning-orange-200": isExpiringSoon,
-              "text-foreground-muted": !isExpiringNow && !isExpiringSoon,
-            })}>
-            {isExpiringNow && (
-              <span
-                className="bg-error-red-400 dark:bg-error-red-200 mr-2 inline-block h-2 w-2
-                  rounded-full"
+    <div className={cn("relative w-full", className)}>
+      <div className="w-full space-y-3 px-[15%]">
+        <div className="relative w-full" style={{ aspectRatio: coverAspectRatio }}>
+          <CoverPicture
+            covers={manifestation.cover}
+            alt={`${title} cover billede`}
+            withTilt={false}
+            className="select-none"
+            badge={
+              <MaterialTypeIconWrapper
+                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                className={cn(
+                  "outline-1",
+                  isCostFree
+                    ? "bg-content-blue-100 dark:text-blue-title-dark"
+                    : "bg-background-overlay-solid"
+                )}
+                costFree={isCostFree}
               />
-            )}
-            {expiryStatusText(daysUntil, danger)}
-          </p>
-          {isCostFree && (
-            <div className="flex w-full justify-center">
-              <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
-                BLÅ
-              </Badge>
-            </div>
-          )}
+            }
+          />
         </div>
+        {/* pt clears the material-type icon straddling the cover's bottom edge. */}
+        <div className="flex w-full justify-center pt-5">
+          <StatusLabel variant={isExpiringSoon ? "warning" : "neutral"}>
+            {expiryStatusText(daysUntil, danger)}
+          </StatusLabel>
+        </div>
+        {isCostFree && (
+          <div className="flex w-full justify-center">
+            <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
+              BLÅ
+            </Badge>
+          </div>
+        )}
       </div>
     </div>
   )
