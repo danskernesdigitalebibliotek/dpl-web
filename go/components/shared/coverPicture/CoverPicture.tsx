@@ -13,8 +13,17 @@ type CoverPictureProps = {
   className?: string
   alt: string
   withTilt?: boolean
+  // Rendered straddling the bottom edge of the visible cover image
+  // (e.g. a material type icon). Tracks the image, not the container.
+  badge?: React.ReactNode
 }
-export const CoverPicture = ({ covers, alt, withTilt = false, className }: CoverPictureProps) => {
+export const CoverPicture = ({
+  covers,
+  alt,
+  withTilt = false,
+  className,
+  badge,
+}: CoverPictureProps) => {
   const imageAspectRatio = (covers.large?.width ?? 0) / (covers.large?.height ?? 0)
 
   const ref = useRef<HTMLDivElement>(null)
@@ -119,19 +128,29 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               }}
             />
           )}
+          {badge && (
+            <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+              {badge}
+            </div>
+          )}
         </CoverPictureTiltWrapper>
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="flex w-full flex-col items-center justify-center">
+          className="relative flex w-full flex-col items-center justify-center">
           <Icon
             name="question-mark"
             className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
             aria-label="Spørgsmålstegn ikon"
           />
           <p className="text-typo-caption text-center opacity-70">Billede kunne ikke vises</p>
+          {badge && (
+            <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+              {badge}
+            </div>
+          )}
         </motion.div>
       )}
     </div>
