@@ -123,7 +123,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
-        uses: arduino/setup-task@v2
+        uses: arduino/setup-task@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Codegen - REST services
@@ -232,7 +232,7 @@ jobs:
           name: go-storybook-static
           path: go/storybook-static
       - name: Publish to Chromatic
-        uses: chromaui/action@v17
+        uses: chromaui/action@v18
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_GO }}

@@ -1,5 +1,5 @@
 import { Manifestation } from "./types/entities";
-import { getManifestationIsbn } from "../../apps/material/helper";
+import { getManifestationPublizonIdentifier } from "../../apps/material/helper";
 import {
   getOrderIdByIdentifier,
   getReaderPlayerType,
@@ -21,7 +21,9 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
   const isUserAnonymous = isAnonymous();
 
   const type = getReaderPlayerType(manifestation);
-  const identifier = manifestation ? getManifestationIsbn(manifestation) : null;
+  const identifier = manifestation
+    ? getManifestationPublizonIdentifier(manifestation)
+    : null;
 
   const { data: loansPublizon } = useGetV1UserLoans(
     {},

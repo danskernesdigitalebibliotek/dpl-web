@@ -1,5 +1,4 @@
 import { useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { first } from "lodash"
 import { useQueryStates } from "nuqs"
 import React from "react"
 
@@ -14,7 +13,7 @@ import { cyKeys } from "@/cypress/support/constants"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
-import { pidToFaust } from "@/lib/helpers/ids"
+import { getPublizonIdentifierFromManifestation, pidToFaust } from "@/lib/helpers/ids"
 import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -38,7 +37,7 @@ const WorkPageButtonsLoggedIn = ({
     return <WorkPageButtons.Skeleton />
   }
 
-  const identifier = first(selectedManifestation?.identifiers)?.value
+  const identifier = getPublizonIdentifierFromManifestation(selectedManifestation)
   const label = getManifestationLabel(selectedManifestation)
   const category = getMaterialCategory(
     selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
