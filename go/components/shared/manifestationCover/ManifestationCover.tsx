@@ -11,6 +11,7 @@ type ManifestationCoverProps = {
   iconName: MaterialTypeIconNamesType
   alt?: string
   className?: string
+  style?: React.CSSProperties
 }
 
 const ManifestationCover = ({
@@ -18,15 +19,20 @@ const ManifestationCover = ({
   iconName,
   alt = "Forsidebillede på værket",
   className,
+  style,
 }: ManifestationCoverProps) => (
-  <div className={cn("relative", className)}>
-    <CoverPicture alt={alt} covers={cover} />
-    <MaterialTypeIconWrapper
-      iconName={iconName}
-      className={cn(
-        `bg-background absolute top-full left-1/2 h-10 w-10 translate-x-[-50%] -translate-y-[50%]
-        transform outline-1`
-      )}
+  <div className={cn("relative", className)} style={style}>
+    {/* The icon renders through CoverPicture's badge slot so it straddles the
+        visible image edge regardless of the container's aspect ratio. */}
+    <CoverPicture
+      alt={alt}
+      covers={cover}
+      badge={
+        <MaterialTypeIconWrapper
+          iconName={iconName}
+          className="bg-background h-10 w-10 outline-1"
+        />
+      }
     />
   </div>
 )

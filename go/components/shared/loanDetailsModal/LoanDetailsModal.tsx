@@ -1,38 +1,50 @@
 "use client"
 
-import {
-  type Loan,
-  type RenewedLoan,
-  useRenewLoans,
-} from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { format } from "date-fns"
-import { da } from "date-fns/locale"
+import { type RenewedLoan, useRenewLoans } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import { differenceInDays } from "date-fns"
 import React, { useEffect, useState } from "react"
 
-import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import { dueStatusText } from "@/app/(pages)/user/profile/PhysicalLoanCard"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import InfoCard from "@/components/shared/infoCard/InfoCard"
+import LoanDetailsContent, {
+  type LoanDetails,
+} from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
-import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
+import { ModalViewTransition } from "@/components/shared/modalViewTransition/ModalViewTransition"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
+import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type Props = {
   open: boolean
   onClose: () => void
-  loan: Loan
+  loan: LoanDetails
   manifestation: ManifestationSearchPageTeaserFragment
   title: string
   creators?: string
+  // Physical loans are returned ("Afleveres"); digital loans just run out.
+  dueDateLabel?: string
 }
 
-const formatLoanDate = (date: string) => format(new Date(date), "d. MMMM yyyy", { locale: da })
+const LoanDetailsModal = ({
+  open,
+  onClose,
+  loan,
+  manifestation,
+  title,
+  creators,
+  dueDateLabel = "Afleveres",
+}: Props) => {
+  const { warning, danger } = useLoanThresholds()
+  const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
+  const isOverdue = daysUntil < danger
+  const isDueSoon = !isOverdue && daysUntil <= warning
 
-const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators }: Props) => {
   const { mutate: renewLoans, isPending: isRenewing } = useRenewLoans()
   const [renewedLoan, setRenewedLoan] = useState<RenewedLoan | null>(null)
 
@@ -48,8 +60,10 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
   // the renewal result carries the new due date.
   const isReceiptStep = renewedLoan !== null
 
+  const canRenew = Boolean(loan.isRenewable) && loan.loanId !== undefined
+
   const handleRenew = () => {
-    if (isRenewing) return
+    if (isRenewing || loan.loanId === undefined) return
     renewLoans([loan.loanId], {
       onSuccess: renewedLoans => {
         const result = renewedLoans.find(r => r.loanId === loan.loanId)
@@ -68,36 +82,31 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Dit lån">
-      <AnimateChangeInHeight>
-        {isReceiptStep && renewedLoan ? (
-          <LoanRenewalReceiptContent
-            manifestation={manifestation}
-            renewedLoan={renewedLoan}
-            title={title}
-          />
-        ) : (
-          <div data-cy={cyKeys["loan-details-modal"]} className="mx-auto max-w-prose space-y-8">
-            <ModalMaterialHeader
-              cover={manifestation.cover}
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+      {/* The view transition only slides horizontally, so clip x only; the
+          negative margin + padding give cover shadows room at the edges. */}
+      <AnimateChangeInHeight className="-mx-6 overflow-x-clip px-6">
+        <ModalViewTransition viewKey={isReceiptStep ? "receipt" : "details"}>
+          {isReceiptStep && renewedLoan ? (
+            <LoanRenewalReceiptContent
+              manifestation={manifestation}
+              renewedLoan={renewedLoan}
               title={title}
-              subtitle={creators ? `Af ${creators}` : null}
-              alt={`${title} cover billede`}
             />
-
-            <hr className="border-foreground/10" />
-
-            <div className="space-y-4">
-              <InfoCard
-                icon="calendar-check"
-                title="Afleveres"
-                value={formatLoanDate(loan.dueDate)}
-              />
-              <InfoCard icon="clock" title="Udlånsdato" value={formatLoanDate(loan.loanDate)} />
-              <InfoCard icon="document" title="Materialenummer" value={loan.materialItemNumber} />
-            </div>
-          </div>
-        )}
+          ) : (
+            <LoanDetailsContent
+              loan={loan}
+              manifestation={manifestation}
+              title={title}
+              creators={creators}
+              dueDateLabel={dueDateLabel}
+              status={
+                <StatusLabel variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}>
+                  {isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)}
+                </StatusLabel>
+              }
+            />
+          )}
+        </ModalViewTransition>
       </AnimateChangeInHeight>
 
       <ResponsiveDialog.Actions>
@@ -105,7 +114,7 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
           <Button theme="primary" size="lg" onClick={onClose}>
             OK
           </Button>
-        ) : loan.isRenewable ? (
+        ) : canRenew ? (
           <Button
             theme="primary"
             size="lg"

@@ -26,7 +26,7 @@ export type PhysicalLoanCardProps = {
   className?: string
 }
 
-const dueStatusText = (daysUntil: number) => {
+export const dueStatusText = (daysUntil: number) => {
   if (daysUntil <= 0) {
     return "Skal afleveres i dag"
   }
