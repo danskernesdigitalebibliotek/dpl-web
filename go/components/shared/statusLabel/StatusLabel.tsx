@@ -4,13 +4,15 @@ import type { ReactNode } from "react"
 import { cn } from "@/lib/helpers/helper.cn"
 
 const statusLabelVariants = cva(
-  "text-typo-caption inline-flex w-fit items-center rounded-full px-3 py-1.5",
+  "text-typo-caption inline-flex w-fit items-center rounded-full px-3 py-1.5 whitespace-nowrap",
   {
     variants: {
       variant: {
         error: "",
         warning: "",
         success: "",
+        // Plain text without a pill background.
+        neutral: "text-foreground px-0",
       },
       inverted: {
         true: "",
@@ -40,13 +42,21 @@ const statusLabelVariants = cva(
 
 type Props = VariantProps<typeof statusLabelVariants> & {
   children: ReactNode
+  // Expanded form: a bold second line (e.g. an absolute deadline) under the status.
+  subline?: ReactNode
   className?: string
 }
 
-export default function StatusLabel({ children, variant, inverted, className }: Props) {
+export default function StatusLabel({ children, subline, variant, inverted, className }: Props) {
   return (
-    <div className={cn(statusLabelVariants({ variant, inverted }), className)}>
+    <div
+      className={cn(
+        statusLabelVariants({ variant, inverted }),
+        subline && "flex-col items-start gap-0.5 rounded-[8px] px-4 py-2.5",
+        className
+      )}>
       <span>{children}</span>
+      {subline && <span className="font-medium">{subline}</span>}
     </div>
   )
 }
