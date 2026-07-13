@@ -1,10 +1,10 @@
 "use client"
 
 import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { differenceInDays } from "date-fns"
 import Link from "next/link"
 import { useState } from "react"
 
+import { daysUntilDue } from "@/app/(pages)/user/profile/helper"
 import {
   getManifestationMaterialType,
   getManifestationMaterialTypeIcon,
@@ -34,6 +34,24 @@ const dueStatusText = (daysUntil: number) => {
   return `Skal afleveres om ${daysUntil} ${daysUntil === 1 ? "dag" : "dage"}`
 }
 
+const DueStatus = ({ daysUntil }: { daysUntil: number }) => {
+  const isDueNow = daysUntil <= 0
+  return (
+    <p
+      className={cn(
+        "text-typo-subtitle-sm w-full text-center break-words",
+        isDueNow ? "text-error-red-400 dark:text-error-red-200" : "text-foreground-muted"
+      )}>
+      {isDueNow && (
+        <span
+          className="bg-error-red-400 dark:bg-error-red-200 mr-2 inline-block h-2 w-2 rounded-full"
+        />
+      )}
+      {dueStatusText(daysUntil)}
+    </p>
+  )
+}
+
 const PhysicalLoanCard = ({
   loan,
   manifestation,
@@ -42,8 +60,7 @@ const PhysicalLoanCard = ({
   creators,
   className,
 }: PhysicalLoanCardProps) => {
-  const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
-  const isDueNow = daysUntil <= 0
+  const daysUntil = daysUntilDue(loan.dueDate)
   const [showLoanDetails, setShowLoanDetails] = useState(false)
   const materialTypeCode = getManifestationMaterialType(manifestation)?.code
 
@@ -71,19 +88,7 @@ const PhysicalLoanCard = ({
               className="bg-background-overlay-solid relative z-10 mx-auto -mt-14 outline-1"
             />
           </Link>
-          <p
-            className={cn(
-              "text-typo-subtitle-sm w-full text-center break-words",
-              isDueNow ? "text-error-red-400 dark:text-error-red-200" : "text-foreground-muted"
-            )}>
-            {isDueNow && (
-              <span
-                className="bg-error-red-400 dark:bg-error-red-200 mr-2 inline-block h-2 w-2
-                  rounded-full"
-              />
-            )}
-            {dueStatusText(daysUntil)}
-          </p>
+          <DueStatus daysUntil={daysUntil} />
           {loan.isRenewable && (
             <div className="flex w-full justify-center">
               <Button

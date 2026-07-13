@@ -5,7 +5,7 @@ import {
   type RenewedLoan,
   useRenewLoans,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 import { da } from "date-fns/locale"
 import React, { useEffect, useState } from "react"
 
@@ -30,7 +30,10 @@ type Props = {
   creators?: string
 }
 
-const formatLoanDate = (date: string) => format(new Date(date), "d. MMMM yyyy", { locale: da })
+// FBS delivers date-only strings ("2026-07-16"); parseISO parses them as
+// LOCAL midnight (new Date() would give UTC midnight), so the rendered day
+// never shifts in timezones west of UTC.
+const formatLoanDate = (date: string) => format(parseISO(date), "d. MMMM yyyy", { locale: da })
 
 const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators }: Props) => {
   const { mutate: renewLoans, isPending: isRenewing } = useRenewLoans()

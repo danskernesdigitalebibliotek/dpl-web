@@ -1,7 +1,7 @@
 "use client"
 
 import type { RenewedLoan } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 import { da } from "date-fns/locale"
 import React from "react"
 
@@ -45,7 +45,9 @@ const LoanRenewalReceiptContent = ({
     <dl className="grid w-full grid-cols-1 gap-4">
       <ReceiptStat
         term="Skal afleveres"
-        value={format(new Date(renewedLoan.dueDate), "d. MMMM yyyy", { locale: da })}
+        // FBS dueDate is date-only; parseISO = local midnight, so the day
+        // shown matches the calendar day FBS meant in every timezone.
+        value={format(parseISO(renewedLoan.dueDate), "d. MMMM yyyy", { locale: da })}
         dataCy={cyKeys["renew-loan-receipt-due-date"]}
       />
     </dl>
