@@ -189,8 +189,13 @@
   # Full clean rebuild of the CMS: containers, composer install, site
   # install, and linking the built design-system + react assets in.
   # Run once before your first `devenv up`.
+  #
+  # The trailing `drush cr` regenerates caches under the correct base URL:
+  # dev:reset warms them from a CLI context that can bake unreachable file URLs
+  # (e.g. https://dpl-cms.local:37102) the Go frontend then blocks on.
   scripts.cms-reset.exec = ''
     task -d "$DEVENV_ROOT/cms" dev:reset
+    task -d "$DEVENV_ROOT/cms" dev:cli -- drush cr
   '';
 
   enterShell = ''
