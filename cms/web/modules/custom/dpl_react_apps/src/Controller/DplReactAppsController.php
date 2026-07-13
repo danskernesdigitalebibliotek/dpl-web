@@ -7,6 +7,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_react_apps\Services\BranchService;
 use Drupal\dpl_react_apps\SharedTranslations\OnlineMaterialTexts;
+use Drupal\dpl_react_apps\SharedTranslations\OpenOrderTexts;
 use Drupal\dpl_react_apps\SharedTranslations\PlayerModalTexts;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
@@ -619,15 +620,6 @@ class DplReactAppsController extends ControllerBase {
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-material-teaser-text' => $this->t('Try @materialType', [], ['context' => 'Work Page']),
-      'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
-      'open-order-owned-own-catalogue-text' => $this->t('Item available, order through the librarys catalogue', [], ['context' => 'Work Page']),
-      'open-order-owned-wrong-mediumtype-text' => $this->t('Item available but medium type not accepted', [], ['context' => 'Work Page']),
-      'open-order-response-title-text' => $this->t('Order from another library:', [], ['context' => 'Work Page']),
-      'open-order-service-unavailable-text' => $this->t('Service is currently unavailable', [], ['context' => 'Work Page']),
-      'open-order-status-owned-accepted-text' => $this->t('Your order is accepted', [], ['context' => 'Work Page']),
-      'open-order-unknown-error-text' => $this->t('An unknown error occurred', [], ['context' => 'Work Page']),
-      'open-order-unknown-pickupagency-text' => $this->t('Specified pickup agency not found', [], ['context' => 'Work Page']),
-      'open-order-unknown-user-text' => $this->t('User not found', [], ['context' => 'Work Page']),
       'order-digital-copy-button-loading-text' => $this->t('Order digital copy button loading text', [], ['context' => 'Work Page']),
       'order-digital-copy-button-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'order-digital-copy-description-text' => $this->t('Order digital copy description text', [], ['context' => 'Work Page']),
@@ -718,7 +710,8 @@ class DplReactAppsController extends ControllerBase {
       // Add external API base urls.
     ] + self::externalApiBaseUrls()
       + PlayerModalTexts::texts()
-      + OnlineMaterialTexts::texts();
+      + OnlineMaterialTexts::texts()
+      + OpenOrderTexts::texts();
 
     $app = [
       '#theme' => 'dpl_react_app',
