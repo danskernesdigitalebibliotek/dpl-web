@@ -307,8 +307,8 @@ importers:
         specifier: ^3.8.3
         version: 3.9.4
       prettier-plugin-classnames:
-        specifier: ^0.10.2
-        version: 0.10.3(prettier@3.9.4)
+        specifier: ^0.10.4
+        version: 0.10.4(prettier@3.9.4)
       prettier-plugin-merge:
         specifier: ^0.10.1
         version: 0.10.1(prettier@3.9.4)
@@ -8491,8 +8491,8 @@ packages:
     resolution: {integrity: sha512-0hXWjmOpz5YBIk6xujS0lYtCw6IAA0wCR3fw49UGTLc3E9BIhcxgqdMa8rzGvrtt2F8wFiGP42oEpQ8fo9zhRw==}
     engines: {node: ^10.17 || >=11.14}
 
-  prettier-plugin-classnames@0.10.3:
-    resolution: {integrity: sha512-aPyYpL4g4g6EMDNWGGIPxwmExjr1vvEinZTDs9yHGeXAlutDuv/3QaVLk7fwR6jvxBGPE2xzB4TPi46rKdd7eA==}
+  prettier-plugin-classnames@0.10.4:
+    resolution: {integrity: sha512-JIheUGkLGEqBwv/OWpizy+C6lY9z1fE9KpQpq8q+3j2xyzon7zBiv8Udn8tNkKwoQObrIg2e++DEVnMZiTOeJw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@prettier/plugin-oxc': '*'
@@ -19651,7 +19651,7 @@ snapshots:
     dependencies:
       temp-write: 4.0.0
 
-  prettier-plugin-classnames@0.10.3(prettier@3.9.4):
+  prettier-plugin-classnames@0.10.4(prettier@3.9.4):
     dependencies:
       prettier: 3.9.4
       zod: 3.22.4
