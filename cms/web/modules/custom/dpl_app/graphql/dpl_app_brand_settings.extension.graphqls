@@ -1,0 +1,4 @@
+extend type Query {
+  "Get brand settings."
+  getAppBrandSettings: BrandSettings!
+}
