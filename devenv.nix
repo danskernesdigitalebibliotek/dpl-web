@@ -31,6 +31,11 @@
     corepack.enable = true;
   };
 
+  languages.php = {
+    enable = true;
+    package = pkgs.php83;
+  };
+
   # CLI tools the Taskfiles reach for.
   #
   # Docker is intentionally NOT here. devenv can't run a daemon, and our
