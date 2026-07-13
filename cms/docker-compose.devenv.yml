@@ -13,7 +13,16 @@
 #      TLS, and we no longer serve TLS. A compose profile keeps it out of
 #      `docker compose up` without deleting it from the base file.
 #   3. Pins Drupal's absolute base URL (LAGOON_ROUTE) to the browser-facing
-#      host:port so generated links resolve in the browser.
+#      host:port, on every service, so generated links resolve in the browser.
+
+# Pin Drupal's absolute base URL to the browser-facing host:port. The base file
+# defaults it to `https://dpl-cms.${DEV_TLD:-local}` (right for a real Lagoon
+# cluster, wrong here). Set on ALL four services: a CLI/cron run has no request
+# host and falls back to LAGOON_ROUTE, so any drift there bakes unreachable URLs
+# (e.g. https://dpl-cms.local:37102) into Drupal's caches.
+x-lagoon-route: &lagoon-route
+  LAGOON_ROUTE: "http://dpl-web.localhost:37102"
+
 services:
   # The base file's `https` proxy only existed to terminate TLS and forward to
   # varnish. With plain HTTP we hit varnish directly, so park the proxy behind
@@ -27,17 +36,14 @@ services:
   varnish:
     ports:
       - "37102:8080"
-
-  # Drupal derives its own absolute base URL from LAGOON_ROUTE. The base file
-  # sets it port-less over https (correct on a real Lagoon 443 cluster, wrong
-  # here). Pin it to the browser-facing http://dpl-web.localhost:37102 so
-  # absolute CMS URLs — notably the ones dpl_go forces for the Go frontend's
-  # GraphQL config (e.g. the Adgangsplatformen login link) — carry the right
-  # scheme, host and port. Only the containers that run Drupal (php serves
-  # web/GraphQL, cli runs drush/cron/queue) generate URLs, so only they need it.
+    environment:
+      <<: *lagoon-route
+  nginx:
+    environment:
+      <<: *lagoon-route
   cli:
     environment:
-      LAGOON_ROUTE: "http://dpl-web.localhost:37102"
+      <<: *lagoon-route
   php:
     environment:
-      LAGOON_ROUTE: "http://dpl-web.localhost:37102"
+      <<: *lagoon-route
