@@ -5,7 +5,10 @@ import { differenceInDays } from "date-fns"
 import Link from "next/link"
 import { useState } from "react"
 
-import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import {
+  getManifestationMaterialType,
+  getManifestationMaterialTypeIcon,
+} from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
@@ -42,6 +45,7 @@ const PhysicalLoanCard = ({
   const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
   const isDueNow = daysUntil <= 0
   const [showLoanDetails, setShowLoanDetails] = useState(false)
+  const materialTypeCode = getManifestationMaterialType(manifestation)?.code
 
   return (
     <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
@@ -54,9 +58,7 @@ const PhysicalLoanCard = ({
               focus:outline-offset-2"
             href={resolveUrl({
               routeParams: { work: "work", wid: workId },
-              queryParams: {
-                type: manifestation.materialTypes[0].materialTypeSpecific.code,
-              },
+              queryParams: materialTypeCode ? { type: materialTypeCode } : undefined,
             })}>
             <CoverPicture
               covers={manifestation.cover}

@@ -14,7 +14,9 @@ import { MaterialTypeIconNamesType } from "@/lib/types/icons"
 export const getManifestationMaterialType = (
   manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
 ) => {
-  return manifestation.materialTypes?.[0].materialTypeSpecific
+  // ?.[0] guards a missing array but not an empty one — [0] on an empty
+  // list is undefined, so the trailing property access needs its own guard.
+  return manifestation.materialTypes?.[0]?.materialTypeSpecific
 }
 
 const allowedMaterialTypes = [
@@ -290,7 +292,7 @@ export const getManifestationMaterialTypeIcon = (
   manifestation: ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment
 ): MaterialTypeIconNamesType | undefined => {
   const materialType = getManifestationMaterialType(manifestation)
-  return getIconNameFromMaterialType(materialType.code)
+  return materialType ? getIconNameFromMaterialType(materialType.code) : undefined
 }
 
 export const canUserLoanMoreMaterials = (
