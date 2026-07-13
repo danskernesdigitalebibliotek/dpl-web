@@ -7,6 +7,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_react_apps\Services\BranchService;
 use Drupal\dpl_react_apps\SharedTranslations\OnlineMaterialTexts;
+use Drupal\dpl_react_apps\SharedTranslations\OpenOrderTexts;
 use Drupal\dpl_react_apps\SharedTranslations\PlayerModalTexts;
 use Drupal\dpl_fbi\FirstAccessionDateOperator;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
@@ -619,25 +620,6 @@ class DplReactAppsController extends ControllerBase {
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-material-teaser-text' => $this->t('Try @materialType', [], ['context' => 'Work Page']),
-      'open-order-authentication-error-text' => $this->t('An authentication error occurred', [], ['context' => 'Work Page']),
-      'open-order-error-missing-pincode-text' => $this->t('Pincode is missing', [], ['context' => 'Work Page']),
-      'open-order-invalid-order-text' => $this->t('The order is invalid', [], ['context' => 'Work Page']),
-      'open-order-no-servicerequester-text' => $this->t('Service requester is missing', [], ['context' => 'Work Page']),
-      'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
-      'open-order-not-owned-no-ill-loc-text' => $this->t('The material cannot be ordered from another library', [], ['context' => 'Work Page']),
-      'open-order-not-owned-wrong-ill-mediumtype-text' => $this->t('This material type cannot be ordered from another library', [], ['context' => 'Work Page']),
-      'open-order-ors-error-text' => $this->t('An error occurred while sending the order', [], ['context' => 'Work Page']),
-      'open-order-owned-own-catalogue-text' => $this->t('Item available, order through the librarys catalogue', [], ['context' => 'Work Page']),
-      'open-order-owned-wrong-mediumtype-text' => $this->t('Item available but medium type not accepted', [], ['context' => 'Work Page']),
-      'open-order-response-title-text' => $this->t('Order from another library:', [], ['context' => 'Work Page']),
-      'open-order-service-unavailable-text' => $this->t('Service is currently unavailable', [], ['context' => 'Work Page']),
-      'open-order-status-owned-accepted-text' => $this->t('Your order is accepted', [], ['context' => 'Work Page']),
-      'open-order-unknown-error-text' => $this->t('An unknown error occurred', [], ['context' => 'Work Page']),
-      'open-order-unknown-pickupagency-text' => $this->t('Specified pickup agency not found', [], ['context' => 'Work Page']),
-      'open-order-unknown-user-text' => $this->t('User not found', [], ['context' => 'Work Page']),
-      'open-order-user-blocked-by-agency-text' => $this->t('You are blocked from making reservations at the library', [], ['context' => 'Work Page']),
-      'open-order-user-no-longer-exist-on-agency-text' => $this->t('You are no longer registered at the pickup library', [], ['context' => 'Work Page']),
-      'open-order-user-not-verified-text' => $this->t('Your user could not be verified', [], ['context' => 'Work Page']),
       'order-digital-copy-button-loading-text' => $this->t('Order digital copy button loading text', [], ['context' => 'Work Page']),
       'order-digital-copy-button-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'order-digital-copy-description-text' => $this->t('Order digital copy description text', [], ['context' => 'Work Page']),
@@ -728,7 +710,8 @@ class DplReactAppsController extends ControllerBase {
       // Add external API base urls.
     ] + self::externalApiBaseUrls()
       + PlayerModalTexts::texts()
-      + OnlineMaterialTexts::texts();
+      + OnlineMaterialTexts::texts()
+      + OpenOrderTexts::texts();
 
     $app = [
       '#theme' => 'dpl_react_app',
