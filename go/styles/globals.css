@@ -47,7 +47,6 @@
     --screen-minus-navigation-height: calc(100vh - var(--navigation-combined-height));
 
     /* BORDER RADIUS */
-    --base-radius: 0.625rem; /* 10px */
     --input-radius: 0.375rem; /* 5px */
 
     /* ASPECT RATIOS */
