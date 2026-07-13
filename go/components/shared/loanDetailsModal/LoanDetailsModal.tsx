@@ -25,7 +25,9 @@ type Props = {
   open: boolean
   onClose: () => void
   loan: Loan
-  manifestation: ManifestationSearchPageTeaserFragment
+  // Absent for loans whose FBS record has no FBI match (interlibrary loans,
+  // local records) — the modal then renders without cover and material label.
+  manifestation?: ManifestationSearchPageTeaserFragment
   title: string
   creators?: string
 }
@@ -80,13 +82,17 @@ const LoanDetailsModal = ({ open, onClose, loan, manifestation, title, creators 
           />
         ) : (
           <div data-cy={cyKeys["loan-details-modal"]} className="mx-auto max-w-prose space-y-8">
-            <ModalMaterialHeader
-              cover={manifestation.cover}
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              title={title}
-              subtitle={creators ? `Af ${creators}` : null}
-              alt={`${title} cover billede`}
-            />
+            {manifestation ? (
+              <ModalMaterialHeader
+                cover={manifestation.cover}
+                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                title={title}
+                subtitle={creators ? `Af ${creators}` : null}
+                alt={`${title} cover billede`}
+              />
+            ) : (
+              <p className="text-typo-heading-5 text-center break-words lg:text-left">{title}</p>
+            )}
 
             <hr className="border-foreground/10" />
 

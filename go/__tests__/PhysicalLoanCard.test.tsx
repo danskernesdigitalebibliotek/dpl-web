@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import PhysicalLoanCard from "@/app/(pages)/user/profile/PhysicalLoanCard"
+import PhysicalLoanCard, {
+  PhysicalLoanFallbackCard,
+} from "@/app/(pages)/user/profile/PhysicalLoanCard"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 
 // The modal pulls in useRenewLoans (ServiceLayerProvider) and matchMedia via
@@ -89,5 +91,26 @@ describe("PhysicalLoanCard materialTypes access", () => {
     // Regression guard: an unguarded materialTypes[0] threw a TypeError here,
     // and with no error boundary under go/app that took down the profile page.
     expect(() => renderCard("2026-08-01", { materialTypes: [] })).not.toThrow()
+  })
+})
+
+describe("PhysicalLoanFallbackCard", () => {
+  // Loans without an FBI match still need identity and the renew flow: FBS
+  // renewal only needs the loanId, and the legacy react app offers renewal
+  // for these loans too.
+  it("identifies the loan by material number and offers renewal when renewable", () => {
+    render(<PhysicalLoanFallbackCard loan={buildLoan("2026-08-01")} />)
+
+    expect(screen.getByText("Ukendt materiale")).toBeTruthy()
+    expect(screen.getByText("Materialenummer 5001234567")).toBeTruthy()
+    // Regression guard: the fallback card used to ignore isRenewable, so a
+    // renewable interlibrary loan could be seen but never renewed from GO.
+    expect(screen.getByRole("button", { name: /Forny lån af ukendt materiale/ })).toBeTruthy()
+  })
+
+  it("hides the renew button for non-renewable loans", () => {
+    render(<PhysicalLoanFallbackCard loan={{ ...buildLoan("2026-08-01"), isRenewable: false }} />)
+
+    expect(screen.queryByRole("button", { name: /Forny lån/ })).toBeNull()
   })
 })

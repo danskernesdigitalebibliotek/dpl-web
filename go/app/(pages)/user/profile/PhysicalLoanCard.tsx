@@ -11,6 +11,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import Icon from "@/components/shared/icon/Icon"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
@@ -109,6 +110,55 @@ const PhysicalLoanCard = ({
         manifestation={manifestation}
         title={title}
         creators={creators}
+      />
+    </div>
+  )
+}
+
+// FBS loans whose record has no match in FBI (interlibrary loans, locally
+// catalogued records) carry no cover or work link, so the card is a
+// placeholder identified by the loan's material number. Renewal only needs
+// the loanId, so the renew flow works exactly as on the matched card.
+// Follow-up: map FBS's ilBibliographicRecord so these can show a real title.
+export const PhysicalLoanFallbackCard = ({
+  loan,
+  className,
+}: {
+  loan: Loan
+  className?: string
+}) => {
+  const daysUntil = daysUntilDue(loan.dueDate)
+  const [showLoanDetails, setShowLoanDetails] = useState(false)
+
+  return (
+    <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
+      <div className="block h-full w-full space-y-3 px-[15%]">
+        <div
+          className="border-foreground/20 rounded-base flex h-[85%] flex-col items-center
+            justify-center gap-2 border-2 border-dashed px-2">
+          <Icon name="book" className="h-12 w-12 opacity-40" />
+          <p className="text-typo-subtitle-sm text-center break-words">Ukendt materiale</p>
+          <p className="text-typo-caption text-foreground-muted text-center break-all">
+            Materialenummer {loan.materialItemNumber}
+          </p>
+        </div>
+        <DueStatus daysUntil={daysUntil} />
+        {loan.isRenewable && (
+          <div className="flex w-full justify-center">
+            <Button
+              size="sm"
+              ariaLabel={`Forny lån af ukendt materiale, materialenummer ${loan.materialItemNumber}`}
+              onClick={() => setShowLoanDetails(true)}>
+              Forny lån
+            </Button>
+          </div>
+        )}
+      </div>
+      <LoanDetailsModal
+        open={showLoanDetails}
+        onClose={() => setShowLoanDetails(false)}
+        loan={loan}
+        title="Ukendt materiale"
       />
     </div>
   )

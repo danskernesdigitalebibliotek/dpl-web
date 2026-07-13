@@ -15,7 +15,9 @@ import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type LoanRenewalReceiptProps = {
-  manifestation: ManifestationSearchPageTeaserFragment
+  // Absent for loans whose FBS record has no FBI match — the receipt then
+  // renders without cover and with a generic label.
+  manifestation?: ManifestationSearchPageTeaserFragment
   renewedLoan: RenewedLoan
   title: string
 }
@@ -28,17 +30,23 @@ const LoanRenewalReceiptContent = ({
   <div
     data-cy={cyKeys["renew-loan-receipt"]}
     className="mx-auto flex max-w-prose flex-col items-center gap-y-8 text-center">
-    <ManifestationCover
-      cover={manifestation.cover}
-      iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-      className="aspect-[4/5] w-32 shrink-0"
-    />
+    {manifestation && (
+      <ManifestationCover
+        cover={manifestation.cover}
+        iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+        className="aspect-[4/5] w-32 shrink-0"
+      />
+    )}
     <div className="flex flex-col gap-y-4">
       <h2 className="text-typo-heading-4 mt-2 first-letter:uppercase">
-        {getManifestationLabel(manifestation, "definite")} er fornyet!
+        {(manifestation && getManifestationLabel(manifestation, "definite")) || "lånet"} er fornyet!
       </h2>
       <p className="text-typo-subtitle-md text-foreground-muted">
-        Du kan beholde &ldquo;{title}&rdquo; lidt længere.
+        {manifestation ? (
+          <>Du kan beholde &ldquo;{title}&rdquo; lidt længere.</>
+        ) : (
+          <>Du kan beholde materialet lidt længere.</>
+        )}
       </p>
     </div>
 

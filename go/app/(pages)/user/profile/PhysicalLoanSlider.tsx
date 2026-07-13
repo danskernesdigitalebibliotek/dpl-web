@@ -6,7 +6,9 @@ import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import React, { useEffect, useState } from "react"
 
-import PhysicalLoanCard from "@/app/(pages)/user/profile/PhysicalLoanCard"
+import PhysicalLoanCard, {
+  PhysicalLoanFallbackCard,
+} from "@/app/(pages)/user/profile/PhysicalLoanCard"
 import { loanSliderOptions } from "@/app/(pages)/user/profile/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
@@ -24,8 +26,10 @@ import FindBookButton from "./FindBookButton"
 
 export type PhysicalLoanItem = {
   loan: Loan
-  work: WorkTeaserSearchPageFragment
-  manifestation: ManifestationSearchPageTeaserFragment
+  // Absent when the loan's FAUST has no match in FBI (interlibrary loans,
+  // local records) — the loan then renders as a fallback card.
+  work?: WorkTeaserSearchPageFragment
+  manifestation?: ManifestationSearchPageTeaserFragment
 }
 
 type PhysicalLoanSliderProps = {
@@ -104,14 +108,21 @@ const PhysicalLoanSlider = ({ items }: PhysicalLoanSliderProps) => {
               data-cy={cyKeys["physical-loan-slider-work"]}
               key={loan.loanId}
               className="keen-slider__slide !overflow-visible">
-              <PhysicalLoanCard
-                loan={loan}
-                manifestation={manifestation}
-                title={work.titles.full[0]}
-                workId={work.workId}
-                creators={displayCreators(work.creators, 1)}
-                className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
-              />
+              {work && manifestation ? (
+                <PhysicalLoanCard
+                  loan={loan}
+                  manifestation={manifestation}
+                  title={work.titles.full[0]}
+                  workId={work.workId}
+                  creators={displayCreators(work.creators, 1)}
+                  className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
+                />
+              ) : (
+                <PhysicalLoanFallbackCard
+                  loan={loan}
+                  className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
+                />
+              )}
             </div>
           ))}
           {/* To avoid empty looking slider for one loan or no loans, we add visual indicators for more books. */}

@@ -33,21 +33,17 @@ const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
 
   // Pair each loan with the work + exact manifestation it was loaned as, by
   // matching the loan's FBS record id (FAUST) against the manifestation pid.
-  const loanItems = (loans || []).reduce<PhysicalLoanItem[]>((acc, loan) => {
+  // Every FBS loan stays in the list — a loan with no FBI match (interlibrary
+  // loans, local records) renders as a fallback card instead of vanishing.
+  const loanItems = (loans || []).map<PhysicalLoanItem>(loan => {
     const work = dataComplexSearch?.complexSearch.works.find(w =>
       w.manifestations.all.some(manifestation => pidToFaust(manifestation.pid) === loan.recordId)
     )
-    if (!work) {
-      return acc
-    }
-    const manifestation = work.manifestations.all.find(
+    const manifestation = work?.manifestations.all.find(
       manifestation => pidToFaust(manifestation.pid) === loan.recordId
     )
-    if (!manifestation) {
-      return acc
-    }
-    return [...acc, { loan, work, manifestation }]
-  }, [])
+    return { loan, work, manifestation }
+  })
 
   return (
     <div className={cn("col-span-full", className)}>
