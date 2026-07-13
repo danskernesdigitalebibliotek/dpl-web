@@ -21,12 +21,14 @@ export const useRenewLoans = (
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: loanIds => renewLoans(config, loanIds),
+    // Spread before onSuccess: a consumer-supplied onSuccess must compose
+    // with (not replace) the cache invalidation below.
+    ...options,
     onSuccess: (data, variables, onMutateResult, context) => {
       // Denials also come back as a 2xx result list, but dueDate may have
       // changed for any renewed loan — refetch the loan list either way.
       queryClient.invalidateQueries({ queryKey: loansQueryKey() })
       options?.onSuccess?.(data, variables, onMutateResult, context)
     },
-    ...options,
   })
 }
