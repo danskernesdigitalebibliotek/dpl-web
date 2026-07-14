@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/shared/button/Button"
 import ButtonWithLoadingStateHoc from "@/components/shared/button/ButtonWithLoadingStateHoc"
-import Icon from "@/components/shared/icon/Icon"
 import { cyKeys } from "@/cypress/support/constants"
 import useSession from "@/hooks/useSession"
 
@@ -39,11 +38,13 @@ const LogoutButton = ({ onClick }: LogoutButtonProps) => {
   return (
     <>
       <Button
+        variant="icon-text"
+        icon="lock"
         size={size}
+        ariaLabel="Log ud"
         onClick={handleClick}
         className={className}
         data-cy={cyKeys["logout-button"]}>
-        <Icon className="mr-3 h-[20px] w-[20px]" name="lock" />
         Log ud
       </Button>
     </>
