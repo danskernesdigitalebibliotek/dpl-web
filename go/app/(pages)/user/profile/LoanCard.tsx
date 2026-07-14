@@ -10,9 +10,9 @@ import {
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
-import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
@@ -108,35 +108,21 @@ const LoanCard = ({
     )
   }
 
-  // Same layout as PhysicalLoanCard: the cover box adopts the cover's own
-  // aspect ratio so the icon straddles the image edge and the labels below
-  // always sit at the same distance, with card height following the content.
-  const { width: coverWidth, height: coverHeight } = manifestation.cover.large ?? {}
-  const coverAspectRatio = coverWidth && coverHeight ? `${coverWidth} / ${coverHeight}` : "10 / 17"
-
   return (
     <div className={cn("relative w-full", className)}>
       <div className="w-full space-y-3 px-[15%]">
-        <div className="relative w-full" style={{ aspectRatio: coverAspectRatio }}>
-          <CoverPicture
-            covers={manifestation.cover}
-            alt={`${title} cover billede`}
-            withTilt={false}
-            className="select-none"
-            badge={
-              <MaterialTypeIconWrapper
-                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-                className={cn(
-                  "outline-1",
-                  isCostFree
-                    ? "bg-content-blue-100 dark:text-blue-title-dark"
-                    : "bg-background-overlay-solid"
-                )}
-                costFree={isCostFree}
-              />
-            }
-          />
-        </div>
+        <ManifestationCover
+          cover={manifestation.cover}
+          iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+          alt={`${title} cover billede`}
+          className="w-full"
+          costFree={isCostFree}
+          iconClassName={
+            isCostFree
+              ? "bg-content-blue-100 dark:text-blue-title-dark"
+              : "bg-background-overlay-solid"
+          }
+        />
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
         <div className="flex w-full justify-center pt-5">
           <StatusLabel variant={isExpiringSoon ? "warning" : "neutral"}>

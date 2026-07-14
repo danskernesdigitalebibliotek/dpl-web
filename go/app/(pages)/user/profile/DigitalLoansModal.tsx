@@ -14,8 +14,8 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
-import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import {
   ModalViewTransition,
   modalViewVariants,
@@ -24,7 +24,6 @@ import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import {
@@ -32,6 +31,7 @@ import {
   WorkTeaserSearchPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
 type DigitalLoansModalProps = {
@@ -165,6 +165,12 @@ const DigitalLoansModal = ({
               title={selectedLoan.title}
               creators={selectedLoan.creators}
               dueDateLabel="Udløber"
+              href={resolveUrl({
+                routeParams: { work: "work", wid: selectedLoan.workId },
+                queryParams: {
+                  type: selectedLoan.manifestation.materialTypes[0].materialTypeSpecific.code,
+                },
+              })}
               status={(() => {
                 const daysUntil = differenceInDays(new Date(selectedLoan.dueDate), new Date())
                 return (
@@ -187,9 +193,6 @@ const DigitalLoansModal = ({
                 const daysUntil = loan?.loanExpireDateUtc
                   ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
                   : null
-                const { width: coverWidth, height: coverHeight } = manifestation.cover.large ?? {}
-                const coverAspectRatio =
-                  coverWidth && coverHeight ? `${coverWidth} / ${coverHeight}` : "10 / 17"
                 const creators = displayCreators(work.creators, 1)
                 const title = work.titles.full[0]
 
@@ -206,20 +209,13 @@ const DigitalLoansModal = ({
                       }}
                       className="focus-visible flex w-full cursor-pointer items-end gap-8 text-left">
                       <div className="w-28 shrink-0 lg:w-32">
-                        <div className="relative w-full" style={{ aspectRatio: coverAspectRatio }}>
-                          <CoverPicture
-                            covers={manifestation.cover}
-                            alt={`${title} cover billede`}
-                            withTilt={false}
-                            className="select-none"
-                            badge={
-                              <MaterialTypeIconWrapper
-                                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-                                className="bg-background-overlay-solid outline-1"
-                              />
-                            }
-                          />
-                        </div>
+                        <ManifestationCover
+                          cover={manifestation.cover}
+                          iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                          alt={`${title} cover billede`}
+                          className="w-full"
+                          iconClassName="bg-background-overlay-solid"
+                        />
                       </div>
                       <div className="min-w-0 space-y-2">
                         <p className="text-typo-heading-5">{title}</p>

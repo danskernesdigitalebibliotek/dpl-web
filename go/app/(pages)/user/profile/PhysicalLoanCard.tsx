@@ -7,10 +7,9 @@ import { useState } from "react"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
-import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -52,19 +51,12 @@ const PhysicalLoanCard = ({
   const statusText = isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
   const [showLoanDetails, setShowLoanDetails] = useState(false)
 
-  // The cover box adopts the cover's own aspect ratio so the box edge is the
-  // image edge — the icon straddles it and the labels below always sit at the
-  // same distance, letting the card (and slider) height follow the content.
-  const { width: coverWidth, height: coverHeight } = manifestation.cover.large ?? {}
-  const coverAspectRatio = coverWidth && coverHeight ? `${coverWidth} / ${coverHeight}` : "10 / 17"
-
   return (
     <div className={cn("relative w-full", className)}>
       <div className="w-full space-y-3 px-[15%]">
         <Link
           prefetch={false}
           aria-label={`Tilgå værket ${title}. ${statusText}`}
-          style={{ aspectRatio: coverAspectRatio }}
           className="focus-visible outline-accent-foreground rounded-base relative block w-full
             focus:outline-offset-2"
           href={resolveUrl({
@@ -73,17 +65,12 @@ const PhysicalLoanCard = ({
               type: manifestation.materialTypes[0].materialTypeSpecific.code,
             },
           })}>
-          <CoverPicture
-            covers={manifestation.cover}
+          <ManifestationCover
+            cover={manifestation.cover}
+            iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
             alt={`${title} cover billede`}
-            withTilt={false}
-            className="select-none"
-            badge={
-              <MaterialTypeIconWrapper
-                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-                className="bg-background-overlay-solid outline-1"
-              />
-            }
+            className="w-full"
+            iconClassName="bg-background-overlay-solid"
           />
         </Link>
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
@@ -110,6 +97,7 @@ const PhysicalLoanCard = ({
         loan={loan}
         manifestation={manifestation}
         title={title}
+        workId={workId}
         creators={creators}
       />
     </div>

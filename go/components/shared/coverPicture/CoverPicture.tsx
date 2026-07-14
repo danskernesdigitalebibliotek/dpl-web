@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import Icon from "@/components/shared/icon/Icon"
@@ -13,81 +13,28 @@ type CoverPictureProps = {
   className?: string
   alt: string
   withTilt?: boolean
-  // Rendered straddling the bottom edge of the visible cover image
-  // (e.g. a material type icon). Tracks the image, not the container.
-  badge?: React.ReactNode
 }
-export const CoverPicture = ({
-  covers,
-  alt,
-  withTilt = false,
-  className,
-  badge,
-}: CoverPictureProps) => {
-  const imageAspectRatio = (covers.large?.width ?? 0) / (covers.large?.height ?? 0)
+export const CoverPicture = ({ covers, alt, withTilt = false, className }: CoverPictureProps) => {
+  const { width, height } = covers.large ?? {}
 
-  const ref = useRef<HTMLDivElement>(null)
-
-  const [containerSize, setContainerSize] = useState<{ width: number; height: number } | null>(null)
-
-  // Keep container size in sync with layout changes using ResizeObserver so we also react
-  // when Keen slider changes slide width (without requiring a window resize).
-  useEffect(() => {
-    if (!ref.current) return
-
-    const el = ref.current
-    const observer = new ResizeObserver(entries => {
-      const entry = entries[0]
-      if (!entry) return
-
-      const { width, height } = entry.contentRect
-      if (!width || !height) return
-
-      setContainerSize(prev => {
-        if (prev && prev.width === width && prev.height === height) return prev
-        return { width, height }
-      })
-    })
-
-    observer.observe(el)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
-  const containerHeight = containerSize?.height ?? 0
-  const containerWidth = containerSize?.width ?? 0
-
-  // Fallback to image aspect ratio if we don't yet know the container size to avoid NaN calculations
-  const hasContainerSize = containerHeight > 0 && containerWidth > 0 && imageAspectRatio > 0
-
-  // Calculate a width/height that fits INSIDE the container ("object-fit: contain" behavior)
-  let coverWidth = 0
-  let coverHeight = 0
-
-  if (hasContainerSize) {
-    // Start by filling the container width
-    coverWidth = containerWidth
-    coverHeight = coverWidth / imageAspectRatio
-
-    // If the result becomes taller than the container, constrain by height instead
-    if (coverHeight > containerHeight) {
-      coverHeight = containerHeight
-      coverWidth = coverHeight * imageAspectRatio
-    }
-  }
+  // Contain-fit in pure CSS: the wrapper takes the image's aspect ratio and
+  // a width capped by both the container's width (100cqw) and the width the
+  // container's height allows through the ratio (100cqh × ratio) — the same
+  // result as an "object-fit: contain" measured in JS, but it tracks layout
+  // changes (keen-slider, resize) for free.
+  const coverWrapperStyle: React.CSSProperties =
+    width && height
+      ? {
+          aspectRatio: `${width} / ${height}`,
+          width: `min(100cqw, calc(100cqh * ${width / height}))`,
+        }
+      : { width: "100%", height: "100%" }
 
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
-  // Use a style that either matches the calculated size or falls back to 100%
-  const coverWrapperStyle: React.CSSProperties = hasContainerSize
-    ? { width: `${coverWidth}px`, height: `${coverHeight}px` }
-    : { width: "100%", height: "100%" }
-
   return (
-    <div className={cn("flex h-full w-full items-center", className)} ref={ref}>
+    <div className={cn("flex h-full w-full items-center [container-type:size]", className)}>
       {!imageError && covers.thumbnail ? (
         <CoverPictureTiltWrapper
           key={covers.thumbnail}
@@ -128,11 +75,6 @@ export const CoverPicture = ({
               }}
             />
           )}
-          {badge && (
-            <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
-              {badge}
-            </div>
-          )}
         </CoverPictureTiltWrapper>
       ) : (
         <motion.div
@@ -146,11 +88,6 @@ export const CoverPicture = ({
             aria-label="Spørgsmålstegn ikon"
           />
           <p className="text-typo-caption text-center opacity-70">Billede kunne ikke vises</p>
-          {badge && (
-            <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
-              {badge}
-            </div>
-          )}
         </motion.div>
       )}
     </div>
