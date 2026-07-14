@@ -71,8 +71,7 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
               lån. {/* TODO: point at a blue-titles search once that filter exists. */}
               <Link
                 href="#"
-                className="text-foreground font-medium whitespace-nowrap underline
-                  underline-offset-2">
+                className="text-foreground font-medium whitespace-nowrap underline">
                 Find alle blå titler
               </Link>
             </p>

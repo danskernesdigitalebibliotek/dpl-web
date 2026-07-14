@@ -466,6 +466,11 @@
   body {
     @apply bg-background font-body text-foreground;
   }
+  /* Consistent underline distance on all links (and button-based links).
+     0.25em = 25% of the font size; Chrome drops percentage values here. */
+  :where(a, button) {
+    text-underline-offset: 0.25em;
+  }
 }
 
 /* shadcn variables */
