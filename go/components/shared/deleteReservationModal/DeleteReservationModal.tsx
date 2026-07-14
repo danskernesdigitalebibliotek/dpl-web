@@ -67,7 +67,7 @@ const DeleteReservationModal = ({ open, onClose, wid, pid }: Props) => {
                 <ManifestationCover
                   cover={manifestation.cover}
                   iconName="book"
-                  className="aspect-[4/5] w-32 shrink-0"
+                  className="w-32 shrink-0"
                 />
                 <div className="flex flex-col gap-y-3">
                   <p className="text-typo-heading-5">Vil du slette din reservering?</p>

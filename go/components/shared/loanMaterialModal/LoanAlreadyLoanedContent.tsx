@@ -24,7 +24,7 @@ const LoanAlreadyLoanedContent = ({ manifestation }: { manifestation: Manifestat
       <ManifestationCover
         cover={manifestation.cover}
         iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-        className="aspect-[4/5] w-32 shrink-0"
+        className="w-32 shrink-0"
       />
       <div className="flex flex-col gap-y-4">
         <h2 className="text-typo-heading-4 mt-2">Du har allerede lånt denne {label}</h2>

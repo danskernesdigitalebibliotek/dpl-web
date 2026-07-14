@@ -14,7 +14,7 @@ const DeleteReservationReceiptContent = ({ cover }: Props) => (
   <div
     data-cy={cyKeys["delete-reservation-receipt"]}
     className="mx-auto flex max-w-prose flex-col items-center gap-y-8 text-center">
-    <ManifestationCover cover={cover} iconName="book" className="aspect-[4/5] w-32 shrink-0" />
+    <ManifestationCover cover={cover} iconName="book" className="w-32 shrink-0" />
     <p className="text-typo-heading-5">Din reservering er nu slettet</p>
   </div>
 )
