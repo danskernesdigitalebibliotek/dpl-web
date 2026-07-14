@@ -52,6 +52,15 @@
   overflow: hidden;
 }
 
+// Clips horizontal overflow (e.g. to stop a full-bleed header breaking out on
+// mobile) without turning the element into a scroll container. Unlike
+// `overflow: hidden`, `overflow-x: clip` leaves `overflow-y: visible`, so
+// `position: sticky` descendants still stick to the viewport instead of to
+// this element.
+.overflow-x-clip {
+  overflow-x: clip;
+}
+
 // When class is used on a block element it will show a loading ellipsis animation.
 .text-loading:after {
   overflow: hidden;
