@@ -29,6 +29,8 @@ type LoanDetailsContentProps = {
   dueDateLabel?: string
   // Due-status label shown under the title/author.
   status?: React.ReactNode
+  // Link target for the title (the material's work page).
+  href?: string
 }
 
 const formatLoanDate = (date: string) => format(new Date(date), "d. MMMM yyyy", { locale: da })
@@ -40,6 +42,7 @@ const LoanDetailsContent = ({
   creators,
   dueDateLabel = "Afleveres",
   status,
+  href,
 }: LoanDetailsContentProps) => (
   <div data-cy={cyKeys["loan-details-modal"]} className="mx-auto max-w-prose space-y-8">
     <ModalMaterialHeader
@@ -49,6 +52,7 @@ const LoanDetailsContent = ({
       subtitle={creators ? `Af ${creators}` : null}
       alt={`${title} cover billede`}
       status={status}
+      href={href}
     />
 
     <hr className="border-foreground/10" />

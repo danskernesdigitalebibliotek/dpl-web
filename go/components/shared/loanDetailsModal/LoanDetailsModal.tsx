@@ -19,6 +19,7 @@ import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type Props = {
   open: boolean
@@ -26,6 +27,8 @@ type Props = {
   loan: LoanDetails
   manifestation: ManifestationSearchPageTeaserFragment
   title: string
+  // Links the modal title to the material's work page when provided.
+  workId?: string
   creators?: string
   // Physical loans are returned ("Afleveres"); digital loans just run out.
   dueDateLabel?: string
@@ -37,6 +40,7 @@ const LoanDetailsModal = ({
   loan,
   manifestation,
   title,
+  workId,
   creators,
   dueDateLabel = "Afleveres",
 }: Props) => {
@@ -99,6 +103,16 @@ const LoanDetailsModal = ({
               title={title}
               creators={creators}
               dueDateLabel={dueDateLabel}
+              href={
+                workId
+                  ? resolveUrl({
+                      routeParams: { work: "work", wid: workId },
+                      queryParams: {
+                        type: manifestation.materialTypes[0].materialTypeSpecific.code,
+                      },
+                    })
+                  : undefined
+              }
               status={
                 <StatusLabel variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}>
                   {isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)}
