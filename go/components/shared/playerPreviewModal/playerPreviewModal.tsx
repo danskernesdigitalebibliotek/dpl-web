@@ -4,7 +4,7 @@ import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 import Player from "../publizonPlayer/PublizonPlayer"
-import ResponsiveDialog from "../responsiveDialog/ResponsiveDialog"
+import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 
 function PlayerPreviewModal({
   open,

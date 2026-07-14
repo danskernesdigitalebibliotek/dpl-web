@@ -5,7 +5,7 @@ import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 import Player from "../publizonPlayer/PublizonPlayer"
-import ResponsiveDialog from "../responsiveDialog/ResponsiveDialog"
+import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 
 function PlayerModal({
   open,

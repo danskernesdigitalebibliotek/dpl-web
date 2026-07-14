@@ -30,6 +30,14 @@ import { cyKeys } from "@/cypress/support/constants"
 const Actions = ({ children }: { children: React.ReactNode }) => <>{children}</>
 Actions.displayName = "ResponsiveDialog.Actions"
 
+// Matched by displayName rather than function identity: fast-refresh (and any
+// duplicated module instance) recreates the Actions function, which would make
+// a reference comparison silently drop the footer into the body.
+const isActionsElement = (child: React.ReactNode): child is React.ReactElement =>
+  isValidElement(child) &&
+  typeof child.type === "function" &&
+  (child.type as { displayName?: string }).displayName === Actions.displayName
+
 type ResponsiveDialogProps = {
   title: React.ReactNode
   description?: string
@@ -57,7 +65,7 @@ function ResponsiveDialog({
   let actions: React.ReactNode = null
   const bodyChildren: React.ReactNode[] = []
   Children.forEach(children, child => {
-    if (isValidElement(child) && child.type === Actions) {
+    if (isActionsElement(child)) {
       actions = (child.props as { children?: React.ReactNode }).children ?? null
     } else {
       bodyChildren.push(child)
