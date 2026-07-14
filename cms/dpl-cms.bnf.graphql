@@ -163,6 +163,10 @@ type BranchAvailabilityContext {
   search: Boolean!
 }
 
+type BrandSettings {
+  logoUrl: String
+}
+
 type CQLSearch {
   value: String
 }
@@ -935,6 +939,7 @@ scalar PhoneNumber
 
 type Query {
   dplTokens: DplTokens
+  getAppBrandSettings: BrandSettings!
   getAppCategories(id: String, type: AppType!): [AppCategory!]!
   getAppPage(id: String!): AppPage
   getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
