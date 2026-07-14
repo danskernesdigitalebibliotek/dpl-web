@@ -1,0 +1,5 @@
+type AppFeesAndPaymentInfo {
+  feesAndReplacementCostsUrl: String
+  paymentSiteUrl: String
+  paymentSiteButtonLabel: String
+}
