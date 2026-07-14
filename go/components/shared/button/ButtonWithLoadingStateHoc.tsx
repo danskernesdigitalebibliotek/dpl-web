@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 
-import Icon from "../icon/Icon"
 import { Button, ButtonProps } from "./Button"
+import LoadingDots from "./LoadingDots"
 
 const ButtonWithLoadingStateHoc = <TProps extends ButtonProps>(
   Component: React.FC<TProps & { onClick?: () => void }>,
@@ -35,11 +35,7 @@ const ButtonWithLoadingStateHoc = <TProps extends ButtonProps>(
     if (isLoading) {
       return (
         <Button size={size} className={className} theme={theme} disabled>
-          <Icon
-            name="go-spinner"
-            ariaLabel="Indlæser"
-            className="animate-spin-reverse mx-6 h-[15px] w-[15px]"
-          />
+          <LoadingDots className="mx-6" />
         </Button>
       )
     }

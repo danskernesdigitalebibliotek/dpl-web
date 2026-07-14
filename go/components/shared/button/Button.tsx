@@ -2,6 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
+import LoadingDots from "@/components/shared/button/LoadingDots"
 import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
 
@@ -15,6 +16,7 @@ const buttonVariants = cva(
       variant: {
         default: "",
         icon: "",
+        "icon-text": "",
       },
       size: {
         default: "h-[40px]",
@@ -58,6 +60,21 @@ const buttonVariants = cva(
         size: ["md", "sm"],
         class: "h-[32px] w-[32px]",
       },
+      {
+        variant: "icon-text",
+        size: "sm",
+        class: "gap-2 px-6 text-typo-button-sm",
+      },
+      {
+        variant: "icon-text",
+        size: ["default", "md"],
+        class: "gap-2 px-8 text-typo-button-sm",
+      },
+      {
+        variant: "icon-text",
+        size: "lg",
+        class: "gap-3 px-10 text-typo-button-lg",
+      },
     ],
     defaultVariants: {
       variant: "default",
@@ -73,14 +90,38 @@ export interface ButtonProps
   ariaLabel?: string
   dataCy?: string
   isLoading?: boolean
+  // Name of the icon rendered before the label (variant "icon-text").
+  icon?: string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, ariaLabel, variant, theme, size, asChild = false, isLoading, children, ...props },
+    {
+      className,
+      ariaLabel,
+      variant,
+      theme,
+      size,
+      asChild = false,
+      isLoading,
+      icon,
+      children,
+      ...props
+    },
     ref
   ) => {
     const Comp = asChild ? Slot : "button"
+    // Slot requires a single child, so the icon shorthand is skipped for
+    // asChild — put the icon inside the child element instead.
+    const content =
+      icon && !asChild ? (
+        <>
+          <Icon name={icon} className={size === "sm" ? "h-[20px] w-[20px]" : "h-[24px] w-[24px]"} />
+          {children}
+        </>
+      ) : (
+        children
+      )
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, theme }), className)}
@@ -90,15 +131,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-label={ariaLabel || ""}>
         {isLoading ? (
           <span className="grid items-center justify-items-center">
-            <span className="col-start-1 row-start-1 opacity-30">{children}</span>
-            <Icon
-              name="go-spinner"
-              ariaLabel="Indlæser"
-              className="animate-spin-reverse col-start-1 row-start-1 h-[18px] w-[18px]"
-            />
+            <span className="col-start-1 row-start-1 opacity-0">{content}</span>
+            <LoadingDots className="col-start-1 row-start-1" />
           </span>
         ) : (
-          children
+          content
         )}
       </Comp>
     )

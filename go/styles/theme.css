@@ -227,6 +227,7 @@
   --animate-wiggle: wiggle 900ms linear 1;
   --animate-content-grow: content-grow 300ms ease-in-out 1;
   --animate-spin-reverse: spin-reverse 900ms ease-in-out infinite;
+  --animate-dot-pulse: dot-pulse 900ms ease-in-out infinite;
 
   --spacing-navigation-top-height: var(--navigation-top-height);
   --spacing-navigation-height: var(--navigation-height);
@@ -279,6 +280,19 @@
     40%,
     60% {
       transform: rotate(-8deg);
+    }
+  }
+
+  @keyframes dot-pulse {
+    0%,
+    80%,
+    100% {
+      transform: scale(0.6);
+      opacity: 0.4;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
     }
   }
 
