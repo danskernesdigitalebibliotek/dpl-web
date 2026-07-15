@@ -60,7 +60,7 @@ const ProfilePageLayout = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="content-container grid-go w-full space-y-3 gap-y-10">
+      <div className="content-container grid-go w-full gap-y-10">
         <div className="col-span-full flex flex-wrap items-center gap-x-8 gap-y-6 lg:flex-nowrap">
           <div className="min-w-0 space-y-2">
             <h1 className="text-typo-subtitle-sm text-foreground-muted">Min side</h1>
