@@ -27,6 +27,8 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
       ? {
           aspectRatio: `${width} / ${height}`,
           width: `min(100cqw, calc(100cqh * ${width / height}))`,
+          maxWidth: "100%",
+          maxHeight: "100%",
         }
       : { width: "100%", height: "100%" }
 
@@ -39,7 +41,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
         <CoverPictureTiltWrapper
           key={covers.thumbnail}
           withTilt={withTilt}
-          className={"relative m-auto"}
+          className={"relative mx-auto"}
           style={coverWrapperStyle}>
           {covers.thumbnail && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -49,7 +51,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               sizes="20px"
               loading="lazy"
               className={cn(
-                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain
+                `absolute inset-0 h-full w-full overflow-hidden rounded-sm object-contain
                   transition-all duration-500 will-change-transform`,
                 imageLoaded ? "shadow-none" : "shadow-cover-picture"
               )}
@@ -63,7 +65,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               alt={alt}
               loading="lazy"
               className={cn(
-                `shadow-cover-picture absolute inset-0 h-auto w-full overflow-hidden rounded-sm
+                `shadow-cover-picture absolute inset-0 h-full w-full overflow-hidden rounded-sm
                   object-contain transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
