@@ -157,10 +157,10 @@ services:
       << : *default-environment
 
   redis: # In-memory key-value database used as the Drupal Core cache backend.
-    # https://docs.lagoon.sh/lagoon/docker-images/redis
-    image: uselagoon/redis-6:latest
+    # https://docs.lagoon.sh/docker-images/valkey/
+    image: uselagoon/valkey-8:latest
     labels:
-      lagoon.type: redis
+      lagoon.type: valkey
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
