@@ -1,5 +1,5 @@
 diff --git a/src/Plugin/views/field/EventSeriesStartDate.php b/src/Plugin/views/field/EventSeriesStartDate.php
-index 4ff06006e..43d074a71 100644
+index 4ff06006e79ef442f6bcfc9ce36ad81c9fa5005c..43d074a718ce29cbd1750347fcbee40c87797309 100644
 --- a/src/Plugin/views/field/EventSeriesStartDate.php
 +++ b/src/Plugin/views/field/EventSeriesStartDate.php
 @@ -87,11 +87,20 @@ class EventSeriesStartDate extends FieldPluginBase {

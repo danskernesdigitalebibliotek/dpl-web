@@ -385,7 +385,7 @@
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "patches/vendor/recurring_events-35045cb17c7bbd1184553f83771939047175bc24.patch",
-                "3461740: Fatal error when using 'Event series start date' filter in views": "patches/vendor/reccuring_events_event_start_date.patch",
+                "3461740: Fatal error / WSOD when using or click-sorting 'Event series start date' in views (MR !211)": "patches/vendor/recurring_events-c852eb00033eb362da54b073b3dd2c36b00fe159.patch",
                 "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "patches/vendor/recurring_events-67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
                 "3468521: (2/4)": "patches/vendor/recurring_events-603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
                 "3468521: (3/4)": "patches/vendor/recurring_events-ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
