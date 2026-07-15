@@ -88,9 +88,9 @@ class GoSite implements GoSiteInterface {
       return str_replace('varnish.', 'node.', $this->getCmsBaseUrl());
     }
 
-    // If the GO_DOMAIN environment variable is set,
+    // If the DPL_GO_BASE_URL environment variable is set,
     // it will override anything else.
-    $goDomain = getenv('GO_DOMAIN') ?: NULL;
+    $goDomain = getenv('DPL_GO_BASE_URL') ?: NULL;
 
     if ($goDomain) {
       return $goDomain;

@@ -52,9 +52,9 @@ sub-project; only the contracts live here.
 
 All refresh/format tasks run in Docker — `schemas/` has no local
 toolchain (no `node_modules`, no `npm install`). The DBC FBI refresh
-tasks additionally need a bearer token: copy `schemas/.env.example` to
-`schemas/.env` and fill in `LIBRARY_TOKEN` — `Taskfile.yml` loads it
-via `dotenv:`.
+tasks additionally need a bearer token: set `LIBRARY_TOKEN` in the central
+root `.env` (see the repo-root `.env.example`, or run `task token:generate`) —
+`schemas/Taskfile.yml` loads it via `dotenv: ['../.env']`.
 
 ```sh
 task schemas:refresh          # rebuild schemas from respective sources

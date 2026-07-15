@@ -124,9 +124,10 @@ Shared secret for Next.js preview mode. Apparently not used. Set
 Shared secret for Next.js on-demand revalidation. Set on the Next site
 configuration entity.
 
-- `GO_DOMAIN`
+- `DPL_GO_BASE_URL`
 
-Used to override the URL of the Go site. (`GoSite`)
+Used to override the URL of the Go site (`GoSite`). Shared with Go, which
+reads the same variable as its own canonical base URL.
 
 - `GO_GRAPHQL_CONSUMER_SECRET`
 
