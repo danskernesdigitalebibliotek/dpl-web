@@ -30,7 +30,10 @@ tasks:
       - '.env'
     cmds:
       - op inject --force --in-file .env.1pass --out-file .env
-      - cp .env cms/.env
+      # cms/.env, go/.env and react/.env are symlinks to the central root .env.
+      - ln -sf ../.env cms/.env
+      - ln -sf ../.env go/.env
+      - ln -sf ../.env react/.env
     preconditions:
       - sh: which op
         msg: '1Password CLI command required'
@@ -57,7 +60,7 @@ tasks:
   # ---------------------------------------------------------------------------
 
   token:generate:
-    desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in first-level .env files"
+    desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in the central root .env"
     dotenv: ['.env']
     silent: true
     cmds:
@@ -88,7 +91,7 @@ tasks:
           echo "Paste the token below into the *LIBRARY_TOKEN entries of your .env files manually."
         else
           updated=0
-          for envfile in */.env; do
+          for envfile in .env; do
             [ -f "$envfile" ] || continue
             if grep -qE '^[A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
               TOKEN="$token" perl -i -pe 's/^([A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
@@ -98,7 +101,7 @@ tasks:
           done
 
           if [ "$updated" -eq 0 ]; then
-            echo "No *LIBRARY_TOKEN entries found in first-level .env files." >&2
+            echo "No *LIBRARY_TOKEN entries found in the root .env." >&2
           else
             echo "Done. Updated $updated file(s)."
           fi

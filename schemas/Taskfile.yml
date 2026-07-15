@@ -3,6 +3,10 @@ version: '3'
 # Refresh tasks for the contracts under openapi/ and graphql/.
 # Codgen lives in each consuming sub-project — see README.
 
+# LIBRARY_TOKEN (used for GraphQL schema introspection) comes from the central
+# root .env.
+dotenv: ['../.env']
+
 vars:
   FBS_TOOL_REPO: https://github.com/itk-dev/dpl-fbs-adapter-tool.git
   FBS_TOOL_REF: develop

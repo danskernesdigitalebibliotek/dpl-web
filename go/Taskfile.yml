@@ -61,6 +61,9 @@ tasks:
   dev:reset:
     desc: Install development environment and clean up
     cmds:
+      # go/.env is a symlink to the central root .env. Bootstrap + ensure it.
+      - "[ -f ../.env ] || cp ../.env.example ../.env"
+      - "[ -e .env ] || ln -s ../.env .env"
       - task dev:nvm:use
       - pnpm install
       - pnpm run dev:https
