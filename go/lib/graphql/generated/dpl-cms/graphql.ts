@@ -209,6 +209,11 @@ export type BranchAvailabilityContext = {
   search: Scalars['Boolean']['output'];
 };
 
+export type BrandSettings = {
+  __typename?: 'BrandSettings';
+  logoUrl?: Maybe<Scalars['String']['output']>;
+};
+
 export type CqlSearch = {
   __typename?: 'CQLSearch';
   value?: Maybe<Scalars['String']['output']>;
@@ -1058,6 +1063,7 @@ export type ParagraphWebform = ParagraphInterface & {
 export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
+  getAppBrandSettings: BrandSettings;
   getAppCategories: Array<AppCategory>;
   getAppPage?: Maybe<AppPage>;
   getBranches: Array<Branch>;
