@@ -62,6 +62,16 @@ function ResponsiveDialog({
 }: ResponsiveDialogProps) {
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
+  // Navigating away through a link inside the modal should also leave it
+  // closed for when the page is revisited or restored.
+  const closeOnLinkClick = (event: React.MouseEvent) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey) return
+    const target = event.target as HTMLElement
+    if (target.closest?.("a[href]")) {
+      onClose()
+    }
+  }
+
   let actions: React.ReactNode = null
   const bodyChildren: React.ReactNode[] = []
   Children.forEach(children, child => {
@@ -75,7 +85,9 @@ function ResponsiveDialog({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="flex max-h-[95dvh] flex-col gap-0 overflow-hidden p-0 lg:min-h-0">
+        <DialogContent
+          onClickCapture={closeOnLinkClick}
+          className="flex max-h-[95dvh] flex-col gap-0 overflow-hidden p-0 lg:min-h-0">
           <div
             className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 shrink-0
               border-b lg:mx-10 lg:pt-10 lg:pb-6">
@@ -117,7 +129,9 @@ function ResponsiveDialog({
 
   return (
     <Drawer open={open} onOpenChange={onClose}>
-      <DrawerContent className="flex max-h-[95dvh] min-h-0 flex-col overflow-hidden">
+      <DrawerContent
+        onClickCapture={closeOnLinkClick}
+        className="flex max-h-[95dvh] min-h-0 flex-col overflow-hidden">
         <DrawerHeader className="shrink-0">
           <div className="relative flex items-center justify-center">
             <AnimatePresence initial={false}>
