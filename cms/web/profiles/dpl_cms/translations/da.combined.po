@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-13 11:23+0200\n"
-"PO-Revision-Date: 2026-07-13 11:23+0200\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-13 11:24+0200\n"
-"PO-Revision-Date: 2026-07-13 11:24+0200\n"
+"POT-Creation-Date: 2026-07-15 13:43+0200\n"
+"PO-Revision-Date: 2026-07-15 13:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -412,7 +400,7 @@ msgstr "Overskredne lån"
 
 msgctxt "Patron menu"
 msgid "loans expiring soon"
-msgstr "Under 6 dage"
+msgstr "Skal snart afleveres"
 
 msgctxt "Patron menu"
 msgid "reservations ready for pickup"
@@ -1035,7 +1023,7 @@ msgstr "Avancerede felter IKKE aktiveret"
 
 msgctxt "dpl_fbi"
 msgid "Fill out fields using link (optional)"
-msgstr "Udfyld felter i material grid med link til CQL-søgning (valgfrit)"
+msgstr "Udfyld felter i Materialekomponent med link til CQL-søgning (valgfrit)"
 
 msgctxt "dpl_fbi"
 msgid "Link to search"
@@ -1527,7 +1515,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
-msgstr "Advarsel om at udløbsdato nærmer sig"
+msgstr "Advarsel om at afleveringsdato nærmer sig"
 
 msgctxt "Library Agency Configuration"
 msgid "Set expiration warning"
@@ -1646,7 +1634,7 @@ msgid "Image"
 msgstr "Billede"
 
 msgid "Media type"
-msgstr "Media type"
+msgstr "Medie type"
 
 msgid "Generate thumbnails"
 msgstr "Generér thumbnails"
@@ -3046,7 +3034,7 @@ msgstr "Pop-up med facetbrowser"
 
 msgctxt "Search Result"
 msgid "Can always be loaned"
-msgstr "Kan altid lånes"
+msgstr "Lån udenfor kvoten"
 
 msgctxt "Search Result"
 msgid "Children or adults"
@@ -5585,7 +5573,7 @@ msgstr "Overskredet"
 
 msgctxt "Loan list"
 msgid "Expiring soon"
-msgstr "Under 6 dage"
+msgstr "Skal snart afleveres"
 
 msgctxt "Loan list"
 msgid "Your loans"
@@ -8114,7 +8102,7 @@ msgstr ""
 "låst, hvis du forlader siden uden at gemme."
 
 msgid "Break the lock."
-msgstr ""
+msgstr "Bryd låsen."
 
 msgid ""
 "This content translation is now locked by you against simultaneous editing. "
@@ -8134,7 +8122,7 @@ msgstr ""
 "forblive låst, hvis du forlader siden uden at gemme."
 
 msgid "This content is being edited by another user."
-msgstr ""
+msgstr "Dette indhold er ved at blive redigeret af en anden bruger."
 
 msgid "Unlock"
 msgstr "Lås op"
@@ -10688,7 +10676,7 @@ msgid ""
 "below."
 msgstr ""
 "Begynd at skrive for at finde indhold eller indsæt en URL og klik på et "
-"forslag nedenunder."
+"forslag nedenunder. URL er obligatorisk, hvis Linktekst er udfyldt."
 
 msgid ""
 "Must be the same as the profile selected on the form display for this field."
