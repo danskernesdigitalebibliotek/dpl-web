@@ -6,10 +6,7 @@ import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import React, { Suspense, useEffect, useState } from "react"
 
-import DigitalLoansModal, {
-  type SelectedLoan,
-  buildSelectedLoan,
-} from "@/app/(pages)/user/profile/DigitalLoansModal"
+import { buildSelectedLoan } from "@/app/(pages)/user/profile/DigitalLoansModal"
 import LoanCard from "@/app/(pages)/user/profile/LoanCard"
 import QuotasSection, { QuotasSectionSkeleton } from "@/app/(pages)/user/profile/QuotasSection"
 import { loanSliderOptions } from "@/app/(pages)/user/profile/helper"
@@ -22,6 +19,7 @@ import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphq
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+import { openModal } from "@/store/modal.store"
 
 import FindBookButton from "./FindBookButton"
 
@@ -44,8 +42,6 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   const [audioLoans, setAudioLoans] = useState<string[]>([])
   const [ebookLoans, setEbookLoans] = useState<string[]>([])
   const [blueLoans, setBlueLoans] = useState<string[]>([])
-  const [showAllLoans, setShowAllLoans] = useState(false)
-  const [initialLoan, setInitialLoan] = useState<SelectedLoan | null>(null)
 
   useEffect(() => {
     internalSlider.current?.on("slideChanged", () => {
@@ -124,8 +120,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                 onClick={() => {
                   const selection = buildSelectedLoan(work, loanData)
                   if (!selection) return
-                  setInitialLoan(selection)
-                  setShowAllLoans(true)
+                  openModal("DigitalLoansModal", { works, loanData, initialLoan: selection })
                 }}>
                 <LoanCard
                   manifestation={loanManifestation}
@@ -175,19 +170,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
           audioLoans={audioLoans}
           ebookLoans={ebookLoans}
           blueLoans={blueLoans}
-          onViewAll={() => {
-            setInitialLoan(null)
-            setShowAllLoans(true)
-          }}
+          onViewAll={() => openModal("DigitalLoansModal", { works, loanData })}
         />
       </Suspense>
-      <DigitalLoansModal
-        open={showAllLoans}
-        onClose={() => setShowAllLoans(false)}
-        works={works}
-        loanData={loanData}
-        initialLoan={initialLoan}
-      />
     </div>
   )
 }

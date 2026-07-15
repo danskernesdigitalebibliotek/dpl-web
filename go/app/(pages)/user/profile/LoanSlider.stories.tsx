@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import LoanSlider from "@/app/(pages)/user/profile/LoanSlider"
+import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
 import {
   fixtureWorks,
   loanListResult,

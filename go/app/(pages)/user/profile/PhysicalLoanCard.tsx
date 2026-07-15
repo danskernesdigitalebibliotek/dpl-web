@@ -3,11 +3,9 @@
 import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { differenceInDays } from "date-fns"
 import Link from "next/link"
-import { useState } from "react"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
-import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
@@ -15,6 +13,7 @@ import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { openModal } from "@/store/modal.store"
 
 export type PhysicalLoanCardProps = {
   loan: Loan
@@ -49,7 +48,6 @@ const PhysicalLoanCard = ({
   // Compact single-line labels; the expanded (subline) StatusLabel form is
   // reserved for modal contexts.
   const statusText = isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
-  const [showLoanDetails, setShowLoanDetails] = useState(false)
 
   return (
     <div className={cn("relative w-full", className)}>
@@ -85,21 +83,14 @@ const PhysicalLoanCard = ({
               size="sm"
               ariaLabel={`Forny lån af ${title}`}
               data-cy={cyKeys["renew-loan-button"]}
-              onClick={() => setShowLoanDetails(true)}>
+              onClick={() =>
+                openModal("LoanDetailsModal", { loan, manifestation, title, workId, creators })
+              }>
               Forny lån
             </Button>
           </div>
         )}
       </div>
-      <LoanDetailsModal
-        open={showLoanDetails}
-        onClose={() => setShowLoanDetails(false)}
-        loan={loan}
-        manifestation={manifestation}
-        title={title}
-        workId={workId}
-        creators={creators}
-      />
     </div>
   )
 }
