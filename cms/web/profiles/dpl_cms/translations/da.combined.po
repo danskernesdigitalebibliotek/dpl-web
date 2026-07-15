@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-15 13:43+0200\n"
-"PO-Revision-Date: 2026-07-15 13:43+0200\n"
+"POT-Creation-Date: 2026-07-15 14:19+0200\n"
+"PO-Revision-Date: 2026-07-15 14:19+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5946,6 +5946,12 @@ msgstr "DPL Linkit with options"
 
 msgid "Allowed if bnf_server is enabled."
 msgstr "Tilladt hvis bnf_server er aktiveret."
+
+msgid "App fees and payment info"
+msgstr ""
+
+msgid "Returns the app fees and payment info settings."
+msgstr ""
 
 msgid "List all opening hours"
 msgstr "Vis alle åbningstider"
