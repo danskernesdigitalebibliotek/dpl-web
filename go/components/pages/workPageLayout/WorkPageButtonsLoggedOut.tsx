@@ -1,4 +1,3 @@
-import { useQueryStates } from "nuqs"
 import React from "react"
 
 import {
@@ -9,7 +8,8 @@ import {
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
-import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
+import { TModalType } from "@/lib/helpers/modal-url"
+import { openModal } from "@/store/modal.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -23,7 +23,6 @@ const WorkPageButtonsLoggedOut = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
-  const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
   const identifier = getPublizonIdentifierFromManifestation(selectedManifestation)
   const label = getManifestationLabel(selectedManifestation)
@@ -33,7 +32,7 @@ const WorkPageButtonsLoggedOut = ({
   const isDisabled = !identifier
 
   const open = (modal: TModalType) =>
-    setModal({ modal, modalProps: { wid: workId, pid: selectedManifestation.pid } })
+    openModal(modal, { wid: workId, pid: selectedManifestation.pid })
 
   if (category === "physical") {
     return (
@@ -80,7 +79,7 @@ const WorkPageButtonsLoggedOut = ({
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           disabled={isDisabled}
-          onClick={() => open("PlayerPreviewModal")}>
+          onClick={() => openModal("PlayerPreviewModal", { manifestation: selectedManifestation })}>
           Prøv {label}
         </WorkPageButton>
       </WorkPageButtons>

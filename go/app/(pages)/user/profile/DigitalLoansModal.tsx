@@ -34,9 +34,8 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
-type DigitalLoansModalProps = {
-  open: boolean
-  onClose: () => void
+// Data props — `open`/`onClose` come from the DynamicModal host.
+export type DigitalLoansModalProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
   // Opens directly on this loan's details (e.g. from a slider card);
@@ -88,7 +87,7 @@ const DigitalLoansModal = ({
   works,
   loanData,
   initialLoan,
-}: DigitalLoansModalProps) => {
+}: DigitalLoansModalProps & { open: boolean; onClose: () => void }) => {
   const { warning, danger } = useLoanThresholds()
   const [selectedLoan, setSelectedLoan] = useState<SelectedLoan | null>(null)
   const [playerOpen, setPlayerOpen] = useState(false)

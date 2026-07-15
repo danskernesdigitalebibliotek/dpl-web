@@ -13,9 +13,7 @@ import DeleteReservationModal from "@/components/shared/deleteReservationModal/D
 import DeleteReservationReceiptContent from "@/components/shared/deleteReservationModal/DeleteReservationReceiptContent"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { Toaster } from "@/components/shared/toaster/Toaster"
-import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
-import workMock from "@/lib/mocks/work/infoBox.mock"
 
 const physicalManifestation = {
   ...manifestationMock,
@@ -29,20 +27,6 @@ const physicalManifestation = {
   titles: { full: ["Ravnenes hvisken. Bog 1"], original: [] },
 }
 
-const physicalWork = {
-  ...workMock,
-  workId: "work-of:870970-basis:12345678",
-  manifestations: {
-    ...workMock.manifestations,
-    all: [physicalManifestation],
-    bestRepresentation: physicalManifestation,
-    latest: physicalManifestation,
-  },
-}
-
-const wid = physicalWork.workId
-const pid = physicalManifestation.pid
-
 const fixtureReservation: Reservation = {
   reservationId: 987654,
   recordId: "12345678",
@@ -55,7 +39,6 @@ const seedClient = ({ reservations }: { reservations?: Reservation[] } = {}) => 
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false, staleTime: Infinity } },
   })
-  client.setQueryData(useGetMaterialQuery.getKey({ wid }), { work: physicalWork })
   if (reservations) client.setQueryData(reservationsQueryKey(), reservations)
   return client
 }
@@ -92,8 +75,8 @@ export const Confirm: Story = {
   args: {
     open: true,
     onClose: () => {},
-    wid,
-    pid,
+    cover: physicalManifestation.cover,
+    reservationId: fixtureReservation.reservationId,
   },
 }
 
@@ -105,8 +88,8 @@ export const ConfirmDarkMode: Story = {
   args: {
     open: true,
     onClose: () => {},
-    wid,
-    pid,
+    cover: physicalManifestation.cover,
+    reservationId: fixtureReservation.reservationId,
   },
 }
 
@@ -153,7 +136,7 @@ export const Failure: Story = {
   args: {
     open: true,
     onClose: () => {},
-    wid,
-    pid,
+    cover: physicalManifestation.cover,
+    reservationId: fixtureReservation.reservationId,
   },
 }

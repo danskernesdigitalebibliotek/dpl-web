@@ -1,5 +1,4 @@
 import { useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { useQueryStates } from "nuqs"
 import React from "react"
 
 import {
@@ -14,8 +13,9 @@ import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { getPublizonIdentifierFromManifestation, pidToFaust } from "@/lib/helpers/ids"
-import { TModalType, modalParsers } from "@/lib/helpers/modal-url"
+import { TModalType } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
+import { openModal } from "@/store/modal.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -29,7 +29,6 @@ const WorkPageButtonsLoggedIn = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
-  const [, setModal] = useQueryStates(modalParsers, { scroll: false })
   const { session } = useSession()
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
 
@@ -47,7 +46,7 @@ const WorkPageButtonsLoggedIn = ({
   const isDisabled = isErrorLoans || !identifier
 
   const open = (modal: TModalType) =>
-    setModal({ modal, modalProps: { wid: workId, pid: selectedManifestation.pid } })
+    openModal(modal, { wid: workId, pid: selectedManifestation.pid })
 
   // data-cy on each rendered WorkPageButton lets cypress wait for the logged-in
   // branch to mount before clicking — the LoggedOut buttons (same label text)
@@ -110,7 +109,12 @@ const WorkPageButtonsLoggedIn = ({
             theme="primary"
             dataCy={dataCy}
             disabled={isDisabled}
-            onClick={() => open("PlayerModal")}>
+            onClick={() =>
+              openModal("PlayerModal", {
+                manifestation: selectedManifestation,
+                orderId: loan?.orderId ?? undefined,
+              })
+            }>
             Lyt til {label}
           </WorkPageButton>
         </WorkPageButtons>
@@ -130,7 +134,7 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Prøv ${label}`}
           dataCy={dataCy}
           disabled={isDisabled}
-          onClick={() => open("PlayerPreviewModal")}>
+          onClick={() => openModal("PlayerPreviewModal", { manifestation: selectedManifestation })}>
           Prøv {label}
         </WorkPageButton>
       </WorkPageButtons>
@@ -174,7 +178,12 @@ const PhysicalReservationButton = ({
           ariaLabel="Slet reservering"
           theme="primary"
           dataCy={cyKeys["delete-reservation-button"]}
-          onClick={() => onOpen("DeleteReservationModal")}>
+          onClick={() =>
+            openModal("DeleteReservationModal", {
+              cover: selectedManifestation.cover,
+              reservationId: existing.reservationId,
+            })
+          }>
           Slet reservering
         </WorkPageButton>
       </>

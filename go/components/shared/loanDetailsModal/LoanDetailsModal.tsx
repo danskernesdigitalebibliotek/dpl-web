@@ -21,9 +21,8 @@ import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
-type Props = {
-  open: boolean
-  onClose: () => void
+// Data props — `open`/`onClose` come from the DynamicModal host.
+export type LoanDetailsModalProps = {
   loan: LoanDetails
   manifestation: ManifestationSearchPageTeaserFragment
   title: string
@@ -43,7 +42,7 @@ const LoanDetailsModal = ({
   workId,
   creators,
   dueDateLabel = "Afleveres",
-}: Props) => {
+}: LoanDetailsModalProps & { open: boolean; onClose: () => void }) => {
   const { warning, danger } = useLoanThresholds()
   const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
   const isOverdue = daysUntil < danger
