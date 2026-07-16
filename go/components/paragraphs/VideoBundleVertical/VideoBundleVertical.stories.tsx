@@ -22,7 +22,7 @@ const meta = {
   parameters: { layout: "fullscreen" },
   args: {
     title: "Video Bundle Vertical",
-    videoUrl: "https://media.videotool.dk/?vn=557_2025010614502071929993093451",
+    videoUrl: "https://media.videotool.dk/?vn=557_2025091614030817677597047514",
     works: worksMock,
   },
   decorators: [withQueryClient],

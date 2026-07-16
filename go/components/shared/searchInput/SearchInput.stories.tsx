@@ -8,7 +8,7 @@ import SearchInput from "@/components/shared/searchInput/SearchInput"
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
   <QueryClientProvider
     client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-    <div className="w-[600px] max-w-full p-10">
+    <div className="p-10">
       <Story />
     </div>
   </QueryClientProvider>
@@ -19,9 +19,9 @@ const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
 const meta = {
   title: "components/SearchInput",
   component: SearchInput,
-  parameters: { layout: "centered" },
+  parameters: { layout: "fullscreen" },
   args: {
-    placeholder: "Søg blandt bøger, film og spil",
+    placeholder: "Søg",
   },
   decorators: [withQueryClient],
 } satisfies Meta<typeof SearchInput>

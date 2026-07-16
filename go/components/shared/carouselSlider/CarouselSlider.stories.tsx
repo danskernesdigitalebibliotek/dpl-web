@@ -40,8 +40,3 @@ export const Default: Story = {}
 export const DarkMode: Story = {
   decorators: [darkModeDecorator],
 }
-
-// Without works the controls disable and the deck is empty (loading state).
-export const Loading: Story = {
-  args: { works: undefined },
-}
