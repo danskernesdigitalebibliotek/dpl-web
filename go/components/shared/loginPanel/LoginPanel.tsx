@@ -34,7 +34,7 @@ const LoginPanel = ({
         rounded-sm p-8 md:min-h-[300px]`,
         className
       )}>
-      {icon && <Icon name={icon} className="mb-4" />}
+      {icon && <Icon name={icon} className="mb-4 h-[47px] w-[41px]" />}
       <div className="text-typo-heading-5 text-foreground text-center">{heading}</div>
       {description && (
         <p className="text-typo-body-sm text-foreground-muted text-center">{description}</p>
