@@ -72,6 +72,11 @@ const LoanMaterialModal = ({
       { identifier },
       {
         onSuccess: result => {
+          setIsHandlingLoan(false)
+          if (!result) {
+            onClose()
+            return
+          }
           // Publizon's loan list lags behind the create call, so a refetch
           // would miss the new loan. Write it into the cache from the
           // create response instead.
@@ -90,7 +95,6 @@ const LoanMaterialModal = ({
               ],
             })
           )
-          setIsHandlingLoan(false)
 
           // Continue to "Dit lån" with the read/listen action ready.
           if (result.expirationDateUtc) {
