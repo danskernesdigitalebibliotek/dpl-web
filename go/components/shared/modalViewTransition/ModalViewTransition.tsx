@@ -25,18 +25,20 @@ export const ModalViewTransition = ({
   direction = 1,
   children,
   className,
-}: ModalViewTransitionProps) => (
-  <AnimatePresence mode="wait" initial={false} custom={direction}>
-    <motion.div
-      key={viewKey}
-      className={className}
-      custom={direction}
-      variants={modalViewVariants}
-      initial="enter"
-      animate="center"
-      exit="exit"
-      transition={{ duration: 0.2, ease: "easeOut" }}>
-      {children}
-    </motion.div>
-  </AnimatePresence>
-)
+}: ModalViewTransitionProps) => {
+  return (
+    <AnimatePresence mode="wait" initial={false} custom={direction}>
+      <motion.div
+        key={viewKey}
+        className={className}
+        custom={direction}
+        variants={modalViewVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{ duration: 0.2, ease: "easeOut" }}>
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  )
+}

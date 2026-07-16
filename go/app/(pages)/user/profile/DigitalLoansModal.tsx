@@ -9,13 +9,13 @@ import {
   type TMaterialCategory,
   getEbookReadUrl,
   getManifestationLabel,
-  getManifestationMaterialTypeIcon,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
-import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
+import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"
 import {
   ModalViewTransition,
   modalViewVariants,
@@ -26,6 +26,7 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
+import { useModalViewScroll } from "@/hooks/useModalViewScroll"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
@@ -103,12 +104,18 @@ const DigitalLoansModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
+  // Details open at the top; going back restores the list's position.
+  const { anchorRef, scrollToTop, rememberListAndScrollTop, restoreListScroll } =
+    useModalViewScroll()
+
   const goBack = () => {
     setDirection(-1)
     if (playerOpen) {
       setPlayerOpen(false)
+      scrollToTop()
     } else {
       setSelectedLoan(null)
+      restoreListScroll()
     }
   }
 
@@ -149,6 +156,7 @@ const DigitalLoansModal = ({
       onBack={canGoBack ? goBack : undefined}
       viewDirection={direction}
       title={animatedTitle}>
+      <div ref={anchorRef} />
       {/* The view transition only slides horizontally, so clip x only; the
           negative margin + padding give cover shadows room at the edges. */}
       <AnimateChangeInHeight className="-mx-6 overflow-x-clip px-6">
@@ -180,9 +188,7 @@ const DigitalLoansModal = ({
               })()}
             />
           ) : (
-            <ul
-              data-cy={cyKeys["digital-loans-modal"]}
-              className="divide-foreground/10 mx-auto max-w-prose divide-y">
+            <ModalMaterialList dataCy={cyKeys["digital-loans-modal"]}>
               {works.map(work => {
                 const manifestation = work.manifestations.all[0]
                 const isbn = manifestation.identifiers.find(
@@ -196,44 +202,30 @@ const DigitalLoansModal = ({
                 const title = work.titles.full[0]
 
                 return (
-                  <li key={manifestation.pid} className="py-8 first:pt-0 last:pb-0">
-                    <button
-                      type="button"
-                      aria-label={`Se detaljer om dit lån af ${title}`}
-                      onClick={() => {
-                        const selection = buildSelectedLoan(work, loanData)
-                        if (!selection) return
-                        setDirection(1)
-                        setSelectedLoan(selection)
-                      }}
-                      className="focus-visible flex w-full cursor-pointer items-end gap-8 text-left">
-                      <div className="w-28 shrink-0 lg:w-32">
-                        <ManifestationCover
-                          cover={manifestation.cover}
-                          iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-                          alt={`${title} cover billede`}
-                          className="w-full"
-                          iconClassName="bg-background-overlay-solid"
-                        />
-                      </div>
-                      <div className="min-w-0 space-y-2">
-                        <p className="text-typo-heading-5">{title}</p>
-                        {creators && (
-                          <p className="text-typo-subtitle-sm text-foreground-muted">
-                            Af {creators}
-                          </p>
-                        )}
-                        {daysUntil !== null && (
-                          <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
-                            {expiryStatusText(daysUntil, danger)}
-                          </StatusLabel>
-                        )}
-                      </div>
-                    </button>
-                  </li>
+                  <ModalMaterialListItem
+                    key={manifestation.pid}
+                    manifestation={manifestation}
+                    title={title}
+                    creators={creators}
+                    ariaLabel={`Se detaljer om dit lån af ${title}`}
+                    onSelect={() => {
+                      const selection = buildSelectedLoan(work, loanData)
+                      if (!selection) return
+                      rememberListAndScrollTop()
+                      setDirection(1)
+                      setSelectedLoan(selection)
+                    }}
+                    status={
+                      daysUntil !== null && (
+                        <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
+                          {expiryStatusText(daysUntil, danger)}
+                        </StatusLabel>
+                      )
+                    }
+                  />
                 )
               })}
-            </ul>
+            </ModalMaterialList>
           )}
         </ModalViewTransition>
       </AnimateChangeInHeight>
@@ -260,6 +252,7 @@ const DigitalLoansModal = ({
               onClick={() => {
                 setDirection(1)
                 setPlayerOpen(true)
+                scrollToTop()
               }}>
               Lyt til {selectedLoan.label}
             </Button>
