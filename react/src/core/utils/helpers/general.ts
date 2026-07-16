@@ -634,4 +634,59 @@ if (import.meta.vitest) {
       });
     });
   });
+
+  const manifestationWithEdition = (summary: string, year: string) =>
+    ({
+      edition: { summary, publicationYear: { display: year } }
+    }) as Manifestation;
+
+  describe("getManifestationEditionNumber", () => {
+    it("parses the leading edition number from the edition summary", () => {
+      expect(
+        getManifestationEditionNumber(
+          manifestationWithEdition("167. udgave, 2025", "2025")
+        )
+      ).toBe(167);
+    });
+
+    it("returns null when the summary has no leading number", () => {
+      expect(
+        getManifestationEditionNumber(
+          manifestationWithEdition("Særudgave, 2025", "2025")
+        )
+      ).toBeNull();
+    });
+  });
+
+  describe("orderManifestationsByYear", () => {
+    // Editions sharing a publication year must be ordered by edition number
+    // (highest first), so "167. udgave" beats "166. udgave" and "Seneste
+    // udgave" picks the actual newest edition.
+    it("orders same-year editions by edition number regardless of input order", () => {
+      const ed166 = manifestationWithEdition("166. udgave, 2025", "2025");
+      const ed167 = manifestationWithEdition("167. udgave, 2025", "2025");
+      const older = manifestationWithEdition("1. udgave, 2024", "2024");
+
+      // Both incoming orders must yield the same result. A year-only sort is
+      // stable and would leave the tied editions untouched, so it would only
+      // match one of these two orderings — proving the tiebreaker does the work.
+      expect(orderManifestationsByYear([ed166, ed167, older])).toEqual([
+        ed167,
+        ed166,
+        older
+      ]);
+      expect(orderManifestationsByYear([ed167, ed166, older])).toEqual([
+        ed167,
+        ed166,
+        older
+      ]);
+    });
+
+    it("picks the highest edition of the tied year as the latest manifestation", () => {
+      const ed166 = manifestationWithEdition("166. udgave, 2025", "2025");
+      const ed167 = manifestationWithEdition("167. udgave, 2025", "2025");
+
+      expect(getLatestManifestation([ed166, ed167])).toBe(ed167);
+    });
+  });
 }
