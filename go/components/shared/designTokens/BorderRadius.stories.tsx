@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
+import { ShowcaseItem } from "@/.storybook/showcase"
 import { cn } from "@/lib/helpers/helper.cn"
 
 // Visual reference for the border radius scale defined in styles/theme.css.
@@ -21,21 +22,15 @@ const radiusTokens = [
 const BorderRadiusShowcase = () => (
   <div className="flex flex-wrap gap-10 p-10">
     {radiusTokens.map(({ className, token, value }) => (
-      <div key={className} className="space-y-3">
+      <ShowcaseItem key={className} title={className} description={`${token}: ${value}`}>
         <div className={cn("bg-foreground h-36 w-60", className)} />
-        <dl>
-          <dt className="text-typo-subtitle-sm font-medium">{className}</dt>
-          <dd className="text-typo-caption text-foreground-muted">
-            {token}: {value}
-          </dd>
-        </dl>
-      </div>
+      </ShowcaseItem>
     ))}
   </div>
 )
 
 const meta = {
-  title: "design tokens/BorderRadius",
+  title: "design tokens/Border radius",
   component: BorderRadiusShowcase,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof BorderRadiusShowcase>

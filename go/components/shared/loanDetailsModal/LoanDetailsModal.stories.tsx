@@ -1,83 +1,25 @@
-import { type Loan, ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
-import { Toaster } from "@/components/shared/toaster/Toaster"
-import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
-import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
+import {
+  buildItem,
+  withServiceLayer,
+} from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
 
-// Dates are computed relative to "now" so the rendered values stay stable
-// over time (e.g. in Chromatic snapshots).
-const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
-
-const fixtureCover = coverFactory.build({
-  thumbnail: "https://placehold.co/120x173/5b4a8a/ffffff.jpg?text=Sj%C3%A6lerytterne",
-  xSmall: {
-    url: "https://placehold.co/120x173/5b4a8a/ffffff.jpg?text=Sj%C3%A6lerytterne",
-    width: 120,
-    height: 173,
-  },
-  small: {
-    url: "https://placehold.co/240x346/5b4a8a/ffffff.jpg?text=Sj%C3%A6lerytterne",
-    width: 240,
-    height: 346,
-  },
-  medium: {
-    url: "https://placehold.co/480x691/5b4a8a/ffffff.jpg?text=Sj%C3%A6lerytterne",
-    width: 480,
-    height: 691,
-  },
-  large: {
-    url: "https://placehold.co/500x720/5b4a8a/ffffff.jpg?text=Sj%C3%A6lerytterne",
-    width: 500,
-    height: 720,
-  },
-})
-
-const fixtureManifestation = eBookManifestationFactory.build({
-  pid: "870970-basis:12345671",
-  cover: fixtureCover,
-  materialTypes: [
-    {
-      materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-      materialTypeSpecific: { code: "BOOK", display: "bog" },
-    },
-  ],
-})
-
-const fixtureLoan: Loan = {
-  loanId: 12345671,
-  recordId: "12345671",
-  dueDate: daysFromNow(8),
-  loanDate: daysFromNow(-22),
-  materialItemNumber: "87454647634",
+// The renewable "Sjælerytterne" fixture from the shared physical loan set —
+// plain placeholder covers, dates relative to "now".
+const fixtureItem = buildItem({
+  faust: "12345671",
+  title: "Sjælerytterne",
+  dueInDays: 8,
   isRenewable: true,
-}
-
-const storyServiceLayerConfig = {
-  getBaseUrl: () => "https://fbs.example",
-  getAuthHeader: () => "Bearer story-token",
-}
-
-const withServiceLayer =
-  () =>
-  (Story: React.ComponentType): React.ReactElement => (
-    <QueryClientProvider
-      client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-      <ServiceLayerProvider config={storyServiceLayerConfig}>
-        <Story />
-        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
-        <Toaster duration={Infinity} />
-      </ServiceLayerProvider>
-    </QueryClientProvider>
-  )
+})
+const fixtureLoan = fixtureItem.loan
+const fixtureManifestation = fixtureItem.manifestation
 
 const meta = {
-  title: "components/LoanDetailsModal",
+  title: "modals/LoanDetailsModal",
   component: LoanDetailsModal,
   parameters: { layout: "centered" },
 } satisfies Meta<typeof LoanDetailsModal>

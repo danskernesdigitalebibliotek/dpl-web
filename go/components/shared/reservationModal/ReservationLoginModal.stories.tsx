@@ -23,7 +23,7 @@ const withDplCmsConfig =
   )
 
 const meta = {
-  title: "components/ReservationLoginModal",
+  title: "modals/ReservationLoginModal",
   component: ReservationLoginModal,
   parameters: { layout: "centered" },
 } satisfies Meta<typeof ReservationLoginModal>

@@ -1,0 +1,81 @@
+import { type Reservation } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import type { Meta, StoryObj } from "@storybook/nextjs"
+
+import { darkModeDecorator } from "@/.storybook/decorators"
+import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
+import { ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
+import {
+  fixtureItems,
+  withServiceLayer,
+} from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
+
+const daysFromNow = (days: number) =>
+  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+
+const buildReservation = (
+  index: number,
+  overrides: Partial<Reservation> = {}
+): ReservationItem => {
+  const { work, manifestation } = fixtureItems[index]
+  return {
+    reservation: {
+      reservationId: index,
+      recordId: fixtureItems[index].loan.recordId,
+      pickupBranchId: "DK-761500",
+      numberInQueue: 3,
+      state: "reserved",
+      pickupDeadline: undefined,
+      pickupNumber: undefined,
+      ...overrides,
+    },
+    work,
+    manifestation,
+  }
+}
+
+// One ready for pickup, two queued.
+const reservationItems = [
+  buildReservation(0, {
+    state: "readyForPickup",
+    numberInQueue: undefined,
+    pickupDeadline: daysFromNow(6),
+    pickupNumber: "Reol 13",
+  }),
+  buildReservation(1, { numberInQueue: 1 }),
+  buildReservation(2, { numberInQueue: 4 }),
+]
+
+const meta = {
+  title: "profile/PhysicalQuotasSection",
+  component: PhysicalQuotasSection,
+  parameters: { layout: "fullscreen" },
+} satisfies Meta<typeof PhysicalQuotasSection>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+// Loan and reservation counts; "Vis alle" opens the matching modal through
+// the modal store (hosted by the decorator).
+export const Default: Story = {
+  decorators: [withServiceLayer()],
+  args: {
+    loanItems: fixtureItems,
+    reservationItems,
+  },
+}
+
+export const DefaultDarkMode: Story = {
+  decorators: [withServiceLayer(), darkModeDecorator],
+  args: {
+    loanItems: fixtureItems,
+    reservationItems,
+  },
+}
+
+export const Empty: Story = {
+  decorators: [withServiceLayer()],
+  args: {
+    loanItems: [],
+    reservationItems: [],
+  },
+}

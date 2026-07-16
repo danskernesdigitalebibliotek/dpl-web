@@ -3,6 +3,7 @@ import React from "react"
 import { fn } from "storybook/test"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
+import { ShowcaseItem } from "@/.storybook/showcase"
 
 import Icon from "../icon/Icon"
 import { Button } from "./Button"
@@ -22,11 +23,12 @@ const variantContent = {
 const AllVariantsShowcase = () => (
   <div className="space-y-10 p-10">
     {(Object.keys(variantContent) as (keyof typeof variantContent)[]).map(variant => (
-      <div key={variant} className="space-y-3">
-        <p className="text-typo-subtitle-sm font-medium">{variant}</p>
+      <div key={variant} className="space-y-4">
         {themes.map(theme => (
-          <div key={theme} className="flex flex-wrap items-center gap-4">
-            <span className="text-typo-caption text-foreground-muted w-20">{theme}</span>
+          <ShowcaseItem
+            key={theme}
+            title={`${variant} · ${theme}`}
+            boxClassName="flex-row flex-wrap items-center gap-4">
             {sizes.map(size => (
               <Button
                 key={size}
@@ -60,7 +62,7 @@ const AllVariantsShowcase = () => (
                 {variantContent[variant].children}
               </Button>
             )}
-          </div>
+          </ShowcaseItem>
         ))}
       </div>
     ))}

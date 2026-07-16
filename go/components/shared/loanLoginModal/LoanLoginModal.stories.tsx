@@ -63,7 +63,7 @@ const withProviders =
   )
 
 const meta = {
-  title: "components/LoanLoginModal",
+  title: "modals/LoanLoginModal",
   component: LoanLoginModal,
   parameters: { layout: "centered" },
 } satisfies Meta<typeof LoanLoginModal>

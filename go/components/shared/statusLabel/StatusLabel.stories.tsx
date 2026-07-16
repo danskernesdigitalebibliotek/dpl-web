@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 
+import { darkModeDecorator } from "@/.storybook/decorators"
+import { ShowcaseItem, ShowcaseTitle } from "@/.storybook/showcase"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 
 const meta = {
@@ -45,69 +47,90 @@ export const SuccessInverted: Story = {
   args: { variant: "success", inverted: true, children: "Bogen er reserveret til dig" },
 }
 
-// Expanded form: status line plus a bold deadline subline.
-export const ExpandedWarning: Story = {
-  args: {
-    variant: "warning",
-    children: "Skal afleveres om 7 dage",
-    subline: "Aflever senest 22. juli 2026",
-  },
-}
+// All status labels per modal context, mirroring the design reference:
+// compact labels on the "Min side" carousels, expanded labels (bold absolute
+// subline) in list and material views.
+const ContextColumn = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <ShowcaseItem title={title}>{children}</ShowcaseItem>
+)
 
-export const ExpandedError: Story = {
-  args: {
-    variant: "error",
-    children: "Afleveringsfrist overskredet",
-    subline: "Aflever senest 9. juli 2026",
-  },
-}
+const ContextSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <section className="space-y-4">
+    <ShowcaseTitle>{title}</ShowcaseTitle>
+    <div className="grid gap-10 md:grid-cols-2">{children}</div>
+  </section>
+)
 
-export const ExpandedSuccess: Story = {
-  args: {
-    variant: "success",
-    children: "Klar til afhentning",
-    subline: "Afhent senest 22. juli 2026",
-  },
-}
+const ModalContextsShowcase = () => (
+  <div className="space-y-14 p-10">
+    <ContextSection title="Digitale lån">
+      <ContextColumn title="Min side karrusel">
+        <StatusLabel variant="neutral">Udløber om 8 dage</StatusLabel>
+        <StatusLabel variant="warning">Udløber om 7 dage</StatusLabel>
+      </ContextColumn>
+      <ContextColumn title="Liste- og materialevisningen">
+        <StatusLabel variant="neutral">Udløber om 8 dage</StatusLabel>
+        <StatusLabel variant="warning" subline="Udløber 22. juli 2026">
+          Udløber om 7 dage
+        </StatusLabel>
+      </ContextColumn>
+    </ContextSection>
 
-// Side-by-side overview of all variants.
-export const Showcase: Story = {
-  args: { children: "" },
-  render: () => (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap gap-3">
-        <StatusLabel variant="error">Mangler betaling</StatusLabel>
-        <StatusLabel variant="warning">Lån udløber</StatusLabel>
-        <StatusLabel variant="success">Klar til dig</StatusLabel>
-      </div>
-      <div className="flex flex-wrap gap-3">
-        <StatusLabel variant="error" inverted>
-          Frist overskredet
-        </StatusLabel>
-        <StatusLabel variant="warning" inverted>
-          Lån udløber
-        </StatusLabel>
-        <StatusLabel variant="success" inverted>
-          Bogen er reserveret til dig
-        </StatusLabel>
-      </div>
-      <div className="flex flex-col items-start gap-3">
-        <StatusLabel variant="success">Klar til afhentning</StatusLabel>
+    <ContextSection title="Fysiske lån">
+      <ContextColumn title="Min side karrusel">
+        <StatusLabel variant="neutral">Skal afleveres om 8 dage</StatusLabel>
         <StatusLabel variant="warning">Skal afleveres om 7 dage</StatusLabel>
         <StatusLabel variant="error">Afleveringsfrist overskredet</StatusLabel>
-        <StatusLabel variant="neutral">Skal afleveres om 8 dage</StatusLabel>
-      </div>
-      <div className="flex flex-wrap gap-3">
-        <StatusLabel variant="success" subline="Afhent senest 22. juli 2026">
-          Klar til afhentning
+      </ContextColumn>
+      <ContextColumn title="Liste- og materialevisningen">
+        <StatusLabel variant="neutral" className="px-0 py-0" subline="Aflevér senest 28. juli 2026">
+          Skal afleveres om 8 dage
         </StatusLabel>
-        <StatusLabel variant="warning" subline="Aflever senest 22. juli 2026">
+        <StatusLabel variant="warning" subline="Aflevér senest 22. juli 2026">
           Skal afleveres om 7 dage
         </StatusLabel>
-        <StatusLabel variant="error" subline="Aflever senest 9. juli 2026">
+        <StatusLabel variant="error" subline="Aflevér senest 9. juli 2026">
           Afleveringsfrist overskredet
         </StatusLabel>
-      </div>
-    </div>
-  ),
+      </ContextColumn>
+    </ContextSection>
+
+    <ContextSection title="Reserveringer">
+      <ContextColumn title="Min side karrusel">
+        <StatusLabel variant="neutral">Der er 8 foran dig i køen</StatusLabel>
+        <StatusLabel variant="success">Klar til afhentning</StatusLabel>
+        <StatusLabel variant="neutral" className="bg-background-overlay px-4 py-1">
+          Afhentningsfristen er overskredet
+        </StatusLabel>
+      </ContextColumn>
+      <ContextColumn title="Liste- og materialevisningen">
+        <StatusLabel variant="neutral" className="px-0 py-0" subline="Der er 8 foran dig i køen">
+          Biblioteket har 128 eksemplarer
+        </StatusLabel>
+        <StatusLabel variant="success" subline="Afhent senest 22. juli 2026">
+          <span>Nørrebro Bibliotek</span>
+          <span>Afhentningsinfo: Reol 101</span>
+        </StatusLabel>
+        <StatusLabel
+          variant="neutral"
+          className="bg-background-overlay"
+          subline="Afhentningsfristen er overskredet">
+          Reserver igen for at låne materialet
+        </StatusLabel>
+      </ContextColumn>
+    </ContextSection>
+  </div>
+)
+
+export const ModalContexts: Story = {
+  parameters: { layout: "fullscreen" },
+  args: { children: "" },
+  render: () => <ModalContextsShowcase />,
+}
+
+export const ModalContextsDarkMode: Story = {
+  parameters: { layout: "fullscreen" },
+  decorators: [darkModeDecorator],
+  args: { children: "" },
+  render: () => <ModalContextsShowcase />,
 }

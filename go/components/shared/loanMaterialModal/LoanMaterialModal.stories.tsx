@@ -66,7 +66,7 @@ const withQueryClient =
   )
 
 const meta = {
-  title: "components/LoanMaterialModal",
+  title: "modals/LoanMaterialModal",
   component: LoanMaterialModal,
   parameters: { layout: "centered" },
 } satisfies Meta<typeof LoanMaterialModal>

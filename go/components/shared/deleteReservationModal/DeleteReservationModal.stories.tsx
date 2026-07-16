@@ -61,7 +61,7 @@ const withQueryClient =
   )
 
 const meta = {
-  title: "components/DeleteReservationModal",
+  title: "modals/DeleteReservationModal",
   component: DeleteReservationModal,
   parameters: { layout: "centered" },
 } satisfies Meta<typeof DeleteReservationModal>
