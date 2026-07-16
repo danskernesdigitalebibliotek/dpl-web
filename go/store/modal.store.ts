@@ -1,12 +1,12 @@
 import { createStore } from "@xstate/store"
 
-import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
-import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
-import type { ReservationsModalProps } from "@/components/shared/reservationsModal/ReservationsModal"
 import type { DeleteReservationModalProps } from "@/components/shared/deleteReservationModal/DeleteReservationModal"
+import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
+import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import type { PlayerModalProps } from "@/components/shared/playerModal/playerModal"
 import type { PlayerPreviewModalProps } from "@/components/shared/playerPreviewModal/playerPreviewModal"
+import type { ReservationsModalProps } from "@/components/shared/reservationsModal/ReservationsModal"
 import type { TModalUrlParams } from "@/lib/helpers/modal-url"
 
 // Props per modal type — `open`/`onClose` are supplied by the DynamicModal

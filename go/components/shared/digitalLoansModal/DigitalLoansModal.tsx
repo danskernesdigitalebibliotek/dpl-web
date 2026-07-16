@@ -4,7 +4,6 @@ import { differenceInDays } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 
-import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import {
   type TMaterialCategory,
   getEbookReadUrl,
@@ -13,6 +12,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
+import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
 import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"

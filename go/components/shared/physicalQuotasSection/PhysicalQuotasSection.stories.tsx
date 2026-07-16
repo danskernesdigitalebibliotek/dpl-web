@@ -2,20 +2,17 @@ import { type Reservation } from "@danskernesdigitalebibliotek/dpl-service-layer
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
-import { ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 import {
   fixtureItems,
   withServiceLayer,
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
+import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
+import { ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 
 const daysFromNow = (days: number) =>
   new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
 
-const buildReservation = (
-  index: number,
-  overrides: Partial<Reservation> = {}
-): ReservationItem => {
+const buildReservation = (index: number, overrides: Partial<Reservation> = {}): ReservationItem => {
   const { work, manifestation } = fixtureItems[index]
   return {
     reservation: {

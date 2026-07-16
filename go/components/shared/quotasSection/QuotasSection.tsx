@@ -69,9 +69,7 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
             <p className="text-typo-subtitle-sm text-center opacity-70 lg:flex-1 lg:text-left">
               Bøger og podcasts med et blåt mærke kan du altid låne, selvom du har brugt alle dine
               lån. {/* TODO: point at a blue-titles search once that filter exists. */}
-              <Link
-                href="#"
-                className="text-foreground font-medium whitespace-nowrap underline">
+              <Link href="#" className="text-foreground font-medium whitespace-nowrap underline">
                 Find alle blå titler
               </Link>
             </p>

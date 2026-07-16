@@ -2,12 +2,12 @@
 
 import React from "react"
 
-import LoanSlider, { LoanSliderSkeleton } from "@/components/shared/loanSlider/LoanSlider"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
 } from "@/components/pages/workPageLayout/helper"
+import LoanSlider, { LoanSliderSkeleton } from "@/components/shared/loanSlider/LoanSlider"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,

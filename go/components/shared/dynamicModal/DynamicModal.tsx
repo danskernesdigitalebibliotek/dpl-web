@@ -5,6 +5,9 @@ import { usePathname } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React, { useEffect, useRef, useState } from "react"
 
+import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
+import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 import { TModalType, VALID_MODAL_TYPES, modalParsers } from "@/lib/helpers/modal-url"
 import {
   TModalRegistry,
@@ -13,10 +16,6 @@ import {
   modalStore,
   openModal,
 } from "@/store/modal.store"
-
-import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
-import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
-import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 
 import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
 import LoanDetailsModal from "../loanDetailsModal/LoanDetailsModal"

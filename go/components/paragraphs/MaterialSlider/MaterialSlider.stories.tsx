@@ -8,8 +8,7 @@ import MaterialSlider from "@/components/paragraphs/MaterialSlider/MaterialSlide
 import { worksMock } from "./MaterialSlider.mockData"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
-  <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
     <Story />
   </QueryClientProvider>
 )

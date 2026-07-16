@@ -23,7 +23,6 @@ const WorkPageButtonsLoggedOut = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
-
   const identifier = getPublizonIdentifierFromManifestation(selectedManifestation)
   const label = getManifestationLabel(selectedManifestation)
   const category = getMaterialCategory(

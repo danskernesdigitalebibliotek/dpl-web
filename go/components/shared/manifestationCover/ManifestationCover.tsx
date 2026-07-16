@@ -31,9 +31,7 @@ const ManifestationCover = ({
   iconClassName = "bg-background h-10 w-10",
   costFree,
 }: ManifestationCoverProps) => (
-  <div
-    className={cn("relative", className)}
-    style={{ aspectRatio: getCoverAspectRatio(cover) }}>
+  <div className={cn("relative", className)} style={{ aspectRatio: getCoverAspectRatio(cover) }}>
     <CoverPicture alt={alt} covers={cover} className="select-none" />
     <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
       <MaterialTypeIconWrapper

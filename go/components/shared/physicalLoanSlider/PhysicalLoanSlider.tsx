@@ -2,18 +2,19 @@
 
 import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useWindowSize } from "@uidotdev/usehooks"
-import { useRouter } from "next/navigation"
-
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
-import PhysicalLoanCard from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
-import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
+import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
+import PhysicalLoanCard from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
+import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
+import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 import { cyKeys } from "@/cypress/support/constants"
 import {
   ManifestationSearchPageTeaserFragment,
@@ -21,10 +22,6 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
-
-import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
-
-import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
 
 export type PhysicalLoanItem = {
   loan: Loan

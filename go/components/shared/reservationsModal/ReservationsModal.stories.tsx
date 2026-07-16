@@ -13,10 +13,7 @@ import ReservationsModal, {
 const daysFromNow = (days: number) =>
   new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
 
-const buildReservation = (
-  index: number,
-  overrides: Partial<Reservation> = {}
-): ReservationItem => {
+const buildReservation = (index: number, overrides: Partial<Reservation> = {}): ReservationItem => {
   const { work, manifestation } = fixtureItems[index]
   return {
     reservation: {

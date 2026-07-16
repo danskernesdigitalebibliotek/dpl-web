@@ -2,20 +2,21 @@
 
 import { useWindowSize } from "@uidotdev/usehooks"
 import { differenceInDays } from "date-fns"
-import { useRouter } from "next/navigation"
-
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
+import { useRouter } from "next/navigation"
 import React, { Suspense, useEffect, useState } from "react"
 
-import { buildSelectedLoan } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
-import LoanCard from "@/components/shared/loanCard/LoanCard"
-import QuotasSection, { QuotasSectionSkeleton } from "@/components/shared/quotasSection/QuotasSection"
-import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import { buildSelectedLoan } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import Icon from "@/components/shared/icon/Icon"
+import LoanCard from "@/components/shared/loanCard/LoanCard"
+import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
+import QuotasSection, {
+  QuotasSectionSkeleton,
+} from "@/components/shared/quotasSection/QuotasSection"
 import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"

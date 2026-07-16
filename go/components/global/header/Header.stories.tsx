@@ -8,8 +8,7 @@ import { themeStore } from "@/store/theme.store"
 import Header from "./Header"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
-  <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
     <Story />
   </QueryClientProvider>
 )

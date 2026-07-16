@@ -4,10 +4,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 // Three staggered pulsing dots — the shared loading indicator for buttons.
 const LoadingDots = ({ className }: { className?: string }) => (
-  <span
-    role="status"
-    aria-label="Indlæser"
-    className={cn("flex items-center gap-1.5", className)}>
+  <span role="status" aria-label="Indlæser" className={cn("flex items-center gap-1.5", className)}>
     {[0, 150, 300].map(delay => (
       <span
         key={delay}

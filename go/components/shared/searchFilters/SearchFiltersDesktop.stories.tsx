@@ -8,8 +8,7 @@ import SearchFiltersDesktop from "@/components/shared/searchFilters/SearchFilter
 import { searchFilterFacetsMock } from "../sheet/searchFilterFacets.mock"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
-  <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
     <div className="p-10">
       <Story />
     </div>

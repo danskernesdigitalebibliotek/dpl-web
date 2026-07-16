@@ -1,9 +1,8 @@
 import { Metadata } from "next"
 import { connection } from "next/server"
 
-import { setPageMetadata } from "@/lib/helpers/helper.metadata"
-
 import ProfilePageLayout from "@/components/pages/profilePageLayout/ProfilePageLayout"
+import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
 export const metadata: Metadata = setPageMetadata("Din profil")
 

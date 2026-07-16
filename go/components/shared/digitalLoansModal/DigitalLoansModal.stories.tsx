@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
-import DigitalLoansModal, { buildSelectedLoan } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import DigitalLoansModal, {
+  buildSelectedLoan,
+} from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import {
   fixtureWorks,
   loanListResult,

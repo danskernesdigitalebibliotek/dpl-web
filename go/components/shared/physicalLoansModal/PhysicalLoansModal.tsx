@@ -4,7 +4,6 @@ import { type RenewedLoan, useRenewLoans } from "@danskernesdigitalebibliotek/dp
 import { AnimatePresence, motion } from "framer-motion"
 import React, { useState } from "react"
 
-import { type PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
@@ -17,6 +16,7 @@ import {
   ModalViewTransition,
   modalViewVariants,
 } from "@/components/shared/modalViewTransition/ModalViewTransition"
+import { type PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"

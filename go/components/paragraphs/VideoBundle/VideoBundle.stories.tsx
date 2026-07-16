@@ -8,8 +8,7 @@ import VideoBundle from "@/components/paragraphs/VideoBundle/VideoBundle"
 import { worksMock } from "./VideoBundle.mockData"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
-  <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
     <Story />
   </QueryClientProvider>
 )

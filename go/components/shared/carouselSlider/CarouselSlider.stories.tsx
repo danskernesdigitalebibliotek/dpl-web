@@ -8,8 +8,7 @@ import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import { worksMock } from "../../paragraphs/VideoBundle/VideoBundle.mockData"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
-  <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
     <div className="content-container py-10">
       <div className="grid-go items-start">
         <Story />

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import {
   fixtureItems,
   withServiceLayer,
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
+import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 
 const meta = {
   title: "modals/PhysicalLoansModal",

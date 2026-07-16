@@ -58,9 +58,7 @@ const DeleteReservationModal = ({
               <ManifestationCover cover={cover} iconName="book" className="w-32 shrink-0" />
               <div className="flex flex-col gap-y-3">
                 <p className="text-typo-heading-5">Vil du slette din reservering?</p>
-                <p className="text-typo-subtitle-md text-foreground-muted">
-                  Du kan ikke fortryde.
-                </p>
+                <p className="text-typo-subtitle-md text-foreground-muted">Du kan ikke fortryde.</p>
               </div>
             </div>
           )}

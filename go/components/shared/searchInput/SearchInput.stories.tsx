@@ -6,8 +6,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import SearchInput from "@/components/shared/searchInput/SearchInput"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
-  <QueryClientProvider
-    client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
     <div className="p-10">
       <Story />
     </div>
