@@ -47,9 +47,7 @@ export const AnimateChangeInHeight: React.FC<AnimateChangeInHeightProps> = ({
       // Snap to the first measured height (no spring on mount); animate
       // only real content changes after that.
       transition={
-        hasMeasuredOnce.current
-          ? { type: "spring", bounce: 0, duration: 0.35 }
-          : { duration: 0 }
+        hasMeasuredOnce.current ? { type: "spring", bounce: 0, duration: 0.35 } : { duration: 0 }
       }>
       <div ref={containerRef}>{children}</div>
     </motion.div>

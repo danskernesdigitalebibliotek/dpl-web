@@ -75,32 +75,32 @@ const LoanDetailsModal = ({
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Dit lån">
       <ModalFlowBody viewKey={isReceiptStep ? "receipt" : "details"}>
-          {isReceiptStep && renewedLoan ? (
-            <LoanRenewalReceiptContent
-              manifestation={manifestation}
-              renewedLoan={renewedLoan}
-              title={title}
-            />
-          ) : (
-            <LoanDetailsContent
-              loan={loan}
-              manifestation={manifestation}
-              title={title}
-              creators={creators}
-              dueDateLabel={dueDateLabel}
-              href={
-                workId
-                  ? resolveUrl({
-                      routeParams: { work: "work", wid: workId },
-                      queryParams: {
-                        type: manifestation.materialTypes[0].materialTypeSpecific.code,
-                      },
-                    })
-                  : undefined
-              }
-              status={<PhysicalDueStatusLabel dueDate={loan.dueDate} />}
-            />
-          )}
+        {isReceiptStep && renewedLoan ? (
+          <LoanRenewalReceiptContent
+            manifestation={manifestation}
+            renewedLoan={renewedLoan}
+            title={title}
+          />
+        ) : (
+          <LoanDetailsContent
+            loan={loan}
+            manifestation={manifestation}
+            title={title}
+            creators={creators}
+            dueDateLabel={dueDateLabel}
+            href={
+              workId
+                ? resolveUrl({
+                    routeParams: { work: "work", wid: workId },
+                    queryParams: {
+                      type: manifestation.materialTypes[0].materialTypeSpecific.code,
+                    },
+                  })
+                : undefined
+            }
+            status={<PhysicalDueStatusLabel dueDate={loan.dueDate} />}
+          />
+        )}
       </ModalFlowBody>
 
       <ResponsiveDialog.Actions>
