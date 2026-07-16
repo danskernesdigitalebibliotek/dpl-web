@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
-import DigitalLoansModal, {
-  buildSelectedLoan,
-} from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import {
   fixtureWorks,
   loanListResult,
   seedClient,
   withQueryClient,
 } from "@/components/shared/digitalLoansModal/digitalLoansStoryFixtures"
+import { buildSelectedLoan } from "@/lib/helpers/helper.patron"
 
 // The digital loans modal is one dialog with internal views: the loan list,
 // the "Dit lån" details, and (for audiobooks) the player. Navigation between

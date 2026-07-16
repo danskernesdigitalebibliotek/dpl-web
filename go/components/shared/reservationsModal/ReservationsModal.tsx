@@ -23,21 +23,12 @@ import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
-import {
-  ManifestationSearchPageTeaserFragment,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { type ReservationItem } from "@/lib/helpers/helper.patron"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
 const USER_PROFILE_PATH = "/user/me"
-
-export type ReservationItem = {
-  reservation: Reservation
-  work: WorkTeaserSearchPageFragment
-  manifestation: ManifestationSearchPageTeaserFragment
-}
 
 // Data props — `open`/`onClose` come from the DynamicModal host.
 export type ReservationsModalProps = {
@@ -75,13 +66,7 @@ const PickupInfo = ({ reservation }: { reservation: Reservation }) => {
 
 // Queued: copy count and queue position as plain two-line text (no box).
 // FBS numberInQueue is the patron's 1-based position — 1 means next in line.
-const QueueStatus = ({
-  reservation,
-  workId,
-}: {
-  reservation: Reservation
-  workId: string
-}) => {
+const QueueStatus = ({ reservation, workId }: { reservation: Reservation; workId: string }) => {
   const { data: availability } = useMaterialAvailability(workId, [reservation.recordId])
 
   if (reservation.numberInQueue === undefined) return null

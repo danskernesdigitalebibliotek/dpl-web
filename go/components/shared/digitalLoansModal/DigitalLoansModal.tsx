@@ -3,12 +3,7 @@
 import { differenceInDays } from "date-fns"
 import React, { useEffect, useState } from "react"
 
-import {
-  type TMaterialCategory,
-  getEbookReadUrl,
-  getManifestationLabel,
-  getMaterialCategory,
-} from "@/components/pages/workPageLayout/helper"
+import { getEbookReadUrl } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
@@ -21,11 +16,14 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
-import {
-  ManifestationSearchPageTeaserFragment,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import {
+  type SelectedLoan,
+  buildSelectedLoan,
+  digitalLoanForWork,
+  sortWorksBySoonestExpiry,
+} from "@/lib/helpers/helper.patron"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
@@ -36,41 +34,6 @@ export type DigitalLoansModalProps = {
   // Opens directly on this loan's details (e.g. from a slider card);
   // there is then no back navigation to the list.
   initialLoan?: SelectedLoan | null
-}
-
-export type SelectedLoan = {
-  manifestation: ManifestationSearchPageTeaserFragment
-  title: string
-  creators: string
-  dueDate: string
-  loanDate?: string
-  orderId?: string
-  workId: string
-  category: TMaterialCategory
-  label: string
-}
-
-// Pairs a work with its Publizon loan and derives everything the details
-// view needs. Returns null when the loan (or its expiry) is missing.
-export const buildSelectedLoan = (
-  work: WorkTeaserSearchPageFragment,
-  loanData: LoanListResult
-): SelectedLoan | null => {
-  const manifestation = work.manifestations.all[0]
-  const isbn = manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value
-  const loan = loanData.loans?.find(l => l.libraryBook?.identifier === isbn)
-  if (!loan?.loanExpireDateUtc) return null
-  return {
-    manifestation,
-    title: work.titles.full[0],
-    creators: displayCreators(work.creators, 1),
-    dueDate: loan.loanExpireDateUtc,
-    loanDate: loan.orderDateUtc ?? undefined,
-    orderId: loan.orderId ?? undefined,
-    workId: work.workId,
-    category: getMaterialCategory(manifestation.materialTypes[0]?.materialTypeSpecific.code),
-    label: getManifestationLabel(manifestation),
-  }
 }
 
 // One dialog with three views: loan list, "Dit lån" details and (for
@@ -96,14 +59,7 @@ const DigitalLoansModal = ({
   }, [open])
 
   // Soonest-expiring loans first; works without a matching loan go last.
-  const expiryOf = (work: WorkTeaserSearchPageFragment) => {
-    const isbn = work.manifestations.all[0].identifiers.find(
-      identifier => identifier.type === "ISBN"
-    )?.value
-    const expiry = loanData.loans?.find(l => l.libraryBook?.identifier === isbn)?.loanExpireDateUtc
-    return expiry ? new Date(expiry).getTime() : Infinity
-  }
-  const sortedWorks = [...works].sort((a, b) => expiryOf(a) - expiryOf(b))
+  const sortedWorks = sortWorksBySoonestExpiry(works, loanData)
 
   const goBack = () => {
     const target = flow.back()
@@ -128,70 +84,67 @@ const DigitalLoansModal = ({
       title={flow.animatedTitle(titleText)}>
       {flow.renderBody(
         flow.view === "player" && selectedLoan?.orderId ? (
-            <div className="mx-auto max-w-prose">
-              <Player type="loan" orderId={selectedLoan.orderId} />
-            </div>
-          ) : flow.view === "detail" && selectedLoan ? (
-            <LoanDetailsContent
-              loan={{ dueDate: selectedLoan.dueDate, loanDate: selectedLoan.loanDate }}
-              manifestation={selectedLoan.manifestation}
-              title={selectedLoan.title}
-              creators={selectedLoan.creators}
-              dueDateLabel="Udløber"
-              href={resolveUrl({
-                routeParams: { work: "work", wid: selectedLoan.workId },
-                queryParams: {
-                  type: selectedLoan.manifestation.materialTypes[0].materialTypeSpecific.code,
-                },
-              })}
-              status={(() => {
-                const daysUntil = differenceInDays(new Date(selectedLoan.dueDate), new Date())
-                return (
-                  <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
-                    {expiryStatusText(daysUntil, danger)}
-                  </StatusLabel>
-                )
-              })()}
-            />
-          ) : (
-            <ModalMaterialList dataCy={cyKeys["digital-loans-modal"]}>
-              {sortedWorks.map(work => {
-                const manifestation = work.manifestations.all[0]
-                const isbn = manifestation.identifiers.find(
-                  identifier => identifier.type === "ISBN"
-                )?.value
-                const loan = loanData.loans?.find(l => l.libraryBook?.identifier === isbn)
-                const daysUntil = loan?.loanExpireDateUtc
-                  ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
-                  : null
-                const creators = displayCreators(work.creators, 1)
-                const title = work.titles.full[0]
+          <div className="mx-auto max-w-prose">
+            <Player type="loan" orderId={selectedLoan.orderId} />
+          </div>
+        ) : flow.view === "detail" && selectedLoan ? (
+          <LoanDetailsContent
+            loan={{ dueDate: selectedLoan.dueDate, loanDate: selectedLoan.loanDate }}
+            manifestation={selectedLoan.manifestation}
+            title={selectedLoan.title}
+            creators={selectedLoan.creators}
+            dueDateLabel="Udløber"
+            href={resolveUrl({
+              routeParams: { work: "work", wid: selectedLoan.workId },
+              queryParams: {
+                type: selectedLoan.manifestation.materialTypes[0].materialTypeSpecific.code,
+              },
+            })}
+            status={(() => {
+              const daysUntil = differenceInDays(new Date(selectedLoan.dueDate), new Date())
+              return (
+                <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
+                  {expiryStatusText(daysUntil, danger)}
+                </StatusLabel>
+              )
+            })()}
+          />
+        ) : (
+          <ModalMaterialList dataCy={cyKeys["digital-loans-modal"]}>
+            {sortedWorks.map(work => {
+              const manifestation = work.manifestations.all[0]
+              const loan = digitalLoanForWork(work, loanData)
+              const daysUntil = loan?.loanExpireDateUtc
+                ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
+                : null
+              const creators = displayCreators(work.creators, 1)
+              const title = work.titles.full[0]
 
-                return (
-                  <ModalMaterialListItem
-                    key={manifestation.pid}
-                    manifestation={manifestation}
-                    title={title}
-                    creators={creators}
-                    ariaLabel={`Se detaljer om dit lån af ${title}`}
-                    onSelect={() => {
-                      const selection = buildSelectedLoan(work, loanData)
-                      if (!selection) return
-                      setSelectedLoan(selection)
-                      flow.goTo("detail")
-                    }}
-                    status={
-                      daysUntil !== null && (
-                        <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
-                          {expiryStatusText(daysUntil, danger)}
-                        </StatusLabel>
-                      )
-                    }
-                  />
-                )
-              })}
-            </ModalMaterialList>
-          )
+              return (
+                <ModalMaterialListItem
+                  key={manifestation.pid}
+                  manifestation={manifestation}
+                  title={title}
+                  creators={creators}
+                  ariaLabel={`Se detaljer om dit lån af ${title}`}
+                  onSelect={() => {
+                    const selection = buildSelectedLoan(work, loanData)
+                    if (!selection) return
+                    setSelectedLoan(selection)
+                    flow.goTo("detail")
+                  }}
+                  status={
+                    daysUntil !== null && (
+                      <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
+                        {expiryStatusText(daysUntil, danger)}
+                      </StatusLabel>
+                    )
+                  }
+                />
+              )
+            })}
+          </ModalMaterialList>
+        )
       )}
 
       {flow.view === "detail" && selectedLoan?.orderId && (

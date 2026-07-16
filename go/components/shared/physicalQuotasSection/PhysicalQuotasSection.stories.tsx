@@ -7,7 +7,7 @@ import {
   withServiceLayer,
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
 import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
-import { ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
+import { ReservationItem } from "@/lib/helpers/helper.patron"
 
 const daysFromNow = (days: number) =>
   new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()

@@ -6,9 +6,8 @@ import {
   fixtureItems,
   withServiceLayer,
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
-import ReservationsModal, {
-  ReservationItem,
-} from "@/components/shared/reservationsModal/ReservationsModal"
+import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
+import { ReservationItem } from "@/lib/helpers/helper.patron"
 
 const daysFromNow = (days: number) =>
   new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()

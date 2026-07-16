@@ -11,11 +11,11 @@ import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/h
 import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
 import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"
-import { type PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { type PhysicalLoanItem } from "@/lib/helpers/helper.patron"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 // Data props — `open`/`onClose` come from the DynamicModal host.

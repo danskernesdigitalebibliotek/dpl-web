@@ -1,6 +1,5 @@
 "use client"
 
-import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useWindowSize } from "@uidotdev/usehooks"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
@@ -14,20 +13,10 @@ import Icon from "@/components/shared/icon/Icon"
 import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
 import PhysicalLoanCard from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
 import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
-import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 import { cyKeys } from "@/cypress/support/constants"
-import {
-  ManifestationSearchPageTeaserFragment,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
-
-export type PhysicalLoanItem = {
-  loan: Loan
-  work: WorkTeaserSearchPageFragment
-  manifestation: ManifestationSearchPageTeaserFragment
-}
+import { type PhysicalLoanItem, type ReservationItem } from "@/lib/helpers/helper.patron"
 
 type PhysicalLoanSliderProps = {
   items: PhysicalLoanItem[]
