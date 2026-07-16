@@ -4,7 +4,7 @@ import type { ReactNode } from "react"
 import { cn } from "@/lib/helpers/helper.cn"
 
 const statusLabelVariants = cva(
-  "text-typo-caption inline-flex w-fit items-center rounded-full px-3 py-1.5 whitespace-nowrap",
+  "text-typo-body-sm font-medium inline-flex w-fit items-center rounded-full px-4 py-1 whitespace-nowrap",
   {
     variants: {
       variant: {
@@ -52,11 +52,11 @@ export default function StatusLabel({ children, subline, variant, inverted, clas
     <div
       className={cn(
         statusLabelVariants({ variant, inverted }),
-        subline && "rounded-base flex-col items-start gap-0.5 px-4 py-2.5",
+        subline && "flex-col items-start gap-0.5 rounded-sm px-4 py-2 whitespace-normal",
         className
       )}>
-      <span>{children}</span>
-      {subline && <span className="font-medium">{subline}</span>}
+      {children}
+      {subline && <span className="font-bold">{subline}</span>}
     </div>
   )
 }

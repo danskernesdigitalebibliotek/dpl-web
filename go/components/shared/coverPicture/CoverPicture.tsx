@@ -36,7 +36,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
   const [imageError, setImageError] = useState(false)
 
   return (
-    <div className={cn("flex h-full w-full items-center [container-type:size]", className)}>
+    <div className={cn("[container-type:size] flex h-full w-full items-center", className)}>
       {!imageError && covers.thumbnail ? (
         <CoverPictureTiltWrapper
           key={covers.thumbnail}
@@ -51,7 +51,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               sizes="20px"
               loading="lazy"
               className={cn(
-                `absolute inset-0 h-full w-full overflow-hidden rounded-sm object-contain
+                `absolute inset-0 h-full w-full overflow-hidden rounded-xs object-contain
                   transition-all duration-500 will-change-transform`,
                 imageLoaded ? "shadow-none" : "shadow-cover-picture"
               )}
@@ -65,7 +65,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               alt={alt}
               loading="lazy"
               className={cn(
-                `shadow-cover-picture absolute inset-0 h-full w-full overflow-hidden rounded-sm
+                `shadow-cover-picture absolute inset-0 h-full w-full overflow-hidden rounded-xs
                   object-contain transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
@@ -128,7 +128,7 @@ const CoverPictureTiltWrapper = ({
 export const CoverPictureSkeleton = ({ className }: { className?: string }) => {
   return (
     <div
-      className={cn("bg-background-skeleton h-full w-full animate-pulse rounded-md", className)}
+      className={cn("bg-background-skeleton h-full w-full animate-pulse rounded-xs", className)}
     />
   )
 }

@@ -32,19 +32,21 @@ const ModalMaterialHeader = ({
       alt={alt}
       className="mx-auto w-32 shrink-0 lg:mx-0"
     />
-    <div className="mt-auto flex flex-1 flex-col gap-2 text-center lg:text-left">
-      {href ? (
-        <Link
-          prefetch={false}
-          href={href}
-          className="text-typo-heading-5 focus-visible self-center hover:underline lg:self-start">
-          {title}
-        </Link>
-      ) : (
-        <p className="text-typo-heading-5">{title}</p>
-      )}
-      {subtitle && <p className="text-typo-subtitle-sm text-foreground-muted">{subtitle}</p>}
-      {status && <div className="flex justify-center pt-1 lg:justify-start">{status}</div>}
+    <div className="mt-auto flex flex-1 flex-col gap-4 text-center lg:text-left">
+      <div className="flex flex-col gap-2">
+        {href ? (
+          <Link
+            prefetch={false}
+            href={href}
+            className="text-typo-heading-5 focus-visible self-center hover:underline lg:self-start">
+            {title}
+          </Link>
+        ) : (
+          <p className="text-typo-heading-5">{title}</p>
+        )}
+        {subtitle && <p className="text-typo-subtitle-sm text-foreground-muted">{subtitle}</p>}
+      </div>
+      {status && <div className="flex justify-center lg:justify-start">{status}</div>}
     </div>
   </div>
 )
