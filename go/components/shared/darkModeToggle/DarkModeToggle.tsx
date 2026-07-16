@@ -21,14 +21,14 @@ function DarkModeToggle() {
         disabled:opacity-50">
       <div
         className={cn(
-          `bg-foreground relative h-[32px] w-[32px] rounded-full transition-transform duration-300
-          ease-out`,
+          `bg-foreground text-background relative h-[32px] w-[32px] rounded-full
+          transition-transform duration-300 ease-out`,
           theme === "dark" ? "translate-x-[calc(100%+3px)]" : ""
         )}>
         <Icon
           className={cn(
-            `absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all
-            duration-500`,
+            `absolute top-[50%] left-[50%] h-[19px] w-[19px] translate-x-[-50%]
+            translate-y-[-50%] transition-all duration-500`,
             theme === "dark" ? "opacity-0" : "opacity-100"
           )}
           name="sun"
@@ -36,8 +36,8 @@ function DarkModeToggle() {
         <span className="sr-only">{theme}</span>
         <Icon
           className={cn(
-            `absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all
-            duration-500`,
+            `absolute top-[50%] left-[50%] h-[24px] w-[24px] translate-x-[-50%]
+            translate-y-[-50%] transition-all duration-500`,
             theme === "dark" ? "opacity-100" : "opacity-0"
           )}
           name="moon"
