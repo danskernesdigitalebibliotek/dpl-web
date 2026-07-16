@@ -45,6 +45,7 @@ const OverviewCard = ({
       <button
         type="button"
         onClick={onViewAll}
+        // eslint-disable-next-line no-restricted-syntax -- viewAllDataCy comes from cyKeys at call site
         data-cy={viewAllDataCy}
         className="text-typo-link focus-visible cursor-pointer underline">
         Vis alle

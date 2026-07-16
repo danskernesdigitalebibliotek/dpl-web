@@ -88,6 +88,8 @@ const fixtureReservation: Reservation = {
   pickupBranchId: "DK-761500",
   numberInQueue: 3,
   state: "reserved",
+  pickupDeadline: undefined,
+  pickupNumber: undefined,
 }
 
 const storyServiceLayerConfig = {

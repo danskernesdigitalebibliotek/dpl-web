@@ -25,6 +25,11 @@ const buildImage = (width: number, height: number, byline: string) =>
 // The images paragraph from the CMS: a single image renders full width, two
 // images in the staggered side-by-side layout. The blur-up placeholder is
 // mocked in Storybook (the real one is an async server component).
+// The component only reads goImages; the remaining ParagraphGoImages fields
+// (id, created, langcode, status) are CMS bookkeeping the story can skip.
+const imagesArgs = (goImages: MediaImage[]) =>
+  ({ goImages }) as unknown as React.ComponentProps<typeof Images>
+
 const meta = {
   title: "paragraphs/Images",
   component: Images,
@@ -36,54 +41,42 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const SingleImage: Story = {
-  args: {
-    goImages: [buildImage(1200, 800, "Foto: Ukendt fotograf")],
-  },
+  args: imagesArgs([buildImage(1200, 800, "Foto: Ukendt fotograf")]),
 }
 
 // The staggered two-image layout across aspect ratio combinations.
 export const TwoImagesMixed: Story = {
-  args: {
-    goImages: [
-      buildImage(800, 1000, "Foto: Ukendt fotograf"),
-      buildImage(800, 600, "Foto: Også ukendt"),
-    ],
-  },
+  args: imagesArgs([
+    buildImage(800, 1000, "Foto: Ukendt fotograf"),
+    buildImage(800, 600, "Foto: Også ukendt"),
+  ]),
 }
 
 export const TwoImagesPortrait: Story = {
-  args: {
-    goImages: [
-      buildImage(800, 1200, "Foto: Ukendt fotograf"),
-      buildImage(800, 1000, "Foto: Også ukendt"),
-    ],
-  },
+  args: imagesArgs([
+    buildImage(800, 1200, "Foto: Ukendt fotograf"),
+    buildImage(800, 1000, "Foto: Også ukendt"),
+  ]),
 }
 
 export const TwoImagesLandscape: Story = {
-  args: {
-    goImages: [
-      buildImage(1200, 800, "Foto: Ukendt fotograf"),
-      buildImage(1200, 675, "Foto: Også ukendt"),
-    ],
-  },
+  args: imagesArgs([
+    buildImage(1200, 800, "Foto: Ukendt fotograf"),
+    buildImage(1200, 675, "Foto: Også ukendt"),
+  ]),
 }
 
 export const TwoImagesSquare: Story = {
-  args: {
-    goImages: [
-      buildImage(800, 800, "Foto: Ukendt fotograf"),
-      buildImage(800, 800, "Foto: Også ukendt"),
-    ],
-  },
+  args: imagesArgs([
+    buildImage(800, 800, "Foto: Ukendt fotograf"),
+    buildImage(800, 800, "Foto: Også ukendt"),
+  ]),
 }
 
 export const TwoImagesMixedDarkMode: Story = {
   decorators: [darkModeDecorator],
-  args: {
-    goImages: [
-      buildImage(800, 1000, "Foto: Ukendt fotograf"),
-      buildImage(800, 600, "Foto: Også ukendt"),
-    ],
-  },
+  args: imagesArgs([
+    buildImage(800, 1000, "Foto: Ukendt fotograf"),
+    buildImage(800, 600, "Foto: Også ukendt"),
+  ]),
 }

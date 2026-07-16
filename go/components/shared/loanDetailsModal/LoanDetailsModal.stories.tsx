@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
+import { daysFromNow } from "@/components/shared/digitalLoansModal/digitalLoansStoryFixtures"
 import LoanDetailsModal from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import {
   buildItem,

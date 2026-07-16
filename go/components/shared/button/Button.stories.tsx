@@ -13,11 +13,14 @@ const themes = ["secondary", "primary"] as const
 
 // Content per variant: icon-only buttons render just the icon, icon-text
 // takes the icon name as a prop, default is text only.
-const variantContent = {
+const variantContent: Record<
+  "default" | "icon" | "icon-text",
+  { children: React.ReactNode; icon?: string }
+> = {
   default: { children: "Prøv Lydbogen" },
   icon: { children: <Icon className="h-[24px] w-[24px]" name="question-mark" /> },
   "icon-text": { children: "Lyt til lydbog", icon: "headphones" },
-} as const
+}
 
 // Every variant crossed with every size and theme, plus the loading state.
 const AllVariantsShowcase = () => (
@@ -35,7 +38,7 @@ const AllVariantsShowcase = () => (
                 variant={variant}
                 size={size}
                 theme={theme}
-                icon={"icon" in variantContent[variant] ? variantContent[variant].icon : undefined}
+                icon={variantContent[variant].icon}
                 ariaLabel={`${variant} ${theme} ${size}`}
                 onClick={fn()}>
                 {variantContent[variant].children}
@@ -44,7 +47,7 @@ const AllVariantsShowcase = () => (
             <Button
               variant={variant}
               theme={theme}
-              icon={"icon" in variantContent[variant] ? variantContent[variant].icon : undefined}
+              icon={variantContent[variant].icon}
               ariaLabel={`${variant} ${theme} disabled`}
               disabled
               onClick={fn()}>
@@ -55,7 +58,7 @@ const AllVariantsShowcase = () => (
               <Button
                 variant={variant}
                 theme={theme}
-                icon={"icon" in variantContent[variant] ? variantContent[variant].icon : undefined}
+                icon={variantContent[variant].icon}
                 ariaLabel={`${variant} ${theme} loading`}
                 isLoading
                 onClick={fn()}>

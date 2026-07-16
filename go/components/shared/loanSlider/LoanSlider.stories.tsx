@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import LoanSlider from "@/components/shared/loanSlider/LoanSlider"
-import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
 import {
   fixtureWorks,
   loanListResult,
   seedClient,
   withQueryClient,
 } from "@/components/shared/digitalLoansModal/digitalLoansStoryFixtures"
+import LoanSlider from "@/components/shared/loanSlider/LoanSlider"
 
 const meta = {
   title: "profile/LoanSlider",

@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
+import { PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import { Toaster } from "@/components/shared/toaster/Toaster"
-import PhysicalLoanSlider, { PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { EBookFactory } from "@/cypress/factories/fbi/factory-parts/works"
@@ -150,4 +150,3 @@ export const withServiceLayer =
       </ServiceLayerProvider>
     </QueryClientProvider>
   )
-
