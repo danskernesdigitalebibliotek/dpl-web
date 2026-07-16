@@ -8,27 +8,21 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { format } from "date-fns"
 import { da } from "date-fns/locale"
-import { AnimatePresence, motion } from "framer-motion"
 import React, { useContext, useState } from "react"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
-import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import DeleteReservationReceiptContent from "@/components/shared/deleteReservationModal/DeleteReservationReceiptContent"
 import InfoCard from "@/components/shared/infoCard/InfoCard"
+import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
 import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"
-import {
-  ModalViewTransition,
-  modalViewVariants,
-} from "@/components/shared/modalViewTransition/ModalViewTransition"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
-import { useModalViewScroll } from "@/hooks/useModalViewScroll"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
@@ -62,7 +56,7 @@ const isPickupExpired = (reservation: Reservation) =>
 
 // The green pickup box on ready-for-pickup rows: branch and pickup info on
 // their own lines, the deadline as the expanded label's bold subline.
-export const PickupInfo = ({ reservation }: { reservation: Reservation }) => {
+const PickupInfo = ({ reservation }: { reservation: Reservation }) => {
   const { data: branchTitle } = useBranchTitle(reservation.pickupBranchId)
 
   return (
@@ -81,7 +75,7 @@ export const PickupInfo = ({ reservation }: { reservation: Reservation }) => {
 
 // Queued: copy count and queue position as plain two-line text (no box).
 // FBS numberInQueue is the patron's 1-based position — 1 means next in line.
-export const QueueStatus = ({
+const QueueStatus = ({
   reservation,
   workId,
 }: {
@@ -107,7 +101,7 @@ export const QueueStatus = ({
 }
 
 // The pickup deadline has passed without collection.
-export const ExpiredPickup = () => (
+const ExpiredPickup = () => (
   <StatusLabel
     variant="neutral"
     className="bg-background-overlay"
@@ -218,19 +212,15 @@ const ReservationDetails = ({ item }: { item: ReservationItem }) => {
   )
 }
 
-// One dialog with internal views: the reservations list, the "Din
-// reservering" details, and the deletion receipt — modals are never stacked.
+// One dialog with three views: reservations list, "Din reservering"
+// details, and the deletion receipt.
 const ReservationsModal = ({
   open,
   onClose,
   items,
 }: ReservationsModalProps & { open: boolean; onClose: () => void }) => {
   const [selected, setSelected] = useState<ReservationItem | null>(null)
-  const [deletionSucceeded, setDeletionSucceeded] = useState(false)
-  const [direction, setDirection] = useState(1)
-
-  // Details open at the top; going back restores the list's position.
-  const { anchorRef, rememberListAndScrollTop, restoreListScroll } = useModalViewScroll()
+  const flow = useModalFlow<"list" | "details" | "receipt">({ initial: "list" })
 
   const { mutate: deleteReservation, isPending: isDeleting } = useDeleteReservation()
 
@@ -238,102 +228,73 @@ const ReservationsModal = ({
   const queued = items.filter(item => !isReadyForPickup(item.reservation))
 
   const goBack = () => {
-    setDirection(-1)
     setSelected(null)
-    restoreListScroll()
+    flow.back()
+  }
+
+  const selectItem = (item: ReservationItem) => {
+    setSelected(item)
+    flow.goTo("details")
   }
 
   const handleDelete = () => {
     if (!selected || isDeleting) return
     deleteReservation(selected.reservation.reservationId, {
-      onSuccess: () => {
-        setDirection(1)
-        setDeletionSucceeded(true)
-      },
+      onSuccess: () => flow.goTo("receipt"),
       onError: () => toast.error("Reservationen kunne ikke slettes. Prøv igen senere."),
     })
   }
 
-  const viewKey = deletionSucceeded ? "receipt" : selected ? "details" : "list"
-  const titleText = deletionSucceeded
-    ? "Slet reservering"
-    : selected
-      ? "Din reservering"
-      : `Reserveringer (${items.length})`
-
-  // The title participates in the same directional transition as the body.
-  const animatedTitle = (
-    <AnimatePresence mode="wait" initial={false} custom={direction}>
-      <motion.span
-        key={viewKey}
-        className="block"
-        custom={direction}
-        variants={modalViewVariants}
-        initial="enter"
-        animate="center"
-        exit="exit"
-        transition={{ duration: 0.2, ease: "easeOut" }}>
-        {titleText}
-      </motion.span>
-    </AnimatePresence>
-  )
+  const titleText =
+    flow.view === "receipt"
+      ? "Slet reservering"
+      : flow.view === "details"
+        ? "Din reservering"
+        : `Reserveringer (${items.length})`
 
   return (
     <ResponsiveDialog
       open={open}
       onClose={onClose}
-      onBack={selected && !deletionSucceeded ? goBack : undefined}
-      viewDirection={direction}
-      title={animatedTitle}>
-      <div ref={anchorRef} />
-      {/* The view transition only slides horizontally, so clip x only; the
-          negative margin + padding give cover shadows room at the edges. */}
-      <AnimateChangeInHeight className="-mx-6 overflow-x-clip px-6">
-        <ModalViewTransition viewKey={viewKey} direction={direction}>
-          {deletionSucceeded && selected ? (
-            <DeleteReservationReceiptContent cover={selected.manifestation.cover} />
-          ) : selected ? (
-            <ReservationDetails item={selected} />
-          ) : (
-            <div data-cy={cyKeys["reservations-modal"]} className="mx-auto max-w-prose space-y-10">
-              {ready.length > 0 && (
-                <ModalMaterialList heading={`Klar til afhentning (${ready.length})`}>
-                  {ready.map(item => (
-                    <ReservationRow
-                      key={item.reservation.reservationId}
-                      item={item}
-                      onSelect={() => {
-                        rememberListAndScrollTop()
-                        setDirection(1)
-                        setSelected(item)
-                      }}
-                    />
-                  ))}
-                </ModalMaterialList>
-              )}
-              {queued.length > 0 && (
-                <ModalMaterialList heading={`I kø (${queued.length})`}>
-                  {queued.map(item => (
-                    <ReservationRow
-                      key={item.reservation.reservationId}
-                      item={item}
-                      onSelect={() => {
-                        rememberListAndScrollTop()
-                        setDirection(1)
-                        setSelected(item)
-                      }}
-                    />
-                  ))}
-                </ModalMaterialList>
-              )}
-            </div>
-          )}
-        </ModalViewTransition>
-      </AnimateChangeInHeight>
+      onBack={flow.view === "details" ? goBack : undefined}
+      viewDirection={flow.direction}
+      title={flow.animatedTitle(titleText)}>
+      {flow.renderBody(
+        flow.view === "receipt" && selected ? (
+          <DeleteReservationReceiptContent cover={selected.manifestation.cover} />
+        ) : flow.view === "details" && selected ? (
+          <ReservationDetails item={selected} />
+        ) : (
+          <div data-cy={cyKeys["reservations-modal"]} className="mx-auto max-w-prose space-y-10">
+            {ready.length > 0 && (
+              <ModalMaterialList heading={`Klar til afhentning (${ready.length})`}>
+                {ready.map(item => (
+                  <ReservationRow
+                    key={item.reservation.reservationId}
+                    item={item}
+                    onSelect={() => selectItem(item)}
+                  />
+                ))}
+              </ModalMaterialList>
+            )}
+            {queued.length > 0 && (
+              <ModalMaterialList heading={`I kø (${queued.length})`}>
+                {queued.map(item => (
+                  <ReservationRow
+                    key={item.reservation.reservationId}
+                    item={item}
+                    onSelect={() => selectItem(item)}
+                  />
+                ))}
+              </ModalMaterialList>
+            )}
+          </div>
+        )
+      )}
 
       {selected && (
         <ResponsiveDialog.Actions>
-          {deletionSucceeded ? (
+          {flow.view === "receipt" ? (
             <Button theme="primary" size="lg" onClick={onClose}>
               OK
             </Button>

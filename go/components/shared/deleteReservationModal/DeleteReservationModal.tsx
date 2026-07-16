@@ -3,11 +3,10 @@
 import { useDeleteReservation } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React, { useState } from "react"
 
-import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import DeleteReservationReceiptContent from "@/components/shared/deleteReservationModal/DeleteReservationReceiptContent"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
-import { ModalViewTransition } from "@/components/shared/modalViewTransition/ModalViewTransition"
+import { ModalFlowBody } from "@/components/shared/modalFlow/ModalFlowBody"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
@@ -45,10 +44,7 @@ const DeleteReservationModal = ({
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Slet reservering">
-      {/* The view transition only slides horizontally, so clip x only; the
-          negative margin + padding give cover shadows room at the edges. */}
-      <AnimateChangeInHeight className="-mx-6 overflow-x-clip px-6">
-        <ModalViewTransition viewKey={isReceiptStep ? "receipt" : "confirm"}>
+      <ModalFlowBody viewKey={isReceiptStep ? "receipt" : "confirm"}>
           {isReceiptStep ? (
             <DeleteReservationReceiptContent cover={cover} />
           ) : (
@@ -62,8 +58,7 @@ const DeleteReservationModal = ({
               </div>
             </div>
           )}
-        </ModalViewTransition>
-      </AnimateChangeInHeight>
+      </ModalFlowBody>
 
       <ResponsiveDialog.Actions>
         {isReceiptStep ? (

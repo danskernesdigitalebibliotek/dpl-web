@@ -14,6 +14,7 @@ export const AnimateChangeInHeight: React.FC<AnimateChangeInHeightProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [height, setHeight] = useState<number | "auto">("auto")
+  const hasMeasuredOnce = useRef(false)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -32,14 +33,24 @@ export const AnimateChangeInHeight: React.FC<AnimateChangeInHeightProps> = ({
     }
   }, [])
 
+  useEffect(() => {
+    if (height !== "auto") {
+      hasMeasuredOnce.current = true
+    }
+  }, [height])
+
   return (
     <motion.div
       className={cn(className)}
       style={{ height }}
       animate={{ height }}
-      // A soft, bounce-free spring tracks content changes smoothly and stays
-      // in step with the 200ms view transitions inside modals and drawers.
-      transition={{ type: "spring", bounce: 0, duration: 0.35 }}>
+      // Snap to the first measured height (no spring on mount); animate
+      // only real content changes after that.
+      transition={
+        hasMeasuredOnce.current
+          ? { type: "spring", bounce: 0, duration: 0.35 }
+          : { duration: 0 }
+      }>
       <div ref={containerRef}>{children}</div>
     </motion.div>
   )

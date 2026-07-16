@@ -110,8 +110,7 @@ function ResponsiveDialog({
                 variants={modalViewVariants}
                 initial="enter"
                 animate="center"
-                exit="exit"
-                transition={{ duration: 0.2, ease: "easeOut" }}>
+                exit="exit">
                 <div
                   className="bg-background border-foreground/10 mx-grid-edge border-t py-4 lg:mx-10
                     lg:py-6">
@@ -170,8 +169,7 @@ function ResponsiveDialog({
               variants={modalViewVariants}
               initial="enter"
               animate="center"
-              exit="exit"
-              transition={{ duration: 0.2, ease: "easeOut" }}>
+              exit="exit">
               <div className="border-foreground/10 px-grid-edge border-t py-4">
                 <div className="flex flex-col items-stretch gap-3">{actions}</div>
               </div>

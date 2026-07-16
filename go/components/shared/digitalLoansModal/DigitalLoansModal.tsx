@@ -1,7 +1,6 @@
 "use client"
 
 import { differenceInDays } from "date-fns"
-import { AnimatePresence, motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 
 import {
@@ -10,23 +9,18 @@ import {
   getManifestationLabel,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
+import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
 import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"
-import {
-  ModalViewTransition,
-  modalViewVariants,
-} from "@/components/shared/modalViewTransition/ModalViewTransition"
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
-import { useModalViewScroll } from "@/hooks/useModalViewScroll"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
@@ -40,7 +34,7 @@ export type DigitalLoansModalProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
   // Opens directly on this loan's details (e.g. from a slider card);
-  // the back button still leads to the list.
+  // there is then no back navigation to the list.
   initialLoan?: SelectedLoan | null
 }
 
@@ -79,9 +73,8 @@ export const buildSelectedLoan = (
   }
 }
 
-// One dialog with two views: the loan list, and the "Dit lån" details for a
-// selected loan. The header's back button returns to the list — modals are
-// never stacked on top of each other.
+// One dialog with three views: loan list, "Dit lån" details and (for
+// audiobooks) the player.
 const DigitalLoansModal = ({
   open,
   onClose,
@@ -91,22 +84,16 @@ const DigitalLoansModal = ({
 }: DigitalLoansModalProps & { open: boolean; onClose: () => void }) => {
   const { warning, danger } = useLoanThresholds()
   const [selectedLoan, setSelectedLoan] = useState<SelectedLoan | null>(null)
-  const [playerOpen, setPlayerOpen] = useState(false)
-  const [direction, setDirection] = useState(1)
+  const flow = useModalFlow<"list" | "detail" | "player">({ initial: "list" })
 
   // Start from the list — or the requested loan — whenever the modal opens.
   useEffect(() => {
     if (open) {
       setSelectedLoan(initialLoan ?? null)
-      setPlayerOpen(false)
-      setDirection(1)
+      flow.reset(initialLoan ? "detail" : "list")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
-
-  // Details open at the top; going back restores the list's position.
-  const { anchorRef, scrollToTop, rememberListAndScrollTop, restoreListScroll } =
-    useModalViewScroll()
 
   // Soonest-expiring loans first; works without a matching loan go last.
   const expiryOf = (work: WorkTeaserSearchPageFragment) => {
@@ -119,63 +106,32 @@ const DigitalLoansModal = ({
   const sortedWorks = [...works].sort((a, b) => expiryOf(a) - expiryOf(b))
 
   const goBack = () => {
-    setDirection(-1)
-    if (playerOpen) {
-      setPlayerOpen(false)
-      scrollToTop()
-    } else {
+    const target = flow.back()
+    if (target === "list") {
       setSelectedLoan(null)
-      restoreListScroll()
     }
   }
 
-  // Opened directly on a loan (from a slider card) the list was never shown,
-  // so the details view has nothing to go back to. The player view can always
-  // step back to the details.
-  const openedOnLoan = Boolean(initialLoan)
-  const canGoBack = playerOpen || (selectedLoan !== null && !openedOnLoan)
-
-  const viewKey = playerOpen ? "player" : selectedLoan ? "detail" : "list"
-  const titleText = playerOpen
-    ? `Lyt til ${selectedLoan?.label ?? ""}`
-    : selectedLoan
-      ? "Dit lån"
-      : `Digitale lån (${loanData.loans?.length ?? 0})`
-
-  // The title participates in the same directional transition as the body.
-  const animatedTitle = (
-    <AnimatePresence mode="wait" initial={false} custom={direction}>
-      <motion.span
-        key={viewKey}
-        className="block"
-        custom={direction}
-        variants={modalViewVariants}
-        initial="enter"
-        animate="center"
-        exit="exit"
-        transition={{ duration: 0.2, ease: "easeOut" }}>
-        {titleText}
-      </motion.span>
-    </AnimatePresence>
-  )
+  const titleText =
+    flow.view === "player"
+      ? `Lyt til ${selectedLoan?.label ?? ""}`
+      : flow.view === "detail"
+        ? "Dit lån"
+        : `Digitale lån (${loanData.loans?.length ?? 0})`
 
   return (
     <ResponsiveDialog
       open={open}
       onClose={onClose}
-      onBack={canGoBack ? goBack : undefined}
-      viewDirection={direction}
-      title={animatedTitle}>
-      <div ref={anchorRef} />
-      {/* The view transition only slides horizontally, so clip x only; the
-          negative margin + padding give cover shadows room at the edges. */}
-      <AnimateChangeInHeight className="-mx-6 overflow-x-clip px-6">
-        <ModalViewTransition viewKey={viewKey} direction={direction}>
-          {playerOpen && selectedLoan?.orderId ? (
+      onBack={flow.canGoBack ? goBack : undefined}
+      viewDirection={flow.direction}
+      title={flow.animatedTitle(titleText)}>
+      {flow.renderBody(
+        flow.view === "player" && selectedLoan?.orderId ? (
             <div className="mx-auto max-w-prose">
               <Player type="loan" orderId={selectedLoan.orderId} />
             </div>
-          ) : selectedLoan ? (
+          ) : flow.view === "detail" && selectedLoan ? (
             <LoanDetailsContent
               loan={{ dueDate: selectedLoan.dueDate, loanDate: selectedLoan.loanDate }}
               manifestation={selectedLoan.manifestation}
@@ -221,9 +177,8 @@ const DigitalLoansModal = ({
                     onSelect={() => {
                       const selection = buildSelectedLoan(work, loanData)
                       if (!selection) return
-                      rememberListAndScrollTop()
-                      setDirection(1)
                       setSelectedLoan(selection)
+                      flow.goTo("detail")
                     }}
                     status={
                       daysUntil !== null && (
@@ -236,11 +191,10 @@ const DigitalLoansModal = ({
                 )
               })}
             </ModalMaterialList>
-          )}
-        </ModalViewTransition>
-      </AnimateChangeInHeight>
+          )
+      )}
 
-      {selectedLoan && !playerOpen && selectedLoan.orderId && (
+      {flow.view === "detail" && selectedLoan?.orderId && (
         <ResponsiveDialog.Actions>
           {selectedLoan.category === "ebook" ? (
             <Button
@@ -259,11 +213,7 @@ const DigitalLoansModal = ({
               size="lg"
               ariaLabel={`Lyt til ${selectedLoan.label}`}
               data-cy={cyKeys["listen-loan-button"]}
-              onClick={() => {
-                setDirection(1)
-                setPlayerOpen(true)
-                scrollToTop()
-              }}>
+              onClick={() => flow.goTo("player")}>
               Lyt til {selectedLoan.label}
             </Button>
           ) : null}
