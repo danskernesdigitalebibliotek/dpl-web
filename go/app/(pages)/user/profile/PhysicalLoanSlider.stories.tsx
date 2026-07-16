@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
+import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
 import PhysicalLoanSlider, { PhysicalLoanItem } from "@/app/(pages)/user/profile/PhysicalLoanSlider"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
@@ -141,6 +142,8 @@ const withServiceLayer =
       client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
       <ServiceLayerProvider config={storyServiceLayerConfig}>
         <Story />
+        {/* Modals open through the global store, rendered by this host. */}
+        <StoreModal />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )
@@ -158,6 +161,7 @@ export const Default: Story = {
   decorators: [withServiceLayer()],
   args: {
     items: fixtureItems,
+    reservationItems: [],
   },
 }
 
@@ -165,6 +169,7 @@ export const DefaultDarkMode: Story = {
   decorators: [withServiceLayer(), darkModeDecorator],
   args: {
     items: fixtureItems,
+    reservationItems: [],
   },
 }
 
@@ -172,6 +177,7 @@ export const OneLoan: Story = {
   decorators: [withServiceLayer()],
   args: {
     items: fixtureItems.slice(1, 2),
+    reservationItems: [],
   },
 }
 
@@ -179,6 +185,7 @@ export const Empty: Story = {
   decorators: [withServiceLayer()],
   args: {
     items: [],
+    reservationItems: [],
   },
 }
 
@@ -195,5 +202,6 @@ export const OpensLoanDetails: Story = {
   },
   args: {
     items: fixtureItems,
+    reservationItems: [],
   },
 }

@@ -1,6 +1,8 @@
 import { createStore } from "@xstate/store"
 
 import type { DigitalLoansModalProps } from "@/app/(pages)/user/profile/DigitalLoansModal"
+import type { PhysicalLoansModalProps } from "@/app/(pages)/user/profile/PhysicalLoansModal"
+import type { ReservationsModalProps } from "@/app/(pages)/user/profile/ReservationsModal"
 import type { DeleteReservationModalProps } from "@/components/shared/deleteReservationModal/DeleteReservationModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import type { PlayerModalProps } from "@/components/shared/playerModal/playerModal"
@@ -17,6 +19,8 @@ export type TModalRegistry = {
   DeleteReservationModal: DeleteReservationModalProps
   DigitalLoansModal: DigitalLoansModalProps
   LoanDetailsModal: LoanDetailsModalProps
+  PhysicalLoansModal: PhysicalLoansModalProps
+  ReservationsModal: ReservationsModalProps
 } & TModalUrlParams
 
 export type TModalStoreType = keyof TModalRegistry

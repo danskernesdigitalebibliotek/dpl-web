@@ -15,6 +15,8 @@ import {
 } from "@/store/modal.store"
 
 import DigitalLoansModal from "@/app/(pages)/user/profile/DigitalLoansModal"
+import PhysicalLoansModal from "@/app/(pages)/user/profile/PhysicalLoansModal"
+import ReservationsModal from "@/app/(pages)/user/profile/ReservationsModal"
 
 import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
 import LoanDetailsModal from "../loanDetailsModal/LoanDetailsModal"
@@ -36,6 +38,8 @@ const ModalComponents: {
   DeleteReservationModal,
   DigitalLoansModal,
   LoanDetailsModal,
+  PhysicalLoansModal,
+  ReservationsModal,
   LoanMaterialModal,
   LoanLoginModal,
   ReservationModal,

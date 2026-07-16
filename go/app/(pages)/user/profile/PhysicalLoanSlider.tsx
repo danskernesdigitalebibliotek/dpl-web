@@ -20,7 +20,10 @@ import {
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
+import { type ReservationItem } from "@/app/(pages)/user/profile/ReservationsModal"
+
 import FindBookButton from "./FindBookButton"
+import PhysicalQuotasSection from "./PhysicalQuotasSection"
 
 export type PhysicalLoanItem = {
   loan: Loan
@@ -30,9 +33,10 @@ export type PhysicalLoanItem = {
 
 type PhysicalLoanSliderProps = {
   items: PhysicalLoanItem[]
+  reservationItems: ReservationItem[]
 }
 
-const PhysicalLoanSlider = ({ items }: PhysicalLoanSliderProps) => {
+const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps) => {
   const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
   const [reachedEnd, setReachEnd] = useState(true)
@@ -146,6 +150,7 @@ const PhysicalLoanSlider = ({ items }: PhysicalLoanSliderProps) => {
           )}
         </div>
       </div>
+      <PhysicalQuotasSection loanItems={items} reservationItems={reservationItems} />
     </div>
   )
 }
