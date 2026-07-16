@@ -50,10 +50,10 @@ class EventsGET200ResponseInnerDateTime
      *
      * @var \DateTime|null
      * @SerializedName("start")
-     * @Assert\NotNull()
-     * @Assert\Type("\DateTime"))
      * @Type("DateTime")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $start = null;
 
     /**
@@ -61,17 +61,17 @@ class EventsGET200ResponseInnerDateTime
      *
      * @var \DateTime|null
      * @SerializedName("end")
-     * @Assert\NotNull()
-     * @Assert\Type("\DateTime"))
      * @Type("DateTime")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $end = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->start = array_key_exists('start', $data) ? $data['start'] : $this->start;
@@ -89,21 +89,22 @@ class EventsGET200ResponseInnerDateTime
         return $this->start;
     }
 
-
-
     /**
-     * Sets start.
-     *
-     * @param \DateTime|null $start  Start time in ISO 8601 format.
-     *
-     * @return $this
-     */
+    * Sets start.
+    *
+    * @param \DateTime|null $start  Start time in ISO 8601 format.
+    *
+    * @return $this
+    */
     public function setStart(?\DateTime $start): self
     {
         $this->start = $start;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets end.
@@ -115,21 +116,22 @@ class EventsGET200ResponseInnerDateTime
         return $this->end;
     }
 
-
-
     /**
-     * Sets end.
-     *
-     * @param \DateTime|null $end  End time in ISO 8601 format.
-     *
-     * @return $this
-     */
+    * Sets end.
+    *
+    * @param \DateTime|null $end  End time in ISO 8601 format.
+    *
+    * @return $this
+    */
     public function setEnd(?\DateTime $end): self
     {
         $this->end = $end;
 
         return $this;
     }
+
+
+
 }
 
 

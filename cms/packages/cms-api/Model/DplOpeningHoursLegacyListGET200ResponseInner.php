@@ -48,10 +48,10 @@ class DplOpeningHoursLegacyListGET200ResponseInner
      *
      * @var int|null
      * @SerializedName("nid")
-     * @Assert\NotNull()
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("int")]
     protected ?int $nid = null;
 
     /**
@@ -59,10 +59,10 @@ class DplOpeningHoursLegacyListGET200ResponseInner
      *
      * @var int|null
      * @SerializedName("category_tid")
-     * @Assert\NotNull()
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("int")]
     protected ?int $categoryTid = null;
 
     /**
@@ -70,11 +70,11 @@ class DplOpeningHoursLegacyListGET200ResponseInner
      *
      * @var \DateTime|null
      * @SerializedName("date")
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     * @Assert\Type("\Date")
      * @Type("DateTime<'Y-m-d'>")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $date = null;
 
     /**
@@ -82,10 +82,10 @@ class DplOpeningHoursLegacyListGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("start_time")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $startTime = null;
 
     /**
@@ -93,10 +93,10 @@ class DplOpeningHoursLegacyListGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("end_time")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $endTime = null;
 
     /**
@@ -104,17 +104,17 @@ class DplOpeningHoursLegacyListGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("notice")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $notice = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->nid = array_key_exists('nid', $data) ? $data['nid'] : $this->nid;
@@ -136,21 +136,22 @@ class DplOpeningHoursLegacyListGET200ResponseInner
         return $this->nid;
     }
 
-
-
     /**
-     * Sets nid.
-     *
-     * @param int|null $nid  The node Id of the branch the opening hours instance belongs to.
-     *
-     * @return $this
-     */
+    * Sets nid.
+    *
+    * @param int|null $nid  The node Id of the branch the opening hours instance belongs to.
+    *
+    * @return $this
+    */
     public function setNid(?int $nid): self
     {
         $this->nid = $nid;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets categoryTid.
@@ -162,21 +163,22 @@ class DplOpeningHoursLegacyListGET200ResponseInner
         return $this->categoryTid;
     }
 
-
-
     /**
-     * Sets categoryTid.
-     *
-     * @param int|null $categoryTid  The (t)id of the opening hours category.
-     *
-     * @return $this
-     */
+    * Sets categoryTid.
+    *
+    * @param int|null $categoryTid  The (t)id of the opening hours category.
+    *
+    * @return $this
+    */
     public function setCategoryTid(?int $categoryTid): self
     {
         $this->categoryTid = $categoryTid;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets date.
@@ -188,21 +190,22 @@ class DplOpeningHoursLegacyListGET200ResponseInner
         return $this->date;
     }
 
-
-
     /**
-     * Sets date.
-     *
-     * @param \DateTime|null $date  The date which the opening hours applies to. In ISO 8601 format.
-     *
-     * @return $this
-     */
+    * Sets date.
+    *
+    * @param \DateTime|null $date  The date which the opening hours applies to. In ISO 8601 format.
+    *
+    * @return $this
+    */
     public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets startTime.
@@ -214,21 +217,22 @@ class DplOpeningHoursLegacyListGET200ResponseInner
         return $this->startTime;
     }
 
-
-
     /**
-     * Sets startTime.
-     *
-     * @param string|null $startTime  When the opening hours start. In format HH:MM
-     *
-     * @return $this
-     */
+    * Sets startTime.
+    *
+    * @param string|null $startTime  When the opening hours start. In format HH:MM
+    *
+    * @return $this
+    */
     public function setStartTime(?string $startTime): self
     {
         $this->startTime = $startTime;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets endTime.
@@ -240,21 +244,22 @@ class DplOpeningHoursLegacyListGET200ResponseInner
         return $this->endTime;
     }
 
-
-
     /**
-     * Sets endTime.
-     *
-     * @param string|null $endTime  When the opening hours end. In format HH:MM
-     *
-     * @return $this
-     */
+    * Sets endTime.
+    *
+    * @param string|null $endTime  When the opening hours end. In format HH:MM
+    *
+    * @return $this
+    */
     public function setEndTime(?string $endTime): self
     {
         $this->endTime = $endTime;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets notice.
@@ -266,21 +271,22 @@ class DplOpeningHoursLegacyListGET200ResponseInner
         return $this->notice;
     }
 
-
-
     /**
-     * Sets notice.
-     *
-     * @param string|null $notice  Additional notice regarding the opening hours.
-     *
-     * @return $this
-     */
+    * Sets notice.
+    *
+    * @param string|null $notice  Additional notice regarding the opening hours.
+    *
+    * @return $this
+    */
     public function setNotice(?string $notice): self
     {
         $this->notice = $notice;
 
         return $this;
     }
+
+
+
 }
 
 

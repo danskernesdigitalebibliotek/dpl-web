@@ -314,13 +314,17 @@ tasks:
     desc: Generate FBS client package from OpenAPI specification
     cmds:
       - cmd: |
-          docker run --rm \
+          docker run --rm --user $(id -u):$(id -g) \
           -v ${PWD}/..:/local \
-          openapitools/openapi-generator-cli:v7.1.0 generate \
+          openapitools/openapi-generator-cli:v7.11.0 generate \
           -i /local/schemas/openapi/fbs-adapter.yaml \
           -g php -o /local/cms/packages/fbs-client \
           -c /local/cms/.openapi-generator/fbs.config.yaml \
           --skip-validate-spec
+      # The generator still emits a few implicitly nullable parameters that are
+      # deprecated as of PHP 8.4. Rewrite them to explicit `?Type`. See
+      # rector-generated.php.
+      - task dev:cli -- php vendor/bin/rector process packages/fbs-client --config=rector-generated.php --no-diffs
 
   dev:codegen:dpl-cms:
     desc: Generate CMS API package from OpenAPI specification
@@ -328,12 +332,16 @@ tasks:
       - cmd: |
           cd packages/cms-api && find . -mindepth 1 ! -name '.openapi-generator-ignore' -exec rm -rf {} +
       - cmd: |
-          docker run --rm \
+          docker run --rm --user $(id -u):$(id -g) \
           -v ${PWD}:/local \
-          openapitools/openapi-generator-cli:v7.1.0 generate \
+          openapitools/openapi-generator-cli:v7.11.0 generate \
           -i ./local/openapi.json \
           -g php-symfony -o /local/packages/cms-api \
           -c /local/.openapi-generator/dpl-cms.config.yaml
+      # The generator still emits a few implicitly nullable parameters that are
+      # deprecated as of PHP 8.4 (e.g. Service/TypeMismatchException.php).
+      # Rewrite them to explicit `?Type`. See rector-generated.php.
+      - task dev:cli -- php vendor/bin/rector process packages/cms-api --config=rector-generated.php --no-diffs
 
   dev:codegen:bnf-graphql:
     desc: Generate graphQL client classes. See web/modules/custom/bnf/queries/README.md
