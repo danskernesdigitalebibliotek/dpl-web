@@ -36,6 +36,16 @@ export const getManifestationPublicationYear = (
   return manifestation.edition?.publicationYear?.display || null;
 };
 
+// Parses the leading edition number from the edition summary, e.g.
+// "167. udgave, 2025" -> 167. Returns null when no number is present so the
+// caller can fall back to leaving the order untouched.
+export const getManifestationEditionNumber = (
+  manifestation: Manifestation
+): number | null => {
+  const match = manifestation.edition?.summary?.match(/^\s*(\d+)/);
+  return match ? Number(match[1]) : null;
+};
+
 export const orderManifestationsByYear = (
   manifestations: Manifestation[],
   order: "asc" | "desc" = "desc"
@@ -43,10 +53,22 @@ export const orderManifestationsByYear = (
   return manifestations.sort((a, b) => {
     const currentDate = Number(getManifestationPublicationYear(a));
     const prevDate = Number(getManifestationPublicationYear(b));
-    if (order === "desc") {
-      return prevDate - currentDate;
+    const yearComparison =
+      order === "desc" ? prevDate - currentDate : currentDate - prevDate;
+    if (yearComparison !== 0) {
+      return yearComparison;
     }
-    return currentDate - prevDate;
+    // Tiebreaker: for editions sharing a publication year, order by edition
+    // number (e.g. "167. udgave" before "166. udgave") to match bibliotek.dk
+    // and ensure "latest edition" picks the actual newest one.
+    const currentEdition = getManifestationEditionNumber(a);
+    const prevEdition = getManifestationEditionNumber(b);
+    if (currentEdition === null || prevEdition === null) {
+      return 0;
+    }
+    return order === "desc"
+      ? prevEdition - currentEdition
+      : currentEdition - prevEdition;
   });
 };
 
