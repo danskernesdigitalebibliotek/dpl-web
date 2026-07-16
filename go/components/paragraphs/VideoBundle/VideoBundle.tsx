@@ -1,6 +1,6 @@
 "use client"
 
-import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
+import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
 import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import { cyKeys } from "@/cypress/support/constants"
 import type {

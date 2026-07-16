@@ -1,6 +1,6 @@
 "use client"
 
-import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
+import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
 import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 import type { ParagraphGoVideoBundleVerticalManual as VideoBundleVerticalManualType } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
