@@ -15,7 +15,7 @@ const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
 )
 
 const meta = {
-  title: "components/MaterialSlider",
+  title: "paragraphs/MaterialSlider",
   component: MaterialSlider,
   parameters: { layout: "fullscreen" },
   args: {

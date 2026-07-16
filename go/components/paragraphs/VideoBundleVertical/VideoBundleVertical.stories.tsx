@@ -17,7 +17,7 @@ const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
 // The portrait (9:16) variant of the video bundle: video on the left, the
 // stacked work carousel on the right.
 const meta = {
-  title: "components/VideoBundleVertical",
+  title: "paragraphs/VideoBundleVertical",
   component: VideoBundleVertical,
   parameters: { layout: "fullscreen" },
   args: {

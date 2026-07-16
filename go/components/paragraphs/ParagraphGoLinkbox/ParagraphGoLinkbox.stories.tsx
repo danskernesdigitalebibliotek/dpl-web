@@ -4,7 +4,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import ParagraphGoLinkbox from "@/components/paragraphs/ParagraphGoLinkbox/ParagraphGoLinkbox"
 
 const meta = {
-  title: "components/ParagraphGoLinkbox",
+  title: "paragraphs/ParagraphGoLinkbox",
   component: ParagraphGoLinkbox,
   parameters: {
     layout: "centered",

@@ -15,7 +15,7 @@ const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
 )
 
 const meta = {
-  title: "components/VideoBundle",
+  title: "paragraphs/VideoBundle",
   component: VideoBundle,
   parameters: { layout: "fullscreen" },
   args: {
