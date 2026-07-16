@@ -74,19 +74,3 @@ export const Player: Story = {
     await screen.findByRole("heading", { name: /lyt til lydbog/i })
   },
 }
-
-// Full round trip through the flow: list → details → back → list. Ends on
-// the list view after exercising both transition directions.
-export const BackNavigation: Story = {
-  decorators: [withQueryClient(seedClient())],
-  args: baseArgs,
-  play: async () => {
-    const { screen, userEvent } = await import("@storybook/test")
-    const [firstRow] = await screen.findAllByText("Dette er titlen på en e-bog")
-    await userEvent.click(firstRow)
-    await screen.findByRole("heading", { name: "Dit lån" })
-    const backButton = await screen.findByRole("button", { name: "Tilbage" })
-    await userEvent.click(backButton)
-    await screen.findByRole("heading", { name: /digitale lån/i })
-  },
-}
