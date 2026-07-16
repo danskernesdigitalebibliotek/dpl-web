@@ -12,7 +12,7 @@ const statusLabelVariants = cva(
         warning: "",
         success: "",
         // Plain text without a pill background.
-        neutral: "text-foreground px-0",
+        neutral: "text-foreground px-0 py-0",
       },
       inverted: {
         true: "",
