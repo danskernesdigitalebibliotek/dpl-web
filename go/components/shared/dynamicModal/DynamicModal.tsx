@@ -14,9 +14,9 @@ import {
   openModal,
 } from "@/store/modal.store"
 
-import DigitalLoansModal from "@/app/(pages)/user/profile/DigitalLoansModal"
-import PhysicalLoansModal from "@/app/(pages)/user/profile/PhysicalLoansModal"
-import ReservationsModal from "@/app/(pages)/user/profile/ReservationsModal"
+import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
+import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 
 import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
 import LoanDetailsModal from "../loanDetailsModal/LoanDetailsModal"

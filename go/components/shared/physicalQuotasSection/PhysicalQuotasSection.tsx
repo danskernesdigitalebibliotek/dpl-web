@@ -3,8 +3,8 @@
 import { differenceInDays } from "date-fns"
 import React from "react"
 
-import { type PhysicalLoanItem } from "@/app/(pages)/user/profile/PhysicalLoanSlider"
-import { type ReservationItem } from "@/app/(pages)/user/profile/ReservationsModal"
+import { type PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
+import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { openModal } from "@/store/modal.store"

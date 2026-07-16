@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import LoanSlider, { LoanSliderSkeleton } from "@/app/(pages)/user/profile/LoanSlider"
+import LoanSlider, { LoanSliderSkeleton } from "@/components/shared/loanSlider/LoanSlider"
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,

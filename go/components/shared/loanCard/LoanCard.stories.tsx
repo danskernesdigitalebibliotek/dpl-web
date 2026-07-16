@@ -3,7 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import LoanCard from "@/app/(pages)/user/profile/LoanCard"
+import { ShowcaseItem } from "@/.storybook/showcase"
+import LoanCard from "@/components/shared/loanCard/LoanCard"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 import {
@@ -92,9 +93,10 @@ const withQueryClient =
 const CardGrid = ({ fixtures }: { fixtures: Fixture[] }) => (
   <div className="flex flex-wrap gap-8 p-10">
     {fixtures.map(f => (
-      <div key={f.isbn} className="w-72 space-y-2">
-        <p className="text-typo-caption text-foreground-muted text-center">{f.props.title}</p>
-        <LoanCard {...f.props} />
+      <div key={f.isbn} className="w-72">
+        <ShowcaseItem title={f.props.title} boxClassName="items-stretch">
+          <LoanCard {...f.props} />
+        </ShowcaseItem>
       </div>
     ))}
   </div>

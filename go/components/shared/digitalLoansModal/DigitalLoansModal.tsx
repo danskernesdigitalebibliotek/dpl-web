@@ -4,7 +4,7 @@ import { differenceInDays } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 
-import { expiryStatusText } from "@/app/(pages)/user/profile/LoanCard"
+import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import {
   type TMaterialCategory,
   getEbookReadUrl,

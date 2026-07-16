@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
-import DigitalLoansModal, { buildSelectedLoan } from "@/app/(pages)/user/profile/DigitalLoansModal"
+import DigitalLoansModal, { buildSelectedLoan } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import {
   fixtureWorks,
   loanListResult,
   seedClient,
   withQueryClient,
-} from "@/app/(pages)/user/profile/digitalLoansStoryFixtures"
+} from "@/components/shared/digitalLoansModal/digitalLoansStoryFixtures"
 
 // The digital loans modal is one dialog with internal views: the loan list,
 // the "Dit lån" details, and (for audiobooks) the player. Navigation between
 // views slides directionally; modals are never stacked.
 const meta = {
-  title: "profile/DigitalLoansModal",
+  title: "modals/DigitalLoansModal",
   component: DigitalLoansModal,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof DigitalLoansModal>

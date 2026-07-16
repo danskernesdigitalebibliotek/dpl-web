@@ -1,16 +1,15 @@
 "use client"
 
 import { type RenewedLoan, useRenewLoans } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { differenceInDays } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 import React, { useState } from "react"
 
-import { type PhysicalLoanItem } from "@/app/(pages)/user/profile/PhysicalLoanSlider"
-import { dueStatusText } from "@/app/(pages)/user/profile/PhysicalLoanCard"
+import { type PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
+import PhysicalDueStatusLabel from "@/components/shared/loanDetailsModal/PhysicalDueStatusLabel"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
 import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"
@@ -19,10 +18,8 @@ import {
   modalViewVariants,
 } from "@/components/shared/modalViewTransition/ModalViewTransition"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
-import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { useModalViewScroll } from "@/hooks/useModalViewScroll"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -39,7 +36,6 @@ const PhysicalLoansModal = ({
   onClose,
   items,
 }: PhysicalLoansModalProps & { open: boolean; onClose: () => void }) => {
-  const { warning, danger } = useLoanThresholds()
   const [selected, setSelected] = useState<PhysicalLoanItem | null>(null)
   const [renewedLoan, setRenewedLoan] = useState<RenewedLoan | null>(null)
   const [direction, setDirection] = useState(1)
@@ -69,19 +65,6 @@ const PhysicalLoansModal = ({
       },
       onError: () => toast.error(getRenewalFailureMessage("deniedOtherReason")),
     })
-  }
-
-  const dueStatus = (dueDate: string) => {
-    const daysUntil = differenceInDays(new Date(dueDate), new Date())
-    const isOverdue = daysUntil < danger
-    const isDueSoon = !isOverdue && daysUntil <= warning
-    return {
-      variant: (isOverdue ? "error" : isDueSoon ? "warning" : "neutral") as
-        | "error"
-        | "warning"
-        | "neutral",
-      text: isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil),
-    }
   }
 
   const viewKey = renewedLoan ? "receipt" : selected ? "details" : "list"
@@ -134,18 +117,13 @@ const PhysicalLoansModal = ({
                   type: selected.manifestation.materialTypes[0].materialTypeSpecific.code,
                 },
               })}
-              status={
-                <StatusLabel variant={dueStatus(selected.loan.dueDate).variant}>
-                  {dueStatus(selected.loan.dueDate).text}
-                </StatusLabel>
-              }
+              status={<PhysicalDueStatusLabel dueDate={selected.loan.dueDate} />}
             />
           ) : (
             <ModalMaterialList dataCy={cyKeys["physical-loans-modal"]}>
               {items.map(item => {
                 const title = item.work.titles.full[0]
                 const creators = displayCreators(item.work.creators, 1)
-                const status = dueStatus(item.loan.dueDate)
                 return (
                   <ModalMaterialListItem
                     key={item.loan.loanId}
@@ -158,7 +136,7 @@ const PhysicalLoansModal = ({
                       setDirection(1)
                       setSelected(item)
                     }}
-                    status={<StatusLabel variant={status.variant}>{status.text}</StatusLabel>}
+                    status={<PhysicalDueStatusLabel dueDate={item.loan.dueDate} />}
                   />
                 )
               })}

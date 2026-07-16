@@ -6,8 +6,8 @@ import React from "react"
 import PhysicalLoanSlider, {
   PhysicalLoanItem,
   PhysicalLoanSliderSkeleton,
-} from "@/app/(pages)/user/profile/PhysicalLoanSlider"
-import { type ReservationItem } from "@/app/(pages)/user/profile/ReservationsModal"
+} from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
+import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 import { useGetManifestationsByFaustQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { pidToFaust } from "@/lib/helpers/ids"

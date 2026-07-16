@@ -1,8 +1,8 @@
 import { createStore } from "@xstate/store"
 
-import type { DigitalLoansModalProps } from "@/app/(pages)/user/profile/DigitalLoansModal"
-import type { PhysicalLoansModalProps } from "@/app/(pages)/user/profile/PhysicalLoansModal"
-import type { ReservationsModalProps } from "@/app/(pages)/user/profile/ReservationsModal"
+import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
+import type { ReservationsModalProps } from "@/components/shared/reservationsModal/ReservationsModal"
 import type { DeleteReservationModalProps } from "@/components/shared/deleteReservationModal/DeleteReservationModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import type { PlayerModalProps } from "@/components/shared/playerModal/playerModal"

@@ -1,11 +1,12 @@
+// Shared fixtures for physical loan stories: loans in every status
+// state, paired with works/manifestations, plus the service-layer decorator.
 import { type Loan, ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
-import { darkModeDecorator } from "@/.storybook/decorators"
 import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
-import PhysicalLoanSlider, { PhysicalLoanItem } from "@/app/(pages)/user/profile/PhysicalLoanSlider"
+import { Toaster } from "@/components/shared/toaster/Toaster"
+import PhysicalLoanSlider, { PhysicalLoanItem } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { EBookFactory } from "@/cypress/factories/fbi/factory-parts/works"
@@ -38,7 +39,7 @@ const buildCover = (ratio: CoverRatio) => {
   })
 }
 
-const buildItem = ({
+export const buildItem = ({
   faust,
   title,
   dueInDays,
@@ -80,7 +81,7 @@ const buildItem = ({
 // All possible status states a physical loan can be in: overdue (an exceeded
 // loan can no longer be renewed by FBS), due today / due soon (with and
 // without renewal), and neutral (with and without renewal).
-const fixtureItems: PhysicalLoanItem[] = [
+export const fixtureItems: PhysicalLoanItem[] = [
   buildItem({
     faust: "12345670",
     title: "Vildheks",
@@ -135,7 +136,7 @@ const storyServiceLayerConfig = {
   getAuthHeader: () => "Bearer story-token",
 }
 
-const withServiceLayer =
+export const withServiceLayer =
   () =>
   (Story: React.ComponentType): React.ReactElement => (
     <QueryClientProvider
@@ -144,64 +145,9 @@ const withServiceLayer =
         <Story />
         {/* Modals open through the global store, rendered by this host. */}
         <StoreModal />
+        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+        <Toaster duration={Infinity} />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )
 
-const meta = {
-  title: "profile/PhysicalLoanSlider",
-  component: PhysicalLoanSlider,
-  parameters: { layout: "fullscreen" },
-} satisfies Meta<typeof PhysicalLoanSlider>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
-  decorators: [withServiceLayer()],
-  args: {
-    items: fixtureItems,
-    reservationItems: [],
-  },
-}
-
-export const DefaultDarkMode: Story = {
-  decorators: [withServiceLayer(), darkModeDecorator],
-  args: {
-    items: fixtureItems,
-    reservationItems: [],
-  },
-}
-
-export const OneLoan: Story = {
-  decorators: [withServiceLayer()],
-  args: {
-    items: fixtureItems.slice(1, 2),
-    reservationItems: [],
-  },
-}
-
-export const Empty: Story = {
-  decorators: [withServiceLayer()],
-  args: {
-    items: [],
-    reservationItems: [],
-  },
-}
-
-// Clicking "Forny lån" on a card opens the loan details modal.
-export const OpensLoanDetails: Story = {
-  decorators: [withServiceLayer()],
-  play: async () => {
-    // The modal renders to a portal, so query against document.body via
-    // screen instead of canvasElement.
-    const { screen, userEvent } = await import("@storybook/test")
-    const cardButtons = await screen.findAllByRole("button", { name: /forny lån/i })
-    await userEvent.click(cardButtons[0])
-    await screen.findByRole("dialog")
-  },
-  args: {
-    items: fixtureItems,
-    reservationItems: [],
-  },
-}

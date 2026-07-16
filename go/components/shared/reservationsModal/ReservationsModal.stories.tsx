@@ -8,11 +8,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
+import { ShowcaseItem } from "@/.storybook/showcase"
 import {
   ExpiredPickup,
   PickupInfo,
   QueueStatus,
-} from "@/app/(pages)/user/profile/ReservationsModal"
+} from "@/components/shared/reservationsModal/ReservationsModal"
 import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 
 const KNOWN_BRANCH = "DK-761500"
@@ -92,53 +93,33 @@ const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
 
 const PickupInfoShowcase = () => (
   <div className="space-y-8 p-10">
-    <div className="space-y-2">
+    <ShowcaseItem title="I kø" description="Eksemplarer og kø-position, uden boks (nummer 8 = 7 foran dig)">
       <QueueStatus
         reservation={{ ...baseReservation, state: "reserved", numberInQueue: 8 }}
         workId={WORK_ID}
       />
-      <dl>
-        <dt className="text-typo-subtitle-sm font-medium">I kø</dt>
-        <dd className="text-typo-caption text-foreground-muted">
-          Eksemplarer og kø-position, uden boks (nummer 8 = 7 foran dig)
-        </dd>
-      </dl>
-    </div>
-    <div className="space-y-2">
+    </ShowcaseItem>
+    <ShowcaseItem title="Næste i køen" description="numberInQueue = 1 — ingen foran dig">
       <QueueStatus
         reservation={{ ...baseReservation, state: "reserved", numberInQueue: 1 }}
         workId={WORK_ID}
       />
-      <dl>
-        <dt className="text-typo-subtitle-sm font-medium">Næste i køen</dt>
-        <dd className="text-typo-caption text-foreground-muted">
-          numberInQueue = 1 — ingen foran dig
-        </dd>
-      </dl>
-    </div>
+    </ShowcaseItem>
     {cases.map(({ name, description, reservation }) => (
-      <div key={name} className="space-y-2">
+      <ShowcaseItem key={name} title={name} description={description}>
         <PickupInfo reservation={reservation} />
-        <dl>
-          <dt className="text-typo-subtitle-sm font-medium">{name}</dt>
-          <dd className="text-typo-caption text-foreground-muted">{description}</dd>
-        </dl>
-      </div>
+      </ShowcaseItem>
     ))}
-    <div className="space-y-2">
+    <ShowcaseItem
+      title="Frist overskredet"
+      description="Afhentningsfristen er passeret — reserver igen">
       <ExpiredPickup />
-      <dl>
-        <dt className="text-typo-subtitle-sm font-medium">Frist overskredet</dt>
-        <dd className="text-typo-caption text-foreground-muted">
-          Afhentningsfristen er passeret — reserver igen
-        </dd>
-      </dl>
-    </div>
+    </ShowcaseItem>
   </div>
 )
 
 const meta = {
-  title: "profile/ReservationsModal",
+  title: "modals/ReservationsModal",
   component: PickupInfo,
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof PickupInfo>

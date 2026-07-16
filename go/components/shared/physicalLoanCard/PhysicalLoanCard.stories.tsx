@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import PhysicalLoanCard from "@/app/(pages)/user/profile/PhysicalLoanCard"
+import { ShowcaseItem } from "@/.storybook/showcase"
+import PhysicalLoanCard from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 
@@ -66,9 +67,10 @@ const withServiceLayer =
 const CardGrid = ({ items }: { items: React.ComponentProps<typeof PhysicalLoanCard>[] }) => (
   <div className="flex flex-wrap gap-8 p-10">
     {items.map(item => (
-      <div key={item.loan.loanId} className="w-72 space-y-2">
-        <p className="text-typo-caption text-foreground-muted text-center">{item.title}</p>
-        <PhysicalLoanCard {...item} />
+      <div key={item.loan.loanId} className="w-72">
+        <ShowcaseItem title={item.title} boxClassName="items-stretch">
+          <PhysicalLoanCard {...item} />
+        </ShowcaseItem>
       </div>
     ))}
   </div>

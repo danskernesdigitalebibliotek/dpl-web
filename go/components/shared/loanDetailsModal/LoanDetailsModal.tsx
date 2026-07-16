@@ -1,23 +1,20 @@
 "use client"
 
 import { type RenewedLoan, useRenewLoans } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { differenceInDays } from "date-fns"
 import React, { useEffect, useState } from "react"
 
-import { dueStatusText } from "@/app/(pages)/user/profile/PhysicalLoanCard"
 import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import { Button } from "@/components/shared/button/Button"
 import LoanDetailsContent, {
   type LoanDetails,
 } from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
+import PhysicalDueStatusLabel from "@/components/shared/loanDetailsModal/PhysicalDueStatusLabel"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import { ModalViewTransition } from "@/components/shared/modalViewTransition/ModalViewTransition"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
-import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
@@ -43,11 +40,6 @@ const LoanDetailsModal = ({
   creators,
   dueDateLabel = "Afleveres",
 }: LoanDetailsModalProps & { open: boolean; onClose: () => void }) => {
-  const { warning, danger } = useLoanThresholds()
-  const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
-  const isOverdue = daysUntil < danger
-  const isDueSoon = !isOverdue && daysUntil <= warning
-
   const { mutate: renewLoans, isPending: isRenewing } = useRenewLoans()
   const [renewedLoan, setRenewedLoan] = useState<RenewedLoan | null>(null)
 
@@ -112,11 +104,7 @@ const LoanDetailsModal = ({
                     })
                   : undefined
               }
-              status={
-                <StatusLabel variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}>
-                  {isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)}
-                </StatusLabel>
-              }
+              status={<PhysicalDueStatusLabel dueDate={loan.dueDate} />}
             />
           )}
         </ModalViewTransition>

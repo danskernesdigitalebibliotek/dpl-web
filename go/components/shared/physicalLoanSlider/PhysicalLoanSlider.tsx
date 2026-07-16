@@ -6,8 +6,8 @@ import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import React, { useEffect, useState } from "react"
 
-import PhysicalLoanCard from "@/app/(pages)/user/profile/PhysicalLoanCard"
-import { loanSliderOptions } from "@/app/(pages)/user/profile/helper"
+import PhysicalLoanCard from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
+import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
@@ -20,10 +20,10 @@ import {
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
-import { type ReservationItem } from "@/app/(pages)/user/profile/ReservationsModal"
+import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 
-import FindBookButton from "./FindBookButton"
-import PhysicalQuotasSection from "./PhysicalQuotasSection"
+import FindBookButton from "@/components/shared/loanSlider/FindBookButton"
+import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
 
 export type PhysicalLoanItem = {
   loan: Loan
