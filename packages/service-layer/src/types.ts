@@ -72,6 +72,9 @@ export type Reservation = {
   pickupBranchId: string
   numberInQueue: number | undefined
   state: string
+  // Set once the reservation is ready for pickup.
+  pickupDeadline: string | undefined
+  pickupNumber: string | undefined
 }
 
 export type Loan = {

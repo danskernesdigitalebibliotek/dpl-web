@@ -8,6 +8,8 @@ const ReservationDetailsSchema = z.object({
   pickupBranch: z.string(),
   numberInQueue: z.number().int().nullish(),
   state: z.string(),
+  pickupDeadline: z.string().nullish(),
+  pickupNumber: z.string().nullish(),
 })
 
 const ReservationsResponseSchema = z.array(ReservationDetailsSchema)
@@ -20,5 +22,7 @@ export function parseAndMapReservations(raw: unknown): Reservation[] {
     pickupBranchId: r.pickupBranch,
     numberInQueue: r.numberInQueue ?? undefined,
     state: r.state,
+    pickupDeadline: r.pickupDeadline ?? undefined,
+    pickupNumber: r.pickupNumber ?? undefined,
   }))
 }

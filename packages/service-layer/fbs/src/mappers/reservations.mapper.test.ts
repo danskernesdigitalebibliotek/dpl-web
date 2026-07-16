@@ -29,6 +29,34 @@ describe("parseAndMapReservations", () => {
         pickupBranchId: "DK-761500",
         numberInQueue: 3,
         state: "reserved",
+        pickupDeadline: undefined,
+        pickupNumber: undefined,
+      },
+    ])
+  })
+
+  it("maps pickup details on ready reservations", () => {
+    const raw = [
+      {
+        recordId: "12345678",
+        reservationId: 43,
+        pickupBranch: "DK-761500",
+        numberInQueue: null,
+        state: "readyForPickup",
+        pickupDeadline: "2026-07-22",
+        pickupNumber: "Reol 101",
+      },
+    ]
+
+    expect(parseAndMapReservations(raw)).toEqual([
+      {
+        reservationId: 43,
+        recordId: "12345678",
+        pickupBranchId: "DK-761500",
+        numberInQueue: undefined,
+        state: "readyForPickup",
+        pickupDeadline: "2026-07-22",
+        pickupNumber: "Reol 101",
       },
     ])
   })
@@ -49,6 +77,8 @@ describe("parseAndMapReservations", () => {
         pickupBranchId: "DK-761500",
         numberInQueue: undefined,
         state: "readyForPickup",
+        pickupDeadline: undefined,
+        pickupNumber: undefined,
       },
     ])
   })
