@@ -2,6 +2,8 @@
 
 import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useWindowSize } from "@uidotdev/usehooks"
+import { useRouter } from "next/navigation"
+
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import React, { useEffect, useState } from "react"
@@ -22,7 +24,6 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 
 import { type ReservationItem } from "@/components/shared/reservationsModal/ReservationsModal"
 
-import FindBookButton from "@/components/shared/loanSlider/FindBookButton"
 import PhysicalQuotasSection from "@/components/shared/physicalQuotasSection/PhysicalQuotasSection"
 
 export type PhysicalLoanItem = {
@@ -37,6 +38,7 @@ type PhysicalLoanSliderProps = {
 }
 
 const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps) => {
+  const router = useRouter()
   const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
   const [reachedEnd, setReachEnd] = useState(true)
@@ -143,7 +145,9 @@ const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps
                   className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col
                     items-center justify-center gap-5">
                   <p className="text-typo-heading-3 text-center">Du har ikke lånt noget endnu</p>
-                  <FindBookButton />
+                  <Button size="lg" className="min-w-80" onClick={() => router.push("/")}>
+                    Find din næste bog
+                  </Button>
                 </div>
               )}
             </div>

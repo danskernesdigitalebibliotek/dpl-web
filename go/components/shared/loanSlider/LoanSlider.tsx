@@ -2,6 +2,8 @@
 
 import { useWindowSize } from "@uidotdev/usehooks"
 import { differenceInDays } from "date-fns"
+import { useRouter } from "next/navigation"
+
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import React, { Suspense, useEffect, useState } from "react"
@@ -21,14 +23,13 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { openModal } from "@/store/modal.store"
 
-import FindBookButton from "./FindBookButton"
-
 type LoanSliderProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
 }
 
 const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
+  const router = useRouter()
   const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
   const [reachedEnd, setReachEnd] = useState(true)
@@ -158,7 +159,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col
                     items-center justify-center gap-5">
                   <p className="text-typo-heading-3">Du har ikke lånt noget endnu</p>
-                  <FindBookButton />
+                  <Button size="lg" className="min-w-80" onClick={() => router.push("/")}>
+                    Find din næste bog
+                  </Button>
                 </div>
               )}
             </div>
