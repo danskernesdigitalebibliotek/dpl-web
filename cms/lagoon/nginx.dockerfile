@@ -32,7 +32,7 @@ RUN cd react && pnpm build
 
 # NOTE This stage is a copy of cli.dockerfile. Anything from here and
 # to the next FROM statement should be in sync with that file.
-FROM uselagoon/php-8.3-cli-drupal:latest AS cli
+FROM uselagoon/php-8.4-cli-drupal:latest AS cli
 
 # Make sure that every build has unique assets.
 # By setting the build name as an ARG the following layers are not cached.
