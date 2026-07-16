@@ -21,7 +21,8 @@ export const daysFromNow = (days: number) =>
 
 // One digital loan per state: expires today (warning), within the warning
 // window, and comfortably in the future (plain text). The last one is a
-// cost-free ("BLÅ") title.
+// cost-free ("BLÅ") title. Deliberately NOT in expiry order — the modal
+// sorts soonest-expiring first, and the stories should show that.
 export const fixtureLoans = [
   { identifier: "9788711917141", expiresInDays: 0, costFree: false },
   { identifier: "9788711917142", expiresInDays: 4, costFree: false },

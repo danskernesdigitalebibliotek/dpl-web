@@ -108,6 +108,16 @@ const DigitalLoansModal = ({
   const { anchorRef, scrollToTop, rememberListAndScrollTop, restoreListScroll } =
     useModalViewScroll()
 
+  // Soonest-expiring loans first; works without a matching loan go last.
+  const expiryOf = (work: WorkTeaserSearchPageFragment) => {
+    const isbn = work.manifestations.all[0].identifiers.find(
+      identifier => identifier.type === "ISBN"
+    )?.value
+    const expiry = loanData.loans?.find(l => l.libraryBook?.identifier === isbn)?.loanExpireDateUtc
+    return expiry ? new Date(expiry).getTime() : Infinity
+  }
+  const sortedWorks = [...works].sort((a, b) => expiryOf(a) - expiryOf(b))
+
   const goBack = () => {
     setDirection(-1)
     if (playerOpen) {
@@ -189,7 +199,7 @@ const DigitalLoansModal = ({
             />
           ) : (
             <ModalMaterialList dataCy={cyKeys["digital-loans-modal"]}>
-              {works.map(work => {
+              {sortedWorks.map(work => {
                 const manifestation = work.manifestations.all[0]
                 const isbn = manifestation.identifiers.find(
                   identifier => identifier.type === "ISBN"

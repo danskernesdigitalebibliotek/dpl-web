@@ -19,10 +19,13 @@ type Story = StoryObj<typeof meta>
 const baseArgs = {
   open: true,
   onClose: () => {},
-  items: fixtureItems,
+  // Reversed so the stories show the modal's own sorting: the list must
+  // render soonest-due first regardless of the order it receives.
+  items: [...fixtureItems].reverse(),
 }
 
-// The list view: one row per physical loan with cover, title and due status.
+// The list view: one row per physical loan with cover, title and due status,
+// sorted soonest-due first.
 export const List: Story = {
   decorators: [withServiceLayer()],
   args: baseArgs,

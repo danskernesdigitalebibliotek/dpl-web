@@ -45,6 +45,11 @@ const PhysicalLoansModal = ({
 
   const { mutate: renewLoans, isPending: isRenewing } = useRenewLoans()
 
+  // Soonest due date first.
+  const sortedItems = [...items].sort(
+    (a, b) => new Date(a.loan.dueDate).getTime() - new Date(b.loan.dueDate).getTime()
+  )
+
   const goBack = () => {
     setDirection(-1)
     setSelected(null)
@@ -121,7 +126,7 @@ const PhysicalLoansModal = ({
             />
           ) : (
             <ModalMaterialList dataCy={cyKeys["physical-loans-modal"]}>
-              {items.map(item => {
+              {sortedItems.map(item => {
                 const title = item.work.titles.full[0]
                 const creators = displayCreators(item.work.creators, 1)
                 return (

@@ -28,7 +28,9 @@ const baseArgs = {
 }
 
 // The list view: one row per loan with cover, title, author and expiry
-// status. Opened via "Vis alle" in the loans overview.
+// status, sorted soonest-expiring first (the fixtures are unordered, so the
+// "BLÅ" title expiring in 2 days lands second). Opened via "Vis alle" in
+// the loans overview.
 export const List: Story = {
   decorators: [withQueryClient(seedClient())],
   args: baseArgs,
