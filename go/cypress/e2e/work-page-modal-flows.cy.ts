@@ -58,6 +58,8 @@ const clickLoggedInButton = (label: string) => {
   cy.dataCy("work-page-button-logged-in").contains(label).click()
 }
 
+// Modals open through the modal store — the URL is only a one-shot inbox for
+// external entry (e.g. post-login) and never carries modal state itself.
 describe("Work page → modal shown for each (material × login state)", () => {
   beforeEach(() => {
     mockFrontpage()
@@ -74,21 +76,21 @@ describe("Work page → modal shown for each (material × login state)", () => {
       visitWork("BOOK")
       cy.contains("Reserver bog").click()
       cy.dataCy("reservation-login-modal").should("be.visible")
-      cy.url().should("include", "modal=ReservationLoginModal")
+      cy.url().should("not.include", "modal=")
     })
 
     it("E-book → LoanLoginModal", () => {
       visitWork("EBOOK")
       cy.contains("Lån e-bog").click()
       cy.dataCy("loan-login-modal").should("be.visible")
-      cy.url().should("include", "modal=LoanLoginModal")
+      cy.url().should("not.include", "modal=")
     })
 
     it("Audiobook → LoanLoginModal", () => {
       visitWork("AUDIO_BOOK_ONLINE")
       cy.contains("Lån lydbog").click()
       cy.dataCy("loan-login-modal").should("be.visible")
-      cy.url().should("include", "modal=LoanLoginModal")
+      cy.url().should("not.include", "modal=")
     })
   })
 
@@ -102,21 +104,21 @@ describe("Work page → modal shown for each (material × login state)", () => {
       visitWork("BOOK")
       clickLoggedInButton("Reserver bog")
       cy.dataCy("reservation-unilogin-modal").should("be.visible")
-      cy.url().should("include", "modal=ReservationUniloginModal")
+      cy.url().should("not.include", "modal=")
     })
 
     it("E-book → LoanMaterialModal", () => {
       visitWork("EBOOK")
       clickLoggedInButton("Lån e-bog")
       cy.dataCy("loan-material-modal").should("be.visible")
-      cy.url().should("include", "modal=LoanMaterialModal")
+      cy.url().should("not.include", "modal=")
     })
 
     it("Audiobook → LoanMaterialModal", () => {
       visitWork("AUDIO_BOOK_ONLINE")
       clickLoggedInButton("Lån lydbog")
       cy.dataCy("loan-material-modal").should("be.visible")
-      cy.url().should("include", "modal=LoanMaterialModal")
+      cy.url().should("not.include", "modal=")
     })
   })
 
@@ -130,21 +132,21 @@ describe("Work page → modal shown for each (material × login state)", () => {
       visitWork("BOOK")
       clickLoggedInButton("Reserver bog")
       cy.dataCy("reservation-modal").should("be.visible")
-      cy.url().should("include", "modal=ReservationModal")
+      cy.url().should("not.include", "modal=")
     })
 
     it("E-book → LoanMaterialModal", () => {
       visitWork("EBOOK")
       clickLoggedInButton("Lån e-bog")
       cy.dataCy("loan-material-modal").should("be.visible")
-      cy.url().should("include", "modal=LoanMaterialModal")
+      cy.url().should("not.include", "modal=")
     })
 
     it("Audiobook → LoanMaterialModal", () => {
       visitWork("AUDIO_BOOK_ONLINE")
       clickLoggedInButton("Lån lydbog")
       cy.dataCy("loan-material-modal").should("be.visible")
-      cy.url().should("include", "modal=LoanMaterialModal")
+      cy.url().should("not.include", "modal=")
     })
   })
 })
