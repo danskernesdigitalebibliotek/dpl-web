@@ -36,13 +36,17 @@ export const getManifestationPublicationYear = (
   return manifestation.edition?.publicationYear?.display || null;
 };
 
-// Parses the leading edition number from the edition summary, e.g.
-// "167. udgave, 2025" -> 167. Returns null when no number is present so the
-// caller can fall back to leaving the order untouched.
+// Parses the edition number from the edition summary. The number can appear
+// anywhere in the string and the FBI data leads with the year, e.g.
+// "2025 (167. ajourførte udgave)" -> 167. Returns null when no "N. udgave"
+// pattern is present so the caller can fall back to leaving the order
+// untouched.
 export const getManifestationEditionNumber = (
   manifestation: Manifestation
 ): number | null => {
-  const match = manifestation.edition?.summary?.match(/^\s*(\d+)/);
+  const match = manifestation.edition?.summary?.match(
+    /(\d+)\.\s*(?:\S+\s+)?udgave/i
+  );
   return match ? Number(match[1]) : null;
 };
 
@@ -641,7 +645,15 @@ if (import.meta.vitest) {
     }) as Manifestation;
 
   describe("getManifestationEditionNumber", () => {
-    it("parses the leading edition number from the edition summary", () => {
+    it("parses the edition number from a year-leading summary", () => {
+      expect(
+        getManifestationEditionNumber(
+          manifestationWithEdition("2025 (167. ajourførte udgave)", "2025")
+        )
+      ).toBe(167);
+    });
+
+    it("parses the edition number from a plain 'N. udgave' summary", () => {
       expect(
         getManifestationEditionNumber(
           manifestationWithEdition("167. udgave, 2025", "2025")
@@ -649,10 +661,10 @@ if (import.meta.vitest) {
       ).toBe(167);
     });
 
-    it("returns null when the summary has no leading number", () => {
+    it("returns null when the summary has no edition number", () => {
       expect(
         getManifestationEditionNumber(
-          manifestationWithEdition("Særudgave, 2025", "2025")
+          manifestationWithEdition("2025 (særudgave)", "2025")
         )
       ).toBeNull();
     });
@@ -663,9 +675,15 @@ if (import.meta.vitest) {
     // (highest first), so "167. udgave" beats "166. udgave" and "Seneste
     // udgave" picks the actual newest edition.
     it("orders same-year editions by edition number regardless of input order", () => {
-      const ed166 = manifestationWithEdition("166. udgave, 2025", "2025");
-      const ed167 = manifestationWithEdition("167. udgave, 2025", "2025");
-      const older = manifestationWithEdition("1. udgave, 2024", "2024");
+      const ed166 = manifestationWithEdition(
+        "2025 (166. ajourførte udgave)",
+        "2025"
+      );
+      const ed167 = manifestationWithEdition(
+        "2025 (167. ajourførte udgave)",
+        "2025"
+      );
+      const older = manifestationWithEdition("2024 (1. udgave)", "2024");
 
       // Both incoming orders must yield the same result. A year-only sort is
       // stable and would leave the tied editions untouched, so it would only
@@ -683,8 +701,14 @@ if (import.meta.vitest) {
     });
 
     it("picks the highest edition of the tied year as the latest manifestation", () => {
-      const ed166 = manifestationWithEdition("166. udgave, 2025", "2025");
-      const ed167 = manifestationWithEdition("167. udgave, 2025", "2025");
+      const ed166 = manifestationWithEdition(
+        "2025 (166. ajourførte udgave)",
+        "2025"
+      );
+      const ed167 = manifestationWithEdition(
+        "2025 (167. ajourførte udgave)",
+        "2025"
+      );
 
       expect(getLatestManifestation([ed166, ed167])).toBe(ed167);
     });
