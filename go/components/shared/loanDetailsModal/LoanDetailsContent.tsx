@@ -52,7 +52,7 @@ const LoanDetailsContent = ({
   const isBlue = useIsBlueTitle(manifestation, blueTitle)
 
   return (
-    <div data-cy={cyKeys["loan-details-modal"]} className="mx-auto max-w-prose space-y-8">
+    <div data-cy={cyKeys["loan-details-modal"]} className="space-y-8">
       <ModalMaterialHeader
         cover={manifestation.cover}
         iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
@@ -62,8 +62,8 @@ const LoanDetailsContent = ({
         status={status}
         href={href}
         badge={
-          blueTitle ? (
-            <BlueTitleBadge manifestation={manifestation} className="self-center lg:self-start" />
+          isBlue ? (
+            <BlueTitleBadge manifestation={manifestation} className="self-start" />
           ) : undefined
         }
         costFree={isBlue}

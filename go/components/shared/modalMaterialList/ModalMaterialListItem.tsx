@@ -34,13 +34,13 @@ const ModalMaterialListItem = ({
   const isBlue = useIsBlueTitle(manifestation, blueTitle)
 
   return (
-    <li className="py-8 first:pt-0 last:pb-0">
+    <li className="py-8 first:pt-0 last:pb-0 md:py-10">
       <button
         type="button"
         aria-label={ariaLabel}
         onClick={onSelect}
-        className="focus-visible flex w-full cursor-pointer items-end gap-8 text-left">
-        <div className="w-32 shrink-0">
+        className="focus-visible flex w-full cursor-pointer items-end gap-6 text-left md:gap-8">
+        <div className="w-24 shrink-0 md:w-36">
           <ManifestationCover
             cover={manifestation.cover}
             iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
@@ -56,7 +56,7 @@ const ModalMaterialListItem = ({
         </div>
         <div className="space-y-4">
           <div className="space-y-2">
-            {blueTitle && <BlueTitleBadge manifestation={manifestation} />}
+            {isBlue && <BlueTitleBadge manifestation={manifestation} />}
             <p className="text-typo-heading-5">{title}</p>
             {creators && (
               <p className="text-typo-subtitle-sm text-foreground-muted">Af {creators}</p>

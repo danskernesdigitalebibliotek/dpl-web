@@ -32,23 +32,23 @@ const ModalMaterialHeader = ({
   status,
   href,
 }: ModalMaterialHeaderProps) => (
-  <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
+  <div className="flex items-end gap-8">
     <ManifestationCover
       cover={cover}
       iconName={iconName}
       alt={alt}
-      className="mx-auto w-32 shrink-0 lg:mx-0"
+      className="w-32 shrink-0"
       costFree={costFree}
       iconClassName={iconClassName}
     />
-    <div className="mt-auto flex flex-1 flex-col gap-4 text-center lg:text-left">
+    <div className="flex min-w-0 flex-1 flex-col gap-4 text-left">
       <div className="flex flex-col gap-2">
         {badge}
         {href ? (
           <Link
             prefetch={false}
             href={href}
-            className="text-typo-heading-5 focus-visible self-center hover:underline lg:self-start">
+            className="text-typo-heading-5 focus-visible self-start hover:underline">
             {title}
           </Link>
         ) : (
@@ -56,7 +56,7 @@ const ModalMaterialHeader = ({
         )}
         {subtitle && <p className="text-typo-subtitle-sm text-foreground-muted">{subtitle}</p>}
       </div>
-      {status && <div className="flex justify-center lg:justify-start">{status}</div>}
+      {status && <div className="flex justify-start">{status}</div>}
     </div>
   </div>
 )
