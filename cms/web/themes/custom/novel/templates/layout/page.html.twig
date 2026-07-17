@@ -43,8 +43,11 @@
  */
 #}
 
-{# Overflow hidden is necessary, to avoid the header breaking out on mobile. #}
-<div class="overflow-hidden">
+{# Clips the header's mobile breakout. `overflow-x: clip` (not `overflow: hidden`)
+   so it doesn't become a scroll container that would stop the events overview's
+   sticky month separators — and clip the header's autosuggest dropdown.
+   `.overflow-x-clip` is a design-system utility. #}
+<div class="overflow-x-clip">
   {{ include('@novel/layout/header.html.twig'
     , {
     header: page.header,
