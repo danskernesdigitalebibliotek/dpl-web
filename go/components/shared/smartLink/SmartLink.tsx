@@ -27,7 +27,12 @@ function SmartLink({
   if (linkType === "internal") {
     if (reload) {
       return (
-        <a onClick={onClick} className={className} href={href} target={target} aria-label={ariaLabel}>
+        <a
+          onClick={onClick}
+          className={className}
+          href={href}
+          target={target}
+          aria-label={ariaLabel}>
           {children}
         </a>
       )
@@ -49,7 +54,12 @@ function SmartLink({
   if (linkType === "external") {
     const validHref = href.startsWith("http") ? href : `https://${href}`
     return (
-      <a onClick={onClick} className={className} href={validHref} target={target} aria-label={ariaLabel}>
+      <a
+        onClick={onClick}
+        className={className}
+        href={validHref}
+        target={target}
+        aria-label={ariaLabel}>
         {children}
       </a>
     )
