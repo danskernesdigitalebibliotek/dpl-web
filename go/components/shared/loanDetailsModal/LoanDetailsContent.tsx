@@ -73,11 +73,7 @@ const LoanDetailsContent = ({
       <hr className="border-foreground/10" />
 
       <div className="space-y-4">
-        <InfoCard
-          icon="calendar-check"
-          title={dueDateLabel}
-          value={formatLoanDate(loan.dueDate)}
-        />
+        <InfoCard icon="calendar-check" title={dueDateLabel} value={formatLoanDate(loan.dueDate)} />
         {loan.loanDate && (
           <InfoCard icon="clock" title="Udlånsdato" value={formatLoanDate(loan.loanDate)} />
         )}

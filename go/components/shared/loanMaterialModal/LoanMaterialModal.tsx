@@ -8,8 +8,8 @@ import {
   getManifestationMaterialTypeIcon,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import { Button } from "@/components/shared/button/Button"
 import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
+import { Button } from "@/components/shared/button/Button"
 import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanAlreadyLoanedContent from "@/components/shared/loanMaterialModal/LoanAlreadyLoanedContent"
@@ -177,9 +177,7 @@ const LoanMaterialModal = ({
                     className="mx-auto w-32 shrink-0"
                     costFree={isBlue}
                     iconClassName={
-                      isBlue
-                        ? "bg-content-blue-100 dark:text-blue-title-dark h-10 w-10"
-                        : undefined
+                      isBlue ? "bg-content-blue-100 dark:text-blue-title-dark h-10 w-10" : undefined
                     }
                   />
 

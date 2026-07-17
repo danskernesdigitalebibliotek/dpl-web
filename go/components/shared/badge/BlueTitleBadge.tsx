@@ -26,7 +26,7 @@ export const useIsBlueTitle = (
   if (!enabled || !manifestation) return false
   return Boolean(
     data?.product?.costFree ||
-      isPodcastMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
+    isPodcastMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
   )
 }
 
