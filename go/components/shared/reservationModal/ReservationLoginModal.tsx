@@ -37,9 +37,7 @@ const ReservationLoginModal = ({ open, onClose, wid, pid }: ReservationLoginModa
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Reserver bog">
-      <div
-        className="mx-auto w-full max-w-prose space-y-6"
-        data-cy={cyKeys["reservation-login-modal"]}>
+      <div className="w-full space-y-6" data-cy={cyKeys["reservation-login-modal"]}>
         <h5 className="text-typo-heading-5 text-pretty!">
           4 nemme steps til lån af bog på biblioteket.
         </h5>

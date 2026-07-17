@@ -54,7 +54,7 @@ const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Log ind">
-      <div className="mx-auto w-full max-w-prose space-y-8" data-cy={cyKeys["loan-login-modal"]}>
+      <div className="w-full space-y-8" data-cy={cyKeys["loan-login-modal"]}>
         <div className="space-y-4">
           <p className="text-typo-heading-5">Du skal logge ind for at låne {label}</p>
           <p className="text-typo-subtitle-md text-foreground-muted">

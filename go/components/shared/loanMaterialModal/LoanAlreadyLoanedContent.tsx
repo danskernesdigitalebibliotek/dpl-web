@@ -20,7 +20,7 @@ const LoanAlreadyLoanedContent = ({ manifestation }: { manifestation: Manifestat
   return (
     <div
       data-cy={cyKeys["loan-already-loaned"]}
-      className="mx-auto flex max-w-prose flex-col items-center gap-y-8 text-center">
+      className="flex flex-col items-center gap-y-8 text-center">
       <ManifestationCover
         cover={manifestation.cover}
         iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}

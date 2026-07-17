@@ -50,8 +50,8 @@ const DeleteReservationModal = ({
         ) : (
           <div
             data-cy={cyKeys["delete-reservation-modal"]}
-            className="mx-auto flex max-w-prose flex-col items-center gap-y-8 text-center">
-            <ManifestationCover cover={cover} iconName="book" className="w-32 shrink-0" />
+            className="flex flex-col items-center gap-y-8 text-center">
+            <ManifestationCover cover={cover} iconName="book" className="w-32 shrink-0 md:w-36" />
             <div className="flex flex-col gap-y-3">
               <p className="text-typo-heading-5">Vil du slette din reservering?</p>
               <p className="text-typo-subtitle-md text-foreground-muted">Du kan ikke fortryde.</p>

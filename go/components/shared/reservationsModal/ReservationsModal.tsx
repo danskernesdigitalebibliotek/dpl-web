@@ -138,7 +138,7 @@ const ReservationDetails = ({ item }: { item: ReservationItem }) => {
   const adultSiteUrl = baseURL ? `${baseURL.replace(/\/$/, "")}${USER_PROFILE_PATH}` : "#"
 
   return (
-    <div data-cy={cyKeys["reservation-details"]} className="mx-auto max-w-prose space-y-8">
+    <div data-cy={cyKeys["reservation-details"]} className="space-y-8">
       <ModalMaterialHeader
         cover={manifestation.cover}
         iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
@@ -185,7 +185,7 @@ const ReservationDetails = ({ item }: { item: ReservationItem }) => {
           </>
         )}
 
-        <p className="text-typo-caption text-foreground-muted max-w-prose text-center">
+        <p className="text-typo-caption text-foreground-muted text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
           <a className="text-foreground underline" href={adultSiteUrl}>
             voksen-hjemmesiden
@@ -250,7 +250,7 @@ const ReservationsModal = ({
         ) : flow.view === "details" && selected ? (
           <ReservationDetails item={selected} />
         ) : (
-          <div data-cy={cyKeys["reservations-modal"]} className="mx-auto max-w-prose space-y-10">
+          <div data-cy={cyKeys["reservations-modal"]} className="space-y-10">
             {ready.length > 0 && (
               <ModalMaterialList heading={`Klar til afhentning (${ready.length})`}>
                 {ready.map(item => (

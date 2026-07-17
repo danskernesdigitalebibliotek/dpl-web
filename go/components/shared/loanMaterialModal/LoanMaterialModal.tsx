@@ -8,7 +8,7 @@ import {
   getManifestationMaterialTypeIcon,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
+import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { Button } from "@/components/shared/button/Button"
 import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
@@ -145,7 +145,7 @@ const LoanMaterialModal = ({
       title={flow.animatedTitle(titleText)}>
       {flow.renderBody(
         flow.view === "player" && loanResult?.orderId ? (
-          <div className="mx-auto max-w-prose">
+          <div>
             <Player type="loan" orderId={loanResult.orderId} />
           </div>
         ) : flow.view === "details" && manifestation && loanResult?.expirationDateUtc ? (
@@ -166,7 +166,7 @@ const LoanMaterialModal = ({
           />
         ) : (
           manifestation && (
-            <div className="mx-auto max-w-prose" data-cy={cyKeys["loan-material-modal"]}>
+            <div data-cy={cyKeys["loan-material-modal"]}>
               {isAlreadyLoaned ? (
                 <LoanAlreadyLoanedContent manifestation={manifestation} />
               ) : (

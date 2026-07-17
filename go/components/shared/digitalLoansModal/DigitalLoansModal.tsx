@@ -84,7 +84,7 @@ const DigitalLoansModal = ({
       title={flow.animatedTitle(titleText)}>
       {flow.renderBody(
         flow.view === "player" && selectedLoan?.orderId ? (
-          <div className="mx-auto max-w-prose">
+          <div>
             <Player type="loan" orderId={selectedLoan.orderId} />
           </div>
         ) : flow.view === "detail" && selectedLoan ? (

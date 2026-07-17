@@ -39,7 +39,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
     : (branchTitle ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : ""))
 
   return (
-    <div className="mx-auto max-w-prose space-y-8">
+    <div className="space-y-8">
       <ModalMaterialHeader
         cover={manifestation.cover}
         iconName={materialIcon}
@@ -68,7 +68,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
           value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adresse."}
         />
 
-        <p className="text-typo-caption text-foreground-muted max-w-prose text-center">
+        <p className="text-typo-caption text-foreground-muted text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
           <a className="text-foreground underline" href={adultSiteUrl}>
             voksen-hjemmesiden

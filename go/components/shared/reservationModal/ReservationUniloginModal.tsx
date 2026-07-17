@@ -37,9 +37,7 @@ const ReservationUniloginModal = ({ open, onClose, wid, pid }: ReservationUnilog
 
   return (
     <ResponsiveDialog open={open} onClose={onClose} title="Brug bibliotekslogin">
-      <div
-        className="mx-auto w-full max-w-prose space-y-6"
-        data-cy={cyKeys["reservation-unilogin-modal"]}>
+      <div className="w-full space-y-6" data-cy={cyKeys["reservation-unilogin-modal"]}>
         <p className="text-typo-heading-5">
           Du kan ikke reservere bøger på biblioteket med Unilogin.
         </p>
