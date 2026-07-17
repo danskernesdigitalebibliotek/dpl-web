@@ -9,6 +9,7 @@ import {
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
+import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanAlreadyLoanedContent from "@/components/shared/loanMaterialModal/LoanAlreadyLoanedContent"
@@ -64,6 +65,7 @@ const LoanMaterialModal = ({
 
   const label = manifestation ? getManifestationLabel(manifestation) : ""
   const category = getMaterialCategory(manifestation?.materialTypes[0]?.materialTypeSpecific.code)
+  const isBlue = useIsBlueTitle(manifestation)
 
   const handleLoanMaterial = () => {
     if (!manifestation || !identifier) return
@@ -153,6 +155,7 @@ const LoanMaterialModal = ({
             title={data?.work?.titles.full[0] ?? ""}
             creators={displayCreators(data?.work?.creators ?? [], 1)}
             dueDateLabel="Udløber"
+            blueTitle
             status={
               daysUntilExpiry !== null && (
                 <StatusLabel variant={daysUntilExpiry <= warning ? "warning" : "neutral"}>
@@ -171,8 +174,13 @@ const LoanMaterialModal = ({
                   <ManifestationCover
                     cover={manifestation.cover}
                     iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-                    className="rounded-base flex aspect-1/1 h-36 w-full flex-col items-center
-                      justify-center lg:aspect-4/5"
+                    className="mx-auto w-32 shrink-0"
+                    costFree={isBlue}
+                    iconClassName={
+                      isBlue
+                        ? "bg-content-blue-100 dark:text-blue-title-dark h-10 w-10"
+                        : undefined
+                    }
                   />
 
                   <div className="mx-auto mt-10 mb-5 w-full space-y-4">

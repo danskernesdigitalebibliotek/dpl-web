@@ -8,6 +8,10 @@ import type { MaterialTypeIconNamesType } from "@/lib/types/icons"
 type ModalMaterialHeaderProps = {
   cover: Cover
   iconName: MaterialTypeIconNamesType
+  // Rendered above the title (e.g. the blue title badge).
+  badge?: React.ReactNode
+  costFree?: boolean
+  iconClassName?: string
   title: string
   subtitle?: string | null
   alt?: string
@@ -19,6 +23,9 @@ type ModalMaterialHeaderProps = {
 const ModalMaterialHeader = ({
   cover,
   iconName,
+  badge,
+  costFree,
+  iconClassName,
   title,
   subtitle,
   alt,
@@ -31,9 +38,12 @@ const ModalMaterialHeader = ({
       iconName={iconName}
       alt={alt}
       className="mx-auto w-32 shrink-0 lg:mx-0"
+      costFree={costFree}
+      iconClassName={iconClassName}
     />
     <div className="mt-auto flex flex-1 flex-col gap-4 text-center lg:text-left">
       <div className="flex flex-col gap-2">
+        {badge}
         {href ? (
           <Link
             prefetch={false}

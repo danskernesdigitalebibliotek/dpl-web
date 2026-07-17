@@ -5,6 +5,7 @@ import { da } from "date-fns/locale"
 import React from "react"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import { cyKeys } from "@/cypress/support/constants"
@@ -31,6 +32,9 @@ type LoanDetailsContentProps = {
   status?: React.ReactNode
   // Link target for the title (the material's work page).
   href?: string
+  // Blue title traits (digital loans only): "BLÅ" badge above the title
+  // and the blue material-type icon on cost-free titles.
+  blueTitle?: boolean
 }
 
 const formatLoanDate = (date: string) => format(new Date(date), "d. MMMM yyyy", { locale: da })
@@ -43,30 +47,46 @@ const LoanDetailsContent = ({
   dueDateLabel = "Afleveres",
   status,
   href,
-}: LoanDetailsContentProps) => (
-  <div data-cy={cyKeys["loan-details-modal"]} className="mx-auto max-w-prose space-y-8">
-    <ModalMaterialHeader
-      cover={manifestation.cover}
-      iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-      title={title}
-      subtitle={creators ? `Af ${creators}` : null}
-      alt={`${title} cover billede`}
-      status={status}
-      href={href}
-    />
+  blueTitle = false,
+}: LoanDetailsContentProps) => {
+  const isBlue = useIsBlueTitle(manifestation, blueTitle)
 
-    <hr className="border-foreground/10" />
+  return (
+    <div data-cy={cyKeys["loan-details-modal"]} className="mx-auto max-w-prose space-y-8">
+      <ModalMaterialHeader
+        cover={manifestation.cover}
+        iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+        title={title}
+        subtitle={creators ? `Af ${creators}` : null}
+        alt={`${title} cover billede`}
+        status={status}
+        href={href}
+        badge={
+          blueTitle ? (
+            <BlueTitleBadge manifestation={manifestation} className="self-center lg:self-start" />
+          ) : undefined
+        }
+        costFree={isBlue}
+        iconClassName={isBlue ? "bg-content-blue-100 dark:text-blue-title-dark" : undefined}
+      />
 
-    <div className="space-y-4">
-      <InfoCard icon="calendar-check" title={dueDateLabel} value={formatLoanDate(loan.dueDate)} />
-      {loan.loanDate && (
-        <InfoCard icon="clock" title="Udlånsdato" value={formatLoanDate(loan.loanDate)} />
-      )}
-      {loan.materialItemNumber && (
-        <InfoCard icon="document" title="Materialenummer" value={loan.materialItemNumber} />
-      )}
+      <hr className="border-foreground/10" />
+
+      <div className="space-y-4">
+        <InfoCard
+          icon="calendar-check"
+          title={dueDateLabel}
+          value={formatLoanDate(loan.dueDate)}
+        />
+        {loan.loanDate && (
+          <InfoCard icon="clock" title="Udlånsdato" value={formatLoanDate(loan.loanDate)} />
+        )}
+        {loan.materialItemNumber && (
+          <InfoCard icon="document" title="Materialenummer" value={loan.materialItemNumber} />
+        )}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default LoanDetailsContent

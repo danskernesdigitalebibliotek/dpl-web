@@ -94,6 +94,7 @@ const DigitalLoansModal = ({
             title={selectedLoan.title}
             creators={selectedLoan.creators}
             dueDateLabel="Udløber"
+            blueTitle
             href={resolveUrl({
               routeParams: { work: "work", wid: selectedLoan.workId },
               queryParams: {
@@ -126,6 +127,7 @@ const DigitalLoansModal = ({
                   manifestation={manifestation}
                   title={title}
                   creators={creators}
+                  blueTitle
                   ariaLabel={`Se detaljer om dit lån af ${title}`}
                   onSelect={() => {
                     const selection = buildSelectedLoan(work, loanData)
