@@ -6,9 +6,6 @@ import ParagraphGoLinkbox from "@/components/paragraphs/ParagraphGoLinkbox/Parag
 const meta = {
   title: "paragraphs/ParagraphGoLinkbox",
   component: ParagraphGoLinkbox,
-  parameters: {
-    layout: "centered",
-  },
   args: {
     title: "Adrians bogklub 2.0",
     goDescription: "Adrians bogklub 2.0",
