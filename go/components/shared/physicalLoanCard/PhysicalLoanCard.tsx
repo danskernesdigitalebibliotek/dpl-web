@@ -2,7 +2,6 @@
 
 import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { differenceInDays } from "date-fns"
-import Link from "next/link"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
@@ -12,7 +11,6 @@ import { cyKeys } from "@/cypress/support/constants"
 import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { openModal } from "@/store/modal.store"
 
 export type PhysicalLoanCardProps = {
@@ -52,17 +50,14 @@ const PhysicalLoanCard = ({
   return (
     <div className={cn("relative w-full", className)}>
       <div className="w-full space-y-3 px-[15%]">
-        <Link
-          prefetch={false}
-          aria-label={`Tilgå værket ${title}. ${statusText}`}
+        <button
+          type="button"
+          aria-label={`Se detaljer om dit lån af ${title}. ${statusText}`}
           className="focus-visible outline-accent-foreground rounded-base relative block w-full
-            focus:outline-offset-2"
-          href={resolveUrl({
-            routeParams: { work: "work", wid: workId },
-            queryParams: {
-              type: manifestation.materialTypes[0].materialTypeSpecific.code,
-            },
-          })}>
+            cursor-pointer focus:outline-offset-2"
+          onClick={() =>
+            openModal("LoanDetailsModal", { loan, manifestation, title, workId, creators })
+          }>
           <ManifestationCover
             cover={manifestation.cover}
             iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
@@ -70,7 +65,7 @@ const PhysicalLoanCard = ({
             className="w-full"
             iconClassName="bg-background-overlay-solid"
           />
-        </Link>
+        </button>
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
         <div className="flex w-full justify-center pt-5">
           <StatusLabel variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}>
