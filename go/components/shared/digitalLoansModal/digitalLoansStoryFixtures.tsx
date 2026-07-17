@@ -2,6 +2,7 @@ import { ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-l
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
+import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { worksWithIdentifiersFactory } from "@/cypress/factories/fbi/factory-parts/works"
 import {
@@ -107,6 +108,8 @@ export const withQueryClient =
     <QueryClientProvider client={client}>
       <ServiceLayerProvider config={storyServiceLayerConfig}>
         <Story />
+        {/* Modals open through the global store, rendered by this host. */}
+        <StoreModal />
       </ServiceLayerProvider>
     </QueryClientProvider>
   )

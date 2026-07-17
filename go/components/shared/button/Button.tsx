@@ -128,7 +128,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         aria-busy={isLoading || undefined}
-        aria-label={ariaLabel || ""}>
+        aria-label={ariaLabel || props["aria-label"] || undefined}>
         {isLoading ? (
           <span className="grid items-center justify-items-center">
             <span className="col-start-1 row-start-1 opacity-0">{content}</span>
