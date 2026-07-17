@@ -6,6 +6,8 @@ import React from "react"
 import PhysicalLoanSlider, {
   PhysicalLoanSliderSkeleton,
 } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
+import PhysicalLoansUniloginTeaser from "@/components/shared/physicalLoans/PhysicalLoansUniloginTeaser"
+import useSession from "@/hooks/useSession"
 import { useGetManifestationsByFaustQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import {
@@ -19,6 +21,7 @@ export type PhysicalLoansProps = {
 }
 
 const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
+  const { session } = useSession()
   const { data: loans, isLoading: isLoadingLoans } = useLoans()
   const { data: reservations, isLoading: isLoadingReservations } = useReservations()
 
@@ -31,6 +34,11 @@ const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
     reservations ?? [],
     dataManifestations?.manifestations
   )
+
+  // FBS is only available with a library login.
+  if (session?.type === "unilogin") {
+    return <PhysicalLoansUniloginTeaser className={className} />
+  }
 
   return (
     <div className={cn("col-span-full", className)}>
