@@ -29,8 +29,8 @@ const StatBox = ({
   <button
     type="button"
     onClick={onClick}
-    className="bg-background-overlay focus-visible flex flex-1 cursor-pointer flex-col
-      items-center justify-center gap-2 rounded-sm p-6 text-center md:min-h-36">
+    className="bg-background-overlay focus-visible flex flex-1 cursor-pointer flex-col items-center
+      justify-center gap-2 rounded-sm p-6 text-center md:min-h-36">
     <span className="text-typo-heading-3 block">{count}</span>
     <span className="text-typo-subtitle-sm block opacity-70">{label}</span>
   </button>
