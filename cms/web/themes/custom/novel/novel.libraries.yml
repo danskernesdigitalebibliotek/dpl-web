@@ -42,3 +42,7 @@ footer-accordions:
 show-more:
   js:
     assets/dpl-design-system/js/show-more.js: {}
+
+content-list-month-separator:
+  js:
+    assets/dpl-design-system/js/content-list-month-separator.js: {}
