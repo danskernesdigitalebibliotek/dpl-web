@@ -181,16 +181,18 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   )
 }
 
+// Mirrors the loaded slider: same container padding, headline row, slides
+// per view and the quota section, so nothing jumps when the data arrives.
 export const LoanSliderSkeleton = () => {
   return (
     <div
-      className="bg-background-overlay grid-go col-span-full space-y-8 overflow-hidden rounded-md
-        py-10">
-      <div className="col-span-full flex items-center justify-between px-10">
+      className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
+        overflow-hidden md:p-8">
+      <div className="col-span-full flex items-center justify-between">
         {/* Headline */}
         <div
-          className="text-typo-heading-4 bg-background-skeleton h-[27px] w-xl animate-pulse
-            rounded-sm"
+          className="bg-background-skeleton h-[27px] w-48 max-w-[60%] animate-pulse rounded-sm
+            md:w-80"
         />
         {/* Buttons */}
         <div className="flex flex-row justify-end gap-x-4">
@@ -200,23 +202,24 @@ export const LoanSliderSkeleton = () => {
       </div>
       {/* Slider */}
       <div className="-mx-grid-edge px-grid-edge col-span-full">
-        <div className={"keen-slider !overflow-visible"}>
-          {Array.from({ length: 4 }).map((item, index) => {
-            return (
+        <div className="flex">
+          {Array.from({ length: 4 }).map((item, index) => (
+            <div
+              key={index}
+              className="min-w-[calc(100%/1.3)] shrink-0 md:min-w-[calc(100%/2.5)]
+                lg:min-w-[calc(100%/3.7)]">
               <div
-                key={index}
-                className="relative flex aspect-5/7 h-full max-w-[400px] min-w-[400px]">
-                <div className="aspect-1/1 h-full w-full p-14">
-                  <CoverPictureSkeleton
-                    className={cn({
-                      "rotate-5": index % 2 === 0,
-                      "mt-10 -rotate-5": index % 2 !== 0,
-                    })}
-                  />
+                className={cn(
+                  "w-full space-y-3 px-[15%]",
+                  index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5"
+                )}>
+                <CoverPictureSkeleton className="aspect-2/3 w-full" />
+                <div className="flex w-full justify-center pt-5">
+                  <div className="bg-background-skeleton h-[30px] w-28 animate-pulse rounded-full" />
                 </div>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       </div>
       {/* Quota section */}

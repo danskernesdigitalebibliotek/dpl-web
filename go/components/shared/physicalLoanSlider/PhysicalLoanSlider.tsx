@@ -63,7 +63,7 @@ const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps
     <div
       className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
         overflow-hidden md:p-8">
-      <div className="col-span-full flex items-center justify-between px-10">
+      <div className="col-span-full flex items-center justify-between">
         <h2 className="text-typo-heading-4">Bøger jeg har lånt på biblioteket ({items.length})</h2>
         {!!items.length && (
           <div className="flex flex-row justify-end gap-x-4">
@@ -145,16 +145,18 @@ const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps
   )
 }
 
+// Mirrors the loaded slider: same container padding, headline row, rotated
+// covers and the two overview cards, so nothing jumps when the data arrives.
 export const PhysicalLoanSliderSkeleton = () => {
   return (
     <div
-      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
-        py-10">
-      <div className="col-span-full flex items-center justify-between px-10">
+      className="bg-background-overlay rounded-base grid-go p-grid-edge col-span-full space-y-8
+        overflow-hidden md:p-8">
+      <div className="col-span-full flex items-center justify-between">
         {/* Headline */}
         <div
-          className="text-typo-heading-4 bg-background-skeleton h-[27px] w-xl animate-pulse
-            rounded-sm"
+          className="bg-background-skeleton h-[27px] w-48 max-w-[60%] animate-pulse rounded-sm
+            md:w-80"
         />
         {/* Buttons */}
         <div className="flex flex-row justify-end gap-x-4">
@@ -164,24 +166,30 @@ export const PhysicalLoanSliderSkeleton = () => {
       </div>
       {/* Slider */}
       <div className="-mx-grid-edge px-grid-edge col-span-full">
-        <div className={"keen-slider !overflow-visible"}>
+        <div className="flex">
           {Array.from({ length: 4 }).map((item, index) => {
             return (
               <div
                 key={index}
-                className="relative flex aspect-5/7 h-full max-w-[400px] min-w-[400px]">
-                <div className="aspect-1/1 h-full w-full p-14">
+                className="min-w-[calc(100%/1.3)] shrink-0 md:min-w-[calc(100%/2.5)]
+                  lg:min-w-[calc(100%/3.7)]">
+                <div className="w-full px-[15%]">
                   <CoverPictureSkeleton
-                    className={cn({
-                      "rotate-5": index % 2 === 0,
-                      "mt-10 -rotate-5": index % 2 !== 0,
-                    })}
+                    className={cn(
+                      "aspect-2/3 w-full",
+                      index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5"
+                    )}
                   />
                 </div>
               </div>
             )
           })}
         </div>
+      </div>
+      {/* Overview cards */}
+      <div className="gap-grid-edge col-span-full flex w-full flex-col md:gap-6 lg:flex-row">
+        <div className="bg-background-skeleton rounded-base h-44 w-full animate-pulse lg:flex-1" />
+        <div className="bg-background-skeleton rounded-base h-44 w-full animate-pulse lg:flex-1" />
       </div>
     </div>
   )

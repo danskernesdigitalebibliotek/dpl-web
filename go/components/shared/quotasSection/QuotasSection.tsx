@@ -82,8 +82,8 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
 
 export const QuotasSectionSkeleton = () => {
   return (
-    <div className="col-span-full mt-10 px-10 lg:mt-12">
-      <div className="bg-background-skeleton rounded-base md:rounded-base h-56 w-full animate-pulse" />
+    <div className="col-span-full">
+      <div className="bg-background-skeleton rounded-base h-56 w-full animate-pulse" />
     </div>
   )
 }
