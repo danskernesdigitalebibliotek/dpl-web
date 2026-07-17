@@ -50,17 +50,17 @@ class EventsGET200ResponseInnerTeaserImage
      *
      * @var string|null
      * @SerializedName("url")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $url = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
@@ -77,21 +77,22 @@ class EventsGET200ResponseInnerTeaserImage
         return $this->url;
     }
 
-
-
     /**
-     * Sets url.
-     *
-     * @param string|null $url  An absolute URL for the image. Unlike the main image, this is scaled and cropped to be identical in all instances - matching the teaser images of the website lists.
-     *
-     * @return $this
-     */
+    * Sets url.
+    *
+    * @param string|null $url  An absolute URL for the image. Unlike the main image, this is scaled and cropped to be identical in all instances - matching the teaser images of the website lists.
+    *
+    * @return $this
+    */
     public function setUrl(?string $url): self
     {
         $this->url = $url;
 
         return $this;
     }
+
+
+
 }
 
 

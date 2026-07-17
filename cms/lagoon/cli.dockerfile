@@ -38,7 +38,7 @@ COPY react ./react/
 RUN cd react && pnpm build
 
 # Stage 2: PHP CLI image — the image that actually runs Drupal.
-FROM uselagoon/php-8.3-cli-drupal:latest
+FROM uselagoon/php-8.4-cli-drupal:latest
 
 # NOTE Changes to this file should be reflected in php.dockerfile and
 # nginx.dockerfile. See DDFNEXT-1368 as to why we ended up here rather

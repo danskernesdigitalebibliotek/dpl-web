@@ -50,17 +50,17 @@ class EventsGET200ResponseInnerSeries
      *
      * @var string|null
      * @SerializedName("uuid")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $uuid = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
@@ -77,21 +77,22 @@ class EventsGET200ResponseInnerSeries
         return $this->uuid;
     }
 
-
-
     /**
-     * Sets uuid.
-     *
-     * @param string|null $uuid  The unique identifier for the series. All events belonging to the same series will have the same value.
-     *
-     * @return $this
-     */
+    * Sets uuid.
+    *
+    * @param string|null $uuid  The unique identifier for the series. All events belonging to the same series will have the same value.
+    *
+    * @return $this
+    */
     public function setUuid(?string $uuid): self
     {
         $this->uuid = $uuid;
 
         return $this;
     }
+
+
+
 }
 
 

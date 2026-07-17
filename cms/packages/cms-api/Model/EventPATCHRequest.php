@@ -48,25 +48,25 @@ class EventPATCHRequest
      *
      * @var string|null
      * @SerializedName("state")
-     * @Assert\Choice({ "TicketSaleNotOpen", "Active", "SoldOut", "Cancelled", "Occurred" })
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Choice(['TicketSaleNotOpen', 'Active', 'SoldOut', 'Cancelled', 'Occurred'])]
+    #[Assert\Type("string")]
     protected ?string $state = null;
 
     /**
      * @var EventPATCHRequestExternalData|null
      * @SerializedName("external_data")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData")]
     protected ?EventPATCHRequestExternalData $externalData = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->state = array_key_exists('state', $data) ? $data['state'] : $this->state;
@@ -84,21 +84,22 @@ class EventPATCHRequest
         return $this->state;
     }
 
-
-
     /**
-     * Sets state.
-     *
-     * @param string|null $state  The state of the event.
-     *
-     * @return $this
-     */
+    * Sets state.
+    *
+    * @param string|null $state  The state of the event.
+    *
+    * @return $this
+    */
     public function setState(?string $state = null): self
     {
         $this->state = $state;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets externalData.
@@ -110,21 +111,22 @@ class EventPATCHRequest
         return $this->externalData;
     }
 
-
-
     /**
-     * Sets externalData.
-     *
-     * @param EventPATCHRequestExternalData|null $externalData
-     *
-     * @return $this
-     */
+    * Sets externalData.
+    *
+    * @param EventPATCHRequestExternalData|null $externalData
+    *
+    * @return $this
+    */
     public function setExternalData(?EventPATCHRequestExternalData $externalData = null): self
     {
         $this->externalData = $externalData;
 
         return $this;
     }
+
+
+
 }
 
 
