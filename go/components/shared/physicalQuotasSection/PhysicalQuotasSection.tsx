@@ -16,13 +16,24 @@ export type PhysicalQuotasSectionProps = {
   reservationItems: ReservationItem[]
 }
 
-const StatBox = ({ count, label }: { count: number; label: string }) => (
-  <div
-    className="bg-background-overlay flex flex-1 flex-col items-center justify-center gap-2
-      rounded-sm p-6 text-center md:min-h-36">
-    <p className="text-typo-heading-3">{count}</p>
-    <p className="text-typo-subtitle-sm opacity-70">{label}</p>
-  </div>
+// Opens the same modal as the card's "Vis alle".
+const StatBox = ({
+  count,
+  label,
+  onClick,
+}: {
+  count: number
+  label: string
+  onClick: () => void
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="bg-background-overlay focus-visible flex flex-1 cursor-pointer flex-col
+      items-center justify-center gap-2 rounded-sm p-6 text-center md:min-h-36">
+    <span className="text-typo-heading-3 block">{count}</span>
+    <span className="text-typo-subtitle-sm block opacity-70">{label}</span>
+  </button>
 )
 
 const OverviewCard = ({
@@ -67,22 +78,25 @@ const PhysicalQuotasSection = ({ loanItems, reservationItems }: PhysicalQuotasSe
   ).length
   const queuedCount = reservationItems.length - readyCount
 
+  const openLoans = () => openModal("PhysicalLoansModal", { items: loanItems })
+  const openReservations = () => openModal("ReservationsModal", { items: reservationItems })
+
   return (
     <div className="col-span-full">
       <div className="gap-grid-edge flex w-full flex-col md:gap-6 lg:flex-row">
         <OverviewCard
           title="Mine lån"
-          onViewAll={() => openModal("PhysicalLoansModal", { items: loanItems })}
+          onViewAll={openLoans}
           viewAllDataCy={cyKeys["view-all-physical-loans-button"]}>
-          <StatBox count={loanItems.length} label="Lånte bøger" />
-          <StatBox count={dueSoonCount} label="Skal afleveres" />
+          <StatBox count={loanItems.length} label="Lånte bøger" onClick={openLoans} />
+          <StatBox count={dueSoonCount} label="Skal afleveres" onClick={openLoans} />
         </OverviewCard>
         <OverviewCard
           title="Mine reserveringer"
-          onViewAll={() => openModal("ReservationsModal", { items: reservationItems })}
+          onViewAll={openReservations}
           viewAllDataCy={cyKeys["view-all-reservations-button"]}>
-          <StatBox count={readyCount} label="Klar til afhentning" />
-          <StatBox count={queuedCount} label="I kø" />
+          <StatBox count={readyCount} label="Klar til afhentning" onClick={openReservations} />
+          <StatBox count={queuedCount} label="I kø" onClick={openReservations} />
         </OverviewCard>
       </div>
     </div>
