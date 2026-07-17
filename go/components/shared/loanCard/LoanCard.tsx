@@ -129,13 +129,18 @@ const LoanCard = ({
             {expiryStatusText(daysUntil, danger)}
           </StatusLabel>
         </div>
-        {isCostFree && (
-          <div className="flex w-full justify-center">
-            <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
-              BLÅ
-            </Badge>
-          </div>
-        )}
+        {/* Always rendered so the card height is stable — the badge fades in
+            when the product data marks the title as cost-free. */}
+        <div className="flex w-full justify-center" aria-hidden={!isCostFree}>
+          <Badge
+            variant={"blue-title"}
+            className={cn(
+              "mb-1 transition-opacity duration-300 lg:mb-2",
+              isCostFree ? "opacity-100" : "opacity-0"
+            )}>
+            BLÅ
+          </Badge>
+        </div>
       </div>
     </div>
   )
