@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Arrow from "../../../components/atoms/icons/arrow/arrow";
-import StatusBadge from "../../loan-list/materials/utils/status-badge";
+import StatusBadge from "../../../components/status-badge/status-badge";
 import { isEnterOrSpacePressed } from "../../../core/utils/helpers/general";
 
 interface DashboardNotificationProps {

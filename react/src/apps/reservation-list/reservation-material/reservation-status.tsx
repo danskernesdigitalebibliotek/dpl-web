@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import ArrowButton from "../../../components/Buttons/ArrowButton";
 import { ReservationType } from "../../../core/utils/types/reservation-type";
-import StatusCircleIcon from "../../loan-list/materials/utils/status-circle-icon";
+import StatusCircleIcon from "../../../components/status-circle/status-circle-icon";
 import InfoLabel from "../../../components/atoms/labels/InfoLabel";
 import { ReservationLabelWithOptionalStockInfo } from "./reservation-label-with-optional-stock-info";
 

@@ -1,8 +1,8 @@
 import React, { FC, ReactNode } from "react";
 import { isDigital, materialsAreStacked } from "../../utils/helpers";
 import { LoanType } from "../../../../core/utils/types/loan-type";
-import StatusCircle from "../utils/status-circle";
-import StatusBadge from "../utils/status-badge";
+import StatusCircle from "../../../../components/status-circle/status-circle";
+import StatusBadge from "../../../../components/status-badge/status-badge";
 import { useText } from "../../../../core/utils/text";
 import ArrowButton from "../../../../components/Buttons/ArrowButton";
 import {

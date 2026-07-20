@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { cleanup, render } from "@testing-library/react";
 import configReducer from "../../core/config.slice";
-import StatusBadge from "../../apps/loan-list/materials/utils/status-badge";
+import StatusBadge from "../../components/status-badge/status-badge";
 
 const store = configureStore({
   reducer: combineReducers({
