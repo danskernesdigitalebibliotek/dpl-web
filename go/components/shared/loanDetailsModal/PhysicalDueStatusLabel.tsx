@@ -17,12 +17,35 @@ const PhysicalDueStatusLabel = ({ dueDate }: { dueDate: string }) => {
   const isOverdue = daysUntil < danger
   const isDueSoon = !isOverdue && daysUntil <= warning
 
+  if (isOverdue) {
+    const overdueDays = Math.abs(daysUntil)
+    return (
+      <StatusLabel
+        variant="error"
+        subline={`Skulle afleveres ${format(new Date(dueDate), "d. MMM yyyy", { locale: da })}`}>
+        {`Afleveringsfristen er overskredet med ${overdueDays} ${
+          overdueDays === 1 ? "dag" : "dage"
+        }`}
+      </StatusLabel>
+    )
+  }
+
+  if (daysUntil === 0) {
+    return (
+      <StatusLabel
+        variant="warning"
+        subline={`Aflevér senest ${format(new Date(dueDate), "d. MMM yyyy", { locale: da })}`}>
+        Afleveres i dag
+      </StatusLabel>
+    )
+  }
+
   return (
     <StatusLabel
-      variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}
-      className={isOverdue || isDueSoon ? undefined : "px-0 py-0"}
+      variant={isDueSoon ? "warning" : "neutral"}
+      className={isDueSoon ? undefined : "px-0 py-0"}
       subline={`Aflevér senest ${format(new Date(dueDate), "d. MMMM yyyy", { locale: da })}`}>
-      {isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)}
+      {dueStatusText(daysUntil)}
     </StatusLabel>
   )
 }
