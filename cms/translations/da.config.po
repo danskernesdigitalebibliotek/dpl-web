@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-08 10:50+0200\n"
-"PO-Revision-Date: 2026-07-08 10:50+0200\n"
+"POT-Creation-Date: 2026-07-20 10:49+0200\n"
+"PO-Revision-Date: 2026-07-20 10:49+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7811,7 +7811,7 @@ msgstr "Kampagne aktiveres baseret på søgeordene fra brugerens søgning"
 
 msgctxt "field.field.eventinstance.default.field_event_address:label"
 msgid "Address (Deprecated - will be removed)"
-msgstr ""
+msgstr "Adresse (Forældet element – fjernes!)"
 
 msgctxt "field.field.eventinstance.default.field_event_address_gsearch:label"
 msgid "Address"
@@ -7819,7 +7819,7 @@ msgstr "Adresse"
 
 msgctxt "field.field.eventseries.default.field_event_address:label"
 msgid "Address (Deprecated - will be removed)"
-msgstr ""
+msgstr "Adresse (Forældet element – fjernes!)"
 
 msgctxt "field.field.eventseries.default.field_event_address_gsearch:label"
 msgid "Address"
@@ -7899,19 +7899,19 @@ msgstr "Målgrupper, f.eks. \"Børn\", \"Unge\" eller \"Voksne\""
 
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
 msgid "Event location"
-msgstr ""
+msgstr "Arrangementslokation"
 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
 msgid "Event location"
-msgstr ""
+msgstr "Arrangementslokation"
 
 msgctxt "field.field.eventinstance.default.field_event_location:label"
 msgid "Location name"
-msgstr ""
+msgstr "Lokation"
 
 msgctxt "field.field.eventseries.default.field_event_location:label"
 msgid "Location name"
-msgstr ""
+msgstr "Lokation"
 
 msgctxt "views.view.watchdog:label"
 msgid "Watchdog"

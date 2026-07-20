@@ -3613,7 +3613,7 @@ msgstr "Basisindstillinger"
 #: 
 msgctxt "Fees list settings form"
 msgid "Fees and Replacement costs URL"
-msgstr "URL"
+msgstr "Takster URL"
 
 #: 
 msgctxt "Fees list settings form"
@@ -3667,51 +3667,6 @@ msgstr "Indstillinger for listestørrelser"
 #: 
 msgid "Administer list size settings for a library agency."
 msgstr "Indstil hvor mange elementer der skal vises på en liste inden for hver af disse områder (før bruger skal klikke \"Vis flere\")."
-
-#: 
-msgctxt "Work Page"
-msgid "Your material has been ordered from another library"
-msgstr "Materialet er bestilt fra et andet bibliotek. Materialer fra andre biblioteker har øget leveringstid. Bemærk: Hvis materialet er ret nyt, så dukker det ikke op i din reserveringsoversigt med det samme. Det er normalt. Kontakt os gerne, hvis det ikke er dukket op i din reserveringsoversigt tre hverdage efter bestillingen."
-
-#: 
-msgctxt "Work Page"
-msgid "Item available, order through the librarys catalogue"
-msgstr "Materiale tilgængeligt, bestil via bibliotekets katalog"
-
-#: 
-msgctxt "Work Page"
-msgid "Item available but medium type not accepted"
-msgstr "Tilgængelig, men medietype accepteres ikke"
-
-#: 
-msgctxt "Work Page"
-msgid "Order from another library:"
-msgstr "Reserver"
-
-#: 
-msgctxt "Work Page"
-msgid "Service is currently unavailable"
-msgstr "Servicen svarer ikke"
-
-#: 
-msgctxt "Work Page"
-msgid "Your order is accepted"
-msgstr "Din bestilling er modtaget"
-
-#: 
-msgctxt "Work Page"
-msgid "An unknown error occurred"
-msgstr "En ukendt fejl opstod"
-
-#: 
-msgctxt "Work Page"
-msgid "Specified pickup agency not found"
-msgstr "Valgt afhentningssted ikke fundet"
-
-#: 
-msgctxt "Work Page"
-msgid "User not found"
-msgstr "Bruger ikke fundet"
 
 #: 
 msgctxt "Work Page"
@@ -28166,7 +28121,7 @@ msgstr "Vælg operator"
 #: 
 msgctxt "advanced search"
 msgid "The format should be YYYY-MM-DD e.g. 2024-11-24. Terms ”NOW”, ”DAYS” and ”MONTHS” can also be used. For example ”NOW - 90 DAYS”. Remember to add a space on both sides of the plus and minus symbols."
-msgstr "Datoformatet for \"firstaccessiondateitem\" skal være YYYY-MM-DD, f.eks. 2024-12-24. Termerne \"NOW\", \"DAYS\" og \"MONTHS\" kan også bruges til at angive interval, f.eks. \"NOW - 90 DAYS\". HUSK at lave mellemrum på begge sider af plus- og minussymboler."
+msgstr "Datoformatet for \"firstAccessionDate\" skal være YYYY-MM-DD, f.eks. 2024-12-24. Termerne \"NOW\", \"DAYS\" og \"MONTHS\" kan også bruges til at angive interval, f.eks. \"NOW - 90 DAYS\". HUSK at lave mellemrum på begge sider af plus- og minussymboler."
 
 #: 
 msgctxt "advanced search"
@@ -28191,7 +28146,7 @@ msgstr "Tidligere end"
 #: 
 msgctxt "dpl_fbi"
 msgid "First accession date: Value"
-msgstr "Firstaccessiondateitem: Værdi"
+msgstr "FirstAccessionDate: Værdi"
 
 #: 
 msgctxt "dpl_fbi"
@@ -28201,12 +28156,12 @@ msgstr "Datoformatet skal være YYYY-MM-DD, f.eks. 2024-12-24. Termerne \"NOW\",
 #: 
 msgctxt "dpl_fbi"
 msgid "First accession date: Operator"
-msgstr "Firstaccessiondateitem: Operator"
+msgstr "FirstAccessionDate: Operator"
 
 #: 
 msgctxt "dpl_fbi"
 msgid "First accession date"
-msgstr "Filtrering på Firstaccessiondateitem"
+msgstr "Filtrering på firstAccessionDate"
 
 #: 
 msgctxt "views.view.firstaccessiondate_content_admin:label"
@@ -30629,7 +30584,7 @@ msgstr "Din reservering kunne ikke gennemføres. Prøv at kontakte os, hvis du s
 #: 
 msgctxt "field.field.eventinstance.default.field_event_address:label"
 msgid "Address (Deprecated - will be removed)"
-msgstr ""
+msgstr "Adresse (Forældet element – fjernes!)"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_address_gsearch:label"
@@ -30639,7 +30594,7 @@ msgstr "Adresse"
 #: 
 msgctxt "field.field.eventseries.default.field_event_address:label"
 msgid "Address (Deprecated - will be removed)"
-msgstr ""
+msgstr "Adresse (Forældet element – fjernes!)"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_address_gsearch:label"
@@ -30888,27 +30843,27 @@ msgstr ""
 #: 
 msgctxt "dpl_event"
 msgid "When selecting a branch, we will use the address from the branch, unless you select “Other location”."
-msgstr ""
+msgstr "Når du vælger et bibliotek, bruger arrangementet bibliotekets adresse som afholdelsessted, medmindre du også vælger \"Anden lokation\"."
 
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_library:label"
 msgid "Event location"
-msgstr ""
+msgstr "Arrangementslokation"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_library:label"
 msgid "Event location"
-msgstr ""
+msgstr "Arrangementslokation"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_location:label"
 msgid "Location name"
-msgstr ""
+msgstr "Lokation"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_location:label"
 msgid "Location name"
-msgstr ""
+msgstr "Lokation"
 
 #: 
 msgid "This content translation is being edited by the user %name and is therefore locked to prevent changes by other users. This lock has been active for @age."
@@ -30940,6 +30895,14 @@ msgstr ""
 
 #: 
 msgid "The content lock timeout is currently disabled. It is recommended that administrators <a href=\":settings\">set the timeout value</a> so that content locks automatically expire."
+msgstr ""
+
+#: 
+msgid "DPL Media"
+msgstr ""
+
+#: 
+msgid "DPL media support functionality"
 msgstr ""
 
 #: 
@@ -31075,5 +31038,108 @@ msgstr ""
 #: 
 msgctxt "views.view.watchdog:display:page:display_title"
 msgid "Page"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "An authentication error occurred"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Pincode is missing"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "The order is invalid"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Service requester is missing"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Your material has been ordered from another library"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "The material cannot be ordered from another library"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "This material type cannot be ordered from another library"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "An error occurred while sending the order"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Item available, order through the librarys catalogue"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Item available but medium type not accepted"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Order from another library:"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Service is currently unavailable"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Your order is accepted"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "An unknown error occurred"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Specified pickup agency not found"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "User not found"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "You are blocked from making reservations at the library"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "You are no longer registered at the pickup library"
+msgstr ""
+
+#: 
+msgctxt "Open order"
+msgid "Your user could not be verified"
+msgstr ""
+
+#: 
+msgid "App fees and payment info"
+msgstr ""
+
+#: 
+msgid "Returns the app fees and payment info settings."
 msgstr ""
 
