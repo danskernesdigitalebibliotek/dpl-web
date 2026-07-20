@@ -189,31 +189,26 @@ const ProfileNotifications = () => {
 // The presentational section: the card grid, or the empty state when there
 // is nothing to show. Split from the data wiring so stories can render the
 // states directly.
-export const ProfileNotificationsView = ({ notifications }: { notifications: Notification[] }) => (
-  <div
-    data-cy={cyKeys["profile-notifications"]}
-    className="bg-background-overlay rounded-base p-grid-edge col-span-full space-y-4 md:p-8">
-    <h2 className="text-typo-subtitle-sm opacity-70">Vigtige notifikationer</h2>
-    {notifications.length > 0 && (
-      <div className="grid gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
-        {notifications.map(notification => (
-          <NotificationCard key={notification.key} notification={notification} />
-        ))}
-      </div>
-    )}
-    {notifications.length === 0 && (
-      <div
-        data-cy={cyKeys["profile-notifications-empty"]}
-        className="bg-background duration-dark-mode rounded-base flex flex-col items-center
-          justify-center gap-2 p-8 text-center transition-all">
-        <p className="text-typo-subtitle-lg">Du har styr på det hele</p>
-        <p className="text-typo-body-sm text-foreground-muted">
-          Der er ingen vigtige notifikationer lige nu.
+export const ProfileNotificationsView = ({ notifications }: { notifications: Notification[] }) => {
+  return (
+    <div
+      data-cy={cyKeys["profile-notifications"]}
+      className="bg-background-overlay rounded-base p-grid-edge col-span-full space-y-4 md:p-8">
+      <h2 className="text-typo-subtitle-sm opacity-70">Vigtige notifikationer</h2>
+      {notifications.length === 0 ? (
+        <p data-cy={cyKeys["profile-notifications-empty"]} className="text-typo-body-md">
+          Alt ser fint ud — ingen gebyrer, afhentninger eller forfaldne lån.
         </p>
-      </div>
-    )}
-  </div>
-)
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
+          {notifications.map(notification => (
+            <NotificationCard key={notification.key} notification={notification} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 // Mirrors the loaded section: heading row and four notification cards, so
 // nothing jumps when the data arrives.
