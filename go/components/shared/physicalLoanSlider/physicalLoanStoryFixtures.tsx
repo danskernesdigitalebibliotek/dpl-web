@@ -74,21 +74,30 @@ export const buildItem = ({
     loanDate: daysFromNow(dueInDays - 30),
     materialItemNumber: `50${faust}`,
     isRenewable,
+    nonRenewableReason: isRenewable ? undefined : "deniedReserved",
   }
   return { loan, work, manifestation }
 }
 
-// All possible status states a physical loan can be in: overdue (an exceeded
-// loan can no longer be renewed by FBS), due today / due soon (with and
-// without renewal), and neutral (with and without renewal).
+// All possible status states a physical loan can be in: overdue, due today /
+// due soon, and neutral — each with and without renewal. Overdue loans can
+// still be renewed (the fee stands regardless); whether renewal is blocked
+// is FBS' per-loan call, e.g. a reservation by another patron.
 export const fixtureItems: PhysicalLoanItem[] = [
   buildItem({
     faust: "12345670",
     title: "Vildheks",
-    // Overdue: red "Afleveringsfrist overskredet" — never renewable.
+    // Overdue and blocked (e.g. reserved by another patron).
     dueInDays: -3,
     isRenewable: false,
     coverRatio: "tall",
+  }),
+  buildItem({
+    faust: "12345676",
+    title: "Gummi-Tarzan",
+    // Overdue but still renewable — the fee is already incurred.
+    dueInDays: -2,
+    isRenewable: true,
   }),
   buildItem({
     faust: "12345671",

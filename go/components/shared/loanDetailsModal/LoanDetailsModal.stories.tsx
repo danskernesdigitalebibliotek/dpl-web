@@ -9,11 +9,13 @@ import {
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
 
 // The renewable "Sjælerytterne" fixture from the shared physical loan set —
-// plain placeholder covers, dates relative to "now".
+// plain placeholder covers, dates relative to "now". 7.5 days lands inside
+// the renewal window (7) but outside the warning threshold (6): neutral
+// status with an active "Forny lån" button.
 const fixtureItem = buildItem({
   faust: "12345671",
   title: "Sjælerytterne",
-  dueInDays: 8,
+  dueInDays: 7.5,
   isRenewable: true,
 })
 const fixtureLoan = fixtureItem.loan
@@ -47,13 +49,32 @@ export const DefaultDarkMode: Story = {
   args: defaultArgs,
 }
 
-// The renew option is decided by FBS (isRenewable); without it the modal is
-// informational only.
-export const NotRenewable: Story = {
+// Whether renewal is possible is FBS' per-loan call; when blocked the button
+// is disabled with the denial reason above it.
+export const NotRenewableReserved: Story = {
   decorators: [withServiceLayer()],
   args: {
     ...defaultArgs,
-    loan: { ...fixtureLoan, isRenewable: false },
+    loan: { ...fixtureLoan, isRenewable: false, nonRenewableReason: "deniedReserved" as const },
+  },
+}
+
+// Blocked without a documented reason: the generic fallback copy.
+export const NotRenewableUnknownReason: Story = {
+  decorators: [withServiceLayer()],
+  args: {
+    ...defaultArgs,
+    loan: { ...fixtureLoan, isRenewable: false, nonRenewableReason: undefined },
+  },
+}
+
+// More than `renewalWindow` days to the due date: Cicero doesn't allow
+// renewal yet, so the button is disabled with a countdown to the renew date.
+export const RenewalWindowNotOpen: Story = {
+  decorators: [withServiceLayer()],
+  args: {
+    ...defaultArgs,
+    loan: { ...fixtureLoan, dueDate: daysFromNow(14.5) },
   },
 }
 

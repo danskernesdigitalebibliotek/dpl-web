@@ -44,6 +44,7 @@ const buildProps = ({
     loanDate: daysFromNow(dueInDays - 30),
     materialItemNumber: `50${faust}`,
     isRenewable,
+    nonRenewableReason: isRenewable ? undefined : "deniedReserved",
   }
   return { loan, manifestation, title, workId: `work-of:870970-basis:${faust}` }
 }

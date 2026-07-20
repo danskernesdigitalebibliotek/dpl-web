@@ -25,6 +25,7 @@ const loan = (recordId: string, dueDate: string): Loan => ({
   loanDate: "2026-01-01",
   materialItemNumber: "",
   isRenewable: false,
+  nonRenewableReason: "deniedOtherReason",
 })
 
 const reservation = (recordId: string, overrides: Partial<Reservation> = {}): Reservation => ({

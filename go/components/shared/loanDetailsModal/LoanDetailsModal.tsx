@@ -9,11 +9,11 @@ import LoanDetailsContent, {
 } from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
 import PhysicalDueStatusLabel from "@/components/shared/loanDetailsModal/PhysicalDueStatusLabel"
+import RenewLoanAction from "@/components/shared/loanDetailsModal/RenewLoanAction"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import { ModalFlowBody } from "@/components/shared/modalFlow/ModalFlowBody"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
-import { cyKeys } from "@/cypress/support/constants"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
@@ -52,7 +52,9 @@ const LoanDetailsModal = ({
   // The receipt is only shown after a renewal in this session.
   const isReceiptStep = renewedLoan !== null
 
-  const canRenew = Boolean(loan.isRenewable) && loan.loanId !== undefined
+  // Only physical (FBS) loans carry a loanId and can be renewed at all;
+  // digital loans just run out and keep a plain close button.
+  const isPhysical = loan.loanId !== undefined
 
   const handleRenew = () => {
     if (isRenewing || loan.loanId === undefined) return
@@ -108,16 +110,13 @@ const LoanDetailsModal = ({
           <Button theme="primary" size="lg" onClick={onClose}>
             OK
           </Button>
-        ) : canRenew ? (
-          <Button
-            theme="primary"
-            size="lg"
-            isLoading={isRenewing}
-            ariaLabel={`Forny lån af ${title}`}
-            data-cy={cyKeys["approve-renew-loan-button"]}
-            onClick={handleRenew}>
-            Forny lån
-          </Button>
+        ) : isPhysical ? (
+          <RenewLoanAction
+            loan={loan}
+            title={title}
+            isRenewing={isRenewing}
+            onRenew={handleRenew}
+          />
         ) : (
           <Button theme="primary" size="lg" onClick={onClose}>
             Luk

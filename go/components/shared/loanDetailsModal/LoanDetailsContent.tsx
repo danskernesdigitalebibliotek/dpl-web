@@ -1,5 +1,6 @@
 "use client"
 
+import type { RenewalFailureReason } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { format } from "date-fns"
 import { da } from "date-fns/locale"
 import React from "react"
@@ -19,6 +20,7 @@ export type LoanDetails = {
   loanDate?: string
   materialItemNumber?: string
   isRenewable?: boolean
+  nonRenewableReason?: RenewalFailureReason
 }
 
 type LoanDetailsContentProps = {
