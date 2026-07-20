@@ -58,6 +58,12 @@ const config: StorybookConfig = {
           /^@\/components\/shared\/image\/ImageBaseWithPlaceholder$/,
           path.resolve(dirname, "mocks/ImageBaseWithPlaceholder.tsx")
         ).apply(compiler)
+        // The CMS config module is a server function; serve a fixture so
+        // config-dependent UI (e.g. the payment link) renders in stories.
+        new compiler.webpack.NormalModuleReplacementPlugin(
+          /^@\/lib\/config\/dpl-cms\/dplCmsConfig$/,
+          path.resolve(dirname, "mocks/dplCmsConfig.ts")
+        ).apply(compiler)
       },
     })
 

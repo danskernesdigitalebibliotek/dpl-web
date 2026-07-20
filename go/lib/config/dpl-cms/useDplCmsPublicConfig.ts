@@ -11,13 +11,20 @@ export default function useDplCmsPublicConfig() {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const data = await getDplCmsPublicConfig()
-      if (!data) {
+      try {
+        const data = await getDplCmsPublicConfig()
+        if (!data) {
+          setIsError(true)
+          return
+        }
+        setConfig(data)
+      } catch {
+        // A failed server call (or a non-Next environment like Storybook)
+        // degrades to "no config" instead of an unhandled rejection.
         setIsError(true)
-        return
+      } finally {
+        setIsLoading(false)
       }
-      setIsLoading(false)
-      setConfig(data)
     }
     fetchData()
   }, [setIsError, setIsLoading])
