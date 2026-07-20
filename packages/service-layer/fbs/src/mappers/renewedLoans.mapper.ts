@@ -17,8 +17,9 @@ const RenewedLoansResponseSchema = z.array(RenewedLoanSchema)
 const KNOWN_REASONS = new Map(RENEWAL_FAILURE_REASONS.map(reason => [reason.toLowerCase(), reason]))
 
 // Pick the first documented denial code from the status list; the FBS spec
-// says anything unrecognized must be treated as deniedOtherReason.
-const coerceReason = (statuses: string[]): RenewalFailureReason => {
+// says anything unrecognized must be treated as deniedOtherReason. Shared
+// with the loans mapper, which coerces renewalStatusList the same way.
+export const coerceReason = (statuses: string[]): RenewalFailureReason => {
   for (const status of statuses) {
     const known = KNOWN_REASONS.get(status.toLowerCase())
     if (known) return known
