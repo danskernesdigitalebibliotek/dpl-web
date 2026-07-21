@@ -11,10 +11,14 @@ import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts
 import { EBookFactory } from "@/cypress/factories/fbi/factory-parts/works"
 import { PhysicalLoanItem } from "@/lib/helpers/helper.patron"
 
-// Due dates are computed relative to "now" so the rendered day counts stay
-// stable over time (e.g. in Chromatic snapshots).
-const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+// Due dates anchored to local noon so calendar-day counts stay stable
+// whenever the story renders (e.g. in Chromatic snapshots).
+const daysFromNow = (days: number) => {
+  const date = new Date()
+  date.setHours(12, 0, 0, 0)
+  date.setDate(date.getDate() + days)
+  return date.toISOString()
+}
 
 // Real covers come in varying proportions; the fixtures rotate through a
 // tall, a standard and a near-square ratio so cover-edge-anchored details
@@ -74,21 +78,30 @@ export const buildItem = ({
     loanDate: daysFromNow(dueInDays - 30),
     materialItemNumber: `50${faust}`,
     isRenewable,
+    nonRenewableReason: isRenewable ? undefined : "deniedReserved",
   }
   return { loan, work, manifestation }
 }
 
-// All possible status states a physical loan can be in: overdue (an exceeded
-// loan can no longer be renewed by FBS), due today / due soon (with and
-// without renewal), and neutral (with and without renewal).
+// All possible status states a physical loan can be in: overdue, due today /
+// due soon, and neutral — each with and without renewal. Overdue loans can
+// still be renewed (the fee stands regardless); whether renewal is blocked
+// is FBS' per-loan call, e.g. a reservation by another patron.
 export const fixtureItems: PhysicalLoanItem[] = [
   buildItem({
     faust: "12345670",
     title: "Vildheks",
-    // Overdue: red "Afleveringsfrist overskredet" — never renewable.
+    // Overdue and blocked (e.g. reserved by another patron).
     dueInDays: -3,
     isRenewable: false,
     coverRatio: "tall",
+  }),
+  buildItem({
+    faust: "12345676",
+    title: "Gummi-Tarzan",
+    // Overdue but still renewable — the fee is already incurred.
+    dueInDays: -2,
+    isRenewable: true,
   }),
   buildItem({
     faust: "12345671",
@@ -101,16 +114,15 @@ export const fixtureItems: PhysicalLoanItem[] = [
   buildItem({
     faust: "12345672",
     title: "Vi snakker ikke om Jonathan",
-    // 1.5 days so differenceInDays yields a full day and the card shows the
-    // singular "om 1 dag" state instead of rounding down to "i dag".
-    dueInDays: 1.5,
+    // Due tomorrow: the singular "om 1 dag" state.
+    dueInDays: 1,
     isRenewable: true,
   }),
   buildItem({
     faust: "12345673",
     title: "Den sultne larve Aldrigmæt",
     // Due soon but not renewable (e.g. reserved by another patron).
-    dueInDays: 5.5,
+    dueInDays: 5,
     isRenewable: false,
     coverRatio: "tall",
   }),

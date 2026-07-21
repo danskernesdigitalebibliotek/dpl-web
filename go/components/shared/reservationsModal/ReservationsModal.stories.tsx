@@ -9,8 +9,12 @@ import {
 import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 import { ReservationItem } from "@/lib/helpers/helper.patron"
 
-const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+const daysFromNow = (days: number) => {
+  const date = new Date()
+  date.setHours(12, 0, 0, 0)
+  date.setDate(date.getDate() + days)
+  return date.toISOString()
+}
 
 const buildReservation = (index: number, overrides: Partial<Reservation> = {}): ReservationItem => {
   const { work, manifestation } = fixtureItems[index]

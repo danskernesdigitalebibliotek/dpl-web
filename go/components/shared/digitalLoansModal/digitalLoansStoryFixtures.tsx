@@ -17,8 +17,12 @@ import {
 
 // Expiry dates are computed relative to "now" so the rendered day counts stay
 // stable over time (e.g. in Chromatic snapshots).
-export const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+export const daysFromNow = (days: number) => {
+  const date = new Date()
+  date.setHours(12, 0, 0, 0)
+  date.setDate(date.getDate() + days)
+  return date.toISOString()
+}
 
 // One digital loan per state: expires today (warning), within the warning
 // window, and comfortably in the future (plain text). The last one is a

@@ -10,6 +10,7 @@ export type {
   CreateReservationFailed,
   FailureReason,
   Reservation,
+  Fee,
   Loan,
   RenewedLoan,
   RenewedLoanSuccess,
@@ -29,6 +30,7 @@ export { useReservations } from "./hooks/useReservations"
 export { useCreateReservation } from "./hooks/useCreateReservation"
 export { useDeleteReservation } from "./hooks/useDeleteReservation"
 export { useLoans } from "./hooks/useLoans"
+export { useFees } from "./hooks/useFees"
 export { useRenewLoans } from "./hooks/useRenewLoans"
 
 // queryOptions factories — for prefetchQuery / setQueryData in non-hook contexts.
@@ -36,12 +38,14 @@ export { patronQuery } from "./queries/patron"
 export { materialAvailabilityQuery } from "./queries/availability"
 export { reservationsQuery } from "./queries/reservations"
 export { loansQuery } from "./queries/loans"
+export { feesQuery } from "./queries/fees"
 
 // Query keys — for cache mutations (tests, stories, setQueryData).
 export { patronQueryKey } from "./queries/patron"
 export { materialAvailabilityQueryKey } from "./queries/availability"
 export { reservationsQueryKey } from "./queries/reservations"
 export { loansQueryKey } from "./queries/loans"
+export { feesQueryKey } from "./queries/fees"
 
 // Imperative fetchers — for non-react-query contexts (e.g. baking patron name into session).
 export { getPatron } from "./patron"
@@ -49,3 +53,4 @@ export { getMaterialAvailability } from "./availability"
 export { createReservation } from "./reservation"
 export { getReservations, deleteReservation } from "./reservations"
 export { getLoans, renewLoans } from "./loans"
+export { getFees } from "./fees"

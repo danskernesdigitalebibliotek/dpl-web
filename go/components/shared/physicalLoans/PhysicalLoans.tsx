@@ -1,39 +1,21 @@
 "use client"
 
-import { useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import PhysicalLoanSlider, {
   PhysicalLoanSliderSkeleton,
 } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import PhysicalLoansUniloginTeaser from "@/components/shared/physicalLoans/PhysicalLoansUniloginTeaser"
-import useSession from "@/hooks/useSession"
-import { useGetManifestationsByFaustQuery } from "@/lib/graphql/generated/fbi/graphql"
+import usePatronShelf from "@/hooks/usePatronShelf"
 import { cn } from "@/lib/helpers/helper.cn"
-import {
-  buildPhysicalLoanItems,
-  buildReservationItems,
-  shelfRecordIds,
-} from "@/lib/helpers/helper.patron"
 
 export type PhysicalLoansProps = {
   className?: string
 }
 
 const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
-  const { session } = useSession()
-  const { data: loans, isLoading: isLoadingLoans } = useLoans()
-  const { data: reservations, isLoading: isLoadingReservations } = useReservations()
-
-  const fausts = shelfRecordIds(loans ?? [], reservations ?? [])
-  const { data: dataManifestations, isLoading: isLoadingManifestations } =
-    useGetManifestationsByFaustQuery({ faust: fausts }, { enabled: fausts.length > 0 })
-
-  const loanItems = buildPhysicalLoanItems(loans ?? [], dataManifestations?.manifestations)
-  const reservationItems = buildReservationItems(
-    reservations ?? [],
-    dataManifestations?.manifestations
-  )
+  const { session, loanItems, reservationItems, isLibraryLogin, isLoading, isError } =
+    usePatronShelf()
 
   // FBS is only available with a library login.
   if (session?.type === "unilogin") {
@@ -42,10 +24,8 @@ const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
 
   return (
     <div className={cn("col-span-full", className)}>
-      {(isLoadingLoans || isLoadingReservations || isLoadingManifestations) && (
-        <PhysicalLoanSliderSkeleton />
-      )}
-      {!isLoadingLoans && !isLoadingReservations && !isLoadingManifestations && loans && (
+      {isLoading && <PhysicalLoanSliderSkeleton />}
+      {!isLoading && !isError && isLibraryLogin && (
         <PhysicalLoanSlider items={loanItems} reservationItems={reservationItems} />
       )}
     </div>

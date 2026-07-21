@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React, { useEffect, useRef, useState } from "react"
 
+import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
 import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import FeesModal from "@/components/shared/feesModal/FeesModal"
 import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 import { TModalType, VALID_MODAL_TYPES, modalParsers } from "@/lib/helpers/modal-url"
@@ -35,7 +37,9 @@ const ModalComponents: {
   PlayerModal,
   PlayerPreviewModal,
   DeleteReservationModal,
+  CompensationModal,
   DigitalLoansModal,
+  FeesModal,
   LoanDetailsModal,
   PhysicalLoansModal,
   ReservationsModal,

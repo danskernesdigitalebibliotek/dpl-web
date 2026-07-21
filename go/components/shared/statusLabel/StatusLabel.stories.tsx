@@ -80,6 +80,7 @@ const ModalContextsShowcase = () => (
       <ContextColumn title="Min side karrusel">
         <StatusLabel variant="neutral">Skal afleveres om 8 dage</StatusLabel>
         <StatusLabel variant="warning">Skal afleveres om 7 dage</StatusLabel>
+        <StatusLabel variant="warning">Skal afleveres i dag</StatusLabel>
         <StatusLabel variant="error">Afleveringsfrist overskredet</StatusLabel>
       </ContextColumn>
       <ContextColumn title="Liste- og materialevisningen">
@@ -89,8 +90,11 @@ const ModalContextsShowcase = () => (
         <StatusLabel variant="warning" subline="Aflevér senest 22. juli 2026">
           Skal afleveres om 7 dage
         </StatusLabel>
-        <StatusLabel variant="error" subline="Aflevér senest 9. juli 2026">
-          Afleveringsfrist overskredet
+        <StatusLabel variant="warning" subline="Aflevér senest 20. jul. 2026">
+          Skal afleveres i dag
+        </StatusLabel>
+        <StatusLabel variant="error" subline="Skulle afleveres 18. jul. 2026">
+          Afleveringsfristen er overskredet med 2 dage
         </StatusLabel>
       </ContextColumn>
     </ContextSection>

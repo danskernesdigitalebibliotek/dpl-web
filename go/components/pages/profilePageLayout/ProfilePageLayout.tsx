@@ -6,6 +6,9 @@ import { LoanSliderSkeleton } from "@/components/shared/loanSlider/LoanSlider"
 import LogoutButton from "@/components/shared/logoutButton/LogoutButton"
 import { PhysicalLoanSliderSkeleton } from "@/components/shared/physicalLoanSlider/PhysicalLoanSlider"
 import PhysicalLoans from "@/components/shared/physicalLoans/PhysicalLoans"
+import ProfileNotifications, {
+  ProfileNotificationsSkeleton,
+} from "@/components/shared/profileNotifications/ProfileNotifications"
 import UserLoans from "@/components/shared/userLoans/UserLoans"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
@@ -73,6 +76,13 @@ const ProfilePageLayout = async () => {
           </div>
           <LogoutButton />
         </div>
+        {/* FBS-only section — skipped entirely (skeleton included) for
+            sessions that can never load it. */}
+        {session.type === "adgangsplatformen" && (
+          <Suspense fallback={<ProfileNotificationsSkeleton />}>
+            <ProfileNotifications />
+          </Suspense>
+        )}
         <Suspense fallback={<LoanSliderSkeleton />}>
           <UserLoans />
         </Suspense>

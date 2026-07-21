@@ -1,10 +1,9 @@
 "use client"
 
-import { differenceInDays } from "date-fns"
 import React from "react"
 
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 import { type PhysicalLoanItem, type ReservationItem } from "@/lib/helpers/helper.patron"
 import { openModal } from "@/store/modal.store"
 
@@ -68,10 +67,9 @@ const OverviewCard = ({
 // Overview under the physical loan slider: loan counts and reservation
 // counts, each with a "Vis alle" opening the matching modal.
 const PhysicalQuotasSection = ({ loanItems, reservationItems }: PhysicalQuotasSectionProps) => {
-  const { warning } = useLoanThresholds()
-
+  // "Skal afleveres" counts anything with a pressing due date, overdue included.
   const dueSoonCount = loanItems.filter(
-    ({ loan }) => differenceInDays(new Date(loan.dueDate), new Date()) <= warning
+    ({ loan }) => dueStatus(loan.dueDate).state !== "neutral"
   ).length
   const readyCount = reservationItems.filter(
     ({ reservation }) => reservation.state === "readyForPickup"

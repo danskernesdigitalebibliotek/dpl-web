@@ -77,6 +77,22 @@ export type Reservation = {
   pickupNumber: string | undefined
 }
 
+export type Fee = {
+  feeId: number
+  // In the currency of the agency.
+  amount: number
+  creationDate: string
+  dueDate: string | undefined
+  // Free text from FBS, in the language of the agency.
+  reasonMessage: string
+  // "fee" | "compensation" — unrecognized values must be treated as "other".
+  type: string
+  payableByClient: boolean
+  // How many materials the fee covers; 0 when the materials no longer exist
+  // (e.g. fees from closed interlibrary loans).
+  materialCount: number
+}
+
 export type Loan = {
   loanId: number
   recordId: string
@@ -84,6 +100,9 @@ export type Loan = {
   loanDate: string
   materialItemNumber: string
   isRenewable: boolean
+  // Set when isRenewable is false: the first documented denial code from
+  // FBS' renewalStatusList (e.g. deniedReserved when another patron waits).
+  nonRenewableReason: RenewalFailureReason | undefined
 }
 
 // FBS-documented renewal denial codes. The spec instructs that unrecognized

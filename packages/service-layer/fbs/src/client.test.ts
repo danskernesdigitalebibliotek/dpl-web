@@ -7,6 +7,7 @@ const patronInfoUrl = `${baseUrl}/external/agencyid/patrons/patronid/v4`
 const holdingsBaseUrl = `${baseUrl}/external/agencyid/catalog/holdingsLogistics/v1`
 const reservationsUrl = `${baseUrl}/external/v1/agencyid/patrons/patronid/reservations/v2`
 const loansUrl = `${baseUrl}/external/agencyid/patrons/patronid/loans/v2`
+const feesUrl = `${baseUrl}/external/agencyid/patron/patronid/fees/v2?includepaid=false&includenonpayable=true`
 const renewLoansUrl = `${baseUrl}/external/agencyid/patrons/patronid/loans/renew/v2`
 
 const mockJsonResponse = (body: unknown, status = 200) =>
@@ -367,6 +368,81 @@ describe("createFbsClient.getLoans", () => {
   it("throws when the response shape fails validation", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ unexpected: "shape" }))
     await expect(buildClient().getLoans()).rejects.toThrow()
+  })
+})
+
+describe("createFbsClient.getFees", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("GETs the fees endpoint with unpaid+nonpayable params and returns mapped fees", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse([
+        {
+          feeId: 7,
+          amount: 58,
+          creationDate: "2026-06-01",
+          dueDate: "2026-07-01",
+          reasonMessage: "Overskredet afleveringsfrist",
+          type: "fee",
+          payableByClient: false,
+          materials: [{ materialItemNumber: "5001234567" }, { materialItemNumber: "5001234568" }],
+        },
+      ])
+    )
+
+    const result = await buildClient().getFees()
+
+    expect(fetch).toHaveBeenCalledWith(feesUrl, {
+      method: "GET",
+      headers: { authorization: "Bearer abc" },
+    })
+    expect(result).toEqual([
+      {
+        feeId: 7,
+        amount: 58,
+        creationDate: "2026-06-01",
+        dueDate: "2026-07-01",
+        reasonMessage: "Overskredet afleveringsfrist",
+        type: "fee",
+        payableByClient: false,
+        materialCount: 2,
+      },
+    ])
+  })
+
+  it("maps a missing dueDate to undefined", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse([
+        {
+          feeId: 8,
+          amount: 25.5,
+          creationDate: "2026-06-01",
+          reasonMessage: "Erstatning",
+          type: "compensation",
+          payableByClient: true,
+        },
+      ])
+    )
+
+    const result = await buildClient().getFees()
+
+    expect(result[0].dueDate).toBeUndefined()
+  })
+
+  it("throws on non-2xx", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
+    await expect(buildClient().getFees()).rejects.toThrow(/401/)
+  })
+
+  it("throws when the response shape fails validation", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ unexpected: "shape" }))
+    await expect(buildClient().getFees()).rejects.toThrow()
   })
 })
 

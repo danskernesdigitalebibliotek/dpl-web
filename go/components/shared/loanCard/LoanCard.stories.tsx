@@ -14,8 +14,12 @@ import {
 
 // Expiry dates are computed relative to "now" so the rendered day counts stay
 // stable over time (e.g. in Chromatic snapshots).
-const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+const daysFromNow = (days: number) => {
+  const date = new Date()
+  date.setHours(12, 0, 0, 0)
+  date.setDate(date.getDate() + days)
+  return date.toISOString()
+}
 
 let isbnCounter = 9788711917200
 

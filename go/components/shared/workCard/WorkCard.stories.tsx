@@ -56,21 +56,19 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => (
-    <div className="w-72 p-10">
+    <div className="w-96 p-10">
       <WorkCard {...args} />
     </div>
   ),
 }
 
 // The card scales with its container; the icon row and title keep up. The
-// widths match real render sites: search results on a small phone (two
-// columns of the mobile grid), sliders, and search results on desktop.
+// widths match real render sites: sliders and search results on desktop.
 export const Sizes: Story = {
   render: args => (
     <div className="flex items-end gap-10 p-10">
       {(
         [
-          ["w-40", "Search results, small phone"],
           ["w-72", "Slider card"],
           ["w-[420px]", "Search results, desktop"],
         ] as const
@@ -111,7 +109,7 @@ export const MaterialTypes: Story = {
 // Cost-free ("BLÅ") titles get the badge in the top left corner.
 export const BlueTitle: Story = {
   render: () => (
-    <div className="w-72 p-10">
+    <div className="w-96 p-10">
       <WorkCard {...cardArgs(blueTitle)} />
     </div>
   ),
@@ -121,7 +119,7 @@ export const BlueTitle: Story = {
 export const WithTilt: Story = {
   args: { isWithTilt: true },
   render: args => (
-    <div className="w-72 p-10">
+    <div className="w-96 p-10">
       <WorkCard {...args} />
     </div>
   ),
@@ -130,7 +128,7 @@ export const WithTilt: Story = {
 export const DefaultDarkMode: Story = {
   decorators: [darkModeDecorator],
   render: args => (
-    <div className="w-72 p-10">
+    <div className="w-96 p-10">
       <WorkCard {...args} />
     </div>
   ),

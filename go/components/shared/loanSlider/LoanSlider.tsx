@@ -73,8 +73,10 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
       className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
         overflow-hidden md:p-8">
       <div className="col-span-full flex items-center justify-between">
-        <h2 className="text-typo-heading-4">Digitale lån ({loanData.loans?.length})</h2>
-        {!!loanData.loans?.length && (
+        {/* Counts the paired works actually shown — raw Publizon loans also
+            cover adult-only materials that GO filters out. */}
+        <h2 className="text-typo-heading-4">Digitale lån ({works.length})</h2>
+        {!!works.length && (
           <div className="flex flex-row justify-end gap-x-4">
             <Button
               disabled={reachedStart}

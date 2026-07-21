@@ -5,7 +5,7 @@ const GENERIC_MESSAGE = "Lånet kunne ikke fornys. Prøv igen senere."
 // Single source of truth for FBS renewal-denial → Danish copy. Codes the user
 // can't act on collapse to the generic message, mirroring the reservation flow.
 const REASON_COPY: Record<RenewalFailureReason, string> = {
-  deniedReserved: "Bogen er reserveret af en anden låner, så lånet kan ikke fornys.",
+  deniedReserved: "Bogen er reserveret af en anden låner, lånet kan ikke fornys.",
   deniedMaxRenewalsReached: "Lånet kan ikke fornys flere gange.",
   deniedLoanerIsBlocked: "Din konto er spærret. Kontakt biblioteket.",
   deniedMaterialIsNotLoanable: "Bogen kan ikke fornys lige nu.",

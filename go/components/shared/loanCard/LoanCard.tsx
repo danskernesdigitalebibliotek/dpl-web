@@ -1,6 +1,5 @@
 "use client"
 
-import { differenceInDays } from "date-fns"
 import { useEffect } from "react"
 
 import {
@@ -11,9 +10,8 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiryStatusLabel"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
-import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
@@ -26,16 +24,6 @@ export type LoanCardProps = {
   setAudioLoans: React.Dispatch<React.SetStateAction<string[]>>
   setEbookLoans: React.Dispatch<React.SetStateAction<string[]>>
   setBlueLoans: React.Dispatch<React.SetStateAction<string[]>>
-}
-
-// Digital loans aren't returned by the user — the loan period just runs out —
-// so the label stays "Udløber", but the due-soon coloring follows the same
-// thresholds as physical loans.
-export const expiryStatusText = (daysUntil: number, danger: number) => {
-  if (daysUntil <= danger) {
-    return "Udløber i dag"
-  }
-  return `Udløber om ${daysUntil} ${daysUntil === 1 ? "dag" : "dage"}`
 }
 
 const LoanCard = ({
@@ -54,13 +42,6 @@ const LoanCard = ({
   const { data: dataProducts } = useGetV1ProductsIdentifierAdapter(manifestationIsbn || "")
 
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
-  const targetDate = new Date(loan?.loanExpireDateUtc || "")
-  const today = new Date()
-  const daysUntil = differenceInDays(targetDate, today)
-  // Digital loans expire on their own, so there is no overdue (red) state —
-  // "expires today" is still just a warning.
-  const { warning, danger } = useLoanThresholds()
-  const isExpiringSoon = daysUntil <= warning
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
@@ -125,9 +106,7 @@ const LoanCard = ({
         />
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
         <div className="flex w-full justify-center pt-5">
-          <StatusLabel variant={isExpiringSoon ? "warning" : "neutral"}>
-            {expiryStatusText(daysUntil, danger)}
-          </StatusLabel>
+          <DigitalExpiryStatusLabel dueDate={loan?.loanExpireDateUtc} />
         </div>
         {/* Always rendered so the card height is stable — the badge fades in
             when the product data marks the title as cost-free. */}

@@ -58,8 +58,43 @@ describe("parseAndMapLoans", () => {
         loanDate: "2026-06-01",
         materialItemNumber: "5001234567",
         isRenewable: false,
+        nonRenewableReason: "deniedOtherReason",
       },
     ])
+  })
+
+  it("coerces the denial reason from renewalStatusList on non-renewable loans", () => {
+    const raw = [
+      {
+        isRenewable: false,
+        renewalStatusList: ["deniedReserved"],
+        loanDetails: {
+          loanId: 1,
+          recordId: "1",
+          dueDate: "2026-07-01",
+          loanDate: "2026-06-01",
+          materialItemNumber: "5001234567",
+        },
+      },
+    ]
+    expect(parseAndMapLoans(raw)[0].nonRenewableReason).toBe("deniedReserved")
+  })
+
+  it("leaves nonRenewableReason undefined on renewable loans", () => {
+    const raw = [
+      {
+        isRenewable: true,
+        renewalStatusList: [],
+        loanDetails: {
+          loanId: 1,
+          recordId: "1",
+          dueDate: "2026-07-01",
+          loanDate: "2026-06-01",
+          materialItemNumber: "5001234567",
+        },
+      },
+    ]
+    expect(parseAndMapLoans(raw)[0].nonRenewableReason).toBeUndefined()
   })
 
   it("throws on non-array input", () => {

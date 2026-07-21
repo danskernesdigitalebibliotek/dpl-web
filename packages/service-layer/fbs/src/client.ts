@@ -1,6 +1,7 @@
 import type {
   CreateReservationInput,
   CreateReservationResult,
+  Fee,
   Loan,
   MaterialAvailability,
   Patron,
@@ -10,6 +11,7 @@ import type {
 import {
   getAddReservationsV2Url,
   getDeleteReservationsUrl,
+  getGetFeesV2Url,
   getGetHoldingsLogisticsV1Url,
   getGetLoansV2Url,
   getGetPatronInformationByPatronIdV4Url,
@@ -18,6 +20,7 @@ import {
 } from "./generated/fbs"
 import type { CreateReservationBatchV2 } from "./generated/model/createReservationBatchV2"
 import { parseAndMapAvailability } from "./mappers/availability.mapper"
+import { parseAndMapFees } from "./mappers/fees.mapper"
 import { parseAndMapLoans } from "./mappers/loans.mapper"
 import { parseAndMapPatron } from "./mappers/patron.mapper"
 import { parseAndMapRenewedLoans } from "./mappers/renewedLoans.mapper"
@@ -106,6 +109,25 @@ export function createFbsClient(config: FbsConfig) {
       }
       const raw: unknown = await response.json()
       return parseAndMapReservations(raw)
+    },
+
+    getFees: async (): Promise<Fee[]> => {
+      const authHeader = await config.getAuthHeader()
+      // Unpaid fees only; nonpayable ones are included because they are
+      // displayed, not paid, through the client systems.
+      const url = `${config.baseUrl}${getGetFeesV2Url({
+        includepaid: false,
+        includenonpayable: true,
+      })}`
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { authorization: authHeader },
+      })
+      if (!response.ok) {
+        throw new Error(`FBS getFees failed: ${response.status} ${response.statusText}`)
+      }
+      const raw: unknown = await response.json()
+      return parseAndMapFees(raw)
     },
 
     getLoans: async (): Promise<Loan[]> => {

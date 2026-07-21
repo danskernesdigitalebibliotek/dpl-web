@@ -7,6 +7,7 @@ import { Button } from "@/components/shared/button/Button"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanRenewalReceiptContent from "@/components/shared/loanDetailsModal/LoanRenewalReceiptContent"
 import PhysicalDueStatusLabel from "@/components/shared/loanDetailsModal/PhysicalDueStatusLabel"
+import RenewLoanAction from "@/components/shared/loanDetailsModal/RenewLoanAction"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
@@ -122,17 +123,14 @@ const PhysicalLoansModal = ({
             <Button theme="primary" size="lg" onClick={onClose}>
               OK
             </Button>
-          ) : selected.loan.isRenewable ? (
-            <Button
-              theme="primary"
-              size="lg"
-              isLoading={isRenewing}
-              ariaLabel={`Forny lån af ${selected.work.titles.full[0]}`}
-              data-cy={cyKeys["approve-renew-loan-button"]}
-              onClick={handleRenew}>
-              Forny lån
-            </Button>
-          ) : null}
+          ) : (
+            <RenewLoanAction
+              loan={selected.loan}
+              title={selected.work.titles.full[0]}
+              isRenewing={isRenewing}
+              onRenew={handleRenew}
+            />
+          )}
         </ResponsiveDialog.Actions>
       )}
     </ResponsiveDialog>

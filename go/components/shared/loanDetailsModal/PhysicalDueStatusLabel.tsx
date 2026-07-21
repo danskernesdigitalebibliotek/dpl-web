@@ -1,28 +1,52 @@
 "use client"
 
-import { differenceInDays, format } from "date-fns"
+import { format } from "date-fns"
 import { da } from "date-fns/locale"
 import React from "react"
 
 import { dueStatusText } from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 
 // The expanded due status for physical loans in list and material views:
 // the relative status with the absolute deadline as bold subline. The
 // compact one-line form on the slider cards stays in PhysicalLoanCard.
 const PhysicalDueStatusLabel = ({ dueDate }: { dueDate: string }) => {
-  const { warning, danger } = useLoanThresholds()
-  const daysUntil = differenceInDays(new Date(dueDate), new Date())
-  const isOverdue = daysUntil < danger
-  const isDueSoon = !isOverdue && daysUntil <= warning
+  const { state, daysUntil } = dueStatus(dueDate)
+
+  // An unparseable due date degrades to NaN day counts — no label beats
+  // "om NaN dage" and an "Invalid Date" subline.
+  if (Number.isNaN(daysUntil)) return null
+
+  if (state === "overdue") {
+    const overdueDays = Math.abs(daysUntil)
+    return (
+      <StatusLabel
+        variant="error"
+        subline={`Skulle afleveres ${format(new Date(dueDate), "d. MMM yyyy", { locale: da })}`}>
+        {`Afleveringsfristen er overskredet med ${overdueDays} ${
+          overdueDays === 1 ? "dag" : "dage"
+        }`}
+      </StatusLabel>
+    )
+  }
+
+  if (state === "due-today") {
+    return (
+      <StatusLabel
+        variant="warning"
+        subline={`Aflevér senest ${format(new Date(dueDate), "d. MMM yyyy", { locale: da })}`}>
+        Skal afleveres i dag
+      </StatusLabel>
+    )
+  }
 
   return (
     <StatusLabel
-      variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}
-      className={isOverdue || isDueSoon ? undefined : "px-0 py-0"}
+      variant={state === "due-soon" ? "warning" : "neutral"}
+      className={state === "due-soon" ? undefined : "px-0 py-0"}
       subline={`Aflevér senest ${format(new Date(dueDate), "d. MMMM yyyy", { locale: da })}`}>
-      {isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)}
+      {dueStatusText(daysUntil)}
     </StatusLabel>
   )
 }

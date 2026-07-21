@@ -11,6 +11,7 @@ import InfoCard from "@/components/shared/infoCard/InfoCard"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
@@ -27,8 +28,7 @@ type ReservationFormContentProps = {
 
 const ReservationFormContent = ({ work, manifestation, patron }: ReservationFormContentProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
-  const baseURL = dplCmsConfig?.libraryInfo?.baseURL
-  const adultSiteUrl = baseURL ? `${baseURL.replace(/\/$/, "")}${USER_PROFILE_PATH}` : "#"
+  const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
   const creators = work?.creators ?? manifestation.contributors ?? []
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
@@ -70,7 +70,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
 
         <p className="text-typo-caption text-foreground-muted text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
-          <a className="text-foreground underline" href={adultSiteUrl}>
+          <a className="text-foreground underline" href={profileUrl}>
             voksen-hjemmesiden
           </a>
           .
