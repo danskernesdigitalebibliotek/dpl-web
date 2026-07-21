@@ -69,7 +69,7 @@ const DigitalLoansModal = ({
       ? `Lyt til ${selectedLoan?.label ?? ""}`
       : flow.view === "detail"
         ? "Dit lån"
-        : `Digitale lån (${loanData.loans?.length ?? 0})`
+        : `Digitale lån (${sortedWorks.length})`
 
   return (
     <ResponsiveDialog
