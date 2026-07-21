@@ -7,9 +7,9 @@ import { Button } from "@/components/shared/button/Button"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
-import useDueStatus from "@/hooks/useDueStatus"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 import { openModal } from "@/store/modal.store"
 
 export type PhysicalLoanCardProps = {
@@ -36,7 +36,7 @@ const PhysicalLoanCard = ({
   creators,
   className,
 }: PhysicalLoanCardProps) => {
-  const { state, daysUntil } = useDueStatus()(loan.dueDate)
+  const { state, daysUntil } = dueStatus(loan.dueDate)
   // Compact single-line labels; the expanded (subline) StatusLabel form is
   // reserved for modal contexts.
   const statusText = state === "overdue" ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)

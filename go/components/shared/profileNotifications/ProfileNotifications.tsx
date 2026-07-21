@@ -6,9 +6,9 @@ import React, { useEffect, useRef } from "react"
 import { Button } from "@/components/shared/button/Button"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
-import useDueStatus from "@/hooks/useDueStatus"
 import useSession from "@/hooks/useSession"
 import { useGetManifestationsByFaustQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 import { formatAmount, summarizeFees } from "@/lib/helpers/helper.fees"
 import {
   buildPhysicalLoanItems,
@@ -55,7 +55,6 @@ const NotificationCard = ({ notification }: { notification: Notification }) => (
 // it is FBS data, so the section is hidden for Unilogin users.
 const ProfileNotifications = () => {
   const { session } = useSession()
-  const dueStatusOf = useDueStatus()
   const { data: fees, isLoading: isLoadingFees } = useFees()
   const { data: loans, isLoading: isLoadingLoans } = useLoans()
   const { data: reservations, isLoading: isLoadingReservations } = useReservations()
@@ -107,10 +106,10 @@ const ProfileNotifications = () => {
   ).length
   // A loan due today is still on time and counts as due soon.
   const overdueCount = loanItems.filter(
-    ({ loan }) => dueStatusOf(loan.dueDate).state === "overdue"
+    ({ loan }) => dueStatus(loan.dueDate).state === "overdue"
   ).length
   const dueSoonCount = loanItems.filter(({ loan }) => {
-    const { state } = dueStatusOf(loan.dueDate)
+    const { state } = dueStatus(loan.dueDate)
     return state === "due-today" || state === "due-soon"
   }).length
 

@@ -6,7 +6,7 @@ import { Button } from "@/components/shared/button/Button"
 import { type LoanDetails } from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import { cyKeys } from "@/cypress/support/constants"
-import useDueStatus from "@/hooks/useDueStatus"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 
 type RenewLoanActionProps = {
   loan: LoanDetails
@@ -36,7 +36,7 @@ const DisabledRenewAction = ({ title, message }: { title: string; message: strin
 // due date, so before that the button is disabled with a countdown; inside
 // the window it renews, or explains FBS' denial reason when blocked.
 const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionProps) => {
-  const { daysUntilRenewable } = useDueStatus()(loan.dueDate)
+  const { daysUntilRenewable } = dueStatus(loan.dueDate)
 
   if (daysUntilRenewable > 0) {
     return (

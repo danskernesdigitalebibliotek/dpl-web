@@ -3,7 +3,7 @@
 import React from "react"
 
 import { cyKeys } from "@/cypress/support/constants"
-import useDueStatus from "@/hooks/useDueStatus"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 import { type PhysicalLoanItem, type ReservationItem } from "@/lib/helpers/helper.patron"
 import { openModal } from "@/store/modal.store"
 
@@ -67,11 +67,9 @@ const OverviewCard = ({
 // Overview under the physical loan slider: loan counts and reservation
 // counts, each with a "Vis alle" opening the matching modal.
 const PhysicalQuotasSection = ({ loanItems, reservationItems }: PhysicalQuotasSectionProps) => {
-  const dueStatusOf = useDueStatus()
-
   // "Skal afleveres" counts anything with a pressing due date, overdue included.
   const dueSoonCount = loanItems.filter(
-    ({ loan }) => dueStatusOf(loan.dueDate).state !== "neutral"
+    ({ loan }) => dueStatus(loan.dueDate).state !== "neutral"
   ).length
   const readyCount = reservationItems.filter(
     ({ reservation }) => reservation.state === "readyForPickup"

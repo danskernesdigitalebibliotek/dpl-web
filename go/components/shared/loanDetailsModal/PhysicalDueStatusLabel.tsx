@@ -6,13 +6,13 @@ import React from "react"
 
 import { dueStatusText } from "@/components/shared/physicalLoanCard/PhysicalLoanCard"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import useDueStatus from "@/hooks/useDueStatus"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
 
 // The expanded due status for physical loans in list and material views:
 // the relative status with the absolute deadline as bold subline. The
 // compact one-line form on the slider cards stays in PhysicalLoanCard.
 const PhysicalDueStatusLabel = ({ dueDate }: { dueDate: string }) => {
-  const { state, daysUntil } = useDueStatus()(dueDate)
+  const { state, daysUntil } = dueStatus(dueDate)
 
   if (state === "overdue") {
     const overdueDays = Math.abs(daysUntil)

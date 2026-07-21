@@ -47,4 +47,9 @@ describe("dueStatus", () => {
     expect(dueStatus("", thresholds).state).toBe("neutral")
     expect(dueStatus("not-a-date", thresholds).state).toBe("neutral")
   })
+
+  it("falls back to the configured thresholds when none are given", () => {
+    expect(dueStatus(daysFromNow(1.5)).state).toBe("due-soon")
+    expect(dueStatus(daysFromNow(30.5)).state).toBe("neutral")
+  })
 })
