@@ -10,6 +10,7 @@ import MappTracking from "@/components/global/mappTracking/MappTracking"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
@@ -50,6 +51,7 @@ async function RootLayout({
             <Header />
             <DynamicSheet />
             <DynamicModal />
+            <Toaster />
             {children}
             <Footer />
             <MappTracking />
