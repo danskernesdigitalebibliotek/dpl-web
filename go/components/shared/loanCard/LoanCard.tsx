@@ -1,6 +1,5 @@
 "use client"
 
-import { differenceInDays } from "date-fns"
 import { useEffect } from "react"
 
 import {
@@ -10,8 +9,9 @@ import {
   isPodcastMaterialType,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
-import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
-import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiryStatusLabel"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
@@ -23,6 +23,7 @@ export type LoanCardProps = {
   className?: string
   setAudioLoans: React.Dispatch<React.SetStateAction<string[]>>
   setEbookLoans: React.Dispatch<React.SetStateAction<string[]>>
+  setBlueLoans: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 const LoanCard = ({
@@ -31,6 +32,7 @@ const LoanCard = ({
   className,
   setAudioLoans,
   setEbookLoans,
+  setBlueLoans,
 }: LoanCardProps) => {
   const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
 
@@ -40,9 +42,6 @@ const LoanCard = ({
   const { data: dataProducts } = useGetV1ProductsIdentifierAdapter(manifestationIsbn || "")
 
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
-  const targetDate = new Date(loan?.loanExpireDateUtc || "")
-  const today = new Date()
-  const daysUntil = differenceInDays(targetDate, today)
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
@@ -69,6 +68,12 @@ const LoanCard = ({
             : [...prev, manifestationIsbn || "unknown isbn"]
         )
       }
+    } else {
+      setBlueLoans(prev =>
+        prev.includes(String(manifestationIsbn))
+          ? prev
+          : [...prev, manifestationIsbn || "unknown isbn"]
+      )
     }
     // We only want to run this useEffect if the manifestation changes or when the products are loaded
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,35 +90,35 @@ const LoanCard = ({
   }
 
   return (
-    <div className={cn("relative flex aspect-5/7 h-full w-full", className)}>
-      <div className="h-full w-full">
-        <div className="block h-full w-full space-y-3 px-[15%]">
-          <div className="relative h-[85%]">
-            <CoverPicture
-              covers={manifestation.cover}
-              alt={`${title} cover billede`}
-              withTilt={false}
-              className="select-none"
-            />
-            <MaterialTypeIconWrapper
-              iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-              className={cn(
-                "relative z-10 mx-auto -mt-14 outline-1",
-                isCostFree
-                  ? "bg-content-blue-100 dark:text-blue-title-dark"
-                  : "bg-background-overlay-solid"
-              )}
-              costFree={isCostFree}
-            />
-          </div>
-          <p className="text-typo-subtitle-sm text-foreground/70 w-full text-center break-words">{`Udløber om ${daysUntil} dage`}</p>
-          {isCostFree && (
-            <div className="flex w-full justify-center">
-              <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
-                BLÅ
-              </Badge>
-            </div>
-          )}
+    <div className={cn("relative w-full", className)}>
+      <div className="w-full space-y-3 px-[15%]">
+        <ManifestationCover
+          cover={manifestation.cover}
+          iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+          alt={`${title} cover billede`}
+          className="w-full"
+          costFree={isCostFree}
+          iconClassName={
+            isCostFree
+              ? "bg-content-blue-100 dark:text-blue-title-dark"
+              : "bg-background-overlay-solid"
+          }
+        />
+        {/* pt clears the material-type icon straddling the cover's bottom edge. */}
+        <div className="flex w-full justify-center pt-5">
+          <DigitalExpiryStatusLabel dueDate={loan?.loanExpireDateUtc} />
+        </div>
+        {/* Always rendered so the card height is stable — the badge fades in
+            when the product data marks the title as cost-free. */}
+        <div className="flex w-full justify-center" aria-hidden={!isCostFree}>
+          <Badge
+            variant={"blue-title"}
+            className={cn(
+              "mb-1 transition-opacity duration-300 lg:mb-2",
+              isCostFree ? "opacity-100" : "opacity-0"
+            )}>
+            BLÅ
+          </Badge>
         </div>
       </div>
     </div>

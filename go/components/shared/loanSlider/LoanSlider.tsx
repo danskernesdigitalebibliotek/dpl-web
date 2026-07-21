@@ -4,24 +4,25 @@ import { useWindowSize } from "@uidotdev/usehooks"
 import { differenceInDays } from "date-fns"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import React, { Suspense, useEffect, useState } from "react"
 
-import LoanCard from "@/app/(pages)/user/profile/LoanCard"
-import QuotasSection, { QuotasSectionSkeleton } from "@/app/(pages)/user/profile/QuotasSection"
-import { loanSliderOptions } from "@/app/(pages)/user/profile/helper"
 import { WheelControls } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
+import LoanCard from "@/components/shared/loanCard/LoanCard"
+import { loanSliderOptions } from "@/components/shared/loanSlider/helper"
+import QuotasSection, {
+  QuotasSectionSkeleton,
+} from "@/components/shared/quotasSection/QuotasSection"
 import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { buildSelectedLoan } from "@/lib/helpers/helper.patron"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
-
-import FindBookButton from "./FindBookButton"
+import { openModal } from "@/store/modal.store"
 
 type LoanSliderProps = {
   works: WorkTeaserSearchPageFragment[]
@@ -29,6 +30,7 @@ type LoanSliderProps = {
 }
 
 const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
+  const router = useRouter()
   const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
   const [reachedEnd, setReachEnd] = useState(true)
@@ -41,6 +43,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   }
   const [audioLoans, setAudioLoans] = useState<string[]>([])
   const [ebookLoans, setEbookLoans] = useState<string[]>([])
+  const [blueLoans, setBlueLoans] = useState<string[]>([])
 
   useEffect(() => {
     internalSlider.current?.on("slideChanged", () => {
@@ -67,11 +70,13 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
 
   return (
     <div
-      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
-        py-10">
-      <div className="col-span-full flex items-center justify-between px-10">
-        <h2 className="text-typo-heading-4">Mine lån ({loanData.loans?.length})</h2>
-        {!!loanData.loans?.length && (
+      className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
+        overflow-hidden md:p-8">
+      <div className="col-span-full flex items-center justify-between">
+        {/* Counts the paired works actually shown — raw Publizon loans also
+            cover adult-only materials that GO filters out. */}
+        <h2 className="text-typo-heading-4">Digitale lån ({works.length})</h2>
+        {!!works.length && (
           <div className="flex flex-row justify-end gap-x-4">
             <Button
               disabled={reachedStart}
@@ -107,29 +112,29 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
               : null
             return (
-              <Link
+              <button
+                type="button"
                 data-cy={cyKeys["loan-slider-work"]}
-                prefetch={false}
                 key={loanManifestation.pid}
-                aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}${daysUntil !== null ? `. Udløber om ${daysUntil} dage` : ""}`}
+                aria-label={`Se detaljer om dit lån af ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}${daysUntil !== null ? `. Udløber om ${daysUntil} dage` : ""}`}
                 className={cn(
-                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base
-                  !overflow-visible focus:outline-offset-2`
+                  `keen-slider__slide focus-visible outline-accent-foreground rounded-base flex
+                  cursor-pointer items-center !overflow-visible focus:outline-offset-2`
                 )}
-                href={resolveUrl({
-                  routeParams: { work: "work", wid: work.workId },
-                  queryParams: {
-                    type: loanManifestation.materialTypes[0].materialTypeSpecific.code,
-                  },
-                })}>
+                onClick={() => {
+                  const selection = buildSelectedLoan(work, loanData)
+                  if (!selection) return
+                  openModal("DigitalLoansModal", { works, loanData, initialLoan: selection })
+                }}>
                 <LoanCard
                   manifestation={loanManifestation}
                   title={work.titles.full[0]}
                   className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
                   setAudioLoans={setAudioLoans}
                   setEbookLoans={setEbookLoans}
+                  setBlueLoans={setBlueLoans}
                 />
-              </Link>
+              </button>
             )
           })}
           {/* To avoid empty looking slider for one loan or no loans, we add visual indicators for more books. */}
@@ -157,7 +162,9 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   className="absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col
                     items-center justify-center gap-5">
                   <p className="text-typo-heading-3">Du har ikke lånt noget endnu</p>
-                  <FindBookButton />
+                  <Button size="lg" className="min-w-80" onClick={() => router.push("/")}>
+                    Find din næste bog
+                  </Button>
                 </div>
               )}
             </div>
@@ -165,22 +172,29 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
         </div>
       </div>
       <Suspense fallback={<QuotasSectionSkeleton />}>
-        <QuotasSection audioLoans={audioLoans} ebookLoans={ebookLoans} />
+        <QuotasSection
+          audioLoans={audioLoans}
+          ebookLoans={ebookLoans}
+          blueLoans={blueLoans}
+          onViewAll={() => openModal("DigitalLoansModal", { works, loanData })}
+        />
       </Suspense>
     </div>
   )
 }
 
+// Mirrors the loaded slider: same container padding, headline row, slides
+// per view and the quota section, so nothing jumps when the data arrives.
 export const LoanSliderSkeleton = () => {
   return (
     <div
-      className="bg-background-overlay rounded-base grid-go col-span-full space-y-8 overflow-hidden
-        py-10">
-      <div className="col-span-full flex items-center justify-between px-10">
+      className="bg-background-overlay grid-go p-grid-edge rounded-base col-span-full space-y-8
+        overflow-hidden md:p-8">
+      <div className="col-span-full flex items-center justify-between">
         {/* Headline */}
         <div
-          className="text-typo-heading-4 bg-background-skeleton h-[27px] w-xl animate-pulse
-            rounded-sm"
+          className="bg-background-skeleton h-[27px] w-48 max-w-[60%] animate-pulse rounded-sm
+            md:w-80"
         />
         {/* Buttons */}
         <div className="flex flex-row justify-end gap-x-4">
@@ -190,23 +204,24 @@ export const LoanSliderSkeleton = () => {
       </div>
       {/* Slider */}
       <div className="-mx-grid-edge px-grid-edge col-span-full">
-        <div className={"keen-slider !overflow-visible"}>
-          {Array.from({ length: 4 }).map((item, index) => {
-            return (
+        <div className="flex">
+          {Array.from({ length: 4 }).map((item, index) => (
+            <div
+              key={index}
+              className="min-w-[calc(100%/1.3)] shrink-0 md:min-w-[calc(100%/2.5)]
+                lg:min-w-[calc(100%/3.7)]">
               <div
-                key={index}
-                className="relative flex aspect-5/7 h-full max-w-[400px] min-w-[400px]">
-                <div className="aspect-1/1 h-full w-full p-14">
-                  <CoverPictureSkeleton
-                    className={cn({
-                      "rotate-5": index % 2 === 0,
-                      "mt-10 -rotate-5": index % 2 !== 0,
-                    })}
-                  />
+                className={cn(
+                  "w-full space-y-3 px-[15%]",
+                  index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5"
+                )}>
+                <CoverPictureSkeleton className="aspect-2/3 w-full" />
+                <div className="flex w-full justify-center pt-5">
+                  <div className="bg-background-skeleton h-[30px] w-28 animate-pulse rounded-full" />
                 </div>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       </div>
       {/* Quota section */}
