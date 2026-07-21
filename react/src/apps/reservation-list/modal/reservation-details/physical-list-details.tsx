@@ -132,10 +132,10 @@ const PhysicalListDetails: FC<PhysicalListDetailsProps & MaterialProps> = ({
           <ReservationFormListItem
             icon={LocationIcon}
             title={t("reservationDetailsPickUpAtTitleText")}
-            text={getPreferredBranch(
-              selectedBranch ?? pickupBranch,
-              whitelistBranches
-            )}
+            // Resolve the display name from the complete branch list so a
+            // blacklisted-but-assigned pickup branch still shows its name; the
+            // whitelist is only for the selectable branches in PickupModal.
+            text={getPreferredBranch(selectedBranch ?? pickupBranch, branches)}
             changeHandler={openModal("pickup")}
             buttonAriaLabel={t("changePickupLocationText")}
             subText={pickupNumber ?? ""}
