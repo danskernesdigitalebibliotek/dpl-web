@@ -13,10 +13,8 @@ export const appendQueryParametersToUrl = (
   // We need to clone url in order not to manipulate the incoming object.
   const processedUrl = new URL(url);
   Object.keys(parameters).forEach((key) => {
-    // URLSearchParams already percent-encodes values. Do NOT encodeURI on top
-    // of it: that double-encodes reserved characters (e.g. a colon becomes %3A
-    // and then %253A once the query string is itself carried as a parameter),
-    // and the readers below only decode once, so the value no longer matches.
+    // Pass raw values: URLSearchParams encodes on its own, and layering
+    // encodeURI on top double-encodes. See docs ADR-013.
     processedUrl.searchParams.set(key, parameters[key]);
   });
 
@@ -26,16 +24,15 @@ export const appendQueryParametersToUrl = (
 export const getUrlQueryParam = (param: string): null | string => {
   const queryParams = new URLSearchParams(window.location.search);
 
-  // URLSearchParams.get already decodes once; decoding again would leave a
-  // residual encoding layer for values written with a single (correct) encode.
+  // Return the value as-is: URLSearchParams.get already decodes, and layering
+  // decodeURI on top breaks single-encoded values. See docs ADR-013.
   return queryParams.get(param) ? String(queryParams.get(param)) : null;
 };
 
-// URLSearchParams percent-encodes ":" as "%3A", but a colon is a legal query
-// character (RFC 3986 §3.4). Restore it so deep-link URLs (e.g. the modal
-// parameter, which embeds a Pid) stay readable in the address bar. This is
-// display-only: URLSearchParams reads ":" and "%3A" identically, so the value
-// still round-trips.
+// Restore the human-readable colon (a legal query character) in URLs written
+// to the address bar. Display-only: ":" and "%3A" parse identically, and a
+// literal "%3A" in a value serialises as "%253A" so it is never matched.
+// See docs ADR-013.
 export const prettifyQueryColons = (url: URL): string =>
   `${url.origin}${url.pathname}${url.search.replace(/%3A/gi, ":")}${url.hash}`;
 
@@ -164,8 +161,6 @@ export const constructSearchUrlWithFacets = (args: {
 }) => {
   const { searchUrl, q, facets } = args;
   const processedUrl = new URL(searchUrl);
-  // See appendQueryParametersToUrl: URLSearchParams encodes on its own, so no
-  // encodeURI on top (it would double-encode reserved characters).
   processedUrl.searchParams.set("q", q);
   if (facets.length > 0) {
     processedUrl.searchParams.set("facets", JSON.stringify(facets));
