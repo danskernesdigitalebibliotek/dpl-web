@@ -1,39 +1,41 @@
 export const searchFilterFacetsMock = [
   {
+    // Terms must match the facet term map in the materialtypes config —
+    // unknown terms are filtered out of the column.
     values: [
       {
-        key: "bøger",
-        term: "bøger",
+        key: "bog",
+        term: "bog",
         score: 520,
       },
       {
-        key: "e-bøger",
-        term: "e-bøger",
+        key: "e-bog",
+        term: "e-bog",
         score: 235,
       },
       {
-        key: "lydbøger",
-        term: "lydbøger",
+        key: "lydbog (online)",
+        term: "lydbog (online)",
         score: 202,
       },
       {
-        key: "tegneserier",
-        term: "tegneserier",
+        key: "tegneserie",
+        term: "tegneserie",
         score: 21,
       },
       {
-        key: "musik",
-        term: "musik",
+        key: "billedbog",
+        term: "billedbog",
         score: 9,
       },
       {
-        key: "film",
-        term: "film",
+        key: "podcast",
+        term: "podcast",
         score: 4,
       },
       {
-        key: "noder",
-        term: "noder",
+        key: "graphic novel",
+        term: "graphic novel",
         score: 3,
       },
     ],
