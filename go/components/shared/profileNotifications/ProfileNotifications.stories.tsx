@@ -42,7 +42,7 @@ const allNotifications: Notification[] = [
   {
     key: "compensation",
     status: "error",
-    label: "Erstatning",
+    label: "Mangler betaling",
     title: "Du mangler at betale 125 kr. i erstatning",
     body: "Tag fat i en voksen for at få hjælp til at betale pengene.",
     action: { label: "Vis erstatning", onClick: () => {} },
@@ -91,6 +91,11 @@ export const Empty: Story = {
 export const EmptyDarkMode: Story = {
   decorators: [darkModeDecorator],
   args: { notifications: [] },
+}
+
+// A failed fetch never claims "all clear" — it says so honestly.
+export const Error: Story = {
+  args: { notifications: [], hasError: true },
 }
 
 export const Skeleton: Story = {

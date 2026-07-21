@@ -53,6 +53,7 @@ export const cyKeys = {
   "profile-notification": "profile-notification",
   "profile-notification-button": "profile-notification-button",
   "profile-notifications-empty": "profile-notifications-empty",
+  "profile-notifications-error": "profile-notifications-error",
   "read-loan-button": "read-loan-button",
   "listen-loan-button": "listen-loan-button",
   "modal-back-button": "modal-back-button",

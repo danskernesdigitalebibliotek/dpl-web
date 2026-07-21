@@ -55,18 +55,26 @@ const NotificationCard = ({ notification }: { notification: Notification }) => (
 // it is FBS data, so the section is hidden for Unilogin users.
 const ProfileNotifications = () => {
   const { session } = useSession()
-  const { data: fees, isLoading: isLoadingFees } = useFees()
-  const { data: loans, isLoading: isLoadingLoans } = useLoans()
-  const { data: reservations, isLoading: isLoadingReservations } = useReservations()
+  const { data: fees, isLoading: isLoadingFees, isError: isErrorFees } = useFees()
+  const { data: loans, isLoading: isLoadingLoans, isError: isErrorLoans } = useLoans()
+  const {
+    data: reservations,
+    isLoading: isLoadingReservations,
+    isError: isErrorReservations,
+  } = useReservations()
 
   const fausts = shelfRecordIds(loans ?? [], reservations ?? [])
-  const { data: dataManifestations, isLoading: isLoadingManifestations } =
-    useGetManifestationsByFaustQuery({ faust: fausts }, { enabled: fausts.length > 0 })
+  const {
+    data: dataManifestations,
+    isLoading: isLoadingManifestations,
+    isError: isErrorManifestations,
+  } = useGetManifestationsByFaustQuery({ faust: fausts }, { enabled: fausts.length > 0 })
 
   // FBS is only available with a library login.
   const isUnilogin = session?.type === "unilogin"
   const isLoading =
     isLoadingFees || isLoadingLoans || isLoadingReservations || isLoadingManifestations
+  const isError = isErrorFees || isErrorLoans || isErrorReservations || isErrorManifestations
 
   const {
     unpaidTotal,
@@ -82,6 +90,12 @@ const ProfileNotifications = () => {
 
   if (isLoading) {
     return <ProfileNotificationsSkeleton />
+  }
+
+  // A failed query must never render the reassuring empty state — the child
+  // may well have fees or overdue loans.
+  if (isError) {
+    return <ProfileNotificationsView hasError notifications={[]} />
   }
 
   // The paired items both drive the counts and feed the modals: pairing
@@ -131,7 +145,7 @@ const ProfileNotifications = () => {
           {
             key: "compensation",
             status: "error" as const,
-            label: "Erstatning",
+            label: "Mangler betaling",
             title: `Du mangler at betale ${formatAmount(compensationTotal)} kr. i erstatning`,
             body: "Tag fat i en voksen for at få hjælp til at betale pengene.",
             action: { label: "Vis erstatning", onClick: openCompensation },
@@ -176,16 +190,27 @@ const ProfileNotifications = () => {
   return <ProfileNotificationsView notifications={notifications} />
 }
 
-// The presentational section: the card grid, or the empty state when there
-// is nothing to show. Split from the data wiring so stories can render the
-// states directly.
-export const ProfileNotificationsView = ({ notifications }: { notifications: Notification[] }) => {
+// The presentational section: the card grid, the empty state when there is
+// nothing to show, or an honest error line when the data couldn't be
+// fetched. Split from the data wiring so stories can render the states
+// directly.
+export const ProfileNotificationsView = ({
+  notifications,
+  hasError = false,
+}: {
+  notifications: Notification[]
+  hasError?: boolean
+}) => {
   return (
     <div
       data-cy={cyKeys["profile-notifications"]}
       className="bg-background-overlay rounded-base p-grid-edge col-span-full space-y-4 md:p-8">
       <h2 className="text-typo-subtitle-sm opacity-70">Vigtige notifikationer</h2>
-      {notifications.length === 0 ? (
+      {hasError ? (
+        <p data-cy={cyKeys["profile-notifications-error"]} className="text-typo-body-md">
+          Vi kunne ikke hente dine notifikationer lige nu. Prøv igen senere.
+        </p>
+      ) : notifications.length === 0 ? (
         <p data-cy={cyKeys["profile-notifications-empty"]} className="text-typo-body-md">
           Alt ser fint ud — ingen gebyrer, afhentninger eller forfaldne lån.
         </p>
