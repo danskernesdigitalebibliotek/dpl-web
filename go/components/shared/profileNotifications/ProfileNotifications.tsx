@@ -1,7 +1,7 @@
 "use client"
 
 import { useFees, useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import React, { useEffect, useRef } from "react"
+import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
@@ -75,14 +75,6 @@ const ProfileNotifications = () => {
     compensationTotal,
     compensationMaterialCount,
   } = summarizeFees(fees ?? [])
-
-  // Overdue fees open the explainer modal, once per profile visit.
-  const hasOpenedFeesModal = useRef(false)
-  useEffect(() => {
-    if (isLoading || isUnilogin || hasOpenedFeesModal.current || lateFeeTotal <= 0) return
-    hasOpenedFeesModal.current = true
-    openModal("FeesModal", { lateMaterialCount, lateFeeTotal })
-  }, [isLoading, isUnilogin, lateFeeTotal, lateMaterialCount])
 
   if (isUnilogin) {
     return null
