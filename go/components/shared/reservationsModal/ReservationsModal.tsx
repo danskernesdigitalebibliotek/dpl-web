@@ -23,6 +23,7 @@ import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
+import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { type ReservationItem } from "@/lib/helpers/helper.patron"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -134,8 +135,7 @@ const ReservationDetails = ({ item }: { item: ReservationItem }) => {
     reservation.pickupBranchId
   )
   const dplCmsConfig = useContext(DplCmsConfigContext)
-  const baseURL = dplCmsConfig?.libraryInfo?.baseURL
-  const adultSiteUrl = baseURL ? `${baseURL.replace(/\/$/, "")}${USER_PROFILE_PATH}` : "#"
+  const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
 
   return (
     <div data-cy={cyKeys["reservation-details"]} className="space-y-8">
@@ -187,7 +187,7 @@ const ReservationDetails = ({ item }: { item: ReservationItem }) => {
 
         <p className="text-typo-caption text-foreground-muted text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
-          <a className="text-foreground underline" href={adultSiteUrl}>
+          <a className="text-foreground underline" href={profileUrl}>
             voksen-hjemmesiden
           </a>
           .
