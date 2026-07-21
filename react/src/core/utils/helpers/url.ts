@@ -13,7 +13,11 @@ export const appendQueryParametersToUrl = (
   // We need to clone url in order not to manipulate the incoming object.
   const processedUrl = new URL(url);
   Object.keys(parameters).forEach((key) => {
-    processedUrl.searchParams.set(key, encodeURI(parameters[key]));
+    // URLSearchParams already percent-encodes values. Do NOT encodeURI on top
+    // of it: that double-encodes reserved characters (e.g. a colon becomes %3A
+    // and then %253A once the query string is itself carried as a parameter),
+    // and the readers below only decode once, so the value no longer matches.
+    processedUrl.searchParams.set(key, parameters[key]);
   });
 
   return processedUrl;
@@ -22,9 +26,9 @@ export const appendQueryParametersToUrl = (
 export const getUrlQueryParam = (param: string): null | string => {
   const queryParams = new URLSearchParams(window.location.search);
 
-  return queryParams.get(param)
-    ? decodeURI(String(queryParams.get(param)))
-    : null;
+  // URLSearchParams.get already decodes once; decoding again would leave a
+  // residual encoding layer for values written with a single (correct) encode.
+  return queryParams.get(param) ? String(queryParams.get(param)) : null;
 };
 
 export const setQueryParametersInUrl = (parameters: {
@@ -152,7 +156,9 @@ export const constructSearchUrlWithFacets = (args: {
 }) => {
   const { searchUrl, q, facets } = args;
   const processedUrl = new URL(searchUrl);
-  processedUrl.searchParams.set("q", encodeURI(q));
+  // See appendQueryParametersToUrl: URLSearchParams encodes on its own, so no
+  // encodeURI on top (it would double-encode reserved characters).
+  processedUrl.searchParams.set("q", q);
   if (facets.length > 0) {
     processedUrl.searchParams.set("facets", JSON.stringify(facets));
   }
