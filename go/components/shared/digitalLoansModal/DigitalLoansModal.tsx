@@ -1,11 +1,10 @@
 "use client"
 
-import { differenceInDays } from "date-fns"
 import React, { useEffect, useState } from "react"
 
 import { getEbookReadUrl } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
-import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
+import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiryStatusLabel"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
@@ -13,9 +12,7 @@ import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMa
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import {
@@ -45,7 +42,6 @@ const DigitalLoansModal = ({
   loanData,
   initialLoan,
 }: DigitalLoansModalProps & { open: boolean; onClose: () => void }) => {
-  const { warning, danger } = useLoanThresholds()
   const [selectedLoan, setSelectedLoan] = useState<SelectedLoan | null>(null)
   const flow = useModalFlow<"list" | "detail" | "player">({ initial: "list" })
 
@@ -101,23 +97,13 @@ const DigitalLoansModal = ({
                 type: selectedLoan.manifestation.materialTypes[0].materialTypeSpecific.code,
               },
             })}
-            status={(() => {
-              const daysUntil = differenceInDays(new Date(selectedLoan.dueDate), new Date())
-              return (
-                <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
-                  {expiryStatusText(daysUntil, danger)}
-                </StatusLabel>
-              )
-            })()}
+            status={<DigitalExpiryStatusLabel dueDate={selectedLoan.dueDate} />}
           />
         ) : (
           <ModalMaterialList dataCy={cyKeys["digital-loans-modal"]}>
             {sortedWorks.map(work => {
               const manifestation = work.manifestations.all[0]
               const loan = digitalLoanForWork(work, loanData)
-              const daysUntil = loan?.loanExpireDateUtc
-                ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
-                : null
               const creators = displayCreators(work.creators, 1)
               const title = work.titles.full[0]
 
@@ -135,13 +121,7 @@ const DigitalLoansModal = ({
                     setSelectedLoan(selection)
                     flow.goTo("detail")
                   }}
-                  status={
-                    daysUntil !== null && (
-                      <StatusLabel variant={daysUntil <= warning ? "warning" : "neutral"}>
-                        {expiryStatusText(daysUntil, danger)}
-                      </StatusLabel>
-                    )
-                  }
+                  status={<DigitalExpiryStatusLabel dueDate={loan?.loanExpireDateUtc} />}
                 />
               )
             })}

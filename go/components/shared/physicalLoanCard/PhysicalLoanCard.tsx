@@ -1,14 +1,13 @@
 "use client"
 
 import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { differenceInDays } from "date-fns"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
+import useDueStatus from "@/hooks/useDueStatus"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { openModal } from "@/store/modal.store"
@@ -37,15 +36,10 @@ const PhysicalLoanCard = ({
   creators,
   className,
 }: PhysicalLoanCardProps) => {
-  const daysUntil = differenceInDays(new Date(loan.dueDate), new Date())
-  // Same thresholds as dpl-react's loan list: red when the due date has
-  // passed, orange warning when it is getting close.
-  const { warning, danger } = useLoanThresholds()
-  const isOverdue = daysUntil < danger
-  const isDueSoon = !isOverdue && daysUntil <= warning
+  const { state, daysUntil } = useDueStatus()(loan.dueDate)
   // Compact single-line labels; the expanded (subline) StatusLabel form is
   // reserved for modal contexts.
-  const statusText = isOverdue ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
+  const statusText = state === "overdue" ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
 
   return (
     <div className={cn("relative w-full", className)}>
@@ -68,7 +62,8 @@ const PhysicalLoanCard = ({
         </button>
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
         <div className="flex w-full justify-center pt-5">
-          <StatusLabel variant={isOverdue ? "error" : isDueSoon ? "warning" : "neutral"}>
+          <StatusLabel
+            variant={state === "overdue" ? "error" : state === "neutral" ? "neutral" : "warning"}>
             {statusText}
           </StatusLabel>
         </div>

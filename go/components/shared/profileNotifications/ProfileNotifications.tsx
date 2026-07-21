@@ -1,13 +1,12 @@
 "use client"
 
 import { useFees, useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import { differenceInDays } from "date-fns"
 import React, { useEffect, useRef } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
+import useDueStatus from "@/hooks/useDueStatus"
 import useSession from "@/hooks/useSession"
 import { useGetManifestationsByFaustQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { formatAmount, summarizeFees } from "@/lib/helpers/helper.fees"
@@ -56,7 +55,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => (
 // it is FBS data, so the section is hidden for Unilogin users.
 const ProfileNotifications = () => {
   const { session } = useSession()
-  const { warning } = useLoanThresholds()
+  const dueStatusOf = useDueStatus()
   const { data: fees, isLoading: isLoadingFees } = useFees()
   const { data: loans, isLoading: isLoadingLoans } = useLoans()
   const { data: reservations, isLoading: isLoadingReservations } = useReservations()
@@ -103,16 +102,16 @@ const ProfileNotifications = () => {
     dataManifestations?.manifestations
   )
 
-  const daysUntilDue = (dueDate: string) => differenceInDays(new Date(dueDate), new Date())
   const readyCount = reservationItems.filter(
     ({ reservation }) => reservation.state === "readyForPickup"
   ).length
-  // Overdue means the due date itself has passed — a loan due today is still
-  // on time and counts as due soon.
-  const overdueCount = loanItems.filter(({ loan }) => daysUntilDue(loan.dueDate) < 0).length
+  // A loan due today is still on time and counts as due soon.
+  const overdueCount = loanItems.filter(
+    ({ loan }) => dueStatusOf(loan.dueDate).state === "overdue"
+  ).length
   const dueSoonCount = loanItems.filter(({ loan }) => {
-    const days = daysUntilDue(loan.dueDate)
-    return days >= 0 && days <= warning
+    const { state } = dueStatusOf(loan.dueDate)
+    return state === "due-today" || state === "due-soon"
   }).length
 
   const openLoans = () => openModal("PhysicalLoansModal", { items: loanItems })

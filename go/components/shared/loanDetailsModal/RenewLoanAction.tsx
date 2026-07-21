@@ -1,13 +1,12 @@
 "use client"
 
-import { differenceInDays } from "date-fns"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import { type LoanDetails } from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
+import useDueStatus from "@/hooks/useDueStatus"
 
 type RenewLoanActionProps = {
   loan: LoanDetails
@@ -37,9 +36,7 @@ const DisabledRenewAction = ({ title, message }: { title: string; message: strin
 // due date, so before that the button is disabled with a countdown; inside
 // the window it renews, or explains FBS' denial reason when blocked.
 const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionProps) => {
-  const { renewalWindow } = useLoanThresholds()
-  const daysUntilDue = differenceInDays(new Date(loan.dueDate), new Date())
-  const daysUntilRenewable = daysUntilDue - renewalWindow
+  const { daysUntilRenewable } = useDueStatus()(loan.dueDate)
 
   if (daysUntilRenewable > 0) {
     return (

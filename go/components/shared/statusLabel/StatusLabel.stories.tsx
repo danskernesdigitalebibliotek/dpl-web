@@ -91,7 +91,7 @@ const ModalContextsShowcase = () => (
           Skal afleveres om 7 dage
         </StatusLabel>
         <StatusLabel variant="warning" subline="Aflevér senest 20. jul. 2026">
-          Afleveres i dag
+          Skal afleveres i dag
         </StatusLabel>
         <StatusLabel variant="error" subline="Skulle afleveres 18. jul. 2026">
           Afleveringsfristen er overskredet med 2 dage

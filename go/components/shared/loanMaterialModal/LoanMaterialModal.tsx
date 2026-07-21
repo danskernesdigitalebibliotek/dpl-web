@@ -1,5 +1,4 @@
 import { useQueryClient } from "@tanstack/react-query"
-import { differenceInDays } from "date-fns"
 import React, { useState } from "react"
 
 import {
@@ -10,7 +9,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { Button } from "@/components/shared/button/Button"
-import { expiryStatusText } from "@/components/shared/loanCard/LoanCard"
+import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiryStatusLabel"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import LoanAlreadyLoanedContent from "@/components/shared/loanMaterialModal/LoanAlreadyLoanedContent"
 import { publizonErrorMessageMap } from "@/components/shared/loanMaterialModal/helper"
@@ -19,10 +18,8 @@ import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
-import useLoanThresholds from "@/hooks/useLoanThresholds"
 import {
   ManifestationSearchPageTeaserFragment,
   useGetMaterialQuery,
@@ -54,7 +51,6 @@ const LoanMaterialModal = ({
   const manifestation = findManifestationByPid(data?.work, pid)
   const { mutate } = usePostV1UserLoansIdentifier()
   const { data: loansData, isLoading: isLoadingLoans } = useGetV1UserLoans()
-  const { warning, danger } = useLoanThresholds()
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [loanResult, setLoanResult] = useState<CreateLoanResult | null>(null)
   const flow = useModalFlow<"confirm" | "details" | "player">({ initial: "confirm" })
@@ -132,10 +128,6 @@ const LoanMaterialModal = ({
         ? "Dit lån"
         : (manifestation && `Lån ${label}`) || ""
 
-  const daysUntilExpiry = loanResult?.expirationDateUtc
-    ? differenceInDays(new Date(loanResult.expirationDateUtc), new Date())
-    : null
-
   return (
     <ResponsiveDialog
       open={open}
@@ -156,13 +148,7 @@ const LoanMaterialModal = ({
             creators={displayCreators(data?.work?.creators ?? [], 1)}
             dueDateLabel="Udløber"
             blueTitle
-            status={
-              daysUntilExpiry !== null && (
-                <StatusLabel variant={daysUntilExpiry <= warning ? "warning" : "neutral"}>
-                  {expiryStatusText(daysUntilExpiry, danger)}
-                </StatusLabel>
-              )
-            }
+            status={<DigitalExpiryStatusLabel dueDate={loanResult?.expirationDateUtc} />}
           />
         ) : (
           manifestation && (
