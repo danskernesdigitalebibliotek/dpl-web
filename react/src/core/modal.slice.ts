@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getCurrentLocation,
+  prettifyQueryColons,
   removeQueryParametersFromUrl,
   setQueryParametersInUrl
 } from "./utils/helpers/url";
@@ -77,7 +78,7 @@ const modalSlice = createSlice({
           }
         });
 
-        window.history.pushState("", "", currentURL);
+        window.history.pushState("", "", prettifyQueryColons(currentURL));
       }
       const { activeElement } = document;
       // Prevent body from double triggering focus store when url contains modalId

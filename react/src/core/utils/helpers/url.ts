@@ -31,6 +31,14 @@ export const getUrlQueryParam = (param: string): null | string => {
   return queryParams.get(param) ? String(queryParams.get(param)) : null;
 };
 
+// URLSearchParams percent-encodes ":" as "%3A", but a colon is a legal query
+// character (RFC 3986 §3.4). Restore it so deep-link URLs (e.g. the modal
+// parameter, which embeds a Pid) stay readable in the address bar. This is
+// display-only: URLSearchParams reads ":" and "%3A" identically, so the value
+// still round-trips.
+export const prettifyQueryColons = (url: URL): string =>
+  `${url.origin}${url.pathname}${url.search.replace(/%3A/gi, ":")}${url.hash}`;
+
 export const setQueryParametersInUrl = (parameters: {
   [key: string]: string;
 }) => {
@@ -39,11 +47,11 @@ export const setQueryParametersInUrl = (parameters: {
     processedUrl.searchParams.set(key, parameters[key]);
   });
 
-  window.history.replaceState(null, "", processedUrl);
+  window.history.replaceState(null, "", prettifyQueryColons(processedUrl));
 };
 
 export const replaceCurrentLocation = (replacementUrl: URL) => {
-  window.history.replaceState(null, "", replacementUrl);
+  window.history.replaceState(null, "", prettifyQueryColons(replacementUrl));
 };
 
 export const removeQueryParametersFromUrl = (parameter: string) => {
