@@ -76,9 +76,13 @@ const ProfilePageLayout = async () => {
           </div>
           <LogoutButton />
         </div>
-        <Suspense fallback={<ProfileNotificationsSkeleton />}>
-          <ProfileNotifications />
-        </Suspense>
+        {/* FBS-only section — skipped entirely (skeleton included) for
+            sessions that can never load it. */}
+        {session.type === "adgangsplatformen" && (
+          <Suspense fallback={<ProfileNotificationsSkeleton />}>
+            <ProfileNotifications />
+          </Suspense>
+        )}
         <Suspense fallback={<LoanSliderSkeleton />}>
           <UserLoans />
         </Suspense>
