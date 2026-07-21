@@ -78,6 +78,21 @@ export const RenewalWindowNotOpen: Story = {
   },
 }
 
+// Terminal denials (max renewals, blocked account) beat the countdown —
+// waiting changes nothing, so the real reason shows right away.
+export const TerminallyDeniedBeforeWindow: Story = {
+  decorators: [withServiceLayer()],
+  args: {
+    ...defaultArgs,
+    loan: {
+      ...fixtureLoan,
+      dueDate: daysFromNow(14),
+      isRenewable: false,
+      nonRenewableReason: "deniedMaxRenewalsReached" as const,
+    },
+  },
+}
+
 // Stub the FBS renew endpoint and auto-click "Forny lån" so the story renders
 // the requested renewal outcome on load.
 const renewalStory = (renewalStatus: string[]): Story => ({

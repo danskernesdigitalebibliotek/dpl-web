@@ -1,5 +1,6 @@
 "use client"
 
+import { type RenewalFailureReason } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
@@ -7,6 +8,15 @@ import { type LoanDetails } from "@/components/shared/loanDetailsModal/LoanDetai
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 import { cyKeys } from "@/cypress/support/constants"
 import { dueStatus } from "@/lib/helpers/helper.due-status"
+
+// Denials that no amount of waiting changes. They beat the renewal-window
+// countdown, which would otherwise falsely promise a coming renewal;
+// situational reasons (reserved, unknown) keep the countdown since waiting
+// can genuinely change them.
+const TERMINAL_DENIAL_REASONS: RenewalFailureReason[] = [
+  "deniedMaxRenewalsReached",
+  "deniedLoanerIsBlocked",
+]
 
 type RenewLoanActionProps = {
   loan: LoanDetails
@@ -38,7 +48,12 @@ const DisabledRenewAction = ({ title, message }: { title: string; message: strin
 const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionProps) => {
   const { daysUntilRenewable } = dueStatus(loan.dueDate)
 
-  if (daysUntilRenewable > 0) {
+  const isTerminallyDenied =
+    loan.isRenewable === false &&
+    loan.nonRenewableReason !== undefined &&
+    TERMINAL_DENIAL_REASONS.includes(loan.nonRenewableReason)
+
+  if (daysUntilRenewable > 0 && !isTerminallyDenied) {
     return (
       <DisabledRenewAction
         title={title}
