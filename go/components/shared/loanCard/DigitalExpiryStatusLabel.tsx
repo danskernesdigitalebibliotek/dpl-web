@@ -19,6 +19,10 @@ const DigitalExpiryStatusLabel = ({ dueDate }: { dueDate: string | null | undefi
   if (!dueDate) return null
 
   const status = dueStatus(dueDate)
+  // A truthy but unparseable date degrades to NaN day counts — no label
+  // beats "Udløber om NaN dage".
+  if (Number.isNaN(status.daysUntil)) return null
+
   return (
     <StatusLabel variant={status.state === "neutral" ? "neutral" : "warning"}>
       {expiryStatusText(status)}

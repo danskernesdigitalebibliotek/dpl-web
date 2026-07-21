@@ -37,6 +37,9 @@ const PhysicalLoanCard = ({
   className,
 }: PhysicalLoanCardProps) => {
   const { state, daysUntil } = dueStatus(loan.dueDate)
+  // An unparseable due date degrades to NaN day counts — skip the status
+  // rather than render "om NaN dage".
+  const hasDueStatus = !Number.isNaN(daysUntil)
   // Compact single-line labels; the expanded (subline) StatusLabel form is
   // reserved for modal contexts.
   const statusText = state === "overdue" ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
@@ -46,7 +49,7 @@ const PhysicalLoanCard = ({
       <div className="w-full space-y-3 px-[15%]">
         <button
           type="button"
-          aria-label={`Se detaljer om dit lån af ${title}. ${statusText}`}
+          aria-label={`Se detaljer om dit lån af ${title}.${hasDueStatus ? ` ${statusText}` : ""}`}
           className="focus-visible outline-accent-foreground rounded-base relative block w-full
             cursor-pointer focus:outline-offset-2"
           onClick={() =>
@@ -61,12 +64,14 @@ const PhysicalLoanCard = ({
           />
         </button>
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
-        <div className="flex w-full justify-center pt-5">
-          <StatusLabel
-            variant={state === "overdue" ? "error" : state === "neutral" ? "neutral" : "warning"}>
-            {statusText}
-          </StatusLabel>
-        </div>
+        {hasDueStatus && (
+          <div className="flex w-full justify-center pt-5">
+            <StatusLabel
+              variant={state === "overdue" ? "error" : state === "neutral" ? "neutral" : "warning"}>
+              {statusText}
+            </StatusLabel>
+          </div>
+        )}
         {loan.isRenewable && (
           <div className="flex w-full justify-center">
             <Button

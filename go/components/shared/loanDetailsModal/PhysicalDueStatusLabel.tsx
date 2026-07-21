@@ -14,6 +14,10 @@ import { dueStatus } from "@/lib/helpers/helper.due-status"
 const PhysicalDueStatusLabel = ({ dueDate }: { dueDate: string }) => {
   const { state, daysUntil } = dueStatus(dueDate)
 
+  // An unparseable due date degrades to NaN day counts — no label beats
+  // "om NaN dage" and an "Invalid Date" subline.
+  if (Number.isNaN(daysUntil)) return null
+
   if (state === "overdue") {
     const overdueDays = Math.abs(daysUntil)
     return (
