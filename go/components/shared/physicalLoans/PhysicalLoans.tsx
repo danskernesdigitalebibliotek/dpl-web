@@ -21,9 +21,14 @@ export type PhysicalLoansProps = {
 }
 
 const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
-  const { session } = useSession()
-  const { data: loans, isLoading: isLoadingLoans } = useLoans()
-  const { data: reservations, isLoading: isLoadingReservations } = useReservations()
+  const { session, isLoading: isLoadingSession } = useSession()
+  // FBS requires a library login; the queries wait for the session so
+  // Unilogin (and still-loading) sessions never fire doomed FBS requests.
+  const isLibraryLogin = session?.type === "adgangsplatformen"
+  const { data: loans, isLoading: isLoadingLoans } = useLoans({ enabled: isLibraryLogin })
+  const { data: reservations, isLoading: isLoadingReservations } = useReservations({
+    enabled: isLibraryLogin,
+  })
 
   const fausts = shelfRecordIds(loans ?? [], reservations ?? [])
   const { data: dataManifestations, isLoading: isLoadingManifestations } =
@@ -40,12 +45,13 @@ const PhysicalLoans = ({ className }: PhysicalLoansProps) => {
     return <PhysicalLoansUniloginTeaser className={className} />
   }
 
+  const isLoading =
+    isLoadingSession || isLoadingLoans || isLoadingReservations || isLoadingManifestations
+
   return (
     <div className={cn("col-span-full", className)}>
-      {(isLoadingLoans || isLoadingReservations || isLoadingManifestations) && (
-        <PhysicalLoanSliderSkeleton />
-      )}
-      {!isLoadingLoans && !isLoadingReservations && !isLoadingManifestations && loans && (
+      {isLoading && <PhysicalLoanSliderSkeleton />}
+      {!isLoading && loans && (
         <PhysicalLoanSlider items={loanItems} reservationItems={reservationItems} />
       )}
     </div>

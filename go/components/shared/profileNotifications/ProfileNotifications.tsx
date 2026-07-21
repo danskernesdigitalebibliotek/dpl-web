@@ -54,14 +54,25 @@ const NotificationCard = ({ notification }: { notification: Notification }) => (
 // ready for pickup and physical loans that are overdue or due soon. All of
 // it is FBS data, so the section is hidden for Unilogin users.
 const ProfileNotifications = () => {
-  const { session } = useSession()
-  const { data: fees, isLoading: isLoadingFees, isError: isErrorFees } = useFees()
-  const { data: loans, isLoading: isLoadingLoans, isError: isErrorLoans } = useLoans()
+  const { session, isLoading: isLoadingSession } = useSession()
+  // FBS requires a library login; the queries wait for the session so
+  // Unilogin (and still-loading) sessions never fire doomed FBS requests.
+  const isLibraryLogin = session?.type === "adgangsplatformen"
+  const {
+    data: fees,
+    isLoading: isLoadingFees,
+    isError: isErrorFees,
+  } = useFees({ enabled: isLibraryLogin })
+  const {
+    data: loans,
+    isLoading: isLoadingLoans,
+    isError: isErrorLoans,
+  } = useLoans({ enabled: isLibraryLogin })
   const {
     data: reservations,
     isLoading: isLoadingReservations,
     isError: isErrorReservations,
-  } = useReservations()
+  } = useReservations({ enabled: isLibraryLogin })
 
   const fausts = shelfRecordIds(loans ?? [], reservations ?? [])
   const {
@@ -70,10 +81,12 @@ const ProfileNotifications = () => {
     isError: isErrorManifestations,
   } = useGetManifestationsByFaustQuery({ faust: fausts }, { enabled: fausts.length > 0 })
 
-  // FBS is only available with a library login.
-  const isUnilogin = session?.type === "unilogin"
   const isLoading =
-    isLoadingFees || isLoadingLoans || isLoadingReservations || isLoadingManifestations
+    isLoadingSession ||
+    isLoadingFees ||
+    isLoadingLoans ||
+    isLoadingReservations ||
+    isLoadingManifestations
   const isError = isErrorFees || isErrorLoans || isErrorReservations || isErrorManifestations
 
   const {
@@ -84,12 +97,12 @@ const ProfileNotifications = () => {
     compensationMaterialCount,
   } = summarizeFees(fees ?? [])
 
-  if (isUnilogin) {
-    return null
-  }
-
   if (isLoading) {
     return <ProfileNotificationsSkeleton />
+  }
+
+  if (!isLibraryLogin) {
+    return null
   }
 
   // A failed query must never render the reassuring empty state — the child
