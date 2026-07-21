@@ -1,20 +1,14 @@
 "use client"
 
-import { useFees, useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import { useFees } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
-import useSession from "@/hooks/useSession"
-import { useGetManifestationsByFaustQuery } from "@/lib/graphql/generated/fbi/graphql"
+import usePatronShelf from "@/hooks/usePatronShelf"
 import { dueStatus } from "@/lib/helpers/helper.due-status"
 import { formatAmount, summarizeFees } from "@/lib/helpers/helper.fees"
-import {
-  buildPhysicalLoanItems,
-  buildReservationItems,
-  shelfRecordIds,
-} from "@/lib/helpers/helper.patron"
 import { openModal } from "@/store/modal.store"
 
 const bookCount = (count: number) => (count === 1 ? "1 bog" : `${count} bøger`)
@@ -54,40 +48,21 @@ const NotificationCard = ({ notification }: { notification: Notification }) => (
 // ready for pickup and physical loans that are overdue or due soon. All of
 // it is FBS data, so the section is hidden for Unilogin users.
 const ProfileNotifications = () => {
-  const { session, isLoading: isLoadingSession } = useSession()
-  // FBS requires a library login; the queries wait for the session so
-  // Unilogin (and still-loading) sessions never fire doomed FBS requests.
-  const isLibraryLogin = session?.type === "adgangsplatformen"
+  const {
+    loanItems,
+    reservationItems,
+    isLibraryLogin,
+    isLoading: isLoadingShelf,
+    isError: isErrorShelf,
+  } = usePatronShelf()
   const {
     data: fees,
     isLoading: isLoadingFees,
     isError: isErrorFees,
   } = useFees({ enabled: isLibraryLogin })
-  const {
-    data: loans,
-    isLoading: isLoadingLoans,
-    isError: isErrorLoans,
-  } = useLoans({ enabled: isLibraryLogin })
-  const {
-    data: reservations,
-    isLoading: isLoadingReservations,
-    isError: isErrorReservations,
-  } = useReservations({ enabled: isLibraryLogin })
 
-  const fausts = shelfRecordIds(loans ?? [], reservations ?? [])
-  const {
-    data: dataManifestations,
-    isLoading: isLoadingManifestations,
-    isError: isErrorManifestations,
-  } = useGetManifestationsByFaustQuery({ faust: fausts }, { enabled: fausts.length > 0 })
-
-  const isLoading =
-    isLoadingSession ||
-    isLoadingFees ||
-    isLoadingLoans ||
-    isLoadingReservations ||
-    isLoadingManifestations
-  const isError = isErrorFees || isErrorLoans || isErrorReservations || isErrorManifestations
+  const isLoading = isLoadingShelf || isLoadingFees
+  const isError = isErrorShelf || isErrorFees
 
   const {
     unpaidTotal,
@@ -110,15 +85,6 @@ const ProfileNotifications = () => {
   if (isError) {
     return <ProfileNotificationsView hasError notifications={[]} />
   }
-
-  // The paired items both drive the counts and feed the modals: pairing
-  // resolves records through FBI and filters out adult-only materials, which
-  // the raw FBS data cannot distinguish.
-  const loanItems = buildPhysicalLoanItems(loans ?? [], dataManifestations?.manifestations)
-  const reservationItems = buildReservationItems(
-    reservations ?? [],
-    dataManifestations?.manifestations
-  )
 
   const readyCount = reservationItems.filter(
     ({ reservation }) => reservation.state === "readyForPickup"
