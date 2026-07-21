@@ -1,12 +1,21 @@
 import { createStore } from "@xstate/store"
 
+import type { DeleteReservationModalProps } from "@/components/shared/deleteReservationModal/DeleteReservationModal"
+import type { PlayerModalProps } from "@/components/shared/playerModal/playerModal"
+import type { PlayerPreviewModalProps } from "@/components/shared/playerPreviewModal/playerPreviewModal"
+import type { ReservationsModalProps } from "@/components/shared/reservationsModal/ReservationsModal"
 import type { TModalUrlParams } from "@/lib/helpers/modal-url"
 
 // Props per modal type — `open`/`onClose` are supplied by the DynamicModal
 // host. The rule: modals open through this store; rich data props for
 // in-page modals, `{wid, pid}` for the login-flow modals that must also be
 // openable from the URL inbox after a redirect (they fetch internally).
-export type TModalRegistry = TModalUrlParams
+export type TModalRegistry = {
+  PlayerModal: PlayerModalProps
+  PlayerPreviewModal: PlayerPreviewModalProps
+  DeleteReservationModal: DeleteReservationModalProps
+  ReservationsModal: ReservationsModalProps
+} & TModalUrlParams
 
 export type TModalStoreType = keyof TModalRegistry
 

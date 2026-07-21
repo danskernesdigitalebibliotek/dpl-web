@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React, { useEffect, useRef, useState } from "react"
 
+import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 import { TModalType, VALID_MODAL_TYPES, modalParsers } from "@/lib/helpers/modal-url"
 import {
   TModalRegistry,
@@ -14,9 +15,14 @@ import {
   openModal,
 } from "@/store/modal.store"
 
+import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
+import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
+import ReservationLoginModal from "../reservationModal/ReservationLoginModal"
+import ReservationModal from "../reservationModal/ReservationModal"
+import ReservationUniloginModal from "../reservationModal/ReservationUniloginModal"
 
 const ModalComponents: {
   [K in TModalStoreType]: React.ComponentType<
@@ -25,7 +31,13 @@ const ModalComponents: {
 } = {
   PlayerModal,
   PlayerPreviewModal,
+  DeleteReservationModal,
+  ReservationsModal,
   LoanMaterialModal,
+  LoanLoginModal,
+  ReservationModal,
+  ReservationLoginModal,
+  ReservationUniloginModal,
 }
 
 // Opens a modal from URL query params and strips them right away — the way
