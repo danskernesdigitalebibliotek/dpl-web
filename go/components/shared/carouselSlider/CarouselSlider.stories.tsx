@@ -3,27 +3,33 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import VideoBundle from "@/components/paragraphs/VideoBundle/VideoBundle"
+import CarouselSlider from "@/components/shared/carouselSlider/CarouselSlider"
 
-import { worksMock } from "./VideoBundle.mockData"
+import { worksMock } from "../../paragraphs/VideoBundle/VideoBundle.mockData"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
   <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-    <Story />
+    <div className="content-container py-10">
+      <div className="grid-go items-start">
+        <Story />
+      </div>
+    </div>
   </QueryClientProvider>
 )
 
+// The stacked work carousel from the video bundles: auto-advances on a
+// timer, with prev/next controls and the deck shuffling behind the front
+// card.
 const meta = {
-  title: "paragraphs/VideoBundle",
-  component: VideoBundle,
+  title: "components/CarouselSlider",
+  component: CarouselSlider,
   parameters: { layout: "fullscreen" },
   args: {
-    title: "Video Bundle",
-    videoUrl: "https://media.videotool.dk/?vn=557_2025010614502071929993093451",
     works: worksMock,
+    className: "lg:col-span-4 lg:col-start-5 xl:col-span-3",
   },
   decorators: [withQueryClient],
-} satisfies Meta<typeof VideoBundle>
+} satisfies Meta<typeof CarouselSlider>
 
 export default meta
 type Story = StoryObj<typeof meta>

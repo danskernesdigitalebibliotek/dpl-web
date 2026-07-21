@@ -3,27 +3,27 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import VideoBundle from "@/components/paragraphs/VideoBundle/VideoBundle"
-
-import { worksMock } from "./VideoBundle.mockData"
+import SearchInput from "@/components/shared/searchInput/SearchInput"
 
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
   <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-    <Story />
+    <div className="p-10">
+      <Story />
+    </div>
   </QueryClientProvider>
 )
 
+// The search field from the navigation; typing feeds the search machine and
+// Enter (or the arrow button) navigates to the search page.
 const meta = {
-  title: "paragraphs/VideoBundle",
-  component: VideoBundle,
+  title: "components/SearchInput",
+  component: SearchInput,
   parameters: { layout: "fullscreen" },
   args: {
-    title: "Video Bundle",
-    videoUrl: "https://media.videotool.dk/?vn=557_2025010614502071929993093451",
-    works: worksMock,
+    placeholder: "Søg",
   },
   decorators: [withQueryClient],
-} satisfies Meta<typeof VideoBundle>
+} satisfies Meta<typeof SearchInput>
 
 export default meta
 type Story = StoryObj<typeof meta>
