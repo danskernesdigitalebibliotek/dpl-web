@@ -41,8 +41,9 @@ reflex. The intended shape:
   reads `process.env`.
 - **App configuration** (routes, search defaults, service URLs, …) goes
   through the **resolver system** under `lib/config/resolvers/`, accessed as
-  `goConfig("routes.user-profile")` server-side or `useGoConfig([...])`
-  client-side. See ADR-001. Async resolvers must expose an env-var override.
+  `goConfig("routes.user-profile")` — synchronous, from both server and
+  client code (all resolvers are flat values today). See ADR-001. Async
+  resolvers must expose an env-var override.
 
 Lagoon derives the `NEXT_PUBLIC_*` env vars at *container start*, not build
 time (see `lagoon/start.sh`). Build artifacts are environment-independent —

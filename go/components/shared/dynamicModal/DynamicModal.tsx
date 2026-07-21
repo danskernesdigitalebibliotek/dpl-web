@@ -5,6 +5,10 @@ import { usePathname } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React, { useEffect, useRef, useState } from "react"
 
+import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
+import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import FeesModal from "@/components/shared/feesModal/FeesModal"
+import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
 import { TModalType, VALID_MODAL_TYPES, modalParsers } from "@/lib/helpers/modal-url"
 import {
@@ -16,6 +20,7 @@ import {
 } from "@/store/modal.store"
 
 import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
+import LoanDetailsModal from "../loanDetailsModal/LoanDetailsModal"
 import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
@@ -32,6 +37,11 @@ const ModalComponents: {
   PlayerModal,
   PlayerPreviewModal,
   DeleteReservationModal,
+  CompensationModal,
+  DigitalLoansModal,
+  FeesModal,
+  LoanDetailsModal,
+  PhysicalLoansModal,
   ReservationsModal,
   LoanMaterialModal,
   LoanLoginModal,
