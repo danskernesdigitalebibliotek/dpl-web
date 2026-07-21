@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 
-import { TDplCmsPublicConfig } from "./configSchemas"
 // Aliased so Storybook's module replacement (.storybook/main.ts) can swap
 // the server-function module for its client mock.
 import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
+
+import { TDplCmsPublicConfig } from "./configSchemas"
 
 export default function useDplCmsPublicConfig() {
   const [config, setConfig] = useState<TDplCmsPublicConfig | null>(null)

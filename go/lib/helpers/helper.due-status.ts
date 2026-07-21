@@ -1,4 +1,4 @@
-import { differenceInDays } from "date-fns"
+import { differenceInCalendarDays } from "date-fns"
 
 import goConfig from "@/lib/config/goConfig"
 
@@ -17,7 +17,8 @@ export type DueThresholds = {
 
 export type DueStatus = {
   state: DueState
-  // Whole calendar days until due; negative once overdue, 0 = due today.
+  // Calendar days until due (midnight boundaries, so a loan due tomorrow is
+  // 1 all day); negative once overdue, 0 = due today.
   daysUntil: number
   // Days until the renewal window opens; 0 or less means renewable now.
   daysUntilRenewable: number
@@ -37,7 +38,7 @@ export const dueStatus = (
   dueDate: string,
   thresholds: DueThresholds = getLoanThresholds()
 ): DueStatus => {
-  const daysUntil = differenceInDays(new Date(dueDate), new Date())
+  const daysUntil = differenceInCalendarDays(new Date(dueDate), new Date())
   const state: DueState =
     daysUntil < thresholds.danger
       ? "overdue"

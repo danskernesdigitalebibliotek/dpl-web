@@ -9,13 +9,13 @@ import {
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
 
 // The renewable "Sjælerytterne" fixture from the shared physical loan set —
-// plain placeholder covers, dates relative to "now". 7.5 days lands inside
+// plain placeholder covers, dates relative to "now". 7 days lands inside
 // the renewal window (7) but outside the warning threshold (6): neutral
 // status with an active "Forny lån" button.
 const fixtureItem = buildItem({
   faust: "12345671",
   title: "Sjælerytterne",
-  dueInDays: 7.5,
+  dueInDays: 7,
   isRenewable: true,
 })
 const fixtureLoan = fixtureItem.loan
@@ -74,7 +74,7 @@ export const RenewalWindowNotOpen: Story = {
   decorators: [withServiceLayer()],
   args: {
     ...defaultArgs,
-    loan: { ...fixtureLoan, dueDate: daysFromNow(14.5) },
+    loan: { ...fixtureLoan, dueDate: daysFromNow(14) },
   },
 }
 

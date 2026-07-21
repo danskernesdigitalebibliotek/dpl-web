@@ -9,10 +9,14 @@ import PhysicalLoanCard from "@/components/shared/physicalLoanCard/PhysicalLoanC
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 
-// Due dates are computed relative to "now" so the rendered day counts stay
-// stable over time (e.g. in Chromatic snapshots).
-const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+// Due dates anchored to local noon so calendar-day counts stay stable
+// whenever the story renders (e.g. in Chromatic snapshots).
+const daysFromNow = (days: number) => {
+  const date = new Date()
+  date.setHours(12, 0, 0, 0)
+  date.setDate(date.getDate() + days)
+  return date.toISOString()
+}
 
 let faustCounter = 22345670
 
@@ -135,15 +139,14 @@ const stateItems = [
   buildProps({
     title: "Skal afleveres om 1 dag",
     materialType: { code: "BOOK", display: "bog", general: "BOOKS" },
-    // 1.5 days so differenceInDays yields a full day and the card shows the
-    // singular "om 1 dag" state instead of rounding down to "i dag".
-    dueInDays: 1.5,
+    // Due tomorrow: the singular "om 1 dag" state.
+    dueInDays: 1,
     isRenewable: true,
   }),
   buildProps({
     title: "Skal afleveres om 5 dage",
     materialType: { code: "BOOK", display: "bog", general: "BOOKS" },
-    dueInDays: 5.5,
+    dueInDays: 5,
   }),
   buildProps({
     title: "Neutral med fornyelse",

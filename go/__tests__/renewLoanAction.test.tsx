@@ -4,10 +4,13 @@ import { describe, expect, it, vi } from "vitest"
 import RenewLoanAction from "@/components/shared/loanDetailsModal/RenewLoanAction"
 import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
 
-// Half-day offsets so differenceInDays lands on whole days regardless of
-// the time of day the test runs.
-const daysFromNow = (days: number) =>
-  new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+// Anchored to local noon so calendar-day counts are stable at any time of day.
+const daysFromNow = (days: number) => {
+  const date = new Date()
+  date.setHours(12, 0, 0, 0)
+  date.setDate(date.getDate() + days)
+  return date.toISOString()
+}
 
 const loan = (dueInDays: number, overrides: Record<string, unknown> = {}) => ({
   loanId: 1,

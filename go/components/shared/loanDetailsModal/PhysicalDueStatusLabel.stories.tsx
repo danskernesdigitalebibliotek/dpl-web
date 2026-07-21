@@ -18,25 +18,25 @@ type Story = StoryObj<typeof meta>
 
 // Plain text with the deadline subline; no pill background.
 export const Neutral: Story = {
-  args: { dueDate: daysFromNow(8.5) },
+  args: { dueDate: daysFromNow(8) },
 }
 
 // Inside the warning threshold: soft orange pill.
 export const DueSoon: Story = {
-  args: { dueDate: daysFromNow(5.5) },
+  args: { dueDate: daysFromNow(5) },
 }
 
 // "Afleveres i dag" with the abbreviated absolute deadline.
 export const DueToday: Story = {
-  args: { dueDate: daysFromNow(0.5) },
+  args: { dueDate: daysFromNow(0) },
 }
 
 // "Afleveringsfristen er overskredet med X dage" / "Skulle afleveres …".
 export const Overdue: Story = {
-  args: { dueDate: daysFromNow(-2.5) },
+  args: { dueDate: daysFromNow(-2) },
 }
 
 export const OverdueDarkMode: Story = {
   decorators: [darkModeDecorator],
-  args: { dueDate: daysFromNow(-2.5) },
+  args: { dueDate: daysFromNow(-2) },
 }
