@@ -65,17 +65,23 @@ unescaped, so it produces readable colons on its own — the exact behaviour
   of the `modal` parameter (loan-list, reservation-list) go through
   `getModalIdsFromUrl`, exported next to the parser in `useModalUrl.ts`, so
   the wire format has exactly one owner.
-- **Legacy hand-rolled writers are quarantined, not deleted.** Two consumers
-  are deliberately left untouched — advanced-search **v1** (kept only for CQL
-  search) and search-result's `useFilterHandler` (a sentinel-flag scheme whose
-  real state lives in persisted Redux, not the URL). Migrating either would be
-  a rewrite, not a mechanical swap. `setQueryParametersInUrl` and
+- **search-result's `useFilterHandler` lost its URL coupling instead of
+  being migrated.** Its filter state lives in persisted Redux; auditing the
+  handler showed every one of its URL writes was already dead on `develop`:
+  the `filters=usePersistedFilters` sentinel was written but read by nothing,
+  `addFilterFromUrlParamListener` had no callers, and the facet-name
+  parameters it removed are read by nothing since search-result moved facet
+  deep links to the nuqs-owned `facets` parameter. The dead code was deleted,
+  leaving the handler free of URL access.
+- **One legacy hand-rolled writer is quarantined, not deleted.**
+  advanced-search **v1** is deliberately left untouched — it is kept only for
+  CQL search and is slated for deletion. `setQueryParametersInUrl` and
   `removeQueryParametersFromUrl` were moved out of the shared `url.ts` into a
-  `@deprecated` `core/utils/helpers/legacy-url.ts`, to be deleted when those
-  two are retired. `prettifyQueryColons` is deleted outright: nuqs made it
-  obsolete for every flow it was invented for (the modal deep links), and the
-  legacy writers never needed it — their values do not carry colons, and
-  `%3A` parses identically anyway.
+  `@deprecated` `core/utils/helpers/legacy-url.ts`, to be deleted together
+  with v1. `prettifyQueryColons` is deleted outright: nuqs made it obsolete
+  for every flow it was invented for (the modal deep links), and the legacy
+  writer never needed it — its values do not carry colons, and `%3A` parses
+  identically anyway.
 
 This supersedes ADR 013 for query *writing*: nuqs, not
 `URLSearchParams` + `prettifyQueryColons`, is now the writing path for
@@ -85,13 +91,20 @@ writers.
 
 ## Alternatives considered
 
-### Migrate everything, including advanced-search v1 and search-result
+### Migrate everything, including advanced-search v1
 
-Would let us delete the legacy helpers outright. Rejected: v1 lingers only for
-CQL and search-result's filter scheme is a persisted-Redux design, not real
-URL state; both are rewrites with high regression risk across 100+ sites for
-no user-facing gain. Quarantining isolates the cruft and marks it for deletion
-without destabilising legacy.
+Would let us delete the legacy helpers outright. Rejected: v1 lingers only
+for CQL, is slated for deletion, and migrating it would be a rewrite with
+regression risk across 100+ sites for no user-facing gain. Quarantining
+isolates the cruft and ties its deletion to v1's.
+
+### Migrate search-result's `useFilterHandler` writes to nuqs
+
+Considered mechanically porting its `filters` sentinel and facet-name
+parameter writes to `useQueryState`. Rejected once the audit showed the
+writes were dead (nothing reads the parameters) — porting them would have
+preserved cruft in a new syntax. Deleting the URL coupling was the honest
+migration.
 
 ### Wrap nuqs inside the `url.ts` helper functions
 

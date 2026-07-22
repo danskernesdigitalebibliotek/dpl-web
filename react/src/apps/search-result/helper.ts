@@ -10,23 +10,6 @@ import {
 import { FacetOrigin, Filter, FilterItemTerm } from "../../core/filter.slice";
 import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
 
-export const mapFacetToFilter = (facet: FacetFieldEnum) => {
-  switch (facet) {
-    case FacetFieldEnum.Materialtypesspecific:
-      return "materialTypesSpecific";
-    case FacetFieldEnum.Worktypes:
-      return "workTypes";
-    case FacetFieldEnum.Creators:
-      return "creators";
-    case FacetFieldEnum.Subjects:
-      return "subjects";
-    case FacetFieldEnum.Dk5:
-      return "dk5";
-    default:
-      return "invalid";
-  }
-};
-
 export const getFirstMaterialTypeFromFilters = (
   filters: Filter,
   manifestations: Manifestation[]

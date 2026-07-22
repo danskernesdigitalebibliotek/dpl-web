@@ -7,12 +7,11 @@
  * `window.history` with plain `URLSearchParams` encoding, which is exactly
  * what nuqs replaces.
  *
- * They live here, isolated from the shared `url.ts`, only to keep the two
- * remaining legacy consumers working:
- *   - `apps/advanced-search` (v1) — kept for CQL search.
- *   - `apps/search-result/useFilterHandler.tsx` — legacy sentinel filter scheme.
+ * They live here, isolated from the shared `url.ts`, only to keep the single
+ * remaining legacy consumer working: `apps/advanced-search` (v1), which is
+ * kept solely for CQL search and is slated for deletion.
  *
- * Delete this module once those two are retired.
+ * Delete this module together with advanced-search v1.
  */
 import { getCurrentLocation } from "./url";
 
