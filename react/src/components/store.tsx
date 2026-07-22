@@ -2,11 +2,13 @@ import React from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { NuqsAdapter } from "nuqs/adapters/react";
 import { store, persistor } from "../core/store";
 import FetcherHttpError from "../core/fetchers/FetcherHttpError";
 import FetcherError from "../core/fetchers/FetcherError";
 import FetcherCriticalHttpError from "../core/fetchers/FetcherCriticalHttpError";
 import InvalidUrlError from "../core/errors/InvalidUrlError";
+import { ModalUrlSync } from "../core/utils/helpers/useModalUrl";
 
 const queryErrorHandler = (error: unknown) => {
   // If we get an error that controls the error boundary make sure it does just that.
@@ -46,7 +48,10 @@ function Store({ children }: StoreProps) {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <PersistGate persistor={persistor}>{children}</PersistGate>
+        <NuqsAdapter>
+          <ModalUrlSync />
+          <PersistGate persistor={persistor}>{children}</PersistGate>
+        </NuqsAdapter>
       </QueryClientProvider>
     </Provider>
   );

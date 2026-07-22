@@ -1,20 +1,48 @@
 import React from "react";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { afterEach, describe, expect, it } from "vitest";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { Provider } from "react-redux";
+import {
+  NuqsTestingAdapter,
+  type OnUrlUpdateFunction
+} from "nuqs/adapters/testing";
 import modalReducer from "../../core/modal.slice";
 import Modal, { useModalButtonHandler } from "../../core/utils/modal";
+import { ModalUrlSync } from "../../core/utils/helpers/useModalUrl";
 
-const store = configureStore({
-  reducer: combineReducers({
-    modal: modalReducer
-  })
-});
+// A fresh store per render keeps the modal stack isolated between tests.
+const createStore = () =>
+  configureStore({
+    reducer: combineReducers({
+      modal: modalReducer
+    })
+  });
 
-const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <Provider store={store}> {children} </Provider>
-);
+type WrapperOptions = {
+  searchParams?: string;
+  onUrlUpdate?: OnUrlUpdateFunction;
+};
+
+const makeWrapper =
+  ({ searchParams, onUrlUpdate }: WrapperOptions = {}) =>
+  ({ children }: { children: React.ReactNode }) => (
+    <Provider store={createStore()}>
+      <NuqsTestingAdapter searchParams={searchParams} onUrlUpdate={onUrlUpdate}>
+        {/* Mounted once like <Store> does in production. */}
+        <ModalUrlSync />
+        {children}
+      </NuqsTestingAdapter>
+    </Provider>
+  );
+
+const Wrapper = makeWrapper();
 
 const ComponentWithModals = () => {
   const modalId1 = "modal-1";
@@ -165,5 +193,31 @@ describe("modal", () => {
 
     // Expect no modals to be displayed
     expect(container.querySelector("#modal-modal-1-description")).toBeNull();
+  });
+
+  it("reopens a modal that is already present in the URL on mount", async () => {
+    const { container } = render(<ComponentWithModals />, {
+      wrapper: makeWrapper({ searchParams: "?modal=modal-1" })
+    });
+
+    // The modal encoded in the URL opens without any interaction, e.g. when the
+    // user returns from login.
+    await waitFor(() =>
+      expect(container.querySelector("#modal-modal-1-description")).toBeTruthy()
+    );
+  });
+
+  it("writes the opened modal into the URL", async () => {
+    const onUrlUpdate = vi.fn();
+    render(<ComponentWithModals />, {
+      wrapper: makeWrapper({ onUrlUpdate })
+    });
+
+    fireEvent.click(screen.getByText("Open modal 1"));
+
+    await waitFor(() => expect(onUrlUpdate).toHaveBeenCalled());
+    expect(onUrlUpdate.mock.lastCall?.[0].searchParams.get("modal")).toBe(
+      "modal-1"
+    );
   });
 });

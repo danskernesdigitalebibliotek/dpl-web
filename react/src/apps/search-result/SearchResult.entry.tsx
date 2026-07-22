@@ -9,7 +9,6 @@ import GlobalUrlEntryPropsInterface from "../../core/utils/types/global-url-prop
 import { GlobalEntryTextProps } from "../../core/storybook/globalTextArgs";
 import { MappArgs } from "../../core/storybook/mappArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
-import { NuqsAdapter } from "nuqs/adapters/react";
 
 interface SearchResultEntryTextProps {
   addMoreFiltersText: string;
@@ -103,9 +102,7 @@ const SearchResultEntry: React.FC<SearchResultEntryProps> = ({
       {/* We still want to render the app, even if the search query is an empty string */}
       {(searchQuery || searchQuery === "") && (
         <GuardedApp app="search-result">
-          <NuqsAdapter>
-            <SearchResult q={searchQuery} pageSize={pageSize} />
-          </NuqsAdapter>
+          <SearchResult q={searchQuery} pageSize={pageSize} />
         </GuardedApp>
       )}
     </>
