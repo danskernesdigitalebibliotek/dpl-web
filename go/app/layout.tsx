@@ -15,6 +15,7 @@ import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
+import ServiceLayerProvider from "@/lib/providers/ServiceLayerProvider"
 import "@/styles/globals.css"
 
 import GlobalErrorBoundary from "./GlobalErrorBoundary"
@@ -48,13 +49,15 @@ async function RootLayout({
       <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
         <Theme>
           <ReactQueryProvider>
-            <Header />
-            <DynamicSheet />
-            <DynamicModal />
-            <Toaster />
-            {children}
-            <Footer />
-            <MappTracking />
+            <ServiceLayerProvider>
+              <Header />
+              <DynamicSheet />
+              <DynamicModal />
+              <Toaster />
+              {children}
+              <Footer />
+              <MappTracking />
+            </ServiceLayerProvider>
           </ReactQueryProvider>
         </Theme>
       </DplCmsConfigContextProvider>
