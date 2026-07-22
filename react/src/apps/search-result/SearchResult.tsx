@@ -212,7 +212,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       <SearchResultHeader
         headerTitle={headerTitle}
         subtitleRenderProp={
-          !isWildcardQuerySearch &&
+          // Hide the teaser only when its phrase is the wildcard itself. For
+          // facet deep links (q=*) the CMS derives the phrase from the facets
+          // parameter, and that teaser should show.
+          webSearchConfig?.webSearchText !== "*" &&
           webSearchConfig?.hasWebSearchResults &&
           webSearchConfig?.webSearchUrl &&
           webSearchConfig?.webSearchText ? (
