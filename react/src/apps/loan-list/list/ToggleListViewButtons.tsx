@@ -1,10 +1,9 @@
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import { useText } from "../../../core/utils/text";
 import IconList from "../../../components/icon-list/icon-list";
 import IconStack from "../../../components/icon-stack/icon-stack";
 import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
-import { setQueryParametersInUrl } from "../../../core/utils/helpers/url";
 import { Button } from "../../../components/Buttons/Button";
 
 export interface ToggleListViewButtonsProps {
@@ -24,16 +23,6 @@ const ToggleListViewButtons: FC<ToggleListViewButtonsProps> = ({
 }) => {
   const t = useText();
 
-  const setViewHandler = useCallback(
-    (inputView: ListView) => {
-      setQueryParametersInUrl({
-        listview: inputView
-      });
-      setView(inputView);
-    },
-    [setView]
-  );
-
   const renewLoansButtonText = disableRenewLoansButton
     ? t("loanListNoItemsCanBeRenewedText")
     : t("loanListRenewMultipleButtonText");
@@ -48,7 +37,7 @@ const ToggleListViewButtons: FC<ToggleListViewButtonsProps> = ({
       </div>
       <div className="dpl-list-buttons__buttons__button">
         <button
-          onClick={() => setViewHandler("list")}
+          onClick={() => setView("list")}
           aria-pressed={view === "list"}
           className={`dpl-icon-button ${
             view === "list" ? "dpl-icon-button--selected" : ""
@@ -67,7 +56,7 @@ const ToggleListViewButtons: FC<ToggleListViewButtonsProps> = ({
             view === "stack" ? "dpl-icon-button--selected" : ""
           }`}
           data-cy="stack"
-          onClick={() => setViewHandler("stack")}
+          onClick={() => setView("stack")}
           type="button"
           aria-label={t("loanListAriaLabelStackButtonText")}
         >

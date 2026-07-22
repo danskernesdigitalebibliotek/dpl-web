@@ -1,12 +1,13 @@
 import React, { useEffect, useState, FC, useCallback } from "react";
 import { useSelector } from "react-redux";
+import { useQueryState, parseAsStringLiteral } from "nuqs";
 import {
   getAmountOfRenewableLoans,
   getDueDatesLoan,
   getScrollClass,
   sortByDueDate
 } from "../../../core/utils/helpers/general";
-import { getUrlQueryParam } from "../../../core/utils/helpers/url";
+import { getModalIdsFromUrl } from "../../../core/utils/helpers/useModalUrl";
 import { useText } from "../../../core/utils/text";
 import {
   useModalButtonHandler,
@@ -51,7 +52,12 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
   const { open } = useModalButtonHandler();
   const { loanDetails, allLoansId, dueDateModal } = getModalIds();
   const t = useText();
-  const [view, setView] = useState<ListView>("list");
+  // The URL is the single source of truth for the list view, so a reload or
+  // a shared link with ?listview=stack lands on the chosen view.
+  const [view, setView] = useQueryState(
+    "listview",
+    parseAsStringLiteral<ListView>(["list", "stack"]).withDefault("list")
+  );
   const [dueDate, setDueDate] = useState<string | null>(null);
   const [modalLoan, setModalLoan] = useState<LoanType | null>(null);
   const {
@@ -83,12 +89,15 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
   }, [allLoansId, open]);
 
   useEffect(() => {
-    const modalUrlParam = getUrlQueryParam("modal");
+    const modalUrlIds = getModalIdsFromUrl();
     // if there is a loan details query param, loan details modal should be opened
     const loanDetailsString = loanDetails as string;
-    if (modalUrlParam && modalUrlParam.includes(loanDetails as string)) {
+    const detailsModalId = modalUrlIds.find((id) =>
+      id.includes(loanDetailsString)
+    );
+    if (detailsModalId) {
       const loanIdFromModalId = getDetailsModalId(
-        modalUrlParam,
+        detailsModalId,
         loanDetailsString
       );
       if (loanIdFromModalId && loansPhysical) {
@@ -104,8 +113,11 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
     }
 
     // If there is a query param with the due date, a modal should be opened
-    if (modalUrlParam && containsDueDateModalQueryParam(modalUrlParam)) {
-      const dateFromQueryParam = dateFromDueDateModalQueryParam(modalUrlParam);
+    const dueDateModalId = modalUrlIds.find((id) =>
+      containsDueDateModalQueryParam(id)
+    );
+    if (dueDateModalId) {
+      const dateFromQueryParam = dateFromDueDateModalQueryParam(dueDateModalId);
       setDueDate(dateFromQueryParam);
     }
   }, [loansPhysical, loansDigital, loanDetails, openDueDateModal]);

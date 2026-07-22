@@ -22,7 +22,7 @@ import MaterialDetailsModal, {
   reservationDetailsModalId
 } from "../../loan-list/modal/material-details-modal";
 import ReservationDetails from "../modal/reservation-details/reservation-details";
-import { getUrlQueryParam } from "../../../core/utils/helpers/url";
+import { getModalIdsFromUrl } from "../../../core/utils/helpers/useModalUrl";
 import {
   getDetailsModalId,
   getModalIds
@@ -66,11 +66,12 @@ const ReservationList: FC<ReservationListProps> = ({ pageSize }) => {
   };
 
   useDeepCompareEffect(() => {
-    const modalUrlParam = getUrlQueryParam("modal");
+    const modalUrlIds = getModalIdsFromUrl();
     // If there is a reservation details query param, loan details modal should be opened
     const resDetails = reservationDetails as string;
-    if (modalUrlParam && modalUrlParam.includes(resDetails as string)) {
-      const queryReservationId = getDetailsModalId(modalUrlParam, resDetails);
+    const detailsModalId = modalUrlIds.find((id) => id.includes(resDetails));
+    if (detailsModalId) {
+      const queryReservationId = getDetailsModalId(detailsModalId, resDetails);
       if (queryReservationId && allReservations) {
         const reservationFromQuery = allReservations
           .filter((reservation) => {
@@ -84,8 +85,9 @@ const ReservationList: FC<ReservationListProps> = ({ pageSize }) => {
     }
     // If there is a reservation delete query param, loan details modal should be opened
     const deleteRes = deleteReservation as string;
-    if (modalUrlParam && modalUrlParam.includes(deleteRes as string)) {
-      const queryReservationId = getDetailsModalId(modalUrlParam, deleteRes);
+    const deleteModalId = modalUrlIds.find((id) => id.includes(deleteRes));
+    if (deleteModalId) {
+      const queryReservationId = getDetailsModalId(deleteModalId, deleteRes);
       if (queryReservationId && allReservations) {
         const reservationFromQuery = allReservations
           .filter((reservation) => {
