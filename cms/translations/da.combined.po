@@ -2153,7 +2153,7 @@ msgstr "Indstil advarsel vedr. udløbsdato"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Insert the number of days before the expiration of the material, when the reminder \"Expires soon\" should appear."
-msgstr "Indsæt antal dage før udløbsdatoen for et lån, hvor label med teksten \"Udløber snart\" skal vises på lånet."
+msgstr "Indsæt antal dage før afleveringsdatoen for et lån, hvor label med teksten \"Udløber snart\" skal vises på lånet."
 
 #: 
 msgid "List of bookmarks"
@@ -13459,7 +13459,7 @@ msgstr "En relateret ressource, der er refereret, citeret eller på anden vis pe
 
 #: 
 msgid "Audience"
-msgstr "Publikum"
+msgstr "Målgruppe"
 
 #: 
 msgid "A class of entity for whom the resource is intended or useful."
@@ -30203,12 +30203,12 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_place:settings:placeholder"
 msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
-msgstr "Fx et specifik lokale såsom 'Mødelokale 1' eller '4. sal'"
+msgstr "Fx et specifikt lokale såsom 'Mødelokale 1' eller '4. sal'"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_place:settings:placeholder"
 msgid "E.g. a specific room such as “meeting room 1” or “4. floor”."
-msgstr "Fx et specifik lokale såsom 'Mødelokale 1' eller '4. sal'"
+msgstr "Fx et specifikt lokale såsom 'Mødelokale 1' eller '4. sal'"
 
 #: 
 msgctxt "Share buttons"
@@ -30777,7 +30777,7 @@ msgstr ""
 
 #: 
 msgid "DPL static content: Audiences"
-msgstr ""
+msgstr "Målgruppe"
 
 #: 
 msgid "Adds default audiences"
