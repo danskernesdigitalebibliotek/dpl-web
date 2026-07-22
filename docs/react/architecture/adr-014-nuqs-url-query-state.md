@@ -69,11 +69,13 @@ unescaped, so it produces readable colons on its own — the exact behaviour
   are deliberately left untouched — advanced-search **v1** (kept only for CQL
   search) and search-result's `useFilterHandler` (a sentinel-flag scheme whose
   real state lives in persisted Redux, not the URL). Migrating either would be
-  a rewrite, not a mechanical swap. `setQueryParametersInUrl`,
-  `removeQueryParametersFromUrl`, `replaceCurrentLocation`, and
-  `prettifyQueryColons` were moved out of the shared `url.ts` into a
+  a rewrite, not a mechanical swap. `setQueryParametersInUrl` and
+  `removeQueryParametersFromUrl` were moved out of the shared `url.ts` into a
   `@deprecated` `core/utils/helpers/legacy-url.ts`, to be deleted when those
-  two are retired.
+  two are retired. `prettifyQueryColons` is deleted outright: nuqs made it
+  obsolete for every flow it was invented for (the modal deep links), and the
+  legacy writers never needed it — their values do not carry colons, and
+  `%3A` parses identically anyway.
 
 This supersedes ADR 013 for query *writing*: nuqs, not
 `URLSearchParams` + `prettifyQueryColons`, is now the writing path for
@@ -108,8 +110,9 @@ nuqs pattern.
 - URL query state is owned by the React layer that renders it; adding new
   state is a `useQueryState` call with a typed parser, no manual history or
   colon handling.
-- `prettifyQueryColons` survives only in `legacy-url.ts`; nuqs gives readable
-  colons for the migrated parameters for free.
+- `prettifyQueryColons` is gone; nuqs gives readable colons for the migrated
+  parameters for free, and the quarantined legacy writers return to plain
+  `URLSearchParams` encoding (display-only difference).
 - nuqs live-syncs the *hook value* with the URL, so back/forward now updates
   migrated state: `didAuthenticate` is read reactively, `listview` derives
   the loan-list view straight from the URL, and the modal sync is two-way —
