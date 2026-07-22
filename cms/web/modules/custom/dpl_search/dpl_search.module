@@ -25,6 +25,12 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
     return;
   }
 
+  // The teaser is derived from the q and facets query parameters, so the
+  // render cache must vary on them. Without these contexts the dynamic page
+  // cache serves whichever variant was rendered first to every search URL.
+  $variables['#cache']['contexts'][] = 'url.query_args:' . DplSearchSettings::MATERIAL_QUERY_KEY;
+  $variables['#cache']['contexts'][] = 'url.query_args:facets';
+
   $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
 
   if (empty($input) || !is_string($input)) {
