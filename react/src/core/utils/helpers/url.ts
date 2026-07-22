@@ -94,6 +94,11 @@ export const processUrlPlaceholders = (
   return processedUrl;
 };
 
+// The query parameter carrying the selected material type on material pages.
+// Single source for the nuqs writers (material, availability labels) and the
+// deep-link construction below.
+export const MATERIAL_TYPE_URL_PARAM = "type";
+
 export const constructMaterialUrl = (
   url: URL,
   workId: WorkId,
@@ -108,7 +113,9 @@ export const constructMaterialUrl = (
 
   // Append type if specified.
   if (type) {
-    return appendQueryParametersToUrl(materialUrl, { type });
+    return appendQueryParametersToUrl(materialUrl, {
+      [MATERIAL_TYPE_URL_PARAM]: type
+    });
   }
 
   return materialUrl;

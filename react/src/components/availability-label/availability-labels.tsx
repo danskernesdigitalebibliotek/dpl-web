@@ -1,4 +1,5 @@
 import React from "react";
+import { useQueryState } from "nuqs";
 import {
   getAllFaustIds,
   getMaterialType,
@@ -6,7 +7,7 @@ import {
 } from "../../core/utils/helpers/general";
 import {
   constructMaterialUrl,
-  setQueryParametersInUrl
+  MATERIAL_TYPE_URL_PARAM
 } from "../../core/utils/helpers/url";
 import { WorkId } from "../../core/utils/types/ids";
 import { useUrls } from "../../core/utils/url";
@@ -33,6 +34,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
 }) => {
   const u = useUrls();
   const materialUrl = u("materialUrl");
+  const [, setUrlType] = useQueryState(MATERIAL_TYPE_URL_PARAM);
   const allMaterialTypes = getMaterialTypes(manifestations);
   const manifestationsByMaterialType =
     divideManifestationsByMaterialType(manifestations);
@@ -76,9 +78,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
               setSelectedManifestations
                 ? () => {
                     setSelectedManifestations(manifestationsOfMaterialType);
-                    setQueryParametersInUrl({
-                      type: materialType
-                    });
+                    setUrlType(materialType);
                   }
                 : undefined
             }
