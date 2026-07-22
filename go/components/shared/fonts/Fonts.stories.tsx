@@ -6,7 +6,7 @@ import Fonts from "./Fonts"
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "components/Fonts",
+  title: "design tokens/Fonts",
   component: Fonts,
   parameters: {
     layout: "centered",
