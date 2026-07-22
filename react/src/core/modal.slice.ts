@@ -1,22 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getCurrentLocation,
-  prettifyQueryColons,
-  removeQueryParametersFromUrl,
-  setQueryParametersInUrl
-} from "./utils/helpers/url";
 
 export type ModalId = string;
 
-export type ModalOptions = {
-  updateUrl?: boolean;
-  modalsToClose?: string[];
+// The modal slice as seen from the root state — the one canonical shape for
+// every selector that reads the modal stack.
+export type ModalIdsProps = {
+  modal: {
+    modalIds: ModalId[];
+  };
 };
 
 interface PayloadProps {
   payload: {
     modalId: ModalId;
-  } & ModalOptions;
+  };
 }
 
 interface StateProps {
@@ -38,19 +35,6 @@ const returnFocusElement = () => {
   return element;
 };
 
-// Removes the 'modal' parameter from the browser's address bar.
-// If state.modalIds is not empty, adds the last modal ID as the 'modal' parameter.
-const removeModalIdFromUrl = (state: StateProps) => {
-  if (state.modalIds && state.modalIds.length > 0) {
-    const lastModalId = state.modalIds[state.modalIds.length - 1];
-    setQueryParametersInUrl({
-      modal: lastModalId
-    });
-  } else {
-    removeQueryParametersFromUrl("modal");
-  }
-};
-
 const modalSlice = createSlice({
   name: "modal",
   initialState: { modalIds: [] },
@@ -62,23 +46,15 @@ const modalSlice = createSlice({
       }
 
       // If there is a modalid in the payload, and if this modalid is not saved
-      // then save the modalid
+      // then save the modalid. Syncing the id into the URL is handled by
+      // useModalUrl, so the reducer no longer touches the URL — the
+      // scroll-lock and focus-store side effects in here predate that split
+      // and still make the reducer impure.
       if (
         action.payload.modalId &&
         !state.modalIds.includes(action.payload.modalId)
       ) {
         state.modalIds.push(action.payload.modalId);
-
-        const currentURL = new URL(getCurrentLocation());
-        const searchParamsModalIds = currentURL.searchParams.getAll("modal");
-
-        state.modalIds.forEach((modalId) => {
-          if (searchParamsModalIds && !searchParamsModalIds.includes(modalId)) {
-            currentURL.searchParams.append("modal", modalId);
-          }
-        });
-
-        window.history.pushState("", "", prettifyQueryColons(currentURL));
       }
       const { activeElement } = document;
       // Prevent body from double triggering focus store when url contains modalId
@@ -96,7 +72,6 @@ const modalSlice = createSlice({
         );
       }
       if (modalId) {
-        removeModalIdFromUrl(state);
         returnFocusElement();
       }
       // Enables background scrolling to use when last modal is closed
@@ -109,7 +84,6 @@ const modalSlice = createSlice({
       document.body.style.overflow = "";
       const modalId = state.modalIds.pop();
       if (modalId) {
-        removeModalIdFromUrl(state);
         returnFocusElement();
       }
     },
@@ -117,7 +91,6 @@ const modalSlice = createSlice({
       // Enables background scrolling to use when Modal is closed
       document.body.style.overflow = "";
       state.modalIds = [];
-      removeModalIdFromUrl(state);
       returnFocusElement();
     }
   }

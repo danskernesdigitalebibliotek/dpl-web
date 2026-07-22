@@ -9,34 +9,26 @@ import {
   FilterPayloadTypeWithOrigin
 } from "../../core/filter.slice";
 import { store, RootState } from "../../core/store";
-import {
-  getUrlQueryParam,
-  removeQueryParametersFromUrl,
-  setQueryParametersInUrl
-} from "../../core/utils/helpers/url";
-import { FacetFieldEnum } from "../../core/dbc-gateway/generated/graphql";
-import { getAllFilterPathsAsString, mapFacetToFilter } from "./helper";
+import { getAllFilterPathsAsString } from "./helper";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
+// The filter state lives in persisted Redux only. The handler used to mirror
+// a `filters=usePersistedFilters` sentinel and facet parameter names into the
+// URL with the hand-rolled history writers, but nothing has read those
+// parameters since search-result moved to the nuqs-owned `facets` parameter,
+// so the URL coupling was dropped instead of migrated (see ADR-014).
 const useFilterHandler = () => {
   const { track } = useEventStatistics();
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filter) as Filter;
 
   const clearFilter = useCallback(() => {
-    removeQueryParametersFromUrl("filters");
     dispatch(clear());
   }, [dispatch]);
 
   const addToFilter = useCallback(
     (payload: FilterPayloadTypeWithOrigin) => {
-      if (getUrlQueryParam("filters") !== "usePersistedFilters") {
-        setQueryParametersInUrl({
-          filters: "usePersistedFilters"
-        });
-      }
-
       dispatch(add(payload));
 
       // Track the click event after updating the filters.
@@ -65,43 +57,15 @@ const useFilterHandler = () => {
   const removeFromFilter = useCallback(
     (payload: FilterPayloadType) => {
       dispatch(remove(payload));
-      removeQueryParametersFromUrl(payload.facet);
     },
     [dispatch]
   );
-
-  const addFilterFromUrlParamListener = (facet: FacetFieldEnum) => {
-    const urlFilter = getUrlQueryParam(mapFacetToFilter(facet));
-    if (urlFilter) {
-      // When a user initiates a new search for a creator, subject, or DK5 (from a material page link),
-      // we want to provide a clean search experience.
-      // This clears any filters from a previous search to avoid unintended filtering on the new search.
-      if (
-        [
-          FacetFieldEnum.Creators,
-          FacetFieldEnum.Subjects,
-          FacetFieldEnum.Dk5
-        ].includes(facet)
-      ) {
-        clearFilter();
-      }
-
-      // We only use term from the url, therefore key is not important here.
-      // We dont have a traceId, so we just use a placeholder.
-      addToFilter({
-        facet: mapFacetToFilter(facet),
-        term: { key: "key", term: urlFilter, traceId: "traceId" },
-        origin: "facetUrl"
-      });
-    }
-  };
 
   return {
     filters,
     addToFilter,
     removeFromFilter,
-    clearFilter,
-    addFilterFromUrlParamListener
+    clearFilter
   };
 };
 

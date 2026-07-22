@@ -3,6 +3,7 @@ import Receipt from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/
 import VariousIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Various.svg";
 import React, { useEffect, useState } from "react";
 import { useDeepCompareEffect, useUpdateEffect } from "react-use";
+import { useQueryState } from "nuqs";
 import DigitalModal from "../../components/material/digital-modal/DigitalModal";
 import InfomediaModal from "../../components/material/infomedia/InfomediaModal";
 import {
@@ -24,7 +25,7 @@ import {
 import { getAllFaustIds, getWorkPid } from "../../core/utils/helpers/general";
 import {
   getUrlQueryParam,
-  setQueryParametersInUrl
+  MATERIAL_TYPE_URL_PARAM
 } from "../../core/utils/helpers/url";
 import { usePatronData } from "../../core/utils/helpers/usePatronData";
 import { isAnonymous, isBlocked } from "../../core/utils/helpers/user";
@@ -64,6 +65,7 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
   const [selectedPeriodical, setSelectedPeriodical] =
     useState<PeriodicalEdition | null>(null);
   const { data, isLoading, workType } = useGetWork(wid);
+  const [, setUrlType] = useQueryState(MATERIAL_TYPE_URL_PARAM);
   const { data: userData } = usePatronData();
   const [isUserBlocked, setIsUserBlocked] = useState<boolean | null>(null);
   const { updatePageStatistics } = usePageStatistics();
@@ -124,7 +126,10 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
     if (!data?.work) return;
     const { work } = data as { work: Work };
 
-    const urlType = getUrlQueryParam("type");
+    // Deliberately a read-once, non-reactive lookup: the type is only
+    // consulted when work data loads, so later URL changes must not re-run
+    // this effect.
+    const urlType = getUrlQueryParam(MATERIAL_TYPE_URL_PARAM);
     const manifestationsByMaterialType = divideManifestationsByMaterialType(
       work.manifestations.all
     );
@@ -139,9 +144,9 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
       // Otherwise, fallback to the best material type for the work
       const bestMaterialType = getBestMaterialTypeForWork(work);
       setSelectedManifestations(manifestationsByMaterialType[bestMaterialType]);
-      setQueryParametersInUrl({ type: bestMaterialType });
+      setUrlType(bestMaterialType);
     }
-  }, [data]);
+  }, [data, setUrlType]);
 
   // We need availability in order to show availability text under action buttons
   const { isAvailable, isLoading: isAvailabilityLoading } = useAvailabilityData(

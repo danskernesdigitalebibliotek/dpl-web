@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useQueryState } from "nuqs";
 import {
   AUTH_PARAM,
   hasRequestExpired,
@@ -8,10 +9,6 @@ import {
 } from "../core/guardedRequests.slice";
 import { RootState } from "../core/store";
 import getCurrentUnixTime from "../core/utils/helpers/date";
-import {
-  getUrlQueryParam,
-  removeQueryParametersFromUrl
-} from "../core/utils/helpers/url";
 import { isAnonymous } from "../core/utils/helpers/user";
 import { GuardedAppId } from "../core/utils/types/ids";
 
@@ -28,7 +25,7 @@ const GuardedApp = ({ app, children }: GuardedAppProps) => {
     (state: RootState) => state.guardedRequests
   );
   const isApplicationBlocked = persistedRequest && !isAnonymous();
-  const didAuthenticate = getUrlQueryParam(AUTH_PARAM);
+  const [didAuthenticate, setDidAuthenticate] = useQueryState(AUTH_PARAM);
 
   // We'll leave this debugging here temporarily also in the testing phase for troubleshooting.
   // eslint-disable-next-line no-console
@@ -72,10 +69,17 @@ const GuardedApp = ({ app, children }: GuardedAppProps) => {
     dispatch(reRunRequest(persistedRequest));
 
     // Remove auth parameter from url so we don't accidentally
-    removeQueryParametersFromUrl(AUTH_PARAM);
+    setDidAuthenticate(null);
     // repeat the functionality related to it.
     dispatch(removeRequest());
-  }, [app, didAuthenticate, dispatch, isApplicationBlocked, persistedRequest]);
+  }, [
+    app,
+    didAuthenticate,
+    dispatch,
+    isApplicationBlocked,
+    persistedRequest,
+    setDidAuthenticate
+  ]);
 
   if (isApplicationBlocked) {
     return <div />;

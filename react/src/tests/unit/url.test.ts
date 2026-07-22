@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   appendQueryParametersToUrl,
-  getUrlQueryParam,
-  prettifyQueryColons
+  getUrlQueryParam
 } from "../../core/utils/helpers/url";
 
 describe("url query parameter encoding", () => {
@@ -54,25 +53,5 @@ describe("url query parameter encoding", () => {
     window.history.replaceState(null, "", `/${url.search}`);
 
     expect(getUrlQueryParam("q")).toBe(value);
-  });
-
-  it("prettifyQueryColons shows a literal colon but still round-trips", () => {
-    const modalId = "digital-modal-870971-tsart:37743437";
-    const url = appendQueryParametersToUrl(
-      new URL("https://lib.example/work"),
-      {
-        modal: modalId
-      }
-    );
-    // URLSearchParams percent-encodes the colon...
-    expect(url.search).toContain("%3A");
-
-    // ...prettifyQueryColons restores the human-readable colon.
-    const pretty = prettifyQueryColons(url);
-    expect(pretty).toContain(modalId);
-    expect(pretty).not.toContain("%3A");
-
-    // And the pretty URL is still parsed back to the same value.
-    expect(new URL(pretty).searchParams.getAll("modal")).toContain(modalId);
   });
 });

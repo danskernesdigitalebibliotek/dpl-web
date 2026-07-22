@@ -9,7 +9,6 @@ import { GlobalEntryTextProps } from "../../core/storybook/globalTextArgs";
 import { MappArgs } from "../../core/storybook/mappArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import AdvancedSearchV2 from "./AdvancedSearchV2";
-import { NuqsAdapter } from "nuqs/adapters/react";
 import { AdvancedSearchV2Args } from "../../core/storybook/advancedSearchV2Args";
 import { AdvancedSearchV2CqlSearchArgs } from "../../core/storybook/advancedSearchV2CqlSearchArgs";
 
@@ -59,9 +58,7 @@ const AdvancedSearchEntry: React.FC<AdvancedSearchEntryProps> = ({
   return (
     <>
       <GuardedApp app="advanced-search">
-        <NuqsAdapter>
-          <AdvancedSearchV2 pageSize={pageSize} />
-        </NuqsAdapter>
+        <AdvancedSearchV2 pageSize={pageSize} />
       </GuardedApp>
     </>
   );

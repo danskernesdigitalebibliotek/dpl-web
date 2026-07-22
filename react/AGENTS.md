@@ -43,8 +43,12 @@ Keep these straight:
   `dpl-react` in sessionStorage.
 - **react-query (v3, not TanStack v5!)** holds *all server data* — GraphQL
   and REST.
-- **`nuqs`** for URL-synced state in newer apps. Don't repurpose the legacy
-  `url` Redux slice for new URL state.
+- **`nuqs`** is the default for URL query state (ADR-014): new URL state
+  MUST use `useQueryState`/`useQueryStates` — the `NuqsAdapter` is provided
+  once by the shared `Store`. Don't repurpose the legacy `url` Redux slice
+  for new URL state, and never reach for the `@deprecated` hand-rolled
+  writers in `core/utils/helpers/legacy-url.ts` (kept alive only for
+  advanced-search v1 and deleted with it).
 
 Server data never goes into Redux; app config never goes into react-query.
 

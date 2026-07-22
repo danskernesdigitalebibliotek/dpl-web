@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/CloseLarge.svg";
 import clsx from "clsx";
@@ -7,7 +7,7 @@ import {
   closeAllModals,
   closeModal,
   openModal,
-  ModalOptions
+  ModalIdsProps
 } from "../modal.slice";
 import { isAnonymous } from "./helpers/user";
 import {
@@ -17,6 +17,12 @@ import {
 import { isEnterOrSpacePressed } from "./helpers/general";
 
 type ModalId = string;
+
+// Options for useModalButtonHandler — consumed entirely in this file; the
+// reducer itself only ever receives a modalId.
+export type ModalOptions = {
+  modalsToClose?: string[];
+};
 
 type ModalProps = {
   children: ReactNode;
@@ -31,11 +37,7 @@ type ModalProps = {
   };
 };
 
-export interface ModalIdsProps {
-  modal: {
-    modalIds: ModalId[];
-  };
-}
+export type { ModalIdsProps };
 
 const MODAL_Z_INDEX = 400;
 
@@ -51,16 +53,6 @@ function Modal({
 }: ModalProps) {
   const dispatch = useDispatch();
   const { modalIds } = useSelector((s: ModalIdsProps) => s.modal);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-
-    const modalIdsInUrl = searchParams.getAll("modal");
-
-    modalIdsInUrl.forEach((id) => {
-      dispatch(openModal({ modalId: id }));
-    });
-  }, [modalId, dispatch]);
 
   // Check if the modal should be open
   if (modalIds && !modalIds.includes(modalId)) {
@@ -176,12 +168,7 @@ export const useModalButtonHandler = () => {
         closeModals(options.modalsToClose);
       }
 
-      return dispatch(
-        openModal({
-          modalId,
-          updateUrl: options?.updateUrl
-        })
-      );
+      return dispatch(openModal({ modalId }));
     },
     close: (modalId: ModalId) => {
       return dispatch(closeModal({ modalId }));
@@ -217,12 +204,7 @@ export const useModalButtonHandler = () => {
         trackOnlineView();
       }
 
-      dispatch(
-        openModal({
-          modalId,
-          updateUrl: options?.updateUrl
-        })
-      );
+      dispatch(openModal({ modalId }));
     }
   };
 };

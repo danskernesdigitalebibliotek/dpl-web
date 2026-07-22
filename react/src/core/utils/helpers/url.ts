@@ -29,34 +29,6 @@ export const getUrlQueryParam = (param: string): null | string => {
   return queryParams.get(param) ? String(queryParams.get(param)) : null;
 };
 
-// Restore the human-readable colon (a legal query character) in URLs written
-// to the address bar. Display-only: ":" and "%3A" parse identically, and a
-// literal "%3A" in a value serialises as "%253A" so it is never matched.
-// See docs ADR-013.
-export const prettifyQueryColons = (url: URL): string =>
-  `${url.origin}${url.pathname}${url.search.replace(/%3A/gi, ":")}${url.hash}`;
-
-export const setQueryParametersInUrl = (parameters: {
-  [key: string]: string;
-}) => {
-  const processedUrl = new URL(getCurrentLocation());
-  Object.keys(parameters).forEach((key) => {
-    processedUrl.searchParams.set(key, parameters[key]);
-  });
-
-  window.history.replaceState(null, "", prettifyQueryColons(processedUrl));
-};
-
-export const replaceCurrentLocation = (replacementUrl: URL) => {
-  window.history.replaceState(null, "", prettifyQueryColons(replacementUrl));
-};
-
-export const removeQueryParametersFromUrl = (parameter: string) => {
-  const processedUrl = new URL(getCurrentLocation());
-  processedUrl.searchParams.delete(parameter);
-  replaceCurrentLocation(processedUrl);
-};
-
 export const redirectTo = (url: URL, isNewTab?: boolean): void => {
   if (isNewTab) {
     window.open(String(url), "_blank");
@@ -94,6 +66,11 @@ export const processUrlPlaceholders = (
   return processedUrl;
 };
 
+// The query parameter carrying the selected material type on material pages.
+// Single source for the nuqs writers (material, availability labels) and the
+// deep-link construction below.
+export const MATERIAL_TYPE_URL_PARAM = "type";
+
 export const constructMaterialUrl = (
   url: URL,
   workId: WorkId,
@@ -108,7 +85,9 @@ export const constructMaterialUrl = (
 
   // Append type if specified.
   if (type) {
-    return appendQueryParametersToUrl(materialUrl, { type });
+    return appendQueryParametersToUrl(materialUrl, {
+      [MATERIAL_TYPE_URL_PARAM]: type
+    });
   }
 
   return materialUrl;
