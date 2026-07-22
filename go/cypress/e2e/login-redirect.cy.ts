@@ -94,8 +94,10 @@ describe("Login redirect after loan attempt", () => {
     // Visit the callback URL — server reads the redirect cookie and redirects
     cy.visit(mockedCallbackUrl)
 
-    // Assert we were redirected to the material page with the loan modal open
-    cy.url().should("include", "modal=LoanMaterialModal")
+    // Assert we were redirected to the material page with the loan modal open.
+    // The modal param is a one-shot inbox — it opens the modal and is
+    // stripped from the URL — so assert the visible outcome instead.
+    cy.dataCy("approve-loan-button").should("be.visible")
     cy.location("pathname").should("not.eq", "/user/profile")
   })
 
@@ -146,8 +148,10 @@ describe("Login redirect after loan attempt", () => {
     // Visit the callback URL — server reads the redirect cookie and redirects
     cy.visit("/auth/callback/adgangsplatformen")
 
-    // Assert we were redirected to the material page with the loan modal open
-    cy.url().should("include", "modal=LoanMaterialModal")
+    // Assert we were redirected to the material page with the loan modal open.
+    // The modal param is a one-shot inbox — it opens the modal and is
+    // stripped from the URL — so assert the visible outcome instead.
+    cy.dataCy("approve-loan-button").should("be.visible")
     cy.location("pathname").should("not.eq", "/user/profile")
   })
 })
