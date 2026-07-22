@@ -9,11 +9,11 @@ import {
   FilterPayloadTypeWithOrigin
 } from "../../core/filter.slice";
 import { store, RootState } from "../../core/store";
+import { getUrlQueryParam } from "../../core/utils/helpers/url";
 import {
-  getUrlQueryParam,
   removeQueryParametersFromUrl,
   setQueryParametersInUrl
-} from "../../core/utils/helpers/url";
+} from "../../core/utils/helpers/legacy-url";
 import { FacetFieldEnum } from "../../core/dbc-gateway/generated/graphql";
 import { getAllFilterPathsAsString, mapFacetToFilter } from "./helper";
 import { useEventStatistics } from "../../core/statistics/useStatistics";

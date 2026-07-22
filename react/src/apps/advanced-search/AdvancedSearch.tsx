@@ -11,11 +11,11 @@ import {
   AdvancedSortMapStrings,
   FirstAccessionOperatorFilter
 } from "./types";
+import { getUrlQueryParam } from "../../core/utils/helpers/url";
 import {
-  getUrlQueryParam,
   removeQueryParametersFromUrl,
   setQueryParametersInUrl
-} from "../../core/utils/helpers/url";
+} from "../../core/utils/helpers/legacy-url";
 import { LocationFilter } from "./LocationFilter";
 
 interface AdvancedSearchProps {

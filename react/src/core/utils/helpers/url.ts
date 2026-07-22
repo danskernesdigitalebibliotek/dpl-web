@@ -29,34 +29,6 @@ export const getUrlQueryParam = (param: string): null | string => {
   return queryParams.get(param) ? String(queryParams.get(param)) : null;
 };
 
-// Restore the human-readable colon (a legal query character) in URLs written
-// to the address bar. Display-only: ":" and "%3A" parse identically, and a
-// literal "%3A" in a value serialises as "%253A" so it is never matched.
-// See docs ADR-013.
-export const prettifyQueryColons = (url: URL): string =>
-  `${url.origin}${url.pathname}${url.search.replace(/%3A/gi, ":")}${url.hash}`;
-
-export const setQueryParametersInUrl = (parameters: {
-  [key: string]: string;
-}) => {
-  const processedUrl = new URL(getCurrentLocation());
-  Object.keys(parameters).forEach((key) => {
-    processedUrl.searchParams.set(key, parameters[key]);
-  });
-
-  window.history.replaceState(null, "", prettifyQueryColons(processedUrl));
-};
-
-export const replaceCurrentLocation = (replacementUrl: URL) => {
-  window.history.replaceState(null, "", prettifyQueryColons(replacementUrl));
-};
-
-export const removeQueryParametersFromUrl = (parameter: string) => {
-  const processedUrl = new URL(getCurrentLocation());
-  processedUrl.searchParams.delete(parameter);
-  replaceCurrentLocation(processedUrl);
-};
-
 export const redirectTo = (url: URL, isNewTab?: boolean): void => {
   if (isNewTab) {
     window.open(String(url), "_blank");

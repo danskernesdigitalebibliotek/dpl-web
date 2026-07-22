@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   appendQueryParametersToUrl,
-  getUrlQueryParam,
-  prettifyQueryColons
+  getUrlQueryParam
 } from "../../core/utils/helpers/url";
+import { prettifyQueryColons } from "../../core/utils/helpers/legacy-url";
 
 describe("url query parameter encoding", () => {
   it("encodes a value exactly once so a single-decode reader recovers it", () => {
