@@ -11,17 +11,21 @@ type LoansQueryKey = ReturnType<typeof loansQueryKey>
 
 type UseLoansOptions = Omit<
   UseQueryOptions<Loan[], Error, Loan[], LoansQueryKey>,
-  "queryKey" | "queryFn"
->
+  "queryKey" | "queryFn" | "enabled"
+> & { enabled?: boolean }
 
 export const useLoans = (options?: UseLoansOptions): UseQueryResult<Loan[], Error> => {
   const config = useServiceLayerConfig()
+  const { enabled = true, ...restOptions } = options ?? {}
   return useQuery({
     ...loansQuery(config),
     // Due dates and renewability change behind our back (renewals from other
     // devices, staff actions). Always refetch on mount unless a consumer
     // explicitly opts out.
     refetchOnMount: "always",
-    ...options,
+    ...restOptions,
+    // Patron-scoped: never fires without a patron session, regardless of the
+    // consumer's own `enabled` condition.
+    enabled: (config.isPatronAuthenticated ?? true) && enabled,
   })
 }

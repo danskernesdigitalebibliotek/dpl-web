@@ -5,6 +5,12 @@ export type ApiId = "fbs"
 export type ServiceLayerConfig = {
   getBaseUrl: (api: ApiId) => string
   getAuthHeader: (api: ApiId) => Promise<string> | string
+  // Whether the session may call patron-scoped endpoints (patron, loans,
+  // reservations, fees). The patron hooks disable themselves when false, so
+  // call sites can't forget to guard — sessions without patron access (in GO:
+  // Unilogin and anonymous) never fire doomed 401 requests. Public data
+  // (material availability) ignores it. Defaults to true when omitted.
+  isPatronAuthenticated?: boolean
 }
 
 export type Patron = {
