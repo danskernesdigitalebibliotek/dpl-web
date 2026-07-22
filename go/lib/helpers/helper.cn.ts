@@ -10,7 +10,7 @@ const customTwMerge = extendTailwindMerge({
         },
       ],
       // Custom radius tokens (theme.css) so conflicting rounded-* classes merge.
-      rounded: [{ rounded: ["base", "input"] }],
+      rounded: [{ rounded: ["base"] }],
     },
   },
 })
