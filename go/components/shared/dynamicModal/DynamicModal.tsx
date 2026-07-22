@@ -29,8 +29,12 @@ const ModalComponents: {
 }
 
 // Opens a modal from URL query params and strips them right away — the way
-// external flows (login redirects) hand a modal over to the store. One-shot:
-// a modal param can never go stale in history.
+// external flows hand a modal over to the store. The case that needs this:
+// a user tries to loan without being logged in, logs in, and the redirect
+// lands here with the loan modal in the URL so it can reopen. Stripping is
+// deliberate: the params are a one-shot handover, not state — if they stayed,
+// the modal would become part of history/bookmarks and reopen on
+// back-navigation or page restore.
 function ModalUrlListener() {
   const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, {
     scroll: false,
