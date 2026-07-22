@@ -33,20 +33,43 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
 
   $input = urldecode($input);
 
-  // For creator, subject, or dk5 searches, use the filter value instead of "*".
+  // For creator, subject, or dk5 searches, use the facet value instead of
+  // "*". Links from material pages carry the value in the JSON `facets`
+  // parameter (see constructSearchUrlWithFacets in dpl-react); the plain
+  // creators/subjects/dk5 parameters are a retired format nothing produces
+  // or reads anymore.
   if ($input === '*') {
-    $creator = \Drupal::request()->query->get('creators');
-    $subject = \Drupal::request()->query->get('subjects');
-    $dk5 = \Drupal::request()->query->get('dk5');
+    $facets_json = \Drupal::request()->query->get('facets');
+    $facets = NULL;
 
-    if ($creator) {
-      $input = $creator;
+    if (is_string($facets_json) && $facets_json !== '') {
+      try {
+        $facets = Safe\json_decode($facets_json, TRUE);
+      }
+      catch (\JsonException) {
+        // Malformed user input — keep the "*" phrase.
+      }
     }
-    elseif ($subject) {
-      $input = $subject;
-    }
-    elseif ($dk5) {
-      $input = $dk5;
+
+    if (is_array($facets)) {
+      foreach ($facets as $facet) {
+        if (!is_array($facet)) {
+          continue;
+        }
+
+        $facet_name = $facet['facetName'] ?? NULL;
+        $selected_values = $facet['selectedValues'] ?? NULL;
+
+        if (
+          in_array($facet_name, ['creators', 'subjects', 'dk5'], TRUE)
+          && is_array($selected_values)
+          && is_string($selected_values[0] ?? NULL)
+          && $selected_values[0] !== ''
+        ) {
+          $input = $selected_values[0];
+          break;
+        }
+      }
     }
   }
 
