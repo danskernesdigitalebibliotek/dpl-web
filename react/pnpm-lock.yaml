@@ -229,8 +229,8 @@ importers:
         specifier: ^8.64.0
         version: 8.64.0(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
       '@vitest/coverage-istanbul':
-        specifier: ^4.1.9
-        version: 4.1.9(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.10.6)(sass@1.101.0)(terser@5.48.0))
+        specifier: ^4.1.10
+        version: 4.1.10(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.10.6)(sass@1.101.0)(terser@5.48.0))
       autoprefixer:
         specifier: ^10.5.0
         version: 10.5.2(postcss@8.5.16)
@@ -2997,10 +2997,10 @@ packages:
     resolution: {integrity: sha512-mrtuL8Nsn6gi2H4mo5KMTp823M+3Q19Ew/i+Zlikq20tIMm99C3Ez0dCmkWWnxut20esQvTg8aUSEhMcAOXhEw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vitest/coverage-istanbul@4.1.9':
-    resolution: {integrity: sha512-4a7DsIwycTf4eYwEDtnMfMV8H80KSKH9PuMHhqL5SwPZzDyUKq2X/TPCVZ7NqIuSz7UbZckmEmkip6iZBI/gEA==}
+  '@vitest/coverage-istanbul@4.1.10':
+    resolution: {integrity: sha512-AyNJ5pQRFqCX7pwB9PSTmoVKPaZ4H5IEVJfJsT+q1DYkXvZMEFYgJlyk5sfStmt9rVYRyYYRRsuBeImCOc39ww==}
     peerDependencies:
-      vitest: 4.1.9
+      vitest: 4.1.10
 
   '@vitest/expect@2.1.9':
     resolution: {integrity: sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw==}
@@ -6008,8 +6008,8 @@ packages:
   oblivious-set@1.0.0:
     resolution: {integrity: sha512-z+pI07qxo4c2CulUHCDf9lcqDlMSo72N/4rLUpRXf6fu+q8vjt8y0xS+Tlf8NTJDdTXHbdeO1n3MlbctwEoXZw==}
 
-  obug@2.1.3:
-    resolution: {integrity: sha512-9miFgM2OFba7hB+pRgvtV84pYTBaoTHohvmIgiRt6dRIzbwEOIaNaP+dIlGs2fNFoB0SeISs0Jz5WFVRid6Xyg==}
+  obug@2.1.4:
+    resolution: {integrity: sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA==}
     engines: {node: '>=12.20.0'}
 
   once@1.4.0:
@@ -11124,7 +11124,7 @@ snapshots:
       '@typescript-eslint/types': 8.64.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-istanbul@4.1.9(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.10.6)(sass@1.101.0)(terser@5.48.0))':
+  '@vitest/coverage-istanbul@4.1.10(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.10.6)(sass@1.101.0)(terser@5.48.0))':
     dependencies:
       '@babel/core': 7.29.7
       '@istanbuljs/schema': 0.1.6
@@ -11134,7 +11134,7 @@ snapshots:
       istanbul-lib-report: 3.0.1
       istanbul-reports: 3.2.0
       magicast: 0.5.3
-      obug: 2.1.3
+      obug: 2.1.4
       tinyrainbow: 3.1.0
       vitest: 2.1.9(@types/node@24.13.3)(happy-dom@20.10.6)(sass@1.101.0)(terser@5.48.0)
     transitivePeerDependencies:
@@ -14597,7 +14597,7 @@ snapshots:
 
   oblivious-set@1.0.0: {}
 
-  obug@2.1.3: {}
+  obug@2.1.4: {}
 
   once@1.4.0:
     dependencies:
