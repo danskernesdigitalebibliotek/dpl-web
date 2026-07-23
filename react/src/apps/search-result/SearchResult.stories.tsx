@@ -127,13 +127,16 @@ export const Default: Story = {
   }
 };
 
-// The CMS only ships hasWebSearchResults when the phrase has web results,
-// making the teaser visible. The default story mirrors a config without it.
+// The teaser links a material search over to the editorial content search
+// (the /search/web View) for the same phrase. The CMS builds this config
+// from the phrase and the number of matching editorial results, and only
+// ships hasWebSearchResults when there are any. The default story mirrors a
+// config without it.
 export const WithWebSearchTeaser: Story = {
   args: {
     ...Default.args,
     webSearchConfig:
-      '{\n  "webSearchUrl": "https://www.google.com",\n  "webSearchText": "Google",\n  "webSearchTotal": "1000",\n  "hasWebSearchResults": true\n}'
+      '{\n  "webSearchUrl": "/search/web?search=skovbadning",\n  "webSearchText": "skovbadning",\n  "webSearchTotal": "12",\n  "hasWebSearchResults": true\n}'
   }
 };
 
