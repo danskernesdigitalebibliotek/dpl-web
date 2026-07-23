@@ -11,7 +11,11 @@ import {
   HoldingsStatusEnum
 } from "../../core/dbc-gateway/generated/graphql";
 import { Work } from "../../core/utils/types/entities";
-import { getCurrentLocation, redirectTo } from "../../core/utils/helpers/url";
+import {
+  constructSearchUrlWithFacets,
+  getCurrentLocation,
+  redirectTo
+} from "../../core/utils/helpers/url";
 import { useText } from "../../core/utils/text";
 import useGetSearchBranches from "../../core/utils/branches";
 import SearchResultInvalidSearch from "./search-result-not-valid-search";
@@ -134,7 +138,23 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       enabled: q.length >= minimalQueryLength,
       onSuccess: (data) => {
         if (data.search.hitcount === 0) {
-          redirectTo(zeroHitsSearchUrl);
+          // A zero hits URL misconfigured to point at a page hosting this
+          // app would make the redirect loop forever.
+          if (
+            new URL(getCurrentLocation()).pathname ===
+            zeroHitsSearchUrl.pathname
+          ) {
+            return;
+          }
+          // Carry the search parameters along so the zero hits page can
+          // offer the web search teaser for the same phrase.
+          redirectTo(
+            constructSearchUrlWithFacets({
+              searchUrl: zeroHitsSearchUrl,
+              q,
+              facets: facetsFromUrl
+            })
+          );
         }
       }
     }
@@ -209,10 +229,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       <SearchResultHeader
         headerTitle={headerTitle}
         subtitleRenderProp={
-          // For facet deep links q is "*", but the CMS derives a real teaser
-          // phrase from the facets parameter — so hide the teaser based on
-          // its phrase, not on the query.
-          webSearchConfig?.webSearchText !== "*" &&
           webSearchConfig?.hasWebSearchResults &&
           webSearchConfig?.webSearchUrl &&
           webSearchConfig?.webSearchText ? (
