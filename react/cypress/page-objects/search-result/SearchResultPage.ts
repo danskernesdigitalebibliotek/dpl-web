@@ -25,7 +25,10 @@ export class SearchResultPage extends PageObject {
       dialog: () => cy.get("dialog.dialog"),
       dialogCloseButton: () => cy.get("dialog.dialog .dialog__close-btn"),
       dialogShowResultsButton: () =>
-        cy.get(".search-facets__dialog__actions__button")
+        cy.get(".search-facets__dialog__actions__button"),
+      headerTitle: () => cy.get(".search__header__title"),
+      headerSubtitle: () => cy.get(".search__header__subtitle"),
+      webSearchLink: () => cy.get(".search__header__subtitle a.link-tag")
     };
 
     this.addNestedComponents = {
@@ -42,6 +45,20 @@ export class SearchResultPage extends PageObject {
           fn
         )
     };
+  }
+
+  // Story navigation
+  //
+  // The teaser and zero hits behaviour live in dedicated stories rather than
+  // the default one visited via visit(). Keep the iframe URL shape in one
+  // place so specs name a story, not a URL.
+
+  private storyUrl(storyId: string): string {
+    return `/iframe.html?globals=&id=apps-search-result--${storyId}&viewMode=story`;
+  }
+
+  visitStory(storyId: string, opts?: Partial<Cypress.VisitOptions>) {
+    cy.visit(this.storyUrl(storyId), opts);
   }
 
   // Page-level verification methods
@@ -75,6 +92,37 @@ export class SearchResultPage extends PageObject {
       }
       const actualValue = JSON.parse(paramValue);
       expect(actualValue).to.deep.equal(expectedValue);
+    });
+  }
+
+  // Web search teaser verification methods
+
+  verifyWebSearchTeaser({ label, href }: { label: string; href: string }) {
+    this.elements.headerSubtitle().should("contain", "Search web");
+    this.elements
+      .webSearchLink()
+      .should("contain", label)
+      .and("have.attr", "href", href);
+  }
+
+  verifyNoWebSearchTeaser() {
+    this.elements.headerTitle().should("be.visible");
+    this.elements.headerSubtitle().should("not.exist");
+  }
+
+  // Zero hits verification methods
+
+  verifyRedirectedToZeroHitsPage(
+    expectedQuery: string,
+    expectedFacets: unknown
+  ) {
+    cy.url().should((url) => {
+      const { pathname, searchParams } = new URL(url);
+      expect(pathname).to.equal("/din-sogning-har-0-resultater");
+      expect(searchParams.get("q")).to.equal(expectedQuery);
+      expect(JSON.parse(searchParams.get("facets") ?? "")).to.deep.equal(
+        expectedFacets
+      );
     });
   }
 

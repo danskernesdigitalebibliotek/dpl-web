@@ -428,22 +428,18 @@ describe("Search Result", () => {
 
   describe("Web Search Teaser", () => {
     it("shows the teaser when the phrase has web search results", () => {
-      cy.visit(
-        "/iframe.html?globals=&id=apps-search-result--with-web-search-teaser&viewMode=story"
-      );
+      page.visitStory("with-web-search-teaser");
 
-      cy.get(".search__header__subtitle")
-        .should("contain", "Search web")
-        .find("a.link-tag")
-        .should("contain", "Google (1000)")
-        .and("have.attr", "href", "https://www.google.com");
+      page.verifyWebSearchTeaser({
+        label: "Google (1000)",
+        href: "https://www.google.com"
+      });
     });
 
     it("hides the teaser when the config has no web search results", () => {
       // The default story's config lacks hasWebSearchResults, mirroring a
       // CMS that found no web results for the phrase.
-      cy.get(".search__header__title").should("be.visible");
-      cy.get(".search__header__subtitle").should("not.exist");
+      page.verifyNoWebSearchTeaser();
     });
   });
 
@@ -456,21 +452,12 @@ describe("Search Result", () => {
 
       // The zero hits page must receive the q and facets parameters so it
       // can offer the web search teaser for the same phrase.
-      cy.url().should((url) => {
-        const { pathname, searchParams } = new URL(url);
-        expect(pathname).to.equal("/din-sogning-har-0-resultater");
-        expect(searchParams.get("q")).to.equal("harry");
-        expect(JSON.parse(searchParams.get("facets") ?? "")).to.deep.equal(
-          facets
-        );
-      });
+      page.verifyRedirectedToZeroHitsPage("harry", facets);
     });
 
     it("does not redirect when already on the zero hits page", () => {
       givenSearchWithPaginationEmptyResponse();
-      cy.visit(
-        "/iframe.html?globals=&id=apps-search-result--on-zero-hits-page&viewMode=story"
-      );
+      page.visitStory("on-zero-hits-page");
 
       // The app stays and renders the empty result state instead of
       // redirecting to itself in a loop. A redirect fires right after the
@@ -479,7 +466,7 @@ describe("Search Result", () => {
       page.verifyResultsHeadingContains("0 materials");
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000);
-      cy.url().should("include", "id=apps-search-result--on-zero-hits-page");
+      page.verifyUrlContains("id=apps-search-result--on-zero-hits-page");
     });
   });
 });
