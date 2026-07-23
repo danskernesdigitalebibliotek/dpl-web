@@ -105,12 +105,48 @@
         container.classList.toggle('date-range-facet--active', active);
       };
 
-      const initial = [minInput.value, maxInput.value].filter(Boolean);
+      // The active range lives in the page URL as
+      // "<alias>:(min:<ts>,max:<ts>)". flatpickr needs the calendar dates the
+      // user picked, so we derive them from those raw timestamps, interpreted
+      // in the browser's local time (which for our users is the site
+      // timezone). We deliberately do NOT reuse the module's own min/max
+      // inputs: it formats their values with gmdate() (UTC), which renders the
+      // local-midnight timestamps we store one day early.
+      const readActiveRange = () => {
+        const template = decodeURIComponent(dateRange.url);
+        const aliasMatch = template.match(
+          /([^=?&/]+):\(min:__date_range_min__,max:__date_range_max__\)/,
+        );
+        if (!aliasMatch) {
+          return [];
+        }
+        // The alias is admin-configured, so escape regex metacharacters
+        // before embedding it in a pattern.
+        const alias = aliasMatch[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const params = new URLSearchParams(window.location.search);
+        const rangePattern = new RegExp(
+          `^${alias}:\\(min:(\\d+),max:(\\d+)\\)$`,
+        );
+        const values = Array.from(params.values());
+        const match = values
+          .map((value) => value.match(rangePattern))
+          .find(Boolean);
+        if (!match) {
+          return [];
+        }
+        return [
+          new Date(Number(match[1]) * 1000),
+          new Date(Number(match[2]) * 1000),
+        ];
+      };
+
+      const initial = readActiveRange();
 
       const instance = flatpickr(picker, {
         mode: 'range',
-        // Keep the underlying value as Y-m-d (matches the timestamp logic in
-        // onClose) but show the Danish d.m.y format to the user.
+        // Underlying value format. We read the picked days back as Date objects
+        // in onClose rather than parsing this string, so the format only
+        // affects the hidden native value.
         dateFormat: 'Y-m-d',
         altInput: true,
         altFormat: 'd.m.y',
@@ -128,11 +164,27 @@
           if (selectedDates.length !== 2) {
             return;
           }
-          // Match facets_date_range's UTC-midnight timestamp semantics.
-          const toUtcTs = (date) =>
-            Date.parse(flatpickr.formatDate(date, 'Y-m-d')) / 1000;
-          const min = toUtcTs(selectedDates[0]);
-          const max = toUtcTs(selectedDates[1]);
+          // The bounds must be local midnight of the picked days. The indexed
+          // event dates are real (site-local) timestamps and the
+          // facets_date_range query compares against them directly, so using
+          // UTC midnight here would shift the whole window by the timezone
+          // offset — dropping events that start just after midnight and
+          // pulling in the following day's early events. flatpickr's selected
+          // dates are already at local midnight of each picked day.
+          const toLocalMidnightTs = (date) => Math.round(date.getTime() / 1000);
+          const min = toLocalMidnightTs(selectedDates[0]);
+          const max = toLocalMidnightTs(selectedDates[1]);
+
+          // The calendar fires onClose even when it was merely opened and
+          // dismissed. If the selection still matches the already-applied
+          // range, redirecting would just reload the current page.
+          if (
+            initial.length === 2 &&
+            min === toLocalMidnightTs(initial[0]) &&
+            max === toLocalMidnightTs(initial[1])
+          ) {
+            return;
+          }
 
           safeRedirect(
             dateRange.url
