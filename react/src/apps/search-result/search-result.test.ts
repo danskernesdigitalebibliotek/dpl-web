@@ -431,8 +431,8 @@ describe("Search Result", () => {
       page.visitStory("with-web-search-teaser");
 
       page.verifyWebSearchTeaser({
-        label: "Google (1000)",
-        href: "https://www.google.com"
+        label: "skovbadning (12)",
+        href: "/search/web?search=skovbadning"
       });
     });
 
