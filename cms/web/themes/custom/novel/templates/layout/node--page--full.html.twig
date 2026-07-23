@@ -7,10 +7,13 @@
 
       {{ content.field_subtitle }}
 
+      {{ content.web_search_teaser }}
     </header>
   {% else %}
     {# We want the title to still be available for SEO/Accessibility. #}
     <h1 class="hide-visually">{{ title }}</h1>
+
+    {{ content.web_search_teaser }}
   {% endif %}
 
   {{ content.field_paragraphs }}
