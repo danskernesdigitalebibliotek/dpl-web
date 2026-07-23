@@ -9,6 +9,7 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_search\DplSearchSettings;
+use Drupal\dpl_search\FacetPhrase;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 use Safe\Exceptions\UrlException;
@@ -74,7 +75,8 @@ function _dpl_search_web_search_teaser_config(array &$cache_tags = []): ?array {
   // A bare "*" is a browse-all search without a phrase to offer web results
   // for, unless a facet carries one.
   if ($input === '*') {
-    $input = _dpl_search_facet_phrase();
+    $facets_json = \Drupal::request()->query->get(DplSearchSettings::FACETS_QUERY_KEY);
+    $input = is_string($facets_json) ? FacetPhrase::fromJson($facets_json) : NULL;
 
     if ($input === NULL) {
       return NULL;
@@ -107,54 +109,6 @@ function _dpl_search_web_search_teaser_config(array &$cache_tags = []): ?array {
     'webSearchUrl' => $url,
     'hasWebSearchResults' => TRUE,
   ];
-}
-
-/**
- * Get the web search teaser phrase from the facets query parameter.
- *
- * Links from material pages search with q "*" and carry the human readable
- * value in the JSON `facets` parameter (see constructSearchUrlWithFacets in
- * dpl-react).
- *
- * @return string|null
- *   The first creator, subject or dk5 facet value, or NULL if there is none.
- */
-function _dpl_search_facet_phrase(): ?string {
-  $facets_json = \Drupal::request()->query->get(DplSearchSettings::FACETS_QUERY_KEY);
-
-  if (!is_string($facets_json) || $facets_json === '') {
-    return NULL;
-  }
-
-  try {
-    $facets = Safe\json_decode($facets_json, TRUE);
-  }
-  catch (\JsonException) {
-    return NULL;
-  }
-
-  if (!is_array($facets)) {
-    return NULL;
-  }
-
-  foreach ($facets as $facet) {
-    if (!is_array($facet)) {
-      continue;
-    }
-
-    $values = $facet['selectedValues'] ?? NULL;
-    $value = is_array($values) ? ($values[0] ?? NULL) : NULL;
-
-    if (
-      in_array($facet['facetName'] ?? NULL, ['creators', 'subjects', 'dk5'], TRUE)
-      && is_string($value)
-      && $value !== ''
-    ) {
-      return $value;
-    }
-  }
-
-  return NULL;
 }
 
 /**
