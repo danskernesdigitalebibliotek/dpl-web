@@ -5,10 +5,13 @@
  * DPL Search drupal module file.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_search\DplSearchSettings;
+use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
+use Safe\Exceptions\UrlException;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
@@ -28,65 +31,68 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
   // The web search teaser below is derived from the q and facets query
   // parameters, so the render cache must vary on them.
   $variables['#cache']['contexts'][] = 'url.query_args:' . DplSearchSettings::MATERIAL_QUERY_KEY;
-  $variables['#cache']['contexts'][] = 'url.query_args:facets';
+  $variables['#cache']['contexts'][] = 'url.query_args:' . DplSearchSettings::FACETS_QUERY_KEY;
 
+  $cache_tags = [];
+  $config = _dpl_search_web_search_teaser_config($cache_tags);
+
+  foreach ($cache_tags as $cache_tag) {
+    $variables['#cache']['tags'][] = $cache_tag;
+  }
+
+  if (!$config) {
+    return;
+  }
+
+  $variables['attributes']['data-web-search-config'] = Safe\json_encode($config);
+}
+
+/**
+ * Build the web search teaser data from the current request.
+ *
+ * The teaser phrase is the material search input: the q query parameter, or
+ * for creator, subject, or dk5 searches the facet value instead of "*".
+ *
+ * @param string[] $cache_tags
+ *   Filled with the cache tags of what the result was derived from, so both
+ *   a shown and a suppressed teaser is invalidated when the web content
+ *   changes.
+ *
+ * @return mixed[]|null
+ *   The web search teaser config, or NULL if the request has no search
+ *   phrase or the phrase has no web results.
+ */
+function _dpl_search_web_search_teaser_config(array &$cache_tags = []): ?array {
   $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
 
   if (empty($input) || !is_string($input)) {
-    return;
+    return NULL;
   }
 
   $input = urldecode($input);
 
-  // For creator, subject, or dk5 searches, use the facet value instead of
-  // "*". Links from material pages carry the value in the JSON `facets`
-  // parameter (see constructSearchUrlWithFacets in dpl-react).
+  // A bare "*" is a browse-all search without a phrase to offer web results
+  // for, unless a facet carries one.
   if ($input === '*') {
-    $facets_json = \Drupal::request()->query->get('facets');
-    $facets = NULL;
+    $input = _dpl_search_facet_phrase();
 
-    if (is_string($facets_json) && $facets_json !== '') {
-      try {
-        $facets = Safe\json_decode($facets_json, TRUE);
-      }
-      catch (\JsonException) {
-        // Malformed user input — keep the "*" phrase.
-      }
-    }
-
-    if (is_array($facets)) {
-      foreach ($facets as $facet) {
-        if (!is_array($facet)) {
-          continue;
-        }
-
-        $facet_name = $facet['facetName'] ?? NULL;
-        $selected_values = $facet['selectedValues'] ?? NULL;
-
-        if (
-          in_array($facet_name, ['creators', 'subjects', 'dk5'], TRUE)
-          && is_array($selected_values)
-          && is_string($selected_values[0] ?? NULL)
-          && $selected_values[0] !== ''
-        ) {
-          $input = $selected_values[0];
-          break;
-        }
-      }
+    if ($input === NULL) {
+      return NULL;
     }
   }
 
   $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
 
   if (!($view instanceof ViewExecutable)) {
-    return;
+    return NULL;
   }
 
   $view->setDisplay('page');
-  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => (string) $input]);
+  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => $input]);
   $view->execute();
+  $cache_tags = $view->getCacheTags();
   if (empty($view->total_rows)) {
-    return;
+    return NULL;
   }
 
   $url = Url::fromRoute(
@@ -95,14 +101,171 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
     ['query' => [DplSearchSettings::EDITORIAL_QUERY_KEY => $input]]
   )->setAbsolute(TRUE)->toString();
 
-  $config = [
+  return [
     'webSearchText' => $input,
     'webSearchTotal' => $view->total_rows,
     'webSearchUrl' => $url,
     'hasWebSearchResults' => TRUE,
   ];
+}
 
-  $variables['attributes']['data-web-search-config'] = Safe\json_encode($config);
+/**
+ * Get the web search teaser phrase from the facets query parameter.
+ *
+ * Links from material pages search with q "*" and carry the human readable
+ * value in the JSON `facets` parameter (see constructSearchUrlWithFacets in
+ * dpl-react).
+ *
+ * @return string|null
+ *   The first creator, subject or dk5 facet value, or NULL if there is none.
+ */
+function _dpl_search_facet_phrase(): ?string {
+  $facets_json = \Drupal::request()->query->get(DplSearchSettings::FACETS_QUERY_KEY);
+
+  if (!is_string($facets_json) || $facets_json === '') {
+    return NULL;
+  }
+
+  try {
+    $facets = Safe\json_decode($facets_json, TRUE);
+  }
+  catch (\JsonException) {
+    return NULL;
+  }
+
+  if (!is_array($facets)) {
+    return NULL;
+  }
+
+  foreach ($facets as $facet) {
+    if (!is_array($facet)) {
+      continue;
+    }
+
+    $values = $facet['selectedValues'] ?? NULL;
+    $value = is_array($values) ? ($values[0] ?? NULL) : NULL;
+
+    if (
+      in_array($facet['facetName'] ?? NULL, ['creators', 'subjects', 'dk5'], TRUE)
+      && is_string($value)
+      && $value !== ''
+    ) {
+      return $value;
+    }
+  }
+
+  return NULL;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for node entities.
+ *
+ * Show the web search teaser on the zero hits page. The search result app
+ * redirects here when a material search has no hits, carrying its q and
+ * facets query parameters, so the visitor can still reach the web results
+ * for the same phrase.
+ *
+ * @param mixed[] $build
+ *   The render array of the node.
+ * @param \Drupal\node\NodeInterface $node
+ *   The node being viewed.
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display.
+ * @param string $view_mode
+ *   The view mode.
+ */
+function dpl_search_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, string $view_mode): void {
+  // Only the page bundle has a template that renders the teaser element.
+  if ($view_mode !== 'full' || $node->bundle() !== 'page') {
+    return;
+  }
+
+  $settings = \Drupal::service('dpl_library_agency.general_settings');
+
+  // Which node is the zero hits page is configuration, so cached builds
+  // must be invalidated when it changes.
+  foreach ($settings->getCacheTags() as $cache_tag) {
+    $build['#cache']['tags'][] = $cache_tag;
+  }
+
+  if ((string) $node->id() !== _dpl_search_zero_hits_node_id($settings->getZeroHitsSearchUrl())) {
+    return;
+  }
+
+  $build['#cache']['contexts'][] = 'url.query_args:' . DplSearchSettings::MATERIAL_QUERY_KEY;
+  $build['#cache']['contexts'][] = 'url.query_args:' . DplSearchSettings::FACETS_QUERY_KEY;
+
+  $cache_tags = [];
+  $config = _dpl_search_web_search_teaser_config($cache_tags);
+
+  foreach ($cache_tags as $cache_tag) {
+    $build['#cache']['tags'][] = $cache_tag;
+  }
+
+  if (!$config) {
+    return;
+  }
+
+  $build['web_search_teaser'] = [
+    '#type' => 'inline_template',
+    '#template' => '<p class="article-header__info">{{ link_text }} <a class="link-tag" href="{{ url }}">{{ phrase }} ({{ total }})</a></p>',
+    '#context' => [
+      // Same string and context as web-search-link-text in
+      // DplReactAppsController, so both surfaces share one translation.
+      'link_text' => t('Switch to the results for the library content.', [], ['context' => 'Search Result']),
+      'url' => $config['webSearchUrl'],
+      'phrase' => $config['webSearchText'],
+      'total' => $config['webSearchTotal'],
+    ],
+  ];
+}
+
+/**
+ * Get the node ID of the configured zero hits search page.
+ *
+ * The configured URL is resolved through routing, so it matches the node
+ * whether it is stored as an alias or a /node/{id} path, with or without a
+ * trailing slash, and regardless of language prefixes on the request.
+ *
+ * @param string $zero_hits_url
+ *   The configured zero hits search URL.
+ *
+ * @return string|null
+ *   The node ID, or NULL if the URL does not point to a node on this site.
+ */
+function _dpl_search_zero_hits_node_id(string $zero_hits_url): ?string {
+  try {
+    $parts = Safe\parse_url($zero_hits_url);
+  }
+  catch (UrlException) {
+    return NULL;
+  }
+
+  if (!is_array($parts)) {
+    return NULL;
+  }
+
+  // A URL on another host cannot be a node on this site, even if its path
+  // happens to match one.
+  if (isset($parts['host']) && $parts['host'] !== \Drupal::request()->getHost()) {
+    return NULL;
+  }
+
+  $path = $parts['path'] ?? NULL;
+
+  if (!is_string($path) || $path === '' || $path === '/') {
+    return NULL;
+  }
+
+  $url = \Drupal::service('path.validator')->getUrlIfValidWithoutAccessCheck(rtrim($path, '/'));
+
+  if (!$url instanceof Url || !$url->isRouted() || $url->getRouteName() !== 'entity.node.canonical') {
+    return NULL;
+  }
+
+  $node_id = $url->getRouteParameters()['node'] ?? NULL;
+
+  return is_string($node_id) ? $node_id : NULL;
 }
 
 /**
