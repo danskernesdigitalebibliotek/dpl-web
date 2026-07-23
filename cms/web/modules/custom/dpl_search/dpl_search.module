@@ -25,9 +25,8 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
     return;
   }
 
-  // The teaser is derived from the q and facets query parameters, so the
-  // render cache must vary on them. Without these contexts the dynamic page
-  // cache serves whichever variant was rendered first to every search URL.
+  // The web search teaser below is derived from the q and facets query
+  // parameters, so the render cache must vary on them.
   $variables['#cache']['contexts'][] = 'url.query_args:' . DplSearchSettings::MATERIAL_QUERY_KEY;
   $variables['#cache']['contexts'][] = 'url.query_args:facets';
 
@@ -41,9 +40,7 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
 
   // For creator, subject, or dk5 searches, use the facet value instead of
   // "*". Links from material pages carry the value in the JSON `facets`
-  // parameter (see constructSearchUrlWithFacets in dpl-react); the plain
-  // creators/subjects/dk5 parameters are a retired format nothing produces
-  // or reads anymore.
+  // parameter (see constructSearchUrlWithFacets in dpl-react).
   if ($input === '*') {
     $facets_json = \Drupal::request()->query->get('facets');
     $facets = NULL;
