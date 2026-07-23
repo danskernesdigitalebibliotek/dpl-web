@@ -1,5 +1,8 @@
 import { SearchResultPage } from "../../../cypress/page-objects/search-result/SearchResultPage";
-import { givenSearchWithPaginationResponse } from "../../../cypress/intercepts/fbi/searchWithPagination";
+import {
+  givenSearchWithPaginationResponse,
+  givenSearchWithPaginationEmptyResponse
+} from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
 
 describe("Search Result", () => {
@@ -420,6 +423,63 @@ describe("Search Result", () => {
         filters.clickShowAllInGroup("Genre and form");
         filters.verifyFacetItemCount("Genre and form", 10);
       });
+    });
+  });
+
+  describe("Web Search Teaser", () => {
+    it("shows the teaser when the phrase has web search results", () => {
+      cy.visit(
+        "/iframe.html?globals=&id=apps-search-result--with-web-search-teaser&viewMode=story"
+      );
+
+      cy.get(".search__header__subtitle")
+        .should("contain", "Search web")
+        .find("a.link-tag")
+        .should("contain", "Google (1000)")
+        .and("have.attr", "href", "https://www.google.com");
+    });
+
+    it("hides the teaser when the config has no web search results", () => {
+      // The default story's config lacks hasWebSearchResults, mirroring a
+      // CMS that found no web results for the phrase.
+      cy.get(".search__header__title").should("be.visible");
+      cy.get(".search__header__subtitle").should("not.exist");
+    });
+  });
+
+  describe("Zero Hits", () => {
+    const facets = [{ facetName: "subjects", selectedValues: ["skovbadning"] }];
+
+    it("redirects to the zero hits page with the search parameters", () => {
+      givenSearchWithPaginationEmptyResponse();
+      page.visit([], { qs: { facets: JSON.stringify(facets) } });
+
+      // The zero hits page must receive the q and facets parameters so it
+      // can offer the web search teaser for the same phrase.
+      cy.url().should((url) => {
+        const { pathname, searchParams } = new URL(url);
+        expect(pathname).to.equal("/din-sogning-har-0-resultater");
+        expect(searchParams.get("q")).to.equal("harry");
+        expect(JSON.parse(searchParams.get("facets") ?? "")).to.deep.equal(
+          facets
+        );
+      });
+    });
+
+    it("does not redirect when already on the zero hits page", () => {
+      givenSearchWithPaginationEmptyResponse();
+      cy.visit(
+        "/iframe.html?globals=&id=apps-search-result--on-zero-hits-page&viewMode=story"
+      );
+
+      // The app stays and renders the empty result state instead of
+      // redirecting to itself in a loop. A redirect fires right after the
+      // search response, so give it time to (wrongly) happen, then check
+      // the story id — it is only present on the original URL.
+      page.verifyResultsHeadingContains("0 materials");
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1000);
+      cy.url().should("include", "id=apps-search-result--on-zero-hits-page");
     });
   });
 });
