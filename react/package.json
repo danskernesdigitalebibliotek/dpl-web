@@ -99,7 +99,7 @@
     "cypress": "15.18.0",
     "cypress-terminal-report": "^7.3.3",
     "dotenv": "^16.5.0",
-    "eslint": "^9.39.4",
+    "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-webpack": "^0.13.11",
     "eslint-loader": "^4.0.2",
