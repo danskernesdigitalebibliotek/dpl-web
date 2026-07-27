@@ -22,6 +22,7 @@ import { getReservationFailureMessage } from "@/components/shared/reservationMod
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
+import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
@@ -47,7 +48,8 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const recordIds = getFaustIdsFromManifestations(physicalManifestations)
 
   const { data: patron } = usePatron()
-  const { data: availability } = useMaterialAvailability(wid, recordIds, {
+  const blacklistedBranches = useBlacklistedAvailabilityBranches()
+  const { data: availability } = useMaterialAvailability(wid, recordIds, blacklistedBranches, {
     enabled: recordIds.length > 0,
   })
   const { data: reservations } = useReservations()

@@ -13,6 +13,7 @@ import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import { isPhysicalMaterialType } from "@/components/pages/workPageLayout/helper"
 import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { getBranchTitle } from "@/lib/actions/getBranchTitle"
+import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn, getBearerTokenServerSide } from "@/lib/helpers/bearer-token"
@@ -59,10 +60,13 @@ async function WorkPage({ params }: TWorkPageProps) {
     const accessToken = await getBearerTokenServerSide("fbs", cookieStore)
     if (accessToken) {
       const config = getServiceLayerConfig(accessToken)
+      const { blacklistedAvailabilityBranches } = await getDplCmsPublicConfig()
       await Promise.allSettled([
         queryClient.prefetchQuery(patronQuery(config)),
         recordIds.length > 0 &&
-          queryClient.prefetchQuery(materialAvailabilityQuery(config, workId, recordIds)),
+          queryClient.prefetchQuery(
+            materialAvailabilityQuery(config, workId, recordIds, blacklistedAvailabilityBranches)
+          ),
         queryClient.prefetchQuery(reservationsQuery(config)),
       ])
 

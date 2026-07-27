@@ -133,6 +133,26 @@ describe("createFbsClient.getMaterialAvailability", () => {
     expect(result).toEqual({ totalCopies: 3, reservationCount: 2 })
   })
 
+  it("adds an exclude query param per blacklisted branch id", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validHoldingsBody))
+
+    await buildClient().getMaterialAvailability(["12345678"], ["775100", "775120"])
+
+    const calledUrl = vi.mocked(fetch).mock.calls[0][0] as string
+    expect(calledUrl).toContain("recordid=12345678")
+    expect(calledUrl).toContain("exclude=775100")
+    expect(calledUrl).toContain("exclude=775120")
+  })
+
+  it("omits the exclude query param when no branches are blacklisted", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validHoldingsBody))
+
+    await buildClient().getMaterialAvailability(["12345678"], [])
+
+    const calledUrl = vi.mocked(fetch).mock.calls[0][0] as string
+    expect(calledUrl).not.toContain("exclude=")
+  })
+
   it("awaits an async auth header callback", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(validHoldingsBody))
 

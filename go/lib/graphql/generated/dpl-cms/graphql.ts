@@ -290,6 +290,7 @@ export type GoConfigurationPrivate = {
 
 export type GoConfigurationPublic = {
   __typename?: 'GoConfigurationPublic';
+  blacklistedAvailabilityBranches?: Maybe<Array<Scalars['String']['output']>>;
   libraryInfo?: Maybe<GoLibraryInfo>;
   loginUrls?: Maybe<GoLoginUrls>;
   logoutUrls?: Maybe<GoLogoutUrls>;
@@ -2093,6 +2094,13 @@ export type GetBranchesQueryVariables = Exact<{
 
 export type GetBranchesQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', getBranches: Array<{ __typename?: 'Branch', isilId: string, title: string }> };
 
+export type GetBranchesByContextQueryVariables = Exact<{
+  availabilityContexts?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+}>;
+
+
+export type GetBranchesByContextQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', getBranches: Array<{ __typename?: 'Branch', isilId: string }> };
+
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2268,7 +2276,7 @@ export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } }
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', blacklistedAvailabilityBranches?: Array<string> | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
@@ -3224,6 +3232,53 @@ useSuspenseGetBranchesQuery.getKey = (variables?: GetBranchesQueryVariables) => 
 
 useGetBranchesQuery.fetcher = (variables?: GetBranchesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables, options);
 
+export const GetBranchesByContextDocument = `
+    query getBranchesByContext($availabilityContexts: [String!]) {
+  getBranches(availabilityContexts: $availabilityContexts) {
+    isilId
+  }
+}
+    `;
+
+export const useGetBranchesByContextQuery = <
+      TData = GetBranchesByContextQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesByContextQueryVariables,
+      options?: Omit<UseQueryOptions<GetBranchesByContextQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBranchesByContextQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBranchesByContextQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getBranchesByContext'] : ['getBranchesByContext', variables],
+    queryFn: fetcher<GetBranchesByContextQuery, GetBranchesByContextQueryVariables>(GetBranchesByContextDocument, variables),
+    ...options
+  }
+    )};
+
+useGetBranchesByContextQuery.getKey = (variables?: GetBranchesByContextQueryVariables) => variables === undefined ? ['getBranchesByContext'] : ['getBranchesByContext', variables];
+
+export const useSuspenseGetBranchesByContextQuery = <
+      TData = GetBranchesByContextQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesByContextQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetBranchesByContextQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetBranchesByContextQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetBranchesByContextQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getBranchesByContext'] : ['getBranchesByContext', variables],
+    queryFn: fetcher<GetBranchesByContextQuery, GetBranchesByContextQueryVariables>(GetBranchesByContextDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetBranchesByContextQuery.getKey = (variables?: GetBranchesByContextQueryVariables) => variables === undefined ? ['getBranchesByContext'] : ['getBranchesByContext', variables];
+
+
+useGetBranchesByContextQuery.fetcher = (variables?: GetBranchesByContextQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchesByContextQuery, GetBranchesByContextQueryVariables>(GetBranchesByContextDocument, variables, options);
+
 export const GetCategoriesDocument = `
     query getCategories {
   goCategories {
@@ -3435,6 +3490,7 @@ export const GetDplCmsPublicConfigurationDocument = `
       unilogin {
         municipalityId
       }
+      blacklistedAvailabilityBranches
     }
   }
 }
@@ -3840,6 +3896,7 @@ export const operationNames = {
   Query: {
     getArticleByPath: 'getArticleByPath',
     getBranches: 'getBranches',
+    getBranchesByContext: 'getBranchesByContext',
     getCategories: 'getCategories',
     getCategoryPageByPath: 'getCategoryPageByPath',
     getDplCmsPrivateConfiguration: 'getDplCmsPrivateConfiguration',
