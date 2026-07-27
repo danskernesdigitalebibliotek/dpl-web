@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@danskernesdigitalebibliotek/dpl-service-layer':
         specifier: file:../packages/service-layer
-        version: file:../packages/service-layer
+        version: file:../packages/service-layer(@tanstack/react-query@5.101.2(react@19.2.7))(react@19.2.7)
       '@next/env':
         specifier: 16.2.10
         version: 16.2.10
@@ -144,6 +144,18 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
+      '@babel/core':
+        specifier: 7.29.7
+        version: 7.29.7
+      '@babel/preset-env':
+        specifier: 7.29.7
+        version: 7.29.7(@babel/core@7.29.7)
+      '@babel/preset-react':
+        specifier: 7.29.7
+        version: 7.29.7(@babel/core@7.29.7)
+      '@babel/preset-typescript':
+        specifier: 7.29.7
+        version: 7.29.7(@babel/core@7.29.7)
       '@chromatic-com/storybook':
         specifier: ^5.2.1
         version: 5.2.1(storybook@10.5.2(@types/react@19.2.17)(prettier@3.9.4)(react@19.2.7))
@@ -240,6 +252,9 @@ importers:
       axe-playwright:
         specifier: ^2.2.2
         version: 2.2.2(playwright@1.61.1)
+      babel-loader:
+        specifier: 9.2.1
+        version: 9.2.1(@babel/core@7.29.7)(webpack@5.108.3(@swc/core@1.15.43)(esbuild@0.28.1)(lightningcss@1.32.0)(postcss@8.5.16))
       cypress:
         specifier: ^14.5.4
         version: 14.5.4
@@ -1141,6 +1156,9 @@ packages:
 
   '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer':
     resolution: {directory: ../packages/service-layer, type: directory}
+    peerDependencies:
+      '@tanstack/react-query': ^5.101.0
+      react: ^18 || ^19
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -11420,8 +11438,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer':
+  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer(@tanstack/react-query@5.101.2(react@19.2.7))(react@19.2.7)':
     dependencies:
+      '@tanstack/react-query': 5.101.2(react@19.2.7)
+      react: 19.2.7
       zod: 4.4.3
 
   '@emnapi/core@1.10.0':

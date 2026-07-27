@@ -10,10 +10,12 @@ import MappTracking from "@/components/global/mappTracking/MappTracking"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { DynamicSheet } from "@/components/shared/dynamicSheet/DynamicSheet"
+import { Toaster } from "@/components/shared/toaster/Toaster"
 import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
+import ServiceLayerProvider from "@/lib/providers/ServiceLayerProvider"
 import "@/styles/globals.css"
 
 import GlobalErrorBoundary from "./GlobalErrorBoundary"
@@ -47,12 +49,15 @@ async function RootLayout({
       <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
         <Theme>
           <ReactQueryProvider>
-            <Header />
-            <DynamicSheet />
-            <DynamicModal />
-            {children}
-            <Footer />
-            <MappTracking />
+            <ServiceLayerProvider>
+              <Header />
+              <DynamicSheet />
+              <DynamicModal />
+              <Toaster />
+              {children}
+              <Footer />
+              <MappTracking />
+            </ServiceLayerProvider>
           </ReactQueryProvider>
         </Theme>
       </DplCmsConfigContextProvider>
