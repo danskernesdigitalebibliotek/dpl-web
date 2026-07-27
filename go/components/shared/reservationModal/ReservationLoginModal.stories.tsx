@@ -12,6 +12,7 @@ const dplCmsConfig: TDplCmsPublicConfig = {
   libraryInfo: { name: "Story Bibliotek", baseURL: "https://library.example" },
   mapp: null,
   unilogin: { municipalityId: "0000" },
+  blacklistedAvailabilityBranches: [],
 }
 
 const withDplCmsConfig =

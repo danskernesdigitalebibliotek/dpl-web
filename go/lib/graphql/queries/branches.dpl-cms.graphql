@@ -4,3 +4,9 @@ query getBranches($isilId: String) {
     title
   }
 }
+
+query getBranchesByContext($availabilityContexts: [String!]) {
+  getBranches(availabilityContexts: $availabilityContexts) {
+    isilId
+  }
+}

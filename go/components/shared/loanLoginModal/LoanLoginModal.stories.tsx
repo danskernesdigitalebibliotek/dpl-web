@@ -42,6 +42,7 @@ const stubConfig: TDplCmsPublicConfig = {
   libraryInfo: { name: "Storybook Bibliotek", baseURL: "https://example.test" },
   mapp: null,
   unilogin: { municipalityId: null },
+  blacklistedAvailabilityBranches: [],
 }
 
 const seedClient = () => {
