@@ -1,0 +1,130 @@
+---
+# Automatically merge Dependabot pull requests.
+#
+# A PR is merged only when BOTH conditions hold:
+#   1. It is not a major version bump (major bumps stay for manual review).
+#   2. Every other check on the PR has finished and none of them failed.
+#
+# Condition 1 is enforced via the update-type reported by
+# dependabot/fetch-metadata. For grouped updates the reported update-type is
+# the largest change in the group, so a group containing a single major bump
+# is (correctly) held back.
+#
+# Condition 2 is enforced directly here: the "Wait for checks" step polls the
+# PR's check runs (excluding this workflow's own run) until they have all
+# completed, then merges only if none failed. This does NOT rely on branch
+# protection / required status checks — the workflow does the gating itself.
+#
+# Self-gating (rather than branch-protection required checks) is deliberate:
+# CI here is path-filtered per package, and branch protection matches required
+# checks by name — so requiring them would leave PRs that don't touch a given
+# package stuck "waiting" on checks that never run, and the required-check list
+# would need updating every time a package's tests change.
+#
+# Caveats of this approach:
+#   * There is an inherent race: sibling CI workflows create their check runs a
+#     few seconds after this one starts. The initial delay plus the "settled
+#     for two consecutive polls" requirement in the wait step mitigate it, but
+#     it cannot be made mathematically race-proof without knowing the exact set
+#     of checks a PR should run.
+#   * If a Dependabot PR happens to trigger no other checks at all, the wait
+#     loop times out and the PR is NOT merged (safe default).
+
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+
+# Dependabot-triggered runs get a read-only GITHUB_TOKEN by default; grant the
+# write scopes the approve + merge steps need.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot-auto-merge:
+    name: Auto-merge Dependabot
+    runs-on: ubuntu-latest
+    # Only ever act on Dependabot's own PRs.
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for checks to finish and confirm none failed
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # This workflow's own check run — excluded from the wait so we don't
+          # deadlock waiting on ourselves.
+          SELF: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+
+          # Give sibling CI workflows time to register their check runs before
+          # we start inspecting the PR's check list. This job runs autonomously,
+          # so a generous delay costs nothing and shrinks the startup race.
+          sleep 90
+
+          # We only merge once the check list has been "settled" — at least one
+          # non-self check present and zero pending — for two consecutive polls
+          # (~60s apart). Requiring stability guards against the race where a
+          # sibling workflow registers its check run slightly later than the
+          # others: it will still be pending on the next poll and reset the
+          # counter.
+          stable=0
+          for attempt in $(seq 1 40); do
+            json=$(gh pr checks "$PR_URL" --json name,bucket,workflow 2>/dev/null) || true
+            [ -z "${json:-}" ] && json='[]'
+
+            total=$(jq --arg self "$SELF" \
+              '[.[] | select(.workflow != $self)] | length' <<<"$json")
+            pending=$(jq --arg self "$SELF" \
+              '[.[] | select(.workflow != $self) | select(.bucket=="pending")] | length' <<<"$json")
+            failed=$(jq --arg self "$SELF" \
+              '[.[] | select(.workflow != $self) | select(.bucket=="fail" or .bucket=="cancel")] | length' <<<"$json")
+
+            echo "Attempt ${attempt}: other-checks=${total} pending=${pending} failed=${failed} stable=${stable}"
+
+            if [ "$failed" -gt 0 ]; then
+              echo "::error::One or more checks failed — not merging."
+              gh pr checks "$PR_URL" || true
+              exit 1
+            fi
+
+            if [ "$total" -gt 0 ] && [ "$pending" -eq 0 ]; then
+              stable=$((stable + 1))
+              if [ "$stable" -ge 2 ]; then
+                echo "All checks finished successfully and the list is stable."
+                exit 0
+              fi
+            else
+              stable=0
+            fi
+
+            sleep 60
+          done
+
+          echo "::error::Timed out waiting for checks to complete — not merging."
+          exit 1
+
+      - name: Approve the PR
+        # Needed if the base branch requires a review before merging. Requires
+        # the repository/org setting "Allow GitHub Actions to create and
+        # approve pull requests".
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        run: gh pr merge --rebase "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
