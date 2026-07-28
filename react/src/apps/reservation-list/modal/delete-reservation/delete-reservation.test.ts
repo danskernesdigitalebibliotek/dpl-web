@@ -10,7 +10,9 @@ describe("Delete reservation modal", () => {
     );
 
     // Sets time to a specific date
-    cy.clock(clockDate);
+    // Only Date is faked. Freezing setTimeout would stall TanStack Query's
+    // notify scheduler, leaving every component stuck in its loading state.
+    cy.clock(clockDate, ["Date"]);
 
     cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
       patron: {

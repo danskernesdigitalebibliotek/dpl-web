@@ -23,7 +23,9 @@ describe("Reservation details modal", () => {
 
     // Sets time to a specific date. cy.clock() applies to the application
     // under test automatically when called before cy.visit().
-    cy.clock(clockDate);
+    // Only Date is faked. Freezing setTimeout would stall TanStack Query's
+    // notify scheduler, leaving every component stuck in its loading state.
+    cy.clock(clockDate, ["Date"]);
 
     cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
       statusCode: 200,
