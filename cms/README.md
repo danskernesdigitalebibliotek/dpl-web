@@ -1,7 +1,7 @@
 # The library CMS, powered by Drupal (formerly 'dpl-cms')
 
-This is the main repository used for building the core Drupal CMS which is used
-by the Danish Public Libraries.
+This is the subproject for the core Drupal CMS which is used by the Danish
+Public Libraries.
 
 You can find the full documentation, along with setup instructions in either the
 [documentation site](https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-CMS/),
