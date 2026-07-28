@@ -360,3 +360,7 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "@graphql-codegen/typescript-operations"
         versions: [">=6.0.0"]
+      # Upgrading babel to v8 is nontrivial and causes CMS Cypress tests for
+      # Adgangsplatformen to break. DDFNEXT-1548
+      - dependency-name: "@babel/*"
+        versions: [ ">=8.0.0" ]
