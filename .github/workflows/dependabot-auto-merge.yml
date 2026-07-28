@@ -41,6 +41,16 @@ name: Dependabot auto-merge
 on:
   pull_request:
 
+concurrency:
+  # Per-PR group: an update to a PR (e.g. Dependabot rebasing it after another
+  # PR merges) cancels the in-flight run — which may
+  # be part-way through a long check-wait against a now-stale base — and starts
+  # fresh. Runs for different PRs do not interfere with each other. This
+  # workflow only triggers on pull_request, so github.ref is always
+  # refs/pull/<n>/merge, making the group effectively per-PR.
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # Dependabot-triggered runs get a read-only GITHUB_TOKEN by default; grant the
 # write scopes the approve + merge steps need.
 permissions:
@@ -60,7 +70,8 @@ jobs:
     # start. `queue: max` lets up to 100 runs sit *pending* (consuming no
     # runner) while exactly one executes at a time; when it finishes, the next
     # starts. Serialising the merge step also avoids several PRs trying to
-    # merge into the same base at once.
+    # merge into the same base at once. This is separate from the workflow-level
+    # per-PR group above, which handles cancel-on-update for a single PR.
     concurrency:
       group: dependabot-auto-merge
       queue: max
