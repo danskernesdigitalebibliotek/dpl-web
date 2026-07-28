@@ -2,13 +2,19 @@
 # Automatically merge Dependabot pull requests.
 #
 # A PR is merged only when BOTH conditions hold:
-#   1. It is not a major version bump (major bumps stay for manual review).
+#   1. It is explicitly a minor or patch version bump. Anything else — major
+#      bumps, or updates whose type Dependabot cannot determine — stays for
+#      manual review.
 #   2. Every other check on the PR has finished and none of them failed.
 #
 # Condition 1 is enforced via the update-type reported by
-# dependabot/fetch-metadata. For grouped updates the reported update-type is
-# the largest change in the group, so a group containing a single major bump
-# is (correctly) held back.
+# dependabot/fetch-metadata. We match the ALLOWED types explicitly
+# (semver-minor / semver-patch) rather than excluding semver-major, so the
+# check fails closed: fetch-metadata does not document a guaranteed value when
+# the update type can't be determined (e.g. non-semver versions), and an empty
+# or unexpected value must NOT be treated as safe to merge. For grouped updates
+# the reported update-type is the largest change in the group, so a group
+# containing a single major bump is (correctly) held back.
 #
 # Condition 2 is enforced directly here: the "Wait for checks" step polls the
 # PR's check runs (excluding this workflow's own run) until they have all
@@ -58,7 +64,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Wait for checks to finish and confirm none failed
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -119,14 +125,14 @@ jobs:
         # Needed if the base branch requires a review before merging. Requires
         # the repository/org setting "Allow GitHub Actions to create and
         # approve pull requests".
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: gh pr merge --rebase "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
