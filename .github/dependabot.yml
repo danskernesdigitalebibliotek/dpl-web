@@ -282,6 +282,9 @@ updates:
           - "@types/react"
           - "react-dom"
           - "@types/react-dom"
+      react-query:
+        patterns:
+          - "@tanstack/react-query"
       redux:
         patterns:
           - "@reduxjs/toolkit"
@@ -345,7 +348,7 @@ updates:
         update-types: ["version-update:semver-major"]
       # codegen breaks with these versions. DDFNEXT-1455
       # typescript / typescript-operations v6 emit a second set of input/enum
-      # types that collide with typescript-react-query@6 legacyMode output.
+      # types that collide with the typescript-react-query@6 output.
       # graphql 17 is also unsupported by the pinned codegen toolchain (all
       # plugins peer-require graphql ^16), so codegen crashes on it.
       - dependency-name: "graphql"
