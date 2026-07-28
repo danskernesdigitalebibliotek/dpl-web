@@ -1,0 +1,6 @@
+"""
+Brand settings for the application.
+"""
+type BrandSettings {
+  logoUrl: String
+}

@@ -48,9 +48,9 @@ class DplOpeningHoursCreatePOSTRequestRepetition
      *
      * @var int|null
      * @SerializedName("id")
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\Type("int")]
     protected ?int $id = null;
 
     /**
@@ -58,26 +58,26 @@ class DplOpeningHoursCreatePOSTRequestRepetition
      *
      * @var string|null
      * @SerializedName("type")
-     * @Assert\NotNull()
-     * @Assert\Choice({ "none", "weekly" })
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Choice(['none', 'weekly'])]
+    #[Assert\Type("string")]
     protected ?string $type = 'none';
 
     /**
      * @var DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData|null
      * @SerializedName("weekly_data")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData")]
     protected ?DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData $weeklyData = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->id = array_key_exists('id', $data) ? $data['id'] : $this->id;
@@ -96,21 +96,22 @@ class DplOpeningHoursCreatePOSTRequestRepetition
         return $this->id;
     }
 
-
-
     /**
-     * Sets id.
-     *
-     * @param int|null $id  A serial unique id of the repetition. All instances with the same id belongs to the same repetition.
-     *
-     * @return $this
-     */
+    * Sets id.
+    *
+    * @param int|null $id  A serial unique id of the repetition. All instances with the same id belongs to the same repetition.
+    *
+    * @return $this
+    */
     public function setId(?int $id = null): self
     {
         $this->id = $id;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets type.
@@ -122,21 +123,22 @@ class DplOpeningHoursCreatePOSTRequestRepetition
         return $this->type;
     }
 
-
-
     /**
-     * Sets type.
-     *
-     * @param string|null $type  If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.
-     *
-     * @return $this
-     */
+    * Sets type.
+    *
+    * @param string|null $type  If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.
+    *
+    * @return $this
+    */
     public function setType(?string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets weeklyData.
@@ -148,21 +150,22 @@ class DplOpeningHoursCreatePOSTRequestRepetition
         return $this->weeklyData;
     }
 
-
-
     /**
-     * Sets weeklyData.
-     *
-     * @param DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData|null $weeklyData
-     *
-     * @return $this
-     */
+    * Sets weeklyData.
+    *
+    * @param DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData|null $weeklyData
+    *
+    * @return $this
+    */
     public function setWeeklyData(?DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData $weeklyData = null): self
     {
         $this->weeklyData = $weeklyData;
 
         return $this;
     }
+
+
+
 }
 
 

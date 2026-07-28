@@ -45,6 +45,15 @@ interface AppContentElement {
   id: String!
 }
 
+type AppContentElementGoLinkbox implements AppContentElement {
+  color: String
+  contentId: String!
+  description: String!
+  id: String!
+  image: String
+  title: String!
+}
+
 type AppContentElementGoMaterialSliderAutomatic implements AppContentElement {
   cql: String!
   id: String!
@@ -113,6 +122,12 @@ type AppContentElementVideoBundleManual implements AppContentElement {
   workIds: [String!]!
 }
 
+type AppFeesAndPaymentInfo {
+  feesAndReplacementCostsUrl: String
+  paymentSiteButtonLabel: String
+  paymentSiteUrl: String
+}
+
 type AppPage {
   elements: [AppContentElement!]!
   image: String
@@ -161,6 +176,10 @@ type BranchAvailabilityContext {
   availability: Boolean!
   reservations: Boolean!
   search: Boolean!
+}
+
+type BrandSettings {
+  logoUrl: String
 }
 
 type CQLSearch {
@@ -935,7 +954,9 @@ scalar PhoneNumber
 
 type Query {
   dplTokens: DplTokens
+  getAppBrandSettings: BrandSettings!
   getAppCategories(id: String, type: AppType!): [AppCategory!]!
+  getAppFeesAndPaymentInfo: AppFeesAndPaymentInfo
   getAppPage(id: String!): AppPage
   getBranches(availabilityContexts: [String!], cmsConfigured: Boolean, isilId: String): [Branch!]!
   goCategories(page: Int = 0): GoCategoriesResult

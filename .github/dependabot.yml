@@ -9,6 +9,8 @@ updates:
   # GitHub Actions - applies to all workflows in .github/workflows
   - package-ecosystem: github-actions
     directory: "/"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 20
     schedule:
       interval: weekly
@@ -22,6 +24,8 @@ updates:
   # CMS - Composer dependencies
   - package-ecosystem: composer
     directory: "/cms"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 20
     groups:
       drupal-core-minor-releases:
@@ -75,6 +79,8 @@ updates:
   # CMS - npm dependencies
   - package-ecosystem: npm
     directory: "/cms"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 20
     groups:
       typescript-eslint:
@@ -100,6 +106,8 @@ updates:
   # Design System - npm dependencies
   - package-ecosystem: npm
     directory: "/design-system"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 20
     versioning-strategy: increase
     schedule:
@@ -144,6 +152,8 @@ updates:
   # Go (Next.js) - npm dependencies
   - package-ecosystem: npm
     directory: "/go"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 20
     versioning-strategy: increase
     schedule:
@@ -241,6 +251,8 @@ updates:
   # React - npm dependencies
   - package-ecosystem: npm
     directory: "/react"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 20
     versioning-strategy: increase
     schedule:

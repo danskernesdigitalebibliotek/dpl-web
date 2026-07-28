@@ -48,16 +48,16 @@ class DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData
      *
      * @var \DateTime|null
      * @SerializedName("end_date")
-     * @Assert\Type("\Date")
      * @Type("DateTime<'Y-m-d'>")
-     */
+    */
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $endDate = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->endDate = array_key_exists('endDate', $data) ? $data['endDate'] : $this->endDate;
@@ -74,21 +74,22 @@ class DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData
         return $this->endDate;
     }
 
-
-
     /**
-     * Sets endDate.
-     *
-     * @param \DateTime|null $endDate  The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'
-     *
-     * @return $this
-     */
+    * Sets endDate.
+    *
+    * @param \DateTime|null $endDate  The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'
+    *
+    * @return $this
+    */
     public function setEndDate(?\DateTime $endDate = null): self
     {
         $this->endDate = $endDate;
 
         return $this;
     }
+
+
+
 }
 
 

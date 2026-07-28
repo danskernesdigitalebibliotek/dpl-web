@@ -36,6 +36,9 @@ import materialContentsArgs, {
 import playerModalArgs, {
   argTypes as playerModalArgTypes
 } from "../../core/storybook/playerModalArgs";
+import openOrderArgs, {
+  argTypes as openOrderArgTypes
+} from "../../core/storybook/openOrderArgs";
 
 const meta: Meta<typeof MaterialEntry> = {
   title: "Apps / Material",
@@ -55,6 +58,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...editionSwitchModalArgTypes,
     ...materialContentsArgTypes,
     ...playerModalArgTypes,
+    ...openOrderArgTypes,
     searchUrl: {
       description: "Path to the search result page",
       control: { type: "text" }
@@ -785,82 +789,6 @@ const meta: Meta<typeof MaterialEntry> = {
     interestPeriodsConfig: {
       control: { type: "text" }
     },
-    openOrderResponseTitleText: {
-      description: "Reservation Success title",
-      control: { type: "text" }
-    },
-    openOrderAuthenticationErrorText: {
-      description: "Open order authentication error text",
-      control: { type: "text" }
-    },
-    openOrderUserBlockedByAgencyText: {
-      description: "Open order user blocked by agency text",
-      control: { type: "text" }
-    },
-    openOrderUserNotVerifiedText: {
-      description: "Open order user not verified text",
-      control: { type: "text" }
-    },
-    openOrderUserNoLongerExistOnAgencyText: {
-      description: "Open order user no longer exists on agency text",
-      control: { type: "text" }
-    },
-    openOrderInvalidOrderText: {
-      description: "Open order invalid order text",
-      control: { type: "text" }
-    },
-    openOrderNotOwnedIllLocText: {
-      description: "Open order item localized for ILL text",
-      control: { type: "text" }
-    },
-    openOrderNotOwnedNoIllLocText: {
-      description: "Open order item not localized for ILL text",
-      control: { type: "text" }
-    },
-    openOrderNotOwnedWrongIllMediumtypeText: {
-      description: "Open order wrong ILL medium type text",
-      control: { type: "text" }
-    },
-    openOrderNoServicerequesterText: {
-      description: "Open order no service requester text",
-      control: { type: "text" }
-    },
-    openOrderOrsErrorText: {
-      description: "Open order ORS error text",
-      control: { type: "text" }
-    },
-    openOrderStatusOwnedAcceptedText: {
-      description: "Open order status owned accepted text",
-      control: { type: "text" }
-    },
-    openOrderOwnedOwnCatalogueText: {
-      description: "Open order available in own catalogue text",
-      control: { type: "text" }
-    },
-    openOrderOwnedWrongMediumtypeText: {
-      description: "Open order wrong medium type for available item text",
-      control: { type: "text" }
-    },
-    openOrderServiceUnavailableText: {
-      description: "Open order service unavailable text",
-      control: { type: "text" }
-    },
-    openOrderUnknownErrorText: {
-      description: "Open order unknown error text",
-      control: { type: "text" }
-    },
-    openOrderUnknownPickupagencyText: {
-      description: "Open order unknown pickup agency text",
-      control: { type: "text" }
-    },
-    openOrderUnknownUserText: {
-      description: "Open order unknown user text",
-      control: { type: "text" }
-    },
-    openOrderErrorMissingPincodeText: {
-      description: "Open order error missing pincode text",
-      control: { type: "text" }
-    },
     shareOnFacebookText: {
       description: "Share on Facebook",
       control: { type: "text" }
@@ -895,6 +823,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...editionSwitchModalArgs,
     ...materialContentsArgs,
     ...playerModalArgs,
+    ...openOrderArgs,
     searchUrl: "/search",
     materialUrl: "/work/:workid",
     advancedSearchUrl: "/advancedsearch",
@@ -1125,31 +1054,6 @@ const meta: Meta<typeof MaterialEntry> = {
       '{ "threshold": "1", "matchStrings": ["Standard"], "enabled": "true" }',
     interestPeriodsConfig:
       '{ "interestPeriods":[ { "value":14, "label":"14 days" }, { "value":30, "label":"1 month" }, { "value":60, "label":"2 months" }, { "value":90, "label":"3 months" }, { "value":180, "label":"6 months" }, { "value":365, "label":"1 year" } ], "defaultInterestPeriod":{ "value":"14", "label":"14 days" } }',
-    openOrderResponseTitleText: "Order from another library:",
-    openOrderAuthenticationErrorText: "Authentication error occurred",
-    openOrderUserBlockedByAgencyText: "You are blocked by the agency",
-    openOrderUserNotVerifiedText: "User could not be verified",
-    openOrderUserNoLongerExistOnAgencyText:
-      "User no longer exists at the specified agency",
-    openOrderInvalidOrderText: "Your order is invalid",
-    openOrderNotOwnedIllLocText:
-      "Your material has been ordered from another library",
-    openOrderNotOwnedNoIllLocText:
-      "Item not available and not localized for ILL",
-    openOrderNotOwnedWrongIllMediumtypeText:
-      "Item not available, ILL of this medium type not accepted",
-    openOrderNoServicerequesterText: "Service requester is obligatory",
-    openOrderOrsErrorText: "Error occurred while sending order to ORS",
-    openOrderStatusOwnedAcceptedText: "Your order is accepted",
-    openOrderOwnedOwnCatalogueText:
-      "Item available, order through the library's catalogue",
-    openOrderOwnedWrongMediumtypeText:
-      "Item available but medium type not accepted",
-    openOrderServiceUnavailableText: "Service is currently unavailable",
-    openOrderUnknownErrorText: "An unknown error occurred",
-    openOrderUnknownPickupagencyText: "Specified pickup agency not found",
-    openOrderUnknownUserText: "User not found",
-    openOrderErrorMissingPincodeText: "Missing pincode",
     shareOnFacebookText: "Share on Facebook",
     shareOnFacebookAriaLabelText: "Share this page on Facebook",
     copyLinkText: "Copy link",

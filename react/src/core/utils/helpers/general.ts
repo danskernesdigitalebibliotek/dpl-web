@@ -36,6 +36,20 @@ export const getManifestationPublicationYear = (
   return manifestation.edition?.publicationYear?.display || null;
 };
 
+// Parses the edition number from the edition summary. The number can appear
+// anywhere in the string and the FBI data leads with the year, e.g.
+// "2025 (167. ajourførte udgave)" -> 167. Returns null when no "N. udgave"
+// pattern is present so the caller can fall back to leaving the order
+// untouched.
+export const getManifestationEditionNumber = (
+  manifestation: Manifestation
+): number | null => {
+  const match = manifestation.edition?.summary?.match(
+    /(\d+)\.\s*(?:\S+\s+)?udgave/i
+  );
+  return match ? Number(match[1]) : null;
+};
+
 export const orderManifestationsByYear = (
   manifestations: Manifestation[],
   order: "asc" | "desc" = "desc"
@@ -43,10 +57,22 @@ export const orderManifestationsByYear = (
   return manifestations.sort((a, b) => {
     const currentDate = Number(getManifestationPublicationYear(a));
     const prevDate = Number(getManifestationPublicationYear(b));
-    if (order === "desc") {
-      return prevDate - currentDate;
+    const yearComparison =
+      order === "desc" ? prevDate - currentDate : currentDate - prevDate;
+    if (yearComparison !== 0) {
+      return yearComparison;
     }
-    return currentDate - prevDate;
+    // Tiebreaker: for editions sharing a publication year, order by edition
+    // number (e.g. "167. udgave" before "166. udgave") to match bibliotek.dk
+    // and ensure "latest edition" picks the actual newest one.
+    const currentEdition = getManifestationEditionNumber(a);
+    const prevEdition = getManifestationEditionNumber(b);
+    if (currentEdition === null || prevEdition === null) {
+      return 0;
+    }
+    return order === "desc"
+      ? prevEdition - currentEdition
+      : currentEdition - prevEdition;
   });
 };
 
@@ -610,6 +636,81 @@ if (import.meta.vitest) {
         "some-url-param": "some-url-param-value",
         foo: "bar"
       });
+    });
+  });
+
+  const manifestationWithEdition = (summary: string, year: string) =>
+    ({
+      edition: { summary, publicationYear: { display: year } }
+    }) as Manifestation;
+
+  describe("getManifestationEditionNumber", () => {
+    it("parses the edition number from a year-leading summary", () => {
+      expect(
+        getManifestationEditionNumber(
+          manifestationWithEdition("2025 (167. ajourførte udgave)", "2025")
+        )
+      ).toBe(167);
+    });
+
+    it("parses the edition number from a plain 'N. udgave' summary", () => {
+      expect(
+        getManifestationEditionNumber(
+          manifestationWithEdition("167. udgave, 2025", "2025")
+        )
+      ).toBe(167);
+    });
+
+    it("returns null when the summary has no edition number", () => {
+      expect(
+        getManifestationEditionNumber(
+          manifestationWithEdition("2025 (særudgave)", "2025")
+        )
+      ).toBeNull();
+    });
+  });
+
+  describe("orderManifestationsByYear", () => {
+    // Editions sharing a publication year must be ordered by edition number
+    // (highest first), so "167. udgave" beats "166. udgave" and "Seneste
+    // udgave" picks the actual newest edition.
+    it("orders same-year editions by edition number regardless of input order", () => {
+      const ed166 = manifestationWithEdition(
+        "2025 (166. ajourførte udgave)",
+        "2025"
+      );
+      const ed167 = manifestationWithEdition(
+        "2025 (167. ajourførte udgave)",
+        "2025"
+      );
+      const older = manifestationWithEdition("2024 (1. udgave)", "2024");
+
+      // Both incoming orders must yield the same result. A year-only sort is
+      // stable and would leave the tied editions untouched, so it would only
+      // match one of these two orderings — proving the tiebreaker does the work.
+      expect(orderManifestationsByYear([ed166, ed167, older])).toEqual([
+        ed167,
+        ed166,
+        older
+      ]);
+      expect(orderManifestationsByYear([ed167, ed166, older])).toEqual([
+        ed167,
+        ed166,
+        older
+      ]);
+    });
+
+    it("picks the highest edition of the tied year as the latest manifestation", () => {
+      const ed166 = manifestationWithEdition(
+        "2025 (166. ajourførte udgave)",
+        "2025"
+      );
+      const ed167 = manifestationWithEdition(
+        "2025 (167. ajourførte udgave)",
+        "2025"
+      );
+
+      expect(getLatestManifestation([ed166, ed167])).toBe(ed167);
     });
   });
 }

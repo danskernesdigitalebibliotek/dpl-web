@@ -77,6 +77,16 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementGoLinkbox = AppContentElement & {
+  __typename?: 'AppContentElementGoLinkbox';
+  color?: Maybe<Scalars['String']['output']>;
+  contentId: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
 export type AppContentElementGoMaterialSliderAutomatic = AppContentElement & {
   __typename?: 'AppContentElementGoMaterialSliderAutomatic';
   cql: Scalars['String']['output'];
@@ -155,6 +165,13 @@ export type AppContentElementVideoBundleManual = AppContentElement & {
   workIds: Array<Scalars['String']['output']>;
 };
 
+export type AppFeesAndPaymentInfo = {
+  __typename?: 'AppFeesAndPaymentInfo';
+  feesAndReplacementCostsUrl?: Maybe<Scalars['String']['output']>;
+  paymentSiteButtonLabel?: Maybe<Scalars['String']['output']>;
+  paymentSiteUrl?: Maybe<Scalars['String']['output']>;
+};
+
 export type AppPage = {
   __typename?: 'AppPage';
   elements: Array<AppContentElement>;
@@ -207,6 +224,11 @@ export type BranchAvailabilityContext = {
   availability: Scalars['Boolean']['output'];
   reservations: Scalars['Boolean']['output'];
   search: Scalars['Boolean']['output'];
+};
+
+export type BrandSettings = {
+  __typename?: 'BrandSettings';
+  logoUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export type CqlSearch = {
@@ -1058,7 +1080,9 @@ export type ParagraphWebform = ParagraphInterface & {
 export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
+  getAppBrandSettings: BrandSettings;
   getAppCategories: Array<AppCategory>;
+  getAppFeesAndPaymentInfo?: Maybe<AppFeesAndPaymentInfo>;
   getAppPage?: Maybe<AppPage>;
   getBranches: Array<Branch>;
   goCategories?: Maybe<GoCategoriesResult>;

@@ -48,10 +48,10 @@ class EventsGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("uuid")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $uuid = null;
 
     /**
@@ -59,10 +59,10 @@ class EventsGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("title")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $title = null;
 
     /**
@@ -70,9 +70,9 @@ class EventsGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("description")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $description = null;
 
     /**
@@ -80,10 +80,10 @@ class EventsGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("url")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $url = null;
 
     /**
@@ -91,10 +91,10 @@ class EventsGET200ResponseInner
      *
      * @var \DateTime|null
      * @SerializedName("created_at")
-     * @Assert\NotNull()
-     * @Assert\Type("\DateTime"))
      * @Type("DateTime")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $createdAt = null;
 
     /**
@@ -102,10 +102,10 @@ class EventsGET200ResponseInner
      *
      * @var \DateTime|null
      * @SerializedName("updated_at")
-     * @Assert\NotNull()
-     * @Assert\Type("\DateTime"))
      * @Type("DateTime")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $updatedAt = null;
 
     /**
@@ -113,33 +113,33 @@ class EventsGET200ResponseInner
      *
      * @var bool|null
      * @SerializedName("ticket_manager_relevance")
-     * @Assert\Type("bool")
      * @Type("bool")
-     */
+    */
+    #[Assert\Type("bool")]
     protected ?bool $ticketManagerRelevance = null;
 
     /**
      * @var EventsGET200ResponseInnerImage|null
      * @SerializedName("image")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage")]
     protected ?EventsGET200ResponseInnerImage $image = null;
 
     /**
      * @var EventsGET200ResponseInnerOriginalImage|null
      * @SerializedName("originalImage")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage")]
     protected ?EventsGET200ResponseInnerOriginalImage $originalImage = null;
 
     /**
      * @var EventsGET200ResponseInnerTeaserImage|null
      * @SerializedName("teaserImage")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage")]
     protected ?EventsGET200ResponseInnerTeaserImage $teaserImage = null;
 
     /**
@@ -147,11 +147,11 @@ class EventsGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("state")
-     * @Assert\NotNull()
-     * @Assert\Choice({ "TicketSaleNotOpen", "Active", "SoldOut", "Cancelled", "Occurred" })
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Choice(['TicketSaleNotOpen', 'Active', 'SoldOut', 'Cancelled', 'Occurred'])]
+    #[Assert\Type("string")]
     protected ?string $state = null;
 
     /**
@@ -159,19 +159,19 @@ class EventsGET200ResponseInner
      *
      * @var bool|null
      * @SerializedName("all_day")
-     * @Assert\Type("bool")
      * @Type("bool")
-     */
+    */
+    #[Assert\Type("bool")]
     protected ?bool $allDay = null;
 
     /**
      * @var EventsGET200ResponseInnerDateTime|null
      * @SerializedName("date_time")
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime")]
     protected ?EventsGET200ResponseInnerDateTime $dateTime = null;
 
     /**
@@ -179,19 +179,19 @@ class EventsGET200ResponseInner
      *
      * @var string[]|null
      * @SerializedName("branches")
-     * @Assert\All({
-     *   @Assert\Type("string")
-     * })
      * @Type("array<string>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("string"),
+    ])]
     protected ?array $branches = null;
 
     /**
      * @var EventsGET200ResponseInnerAddress|null
      * @SerializedName("address")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")]
     protected ?EventsGET200ResponseInnerAddress $address = null;
 
     /**
@@ -199,11 +199,11 @@ class EventsGET200ResponseInner
      *
      * @var string[]|null
      * @SerializedName("categories")
-     * @Assert\All({
-     *   @Assert\Type("string")
-     * })
      * @Type("array<string>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("string"),
+    ])]
     protected ?array $categories = null;
 
     /**
@@ -211,11 +211,11 @@ class EventsGET200ResponseInner
      *
      * @var string[]|null
      * @SerializedName("audiences")
-     * @Assert\All({
-     *   @Assert\Type("string")
-     * })
      * @Type("array<string>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("string"),
+    ])]
     protected ?array $audiences = null;
 
     /**
@@ -223,11 +223,11 @@ class EventsGET200ResponseInner
      *
      * @var string[]|null
      * @SerializedName("tags")
-     * @Assert\All({
-     *   @Assert\Type("string")
-     * })
      * @Type("array<string>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("string"),
+    ])]
     protected ?array $tags = null;
 
     /**
@@ -235,11 +235,11 @@ class EventsGET200ResponseInner
      *
      * @var string[]|null
      * @SerializedName("partners")
-     * @Assert\All({
-     *   @Assert\Type("string")
-     * })
      * @Type("array<string>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("string"),
+    ])]
     protected ?array $partners = null;
 
     /**
@@ -247,11 +247,11 @@ class EventsGET200ResponseInner
      *
      * @var EventsGET200ResponseInnerTicketCategoriesInner[]|null
      * @SerializedName("ticket_categories")
-     * @Assert\All({
-     *   @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner")
-     * })
      * @Type("array<DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner"),
+    ])]
     protected ?array $ticketCategories = null;
 
     /**
@@ -259,17 +259,17 @@ class EventsGET200ResponseInner
      *
      * @var int|null
      * @SerializedName("ticket_capacity")
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\Type("int")]
     protected ?int $ticketCapacity = null;
 
     /**
      * @var EventsGET200ResponseInnerSeries|null
      * @SerializedName("series")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries")]
     protected ?EventsGET200ResponseInnerSeries $series = null;
 
     /**
@@ -277,17 +277,17 @@ class EventsGET200ResponseInner
      *
      * @var string|null
      * @SerializedName("body")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $body = null;
 
     /**
      * @var EventPATCHRequestExternalData|null
      * @SerializedName("external_data")
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData")
-     */
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData")]
     protected ?EventPATCHRequestExternalData $externalData = null;
 
     /**
@@ -295,18 +295,18 @@ class EventsGET200ResponseInner
      *
      * @var string[]|null
      * @SerializedName("screen_names")
-     * @Assert\All({
-     *   @Assert\Type("string")
-     * })
      * @Type("array<string>")
-     */
+    */
+    #[Assert\All([
+        new Assert\Type("string"),
+    ])]
     protected ?array $screenNames = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
@@ -347,21 +347,22 @@ class EventsGET200ResponseInner
         return $this->uuid;
     }
 
-
-
     /**
-     * Sets uuid.
-     *
-     * @param string|null $uuid  A unique identifier for the event.
-     *
-     * @return $this
-     */
+    * Sets uuid.
+    *
+    * @param string|null $uuid  A unique identifier for the event.
+    *
+    * @return $this
+    */
     public function setUuid(?string $uuid): self
     {
         $this->uuid = $uuid;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets title.
@@ -373,21 +374,22 @@ class EventsGET200ResponseInner
         return $this->title;
     }
 
-
-
     /**
-     * Sets title.
-     *
-     * @param string|null $title  The event title.
-     *
-     * @return $this
-     */
+    * Sets title.
+    *
+    * @param string|null $title  The event title.
+    *
+    * @return $this
+    */
     public function setTitle(?string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets description.
@@ -399,21 +401,22 @@ class EventsGET200ResponseInner
         return $this->description;
     }
 
-
-
     /**
-     * Sets description.
-     *
-     * @param string|null $description  The short event description.
-     *
-     * @return $this
-     */
+    * Sets description.
+    *
+    * @param string|null $description  The short event description.
+    *
+    * @return $this
+    */
     public function setDescription(?string $description = null): self
     {
         $this->description = $description;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets url.
@@ -425,21 +428,22 @@ class EventsGET200ResponseInner
         return $this->url;
     }
 
-
-
     /**
-     * Sets url.
-     *
-     * @param string|null $url  An absolute URL end users should use to view the event at the website.
-     *
-     * @return $this
-     */
+    * Sets url.
+    *
+    * @param string|null $url  An absolute URL end users should use to view the event at the website.
+    *
+    * @return $this
+    */
     public function setUrl(?string $url): self
     {
         $this->url = $url;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets createdAt.
@@ -451,21 +455,22 @@ class EventsGET200ResponseInner
         return $this->createdAt;
     }
 
-
-
     /**
-     * Sets createdAt.
-     *
-     * @param \DateTime|null $createdAt  When the event was created. In ISO 8601 format.
-     *
-     * @return $this
-     */
+    * Sets createdAt.
+    *
+    * @param \DateTime|null $createdAt  When the event was created. In ISO 8601 format.
+    *
+    * @return $this
+    */
     public function setCreatedAt(?\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets updatedAt.
@@ -477,21 +482,22 @@ class EventsGET200ResponseInner
         return $this->updatedAt;
     }
 
-
-
     /**
-     * Sets updatedAt.
-     *
-     * @param \DateTime|null $updatedAt  When the event was last updated. In ISO 8601 format.
-     *
-     * @return $this
-     */
+    * Sets updatedAt.
+    *
+    * @param \DateTime|null $updatedAt  When the event was last updated. In ISO 8601 format.
+    *
+    * @return $this
+    */
     public function setUpdatedAt(?\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets ticketManagerRelevance.
@@ -503,21 +509,22 @@ class EventsGET200ResponseInner
         return $this->ticketManagerRelevance;
     }
 
-
-
     /**
-     * Sets ticketManagerRelevance.
-     *
-     * @param bool|null $ticketManagerRelevance  Whether the event is marked as relevant for ticket management systems
-     *
-     * @return $this
-     */
+    * Sets ticketManagerRelevance.
+    *
+    * @param bool|null $ticketManagerRelevance  Whether the event is marked as relevant for ticket management systems
+    *
+    * @return $this
+    */
     public function setTicketManagerRelevance(?bool $ticketManagerRelevance = null): self
     {
         $this->ticketManagerRelevance = $ticketManagerRelevance;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets image.
@@ -529,21 +536,22 @@ class EventsGET200ResponseInner
         return $this->image;
     }
 
-
-
     /**
-     * Sets image.
-     *
-     * @param EventsGET200ResponseInnerImage|null $image
-     *
-     * @return $this
-     */
+    * Sets image.
+    *
+    * @param EventsGET200ResponseInnerImage|null $image
+    *
+    * @return $this
+    */
     public function setImage(?EventsGET200ResponseInnerImage $image = null): self
     {
         $this->image = $image;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets originalImage.
@@ -555,21 +563,22 @@ class EventsGET200ResponseInner
         return $this->originalImage;
     }
 
-
-
     /**
-     * Sets originalImage.
-     *
-     * @param EventsGET200ResponseInnerOriginalImage|null $originalImage
-     *
-     * @return $this
-     */
+    * Sets originalImage.
+    *
+    * @param EventsGET200ResponseInnerOriginalImage|null $originalImage
+    *
+    * @return $this
+    */
     public function setOriginalImage(?EventsGET200ResponseInnerOriginalImage $originalImage = null): self
     {
         $this->originalImage = $originalImage;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets teaserImage.
@@ -581,21 +590,22 @@ class EventsGET200ResponseInner
         return $this->teaserImage;
     }
 
-
-
     /**
-     * Sets teaserImage.
-     *
-     * @param EventsGET200ResponseInnerTeaserImage|null $teaserImage
-     *
-     * @return $this
-     */
+    * Sets teaserImage.
+    *
+    * @param EventsGET200ResponseInnerTeaserImage|null $teaserImage
+    *
+    * @return $this
+    */
     public function setTeaserImage(?EventsGET200ResponseInnerTeaserImage $teaserImage = null): self
     {
         $this->teaserImage = $teaserImage;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets state.
@@ -607,21 +617,22 @@ class EventsGET200ResponseInner
         return $this->state;
     }
 
-
-
     /**
-     * Sets state.
-     *
-     * @param string|null $state  The state of the event.
-     *
-     * @return $this
-     */
+    * Sets state.
+    *
+    * @param string|null $state  The state of the event.
+    *
+    * @return $this
+    */
     public function setState(?string $state): self
     {
         $this->state = $state;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets allDay.
@@ -633,21 +644,22 @@ class EventsGET200ResponseInner
         return $this->allDay;
     }
 
-
-
     /**
-     * Sets allDay.
-     *
-     * @param bool|null $allDay  Whether the event is marked as an all-day event, without time relevance.
-     *
-     * @return $this
-     */
+    * Sets allDay.
+    *
+    * @param bool|null $allDay  Whether the event is marked as an all-day event, without time relevance.
+    *
+    * @return $this
+    */
     public function setAllDay(?bool $allDay = null): self
     {
         $this->allDay = $allDay;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets dateTime.
@@ -659,21 +671,22 @@ class EventsGET200ResponseInner
         return $this->dateTime;
     }
 
-
-
     /**
-     * Sets dateTime.
-     *
-     * @param EventsGET200ResponseInnerDateTime|null $dateTime
-     *
-     * @return $this
-     */
+    * Sets dateTime.
+    *
+    * @param EventsGET200ResponseInnerDateTime|null $dateTime
+    *
+    * @return $this
+    */
     public function setDateTime(?EventsGET200ResponseInnerDateTime $dateTime): self
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets branches.
@@ -685,21 +698,22 @@ class EventsGET200ResponseInner
         return $this->branches;
     }
 
-
-
     /**
-     * Sets branches.
-     *
-     * @param string[]|null $branches  The associated library branches.
-     *
-     * @return $this
-     */
+    * Sets branches.
+    *
+    * @param string[]|null $branches  The associated library branches.
+    *
+    * @return $this
+    */
     public function setBranches(?array $branches = null): self
     {
         $this->branches = $branches;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets address.
@@ -711,21 +725,22 @@ class EventsGET200ResponseInner
         return $this->address;
     }
 
-
-
     /**
-     * Sets address.
-     *
-     * @param EventsGET200ResponseInnerAddress|null $address
-     *
-     * @return $this
-     */
+    * Sets address.
+    *
+    * @param EventsGET200ResponseInnerAddress|null $address
+    *
+    * @return $this
+    */
     public function setAddress(?EventsGET200ResponseInnerAddress $address = null): self
     {
         $this->address = $address;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets categories.
@@ -737,21 +752,22 @@ class EventsGET200ResponseInner
         return $this->categories;
     }
 
-
-
     /**
-     * Sets categories.
-     *
-     * @param string[]|null $categories  The categories associated with the event.
-     *
-     * @return $this
-     */
+    * Sets categories.
+    *
+    * @param string[]|null $categories  The categories associated with the event.
+    *
+    * @return $this
+    */
     public function setCategories(?array $categories = null): self
     {
         $this->categories = $categories;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets audiences.
@@ -763,21 +779,22 @@ class EventsGET200ResponseInner
         return $this->audiences;
     }
 
-
-
     /**
-     * Sets audiences.
-     *
-     * @param string[]|null $audiences  The audiences associated with the event.
-     *
-     * @return $this
-     */
+    * Sets audiences.
+    *
+    * @param string[]|null $audiences  The audiences associated with the event.
+    *
+    * @return $this
+    */
     public function setAudiences(?array $audiences = null): self
     {
         $this->audiences = $audiences;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets tags.
@@ -789,21 +806,22 @@ class EventsGET200ResponseInner
         return $this->tags;
     }
 
-
-
     /**
-     * Sets tags.
-     *
-     * @param string[]|null $tags  The tags associated with the event.
-     *
-     * @return $this
-     */
+    * Sets tags.
+    *
+    * @param string[]|null $tags  The tags associated with the event.
+    *
+    * @return $this
+    */
     public function setTags(?array $tags = null): self
     {
         $this->tags = $tags;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets partners.
@@ -815,21 +833,22 @@ class EventsGET200ResponseInner
         return $this->partners;
     }
 
-
-
     /**
-     * Sets partners.
-     *
-     * @param string[]|null $partners  The partners associated with the event.
-     *
-     * @return $this
-     */
+    * Sets partners.
+    *
+    * @param string[]|null $partners  The partners associated with the event.
+    *
+    * @return $this
+    */
     public function setPartners(?array $partners = null): self
     {
         $this->partners = $partners;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets ticketCategories.
@@ -841,21 +860,22 @@ class EventsGET200ResponseInner
         return $this->ticketCategories;
     }
 
-
-
     /**
-     * Sets ticketCategories.
-     *
-     * @param EventsGET200ResponseInnerTicketCategoriesInner[]|null $ticketCategories  Ticket categories used for the event. Not present for events without ticketing.
-     *
-     * @return $this
-     */
+    * Sets ticketCategories.
+    *
+    * @param EventsGET200ResponseInnerTicketCategoriesInner[]|null $ticketCategories  Ticket categories used for the event. Not present for events without ticketing.
+    *
+    * @return $this
+    */
     public function setTicketCategories(?array $ticketCategories = null): self
     {
         $this->ticketCategories = $ticketCategories;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets ticketCapacity.
@@ -867,21 +887,22 @@ class EventsGET200ResponseInner
         return $this->ticketCapacity;
     }
 
-
-
     /**
-     * Sets ticketCapacity.
-     *
-     * @param int|null $ticketCapacity  Total number of tickets which can be sold for the event.
-     *
-     * @return $this
-     */
+    * Sets ticketCapacity.
+    *
+    * @param int|null $ticketCapacity  Total number of tickets which can be sold for the event.
+    *
+    * @return $this
+    */
     public function setTicketCapacity(?int $ticketCapacity = null): self
     {
         $this->ticketCapacity = $ticketCapacity;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets series.
@@ -893,21 +914,22 @@ class EventsGET200ResponseInner
         return $this->series;
     }
 
-
-
     /**
-     * Sets series.
-     *
-     * @param EventsGET200ResponseInnerSeries|null $series
-     *
-     * @return $this
-     */
+    * Sets series.
+    *
+    * @param EventsGET200ResponseInnerSeries|null $series
+    *
+    * @return $this
+    */
     public function setSeries(?EventsGET200ResponseInnerSeries $series = null): self
     {
         $this->series = $series;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets body.
@@ -919,21 +941,22 @@ class EventsGET200ResponseInner
         return $this->body;
     }
 
-
-
     /**
-     * Sets body.
-     *
-     * @param string|null $body  An editorial WYSIWYG/HTML description of the event.
-     *
-     * @return $this
-     */
+    * Sets body.
+    *
+    * @param string|null $body  An editorial WYSIWYG/HTML description of the event.
+    *
+    * @return $this
+    */
     public function setBody(?string $body = null): self
     {
         $this->body = $body;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets externalData.
@@ -945,21 +968,22 @@ class EventsGET200ResponseInner
         return $this->externalData;
     }
 
-
-
     /**
-     * Sets externalData.
-     *
-     * @param EventPATCHRequestExternalData|null $externalData
-     *
-     * @return $this
-     */
+    * Sets externalData.
+    *
+    * @param EventPATCHRequestExternalData|null $externalData
+    *
+    * @return $this
+    */
     public function setExternalData(?EventPATCHRequestExternalData $externalData = null): self
     {
         $this->externalData = $externalData;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets screenNames.
@@ -971,21 +995,22 @@ class EventsGET200ResponseInner
         return $this->screenNames;
     }
 
-
-
     /**
-     * Sets screenNames.
-     *
-     * @param string[]|null $screenNames  The screens this event should be shown on.
-     *
-     * @return $this
-     */
+    * Sets screenNames.
+    *
+    * @param string[]|null $screenNames  The screens this event should be shown on.
+    *
+    * @return $this
+    */
     public function setScreenNames(?array $screenNames = null): self
     {
         $this->screenNames = $screenNames;
 
         return $this;
     }
+
+
+
 }
 
 

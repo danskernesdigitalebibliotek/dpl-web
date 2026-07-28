@@ -7,7 +7,7 @@ import { getColors } from "../../../core/utils/helpers/general";
 import { calculateRoundedUpDaysUntil } from "../../../core/utils/helpers/date";
 import { getPreferredBranch } from "../../../components/reservation/helper";
 import ReservationStatus from "./reservation-status";
-import { useGetBranches } from "../../../core/utils/branches";
+import { AgencyBranch } from "../../../core/fbs/model";
 import { getReservationStatusInfoLabel } from "../utils/helpers";
 import { getTotalHoldings, useGetHoldings } from "../../material/helper";
 import { useConfig } from "../../../core/utils/config";
@@ -51,7 +51,13 @@ const ReservationInfo: FC<ReservationInfoProps> = ({
 
   const [pickupLibrary, setPickupLibrary] = useState<string>("");
   const { success } = getColors();
-  const branches = useGetBranches("blacklistedPickupBranchesConfig");
+  // Resolve the pickup branch name from the complete branch list, not the
+  // blacklist-filtered one: a patron can be assigned a blacklisted pickup
+  // branch (e.g. approved special pickup spots in Cicero), and it must still
+  // show its name here — the same way the reservation modal resolves it.
+  const branches = config<AgencyBranch[]>("branchesConfig", {
+    transformer: "jsonParse"
+  });
 
   useDeepCompareEffect(() => {
     if (branches && pickupBranch) {

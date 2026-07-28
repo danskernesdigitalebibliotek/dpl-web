@@ -34,7 +34,7 @@ be especially aware of.
 
 ### PHP
 
-* Code must be compatible with PHP 8.3, the version currently pinned by the
+* Code must be compatible with PHP 8.4, the version currently pinned by the
   project (see `composer.json`). When the pinned version is bumped, custom code
   must remain compatible with all currently supported PHP minor releases to
   ensure smooth upgrades going forward.

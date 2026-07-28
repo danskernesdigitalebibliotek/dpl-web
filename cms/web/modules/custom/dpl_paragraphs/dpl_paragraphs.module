@@ -8,6 +8,8 @@
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_paragraphs\Entity\GoLinkParagraph;
+use Drupal\dpl_paragraphs\Entity\GoLinkboxParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
 use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
@@ -88,6 +90,14 @@ function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
 
   if (isset($bundles['paragraph']['go_video'])) {
     $bundles['paragraph']['go_video']['class'] = GoVideoParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_linkbox'])) {
+    $bundles['paragraph']['go_linkbox']['class'] = GoLinkboxParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_link'])) {
+    $bundles['paragraph']['go_link']['class'] = GoLinkParagraph::class;
   }
 }
 

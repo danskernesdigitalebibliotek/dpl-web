@@ -1,10 +1,20 @@
 diff --git a/src/Plugin/views/field/EventSeriesStartDate.php b/src/Plugin/views/field/EventSeriesStartDate.php
-index 4ff0600..57cbcff 100644
+index 4ff06006e79ef442f6bcfc9ce36ad81c9fa5005c..43d074a718ce29cbd1750347fcbee40c87797309 100644
 --- a/src/Plugin/views/field/EventSeriesStartDate.php
 +++ b/src/Plugin/views/field/EventSeriesStartDate.php
-@@ -88,10 +88,10 @@ class EventSeriesStartDate extends FieldPluginBase {
+@@ -87,11 +87,20 @@ class EventSeriesStartDate extends FieldPluginBase {
+    * {@inheritdoc}
     */
    public function query() {
++    // query() can be invoked more than once per view build — the "combine"
++    // search filter calls ViewExecutable::_build('field'), after which Views
++    // builds the fields again. Adding the subquery relationship twice yields a
++    // duplicate join and an ambiguous "eventseries_start_date" column that
++    // breaks click-sorting on this field, so only add it once.
++    if (!empty($this->field_alias) && $this->field_alias !== 'unknown') {
++      return;
++    }
++
      // Add a subquery to get the earliest instance start date for a series.
 -    $subQuery = $this->database->select('eventinstance_field_data', 'eventinstance_field_data');
 -    $subQuery->addField('eventinstance_field_data', 'eventseries_id');
@@ -17,7 +27,7 @@ index 4ff0600..57cbcff 100644
  
      // Create a join for the subquery.
      $joinDefinition = [
-@@ -105,10 +105,10 @@ class EventSeriesStartDate extends FieldPluginBase {
+@@ -105,10 +114,11 @@ class EventSeriesStartDate extends FieldPluginBase {
      // Add the subquery join to the main query.
      /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $join */
      $join = $this->joinHandler->createInstance('standard', $joinDefinition);
@@ -26,8 +36,9 @@ index 4ff0600..57cbcff 100644
  
 -    // Add the field to the view.
 -    $this->query->addField(NULL, 'eventseries_start_date', 'eventseries_start_date');
-+    // Add the field to the view using the alias from the subquery join.
-+    $this->query->addField('eventseries_start_date_sub', 'eventseries_start_date', 'eventseries_start_date');
++    // Add the field to the view using the alias from the subquery join, and
++    // record the alias so click-sorting the column produces a valid ORDER BY.
++    $this->field_alias = $this->query->addField('eventseries_start_date_sub', 'eventseries_start_date', 'eventseries_start_date');
    }
  
    /**

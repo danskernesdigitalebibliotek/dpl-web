@@ -8,7 +8,7 @@ on:
       - '.github/workflows/cms-*.yml'
 
 env:
-  PHP_VERSION: 8.3
+  PHP_VERSION: 8.4
   COMPOSER_VERSION: v2
 
 # Detect if this action is already running, and cancel it.
@@ -35,6 +35,9 @@ jobs:
       - name: Validate composer.json
         run: |
           composer validate --no-check-all --no-check-publish
+      - name: Ensure dependencies are resolvable
+        run: |
+          composer update --dry-run --with-all-dependencies --no-interaction --no-progress
       - name: Install Dependencies
         run: |
           composer install --no-interaction --no-progress

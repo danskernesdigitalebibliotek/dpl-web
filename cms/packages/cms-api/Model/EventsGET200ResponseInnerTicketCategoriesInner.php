@@ -48,9 +48,9 @@ class EventsGET200ResponseInnerTicketCategoriesInner
      *
      * @var string|null
      * @SerializedName("uuid")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $uuid = null;
 
     /**
@@ -58,27 +58,27 @@ class EventsGET200ResponseInnerTicketCategoriesInner
      *
      * @var string|null
      * @SerializedName("title")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $title = null;
 
     /**
      * @var EventsGET200ResponseInnerTicketCategoriesInnerPrice|null
      * @SerializedName("price")
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice")]
     protected ?EventsGET200ResponseInnerTicketCategoriesInnerPrice $price = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
@@ -97,21 +97,22 @@ class EventsGET200ResponseInnerTicketCategoriesInner
         return $this->uuid;
     }
 
-
-
     /**
-     * Sets uuid.
-     *
-     * @param string|null $uuid  A unique identifier for the ticket category.
-     *
-     * @return $this
-     */
+    * Sets uuid.
+    *
+    * @param string|null $uuid  A unique identifier for the ticket category.
+    *
+    * @return $this
+    */
     public function setUuid(?string $uuid = null): self
     {
         $this->uuid = $uuid;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets title.
@@ -123,21 +124,22 @@ class EventsGET200ResponseInnerTicketCategoriesInner
         return $this->title;
     }
 
-
-
     /**
-     * Sets title.
-     *
-     * @param string|null $title  The name of the ticket category.
-     *
-     * @return $this
-     */
+    * Sets title.
+    *
+    * @param string|null $title  The name of the ticket category.
+    *
+    * @return $this
+    */
     public function setTitle(?string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets price.
@@ -149,21 +151,22 @@ class EventsGET200ResponseInnerTicketCategoriesInner
         return $this->price;
     }
 
-
-
     /**
-     * Sets price.
-     *
-     * @param EventsGET200ResponseInnerTicketCategoriesInnerPrice|null $price
-     *
-     * @return $this
-     */
+    * Sets price.
+    *
+    * @param EventsGET200ResponseInnerTicketCategoriesInnerPrice|null $price
+    *
+    * @return $this
+    */
     public function setPrice(?EventsGET200ResponseInnerTicketCategoriesInnerPrice $price): self
     {
         $this->price = $price;
 
         return $this;
     }
+
+
+
 }
 
 
