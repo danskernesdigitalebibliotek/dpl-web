@@ -45,6 +45,15 @@ interface AppContentElement {
   id: String!
 }
 
+type AppContentElementGoLinkbox implements AppContentElement {
+  color: String
+  contentId: String!
+  description: String!
+  id: String!
+  image: String
+  title: String!
+}
+
 type AppContentElementGoMaterialSliderAutomatic implements AppContentElement {
   cql: String!
   id: String!
