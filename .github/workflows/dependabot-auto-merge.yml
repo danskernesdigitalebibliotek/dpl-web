@@ -38,8 +38,11 @@ on:
 # Dependabot-triggered runs get a read-only GITHUB_TOKEN by default; grant the
 # write scopes the approve + merge steps need.
 permissions:
+  actions: read
+  checks: read
   contents: write
   pull-requests: write
+  statuses: read
 
 jobs:
   dependabot-auto-merge:
