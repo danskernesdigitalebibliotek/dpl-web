@@ -9,14 +9,16 @@ export class CreatePatronPage extends PageObject {
   public elements!: Elements;
   public components!: NestedComponents;
 
-  constructor() {
+  constructor(storyId = "apps-create-patron--primary") {
     super({
-      path: `/iframe.html?args=&globals=&id=apps-create-patron--primary&viewMode=story`
+      path: `/iframe.html?args=&globals=&id=${storyId}&viewMode=story`
     });
 
     this.addElements = {
       title: () => cy.get(".create-patron-page__title"),
       contactInfo: () => cy.get("[data-cy='patron-page-contact-info']"),
+      phoneNumberLabel: () => cy.get("label[for='phone-input']"),
+      receiveSmsCheckbox: () => cy.get("label[for='phone-messages']"),
       pincode: () => cy.get("[data-cy='pincode-section']"),
       librarySelectButton: () => cy.get("[data-cy='library-select-section']"),
       submitButton: () =>
@@ -32,6 +34,10 @@ export class CreatePatronPage extends PageObject {
 
   openFindLibraryDialog() {
     this.elements.librarySelectButton().click();
+  }
+
+  toggleReceiveSms() {
+    this.elements.receiveSmsCheckbox().click();
   }
 
   verifyFindLibraryDialogIsVisible() {
