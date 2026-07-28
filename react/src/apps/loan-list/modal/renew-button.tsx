@@ -1,5 +1,5 @@
 import React, { useCallback, FC } from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useText } from "../../../core/utils/text";
 import { useRenewLoansV2, getGetLoansV2QueryKey } from "../../../core/fbs/fbs";
 import { LoanId } from "../../../core/utils/types/ids";
@@ -60,7 +60,9 @@ const RenewButton: FC<RenewButtonProps> = ({
         {
           onSuccess: (result) => {
             if (result) {
-              queryClient.invalidateQueries(getGetLoansV2QueryKey());
+              queryClient.invalidateQueries({
+                queryKey: getGetLoansV2QueryKey()
+              });
               setRenewingResponse(result);
               setRenewingStatus("success");
             }

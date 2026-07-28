@@ -89,8 +89,8 @@ export const usePaginatedResults = ({
       // Caching is disabled because we manually accumulate pages in resultItems.
       // Cached responses would conflict with our state management when the user
       // toggles facets or changes sort - we need fresh data each time.
-      keepPreviousData: false,
-      cacheTime: 0,
+      // Not keeping previous data between key changes is the default.
+      gcTime: 0,
       staleTime: 0
     }
   );
