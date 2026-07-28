@@ -35,6 +35,20 @@
 #     of checks a PR should run.
 #   * If a Dependabot PR happens to trigger no other checks at all, the wait
 #     loop times out and the PR is NOT merged (safe default).
+#
+# Security:
+#   * This workflow merges unattended with write permissions, so its
+#     third-party surface is kept small: the only external action is
+#     dependabot/fetch-metadata (GitHub-owned), pinned to a commit SHA. Pin
+#     anything added here too.
+#   * Only minor/patch bumps are merged; majors and anything unclassifiable are
+#     left for a human.
+#   * The Dependabot cooldown (.github/dependabot.yml, 3 days) bounds exposure
+#     to a compromised release: the PR isn't opened until the version has been
+#     public a few days, so a quickly-yanked bad release is never merged.
+#   * This auto-merges github-actions bumps, including its own actions. Pinning
+#     and cooldown cover that; if a lower-trust action ever lands here, also
+#     exclude the workflow's own deps from auto-merge so they get a human.
 
 name: Dependabot auto-merge
 
