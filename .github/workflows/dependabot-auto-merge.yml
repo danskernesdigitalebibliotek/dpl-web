@@ -53,6 +53,17 @@ permissions:
 jobs:
   dependabot-auto-merge:
     name: Auto-merge Dependabot
+    # A single global lane for the merge job across ALL PRs. Because we spawn
+    # many Dependabot PRs and each run waits (polls) for checks, running them
+    # all at once would tie up runners waiting — and can even deadlock, with
+    # waiters occupying every runner so the checks they wait on can never
+    # start. `queue: max` lets up to 100 runs sit *pending* (consuming no
+    # runner) while exactly one executes at a time; when it finishes, the next
+    # starts. Serialising the merge step also avoids several PRs trying to
+    # merge into the same base at once.
+    concurrency:
+      group: dependabot-auto-merge
+      queue: max
     runs-on: ubuntu-latest
     # Only ever act on Dependabot's own PRs.
     if: ${{ github.actor == 'dependabot[bot]' }}
