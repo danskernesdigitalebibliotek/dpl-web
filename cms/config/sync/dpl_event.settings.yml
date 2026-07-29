@@ -2,3 +2,4 @@ unpublish_schedule: '21600'
 price_currency: DKK
 unpublish_enable: 1
 unpublish_series_enable: 0
+list_paging_mode: show_more_25

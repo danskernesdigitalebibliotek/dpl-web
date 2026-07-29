@@ -10,6 +10,8 @@
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_event\EventListPaging;
+use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\gsearch\Services\Gsearch;
 use Drupal\recurring_events\Entity\EventSeries;
@@ -268,4 +270,27 @@ function dpl_event_deploy_migrate_event_place(): string {
   $count = count($ids);
 
   return "Updated $count events, migrating wrongly-overriden place fields.";
+}
+
+/**
+ * Default the event list paging mode to the pre-existing experience, if unset.
+ *
+ * Before this setting existed the events list always showed 25 events followed
+ * by a "Show more" button. Sites without a value - e.g. because they ignore
+ * this config, so config import did not provide one - are defaulted to that
+ * same mode, keeping the change invisible until an editor picks another one.
+ */
+function dpl_event_deploy_set_default_list_paging_mode(): string {
+  $config = \Drupal::configFactory()->getEditable(SettingsForm::CONFIG_NAME);
+
+  // Never override a value that is already set - e.g. one just brought in by
+  // config import, or an editor's own choice.
+  if (!empty($config->get('list_paging_mode'))) {
+    return 'Event list paging mode already set; left unchanged.';
+  }
+
+  $default_mode = EventListPaging::DEFAULT_MODE->value;
+  $config->set('list_paging_mode', $default_mode)->save();
+
+  return "Set event list paging mode to the existing default ({$default_mode}).";
 }

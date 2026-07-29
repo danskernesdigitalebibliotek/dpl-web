@@ -10,17 +10,20 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\Core\Url;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\Form\SettingsForm;
+use Drupal\dpl_event\Hook\EventListPagingHooks;
 use Drupal\dpl_event\ReoccurringDateFormatter;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSeriesSchedule;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventSeries;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_entity_presave().
@@ -660,6 +663,26 @@ function _dpl_event_stack_eventinstances(array $items): array {
   }
 
   return $items;
+}
+
+/**
+ * Implements hook_views_pre_build().
+ *
+ * @see \Drupal\dpl_event\Hook\EventListPagingHooks::viewsPreBuild()
+ */
+#[LegacyHook]
+function dpl_event_views_pre_build(ViewExecutable $view): void {
+  DrupalTyped::service(EventListPagingHooks::class)->viewsPreBuild($view);
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * @see \Drupal\dpl_event\Hook\EventListPagingHooks::viewsPreRender()
+ */
+#[LegacyHook]
+function dpl_event_views_pre_render(ViewExecutable $view): void {
+  DrupalTyped::service(EventListPagingHooks::class)->viewsPreRender($view);
 }
 
 /**

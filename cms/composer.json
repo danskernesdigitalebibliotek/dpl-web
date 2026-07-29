@@ -318,7 +318,8 @@
                 "3199172: multivalue_form_element-3199172": "patches/vendor/nested_elements-3199172-14.patch"
             },
             "drupal/views_infinite_scroll": {
-                "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch"
+                "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch",
+                "Show the loading indicator inline at the pager instead of a floating full-screen overlay": "patches/infinite-scroll-inline-loading-indicator.patch"
             },
             "drupal/core": {
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "patches/vendor/2280639-d10-reroll-156.patch",
