@@ -247,8 +247,8 @@ importers:
         specifier: ^0.4.24
         version: 0.4.24
       caniuse-lite:
-        specifier: ^1.0.30001800
-        version: 1.0.30001800
+        specifier: ^1.0.30001806
+        version: 1.0.30001806
       change-case-all:
         specifier: ^2.1.0
         version: 2.1.0
@@ -3511,9 +3511,6 @@ packages:
 
   caniuse-api@4.0.0:
     resolution: {integrity: sha512-B0hQ1OLyJuHTQSOWXvwibWqM6DCoqJdvBA6X1S/53bd4XU7LJ1yurIPlrsouol3mw1jh9pGI4ivubSpmJeIqCA==}
-
-  caniuse-lite@1.0.30001800:
-    resolution: {integrity: sha512-MMHtuAz9Ys840zAY5F4k6fV5GaivZ9sPk+nz0mY+GYVzRBnYkN0mpqkSR92oWRQ19yQWo4HvBV/FnC16AJX8MA==}
 
   caniuse-lite@1.0.30001806:
     resolution: {integrity: sha512-72Cuvd95zbSYPKq6Fhg8eDJRlzgWDf7/mtoZv6Qe/DYNCEBdNxoA3+rZAU2ZhGCpZlns3EssFavaZomckT5Uuw==}
@@ -11687,8 +11684,6 @@ snapshots:
     dependencies:
       browserslist: 4.28.7
       caniuse-lite: 1.0.30001806
-
-  caniuse-lite@1.0.30001800: {}
 
   caniuse-lite@1.0.30001806: {}
 
