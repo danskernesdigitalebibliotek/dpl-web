@@ -1,5 +1,5 @@
 import React from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useUrls } from "../../../core/utils/url";
 import { useText } from "../../../core/utils/text";
 import { Button } from "../../../components/Buttons/Button";

@@ -5,16 +5,21 @@
  * The REST API provided by the core REST module.
  * OpenAPI spec version: Versioning not supported
  */
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
+  QueryClient,
   QueryFunction,
   QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult
-} from "react-query";
+} from "@tanstack/react-query";
 
 import type {
   CampaignMatchPOST200,
@@ -108,14 +113,20 @@ export type CampaignMatchPOSTMutationError = ErrorType<void>;
 export const useCampaignMatchPOST = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof campaignMatchPOST>>,
-    TError,
-    { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof campaignMatchPOST>>,
+      TError,
+      {
+        data: BodyType<CampaignMatchPOSTBody>;
+        params: CampaignMatchPOSTParams;
+      },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof campaignMatchPOST>>,
   TError,
   { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
@@ -123,7 +134,7 @@ export const useCampaignMatchPOST = <
 > => {
   const mutationOptions = getCampaignMatchPOSTMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -203,17 +214,20 @@ export type DplOpeningHoursCreatePOSTMutationError = ErrorType<void>;
 export const useDplOpeningHoursCreatePOST = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
-    TError,
-    {
-      data: BodyType<DplOpeningHoursCreatePOSTOpeningHoursInstanceBody>;
-      params: DplOpeningHoursCreatePOSTParams;
-    },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
+      TError,
+      {
+        data: BodyType<DplOpeningHoursCreatePOSTOpeningHoursInstanceBody>;
+        params: DplOpeningHoursCreatePOSTParams;
+      },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
   TError,
   {
@@ -224,7 +238,7 @@ export const useDplOpeningHoursCreatePOST = <
 > => {
   const mutationOptions = getDplOpeningHoursCreatePOSTMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -253,10 +267,12 @@ export const getDplOpeningHoursListGETQueryOptions = <
   TError = ErrorType<void>
 >(
   params: DplOpeningHoursListGETParams,
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
-    TError,
-    TData
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+      TError,
+      TData
+    >
   >
 ) => {
   const queryKey =
@@ -270,7 +286,7 @@ export const getDplOpeningHoursListGETQueryOptions = <
     Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type DplOpeningHoursListGETQueryResult = NonNullable<
@@ -278,6 +294,70 @@ export type DplOpeningHoursListGETQueryResult = NonNullable<
 >;
 export type DplOpeningHoursListGETQueryError = ErrorType<void>;
 
+export function useDplOpeningHoursListGET<
+  TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+  TError = ErrorType<void>
+>(
+  params: DplOpeningHoursListGETParams,
+  queryOptions: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+        TError,
+        Awaited<ReturnType<typeof dplOpeningHoursListGET>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDplOpeningHoursListGET<
+  TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+  TError = ErrorType<void>
+>(
+  params: DplOpeningHoursListGETParams,
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+        TError,
+        Awaited<ReturnType<typeof dplOpeningHoursListGET>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDplOpeningHoursListGET<
+  TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+  TError = ErrorType<void>
+>(
+  params: DplOpeningHoursListGETParams,
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+      TError,
+      TData
+    >
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List all opening hours
  */
@@ -287,17 +367,23 @@ export function useDplOpeningHoursListGET<
   TError = ErrorType<void>
 >(
   params: DplOpeningHoursListGETParams,
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
-    TError,
-    TData
-  >
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
+      TError,
+      TData
+    >
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const options = getDplOpeningHoursListGETQueryOptions(params, queryOptions);
 
-  const query = useQuery(options) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(options, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = options.queryKey;
 
@@ -367,14 +453,17 @@ export type DplOpeningHoursDeleteDELETEMutationError = ErrorType<void>;
 export const useDplOpeningHoursDeleteDELETE = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
-    TError,
-    { id: string; params: DplOpeningHoursDeleteDELETEParams },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
+      TError,
+      { id: string; params: DplOpeningHoursDeleteDELETEParams },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
   TError,
   { id: string; params: DplOpeningHoursDeleteDELETEParams },
@@ -383,7 +472,7 @@ export const useDplOpeningHoursDeleteDELETE = <
   const mutationOptions =
     getDplOpeningHoursDeleteDELETEMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -465,18 +554,21 @@ export type DplOpeningHoursUpdatePATCHMutationError = ErrorType<void>;
 export const useDplOpeningHoursUpdatePATCH = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
-    TError,
-    {
-      id: string;
-      data: BodyType<DplOpeningHoursCreatePOSTOpeningHoursInstanceBody>;
-      params: DplOpeningHoursUpdatePATCHParams;
-    },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
+      TError,
+      {
+        id: string;
+        data: BodyType<DplOpeningHoursCreatePOSTOpeningHoursInstanceBody>;
+        params: DplOpeningHoursUpdatePATCHParams;
+      },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
   TError,
   {
@@ -488,7 +580,7 @@ export const useDplOpeningHoursUpdatePATCH = <
 > => {
   const mutationOptions = getDplOpeningHoursUpdatePATCHMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -518,10 +610,12 @@ export const getDplOpeningHoursLegacyListGETQueryOptions = <
 >(
   params: DplOpeningHoursLegacyListGETParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+        TError,
+        TData
+      >
     >;
   }
 ) => {
@@ -538,7 +632,7 @@ export const getDplOpeningHoursLegacyListGETQueryOptions = <
     Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type DplOpeningHoursLegacyListGETQueryResult = NonNullable<
@@ -546,6 +640,76 @@ export type DplOpeningHoursLegacyListGETQueryResult = NonNullable<
 >;
 export type DplOpeningHoursLegacyListGETQueryError = ErrorType<void>;
 
+export function useDplOpeningHoursLegacyListGET<
+  TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+  TError = ErrorType<void>
+>(
+  params: DplOpeningHoursLegacyListGETParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+          TError,
+          Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDplOpeningHoursLegacyListGET<
+  TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+  TError = ErrorType<void>
+>(
+  params: DplOpeningHoursLegacyListGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+          TError,
+          Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDplOpeningHoursLegacyListGET<
+  TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+  TError = ErrorType<void>
+>(
+  params: DplOpeningHoursLegacyListGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List all opening hours for legacy API
  */
@@ -556,21 +720,27 @@ export function useDplOpeningHoursLegacyListGET<
 >(
   params: DplOpeningHoursLegacyListGETParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
+        TError,
+        TData
+      >
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getDplOpeningHoursLegacyListGETQueryOptions(
     params,
     options
   );
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -640,17 +810,21 @@ export type EventPATCHMutationError = ErrorType<void>;
 /**
  * @summary Update single events
  */
-export const useEventPATCH = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof eventPATCH>>,
-    TError,
-    { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams },
-    TContext
-  >;
-}): UseMutationResult<
+export const useEventPATCH = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof eventPATCH>>,
+      TError,
+      {
+        uuid: string;
+        data: BodyType<EventPATCHBody>;
+        params: EventPATCHParams;
+      },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof eventPATCH>>,
   TError,
   { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams },
@@ -658,7 +832,7 @@ export const useEventPATCH = <
 > => {
   const mutationOptions = getEventPATCHMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -683,10 +857,8 @@ export const getEventsGETQueryOptions = <
 >(
   params: EventsGETParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof eventsGET>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
     >;
   }
 ) => {
@@ -702,7 +874,7 @@ export const getEventsGETQueryOptions = <
     Awaited<ReturnType<typeof eventsGET>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type EventsGETQueryResult = NonNullable<
@@ -710,6 +882,64 @@ export type EventsGETQueryResult = NonNullable<
 >;
 export type EventsGETQueryError = ErrorType<void>;
 
+export function useEventsGET<
+  TData = Awaited<ReturnType<typeof eventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: EventsGETParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof eventsGET>>,
+          TError,
+          Awaited<ReturnType<typeof eventsGET>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useEventsGET<
+  TData = Awaited<ReturnType<typeof eventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: EventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof eventsGET>>,
+          TError,
+          Awaited<ReturnType<typeof eventsGET>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useEventsGET<
+  TData = Awaited<ReturnType<typeof eventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: EventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Retrieve all events
  */
@@ -720,18 +950,20 @@ export function useEventsGET<
 >(
   params: EventsGETParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof eventsGET>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getEventsGETQueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -762,10 +994,8 @@ export const getProxyUrlGETQueryOptions = <
   TError = ErrorType<void>
 >(
   params: ProxyUrlGETParams,
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof proxyUrlGET>>,
-    TError,
-    TData
+  queryOptions?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
   >
 ) => {
   const queryKey = queryOptions?.queryKey ?? getProxyUrlGETQueryKey(params);
@@ -778,7 +1008,7 @@ export const getProxyUrlGETQueryOptions = <
     Awaited<ReturnType<typeof proxyUrlGET>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type ProxyUrlGETQueryResult = NonNullable<
@@ -786,6 +1016,58 @@ export type ProxyUrlGETQueryResult = NonNullable<
 >;
 export type ProxyUrlGETQueryError = ErrorType<void>;
 
+export function useProxyUrlGET<
+  TData = Awaited<ReturnType<typeof proxyUrlGET>>,
+  TError = ErrorType<void>
+>(
+  params: ProxyUrlGETParams,
+  queryOptions: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof proxyUrlGET>>,
+        TError,
+        Awaited<ReturnType<typeof proxyUrlGET>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useProxyUrlGET<
+  TData = Awaited<ReturnType<typeof proxyUrlGET>>,
+  TError = ErrorType<void>
+>(
+  params: ProxyUrlGETParams,
+  queryOptions?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof proxyUrlGET>>,
+        TError,
+        Awaited<ReturnType<typeof proxyUrlGET>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useProxyUrlGET<
+  TData = Awaited<ReturnType<typeof proxyUrlGET>>,
+  TError = ErrorType<void>
+>(
+  params: ProxyUrlGETParams,
+  queryOptions?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Generate proxy url
  */
@@ -795,17 +1077,19 @@ export function useProxyUrlGET<
   TError = ErrorType<void>
 >(
   params: ProxyUrlGETParams,
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof proxyUrlGET>>,
-    TError,
-    TData
-  >
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  queryOptions?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const options = getProxyUrlGETQueryOptions(params, queryOptions);
 
-  const query = useQuery(options) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(options, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = options.queryKey;
 

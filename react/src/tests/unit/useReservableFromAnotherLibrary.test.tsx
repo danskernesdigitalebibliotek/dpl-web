@@ -3,7 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import React, { ReactNode, act } from "react";
 import { renderHook } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useReservableFromAnotherLibrary from "../../core/utils/useReservableFromAnotherLibrary";
 import { Manifestation } from "../../core/utils/types/entities";
 import configReducer from "../../core/config.slice";

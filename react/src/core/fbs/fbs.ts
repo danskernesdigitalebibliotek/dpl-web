@@ -4,16 +4,21 @@
  * FBS Adapter
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
+  QueryClient,
   QueryFunction,
   QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult
-} from "react-query";
+} from "@tanstack/react-query";
 
 import type {
   AgencyBranch,
@@ -78,10 +83,8 @@ export const getGetBranchesQueryOptions = <
 >(
   params?: GetBranchesParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getBranches>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
     >;
   }
 ) => {
@@ -97,7 +100,7 @@ export const getGetBranchesQueryOptions = <
     Awaited<ReturnType<typeof getBranches>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetBranchesQueryResult = NonNullable<
@@ -105,6 +108,64 @@ export type GetBranchesQueryResult = NonNullable<
 >;
 export type GetBranchesQueryError = ErrorType<void>;
 
+export function useGetBranches<
+  TData = Awaited<ReturnType<typeof getBranches>>,
+  TError = ErrorType<void>
+>(
+  params: undefined | GetBranchesParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getBranches>>,
+          TError,
+          Awaited<ReturnType<typeof getBranches>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetBranches<
+  TData = Awaited<ReturnType<typeof getBranches>>,
+  TError = ErrorType<void>
+>(
+  params?: GetBranchesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getBranches>>,
+          TError,
+          Awaited<ReturnType<typeof getBranches>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetBranches<
+  TData = Awaited<ReturnType<typeof getBranches>>,
+  TError = ErrorType<void>
+>(
+  params?: GetBranchesParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get branches for an agency.
  */
@@ -115,18 +176,20 @@ export function useGetBranches<
 >(
   params?: GetBranchesParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getBranches>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetBranchesQueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -193,14 +256,17 @@ export type DeleteReservationsMutationError = ErrorType<void>;
 export const useDeleteReservations = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteReservations>>,
-    TError,
-    { params: DeleteReservationsParams },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteReservations>>,
+      TError,
+      { params: DeleteReservationsParams },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof deleteReservations>>,
   TError,
   { params: DeleteReservationsParams },
@@ -208,7 +274,7 @@ export const useDeleteReservations = <
 > => {
   const mutationOptions = getDeleteReservationsMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -253,10 +319,8 @@ export const getGetReservationsQueryOptions = <
   TData = Awaited<ReturnType<typeof getReservations>>,
   TError = ErrorType<void>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getReservations>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -271,7 +335,7 @@ export const getGetReservationsQueryOptions = <
     Awaited<ReturnType<typeof getReservations>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetReservationsQueryResult = NonNullable<
@@ -279,6 +343,73 @@ export type GetReservationsQueryResult = NonNullable<
 >;
 export type GetReservationsQueryError = ErrorType<void>;
 
+export function useGetReservations<
+  TData = Awaited<ReturnType<typeof getReservations>>,
+  TError = ErrorType<void>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservations>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getReservations>>,
+          TError,
+          Awaited<ReturnType<typeof getReservations>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetReservations<
+  TData = Awaited<ReturnType<typeof getReservations>>,
+  TError = ErrorType<void>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservations>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getReservations>>,
+          TError,
+          Awaited<ReturnType<typeof getReservations>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetReservations<
+  TData = Awaited<ReturnType<typeof getReservations>>,
+  TError = ErrorType<void>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservations>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
  */
@@ -286,18 +417,26 @@ export type GetReservationsQueryError = ErrorType<void>;
 export function useGetReservations<
   TData = Awaited<ReturnType<typeof getReservations>>,
   TError = ErrorType<void>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getReservations>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservations>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetReservationsQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -394,14 +533,17 @@ export type AddReservationsDeprecatedMutationError = ErrorType<void>;
 export const useAddReservationsDeprecated = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof addReservationsDeprecated>>,
-    TError,
-    { data: BodyType<CreateReservationBatch> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof addReservationsDeprecated>>,
+      TError,
+      { data: BodyType<CreateReservationBatch> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof addReservationsDeprecated>>,
   TError,
   { data: BodyType<CreateReservationBatch> },
@@ -409,7 +551,7 @@ export const useAddReservationsDeprecated = <
 > => {
   const mutationOptions = getAddReservationsDeprecatedMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -494,14 +636,17 @@ export type UpdateReservationsMutationError = ErrorType<void>;
 export const useUpdateReservations = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateReservations>>,
-    TError,
-    { data: BodyType<UpdateReservationBatch> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof updateReservations>>,
+      TError,
+      { data: BodyType<UpdateReservationBatch> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof updateReservations>>,
   TError,
   { data: BodyType<UpdateReservationBatch> },
@@ -509,7 +654,7 @@ export const useUpdateReservations = <
 > => {
   const mutationOptions = getUpdateReservationsMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -556,10 +701,12 @@ export const getGetReservationsV2QueryOptions = <
   TData = Awaited<ReturnType<typeof getReservationsV2>>,
   TError = ErrorType<void>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getReservationsV2>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getReservationsV2>>,
+      TError,
+      TData
+    >
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -574,7 +721,7 @@ export const getGetReservationsV2QueryOptions = <
     Awaited<ReturnType<typeof getReservationsV2>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetReservationsV2QueryResult = NonNullable<
@@ -582,6 +729,73 @@ export type GetReservationsV2QueryResult = NonNullable<
 >;
 export type GetReservationsV2QueryError = ErrorType<void>;
 
+export function useGetReservationsV2<
+  TData = Awaited<ReturnType<typeof getReservationsV2>>,
+  TError = ErrorType<void>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservationsV2>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getReservationsV2>>,
+          TError,
+          Awaited<ReturnType<typeof getReservationsV2>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetReservationsV2<
+  TData = Awaited<ReturnType<typeof getReservationsV2>>,
+  TError = ErrorType<void>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservationsV2>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getReservationsV2>>,
+          TError,
+          Awaited<ReturnType<typeof getReservationsV2>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetReservationsV2<
+  TData = Awaited<ReturnType<typeof getReservationsV2>>,
+  TError = ErrorType<void>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservationsV2>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get all unfulfilled reservations made by the patron.
  */
@@ -589,18 +803,26 @@ export type GetReservationsV2QueryError = ErrorType<void>;
 export function useGetReservationsV2<
   TData = Awaited<ReturnType<typeof getReservationsV2>>,
   TError = ErrorType<void>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getReservationsV2>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getReservationsV2>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetReservationsV2QueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -728,14 +950,17 @@ export type AddReservationsV2MutationError = ErrorType<void>;
 export const useAddReservationsV2 = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof addReservationsV2>>,
-    TError,
-    { data: BodyType<CreateReservationBatchV2> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof addReservationsV2>>,
+      TError,
+      { data: BodyType<CreateReservationBatchV2> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof addReservationsV2>>,
   TError,
   { data: BodyType<CreateReservationBatchV2> },
@@ -743,7 +968,7 @@ export const useAddReservationsV2 = <
 > => {
   const mutationOptions = getAddReservationsV2MutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -778,10 +1003,12 @@ export const getGetAvailabilityV3QueryOptions = <
 >(
   params: GetAvailabilityV3Params,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getAvailabilityV3>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAvailabilityV3>>,
+        TError,
+        TData
+      >
     >;
   }
 ) => {
@@ -798,7 +1025,7 @@ export const getGetAvailabilityV3QueryOptions = <
     Awaited<ReturnType<typeof getAvailabilityV3>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetAvailabilityV3QueryResult = NonNullable<
@@ -806,6 +1033,76 @@ export type GetAvailabilityV3QueryResult = NonNullable<
 >;
 export type GetAvailabilityV3QueryError = ErrorType<void>;
 
+export function useGetAvailabilityV3<
+  TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
+  TError = ErrorType<void>
+>(
+  params: GetAvailabilityV3Params,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAvailabilityV3>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAvailabilityV3>>,
+          TError,
+          Awaited<ReturnType<typeof getAvailabilityV3>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetAvailabilityV3<
+  TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
+  TError = ErrorType<void>
+>(
+  params: GetAvailabilityV3Params,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAvailabilityV3>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAvailabilityV3>>,
+          TError,
+          Awaited<ReturnType<typeof getAvailabilityV3>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetAvailabilityV3<
+  TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
+  TError = ErrorType<void>
+>(
+  params: GetAvailabilityV3Params,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAvailabilityV3>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get availability of bibliographical records.
  */
@@ -816,18 +1113,24 @@ export function useGetAvailabilityV3<
 >(
   params: GetAvailabilityV3Params,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getAvailabilityV3>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAvailabilityV3>>,
+        TError,
+        TData
+      >
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetAvailabilityV3QueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -867,10 +1170,12 @@ export const getGetHoldingsLogisticsV1QueryOptions = <
 >(
   params: GetHoldingsLogisticsV1Params,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+        TError,
+        TData
+      >
     >;
   }
 ) => {
@@ -887,7 +1192,7 @@ export const getGetHoldingsLogisticsV1QueryOptions = <
     Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetHoldingsLogisticsV1QueryResult = NonNullable<
@@ -895,6 +1200,76 @@ export type GetHoldingsLogisticsV1QueryResult = NonNullable<
 >;
 export type GetHoldingsLogisticsV1QueryError = ErrorType<void>;
 
+export function useGetHoldingsLogisticsV1<
+  TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+  TError = ErrorType<void>
+>(
+  params: GetHoldingsLogisticsV1Params,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+          TError,
+          Awaited<ReturnType<typeof getHoldingsLogisticsV1>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetHoldingsLogisticsV1<
+  TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+  TError = ErrorType<void>
+>(
+  params: GetHoldingsLogisticsV1Params,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+          TError,
+          Awaited<ReturnType<typeof getHoldingsLogisticsV1>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetHoldingsLogisticsV1<
+  TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+  TError = ErrorType<void>
+>(
+  params: GetHoldingsLogisticsV1Params,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get placement holdings for bibliographical records.
  */
@@ -905,18 +1280,24 @@ export function useGetHoldingsLogisticsV1<
 >(
   params: GetHoldingsLogisticsV1Params,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
+        TError,
+        TData
+      >
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetHoldingsLogisticsV1QueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -962,10 +1343,8 @@ export const getGetFeesV2QueryOptions = <
 >(
   params: GetFeesV2Params,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getFeesV2>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
     >;
   }
 ) => {
@@ -981,7 +1360,7 @@ export const getGetFeesV2QueryOptions = <
     Awaited<ReturnType<typeof getFeesV2>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetFeesV2QueryResult = NonNullable<
@@ -989,6 +1368,64 @@ export type GetFeesV2QueryResult = NonNullable<
 >;
 export type GetFeesV2QueryError = ErrorType<void>;
 
+export function useGetFeesV2<
+  TData = Awaited<ReturnType<typeof getFeesV2>>,
+  TError = ErrorType<void>
+>(
+  params: GetFeesV2Params,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFeesV2>>,
+          TError,
+          Awaited<ReturnType<typeof getFeesV2>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetFeesV2<
+  TData = Awaited<ReturnType<typeof getFeesV2>>,
+  TError = ErrorType<void>
+>(
+  params: GetFeesV2Params,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFeesV2>>,
+          TError,
+          Awaited<ReturnType<typeof getFeesV2>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetFeesV2<
+  TData = Awaited<ReturnType<typeof getFeesV2>>,
+  TError = ErrorType<void>
+>(
+  params: GetFeesV2Params,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List of fees in FBS for the patron with all available information about the fee.
  */
@@ -999,18 +1436,20 @@ export function useGetFeesV2<
 >(
   params: GetFeesV2Params,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getFeesV2>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetFeesV2QueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -1104,17 +1543,17 @@ export type CreateV9MutationError = ErrorType<void>;
 /**
  * @summary Create a new patron who is a person.
  */
-export const useCreateV9 = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createV9>>,
-    TError,
-    { data: BodyType<CreatePatronRequestV7> },
-    TContext
-  >;
-}): UseMutationResult<
+export const useCreateV9 = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createV9>>,
+      TError,
+      { data: BodyType<CreatePatronRequestV7> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof createV9>>,
   TError,
   { data: BodyType<CreatePatronRequestV7> },
@@ -1122,7 +1561,7 @@ export const useCreateV9 = <
 > => {
   const mutationOptions = getCreateV9MutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1201,14 +1640,17 @@ export type CreateWithGuardianMutationError = ErrorType<void>;
 export const useCreateWithGuardian = <
   TError = ErrorType<void>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createWithGuardian>>,
-    TError,
-    { data: BodyType<PatronWithGuardianRequest> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createWithGuardian>>,
+      TError,
+      { data: BodyType<PatronWithGuardianRequest> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof createWithGuardian>>,
   TError,
   { data: BodyType<PatronWithGuardianRequest> },
@@ -1216,7 +1658,7 @@ export const useCreateWithGuardian = <
 > => {
   const mutationOptions = getCreateWithGuardianMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1289,17 +1731,17 @@ export type UpdateGuardianMutationError = ErrorType<void>;
 /**
  * @summary Updates a person patron's guardian (eg A financial responsible).
  */
-export const useUpdateGuardian = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateGuardian>>,
-    TError,
-    { data: BodyType<UpdateGuardianRequest> },
-    TContext
-  >;
-}): UseMutationResult<
+export const useUpdateGuardian = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof updateGuardian>>,
+      TError,
+      { data: BodyType<UpdateGuardianRequest> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof updateGuardian>>,
   TError,
   { data: BodyType<UpdateGuardianRequest> },
@@ -1307,7 +1749,7 @@ export const useUpdateGuardian = <
 > => {
   const mutationOptions = getUpdateGuardianMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1401,17 +1843,17 @@ export type RenewLoansV2MutationError = ErrorType<void>;
 /**
  * @summary Renew loans.
  */
-export const useRenewLoansV2 = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof renewLoansV2>>,
-    TError,
-    { data: BodyType<number[]> },
-    TContext
-  >;
-}): UseMutationResult<
+export const useRenewLoansV2 = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof renewLoansV2>>,
+      TError,
+      { data: BodyType<number[]> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof renewLoansV2>>,
   TError,
   { data: BodyType<number[]> },
@@ -1419,7 +1861,7 @@ export const useRenewLoansV2 = <
 > => {
   const mutationOptions = getRenewLoansV2MutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1471,10 +1913,8 @@ export const getGetLoansV2QueryOptions = <
   TData = Awaited<ReturnType<typeof getLoansV2>>,
   TError = ErrorType<void>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getLoansV2>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -1489,7 +1929,7 @@ export const getGetLoansV2QueryOptions = <
     Awaited<ReturnType<typeof getLoansV2>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetLoansV2QueryResult = NonNullable<
@@ -1497,6 +1937,61 @@ export type GetLoansV2QueryResult = NonNullable<
 >;
 export type GetLoansV2QueryError = ErrorType<void>;
 
+export function useGetLoansV2<
+  TData = Awaited<ReturnType<typeof getLoansV2>>,
+  TError = ErrorType<void>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getLoansV2>>,
+          TError,
+          Awaited<ReturnType<typeof getLoansV2>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetLoansV2<
+  TData = Awaited<ReturnType<typeof getLoansV2>>,
+  TError = ErrorType<void>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getLoansV2>>,
+          TError,
+          Awaited<ReturnType<typeof getLoansV2>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetLoansV2<
+  TData = Awaited<ReturnType<typeof getLoansV2>>,
+  TError = ErrorType<void>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get list of current loans by the patron.
  */
@@ -1504,18 +1999,22 @@ export type GetLoansV2QueryError = ErrorType<void>;
 export function useGetLoansV2<
   TData = Awaited<ReturnType<typeof getLoansV2>>,
   TError = ErrorType<void>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getLoansV2>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetLoansV2QueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -1553,10 +2052,12 @@ export const getGetPatronInformationByPatronIdV4QueryOptions = <
   TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
   TError = ErrorType<void>
 >(
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
-    TError,
-    TData
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+      TError,
+      TData
+    >
   >
 ) => {
   const queryKey =
@@ -1570,7 +2071,7 @@ export const getGetPatronInformationByPatronIdV4QueryOptions = <
     Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetPatronInformationByPatronIdV4QueryResult = NonNullable<
@@ -1578,6 +2079,67 @@ export type GetPatronInformationByPatronIdV4QueryResult = NonNullable<
 >;
 export type GetPatronInformationByPatronIdV4QueryError = ErrorType<void>;
 
+export function useGetPatronInformationByPatronIdV4<
+  TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+  TError = ErrorType<void>
+>(
+  queryOptions: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+        TError,
+        Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetPatronInformationByPatronIdV4<
+  TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+  TError = ErrorType<void>
+>(
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+        TError,
+        Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetPatronInformationByPatronIdV4<
+  TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+  TError = ErrorType<void>
+>(
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+      TError,
+      TData
+    >
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Returns the patron details
  */
@@ -1586,17 +2148,23 @@ export function useGetPatronInformationByPatronIdV4<
   TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
   TError = ErrorType<void>
 >(
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
-    TError,
-    TData
-  >
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
+      TError,
+      TData
+    >
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const options = getGetPatronInformationByPatronIdV4QueryOptions(queryOptions);
 
-  const query = useQuery(options) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(options, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = options.queryKey;
 
@@ -1678,17 +2246,17 @@ export type UpdateV4MutationError = ErrorType<void>;
 /**
  * @summary Update information about the patron.
  */
-export const useUpdateV4 = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateV4>>,
-    TError,
-    { data: BodyType<UpdatePatronRequestV3> },
-    TContext
-  >;
-}): UseMutationResult<
+export const useUpdateV4 = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof updateV4>>,
+      TError,
+      { data: BodyType<UpdatePatronRequestV3> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof updateV4>>,
   TError,
   { data: BodyType<UpdatePatronRequestV3> },
@@ -1696,7 +2264,7 @@ export const useUpdateV4 = <
 > => {
   const mutationOptions = getUpdateV4MutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1779,17 +2347,17 @@ export type UpdateV8MutationError = ErrorType<void>;
 /**
  * @summary Update information about the patron.
  */
-export const useUpdateV8 = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateV8>>,
-    TError,
-    { data: BodyType<UpdatePatronRequestV6> },
-    TContext
-  >;
-}): UseMutationResult<
+export const useUpdateV8 = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof updateV8>>,
+      TError,
+      { data: BodyType<UpdatePatronRequestV6> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof updateV8>>,
   TError,
   { data: BodyType<UpdatePatronRequestV6> },
@@ -1797,5 +2365,5 @@ export const useUpdateV8 = <
 > => {
   const mutationOptions = getUpdateV8MutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   GetMaterialDocument,
   GetMaterialQuery,
@@ -51,42 +51,48 @@ const useGetSelectedWork = ({
     data,
     isLoading: isSelectedWorkLoading,
     refetch
-  } = useQuery<GetMaterialQuery>(
-    [useGoVipProfile ? "getMaterial-go" : "getMaterial", variables],
+  } = useQuery<GetMaterialQuery>({
+    queryKey: [useGoVipProfile ? "getMaterial-go" : "getMaterial", variables],
     queryFn,
-    {
-      enabled: !!selectedWorkId && selectedWorkId.length > 0,
-      onSuccess: (responseData: GetMaterialQuery) => {
-        if (!responseData.work) {
-          setErrorState(ErrorState.WorkError);
-          return;
-        }
-
-        if (selectedMaterialType && responseData.work) {
-          const work = responseData.work as Work;
-
-          const availableMaterialTypes = work
-            ? getMaterialTypes(work.manifestations.all, false)
-            : null;
-
-          if (
-            availableMaterialTypes &&
-            !availableMaterialTypes.includes(selectedMaterialType)
-          ) {
-            setErrorState(ErrorState.MaterialTypeError);
-            return;
-          }
-        }
-        setErrorState(ErrorState.NoError);
-      }
-    }
-  );
+    enabled: !!selectedWorkId && selectedWorkId.length > 0
+  });
 
   useEffect(() => {
     if (selectedWorkId) {
       refetch();
     }
   }, [selectedWorkId, selectedMaterialType, refetch]);
+
+  // Validate the fetched work against the material type the user selected.
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    const fetchedWork = data.work as Work | null | undefined;
+
+    if (!fetchedWork) {
+      setErrorState(ErrorState.WorkError);
+      return;
+    }
+
+    if (selectedMaterialType) {
+      const fetchedMaterialTypes = getMaterialTypes(
+        fetchedWork.manifestations.all,
+        false
+      );
+
+      if (
+        fetchedMaterialTypes &&
+        !fetchedMaterialTypes.includes(selectedMaterialType)
+      ) {
+        setErrorState(ErrorState.MaterialTypeError);
+        return;
+      }
+    }
+
+    setErrorState(ErrorState.NoError);
+  }, [data, selectedMaterialType]);
 
   const work = (data?.work as Work) ?? null;
 
