@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-28 19:19+0200\n"
-"PO-Revision-Date: 2026-07-28 19:19+0200\n"
+"POT-Creation-Date: 2026-07-29 10:49+0200\n"
+"PO-Revision-Date: 2026-07-29 10:49+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5025,6 +5025,17 @@ msgstr ""
 "and display the events on real physical screens."
 
 msgctxt "DPL event"
+msgid "Event list paging"
+msgstr ""
+
+msgctxt "DPL event"
+msgid ""
+"Controls how visitors browse the list of events on the events page: how many "
+"events are shown at a time, and whether more events appear behind a \"Show "
+"more\" button or load automatically as the visitor scrolls."
+msgstr ""
+
+msgctxt "DPL event"
 msgid "Automatic unpublication"
 msgstr "Automatisk afpublicering"
 
@@ -5105,6 +5116,22 @@ msgstr "DKK"
 
 msgid "Free"
 msgstr "Gratis"
+
+msgctxt "dpl_event"
+msgid "Show 25 events, then a \"Show more\" button"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Show 50 events, then a \"Show more\" button"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Show 100 events, then a \"Show more\" button"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Show 100 events, then load the rest automatically while scrolling"
+msgstr ""
 
 msgctxt "Recommender (settings)"
 msgid "Search text"
