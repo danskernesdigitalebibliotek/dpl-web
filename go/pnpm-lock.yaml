@@ -72,8 +72,8 @@ importers:
         specifier: github:danskernesdigitalebibliotek/iron-session#chunking-no-build
         version: https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f
       js-md5:
-        specifier: ^0.8.3
-        version: 0.8.3
+        specifier: ^0.9.2
+        version: 0.9.2
       keen-slider:
         specifier: ^6.8.6
         version: 6.8.6
@@ -7335,8 +7335,8 @@ packages:
   js-md4@0.3.2:
     resolution: {integrity: sha512-/GDnfQYsltsjRswQhN9fhv3EMw2sCpUdrdxyWDOUK7eyD++r3gRhzgiQgc/x4MAv2i1iuQ4lxO5mvqM3vj4bwA==}
 
-  js-md5@0.8.3:
-    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==}
+  js-md5@0.9.2:
+    resolution: {integrity: sha512-QK62elp/ozZj7kzyCG5yaeK+uWeqxPlg3w3znYDBvwyqzJs7nh5bgTAAH9KltLni2LT7qx/E1EgSVwfiOSRe0Q==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -18480,7 +18480,7 @@ snapshots:
 
   js-md4@0.3.2: {}
 
-  js-md5@0.8.3: {}
+  js-md5@0.9.2: {}
 
   js-tokens@4.0.0: {}
 
