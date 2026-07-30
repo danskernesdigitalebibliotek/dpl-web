@@ -152,6 +152,39 @@ class EventInstanceReconciliationTest extends KernelTestBase {
   }
 
   /**
+   * Two occurrences that share a start time survive a change to the series.
+   *
+   * This is the same identity question as the test above, asked of a series
+   * that already exists: recognising an occurrence by its start time alone
+   * makes the two look like one, and deletes one of them on the next change.
+   */
+  public function testOccurrencesSharingTheirStartTimeSurviveLaterChanges(): void {
+    $series = $this->createSeries([
+      ['2030-01-07T10:00:00', '2030-01-07T12:00:00'],
+      ['2030-01-07T10:00:00', '2030-01-07T14:00:00'],
+    ]);
+
+    $original_ids = $this->instanceIds($series);
+    $this->assertCount(2, $original_ids);
+
+    // Add an occurrence on another day, which leaves both of these alone.
+    $this->setCustomDates($series, [
+      ['2030-01-07T10:00:00', '2030-01-07T12:00:00'],
+      ['2030-01-07T10:00:00', '2030-01-07T14:00:00'],
+      ['2030-01-14T10:00:00', '2030-01-14T12:00:00'],
+    ]);
+
+    $remaining_ids = $this->instanceIds($series);
+
+    $this->assertSame(
+      [],
+      array_diff($original_ids, $remaining_ids),
+      'Both of the occurrences that start at the same time are still there.',
+    );
+    $this->assertCount(3, $remaining_ids, 'The added occurrence is the only new instance.');
+  }
+
+  /**
    * Creates a published event series with the given custom date ranges.
    *
    * @param array<array{string, string}> $dates
