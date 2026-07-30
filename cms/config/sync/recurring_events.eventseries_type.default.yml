@@ -23,3 +23,4 @@ _core:
 id: default
 label: Default
 description: 'A default event series type.'
+new_revision: false
