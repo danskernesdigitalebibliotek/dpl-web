@@ -24,3 +24,4 @@ id: default
 label: Default
 description: 'A default event series type.'
 new_revision: false
+validate_recurring_date: false

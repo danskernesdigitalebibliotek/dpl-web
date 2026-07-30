@@ -334,7 +334,7 @@
                 "3426797: Problem: Untranslated string used as source": "patches/vendor/config_translation_po-5.patch"
             },
             "drupal/date_range_formatter": {
-                "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2026-03-24/date_range_formatter_daterange_issue.patch"
+                "3309324: Fails when start and end date are identical": "patches/vendor/date_range_formatter_daterange_issue.patch"
             },
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "patches/vendor/default_content-52a8827e43ebe1e4cbfd99b3f2c896c20122c220.patch"

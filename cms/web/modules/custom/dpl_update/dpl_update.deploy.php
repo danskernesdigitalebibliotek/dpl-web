@@ -600,3 +600,16 @@ function dpl_update_deploy_remove_unilogin_permissions(): string {
 function dpl_update_deploy_event_audiences_field_inheritance(): string {
   return _dpl_update_field_inheritance('event_audiences');
 }
+
+/**
+ * Remove invalid field_inheritance permission, after patch removal.
+ */
+function dpl_update_deploy_remove_field_inheritance_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator', 'editor', 'mediator'],
+    ['administer entity field inheritance'],
+    FALSE,
+  );
+
+  return 'Removed outdated field_inheritance permission.';
+}
