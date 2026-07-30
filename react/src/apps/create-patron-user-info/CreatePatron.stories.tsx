@@ -328,3 +328,13 @@ export const Primary: Story = {
     }
   ]
 };
+
+// Mirrors a library that has disabled the option to opt in to SMS
+// notifications in the CMS backend (textNotificationsEnabledConfig = "0").
+export const WithoutSmsNotifications: Story = {
+  ...Primary,
+  args: {
+    ...Primary.args,
+    textNotificationsEnabledConfig: "0"
+  }
+};

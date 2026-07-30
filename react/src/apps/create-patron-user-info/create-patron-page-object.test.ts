@@ -31,7 +31,7 @@ describe("Create Patron - Page Objects Integration", () => {
       createPatronPage.elements
         .contactInfo()
         .shouldContainAll([
-          "Phone number *",
+          "Phone number",
           "E-mail *",
           "Receive text messages about your loans, reservations, and so forth"
         ]);
@@ -43,6 +43,41 @@ describe("Create Patron - Page Objects Integration", () => {
         .shouldContainAll(["Choose library"]);
       createPatronPage.elements.submitButton().shouldContainAll(["Confirm"]);
       createPatronPage.elements.cancelButton().shouldContainAll(["Cancel"]);
+    });
+  });
+
+  describe("SMS notifications", () => {
+    it("Should show the SMS checkbox and keep the phone number optional by default", () => {
+      createPatronPage.elements
+        .receiveSmsCheckbox()
+        .shouldContainAll([
+          "Receive text messages about your loans, reservations, and so forth"
+        ]);
+      // The phone number is optional until the patron opts in to SMS, so the
+      // label must not carry the required asterisk.
+      createPatronPage.elements
+        .phoneNumberLabel()
+        .should("have.text", "Phone number");
+    });
+
+    it("Should make the phone number required when opting in to SMS", () => {
+      createPatronPage.toggleReceiveSms();
+      createPatronPage.elements
+        .phoneNumberLabel()
+        .should("have.text", "Phone number *");
+    });
+
+    it("Should hide the SMS checkbox and keep the phone number optional when the library has disabled SMS notifications", () => {
+      // Library with textNotificationsEnabledConfig = "0" in the CMS backend.
+      const pageWithoutSms = new CreatePatronPage(
+        "apps-create-patron--without-sms-notifications"
+      );
+      pageWithoutSms.visit([]);
+
+      pageWithoutSms.elements.receiveSmsCheckbox().should("not.exist");
+      pageWithoutSms.elements
+        .phoneNumberLabel()
+        .should("have.text", "Phone number");
     });
   });
 
