@@ -31009,141 +31009,6 @@ msgid "Returns the app fees and payment info settings."
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:label"
-msgid "Watchdog"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:description"
-msgid "Recent log messages"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_title"
-msgid "Default"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:title"
-msgid "Recent log messages"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
-msgid "Icon"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
-msgid "WID"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
-msgid "Severity"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
-msgid "Type"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
-msgid "Date"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
-msgid "Message"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
-msgid "admin/reports/dblog/event/{{ wid }}"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
-msgid "{{ message }}"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
-msgid "User"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
-msgid "Operations"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
-msgid "Items per page"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
-msgid "- All -"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
-msgid "Offset"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
-msgid "Filter"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
-msgid "Reset"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
-msgid "Sort by"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
-msgid "Asc"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
-msgid "Desc"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
-msgid "No log messages available."
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
-msgid "No log messages available."
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
-msgid "Type"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
-msgid "Severity"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:page:display_title"
-msgid "Page"
-msgstr ""
-
-#: 
 msgctxt "DPL event"
 msgid "Event list paging"
 msgstr "Arrangementsoversigt"
@@ -31172,4 +31037,29 @@ msgstr "Vis 100 arrangementer ad gangen og så \"Vis flere\"-knappen"
 msgctxt "dpl_event"
 msgid "Show 100 events, then load the rest automatically while scrolling"
 msgstr "Vis 100 arrangementer ad gangen og indlæs flere arrangementer, mens brugeren scroller nedad"
+
+#: 
+msgctxt "facets.facet.event_date:name"
+msgid "Event Date"
+msgstr "Dato"
+
+#: 
+msgctxt "facets.facet.event_date:missing_label"
+msgid "others"
+msgstr "andre"
+
+#: 
+msgctxt "facets.facet.event_date:url_alias"
+msgid "event_date"
+msgstr "arrangements_dato"
+
+#: 
+msgctxt "facets.facet.event_date:widget:config:min_label"
+msgid "Date from"
+msgstr "Dato fra"
+
+#: 
+msgctxt "facets.facet.event_date:widget:config:max_label"
+msgid "Date to"
+msgstr "Dato til"
 
