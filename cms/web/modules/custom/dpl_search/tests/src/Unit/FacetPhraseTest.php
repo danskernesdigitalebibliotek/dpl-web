@@ -22,7 +22,7 @@ class FacetPhraseTest extends UnitTestCase {
    *   Array of examples, keyed by description. Each example contains a
    *   facets JSON string and the expected phrase (or NULL for none).
    */
-  public function facetsProvider(): array {
+  public static function facetsProvider(): array {
     return [
       'a creator link from a material page' => [
         '[{"facetName":"creators","selectedValues":["h.c. andersen"]}]',

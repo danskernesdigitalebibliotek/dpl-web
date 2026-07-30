@@ -12,7 +12,6 @@ use Drupal\dpl_search\DplSearchSettings;
 use Drupal\dpl_search\FacetPhrase;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
-use Safe\Exceptions\UrlException;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
@@ -142,7 +141,7 @@ function dpl_search_node_view(array &$build, NodeInterface $node, EntityViewDisp
     $build['#cache']['tags'][] = $cache_tag;
   }
 
-  if ((string) $node->id() !== _dpl_search_zero_hits_node_id($settings->getZeroHitsSearchUrl())) {
+  if ((string) $node->id() !== $settings->getZeroHitsSearchNodeId()) {
     return;
   }
 
@@ -172,54 +171,6 @@ function dpl_search_node_view(array &$build, NodeInterface $node, EntityViewDisp
       'total' => $config['webSearchTotal'],
     ],
   ];
-}
-
-/**
- * Get the node ID of the configured zero hits search page.
- *
- * The configured URL is resolved through routing, so it matches the node
- * whether it is stored as an alias or a /node/{id} path, with or without a
- * trailing slash, and regardless of language prefixes on the request.
- *
- * @param string $zero_hits_url
- *   The configured zero hits search URL.
- *
- * @return string|null
- *   The node ID, or NULL if the URL does not point to a node on this site.
- */
-function _dpl_search_zero_hits_node_id(string $zero_hits_url): ?string {
-  try {
-    $parts = Safe\parse_url($zero_hits_url);
-  }
-  catch (UrlException) {
-    return NULL;
-  }
-
-  if (!is_array($parts)) {
-    return NULL;
-  }
-
-  // A URL on another host cannot be a node on this site, even if its path
-  // happens to match one.
-  if (isset($parts['host']) && $parts['host'] !== \Drupal::request()->getHost()) {
-    return NULL;
-  }
-
-  $path = $parts['path'] ?? NULL;
-
-  if (!is_string($path) || $path === '' || $path === '/') {
-    return NULL;
-  }
-
-  $url = \Drupal::service('path.validator')->getUrlIfValidWithoutAccessCheck(rtrim($path, '/'));
-
-  if (!$url instanceof Url || !$url->isRouted() || $url->getRouteName() !== 'entity.node.canonical') {
-    return NULL;
-  }
-
-  $node_id = $url->getRouteParameters()['node'] ?? NULL;
-
-  return is_string($node_id) ? $node_id : NULL;
 }
 
 /**
