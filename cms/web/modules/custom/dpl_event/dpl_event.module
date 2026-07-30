@@ -647,14 +647,18 @@ function _dpl_event_stack_eventinstances(array $items): array {
     }
 
     $eventInstance = $item['content']['#eventinstance'];
-    $eventSeriesId = $eventInstance->getEventSeries()->id();
+    $eventSeries = $eventInstance->getEventSeries();
 
     $shouldBeStacked = FALSE;
 
-    // Check if not first row and previous event_series_id matches.
+    // Check if not first row and previous event_series_id matches. An instance
+    // whose series has been deleted belongs with nothing, so it is never
+    // stacked.
     $priorInstance = $items[$index - 1]['content']['#eventinstance'] ?? NULL;
-    if ($priorInstance instanceof EventInstance) {
-      $shouldBeStacked = $eventSeriesId === $priorInstance->getEventSeries()->id();
+    if ($eventSeries instanceof EventSeries && $priorInstance instanceof EventInstance) {
+      $priorSeries = $priorInstance->getEventSeries();
+      $shouldBeStacked = $priorSeries instanceof EventSeries
+        && $eventSeries->id() === $priorSeries->id();
     }
 
     $item['shouldBeStacked'] = $shouldBeStacked;

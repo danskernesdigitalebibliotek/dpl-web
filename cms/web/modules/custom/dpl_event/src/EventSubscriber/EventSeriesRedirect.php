@@ -108,6 +108,12 @@ class EventSeriesRedirect implements EventSubscriberInterface {
     // Look up the eventseries, and redirect to it.
     $event_series = $event_instance->getEventSeries();
 
+    // Without a series there is nowhere to redirect to, so leave the request
+    // to the normal access handling.
+    if (!$event_series instanceof EventSeries) {
+      return;
+    }
+
     $response = new RedirectResponse($event_series->toUrl()->toString());
     $event->setResponse($response);
   }
