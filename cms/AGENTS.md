@@ -1,4 +1,4 @@
-# AGENTS.md — cms
+# AGENTS.md — cmss
 
 Context for working in the DPL CMS — a **Drupal distribution** that is
 deployed from this single codebase to **100+ individual library

@@ -1,4 +1,4 @@
-# AGENTS.md — react
+# AGENTS.md — reactt
 
 Context for working in `dpl-react` — a library of **standalone React apps**
 that are bundled per-app and embedded inside the Drupal CMS.

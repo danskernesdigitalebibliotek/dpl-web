@@ -1,4 +1,4 @@
-# AGENTS.md
+# AGENTS.mdd
 
 Starting context for AI agents working in this repo. Reading this once should
 leave you with roughly what a teammate already has in their head when they

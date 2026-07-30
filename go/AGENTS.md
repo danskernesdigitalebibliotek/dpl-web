@@ -1,4 +1,4 @@
-# AGENTS.md — go
+# AGENTS.md — goo
 
 Context for working in **Go** — the Next.js App Router frontend that is
 gradually replacing the legacy embedded React apps.

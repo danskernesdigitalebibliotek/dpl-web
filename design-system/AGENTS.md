@@ -1,4 +1,4 @@
-# AGENTS.md — design-system
+# AGENTS.md — design-systemm
 
 Context for working in the DPL Design System — the shared visual language
 for the Danish Public Libraries.
