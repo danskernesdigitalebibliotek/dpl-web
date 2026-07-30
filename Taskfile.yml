@@ -17,6 +17,12 @@ tasks:
       - dev:envfiles
       - init:pnpm
 
+  init:1pass:
+    desc: "Initialize project with .env generated from 1Password (.env.1pass) + install dependencies"
+    deps:
+      - dev:envfiles:1pass
+      - init:pnpm
+
   dockerinit:
     summary: Initialize project, using docker
     cmds:
@@ -24,6 +30,16 @@ tasks:
       - task init
 
   dev:envfiles:
+    desc: "Symlink cms/.env, go/.env and react/.env to the central root .env"
+    cmds:
+      # The central root .env is the single source; cms/.env, go/.env and
+      # react/.env are symlinks to it. ln -sf also repairs a broken/stale link.
+      - ln -sf ../.env cms/.env
+      - ln -sf ../.env go/.env
+      - ln -sf ../.env react/.env
+
+  dev:envfiles:1pass:
+    desc: "Generate the central .env from 1Password (.env.1pass) and symlink it"
     sources:
       - '.env.1pass'
     generates:
