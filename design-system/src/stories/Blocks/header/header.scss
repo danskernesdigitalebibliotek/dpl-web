@@ -6,7 +6,12 @@ $_header-button-size--large: 70px;
   display: grid;
   grid-template-columns: 250px 1fr 105px;
   background-color: $color__global-primary;
-  position: sticky;
+  // Non-sticky for now. header-sticky.js still writes an inline `top` on scroll
+  // (kept so sticky can be revived later), so `top: auto !important` overrides it
+  // to keep the header put; `relative` keeps it as the containing block for its
+  // dropdowns. To revive sticky: use `position: sticky` and drop the `top`.
+  position: relative;
+  top: auto !important;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 500ms;
