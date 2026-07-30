@@ -388,7 +388,8 @@
                 "3461740: Fatal error / WSOD when using or click-sorting 'Event series start date' in views (MR !211)": "patches/vendor/recurring_events-c852eb00033eb362da54b073b3dd2c36b00fe159.patch",
                 "3468300: Update EventSeriesSettings to use datetime form element.": "patches/vendor/recurring_events-5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
                 "3504806: Clean up orphaned eventinstances automatically": "patches/vendor/reccuring_events_auto_delete_orphaned.patch",
-                "3515976: EventUserTrait may return NULL if owner has been deleted": "patches/vendor/recurring_events-4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch"
+                "3515976: EventUserTrait may return NULL if owner has been deleted": "patches/vendor/recurring_events-4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch",
+                "Key calculated event dates by their full date range, so same-day occurrences of different lengths are not merged": "patches/recurring_events-key-calculated-dates-by-full-range.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "patches/vendor/theme-permission-edit-install-uninstall-3105637-7.patch"

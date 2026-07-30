@@ -1,0 +1,74 @@
+Key calculated event dates by their full date range.
+
+The calculated dates of an event series are keyed by the start date alone.
+Two occurrences that start at the same time but end at different times
+therefore share a key, and the second one silently overwrites the first,
+so only one event instance is created for the two of them.
+
+Nothing reads these keys as dates - they are only iterated over and unset
+by hook_recurring_events_event_instances_pre_create_alter() implementations
+and by YearlyRecurringDate::calculateInstances() - so including the end date
+in the key is enough to keep both occurrences.
+
+diff --git a/src/EventCreationService.php b/src/EventCreationService.php
+--- a/src/EventCreationService.php
++++ b/src/EventCreationService.php
+@@ -371,9 +371,9 @@
+    *   The event series.
+    *
+    * @return array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}>
+-   *   An array where each key is a start date formatted as RFC 2822 / RFC 5322
+-   *   and each value is an array having 'start_date' and 'end_date', which are
+-   *   DrupalDateTime values.
++   *   An array where each key is the start and end date of the occurrence, both
++   *   formatted as RFC 2822 / RFC 5322, and each value is an array having
++   *   'start_date' and 'end_date', which are DrupalDateTime values.
+    *
+    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+    */
+@@ -392,9 +392,9 @@
+    *   The event series.
+    *
+    * @return array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}>
+-   *   An array where each key is a start date formatted as RFC 2822 / RFC 5322
+-   *   and each value is an array having 'start_date' and 'end_date', which are
+-   *   DrupalDateTime values.
++   *   An array where each key is the start and end date of the occurrence, both
++   *   formatted as RFC 2822 / RFC 5322, and each value is an array having
++   *   'start_date' and 'end_date', which are DrupalDateTime values.
+    *
+    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+    */
+@@ -406,7 +406,7 @@
+         if (!empty($config['custom_dates'])) {
+           foreach ($config['custom_dates'] as $date_range) {
+             if (isset($date_range['start_date'], $date_range['end_date'])) {
+-              $dates[$date_range['start_date']->format('r')] = [
++              $dates[$date_range['start_date']->format('r') . '/' . $date_range['end_date']->format('r')] = [
+                 'start_date' => $date_range['start_date'],
+                 'end_date' => $date_range['end_date'],
+               ];
+diff --git a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+--- a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
++++ b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+@@ -257,7 +257,7 @@
+               // Add the number of seconds specified in the duration field.
+               $daily_date_end->modify('+' . $form_data['duration'] . ' ' . $form_data['duration_units']);
+               // Set this event to be created.
+-              $events_to_create[$day_time->format('r')] = [
++              $events_to_create[$day_time->format('r') . '/' . $daily_date_end->format('r')] = [
+                 'start_date' => $day_time,
+                 'end_date' => $daily_date_end,
+               ];
+diff --git a/src/Plugin/Field/FieldType/DailyRecurringDate.php b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+--- a/src/Plugin/Field/FieldType/DailyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+@@ -238,7 +238,7 @@
+       $end_date->setTimezone($utc_timezone);
+
+       // Set this event to be created.
+-      $events_to_create[$start_date->format('r')] = [
++      $events_to_create[$start_date->format('r') . '/' . $end_date->format('r')] = [
+         'start_date' => $start_date,
+         'end_date' => $end_date,
+       ];
