@@ -6,6 +6,19 @@ index 195886a..7bfa6c8 100644
  date_format: 'F jS, Y h:iA'
  limit: 10
 +auto_delete_orphaned: 0
+diff --git a/config/schema/recurring_events.schema.yml b/config/schema/recurring_events.schema.yml
+--- a/config/schema/recurring_events.schema.yml
++++ b/config/schema/recurring_events.schema.yml
+@@ -58,6 +58,9 @@
+     limit:
+       type: integer
+       label: 'The items per page to show on event instance listing'
++    auto_delete_orphaned:
++      type: integer
++      label: 'Automatically delete orphaned event instances'
+ 
+ field.formatter.settings.recurring_events_eventinstance_date:
+   type: mapping
 diff --git a/recurring_events.module b/recurring_events.module
 index 4902fe0..3bf2d0e 100644
 --- a/recurring_events.module
