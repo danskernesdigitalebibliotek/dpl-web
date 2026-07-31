@@ -199,6 +199,14 @@ class EventsGET200ResponseInner
     protected ?array $branchIsilIds = null;
 
     /**
+     * @var EventsGET200ResponseInnerOrganizer|null
+     * @SerializedName("organizer")
+     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOrganizer")
+    */
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOrganizer")]
+    protected ?EventsGET200ResponseInnerOrganizer $organizer = null;
+
+    /**
      * @var EventsGET200ResponseInnerAddress|null
      * @SerializedName("address")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
@@ -336,6 +344,7 @@ class EventsGET200ResponseInner
             $this->dateTime = array_key_exists('dateTime', $data) ? $data['dateTime'] : $this->dateTime;
             $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->branchIsilIds = array_key_exists('branchIsilIds', $data) ? $data['branchIsilIds'] : $this->branchIsilIds;
+            $this->organizer = array_key_exists('organizer', $data) ? $data['organizer'] : $this->organizer;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
             $this->categories = array_key_exists('categories', $data) ? $data['categories'] : $this->categories;
             $this->audiences = array_key_exists('audiences', $data) ? $data['audiences'] : $this->audiences;
@@ -748,6 +757,33 @@ class EventsGET200ResponseInner
     public function setBranchIsilIds(?array $branchIsilIds = null): self
     {
         $this->branchIsilIds = $branchIsilIds;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * Gets organizer.
+     *
+     * @return EventsGET200ResponseInnerOrganizer|null
+     */
+    public function getOrganizer(): ?EventsGET200ResponseInnerOrganizer
+    {
+        return $this->organizer;
+    }
+
+    /**
+    * Sets organizer.
+    *
+    * @param EventsGET200ResponseInnerOrganizer|null $organizer
+    *
+    * @return $this
+    */
+    public function setOrganizer(?EventsGET200ResponseInnerOrganizer $organizer = null): self
+    {
+        $this->organizer = $organizer;
 
         return $this;
     }
