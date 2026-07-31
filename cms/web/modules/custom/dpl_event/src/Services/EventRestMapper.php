@@ -7,6 +7,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOrganizer;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage;
@@ -19,8 +20,10 @@ use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
+use Drupal\gsearch\AddressGsearchItemInterface;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\media\MediaInterface;
+use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTime;
@@ -62,6 +65,7 @@ class EventRestMapper {
       'originalImage' => $this->getOriginalImage(),
       'teaserImage' => $this->getTeaserImage(),
       'branches' => $this->getBranches(),
+      'organizer' => $this->getOrganizer(),
       'address' => $this->getAddress(),
       'audiences' => $this->getAudiences(),
       'tags' => $this->getTags(),
@@ -108,6 +112,71 @@ class EventRestMapper {
     }
 
     return $names;
+  }
+
+  /**
+   * Getting the organizer of the event.
+   *
+   * The organizer is the branch responsible for the event. Notice that this is
+   * not necessarily where the event takes place - when an event is held
+   * outside the library, the organizer and the address differ.
+   *
+   * @see self::getAddress()
+   */
+  private function getOrganizer(): ?EventsGET200ResponseInnerOrganizer {
+    $branches = $this->event->getBranches() ?? [];
+    $branch = reset($branches);
+
+    if (!($branch instanceof NodeInterface)) {
+      return NULL;
+    }
+
+    // The name is the only required part of an organizer, so a branch without
+    // a title cannot be described. This mirrors getBranches(), which leaves
+    // such a branch out of the response entirely.
+    $name = $branch->getTitle();
+
+    if (empty($name)) {
+      return NULL;
+    }
+
+    $organizer = new EventsGET200ResponseInnerOrganizer();
+    $organizer->setName($name);
+    $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
+    $organizer->setIsilId($this->getBranchValue($branch, 'field_agency_branch_id'));
+    $organizer->setPhone($this->getBranchValue($branch, 'field_phone'));
+    $organizer->setEmail($this->getBranchValue($branch, 'field_email'));
+
+    $address = $branch->hasField('field_address_gsearch') ?
+      $branch->get('field_address_gsearch')->first() : NULL;
+
+    if ($address instanceof AddressGsearchItemInterface) {
+      $zip = $address->getPostalCode();
+      $country = $address->getCountryCode();
+      // The normalized street can be missing even though the address holds a
+      // value, so fall back to the human-readable address as a whole.
+      $street = $address->getAddress() ?: $address->getString();
+
+      $organizer->setStreet(!empty($street) ? $street : NULL);
+      $organizer->setZipCode(!empty($zip) ? intval($zip) : NULL);
+      $organizer->setCity($address->getPostalName());
+      // Addresses entered as freetext can leave the country empty. Since all
+      // branches are Danish libraries, default to Denmark in that case.
+      $organizer->setCountry(!empty($country) ? $country : 'DK');
+    }
+
+    return $organizer;
+  }
+
+  /**
+   * Helper, getting a single string value from a branch node field.
+   */
+  private function getBranchValue(NodeInterface $branch, string $field_name): ?string {
+    if (!$branch->hasField($field_name)) {
+      return NULL;
+    }
+
+    return $branch->get($field_name)->getString() ?: NULL;
   }
 
   /**
