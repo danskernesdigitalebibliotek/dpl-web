@@ -1,0 +1,29 @@
+name: Build CMS frontend assets
+description: >-
+  Build the design-system and React and copy their artifacts into the CMS
+  source tree (theme assets + libraries), ready to be baked into the source
+  image. Replaces the old Composer-package download of these projects.
+inputs:
+  token:
+    description: GitHub token for authenticating with the npm registry.
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/common-setup-js
+      with:
+        token: ${{ inputs.token }}
+    - name: Install go-task
+      uses: arduino/setup-task@v2
+      with:
+        repo-token: ${{ inputs.token }}
+    - name: Build design-system + React and copy into CMS
+      shell: bash
+      # The build does not require browsers.
+      env:
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      run: |
+        # design-system must be built before React: React imports from
+        # @danskernesdigitalebibliotek/dpl-design-system/build/*.
+        task dev:cms:link:design-system
+        task dev:cms:link:react

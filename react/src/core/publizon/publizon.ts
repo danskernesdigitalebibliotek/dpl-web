@@ -6,16 +6,21 @@
 Orders/loans created in test environment will not be invoiced. Please request a new license key for the production environment when you're ready to go live.
  * OpenAPI spec version: 1
  */
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
+  QueryClient,
   QueryFunction,
   QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult
-} from "react-query";
+} from "@tanstack/react-query";
 
 import type {
   ApiResult,
@@ -63,10 +68,12 @@ export const getGetV1UserCardnumberFriendlyQueryOptions = <
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
   TError = ErrorType<ApiResult>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+      TError,
+      TData
+    >
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -82,7 +89,7 @@ export const getGetV1UserCardnumberFriendlyQueryOptions = <
     Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1UserCardnumberFriendlyQueryResult = NonNullable<
@@ -90,6 +97,73 @@ export type GetV1UserCardnumberFriendlyQueryResult = NonNullable<
 >;
 export type GetV1UserCardnumberFriendlyQueryError = ErrorType<ApiResult>;
 
+export function useGetV1UserCardnumberFriendly<
+  TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+  TError = ErrorType<ApiResult>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserCardnumberFriendly<
+  TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+  TError = ErrorType<ApiResult>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserCardnumberFriendly<
+  TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+  TError = ErrorType<ApiResult>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Gets the user's friendly card number.
  */
@@ -97,18 +171,26 @@ export type GetV1UserCardnumberFriendlyQueryError = ErrorType<ApiResult>;
 export function useGetV1UserCardnumberFriendly<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
   TError = ErrorType<ApiResult>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1UserCardnumberFriendlyQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -134,10 +216,12 @@ export const getGetV1UserChecklistQueryOptions = <
   TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
   TError = ErrorType<unknown>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1UserChecklist>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1UserChecklist>>,
+      TError,
+      TData
+    >
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -152,7 +236,7 @@ export const getGetV1UserChecklistQueryOptions = <
     Awaited<ReturnType<typeof getV1UserChecklist>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1UserChecklistQueryResult = NonNullable<
@@ -160,6 +244,73 @@ export type GetV1UserChecklistQueryResult = NonNullable<
 >;
 export type GetV1UserChecklistQueryError = ErrorType<unknown>;
 
+export function useGetV1UserChecklist<
+  TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
+  TError = ErrorType<unknown>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserChecklist>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserChecklist>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserChecklist>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserChecklist<
+  TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserChecklist>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserChecklist>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserChecklist>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserChecklist<
+  TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserChecklist>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List all checklist items of the user.
  */
@@ -167,18 +318,26 @@ export type GetV1UserChecklistQueryError = ErrorType<unknown>;
 export function useGetV1UserChecklist<
   TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
   TError = ErrorType<unknown>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1UserChecklist>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserChecklist>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1UserChecklistQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -248,14 +407,17 @@ export type PostV1UserChecklistIdentifierMutationError = ErrorType<unknown>;
 export const usePostV1UserChecklistIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
-    TError,
-    { identifier: string },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
+      TError,
+      { identifier: string },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
   TError,
   { identifier: string },
@@ -264,7 +426,7 @@ export const usePostV1UserChecklistIdentifier = <
   const mutationOptions =
     getPostV1UserChecklistIdentifierMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -326,14 +488,17 @@ export type DeleteV1UserChecklistIdentifierMutationError = ErrorType<unknown>;
 export const useDeleteV1UserChecklistIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
-    TError,
-    { identifier: string },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
+      TError,
+      { identifier: string },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
   TError,
   { identifier: string },
@@ -342,7 +507,7 @@ export const useDeleteV1UserChecklistIdentifier = <
   const mutationOptions =
     getDeleteV1UserChecklistIdentifierMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 export const getV1LibraryProfile = (signal?: AbortSignal) => {
@@ -361,10 +526,12 @@ export const getGetV1LibraryProfileQueryOptions = <
   TData = Awaited<ReturnType<typeof getV1LibraryProfile>>,
   TError = ErrorType<unknown>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1LibraryProfile>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1LibraryProfile>>,
+      TError,
+      TData
+    >
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -379,7 +546,7 @@ export const getGetV1LibraryProfileQueryOptions = <
     Awaited<ReturnType<typeof getV1LibraryProfile>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1LibraryProfileQueryResult = NonNullable<
@@ -390,18 +557,94 @@ export type GetV1LibraryProfileQueryError = ErrorType<unknown>;
 export function useGetV1LibraryProfile<
   TData = Awaited<ReturnType<typeof getV1LibraryProfile>>,
   TError = ErrorType<unknown>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1LibraryProfile>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1LibraryProfile>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1LibraryProfile>>,
+          TError,
+          Awaited<ReturnType<typeof getV1LibraryProfile>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1LibraryProfile<
+  TData = Awaited<ReturnType<typeof getV1LibraryProfile>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1LibraryProfile>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1LibraryProfile>>,
+          TError,
+          Awaited<ReturnType<typeof getV1LibraryProfile>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1LibraryProfile<
+  TData = Awaited<ReturnType<typeof getV1LibraryProfile>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1LibraryProfile>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+
+export function useGetV1LibraryProfile<
+  TData = Awaited<ReturnType<typeof getV1LibraryProfile>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1LibraryProfile>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1LibraryProfileQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -433,10 +676,8 @@ export const getGetV1UserLoansQueryOptions = <
 >(
   params?: GetV1UserLoansParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getV1UserLoans>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1UserLoans>>, TError, TData>
     >;
   }
 ) => {
@@ -452,7 +693,7 @@ export const getGetV1UserLoansQueryOptions = <
     Awaited<ReturnType<typeof getV1UserLoans>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1UserLoansQueryResult = NonNullable<
@@ -460,6 +701,64 @@ export type GetV1UserLoansQueryResult = NonNullable<
 >;
 export type GetV1UserLoansQueryError = ErrorType<unknown>;
 
+export function useGetV1UserLoans<
+  TData = Awaited<ReturnType<typeof getV1UserLoans>>,
+  TError = ErrorType<unknown>
+>(
+  params: undefined | GetV1UserLoansParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1UserLoans>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserLoans>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserLoans>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserLoans<
+  TData = Awaited<ReturnType<typeof getV1UserLoans>>,
+  TError = ErrorType<unknown>
+>(
+  params?: GetV1UserLoansParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1UserLoans>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserLoans>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserLoans>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserLoans<
+  TData = Awaited<ReturnType<typeof getV1UserLoans>>,
+  TError = ErrorType<unknown>
+>(
+  params?: GetV1UserLoansParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1UserLoans>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Lists all active loans of the user.
  */
@@ -470,18 +769,20 @@ export function useGetV1UserLoans<
 >(
   params?: GetV1UserLoansParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getV1UserLoans>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1UserLoans>>, TError, TData>
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1UserLoansQueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -512,10 +813,12 @@ export const getGetV1UserLoansIdentifierQueryOptions = <
 >(
   identifier: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+        TError,
+        TData
+      >
     >;
   }
 ) => {
@@ -537,7 +840,7 @@ export const getGetV1UserLoansIdentifierQueryOptions = <
     Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1UserLoansIdentifierQueryResult = NonNullable<
@@ -545,6 +848,76 @@ export type GetV1UserLoansIdentifierQueryResult = NonNullable<
 >;
 export type GetV1UserLoansIdentifierQueryError = ErrorType<unknown>;
 
+export function useGetV1UserLoansIdentifier<
+  TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserLoansIdentifier>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserLoansIdentifier<
+  TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserLoansIdentifier>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserLoansIdentifier<
+  TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Gets details of a specific loan.
  */
@@ -555,21 +928,27 @@ export function useGetV1UserLoansIdentifier<
 >(
   identifier: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
+        TError,
+        TData
+      >
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1UserLoansIdentifierQueryOptions(
     identifier,
     options
   );
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -641,14 +1020,17 @@ export type PostV1UserLoansIdentifierMutationError = ErrorType<unknown>;
 export const usePostV1UserLoansIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
-    TError,
-    { identifier: string; params?: PostV1UserLoansIdentifierParams },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
+      TError,
+      { identifier: string; params?: PostV1UserLoansIdentifierParams },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
   TError,
   { identifier: string; params?: PostV1UserLoansIdentifierParams },
@@ -656,7 +1038,7 @@ export const usePostV1UserLoansIdentifier = <
 > => {
   const mutationOptions = getPostV1UserLoansIdentifierMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -682,10 +1064,12 @@ export const getGetV1LoanstatusIdentifierQueryOptions = <
   TError = ErrorType<unknown>
 >(
   identifier: string,
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
-    TError,
-    TData
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+      TError,
+      TData
+    >
   >
 ) => {
   const queryKey =
@@ -704,7 +1088,7 @@ export const getGetV1LoanstatusIdentifierQueryOptions = <
     Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1LoanstatusIdentifierQueryResult = NonNullable<
@@ -712,6 +1096,70 @@ export type GetV1LoanstatusIdentifierQueryResult = NonNullable<
 >;
 export type GetV1LoanstatusIdentifierQueryError = ErrorType<unknown>;
 
+export function useGetV1LoanstatusIdentifier<
+  TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  queryOptions: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+        TError,
+        Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1LoanstatusIdentifier<
+  TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+        TError,
+        Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>
+      >,
+      "initialData"
+    >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1LoanstatusIdentifier<
+  TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+      TError,
+      TData
+    >
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get loan status of a specific product.
  */
@@ -721,20 +1169,26 @@ export function useGetV1LoanstatusIdentifier<
   TError = ErrorType<unknown>
 >(
   identifier: string,
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
-    TError,
-    TData
-  >
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  queryOptions?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
+      TError,
+      TData
+    >
+  >,
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const options = getGetV1LoanstatusIdentifierQueryOptions(
     identifier,
     queryOptions
   );
 
-  const query = useQuery(options) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(options, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = options.queryKey;
 
@@ -806,14 +1260,17 @@ export type PostV1LoanstatusMutationError = ErrorType<unknown>;
 export const usePostV1Loanstatus = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postV1Loanstatus>>,
-    TError,
-    { data: BodyType<string[]> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof postV1Loanstatus>>,
+      TError,
+      { data: BodyType<string[]> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof postV1Loanstatus>>,
   TError,
   { data: BodyType<string[]> },
@@ -821,7 +1278,7 @@ export const usePostV1Loanstatus = <
 > => {
   const mutationOptions = getPostV1LoanstatusMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -848,10 +1305,12 @@ export const getGetV1ProductsIdentifierQueryOptions = <
 >(
   identifier: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+        TError,
+        TData
+      >
     >;
   }
 ) => {
@@ -873,7 +1332,7 @@ export const getGetV1ProductsIdentifierQueryOptions = <
     Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1ProductsIdentifierQueryResult = NonNullable<
@@ -881,6 +1340,76 @@ export type GetV1ProductsIdentifierQueryResult = NonNullable<
 >;
 export type GetV1ProductsIdentifierQueryError = ErrorType<unknown>;
 
+export function useGetV1ProductsIdentifier<
+  TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+          TError,
+          Awaited<ReturnType<typeof getV1ProductsIdentifier>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1ProductsIdentifier<
+  TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+          TError,
+          Awaited<ReturnType<typeof getV1ProductsIdentifier>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1ProductsIdentifier<
+  TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+  TError = ErrorType<unknown>
+>(
+  identifier: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get a specific product.
  */
@@ -891,21 +1420,27 @@ export function useGetV1ProductsIdentifier<
 >(
   identifier: string,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
+        TError,
+        TData
+      >
     >;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1ProductsIdentifierQueryOptions(
     identifier,
     options
   );
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -931,10 +1466,8 @@ export const getGetV1ProductsQueryOptions = <
   TData = Awaited<ReturnType<typeof getV1Products>>,
   TError = ErrorType<unknown>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1Products>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getV1Products>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -949,7 +1482,7 @@ export const getGetV1ProductsQueryOptions = <
     Awaited<ReturnType<typeof getV1Products>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1ProductsQueryResult = NonNullable<
@@ -957,6 +1490,61 @@ export type GetV1ProductsQueryResult = NonNullable<
 >;
 export type GetV1ProductsQueryError = ErrorType<unknown>;
 
+export function useGetV1Products<
+  TData = Awaited<ReturnType<typeof getV1Products>>,
+  TError = ErrorType<unknown>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1Products>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1Products>>,
+          TError,
+          Awaited<ReturnType<typeof getV1Products>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1Products<
+  TData = Awaited<ReturnType<typeof getV1Products>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1Products>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1Products>>,
+          TError,
+          Awaited<ReturnType<typeof getV1Products>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1Products<
+  TData = Awaited<ReturnType<typeof getV1Products>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1Products>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List all products.
  */
@@ -964,18 +1552,22 @@ export type GetV1ProductsQueryError = ErrorType<unknown>;
 export function useGetV1Products<
   TData = Awaited<ReturnType<typeof getV1Products>>,
   TError = ErrorType<unknown>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1Products>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getV1Products>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1ProductsQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -1001,10 +1593,12 @@ export const getGetV1UserReservationsQueryOptions = <
   TData = Awaited<ReturnType<typeof getV1UserReservations>>,
   TError = ErrorType<unknown>
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1UserReservations>>,
-    TError,
-    TData
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getV1UserReservations>>,
+      TError,
+      TData
+    >
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
@@ -1019,7 +1613,7 @@ export const getGetV1UserReservationsQueryOptions = <
     Awaited<ReturnType<typeof getV1UserReservations>>,
     TError,
     TData
-  > & { queryKey: QueryKey };
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type GetV1UserReservationsQueryResult = NonNullable<
@@ -1027,6 +1621,73 @@ export type GetV1UserReservationsQueryResult = NonNullable<
 >;
 export type GetV1UserReservationsQueryError = ErrorType<unknown>;
 
+export function useGetV1UserReservations<
+  TData = Awaited<ReturnType<typeof getV1UserReservations>>,
+  TError = ErrorType<unknown>
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserReservations>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserReservations>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserReservations>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserReservations<
+  TData = Awaited<ReturnType<typeof getV1UserReservations>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserReservations>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getV1UserReservations>>,
+          TError,
+          Awaited<ReturnType<typeof getV1UserReservations>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetV1UserReservations<
+  TData = Awaited<ReturnType<typeof getV1UserReservations>>,
+  TError = ErrorType<unknown>
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserReservations>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Lists all reservations of the user.
  */
@@ -1034,18 +1695,26 @@ export type GetV1UserReservationsQueryError = ErrorType<unknown>;
 export function useGetV1UserReservations<
   TData = Awaited<ReturnType<typeof getV1UserReservations>>,
   TError = ErrorType<unknown>
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getV1UserReservations>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getV1UserReservations>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetV1UserReservationsQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -1119,14 +1788,17 @@ export type PostV1UserReservationsIdentifierMutationError = ErrorType<unknown>;
 export const usePostV1UserReservationsIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
-    TError,
-    { identifier: string; data: BodyType<ReservationInput> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
+      TError,
+      { identifier: string; data: BodyType<ReservationInput> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
   TError,
   { identifier: string; data: BodyType<ReservationInput> },
@@ -1135,7 +1807,7 @@ export const usePostV1UserReservationsIdentifier = <
   const mutationOptions =
     getPostV1UserReservationsIdentifierMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1203,14 +1875,17 @@ export type PatchV1UserReservationsIdentifierMutationError = ErrorType<unknown>;
 export const usePatchV1UserReservationsIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
-    TError,
-    { identifier: string; data: BodyType<ReservationInput> },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
+      TError,
+      { identifier: string; data: BodyType<ReservationInput> },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
   TError,
   { identifier: string; data: BodyType<ReservationInput> },
@@ -1219,7 +1894,7 @@ export const usePatchV1UserReservationsIdentifier = <
   const mutationOptions =
     getPatchV1UserReservationsIdentifierMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -1282,14 +1957,17 @@ export type DeleteV1UserReservationsIdentifierMutationError =
 export const useDeleteV1UserReservationsIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
-    TError,
-    { identifier: string },
-    TContext
-  >;
-}): UseMutationResult<
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
+      TError,
+      { identifier: string },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
   TError,
   { identifier: string },
@@ -1298,5 +1976,5 @@ export const useDeleteV1UserReservationsIdentifier = <
   const mutationOptions =
     getDeleteV1UserReservationsIdentifierMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };

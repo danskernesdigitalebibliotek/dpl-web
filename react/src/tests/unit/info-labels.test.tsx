@@ -64,6 +64,11 @@ describe("ReservationStatusInfoLabel", () => {
 
     const label = getByText(`Borrow before ${expectedUtcDate}`);
 
-    expect(label).toMatchSnapshot();
+    // Don't freeze a wall-clock time into a snapshot: digital dates are
+    // rendered via formatDateTimeUtc(), so the time shifts with the runner's
+    // timezone (UTC in CI, local elsewhere). Assert structure + the
+    // dynamically-formatted value instead.
+    expect(label.classList.contains("status-label--info")).toBe(true);
+    expect(label.textContent).toContain(expectedUtcDate);
   });
 });

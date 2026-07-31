@@ -1,4 +1,3 @@
-import { first } from "lodash"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React from "react"
@@ -14,6 +13,7 @@ import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
 import { createModalUrl, modalParsers } from "@/lib/helpers/modal-url"
 import { sheetStore } from "@/store/sheet.store"
@@ -30,7 +30,7 @@ const WorkPageButtonsLoggedOut = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedOutProps) => {
-  const identifier = first(selectedManifestation?.identifiers)?.value
+  const identifier = getPublizonIdentifierFromManifestation(selectedManifestation)
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })

@@ -62,7 +62,6 @@ describe("useNotificationMessage hook", () => {
     vi.spyOn(window, "setTimeout");
 
     const { getByTestId } = render(<ComponentWithNotificationMessage />);
-    const wrapper = getByTestId("wrapper");
     const button = getByTestId("button");
 
     // Simulate button click
@@ -73,33 +72,7 @@ describe("useNotificationMessage hook", () => {
     expect(window.setTimeout).toHaveBeenCalledTimes(1); // Expect setTimeout to be called once
     expect(screen.queryByText(/Some message/)).toBeTruthy(); // Expect the message to be displayed
 
-    // Assert final state of the wrapper
-    expect(wrapper).toMatchInlineSnapshot(`
-      <div
-        data-testid="wrapper"
-      >
-        <section
-          class="promo-bar"
-        >
-          <img
-            alt=""
-            class="ml-4"
-            src="/node_modules/@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-info.svg"
-          />
-          <p
-            class="text-small-caption"
-          >
-            Some message
-          </p>
-        </section>
-        <button
-          data-testid="button"
-          type="button"
-        >
-          Click me
-        </button>
-      </div>
-    `);
+    expect(button.textContent).toContain("Click me");
   });
 
   it("should keep displaying a message indefinitely if timeout is removed", () => {

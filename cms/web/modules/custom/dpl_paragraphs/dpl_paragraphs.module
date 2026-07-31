@@ -8,6 +8,21 @@
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_paragraphs\Entity\GoLinkParagraph;
+use Drupal\dpl_paragraphs\Entity\GoLinkboxParagraph;
+use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
+use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleAutomaticParagraph;
+use Drupal\dpl_paragraphs\Entity\GoVideoParagraph;
+use Drupal\dpl_paragraphs\Entity\MaterialGridAutomaticParagraph;
+use Drupal\dpl_paragraphs\Entity\MaterialGridManualParagraph;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleManualParagraph;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalAutoParagraph;
+use Drupal\dpl_paragraphs\Entity\GoVideoBundleVerticalManualParagraph;
+use Drupal\dpl_paragraphs\Entity\NavSpotsManualParagraph;
+use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
+use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
+use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\node\NodeForm;
@@ -15,6 +30,76 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 use function Safe\parse_url;
 use function Safe\preg_match;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @todo Use atttribute in Drupal 11.4.0.
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_paragraphs_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['paragraph']['text_body'])) {
+    $bundles['paragraph']['text_body']['class'] = TextBodyParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['video'])) {
+    $bundles['paragraph']['video']['class'] = VideoParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_manual'])) {
+    $bundles['paragraph']['go_video_bundle_manual']['class'] = GoVideoBundleManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_vertical_manual'])) {
+    $bundles['paragraph']['go_video_bundle_vertical_manual']['class'] = GoVideoBundleVerticalManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_automatic'])) {
+    $bundles['paragraph']['go_video_bundle_automatic']['class'] = GoVideoBundleAutomaticParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video_bundle_vertical_auto'])) {
+    $bundles['paragraph']['go_video_bundle_vertical_auto']['class'] = GoVideoBundleVerticalAutoParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['recommendation'])) {
+    $bundles['paragraph']['recommendation']['class'] = RecommendationParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['nav_spots_manual'])) {
+    $bundles['paragraph']['nav_spots_manual']['class'] = NavSpotsManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_material_slider_automatic'])) {
+    $bundles['paragraph']['go_material_slider_automatic']['class'] = GoMaterialSliderAutomaticParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_material_slider_manual'])) {
+    $bundles['paragraph']['go_material_slider_manual']['class'] = GoMaterialSliderManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['material_grid_automatic'])) {
+    $bundles['paragraph']['material_grid_automatic']['class'] = MaterialGridAutomaticParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['material_grid_manual'])) {
+    $bundles['paragraph']['material_grid_manual']['class'] = MaterialGridManualParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_video'])) {
+    $bundles['paragraph']['go_video']['class'] = GoVideoParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_linkbox'])) {
+    $bundles['paragraph']['go_linkbox']['class'] = GoLinkboxParagraph::class;
+  }
+
+  if (isset($bundles['paragraph']['go_link'])) {
+    $bundles['paragraph']['go_link']['class'] = GoLinkParagraph::class;
+  }
+}
 
 /**
  * Implements hook_preprocess_paragraph().

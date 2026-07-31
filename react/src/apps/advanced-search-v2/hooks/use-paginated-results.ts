@@ -9,6 +9,7 @@ import {
 import { SortOption } from "../types";
 import { getSortInput } from "../lib/sort-utils";
 import useGetSearchBranches from "../../../core/utils/branches";
+import { useGetPhysicalHoldingsFilters } from "../../../core/utils/useGetPhysicalHoldingsFilters";
 import { usePrevious } from "react-use";
 
 export interface UsePaginatedResultsReturn {
@@ -46,6 +47,7 @@ export const usePaginatedResults = ({
   sort
 }: UsePaginatedResultsProps): UsePaginatedResultsReturn => {
   const cleanBranches = useGetSearchBranches();
+  const physicalHoldingsFilters = useGetPhysicalHoldingsFilters();
   const [resultItems, setResultItems] = useState<Work[]>([]);
   const [hitcount, setHitCount] = useState(0);
 
@@ -74,7 +76,10 @@ export const usePaginatedResults = ({
         // blacklisted branches are filtered out of the results.
         branchId: cleanBranches,
         ...(onShelf && {
-          status: [CsHoldingsStatusEnum.Onshelf]
+          status: [CsHoldingsStatusEnum.Onshelf],
+          // Filtering on-shelf is a physical-holdings filter, so also exclude
+          // online editions and restrict to the site's own agency.
+          ...physicalHoldingsFilters
         })
       },
       sort: getSortInput(sort)
@@ -84,8 +89,8 @@ export const usePaginatedResults = ({
       // Caching is disabled because we manually accumulate pages in resultItems.
       // Cached responses would conflict with our state management when the user
       // toggles facets or changes sort - we need fresh data each time.
-      keepPreviousData: false,
-      cacheTime: 0,
+      // Not keeping previous data between key changes is the default.
+      gcTime: 0,
       staleTime: 0
     }
   );

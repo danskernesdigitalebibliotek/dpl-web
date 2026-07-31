@@ -8,7 +8,6 @@ coverage
 index.html
 .tokens.json
 .vscode
-yarn-error.log
 .env
 .cache
 .docker/wiremock/**/*.log

@@ -48,20 +48,20 @@ class DplOpeningHoursCreatePOST200ResponseInner
      *
      * @var int|null
      * @SerializedName("id")
-     * @Assert\NotNull()
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("int")]
     protected ?int $id = null;
 
     /**
      * @var DplOpeningHoursListGET200ResponseInnerCategory|null
      * @SerializedName("category")
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory")]
     protected ?DplOpeningHoursListGET200ResponseInnerCategory $category = null;
 
     /**
@@ -69,11 +69,11 @@ class DplOpeningHoursCreatePOST200ResponseInner
      *
      * @var \DateTime|null
      * @SerializedName("date")
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     * @Assert\Type("\Date")
      * @Type("DateTime<'Y-m-d'>")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Assert\Type("\DateTime")]
     protected ?\DateTime $date = null;
 
     /**
@@ -81,10 +81,10 @@ class DplOpeningHoursCreatePOST200ResponseInner
      *
      * @var string|null
      * @SerializedName("start_time")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $startTime = null;
 
     /**
@@ -92,10 +92,10 @@ class DplOpeningHoursCreatePOST200ResponseInner
      *
      * @var string|null
      * @SerializedName("end_time")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $endTime = null;
 
     /**
@@ -103,10 +103,10 @@ class DplOpeningHoursCreatePOST200ResponseInner
      *
      * @var int|null
      * @SerializedName("branch_id")
-     * @Assert\NotNull()
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("int")]
     protected ?int $branchId = null;
 
     /**
@@ -114,27 +114,27 @@ class DplOpeningHoursCreatePOST200ResponseInner
      *
      * @var string|null
      * @SerializedName("branch_name")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $branchName = null;
 
     /**
      * @var DplOpeningHoursListGET200ResponseInnerRepetition|null
      * @SerializedName("repetition")
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Valid]
+    #[Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")]
     protected ?DplOpeningHoursListGET200ResponseInnerRepetition $repetition = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->id = array_key_exists('id', $data) ? $data['id'] : $this->id;
@@ -158,21 +158,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->id;
     }
 
-
-
     /**
-     * Sets id.
-     *
-     * @param int|null $id  An serial unique id of the opening hours instance.
-     *
-     * @return $this
-     */
+    * Sets id.
+    *
+    * @param int|null $id  An serial unique id of the opening hours instance.
+    *
+    * @return $this
+    */
     public function setId(?int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets category.
@@ -184,21 +185,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->category;
     }
 
-
-
     /**
-     * Sets category.
-     *
-     * @param DplOpeningHoursListGET200ResponseInnerCategory|null $category
-     *
-     * @return $this
-     */
+    * Sets category.
+    *
+    * @param DplOpeningHoursListGET200ResponseInnerCategory|null $category
+    *
+    * @return $this
+    */
     public function setCategory(?DplOpeningHoursListGET200ResponseInnerCategory $category): self
     {
         $this->category = $category;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets date.
@@ -210,21 +212,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->date;
     }
 
-
-
     /**
-     * Sets date.
-     *
-     * @param \DateTime|null $date  The date which the opening hours applies to. In ISO 8601 format.
-     *
-     * @return $this
-     */
+    * Sets date.
+    *
+    * @param \DateTime|null $date  The date which the opening hours applies to. In ISO 8601 format.
+    *
+    * @return $this
+    */
     public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets startTime.
@@ -236,21 +239,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->startTime;
     }
 
-
-
     /**
-     * Sets startTime.
-     *
-     * @param string|null $startTime  When the opening hours start. In format HH:MM
-     *
-     * @return $this
-     */
+    * Sets startTime.
+    *
+    * @param string|null $startTime  When the opening hours start. In format HH:MM
+    *
+    * @return $this
+    */
     public function setStartTime(?string $startTime): self
     {
         $this->startTime = $startTime;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets endTime.
@@ -262,21 +266,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->endTime;
     }
 
-
-
     /**
-     * Sets endTime.
-     *
-     * @param string|null $endTime  When the opening hours end. In format HH:MM
-     *
-     * @return $this
-     */
+    * Sets endTime.
+    *
+    * @param string|null $endTime  When the opening hours end. In format HH:MM
+    *
+    * @return $this
+    */
     public function setEndTime(?string $endTime): self
     {
         $this->endTime = $endTime;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets branchId.
@@ -288,21 +293,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->branchId;
     }
 
-
-
     /**
-     * Sets branchId.
-     *
-     * @param int|null $branchId  The id for the branch the instance belongs to
-     *
-     * @return $this
-     */
+    * Sets branchId.
+    *
+    * @param int|null $branchId  The id for the branch the instance belongs to
+    *
+    * @return $this
+    */
     public function setBranchId(?int $branchId): self
     {
         $this->branchId = $branchId;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets branchName.
@@ -314,21 +320,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->branchName;
     }
 
-
-
     /**
-     * Sets branchName.
-     *
-     * @param string|null $branchName  The name of the branch the instance belongs to
-     *
-     * @return $this
-     */
+    * Sets branchName.
+    *
+    * @param string|null $branchName  The name of the branch the instance belongs to
+    *
+    * @return $this
+    */
     public function setBranchName(?string $branchName): self
     {
         $this->branchName = $branchName;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets repetition.
@@ -340,21 +347,22 @@ class DplOpeningHoursCreatePOST200ResponseInner
         return $this->repetition;
     }
 
-
-
     /**
-     * Sets repetition.
-     *
-     * @param DplOpeningHoursListGET200ResponseInnerRepetition|null $repetition
-     *
-     * @return $this
-     */
+    * Sets repetition.
+    *
+    * @param DplOpeningHoursListGET200ResponseInnerRepetition|null $repetition
+    *
+    * @return $this
+    */
     public function setRepetition(?DplOpeningHoursListGET200ResponseInnerRepetition $repetition): self
     {
         $this->repetition = $repetition;
 
         return $this;
     }
+
+
+
 }
 
 

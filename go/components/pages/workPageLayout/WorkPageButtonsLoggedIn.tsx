@@ -1,4 +1,3 @@
-import { first } from "lodash"
 import { useQueryStates } from "nuqs"
 import React, { useMemo } from "react"
 
@@ -13,6 +12,7 @@ import AlertBox from "@/components/shared/alertBox/AlertBox"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { modalParsers } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -28,7 +28,7 @@ const WorkPageButtonsLoggedIn = ({
   workId,
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
-  const identifier = first(selectedManifestation?.identifiers)?.value
+  const identifier = getPublizonIdentifierFromManifestation(selectedManifestation)
   const [, setModal] = useQueryStates(modalParsers, { scroll: false })
 
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()

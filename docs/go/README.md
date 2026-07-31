@@ -51,30 +51,19 @@
 
 ### Prerequisites
 
-- Use the node version registered in the [`.nvm`] file
-- Preferably managed by [`nvm`](https://github.com/nvm-sh/nvm)
-- This project uses [`yarn`](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) make sure to have this installed globally on your machine
+- Node.js – version specified in `.nvmrc`, managed via [nvm](https://github.com/nvm-sh/nvm) or similar tools.
+- [pnpm](https://pnpm.io/) – version specified in `package.json`, can be installed using corepack or similar tools.
 
 ### Setup
 
-1. Make sure you are using the correct Node version:
+1. Install dependencies by running `pnpm install` from the **repository root**. This installs dependencies for all workspace members including `go/`.
 
-```bash
-nvm use
-```
-
-2. Install dependencies:
-
-```bash
-yarn
-```
-
-3. Start the development server:
+2. Start the development server:
 
 We run the server in an [experimental https](https://nextjs.org/docs/pages/api-reference/cli/next#next-dev-options) state to not get blocked by CORS policy when developing locally.
 
 ```bash
-yarn dev:https
+pnpm run dev:https
 ```
 
 The application is now running at [https://localhost:3000](https://localhost:3000)
@@ -99,7 +88,7 @@ The application is now running at [https://localhost:3000](https://localhost:300
 In the project, you'll see the following folders and files:
 
 | File(s)                  | Description                                                                                                                                               |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | \_\_tests\_\_/\*         | Unit tests for the application components and utilities. Using [vitest][vitest]                                                                           |
 | .github/\*               | GitHub configuration files and workflows                                                                                                                  |
 | .storybook/\*            | Configuration files and stories for Storybook                                                                                                             |
@@ -148,7 +137,6 @@ In the project, you'll see the following folders and files:
 | Taskfile.yml             | Task automation file used to define and run tasks                                                                                                         |
 | tsconfig.json            | TypeScript configuration file                                                                                                                             |
 | vitest.config.ts         | Configuration file for [Vitest][vitest]                                                                                                                   |
-| yarn.lock                | Lockfile for Yarn, ensuring consistent installs across different environments                                                                             |
 
 ### git workflows
 
@@ -221,7 +209,7 @@ Storybook is an essential tool in our development workflow for several reasons:
 To start Storybook, run the following command:
 
 ```bash
-yarn storybook
+pnpm run storybook
 ```
 
 This will launch the Storybook server, and you can view the component library in your browser at [http://localhost:6006](http://localhost:6006).
@@ -235,8 +223,8 @@ Cypress is an end-to-end testing framework that allows us to write and run tests
 To start Cypress, run the following commands:
 
 ```bash
-yarn dev # Start the development server
-yarn cypress:run # Run all Cypress tests
+pnpm run dev # Start the development server
+pnpm run cypress:run # Run all Cypress tests
 ```
 
 ## Deployment

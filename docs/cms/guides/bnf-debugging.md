@@ -21,7 +21,92 @@ and doesn't throw any errors.
 The BNF client module has a `job_schedule` that queues subscription
 and node updates which is then processed by the queue system.
 
-Use the `drush queue:*` commands to inspect the state of the queue.
+Use the `drush queue:*` commands to inspect the state of the queue:
+
+Check current queue items:
+  ```bash
+  drush queue:list
+  ```
+
+If the queue isn't properly processed, cron issues can be the culprit.
+Check Grafana for regular "Cron run completed" entries. If another
+`hook_cron` throws an exception, it can halt the synchronization
+process completely.
+
+Force scheduling of all nodes:
+  ```bash
+  drush bnf:scheduler:all-nodes
+  ```
+
+Schedule check of all subscriptions:
+  ```bash
+  drush bnf:scheduler:all-subscriptions
+  ```
+
+
+Process node updates queue:
+  ```bash
+  drush queue:process bnf_client_node_update
+  ```
+
+During processing, look out for import failures such as:
+`Failed to import content [uuid]: Could not fetch content for [uuid]`
+
+## GraphQL schema mismatches
+
+Synchronization failures can happen if there is a version mismatch
+between the central site (DT) and the client sites. For example, if a
+new paragraph/media type (e.g. `MediaVideotoolVertical`) has been
+introduced on DT (running the latest release) but the client site runs
+a previous release: `Failed to import content [uuid]: ... Type
+"MediaVideotoolVertical" not found in document.`
+
+Even if the nodes being synchronized do not actually contain the new
+type, the client site's GraphQL server will fail because it does not
+recognize the type. In this case, the client site must be updated to
+the latest release before synchronization will work again.
+
+## GraphQL caching issues (stale GO / Lurker data)
+
+A known caching bug in the GraphQL implementation can cause stale data
+to be returned. Specifically, queries using variables:
+
+```graphql
+query MyQuery($uuid: ID!) {
+  node(id: $uuid) {
+    ... on NodeGoPage {
+      changed {
+        timestamp
+      }
+    }
+  }
+}
+```
+
+can serve stale cached data. Conversely, queries using inline
+parameters bypass this stale cache:
+
+```graphql
+query MyQuery {
+  node(id: "d5330804-5682-4471-a428-1d058c117740") {
+    __typename
+    ... on NodeGoPage {
+      changed {
+        timestamp
+      }
+    }
+  }
+}
+```
+
+If GO or GO Lurker is displaying stale content (such as a frontpage
+showing an outdated state, even though the backend node import was
+successful and skipped because it "has not changed"), rebuild the
+cache on the client site:
+
+```bash
+drush cr
+```
 
 ## Subscription issues
 

@@ -27,7 +27,7 @@ const DigitalModal: React.FunctionComponent<DigitalModalProps> = ({
 
   const {
     mutate: articleOrder,
-    isLoading: articleOrderLoading,
+    isPending: articleOrderLoading,
     data: articleResponse
   } = usePlaceCopyMutation();
 

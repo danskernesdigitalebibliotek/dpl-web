@@ -1,0 +1,11 @@
+uuid: f3171628-9d62-42ba-9cce-85e3bb9dd55c
+langcode: en
+status: true
+dependencies:
+  config:
+    - recurring_events.eventseries_type.default
+id: eventseries.default
+target_entity_type_id: eventseries
+target_bundle: default
+default_langcode: da
+language_alterable: false

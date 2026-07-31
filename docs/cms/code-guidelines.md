@@ -34,7 +34,7 @@ be especially aware of.
 
 ### PHP
 
-* Code must be compatible with PHP 8.3, the version currently pinned by the
+* Code must be compatible with PHP 8.4, the version currently pinned by the
   project (see `composer.json`). When the pinned version is bumped, custom code
   must remain compatible with all currently supported PHP minor releases to
   ensure smooth upgrades going forward.
@@ -188,7 +188,7 @@ The project uses two package manages for this:
 * [Composer](https://getcomposer.org/) - primarily for managing PHP packages,
   Drupal modules and other code libraries which are executed at runtime in the
   production environment.
-* [Yarn](https://yarnpkg.com/) - primarily for managing code needed to establish
+* [pnpm](https://pnpm.io/) - primarily for managing code needed to establish
   the pipeline for managing frontend assets like linting, preprocessing and
   optimization of JavaScript, CSS and images.
 

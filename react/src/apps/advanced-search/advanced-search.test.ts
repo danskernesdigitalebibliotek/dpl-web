@@ -90,6 +90,12 @@ describe("Search Result", () => {
     cy.getBySel("advanced-search-header-row").first().click();
     cy.getBySel("advanced-search-header-row").first().type("Harry");
     cy.getBySel("search-button").should("be.enabled");
+    // React 19 schedules the CQL preview update (setPreviewCql) as a
+    // startTransition. Without asserting the preview here, the transition stays
+    // pending when this test ends. The next beforeEach then calls cy.visit,
+    // and Cypress's pre-navigation stability check waits for the pending
+    // transition indefinitely — causing a 28-minute timeout in CI.
+    cy.getBySel("preview-section").first().should("contain", "'Harry'");
   });
 
   it("Should persist advanced search query in url", () => {
@@ -181,6 +187,7 @@ describe("Search Result", () => {
 
   beforeEach(() => {
     cy.visit("/iframe.html?id=apps-advanced-search--primary&viewMode=story");
+    cy.getBySel("advanced-search-header-row").should("have.length", 2);
 
     // Intercept graphql search query.
     cy.interceptGraphql({

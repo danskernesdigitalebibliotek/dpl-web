@@ -50,10 +50,10 @@ class EventsGET200ResponseInnerTicketCategoriesInnerPrice
      *
      * @var string|null
      * @SerializedName("currency")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $currency = null;
 
     /**
@@ -61,17 +61,17 @@ class EventsGET200ResponseInnerTicketCategoriesInnerPrice
      *
      * @var float|null
      * @SerializedName("value")
-     * @Assert\NotNull()
-     * @Assert\Type("float")
      * @Type("float")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("float")]
     protected ?float $value = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->currency = array_key_exists('currency', $data) ? $data['currency'] : $this->currency;
@@ -89,21 +89,22 @@ class EventsGET200ResponseInnerTicketCategoriesInnerPrice
         return $this->currency;
     }
 
-
-
     /**
-     * Sets currency.
-     *
-     * @param string|null $currency  The currency of the price in ISO 4217 format. E.g. DKK for Danish krone.
-     *
-     * @return $this
-     */
+    * Sets currency.
+    *
+    * @param string|null $currency  The currency of the price in ISO 4217 format. E.g. DKK for Danish krone.
+    *
+    * @return $this
+    */
     public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets value.
@@ -115,21 +116,22 @@ class EventsGET200ResponseInnerTicketCategoriesInnerPrice
         return $this->value;
     }
 
-
-
     /**
-     * Sets value.
-     *
-     * @param float|null $value  The price of a ticket in the minor unit of the currency. E.g. 750 for 7,50 EUR. Use 0 for free tickets.
-     *
-     * @return $this
-     */
+    * Sets value.
+    *
+    * @param float|null $value  The price of a ticket in the minor unit of the currency. E.g. 750 for 7,50 EUR. Use 0 for free tickets.
+    *
+    * @return $this
+    */
     public function setValue(?float $value): self
     {
         $this->value = $value;
 
         return $this;
     }
+
+
+
 }
 
 

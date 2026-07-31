@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\dpl_media\Entity\ImageMedia;
+use Drupal\dpl_media\Entity\VideoMedia;
+use Drupal\dpl_media\Entity\VideotoolMedia;
+use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @todo Use atttribute in Drupal 11.4.0.
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_media_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['media']['image'])) {
+    $bundles['media']['image']['class'] = ImageMedia::class;
+  }
+
+  if (isset($bundles['media']['video'])) {
+    $bundles['media']['video']['class'] = VideoMedia::class;
+  }
+
+  if (isset($bundles['media']['videotool'])) {
+    $bundles['media']['videotool']['class'] = VideotoolMedia::class;
+  }
+
+  if (isset($bundles['media']['videotool_vertical'])) {
+    $bundles['media']['videotool_vertical']['class'] = VideotoolVerticalMedia::class;
+  }
+}

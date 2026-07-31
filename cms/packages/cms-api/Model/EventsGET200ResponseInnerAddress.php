@@ -50,10 +50,10 @@ class EventsGET200ResponseInnerAddress
      *
      * @var string|null
      * @SerializedName("locationType")
-     * @Assert\Choice({ "physical", "online" })
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Choice(['physical', 'online'])]
+    #[Assert\Type("string")]
     protected ?string $locationType = null;
 
     /**
@@ -61,9 +61,9 @@ class EventsGET200ResponseInnerAddress
      *
      * @var string|null
      * @SerializedName("location")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $location = null;
 
     /**
@@ -71,9 +71,9 @@ class EventsGET200ResponseInnerAddress
      *
      * @var string|null
      * @SerializedName("locationAdditional")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $locationAdditional = null;
 
     /**
@@ -81,10 +81,10 @@ class EventsGET200ResponseInnerAddress
      *
      * @var string|null
      * @SerializedName("street")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $street = null;
 
     /**
@@ -92,10 +92,10 @@ class EventsGET200ResponseInnerAddress
      *
      * @var int|null
      * @SerializedName("zip_code")
-     * @Assert\NotNull()
-     * @Assert\Type("int")
      * @Type("int")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("int")]
     protected ?int $zipCode = null;
 
     /**
@@ -103,10 +103,10 @@ class EventsGET200ResponseInnerAddress
      *
      * @var string|null
      * @SerializedName("city")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $city = null;
 
     /**
@@ -114,17 +114,17 @@ class EventsGET200ResponseInnerAddress
      *
      * @var string|null
      * @SerializedName("country")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $country = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->locationType = array_key_exists('locationType', $data) ? $data['locationType'] : $this->locationType;
@@ -147,21 +147,22 @@ class EventsGET200ResponseInnerAddress
         return $this->locationType;
     }
 
-
-
     /**
-     * Sets locationType.
-     *
-     * @param string|null $locationType  If an event is physical or not.
-     *
-     * @return $this
-     */
+    * Sets locationType.
+    *
+    * @param string|null $locationType  If an event is physical or not.
+    *
+    * @return $this
+    */
     public function setLocationType(?string $locationType = null): self
     {
         $this->locationType = $locationType;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets location.
@@ -173,21 +174,22 @@ class EventsGET200ResponseInnerAddress
         return $this->location;
     }
 
-
-
     /**
-     * Sets location.
-     *
-     * @param string|null $location  Name of the location where the event occurs. This could be the name of a library branch.
-     *
-     * @return $this
-     */
+    * Sets location.
+    *
+    * @param string|null $location  Name of the location where the event occurs. This could be the name of a library branch.
+    *
+    * @return $this
+    */
     public function setLocation(?string $location = null): self
     {
         $this->location = $location;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets locationAdditional.
@@ -199,21 +201,22 @@ class EventsGET200ResponseInnerAddress
         return $this->locationAdditional;
     }
 
-
-
     /**
-     * Sets locationAdditional.
-     *
-     * @param string|null $locationAdditional  Expanded description of location.
-     *
-     * @return $this
-     */
+    * Sets locationAdditional.
+    *
+    * @param string|null $locationAdditional  Expanded description of location.
+    *
+    * @return $this
+    */
     public function setLocationAdditional(?string $locationAdditional = null): self
     {
         $this->locationAdditional = $locationAdditional;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets street.
@@ -225,21 +228,22 @@ class EventsGET200ResponseInnerAddress
         return $this->street;
     }
 
-
-
     /**
-     * Sets street.
-     *
-     * @param string|null $street  Street name and number.
-     *
-     * @return $this
-     */
+    * Sets street.
+    *
+    * @param string|null $street  Street name and number.
+    *
+    * @return $this
+    */
     public function setStreet(?string $street): self
     {
         $this->street = $street;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets zipCode.
@@ -251,21 +255,22 @@ class EventsGET200ResponseInnerAddress
         return $this->zipCode;
     }
 
-
-
     /**
-     * Sets zipCode.
-     *
-     * @param int|null $zipCode  Zip code.
-     *
-     * @return $this
-     */
+    * Sets zipCode.
+    *
+    * @param int|null $zipCode  Zip code.
+    *
+    * @return $this
+    */
     public function setZipCode(?int $zipCode): self
     {
         $this->zipCode = $zipCode;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets city.
@@ -277,21 +282,22 @@ class EventsGET200ResponseInnerAddress
         return $this->city;
     }
 
-
-
     /**
-     * Sets city.
-     *
-     * @param string|null $city  City.
-     *
-     * @return $this
-     */
+    * Sets city.
+    *
+    * @param string|null $city  City.
+    *
+    * @return $this
+    */
     public function setCity(?string $city): self
     {
         $this->city = $city;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets country.
@@ -303,21 +309,22 @@ class EventsGET200ResponseInnerAddress
         return $this->country;
     }
 
-
-
     /**
-     * Sets country.
-     *
-     * @param string|null $country  Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark.
-     *
-     * @return $this
-     */
+    * Sets country.
+    *
+    * @param string|null $country  Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark.
+    *
+    * @return $this
+    */
     public function setCountry(?string $country): self
     {
         $this->country = $country;
 
         return $this;
     }
+
+
+
 }
 
 

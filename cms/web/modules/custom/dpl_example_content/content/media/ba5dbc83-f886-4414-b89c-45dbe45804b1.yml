@@ -1,0 +1,36 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: ba5dbc83-f886-4414-b89c-45dbe45804b1
+  bundle: image
+  default_langcode: da
+  depends:
+    0ec24a0b-c153-4619-a4f6-47dd8bb7f296: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: gaming.png
+  created:
+    -
+      value: 1782741823
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 0
+  field_byline:
+    -
+      value: gaming
+  field_media_image:
+    -
+      entity: 0ec24a0b-c153-4619-a4f6-47dd8bb7f296
+      alt: ''
+      title: ''
+      width: 300
+      height: 300

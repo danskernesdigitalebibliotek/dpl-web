@@ -1,5 +1,5 @@
 import { compact, first, groupBy, head, uniq, uniqBy } from "lodash";
-import { UseQueryOptions } from "react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 import { ManifestationHoldings } from "../../components/find-on-shelf/types";
 import { ListData } from "../../components/material/MaterialDetailsList";
 import {
@@ -91,6 +91,20 @@ export const getFirstManifestation = (manifestations: Manifestation[]) => {
   return first(manifestations) || null;
 };
 
+export const hasPublizonIdentifier = (manifestation: Manifestation) =>
+  manifestation.identifiers?.some(
+    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
+  ) ?? false;
+
+// Picks the manifestation to loan/reserve through Publizon: prefer the one
+// carrying a PUBLIZON identifier (the loanable edition), else the first.
+export const getLoanableManifestation = (manifestations: Manifestation[]) => {
+  return (
+    manifestations.find(hasPublizonIdentifier) ??
+    getFirstManifestation(manifestations)
+  );
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getManifestationPlayingTime = (manifestation: Manifestation) => {
   return "";
@@ -154,6 +168,17 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
   return isbnIdentifier?.value ?? "";
 };
 
+// Identifier used for every Publizon call (loan, reservation, loan status,
+// order id). Prefer the PUBLIZON identifier; fall back to the ISBN.
+export const getManifestationPublizonIdentifier = (
+  manifestation: Manifestation
+) => {
+  const publizonIdentifier = manifestation.identifiers?.find(
+    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
+  );
+  return publizonIdentifier?.value ?? getManifestationIsbn(manifestation);
+};
+
 export const getManifestationSource = (manifestation: Manifestation) => {
   return manifestation.source ?? "";
 };
@@ -200,8 +225,8 @@ export const getManifestationOriginalTitle = (manifestation: Manifestation) => {
   if (manifestation.titles?.original?.length) {
     return manifestation.titles.original.join(", ");
   }
-  // This should never happen, so therefore ist not translated.
-  return "Unknown title";
+  // No original title delivered — return empty so the details row is hidden
+  return "";
 };
 
 export const materialContainsDanish = (work: Work) => {
@@ -605,7 +630,9 @@ export const useGetHoldings = ({
   config: UseConfigFunction;
   blacklist: BlacklistType;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>;
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>
+    >;
   };
 }) => {
   const { data, isLoading, isError } = useGetHoldingsLogisticsV1(
@@ -924,6 +951,32 @@ if (import.meta.vitest) {
 
       const title = getManifestationTitle(manifestation);
       expect(title).toMatchInlineSnapshot(`"Unknown title"`);
+    });
+  });
+
+  describe("getManifestationOriginalTitle", () => {
+    it("returns the original titles joined by a comma", () => {
+      const manifestation = {
+        titles: {
+          original: ["Some Original Title", "Another Original Title"]
+        }
+      } as unknown as Manifestation;
+
+      const title = getManifestationOriginalTitle(manifestation);
+      expect(title).toMatchInlineSnapshot(
+        `"Some Original Title, Another Original Title"`
+      );
+    });
+
+    it("returns an empty string when no original title is available so the details row is hidden (DDF-366)", () => {
+      const manifestation = {
+        titles: {
+          original: []
+        }
+      } as unknown as Manifestation;
+
+      const title = getManifestationOriginalTitle(manifestation);
+      expect(title).toMatchInlineSnapshot(`""`);
     });
   });
 }

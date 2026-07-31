@@ -4,7 +4,7 @@ import {
   UseQueryOptions,
   UseQueryResult,
   useQuery
-} from "react-query";
+} from "@tanstack/react-query";
 import { ErrorType, fetcher } from "./fetcher";
 import { useUrls } from "../utils/url";
 import { getUserToken } from "../utils/helpers/user";
@@ -25,7 +25,7 @@ export type UserInfoData = {
   };
 };
 
-const getUserInfoQueryKey = (url: string) => {
+const getUserInfoQueryKey = (url: string): QueryKey => {
   const userToken = getUserToken();
 
   if (!userToken) {
@@ -33,7 +33,9 @@ const getUserInfoQueryKey = (url: string) => {
     console.error("userToken is missing");
   }
 
-  return userToken ? `${url}:${userToken}` : url;
+  // The token is part of the key so a new login does not reuse the previous
+  // user's cached info.
+  return userToken ? [url, userToken] : [url];
 };
 
 type UserInfoFunction = () => Promise<UserInfoData | null | undefined>;
@@ -42,10 +44,8 @@ const useUserInfo = <
   TData = Awaited<ReturnType<UserInfoFunction>>,
   TError = ErrorType<void>
 >(
-  queryOptions?: UseQueryOptions<
-    Awaited<ReturnType<UserInfoFunction>>,
-    TError,
-    TData
+  queryOptions?: Partial<
+    UseQueryOptions<Awaited<ReturnType<UserInfoFunction>>, TError, TData>
   >
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const u = useUrls();
@@ -65,11 +65,11 @@ const useUserInfo = <
   const queryFn: QueryFunction<Awaited<ReturnType<UserInfoFunction>>> = () =>
     getUserInfo(url);
 
-  const query = useQuery<Awaited<ReturnType<UserInfoFunction>>, TError, TData>(
+  const query = useQuery<Awaited<ReturnType<UserInfoFunction>>, TError, TData>({
     queryKey,
     queryFn,
-    queryOptions
-  );
+    ...queryOptions
+  });
 
   return {
     queryKey,

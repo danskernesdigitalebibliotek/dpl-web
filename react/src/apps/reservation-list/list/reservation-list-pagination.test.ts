@@ -1,4 +1,4 @@
-describe("Reservation list pagination", () => {
+describe("Reservation list pagination", { testIsolation: false }, () => {
   before(() => {
     cy.createFakeAuthenticatedSession();
     cy.createFakeLibrarySession();
@@ -7,7 +7,9 @@ describe("Reservation list pagination", () => {
 
     // Sets time to a specific date. cy.clock() applies to the application
     // under test automatically when called before cy.visit().
-    cy.clock(wednesday20220603);
+    // Only Date is faked. Freezing setTimeout would stall TanStack Query's
+    // notify scheduler, leaving every component stuck in its loading state.
+    cy.clock(wednesday20220603, ["Date"]);
 
     cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
       patron: {

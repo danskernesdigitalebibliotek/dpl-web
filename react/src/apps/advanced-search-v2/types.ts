@@ -64,8 +64,7 @@ export enum SortOption {
 
 // Radio button filter types
 export type AccessTypeFilterOptions =
-  | { value: "online"; label: "Online" }
-  | { value: "fysisk"; label: "Fysisk" };
+  { value: "online"; label: "Online" } | { value: "fysisk"; label: "Fysisk" };
 export type FictionTypeFilterOptions =
   | { value: "fiction"; label: "Fiktion" }
   | { value: "nonfiction"; label: "Non-fiktion" };

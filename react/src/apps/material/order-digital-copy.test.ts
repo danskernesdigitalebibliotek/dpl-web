@@ -10,6 +10,21 @@ describe("Material - Order digital copy", () => {
       fixtureFilePath: "cover/cover.json"
     });
 
+    // Intercept MaterialGridRelated queries so they don't hit the real server
+    // and trigger a GuardedApp error boundary that would replace the page UI.
+    cy.interceptGraphql({
+      operationName: "WorkRecommendations",
+      fixtureFilePath: "material/material-grid-related-recommendations.json",
+      middleware: true
+    });
+
+    cy.interceptGraphql({
+      operationName: "complexSearchWithPagination",
+      fixtureFilePath:
+        "material/material-grid-related-author-recommendations.json",
+      middleware: true
+    });
+
     cy.interceptRest({
       aliasName: "user",
       url: "**/agencyid/patrons/patronid/v4",
@@ -38,8 +53,10 @@ describe("Material - Order digital copy", () => {
       statusCode: 404
     }).as("Favorite list service");
 
-    cy.visit("/iframe.html?id=apps-material--digital&viewMode=story");
+    // Must come before cy.visit() so the token is in sessionStorage when
+    // preview.tsx executes at iframe load time and calls setToken().
     cy.createFakeAuthenticatedSession();
+    cy.visit("/iframe.html?id=apps-material--digital&viewMode=story");
     cy.scrollTo("bottom", { duration: 200 });
   });
 

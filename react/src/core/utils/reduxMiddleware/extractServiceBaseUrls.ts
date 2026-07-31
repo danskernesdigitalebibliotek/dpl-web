@@ -14,8 +14,7 @@ type Api =
 export type ApiBaseUrlKey = `${Api}BaseUrl`;
 
 export type ServiceBaseUrls =
-  | Record<Api, ApiBaseUrlKey>
-  | Record<string, never>;
+  Record<Api, ApiBaseUrlKey> | Record<string, never>;
 
 type Action = {
   type: string;
