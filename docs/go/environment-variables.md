@@ -163,6 +163,31 @@ Retailer key code for Publizon. MD5-hashed at runtime before being sent as `reta
 
 > **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
 
+### `UNILOGIN_WS_UDBYDERSYSTEM_ID`
+
+- **Required:** No (optional in `env.ts`, but throws at runtime if missing when the SOAP call is made)
+- **Example:** `XXX`
+
+Provider system ID from STIL Tilslutning, used when signing Unilogin SOAP webservice requests. Read via `getServerEnv()` in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which raises `Missing Unilogin UdbydersystemId` if it is unset.
+
+### `UNILOGIN_WS_PRIVATE_KEY`
+
+- **Required:** No (optional)
+- **Example:** PEM-encoded private key with newlines written as `\n`
+
+Private key used to sign Unilogin SOAP webservice requests. Read in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which converts the literal `\n` sequences back into newlines.
+
+### `UNILOGIN_WS_PUBLIC_CERT`
+
+- **Required:** No (optional)
+- **Example:** PEM-encoded certificate
+
+Public certificate paired with the private key above. Read in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which converts the literal `\n` sequences back into newlines.
+
+> **Note:** These three replaced the earlier username/password pair
+> (`UNLILOGIN_SERVICES_WS_USER` / `UNLILOGIN_SERVICES_WS_PASSWORD`), which is no
+> longer read anywhere. Some Lagoon projects still carry the old variables.
+
 ## Build / Tooling Variables
 
 Used by scripts and tooling, not by the running application.
@@ -188,8 +213,8 @@ Provided by the Lagoon hosting environment and consumed in `go/scripts/prepare-d
 
 - `LAGOON_ROUTES`
 
-  The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.).
+    The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.).
 
 - `LAGOON_ROUTE`
 
-  The full route URL (with protocol) for the first/primary route.
+    The full route URL (with protocol) for the first/primary route.
