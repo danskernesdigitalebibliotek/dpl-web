@@ -20,6 +20,7 @@ use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
 use Drupal\next\Entity\NextSite;
@@ -1225,4 +1226,39 @@ function dpl_update_update_10074(array &$sandbox): string {
  */
 function dpl_update_update_10075(): string {
   return _dpl_update_install_modules(['facets_date_range']);
+}
+
+/**
+ * Empty and remove field_address_dawa, in preparation for uninstalling DAWA.
+ */
+function dpl_update_update_10076(): string {
+  $storage = FieldStorageConfig::loadByName('node', 'field_address_dawa');
+
+  if (!$storage instanceof FieldStorageConfig) {
+    return "field_address_dawa does not exist - nothing to delete.";
+  }
+
+  // Remember the identifier before deleting - after deletion the storage is
+  // only reachable through the deleted fields repository, keyed by this ID.
+  $storage_id = $storage->getUniqueStorageIdentifier();
+
+  // Deleting the storage also deletes the field on the branch bundle, but it
+  // only marks the actual field data as deleted. The rows are normally purged
+  // later, by cron.
+  $storage->delete();
+
+  // A module cannot be uninstalled while it has fields pending deletion, so
+  // purge the data now instead of waiting for cron. The batch size is an upper
+  // bound of nodes to purge - branches are counted in the tens, so a single
+  // pass is plenty.
+  field_purge_batch(10000, $storage_id);
+
+  return "Deleted field_address_dawa data on branch nodes.";
+}
+
+/**
+ * Uninstall address_dawa module.
+ */
+function dpl_update_update_10077(): string {
+  return _dpl_update_uninstall_modules(['address_dawa']);
 }
