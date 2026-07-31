@@ -2,15 +2,18 @@
 
 namespace Drupal\dpl_event\Plugin\EventInstanceCreator;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 use Drupal\recurring_events\EventCreationService;
 use Drupal\recurring_events\EventInstanceCreatorBase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -52,6 +55,8 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
    *   The module handler, used to invoke the instance deletion hooks.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger, used to tell the editor what happened to the occurrences.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger, used to report occurrences we cannot make sense of.
    */
   public function __construct(
     array $configuration,
@@ -60,6 +65,7 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
     EventCreationService $creation_service,
     protected ModuleHandlerInterface $moduleHandler,
     protected MessengerInterface $messenger,
+    protected LoggerInterface $logger,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $creation_service);
   }
@@ -75,6 +81,7 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
       $container->get('recurring_events.event_creation_service'),
       $container->get('module_handler'),
       $container->get('messenger'),
+      $container->get('dpl_event.logger'),
     );
     $plugin->setStringTranslation($container->get('string_translation'));
 
@@ -150,14 +157,29 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
     // instances of the date ranges that are gone. Recreating everything used to
     // clean duplicates up as a side effect - preserving instances does not, so
     // we have to be explicit about it.
-    $preserved_instances = [];
+    $preserved_ranges = [];
+    $preserved_count = 0;
     $obsolete_instances = [];
 
     foreach ($series->getInstances() as $instance) {
       $range = $this->instanceDateRange($instance);
 
-      if (isset($wanted_dates[$range]) && !isset($preserved_instances[$range])) {
-        $preserved_instances[$range] = $instance;
+      // An occurrence we cannot read the date of is left alone. It matches no
+      // wanted date, so reconciling it would mean deleting it, and that would
+      // throw away whatever an editor put on it over a date that we are the
+      // ones failing to understand.
+      if ($range === NULL) {
+        $this->logger->error('Left event instance @instance of event series @series untouched: it has no date range that could be read.', [
+          '@instance' => $instance->id(),
+          '@series' => $series->id(),
+        ]);
+        $preserved_count++;
+        continue;
+      }
+
+      if (isset($wanted_dates[$range]) && !isset($preserved_ranges[$range])) {
+        $preserved_ranges[$range] = TRUE;
+        $preserved_count++;
       }
       else {
         $obsolete_instances[] = $instance;
@@ -165,12 +187,12 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
     }
 
     $deleted_count = $this->deleteInstances($series, $obsolete_instances);
-    $created_count = $this->createInstances($series, array_diff_key($wanted_dates, $preserved_instances));
+    $created_count = $this->createInstances($series, array_diff_key($wanted_dates, $preserved_ranges));
 
     $this->messenger->addStatus($this->t('Updated the occurrences of this event series: @created created, @deleted removed and @preserved left untouched.', [
       '@created' => $created_count,
       '@deleted' => $deleted_count,
-      '@preserved' => count($preserved_instances),
+      '@preserved' => $preserved_count,
     ], ['context' => 'dpl_event']));
   }
 
@@ -208,18 +230,27 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
    * @param \Drupal\recurring_events\Entity\EventInstance $instance
    *   The instance to read the date range of.
    *
-   * @return string
-   *   The date range, in the same shape as the calculated dates are indexed by.
+   * @return string|null
+   *   The date range, in the same shape as the calculated dates are indexed by,
+   *   or NULL if the instance has no date we can read. An instance is supposed
+   *   to always have one, but these sites have seen instances end up in states
+   *   the module does not allow, and this runs after the series has been saved,
+   *   so a fatal here would leave the editor with a white screen and a series
+   *   whose occurrences were never reconciled.
    */
-  private function instanceDateRange(EventInstance $instance): string {
-    /** @var \Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem $date */
+  private function instanceDateRange(EventInstance $instance): ?string {
     $date = $instance->get('date')->first();
 
-    /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
-    $start_date = $date->get('start_date')->getValue();
+    if (!$date instanceof DateRangeItem) {
+      return NULL;
+    }
 
-    /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
+    $start_date = $date->get('start_date')->getValue();
     $end_date = $date->get('end_date')->getValue();
+
+    if (!$start_date instanceof DrupalDateTime || !$end_date instanceof DrupalDateTime) {
+      return NULL;
+    }
 
     return $this->dateRange(
       $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
@@ -243,9 +274,17 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
    * Deletes the instances that the new recurrence no longer contains.
    *
    * EventCreationService::clearEventInstances() cannot be used for this, as it
-   * always deletes every instance of the series. We invoke the same hooks it
-   * does, so modules reacting to a date configuration change still see the
-   * instances that are actually going away.
+   * always deletes every instance of the series. We invoke the hooks it invokes
+   * per instance, so modules reacting to a date configuration change still see
+   * the instances that are actually going away.
+   *
+   * The two series-wide hooks it also invokes are deliberately left out.
+   * hook_recurring_events_save_pre_instances_deletion() means that every
+   * instance of the series is about to go, and implementors act on the series
+   * rather than on a list of instances: recurring_events_registration answers
+   * it by deleting every registrant of the series and notifying them all. That
+   * is the wrong thing to do when a single occurrence is being removed, and
+   * there is no partial-deletion equivalent to invoke instead.
    *
    * @param \Drupal\recurring_events\Entity\EventSeries $series
    *   The series being saved.
@@ -260,7 +299,6 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
       return 0;
     }
 
-    $this->moduleHandler->invokeAll('recurring_events_save_pre_instances_deletion', [$series]);
     // Modules may remove instances from the list here, to keep them around.
     $this->moduleHandler->invokeAll('recurring_events_save_pre_instances_deletion_alter', [&$instances]);
 
@@ -269,8 +307,6 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
       $instance->delete();
       $this->moduleHandler->invokeAll('recurring_events_save_post_instance_deletion', [$series, $instance]);
     }
-
-    $this->moduleHandler->invokeAll('recurring_events_save_post_instances_deletion', [$series]);
 
     return count($instances);
   }
