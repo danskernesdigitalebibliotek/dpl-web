@@ -549,7 +549,9 @@ tasks:
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | corepack pnpm dlx jsome -r > openapi.json
+      - task dev:cli -- curl "http://varnish:8080/openapi/rest?_format=json&language=en" -o openapi.tmp
+      - task -d .. dev:cli -- sh -c "cd cms && corepack pnpm dlx jsome -r < openapi.tmp > openapi.json"
+      - rm -f openapi.tmp
 
   ci:shellcheck:
     desc: Run ShellCheck on CMS helper scripts
