@@ -1,7 +1,7 @@
 on:
   pull_request:
     # Environment teardown on close is handled by lagoon-close.yml.
-    types: [ opened, synchronize, reopened, edited ]
+    types: [ opened, synchronize, reopened ]
     # The Lagoon image builds cms, go, react and design-system from source (see
     # cms/lagoon/{cli,nginx}.dockerfile), so almost any change affects the
     # deployed environment. Deploy on everything except docs-only changes rather
@@ -42,8 +42,6 @@ jobs:
   BuildGoBaseImage:
     name: Go / Build Go base image
     needs: [BranchNameLength]
-    # Narrow the main workflow conditions to only run when a PR is opened or updated, or when a push is made to the special branches.
-    if: ${{ (github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')) || (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main' || github.ref_name == 'go-demo' || github.ref_name == 'go-playground')) }}
     uses: ./.github/workflows/go-build-base-image.yml
 
   # Creating the deployment that Lagoon will look for, and add status to.
@@ -73,7 +71,7 @@ jobs:
   CreateDeploymentBNF:
     name: Lagoon / Create BNF deployment
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'bnf:') && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
+    if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'bnf:') }}
     needs: [BuildGoBaseImage]
     steps:
       - env:
