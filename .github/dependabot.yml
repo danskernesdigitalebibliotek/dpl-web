@@ -50,16 +50,18 @@ updates:
       # drupal/next 2.1.0 adds draft_enabled to exported Next entity config.
       - dependency-name: "drupal/next"
         versions: [">=2.1.0"]
-      # Our patches are not compatible with the latest version.
+      # 1.13 rewrote EntityReferenceRevisionsFieldItemList::hasAffectingChanges()
+      # so the delta loop returns on delta 0, meaning a change to the second
+      # paragraph in a field is reported as "unchanged" and gets no new
+      # revision. The fix is committed upstream but unreleased as of 1.14.
+      # The rewrite also breaks our 3039442 patch. Enforced as a composer
+      # constraint in cms/composer.json, this entry only avoids the noise.
+      # See https://www.drupal.org/project/entity_reference_revisions/issues/3582279
       - dependency-name: "drupal/entity_reference_revisions"
         versions: [">=1.13.0"]
       # Our patches are not compatible with the latest version. See DDFNEXT-1494
       - dependency-name: "drupal/paragraphs_ee"
         versions: [">=10.0.8"]
-      # Automated updates to paragraphs also trigger updates to
-      # entity_reference_revisions.
-      - dependency-name: "drupal/paragraphs"
-        versions: [">1.19.0"]
       # Drupal 10.6.x breaks the CMS opening-hours Cypress flow.
       - dependency-name: "drupal/core*"
         versions: [">=10.6.0"]
