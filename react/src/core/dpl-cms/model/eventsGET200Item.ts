@@ -10,6 +10,7 @@ import type { EventsGET200ItemOriginalImage } from "./eventsGET200ItemOriginalIm
 import type { EventsGET200ItemTeaserImage } from "./eventsGET200ItemTeaserImage";
 import type { EventsGET200ItemState } from "./eventsGET200ItemState";
 import type { EventsGET200ItemDateTime } from "./eventsGET200ItemDateTime";
+import type { EventsGET200ItemOrganizer } from "./eventsGET200ItemOrganizer";
 import type { EventsGET200ItemAddress } from "./eventsGET200ItemAddress";
 import type { EventsGET200ItemTicketCategoriesItem } from "./eventsGET200ItemTicketCategoriesItem";
 import type { EventsGET200ItemSeries } from "./eventsGET200ItemSeries";
@@ -44,6 +45,8 @@ export type EventsGET200Item = {
   date_time: EventsGET200ItemDateTime;
   /** The associated library branches. */
   branches?: string[];
+  /** The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library. */
+  organizer?: EventsGET200ItemOrganizer;
   /** Where the event occurs. */
   address?: EventsGET200ItemAddress;
   /** The categories associated with the event. */
