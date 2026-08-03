@@ -41,8 +41,7 @@
   - [Create pull request](#create-pull-request)
   - [Reviewing a PR](#reviewing-a-pr)
   - [Updating the demo site](#updating-the-demo-site)
-    - [Create a release tag in dpl-go based on sprint number](#create-a-release-tag-in-dpl-go-based-on-sprint-number)
-    - [Deploying a release](#deploying-a-release)
+  - [Releases](#releases)
 - [Quality assurance](#quality-assurance)
   - [GitHub Workflows for quality assurance](#github-workflows-for-quality-assurance)
 - [Developers](#developers)
@@ -140,15 +139,12 @@ In the project, you'll see the following folders and files:
 
 ### git workflows
 
-| File(s)                | Description                                                                                                                 |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| accessibility-test.yml | Runs accessibility tests using Axe and Lighthouse to ensure the application meets accessibility standards.                  |
-| chromatic.yml          | Runs Chromatic to visualize and test UI components in Storybook, ensuring that changes do not introduce visual regressions. |
-| eslint-check.yml       | Runs ESLint to check for code quality and adherence to coding standards.                                                    |
-| prettier-check.yml     | Runs Prettier to ensure code formatting consistency across the project.                                                     |
-| publish-source.yml     | Publishes the source code to the specified repository or platform.                                                          |
-| type-check.yml         | Runs TypeScript to check for type errors and ensure type safety across the project.                                         |
-| unit-test.yml          | Runs unit tests using Vitest to ensure that individual components and utilities function correctly.                         |
+| File                      | Description                                                                                                                                                                                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| go-ci.yml                 | Everything that gates a change to `go/` or `packages/`: ESLint, Prettier, type check, Vitest unit tests, a check that the committed generated clients are up to date, a Storybook build shared by the accessibility (Axe/Playwright) and Chromatic jobs, and Cypress E2E. |
+| go-build-base-image.yml   | Builds `go/lagoon/base.dockerfile` and pushes it to `ghcr.io/danskernesdigitalebibliotek/dpl-web-go`. Called by `lagoon-deploy.yml`, and runs on its own for semver tags.                                          |
+| lagoon-deploy.yml         | Builds the Go base image, then sends a deploy webhook to Lagoon for pull requests and pushes to `develop`, `main`, `go-demo` and `go-playground`.                                                                  |
+| lagoon-close.yml          | Tears down the Lagoon environment when a pull request is closed.                                                                                                                                                  |
 
 ## Development
 
@@ -266,28 +262,32 @@ When creating a pull request, follow these steps:
 
 ### Updating the demo site
 
-#### Create a release tag in dpl-go based on sprint number
+Deploys are automated — there is nothing to build, publish or wire up by hand.
+Push the code you want to demo to the `go-demo` branch:
 
-1. Navigate to the github project and go to the releases page
-2. Click **Draft a new release**
-3. Create a new release with the tag format `0.<sprint_number>.<incremental_release_count>` (e.g., for sprint 7, the tag would be `0.7.0`).
-4. This will trigger the `publish-source` workflow in the repository
-
-#### Deploying a release
-
-1. Navigate to the `dpl-cms` repository.
-2. Pull the latest changes from the `develop` branch locally.
-3. Switch to the `dpl-go-demo` branch and merge the `develop` branch into it.
-4. Update the `dpl-go` package version locally to the latest release and push the changes upstream.
-5. Edit the `Docker-compose.yml` file with the following changes:
-
-```yaml
-node:
-  image: ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.<sprint_number>.<incremental_release_count>
-  labels:
-    lagoon.type: node
-    provenance: false
+```bash
+git push origin my-feature:go-demo --force
 ```
+
+`.github/workflows/lagoon-deploy.yml` builds the Go base image, then tells
+Lagoon to build and deploy the full stack (CMS + Go) on top of it. The same
+applies to `go-playground`, and every pull request gets its own throwaway
+environment.
+
+The branch environments are shared, so coordinate before force-pushing. For the
+environment URLs, the build pipeline and how the CMS domain is resolved, see
+[Go Lagoon deployment and branch environments](guides/git-branch-development-demo-workflow.md).
+
+### Releases
+
+When a release tag is published, `.github/workflows/go-build-base-image.yml`
+picks it up and publishes a Docker image to
+`ghcr.io/danskernesdigitalebibliotek/dpl-web-go:<tag>`. Individual library
+environment repositories pin that tag through their `GO_RELEASE` variable, which
+their `lagoon/node.dockerfile` template builds `FROM` — see `dpl-platform`.
+
+The tag also triggers the CMS source image; that side of the release is
+documented in [CMS releases](../cms/releases.md).
 
 ## Quality assurance
 
@@ -297,17 +297,22 @@ Quality assurance (QA) is a critical aspect of our development process, ensuring
 
 #### GitHub Workflows for quality assurance
 
-1. **Automated Unit Testing**: Workflows like `unit-test.yml` run unit tests automatically, ensuring that individual components and utilities function correctly. This helps catch bugs early in the development process.
+These all run as jobs in `go-ci.yml` on every pull request touching `go/` or
+`packages/`:
 
-2. **End-to-end Testing**: Workflows such as `e2e-test.yml` run end-to-end tests using Cypress to simulate user interactions and test the application's core user journeys. This helps ensure that the application and important features work as expected. This also helps catch bugs early in the development process.
+1. **Automated Unit Testing**: the `unit` job runs Vitest, ensuring that individual components and utilities function correctly. This helps catch bugs early in the development process.
 
-3. **Code Quality Checks**: Workflows such as `eslint-check.yml` and `prettier-check.yml` enforce coding standards and consistent formatting. This ensures that the codebase remains clean, readable, and maintainable.
+2. **End-to-end Testing**: the `e2e` job runs Cypress to simulate user interactions and test the application's core user journeys. This helps ensure that the application and important features work as expected.
 
-4. **Type Safety**: The `type-check.yml` workflow runs TypeScript checks to ensure type safety across the project. This helps prevent type-related errors and improves code reliability.
+3. **Code Quality Checks**: the `eslint` and `prettier` jobs enforce coding standards and consistent formatting. This ensures that the codebase remains clean, readable, and maintainable.
 
-5. **Accessibility Testing**: The `accessibility-test.yml` workflow runs accessibility tests on each [Storybook] Story using [Axe] through [Playwright]. This ensures that the application meets accessibility standards and provides a better user experience for all users.
+4. **Type Safety**: the `typecheck` job runs TypeScript checks to ensure type safety across the project. This helps prevent type-related errors and improves code reliability.
 
-6. **Visual Regression Testing**: The `chromatic.yml` workflow runs Chromatic to visualize and test UI components in [Storybook]. This helps catch visual regressions and ensures that UI changes do not introduce unexpected issues.
+5. **Accessibility Testing**: the `accessibility` job runs accessibility tests on each [Storybook] Story using [Axe] through [Playwright]. This ensures that the application meets accessibility standards and provides a better user experience for all users.
+
+6. **Visual Regression Testing**: the `chromatic` job runs Chromatic to visualize and test UI components in [Storybook]. This helps catch visual regressions and ensures that UI changes do not introduce unexpected issues.
+
+7. **Generated code drift**: the `codegen` job re-runs the client generators and fails if the committed output differs, so the checked-in clients cannot silently fall out of sync with the schemas.
 
 ## Developers
 

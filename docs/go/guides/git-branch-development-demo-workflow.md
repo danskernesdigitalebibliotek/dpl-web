@@ -2,13 +2,16 @@
 
 ## Overview
 
-The Go (Next.js) application is built and deployed entirely by Lagoon. When a
-PR is created or a dedicated branch is pushed, Lagoon checks out the code,
-builds all Docker images (including the Go app), and deploys the full stack
-(CMS + Go frontend).
+Deploying the Go (Next.js) application is fully automated, and split between
+GitHub Actions and Lagoon. When a PR is opened or a dedicated branch is pushed,
+`lagoon-deploy.yml` first builds and publishes the Go **base image** (dependency
+install + `build:stage1`) to GHCR, then tells Lagoon to deploy. Lagoon checks out
+the code, builds the remaining images — the Go one `FROM` that base image — and
+deploys the full stack (CMS + Go frontend).
 
-No separate GitHub Actions build or container registry image is needed for
-deployment — Lagoon handles the complete pipeline.
+The ordering matters: the deploy webhook is gated on the base image push, because
+Lagoon's build pulls the image by environment tag and would otherwise pull a tag
+that does not exist yet.
 
 ## Environment Types
 
@@ -60,8 +63,9 @@ the push and starts a new deployment.
 Monitor the deployment in the Lagoon UI:
 `https://ui.lagoon.dplplat02.dpl.reload.dk/projects/{project}/{project}-go-demo/deployments`
 
-The build installs dependencies, runs `pnpm run build` with the correct
-environment variables, and starts the Go app alongside the CMS.
+Dependencies and the compile step are already baked into the base image, so the
+Lagoon build only runs `build:stage2` with the environment's variables, then
+starts the Go app alongside the CMS.
 
 ### 4. Access the environment
 
@@ -75,13 +79,17 @@ Once deployed, visit the URLs listed above for the branch you deployed to.
 Push to branch/PR
        │
        ▼
-Lagoon checks out repo
+GitHub Actions (lagoon-deploy.yml → go-build-base-image.yml)
+  └─ Builds go/lagoon/base.dockerfile: install node_modules, build:stage1
+     and pushes ghcr.io/…/dpl-web-go:{branch|pr-N}
+       │
+       ▼
+Webhook to Lagoon → Lagoon checks out repo
        │
        ▼
 Builds go/lagoon/node-lagoon.dockerfile
-  ┌─ Stage 1 (deps): install node_modules
-  ├─ Stage 2 (builder): copy source, resolve CMS domain, pnpm run build
-  └─ Stage 3 (runner): production image with start.sh
+  ┌─ Stage 1 (builder): FROM dpl-web-go:{env}, resolve CMS domain, build:stage2
+  └─ Stage 2 (runner): production image with start.sh
        │
        ▼
 Deploys all services (node, varnish, nginx, php, cli, mariadb, redis)
@@ -112,7 +120,8 @@ variables baked into the client bundle) and at runtime (for SSR).
 | `go/lagoon/start.sh`               | Runtime startup script, sets env vars and runs `pnpm run start`     |
 | `docker-compose.lagoon.yml`        | Defines all Lagoon services including `node`                    |
 | `.lagoon.yml`                      | Lagoon project config, environment settings, post-rollout tasks |
-| `.github/workflows/cms-lagoon.yml` | Sends webhook to Lagoon on push/PR events                       |
+| `.github/workflows/lagoon-deploy.yml` | Builds the Go base image, then webhooks Lagoon on push/PR events |
+| `.github/workflows/lagoon-close.yml`  | Tears down the environment when a pull request is closed        |
 
 ## Resetting a Branch Environment
 
