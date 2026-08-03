@@ -8,6 +8,13 @@ COPY packages /app/packages
 COPY package.json pnpm-* /app/
 COPY go /app/go
 WORKDIR /app
+
+# The install below happens before NODE_ENV=production is set, so it pulls in
+# devDependencies (needed by the build). Skip the browser binaries those test
+# tools would otherwise download — nothing in the build runs a browser.
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV CYPRESS_INSTALL_BINARY=0
+
 # Corepack to install pnpm.
 RUN corepack enable
 RUN pnpm install --frozen-lockfile
