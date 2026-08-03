@@ -81,14 +81,14 @@ class GoSiteTest extends UnitTestCase {
    * {@inheritdoc}
    */
   public function tearDown(): void {
-    putenv('GO_DOMAIN');
+    putenv('DPL_GO_BASE_URL');
   }
 
   /**
-   * Test that GO_DOMAIN overrides.
+   * Test that DPL_GO_BASE_URL overrides.
    */
   public function testGoDomainOverrides(): void {
-    putenv('GO_DOMAIN=https://gotest.local');
+    putenv('DPL_GO_BASE_URL=https://gotest.local');
 
     $this->assertEquals('https://gotest.local', $this->goSite->getGoBaseUrl());
   }

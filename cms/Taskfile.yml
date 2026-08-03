@@ -154,7 +154,6 @@ tasks:
       - dev:build
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
-      - ./dev-scripts/add-to-etc-hosts.sh https dpl-cms.docker
     vars:
       CI:
         sh: '[[ -z "${CI}" ]] && echo "false" || echo "true"'
@@ -195,8 +194,8 @@ tasks:
       # Stop potential running environment.
       - dev:down
     cmds:
-      # Create a .env file with recommended defaults.
-      - cp -n .env.example .env || true
+      # cms/.env is a symlink to the central root .env., then ensure the symlink.
+      - '[ -e .env ] || ln -s ../.env .env'
       # Pull the images (necessary for the first reset)
       - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:pull'
       # Start local environment.

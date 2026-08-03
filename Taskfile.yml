@@ -10,11 +10,10 @@ vars:
     sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
 
 tasks:
-
   init:
-    summary: Initialize project
+    desc: "Initialize project, creating .env symlinks and installing dependencies."
     deps:
-      - dev:envfiles
+      - dev:dotenv:link
       - init:pnpm
 
   dockerinit:
@@ -23,17 +22,24 @@ tasks:
       - touch .run-in-docker
       - task init
 
-  dev:envfiles:
+  dev:dotenv:generate:
+    desc: "Generate/replace the central .env from 1Password (.env.1pass) and symlink it."
     sources:
       - '.env.1pass'
     generates:
       - '.env'
     cmds:
-      - op inject --force --in-file .env.1pass --out-file .env
-      - cp .env cms/.env
+      - op inject --account reloadas.1password.com --force --in-file .env.1pass --out-file .env
     preconditions:
       - sh: which op
         msg: '1Password CLI command required'
+
+  dev:dotenv:link:
+    desc: "Create symlinks in each project to the main .env file."
+    cmds:
+      - ln -sf ../.env cms/.env
+      - ln -sf ../.env go/.env
+      - ln -sf ../.env react/.env
 
   dev:cli:
     summary: Performs command inside a container. Expects parameter(s).
@@ -57,7 +63,7 @@ tasks:
   # ---------------------------------------------------------------------------
 
   token:generate:
-    desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in first-level .env files"
+    desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in the central root .env"
     dotenv: ['.env']
     silent: true
     cmds:
@@ -88,7 +94,7 @@ tasks:
           echo "Paste the token below into the *LIBRARY_TOKEN entries of your .env files manually."
         else
           updated=0
-          for envfile in */.env; do
+          for envfile in .env; do
             [ -f "$envfile" ] || continue
             if grep -qE '^[A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
               TOKEN="$token" perl -i -pe 's/^([A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
@@ -98,7 +104,7 @@ tasks:
           done
 
           if [ "$updated" -eq 0 ]; then
-            echo "No *LIBRARY_TOKEN entries found in first-level .env files." >&2
+            echo "No *LIBRARY_TOKEN entries found in the root .env." >&2
           else
             echo "Done. Updated $updated file(s)."
           fi
@@ -155,10 +161,23 @@ tasks:
 
   init:pnpm:
     desc: "Install dependencies with pnpm"
+    # Sources are listed explicitly per workspace package. A "**/package.json"
+    # glob would also walk every node_modules tree, which makes the
+    # up-to-date check take ~45 seconds with no output at all.
     sources:
-      - "**/package.json"
+      - package.json
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
+      - cms/package.json
+      - cms/pnpm-lock.yaml
+      - design-system/package.json
+      - design-system/pnpm-lock.yaml
+      - go/package.json
+      - go/pnpm-lock.yaml
+      - react/package.json
+      - react/pnpm-lock.yaml
+      - packages/*/package.json
+      - packages/*/pnpm-lock.yaml
     cmds:
       - task dev:cli -- corepack pnpm install
 
