@@ -161,10 +161,23 @@ tasks:
 
   init:pnpm:
     desc: "Install dependencies with pnpm"
+    # Sources are listed explicitly per workspace package. A "**/package.json"
+    # glob would also walk every node_modules tree, which makes the
+    # up-to-date check take ~45 seconds with no output at all.
     sources:
-      - "**/package.json"
+      - package.json
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
+      - cms/package.json
+      - cms/pnpm-lock.yaml
+      - design-system/package.json
+      - design-system/pnpm-lock.yaml
+      - go/package.json
+      - go/pnpm-lock.yaml
+      - react/package.json
+      - react/pnpm-lock.yaml
+      - packages/*/package.json
+      - packages/*/pnpm-lock.yaml
     cmds:
       - task dev:cli -- corepack pnpm install
 
