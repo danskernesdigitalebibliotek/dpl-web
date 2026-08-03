@@ -108,7 +108,7 @@ variables baked into the client bundle) and at runtime (for SSR).
 | File                               | Purpose                                                         |
 | ---------------------------------- | --------------------------------------------------------------- |
 | `go/lagoon/node-lagoon.dockerfile`  | Multi-stage Docker build for the Go app (used by Lagoon)        |
-| `go/lagoon/node.dockerfile`        | Source image dockerfile for GHCR publishing                     |
+| `go/lagoon/base.dockerfile`        | Base image (deps + `build:stage1`), published to GHCR by CI      |
 | `go/lagoon/start.sh`               | Runtime startup script, sets env vars and runs `pnpm run start`     |
 | `docker-compose.lagoon.yml`        | Defines all Lagoon services including `node`                    |
 | `.lagoon.yml`                      | Lagoon project config, environment settings, post-rollout tasks |
