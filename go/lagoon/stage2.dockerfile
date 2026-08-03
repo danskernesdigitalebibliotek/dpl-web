@@ -31,6 +31,34 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN node ./scripts/prepare-docker-env-vars.mjs && \
     corepack pnpm run build:stage2
 
+# Drop devDependencies before the runner stage copies /app, so Storybook,
+# Cypress, Vitest and the rest of the build-time tooling do not ship to
+# production.
+#
+# Must run from /app/go, not the workspace root: with sharedWorkspaceLockfile
+# disabled, `pnpm prune` at /app only considers the root project — which has no
+# dependencies at all — and silently leaves go's node_modules untouched.
+#
+# Deliberately no --no-optional. sharp's native binaries
+# (@img/sharp-linuxmusl-x64 and @img/sharp-libvips-linuxmusl-x64) are
+# optionalDependencies, and pruning them makes `require("sharp")` throw
+# "Could not load the sharp module", which breaks next/image at request time.
+RUN corepack pnpm prune --prod
+
+# The service-layer workspace package ships in the image as well (go imports it
+# through a file: dependency) and carries its own eslint/orval/vite/vitest tree.
+WORKDIR /app/packages/service-layer
+RUN corepack pnpm prune --prod --no-optional
+
+WORKDIR /app/go
+# Fail the build here rather than at runtime if pruning took too much or too
+# little. start.sh execs the `next` binary directly, and Next.js needs sharp for
+# image optimization.
+RUN test -x node_modules/.bin/next \
+    && node -e "require('sharp')" \
+    && test ! -e node_modules/cypress \
+    && test ! -e /app/packages/service-layer/node_modules/vitest
+
 FROM uselagoon/node-24:latest AS runner
 # start.sh uses bash syntax ([[ ]]) not available in Alpine's default sh.
 RUN apk add --no-cache bash
