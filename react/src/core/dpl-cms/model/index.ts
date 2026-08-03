@@ -76,6 +76,7 @@ export * from "./eventsGET200ItemAddressLocationType";
 export * from "./eventsGET200ItemDateTime";
 export * from "./eventsGET200ItemExternalData";
 export * from "./eventsGET200ItemImage";
+export * from "./eventsGET200ItemOrganizer";
 export * from "./eventsGET200ItemOriginalImage";
 export * from "./eventsGET200ItemSeries";
 export * from "./eventsGET200ItemState";
