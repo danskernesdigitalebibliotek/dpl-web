@@ -5,7 +5,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.list_teaser
     - field.field.node.branch.field_address
-    - field.field.node.branch.field_address_dawa
     - field.field.node.branch.field_address_gsearch
     - field.field.node.branch.field_agency_branch_id
     - field.field.node.branch.field_email
@@ -73,7 +72,6 @@ content:
     region: content
 hidden:
   field_address: true
-  field_address_dawa: true
   field_agency_branch_id: true
   field_promoted_on_lists: true
   langcode: true
