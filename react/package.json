@@ -6,7 +6,7 @@
   },
   "engines": {
     "node": "24.15.0",
-    "pnpm": "^10"
+    "pnpm": "^11"
   },
   "scripts": {
     "fmt": "prettier --config ./.prettierrc --write \"src/**/*.{js,jsx,ts,tsx}\"",

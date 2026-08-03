@@ -11,25 +11,29 @@ packages:
 # update the lockfile next to each package.json.
 sharedWorkspaceLockfile: false
 
-# Whitelist of packages that are allowed to run build scripts.
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@playwright/browser-chromium'
-  - '@swc/core'
-  - core-js
-  - core-js-pure
-  - cypress
-  - esbuild
-  - puppeteer
-  - sharp
-  - unrs-resolver
+# Whitelist of packages that are allowed to run build scripts. Anything not
+# listed here is "unreviewed": with strictDepBuilds (pnpm 11 default) its build
+# scripts are skipped and the install fails, so new native dependencies must be
+# reviewed and added deliberately. pnpm appends unreviewed packages here with a
+# placeholder value during install — replace it with true or false.
+allowBuilds:
+  '@parcel/watcher': true
+  '@playwright/browser-chromium': true
+  '@swc/core': true
+  core-js: true
+  core-js-pure: true
+  cypress: true
+  esbuild: true
+  puppeteer: true
+  sharp: true
+  unrs-resolver: true
 
 # Supply chain risk mitigation: wait two days before accepting a new version of a
 # package.
-# NOTE: pnpm 10.x silently ignores minimumReleaseAge when sharedWorkspaceLockfile
-# is false (see the pnpm changelog), so this is currently NOT enforced. It is
-# kept here so the protection returns once that bug is fixed or we move off split
-# lockfiles.
+# NOTE: pnpm silently ignores minimumReleaseAge when sharedWorkspaceLockfile is
+# false (pnpm/pnpm#10008, still open as of pnpm 11.20), so this is currently NOT
+# enforced. It is kept here so the protection returns once that bug is fixed or
+# we move off split lockfiles.
 minimumReleaseAge: 2880
 
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
