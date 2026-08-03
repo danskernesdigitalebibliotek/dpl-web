@@ -6,9 +6,9 @@ version: "3"
 dotenv: [".task.env"]
 
 # NOTE Go's release images are built in CI, not from here:
-# .github/workflows/go-build-base-image.yml builds lagoon/base.dockerfile and
+# .github/workflows/go-build-base-image.yml builds lagoon/stage1.dockerfile and
 # pushes it to ghcr.io/danskernesdigitalebibliotek/dpl-web-go. Lagoon then
-# builds lagoon/node-lagoon.dockerfile on top of that tag.
+# builds lagoon/stage2.dockerfile on top of that tag.
 
 tasks:
   dev:nvm:use:

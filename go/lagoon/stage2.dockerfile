@@ -1,6 +1,8 @@
 # syntax=docker.io/docker/dockerfile:1
-# Full build for the Go (Next.js) application within Lagoon.
-# Used by Lagoon environments (PR, demo and playground).
+# Stage 2 of the Lagoon build: the per-environment build, on top of the image
+# produced by stage1.dockerfile. Runs `build:stage2` with the environment's
+# build args and produces the production runtime image.
+# Used by Lagoon environments (PR, demo and playground). See ./README.md.
 # Based on: https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
 

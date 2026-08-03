@@ -80,16 +80,16 @@ Push to branch/PR
        │
        ▼
 GitHub Actions (lagoon-deploy.yml → go-build-base-image.yml)
-  └─ Builds go/lagoon/base.dockerfile: install node_modules, build:stage1
+  └─ Builds go/lagoon/stage1.dockerfile: install node_modules, build:stage1
      and pushes ghcr.io/…/dpl-web-go:{branch|pr-N}
        │
        ▼
 Webhook to Lagoon → Lagoon checks out repo
        │
        ▼
-Builds go/lagoon/node-lagoon.dockerfile
-  ┌─ Stage 1 (builder): FROM dpl-web-go:{env}, resolve CMS domain, build:stage2
-  └─ Stage 2 (runner): production image with start.sh
+Builds go/lagoon/stage2.dockerfile
+  ┌─ builder: FROM dpl-web-go:{env}, resolve CMS domain, build:stage2
+  └─ runner: production image with start.sh
        │
        ▼
 Deploys all services (node, varnish, nginx, php, cli, mariadb, redis)
@@ -100,7 +100,7 @@ Deploys all services (node, varnish, nginx, php, cli, mariadb, redis)
 The Go app needs to know the CMS domain at build time (for `NEXT_PUBLIC_*`
 variables baked into the client bundle) and at runtime (for SSR).
 
-**Build time** (`go/lagoon/node-lagoon.dockerfile`):
+**Build time** (`go/lagoon/stage2.dockerfile`):
 
 - CMS domain is derived from `LAGOON_ENVIRONMENT` and `LAGOON_PROJECT`
 - Pattern: `varnish.{environment}.{project}.dplplat02.dpl.reload.dk`
@@ -113,15 +113,15 @@ variables baked into the client bundle) and at runtime (for SSR).
 
 ### Key Files
 
-| File                               | Purpose                                                         |
-| ---------------------------------- | --------------------------------------------------------------- |
-| `go/lagoon/node-lagoon.dockerfile`  | Multi-stage Docker build for the Go app (used by Lagoon)        |
-| `go/lagoon/base.dockerfile`        | Base image (deps + `build:stage1`), published to GHCR by CI      |
-| `go/lagoon/start.sh`               | Runtime startup script, sets env vars and runs `pnpm run start`     |
-| `docker-compose.lagoon.yml`        | Defines all Lagoon services including `node`                    |
-| `.lagoon.yml`                      | Lagoon project config, environment settings, post-rollout tasks |
-| `.github/workflows/lagoon-deploy.yml` | Builds the Go base image, then webhooks Lagoon on push/PR events |
-| `.github/workflows/lagoon-close.yml`  | Tears down the environment when a pull request is closed        |
+| File                                  | Purpose                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------------ |
+| `go/lagoon/stage1.dockerfile`         | Base image: dependency install + `build:stage1`, published to GHCR by CI  |
+| `go/lagoon/stage2.dockerfile`         | Per-environment build on top of stage 1: `build:stage2` + runtime image   |
+| `go/lagoon/start.sh`                  | Runtime startup script, sets env vars and runs `pnpm run start`           |
+| `docker-compose.lagoon.yml`           | Defines all Lagoon services including `node`                             |
+| `.lagoon.yml`                         | Lagoon project config, environment settings, post-rollout tasks          |
+| `.github/workflows/lagoon-deploy.yml` | Builds the Go base image, then webhooks Lagoon on push/PR events         |
+| `.github/workflows/lagoon-close.yml`  | Tears down the environment when a pull request is closed                 |
 
 ## Resetting a Branch Environment
 

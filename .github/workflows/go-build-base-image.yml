@@ -52,7 +52,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
-          file: "go/lagoon/base.dockerfile"
+          file: "go/lagoon/stage1.dockerfile"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

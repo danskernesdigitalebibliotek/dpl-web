@@ -1,4 +1,7 @@
-# Build base Dockerfile for deployment to lagoon.
+# syntax=docker.io/docker/dockerfile:1
+# Stage 1 of the Lagoon build: install dependencies and run the
+# environment-independent compile (`build:stage1`). Published to GHCR by CI;
+# stage2.dockerfile builds FROM the result. See ./README.md.
 FROM uselagoon/node-24-builder:latest
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
@@ -23,7 +26,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Bake the release version into a plain-text file at /app/VERSION. This
-# survives the COPY --from=builder /app /app in node-lagoon.dockerfile (an
+# survives the COPY --from=builder /app /app in stage2.dockerfile (an
 # ENV would not), so the runtime container can read it from the health endpoint.
 ARG DPL_VERSION=unknown
 RUN echo "${DPL_VERSION}" > /app/VERSION
