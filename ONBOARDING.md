@@ -19,24 +19,24 @@ Storybooks (react, design-system) run on their own; go needs a CMS to talk to.
 
 ## 1. Environment + dependencies
 
-From the repo root:
+If you have access to the Reload 1Password, you can generate the main .env file
+by running `task dev:dotenv:generate`.
+
+If not, you can copy the template with a `cp .env.1pass .env` and then adjust
+the contents as relevant.
+
+When the `.env` file is in place, run (from the repo root):
 
 ```bash
-cp .env.example .env    # the central .env; fill in real values you need
-task init               # symlink cms/.env, go/.env, react/.env + install deps
+task init   # generate.env symlink cms/.env, go/.env, react/.env + install deps
 ```
 
 `cms/.env`, `go/.env` and `react/.env` are symlinks to the root `.env`. If one
 goes missing, recreate them all with `task dev:envfiles`.
 
-**1Password users:** skip the two commands above and run a single
-`task init:1pass` — it generates `.env` from `.env.1pass` via `op inject`,
-creates the symlinks, and installs dependencies.
-
 **Library token** (needed for React backend data): `task token:generate` mints a
 token and writes it to `STORYBOOK_LIBRARY_TOKEN` in `.env`. It needs
-`ADGANGSPLATFORMEN_*` set (the `:1pass` flow fills those from the vault). Restart
-Storybook afterwards.
+`ADGANGSPLATFORMEN_*` set. Restart Storybook afterwards.
 
 ## 2. Run the apps
 

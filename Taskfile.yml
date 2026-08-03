@@ -10,17 +10,10 @@ vars:
     sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
 
 tasks:
-
   init:
-    summary: Initialize project
+    desc: "Initialize project, creating .env symlinks and installing dependencies."
     deps:
-      - dev:envfiles
-      - init:pnpm
-
-  init:1pass:
-    desc: "Initialize project with .env generated from 1Password (.env.1pass) + install dependencies"
-    deps:
-      - dev:envfiles:1pass
+      - dev:dotenv:link
       - init:pnpm
 
   dockerinit:
@@ -29,30 +22,24 @@ tasks:
       - touch .run-in-docker
       - task init
 
-  dev:envfiles:
-    desc: "Symlink cms/.env, go/.env and react/.env to the central root .env"
-    cmds:
-      # The central root .env is the single source; cms/.env, go/.env and
-      # react/.env are symlinks to it. ln -sf also repairs a broken/stale link.
-      - ln -sf ../.env cms/.env
-      - ln -sf ../.env go/.env
-      - ln -sf ../.env react/.env
-
-  dev:envfiles:1pass:
-    desc: "Generate the central .env from 1Password (.env.1pass) and symlink it"
+  dev:dotenv:generate:
+    desc: "Generate/replace the central .env from 1Password (.env.1pass) and symlink it."
     sources:
       - '.env.1pass'
     generates:
       - '.env'
     cmds:
-      - op inject --force --in-file .env.1pass --out-file .env
-      # cms/.env, go/.env and react/.env are symlinks to the central root .env.
-      - ln -sf ../.env cms/.env
-      - ln -sf ../.env go/.env
-      - ln -sf ../.env react/.env
+      - op inject --account reloadas.1password.com --force --in-file .env.1pass --out-file .env
     preconditions:
       - sh: which op
         msg: '1Password CLI command required'
+
+  dev:dotenv:link:
+    desc: "Create symlinks in each project to the main .env file."
+    cmds:
+      - ln -sf ../.env cms/.env
+      - ln -sf ../.env go/.env
+      - ln -sf ../.env react/.env
 
   dev:cli:
     summary: Performs command inside a container. Expects parameter(s).
