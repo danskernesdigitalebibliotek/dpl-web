@@ -72,8 +72,8 @@ importers:
         specifier: ^2.9.3
         version: 2.9.3(react@19.2.8)
       proj4:
-        specifier: ^2.20.9
-        version: 2.20.9
+        specifier: ^2.21.0
+        version: 2.21.0
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -6644,8 +6644,8 @@ packages:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
 
-  proj4@2.20.9:
-    resolution: {integrity: sha512-GLBGqXaTcdWnppre3o1sMmy4DcMGSGq/ng+9k2MTNddarRK6SveINqlqYzi3xEXuy06ljY1TTrC6H9C4f360IQ==}
+  proj4@2.21.0:
+    resolution: {integrity: sha512-33HfDftqw8kY+Cl1dcL16SJuqTSzYxmz4re7Nmhk+fs1/N1fFrAkkF579msQTR/4fLeJVSNne8/gpoCz0fk1uw==}
     peerDependencies:
       geotiff: '*'
     peerDependenciesMeta:
@@ -8004,8 +8004,8 @@ packages:
   wildcard@2.0.1:
     resolution: {integrity: sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==}
 
-  wkt-parser@1.5.5:
-    resolution: {integrity: sha512-/zMYi94/7D7fxcOSlVmWn6vnOMj3Gq5d1xvVjaYOS9n6h0qOJ4I7YYVxBWYcH1vq9+suhqzXkn05Yx47zQNUIA==}
+  wkt-parser@1.5.6:
+    resolution: {integrity: sha512-cqHU3lzGt/gt2OqIORP0uVy5yeOX43WABmgFkmJsmcqH3HhQo9PiJG6ftytwGKmpQUbegeX7+pQc2BuNCRfcrw==}
 
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
@@ -11252,7 +11252,7 @@ snapshots:
 
   '@types/proj4@2.19.0':
     dependencies:
-      proj4: 2.20.9
+      proj4: 2.21.0
     transitivePeerDependencies:
       - geotiff
 
@@ -15312,10 +15312,10 @@ snapshots:
 
   process@0.11.10: {}
 
-  proj4@2.20.9:
+  proj4@2.21.0:
     dependencies:
       mgrs: 1.0.0
-      wkt-parser: 1.5.5
+      wkt-parser: 1.5.6
 
   promise@7.3.1:
     dependencies:
@@ -16820,7 +16820,7 @@ snapshots:
 
   wildcard@2.0.1: {}
 
-  wkt-parser@1.5.5: {}
+  wkt-parser@1.5.6: {}
 
   word-wrap@1.2.5: {}
 
