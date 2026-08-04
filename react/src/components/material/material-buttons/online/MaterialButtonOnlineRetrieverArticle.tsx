@@ -6,27 +6,27 @@ import { ButtonSize } from "../../../../core/utils/types/button";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { useUrls } from "../../../../core/utils/url";
 import { Button } from "../../../Buttons/Button";
-import { infomediaModalId } from "../../infomedia/InfomediaModal";
+import { retrieverModalId } from "../../retriever/RetrieverModal";
 import { isResident } from "../../../../core/utils/helpers/userInfo";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import useUserInfo from "../../../../core/adgangsplatformen/useUserInfo";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 
-export interface MaterialButtonOnlineInfomediaArticleProps {
+export interface MaterialButtonOnlineRetrieverArticleProps {
   size?: ButtonSize;
   manifestations: Manifestation[];
   trackOnlineView: () => Promise<unknown>;
   dataCy?: string;
 }
 
-const MaterialButtonOnlineInfomediaArticle: FC<
-  MaterialButtonOnlineInfomediaArticleProps
+const MaterialButtonOnlineRetrieverArticle: FC<
+  MaterialButtonOnlineRetrieverArticleProps
 > = ({
   size,
   manifestations,
   trackOnlineView,
-  dataCy = "material-button-online-infomedia-article"
+  dataCy = "material-button-online-retriever-article"
 }) => {
   const t = useText();
   const u = useUrls();
@@ -46,12 +46,12 @@ const MaterialButtonOnlineInfomediaArticle: FC<
   }
 
   // Although we may be passed multiple manifestations, there is only one button
-  // and one infomedia article modal to open, as we only associate a singular article
+  // and one Retriever article modal to open, as we only associate a singular article
   // with a given work as of now.
   const onClick = () => {
     openGuarded({
       authUrl,
-      modalId: infomediaModalId(manifestations[0].pid),
+      modalId: retrieverModalId(manifestations[0].pid),
       trackOnlineView
     });
   };
@@ -84,4 +84,4 @@ const MaterialButtonOnlineInfomediaArticle: FC<
   );
 };
 
-export default MaterialButtonOnlineInfomediaArticle;
+export default MaterialButtonOnlineRetrieverArticle;

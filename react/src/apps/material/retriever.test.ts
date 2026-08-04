@@ -1,6 +1,6 @@
 const coverUrlPattern = /^https:\/\/res\.cloudinary\.com\/.*\.(jpg|jpeg|png)$/;
 
-describe("Material - Infomedia", () => {
+describe("Material - Retriever", () => {
   beforeEach(() => {
     cy.interceptGraphql({
       operationName: "GetCoversByPids",
@@ -34,19 +34,19 @@ describe("Material - Infomedia", () => {
 
     cy.interceptGraphql({
       operationName: "getMaterial",
-      fixtureFilePath: "material/infomedia-fbi-api.json"
+      fixtureFilePath: "material/retriever-fbi-api.json"
     });
 
     cy.interceptGraphql({
-      operationName: "getInfomedia",
-      fixtureFilePath: "material/infomedia-article.json"
+      operationName: "getRetriever",
+      fixtureFilePath: "material/retriever-article.json"
     });
 
-    cy.visit("/iframe.html?id=apps-material--infomedia&viewMode=story");
+    cy.visit("/iframe.html?id=apps-material--retriever&viewMode=story");
   });
 
-  it.skip("Render infomedia + Read article + Close modal", () => {
-    cy.getBySel("material-header-buttons-online-infomedia-article")
+  it.skip("Render Retriever + Read article + Close modal", () => {
+    cy.getBySel("material-header-buttons-online-retriever-article")
       .should("be.visible")
       .and("contain", "Read article")
       .click();
@@ -55,7 +55,7 @@ describe("Material - Infomedia", () => {
       .should("be.visible")
       .and("contain", "BUTLERENS UTROLIGE HISTORIE");
 
-    cy.getBySelStartEnd("modal-infomedia-modal-", "-close-button")
+    cy.getBySelStartEnd("modal-retriever-modal-", "-close-button")
       .should("be.visible")
       .click();
   });

@@ -1,6 +1,6 @@
 {
   "data": {
-    "infomedia": {
+    "retriever": {
       "error": "BORROWER_NOT_LOGGED_IN",
       "article": null
     }
