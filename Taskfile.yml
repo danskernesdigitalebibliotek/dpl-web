@@ -34,6 +34,25 @@ tasks:
       - sh: which op
         msg: '1Password CLI command required'
 
+  dev:dotenv:template:
+    desc: "Create the central .env from .env.1pass without 1Password, leaving secret values empty."
+    summary: |
+      For environments that cannot reach 1Password — CI, or a developer without
+      access to our vault. Copies .env.1pass and blanks every `op://` reference,
+      so the resulting .env carries the local development defaults and leaves the
+      real secrets empty. Anything needing a real credential must be filled in by
+      hand afterwards.
+
+      Does nothing if a .env already exists, so it never overwrites a .env
+      generated from 1Password by dev:dotenv:generate.
+    status:
+      # Never clobber an existing .env — notably one holding real secrets.
+      - test -e .env
+    cmds:
+      # Values are quoted in .env.1pass ("op://..."), so match op:// anywhere
+      # after the '=' rather than immediately following it.
+      - sed -E 's|^([A-Za-z_][A-Za-z0-9_]*)=.*op://.*|\1=|' .env.1pass > .env
+
   dev:dotenv:link:
     desc: "Create symlinks in each project to the main .env file."
     cmds:

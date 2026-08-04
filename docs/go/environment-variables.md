@@ -48,7 +48,7 @@ Password counterpart to the GraphQL consumer username above.
 
 ### `NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS`
 
-- **Required:** No (only in `.env.example`)
+- **Required:** No (only set as a Lagoon variable, in `.lagoon.env`)
 
 **Legacy.** A pre-encoded Basic Auth token. Not referenced in application code — the app computes the token at runtime from the username + password above.
 
