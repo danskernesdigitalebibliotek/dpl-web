@@ -390,6 +390,10 @@ tasks:
   ci:reset:
     desc: Create CI setup
     cmds:
+      # CI has no 1Password access, so the central .env cannot be generated the
+      # usual way. dev:reset only symlinks cms/.env to it and would leave a
+      # dangling link.
+      - task -d {{.TASKFILE_DIR}}/.. dev:dotenv:template
       - task dev:reset
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
@@ -398,6 +402,7 @@ tasks:
   ci:reset:clean:
     desc: Create CI setup with a clean database
     cmds:
+      - task -d {{.TASKFILE_DIR}}/.. dev:dotenv:template
       - task dev:reset:clean
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"

@@ -191,7 +191,7 @@ and ask them.
 
 CMS reads `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`, while Go reads the
 misspelled `UNLILOGIN_PUBHUB_RETAILER_KEY_CODE` (a long-standing typo).
-`.env.example` sets both to the same value for local development, but
+`.env.1pass` sets both to the same value for local development, but
 only the misspelled name exists as a Lagoon project variable.
 
 UniLogin SOAP webservice access lives in Go, not CMS, and uses
