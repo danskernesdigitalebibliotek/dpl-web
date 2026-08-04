@@ -108,3 +108,17 @@ We considered the following alternatives:
 2. Using a separate instance of DPL CMS in Lagoon as a central translation hub.
    Such an instance would require maintenance and we would have to implement a
    method for exposing translations to other instances.
+
+## Status
+
+The choice of Potion described above is **no longer relevant**. Scanning is now
+done with POTX, see
+[Translation: Moving from Potion to POTX](./adr-018-translation-potion-to-potx.md).
+
+Note also that the reason given above for rejecting Potx - that it cannot fill
+in existing translations - rested on a misunderstanding. Potx does support it,
+through the Drush command that replaces Potion.
+
+The rest of this ADR still applies: GitHub remains the central source for
+translation files, POEditor is still the translation interface, and the
+requirement to pass `context` inline to every `t()` call is unchanged.
