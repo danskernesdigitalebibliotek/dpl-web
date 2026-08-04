@@ -1,13 +1,14 @@
 # Getting started with `dpl-web`
 
-Four projects make up the platform. You only need the ones you work on — the
-Storybooks (react, design-system) run on their own; go needs a CMS to talk to.
+Four projects make up the platform. Set up the CMS first — it is what builds
+the design-system and react assets the other projects need — then run whichever
+projects you work on.
 
 | Project | What it is | Dev command | URL |
 |---|---|---|---|
+| **cms** | Drupal backend | Docker | <https://dpl-cms.local> |
 | **react** | Embedded React apps | Storybook | <http://localhost:6006> |
 | **design-system** | Shared HTML + CSS | Storybook | <https://design-system.local> |
-| **cms** | Drupal backend | Docker | <https://dpl-cms.local> |
 | **go** | Next.js youth site | `next dev` | <https://dpl-cms.local:3000> |
 
 ## Prerequisites
@@ -40,7 +41,27 @@ goes missing, recreate them all with `task dev:dotenv:link`.
 token and writes it to `STORYBOOK_LIBRARY_TOKEN` in `.env`. It needs
 `ADGANGSPLATFORMEN_*` set. Restart Storybook afterwards.
 
-## 2. Run the apps
+## 2. Build the CMS (do this first)
+
+```bash
+task cms:reset      # first-time: heavy build from a DB snapshot; also builds +
+                    # links design-system and react into the CMS
+```
+
+Open <https://dpl-cms.local>. Test users have password `test`. (Requires the
+`mkcert` HTTPS setup from Prerequisites.)
+
+Day-to-day afterwards, `task cms:start` brings the site up and prints an admin
+login link — no reset needed.
+
+**Run this before the Storybooks, even if you only work on the frontends.**
+`design-system/build/` is not in git, and react's Storybook imports its CSS
+(`react/.storybook/preview.tsx`), so a fresh clone has nothing to import from
+until something has built it. `task cms:reset` does that on the way. If you want
+just the assets without the Drupal build, `task dev:design-system:build` from the
+repo root is enough.
+
+## 3. Run the apps
 
 ### React — Storybook
 
@@ -59,17 +80,6 @@ cd design-system && task dev:start  # Docker
 ```
 
 Open <https://design-system.local>. Uses no `.env`.
-
-### CMS — Drupal
-
-```bash
-task cms:reset      # first-time: heavy build from a DB snapshot; also builds +
-                    # links design-system and react into the CMS
-task cms:start      # day-to-day: brings the site up and prints an admin login link
-```
-
-Open <https://dpl-cms.local>. Test users have password `test`. (Requires the
-`mkcert` HTTPS setup from Prerequisites.)
 
 ### Go — Next.js
 
