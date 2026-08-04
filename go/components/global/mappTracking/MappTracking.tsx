@@ -1,28 +1,20 @@
 "use client"
 
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { useContext, useEffect, useRef } from "react"
 
+import goConfig from "@/lib/config/goConfig"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
-
-declare global {
-  interface Window {
-    _tiConfig?: {
-      tiDomain: string
-      tiId: string
-      option: Record<string, string>
-    }
-    _ti?: Record<string, string>
-    wts?: Array<unknown[]>
-    wt_r?: number
-    wt_mcp_hide?: { show: () => void }
-  }
-}
+import { clearPageStatistics, collectPageStatistics, sendPageUpdate } from "@/lib/tracking/mapp"
+import { statistics } from "@/lib/tracking/statistics"
 
 export default function MappTracking() {
   const config = useContext(DplCmsConfigContext)
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const isInitialLoad = useRef(true)
+
+  const searchQuery = searchParams.get("q")
 
   const domain = config?.mapp?.domain
   const id = config?.mapp?.id
@@ -82,17 +74,28 @@ export default function MappTracking() {
     firstScript?.parentNode?.insertBefore(script, firstScript)
   }, [domain, id])
 
-  // Track SPA navigations — skip the initial page load (handled by Mapp automatically).
+  // Track SPA navigations. Depends on the search query too, so a new search on
+  // the search page (which only changes the `q` param, not the pathname) also
+  // triggers a pageupdate. Collect the on-site search term (OSS) while on the
+  // search page so the page view carries it — reused from the React apps.
   useEffect(() => {
+    const isSearchPage = pathname === `/${goConfig("routes.search")}`
+
+    if (isSearchPage && searchQuery) {
+      collectPageStatistics(statistics.searchQuery, searchQuery)
+    } else {
+      clearPageStatistics(statistics.searchQuery)
+    }
+
+    // Skip the initial page load — Mapp sends that page view automatically
+    // (it still reads the parameters we just collected on window._ti).
     if (isInitialLoad.current) {
       isInitialLoad.current = false
       return
     }
 
-    if (window.wts) {
-      window.wts.push(["send", "pageupdate"])
-    }
-  }, [pathname])
+    sendPageUpdate()
+  }, [pathname, searchQuery])
 
   return null
 }
