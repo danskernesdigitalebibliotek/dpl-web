@@ -56,7 +56,8 @@ export type AccessUnion =
   | Ereol
   | InfomediaService
   | InterLibraryLoan
-  | Publizon;
+  | Publizon
+  | RetrieverService;
 
 export type AccessUrl = {
   __typename?: "AccessUrl";
@@ -1467,6 +1468,16 @@ export type Query = {
   /** Access to various types of recommendations. */
   recommendations: Recommendations;
   refWorks: Scalars["String"]["output"];
+  /**
+   * Fetch a single article from Retriever by its document id.
+   *
+   * Retriever is a media monitoring service that provides access to articles from newspapers
+   * and other news sources, including full text, publication metadata, and links to the original source.
+   *
+   * Requires an authenticated user with a valid subscription through their municipality of residence.
+   * Check `error` on the response for access or lookup failures.
+   */
+  retriever: RetrieverResponse;
   ris: Scalars["String"]["output"];
   search: SearchResponse;
   series?: Maybe<Series>;
@@ -1518,6 +1529,10 @@ export type QueryRecommendArgs = {
 
 export type QueryRefWorksArgs = {
   pids: Array<Scalars["String"]["input"]>;
+};
+
+export type QueryRetrieverArgs = {
+  id: Scalars["String"]["input"];
 };
 
 export type QueryRisArgs = {
@@ -1670,6 +1685,85 @@ export type Relations = {
   isSoundtrackOfGame: Array<Manifestation>;
   /** This sound track for a movie is related to these movies */
   isSoundtrackOfMovie: Array<Manifestation>;
+};
+
+/** A newspaper or media article. */
+export type RetrieverArticle = {
+  __typename?: "RetrieverArticle";
+  /** Author or byline credited with the article. */
+  byLine?: Maybe<Scalars["String"]["output"]>;
+  /** Full article text as plain text. */
+  fullText?: Maybe<Scalars["String"]["output"]>;
+  /** Full article text formatted with simple HTML tags. */
+  fullTextHtml?: Maybe<Scalars["String"]["output"]>;
+  /** Main headline of the article. */
+  headline?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Unique document identifier in Retriever (DOC_ID).
+   * Use this value for subsequent article lookups.
+   */
+  id: Scalars["String"]["output"];
+  /** Type of media the article was published in, for example `print` or `web`. */
+  mediaType?: Maybe<Scalars["String"]["output"]>;
+  /** Page number or page range in the original publication. */
+  pages?: Maybe<Scalars["String"]["output"]>;
+  /** Date and time when the article was published, in ISO 8601 format. */
+  publishingDate?: Maybe<Scalars["String"]["output"]>;
+  /** Category of the source publication, for example national news media. */
+  sourceCategory?: Maybe<Scalars["String"]["output"]>;
+  /** Country of the source publication, for example `Denmark`. */
+  sourceCountry?: Maybe<Scalars["String"]["output"]>;
+  /** Numeric identifier of the source publication in Retriever. */
+  sourceId?: Maybe<Scalars["Int"]["output"]>;
+  /** Name of the source publication, for example a newspaper title. */
+  sourceName?: Maybe<Scalars["String"]["output"]>;
+  /** Geographic region or regions covered by the source publication. */
+  sourceRegion?: Maybe<Scalars["String"]["output"]>;
+  /** Secondary headline or deck, when provided by the source. */
+  subHeadline?: Maybe<Scalars["String"]["output"]>;
+  /** Theme or subject category assigned to the article by Retriever. */
+  themeCategory?: Maybe<Scalars["String"]["output"]>;
+  /** URL to a thumbnail preview image of the article. */
+  thumbnail?: Maybe<Scalars["String"]["output"]>;
+  /** URL to open the article in Retriever. */
+  url?: Maybe<Scalars["String"]["output"]>;
+  /** Approximate number of words in the article body. */
+  wordCount?: Maybe<Scalars["Int"]["output"]>;
+};
+
+/** Error codes returned when an article cannot be fetched or the user is not allowed to access it. */
+export enum RetrieverErrorEnum {
+  ArticleNotFound = "ARTICLE_NOT_FOUND",
+  BorrowercheckNotAllowed = "BORROWERCHECK_NOT_ALLOWED",
+  BorrowerNotFound = "BORROWER_NOT_FOUND",
+  BorrowerNotInMunicipality = "BORROWER_NOT_IN_MUNICIPALITY",
+  BorrowerNotLoggedIn = "BORROWER_NOT_LOGGED_IN",
+  InternalServerError = "INTERNAL_SERVER_ERROR",
+  LibraryNotFound = "LIBRARY_NOT_FOUND",
+  NoAgencyid = "NO_AGENCYID",
+  ServiceNotLicensed = "SERVICE_NOT_LICENSED",
+  ServiceUnavailable = "SERVICE_UNAVAILABLE"
+}
+
+/** Response wrapper for a single article lookup. */
+export type RetrieverResponse = {
+  __typename?: "RetrieverResponse";
+  /**
+   * The requested article, when available.
+   * Returns null if `error` is set or the article was not found.
+   */
+  article?: Maybe<RetrieverArticle>;
+  /**
+   * Present when the article could not be fetched or the user is not allowed to access it.
+   * When this field is set, `article` will be null.
+   */
+  error?: Maybe<RetrieverErrorEnum>;
+};
+
+export type RetrieverService = {
+  __typename?: "RetrieverService";
+  /** Retriever document ID which can be used to fetch article through Retriever Service */
+  id: Scalars["String"]["output"];
 };
 
 export type ReviewElement = {
@@ -2559,9 +2653,10 @@ export type GetSmallWorkQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -2741,9 +2836,10 @@ export type GetSmallWorkQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -2923,9 +3019,10 @@ export type GetSmallWorkQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -3362,9 +3459,10 @@ export type GetMaterialQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -3544,9 +3642,10 @@ export type GetMaterialQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -3726,9 +3825,10 @@ export type GetMaterialQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -4013,9 +4113,10 @@ export type GetMaterialGloballyQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -4195,9 +4296,10 @@ export type GetMaterialGloballyQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -4377,9 +4479,10 @@ export type GetMaterialGloballyQuery = {
               url: string;
               canAlwaysBeLoaned: boolean;
             }
-          | { __typename: "InfomediaService"; id: string }
+          | { __typename: "InfomediaService" }
           | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
           | { __typename: "Publizon" }
+          | { __typename: "RetrieverService"; id: string }
         >;
         shelfmark?: {
           __typename?: "Shelfmark";
@@ -4400,23 +4503,22 @@ export type GetMaterialGloballyQuery = {
   } | null;
 };
 
-export type GetInfomediaQueryVariables = Exact<{
+export type GetRetrieverQueryVariables = Exact<{
   id: Scalars["String"]["input"];
 }>;
 
-export type GetInfomediaQuery = {
+export type GetRetrieverQuery = {
   __typename?: "Query";
-  infomedia: {
-    __typename?: "InfomediaResponse";
-    error?: InfomediaErrorEnum | null;
+  retriever: {
+    __typename?: "RetrieverResponse";
+    error?: RetrieverErrorEnum | null;
     article?: {
-      __typename?: "InfomediaArticle";
-      byLine?: string | null;
-      dateLine?: string | null;
-      headLine?: string | null;
-      hedLine?: string | null;
-      paper?: string | null;
-      text?: string | null;
+      __typename?: "RetrieverArticle";
+      headline?: string | null;
+      subHeadline?: string | null;
+      publishingDate?: string | null;
+      sourceName?: string | null;
+      fullTextHtml?: string | null;
     } | null;
   };
 };
@@ -4439,9 +4541,10 @@ export type GetReviewManifestationsQuery = {
       | { __typename: "AccessUrl"; url: string; origin: string }
       | { __typename: "DigitalArticleService"; issn: string }
       | { __typename: "Ereol" }
-      | { __typename: "InfomediaService"; id: string }
+      | { __typename: "InfomediaService" }
       | { __typename: "InterLibraryLoan" }
       | { __typename: "Publizon" }
+      | { __typename: "RetrieverService"; id: string }
     >;
     edition?: {
       __typename?: "Edition";
@@ -4709,9 +4812,10 @@ export type RecommendFromFaustQuery = {
                   url: string;
                   canAlwaysBeLoaned: boolean;
                 }
-              | { __typename: "InfomediaService"; id: string }
+              | { __typename: "InfomediaService" }
               | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
               | { __typename: "Publizon" }
+              | { __typename: "RetrieverService"; id: string }
             >;
             shelfmark?: {
               __typename?: "Shelfmark";
@@ -4894,9 +4998,10 @@ export type RecommendFromFaustQuery = {
                   url: string;
                   canAlwaysBeLoaned: boolean;
                 }
-              | { __typename: "InfomediaService"; id: string }
+              | { __typename: "InfomediaService" }
               | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
               | { __typename: "Publizon" }
+              | { __typename: "RetrieverService"; id: string }
             >;
             shelfmark?: {
               __typename?: "Shelfmark";
@@ -5079,9 +5184,10 @@ export type RecommendFromFaustQuery = {
                   url: string;
                   canAlwaysBeLoaned: boolean;
                 }
-              | { __typename: "InfomediaService"; id: string }
+              | { __typename: "InfomediaService" }
               | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
               | { __typename: "Publizon" }
+              | { __typename: "RetrieverService"; id: string }
             >;
             shelfmark?: {
               __typename?: "Shelfmark";
@@ -5341,9 +5447,10 @@ export type SearchWithPaginationQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
           shelfmark?: {
             __typename?: "Shelfmark";
@@ -5523,9 +5630,10 @@ export type SearchWithPaginationQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
           shelfmark?: {
             __typename?: "Shelfmark";
@@ -5705,9 +5813,10 @@ export type SearchWithPaginationQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
           shelfmark?: {
             __typename?: "Shelfmark";
@@ -5768,9 +5877,10 @@ export type ComplexSearchWithPaginationWorkAccessQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
         }>;
       };
@@ -5990,9 +6100,10 @@ export type ComplexSearchWithPaginationQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
           shelfmark?: {
             __typename?: "Shelfmark";
@@ -6172,9 +6283,10 @@ export type ComplexSearchWithPaginationQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
           shelfmark?: {
             __typename?: "Shelfmark";
@@ -6354,9 +6466,10 @@ export type ComplexSearchWithPaginationQuery = {
                 url: string;
                 canAlwaysBeLoaned: boolean;
               }
-            | { __typename: "InfomediaService"; id: string }
+            | { __typename: "InfomediaService" }
             | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
             | { __typename: "Publizon" }
+            | { __typename: "RetrieverService"; id: string }
           >;
           shelfmark?: {
             __typename?: "Shelfmark";
@@ -6708,9 +6821,10 @@ export type ManifestationsSimpleFragment = {
           url: string;
           canAlwaysBeLoaned: boolean;
         }
-      | { __typename: "InfomediaService"; id: string }
+      | { __typename: "InfomediaService" }
       | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
       | { __typename: "Publizon" }
+      | { __typename: "RetrieverService"; id: string }
     >;
     shelfmark?: {
       __typename?: "Shelfmark";
@@ -6884,9 +6998,10 @@ export type ManifestationsSimpleFragment = {
           url: string;
           canAlwaysBeLoaned: boolean;
         }
-      | { __typename: "InfomediaService"; id: string }
+      | { __typename: "InfomediaService" }
       | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
       | { __typename: "Publizon" }
+      | { __typename: "RetrieverService"; id: string }
     >;
     shelfmark?: {
       __typename?: "Shelfmark";
@@ -7060,9 +7175,10 @@ export type ManifestationsSimpleFragment = {
           url: string;
           canAlwaysBeLoaned: boolean;
         }
-      | { __typename: "InfomediaService"; id: string }
+      | { __typename: "InfomediaService" }
       | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
       | { __typename: "Publizon" }
+      | { __typename: "RetrieverService"; id: string }
     >;
     shelfmark?: {
       __typename?: "Shelfmark";
@@ -7102,9 +7218,10 @@ export type ManifestationsAccessFragment = {
           url: string;
           canAlwaysBeLoaned: boolean;
         }
-      | { __typename: "InfomediaService"; id: string }
+      | { __typename: "InfomediaService" }
       | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
       | { __typename: "Publizon" }
+      | { __typename: "RetrieverService"; id: string }
     >;
   }>;
 };
@@ -7266,9 +7383,10 @@ export type ManifestationsSimpleFieldsFragment = {
         url: string;
         canAlwaysBeLoaned: boolean;
       }
-    | { __typename: "InfomediaService"; id: string }
+    | { __typename: "InfomediaService" }
     | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
     | { __typename: "Publizon" }
+    | { __typename: "RetrieverService"; id: string }
   >;
   shelfmark?: {
     __typename?: "Shelfmark";
@@ -7295,9 +7413,10 @@ export type ManifestationReviewFieldsFragment = {
     | { __typename: "AccessUrl"; url: string; origin: string }
     | { __typename: "DigitalArticleService"; issn: string }
     | { __typename: "Ereol" }
-    | { __typename: "InfomediaService"; id: string }
+    | { __typename: "InfomediaService" }
     | { __typename: "InterLibraryLoan" }
     | { __typename: "Publizon" }
+    | { __typename: "RetrieverService"; id: string }
   >;
   edition?: {
     __typename?: "Edition";
@@ -7378,9 +7497,10 @@ export type WorkAccessFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
     }>;
   };
@@ -7582,9 +7702,10 @@ export type WorkSmallFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
       shelfmark?: {
         __typename?: "Shelfmark";
@@ -7764,9 +7885,10 @@ export type WorkSmallFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
       shelfmark?: {
         __typename?: "Shelfmark";
@@ -7946,9 +8068,10 @@ export type WorkSmallFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
       shelfmark?: {
         __typename?: "Shelfmark";
@@ -8226,9 +8349,10 @@ export type WorkMediumFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
       shelfmark?: {
         __typename?: "Shelfmark";
@@ -8408,9 +8532,10 @@ export type WorkMediumFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
       shelfmark?: {
         __typename?: "Shelfmark";
@@ -8590,9 +8715,10 @@ export type WorkMediumFragment = {
             url: string;
             canAlwaysBeLoaned: boolean;
           }
-        | { __typename: "InfomediaService"; id: string }
+        | { __typename: "InfomediaService" }
         | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
         | { __typename: "Publizon" }
+        | { __typename: "RetrieverService"; id: string }
       >;
       shelfmark?: {
         __typename?: "Shelfmark";
@@ -8678,7 +8804,7 @@ export const ManifestationReviewFieldsFragmentDoc = `
   }
   access {
     __typename
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on DigitalArticleService {
@@ -8741,7 +8867,7 @@ export const ManifestationsAccessFragmentDoc = `
         url
         loginRequired
       }
-      ... on InfomediaService {
+      ... on RetrieverService {
         id
       }
       ... on InterLibraryLoan {
@@ -8907,7 +9033,7 @@ export const ManifestationsSimpleFieldsFragmentDoc = `
       loginRequired
       status
     }
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on InterLibraryLoan {
@@ -9267,38 +9393,37 @@ export const useGetMaterialGloballyQuery = <
   });
 };
 
-export const GetInfomediaDocument = `
-    query getInfomedia($id: String!) {
-  infomedia(id: $id) {
+export const GetRetrieverDocument = `
+    query getRetriever($id: String!) {
+  retriever(id: $id) {
     error
     article {
-      byLine
-      dateLine
-      headLine
-      hedLine
-      paper
-      text
+      headline
+      subHeadline
+      publishingDate
+      sourceName
+      fullTextHtml
     }
   }
 }
     `;
 
-export const useGetInfomediaQuery = <
-  TData = GetInfomediaQuery,
+export const useGetRetrieverQuery = <
+  TData = GetRetrieverQuery,
   TError = unknown
 >(
-  variables: GetInfomediaQueryVariables,
+  variables: GetRetrieverQueryVariables,
   options?: Omit<
-    UseQueryOptions<GetInfomediaQuery, TError, TData>,
+    UseQueryOptions<GetRetrieverQuery, TError, TData>,
     "queryKey"
   > & {
-    queryKey?: UseQueryOptions<GetInfomediaQuery, TError, TData>["queryKey"];
+    queryKey?: UseQueryOptions<GetRetrieverQuery, TError, TData>["queryKey"];
   }
 ) => {
-  return useQuery<GetInfomediaQuery, TError, TData>({
-    queryKey: ["getInfomedia", variables],
-    queryFn: fetcher<GetInfomediaQuery, GetInfomediaQueryVariables>(
-      GetInfomediaDocument,
+  return useQuery<GetRetrieverQuery, TError, TData>({
+    queryKey: ["getRetriever", variables],
+    queryFn: fetcher<GetRetrieverQuery, GetRetrieverQueryVariables>(
+      GetRetrieverDocument,
       variables
     ),
     ...options
@@ -9838,7 +9963,7 @@ export const operationNames = {
       "getManifestationViaBestRepresentationByFaust" as const,
     getMaterial: "getMaterial" as const,
     getMaterialGlobally: "getMaterialGlobally" as const,
-    getInfomedia: "getInfomedia" as const,
+    getRetriever: "getRetriever" as const,
     getReviewManifestations: "getReviewManifestations" as const,
     recommendFromFaust: "recommendFromFaust" as const,
     searchFacet: "searchFacet" as const,

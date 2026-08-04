@@ -10,16 +10,15 @@ query getMaterialGlobally($wid: String!) {
   }
 }
 
-query getInfomedia($id: String!) {
-  infomedia(id: $id) {
+query getRetriever($id: String!) {
+  retriever(id: $id) {
     error
     article {
-      byLine
-      dateLine
-      headLine
-      hedLine
-      paper
-      text
+      headline
+      subHeadline
+      publishingDate
+      sourceName
+      fullTextHtml
     }
   }
 }

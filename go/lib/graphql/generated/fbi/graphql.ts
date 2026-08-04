@@ -35,7 +35,7 @@ export type AccessTypeCodeEnum =
   | 'PHYSICAL'
   | 'UNKNOWN';
 
-export type AccessUnion = AccessUrl | DigitalArticleService | Ereol | InfomediaService | InterLibraryLoan;
+export type AccessUnion = AccessUrl | DigitalArticleService | Ereol | InfomediaService | InterLibraryLoan | RetrieverService;
 
 export type AccessUrl = {
   __typename?: 'AccessUrl';
@@ -1440,6 +1440,16 @@ export type Query = {
   refWorks: Scalars['String']['output'];
   /** @deprecated Use 'Recommendations.subjects' instead expires: 01/03-2025 */
   relatedSubjects?: Maybe<Array<Scalars['String']['output']>>;
+  /**
+   * Fetch a single article from Retriever by its document id.
+   *
+   * Retriever is a media monitoring service that provides access to articles from newspapers
+   * and other news sources, including full text, publication metadata, and links to the original source.
+   *
+   * Requires an authenticated user with a valid subscription through their municipality of residence.
+   * Check `error` on the response for access or lookup failures.
+   */
+  retriever: RetrieverResponse;
   ris: Scalars['String']['output'];
   search: SearchResponse;
   series?: Maybe<Series>;
@@ -1505,6 +1515,11 @@ export type QueryRefWorksArgs = {
 export type QueryRelatedSubjectsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   q: Array<Scalars['String']['input']>;
+};
+
+
+export type QueryRetrieverArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -1671,6 +1686,84 @@ export type Relations = {
   isSoundtrackOfGame: Array<Manifestation>;
   /** This sound track for a movie is related to these movies */
   isSoundtrackOfMovie: Array<Manifestation>;
+};
+
+/** A newspaper or media article. */
+export type RetrieverArticle = {
+  __typename?: 'RetrieverArticle';
+  /** Author or byline credited with the article. */
+  byLine?: Maybe<Scalars['String']['output']>;
+  /** Full article text as plain text. */
+  fullText?: Maybe<Scalars['String']['output']>;
+  /** Full article text formatted with simple HTML tags. */
+  fullTextHtml?: Maybe<Scalars['String']['output']>;
+  /** Main headline of the article. */
+  headline?: Maybe<Scalars['String']['output']>;
+  /**
+   * Unique document identifier in Retriever (DOC_ID).
+   * Use this value for subsequent article lookups.
+   */
+  id: Scalars['String']['output'];
+  /** Type of media the article was published in, for example `print` or `web`. */
+  mediaType?: Maybe<Scalars['String']['output']>;
+  /** Page number or page range in the original publication. */
+  pages?: Maybe<Scalars['String']['output']>;
+  /** Date and time when the article was published, in ISO 8601 format. */
+  publishingDate?: Maybe<Scalars['String']['output']>;
+  /** Category of the source publication, for example national news media. */
+  sourceCategory?: Maybe<Scalars['String']['output']>;
+  /** Country of the source publication, for example `Denmark`. */
+  sourceCountry?: Maybe<Scalars['String']['output']>;
+  /** Numeric identifier of the source publication in Retriever. */
+  sourceId?: Maybe<Scalars['Int']['output']>;
+  /** Name of the source publication, for example a newspaper title. */
+  sourceName?: Maybe<Scalars['String']['output']>;
+  /** Geographic region or regions covered by the source publication. */
+  sourceRegion?: Maybe<Scalars['String']['output']>;
+  /** Secondary headline or deck, when provided by the source. */
+  subHeadline?: Maybe<Scalars['String']['output']>;
+  /** Theme or subject category assigned to the article by Retriever. */
+  themeCategory?: Maybe<Scalars['String']['output']>;
+  /** URL to a thumbnail preview image of the article. */
+  thumbnail?: Maybe<Scalars['String']['output']>;
+  /** URL to open the article in Retriever. */
+  url?: Maybe<Scalars['String']['output']>;
+  /** Approximate number of words in the article body. */
+  wordCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Error codes returned when an article cannot be fetched or the user is not allowed to access it. */
+export type RetrieverErrorEnum =
+  | 'ARTICLE_NOT_FOUND'
+  | 'BORROWERCHECK_NOT_ALLOWED'
+  | 'BORROWER_NOT_FOUND'
+  | 'BORROWER_NOT_IN_MUNICIPALITY'
+  | 'BORROWER_NOT_LOGGED_IN'
+  | 'INTERNAL_SERVER_ERROR'
+  | 'LIBRARY_NOT_FOUND'
+  | 'NO_AGENCYID'
+  | 'SERVICE_NOT_LICENSED'
+  | 'SERVICE_UNAVAILABLE';
+
+/** Response wrapper for a single article lookup. */
+export type RetrieverResponse = {
+  __typename?: 'RetrieverResponse';
+  /**
+   * The requested article, when available.
+   * Returns null if `error` is set or the article was not found.
+   */
+  article?: Maybe<RetrieverArticle>;
+  /**
+   * Present when the article could not be fetched or the user is not allowed to access it.
+   * When this field is set, `article` will be null.
+   */
+  error?: Maybe<RetrieverErrorEnum>;
+};
+
+export type RetrieverService = {
+  __typename?: 'RetrieverService';
+  /** Retriever document ID which can be used to fetch article through Retriever Service */
+  id: Scalars['String']['output'];
 };
 
 export type ReviewElement = {
@@ -2259,8 +2352,9 @@ export type ManifestationAccessFragment = { __typename?: 'Manifestation', access
     | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
     | { __typename: 'DigitalArticleService', issn: string }
     | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-    | { __typename: 'InfomediaService', id: string }
+    | { __typename: 'InfomediaService' }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+    | { __typename: 'RetrieverService', id: string }
   > };
 
 export type ManifestationTitlesFragment = { __typename?: 'Manifestation', titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> } };
@@ -2289,8 +2383,9 @@ export type ManifestationSearchPageTeaserFragment = { __typename?: 'Manifestatio
     | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
     | { __typename: 'DigitalArticleService', issn: string }
     | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-    | { __typename: 'InfomediaService', id: string }
+    | { __typename: 'InfomediaService' }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+    | { __typename: 'RetrieverService', id: string }
   >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
     | { __typename?: 'Corporation', display: string }
     | { __typename?: 'Person', display: string }
@@ -2300,8 +2395,9 @@ export type ManifestationWorkPageFragment = { __typename?: 'Manifestation', pid:
     | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
     | { __typename: 'DigitalArticleService', issn: string }
     | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-    | { __typename: 'InfomediaService', id: string }
+    | { __typename: 'InfomediaService' }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+    | { __typename: 'RetrieverService', id: string }
   >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
       | { __typename?: 'Corporation', display: string }
       | { __typename?: 'Mood', display: string }
@@ -2320,8 +2416,9 @@ export type WorkAccessFragment = { __typename?: 'Work', workId: string, manifest
         | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
         | { __typename: 'DigitalArticleService', issn: string }
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-        | { __typename: 'InfomediaService', id: string }
+        | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'RetrieverService', id: string }
       > }> } };
 
 export type WorkMaterialTypesFragment = { __typename?: 'Work', materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', display: string, code: string } }> };
@@ -2341,8 +2438,9 @@ export type WorkTeaserSearchPageFragment = { __typename?: 'Work', workId: string
         | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
         | { __typename: 'DigitalArticleService', issn: string }
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-        | { __typename: 'InfomediaService', id: string }
+        | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'RetrieverService', id: string }
       >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
         | { __typename?: 'Corporation', display: string }
         | { __typename?: 'Person', display: string }
@@ -2350,8 +2448,9 @@ export type WorkTeaserSearchPageFragment = { __typename?: 'Work', workId: string
         | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
         | { __typename: 'DigitalArticleService', issn: string }
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-        | { __typename: 'InfomediaService', id: string }
+        | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'RetrieverService', id: string }
       >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
         | { __typename?: 'Corporation', display: string }
         | { __typename?: 'Person', display: string }
@@ -2364,8 +2463,9 @@ export type WorkFullWorkPageFragment = { __typename?: 'Work', workId: string, ab
         | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
         | { __typename: 'DigitalArticleService', issn: string }
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-        | { __typename: 'InfomediaService', id: string }
+        | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'RetrieverService', id: string }
       >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
           | { __typename?: 'Corporation', display: string }
           | { __typename?: 'Mood', display: string }
@@ -2382,8 +2482,9 @@ export type WorkFullWorkPageFragment = { __typename?: 'Work', workId: string, ab
         | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
         | { __typename: 'DigitalArticleService', issn: string }
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-        | { __typename: 'InfomediaService', id: string }
+        | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'RetrieverService', id: string }
       >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
           | { __typename?: 'Corporation', display: string }
           | { __typename?: 'Mood', display: string }
@@ -2413,8 +2514,9 @@ export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __type
             | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
             | { __typename: 'DigitalArticleService', issn: string }
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-            | { __typename: 'InfomediaService', id: string }
+            | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Person', display: string }
@@ -2422,8 +2524,9 @@ export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __type
             | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
             | { __typename: 'DigitalArticleService', issn: string }
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-            | { __typename: 'InfomediaService', id: string }
+            | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Person', display: string }
@@ -2454,8 +2557,9 @@ export type ComplexSearchForWorkTeaserQuery = { __typename?: 'Query', complexSea
             | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
             | { __typename: 'DigitalArticleService', issn: string }
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-            | { __typename: 'InfomediaService', id: string }
+            | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Person', display: string }
@@ -2463,8 +2567,9 @@ export type ComplexSearchForWorkTeaserQuery = { __typename?: 'Query', complexSea
             | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
             | { __typename: 'DigitalArticleService', issn: string }
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-            | { __typename: 'InfomediaService', id: string }
+            | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Person', display: string }
@@ -2482,8 +2587,9 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
           | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
           | { __typename: 'DigitalArticleService', issn: string }
           | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-          | { __typename: 'InfomediaService', id: string }
+          | { __typename: 'InfomediaService' }
           | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+          | { __typename: 'RetrieverService', id: string }
         >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Mood', display: string }
@@ -2500,8 +2606,9 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
           | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
           | { __typename: 'DigitalArticleService', issn: string }
           | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
-          | { __typename: 'InfomediaService', id: string }
+          | { __typename: 'InfomediaService' }
           | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+          | { __typename: 'RetrieverService', id: string }
         >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
             | { __typename?: 'Corporation', display: string }
             | { __typename?: 'Mood', display: string }
@@ -2543,7 +2650,7 @@ export const ManifestationAccessFragmentDoc = `
       url
       loginRequired
     }
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on InterLibraryLoan {

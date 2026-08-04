@@ -284,10 +284,10 @@ describe("Material", () => {
       });
   });
 
-  it("Renders the correct details for infomedia", () => {
+  it("Renders the correct details for Retriever", () => {
     cy.interceptGraphql({
       operationName: "getMaterial",
-      fixtureFilePath: "material/infomedia-fbi-api.json"
+      fixtureFilePath: "material/retriever-fbi-api.json"
     });
 
     cy.interceptRest({
@@ -299,7 +299,7 @@ describe("Material", () => {
     cy.createFakeAuthenticatedSession();
 
     cy.visit(
-      "/iframe.html?args=&id=apps-material--infomedia&viewMode=story&type=artikel"
+      "/iframe.html?args=&id=apps-material--retriever&viewMode=story&type=artikel"
     );
     cy.wait("@getMaterial GraphQL operation");
 

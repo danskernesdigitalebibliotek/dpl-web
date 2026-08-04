@@ -1,8 +1,8 @@
 import React from "react";
 import {
   AccessUrl,
-  InfomediaService,
-  useGetInfomediaQuery
+  RetrieverService,
+  useGetRetrieverQuery
 } from "../../core/dbc-gateway/generated/graphql";
 import {
   getAuthorNames,
@@ -24,12 +24,12 @@ import { Button } from "../Buttons/Button";
 import ReviewHearts from "./ReviewHearts";
 import ReviewMetadata from "./ReviewMetadata";
 
-export interface ReviewInfomediaProps {
+export interface ReviewRetrieverProps {
   review: ReviewManifestation;
   dataCy?: string;
 }
 
-const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
+const ReviewRetriever: React.FC<ReviewRetrieverProps> = ({
   review: {
     recordCreationDate,
     workYear,
@@ -40,7 +40,7 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
     edition,
     hostPublication
   },
-  dataCy = "review-infomedia"
+  dataCy = "review-retriever"
 }) => {
   const t = useText();
   const u = useUrls();
@@ -54,12 +54,12 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
   );
   const authors = getAuthorNames(creators);
   const publication = getPublicationName(hostPublication);
-  const infomediaAccess = access.filter(
-    (accessItem) => accessItem.__typename === "InfomediaService"
-  ) as Pick<InfomediaService, "id">[];
-  const infomediaId = infomediaAccess[0].id;
-  const { data, error, isLoading } = useGetInfomediaQuery({
-    id: infomediaId
+  const retrieverAccess = access.filter(
+    (accessItem) => accessItem.__typename === "RetrieverService"
+  ) as Pick<RetrieverService, "id">[];
+  const retrieverId = retrieverAccess[0].id;
+  const { data, error, isLoading } = useGetRetrieverQuery({
+    id: retrieverId
   });
 
   const onClick = (reviewId: string) => {
@@ -76,11 +76,11 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
   if (!data) {
     return null;
   }
-  const { infomedia } = data;
+  const { retriever } = data;
 
-  const id = createUrlHash(HashPrefix.REVIEW, infomediaId);
+  const id = createUrlHash(HashPrefix.REVIEW, retrieverId);
 
-  if (infomedia.error) {
+  if (retriever.error) {
     return (
       <li
         className="review text-small-caption"
@@ -97,7 +97,7 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
         )}
         {review?.rating && <ReviewHearts amountOfHearts={review.rating} />}
         <div className="review__headline mb-8">
-          {infomedia.error === "BORROWER_NOT_LOGGED_IN" ? (
+          {retriever.error === "BORROWER_NOT_LOGGED_IN" ? (
             <Button
               label={t("loginToSeeReviewText")}
               buttonType="none"
@@ -106,7 +106,7 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
               size="xsmall"
               variant="outline"
               onClick={() => {
-                onClick(infomediaId);
+                onClick(retrieverId);
               }}
             />
           ) : (
@@ -131,16 +131,16 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
         />
       )}
       {review?.rating && <ReviewHearts amountOfHearts={review.rating} />}
-      {infomedia.article?.headLine && (
-        <h3 className="review__headline mb-8">{infomedia.article.headLine}</h3>
+      {retriever.article?.headline && (
+        <h3 className="review__headline mb-8">{retriever.article.headline}</h3>
       )}
-      {/* We consider infomedia to be a trustworthy source & decided not to
+      {/* We consider Retriever to be a trustworthy source & decided not to
       sanitize the text data that we render as HTML. */}
-      {infomedia.article?.text && (
+      {retriever.article?.fullTextHtml && (
         <p
           className="review__body mb-8"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: infomedia.article?.text }}
+          dangerouslySetInnerHTML={{ __html: retriever.article?.fullTextHtml }}
         />
       )}
       {access.some((a) => a.__typename === "AccessUrl") &&
@@ -155,4 +155,4 @@ const ReviewInfomedia: React.FC<ReviewInfomediaProps> = ({
   );
 };
 
-export default ReviewInfomedia;
+export default ReviewRetriever;
