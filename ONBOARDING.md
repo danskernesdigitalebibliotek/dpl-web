@@ -15,7 +15,7 @@ Storybooks (react, design-system) run on their own; go needs a CMS to talk to.
 - [go-task](https://taskfile.dev) (`task`), [pnpm](https://pnpm.io/) (`corepack enable`), Node 24.15 (via [nvm](https://github.com/nvm-sh/nvm) — pinned in `.nvmrc`)
 - [Docker](https://www.docker.com/) — [OrbStack](https://orbstack.dev/) recommended (auto-resolves the `*.local` dev domains)
 - `mkcert` for local HTTPS (cms + go): `brew install mkcert && mkcert -install`
-- 1Password CLI (`op`) — only for the `:1pass` env flow below
+- 1Password CLI (`op`) — only for the `.env` generation flow below
 
 ## 1. Environment + dependencies
 
@@ -28,11 +28,16 @@ the contents as relevant.
 When the `.env` file is in place, run (from the repo root):
 
 ```bash
-task init   # generate.env symlink cms/.env, go/.env, react/.env + install deps
+task init   # symlink cms/.env, go/.env, react/.env + install deps
 ```
 
 `cms/.env`, `go/.env` and `react/.env` are symlinks to the root `.env`. If one
-goes missing, recreate them all with `task dev:envfiles`.
+goes missing, recreate them all with `task dev:dotenv:link`.
+
+If you never create a `.env` yourself, the `dev:reset` tasks in `cms/`, `go/`
+and `react/` bootstrap one from `.env.1pass`. That is enough to boot the
+containers, but the third-party credentials stay unresolved until you run
+`task dev:dotenv:generate`.
 
 **Library token** (needed for React backend data): `task token:generate` mints a
 token and writes it to `STORYBOOK_LIBRARY_TOKEN` in `.env`. It needs
@@ -85,4 +90,4 @@ Step 1, so Go just needs its dev server.)
 - Env is read when a dev server starts — **restart** after changing `.env`.
 - After changing react/design-system, rebuild the assets into the CMS with
   `task dev:cms:link`.
-- `task dev:envfiles:1pass` / `task init:1pass` need the `op` CLI + DDF vault access.
+- `task dev:dotenv:generate` needs the `op` CLI + DDF vault access.

@@ -119,7 +119,7 @@ In the project, you'll see the following folders and files:
 | public/\*                | Non-code, unprocessed assets (fonts, icons, etc.)                                                                                                         |
 | styles/\*                | Global [Tailwind] CSS files                                                                                                                               |
 | .editorconfig/           | Configuration file for maintaining consistent coding styles between different editors and IDEs                                                            |
-| .env.example             | Example environment variables file                                                                                                                        |
+| .env                     | Symlink to the root `.env` (git ignored), created by `task init`                                                                                          |
 | .env.local               | Local environment variables file, specific to your development environment (git ignored)                                                                  |
 | .env.test                | Environment variables file for testing                                                                                                                    |
 | .eslintignore            | File specifying which files and directories to ignore by ESLint                                                                                           |
