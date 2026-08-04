@@ -160,6 +160,50 @@ final class EventsResource extends EventResourceBase {
                       'description' => 'The name of a branch.',
                     ],
                   ],
+                  'organizer' => [
+                    'type' => 'object',
+                    'description' => 'The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.',
+                    'properties' => [
+                      'name' => [
+                        'type' => 'string',
+                        'description' => 'The name of the branch arranging the event.',
+                      ],
+                      'isil_id' => [
+                        'type' => 'string',
+                        'description' => 'The ISIL code identifying the branch. E.g. DK-710100. This is the stable identifier for the organizer.',
+                      ],
+                      'url' => [
+                        'type' => 'string',
+                        'format' => 'uri',
+                        'description' => 'An absolute URL for the page describing the branch.',
+                      ],
+                      'street' => [
+                        'type' => 'string',
+                        'description' => 'Street name and number of the branch.',
+                      ],
+                      'zip_code' => [
+                        'type' => 'integer',
+                        'description' => 'Zip code of the branch.',
+                      ],
+                      'city' => [
+                        'type' => 'string',
+                        'description' => 'City of the branch.',
+                      ],
+                      'country' => [
+                        'type' => 'string',
+                        'description' => 'Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark.',
+                      ],
+                      'phone' => [
+                        'type' => 'string',
+                        'description' => 'Phone number of the branch.',
+                      ],
+                      'email' => [
+                        'type' => 'string',
+                        'description' => 'Email address of the branch.',
+                      ],
+                    ],
+                    'required' => ['name'],
+                  ],
                   'address' => [
                     'type' => 'object',
                     'description' => 'Where the event occurs.',
@@ -351,6 +395,11 @@ final class EventsResource extends EventResourceBase {
 
     $ids = $query->execute();
 
+    // Create cache metadata.
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->setCacheContexts(['url.query_args:from_date']);
+    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
+
     $event_responses = [];
 
     foreach ($ids as $id) {
@@ -358,16 +407,17 @@ final class EventsResource extends EventResourceBase {
 
       if ($event_instance instanceof EventInstance) {
         $event_responses[] = $this->mapper->getResponse($event_instance);
+
+        // The response describes the branches of the event, so it has to be
+        // invalidated when one of them changes.
+        foreach ($event_instance->getBranches() ?? [] as $branch) {
+          $cache_metadata->addCacheableDependency($branch);
+        }
       }
     }
 
     $event_responses = $this->serializer->serialize($event_responses, $this->serializerFormat($request));
     $response = new CacheableResponse($event_responses);
-
-    // Create cache metadata.
-    $cache_metadata = new CacheableMetadata();
-    $cache_metadata->setCacheContexts(['url.query_args:from_date']);
-    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
 
     // Add cache metadata to the response.
     $response->addCacheableDependency($cache_metadata);
