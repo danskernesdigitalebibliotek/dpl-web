@@ -12,18 +12,19 @@ tasks:
   scan:
     desc: Scan and generate translations
     cmds:
-      # Make sure that the potion module is active
-      - task dev:cli -- drush en -y potion
-      # Generate translations for modules and themes
+      # Make sure that the potx module is active
+      - task dev:cli -- drush en -y potx
+      # Generate translations for modules and themes. The script also fills in
+      # existing translations from the database, so no separate step is needed.
       - task dev:cli -- ./dev-scripts/translate-source/scan-translations.sh {{ .LANGUAGE }} {{ .PO_DIR }}
-      # Fill translations from db
-      - task dev:cli -- drush potion:fill {{ .LANGUAGE }} $PATH_TO_FILE
       - task: chown
         vars:
           PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, PO_DIR]
-    env:
+    # A var rather than an env entry, so that it can be passed on to chown. No
+    # command in this task needs it in the shell environment.
+    vars:
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
 
   conf:export:
@@ -33,7 +34,7 @@ tasks:
       - task dev:cli -- drush dpl_po:export-config-po {{ .LANGUAGE }} $PATH_TO_FILE
       - task: chown
         vars:
-          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
     requires:
       vars: [LANGUAGE, PO_DIR]
     env:
