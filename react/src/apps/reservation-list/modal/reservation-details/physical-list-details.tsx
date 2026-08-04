@@ -30,7 +30,7 @@ import {
   formatDate,
   getFutureDateString
 } from "../../../../core/utils/helpers/date";
-import { getReadyForPickup } from "../../utils/helpers";
+import { getReadyForPickup } from "../../../../core/utils/helpers/reservation-sort";
 import { Periods } from "../../../../components/reservation/types";
 import { FormSelectValue } from "../../../../components/reservation/forms/types";
 import { getReservationsForSaving } from "./helper";

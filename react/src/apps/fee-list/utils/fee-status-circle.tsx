@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { getColors } from "../../../core/utils/helpers/general";
 import { useText } from "../../../core/utils/text";
-import StatusCircleIcon from "../../loan-list/materials/utils/status-circle-icon";
+import StatusCircleIcon from "../../../components/status-circle/status-circle-icon";
 import { calculateDateDayDifference } from "../../../core/utils/helpers/date";
 
 interface FeeStatusCircleProps {
