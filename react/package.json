@@ -34,6 +34,8 @@
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest",
     "test:integration": "cypress run",
+    "smoke:serve": "node cypress/smoke/server.mjs",
+    "test:smoke": "cypress run --config-file cypress.smoke.config.js",
     "cypress:open": "cypress open",
     "codegen:dbc:gateway": "graphql-codegen --config dbc-gateway.codegen.yml",
     "codegen:rest-services": "orval",
