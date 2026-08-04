@@ -1,0 +1,45 @@
+Extract @Translation annotations that carry an arguments parameter.
+
+The annotation pattern only allowed an optional "context" parameter after the
+string, then required the closing parenthesis. Any other parameter made the
+match fail, so the string was not extracted at all - and potx then reported it
+as "In @Translation, only one, non-empty static string is allowed in double
+quotes", which is misleading since the syntax is valid.
+
+The common case is "arguments", used for placeholders:
+
+  description = @Translation("A string provided by <a href=':google'>Google</a>.",
+    arguments = { ":google" = "https://www.google.com/" }),
+
+Both "arguments" and "context" are documented parameters of the Translation
+annotation, so this is a genuine upstream bug rather than a local need. In our
+codebase it cost the Danish translations of roughly a dozen metatag field
+descriptions.
+
+The replacement allows any number of "key = value" parameters on either side of
+an optional context, and keeps the capture group numbering the code below
+depends on: 1 is the message, 3 is the quoted context.
+
+diff --git a/potx.inc b/potx.inc
+--- a/potx.inc
++++ b/potx.inc
+@@ -2307,7 +2307,18 @@
+       // Match for a possible empty string too, so we can signal that kind of
+       // error in our standard way (from the save callback), instead of
+       // signaling a generic error from here around syntax.
+-      preg_match_all('!\s*@Translation\(\s*"([^"]*)"(\s*,\s*context\s*=\s*("[^"]+"))?\s*\)!', $string, $found);
++      // Annotations may carry parameters besides context - most commonly
++      // arguments, used for placeholders in for example metatag descriptions.
++      // Allow any number of those on either side of an optional context, so
++      // that the string is still extracted. The delimiter is "~" rather than
++      // "!" because the negative lookahead below contains "!".
++      $other_parameter = '(?:\s*,\s*(?!context\s*=)[a-zA-Z_]+\s*=\s*(?:\{[^{}]*\}|"[^"]*"))';
++      $pattern = '~\s*@Translation\(\s*"([^"]*)"'
++        . $other_parameter . '*'
++        . '(\s*,\s*context\s*=\s*("[^"]+"))?'
++        . $other_parameter . '*'
++        . '\s*\)~';
++      preg_match_all($pattern, $string, $found);
+       if (isset($found) && is_array($found) && count($found[1])) {
+
+         foreach ($found[1] as $index => $match) {
