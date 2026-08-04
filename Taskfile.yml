@@ -24,15 +24,27 @@ tasks:
 
   dev:dotenv:generate:
     desc: "Generate/replace the central .env from 1Password (.env.1pass) and symlink it."
-    sources:
-      - '.env.1pass'
-    generates:
-      - '.env'
+    # Deliberately no sources/generates: a .env created by dev:dotenv:bootstrap
+    # is newer than .env.1pass, so an up-to-date check would skip this task and
+    # silently leave the unresolved "op:" references in place.
     cmds:
       - op inject --account reloadas.1password.com --force --in-file .env.1pass --out-file .env
     preconditions:
       - sh: which op
         msg: '1Password CLI command required'
+
+  dev:dotenv:bootstrap:
+    desc: "Create the central .env from the .env.1pass template if it does not exist."
+    # The reset tasks in cms/, go/ and react/ depend on a .env being present:
+    # the Lagoon containers source cms/.env (a symlink to this file) on startup,
+    # and dpl_consumers refuses to deploy without BNF_GRAPHQL_CONSUMER_SECRET.
+    # CI has no 1Password access, so it gets the template as-is — every value it
+    # needs is a plain local-development one. The 1Password references are left
+    # unresolved until someone runs dev:dotenv:generate.
+    status:
+      - test -f .env
+    cmds:
+      - cp .env.1pass .env
 
   dev:dotenv:link:
     desc: "Create symlinks in each project to the main .env file."

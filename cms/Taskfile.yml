@@ -194,7 +194,9 @@ tasks:
       # Stop potential running environment.
       - dev:down
     cmds:
-      # cms/.env is a symlink to the central root .env., then ensure the symlink.
+      # cms/.env is a symlink to the central root .env. Make sure the root file
+      # exists before linking to it, then ensure the symlink.
+      - task -d {{.TASKFILE_DIR}}/.. dev:dotenv:bootstrap
       - '[ -e .env ] || ln -s ../.env .env'
       # Pull the images (necessary for the first reset)
       - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:pull'

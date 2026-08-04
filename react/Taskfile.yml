@@ -77,7 +77,7 @@ tasks:
     summary: Install development environment and clean up.
     cmds:
       # react/.env is a symlink to the central root .env. Bootstrap + ensure it.
-      - '[ -f ../.env ] || cp ../.env.example ../.env'
+      - 'task -d {{.TASKFILE_DIR}}/.. dev:dotenv:bootstrap'
       - '[ -e .env ] || ln -s ../.env .env'
       - task dev:down
       - task dev:nvm:use
