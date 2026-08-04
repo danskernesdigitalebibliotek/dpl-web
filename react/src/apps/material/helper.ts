@@ -417,17 +417,17 @@ export const totalBranchesHaveMaterial = (
   }).length;
 };
 
-export const getInfomediaIds = (manifestations: Manifestation[]) => {
-  const infomediaIds = manifestations
+export const getRetrieverIds = (manifestations: Manifestation[]) => {
+  const retrieverIds = manifestations
     .map((manifestation) =>
       manifestation.access.map((currentAccess) => {
-        return currentAccess.__typename === "InfomediaService"
+        return currentAccess.__typename === "RetrieverService"
           ? currentAccess.id
           : null;
       })
     )
     .flat();
-  return compact(infomediaIds);
+  return compact(retrieverIds);
 };
 
 export const divideManifestationsByMaterialType = (

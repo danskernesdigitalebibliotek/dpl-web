@@ -4,7 +4,7 @@ import VariousIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/ic
 import React, { useEffect, useState } from "react";
 import { useDeepCompareEffect, useUpdateEffect } from "react-use";
 import DigitalModal from "../../components/material/digital-modal/DigitalModal";
-import InfomediaModal from "../../components/material/infomedia/InfomediaModal";
+import RetrieverModal from "../../components/material/retriever/RetrieverModal";
 import {
   hasCorrectAccess,
   hasCorrectAccessType
@@ -37,7 +37,7 @@ import {
   divideManifestationsByMaterialType,
   getBestMaterialTypeForWork,
   getDetailsListData,
-  getInfomediaIds,
+  getRetrieverIds,
   getManifestationChildrenOrAdults,
   getManifestationsOrderByTypeAndYear,
   isParallelReservation,
@@ -179,7 +179,7 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
     work,
     t
   });
-  const infomediaIds = getInfomediaIds(selectedManifestations);
+  const retrieverIds = getRetrieverIds(selectedManifestations);
 
   return (
     <>
@@ -212,10 +212,10 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
               />
             )
           )}
-          {infomediaIds.length > 0 && !isAnonymous() && !isUserBlocked && (
-            <InfomediaModal
+          {retrieverIds.length > 0 && !isAnonymous() && !isUserBlocked && (
+            <RetrieverModal
               selectedManifestations={selectedManifestations}
-              infoMediaId={infomediaIds[0]}
+              retrieverId={retrieverIds[0]}
             />
           )}
           {hasCorrectAccess("DigitalArticleService", selectedManifestations) &&
