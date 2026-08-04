@@ -126,3 +126,25 @@ export const Default: Story = {
     searchDialogFilterMaterialsText: "Filter materials (97)"
   }
 };
+
+// The teaser links a material search over to the editorial content search
+// (the /search/web View) for the same phrase. The CMS builds this config
+// from the phrase and the number of matching editorial results, and only
+// ships hasWebSearchResults when there are any. The default story mirrors a
+// config without it.
+export const WithWebSearchTeaser: Story = {
+  args: {
+    ...Default.args,
+    webSearchConfig:
+      '{\n  "webSearchUrl": "/search/web?search=skovbadning",\n  "webSearchText": "skovbadning",\n  "webSearchTotal": "12",\n  "hasWebSearchResults": true\n}'
+  }
+};
+
+// A zero hits URL pointing at the page hosting the app itself, to exercise
+// the guard against redirecting in a loop.
+export const OnZeroHitsPage: Story = {
+  args: {
+    ...Default.args,
+    zeroHitsSearchUrl: "/iframe.html"
+  }
+};
