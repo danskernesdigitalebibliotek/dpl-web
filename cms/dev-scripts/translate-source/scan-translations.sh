@@ -23,6 +23,11 @@ fi
 THIS_DIR=$(dirname "$0")
 
 
+# The generated file is not committed, so it is absent on a fresh checkout.
+# Potion only honours --default-write-mode when the destination already exists,
+# so create it up front to keep the write mode below explicit.
+touch "web/${PO_DIR}/${LANGUAGE}.po"
+
 # First import translations from custom modules.
 drush potion:generate "$LANGUAGE" modules/custom/ "$PO_DIR" --recursive --default-write-mode=override
 
