@@ -2,14 +2,13 @@
 
 namespace Drupal\dpl_event\Plugin\EventInstanceCreator;
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
-use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
-use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_event\EventPeriod;
+use Drupal\recurring_events\Entity\EventInstance as RecurringEventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 use Drupal\recurring_events\EventCreationService;
 use Drupal\recurring_events\EventInstanceCreatorBase;
@@ -30,6 +29,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * occurrence its own title, image or ticket categories. So we only delete the
  * occurrences that the new recurrence no longer contains, and only create the
  * ones that are not there yet.
+ *
+ * @todo Nothing about that problem is specific to these sites, so the
+ *   reconciliation belongs upstream, as a creator plugin recurring_events
+ *   ships itself. Reading and writing the dates through our own bundle class
+ *   is what keeps this plugin from being contributed as it stands.
  *
  * @EventInstanceCreator(
  *   id = "dpl_event_eventinstance_creator",
@@ -92,83 +96,110 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
    * {@inheritDoc}
    */
   public function processInstances(EventSeries $series): void {
-    // The calculated dates already have excluded and included dates applied to
-    // them, so they are the full picture of what the series should look like.
-    $new_dates = $this->indexDatesByRange(
-      $this->creationService->calculateEventSeriesDates($series)
-    );
+    $wanted_periods = $this->calculatePeriods($series);
+    $single_instance = $this->singleOccurrenceToMove($series, $wanted_periods);
 
-    if ($this->moveSingleInstance($series, $new_dates)) {
+    // There is exactly one wanted period whenever there is an instance to move,
+    // so this only comes up empty in the cases we reconcile instead.
+    $single_period = reset($wanted_periods);
+
+    if ($single_instance instanceof EventInstance && $single_period instanceof EventPeriod) {
+      $this->moveOccurrence($single_instance, $single_period);
+
       return;
     }
 
-    $this->reconcileInstances($series, $new_dates);
+    $this->reconcileInstances($series, $wanted_periods);
   }
 
   /**
-   * Moves the only instance of a series to the only date of the series.
+   * The periods a series should consist of after the change.
    *
-   * If there is a single occurrence both before and after the change, then that
-   * occurrence is unambiguously still the same occurrence, no matter how far
-   * the date moved. Updating the date of the existing instance keeps it, where
-   * reconciling by date range would delete it and create a new one.
+   * The calculated dates already have excluded and included dates applied to
+   * them, so they are the full picture of what the series should look like. The
+   * keys the calculation itself uses are not something we can rely on, so the
+   * periods are keyed by their own identity instead.
    *
    * @param \Drupal\recurring_events\Entity\EventSeries $series
    *   The series being saved.
-   * @param array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}> $new_dates
-   *   The dates the series should have after the change.
    *
-   * @return bool
-   *   TRUE if the instance was moved, and nothing else needs to happen.
+   * @return array<string, \Drupal\dpl_event\EventPeriod>
+   *   The periods, keyed by their identity.
    */
-  private function moveSingleInstance(EventSeries $series, array $new_dates): bool {
-    if (count($new_dates) !== 1 || $series->getInstanceCount() !== 1) {
-      return FALSE;
+  private function calculatePeriods(EventSeries $series): array {
+    $periods = [];
+
+    foreach ($this->creationService->calculateEventSeriesDates($series) as $date) {
+      $period = EventPeriod::fromDrupalDateTimes($date['start_date'], $date['end_date']);
+
+      $periods[(string) $period] = $period;
+    }
+
+    return $periods;
+  }
+
+  /**
+   * The instance to move, when the change only moves a single occurrence.
+   *
+   * If there is a single occurrence both before and after the change, then that
+   * occurrence is unambiguously still the same occurrence, no matter how far
+   * the date moved. Moving the existing instance keeps it, where reconciling by
+   * period would delete it and create a new one.
+   *
+   * @param \Drupal\recurring_events\Entity\EventSeries $series
+   *   The series being saved.
+   * @param array<string, \Drupal\dpl_event\EventPeriod> $wanted_periods
+   *   The periods the series should have after the change.
+   *
+   * @return \Drupal\dpl_event\Entity\EventInstance|null
+   *   The only instance of the series, or NULL if this is not a move of a
+   *   single occurrence and the instances have to be reconciled instead.
+   */
+  private function singleOccurrenceToMove(EventSeries $series, array $wanted_periods): ?EventInstance {
+    if (count($wanted_periods) !== 1 || $series->getInstanceCount() !== 1) {
+      return NULL;
     }
 
     $instances = $series->getInstances();
     $instance = reset($instances);
 
-    if (!$instance instanceof EventInstance) {
-      return FALSE;
-    }
-
-    $date = reset($new_dates);
-    $instance->set('date', [
-      'value' => $date['start_date']->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-      'end_value' => $date['end_date']->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-    ]);
-    $instance->save();
-
-    return TRUE;
+    return ($instance instanceof EventInstance) ? $instance : NULL;
   }
 
   /**
-   * Brings the instances of a series in line with the dates it should have.
+   * Moves an occurrence to another period.
+   */
+  private function moveOccurrence(EventInstance $instance, EventPeriod $period): void {
+    $instance->setDate($period);
+    $instance->save();
+  }
+
+  /**
+   * Brings the instances of a series in line with the periods it should have.
    *
    * @param \Drupal\recurring_events\Entity\EventSeries $series
    *   The series being saved.
-   * @param array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}> $wanted_dates
-   *   The dates the series should have after the change, keyed by date range.
+   * @param array<string, \Drupal\dpl_event\EventPeriod> $wanted_periods
+   *   The periods the series should have after the change, keyed by identity.
    */
-  private function reconcileInstances(EventSeries $series, array $wanted_dates): void {
-    // Keep the first instance we find for each wanted date range. Any further
-    // instance of that same range is a duplicate, and is removed along with the
-    // instances of the date ranges that are gone. Recreating everything used to
+  private function reconcileInstances(EventSeries $series, array $wanted_periods): void {
+    // Keep the first instance we find for each wanted period. Any further
+    // instance of that same period is a duplicate, and is removed along with
+    // the instances of the periods that are gone. Recreating everything used to
     // clean duplicates up as a side effect - preserving instances does not, so
     // we have to be explicit about it.
-    $preserved_ranges = [];
+    $preserved_identities = [];
     $preserved_count = 0;
     $obsolete_instances = [];
 
     foreach ($series->getInstances() as $instance) {
-      $range = $this->instanceDateRange($instance);
+      $period = $this->instancePeriod($instance);
 
       // An occurrence we cannot read the date of is left alone. It matches no
-      // wanted date, so reconciling it would mean deleting it, and that would
+      // wanted period, so reconciling it would mean deleting it, and that would
       // throw away whatever an editor put on it over a date that we are the
       // ones failing to understand.
-      if ($range === NULL) {
+      if ($period === NULL) {
         $this->logger->error('Left event instance @instance of event series @series untouched: it has no date range that could be read.', [
           '@instance' => $instance->id(),
           '@series' => $series->id(),
@@ -177,8 +208,10 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
         continue;
       }
 
-      if (isset($wanted_dates[$range]) && !isset($preserved_ranges[$range])) {
-        $preserved_ranges[$range] = TRUE;
+      $identity = (string) $period;
+
+      if (isset($wanted_periods[$identity]) && !isset($preserved_identities[$identity])) {
+        $preserved_identities[$identity] = TRUE;
         $preserved_count++;
       }
       else {
@@ -187,7 +220,7 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
     }
 
     $deleted_count = $this->deleteInstances($series, $obsolete_instances);
-    $created_count = $this->createInstances($series, array_diff_key($wanted_dates, $preserved_ranges));
+    $created_count = $this->createInstances($series, array_diff_key($wanted_periods, $preserved_identities));
 
     $this->messenger->addStatus($this->t('Updated the occurrences of this event series: @created created, @deleted removed and @preserved left untouched.', [
       '@created' => $created_count,
@@ -197,77 +230,31 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
   }
 
   /**
-   * Indexes calculated dates by their date range.
-   *
-   * The keys the date calculation itself uses are not something we can rely on,
-   * so we build an index of our own. An occurrence is identified by its whole
-   * date range here.
-   *
-   * @param array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}> $dates
-   *   The calculated dates.
-   *
-   * @return array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}>
-   *   The same dates, keyed by date range.
-   */
-  private function indexDatesByRange(array $dates): array {
-    $indexed_dates = [];
-
-    foreach ($dates as $date) {
-      $range = $this->dateRange(
-        $date['start_date']->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-        $date['end_date']->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-      );
-
-      $indexed_dates[$range] = $date;
-    }
-
-    return $indexed_dates;
-  }
-
-  /**
-   * Reads the date range of an existing event instance.
+   * Reads the period of an existing event instance.
    *
    * @param \Drupal\recurring_events\Entity\EventInstance $instance
-   *   The instance to read the date range of.
+   *   The instance to read the period of.
    *
-   * @return string|null
-   *   The date range, in the same shape as the calculated dates are indexed by,
-   *   or NULL if the instance has no date we can read. An instance is supposed
-   *   to always have one, but these sites have seen instances end up in states
-   *   the module does not allow, and this runs after the series has been saved,
-   *   so a fatal here would leave the editor with a white screen and a series
-   *   whose occurrences were never reconciled.
+   * @return \Drupal\dpl_event\EventPeriod|null
+   *   The period, or NULL if the instance has no date we can read. An instance
+   *   is supposed to always have one, but these sites have seen instances end
+   *   up in states the module does not allow, and this runs after the series
+   *   has been saved, so a fatal here would leave the editor with a white
+   *   screen and a series whose occurrences were never reconciled.
    */
-  private function instanceDateRange(EventInstance $instance): ?string {
-    $date = $instance->get('date')->first();
-
-    if (!$date instanceof DateRangeItem) {
+  private function instancePeriod(RecurringEventInstance $instance): ?EventPeriod {
+    if (!$instance instanceof EventInstance) {
       return NULL;
     }
 
-    $start_date = $date->get('start_date')->getValue();
-    $end_date = $date->get('end_date')->getValue();
-
-    if (!$start_date instanceof DrupalDateTime || !$end_date instanceof DrupalDateTime) {
+    // Every way of failing to read the date is the same answer here: we do not
+    // know when this occurrence is, so it is not ours to reconcile.
+    try {
+      return $instance->getDate();
+    }
+    catch (\Exception $exception) {
       return NULL;
     }
-
-    return $this->dateRange(
-      $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-      $end_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-    );
-  }
-
-  /**
-   * Builds the identity of an occurrence from its start and end date.
-   *
-   * Two occurrences are the same occurrence when they cover the same range.
-   * Both dates are given in the storage format and timezone, which is what the
-   * date calculation produces and what an instance has stored, so the two can
-   * be compared without any conversion in between.
-   */
-  private function dateRange(string $start_date, string $end_date): string {
-    return $start_date . '/' . $end_date;
   }
 
   /**
@@ -312,7 +299,7 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
   }
 
   /**
-   * Creates the instances for the date ranges that do not have one yet.
+   * Creates the instances for the periods that do not have one yet.
    *
    * EventCreationService::createInstances() cannot be used for this, as it
    * creates an instance for every date of the series, which would duplicate the
@@ -320,21 +307,25 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
    *
    * @param \Drupal\recurring_events\Entity\EventSeries $series
    *   The series being saved.
-   * @param array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}> $dates
-   *   The dates to create instances for.
+   * @param array<string, \Drupal\dpl_event\EventPeriod> $periods
+   *   The periods to create instances for.
    *
    * @return int
    *   The number of instances that were created.
    */
-  private function createInstances(EventSeries $series, array $dates): int {
+  private function createInstances(EventSeries $series, array $periods): int {
     $created_count = 0;
 
-    foreach ($dates as $date) {
-      $instance = $this->creationService->createEventInstance($series, $date['start_date'], $date['end_date']);
+    foreach ($periods as $period) {
+      $instance = $this->creationService->createEventInstance(
+        $series,
+        $period->getStartDrupalDateTime(),
+        $period->getEndDrupalDateTime(),
+      );
 
       // A missing instance means the series is a translation without a matching
       // instance in the default language, which createEventInstance() logs.
-      if (!$instance instanceof EventInstance) {
+      if (!$instance instanceof RecurringEventInstance) {
         continue;
       }
 
