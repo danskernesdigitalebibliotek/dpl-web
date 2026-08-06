@@ -12,9 +12,6 @@ export default defineConfig({
           path: "src/core/material-list-api/mutator/fetcher.ts",
           name: "fetcher"
         },
-        query: {
-          useQuery: true
-        }
       },
       prettier: true
     },
@@ -35,9 +32,6 @@ export default defineConfig({
         mutator: {
           path: "src/core/fbs/mutator/fetcher.ts",
           name: "fetcher"
-        },
-        query: {
-          useQuery: true
         },
         operations: {
           // The reason why we add this here is to be able to use "enabled" option in the
@@ -68,9 +62,6 @@ export default defineConfig({
           path: "src/core/publizon/mutator/fetcher.ts",
           name: "fetcher"
         },
-        query: {
-          useQuery: true
-        },
         operations: {
           // The reason why we add this here is to be able to use "enabled" option in the
           // useGetV1LoanstatusIdentifier query. This lets us call it conditionally.
@@ -98,9 +89,6 @@ export default defineConfig({
         mutator: {
           path: "src/core/dpl-cms/mutator/fetcher.ts",
           name: "fetcher"
-        },
-        query: {
-          useQuery: true
         },
         operations: {
           // The reason why we add this here is to be able to use "enabled" option in the
