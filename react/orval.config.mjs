@@ -51,6 +51,7 @@ export default defineConfig({
     },
     input: {
       target: "../schemas/openapi/fbs-adapter.yaml",
+      unsafeDisableValidation: true,
       converterOptions: {
         indent: 2
       }
@@ -115,8 +116,8 @@ export default defineConfig({
       prettier: true
     },
     input: {
-      target:
-        "../cms/openapi.json",
+      target: "../cms/openapi.json",
+      unsafeDisableValidation: true,
       converterOptions: {
         indent: 2
       }
