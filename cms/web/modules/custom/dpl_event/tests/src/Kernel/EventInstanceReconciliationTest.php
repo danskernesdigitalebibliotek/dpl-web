@@ -204,6 +204,9 @@ class EventInstanceReconciliationTest extends KernelTestBase {
       ['2030-01-14T10:00:00', '2030-01-14T12:00:00'],
     ]);
 
+    // Damage the middle occurrence the way a broken database row would be: the
+    // instance is still there and still belongs to the series, but the date
+    // that says which occurrence it is has been emptied out.
     $damaged_id = $this->instanceIdByStartDate($series, '2030-01-14T10:00:00');
     $this->clearInstanceDate($damaged_id);
 
