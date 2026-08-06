@@ -13,7 +13,7 @@ export default defineConfig({
           name: "fetcher"
         },
       },
-      prettier: true
+      formatter: 'prettier',
     },
     input: {
       target: "../schemas/openapi/material-list.yaml",
@@ -41,7 +41,7 @@ export default defineConfig({
           }
         }
       },
-      prettier: true
+      formatter: 'prettier',
     },
     input: {
       target: "../schemas/openapi/fbs-adapter.yaml",
@@ -70,7 +70,7 @@ export default defineConfig({
           }
         }
       },
-      prettier: true
+      formatter: 'prettier',
     },
     input: {
       target: "../schemas/openapi/publizon-adapter.yaml",
@@ -101,7 +101,7 @@ export default defineConfig({
           }
         }
       },
-      prettier: true
+      formatter: 'prettier',
     },
     input: {
       target: "../cms/openapi.json",
