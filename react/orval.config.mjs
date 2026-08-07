@@ -19,10 +19,7 @@ export default defineConfig({
       formatter: 'prettier',
     },
     input: {
-      target: "../schemas/openapi/material-list.yaml",
-      converterOptions: {
-        indent: 2
-      }
+      target: "../schemas/openapi/material-list.yaml"
     }
   },
   fbsAdapter: {
@@ -44,10 +41,7 @@ export default defineConfig({
     },
     input: {
       target: "../schemas/openapi/fbs-adapter.yaml",
-      unsafeDisableValidation: true,
-      converterOptions: {
-        indent: 2
-      }
+      unsafeDisableValidation: true
     }
   },
   publizonAdapter: {
@@ -68,10 +62,7 @@ export default defineConfig({
       formatter: 'prettier',
     },
     input: {
-      target: "../schemas/openapi/publizon-adapter.yaml",
-      converterOptions: {
-        indent: 2
-      }
+      target: "../schemas/openapi/publizon-adapter.yaml"
     }
   },
   dplCms: {
@@ -93,10 +84,7 @@ export default defineConfig({
     },
     input: {
       target: "../cms/openapi.json",
-      unsafeDisableValidation: true,
-      converterOptions: {
-        indent: 2
-      }
+      unsafeDisableValidation: true
     }
   }
 });
