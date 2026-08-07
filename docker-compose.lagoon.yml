@@ -75,7 +75,7 @@ services:
 
   node:
     build:
-      dockerfile: go/lagoon/node-lagoon.dockerfile
+      dockerfile: go/lagoon/stage2.dockerfile
       # The parent image is tagged with the branch name, so to avoid building with
       # a stale image, we always fetch the latest version.
       pull: true
