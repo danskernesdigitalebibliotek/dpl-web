@@ -55,7 +55,7 @@ const MaterialButtonOnlineExternal: FC<MaterialButtonOnlineExternalProps> = ({
   const t = useText();
   const { data, error } = useProxyUrlGET(
     { url: externalUrl },
-    { enabled: urlWasTranslated === null && externalUrl.length > 0 }
+    { query: { enabled: urlWasTranslated === null && externalUrl.length > 0 } }
   );
 
   // Update translatedUrl and reset urlWasTranslated when externalUrl changes

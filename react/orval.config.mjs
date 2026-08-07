@@ -38,13 +38,6 @@ export default defineConfig({
         },
         fetch: {
           includeHttpResponseReturnType: false
-        },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // getPatronInformationByPatronIdV2 query. This lets us call it conditionally.
-          getPatronInformationByPatronIdV4: {
-            requestOptions: false
-          }
         }
       },
       formatter: 'prettier',
@@ -71,13 +64,6 @@ export default defineConfig({
         fetch: {
           includeHttpResponseReturnType: false,
         },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // useGetV1LoanstatusIdentifier query. This lets us call it conditionally.
-          getV1LoanstatusIdentifier: {
-            requestOptions: false
-          }
-        }
       },
       formatter: 'prettier',
     },
@@ -102,16 +88,6 @@ export default defineConfig({
         fetch: {
           includeHttpResponseReturnType: false
         },
-        operations: {
-          // The reason why we add this here is to be able to use "enabled" option in the
-          // proxy-url:GET query. This lets us call it conditionally.
-          "proxy-url:GET": {
-            requestOptions: false
-          },
-          "dpl_opening_hours_list:GET": {
-            requestOptions: false
-          }
-        }
       },
       formatter: 'prettier',
     },
