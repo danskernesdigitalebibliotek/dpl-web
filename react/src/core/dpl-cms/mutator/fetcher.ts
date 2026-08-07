@@ -1,5 +1,4 @@
 import FetchFailedError from "../../fetchers/FetchFailedError";
-import { getServiceUrlWithParams } from "../../fetchers/helpers";
 import { getToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../token";
 import {
   getServiceBaseUrl,
@@ -7,42 +6,29 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import DplCmsServiceHttpError from "./DplCmsServiceHttpError";
 
-export const fetcher = async <ResponseType>({
-  url,
-  method,
-  headers,
-  params,
-  data
-}: {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
-  headers?: object;
-  params?: unknown;
-  data?: BodyType<unknown>;
-  signal?: AbortSignal;
-}) => {
+export const fetcher = async <ResponseType>(
+  url: string,
+  options: RequestInit
+) => {
+  const { headers } = options;
+
   const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
 
   const authHeaders = token
     ? ({ Authorization: `Bearer ${token}` } as object)
     : {};
 
-  const body = data ? JSON.stringify(data) : null;
+  const baseUrl = getServiceBaseUrl(serviceUrlKeys.dplCms);
 
-  const serviceUrl = getServiceUrlWithParams({
-    baseUrl: getServiceBaseUrl(serviceUrlKeys.dplCms),
-    url,
-    params
-  });
+  const serviceUrl = `${baseUrl}${url}`;
 
   try {
     const response = await fetch(serviceUrl, {
-      method,
+      ...options,
       headers: {
         ...headers,
         ...authHeaders
-      },
-      body
+      }
     });
 
     if (!response.ok) {
@@ -72,7 +58,7 @@ export const fetcher = async <ResponseType>({
   // cannot be converted to JSON. Fetch API and TypeScript has no clean
   // way for us to identify empty responses, so instead we swallow
   // syntax errors during decoding.
-  return null;
+  return undefined as ResponseType;
 };
 
 export default fetcher;

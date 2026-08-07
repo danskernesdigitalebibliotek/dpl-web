@@ -2,10 +2,10 @@ import { EventInput } from "@fullcalendar/core";
 import { EventImpl } from "@fullcalendar/core/internal";
 import {
   DplOpeningHoursListGET200Item,
-  DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
   DplOpeningHoursUpdatePATCH200Item,
   DplOpeningHoursListGET200ItemRepetitionType
 } from "../../core/dpl-cms/model";
+import { DplOpeningHoursCreatePOSTOpeningHoursInstanceBody } from "../../core/dpl-cms/model/dplOpeningHoursCreatePOSTOpeningHoursInstanceBody";
 import {
   convertToDayJs,
   extractTime,
