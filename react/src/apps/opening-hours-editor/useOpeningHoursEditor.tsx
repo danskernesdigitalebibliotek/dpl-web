@@ -10,12 +10,12 @@ import {
   useDplOpeningHoursUpdatePATCH
 } from "../../core/dpl-cms/dpl-cms";
 import {
-  DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
   DplOpeningHoursUpdatePATCH200Item
 } from "../../core/dpl-cms/model";
 import { useConfig } from "../../core/utils/config";
 import { HandleEventRemoveType } from "./types";
 import { formatDateForAPI } from "../../core/utils/helpers/date";
+import { DplOpeningHoursCreatePOSTOpeningHoursInstanceBody } from "../../core/dpl-cms/model/dplOpeningHoursCreatePOSTOpeningHoursInstanceBody";
 
 const useOpeningHoursEditor = () => {
   const config = useConfig();
