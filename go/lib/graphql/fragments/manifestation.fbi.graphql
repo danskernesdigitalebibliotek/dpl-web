@@ -47,7 +47,7 @@ fragment ManifestationAccess on Manifestation {
       url
       loginRequired
     }
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on InterLibraryLoan {

@@ -24,7 +24,7 @@ fragment ManifestationsAccess on Manifestations {
         url
         loginRequired
       }
-      ... on InfomediaService {
+      ... on RetrieverService {
         id
       }
       ... on InterLibraryLoan {
@@ -165,7 +165,7 @@ fragment ManifestationsSimpleFields on Manifestation {
       loginRequired
       status
     }
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on InterLibraryLoan {
@@ -201,7 +201,7 @@ fragment ManifestationReviewFields on Manifestation {
   }
   access {
     __typename
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on DigitalArticleService {

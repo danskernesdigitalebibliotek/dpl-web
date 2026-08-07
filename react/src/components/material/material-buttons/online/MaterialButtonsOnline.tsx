@@ -12,7 +12,7 @@ import { WorkId } from "../../../../core/utils/types/ids";
 import { hasCorrectAccess, hasCorrectMaterialType } from "../helper";
 import MaterialButtonOnlineDigitalArticle from "./MaterialButtonOnlineDigitalArticle";
 import MaterialButtonOnlineExternal from "./MaterialButtonOnlineExternal";
-import MaterialButtonOnlineInfomediaArticle from "./MaterialButtonOnlineInfomediaArticle";
+import MaterialButtonOnlineRetrieverArticle from "./MaterialButtonOnlineRetrieverArticle";
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
 import MaterialButtonsOnlineInternal from "./MaterialButtonsOnlineInternal";
 import { getReaderPlayerType } from "../../../reader-player/helper";
@@ -116,13 +116,13 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
     );
   }
 
-  if (hasCorrectAccess("InfomediaService", manifestations)) {
+  if (hasCorrectAccess("RetrieverService", manifestations)) {
     return (
-      <MaterialButtonOnlineInfomediaArticle
+      <MaterialButtonOnlineRetrieverArticle
         size={size}
         manifestations={manifestations}
         trackOnlineView={trackOnlineView}
-        dataCy={`${dataCy}-infomedia-article`}
+        dataCy={`${dataCy}-retriever-article`}
       />
     );
   }
