@@ -6,7 +6,10 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import DplCmsServiceHttpError from "./DplCmsServiceHttpError";
 
-export const fetcher = async <ResponseType>(url: string, options: RequestInit) => {
+export const fetcher = async <ResponseType>(
+  url: string,
+  options: RequestInit
+) => {
   const { headers } = options;
 
   const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
@@ -25,7 +28,7 @@ export const fetcher = async <ResponseType>(url: string, options: RequestInit) =
       headers: {
         ...headers,
         ...authHeaders
-      },
+      }
     });
 
     if (!response.ok) {

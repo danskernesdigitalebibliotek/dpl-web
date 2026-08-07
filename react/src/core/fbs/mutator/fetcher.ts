@@ -7,7 +7,10 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import FbsServiceHttpError from "./FbsServiceHttpError";
 
-export const fetcher = async <ResponseType>(url: string, options: RequestInit) => {
+export const fetcher = async <ResponseType>(
+  url: string,
+  options: RequestInit
+) => {
   const { headers } = options;
 
   const token = getUserToken() ?? getToken(TOKEN_LIBRARY_KEY);
@@ -25,7 +28,7 @@ export const fetcher = async <ResponseType>(url: string, options: RequestInit) =
       headers: {
         ...headers,
         ...authHeaders
-      },
+      }
     });
 
     if (!response.ok) {
@@ -38,7 +41,9 @@ export const fetcher = async <ResponseType>(url: string, options: RequestInit) =
 
     const text = await response.text();
     // Some of our responses are intentionally empty. Only try to convert non-empty responses to JSON.
-    return text ? (JSON.parse(text) as ResponseType) : undefined as ResponseType;
+    return text
+      ? (JSON.parse(text) as ResponseType)
+      : (undefined as ResponseType);
   } catch (error: unknown) {
     if (error instanceof FbsServiceHttpError) {
       throw error;

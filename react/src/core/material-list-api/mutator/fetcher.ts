@@ -6,15 +6,20 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import MaterialListServiceHttpError from "./MaterialListServiceHttpError";
 
-export const fetcher = async <ResponseType>(url: string, options: RequestInit) => {
+export const fetcher = async <ResponseType>(
+  url: string,
+  options: RequestInit
+) => {
   const { method, headers: requestHeaders } = options;
 
   const baseUrl = getServiceBaseUrl(serviceUrlKeys.materialList);
 
   // QUESTION: now that `additionalHeaders` doesn't come from data, this seems completely superflous.
   const additionalHeaders =
-    (typeof requestHeaders === "object" && requestHeaders !== null) ? requestHeaders : {};
-  
+    typeof requestHeaders === "object" && requestHeaders !== null
+      ? requestHeaders
+      : {};
+
   const userToken = getToken(TOKEN_USER_KEY);
   const authHeaders = userToken
     ? ({ Authorization: `Bearer ${userToken}` } as object)
