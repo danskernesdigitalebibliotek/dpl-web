@@ -6,7 +6,10 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import PublizonServiceError from "./PublizonServiceError";
 
-export const fetcher = async <ResponseType>(url: string, options: RequestInit) => {
+export const fetcher = async <ResponseType>(
+  url: string,
+  options: RequestInit
+) => {
   const { headers } = options;
 
   const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
@@ -14,7 +17,7 @@ export const fetcher = async <ResponseType>(url: string, options: RequestInit) =
     ? ({ Authorization: `Bearer ${token}` } as object)
     : {};
 
-  const baseUrl = getServiceBaseUrl(serviceUrlKeys.publizon)
+  const baseUrl = getServiceBaseUrl(serviceUrlKeys.publizon);
 
   const serviceUrl = `${baseUrl}${url}`;
 
@@ -24,7 +27,7 @@ export const fetcher = async <ResponseType>(url: string, options: RequestInit) =
       headers: {
         ...headers,
         ...authHeaders
-      },
+      }
     });
 
     // Json decode the response.
@@ -40,7 +43,7 @@ export const fetcher = async <ResponseType>(url: string, options: RequestInit) =
           serviceUrl
         );
       }
-      return (responseBody as ResponseType) ?? undefined as ResponseType;
+      return (responseBody as ResponseType) ?? (undefined as ResponseType);
       // If the response is not JSON, we catch the error and throw a syntax error.
     } catch (e) {
       if (!(e instanceof SyntaxError)) {
