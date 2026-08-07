@@ -32,7 +32,7 @@ const useOpeningHoursEditor = () => {
         to_date: formatDateForAPI(datesSet.end)
       })
     },
-    { enabled: !!datesSet }
+    { query: { enabled: !!datesSet } }
   );
   const { mutate: removeOpeningHours, isPending: removeOpeningHoursLoading } =
     useDplOpeningHoursDeleteDELETE();
