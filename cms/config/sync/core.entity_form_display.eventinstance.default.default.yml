@@ -31,6 +31,7 @@ dependencies:
   module:
     - datetime_range
     - field_group
+    - field_inheritance
     - gsearch
     - link
     - media_library
@@ -375,6 +376,13 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_inheritance:
+    type: field_inheritance_default
+    weight: 0
+    region: content
+    settings:
+      elements: both
     third_party_settings: {  }
   field_screen_names:
     type: select2_entity_reference

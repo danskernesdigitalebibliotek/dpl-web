@@ -1,0 +1,20 @@
+diff --git a/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php b/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php
+index bbc5a9c..ea858ad 100644
+--- a/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/DateRangeFormatterRangeFormatter.php
+@@ -72,6 +72,7 @@ class DateRangeFormatterRangeFormatter extends DateTimeCustomFormatter {
+             if (date('d.m.Y', $start_date) === date('d.m.Y', $end_date)) {
+               $format = $this->getSetting('one_day');
+             }
++            $format = is_string($format) && $format !== '' ? $format : 'd.m.Y';
+             $date_str = $this->dateFormatter
+               // Since Drupal does not support the translation of formatter
+               // settings, we use 'phpcs:ignore' here.
+@@ -92,6 +93,7 @@ class DateRangeFormatterRangeFormatter extends DateTimeCustomFormatter {
+           // No end date provided or end date equals start date use single
+           // formatting.
+           $single_format = $this->getSetting('single');
++          $single_format = is_string($single_format) && $single_format !== '' ? $single_format : 'd.m.Y';
+           $elements[$delta] = $this->buildDateRenderArray(
+             $this->formatDateToRfc3339($start_date),
+             // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString

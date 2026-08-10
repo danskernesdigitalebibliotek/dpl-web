@@ -500,6 +500,7 @@ function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query)
  *
  * - Move the "Published" checkbox gin sticky action header.
  * - Hide screen names if the feature is disabled.
+ * - Correct the description of what a recurrence change does to occurrences.
  */
 function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   // The exposed form for the event list is rather difficult to detect.
@@ -522,6 +523,16 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (!in_array($form_id, $forms)) {
     return;
+  }
+
+  // recurring_events warns that every occurrence will be removed and recreated
+  // when the recurrence changes. We only touch the occurrences the change
+  // actually affects, so say that instead. This override goes away once the
+  // creator plugin can supply the message itself.
+  // @see \Drupal\dpl_event\Plugin\EventInstanceCreator\DplEventInstanceCreator
+  // @see https://www.drupal.org/project/recurring_events/issues/3615282
+  if (isset($form['diff']['diff_message'])) {
+    $form['diff']['diff_message']['#markup'] = t('The recurrence has been changed. Occurrences that are no longer part of it will be deleted, and any new ones will be created. The remaining occurrences, and anything filled in on them, are left as they are. Deleting an occurrence cannot be undone.', [], ['context' => 'dpl_event']);
   }
 
   if (isset($form['field_event_all_day'])) {
@@ -638,14 +649,18 @@ function _dpl_event_stack_eventinstances(array $items): array {
     }
 
     $eventInstance = $item['content']['#eventinstance'];
-    $eventSeriesId = $eventInstance->getEventSeries()->id();
+    $eventSeries = $eventInstance->getEventSeries();
 
     $shouldBeStacked = FALSE;
 
-    // Check if not first row and previous event_series_id matches.
+    // Check if not first row and previous event_series_id matches. An instance
+    // whose series has been deleted belongs with nothing, so it is never
+    // stacked.
     $priorInstance = $items[$index - 1]['content']['#eventinstance'] ?? NULL;
-    if ($priorInstance instanceof EventInstance) {
-      $shouldBeStacked = $eventSeriesId === $priorInstance->getEventSeries()->id();
+    if ($eventSeries instanceof EventSeries && $priorInstance instanceof EventInstance) {
+      $priorSeries = $priorInstance->getEventSeries();
+      $shouldBeStacked = $priorSeries instanceof EventSeries
+        && $eventSeries->id() === $priorSeries->id();
     }
 
     $item['shouldBeStacked'] = $shouldBeStacked;
