@@ -51,6 +51,23 @@ live in [`cms/patches/`](../../../cms/patches/):
 Neither patch is a goal in itself. Dropping them costs the strings they cover,
 which is a trade we may want to make later in favour of running potx unpatched.
 
+### Why the 2.x alpha and not the 1.x stable release
+
+`8.x-1.1` declares Drupal 11 compatibility, but the branch does not deliver it.
+The 2.x branch contains every commit in `8.x-1.1` plus the fixes we depend on:
+
+- [#3308598](https://www.drupal.org/project/potx/issues/3308598): Drush 10+
+  support in 1.x was inadequate. We drive potx entirely from Drush.
+- [#3528177](https://www.drupal.org/project/potx/issues/3528177): Twig scanning
+  stopped recognising `t` filters as of Twig 3.21, which is the Twig Drupal 11
+  ships.
+- [#3570518](https://www.drupal.org/project/potx/issues/3570518): core language
+  list parsing is not Drupal 11 compatible.
+- [#3354887](https://www.drupal.org/project/potx/issues/3354887): the 1.x info
+  file claimed core compatibility it did not have.
+
+2.x additionally carries the Drupal 12 compatibility work.
+
 ## Consequences
 
 - Seven patches and a git-commit pin become two patches on a tagged release
@@ -80,14 +97,13 @@ which is a trade we may want to make later in favour of running potx unpatched.
 
 ## Alternatives considered
 
-1. Keep Potion and port it to Drupal 11 ourselves. Drupal 11 converts plugin
-   annotations to attributes, so the extractor's input format is disappearing
-   regardless of whether the module is made to run.
-2. Patch potx to keep scanning `tests/`, so the file stays identical.
-   Rejected - it would mean translating PHPUnit assertion messages forever.
+1. Keeping Potion and maintaining it ourselves. It offers nothing that potx
+   does not, so this would be work spent on staying where we are.
+2. Patching potx to keep scanning `tests/`, so the generated file stays
+   identical to the Potion one. Rejected - it would mean translating PHPUnit
+   assertion messages forever.
 3. [ITK's translation extractor](https://github.com/itk-dev/drupal_translation_extractor),
    which extracts from PHP, Twig and JavaScript using Symfony's translation
-   component. It is published only on GitHub by a single vendor, where potx is
-   a drupal.org contrib project with an established maintainer team. For
-   something the translation pipeline of every site depends on, we prefer the
-   latter.
+   component. We found no advantage over potx, and it is published on GitHub by
+   a single vendor where potx is a drupal.org project with an established
+   maintainer team.
