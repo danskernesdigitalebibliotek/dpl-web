@@ -111,14 +111,8 @@ We considered the following alternatives:
 
 ## Status
 
-The choice of Potion described above is **no longer relevant**. Scanning is now
-done with POTX, see
-[Translation: Moving from Potion to POTX](./adr-018-translation-potion-to-potx.md).
+Superseded by
+[ADR-018: Translation: Moving from Potion to POTX](./adr-018-translation-potion-to-potx.md).
 
-Note also that the reason given above for rejecting Potx - that it cannot fill
-in existing translations - rested on a misunderstanding. Potx does support it,
-through the Drush command that replaces Potion.
-
-The rest of this ADR still applies: GitHub remains the central source for
-translation files, POEditor is still the translation interface, and the
-requirement to pass `context` inline to every `t()` call is unchanged.
+The current setup is described in
+[the translation documentation](../translation.md).
