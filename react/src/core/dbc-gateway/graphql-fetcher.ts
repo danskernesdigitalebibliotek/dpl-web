@@ -1,4 +1,4 @@
-import { QueryFunctionContext } from "react-query";
+import { QueryFunctionContext } from "@tanstack/react-query";
 import FetchFailedCriticalError from "../fetchers/FetchFailedCriticalError";
 import { getToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../token";
 import DbcGateWayHttpError from "./DbcGateWayHttpError";

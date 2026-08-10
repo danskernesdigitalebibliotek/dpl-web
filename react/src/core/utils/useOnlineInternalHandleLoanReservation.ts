@@ -1,4 +1,4 @@
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   getGetV1LoanstatusIdentifierQueryKey,
   getGetV1UserLoansQueryKey,
@@ -81,10 +81,12 @@ const useOnlineInternalHandleLoanReservation = ({
               trackedData: workId
             });
             // Ensure that the button is updated after a successful loan
-            queryClient.invalidateQueries(getGetV1UserLoansQueryKey());
-            queryClient.invalidateQueries(
-              getGetV1LoanstatusIdentifierQueryKey(identifier)
-            );
+            queryClient.invalidateQueries({
+              queryKey: getGetV1UserLoansQueryKey()
+            });
+            queryClient.invalidateQueries({
+              queryKey: getGetV1LoanstatusIdentifierQueryKey(identifier)
+            });
             if (setLoanStatus) {
               setLoanStatus("success");
             }
@@ -129,10 +131,12 @@ const useOnlineInternalHandleLoanReservation = ({
               trackedData: workId
             });
             // Ensure that the button is updated after a successful reservation
-            queryClient.invalidateQueries(getGetV1UserReservationsQueryKey());
-            queryClient.invalidateQueries(
-              getGetV1LoanstatusIdentifierQueryKey(identifier)
-            );
+            queryClient.invalidateQueries({
+              queryKey: getGetV1UserReservationsQueryKey()
+            });
+            queryClient.invalidateQueries({
+              queryKey: getGetV1LoanstatusIdentifierQueryKey(identifier)
+            });
             if (setReservationStatus) {
               setReservationStatus("success");
             }

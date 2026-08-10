@@ -66,16 +66,16 @@ services:
       service: mariadb
 
   redis:
-    image: uselagoon/valkey-8:latest
+    image: uselagoon/redis-8:latest
     labels:
-      lagoon.type: valkey
+      lagoon.type: redis
     extends:
       file: cms/docker-compose.yml
       service: redis
 
   node:
     build:
-      dockerfile: go/lagoon/node-lagoon.dockerfile
+      dockerfile: go/lagoon/stage2.dockerfile
       # The parent image is tagged with the branch name, so to avoid building with
       # a stale image, we always fetch the latest version.
       pull: true

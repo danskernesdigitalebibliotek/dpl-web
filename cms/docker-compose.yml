@@ -47,6 +47,9 @@ services:
       - varnish
     labels:
       lagoon.type: none
+      # OrbStack resolves the site's HTTPS URL straight to this proxy (which
+      # terminates TLS and forwards to varnish). No /etc/hosts entry needed.
+      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     volumes:
       - '../:/app'
       - '${HOME}/.local/share/mkcert:/rootCA:ro'
@@ -55,9 +58,7 @@ services:
       NGINX_DOCUMENT_ROOT: /app/cms/web
       NGINX_PROXY_PASS: http://varnish:8080
       VIRTUAL_PROTO: https
-      VIRTUAL_HOST: >-
-        ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
-        dpl-cms.docker
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     working_dir: /app
 
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
@@ -69,7 +70,6 @@ services:
       - nginx
     labels:
       lagoon.type: varnish
-      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
     links:
       - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     << : *default-user # uses the defined user from top
@@ -157,10 +157,10 @@ services:
       << : *default-environment
 
   redis: # In-memory key-value database used as the Drupal Core cache backend.
-    # https://docs.lagoon.sh/docker-images/valkey/
-    image: uselagoon/valkey-8:latest
+    # https://docs.lagoon.sh/docker-images/redis/
+    image: uselagoon/redis-8:latest
     labels:
-      lagoon.type: valkey
+      lagoon.type: redis
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment

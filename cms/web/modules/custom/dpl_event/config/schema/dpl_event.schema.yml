@@ -1,0 +1,22 @@
+dpl_event.settings:
+  type: config_object
+  label: 'DPL Event settings'
+  mapping:
+    price_currency:
+      type: string
+      label: 'Price currency'
+    enable_screen_name:
+      type: boolean
+      label: 'Enable screen names'
+    unpublish_enable:
+      type: boolean
+      label: 'Unpublish event instances when they have occurred'
+    unpublish_schedule:
+      type: string
+      label: 'Time to pass before an occurred event instance is unpublished'
+    unpublish_series_enable:
+      type: boolean
+      label: 'Unpublish the series when all instances have occurred'
+    list_paging_mode:
+      type: string
+      label: 'Event list paging mode'

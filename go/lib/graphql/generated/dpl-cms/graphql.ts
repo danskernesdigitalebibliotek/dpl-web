@@ -77,6 +77,16 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementGoLinkbox = AppContentElement & {
+  __typename?: 'AppContentElementGoLinkbox';
+  color?: Maybe<Scalars['String']['output']>;
+  contentId: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
 export type AppContentElementGoMaterialSliderAutomatic = AppContentElement & {
   __typename?: 'AppContentElementGoMaterialSliderAutomatic';
   cql: Scalars['String']['output'];

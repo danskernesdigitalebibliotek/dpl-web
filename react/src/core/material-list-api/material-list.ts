@@ -4,16 +4,21 @@
  * Collection List
  * OpenAPI spec version: 2.0.0
  */
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
+  QueryClient,
   QueryFunction,
   QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult
-} from "react-query";
+} from "@tanstack/react-query";
 
 import type { GetListParams, List } from "./model";
 
@@ -47,7 +52,9 @@ export const getGetListQueryOptions = <
   listId: string,
   params?: GetListParams,
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>;
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
+    >;
   }
 ) => {
   const { query: queryOptions } = options ?? {};
@@ -64,7 +71,7 @@ export const getGetListQueryOptions = <
     enabled: !!listId,
     ...queryOptions
   } as UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData> & {
-    queryKey: QueryKey;
+    queryKey: DataTag<QueryKey, TData, TError>;
   };
 };
 
@@ -78,16 +85,84 @@ export function useGetList<
   TError = ErrorType<void>
 >(
   listId: string,
+  params: undefined | GetListParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getList>>,
+          TError,
+          Awaited<ReturnType<typeof getList>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetList<
+  TData = Awaited<ReturnType<typeof getList>>,
+  TError = ErrorType<void>
+>(
+  listId: string,
   params?: GetListParams,
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getList>>,
+          TError,
+          Awaited<ReturnType<typeof getList>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetList<
+  TData = Awaited<ReturnType<typeof getList>>,
+  TError = ErrorType<void>
+>(
+  listId: string,
+  params?: GetListParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+
+export function useGetList<
+  TData = Awaited<ReturnType<typeof getList>>,
+  TError = ErrorType<void>
+>(
+  listId: string,
+  params?: GetListParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
   const queryOptions = getGetListQueryOptions(listId, params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   query.queryKey = queryOptions.queryKey;
 
@@ -152,17 +227,17 @@ export type HasItemMutationResult = NonNullable<
 
 export type HasItemMutationError = ErrorType<void>;
 
-export const useHasItem = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof hasItem>>,
-    TError,
-    { listId: string; itemId: string },
-    TContext
-  >;
-}): UseMutationResult<
+export const useHasItem = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof hasItem>>,
+      TError,
+      { listId: string; itemId: string },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof hasItem>>,
   TError,
   { listId: string; itemId: string },
@@ -170,7 +245,7 @@ export const useHasItem = <
 > => {
   const mutationOptions = getHasItemMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -223,17 +298,17 @@ export type AddItemMutationResult = NonNullable<
 
 export type AddItemMutationError = ErrorType<void>;
 
-export const useAddItem = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof addItem>>,
-    TError,
-    { listId: string; itemId: string },
-    TContext
-  >;
-}): UseMutationResult<
+export const useAddItem = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof addItem>>,
+      TError,
+      { listId: string; itemId: string },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof addItem>>,
   TError,
   { listId: string; itemId: string },
@@ -241,7 +316,7 @@ export const useAddItem = <
 > => {
   const mutationOptions = getAddItemMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };
 
 /**
@@ -294,17 +369,17 @@ export type RemoveItemMutationResult = NonNullable<
 
 export type RemoveItemMutationError = ErrorType<void>;
 
-export const useRemoveItem = <
-  TError = ErrorType<void>,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof removeItem>>,
-    TError,
-    { listId: string; itemId: string },
-    TContext
-  >;
-}): UseMutationResult<
+export const useRemoveItem = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof removeItem>>,
+      TError,
+      { listId: string; itemId: string },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
   Awaited<ReturnType<typeof removeItem>>,
   TError,
   { listId: string; itemId: string },
@@ -312,5 +387,5 @@ export const useRemoveItem = <
 > => {
   const mutationOptions = getRemoveItemMutationOptions(options);
 
-  return useMutation(mutationOptions);
+  return useMutation(mutationOptions, queryClient);
 };

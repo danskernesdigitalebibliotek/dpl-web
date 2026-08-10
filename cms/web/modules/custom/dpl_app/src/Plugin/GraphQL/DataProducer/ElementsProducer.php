@@ -10,6 +10,8 @@ use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
+use Drupal\file\Entity\File;
+use Drupal\dpl_paragraphs\Entity\GoLinkboxParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderManualParagraph;
 use Drupal\dpl_paragraphs\Entity\MaterialGridAutomaticParagraph;
@@ -133,6 +135,9 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       }
       elseif ($paragraph instanceof MaterialGridManualParagraph) {
         $response = $this->handleMaterialGridManual($paragraph, $field_context);
+      }
+      elseif ($paragraph instanceof GoLinkboxParagraph) {
+        $response = $this->handleGoLinkbox($paragraph, $field_context);
       }
 
       if ($response) {
@@ -417,6 +422,45 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     return [
       'url' => $url,
       'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
+    ];
+  }
+
+  /**
+   * Handle go_linkbox paragraphs.
+   *
+   * @param \Drupal\dpl_paragraphs\Entity\GoLinkboxParagraph $paragraph
+   *   Paragraph to handle.
+   * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
+   *   The field context for adding cache metadata.
+   *
+   * @return array<mixed>|null
+   *   GraphQL data, or NULL if external link.
+   */
+  protected function handleGoLinkbox(GoLinkboxParagraph $paragraph, FieldContext $field_context): ?array {
+    $node = $paragraph->getLinkedNode();
+
+    if (!$node) {
+      return NULL;
+    }
+
+    $field_context->addCacheableDependency($node);
+
+    $file = $paragraph->getImageFile();
+    $imageUrl = NULL;
+
+    if ($file instanceof File) {
+      $field_context->addCacheableDependency($file);
+      $imageUrl = $file->createFileUrl(FALSE);
+    }
+
+    return [
+      '__typename' => 'AppContentElementGoLinkbox',
+      'id' => $paragraph->uuid(),
+      'title' => $paragraph->getLinkboxTitle(),
+      'color' => $paragraph->getColor(),
+      'description' => $paragraph->getDescription(),
+      'image' => $imageUrl,
+      'contentId' => $node->uuid(),
     ];
   }
 

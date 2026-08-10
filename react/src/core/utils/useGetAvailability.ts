@@ -1,4 +1,4 @@
-import { UseQueryOptions } from "react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 import { getAvailabilityV3, useGetAvailabilityV3 } from "../fbs/fbs";
 import { UseConfigFunction } from "./config";
 import { FaustId } from "./types/ids";
@@ -12,7 +12,9 @@ const useGetAvailability = ({
   faustIds: FaustId[];
   config: UseConfigFunction;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getAvailabilityV3>>>;
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAvailabilityV3>>>
+    >;
   };
 }) => {
   const response = useGetAvailabilityV3(

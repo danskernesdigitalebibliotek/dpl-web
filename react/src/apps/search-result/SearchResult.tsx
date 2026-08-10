@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useSearchResultTracking from "./useSearchResultTracking";
 import { useDeepCompareEffect } from "react-use";
 import { useQueryState, parseAsJson, parseAsBoolean } from "nuqs";
+import { keepPreviousData } from "@tanstack/react-query";
 import SearchResultHeader from "../../components/search-bar/search-result-header/SearchResultHeader";
 import usePager from "../../components/result-pager/use-pager";
 import {
@@ -93,7 +94,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       filters: searchFilters
     },
     {
-      keepPreviousData: true
+      placeholderData: keepPreviousData
     }
   );
 
@@ -131,14 +132,16 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       filters: searchFilters
     },
     {
-      enabled: q.length >= minimalQueryLength,
-      onSuccess: (data) => {
-        if (data.search.hitcount === 0) {
-          redirectTo(zeroHitsSearchUrl);
-        }
-      }
+      enabled: q.length >= minimalQueryLength
     }
   );
+
+  // A search without results sends the user to the dedicated zero-hits page.
+  useEffect(() => {
+    if (data?.search.hitcount === 0) {
+      redirectTo(zeroHitsSearchUrl);
+    }
+  }, [data, zeroHitsSearchUrl]);
 
   useEffect(() => {
     if (!data) {

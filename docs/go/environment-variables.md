@@ -43,14 +43,12 @@ Username for Basic Auth against the DPL CMS GraphQL API. Combined with the passw
 ### `NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD`
 
 - **Required:** Yes
-- **Example:** `oA8mqZFxmFubREH77T3qeApeoUxoNS7Y`
 
 Password counterpart to the GraphQL consumer username above.
 
 ### `NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS`
 
-- **Required:** No (only in `.env.example`)
-- **Example:** `Z29fZ3JhcGhxbDpvQThtcVpGeG1GdWJSRUg3N1QzcWVBcGVvVXhvTlM3WQ==`
+- **Required:** No (only set as a Lagoon variable, in `.lagoon.env`)
 
 **Legacy.** A pre-encoded Basic Auth token. Not referenced in application code — the app computes the token at runtime from the username + password above.
 
@@ -90,14 +88,12 @@ Only available server-side. Accessed via `getServerEnv()`.
 ### `DRUPAL_REVALIDATE_SECRET`
 
 - **Required:** Yes
-- **Example:** `CeXF8E2Rd9wXZ2sswFHR`
 
 Shared secret for on-demand cache revalidation. The `GET /cache/revalidate` route compares the incoming `secret` query parameter against this value; mismatches return 401. This lets DPL CMS trigger Next.js cache invalidation securely.
 
 ### `GO_SESSION_SECRET`
 
 - **Required:** Yes (minimum 32 characters)
-- **Example:** `yZJhgvvvUYMawDRbdzfdvsVswWXCKwkU`
 
 The encryption password for `iron-session`. Used to seal/unseal the `go-session` cookie that stores all authentication state (tokens, user info, session type). Also used in Cypress E2E setup to create mocked session cookies via `sealData()`.
 
@@ -118,7 +114,6 @@ OpenID Connect client ID for the Unilogin identity broker. Used by `openid-clien
 ### `UNILOGIN_CLIENT_SECRET`
 
 - **Required:** No (optional, can come from DPL CMS private config)
-- **Example:** `XXX` (sensitive)
 
 OpenID Connect client secret for Unilogin. If set, overrides the value fetched from DPL CMS private configuration in `dplCmsConfig.ts`.
 
@@ -132,14 +127,12 @@ The OIDC discovery endpoint for the Unilogin broker. Used by `openid-client` to 
 ### `UNILOGIN_MUNICIPALITY_ID`
 
 - **Required:** No (optional)
-- **Example:** `XXX`
 
 Overrides the municipality ID from DPL CMS public config. Used for Unilogin institution filtering in `getDplCmsPublicConfig()`.
 
 ### `UNLILOGIN_PUBHUB_CLIENT_ID`
 
 - **Required:** Yes
-- **Example:** `EE939D96-702D-1BEE-AEB2-517B8BA18B11`
 
 Client ID for Publizon/PubHub SOAP services. Passed as `clientid` in service requests (`publizon.ts`).
 
@@ -148,7 +141,6 @@ Client ID for Publizon/PubHub SOAP services. Passed as `clientid` in service req
 ### `UNLILOGIN_PUBHUB_RETAILER_ID`
 
 - **Required:** Yes
-- **Example:** `XXX`
 
 Retailer ID for Publizon SOAP API calls. Passed as `retailerid` in loan creation and other Publizon requests.
 
@@ -157,11 +149,34 @@ Retailer ID for Publizon SOAP API calls. Passed as `retailerid` in loan creation
 ### `UNLILOGIN_PUBHUB_RETAILER_KEY_CODE`
 
 - **Required:** No (optional, can come from DPL CMS private config)
-- **Example:** `XXX` (sensitive)
 
 Retailer key code for Publizon. MD5-hashed at runtime before being sent as `retailerkeycode` in SOAP requests (`publizon.ts`). If set as an env var, overrides the DPL CMS private config value.
 
 > **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
+
+### `UNILOGIN_WS_UDBYDERSYSTEM_ID`
+
+- **Required:** No (optional in `env.ts`, but throws at runtime if missing when the SOAP call is made)
+
+Provider system ID from STIL Tilslutning, used when signing Unilogin SOAP webservice requests. Read via `getServerEnv()` in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which raises `Missing Unilogin UdbydersystemId` if it is unset.
+
+### `UNILOGIN_WS_PRIVATE_KEY`
+
+- **Required:** No (optional)
+- **Example:** PEM-encoded private key with newlines written as `\n`
+
+Private key used to sign Unilogin SOAP webservice requests. Read in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which converts the literal `\n` sequences back into newlines.
+
+### `UNILOGIN_WS_PUBLIC_CERT`
+
+- **Required:** No (optional)
+- **Example:** PEM-encoded certificate
+
+Public certificate paired with the private key above. Read in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which converts the literal `\n` sequences back into newlines.
+
+> **Note:** These three replaced the earlier username/password pair
+> (`UNLILOGIN_SERVICES_WS_USER` / `UNLILOGIN_SERVICES_WS_PASSWORD`), which is no
+> longer read anywhere. Some Lagoon projects still carry the old variables.
 
 ## Build / Tooling Variables
 
@@ -188,8 +203,8 @@ Provided by the Lagoon hosting environment and consumed in `go/scripts/prepare-d
 
 - `LAGOON_ROUTES`
 
-  The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.).
+    The list of all Lagoon routes, searched to find the one starting with `go.` or `node.` (possibly with www prefix.).
 
 - `LAGOON_ROUTE`
 
-  The full route URL (with protocol) for the first/primary route.
+    The full route URL (with protocol) for the first/primary route.

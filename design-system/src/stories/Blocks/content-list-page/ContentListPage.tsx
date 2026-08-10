@@ -4,6 +4,7 @@ import contentListData from "../../Library/content-list/ContentListData";
 import { InputLabel } from "../../Library/input-label/InputLabel";
 import { Dropdown } from "../../Library/dropdown/Dropdown";
 import SearchFullText from "../../Library/search-full-text/SearchFullText";
+import DateRangeFacet from "../../Library/date-range-facet/DateRangeFacet";
 
 const filters = [
   {
@@ -46,20 +47,28 @@ const ContentListPage: React.FC = () => {
         {filters.map((filter, index) => {
           return (
             <li key={index} className="content-list-page__filter">
-              <InputLabel text={filter.label} />
-              <Dropdown
-                classNames="dropdown--grey-borders"
-                innerClassNames={{
-                  select: "dropdown__select--grey",
-                }}
-                list={filter.options}
-                ariaLabel="Kategorier"
-                arrowIcon="chevron"
-              />
+              <div className="facet-inactive block-facet--dropdown">
+                <InputLabel text={filter.label} />
+                <Dropdown
+                  classNames="dropdown--grey-borders"
+                  innerClassNames={{
+                    select: "dropdown__select--grey",
+                  }}
+                  list={filter.options}
+                  ariaLabel="Kategorier"
+                  arrowIcon="chevron"
+                />
+              </div>
             </li>
           );
         })}
-        <li className="content-list-page__filter content-list-page__filter--right">
+        <li className="content-list-page__filter">
+          <div className="facet-inactive block-facet--date-range">
+            <InputLabel text="Dato" />
+            <DateRangeFacet />
+          </div>
+        </li>
+        <li className="content-list-page__filter">
           <InputLabel text="Søg" />
           <SearchFullText />
         </li>

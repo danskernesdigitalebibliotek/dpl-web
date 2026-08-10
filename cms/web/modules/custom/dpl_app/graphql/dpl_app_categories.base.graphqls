@@ -131,3 +131,15 @@ type AppContentElementMaterialGridManual implements AppContentElement {
   description: String
   workIds: [String!]!
 }
+
+"""
+A linkbox element.
+"""
+type AppContentElementGoLinkbox implements AppContentElement {
+  id: String!
+  title: String!
+  color: String
+  description: String!
+  image: String
+  contentId: String!
+}

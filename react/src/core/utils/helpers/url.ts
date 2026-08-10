@@ -13,7 +13,9 @@ export const appendQueryParametersToUrl = (
   // We need to clone url in order not to manipulate the incoming object.
   const processedUrl = new URL(url);
   Object.keys(parameters).forEach((key) => {
-    processedUrl.searchParams.set(key, encodeURI(parameters[key]));
+    // Pass raw values: URLSearchParams encodes on its own, and layering
+    // encodeURI on top double-encodes. See docs ADR-013.
+    processedUrl.searchParams.set(key, parameters[key]);
   });
 
   return processedUrl;
@@ -22,10 +24,17 @@ export const appendQueryParametersToUrl = (
 export const getUrlQueryParam = (param: string): null | string => {
   const queryParams = new URLSearchParams(window.location.search);
 
-  return queryParams.get(param)
-    ? decodeURI(String(queryParams.get(param)))
-    : null;
+  // Return the value as-is: URLSearchParams.get already decodes, and layering
+  // decodeURI on top breaks single-encoded values. See docs ADR-013.
+  return queryParams.get(param) ? String(queryParams.get(param)) : null;
 };
+
+// Restore the human-readable colon (a legal query character) in URLs written
+// to the address bar. Display-only: ":" and "%3A" parse identically, and a
+// literal "%3A" in a value serialises as "%253A" so it is never matched.
+// See docs ADR-013.
+export const prettifyQueryColons = (url: URL): string =>
+  `${url.origin}${url.pathname}${url.search.replace(/%3A/gi, ":")}${url.hash}`;
 
 export const setQueryParametersInUrl = (parameters: {
   [key: string]: string;
@@ -35,11 +44,11 @@ export const setQueryParametersInUrl = (parameters: {
     processedUrl.searchParams.set(key, parameters[key]);
   });
 
-  window.history.replaceState(null, "", processedUrl);
+  window.history.replaceState(null, "", prettifyQueryColons(processedUrl));
 };
 
 export const replaceCurrentLocation = (replacementUrl: URL) => {
-  window.history.replaceState(null, "", replacementUrl);
+  window.history.replaceState(null, "", prettifyQueryColons(replacementUrl));
 };
 
 export const removeQueryParametersFromUrl = (parameter: string) => {
@@ -152,7 +161,7 @@ export const constructSearchUrlWithFacets = (args: {
 }) => {
   const { searchUrl, q, facets } = args;
   const processedUrl = new URL(searchUrl);
-  processedUrl.searchParams.set("q", encodeURI(q));
+  processedUrl.searchParams.set("q", q);
   if (facets.length > 0) {
     processedUrl.searchParams.set("facets", JSON.stringify(facets));
   }

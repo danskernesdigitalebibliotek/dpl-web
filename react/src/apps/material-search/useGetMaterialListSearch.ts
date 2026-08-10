@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   SearchWithPaginationDocument,
   SearchWithPaginationQuery,
@@ -56,10 +56,10 @@ const useGetMaterialListSearch = ({
     ? "searchWithPagination-go"
     : "searchWithPagination";
 
-  const { data, isLoading } = useQuery<SearchWithPaginationQuery>(
-    [queryKey, queryVariables],
+  const { data, isLoading } = useQuery<SearchWithPaginationQuery>({
+    queryKey: [queryKey, queryVariables],
     queryFn
-  );
+  });
 
   useEffect(() => {
     if (data?.search?.works) {

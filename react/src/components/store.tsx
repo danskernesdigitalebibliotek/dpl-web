@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { store, persistor } from "../core/store";
 import FetcherHttpError from "../core/fetchers/FetcherHttpError";
 import FetcherError from "../core/fetchers/FetcherError";
@@ -30,10 +30,10 @@ const queryClient = new QueryClient({
       // This is for temporarily testing.
       // In this case cache needs be updated after 2 minutes:
       staleTime: 1000 * 120,
-      useErrorBoundary: queryErrorHandler
+      throwOnError: queryErrorHandler
     },
     mutations: {
-      useErrorBoundary: queryErrorHandler
+      throwOnError: queryErrorHandler
     }
   }
 });

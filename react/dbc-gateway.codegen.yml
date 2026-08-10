@@ -9,7 +9,7 @@ generates:
       defaultScalarType: unknown
       identifierName: operationNames
       useConsts: true
-      legacyMode: true
+      reactQueryVersion: 5
     plugins:
       - "typescript"
       - "typescript-operations"

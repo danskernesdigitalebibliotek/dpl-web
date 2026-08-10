@@ -12,6 +12,12 @@
 # Ignore Drupal's file directory
 /web/sites/*/files/
 
+# Ignore the generated translation files. Only the combined file is committed;
+# these two are derived from it and are published to GitHub Pages by CI.
+# See docs/cms/translation.md.
+/web/profiles/dpl_cms/translations/da.po
+/web/profiles/dpl_cms/translations/da.config.po
+
 # Ingore files that are only for the current local environment
 web/sites/*/settings.local.php
 web/sites/*/services.local.yml

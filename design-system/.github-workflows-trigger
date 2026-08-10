@@ -1,0 +1,12 @@
+# GitHub workflows trigger
+
+This subproject's CI is path-filtered to its own directory, so a PR that
+only touches another subproject skips it. To force it to run anyway, add
+a numbered line with a short reason below and commit — that counts as a
+change to `<subproject>/**`.
+
+Permanent file — do NOT remove before merging.
+
+## Trigger log
+
+_No triggers yet._

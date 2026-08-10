@@ -58,3 +58,6 @@ services:
     class: Drupal\dpl_event\EventSubscriber\EventInstanceEditRedirect
     tags:
       - { name: event_subscriber }
+  Drupal\dpl_event\Hook\EventListPagingHooks:
+    class: Drupal\dpl_event\Hook\EventListPagingHooks
+    autowire: true

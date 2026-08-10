@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_event\EventListPaging;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -77,6 +78,15 @@ final class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('Enable screen names'),
       '#default_value' => $config->get('enable_screen_name'),
       '#description' => $this->t('Enable screen names on events. Requires an external system to actually fetch and display the events on real physical screens.'),
+    ];
+
+    $form['list_paging_mode'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Event list paging', [], ['context' => 'DPL event']),
+      '#description' => $this->t('Controls how visitors browse the list of events on the events page: how many events are shown at a time, and whether more events appear behind a "Show more" button or load automatically as the visitor scrolls.', [], ['context' => 'DPL event']),
+      '#required' => TRUE,
+      '#default_value' => $config->get('list_paging_mode') ?? EventListPaging::DEFAULT_MODE->value,
+      '#options' => EventListPaging::formOptions(),
     ];
 
     $form['unpublish'] = [
@@ -165,6 +175,7 @@ final class SettingsForm extends ConfigFormBase {
       ->set('unpublish_schedule', $form_state->getValue('unpublish_schedule'))
       ->set('unpublish_series_enable', $form_state->getValue('unpublish_series_enable'))
       ->set('enable_screen_name', $form_state->getValue('enable_screen_name'))
+      ->set('list_paging_mode', $form_state->getValue('list_paging_mode'))
       ->save();
     parent::submitForm($form, $form_state);
 

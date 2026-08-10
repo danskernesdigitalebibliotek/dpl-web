@@ -1,4 +1,4 @@
-import { QueryClient } from "react-query";
+import { QueryClient } from "@tanstack/react-query";
 
 /**
  * Clears all user-visible content and client-side state, then navigates to the

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Drupal\dpl_media\Entity\ImageMedia;
 use Drupal\dpl_media\Entity\VideoMedia;
 use Drupal\dpl_media\Entity\VideotoolMedia;
 use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
@@ -15,6 +16,10 @@ use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
  *   Bundle info for altering.
  */
 function dpl_media_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['media']['image'])) {
+    $bundles['media']['image']['class'] = ImageMedia::class;
+  }
+
   if (isset($bundles['media']['video'])) {
     $bundles['media']['video']['class'] = VideoMedia::class;
   }
