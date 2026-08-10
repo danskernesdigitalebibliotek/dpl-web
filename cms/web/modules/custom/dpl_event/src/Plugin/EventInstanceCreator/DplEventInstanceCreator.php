@@ -193,12 +193,16 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
     $obsolete_instances = [];
 
     foreach ($series->getInstances() as $instance) {
-      $period = $this->instancePeriod($instance);
+      // The series returns the module's own class, so anything that is not our
+      // bundle class is an occurrence we have no way of reading the date of.
+      $period = ($instance instanceof EventInstance) ? $instance->getDateOrNull() : NULL;
 
       // An occurrence we cannot read the date of is left alone. It matches no
       // wanted period, so reconciling it would mean deleting it, and that would
       // throw away whatever an editor put on it over a date that we are the
-      // ones failing to understand.
+      // ones failing to understand. This also runs after the series has been
+      // saved, so failing here instead would leave the editor with a white
+      // screen and a series whose occurrences were never reconciled.
       if ($period === NULL) {
         $this->logger->error('Left event instance @instance of event series @series untouched: it has no date range that could be read.', [
           '@instance' => $instance->id(),
@@ -227,34 +231,6 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
       '@deleted' => $deleted_count,
       '@preserved' => $preserved_count,
     ], ['context' => 'dpl_event']));
-  }
-
-  /**
-   * Reads the period of an existing event instance.
-   *
-   * @param \Drupal\recurring_events\Entity\EventInstance $instance
-   *   The instance to read the period of.
-   *
-   * @return \Drupal\dpl_event\EventPeriod|null
-   *   The period, or NULL if the instance has no date we can read. An instance
-   *   is supposed to always have one, but these sites have seen instances end
-   *   up in states the module does not allow, and this runs after the series
-   *   has been saved, so a fatal here would leave the editor with a white
-   *   screen and a series whose occurrences were never reconciled.
-   */
-  private function instancePeriod(RecurringEventInstance $instance): ?EventPeriod {
-    if (!$instance instanceof EventInstance) {
-      return NULL;
-    }
-
-    // Every way of failing to read the date is the same answer here: we do not
-    // know when this occurrence is, so it is not ours to reconcile.
-    try {
-      return $instance->getDate();
-    }
-    catch (\Exception $exception) {
-      return NULL;
-    }
   }
 
   /**
