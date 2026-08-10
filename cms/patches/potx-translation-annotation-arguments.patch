@@ -1,5 +1,7 @@
 Extract @Translation annotations that carry an arguments parameter.
 
+Filed upstream as https://www.drupal.org/project/potx/issues/3615813.
+
 The annotation pattern only allowed an optional "context" parameter after the
 string, then required the closing parenthesis. Any other parameter made the
 match fail, so the string was not extracted at all - and potx then reported it

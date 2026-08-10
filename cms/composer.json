@@ -377,7 +377,7 @@
             },
             "drupal/potx": {
                 "Scan TranslationInterface::translate() calls": "patches/potx-scan-translationinterface-translate.patch",
-                "Extract @Translation annotations that carry an arguments parameter": "patches/potx-translation-annotation-arguments.patch"
+                "3615813: Extract @Translation annotations that carry an arguments parameter": "patches/potx-translation-annotation-arguments.patch"
             },
             "drupal/purge": {
                 "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",
