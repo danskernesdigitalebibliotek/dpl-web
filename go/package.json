@@ -54,7 +54,7 @@
     "@redux-devtools/extension": "^4.0.0",
     "@reloaddk/wsdl-tsclient": "^2.0.9",
     "@tanstack/react-query": "^5.101.4",
-    "@types/lodash": "^4.17.24",
+    "@types/lodash": "^4.17.25",
     "@uidotdev/usehooks": "^2.4.1",
     "@xstate/react": "^6.1.0",
     "@xstate/store": "^4.2.2",
