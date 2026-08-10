@@ -33,8 +33,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(redux@5.0.1)
       '@reloaddk/wsdl-tsclient':
-        specifier: ^2.0.8
-        version: 2.0.8
+        specifier: ^2.0.9
+        version: 2.0.9
       '@tanstack/react-query':
         specifier: ^5.101.4
         version: 5.101.4(react@19.2.8)
@@ -3246,8 +3246,8 @@ packages:
     peerDependencies:
       redux: ^3.1.0 || ^4.0.0 || ^5.0.0
 
-  '@reloaddk/wsdl-tsclient@2.0.8':
-    resolution: {integrity: sha512-D10MQRD0HILNZrSD7bLTbGLOp5+cYFHvwon/at3k8H9AynXPfqBp1NkaKqK/6Igg/11OjNohciH8edtINLXPhQ==}
+  '@reloaddk/wsdl-tsclient@2.0.9':
+    resolution: {integrity: sha512-uH5ratxz+YDTRRwwpyKvNS0zVgkDun8yi0ZikXIJtm4TxzmKHY1HMnZZBwAWAMm9lhpwBmYzt3yO5g/w7Id2DQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
@@ -13307,7 +13307,7 @@ snapshots:
     dependencies:
       redux: 5.0.1
 
-  '@reloaddk/wsdl-tsclient@2.0.8':
+  '@reloaddk/wsdl-tsclient@2.0.9':
     dependencies:
       camelcase: 9.0.0
       chalk: 5.6.2
