@@ -12,3 +12,11 @@ services:
       - '@cache.config'
     tags:
       - { name: drush.command }
+  dpl_po.scan_source_commands:
+    class: \Drupal\dpl_po\Commands\ScanSourceCommands
+    arguments:
+      - '%app.root%'
+      - '@language_manager'
+      - '@module_handler'
+    tags:
+      - { name: drush.command }

@@ -12,44 +12,78 @@ built on the doctrine annotation machinery that Drupal 11 removes.
 ADR-009 rejected [POTX](https://www.drupal.org/project/potx) because it
 "extract[s] strings to a `.pot` file without having the possibility of filling
 in the existing translations". This was a misunderstanding of what the module
-offered - potx fills in the translations held in the database as it scans,
-through the Drush command we now use.
+offered - potx fills in the translations held in the database as it scans.
 
 ## Decision
 
 We use POTX instead of Potion for scanning.
 
-`drush potx single --language=da --translations` replaces both
-`potion:generate` and `potion:fill`: it scans and fills in existing
-translations from the database in one pass. Potx writes hardcoded
-`general.pot` and `installer.pot` files into the Drupal root, so
-[`scan-translations.sh`](../../../cms/dev-scripts/translate-source/scan-translations.sh)
-moves each scan's output aside and combines the results with `msgcat`.
+Scanning is done by our own `dpl_po:scan-source` Drush command, which drives
+the potx API directly. It replaces both `potion:generate` and `potion:fill`:
+the codebase is scanned and the translations we already have are filled in, in
+a single pass.
+
+Potx ships a `drush potx` command of its own, but it scans one directory per
+invocation and writes the result to a hardcoded file name in the current
+directory. We scan a number of directories into one file, which is why we call
+the API rather than the command.
+
+### What gets scanned
+
+Our own code is covered by directory - `modules/custom`, `themes/custom` and
+the profile. Some of our modules only run on some sites, `bnf_client` and
+`bnf_server` on the BNF site and `dpl_webmaster` on webmaster sites, and their
+strings need translating whether or not the site running the scan has them
+turned on.
+
+Contrib is covered by the list in
+[`scanned_modules.txt`](../../../cms/dev-scripts/translate-source/scanned_modules.txt),
+which the command reads. Core is left out either way; its translations come
+from localize.drupal.org.
+
+That list is worth understanding before changing it. It is not a considered
+selection of the contrib projects worth translating: it was added in 33cc8d770
+because Potion crashed on some modules, and naming what to include was the safe
+way to stop a newly added module breaking the workflow without it being obvious
+why. Potx does not crash, so the reason is gone - but the list has quietly been
+deciding what reaches POEditor ever since. Dropping it takes the file from
+around 6,000 terms to around 13,400, most of them contrib strings that
+localize.drupal.org already translates. That is a decision about what we ask
+translators to work on, so it is left for its own day.
 
 The POEditor integration is unchanged - same file, same path, same webhook.
 
 ### Patches
 
-Potx and Potion do not find exactly the same strings. We deliberately and
-selectively patch potx in the two cases where it misses something Potion found
-and where the string in question already had a Danish translation. Both patches
-live in [`cms/patches/`](../../../cms/patches/):
+We carry one patch,
+[`potx-scan-translationinterface-translate.patch`](../../../cms/patches/potx-scan-translationinterface-translate.patch).
+Potx does not scan `translate()`, so strings passed to an injected
+`TranslationInterface` are invisible to it, and we use that call form in our own
+code - including in enums, which cannot use `StringTranslationTrait` at all. It
+is deliberately not filed upstream: `ContentEntityInterface::translate()` takes
+a langcode, and potx matches on a flat token stream, so a general version would
+extract `'da'` as a translatable string on any site that translates entities.
 
-- **`potx-scan-translationinterface-translate.patch`** - potx does not scan
-  `translate()`, so strings passed to an injected `TranslationInterface` are
-  invisible to it. Not filed upstream: `ContentEntityInterface::translate()`
-  takes a langcode, and potx matches on a flat token stream, so a general
-  version of this would extract `'da'` as a translatable string on any site
-  that translates entities.
-- **`potx-translation-annotation-arguments.patch`** - potx skips a
-  `@Translation` annotation that carries an `arguments` parameter. Filed
-  upstream as
-  [#3615813](https://www.drupal.org/project/potx/issues/3615813); both
-  `arguments` and `context` are documented parameters of the annotation, so
-  this is a plain bug.
+Two other potx shortcomings are handled in the Drush command rather than by
+patching, so that the patch count stays at one:
 
-Neither patch is a goal in itself. Dropping them costs the strings they cover,
-which is a trade we may want to make later in favour of running potx unpatched.
+- The `@Translation` extractor saves its match raw, where every other extractor
+  in `potx.inc` escapes it first. An annotation wrapped over two lines
+  therefore carries a real newline and the doc comment's continuation into the
+  msgid, which makes the file unreadable to gettext - losing every term in it,
+  not just the one string. The command escapes what potx left raw and folds the
+  continuation back into a space.
+- Potx keys a plural string by both of its forms and a plain string by itself,
+  so the same text reached through `formatPlural()` and through `t()` is one
+  message defined twice as far as gettext is concerned. The command keeps the
+  plural, whose first form is the singular translation.
+
+We also carried a patch for `@Translation` annotations with an `arguments`
+parameter, which potx skips entirely. It is dropped: every annotation of that
+shape in the codebase belongs to a metatag submodule we do not install, so the
+patch recovered nothing. The bug is real and stays filed upstream as
+[#3615813](https://www.drupal.org/project/potx/issues/3615813) for whenever one
+of those submodules is switched on.
 
 ### Why the 2.x alpha and not the 1.x stable release
 
@@ -87,13 +121,7 @@ The 2.x branch contains every commit in `8.x-1.1` plus the fixes we depend on:
   6,926 terms unchanged, 1,045 added, 184 dropped. No surviving term lost its
   translation. Of the dropped terms, 170 carried a Danish translation, but 133
   of those exist only in `tests/` directories or `*.api.php` files - the
-  translators had been translating test fixtures. The rest are whitespace and
-  context churn plus a handful of contrib strings not reachable from real code.
-- Comparing generated files requires a CI-equivalent site. Config strings are
-  exported with the translations held in the local site's `language.da`
-  config collection, and `ci:reset` skips importing those, so a scan run on a
-  normal dev site fills in around 1,700 config translations that CI leaves
-  empty. See [ADR-011](./adr-011-configuration-translation-system.md).
+  translators had been translating test fixtures.
 
 ## Alternatives considered
 

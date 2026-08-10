@@ -14,9 +14,8 @@ tasks:
     cmds:
       # Make sure that the potx module is active
       - task dev:cli -- drush en -y potx
-      # Generate translations for modules and themes. The script also fills in
-      # existing translations from the database, so no separate step is needed.
-      - task dev:cli -- ./dev-scripts/translate-source/scan-translations.sh {{ .LANGUAGE }} {{ .PO_DIR }}
+      # Generate translations for modules and themes
+      - task dev:cli -- drush dpl_po:scan-source {{ .LANGUAGE }} {{ .PATH_TO_FILE }}
       - task: chown
         vars:
           PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
