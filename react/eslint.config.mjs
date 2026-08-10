@@ -14,14 +14,19 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 const __dirname = import.meta.dirname;
 
 export default [
+  { files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"] },
   {
-    files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
     ignores: [
-      "src/core/dpl-cms/model",
+      // Orval output. Each generated client has a `mutator/` sibling which is
+      // hand-written and must stay linted, so we ignore the entry file and
+      // the `model/` schemas rather than the whole client directory.
+      "src/core/dpl-cms/model/**",
       "src/core/dpl-cms/dpl-cms.ts",
-      "src/core/fbs/model",
+      "src/core/fbs/model/**",
       "src/core/fbs/fbs.ts",
-      "src/core/publizon/model",
+      "src/core/material-list-api/model/**",
+      "src/core/material-list-api/material-list.ts",
+      "src/core/publizon/model/**",
       "src/core/publizon/publizon.ts",
       "*.config.js",
       "*.config.mjs"
