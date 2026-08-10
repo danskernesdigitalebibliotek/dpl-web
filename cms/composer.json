@@ -12,25 +12,6 @@
         {
             "type": "package",
             "package": {
-                "name": "drupal/potion",
-                "type": "drupal-module",
-                "version": "dev-2.x",
-                "source": {
-                    "type": "git",
-                    "url": "https://git.drupalcode.org/project/potion.git",
-                    "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
-                },
-                "require": {
-                    "drupal/core": "^8 || ^9 || ^10",
-                    "symfony/finder": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/process": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/translation": "^3.4 || ^4.4 || ^5 || ^6"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "drupal/address_dawa",
                 "type": "drupal-module",
                 "version": "dev-2.x",
@@ -155,7 +136,6 @@
         "drupal/paragraphs_ee": "^10",
         "drupal/password_policy": "^4.0",
         "drupal/pathauto": "^1.13",
-        "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/potx": "^2.0@alpha",
         "drupal/purge": "^3.6",
         "drupal/purge_queues": "^2.1",
