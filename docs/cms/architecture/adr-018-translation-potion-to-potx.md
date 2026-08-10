@@ -30,50 +30,26 @@ The POEditor integration is unchanged - same file, same path, same webhook.
 
 ### Patches
 
-We carry two patches in [`cms/patches/`](../../../cms/patches/). Both exist
-because potx fails to extract strings we need, and in both cases the failure is
-silent in the resulting file.
+Potx and Potion do not find exactly the same strings. We deliberately and
+selectively patch potx in the two cases where it misses something Potion found
+and where the string in question already had a Danish translation. Both patches
+live in [`cms/patches/`](../../../cms/patches/):
 
-#### `potx-scan-translationinterface-translate.patch`
+- **`potx-scan-translationinterface-translate.patch`** - potx does not scan
+  `translate()`, so strings passed to an injected `TranslationInterface` are
+  invisible to it. Not filed upstream: `ContentEntityInterface::translate()`
+  takes a langcode, and potx matches on a flat token stream, so a general
+  version of this would extract `'da'` as a translatable string on any site
+  that translates entities.
+- **`potx-translation-annotation-arguments.patch`** - potx skips a
+  `@Translation` annotation that carries an `arguments` parameter. Filed
+  upstream as
+  [#3615813](https://www.drupal.org/project/potx/issues/3615813); both
+  `arguments` and `context` are documented parameters of the annotation, so
+  this is a plain bug.
 
-**Why:** potx does not scan `translate()`, so strings passed to an injected
-`TranslationInterface` - `$this->translation->translate('...')` - are invisible
-to it. We use that call form in 31 places across 8 files. Four of those files
-are enums, which cannot use `StringTranslationTrait` at all, since the trait
-declares a property and enums cannot have properties.
-
-**If removed:** around 30 strings disappear from the translation file and lose
-their Danish. The alternative to keeping the patch is to rewrite those 31 call
-sites as `new TranslatableMarkup($string, $args, $options, $this->translation)`,
-which builds the identical object and is scanned without any patch - core's
-`translate()` is literally that constructor call.
-
-**Deliberately not filed upstream.** `ContentEntityInterface::translate()` takes
-a langcode, and potx matches on a flat token stream, so a general version of
-this would make potx extract `'da'` as a translatable string on any site that
-translates entities. It is only safe here because we never call `translate()` on
-an entity. Grep before assuming that still holds.
-
-#### `potx-translation-annotation-arguments.patch`
-
-**Why:** potx's `@Translation` pattern allowed only an optional `context`
-parameter before the closing parenthesis, so an annotation carrying any other
-parameter failed to match and its string was skipped. The common case is
-`arguments`, used for placeholders:
-
-```php
-description = @Translation("A string provided by <a href=':google'>Google</a>.",
-  arguments = { ":google" = "https://www.google.com/" }),
-```
-
-**If removed:** 13 strings disappear, all metatag field descriptions, and all 13
-had Danish translations. Potx additionally reports each one as an error ("In
-@Translation, only one, non-empty static string is allowed in double quotes"),
-even though the annotation is perfectly valid.
-
-**Worth filing upstream.** Both `arguments` and `context` are documented
-parameters of the Translation annotation, so this is a plain bug rather than
-anything specific to our codebase.
+Neither patch is a goal in itself. Dropping them costs the strings they cover,
+which is a trade we may want to make later in favour of running potx unpatched.
 
 ## Consequences
 
