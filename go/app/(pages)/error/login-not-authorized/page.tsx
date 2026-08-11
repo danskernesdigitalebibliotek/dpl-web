@@ -9,9 +9,9 @@ export const metadata: Metadata = setPageMetadata("Ingen adgang med Unilogin")
 const descriptionComponent = (
   <>
     <p>
-      Din skole er ikke tilmeldt GO med Unilogin. Brug almindeligt bibliotekslogin i stedet. Hvis
-      du ikke har et, kan du få et på dit lokale bibliotek med en forælder/værge. Det koster ikke
-      noget at få et bibliotekslogin.
+      Din skole er ikke tilmeldt GO med Unilogin. Brug almindeligt bibliotekslogin i stedet. Hvis du
+      ikke har et, kan du få et på dit lokale bibliotek med en forælder/værge. Det koster ikke noget
+      at få et bibliotekslogin.
     </p>
     <h4>
       Er du medarbejder på en skole, der ønsker en aftale om login med Unilogin på eReolen GO?
