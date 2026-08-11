@@ -10,5 +10,5 @@ services:
 
   # These hook services definitions is only needed by Drupal 10, they
   # can be removed when we upgrade to Drupal 11.
-  Drupal\dpl_logging\Hook\EntityHooks:
-    class: Drupal\dpl_logging\Hook\EntityHooks
+  Drupal\dpl_logging\Hook\UserHooks: {}
+  Drupal\dpl_logging\Hook\EntityHooks: {}
