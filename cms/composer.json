@@ -331,6 +331,9 @@
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "patches/vendor/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
+            "drupal/next": {
+                "3616052: next_update_9107() installs a base field on a config entity type (MR !9)": "patches/3616052-next-9107-no-base-field-on-config-entity.patch"
+            },
             "drupal/openapi": {
                 "3480050: Update oauth2 security definitions to match openapi v2 specification": "patches/vendor/openapi-add-oauth2-accesscode-flow-3480050-3.patch"
             },
