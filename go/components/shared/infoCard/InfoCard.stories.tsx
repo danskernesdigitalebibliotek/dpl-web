@@ -33,10 +33,10 @@ export const Stacked: Story = {
   render: args => (
     <div className="w-96 space-y-4">
       <InfoCard {...args} />
-      <InfoCard icon="chat" title="Du får en sms når du kan hente bogen" value="12 34 56 78" />
+      <InfoCard icon="chat" title="Du får en sms, når du kan hente bogen" value="12 34 56 78" />
       <InfoCard
         icon="envelope"
-        title="Du får en e-mail når du kan hente bogen"
+        title="Du får en e-mail, når du kan hente bogen"
         value="laaner@eksempel.dk"
       />
     </div>
@@ -48,10 +48,10 @@ export const StackedDarkMode: Story = {
   render: args => (
     <div className="w-96 space-y-4">
       <InfoCard {...args} />
-      <InfoCard icon="chat" title="Du får en sms når du kan hente bogen" value="12 34 56 78" />
+      <InfoCard icon="chat" title="Du får en sms, når du kan hente bogen" value="12 34 56 78" />
       <InfoCard
         icon="envelope"
-        title="Du får en e-mail når du kan hente bogen"
+        title="Du får en e-mail, når du kan hente bogen"
         value="laaner@eksempel.dk"
       />
     </div>

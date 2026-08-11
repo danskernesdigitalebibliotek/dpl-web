@@ -138,7 +138,7 @@ const ProfileNotifications = () => {
             status: "success" as const,
             label: "Klar til dig",
             title: `${bookCount(readyCount)} er klar til afhentning på biblioteket`,
-            action: { label: "Vis bøger", onClick: openReservations },
+            action: { label: "Vis reserveringer", onClick: openReservations },
           },
         ]
       : []),

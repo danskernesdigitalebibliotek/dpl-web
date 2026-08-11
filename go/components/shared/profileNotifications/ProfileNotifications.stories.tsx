@@ -52,7 +52,7 @@ const allNotifications: Notification[] = [
     status: "success",
     label: "Klar til dig",
     title: "1 bog er klar til afhentning på biblioteket",
-    action: { label: "Vis bøger", onClick: () => {} },
+    action: { label: "Vis reserveringer", onClick: () => {} },
   },
   {
     key: "overdue",

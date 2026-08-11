@@ -168,20 +168,22 @@ const ReservationDetails = ({ item }: { item: ReservationItem }) => {
         ) : (
           <>
             {branchTitle && <InfoCard icon="pin" title="Afhentningssted" value={branchTitle} />}
-            {patron?.phoneNumber && (
-              <InfoCard
-                icon="chat"
-                title="Du får en sms når du kan hente bogen"
-                value={patron.phoneNumber}
-              />
-            )}
-            {patron?.emailAddress && (
-              <InfoCard
-                icon="envelope"
-                title="Du får en e-mail når du kan hente bogen"
-                value={patron.emailAddress}
-              />
-            )}
+            <InfoCard
+              icon="chat"
+              title={
+                patron?.phoneNumber ? "Du får en sms, når du kan hente bogen" : "Du får ikke en sms"
+              }
+              value={patron?.phoneNumber ?? "Der er ikke registreret et telefonnummer."}
+            />
+            <InfoCard
+              icon="envelope"
+              title={
+                patron?.emailAddress
+                  ? "Du får en e-mail, når du kan hente bogen"
+                  : "Du får ikke en e-mail"
+              }
+              value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adresse."}
+            />
           </>
         )}
 

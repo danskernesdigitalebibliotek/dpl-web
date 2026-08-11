@@ -53,7 +53,8 @@ export default function StatusLabel({ children, subline, variant, inverted, clas
       className={cn(
         statusLabelVariants({ variant, inverted }),
         subline &&
-          "w-[230px] max-w-full flex-col items-start gap-0.5 rounded-sm px-4 py-2 whitespace-normal",
+          `max-w-full flex-col items-start gap-0.5 rounded-sm px-4 py-2 text-balance
+          whitespace-normal`,
         className
       )}>
       {children}
