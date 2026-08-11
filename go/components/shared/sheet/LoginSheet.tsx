@@ -30,12 +30,12 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
               className="bg-background-overlay flex min-h-[300px] flex-col items-center
                 justify-center rounded-sm p-8">
               <div className="text-typo-heading-4 text-foreground mb-4 text-center">
-                Log ind med UNI•Login
+                Log ind med Unilogin
               </div>
               <div>
                 <Button
                   theme="primary"
-                  ariaLabel="Log ind med UNI•Login"
+                  ariaLabel="Log ind med UniLogin"
                   onClick={() => {
                     if (onLogin) onLogin()
                     router.push(routes["routes.login.unilogin"])
