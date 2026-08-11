@@ -19,7 +19,7 @@ const loan = (dueInDays: number, overrides: Record<string, unknown> = {}) => ({
   ...overrides,
 })
 
-const renewButton = () => screen.getByRole("button", { name: /forny lån/i }) as HTMLButtonElement
+const renewButton = () => screen.getByRole("button", { name: /forlæng lån/i }) as HTMLButtonElement
 
 describe("RenewLoanAction", () => {
   it("shows a disabled button with a countdown before the renewal window opens", () => {
@@ -29,7 +29,7 @@ describe("RenewLoanAction", () => {
     )
 
     expect(renewButton().disabled).toBe(true)
-    expect(screen.getByText("Lånet kan først fornys om 7 dage")).toBeTruthy()
+    expect(screen.getByText("Lånet kan først forlænges om 7 dage")).toBeTruthy()
   })
 
   it("uses the singular day form one day before the window opens", () => {
@@ -37,7 +37,7 @@ describe("RenewLoanAction", () => {
       <RenewLoanAction loan={loan(8.5)} title="Vildheks" isRenewing={false} onRenew={() => {}} />
     )
 
-    expect(screen.getByText("Lånet kan først fornys om 1 dag")).toBeTruthy()
+    expect(screen.getByText("Lånet kan først forlænges om 1 dag")).toBeTruthy()
   })
 
   it("renews through an active button inside the window", () => {
@@ -99,7 +99,7 @@ describe("RenewLoanAction", () => {
       />
     )
 
-    expect(screen.getByText("Lånet kan først fornys om 7 dage")).toBeTruthy()
+    expect(screen.getByText("Lånet kan først forlænges om 7 dage")).toBeTruthy()
   })
 
   it("falls back to the generic denial copy without a documented reason", () => {

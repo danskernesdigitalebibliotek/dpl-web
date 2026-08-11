@@ -11,7 +11,7 @@ import {
 // The renewable "Sjælerytterne" fixture from the shared physical loan set —
 // plain placeholder covers, dates relative to "now". 7 days lands inside
 // the renewal window (7) but outside the warning threshold (6): neutral
-// status with an active "Forny lån" button.
+// status with an active "Forlæng lån" button.
 const fixtureItem = buildItem({
   faust: "12345671",
   title: "Sjælerytterne",
@@ -93,7 +93,7 @@ export const TerminallyDeniedBeforeWindow: Story = {
   },
 }
 
-// Stub the FBS renew endpoint and auto-click "Forny lån" so the story renders
+// Stub the FBS renew endpoint and auto-click "Forlæng lån" so the story renders
 // the requested renewal outcome on load.
 const renewalStory = (renewalStatus: string[]): Story => ({
   decorators: [withServiceLayer()],
@@ -132,7 +132,7 @@ const renewalStory = (renewalStatus: string[]): Story => ({
     // The modal renders to a portal, so query against document.body via
     // screen instead of canvasElement.
     const { screen, userEvent } = await import("@storybook/test")
-    const button = await screen.findByRole("button", { name: /forny lån/i })
+    const button = await screen.findByRole("button", { name: /forlæng lån/i })
     await userEvent.click(button)
   },
   args: defaultArgs,

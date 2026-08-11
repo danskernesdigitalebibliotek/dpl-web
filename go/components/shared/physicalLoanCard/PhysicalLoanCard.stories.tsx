@@ -149,13 +149,13 @@ const stateItems = [
     dueInDays: 5,
   }),
   buildProps({
-    title: "Neutral med fornyelse",
+    title: "Neutral med forlængelse",
     materialType: { code: "BOOK", display: "bog", general: "BOOKS" },
     dueInDays: 24,
     isRenewable: true,
   }),
   buildProps({
-    title: "Neutral uden fornyelse",
+    title: "Neutral uden forlængelse",
     materialType: { code: "BOOK", display: "bog", general: "BOOKS" },
     dueInDays: 24,
   }),

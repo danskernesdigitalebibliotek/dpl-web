@@ -76,12 +76,12 @@ const PhysicalLoanCard = ({
           <div className="flex w-full justify-center">
             <Button
               size="sm"
-              ariaLabel={`Forny lån af ${title}`}
+              ariaLabel={`Forlæng lån af ${title}`}
               data-cy={cyKeys["renew-loan-button"]}
               onClick={() =>
                 openModal("LoanDetailsModal", { loan, manifestation, title, workId, creators })
               }>
-              Forny lån
+              Forlæng lån
             </Button>
           </div>
         )}

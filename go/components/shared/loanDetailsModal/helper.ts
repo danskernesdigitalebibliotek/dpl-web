@@ -1,14 +1,14 @@
 import type { RenewalFailureReason } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
-const GENERIC_MESSAGE = "Lånet kunne ikke fornys. Prøv igen senere."
+const GENERIC_MESSAGE = "Lånet kunne ikke forlænges. Prøv igen senere."
 
 // Single source of truth for FBS renewal-denial → Danish copy. Codes the user
 // can't act on collapse to the generic message, mirroring the reservation flow.
 const REASON_COPY: Record<RenewalFailureReason, string> = {
-  deniedReserved: "Bogen er reserveret af en anden låner, lånet kan ikke fornys.",
-  deniedMaxRenewalsReached: "Lånet kan ikke fornys flere gange.",
+  deniedReserved: "Bogen er reserveret af en anden låner, lånet kan ikke forlænges.",
+  deniedMaxRenewalsReached: "Lånet kan ikke forlænges flere gange.",
   deniedLoanerIsBlocked: "Din konto er spærret. Kontakt biblioteket.",
-  deniedMaterialIsNotLoanable: "Bogen kan ikke fornys lige nu.",
+  deniedMaterialIsNotLoanable: "Bogen kan ikke forlænges lige nu.",
   deniedMaterialIsNotFound: "Bogen er ikke længere tilgængelig.",
   deniedLoanerNotFound: "Vi kunne ikke finde din konto.",
   deniedLoaningProfileNotFound: GENERIC_MESSAGE,

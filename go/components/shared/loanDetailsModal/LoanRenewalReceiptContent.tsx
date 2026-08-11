@@ -35,7 +35,7 @@ const LoanRenewalReceiptContent = ({
     />
     <div className="flex flex-col gap-y-4">
       <h2 className="text-typo-heading-4 mt-2 first-letter:uppercase">
-        {getManifestationLabel(manifestation, "definite")} er fornyet!
+        {getManifestationLabel(manifestation, "definite")} er forlænget!
       </h2>
       <p className="text-typo-subtitle-md text-foreground-muted">
         Du kan beholde &ldquo;{title}&rdquo; lidt længere.
