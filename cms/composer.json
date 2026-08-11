@@ -292,12 +292,10 @@
                 "Show the loading indicator inline at the pager instead of a floating full-screen overlay": "patches/infinite-scroll-inline-loading-indicator.patch"
             },
             "drupal/core": {
-                "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "patches/vendor/2280639-d10-reroll-156.patch",
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "patches/vendor/core-61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
                 "3035578: Add details for AJAX response errors": "patches/vendor/3035578-26.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
-                "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch",
-                "Don't check for file owner in update": "patches/dont-check-fileowner.patch"
+                "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
             "drupal/config_translation_po": {
                 "3426797: Problem: Untranslated string used as source": "patches/vendor/config_translation_po-5.patch"
