@@ -1,4 +1,14 @@
-# Architecture Decision Record: Translation system
+# SUPERSEEDED: Architecture Decision Record: Translation system
+
+## Status
+
+**This is no longer the active setup**
+
+Superseded by
+[ADR-018: Translation: Moving from Potion to POTX](./adr-018-translation-potion-to-potx.md).
+
+The current setup is described in
+[the translation documentation](../translation.md).
 
 ## Context
 
@@ -109,10 +119,3 @@ We considered the following alternatives:
    Such an instance would require maintenance and we would have to implement a
    method for exposing translations to other instances.
 
-## Status
-
-Superseded by
-[ADR-018: Translation: Moving from Potion to POTX](./adr-018-translation-potion-to-potx.md).
-
-The current setup is described in
-[the translation documentation](../translation.md).
