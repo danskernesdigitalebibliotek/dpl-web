@@ -6,8 +6,10 @@ import {
   formatFullCalendarEventToCmsEventAdd
 } from "./helper";
 import EventForm, { EventFormOnSubmitType } from "./EventForm";
-import { DplOpeningHoursCreatePOSTBodyRepetitionType } from "../../core/dpl-cms/model";
-import { DplOpeningHoursCreatePOSTOpeningHoursInstanceBody } from "../../core/dpl-cms/model/dplOpeningHoursCreatePOSTOpeningHoursInstanceBody";
+import {
+  DplOpeningHoursCreatePOSTBody,
+  DplOpeningHoursCreatePOSTBodyRepetitionType
+} from "../../core/dpl-cms/model";
 import { OpeningHoursCategoriesType } from "./types";
 import useDialog from "../../components/dialog/useDialog";
 import ConfirmAddRepeatedOpeningHour from "./ConfirmAddRepeatedOpeningHour";
@@ -19,9 +21,7 @@ import {
 
 type DialogFormAddProps = {
   selectedEventInfo: DateSelectArg;
-  handleEventAdd: (
-    event: DplOpeningHoursCreatePOSTOpeningHoursInstanceBody
-  ) => void;
+  handleEventAdd: (event: DplOpeningHoursCreatePOSTBody) => void;
   closeDialog: () => void;
   openingHoursCategories: OpeningHoursCategoriesType[];
 };

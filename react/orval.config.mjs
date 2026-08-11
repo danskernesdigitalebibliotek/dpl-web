@@ -3,6 +3,7 @@ import { defineConfig } from "orval";
 export default defineConfig({
   materialList: {
     output: {
+      clean: ['!**/mutator/*.*'],
       mode: "split",
       target: "src/core/material-list-api/material-list.ts",
       schemas: "src/core/material-list-api/model",
@@ -24,6 +25,7 @@ export default defineConfig({
   },
   fbsAdapter: {
     output: {
+      clean: ['!**/mutator/*.*'],
       mode: "split",
       target: "src/core/fbs/fbs.ts",
       schemas: "src/core/fbs/model",
@@ -46,6 +48,7 @@ export default defineConfig({
   },
   publizonAdapter: {
     output: {
+      clean: ['!**/mutator/*.*', '!**/productType.ts'],
       mode: "split",
       target: "src/core/publizon/publizon.ts",
       schemas: "src/core/publizon/model",
@@ -67,6 +70,7 @@ export default defineConfig({
   },
   dplCms: {
     output: {
+      clean: ['!**/mutator/*.*'],
       mode: "split",
       target: "src/core/dpl-cms/dpl-cms.ts",
       schemas: "src/core/dpl-cms/model",
