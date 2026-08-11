@@ -43,7 +43,6 @@ export default defineConfig({
     },
     input: {
       target: "../schemas/openapi/fbs-adapter.yaml",
-      unsafeDisableValidation: true
     }
   },
   publizonAdapter: {
