@@ -288,6 +288,9 @@
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "patches/vendor/nested_elements-3199172-14.patch"
             },
+            "drupal/state_log": {
+                "3616051: StateLog is missing StateInterface::getValuesSetDuringRequest(), fatal on Drupal 11.3 and up (MR !6)": "patches/3616051-state_log-getValuesSetDuringRequest.patch"
+            },
             "drupal/views_infinite_scroll": {
                 "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch",
                 "Show the loading indicator inline at the pager instead of a floating full-screen overlay": "patches/infinite-scroll-inline-loading-indicator.patch"
