@@ -313,7 +313,7 @@
                 "2708731: Allow redirect to edit form after cloning": "patches/2708731-entity_clone-2.2.0-beta1-reroll.patch"
             },
             "drupal/entity_reference_revisions": {
-                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/vendor/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/3039442-entity_reference_revisions-1.14-reroll.patch"
             },
             "drupal/facets": {
                 "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
