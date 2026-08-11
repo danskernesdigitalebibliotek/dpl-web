@@ -48,8 +48,8 @@ import type {
   UpdateReservationBatch
 } from "./model";
 
-import { fetcher } from "./mutator/fetcher";
-import type { ErrorType, BodyType } from "./mutator/fetcher";
+import { mutator } from "./mutator/mutator";
+import type { ErrorType, BodyType } from "./mutator/mutator";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -101,9 +101,9 @@ export const getGetBranchesUrl = (params?: GetBranchesParams) => {
  */
 export const getBranches = async (
   params?: GetBranchesParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<AgencyBranch[]> => {
-  return fetcher<AgencyBranch[]>(getGetBranchesUrl(params), {
+  return mutator<AgencyBranch[]>(getGetBranchesUrl(params), {
     ...options,
     method: "GET"
   });
@@ -125,7 +125,7 @@ export const getGetBranchesQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -165,7 +165,7 @@ export function useGetBranches<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -188,7 +188,7 @@ export function useGetBranches<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -203,7 +203,7 @@ export function useGetBranches<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -222,7 +222,7 @@ export function useGetBranches<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getBranches>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -264,9 +264,9 @@ export const getDeleteReservationsUrl = (params: DeleteReservationsParams) => {
  */
 export const deleteReservations = async (
   params: DeleteReservationsParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getDeleteReservationsUrl(params), {
+  return mutator<void>(getDeleteReservationsUrl(params), {
     ...options,
     method: "DELETE"
   });
@@ -282,7 +282,7 @@ export const getDeleteReservationsMutationOptions = <
     { params: DeleteReservationsParams },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof deleteReservations>>,
   TError,
@@ -330,7 +330,7 @@ export const useDeleteReservations = <
       { params: DeleteReservationsParams },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -376,9 +376,9 @@ export const getGetReservationsUrl = () => {
  * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
  */
 export const getReservations = async (
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
-  return fetcher<ReservationDetails[]>(getGetReservationsUrl(), {
+  return mutator<ReservationDetails[]>(getGetReservationsUrl(), {
     ...options,
     method: "GET"
   });
@@ -395,7 +395,7 @@ export const getGetReservationsQueryOptions = <
   query?: Partial<
     UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -437,7 +437,7 @@ export function useGetReservations<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -463,7 +463,7 @@ export function useGetReservations<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -481,7 +481,7 @@ export function useGetReservations<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -503,7 +503,7 @@ export function useGetReservations<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -552,9 +552,9 @@ export const getAddReservationsDeprecatedUrl = () => {
  */
 export const addReservationsDeprecated = async (
   createReservationBatch: CreateReservationBatch,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
-  return fetcher<ReservationDetails[]>(getAddReservationsDeprecatedUrl(), {
+  return mutator<ReservationDetails[]>(getAddReservationsDeprecatedUrl(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -572,7 +572,7 @@ export const getAddReservationsDeprecatedMutationOptions = <
     { data: BodyType<CreateReservationBatch> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof addReservationsDeprecated>>,
   TError,
@@ -621,7 +621,7 @@ export const useAddReservationsDeprecated = <
       { data: BodyType<CreateReservationBatch> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -664,9 +664,9 @@ export const getUpdateReservationsUrl = () => {
  */
 export const updateReservations = async (
   updateReservationBatch: UpdateReservationBatch,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
-  return fetcher<ReservationDetails[]>(getUpdateReservationsUrl(), {
+  return mutator<ReservationDetails[]>(getUpdateReservationsUrl(), {
     ...options,
     method: "PUT",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -684,7 +684,7 @@ export const getUpdateReservationsMutationOptions = <
     { data: BodyType<UpdateReservationBatch> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateReservations>>,
   TError,
@@ -732,7 +732,7 @@ export const useUpdateReservations = <
       { data: BodyType<UpdateReservationBatch> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -780,9 +780,9 @@ export const getGetReservationsV2Url = () => {
  * @summary Get all unfulfilled reservations made by the patron.
  */
 export const getReservationsV2 = async (
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetailsV2[]> => {
-  return fetcher<ReservationDetailsV2[]>(getGetReservationsV2Url(), {
+  return mutator<ReservationDetailsV2[]>(getGetReservationsV2Url(), {
     ...options,
     method: "GET"
   });
@@ -803,7 +803,7 @@ export const getGetReservationsV2QueryOptions = <
       TData
     >
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -845,7 +845,7 @@ export function useGetReservationsV2<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -871,7 +871,7 @@ export function useGetReservationsV2<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -889,7 +889,7 @@ export function useGetReservationsV2<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -911,7 +911,7 @@ export function useGetReservationsV2<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -992,9 +992,9 @@ export const getAddReservationsV2Url = () => {
  */
 export const addReservationsV2 = async (
   createReservationBatchV2: CreateReservationBatchV2,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationResponseV2> => {
-  return fetcher<ReservationResponseV2>(getAddReservationsV2Url(), {
+  return mutator<ReservationResponseV2>(getAddReservationsV2Url(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -1012,7 +1012,7 @@ export const getAddReservationsV2MutationOptions = <
     { data: BodyType<CreateReservationBatchV2> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof addReservationsV2>>,
   TError,
@@ -1060,7 +1060,7 @@ export const useAddReservationsV2 = <
       { data: BodyType<CreateReservationBatchV2> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -1100,9 +1100,9 @@ export const getGetAvailabilityV3Url = (params: GetAvailabilityV3Params) => {
  */
 export const getAvailabilityV3 = async (
   params: GetAvailabilityV3Params,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<AvailabilityV3[]> => {
-  return fetcher<AvailabilityV3[]>(getGetAvailabilityV3Url(params), {
+  return mutator<AvailabilityV3[]>(getGetAvailabilityV3Url(params), {
     ...options,
     method: "GET"
   });
@@ -1130,7 +1130,7 @@ export const getGetAvailabilityV3QueryOptions = <
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1175,7 +1175,7 @@ export function useGetAvailabilityV3<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1202,7 +1202,7 @@ export function useGetAvailabilityV3<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1221,7 +1221,7 @@ export function useGetAvailabilityV3<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1244,7 +1244,7 @@ export function useGetAvailabilityV3<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1291,9 +1291,9 @@ export const getGetHoldingsLogisticsV1Url = (
  */
 export const getHoldingsLogisticsV1 = async (
   params: GetHoldingsLogisticsV1Params,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<HoldingsForBibliographicalRecordLogisticsV1[]> => {
-  return fetcher<HoldingsForBibliographicalRecordLogisticsV1[]>(
+  return mutator<HoldingsForBibliographicalRecordLogisticsV1[]>(
     getGetHoldingsLogisticsV1Url(params),
     {
       ...options,
@@ -1324,7 +1324,7 @@ export const getGetHoldingsLogisticsV1QueryOptions = <
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1370,7 +1370,7 @@ export function useGetHoldingsLogisticsV1<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1397,7 +1397,7 @@ export function useGetHoldingsLogisticsV1<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1416,7 +1416,7 @@ export function useGetHoldingsLogisticsV1<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1439,7 +1439,7 @@ export function useGetHoldingsLogisticsV1<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1490,9 +1490,9 @@ export const getGetFeesV2Url = (params: GetFeesV2Params) => {
  */
 export const getFeesV2 = async (
   params: GetFeesV2Params,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<FeeV2[]> => {
-  return fetcher<FeeV2[]>(getGetFeesV2Url(params), {
+  return mutator<FeeV2[]>(getGetFeesV2Url(params), {
     ...options,
     method: "GET"
   });
@@ -1514,7 +1514,7 @@ export const getGetFeesV2QueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1554,7 +1554,7 @@ export function useGetFeesV2<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1577,7 +1577,7 @@ export function useGetFeesV2<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1592,7 +1592,7 @@ export function useGetFeesV2<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1611,7 +1611,7 @@ export function useGetFeesV2<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getFeesV2>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1661,9 +1661,9 @@ export const getCreateV9Url = () => {
  */
 export const createV9 = async (
   createPatronRequestV7: CreatePatronRequestV7,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV10> => {
-  return fetcher<AuthenticatedPatronV10>(getCreateV9Url(), {
+  return mutator<AuthenticatedPatronV10>(getCreateV9Url(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -1681,7 +1681,7 @@ export const getCreateV9MutationOptions = <
     { data: BodyType<CreatePatronRequestV7> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createV9>>,
   TError,
@@ -1726,7 +1726,7 @@ export const useCreateV9 = <TError = ErrorType<void>, TContext = unknown>(
       { data: BodyType<CreatePatronRequestV7> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -1757,9 +1757,9 @@ export const getCreateWithGuardianUrl = () => {
  */
 export const createWithGuardian = async (
   patronWithGuardianRequest: PatronWithGuardianRequest,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<number> => {
-  return fetcher<number>(getCreateWithGuardianUrl(), {
+  return mutator<number>(getCreateWithGuardianUrl(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -1777,7 +1777,7 @@ export const getCreateWithGuardianMutationOptions = <
     { data: BodyType<PatronWithGuardianRequest> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createWithGuardian>>,
   TError,
@@ -1826,7 +1826,7 @@ export const useCreateWithGuardian = <
       { data: BodyType<PatronWithGuardianRequest> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -1860,9 +1860,9 @@ export const getUpdateGuardianUrl = () => {
  */
 export const updateGuardian = async (
   updateGuardianRequest: UpdateGuardianRequest,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<number> => {
-  return fetcher<number>(getUpdateGuardianUrl(), {
+  return mutator<number>(getUpdateGuardianUrl(), {
     ...options,
     method: "PUT",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -1880,7 +1880,7 @@ export const getUpdateGuardianMutationOptions = <
     { data: BodyType<UpdateGuardianRequest> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateGuardian>>,
   TError,
@@ -1925,7 +1925,7 @@ export const useUpdateGuardian = <TError = ErrorType<void>, TContext = unknown>(
       { data: BodyType<UpdateGuardianRequest> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -1975,9 +1975,9 @@ export const getRenewLoansV2Url = () => {
  */
 export const renewLoansV2 = async (
   renewLoansV2Body: number[],
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<RenewedLoanV2[]> => {
-  return fetcher<RenewedLoanV2[]>(getRenewLoansV2Url(), {
+  return mutator<RenewedLoanV2[]>(getRenewLoansV2Url(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -1995,7 +1995,7 @@ export const getRenewLoansV2MutationOptions = <
     { data: BodyType<number[]> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof renewLoansV2>>,
   TError,
@@ -2040,7 +2040,7 @@ export const useRenewLoansV2 = <TError = ErrorType<void>, TContext = unknown>(
       { data: BodyType<number[]> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -2090,9 +2090,9 @@ export const getGetLoansV2Url = () => {
  * @summary Get list of current loans by the patron.
  */
 export const getLoansV2 = async (
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<LoanV2[]> => {
-  return fetcher<LoanV2[]>(getGetLoansV2Url(), {
+  return mutator<LoanV2[]>(getGetLoansV2Url(), {
     ...options,
     method: "GET"
   });
@@ -2109,7 +2109,7 @@ export const getGetLoansV2QueryOptions = <
   query?: Partial<
     UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -2147,7 +2147,7 @@ export function useGetLoansV2<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -2169,7 +2169,7 @@ export function useGetLoansV2<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -2183,7 +2183,7 @@ export function useGetLoansV2<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -2201,7 +2201,7 @@ export function useGetLoansV2<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getLoansV2>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -2237,9 +2237,9 @@ export const getGetPatronInformationByPatronIdV4Url = () => {
  * @summary Returns the patron details
  */
 export const getPatronInformationByPatronIdV4 = async (
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV8> => {
-  return fetcher<AuthenticatedPatronV8>(
+  return mutator<AuthenticatedPatronV8>(
     getGetPatronInformationByPatronIdV4Url(),
     {
       ...options,
@@ -2263,7 +2263,7 @@ export const getGetPatronInformationByPatronIdV4QueryOptions = <
       TData
     >
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -2307,7 +2307,7 @@ export function useGetPatronInformationByPatronIdV4<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -2333,7 +2333,7 @@ export function useGetPatronInformationByPatronIdV4<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -2351,7 +2351,7 @@ export function useGetPatronInformationByPatronIdV4<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -2373,7 +2373,7 @@ export function useGetPatronInformationByPatronIdV4<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -2413,9 +2413,9 @@ export const getUpdateV4Url = () => {
  */
 export const updateV4 = async (
   updatePatronRequestV3: UpdatePatronRequestV3,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV4> => {
-  return fetcher<AuthenticatedPatronV4>(getUpdateV4Url(), {
+  return mutator<AuthenticatedPatronV4>(getUpdateV4Url(), {
     ...options,
     method: "PUT",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -2433,7 +2433,7 @@ export const getUpdateV4MutationOptions = <
     { data: BodyType<UpdatePatronRequestV3> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateV4>>,
   TError,
@@ -2478,7 +2478,7 @@ export const useUpdateV4 = <TError = ErrorType<void>, TContext = unknown>(
       { data: BodyType<UpdatePatronRequestV3> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -2519,9 +2519,9 @@ export const getUpdateV8Url = () => {
  */
 export const updateV8 = async (
   updatePatronRequestV6: UpdatePatronRequestV6,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getUpdateV8Url(), {
+  return mutator<void>(getUpdateV8Url(), {
     ...options,
     method: "PUT",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -2539,7 +2539,7 @@ export const getUpdateV8MutationOptions = <
     { data: BodyType<UpdatePatronRequestV6> },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateV8>>,
   TError,
@@ -2584,7 +2584,7 @@ export const useUpdateV8 = <TError = ErrorType<void>, TContext = unknown>(
       { data: BodyType<UpdatePatronRequestV6> },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<

@@ -22,8 +22,8 @@ import type {
 
 import type { GetListParams, List } from "./model";
 
-import { fetcher } from "./mutator/fetcher";
-import type { ErrorType } from "./mutator/fetcher";
+import { mutator } from "./mutator/mutator";
+import type { ErrorType } from "./mutator/mutator";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -67,9 +67,9 @@ export const getGetListUrl = (listId: string, params?: GetListParams) => {
 export const getList = async (
   listId: string,
   params?: GetListParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<List> => {
-  return fetcher<List>(getGetListUrl(listId, params), {
+  return mutator<List>(getGetListUrl(listId, params), {
     ...options,
     method: "GET"
   });
@@ -89,7 +89,7 @@ export const getGetListQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -133,7 +133,7 @@ export function useGetList<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -157,7 +157,7 @@ export function useGetList<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -173,7 +173,7 @@ export function useGetList<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -190,7 +190,7 @@ export function useGetList<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getList>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -216,9 +216,9 @@ export const getHasItemUrl = (listId: string, itemId: string) => {
 export const hasItem = async (
   listId: string,
   itemId: string,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getHasItemUrl(listId, itemId), {
+  return mutator<void>(getHasItemUrl(listId, itemId), {
     ...options,
     method: "HEAD"
   });
@@ -234,7 +234,7 @@ export const getHasItemMutationOptions = <
     { listId: string; itemId: string },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof hasItem>>,
   TError,
@@ -276,7 +276,7 @@ export const useHasItem = <TError = ErrorType<void>, TContext = unknown>(
       { listId: string; itemId: string },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -298,9 +298,9 @@ export const getAddItemUrl = (listId: string, itemId: string) => {
 export const addItem = async (
   listId: string,
   itemId: string,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getAddItemUrl(listId, itemId), {
+  return mutator<void>(getAddItemUrl(listId, itemId), {
     ...options,
     method: "PUT"
   });
@@ -316,7 +316,7 @@ export const getAddItemMutationOptions = <
     { listId: string; itemId: string },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof addItem>>,
   TError,
@@ -358,7 +358,7 @@ export const useAddItem = <TError = ErrorType<void>, TContext = unknown>(
       { listId: string; itemId: string },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -380,9 +380,9 @@ export const getRemoveItemUrl = (listId: string, itemId: string) => {
 export const removeItem = async (
   listId: string,
   itemId: string,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getRemoveItemUrl(listId, itemId), {
+  return mutator<void>(getRemoveItemUrl(listId, itemId), {
     ...options,
     method: "DELETE"
   });
@@ -398,7 +398,7 @@ export const getRemoveItemMutationOptions = <
     { listId: string; itemId: string },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof removeItem>>,
   TError,
@@ -440,7 +440,7 @@ export const useRemoveItem = <TError = ErrorType<void>, TContext = unknown>(
       { listId: string; itemId: string },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<

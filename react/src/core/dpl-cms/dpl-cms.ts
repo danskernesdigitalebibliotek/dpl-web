@@ -44,8 +44,8 @@ import type {
   ProxyUrlGETParams
 } from "./model";
 
-import { fetcher } from "./mutator/fetcher";
-import type { ErrorType, BodyType } from "./mutator/fetcher";
+import { mutator } from "./mutator/mutator";
+import type { ErrorType, BodyType } from "./mutator/mutator";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -89,9 +89,9 @@ export const getCampaignMatchPOSTUrl = (params: CampaignMatchPOSTParams) => {
 export const campaignMatchPOST = async (
   campaignMatchPOSTBody: CampaignMatchPOSTBody,
   params: CampaignMatchPOSTParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<CampaignMatchPOST200> => {
-  return fetcher<CampaignMatchPOST200>(getCampaignMatchPOSTUrl(params), {
+  return mutator<CampaignMatchPOST200>(getCampaignMatchPOSTUrl(params), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -109,7 +109,7 @@ export const getCampaignMatchPOSTMutationOptions = <
     { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof campaignMatchPOST>>,
   TError,
@@ -160,7 +160,7 @@ export const useCampaignMatchPOST = <
       },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -196,9 +196,9 @@ export const getDplOpeningHoursCreatePOSTUrl = (
 export const dplOpeningHoursCreatePOST = async (
   dplOpeningHoursCreatePOSTBody: DplOpeningHoursCreatePOSTBody,
   params: DplOpeningHoursCreatePOSTParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursCreatePOST200Item[]> => {
-  return fetcher<DplOpeningHoursCreatePOST200Item[]>(
+  return mutator<DplOpeningHoursCreatePOST200Item[]>(
     getDplOpeningHoursCreatePOSTUrl(params),
     {
       ...options,
@@ -222,7 +222,7 @@ export const getDplOpeningHoursCreatePOSTMutationOptions = <
     },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
   TError,
@@ -280,7 +280,7 @@ export const useDplOpeningHoursCreatePOST = <
       },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -321,9 +321,9 @@ export const getDplOpeningHoursListGETUrl = (
  */
 export const dplOpeningHoursListGET = async (
   params: DplOpeningHoursListGETParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursListGET200Item[]> => {
-  return fetcher<DplOpeningHoursListGET200Item[]>(
+  return mutator<DplOpeningHoursListGET200Item[]>(
     getDplOpeningHoursListGETUrl(params),
     {
       ...options,
@@ -351,7 +351,7 @@ export const getDplOpeningHoursListGETQueryOptions = <
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -397,7 +397,7 @@ export function useDplOpeningHoursListGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -424,7 +424,7 @@ export function useDplOpeningHoursListGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -443,7 +443,7 @@ export function useDplOpeningHoursListGET<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -466,7 +466,7 @@ export function useDplOpeningHoursListGET<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -507,9 +507,9 @@ export const getDplOpeningHoursDeleteDELETEUrl = (
 export const dplOpeningHoursDeleteDELETE = async (
   id: string,
   params: DplOpeningHoursDeleteDELETEParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getDplOpeningHoursDeleteDELETEUrl(id, params), {
+  return mutator<void>(getDplOpeningHoursDeleteDELETEUrl(id, params), {
     ...options,
     method: "DELETE"
   });
@@ -525,7 +525,7 @@ export const getDplOpeningHoursDeleteDELETEMutationOptions = <
     { id: string; params: DplOpeningHoursDeleteDELETEParams },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
   TError,
@@ -573,7 +573,7 @@ export const useDplOpeningHoursDeleteDELETE = <
       { id: string; params: DplOpeningHoursDeleteDELETEParams },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -614,9 +614,9 @@ export const dplOpeningHoursUpdatePATCH = async (
   id: string,
   dplOpeningHoursUpdatePATCHBody: DplOpeningHoursUpdatePATCHBody,
   params: DplOpeningHoursUpdatePATCHParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursUpdatePATCH200Item[]> => {
-  return fetcher<DplOpeningHoursUpdatePATCH200Item[]>(
+  return mutator<DplOpeningHoursUpdatePATCH200Item[]>(
     getDplOpeningHoursUpdatePATCHUrl(id, params),
     {
       ...options,
@@ -641,7 +641,7 @@ export const getDplOpeningHoursUpdatePATCHMutationOptions = <
     },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
   TError,
@@ -702,7 +702,7 @@ export const useDplOpeningHoursUpdatePATCH = <
       },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -744,9 +744,9 @@ export const getDplOpeningHoursLegacyListGETUrl = (
  */
 export const dplOpeningHoursLegacyListGET = async (
   params: DplOpeningHoursLegacyListGETParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursLegacyListGET200Item[]> => {
-  return fetcher<DplOpeningHoursLegacyListGET200Item[]>(
+  return mutator<DplOpeningHoursLegacyListGET200Item[]>(
     getDplOpeningHoursLegacyListGETUrl(params),
     {
       ...options,
@@ -774,7 +774,7 @@ export const getDplOpeningHoursLegacyListGETQueryOptions = <
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -820,7 +820,7 @@ export function useDplOpeningHoursLegacyListGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -847,7 +847,7 @@ export function useDplOpeningHoursLegacyListGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -866,7 +866,7 @@ export function useDplOpeningHoursLegacyListGET<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -889,7 +889,7 @@ export function useDplOpeningHoursLegacyListGET<
         TData
       >
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -931,9 +931,9 @@ export const eventPATCH = async (
   uuid: string,
   eventPATCHBody: EventPATCHBody,
   params: EventPATCHParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  return fetcher<void>(getEventPATCHUrl(uuid, params), {
+  return mutator<void>(getEventPATCHUrl(uuid, params), {
     ...options,
     method: "PATCH",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -951,7 +951,7 @@ export const getEventPATCHMutationOptions = <
     { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams },
     TContext
   >;
-  request?: SecondParameter<typeof fetcher>;
+  request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof eventPATCH>>,
   TError,
@@ -1000,7 +1000,7 @@ export const useEventPATCH = <TError = ErrorType<void>, TContext = unknown>(
       },
       TContext
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseMutationResult<
@@ -1033,9 +1033,9 @@ export const getEventsGETUrl = (params: EventsGETParams) => {
  */
 export const eventsGET = async (
   params: EventsGETParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<EventsGET200Item[]> => {
-  return fetcher<EventsGET200Item[]>(getEventsGETUrl(params), {
+  return mutator<EventsGET200Item[]>(getEventsGETUrl(params), {
     ...options,
     method: "GET"
   });
@@ -1054,7 +1054,7 @@ export const getEventsGETQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1094,7 +1094,7 @@ export function useEventsGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1117,7 +1117,7 @@ export function useEventsGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1132,7 +1132,7 @@ export function useEventsGET<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1151,7 +1151,7 @@ export function useEventsGET<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof eventsGET>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1188,9 +1188,9 @@ export const getProxyUrlGETUrl = (params: ProxyUrlGETParams) => {
  */
 export const proxyUrlGET = async (
   params: ProxyUrlGETParams,
-  options?: Parameters<typeof fetcher>[1]
+  options?: Parameters<typeof mutator>[1]
 ): Promise<ProxyUrlGET200> => {
-  return fetcher<ProxyUrlGET200>(getProxyUrlGETUrl(params), {
+  return mutator<ProxyUrlGET200>(getProxyUrlGETUrl(params), {
     ...options,
     method: "GET"
   });
@@ -1209,7 +1209,7 @@ export const getProxyUrlGETQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -1249,7 +1249,7 @@ export function useProxyUrlGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -1272,7 +1272,7 @@ export function useProxyUrlGET<
         >,
         "initialData"
       >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1287,7 +1287,7 @@ export function useProxyUrlGET<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -1306,7 +1306,7 @@ export function useProxyUrlGET<
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof proxyUrlGET>>, TError, TData>
     >;
-    request?: SecondParameter<typeof fetcher>;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {

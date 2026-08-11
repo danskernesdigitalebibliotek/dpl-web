@@ -6,7 +6,7 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import DplCmsServiceHttpError from "./DplCmsServiceHttpError";
 
-export const fetcher = async <ResponseType>(
+export const mutator = async <ResponseType>(
   url: string,
   options: RequestInit
 ) => {
@@ -61,7 +61,7 @@ export const fetcher = async <ResponseType>(
   return undefined as ResponseType;
 };
 
-export default fetcher;
+export default mutator;
 
 export type ErrorType<ErrorData> = ErrorData;
 

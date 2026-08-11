@@ -10,8 +10,8 @@ export default defineConfig({
       client: "react-query",
       override: {
         mutator: {
-          path: "src/core/material-list-api/mutator/fetcher.ts",
-          name: "fetcher"
+          path: "src/core/material-list-api/mutator/mutator.ts",
+          name: "mutator"
         },
         fetch: {
           includeHttpResponseReturnType: false,
@@ -32,8 +32,8 @@ export default defineConfig({
       client: "react-query",
       override: {
         mutator: {
-          path: "src/core/fbs/mutator/fetcher.ts",
-          name: "fetcher"
+          path: "src/core/fbs/mutator/mutator.ts",
+          name: "mutator"
         },
         fetch: {
           includeHttpResponseReturnType: false
@@ -54,8 +54,8 @@ export default defineConfig({
       client: "react-query",
       override: {
         mutator: {
-          path: "src/core/publizon/mutator/fetcher.ts",
-          name: "fetcher"
+          path: "src/core/publizon/mutator/mutator.ts",
+          name: "mutator"
         },
         fetch: {
           includeHttpResponseReturnType: false,
@@ -76,8 +76,8 @@ export default defineConfig({
       client: "react-query",
       override: {
         mutator: {
-          path: "src/core/dpl-cms/mutator/fetcher.ts",
-          name: "fetcher"
+          path: "src/core/dpl-cms/mutator/mutator.ts",
+          name: "mutator"
         },
         fetch: {
           includeHttpResponseReturnType: false

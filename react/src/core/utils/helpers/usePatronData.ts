@@ -3,7 +3,7 @@ import BlockedTypes from "../types/BlockedTypes";
 import { AuthenticatedPatron, Patron } from "../types/entities";
 import { isAnonymous } from "./user";
 import { QueryKey, UseQueryResult } from "@tanstack/react-query";
-import { ErrorType } from "../../fbs/mutator/fetcher";
+import { ErrorType } from "../../fbs/mutator/mutator";
 
 export const usePatronData = (): UseQueryResult<
   Awaited<Promise<AuthenticatedPatron | null>>,

@@ -7,7 +7,7 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import FbsServiceHttpError from "./FbsServiceHttpError";
 
-export const fetcher = async <ResponseType>(
+export const mutator = async <ResponseType>(
   url: string,
   options: RequestInit
 ) => {
@@ -54,7 +54,7 @@ export const fetcher = async <ResponseType>(
   }
 };
 
-export default fetcher;
+export default mutator;
 
 export type ErrorType<ErrorData> = ErrorData;
 
