@@ -43,12 +43,18 @@ export function createFbsClient(config: FbsConfig) {
       return parseAndMapPatron(raw)
     },
 
-    getMaterialAvailability: async (recordIds: string[]): Promise<MaterialAvailability> => {
+    getMaterialAvailability: async (
+      recordIds: string[],
+      excludeBranchIds: string[] = []
+    ): Promise<MaterialAvailability> => {
       if (recordIds.length === 0) {
         return { totalCopies: 0, reservationCount: 0 }
       }
       const authHeader = await config.getAuthHeader()
-      const url = `${config.baseUrl}${getGetHoldingsLogisticsV1Url({ recordid: recordIds })}`
+      const url = `${config.baseUrl}${getGetHoldingsLogisticsV1Url({
+        recordid: recordIds,
+        ...(excludeBranchIds.length > 0 ? { exclude: excludeBranchIds } : {}),
+      })}`
       const response = await fetch(url, {
         method: "GET",
         headers: { authorization: authHeader },

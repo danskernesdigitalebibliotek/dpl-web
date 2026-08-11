@@ -242,6 +242,7 @@ type GoConfigurationPrivate {
 }
 
 type GoConfigurationPublic {
+  blacklistedAvailabilityBranches: [String!]
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls

@@ -4,8 +4,9 @@ import type { MaterialAvailability, ServiceLayerConfig } from "./types"
 
 export async function getMaterialAvailability(
   config: ServiceLayerConfig,
-  recordIds: string[]
+  recordIds: string[],
+  excludeBranchIds: string[] = []
 ): Promise<MaterialAvailability> {
   const fbs = createFbsClient(resolveFbsConfig(config))
-  return fbs.getMaterialAvailability(recordIds)
+  return fbs.getMaterialAvailability(recordIds, excludeBranchIds)
 }

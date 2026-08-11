@@ -22,6 +22,7 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
+import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
 import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -68,7 +69,12 @@ const PickupInfo = ({ reservation }: { reservation: Reservation }) => {
 // Queued: copy count and queue position as plain two-line text (no box).
 // FBS numberInQueue is the patron's 1-based position — 1 means next in line.
 const QueueStatus = ({ reservation, workId }: { reservation: Reservation; workId: string }) => {
-  const { data: availability } = useMaterialAvailability(workId, [reservation.recordId])
+  const blacklistedBranches = useBlacklistedAvailabilityBranches()
+  const { data: availability } = useMaterialAvailability(
+    workId,
+    [reservation.recordId],
+    blacklistedBranches
+  )
 
   if (reservation.numberInQueue === undefined) return null
 

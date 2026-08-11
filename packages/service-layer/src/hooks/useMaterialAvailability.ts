@@ -17,11 +17,12 @@ type UseMaterialAvailabilityOptions = Omit<
 export const useMaterialAvailability = (
   workId: string,
   recordIds: string[],
+  excludeBranchIds: string[] = [],
   options?: UseMaterialAvailabilityOptions
 ): UseQueryResult<MaterialAvailability, Error> => {
   const config = useServiceLayerConfig()
   return useQuery({
-    ...materialAvailabilityQuery(config, workId, recordIds),
+    ...materialAvailabilityQuery(config, workId, recordIds, excludeBranchIds),
     ...options,
   })
 }
