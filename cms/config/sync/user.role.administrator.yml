@@ -35,7 +35,6 @@ dependencies:
     - administerusersbyrole
     - block
     - bnf
-    - config_perms
     - content_lock
     - cookieinformation
     - dpl_admin
@@ -77,7 +76,6 @@ label: Administrator
 weight: 2
 is_admin: null
 permissions:
-  - 'Administer maintenance mode'
   - 'access administration pages'
   - 'access any webform configuration'
   - 'access content overview'
@@ -272,6 +270,7 @@ permissions:
   - 'link to any page'
   - 'manage opening hours for branches'
   - 'manage password reset'
+  - 'rebuild node access permissions'
   - 'restful delete dpl_opening_hours_delete'
   - 'restful patch dpl_opening_hours_update'
   - 'restful post dpl_opening_hours_create'
