@@ -1,11 +1,14 @@
 uuid: 937b9b38-65b8-4e21-9638-603061b0440d
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.go_video_bundle_automatic
 id: paragraph.go_video_bundle_automatic
 site_resolver: site_selector
 configuration:
   sites:
     go: go
+draft_enabled: true
 revalidator: cache_tag
 revalidator_configuration: {  }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e1aa9591a5e1cd9cb4b75f7e6815ff6",
+    "content-hash": "0e77dab65233904672f12f04110d366b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -23604,8 +23604,7 @@
         "drupal/default_content": 15,
         "drupal/facets_date_range": 10,
         "drupal/multivalue_form_element": 10,
-        "drupal/openapi_rest": 5,
-        "drupal/potx": 15
+        "drupal/openapi_rest": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,
