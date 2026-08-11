@@ -47,6 +47,13 @@ function WorkPageLayout({ workId }: { workId: string }) {
     )
   }, [allManifestations]) as ManifestationWorkPageFragment[]
 
+  // Soft navigation does not reset scroll when entering /work/[id] — restore top
+  // on entry (deferred so the leaving page can unmount). Skip hash URLs.
+  useEffect(() => {
+    if (window.location.hash) return;
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+  }, [workId])
+
   useEffect(() => {
     // Get the material type from the search params
     const searchParamsMaterialType = searchParams.get("type")
