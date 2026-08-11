@@ -43,10 +43,9 @@
  */
 #}
 
-{# Clip horizontal overflow so the header can't break out on mobile. Uses
-   `overflow-x: clip` (not `overflow: hidden`) so it doesn't become a scroll
-   container that would stop `position: sticky` descendants from sticking to
-   the viewport. #}
+{# Same wrapper as page.html.twig: clips the header's desktop nav so the page
+   can't scroll horizontally on mobile. Keep `.overflow-x-clip`:
+   `.overflow-hidden` here silently stops the header from sticking. #}
 
 <div class="overflow-x-clip">
   {% if node.bundle starts with 'go_' %}

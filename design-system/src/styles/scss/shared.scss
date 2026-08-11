@@ -52,11 +52,10 @@
   overflow: hidden;
 }
 
-// Clips horizontal overflow (e.g. to stop a full-bleed header breaking out on
-// mobile) without turning the element into a scroll container. Unlike
-// `overflow: hidden`, `overflow-x: clip` leaves `overflow-y: visible`, so
-// `position: sticky` descendants still stick to the viewport instead of to
-// this element.
+// Clips horizontal overflow without becoming a scroll container. Prefer this
+// over `.overflow-hidden` when the element wraps `position: sticky` content:
+// `hidden` makes sticky descendants anchor to this element instead of the
+// viewport, which silently stops them from sticking.
 .overflow-x-clip {
   overflow-x: clip;
 }
