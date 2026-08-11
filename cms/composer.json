@@ -293,7 +293,7 @@
                 "Show the loading indicator inline at the pager instead of a floating full-screen overlay": "patches/infinite-scroll-inline-loading-indicator.patch"
             },
             "drupal/core": {
-                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "patches/vendor/core-61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
+                "3130197: Faulty toolbar subtree hash breaks asynchronous loading of admin menu content (DPL workaround)": "patches/3130197-core-d11-reroll.patch",
                 "3035578: Add details for AJAX response errors": "patches/vendor/3035578-mr14700.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
