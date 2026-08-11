@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-10 13:32+0200\n"
-"PO-Revision-Date: 2026-08-10 13:32+0200\n"
+"POT-Creation-Date: 2026-08-11 12:55+0200\n"
+"PO-Revision-Date: 2026-08-11 12:55+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-10 13:32+0200\n"
-"PO-Revision-Date: 2026-08-10 13:32+0200\n"
+"POT-Creation-Date: 2026-08-11 12:55+0200\n"
+"PO-Revision-Date: 2026-08-11 12:55+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1309,9 +1309,6 @@ msgctxt "Global"
 msgid "@count reservations were deleted"
 msgstr "@count reserveringer blev slettet"
 
-msgid "@date by @username"
-msgstr "@date af @username"
-
 msgid "@entity using @field_name"
 msgstr "@entity som bruger @field_name"
 
@@ -1459,9 +1456,6 @@ msgid ""
 msgstr ""
 "@label: Slettede @revision_count revisioner (@entity_count enheder) på "
 "@interval."
-
-msgid "@langname revisions for %title"
-msgstr "@langname versioner af %title"
 
 msgid "@language (original)"
 msgstr "@language (original)"
@@ -2248,6 +2242,9 @@ msgstr ""
 "vindue. Skal indeholde værdierne 'bredde=' og 'højde=' for at kontrollere "
 "henholdsvis bredden og højden."
 
+msgid "A serialized array of order options."
+msgstr ""
+
 msgid ""
 "A set of meta tags specially for controlling advanced functionality with <a "
 "href=':fb'>Facebook</a>.<br><br>The Facebook <a href='https://"
@@ -2474,17 +2471,10 @@ msgstr ""
 msgid "Access for administering of the url proxy configuration."
 msgstr ""
 
-msgid "Access group recurring events series overview"
-msgstr ""
-
 msgid "Access the eventinstance overview page"
 msgstr ""
 
 msgid "Access the eventseries overview page"
-msgstr ""
-
-msgid ""
-"Access the overview of all group recurring events series, regardless of type"
 msgstr ""
 
 msgid "Access the registrant overview page"
@@ -2736,9 +2726,6 @@ msgstr "Tilføj type af arrangement-serie"
 msgid "Add Excluded dates"
 msgstr "Tilføj udelukkede datoer"
 
-msgid "Add Field Inheritance"
-msgstr "Tilføj feltarv"
-
 msgid "Add Field inheritance"
 msgstr "Tilføj feltarv"
 
@@ -2808,9 +2795,6 @@ msgstr ""
 msgid "Add a new event."
 msgstr "Tilføj nyt arrangement"
 
-msgid "Add a new field inheritance field to this entity type and bundle."
-msgstr "Tilføj et nyt felt for arv til denne enhedstype og bundt."
-
 msgid "Add a new group"
 msgstr "Tilføj en ny gruppe"
 
@@ -2850,12 +2834,6 @@ msgstr "Tilføj arrangement"
 msgid "Add eventseries entity"
 msgstr ""
 
-msgid "Add existing content of type %eventseries_type to the group."
-msgstr "Tilføj eksisterende indhold af typen %eventseries_type til gruppen."
-
-msgid "Add existing events"
-msgstr "Tilføj eksisterende arrangementer"
-
 msgid "Add field group"
 msgstr "Tilføj feltgruppe"
 
@@ -2888,12 +2866,6 @@ msgstr "Tilføj ny"
 
 msgid "Add new content"
 msgstr "Tilføj nyt indhold"
-
-msgid "Add new content of type %eventseries_type to the group."
-msgstr "Tilføj nyt indhold af typen %eventseries_type til gruppen."
-
-msgid "Add new events"
-msgstr "Tilføj nye arrangementer"
 
 msgid "Add new instance to %name"
 msgstr "Tilføj ny instans til %name"
@@ -3059,12 +3031,6 @@ msgstr "Adresser kræver commerceguys/adressering biblioteket."
 msgid "Addresses within this country are considered domestic."
 msgstr "Adresser inden for dette land er indenrigs."
 
-msgid "Adds %type content to groups both publicly and privately."
-msgstr "Tilføjer %type indhold til både offentlige og private grupper."
-
-msgid "Adds Registrant entities to groups."
-msgstr "Tilføjer deltager-enheder til grupper."
-
 msgid "Adds a \"Reset sort\" link; Views will use the default sort order."
 msgstr ""
 "Tilføjer et \"Nulstil sortering\" link; Visninger vil bruge standard "
@@ -3087,9 +3053,6 @@ msgstr "Tilføjer standard kontaktside og kontakt-webform kategorier"
 
 msgid "Adds default opening hours categories"
 msgstr "Tilføjer standard åbningstidskategorier"
-
-msgid "Adds event series to groups both publicly and privately."
-msgstr "Tilføjer arrangementserier til både offentlige og private grupper."
 
 msgid "Adds https:// to URL."
 msgstr "Tilføj https// til URL"
@@ -3130,9 +3093,6 @@ msgid "Administer Entity Clone Template"
 msgstr ""
 
 msgid "Administer Field Inheritance configuration"
-msgstr ""
-
-msgid "Administer Field Inheritance when creating/editing an entity."
 msgstr ""
 
 msgid "Administer OpenID Connect clients"
@@ -3582,9 +3542,6 @@ msgid ""
 msgstr ""
 
 msgid "Allow to access to the Entity Reference Revisions orphan deletion form."
-msgstr ""
-
-msgid "Allow to choose how a specific entity respects inheritance."
 msgstr ""
 
 msgid "Allow to define the Paragraphs categories"
@@ -4252,9 +4209,6 @@ msgstr "Er du sikker på du vil slette beskæringstypen %type?"
 msgid "Are you sure you want to delete the group %group?"
 msgstr "Er du sikker på, at du ønsker at slette gruppen %group?"
 
-msgid "Are you sure you want to delete the revision from %revision-date?"
-msgstr "Ønsker du at slette versionen fra %revision-date?"
-
 msgid "Are you sure you want to remove this paragraph?"
 msgstr ""
 
@@ -4272,9 +4226,6 @@ msgid ""
 msgstr ""
 "Er du sikker på, at du ønsker at gendanne @language-oversættelsen af "
 "versionen fra %revision-date?"
-
-msgid "Are you sure you want to revert to the revision from %revision-date?"
-msgstr "Ønsker du at vende tilbage til versionen fra %revision-date?"
 
 msgctxt "Address label"
 msgid "Area"
@@ -4505,6 +4456,11 @@ msgid "At the start of the event"
 msgstr "Ved arrangementets start"
 
 msgid "Attempted to get a focal point value for an invalid or temporary file."
+msgstr ""
+
+msgid ""
+"Attempting to create more than this number of event instances at once will "
+"trigger the warning."
 msgstr ""
 
 msgid ""
@@ -4750,6 +4706,9 @@ msgstr "Forbind automatisk eksisterende brugere"
 
 msgid "Automatically connect existing users enabled"
 msgstr "Forbind automatisk eksisterende aktiveret brugere"
+
+msgid "Automatically create new revisions"
+msgstr ""
 
 msgid "Automatically delete orphaned event instances"
 msgstr ""
@@ -5225,6 +5184,9 @@ msgstr "Lån før @date"
 msgctxt "Reservation list"
 msgid "Borrow before @date"
 msgstr "Lån før @date"
+
+msgid "Both"
+msgstr ""
 
 msgid "Bounce slide"
 msgstr "Springer"
@@ -6123,6 +6085,11 @@ msgstr ""
 msgid "Choose where registrant form redirects"
 msgstr "Vælg, hvor tilmeldingsformularen omdirigeres"
 
+msgid ""
+"Choose which fields to display in the widget. Fields Mappings will override "
+"specific Entities Mappings."
+msgstr ""
+
 msgid "Circular reference detected"
 msgstr "Cirkulær reference opdaget"
 
@@ -6618,8 +6585,14 @@ msgstr "Bekræft afbestilling"
 msgid "Confirm Date Changes"
 msgstr "Bekræft ændring af dato/tidspunkt"
 
+msgid "Confirm Dates"
+msgstr ""
+
 msgid "Confirm break lock"
 msgstr "Bekræft bryd lås"
+
+msgid "Confirm entity removal"
+msgstr ""
 
 msgid "Confirm import"
 msgstr "Bekræft import"
@@ -6656,8 +6629,8 @@ msgstr ""
 msgid "Consecutive Event"
 msgstr "Fortløbende (fx træffetider)"
 
-msgid "Consecutive recurring date widget"
-msgstr "Sammenhængende tilbagevendende dato-widget"
+msgid "Consecutive Recurring Date Widget"
+msgstr ""
 
 msgid "Consent"
 msgstr "Samtykke"
@@ -6846,9 +6819,6 @@ msgstr ""
 
 msgid "Content modification date & time"
 msgstr "Indholdets ændringsdato og -tid"
-
-msgid "Content relation"
-msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.content_slider:label"
 msgid "Content slider"
@@ -7206,9 +7176,6 @@ msgstr ""
 msgid "Create Events Between"
 msgstr "Startdato"
 
-msgid "Create Field Inheritance"
-msgstr "Opret feltarv"
-
 msgid "Create OpenID Connect client"
 msgstr "Create OpenID Connect client"
 
@@ -7263,6 +7230,9 @@ msgstr "Opret ny menu"
 
 msgid "Create new registrant entities"
 msgstr ""
+
+msgid "Create new revision"
+msgstr "Opret ny version"
 
 msgid "Create new users"
 msgstr "Opret nye brugere"
@@ -7458,9 +7428,6 @@ msgstr "Nuværende side"
 
 msgid "Current page where form appears"
 msgstr "Denne side, hvor formularen vises"
-
-msgid "Current revision"
-msgstr "Nuværende version"
 
 msgid "Custom"
 msgstr "Tilpasset"
@@ -7754,8 +7721,8 @@ msgstr "Dagligt"
 msgid "Daily Event"
 msgstr "Daglig"
 
-msgid "Daily recurring date widget"
-msgstr "Dagligt tilbagevendende dato widget"
+msgid "Daily Recurring Date Widget"
+msgstr ""
 
 msgctxt "language.entity.da:label"
 msgid "Danish"
@@ -8160,6 +8127,9 @@ msgctxt "Library Agency Configuration"
 msgid "Default open find on shelf disclosures"
 msgstr "Fold alle filialer ud i Find på hylden"
 
+msgid "Default options"
+msgstr "Standardindstillinger"
+
 msgctxt "Library Agency Configuration"
 msgid "Default profile"
 msgstr "Standardprofil"
@@ -8343,10 +8313,10 @@ msgstr "Slet beskæringstype"
 msgid "Delete default meta tags"
 msgstr "Slet standard meta tags"
 
-msgid "Delete event series"
+msgid "Delete event instance"
 msgstr ""
 
-msgid "Delete event series link"
+msgid "Delete event series"
 msgstr ""
 
 msgid "Delete eventinstance entity"
@@ -8436,12 +8406,6 @@ msgid "Delete registrant entities"
 msgstr ""
 
 msgid "Delete registrant entities anonymously"
-msgstr ""
-
-msgid "Delete relation"
-msgstr ""
-
-msgid "Delete relation link"
 msgstr ""
 
 msgid ""
@@ -8866,9 +8830,8 @@ msgstr "Display Paragraphs as tiles"
 msgid "Display Paragraphs in dialog as"
 msgstr "Vis Paragraphs i dialog som"
 
-msgid "Display a warning when too many event instances may be created?"
+msgid "Display a warning when too many event instances will be created"
 msgstr ""
-"Vis en advarsel, når der kan blive oprettet for mange arrangement-instanser?"
 
 msgid "Display an error message - do not allow dates in the past"
 msgstr "Vis en fejlmeddelelse - tillad ikke datoer i fortiden"
@@ -9519,10 +9482,10 @@ msgstr ""
 msgid "Edit default meta tags for @path"
 msgstr "Rediger standard meta tags for @path"
 
-msgid "Edit event series"
+msgid "Edit event instance"
 msgstr ""
 
-msgid "Edit event series link"
+msgid "Edit event series"
 msgstr ""
 
 msgid "Edit eventinstance entity"
@@ -9569,12 +9532,6 @@ msgid "Edit profile"
 msgstr "Rediger profil"
 
 msgid "Edit registrant entities anonymously"
-msgstr ""
-
-msgid "Edit relation"
-msgstr ""
-
-msgid "Edit relation link"
 msgstr ""
 
 msgctxt "advanced search 2"
@@ -9662,6 +9619,15 @@ msgstr ""
 
 msgid "Element: @element"
 msgstr "Element: @element"
+
+msgid "Elements included: @elements"
+msgstr ""
+
+msgid "Elements to show"
+msgstr ""
+
+msgid "Elements to show in the form element"
+msgstr ""
 
 msgid "Email"
 msgstr "E-mail"
@@ -9980,9 +9946,6 @@ msgstr "Aktiveret for publicering"
 msgid "Enabled for unpublishing"
 msgstr "Aktiveret for afpublicering"
 
-msgid "Enables Group functionality for the Recurring events module"
-msgstr "Enables Group functionality for the Recurring events module"
-
 msgid "Enables jobs with workers that wait indefinitely for jobs."
 msgstr "Enables jobs with workers that wait indefinitely for jobs."
 
@@ -10173,10 +10136,9 @@ msgstr "Indtast beskeden i e-mailen, der skal sendes til deltagerne."
 
 msgid ""
 "Enter the message to be displayed. Use @total as a placeholder for the "
-"amount of instances being created."
+"amount of instances being created, and @threshold as a placeholder for the "
+"configured threshold."
 msgstr ""
-"Indtast beskeden, der skal vises. Brug @total som pladsholder for antallet "
-"af instanser, der oprettes."
 
 msgid "Enter the name of the %bundle from which to inherit data."
 msgstr "Indtast navnet på %bundle, hvorfra data skal arves."
@@ -10292,6 +10254,17 @@ msgstr "Enheds-ID: @id (@type)"
 msgid "Entity Mapping for @label [@entity: @bundle - @field]"
 msgstr "Enhedsmapping for @label [@entity: @bundle - @field]"
 
+msgid "Entity Mapping for [@entity: @bundle] (@label)"
+msgstr ""
+
+msgid "Entity Mappings"
+msgstr ""
+
+msgid ""
+"Entity Mappings allow to define a common entity for each the entity/bundle "
+"Field Inheritance combinations."
+msgstr ""
+
 msgctxt "views.view.entity_reference_content:display:entity_reference_1:display_title"
 msgid "Entity Reference"
 msgstr ""
@@ -10327,6 +10300,9 @@ msgstr "Entity Reference inline-felter"
 
 msgid "Entity Revision"
 msgstr "Entity Revision"
+
+msgid "Entity Type"
+msgstr ""
 
 msgid "Entity Type ID"
 msgstr "Entity Type ID"
@@ -10526,14 +10502,8 @@ msgstr "Arrangementinstans indstillinger"
 msgid "Event Instance Start Date"
 msgstr "Arrangementinstans startdato"
 
-msgid "Event Instance Threshold Count"
-msgstr "Grænseværdi for arrangementsinstanser"
-
-msgid "Event Instance Threshold Message"
-msgstr "Event Instance Threshold Message"
-
-msgid "Event Instance Threshold Prevent Save"
-msgstr "Event Instance Threshold Prevent Save"
+msgid "Event Instance Threshold Warning"
+msgstr ""
 
 msgid "Event Instance Types"
 msgstr "Arrangementinstans typer"
@@ -10662,6 +10632,9 @@ msgstr "Arrangement iCalendar link"
 msgid "Event iCalendar Property Mapping"
 msgstr "Event iCalendar egenskabstilknytning"
 
+msgid "Event instance"
+msgstr ""
+
 msgctxt "views.view.event_instance_list:display:default:display_options:title"
 msgid "Event instance list"
 msgstr ""
@@ -10683,6 +10656,9 @@ msgid "Event instance type"
 msgstr "Arrangementinstans type"
 
 msgid "Event instance type config"
+msgstr ""
+
+msgid "Event instances"
 msgstr ""
 
 msgctxt "views.view.event_series_admin:display:default:display_options:fields:eventseries_instance_count:label"
@@ -10735,6 +10711,9 @@ msgstr ""
 
 msgctxt "views.view.event_series_admin:label"
 msgid "Event series admin"
+msgstr ""
+
+msgid "Event series end date"
 msgstr ""
 
 msgid "Event series entity"
@@ -10811,9 +10790,6 @@ msgstr "Arrangementer i denne serie"
 
 msgid "Events listing page"
 msgstr ""
-
-msgid "Events series"
-msgstr "Arrangementsserie"
 
 msgctxt "DPL Opening Hours Editor"
 msgid "Every"
@@ -11285,8 +11261,22 @@ msgstr "Feltarv"
 msgid "Field Inheritance Settings Config"
 msgstr ""
 
+msgid "Field Inheritance format settings"
+msgstr ""
+
+msgid "Field Inheritance migration: Processed @current batches of @total"
+msgstr ""
+
 msgid "Field Mappings"
 msgstr "Feltkortlægninger"
+
+msgid "Field Mappings define a specific entity for each Field Inheritance."
+msgstr ""
+
+msgid ""
+"Field Mappings define a specific entity for each Field Inheritance. Field "
+"Mappings override Entity Mappings."
+msgstr ""
 
 msgid "Field group format:"
 msgstr "Feltgruppeformat:"
@@ -11302,6 +11292,11 @@ msgstr ""
 
 msgid "Field inheritance"
 msgstr "Feltarv"
+
+msgid ""
+"Field inheritance will be disabled for the following entity types and "
+"<em>all the Field Inheritance data from these field types will be lost</em>!"
+msgstr ""
 
 msgid "Field material type"
 msgstr "Feltmaterialetype"
@@ -11549,6 +11544,14 @@ msgstr "Filtrering og sortering af referencefelter"
 
 msgid "Filters"
 msgstr "Filtre"
+
+msgid ""
+"Filters out unpublished event instances if the current user cannot view them."
+msgstr ""
+
+msgid ""
+"Filters out unpublished event series if the current user cannot view them."
+msgstr ""
 
 msgid "Final Event Starts At"
 msgstr "Sidste instans begynder"
@@ -11858,6 +11861,11 @@ msgid ""
 msgstr ""
 "For more information about this module feel free to visit the <a "
 "href=\"@link\">module page</a>."
+
+msgid ""
+"For more information, see the <a href=\":docs\">online documentation for the "
+"Field Inheritance module</a>."
+msgstr ""
 
 msgid ""
 "For new tags, defaults to the machine name. For existing tags, this "
@@ -12383,17 +12391,8 @@ msgstr "Gruppér efter bundt"
 msgid "Group by bundle: @bundle_grouping"
 msgstr "Gruppér efter bundt: @bundle_grouping"
 
-msgid "Group event series"
-msgstr "Gruppér arrangementsserier"
-
-msgid "Group event series (@type)"
-msgstr "Gruppe arrangementsserie (@type)"
-
 msgid "Group name"
 msgstr "Navn"
-
-msgid "Group recurring events"
-msgstr "Gruppér tilbagevendende arrangementer"
 
 msgid "Group suggestions by their bundle."
 msgstr "Gruppér forslag efter deres bundt."
@@ -12960,6 +12959,13 @@ msgid "If checked, the find on shelf disclosures will be open by default"
 msgstr ""
 "Hvis denne er tjekket til, så er alle Filialer i Find på hylden udfoldet."
 
+msgid ""
+"If checked, the user will not be able to save a series that exceeds the "
+"threshold. If left unchecked, the warning message will be displayed and the "
+"user will be asked to confirm whether they want to proceed with saving "
+"anyway."
+msgstr ""
+
 msgctxt "field.field.eventseries.default.field_automatic_list_hide:description"
 msgid ""
 "If chosen, this eventseries and it's instances will not show up in automatic "
@@ -13475,9 +13481,6 @@ msgstr "Inkluder upubliceret: @include_unpublished"
 
 msgid "Included Dates"
 msgstr "Inkluderede datoer"
-
-msgid "Included Entity Bundles"
-msgstr "Inkluderede enhedsbundter"
 
 msgid "Included Entity Types"
 msgstr "Inkluderede enhedstyper"
@@ -14159,6 +14162,9 @@ msgctxt "paragraphs.paragraphs_type.language_selector:label"
 msgid "Language selector"
 msgstr ""
 
+msgid "Language settings"
+msgstr "Sprogindstillinger"
+
 msgid ""
 "Large - a larger image preview, up to the width of the viewport, may be "
 "shown."
@@ -14271,6 +14277,11 @@ msgstr "Lad datoen være tom for ingen planlagt publicering."
 
 msgid "Leave the date blank for no scheduled unpublishing."
 msgstr "Lad datoen være tom for ingen planlagt afpublicering."
+
+msgid ""
+"Left event instance @instance of event series @series untouched: it has no "
+"date range that could be read."
+msgstr ""
 
 msgctxt "Global"
 msgid "Length of 4 characters"
@@ -14437,9 +14448,6 @@ msgctxt "DPL admin UX"
 msgid "Link title"
 msgstr "Linktitel"
 
-msgid "Link to Group content"
-msgstr ""
-
 msgctxt "field.field.paragraph.language_selector.field_link_language:label"
 msgid "Link to a different language"
 msgstr ""
@@ -14457,18 +14465,6 @@ msgstr ""
 
 msgid "Link to break the content lock."
 msgstr "Link til at bryde indholdslåsen."
-
-msgid "Link to delete Content"
-msgstr ""
-
-msgid "Link to delete Group content"
-msgstr ""
-
-msgid "Link to edit Content"
-msgstr ""
-
-msgid "Link to edit Group content"
-msgstr ""
 
 msgid "Link to search"
 msgstr "Link til søgning"
@@ -14680,9 +14676,6 @@ msgstr "Lyt online"
 msgctxt "Online material"
 msgid "Listen to @materialType"
 msgstr "Lyt til @materialType"
-
-msgid "Lists all of the event series that have been added to a group."
-msgstr ""
 
 msgctxt "Search Result"
 msgid "Lix"
@@ -15902,11 +15895,11 @@ msgstr "Månedligt"
 msgid "Monthly Event"
 msgstr "Månedligt"
 
+msgid "Monthly Recurring Date Widget"
+msgstr ""
+
 msgid "Monthly Type"
 msgstr "Månedlig type"
-
-msgid "Monthly recurring date widget"
-msgstr "Månedlig tilbagevendende dato widget"
 
 msgid "Months"
 msgstr "Måneder"
@@ -16252,9 +16245,6 @@ msgid ""
 "No config name defined for @module notifications. Call @function before "
 "proceeding."
 msgstr ""
-
-msgid "No content available."
-msgstr "Der er intet indhold at vise."
 
 msgctxt "views.view.content:display:default:display_options:empty:area_text_custom:content"
 msgid "No content available."
@@ -18470,10 +18460,14 @@ msgstr "Foretrukket brugernavn"
 msgid "Prepend"
 msgstr "Prepend"
 
-msgid "Prevent saving a series if the threshold is exceeded?"
-msgstr "Forhindre at gemme en serie, hvis tærsklen overskrides?"
+msgid "Prevent saving a series if the threshold is exceeded"
+msgstr ""
 
 msgid "Prevent saving a series if too many instances are being created"
+msgstr ""
+
+msgid ""
+"Prevent saving if the recurrence schedule does not yield at least one date"
 msgstr ""
 
 msgid ""
@@ -18482,6 +18476,11 @@ msgid ""
 msgstr ""
 "Forhindrer flere brugere i at redigere samtidig i et stykke indhold hvilket "
 "kan skabe konflikt."
+
+msgid ""
+"Prevents saving an event series if the recurrence schedule does not yield at "
+"least one date."
+msgstr ""
 
 msgid "Preview"
 msgstr "Gennemse"
@@ -19096,6 +19095,9 @@ msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:
 msgid "Published status"
 msgstr ""
 
+msgid "Published status or admin user"
+msgstr "Publiceringsstatus eller administrator"
+
 msgid "Publisher"
 msgstr "Udgiver"
 
@@ -19118,6 +19120,9 @@ msgstr "Udgivelse slået til"
 
 msgid "Publishing failed for %title. @failed_hooks returned a failure code."
 msgstr ""
+
+msgid "Publishing options"
+msgstr "Udgivelse"
 
 msgctxt "Dpl Publizon"
 msgid "Publizon service url"
@@ -19283,13 +19288,12 @@ msgstr ""
 "revision. Denne handling kan ikke fortrydes."
 
 msgid ""
-"Recurrence configuration has been changed. New instances may be created, and "
-"now-unrelevant instances will be deleted, along with any custom changes made "
-"to these instances. This action cannot be undone."
+"Recurrence configuration has been changed, as a result all instances will be "
+"removed and recreated. This action cannot be undone."
 msgstr ""
-"Recurrence configuration has been changed. New instances may be created, and "
-"now-unrelevant instances will be deleted, along with any custom changes made "
-"to these instances. This action cannot be undone."
+
+msgid "Recurring Date"
+msgstr ""
 
 msgid "Recurring Events"
 msgstr "Gentagende arrangementer"
@@ -19323,6 +19327,9 @@ msgstr "Visning af tilbagevendende arrangementer"
 
 msgid "Recurring Events iCalendar"
 msgstr "Tilbagevendende arrangementer iCalendar"
+
+msgid "Recurring Events migration: Processed @current instances of @total"
+msgstr ""
 
 msgid "Recurring event series scheduler plugin"
 msgstr "Planlægger-plugin for tilbagevendende arrangementserie"
@@ -19549,6 +19556,9 @@ msgstr "Registrant tokens from the Recurring Events Registration module."
 
 msgid "Registrant type"
 msgstr "Deltagertype"
+
+msgid "Registrant type config"
+msgstr ""
 
 msgid "Registrant types"
 msgstr "Deltagertyper"
@@ -20137,9 +20147,6 @@ msgctxt "Work Page"
 msgid "Reviews"
 msgstr "Anmeldelser"
 
-msgid "Revision"
-msgstr "Version"
-
 msgid "Revision Date Changes"
 msgstr ""
 "\n"
@@ -20157,15 +20164,6 @@ msgstr "Revision author ID"
 msgid "Revision create time"
 msgstr "Revidering oprettet"
 
-msgid "Revision from %revision-date of eventinstance %title has been deleted."
-msgstr ""
-"Revidering af %revision-date af arrangemenstinstansen %title er blevet "
-"slettet."
-
-msgid "Revision from %revision-date of eventseries %title has been deleted."
-msgstr ""
-"Revision fra %revision-date af arrangementsrækken %title er blevet slettet."
-
 msgid "Revision log message"
 msgstr "Logbesked"
 
@@ -20180,9 +20178,6 @@ msgid ""
 "stored at 'content' level, not 'content revision' level."
 msgstr ""
 
-msgid "Revision of %title from %date"
-msgstr "Version af %title fra %date"
-
 msgid "Revision timestamp"
 msgstr "Version timestamp"
 
@@ -20191,9 +20186,6 @@ msgstr "Oversættelse af version påvirket"
 
 msgid "Revision user"
 msgstr "Revidér bruger"
-
-msgid "Revisions for %title"
-msgstr "Versioner af %title"
 
 msgid "Revisit After"
 msgstr "Genbesøg efter"
@@ -20334,6 +20326,9 @@ msgstr "Gem klonet @language oversættelse som en ny enhed"
 msgid "Save cloned comments"
 msgstr "Gem klonede kommentarer"
 
+msgid "Save configuration"
+msgstr "Gem indstillinger"
+
 msgctxt "system.action.node_save_action:label"
 msgid "Save content"
 msgstr ""
@@ -20374,6 +20369,12 @@ msgstr "Gemt %label feltarv."
 
 msgid "Saved the %label registrant type."
 msgstr "Gemt %label deltagertype."
+
+msgid ""
+"Saving this series will create @total event instances. Creating more than "
+"@threshold instances at once could result in memory exhaustion or site "
+"instability."
+msgstr ""
 
 msgid "Scales and crops image while keeping its focal point close to centered."
 msgstr "Skalerer og beskærer billedet, mens fokuspunktet holdes tæt på midten."
@@ -20947,9 +20948,6 @@ msgstr "Vælg destinationsenhedsbundtet, hvortil data skal arves."
 msgid "Select the destination entity type to which to inherit data."
 msgstr "Vælg destinationsenhedstypen, hvortil data skal arves."
 
-msgid "Select the entity bundles that should be able to inherit data"
-msgstr "Vælg de enhedsbundter, der bør kunne arve data"
-
 msgid "Select the entity types that should be able to inherit data"
 msgstr "Vælg feltet på kildenheden, hvorfra data skal arves"
 
@@ -21498,9 +21496,6 @@ msgstr "Vis kapacitet?"
 
 msgid "Show Empty Fields"
 msgstr "Vis tomme felter"
-
-msgid "Show Event Instance Threshold Warning?"
-msgstr "Vis advarsel om grænseværdi for antal arrangementsinstanser?"
 
 msgid "Show a button linking to the registration page for this event instance"
 msgstr ""
@@ -23127,6 +23122,9 @@ msgstr ""
 msgid "The @title end date cannot be before the start date"
 msgstr "@title afslutningsdatoen kan ikke være før startdatoen"
 
+msgid "The @title end time cannot be before the start time"
+msgstr ""
+
 msgid ""
 "The @title field should be in the form \"leftoffset,topoffset\" where "
 "offsets are in percentages. Ex: 25,75."
@@ -23594,6 +23592,9 @@ msgstr "De beregnede meta tags for enheden."
 msgid "The condition of the product."
 msgstr "Produktets tilstand."
 
+msgid "The configuration options have been saved."
+msgstr "Indstillingerne er blevet gemt."
+
 msgid ""
 "The content lock timeout is currently disabled. It is recommended that "
 "administrators <a href=\":settings\">set the timeout value</a> so that "
@@ -23724,6 +23725,9 @@ msgstr ""
 
 msgid "The date on which an event first occurs."
 msgstr "Datoen for, hvornår et arrangement sker første gang."
+
+msgid "The date on which an event last occurs."
+msgstr ""
 
 msgid "The date the %type will be published."
 msgstr "Datoen for, hvornår %type bliver publiceret."
@@ -23988,6 +23992,12 @@ msgstr ""
 "and higher, so since the existence of the Fields API in core.</br>By moving "
 "field group to a separate module, this may open some new perspectives."
 
+msgid ""
+"The field inheritance module can be considered to be a field-level entity "
+"reference alternative. It allows site administrators to inherit any field "
+"from any entity into any other entity."
+msgstr ""
+
 msgid "The field name"
 msgstr ""
 
@@ -24160,12 +24170,6 @@ msgid "The id must include only letters, numbers, underscores and dashes."
 msgstr "Id'et skal indeholde bogstaver, tal, understregninger og bindestreger."
 
 msgid "The id of the inheritance"
-msgstr ""
-
-msgid "The included entity bundles"
-msgstr ""
-
-msgid "The included entity types"
 msgstr ""
 
 msgid "The inheritance destination entity bundle"
@@ -24825,6 +24829,14 @@ msgstr "Profil som anvendes til søgning efter materialer"
 msgid "The publishing date to be used by Scheduler."
 msgstr "Publiceringsdatoen, der skal bruges af Scheduler."
 
+msgctxt "dpl_event"
+msgid ""
+"The recurrence has been changed. Occurrences that are no longer part of it "
+"will be deleted, and any new ones will be created. The remaining "
+"occurrences, and anything filled in on them, are left as they are. Deleting "
+"an occurrence cannot be undone."
+msgstr ""
+
 msgid "The referenced entity"
 msgstr "Link til den refererede entity"
 
@@ -25060,6 +25072,9 @@ msgstr ""
 "Indsendelse af den aktuelle formular kan medføre sletning af enheder, der "
 "stadig bruges, tag backup af alle data først."
 
+msgid "The submitted date configuration yielded no valid dates."
+msgstr ""
+
 msgctxt "BNF"
 msgid "The subscriptions that this content originates from."
 msgstr "Abonnementer, som dette indhold stammer fra."
@@ -25209,9 +25224,6 @@ msgstr "Titlen på arrangementsinstansen."
 
 msgid "The title of the event instance."
 msgstr "Titlen på arrangementsinstansen."
-
-msgid "The title of the event series to add to the group"
-msgstr "Titel på den arrangementsserie du vil tilføje til gruppen"
 
 msgid "The title of the event series."
 msgstr "Titlen på arrangementsserien."
@@ -25772,13 +25784,6 @@ msgstr ""
 "Denne begivenhedsserie indeholder %count begivenheder, der finder sted på "
 "følgende datoer:"
 
-msgid ""
-"This field has been disabled by the plugin to guarantee the functionality "
-"that's expected of it."
-msgstr ""
-"Dette felt er blevet deaktiveret af plugin for at garantere den "
-"funktionalitet, der forventes af det."
-
 msgctxt "field.field.node.campaign.field_campaign_image:description"
 msgid ""
 "This field has been replaced by the campaign media field, and will be "
@@ -26314,6 +26319,9 @@ msgid ""
 msgstr ""
 "Dette vil vise/skjule afkrydsningsfeltet \"Aktivér venteliste\" i formularen "
 "Tilføj/rediger serie."
+
+msgid "Threshold"
+msgstr "Varsel"
 
 msgctxt "dpl_instant_loan"
 msgid "Threshold"
@@ -27556,6 +27564,12 @@ msgstr ""
 msgid "Updated profile %label."
 msgstr "Opdateret profil %label."
 
+msgctxt "dpl_event"
+msgid ""
+"Updated the occurrences of this event series: @created created, @deleted "
+"removed and @preserved left untouched."
+msgstr ""
+
 msgid "Updated view @id."
 msgstr "Opdateret visning @id."
 
@@ -27987,6 +28001,10 @@ msgstr ""
 "Brugere, der forsøger at redigere et låst indhold, ser stadig meddelelsen om "
 "låst indhold."
 
+msgid ""
+"Users with sufficient access rights will be able to override these options."
+msgstr ""
+
 msgid "Uses"
 msgstr "Bruger"
 
@@ -28012,6 +28030,9 @@ msgstr ""
 "numerisk bredde bruges til at angive den ønskede sidebredde, som siden skal "
 "gengives i: '240' er den foreslåede standard, '176' for ældre browsere eller "
 "'480' for nyere enheder med høje DPI-skærme."
+
+msgid "Validate recurrence schedule before saving"
+msgstr ""
 
 msgid "Value"
 msgstr "Værdi"
@@ -28226,12 +28247,6 @@ msgstr "View modes"
 msgid "View registrant entities"
 msgstr ""
 
-msgid "View relation"
-msgstr ""
-
-msgid "View relation link"
-msgstr ""
-
 msgid "View scheduled %label"
 msgstr "Vis planlagt %label"
 
@@ -28304,6 +28319,9 @@ msgstr "Brugere på venteliste"
 
 msgctxt "Material search"
 msgid "Warning"
+msgstr "Advarsel"
+
+msgid "Warning message"
 msgstr "Advarsel"
 
 msgid ""
@@ -28412,8 +28430,8 @@ msgstr "Ugentligt"
 msgid "Weekly Event"
 msgstr "Ugentlig"
 
-msgid "Weekly recurring date widget"
-msgstr "Ugentlig tilbagevendende dato-widget"
+msgid "Weekly Recurring Date Widget"
+msgstr ""
 
 msgid "Weight"
 msgstr "Vægt"
@@ -28549,6 +28567,9 @@ msgstr ""
 "baseret på summen af begge timeouts. Som standard vil kapaciteten automatisk "
 "justeres (oppe og nede) baseret på den målte tidsdata."
 
+msgid "Whether a new revision should be created by default"
+msgstr "Hvorvidt der som standard skal oprettes en ny version"
+
 msgctxt "field.field.user.user.field_pending_expire_sent:description"
 msgid ""
 "Whether an email notifying of a pending password expiration has been sent"
@@ -28599,6 +28620,11 @@ msgstr ""
 "Whether to slide handle smoothly when user click outside handle on the bar."
 
 msgid "Whether to use the email notifications queue"
+msgstr ""
+
+msgid ""
+"Whether to validate that the recurrence schedule yields at least one date "
+"before saving a series"
 msgstr ""
 
 msgid "Which occurrence of the day(s) of the week should event take place"
@@ -28743,6 +28769,9 @@ msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_valu
 msgid "Work types"
 msgstr ""
 
+msgid "Would you like to continue with removing the above?"
+msgstr ""
+
 msgid "Wrap the meta tags in a collapsed details container."
 msgstr "Pak metatags ind i en sammenklappelig detaljecontainer."
 
@@ -28808,8 +28837,8 @@ msgstr ""
 msgid "Yearly Event"
 msgstr "Årligt"
 
-msgid "Yearly recurring date widget"
-msgstr "Årlig tilbagevendende dato-widget"
+msgid "Yearly Recurring Date Widget"
+msgstr ""
 
 msgid "Yes"
 msgstr "Ja"
@@ -29890,6 +29919,15 @@ msgstr "et al."
 msgid "event"
 msgstr "begivenhed"
 
+msgid "event instance"
+msgstr ""
+
+msgid "event instances"
+msgstr ""
+
+msgid "event series"
+msgstr ""
+
 msgctxt "facets.facet.event_categories:url_alias"
 msgid "event_categories"
 msgstr ""
@@ -29904,9 +29942,6 @@ msgstr ""
 "Arrangementsinstans %title er blevet tilbageført til revisionen fra "
 "%revision-date"
 
-msgid "eventinstance: deleted %title revision %revision."
-msgstr ""
-
 msgid "eventinstance: reverted %title revision %revision."
 msgstr ""
 
@@ -29915,9 +29950,6 @@ msgid ""
 msgstr ""
 "arrangementseries %title er blevet gendannet til revisionen fra %revision-"
 "dato."
-
-msgid "eventseries: deleted %title revision %revision."
-msgstr ""
 
 msgid "eventseries: reverted %title revision %revision."
 msgstr ""
@@ -30465,12 +30497,6 @@ msgstr "I kø"
 msgid "recommender component"
 msgstr "Komponent til anbefalinger (recommender)"
 
-msgid "registrant type"
-msgstr "deltagertype"
-
-msgid "registrant type config"
-msgstr ""
-
 msgctxt "Global"
 msgid "remove @title from favorites list"
 msgstr "fjern @title fra huskelisten"
@@ -30609,9 +30635,6 @@ msgstr ""
 "fornyet.\"]}"
 
 msgid "{{ \"View Series\"|t }}"
-msgstr ""
-
-msgid "{{ arguments.gid|placeholder }} event series"
 msgstr ""
 
 msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:alter:text"

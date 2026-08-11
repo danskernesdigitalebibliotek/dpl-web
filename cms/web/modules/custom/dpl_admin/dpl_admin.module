@@ -14,6 +14,7 @@ use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\recurring_events\Entity\EventSeries;
 use Drupal\system\Form\SiteInformationForm;
 use Drupal\views\Plugin\views\field\EntityField;
 use Drupal\views\ResultRow;
@@ -182,16 +183,20 @@ function _dpl_admin_form_alter_eventinstance(array &$form, FormStateInterface $f
   if ($event_instance instanceof EventInstance) {
     $event_series = $event_instance->getEventSeries();
 
-    $event_series_edit_url = Url::fromRoute(
-      'entity.eventseries.edit_form',
-      ['eventseries' => $event_series->id()]
-    )->toString();
+    // Without a series there is nothing to link to, and the warning goes out
+    // without the link.
+    if ($event_series instanceof EventSeries) {
+      $event_series_edit_url = Url::fromRoute(
+        'entity.eventseries.edit_form',
+        ['eventseries' => $event_series->id()]
+      )->toString();
 
-    $message_suffix =
-      t('<a href="@url">Edit the series here</a>',
-        ['@url' => $event_series_edit_url],
-        ['context' => 'DPL admin UX']
-      );
+      $message_suffix =
+        t('<a href="@url">Edit the series here</a>',
+          ['@url' => $event_series_edit_url],
+          ['context' => 'DPL admin UX']
+        );
+    }
   }
 
   \Drupal::messenger()->addWarning(t(

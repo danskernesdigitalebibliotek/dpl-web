@@ -14,8 +14,8 @@ updates:
     open-pull-requests-limit: 20
     schedule:
       interval: weekly
-      day: monday
-      time: "04:00"
+      day: sunday
+      time: "20:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -64,8 +64,8 @@ updates:
         versions: [">=10.6.0"]
     schedule:
       interval: weekly
-      day: monday
-      time: "04:00"
+      day: sunday
+      time: "20:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -91,8 +91,8 @@ updates:
         update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
-      day: monday
-      time: "04:00"
+      day: sunday
+      time: "20:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -108,8 +108,8 @@ updates:
     versioning-strategy: increase
     schedule:
       interval: weekly
-      day: monday
-      time: "04:00"
+      day: sunday
+      time: "20:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -154,8 +154,8 @@ updates:
     versioning-strategy: increase
     schedule:
       interval: weekly
-      day: monday
-      time: "04:00"
+      day: sunday
+      time: "20:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"
@@ -253,8 +253,8 @@ updates:
     versioning-strategy: increase
     schedule:
       interval: weekly
-      day: monday
-      time: "04:00"
+      day: sunday
+      time: "20:00"
       timezone: Europe/Copenhagen
     labels:
       - "dependencies"

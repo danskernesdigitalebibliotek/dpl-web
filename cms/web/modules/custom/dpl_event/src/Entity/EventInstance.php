@@ -3,6 +3,7 @@
 namespace Drupal\dpl_event\Entity;
 
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\dpl_event\EventPeriod;
 use Drupal\dpl_event\EventState;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\paragraphs\ParagraphInterface;
@@ -10,7 +11,6 @@ use Drupal\recurring_events\Entity\EventInstance as RecurringEventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 use Psr\Log\LoggerInterface;
 use Safe\DateTime;
-use Safe\DateTimeImmutable;
 
 /**
  * Bundle class for recurring_events EventInstance.
@@ -36,31 +36,75 @@ class EventInstance extends RecurringEventInstance {
    * When the event starts.
    */
   public function getStartDate(): \DateTimeInterface {
-    return $this->getDate("value");
+    return $this->getDate()->start;
   }
 
   /**
    * When the event ends.
    */
   public function getEndDate(): \DateTimeInterface {
-    return $this->getDate("end_value");
+    return $this->getDate()->end;
+  }
+
+  /**
+   * The period the event covers.
+   */
+  public function getDate(): EventPeriod {
+    return EventPeriod::fromStorageValues(
+      $this->getDateValue('value'),
+      $this->getDateValue('end_value'),
+    );
+  }
+
+  /**
+   * The period the event covers, if it can be read at all.
+   *
+   * An event instance is supposed to always have a readable date, but these
+   * sites have seen instances end up in states the module does not allow. Use
+   * this instead of getDate() where an unreadable date must not become a fatal
+   * error.
+   *
+   * @return \Drupal\dpl_event\EventPeriod|null
+   *   The period, or NULL if the instance has no date that could be read.
+   */
+  public function getDateOrNull(): ?EventPeriod {
+    // Every way of failing to read the date is the same answer to the caller:
+    // we do not know when this event is.
+    try {
+      return $this->getDate();
+    }
+    catch (\Exception $exception) {
+      return NULL;
+    }
+  }
+
+  /**
+   * Move the event to another period.
+   */
+  public function setDate(EventPeriod $date): void {
+    $this->set('date', [
+      'value' => $date->getStartValue(),
+      'end_value' => $date->getEndValue(),
+    ]);
   }
 
   /**
    * Determine if two events occur on the exact same date.
    */
   public function hasSameDate(EventInstance $other): bool {
-    return $this->getStartDate() == $other->getStartDate() &&
-      $this->getEndDate() == $other->getEndDate();
+    return $this->getDate()->equals($other->getDate());
   }
 
   /**
-   * Get a date for the event.
+   * Get one end of the stored date of the event.
+   *
+   * The value is returned as it is stored: in the storage format, and in the
+   * timezone Drupal stores dates in.
    *
    * @param "value"|"end_value" $value
    *   The part of the date to get.
    */
-  private function getDate(string $value): \DateTimeInterface {
+  private function getDateValue(string $value): string {
     $event_date = $this->get('date')->get(0);
     if (!$event_date) {
       throw new \LogicException("Unable to retrieve date from event instance");
@@ -70,9 +114,8 @@ class EventInstance extends RecurringEventInstance {
     if (!$event_date_values || empty($event_date_values[$value])) {
       throw new \LogicException("Unable to retrieve date from event instance");
     }
-    // Drupal stores dates in UTC by default but if no timezone is specified
-    // then the default timezone will be assumed.
-    return new DateTimeImmutable($event_date_values[$value], new \DateTimeZone('UTC'));
+
+    return $event_date_values[$value];
   }
 
   /**
