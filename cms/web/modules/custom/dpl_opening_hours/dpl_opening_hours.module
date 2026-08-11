@@ -80,7 +80,7 @@ function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_fo
     return;
   }
 
-  $term_label = $term->label();
+  $term_label = $term->label() ?? '';
 
   $form['#title'] = t('Are you sure you want to delete all "@term_label" opening hours?', [
     '@term_label' => $term_label,
