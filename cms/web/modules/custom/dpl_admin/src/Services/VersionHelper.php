@@ -27,7 +27,7 @@ class VersionHelper {
   public function getVersion(): ?string {
 
     $versionFile = DRUPAL_ROOT . '/../.version';
-    $gitHeadFile = DRUPAL_ROOT . '/../.git/HEAD';
+    $gitHeadFile = DRUPAL_ROOT . '/../../.git/HEAD';
     $version = NULL;
 
     // Check for the .version file, which exists only in deployed
