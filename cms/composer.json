@@ -293,7 +293,7 @@
             },
             "drupal/core": {
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "patches/vendor/core-61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
-                "3035578: Add details for AJAX response errors": "patches/vendor/3035578-26.patch",
+                "3035578: Add details for AJAX response errors": "patches/vendor/3035578-mr14700.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
