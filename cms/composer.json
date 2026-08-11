@@ -310,7 +310,7 @@
                 "3396393: Entity with a dynamic entity reference field can't be cloned using entity_clone": "patches/vendor/3396393-2.patch"
             },
             "drupal/entity_clone": {
-                "2708731: Allow redirect to edit form after cloning": "patches/vendor/improve-workflow-of-cloned-entity-2708731-40_patch.patch"
+                "2708731: Allow redirect to edit form after cloning": "patches/2708731-entity_clone-2.2.0-beta1-reroll.patch"
             },
             "drupal/entity_reference_revisions": {
                 "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/vendor/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
