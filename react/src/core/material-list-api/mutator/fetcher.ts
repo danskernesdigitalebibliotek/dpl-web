@@ -14,19 +14,13 @@ export const fetcher = async <ResponseType>(
 
   const baseUrl = getServiceBaseUrl(serviceUrlKeys.materialList);
 
-  // QUESTION: now that `additionalHeaders` doesn't come from data, this seems completely superflous.
-  const additionalHeaders =
-    typeof requestHeaders === "object" && requestHeaders !== null
-      ? requestHeaders
-      : {};
-
   const userToken = getToken(TOKEN_USER_KEY);
   const authHeaders = userToken
     ? ({ Authorization: `Bearer ${userToken}` } as object)
     : {};
 
   const headers = {
-    ...additionalHeaders,
+    ...requestHeaders,
     ...authHeaders,
     "Accept-Version": "2"
   };
