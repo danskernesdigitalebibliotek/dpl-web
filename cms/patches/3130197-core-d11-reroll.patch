@@ -1,39 +1,16 @@
-From 61ac007a84014f54a07825f8f92bb6bc0dfbd170 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
-Date: Sun, 7 Jan 2024 22:01:56 +0100
-Subject: [PATCH] #3402656: Move subtree hash check from permissions check to
- route
-
-For reasons currently unknown the subtree hash provided by clients no
-longer matches locally generated hash. This causes an access denied
-error. With release 10.1 Drupal now shows an error message in the UI
-when an JavaScript error occurs.
-https://www.drupal.org/node/3350215
-
-The hash mismatch is likely not caused by the Drupal 10.1 upgrade itself
-but it is unfortunate because the situation becomes highly visible to
-administrative users. Something they were previously not aware of
-because the menu still worked.
-
-This is a workaround for the situation by moving the hash check from
-access control to the router function. With this change the AJAX
-response will only contain data if the hashes match.
----
- .../toolbar/src/Controller/ToolbarController.php    | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
-
 diff --git a/core/modules/toolbar/src/Controller/ToolbarController.php b/core/modules/toolbar/src/Controller/ToolbarController.php
-index c683494f5051..cd50a6db27ee 100644
+index 8d25465..6aba5d9 100644
 --- a/core/modules/toolbar/src/Controller/ToolbarController.php
 +++ b/core/modules/toolbar/src/Controller/ToolbarController.php
-@@ -19,12 +19,18 @@ class ToolbarController extends ControllerBase implements TrustedCallbackInterfa
+@@ -31,13 +31,19 @@ class ToolbarController extends ControllerBase implements TrustedCallbackInterfa
    /**
     * Returns an AJAX response to render the toolbar subtrees.
     *
 +   * @param string $hash
-+   *    The hash of the toolbar subtrees.
++   *   The hash of the toolbar subtrees.
 +   *
     * @return \Drupal\Core\Ajax\AjaxResponse
+    *   The AJAX response containing the rendered toolbar subtrees.
     */
 -  public function subtreesAjax() {
 +  public function subtreesAjax($hash) {
@@ -47,7 +24,7 @@ index c683494f5051..cd50a6db27ee 100644
  
      // The Expires HTTP header is the heart of the client-side HTTP caching. The
      // additional server-side page cache only takes effect when the client
-@@ -51,8 +57,7 @@ public function subtreesAjax() {
+@@ -64,8 +70,7 @@ class ToolbarController extends ControllerBase implements TrustedCallbackInterfa
     *   The access result.
     */
    public function checkSubTreeAccess($hash) {
@@ -57,6 +34,3 @@ index c683494f5051..cd50a6db27ee 100644
    }
  
    /**
--- 
-GitLab
-
