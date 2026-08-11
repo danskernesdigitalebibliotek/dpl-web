@@ -32,7 +32,6 @@ export const mutator = async <ResponseType>(
 
     // Json decode the response.
     try {
-      // QUESTION: Shouldn't we do this only after we've checked response.ok?
       const responseBody = await response.json();
 
       if (!response.ok) {
