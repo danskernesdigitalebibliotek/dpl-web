@@ -1,5 +1,4 @@
 import FetchFailedCriticalError from "../../fetchers/FetchFailedCriticalError";
-import { getServiceUrlWithParams } from "../../fetchers/helpers";
 import { getToken, TOKEN_USER_KEY, TOKEN_LIBRARY_KEY } from "../../token";
 import {
   getServiceBaseUrl,
@@ -7,45 +6,34 @@ import {
 } from "../../utils/reduxMiddleware/extractServiceBaseUrls";
 import PublizonServiceError from "./PublizonServiceError";
 
-export const fetcher = async <ResponseType>({
-  url,
-  method,
-  headers,
-  params,
-  data
-}: {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
-  headers?: object;
-  params?: unknown;
-  data?: BodyType<unknown>;
-  signal?: AbortSignal;
-}) => {
+export const mutator = async <ResponseType>(
+  url: string,
+  options: RequestInit
+) => {
+  const { headers } = options;
+
   const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
   const authHeaders = token
     ? ({ Authorization: `Bearer ${token}` } as object)
     : {};
 
-  const body = data ? JSON.stringify(data) : null;
-  const serviceUrl = getServiceUrlWithParams({
-    baseUrl: getServiceBaseUrl(serviceUrlKeys.publizon),
-    url,
-    params
-  });
+  const baseUrl = getServiceBaseUrl(serviceUrlKeys.publizon);
+
+  const serviceUrl = `${baseUrl}${url}`;
 
   try {
     const response = await fetch(serviceUrl, {
-      method,
+      ...options,
       headers: {
         ...headers,
         ...authHeaders
-      },
-      body
+      }
     });
 
     // Json decode the response.
     try {
       const responseBody = await response.json();
+
       if (!response.ok) {
         throw new PublizonServiceError(
           response.status,
@@ -54,7 +42,7 @@ export const fetcher = async <ResponseType>({
           serviceUrl
         );
       }
-      return (responseBody as ResponseType) ?? null;
+      return (responseBody as ResponseType) ?? (undefined as ResponseType);
       // If the response is not JSON, we catch the error and throw a syntax error.
     } catch (e) {
       if (!(e instanceof SyntaxError)) {
@@ -72,10 +60,10 @@ export const fetcher = async <ResponseType>({
   }
   // We did not succeed in fetching the data.
   // and we return null to indicate that.
-  return null;
+  return undefined as ResponseType;
 };
 
-export default fetcher;
+export default mutator;
 
 export type ErrorType<ErrorData> = ErrorData;
 
