@@ -1,12 +1,10 @@
-import React from "react"
-
 import { SearchResultsSkeleton } from "@/components/pages/searchPageLayout/SearchResults"
 import { SearchFiltersDesktopSkeleton } from "@/components/shared/searchFilters/SearchFiltersDesktop"
 
 // Mirrors the loading state SearchPageLayout renders while results are fetched.
 const SearchPageLoading = () => {
   return (
-    <div className="content-container space-y-grid-gap-2" role="status" aria-live="polite">
+    <div className="content-container space-y-grid-gap-2" role="status">
       <span className="sr-only">Søgeresultater indlæses</span>
       <div className="hidden lg:block">
         <SearchFiltersDesktopSkeleton />

@@ -1,5 +1,2 @@
-import SearchPageLoading from "@/components/pages/searchPageLayout/SearchPageLoading"
-
-export default function Loading() {
-  return <SearchPageLoading />
-}
+// Route loading boundary — see the comment in app/(pages)/loading.tsx.
+export { default } from "@/components/pages/searchPageLayout/SearchPageLoading"

@@ -1,5 +1,2 @@
-import ReadPageLoading from "@/components/pages/readPageLayout/ReadPageLoading"
-
-export default function Loading() {
-  return <ReadPageLoading />
-}
+// Route loading boundary — see the comment in app/(pages)/loading.tsx.
+export { default } from "@/components/pages/readPageLayout/ReadPageLoading"

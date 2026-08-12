@@ -1,5 +1,2 @@
-import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
-
-export default function Loading() {
-  return <WorkPageLoading />
-}
+// Route loading boundary — see the comment in app/(pages)/loading.tsx.
+export { default } from "@/components/pages/workPageLayout/WorkPageLoading"
