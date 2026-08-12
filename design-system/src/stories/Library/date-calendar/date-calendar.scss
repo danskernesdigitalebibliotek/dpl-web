@@ -1,20 +1,25 @@
 // flatpickr does not use BEM naming convention, so we have to disable stylelint for this file
 /* stylelint-disable */
 
-//// Color variables
-$primary-gray: rgba(57, 57, 57, 0.7);
-// inherited by flatpickr
-$hover-background: rgba(0, 0, 0, 0.05);
-// we do not currently have a good color for this in the design system
-$selected-date-background: rgb(0, 105, 255);
-
 .flatpickr-calendar {
   font-family: "Noto Sans";
   font-style: normal;
-  font-weight: 500;
+  font-weight: $font__weight--semi-bold;
   color: $color__text-primary-black;
+  background-color: $color__global-primary !important;
+  border: 1px solid $color__text-primary-black !important;
+  border-radius: 0 !important;
+  margin-left: -1px;
+  margin-top: -2px;
+  box-shadow: none !important;
   padding: $s-md !important;
   width: fit-content !important;
+
+  // Hide arrow
+  &::after,
+  &::before {
+    display: none !important;
+  }
 
   // On small devices, we need to make sure that the calendar is visible.
   // People had troubles scrolling when the calendar is open (possible, but users
@@ -25,12 +30,6 @@ $selected-date-background: rgb(0, 105, 255);
       left: 0;
       right: 0;
       margin: 0 auto;
-
-      // Hide arrow
-      &::after,
-      &::before {
-        display: none;
-      }
     }
   }
 
@@ -40,7 +39,7 @@ $selected-date-background: rgb(0, 105, 255);
   }
 
   & * {
-    font-weight: 500 !important;
+    font-weight: $font__weight--semi-bold !important;
   }
 
   & .flatpickr-months {
@@ -84,7 +83,7 @@ $selected-date-background: rgb(0, 105, 255);
       align-items: center;
 
       &:hover {
-        background: $hover-background;
+        background: $color__global-secondary;
       }
 
       & svg {
@@ -98,6 +97,11 @@ $selected-date-background: rgb(0, 105, 255);
       height: auto;
       padding: 20px 0;
     }
+
+    & .flatpickr-weekday {
+      color: $color__global-tertiary-2;
+      text-transform: uppercase;
+    }
   }
   & .flatpickr-days {
     user-select: none;
@@ -106,21 +110,45 @@ $selected-date-background: rgb(0, 105, 255);
       display: flex;
       align-items: center;
 
-      &.selected {
-        background-color: $selected-date-background;
-        border-color: $selected-date-background;
+      // Today is highlighted with weight only, no ring.
+      &.today {
+        border-color: transparent;
+        font-weight: $font__weight--bold !important;
+      }
+
+      // Days between the endpoints. The box-shadow fills the gap between
+      // cells so the range reads as one continuous band.
+      &.inRange {
+        background-color: $color__global-secondary;
+        border-color: $color__global-secondary;
+        box-shadow:
+          -5px 0 0 $color__global-secondary,
+          5px 0 0 $color__global-secondary;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: $color__global-secondary;
+        border-color: $color__global-secondary;
+      }
+
+      &.selected,
+      &.startRange,
+      &.endRange {
+        background-color: $color__global-black;
+        border-color: $color__global-black;
       }
 
       &.selected.startRange + .endRange:not(:nth-child(7n + 1)),
       &.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
       &.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
-        box-shadow: -10px 0 0 $selected-date-background;
+        box-shadow: -10px 0 0 $color__global-black;
       }
 
       &.prevMonthDay:not(.endRange):not(.startRange),
       &.nextMonthDay:not(.endRange):not(.startRange) {
-        color: $primary-gray;
-        font-weight: 400 !important;
+        color: $color__global-tertiary-2;
+        font-weight: $font__weight--normal !important;
       }
     }
   }

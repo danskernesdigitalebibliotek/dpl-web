@@ -64,7 +64,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
           data-cy={dataCy}
           type="text"
           placeholder={t("inputPlaceholderText")}
-          aria-label={t("inputPlaceholderText")}
           onKeyUp={(e) => {
             // Only redirect if there is no selected item in autosuggest + query has length above 0 characters
             if (e.key === "Enter" && qWithoutQuery === q && !!q.length) {
@@ -84,7 +83,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
           src={searchIcon}
           alt={t("searchHeaderIconAltText")}
           className="header__menu-search-icon"
-          onClick={() => {
+          onClick={(e) => {
+            // Prevent the default form submission which would otherwise reload
+            // the current page and cancel the redirect below.
+            e.preventDefault();
             // Only redirect if there is no selected item in autosuggest + query has length above 0 characters
             if (qWithoutQuery === q && !!q.length) {
               redirectTo(redirectUrl);

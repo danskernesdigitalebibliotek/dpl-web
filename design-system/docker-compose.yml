@@ -16,7 +16,7 @@ services:
   node:
   # Remember to keep version updated with the .nvmrc file.
   # The .nvmrc file is used in Github Actions and for "dockerless" development.
-    image: node:24
+    image: node:24.15
     user: node
     init: true
     working_dir: /home/node/app
@@ -25,7 +25,7 @@ services:
       dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
     expose:
       - 80
-    command: 'yarn dev'
+    command: 'corepack pnpm run dev'
     environment:
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.local
       VIRTUAL_PORT: 6006

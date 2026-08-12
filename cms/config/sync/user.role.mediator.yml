@@ -26,7 +26,6 @@ dependencies:
     - content_lock
     - dpl_admin
     - entity_clone
-    - field_inheritance
     - file
     - filter
     - media
@@ -57,7 +56,6 @@ permissions:
   - 'access user profiles'
   - 'access users overview'
   - 'add eventseries entity'
-  - 'administer entity field inheritance'
   - 'administer redirects'
   - 'bnf export nodes'
   - 'bnf import nodes'

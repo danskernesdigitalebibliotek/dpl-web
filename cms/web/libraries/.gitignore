@@ -1,0 +1,5 @@
+# Keep this folder in Git to avoid permission problems
+# when building the release.
+#
+# Ignore everything in here except this file.
+*

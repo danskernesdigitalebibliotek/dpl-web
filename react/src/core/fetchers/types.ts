@@ -1,9 +1,5 @@
 export type FetchParams =
-  | string
-  | string[][]
-  | Record<string, string>
-  | URLSearchParams
-  | undefined;
+  string | string[][] | Record<string, string> | URLSearchParams | undefined;
 
 export type FetcherOptions = {
   bearerToken?: string;

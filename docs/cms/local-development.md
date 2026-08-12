@@ -71,7 +71,7 @@ For performance reasons XDebug is disabled by default. It can be enabled
 temporarily through a task:
 
 1. Run `task dev:enable-xdebug`
-2. Validate that XDebug is enabled by inspecting <http://dpl-cms.docker/admin/reports/status/php>.
+2. Validate that XDebug is enabled by inspecting <https://dpl-cms.local/admin/reports/status/php>.
    It should contain extended information about XDebug
 3. Debug the application by setting breakpoints, listen for incoming
    connections in your IDE and [activate XDebug from you client/browser](https://xdebug.org/docs/step_debug#web-application)
@@ -144,26 +144,6 @@ Replace files locally:
 2. Start a local environment using `task dev:reset:clean`
 3. Restore the files by running `task dev:restore:files`
 
-### Get a specific release of dpl-react - without using composer install
-
-In a development context it is not very handy only
-to be able to get the latest version of the main branch of dpl-react.
-
-So a command has been implemented that downloads the specific version
-of the assets and overwrites the existing library.
-
-You need to specify which branch you need to get the assets from.
-The latest HEAD of the given branch is automatically build by Github actions
-so you just need to specify the branch you want.
-
-It is used like this:
-
-```bash
-BRANCH=[BRANCH_FROM_DPL_REACT_REPOSITORY] task dev:dpl-react:overwrite
-```
-
-Example:
-
-```bash
-BRANCH=feature/more-releases task dev:dpl-react:overwrite
-```
+For an ongoing edit/rebuild loop while developing across the projects, use
+`task dev:cms-react --watch` from the repository root (see
+[docs/development.md](../development.md)).

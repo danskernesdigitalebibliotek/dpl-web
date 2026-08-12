@@ -5,6 +5,10 @@ import CheckIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icon
 import clsx from "clsx";
 import { useText } from "../../core/utils/text";
 import useGetSearchBranches from "../../core/utils/branches";
+import {
+  useGetPhysicalHoldingsFilters,
+  hasActivePhysicalHoldingsFilter
+} from "../../core/utils/useGetPhysicalHoldingsFilters";
 import { Work } from "../../core/utils/types/entities";
 import {
   ComplexSearchWithPaginationQuery,
@@ -58,6 +62,18 @@ const AdvancedSearchResult: React.FC<AdvancedSearchResultProps> = ({
   const t = useText();
   const [copiedLinkToSearch, setCopiedLinkToSearch] = useState<boolean>(false);
   const cleanBranches = useGetSearchBranches();
+  const physicalHoldingsFilters = useGetPhysicalHoldingsFilters();
+
+  // When filtering on physical holdings we must also exclude online editions
+  // and restrict to the site's own agency, so only the library's own physical
+  // materials match.
+  const hasPhysicalHoldingsFilter = hasActivePhysicalHoldingsFilter({
+    onShelf,
+    location: locationFilter?.location,
+    sublocation: locationFilter?.sublocation,
+    branch: locationFilter?.branch,
+    department: locationFilter?.department
+  });
   const [resultItems, setResultItems] = useState<Work[]>([]);
   const [hitcount, setHitCount] = useState<number>(0);
   const { PagerComponent, page, resetPage } = usePager({
@@ -126,7 +142,8 @@ const AdvancedSearchResult: React.FC<AdvancedSearchResultProps> = ({
         ? {
             firstAccessionDate: `${firstAccessionOperatorFilter} ${firstAccessionDateFilter}`
           }
-        : {})
+        : {}),
+      ...(hasPhysicalHoldingsFilter ? physicalHoldingsFilters : {})
     },
     ...(sort ? { sort: advancedSortMap[sort as AdvancedSortMapStrings] } : {})
   });

@@ -2,15 +2,14 @@
 
 ## How is the theme set up to use dpl-design-system assets
 
-The Novel theme is set up to use dpl-design-system assets by requiring it as a
-package in ```composer.json```. The assets consist of javascript files, css
-styles and icons and are installed within the custom Novel theme in an "assets"
-folder.
+The Novel theme uses dpl-design-system assets that are built from source in
+this monorepo and copied into the theme's `assets/dpl-design-system` folder.
+The assets consist of javascript files, css styles and icons.
 
-You can find the ```dist.zip``` file with the latest assets (or different tags)
-under ["Releases" on the github repo](https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases).
-The latest release is getting rebuild on merge to the main branch, and the
-tag-release points to a specific commit.
+The build + copy is handled by the root `task dev:cms:link:design-system`
+(invoked by `task dev:cms-react` and `task dev:reset` locally, and by the
+`CMS / Publish release` workflow when building the source image). The design
+system is no longer pulled in as a Composer/npm package.
 
 ### Styling and base.css
 

@@ -77,6 +77,64 @@ export type AppContentElement = {
   id: Scalars['String']['output'];
 };
 
+export type AppContentElementGoLinkbox = AppContentElement & {
+  __typename?: 'AppContentElementGoLinkbox';
+  color?: Maybe<Scalars['String']['output']>;
+  contentId: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
+export type AppContentElementGoMaterialSliderAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementGoMaterialSliderAutomatic';
+  cql: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type AppContentElementGoMaterialSliderManual = AppContentElement & {
+  __typename?: 'AppContentElementGoMaterialSliderManual';
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementMaterialGridAutomatic = AppContentElement & {
+  __typename?: 'AppContentElementMaterialGridAutomatic';
+  cql: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  limit: Scalars['Int']['output'];
+  priorityMaterialType?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type AppContentElementMaterialGridManual = AppContentElement & {
+  __typename?: 'AppContentElementMaterialGridManual';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementNavSpotsManual = AppContentElement & {
+  __typename?: 'AppContentElementNavSpotsManual';
+  id: Scalars['String']['output'];
+  linkedPages: Array<Scalars['String']['output']>;
+};
+
+export type AppContentElementRecommendation = AppContentElement & {
+  __typename?: 'AppContentElementRecommendation';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  imagePositionRight: Scalars['Boolean']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  workId: Scalars['String']['output'];
+};
+
 export type AppContentElementText = AppContentElement & {
   __typename?: 'AppContentElementText';
   body: Scalars['String']['output'];
@@ -105,6 +163,21 @@ export type AppContentElementVideoBundleManual = AppContentElement & {
   title: Scalars['String']['output'];
   video: AppVideo;
   workIds: Array<Scalars['String']['output']>;
+};
+
+export type AppFeesAndPaymentInfo = {
+  __typename?: 'AppFeesAndPaymentInfo';
+  feesAndReplacementCostsUrl?: Maybe<Scalars['String']['output']>;
+  paymentSiteButtonLabel?: Maybe<Scalars['String']['output']>;
+  paymentSiteUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type AppPage = {
+  __typename?: 'AppPage';
+  elements: Array<AppContentElement>;
+  image?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type AppType =
@@ -151,6 +224,11 @@ export type BranchAvailabilityContext = {
   availability: Scalars['Boolean']['output'];
   reservations: Scalars['Boolean']['output'];
   search: Scalars['Boolean']['output'];
+};
+
+export type BrandSettings = {
+  __typename?: 'BrandSettings';
+  logoUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export type CqlSearch = {
@@ -1010,7 +1088,10 @@ export type ParagraphWebform = ParagraphInterface & {
 export type Query = { go: { cacheTags: string[] } } & {
   __typename?: 'Query';
   dplTokens?: Maybe<DplTokens>;
+  getAppBrandSettings: BrandSettings;
   getAppCategories: Array<AppCategory>;
+  getAppFeesAndPaymentInfo?: Maybe<AppFeesAndPaymentInfo>;
+  getAppPage?: Maybe<AppPage>;
   getBranches: Array<Branch>;
   goCategories?: Maybe<GoCategoriesResult>;
   goConfiguration?: Maybe<GoConfiguration>;
@@ -1027,6 +1108,11 @@ export type Query = { go: { cacheTags: string[] } } & {
 export type QueryGetAppCategoriesArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   type: AppType;
+};
+
+
+export type QueryGetAppPageArgs = {
+  id: Scalars['String']['input'];
 };
 
 

@@ -27,7 +27,7 @@ The repo is a mono-repo of four projects that together form the platform:
 - **`go/`** — A Next.js App Router frontend, a standalone public-facing site.
   Aimed at young audiences. Reads content and configuration from
   the CMS over GraphQL.
-- **`design-system/`** — The shared visual language for non-GO functionality. 
+- **`design-system/`** — The shared visual language for non-GO functionality.
   Ships **HTML markup + CSS classes** (not React components) to consumers.
   GO does NOT use the design-system - it has its own visual identity, contained
   within its project subfolder.
@@ -44,6 +44,6 @@ The repo is a mono-repo of four projects that together form the platform:
   workflows — linting, formatting, codegen, dev servers, resets. When the
   next step in your work is to run a command, there is almost certainly a
   Task for it; surface that name to the developer rather than raw
-  `yarn`/`composer`/`drush`/etc. Every task has a `desc:` (or `summary:`)
+  `pnpm`/`composer`/`drush`/etc. Every task has a `desc:` (or `summary:`)
   field — `task --list` (or reading the file) is the fastest way to find
   the right one.

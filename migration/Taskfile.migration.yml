@@ -157,15 +157,15 @@ tasks:
 
         fetch dpl-cms composer.json cms/composer.json
         fetch dpl-cms composer.lock cms/composer.lock
-        fetch dpl-cms yarn.lock cms/yarn.lock
+        fetch dpl-cms pnpm-lock.yaml cms/pnpm-lock.yaml
         fetch dpl-cms package.json cms/package.json
         fetch dpl-cms web/profiles/dpl_cms/translations/da.combined.po cms/web/profiles/dpl_cms/translations/da.combined.po
         fetch dpl-go package.json go/package.json
-        fetch dpl-go yarn.lock go/yarn.lock
+        fetch dpl-go pnpm-lock.yaml go/pnpm-lock.yaml
         fetch dpl-design-system package.json design-system/package.json
-        fetch dpl-design-system yarn.lock design-system/yarn.lock
+        fetch dpl-design-system pnpm-lock.yaml design-system/pnpm-lock.yaml
         fetch dpl-react package.json react/package.json
-        fetch dpl-react yarn.lock react/yarn.lock
+        fetch dpl-react pnpm-lock.yaml react/pnpm-lock.yaml
 
         echo "✅ All files updated."
 
@@ -334,7 +334,7 @@ tasks:
             done <<< "$COMMIT_FILES"
             if [ "$SKIP_THIS" -eq 1 ]; then
               rm -f "$PATCH_FILE"
-              echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, yarn.lock, or da.combined.po; will handle manually)."
+              echo "⏭️ Skipping $COMMIT (only touches composer.json, composer.lock, pnpm-lock.yaml, or da.combined.po; will handle manually)."
               append_processed "$COMMIT"
               continue
             fi

@@ -46,10 +46,10 @@ class DplOpeningHoursListGET200ResponseInnerCategory
         /**
      * @var string|null
      * @SerializedName("title")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $title = null;
 
     /**
@@ -57,17 +57,17 @@ class DplOpeningHoursListGET200ResponseInnerCategory
      *
      * @var string|null
      * @SerializedName("color")
-     * @Assert\NotNull()
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\NotNull]
+    #[Assert\Type("string")]
     protected ?string $color = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->title = array_key_exists('title', $data) ? $data['title'] : $this->title;
@@ -85,21 +85,22 @@ class DplOpeningHoursListGET200ResponseInnerCategory
         return $this->title;
     }
 
-
-
     /**
-     * Sets title.
-     *
-     * @param string|null $title
-     *
-     * @return $this
-     */
+    * Sets title.
+    *
+    * @param string|null $title
+    *
+    * @return $this
+    */
     public function setTitle(?string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets color.
@@ -111,21 +112,22 @@ class DplOpeningHoursListGET200ResponseInnerCategory
         return $this->color;
     }
 
-
-
     /**
-     * Sets color.
-     *
-     * @param string|null $color  A CSS compatible color code which can be used to represent the category
-     *
-     * @return $this
-     */
+    * Sets color.
+    *
+    * @param string|null $color  A CSS compatible color code which can be used to represent the category
+    *
+    * @return $this
+    */
     public function setColor(?string $color): self
     {
         $this->color = $color;
 
         return $this;
     }
+
+
+
 }
 
 

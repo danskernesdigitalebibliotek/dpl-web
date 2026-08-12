@@ -34,8 +34,11 @@ jobs:
           # We have branch protection on. To get around it, we use a PAT,
           # supplied by the DPL Platform Bot.
           token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
-        uses: arduino/setup-task@v2
+        uses: arduino/setup-task@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
@@ -46,6 +49,9 @@ jobs:
         run: task translations:conf:export
       - name: Combine danish po files
         run: task translations:conf:merge
+        # Neither input file is committed. They are produced by the two steps
+        # above and only exist in the workspace, so this step must stay after
+        # both of them.
         env:
           FILE_A: web/profiles/dpl_cms/translations/da.po
           FILE_B: web/profiles/dpl_cms/translations/da.config.po
@@ -80,8 +86,11 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install go-task
-        uses: arduino/setup-task@v2
+        uses: arduino/setup-task@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site

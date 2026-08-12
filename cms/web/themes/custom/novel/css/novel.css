@@ -62,3 +62,22 @@ The button cannot be removed directly in the Drupal view */
 .search-full-text input[value="Apply"] {
   display: none;
 }
+
+/*
+Infinite-scroll pager loading indicator.
+The pager AJAX uses Drupal's inline "throbber" indicator instead of the default
+full-screen one (see the infinite-scroll-inline-loading-indicator patch), so the
+loading indicator appears inside the pager - at the bottom of the list - rather
+than floating fixed in the middle of the viewport.
+When the pager auto-loads (infinite scroll), the views_infinite_scroll JS adds
+the "infinite-scroll-loading" class; we hide the redundant "Show more" button
+and its title so only the throbber remains. */
+.result-pager.infinite-scroll-loading > .result-pager__title,
+.result-pager.infinite-scroll-loading > .btn-primary {
+  display: none;
+}
+
+.result-pager .ajax-progress-throbber {
+  display: flex;
+  justify-content: center;
+}

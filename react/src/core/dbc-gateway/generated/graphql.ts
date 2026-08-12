@@ -3,7 +3,7 @@ import {
   useMutation,
   UseQueryOptions,
   UseMutationOptions
-} from "react-query";
+} from "@tanstack/react-query";
 import { fetcher } from "../graphql-fetcher";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -9039,16 +9039,25 @@ export const useComplexFacetSearchQuery = <
   TError = unknown
 >(
   variables: ComplexFacetSearchQueryVariables,
-  options?: UseQueryOptions<ComplexFacetSearchQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<ComplexFacetSearchQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      ComplexFacetSearchQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<ComplexFacetSearchQuery, TError, TData>(
-    ["complexFacetSearch", variables],
-    fetcher<ComplexFacetSearchQuery, ComplexFacetSearchQueryVariables>(
+  return useQuery<ComplexFacetSearchQuery, TError, TData>({
+    queryKey: ["complexFacetSearch", variables],
+    queryFn: fetcher<ComplexFacetSearchQuery, ComplexFacetSearchQueryVariables>(
       ComplexFacetSearchDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const ComplexSuggestDocument = `
@@ -9068,16 +9077,21 @@ export const useComplexSuggestQuery = <
   TError = unknown
 >(
   variables: ComplexSuggestQueryVariables,
-  options?: UseQueryOptions<ComplexSuggestQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<ComplexSuggestQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<ComplexSuggestQuery, TError, TData>["queryKey"];
+  }
 ) => {
-  return useQuery<ComplexSuggestQuery, TError, TData>(
-    ["complexSuggest", variables],
-    fetcher<ComplexSuggestQuery, ComplexSuggestQueryVariables>(
+  return useQuery<ComplexSuggestQuery, TError, TData>({
+    queryKey: ["complexSuggest", variables],
+    queryFn: fetcher<ComplexSuggestQuery, ComplexSuggestQueryVariables>(
       ComplexSuggestDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetSmallWorkDocument = `
@@ -9093,16 +9107,21 @@ export const useGetSmallWorkQuery = <
   TError = unknown
 >(
   variables: GetSmallWorkQueryVariables,
-  options?: UseQueryOptions<GetSmallWorkQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetSmallWorkQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<GetSmallWorkQuery, TError, TData>["queryKey"];
+  }
 ) => {
-  return useQuery<GetSmallWorkQuery, TError, TData>(
-    ["getSmallWork", variables],
-    fetcher<GetSmallWorkQuery, GetSmallWorkQueryVariables>(
+  return useQuery<GetSmallWorkQuery, TError, TData>({
+    queryKey: ["getSmallWork", variables],
+    queryFn: fetcher<GetSmallWorkQuery, GetSmallWorkQueryVariables>(
       GetSmallWorkDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetManifestationViaMaterialByFaustDocument = `
@@ -9118,20 +9137,25 @@ export const useGetManifestationViaMaterialByFaustQuery = <
   TError = unknown
 >(
   variables: GetManifestationViaMaterialByFaustQueryVariables,
-  options?: UseQueryOptions<
-    GetManifestationViaMaterialByFaustQuery,
-    TError,
-    TData
-  >
+  options?: Omit<
+    UseQueryOptions<GetManifestationViaMaterialByFaustQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetManifestationViaMaterialByFaustQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<GetManifestationViaMaterialByFaustQuery, TError, TData>(
-    ["getManifestationViaMaterialByFaust", variables],
-    fetcher<
+  return useQuery<GetManifestationViaMaterialByFaustQuery, TError, TData>({
+    queryKey: ["getManifestationViaMaterialByFaust", variables],
+    queryFn: fetcher<
       GetManifestationViaMaterialByFaustQuery,
       GetManifestationViaMaterialByFaustQueryVariables
     >(GetManifestationViaMaterialByFaustDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetManifestationViaBestRepresentationByFaustDocument = `
@@ -9153,24 +9177,33 @@ export const useGetManifestationViaBestRepresentationByFaustQuery = <
   TError = unknown
 >(
   variables: GetManifestationViaBestRepresentationByFaustQueryVariables,
-  options?: UseQueryOptions<
-    GetManifestationViaBestRepresentationByFaustQuery,
-    TError,
-    TData
-  >
+  options?: Omit<
+    UseQueryOptions<
+      GetManifestationViaBestRepresentationByFaustQuery,
+      TError,
+      TData
+    >,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetManifestationViaBestRepresentationByFaustQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
   return useQuery<
     GetManifestationViaBestRepresentationByFaustQuery,
     TError,
     TData
-  >(
-    ["getManifestationViaBestRepresentationByFaust", variables],
-    fetcher<
+  >({
+    queryKey: ["getManifestationViaBestRepresentationByFaust", variables],
+    queryFn: fetcher<
       GetManifestationViaBestRepresentationByFaustQuery,
       GetManifestationViaBestRepresentationByFaustQueryVariables
     >(GetManifestationViaBestRepresentationByFaustDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetMaterialDocument = `
@@ -9183,16 +9216,21 @@ export const GetMaterialDocument = `
 
 export const useGetMaterialQuery = <TData = GetMaterialQuery, TError = unknown>(
   variables: GetMaterialQueryVariables,
-  options?: UseQueryOptions<GetMaterialQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetMaterialQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<GetMaterialQuery, TError, TData>["queryKey"];
+  }
 ) => {
-  return useQuery<GetMaterialQuery, TError, TData>(
-    ["getMaterial", variables],
-    fetcher<GetMaterialQuery, GetMaterialQueryVariables>(
+  return useQuery<GetMaterialQuery, TError, TData>({
+    queryKey: ["getMaterial", variables],
+    queryFn: fetcher<GetMaterialQuery, GetMaterialQueryVariables>(
       GetMaterialDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetMaterialGloballyDocument = `
@@ -9208,16 +9246,25 @@ export const useGetMaterialGloballyQuery = <
   TError = unknown
 >(
   variables: GetMaterialGloballyQueryVariables,
-  options?: UseQueryOptions<GetMaterialGloballyQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetMaterialGloballyQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetMaterialGloballyQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<GetMaterialGloballyQuery, TError, TData>(
-    ["getMaterialGlobally", variables],
-    fetcher<GetMaterialGloballyQuery, GetMaterialGloballyQueryVariables>(
-      GetMaterialGloballyDocument,
-      variables
-    ),
-    options
-  );
+  return useQuery<GetMaterialGloballyQuery, TError, TData>({
+    queryKey: ["getMaterialGlobally", variables],
+    queryFn: fetcher<
+      GetMaterialGloballyQuery,
+      GetMaterialGloballyQueryVariables
+    >(GetMaterialGloballyDocument, variables),
+    ...options
+  });
 };
 
 export const GetInfomediaDocument = `
@@ -9241,16 +9288,21 @@ export const useGetInfomediaQuery = <
   TError = unknown
 >(
   variables: GetInfomediaQueryVariables,
-  options?: UseQueryOptions<GetInfomediaQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetInfomediaQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<GetInfomediaQuery, TError, TData>["queryKey"];
+  }
 ) => {
-  return useQuery<GetInfomediaQuery, TError, TData>(
-    ["getInfomedia", variables],
-    fetcher<GetInfomediaQuery, GetInfomediaQueryVariables>(
+  return useQuery<GetInfomediaQuery, TError, TData>({
+    queryKey: ["getInfomedia", variables],
+    queryFn: fetcher<GetInfomediaQuery, GetInfomediaQueryVariables>(
       GetInfomediaDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetReviewManifestationsDocument = `
@@ -9266,16 +9318,25 @@ export const useGetReviewManifestationsQuery = <
   TError = unknown
 >(
   variables: GetReviewManifestationsQueryVariables,
-  options?: UseQueryOptions<GetReviewManifestationsQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetReviewManifestationsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetReviewManifestationsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<GetReviewManifestationsQuery, TError, TData>(
-    ["getReviewManifestations", variables],
-    fetcher<
+  return useQuery<GetReviewManifestationsQuery, TError, TData>({
+    queryKey: ["getReviewManifestations", variables],
+    queryFn: fetcher<
       GetReviewManifestationsQuery,
       GetReviewManifestationsQueryVariables
     >(GetReviewManifestationsDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const OpenOrderDocument = `
@@ -9301,15 +9362,15 @@ export const useOpenOrderMutation = <TError = unknown, TContext = unknown>(
     TError,
     OpenOrderMutationVariables,
     TContext
-  >(
-    ["openOrder"],
-    (variables?: OpenOrderMutationVariables) =>
+  >({
+    mutationKey: ["openOrder"],
+    mutationFn: (variables?: OpenOrderMutationVariables) =>
       fetcher<OpenOrderMutation, OpenOrderMutationVariables>(
         OpenOrderDocument,
         variables
       )(),
-    options
-  );
+    ...options
+  });
 };
 
 export const RecommendFromFaustDocument = `
@@ -9329,16 +9390,25 @@ export const useRecommendFromFaustQuery = <
   TError = unknown
 >(
   variables: RecommendFromFaustQueryVariables,
-  options?: UseQueryOptions<RecommendFromFaustQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<RecommendFromFaustQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      RecommendFromFaustQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<RecommendFromFaustQuery, TError, TData>(
-    ["recommendFromFaust", variables],
-    fetcher<RecommendFromFaustQuery, RecommendFromFaustQueryVariables>(
+  return useQuery<RecommendFromFaustQuery, TError, TData>({
+    queryKey: ["recommendFromFaust", variables],
+    queryFn: fetcher<RecommendFromFaustQuery, RecommendFromFaustQueryVariables>(
       RecommendFromFaustDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const SearchFacetDocument = `
@@ -9360,16 +9430,21 @@ export const SearchFacetDocument = `
 
 export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
   variables: SearchFacetQueryVariables,
-  options?: UseQueryOptions<SearchFacetQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<SearchFacetQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<SearchFacetQuery, TError, TData>["queryKey"];
+  }
 ) => {
-  return useQuery<SearchFacetQuery, TError, TData>(
-    ["searchFacet", variables],
-    fetcher<SearchFacetQuery, SearchFacetQueryVariables>(
+  return useQuery<SearchFacetQuery, TError, TData>({
+    queryKey: ["searchFacet", variables],
+    queryFn: fetcher<SearchFacetQuery, SearchFacetQueryVariables>(
       SearchFacetDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const SearchWithPaginationDocument = `
@@ -9388,16 +9463,25 @@ export const useSearchWithPaginationQuery = <
   TError = unknown
 >(
   variables: SearchWithPaginationQueryVariables,
-  options?: UseQueryOptions<SearchWithPaginationQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<SearchWithPaginationQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      SearchWithPaginationQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<SearchWithPaginationQuery, TError, TData>(
-    ["searchWithPagination", variables],
-    fetcher<SearchWithPaginationQuery, SearchWithPaginationQueryVariables>(
-      SearchWithPaginationDocument,
-      variables
-    ),
-    options
-  );
+  return useQuery<SearchWithPaginationQuery, TError, TData>({
+    queryKey: ["searchWithPagination", variables],
+    queryFn: fetcher<
+      SearchWithPaginationQuery,
+      SearchWithPaginationQueryVariables
+    >(SearchWithPaginationDocument, variables),
+    ...options
+  });
 };
 
 export const ComplexSearchWithPaginationWorkAccessDocument = `
@@ -9416,20 +9500,25 @@ export const useComplexSearchWithPaginationWorkAccessQuery = <
   TError = unknown
 >(
   variables: ComplexSearchWithPaginationWorkAccessQueryVariables,
-  options?: UseQueryOptions<
-    ComplexSearchWithPaginationWorkAccessQuery,
-    TError,
-    TData
-  >
+  options?: Omit<
+    UseQueryOptions<ComplexSearchWithPaginationWorkAccessQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      ComplexSearchWithPaginationWorkAccessQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<ComplexSearchWithPaginationWorkAccessQuery, TError, TData>(
-    ["complexSearchWithPaginationWorkAccess", variables],
-    fetcher<
+  return useQuery<ComplexSearchWithPaginationWorkAccessQuery, TError, TData>({
+    queryKey: ["complexSearchWithPaginationWorkAccess", variables],
+    queryFn: fetcher<
       ComplexSearchWithPaginationWorkAccessQuery,
       ComplexSearchWithPaginationWorkAccessQueryVariables
     >(ComplexSearchWithPaginationWorkAccessDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const ComplexSearchWithPaginationDocument = `
@@ -9448,16 +9537,25 @@ export const useComplexSearchWithPaginationQuery = <
   TError = unknown
 >(
   variables: ComplexSearchWithPaginationQueryVariables,
-  options?: UseQueryOptions<ComplexSearchWithPaginationQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<ComplexSearchWithPaginationQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      ComplexSearchWithPaginationQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<ComplexSearchWithPaginationQuery, TError, TData>(
-    ["complexSearchWithPagination", variables],
-    fetcher<
+  return useQuery<ComplexSearchWithPaginationQuery, TError, TData>({
+    queryKey: ["complexSearchWithPagination", variables],
+    queryFn: fetcher<
       ComplexSearchWithPaginationQuery,
       ComplexSearchWithPaginationQueryVariables
     >(ComplexSearchWithPaginationDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const SuggestionsFromQueryStringDocument = `
@@ -9494,16 +9592,25 @@ export const useSuggestionsFromQueryStringQuery = <
   TError = unknown
 >(
   variables: SuggestionsFromQueryStringQueryVariables,
-  options?: UseQueryOptions<SuggestionsFromQueryStringQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<SuggestionsFromQueryStringQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      SuggestionsFromQueryStringQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<SuggestionsFromQueryStringQuery, TError, TData>(
-    ["suggestionsFromQueryString", variables],
-    fetcher<
+  return useQuery<SuggestionsFromQueryStringQuery, TError, TData>({
+    queryKey: ["suggestionsFromQueryString", variables],
+    queryFn: fetcher<
       SuggestionsFromQueryStringQuery,
       SuggestionsFromQueryStringQueryVariables
     >(SuggestionsFromQueryStringDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetCoversByPidsDocument = `
@@ -9541,16 +9648,21 @@ export const useGetCoversByPidsQuery = <
   TError = unknown
 >(
   variables: GetCoversByPidsQueryVariables,
-  options?: UseQueryOptions<GetCoversByPidsQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetCoversByPidsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<GetCoversByPidsQuery, TError, TData>["queryKey"];
+  }
 ) => {
-  return useQuery<GetCoversByPidsQuery, TError, TData>(
-    ["GetCoversByPids", variables],
-    fetcher<GetCoversByPidsQuery, GetCoversByPidsQueryVariables>(
+  return useQuery<GetCoversByPidsQuery, TError, TData>({
+    queryKey: ["GetCoversByPids", variables],
+    queryFn: fetcher<GetCoversByPidsQuery, GetCoversByPidsQueryVariables>(
       GetCoversByPidsDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const GetBestRepresentationPidByIsbnDocument = `
@@ -9573,16 +9685,25 @@ export const useGetBestRepresentationPidByIsbnQuery = <
   TError = unknown
 >(
   variables: GetBestRepresentationPidByIsbnQueryVariables,
-  options?: UseQueryOptions<GetBestRepresentationPidByIsbnQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<GetBestRepresentationPidByIsbnQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetBestRepresentationPidByIsbnQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<GetBestRepresentationPidByIsbnQuery, TError, TData>(
-    ["GetBestRepresentationPidByIsbn", variables],
-    fetcher<
+  return useQuery<GetBestRepresentationPidByIsbnQuery, TError, TData>({
+    queryKey: ["GetBestRepresentationPidByIsbn", variables],
+    queryFn: fetcher<
       GetBestRepresentationPidByIsbnQuery,
       GetBestRepresentationPidByIsbnQueryVariables
     >(GetBestRepresentationPidByIsbnDocument, variables),
-    options
-  );
+    ...options
+  });
 };
 
 export const IntelligentFacetsDocument = `
@@ -9607,16 +9728,25 @@ export const useIntelligentFacetsQuery = <
   TError = unknown
 >(
   variables: IntelligentFacetsQueryVariables,
-  options?: UseQueryOptions<IntelligentFacetsQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<IntelligentFacetsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      IntelligentFacetsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<IntelligentFacetsQuery, TError, TData>(
-    ["intelligentFacets", variables],
-    fetcher<IntelligentFacetsQuery, IntelligentFacetsQueryVariables>(
+  return useQuery<IntelligentFacetsQuery, TError, TData>({
+    queryKey: ["intelligentFacets", variables],
+    queryFn: fetcher<IntelligentFacetsQuery, IntelligentFacetsQueryVariables>(
       IntelligentFacetsDocument,
       variables
     ),
-    options
-  );
+    ...options
+  });
 };
 
 export const WorkRecommendationsDocument = `
@@ -9642,16 +9772,25 @@ export const useWorkRecommendationsQuery = <
   TError = unknown
 >(
   variables: WorkRecommendationsQueryVariables,
-  options?: UseQueryOptions<WorkRecommendationsQuery, TError, TData>
+  options?: Omit<
+    UseQueryOptions<WorkRecommendationsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      WorkRecommendationsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
 ) => {
-  return useQuery<WorkRecommendationsQuery, TError, TData>(
-    ["WorkRecommendations", variables],
-    fetcher<WorkRecommendationsQuery, WorkRecommendationsQueryVariables>(
-      WorkRecommendationsDocument,
-      variables
-    ),
-    options
-  );
+  return useQuery<WorkRecommendationsQuery, TError, TData>({
+    queryKey: ["WorkRecommendations", variables],
+    queryFn: fetcher<
+      WorkRecommendationsQuery,
+      WorkRecommendationsQueryVariables
+    >(WorkRecommendationsDocument, variables),
+    ...options
+  });
 };
 
 export const PlaceCopyDocument = `
@@ -9677,15 +9816,15 @@ export const usePlaceCopyMutation = <TError = unknown, TContext = unknown>(
     TError,
     PlaceCopyMutationVariables,
     TContext
-  >(
-    ["placeCopy"],
-    (variables?: PlaceCopyMutationVariables) =>
+  >({
+    mutationKey: ["placeCopy"],
+    mutationFn: (variables?: PlaceCopyMutationVariables) =>
       fetcher<PlaceCopyMutation, PlaceCopyMutationVariables>(
         PlaceCopyDocument,
         variables
       )(),
-    options
-  );
+    ...options
+  });
 };
 
 export const operationNames = {

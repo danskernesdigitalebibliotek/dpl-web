@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { first } from "lodash";
 import Various from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Various.svg";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import {
   convertPostIdsToFaustIds,
@@ -210,9 +210,11 @@ export const ReservationModalBody = ({
             // This state is used to show the success or error modal.
             setReservationResponse(res);
             // Because after a successful reservation the holdings (reservations) are updated.
-            queryClient.invalidateQueries(
-              getGetHoldingsLogisticsV1QueryKey({ recordid: faustIds })
-            );
+            queryClient.invalidateQueries({
+              queryKey: getGetHoldingsLogisticsV1QueryKey({
+                recordid: faustIds
+              })
+            });
           },
           onError: () => {
             setReservationStatus("error");

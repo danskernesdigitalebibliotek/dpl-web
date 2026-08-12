@@ -2,7 +2,6 @@ _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   address: 0
-  address_dawa: 0
   admin_toolbar: 0
   admin_user_language: 0
   administerusersbyrole: 0
@@ -61,6 +60,7 @@ module:
   dpl_login: 0
   dpl_mail: 0
   dpl_mapp: 0
+  dpl_media: 0
   dpl_opening_hours: 0
   dpl_paragraphs: 0
   dpl_patron_menu: 0
@@ -101,6 +101,7 @@ module:
   evac: 0
   externalauth: 0
   facets: 0
+  facets_date_range: 0
   field: 0
   field_group: 0
   field_inheritance: 0

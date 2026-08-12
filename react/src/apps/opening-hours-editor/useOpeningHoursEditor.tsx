@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DatesSetArg, EventInput } from "@fullcalendar/core";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { formatCmsEventsToFullCalendar } from "./helper";
 import {
   getDplOpeningHoursListGETQueryKey,
@@ -34,11 +34,11 @@ const useOpeningHoursEditor = () => {
     },
     { enabled: !!datesSet }
   );
-  const { mutate: removeOpeningHours, isLoading: removeOpeningHoursLoading } =
+  const { mutate: removeOpeningHours, isPending: removeOpeningHoursLoading } =
     useDplOpeningHoursDeleteDELETE();
-  const { mutate: createOpeningHours, isLoading: createOpeningHoursLoading } =
+  const { mutate: createOpeningHours, isPending: createOpeningHoursLoading } =
     useDplOpeningHoursCreatePOST();
-  const { mutate: updateOpeningHours, isLoading: updateOpeningHoursLoading } =
+  const { mutate: updateOpeningHours, isPending: updateOpeningHoursLoading } =
     useDplOpeningHoursUpdatePATCH();
   const [events, setEvents] = useState<EventInput[]>([]);
 
@@ -54,9 +54,11 @@ const useOpeningHoursEditor = () => {
   };
 
   const onSuccess = () => {
-    queryClient.invalidateQueries(
-      getDplOpeningHoursListGETQueryKey({ branch_id: openingHoursBranchId })
-    );
+    queryClient.invalidateQueries({
+      queryKey: getDplOpeningHoursListGETQueryKey({
+        branch_id: openingHoursBranchId
+      })
+    });
   };
 
   const onError = (message: string) => {

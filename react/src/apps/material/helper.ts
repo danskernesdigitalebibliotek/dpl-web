@@ -1,5 +1,5 @@
 import { compact, first, groupBy, head, uniq, uniqBy } from "lodash";
-import { UseQueryOptions } from "react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 import { ManifestationHoldings } from "../../components/find-on-shelf/types";
 import { ListData } from "../../components/material/MaterialDetailsList";
 import {
@@ -91,6 +91,20 @@ export const getFirstManifestation = (manifestations: Manifestation[]) => {
   return first(manifestations) || null;
 };
 
+export const hasPublizonIdentifier = (manifestation: Manifestation) =>
+  manifestation.identifiers?.some(
+    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
+  ) ?? false;
+
+// Picks the manifestation to loan/reserve through Publizon: prefer the one
+// carrying a PUBLIZON identifier (the loanable edition), else the first.
+export const getLoanableManifestation = (manifestations: Manifestation[]) => {
+  return (
+    manifestations.find(hasPublizonIdentifier) ??
+    getFirstManifestation(manifestations)
+  );
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getManifestationPlayingTime = (manifestation: Manifestation) => {
   return "";
@@ -152,6 +166,17 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
     (identifier) => identifier.type === IdentifierTypeEnum.Isbn
   );
   return isbnIdentifier?.value ?? "";
+};
+
+// Identifier used for every Publizon call (loan, reservation, loan status,
+// order id). Prefer the PUBLIZON identifier; fall back to the ISBN.
+export const getManifestationPublizonIdentifier = (
+  manifestation: Manifestation
+) => {
+  const publizonIdentifier = manifestation.identifiers?.find(
+    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
+  );
+  return publizonIdentifier?.value ?? getManifestationIsbn(manifestation);
 };
 
 export const getManifestationSource = (manifestation: Manifestation) => {
@@ -605,7 +630,9 @@ export const useGetHoldings = ({
   config: UseConfigFunction;
   blacklist: BlacklistType;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>;
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>
+    >;
   };
 }) => {
   const { data, isLoading, isError } = useGetHoldingsLogisticsV1(
@@ -642,27 +669,6 @@ export const getManifestationBasedOnType = (
   }
   // Fallback returning best representation.
   return bestRepresentation;
-};
-
-// Returns the requested material type only when the given manifestation
-// actually has that type. If it does not, returns undefined so callers
-// (e.g. URL construction) can fall back to the website's normal logic instead
-// of forcing a type the work cannot satisfy.
-//
-// Pass the manifestation already resolved via getManifestationBasedOnType:
-// that helper falls back to the best representation when the work has no
-// manifestation of the requested type, so a non-matching type here means the
-// work cannot satisfy it.
-export const getAvailablePriorityMaterialType = (
-  manifestation: Manifestation,
-  materialType?: ManifestationMaterialType
-): ManifestationMaterialType | undefined => {
-  if (!materialType) {
-    return undefined;
-  }
-  return getManifestationMaterialTypes(manifestation) === materialType
-    ? materialType
-    : undefined;
 };
 
 export const getWorkTitle = (work: Work): string => {

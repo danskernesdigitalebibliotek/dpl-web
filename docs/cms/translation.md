@@ -14,8 +14,11 @@ of the system is in Danish.
 To make the "translation traffic" work following components are being used:
 
 * GitHub
-  * [Stores `.po` files in git](../../cms/web/profiles/dpl_cms/translations/da.po) with
-    translatable strings and translations
+  * [Stores the combined `.po` file in
+    git](../../cms/web/profiles/dpl_cms/translations/da.combined.po) with
+    translatable strings and translations. It is the single source of truth.
+    The `*.po` and `*.config.po` files are generated from it and are not
+    committed.
 * [GitHub Actions](../../.github/workflows/cms-translate-source.yml)
   * Scans codebase for new translatable strings and commits them to GitHub
   * Exports translatable configuration strings into a separate `*.config.po` file

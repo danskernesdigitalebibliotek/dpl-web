@@ -1,0 +1,39 @@
+--- a/js/infinite-scroll.js
++++ b/js/infinite-scroll.js
+@@ -81,7 +81,12 @@
+     attach : function (context, settings) {
+       once('infinite-scroll', automaticPagerSelector, context).forEach(function (elem) {
+         var $pager = $(elem);
+-        $pager.addClass('visually-hidden');
++        // Keep the pager in the layout (rather than visually-hidden) so the
++        // inline AJAX loading indicator, which is inserted inside it, is
++        // visible at the bottom of the list. The "Show more" button and title
++        // are hidden via CSS on this class instead. The class is added by JS so
++        // that, without JS, the button remains as a working fallback.
++        $pager.addClass('infinite-scroll-loading');
+         var isLoadNeeded = function () {
+           return window.innerHeight + window.pageYOffset > $pager.offset().top - scrollThreshold;
+         };
+@@ -124,4 +129,22 @@
+     return this.$view.hasClass('view-eva') || !this.$view.parents('.view').length;
+   };
+ 
++  /**
++   * Show the pager loading indicator inline instead of full screen.
++   *
++   * Views defaults pager AJAX to a full-screen progress indicator, which
++   * Drupal positions fixed in the middle of the viewport. For infinite scroll
++   * that means a spinner floats on screen even when the visitor has not
++   * scrolled down to where the next results load. Switching to the inline
++   * "throbber" indicator renders it next to the pager - at the bottom of the
++   * list - so it only appears once the visitor reaches it.
++   */
++  var originalAttachPagerLinkAjax = Drupal.views.ajaxView.prototype.attachPagerLinkAjax;
++  Drupal.views.ajaxView.prototype.attachPagerLinkAjax = function (id, link) {
++    originalAttachPagerLinkAjax.call(this, id, link);
++    if (this.pagerAjax && this.pagerAjax.progress) {
++      this.pagerAjax.progress.type = 'throbber';
++    }
++  };
++
+ })(jQuery, Drupal, Drupal.debounce);

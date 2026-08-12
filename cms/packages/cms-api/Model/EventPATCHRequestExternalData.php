@@ -50,9 +50,9 @@ class EventPATCHRequestExternalData
      *
      * @var string|null
      * @SerializedName("url")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $url = null;
 
     /**
@@ -60,16 +60,16 @@ class EventPATCHRequestExternalData
      *
      * @var string|null
      * @SerializedName("admin_url")
-     * @Assert\Type("string")
      * @Type("string")
-     */
+    */
+    #[Assert\Type("string")]
     protected ?string $adminUrl = null;
 
     /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
@@ -87,21 +87,22 @@ class EventPATCHRequestExternalData
         return $this->url;
     }
 
-
-
     /**
-     * Sets url.
-     *
-     * @param string|null $url  An absolute URL provided by the third party where end users can access the event.
-     *
-     * @return $this
-     */
+    * Sets url.
+    *
+    * @param string|null $url  An absolute URL provided by the third party where end users can access the event.
+    *
+    * @return $this
+    */
     public function setUrl(?string $url = null): self
     {
         $this->url = $url;
 
         return $this;
     }
+
+
+
 
     /**
      * Gets adminUrl.
@@ -113,21 +114,22 @@ class EventPATCHRequestExternalData
         return $this->adminUrl;
     }
 
-
-
     /**
-     * Sets adminUrl.
-     *
-     * @param string|null $adminUrl  An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication.
-     *
-     * @return $this
-     */
+    * Sets adminUrl.
+    *
+    * @param string|null $adminUrl  An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication.
+    *
+    * @return $this
+    */
     public function setAdminUrl(?string $adminUrl = null): self
     {
         $this->adminUrl = $adminUrl;
 
         return $this;
     }
+
+
+
 }
 
 

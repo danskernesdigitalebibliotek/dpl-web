@@ -4,7 +4,7 @@ import LocationIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/i
 import LoanHistoryIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/LoanHistory.svg";
 import ReservationsIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reservations.svg";
 import LoansIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Loans.svg";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useText } from "../../../../core/utils/text";
 import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import { MaterialProps } from "../../../loan-list/materials/utils/material-fetch-hoc";
@@ -105,7 +105,9 @@ const PhysicalListDetails: FC<PhysicalListDetailsProps & MaterialProps> = ({
       {
         onSuccess: () => {
           setReservationStatus("success");
-          queryClient.invalidateQueries(getGetReservationsV2QueryKey());
+          queryClient.invalidateQueries({
+            queryKey: getGetReservationsV2QueryKey()
+          });
         },
         onError: () => {
           setReservationStatus("error");
@@ -132,10 +134,10 @@ const PhysicalListDetails: FC<PhysicalListDetailsProps & MaterialProps> = ({
           <ReservationFormListItem
             icon={LocationIcon}
             title={t("reservationDetailsPickUpAtTitleText")}
-            text={getPreferredBranch(
-              selectedBranch ?? pickupBranch,
-              whitelistBranches
-            )}
+            // Resolve the display name from the complete branch list so a
+            // blacklisted-but-assigned pickup branch still shows its name; the
+            // whitelist is only for the selectable branches in PickupModal.
+            text={getPreferredBranch(selectedBranch ?? pickupBranch, branches)}
             changeHandler={openModal("pickup")}
             buttonAriaLabel={t("changePickupLocationText")}
             subText={pickupNumber ?? ""}
