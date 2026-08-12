@@ -29,6 +29,14 @@ class CqlSearchItem extends GraphQLComposeFieldTypeBase implements FieldProducer
 
     return [
       'value' => $item->value ?? NULL,
+      'branch' => $item->branch ?? NULL,
+      'department' => $item->department ?? NULL,
+      'location' => $item->location ?? NULL,
+      'sublocation' => $item->sublocation ?? NULL,
+      'sort' => $item->sort ?? NULL,
+      'onshelf' => $item->onshelf ?? NULL,
+      'firstAccessionDateValue' => $item->first_accession_date_value ?? NULL,
+      'firstAccessionDateOperator' => $item->first_accession_date_operator ?? NULL,
     ];
   }
 
