@@ -2,7 +2,6 @@
 
 use Drupal\collation_fixer\CollationFixer;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -19,7 +18,6 @@ use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
-use Webmozart\Assert\Assert;
 
 /**
  * Update the permissions for a supplied list of roles.
@@ -645,7 +643,10 @@ function dpl_update_deploy_mark_orphaned_files_temporary(array &$sandbox): strin
     $query->leftJoin('file_usage', 'fu', 'fm.fid = fu.fid');
     $query->isNull('fu.fid');
     $result = $query->execute();
-    Assert::isInstanceOf($result, StatementInterface::class);
+
+    if (!$result) {
+      throw new \RuntimeException('Could not query file_managed for unused files.');
+    }
 
     $sandbox['ids'] = $result->fetchCol();
     $sandbox['total'] = count($sandbox['ids']);
