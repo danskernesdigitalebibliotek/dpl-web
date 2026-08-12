@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import React, { Suspense } from "react"
 
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
+import PageLoading from "@/components/shared/pageLoading/PageLoading"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { createServerQueryFn } from "@/lib/helpers/bearer-token"
@@ -42,7 +43,7 @@ async function WorkPage({ params }: TWorkPageProps) {
 
 async function Page({ params }: TWorkPageProps) {
   return (
-    <Suspense>
+    <Suspense fallback={<PageLoading />}>
       <WorkPage params={params} />
     </Suspense>
   )
