@@ -1,3 +1,9 @@
+"use client"
+
+// This file has to be the client boundary: MaterialTypeSelectSkeleton comes
+// from a module that uses client hooks without declaring "use client" itself,
+// so without this the loading.tsx import pulls it into the server graph and the
+// build fails.
 import { ButtonSkeleton } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import { MaterialTypeSelectSkeleton } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
