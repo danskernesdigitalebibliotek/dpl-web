@@ -50,6 +50,11 @@ class EventRestMapper {
   public function getRestDataDefinition(): mixed {
     return [
       'type' => 'object',
+      // Explicitly name the type to match the previously auto-generated name,
+      // so the classes generated with `task dev:codegen:dpl-cms` are still
+      // named the same. As we're the only consumer of the classes, one might
+      // consider refactoring to more natural naming.
+      'title' => 'EventsGET200ResponseInner',
       'properties' => [
         'uuid' => [
           'type' => 'string',
@@ -286,6 +291,7 @@ class EventRestMapper {
         ],
         'external_data' => [
           'type' => 'object',
+          'title' => 'EventPATCHRequestExternalData',
           'description' => 'Data for the event provided by a third party.',
           'properties' => [
             'url' => [
