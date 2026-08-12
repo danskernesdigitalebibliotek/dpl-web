@@ -627,11 +627,6 @@ function dpl_update_deploy_remove_field_inheritance_permissions(): string {
  * never deleted. Marking them temporary hands them over to the regular
  * cron cleanup, matching what happens to files orphaned today.
  *
- * Only files in the date-based upload directories used by the media source
- * fields are touched. Files placed elsewhere may be managed by other
- * mechanisms (e.g. webmaster-installed modules) that do not record usage,
- * and deleting those would be irreversible.
- *
  * @param array<mixed> $sandbox
  *   The sandbox, used for batch processing.
  */
@@ -642,9 +637,6 @@ function dpl_update_deploy_mark_orphaned_files_temporary(array &$sandbox): strin
     $query = \Drupal::database()->select('file_managed', 'fm')
       ->fields('fm', ['fid'])
       ->condition('fm.status', FileInterface::STATUS_PERMANENT)
-      // Matches the '[date:custom:Y]-[date:custom:m]' file directory that
-      // all media source fields upload to.
-      ->condition('fm.uri', 'public://____-__/%', 'LIKE')
       // Leave recently changed files alone. A fresh upload can briefly be
       // permanent without recorded usage while it is being attached to
       // content, and anything orphaned from now on is handled by
