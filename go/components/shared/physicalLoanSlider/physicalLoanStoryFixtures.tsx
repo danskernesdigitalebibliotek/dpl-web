@@ -149,16 +149,21 @@ const storyServiceLayerConfig = {
 }
 
 export const withServiceLayer =
-  () =>
-  (Story: React.ComponentType): React.ReactElement => (
-    <QueryClientProvider
-      client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-      <ServiceLayerProvider config={storyServiceLayerConfig}>
-        <Story />
-        {/* Modals open through the global store, rendered by this host. */}
-        <StoreModal />
-        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
-        <Toaster duration={Infinity} />
-      </ServiceLayerProvider>
-    </QueryClientProvider>
-  )
+  (seed?: (client: QueryClient) => void) =>
+  (Story: React.ComponentType): React.ReactElement => {
+    // Seed the cache so hooks backed by server actions (branch titles,
+    // patron) resolve inside Storybook, where the actions can't run.
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    seed?.(client)
+    return (
+      <QueryClientProvider client={client}>
+        <ServiceLayerProvider config={storyServiceLayerConfig}>
+          <Story />
+          {/* Modals open through the global store, rendered by this host. */}
+          <StoreModal />
+          {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+          <Toaster duration={Infinity} />
+        </ServiceLayerProvider>
+      </QueryClientProvider>
+    )
+  }

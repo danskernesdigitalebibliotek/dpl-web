@@ -1,5 +1,10 @@
-import { type Reservation } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import {
+  type Patron,
+  type Reservation,
+  patronQueryKey,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import type { QueryClient } from "@tanstack/react-query"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import {
@@ -7,7 +12,26 @@ import {
   withServiceLayer,
 } from "@/components/shared/physicalLoanSlider/physicalLoanStoryFixtures"
 import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
+import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { ReservationItem } from "@/lib/helpers/helper.patron"
+
+const fixtureBranch = { isilId: "DK-761500", title: "Hovedbiblioteket" }
+
+const fixturePatron: Patron = {
+  name: "Test Bruger",
+  isLocked: false,
+  pickupBranchId: fixtureBranch.isilId,
+  emailAddress: "test@example.com",
+  phoneNumber: "+4512345678",
+}
+
+// Branch titles and patron data come from server actions the Storybook
+// build can't run, so both are seeded — the "Afhentningssted" / sms /
+// e-mail cards in "Din reservering" depend on them.
+const seedDetails = (client: QueryClient) => {
+  client.setQueryData(branchTitleQueryKey(fixtureBranch.isilId), fixtureBranch.title)
+  client.setQueryData(patronQueryKey(), fixturePatron)
+}
 
 const daysFromNow = (days: number) => {
   const date = new Date()
@@ -85,7 +109,7 @@ export const ListDarkMode: Story = {
 // Clicking a row slides forward to "Din reservering" with pickup and
 // notification details, and the delete action in the footer.
 export const ReservationDetails: Story = {
-  decorators: [withServiceLayer()],
+  decorators: [withServiceLayer(seedDetails)],
   args: baseArgs,
   play: async () => {
     const { screen, userEvent } = await import("@storybook/test")
