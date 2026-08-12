@@ -34,7 +34,7 @@ const CompensationModal = ({
             or just billed after long overdue), so the copy only states that
             it covers these materials. */}
         <p className="text-typo-subtitle-sm text-foreground-muted">
-          {`Ups! Du skal betale erstatning for ${compensationMaterialCount} ${
+          {`Ups! Der skal betales erstatning for ${compensationMaterialCount} ${
             compensationMaterialCount === 1 ? "bog" : "bøger"
           } fra biblioteket.`}
         </p>

@@ -48,14 +48,14 @@ export const Empty: Story = {
   },
 }
 
-// Clicking "Forny lån" on a card opens the loan details modal.
+// Clicking "Forlæng lån" on a card opens the loan details modal.
 export const OpensLoanDetails: Story = {
   decorators: [withServiceLayer()],
   play: async () => {
     // The modal renders to a portal, so query against document.body via
     // screen instead of canvasElement.
     const { screen, userEvent } = await import("@storybook/test")
-    const cardButtons = await screen.findAllByRole("button", { name: /forny lån/i })
+    const cardButtons = await screen.findAllByRole("button", { name: /forlæng lån/i })
     await userEvent.click(cardButtons[0])
     await screen.findByRole("dialog")
   },

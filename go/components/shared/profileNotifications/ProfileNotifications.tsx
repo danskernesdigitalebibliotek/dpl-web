@@ -111,8 +111,8 @@ const ProfileNotifications = () => {
             key: "fees",
             status: "error" as const,
             label: "Mangler betaling",
-            title: `Du mangler at betale ${formatAmount(unpaidTotal)} kr.`,
-            body: "Tag fat i en voksen for at få hjælp til at betale pengene.",
+            title: `Der mangler at blive betalt ${formatAmount(unpaidTotal)} kr.`,
+            body: "Du har afleveret nogle bøger for sent på biblioteket.",
             // The modal only explains overdue fees; without any, the card
             // stands on its own.
             ...(lateFeeTotal > 0 ? { action: { label: "Vis gebyrer", onClick: openFees } } : {}),
@@ -125,8 +125,8 @@ const ProfileNotifications = () => {
             key: "compensation",
             status: "error" as const,
             label: "Mangler betaling",
-            title: `Du mangler at betale ${formatAmount(compensationTotal)} kr. i erstatning`,
-            body: "Tag fat i en voksen for at få hjælp til at betale pengene.",
+            title: `Der mangler at blive betalt ${formatAmount(compensationTotal)} kr. i erstatning`,
+            body: "Du har afleveret nogle bøger for sent på biblioteket.",
             action: { label: "Vis erstatning", onClick: openCompensation },
           },
         ]
@@ -137,8 +137,8 @@ const ProfileNotifications = () => {
             key: "ready",
             status: "success" as const,
             label: "Klar til dig",
-            title: `${bookCount(readyCount)} er klar til afhentning`,
-            action: { label: "Vis bøger", onClick: openReservations },
+            title: `${bookCount(readyCount)} er klar til afhentning på biblioteket`,
+            action: { label: "Vis reserveringer", onClick: openReservations },
           },
         ]
       : []),
@@ -148,7 +148,7 @@ const ProfileNotifications = () => {
             key: "overdue",
             status: "error" as const,
             label: "Frist overskredet",
-            title: `${bookCount(overdueCount)} skal afleveres nu`,
+            title: `${bookCount(overdueCount)} skal afleveres på biblioteket nu`,
             action: { label: "Vis bøger", onClick: openLoans },
           },
         ]
@@ -159,7 +159,7 @@ const ProfileNotifications = () => {
             key: "due-soon",
             status: "warning" as const,
             label: "Lån udløber",
-            title: `${bookCount(dueSoonCount)} skal snart afleveres`,
+            title: `${bookCount(dueSoonCount)} skal snart afleveres på biblioteket`,
             action: { label: "Vis bøger", onClick: openLoans },
           },
         ]
@@ -191,7 +191,7 @@ export const ProfileNotificationsView = ({
         </p>
       ) : notifications.length === 0 ? (
         <p data-cy={cyKeys["profile-notifications-empty"]} className="text-typo-body-md">
-          Alt ser fint ud — ingen gebyrer, afhentninger eller forfaldne lån.
+          Alt ser fint ud. Du har ingen gebyrer eller bøger, der skal afleveres/hentes.
         </p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">

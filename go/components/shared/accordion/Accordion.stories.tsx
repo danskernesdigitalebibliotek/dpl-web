@@ -13,8 +13,8 @@ const sections = [
   },
   {
     value: "loan-period",
-    title: "Lånetid og fornyelse",
-    body: "Standardlånetiden er 30 dage. De fleste materialer kan fornys op til to gange, hvis ingen står på venteliste.",
+    title: "Lånetid og forlængelse",
+    body: "Standardlånetiden er 30 dage. De fleste materialer kan forlænges op til to gange, hvis ingen står på venteliste.",
   },
   {
     value: "fees",

@@ -25,7 +25,7 @@ type RenewLoanActionProps = {
   onRenew: () => void
 }
 
-// Disabled "Forny lån" with an explanation above it — same shape as the
+// Disabled "Forlæng lån" with an explanation above it — same shape as the
 // availability note in the reservation modal.
 const DisabledRenewAction = ({ title, message }: { title: string; message: string }) => (
   <div className="flex w-full flex-col items-center gap-3">
@@ -34,9 +34,9 @@ const DisabledRenewAction = ({ title, message }: { title: string; message: strin
       theme="primary"
       size="lg"
       disabled
-      ariaLabel={`Forny lån af ${title}`}
+      ariaLabel={`Forlæng lån af ${title}`}
       data-cy={cyKeys["approve-renew-loan-button"]}>
-      Forny lån
+      Forlæng lån
     </Button>
   </div>
 )
@@ -57,7 +57,7 @@ const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionPr
     return (
       <DisabledRenewAction
         title={title}
-        message={`Lånet kan først fornys om ${daysUntilRenewable} ${
+        message={`Lånet kan først forlænges om ${daysUntilRenewable} ${
           daysUntilRenewable === 1 ? "dag" : "dage"
         }`}
       />
@@ -70,10 +70,10 @@ const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionPr
         theme="primary"
         size="lg"
         isLoading={isRenewing}
-        ariaLabel={`Forny lån af ${title}`}
+        ariaLabel={`Forlæng lån af ${title}`}
         data-cy={cyKeys["approve-renew-loan-button"]}
         onClick={onRenew}>
-        Forny lån
+        Forlæng lån
       </Button>
     )
   }

@@ -27,7 +27,7 @@ const PhysicalLoansUniloginTeaser = ({ className }: { className?: string }) => {
             md:p-8">
           <p className="text-typo-subtitle-md text-center">
             Du kan ikke se bøger du har lånt eller reserveret på biblioteket, når du er logget ind
-            med UNI-login.
+            med Unilogin.
           </p>
           <LoginPanel
             icon="adgangsplatformen"
