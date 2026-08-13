@@ -25,6 +25,8 @@ import type {
   CampaignMatchPOST200,
   CampaignMatchPOSTBody,
   CampaignMatchPOSTParams,
+  CurrentEventsGET200Item,
+  CurrentEventsGETParams,
   DplOpeningHoursCreatePOST200Item,
   DplOpeningHoursCreatePOSTBody,
   DplOpeningHoursCreatePOSTParams,
@@ -189,6 +191,167 @@ export const getDplOpeningHoursCreatePOSTUrl = (
     ? `/api/v1/opening_hours?${stringifiedParams}`
     : `/api/v1/opening_hours`;
 };
+
+/**
+ * @summary Retrieve current events
+ */
+export const currentEventsGET = (
+  params: CurrentEventsGETParams,
+  signal?: AbortSignal
+) => {
+  return fetcher<CurrentEventsGET200Item[]>({
+    url: `/api/v1/events/current`,
+    method: "GET",
+    params,
+    signal
+  });
+};
+
+export const getCurrentEventsGETQueryKey = (
+  params?: CurrentEventsGETParams
+) => {
+  return [`/api/v1/events/current`, ...(params ? [params] : [])] as const;
+};
+
+export const getCurrentEventsGETQueryOptions = <
+  TData = Awaited<ReturnType<typeof currentEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: CurrentEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof currentEventsGET>>,
+        TError,
+        TData
+      >
+    >;
+  }
+) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getCurrentEventsGETQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof currentEventsGET>>
+  > = ({ signal }) => currentEventsGET(params, signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof currentEventsGET>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type CurrentEventsGETQueryResult = NonNullable<
+  Awaited<ReturnType<typeof currentEventsGET>>
+>;
+export type CurrentEventsGETQueryError = ErrorType<void>;
+
+export function useCurrentEventsGET<
+  TData = Awaited<ReturnType<typeof currentEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: CurrentEventsGETParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof currentEventsGET>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof currentEventsGET>>,
+          TError,
+          Awaited<ReturnType<typeof currentEventsGET>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useCurrentEventsGET<
+  TData = Awaited<ReturnType<typeof currentEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: CurrentEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof currentEventsGET>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof currentEventsGET>>,
+          TError,
+          Awaited<ReturnType<typeof currentEventsGET>>
+        >,
+        "initialData"
+      >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useCurrentEventsGET<
+  TData = Awaited<ReturnType<typeof currentEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: CurrentEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof currentEventsGET>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Retrieve current events
+ */
+
+export function useCurrentEventsGET<
+  TData = Awaited<ReturnType<typeof currentEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: CurrentEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof currentEventsGET>>,
+        TError,
+        TData
+      >
+    >;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getCurrentEventsGETQueryOptions(params, options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
 
 /**
  * @summary Create individual opening hours
