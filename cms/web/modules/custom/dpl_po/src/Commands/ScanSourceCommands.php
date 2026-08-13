@@ -6,6 +6,7 @@ namespace Drupal\dpl_po\Commands;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\dpl_po\PoFileBuilder;
 use Drush\Attributes\Argument;
 use Drush\Attributes\Command;
 use Drush\Attributes\Help;
@@ -13,16 +14,16 @@ use Drush\Attributes\Usage;
 use Drush\Commands\DrushCommands;
 use function Safe\file;
 use function Safe\file_put_contents;
-use function Safe\preg_match;
-use function Safe\preg_replace;
 
 /**
  * Drush command for scanning our source code for translatable strings.
  *
- * The extraction itself is done by the potx module. Potx ships a `drush potx`
- * command, but it scans one directory per invocation and writes the result to
- * a hardcoded file name in the current directory. We scan a number of
- * directories into a single file, so we drive the potx API directly instead.
+ * The extraction is done by the potx module, driven through its API rather
+ * than its own `drush potx` command. That command writes general.pot and
+ * installer.pot to whichever directory Drush ends up in, filled with potx' own
+ * header, its "#:" source references and a listing of every file it scanned.
+ * We want one file, in a given place, without any of that, so the command
+ * would leave the same post-processing to do and two files to clean up.
  */
 class ScanSourceCommands extends DrushCommands {
 
@@ -109,7 +110,7 @@ class ScanSourceCommands extends DrushCommands {
     if (empty($strings)) {
       throw new \RuntimeException('The scan produced no strings. Refusing to write an empty file.');
     }
-    $this->assertReadable($strings);
+    $this->poFile()->assertGettextReads($strings);
 
     file_put_contents($path, $strings);
 
@@ -191,149 +192,6 @@ class ScanSourceCommands extends DrushCommands {
   }
 
   /**
-   * Escape the strings potx hands over unescaped.
-   *
-   * Potx runs almost everything it extracts through
-   * _potx_format_quoted_string(), which escapes control characters. Its
-   * `@Translation` extractor is the exception: it saves the raw regex match. An
-   * annotation wrapped over two lines therefore arrives with a real newline and
-   * the doc comment's continuation in it:
-   *
-   * @code
-   *   description = @Translation("Sends emails through the Azure Communication
-   *   Service")
-   * @endcode
-   *
-   * Written out as-is that is not a .po file at all, and gettext throws away
-   * every term in it rather than the one string. One module with a wrapped
-   * annotation would take the whole translation file with it.
-   *
-   * Only strings that still hold a raw control character are touched, so the
-   * ones potx escaped properly are left exactly as they are.
-   */
-  protected function escapeUnescapedStrings(): void {
-    global $_potx_strings, $_potx_install;
-
-    $escaped = 0;
-    foreach ([&$_potx_strings, &$_potx_install] as &$store) {
-      if (!is_array($store)) {
-        continue;
-      }
-
-      $result = [];
-      foreach ($store as $string => $contexts) {
-        $clean = $this->escapeString((string) $string);
-        if ($clean !== (string) $string) {
-          $escaped++;
-        }
-
-        // Escaping can land a string on one that is already there, so the
-        // occurrences are merged rather than overwritten.
-        $result[$clean] = array_merge_recursive($result[$clean] ?? [], $contexts);
-      }
-      $store = $result;
-    }
-
-    if ($escaped > 0) {
-      $this->logger()?->info(sprintf('Escaped %d strings that potx handed over raw.', $escaped));
-    }
-  }
-
-  /**
-   * Escape one extracted string for a .po file.
-   */
-  protected function escapeString(string $string): string {
-    // Potx delimits the two forms of a plural string with a null byte. Each
-    // form is escaped on its own so the delimiter survives.
-    $forms = explode("\0", $string);
-
-    foreach ($forms as $index => $form) {
-      if (preg_match('/[\x00-\x1F]/', $form) !== 1) {
-        continue;
-      }
-
-      // Fold a doc comment continuation back into a single space, so the msgid
-      // is the string the author wrote rather than the source layout.
-      $form = preg_replace('~[ \t]*\R[ \t]*\*[ \t]*~', ' ', $form);
-
-      // The annotation pattern cannot capture a quote, so control characters
-      // are all that is left to deal with.
-      $forms[$index] = addcslashes($form, "\0..\37");
-    }
-
-    return implode("\0", $forms);
-  }
-
-  /**
-   * Drop plain strings that a plural string already defines.
-   *
-   * Potx keys a plural string by its singular and plural form together, and a
-   * plain string by itself, so "1 month" from a formatPlural() call and
-   * "1 month" from a t() call are two entries to potx. A .po file identifies a
-   * message by its context and singular alone, so the two come out as one
-   * message defined twice and gettext refuses the file.
-   *
-   * The plural entry is the one to keep - its first form is the singular
-   * translation, so nothing is lost by dropping the plain one.
-   *
-   * The old scan hid this: it wrote a file per directory and combined them with
-   * "msgcat --use-first", which quietly kept whichever came first.
-   */
-  protected function removeShadowedPlurals(): void {
-    global $_potx_strings;
-
-    $dropped = 0;
-    foreach ($_potx_strings as $string => $contexts) {
-      // Potx delimits the singular and plural form with a null byte.
-      if (!str_contains((string) $string, "\0")) {
-        continue;
-      }
-
-      [$singular] = explode("\0", (string) $string);
-      foreach (array_keys($contexts) as $context) {
-        if (isset($_potx_strings[$singular][$context])) {
-          unset($_potx_strings[$singular][$context]);
-          $dropped++;
-        }
-      }
-
-      if (isset($_potx_strings[$singular]) && empty($_potx_strings[$singular])) {
-        unset($_potx_strings[$singular]);
-      }
-    }
-
-    if ($dropped > 0) {
-      $this->logger()?->info(sprintf('Dropped %d plain strings that a plural string already defines.', $dropped));
-    }
-  }
-
-  /**
-   * Refuse to write a file that gettext will not read.
-   *
-   * Potx does not escape everything it extracts, so a single string can leave
-   * the whole file unusable - a raw newline inside a msgid gives "end-of-line
-   * within string" and gettext then discards every term. That only surfaces two
-   * steps later, when the file is merged with the configuration translations,
-   * long after the offending string could still be named.
-   *
-   * @throws \RuntimeException
-   *   When a line holds a string gettext cannot read.
-   */
-  protected function assertReadable(string $po): void {
-    foreach (explode("\n", $po) as $index => $line) {
-      $starts_a_string = preg_match('/^(?:msgid|msgid_plural|msgctxt|msgstr(?:\[\d+\])?)\s+"|^"/', $line) === 1;
-
-      if ($starts_a_string && !str_ends_with($line, '"')) {
-        throw new \RuntimeException(sprintf('Line %d leaves a string unterminated, which would make the whole file unusable: %s', $index + 1, $line));
-      }
-
-      if (preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', $line) === 1) {
-        throw new \RuntimeException(sprintf('Line %d holds an unescaped control character: %s', $index + 1, $line));
-      }
-    }
-  }
-
-  /**
    * Run the files through potx and return the contents of the .po file.
    *
    * @param string[] $files
@@ -365,8 +223,10 @@ class ScanSourceCommands extends DrushCommands {
     }
     potx_finish_processing('_potx_save_string', POTX_API_CURRENT);
 
-    $this->escapeUnescapedStrings();
-    $this->removeShadowedPlurals();
+    // Potx' collected runtime strings, which _potx_build_files() reads back
+    // out of the global below.
+    global $_potx_strings;
+    $_potx_strings = $this->poFile()->removeShadowedPlurals($_potx_strings);
 
     // Potx keeps runtime strings and installer strings apart. We want both, so
     // both are built under the same name and end up in the same file.
@@ -388,41 +248,17 @@ class ScanSourceCommands extends DrushCommands {
       return '';
     }
 
-    return $this->render($store[self::POTX_FILE_NAME]);
+    return $this->poFile()->render($store[self::POTX_FILE_NAME]);
   }
 
   /**
-   * Turn what potx built into the contents of a .po file.
+   * The .po file builder, reporting to the command's own logger.
    *
-   * This is potx' own _potx_write_files(), which we cannot use as it writes to
-   * a hardcoded file name in the current directory, plus the adjustments we
-   * need for the file we hand to POEditor.
-   *
-   * @param array{header: string, strings: string} $built
-   *   One entry of the potx output store.
+   * Built on demand rather than injected: Drush sets the logger after
+   * constructing the command, so there is nothing to hand on before then.
    */
-  protected function render(array $built): string {
-    $header = $built['header'];
-
-    // Potx leaves a placeholder in the header for a list of the files it found
-    // strings in, meant for recording module versions when publishing a
-    // template to localize.drupal.org. We scan a git checkout, so every entry
-    // would read "n/a" - a thousand lines of noise that churn whenever a file
-    // moves. Say where the file came from instead.
-    $header = str_replace('--VERSIONS--', 'Generated by "drush dpl_po:scan-source". Do not edit by hand.', $header);
-
-    // Potx marks the header fuzzy, which is the convention for a template. What
-    // we produce is a complete translation file. The header is the only place
-    // potx sets the flag, and the file is built from scratch on every run, so
-    // there are no per-string flags to preserve.
-    $header = str_replace("#, fuzzy\n", '', $header);
-
-    // Drop the "#:" source references. They would add thousands of lines to the
-    // committed file and churn whenever code moves, and POEditor does not need
-    // them - it identifies a string by its context and source text.
-    $strings = preg_replace('/^#:[^\n]*\n/m', '', $built['strings']);
-
-    return $header . $strings;
+  protected function poFile(): PoFileBuilder {
+    return new PoFileBuilder($this->logger());
   }
 
   /**
