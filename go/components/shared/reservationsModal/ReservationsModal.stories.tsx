@@ -53,8 +53,8 @@ const reservationItems = [
 ]
 
 // One dialog with internal views: the reservations list (split into "Klar
-// til afhentning" and "I kø"), the "Din reservering" details, and the
-// deletion receipt — modals are never stacked.
+// til afhentning" and "I kø"), the "Din reservering" details, the deletion
+// confirm step, and the deletion receipt — modals are never stacked.
 const meta = {
   title: "modals/ReservationsModal",
   component: ReservationsModal,

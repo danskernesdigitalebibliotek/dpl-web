@@ -19,12 +19,12 @@ import {
   openModal,
 } from "@/store/modal.store"
 
-import DeleteReservationModal from "../deleteReservationModal/DeleteReservationModal"
 import LoanDetailsModal from "../loanDetailsModal/LoanDetailsModal"
 import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
+import ReservationDetailsModal from "../reservationDetailsModal/ReservationDetailsModal"
 import ReservationLoginModal from "../reservationModal/ReservationLoginModal"
 import ReservationModal from "../reservationModal/ReservationModal"
 import ReservationUniloginModal from "../reservationModal/ReservationUniloginModal"
@@ -36,13 +36,13 @@ const ModalComponents: {
 } = {
   PlayerModal,
   PlayerPreviewModal,
-  DeleteReservationModal,
   CompensationModal,
   DigitalLoansModal,
   FeesModal,
   LoanDetailsModal,
   PhysicalLoansModal,
   ReservationsModal,
+  ReservationDetailsModal,
   LoanMaterialModal,
   LoanLoginModal,
   ReservationModal,
