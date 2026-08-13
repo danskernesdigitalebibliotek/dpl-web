@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import LoadIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Reload.svg";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { IconFavourite } from "../icon-favourite/icon-favourite";
 import {
   getGetListQueryKey,
@@ -79,7 +79,9 @@ const ButtonFavourite: React.FC<ButtonFavouriteProps> = ({
           {
             onSuccess: () => {
               // Invalidate the query to remove any faved materials from favorites list
-              queryClient.invalidateQueries(getGetListQueryKey(listId));
+              queryClient.invalidateQueries({
+                queryKey: getGetListQueryKey(listId)
+              });
             }
           }
         );

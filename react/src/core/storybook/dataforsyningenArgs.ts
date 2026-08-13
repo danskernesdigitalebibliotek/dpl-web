@@ -1,3 +1,5 @@
+import { readEnv } from "../utils/helpers/env";
+
 export const argTypes = {
   dataforsyningenTokenConfig: {
     description: "Dataforsyningen API token",
@@ -6,7 +8,7 @@ export const argTypes = {
 };
 
 export default {
-  dataforsyningenTokenConfig: process.env.STORYBOOK_DATAFORSYNINGEN || ""
+  dataforsyningenTokenConfig: readEnv("STORYBOOK_DATAFORSYNINGEN") || ""
 };
 
 export interface DataforsyningenArgs {

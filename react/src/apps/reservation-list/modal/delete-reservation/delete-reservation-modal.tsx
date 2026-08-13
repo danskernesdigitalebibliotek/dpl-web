@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useState } from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../../../../core/utils/modal";
 import { useText } from "../../../../core/utils/text";
 import DeleteReservationContent from "./delete-reservation-content";
@@ -80,14 +80,18 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
       // were successfully deleted.
       setDeletedReservations(reservations.length);
       // Invalidate queries to update the UI.
-      queryClient.invalidateQueries(getGetV1UserReservationsQueryKey());
-      queryClient.invalidateQueries(getGetReservationsV2QueryKey());
+      queryClient.invalidateQueries({
+        queryKey: getGetV1UserReservationsQueryKey()
+      });
+      queryClient.invalidateQueries({
+        queryKey: getGetReservationsV2QueryKey()
+      });
       if (reservations.length) {
         reservations.forEach((res) => {
           if (res.identifier) {
-            queryClient.invalidateQueries(
-              getGetV1LoanstatusIdentifierQueryKey(res.identifier)
-            );
+            queryClient.invalidateQueries({
+              queryKey: getGetV1LoanstatusIdentifierQueryKey(res.identifier)
+            });
           }
         });
       }

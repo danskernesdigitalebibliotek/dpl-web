@@ -9,7 +9,9 @@ describe("Menu (authenticated))", () => {
     const testdate = new Date("2022-11-11T12:30:00.000Z");
 
     // Sets time to a specific date
-    cy.clock(testdate);
+    // Only Date is faked. Freezing setTimeout would stall TanStack Query's
+    // notify scheduler, leaving every component stuck in its loading state.
+    cy.clock(testdate, ["Date"]);
 
     cy.intercept(
       "GET",

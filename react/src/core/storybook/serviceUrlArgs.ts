@@ -1,4 +1,5 @@
 import { serviceUrlKeys } from "../utils/reduxMiddleware/extractServiceBaseUrls";
+import { readEnv } from "../utils/helpers/env";
 
 export const argTypes = {
   [serviceUrlKeys.fbs]: {
@@ -95,10 +96,10 @@ export const argTypes = {
 
 export default {
   [serviceUrlKeys.fbs]:
-    process.env.FBS_BASEURL ?? "https://fbs-openplatform.dbc.dk",
+    readEnv("FBS_BASEURL") ?? "https://fbs-openplatform.dbc.dk",
   [serviceUrlKeys.publizon]:
-    process.env.PUBLIZON_BASEURL ?? "https://pubhub-openplatform.dbc.dk",
-  [serviceUrlKeys.dplCms]: process.env.CMS_BASEURL ?? "https://dpl-cms.local",
+    readEnv("PUBLIZON_BASEURL") ?? "https://pubhub-openplatform.dbc.dk",
+  [serviceUrlKeys.dplCms]: readEnv("CMS_BASEURL") ?? "https://dpl-cms.local",
   [serviceUrlKeys.cover]: "https://cover.dandigbib.org",
   [serviceUrlKeys.materialList]: "https://prod.materiallist.dandigbib.org",
   [serviceUrlKeys.fbi]: "https://temp.fbi-api.dbc.dk/next-present/graphql",

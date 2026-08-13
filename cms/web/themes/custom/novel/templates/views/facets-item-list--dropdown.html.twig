@@ -17,17 +17,12 @@
 
 <label class="input-label" id="facet_{{ facet.id }}_label">{{ facet.label }}</label>
 <div class="dropdown dropdown--grey-borders">
-  {% if items or empty %}
-    {%- if items -%}
-      <{{ list_type }}{{ attributes.addClass(['dropdown__select', 'dropdown__select--grey']) }}>
-      {%- for item in items -%}
-        <li{{ item.attributes }}>{{ item.value }}</li>
-      {%- endfor -%}
-      </{{ list_type }}>
-    {%- else -%}
-      {{- empty -}}
-    {%- endif -%}
-  {%- endif %}
+  {# Always render the dropdown chrome, even with no items (DDF-307). #}
+  <{{ list_type }}{{ attributes.addClass(['dropdown__select', 'dropdown__select--grey']) }}>
+    {%- for item in items -%}
+      <li{{ item.attributes }}>{{ item.value }}</li>
+    {%- endfor -%}
+  </{{ list_type }}>
   <div class="dropdown__arrows">
     <img class="dropdown__arrow" src="{{ baseIconPath }}/collection/ExpandMore.svg" alt="">
   </div>

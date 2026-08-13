@@ -1,4 +1,4 @@
-import { QueryFunctionContext } from "react-query";
+import { QueryFunctionContext } from "@tanstack/react-query";
 import { beforeAll, vi } from "vitest";
 import { getServiceBaseUrl } from "../utils/reduxMiddleware/extractServiceBaseUrls";
 import queryMap from "./queryMap";

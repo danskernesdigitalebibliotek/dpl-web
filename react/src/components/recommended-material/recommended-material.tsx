@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import * as React from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { getManifestationBasedOnType } from "../../apps/material/helper";
 import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
@@ -79,10 +79,16 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     );
   };
 
+  // Materials shown in a grid are tracked as their own Mapp event so DDF can
+  // compare grid-formidling against other ways of presenting materials.
+  const clickStatistics = partOfGrid
+    ? statistics.materialGridClick
+    : statistics.recommendedMaterial;
+
   const trackData = () =>
     track("click", {
-      id: statistics.recommendedMaterial.id,
-      name: statistics.recommendedMaterial.name,
+      id: clickStatistics.id,
+      name: clickStatistics.name,
       trackedData: wid
     });
 

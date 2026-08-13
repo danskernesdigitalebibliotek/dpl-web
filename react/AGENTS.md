@@ -13,7 +13,7 @@ loan-list, …) that the CMS drops onto its pages via
 (`src/apps/<name>/<name>.mount.ts`) and gets its own JS/CSS artifact in
 `dist/`. The CMS loads the artifact and a shared bundle, then the
 `mount.js` runtime finds the `[data-dpl-app]` divs, looks up the registered
-component, wraps it in a Redux + react-query + ErrorBoundary shell, and
+component, wraps it in a Redux + TanStack Query + ErrorBoundary shell, and
 renders. Storybook is the **only** local dev surface — there is no
 standalone page.
 
@@ -41,19 +41,19 @@ Keep these straight:
 - **Redux Toolkit + redux-persist** holds *app/UI* state (text, config, url,
   modal stack, filter, persisted guarded auth requests). Storage key is
   `dpl-react` in sessionStorage.
-- **react-query (v3, not TanStack v5!)** holds *all server data* — GraphQL
-  and REST.
+- **TanStack Query v5** (`@tanstack/react-query`) holds *all server data* —
+  GraphQL and REST.
 - **`nuqs`** for URL-synced state in newer apps. Don't repurpose the legacy
   `url` Redux slice for new URL state.
 
-Server data never goes into Redux; app config never goes into react-query.
+Server data never goes into Redux; app config never goes into TanStack Query.
 
 ## Codegen is the wire
 
 Server clients are generated — GraphQL via `graphql-codegen` (DBC Gateway),
 REST via Orval (FBS, Publizon, dpl-cms, material-list).
 
-Each generated client has a hand-written `mutator/fetcher.ts` alongside the
+Each generated client has a hand-written `mutator/mutator.ts` alongside the
 generated code — those are yours to edit. They inject the `Authorization`
 header from sessionStorage tokens (`src/core/token.ts`), so don't set
 `Authorization` manually when calling a generated hook.
@@ -69,8 +69,10 @@ header from sessionStorage tokens (`src/core/token.ts`), so don't set
 
 ## Gotchas worth knowing up front
 
-- **react-query is v3.** Imports come from `react-query`, not
-  `@tanstack/react-query`. Don't "fix" the import path.
+- **TanStack Query is v5**, shared with `go/`. Options follow v5 naming —
+  `gcTime`, `throwOnError`, `isPending` on mutations — and queries have no
+  `onSuccess`/`onError` callbacks, so derive from `data`/`error` instead.
+  Query keys are always arrays.
 - **App SCSS lives next to the app** and is found by a PostCSS glob.
   **Shared component SCSS must be `@use`-d in `components/components.scss`**
   — that aggregator is the only file PostCSS processes for components. A

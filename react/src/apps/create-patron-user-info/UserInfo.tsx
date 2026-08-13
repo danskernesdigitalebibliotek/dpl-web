@@ -52,6 +52,9 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
   const isAddressSearchEnabled = isConfigValueOne(
     config("branchAddressSearchEnabledConfig")
   );
+  const textNotificationsEnabled = isConfigValueOne(
+    config("textNotificationsEnabledConfig")
+  );
 
   // Changes the patron object by key.
   // So using the parameters 123 and "phoneNumber" would change the phoneNumber to 123.
@@ -120,20 +123,22 @@ const UserInfo: FC<UserInfoProps> = ({ cpr, registerSuccessCallback }) => {
                     className="dpl-input"
                     changePatron={changePatron}
                     patron={patron}
-                    isRequired={true}
+                    isRequired={patron.receiveSms}
                     showCheckboxes={false}
                   />
-                  <div className="mt-8">
-                    <CheckBox
-                      onChecked={(newReceiveSms: boolean) =>
-                        changePatron(newReceiveSms, "receiveSms")
-                      }
-                      id="phone-messages"
-                      selected={patron?.receiveSms}
-                      disabled={false}
-                      label={t("patronContactPhoneCheckboxText")}
-                    />
-                  </div>
+                  {textNotificationsEnabled && (
+                    <div className="mt-8">
+                      <CheckBox
+                        onChecked={(newReceiveSms: boolean) =>
+                          changePatron(newReceiveSms, "receiveSms")
+                        }
+                        id="phone-messages"
+                        selected={patron?.receiveSms}
+                        disabled={false}
+                        label={t("patronContactPhoneCheckboxText")}
+                      />
+                    </div>
+                  )}
                 </div>
                 <ContactInfoEmail
                   className="dpl-input dpl-input--double"

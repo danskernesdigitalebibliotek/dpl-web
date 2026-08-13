@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.branch.field_address
-    - field.field.node.branch.field_address_dawa
     - field.field.node.branch.field_address_gsearch
     - field.field.node.branch.field_agency_branch_id
     - field.field.node.branch.field_email
@@ -160,7 +159,6 @@ content:
 hidden:
   created: true
   field_address: true
-  field_address_dawa: true
   langcode: true
   promote: true
   publish_on: true

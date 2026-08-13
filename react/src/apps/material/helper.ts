@@ -1,5 +1,5 @@
 import { compact, first, groupBy, head, uniq, uniqBy } from "lodash";
-import { UseQueryOptions } from "react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 import { ManifestationHoldings } from "../../components/find-on-shelf/types";
 import { ListData } from "../../components/material/MaterialDetailsList";
 import {
@@ -630,7 +630,9 @@ export const useGetHoldings = ({
   config: UseConfigFunction;
   blacklist: BlacklistType;
   options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>;
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getHoldingsLogisticsV1>>>
+    >;
   };
 }) => {
   const { data, isLoading, isError } = useGetHoldingsLogisticsV1(

@@ -183,6 +183,14 @@ type BrandSettings {
 }
 
 type CQLSearch {
+  branch: String
+  department: String
+  firstAccessionDateOperator: String
+  firstAccessionDateValue: String
+  location: String
+  onshelf: String
+  sort: String
+  sublocation: String
   value: String
 }
 

@@ -19,7 +19,19 @@
         "modules": false // Ensures ES modules are not transpiled to CommonJS
       }
     ],
-    "@babel/preset-typescript"
+    [
+      "@babel/preset-typescript",
+      {
+        // Babel 8 flipped this default to true, which keeps every
+        // `import { SomeType }` (without the `import type` keyword) as a
+        // real runtime import. Our code imports types with plain `import`
+        // throughout, so the default pulled Storybook arg modules into the
+        // app bundles and shifted module evaluation order — breaking apps
+        // like create-patron at runtime. Restore Babel 7's usage-based
+        // elision of type-only imports.
+        "onlyRemoveTypeImports": false
+      }
+    ]
   ],
   "overrides": [
     {

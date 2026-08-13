@@ -1,4 +1,4 @@
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { Patron } from "./types/entities";
 import {
   PatronSettingsV4,
@@ -49,9 +49,9 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(
-            getGetPatronInformationByPatronIdV4QueryKey()
-          );
+          queryClient.invalidateQueries({
+            queryKey: getGetPatronInformationByPatronIdV4QueryKey()
+          });
           if (onSuccess) {
             onSuccess();
           }
@@ -78,9 +78,9 @@ const useSavePatron = ({ patron, fetchHandlers }: UseSavePatron) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(
-            getGetPatronInformationByPatronIdV4QueryKey()
-          );
+          queryClient.invalidateQueries({
+            queryKey: getGetPatronInformationByPatronIdV4QueryKey()
+          });
           if (onSuccess) {
             onSuccess();
           }

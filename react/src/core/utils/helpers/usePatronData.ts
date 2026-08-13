@@ -2,15 +2,15 @@ import { useGetPatronInformationByPatronIdV4 } from "../../fbs/fbs";
 import BlockedTypes from "../types/BlockedTypes";
 import { AuthenticatedPatron, Patron } from "../types/entities";
 import { isAnonymous } from "./user";
-import { QueryKey, UseQueryResult } from "react-query";
-import { ErrorType } from "../../fbs/mutator/fetcher";
+import { QueryKey, UseQueryResult } from "@tanstack/react-query";
+import { ErrorType } from "../../fbs/mutator/mutator";
 
 export const usePatronData = (): UseQueryResult<
   Awaited<Promise<AuthenticatedPatron | null>>,
   ErrorType<void>
 > & { queryKey: QueryKey } => {
   return useGetPatronInformationByPatronIdV4({
-    enabled: !isAnonymous()
+    query: { enabled: !isAnonymous() }
   });
 };
 

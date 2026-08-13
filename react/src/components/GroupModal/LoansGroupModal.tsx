@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, useEffect, FC, useCallback } from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../../core/utils/modal";
 import { useText } from "../../core/utils/text";
 import GroupModalContent from "./GroupModalContent";
@@ -84,7 +84,7 @@ const LoansGroupModal: FC<LoansGroupModalProps> = ({
     },
     onSuccess: (result) => {
       // Make sure the loans list is updated after renewal.
-      queryClient.invalidateQueries(getGetLoansV2QueryKey());
+      queryClient.invalidateQueries({ queryKey: getGetLoansV2QueryKey() });
       if (result) {
         setRenewingResponse(result);
       }

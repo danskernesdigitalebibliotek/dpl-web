@@ -31,12 +31,11 @@
 
   @include media-query__small {
     flex-direction: row;
-  }
-}
 
-.content-list-page__filter--right {
-  @include media-query__small {
-    margin-left: auto;
+    // In row mode the filters share the width equally.
+    > * {
+      flex: 1;
+    }
   }
 }
 

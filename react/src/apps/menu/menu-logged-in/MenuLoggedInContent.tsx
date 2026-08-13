@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import profileIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-profile.svg";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { performLogout } from "../../../core/utils/helpers/logout";
 import Link from "../../../components/atoms/links/Link";
 import MenuNavigationItem, {
