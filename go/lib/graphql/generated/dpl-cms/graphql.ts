@@ -233,6 +233,14 @@ export type BrandSettings = {
 
 export type CqlSearch = {
   __typename?: 'CQLSearch';
+  branch?: Maybe<Scalars['String']['output']>;
+  department?: Maybe<Scalars['String']['output']>;
+  firstAccessionDateOperator?: Maybe<Scalars['String']['output']>;
+  firstAccessionDateValue?: Maybe<Scalars['String']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  onshelf?: Maybe<Scalars['String']['output']>;
+  sort?: Maybe<Scalars['String']['output']>;
+  sublocation?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
 };
 

@@ -266,6 +266,16 @@
             ],
             "file-mapping": {
                 "[project-root]/.editorconfig": false,
+                "[project-root]/.gitattributes": {
+                    "append": "assets/.gitattributes"
+                },
+                "[web-root]/.ht.router.php": false,
+                "[web-root]/.htaccess": false,
+                "[web-root]/INSTALL.txt": false,
+                "[web-root]/README.md": false,
+                "[web-root]/core/install.php": false,
+                "[web-root]/core/rebuild.php": false,
+                "[web-root]/example.gitignore": false,
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/all.services.yml": "assets/all.services.yml",
                 "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
@@ -277,12 +287,10 @@
                 "[web-root]/sites/bnf/local.settings.php": "assets/local.settings.php",
                 "[project-root]/drush/sites/lagoon.site.yml": "assets/lagoon.site.yml",
                 "[web-root]/.eslintrc.json": false,
-                "[project-root]/.gitattributes": {
-                    "append": "assets/.gitattributes"
-                },
                 "[web-root]/robots.txt": {
                     "append": "assets/robots.txt"
-                }
+                },
+                "[web-root]/web.config": false
             },
             "gitignore": false,
             "locations": {

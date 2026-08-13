@@ -53,7 +53,7 @@ Server data never goes into Redux; app config never goes into TanStack Query.
 Server clients are generated — GraphQL via `graphql-codegen` (DBC Gateway),
 REST via Orval (FBS, Publizon, dpl-cms, material-list).
 
-Each generated client has a hand-written `mutator/fetcher.ts` alongside the
+Each generated client has a hand-written `mutator/mutator.ts` alongside the
 generated code — those are yours to edit. They inject the `Authorization`
 header from sessionStorage tokens (`src/core/token.ts`), so don't set
 `Authorization` manually when calling a generated hook.
