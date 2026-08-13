@@ -14,7 +14,11 @@
 }
 
 .content-list__month-separator {
-  @include typography($typo__body-small);
+  // Serif, a step up from the body text: enough to read as a heading without
+  // the large underlined titles that would pull focus from the events
+  // themselves. Lora ships in regular only, so no weight override here - it
+  // would render as a synthetic bold.
+  @include typography($typo__h5);
   // Sticks while its month scrolls past. Sticky only pins within one <ul>;
   // spanning page boundaries is handled by the wrapper rule below.
   position: sticky;
@@ -24,7 +28,6 @@
   margin-top: $s-2xl;
   margin-bottom: $s-sm;
   padding: $s-md 0;
-  font-weight: $font__weight--semi-bold;
   background-color: $color__global-primary;
   color: $color__global-black;
   text-transform: capitalize;
