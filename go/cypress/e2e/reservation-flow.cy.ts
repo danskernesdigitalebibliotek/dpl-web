@@ -240,9 +240,12 @@ describe("Reservation flow", () => {
     cy.dataCy("view-reservation-button").should("be.visible").click()
     cy.dataCy("reservation-details").should("exist")
 
-    // AnimateChangeInHeight remounts on transition; the button can detach
-    // between query and click. `{force: true}` skips the actionability retry
-    // that races with the remount.
+    // The button stays disabled until the shelf has resolved the reservation;
+    // the retried assertion waits that window out. AnimateChangeInHeight
+    // remounts on transition; the button can detach between query and click.
+    // `{force: true}` skips the actionability retry that races with the
+    // remount.
+    cy.dataCy("delete-reservation-button").should("be.visible").and("be.enabled")
     cy.dataCy("delete-reservation-button").click({ force: true })
     cy.dataCy("delete-reservation-modal").should("exist")
     cy.dataCy("delete-reservation-modal").should("contain", "Vil du slette din reservering?")

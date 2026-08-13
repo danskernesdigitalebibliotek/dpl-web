@@ -7,8 +7,8 @@ import { Button } from "@/components/shared/button/Button"
 import DeleteReservationConfirmContent from "@/components/shared/deleteReservationModal/DeleteReservationConfirmContent"
 import DeleteReservationReceiptContent from "@/components/shared/deleteReservationModal/DeleteReservationReceiptContent"
 import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
-import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import ReservationDetailsContent from "@/components/shared/reservationsModal/ReservationDetailsContent"
+import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import usePatronShelf from "@/hooks/usePatronShelf"
@@ -35,7 +35,7 @@ const ReservationDetailsModal = ({
   recordId,
 }: ReservationDetailsModalProps & { open: boolean; onClose: () => void }) => {
   const flow = useModalFlow<"details" | "confirm" | "receipt">({ initial: "details" })
-  const { reservationItems, isLoading } = usePatronShelf()
+  const { reservationItems } = usePatronShelf()
   const { mutate: deleteReservation, isPending: isDeleting } = useDeleteReservation()
 
   // Deletion removes the reservation from the shelf, so hold on to the last
@@ -99,7 +99,7 @@ const ReservationDetailsModal = ({
             theme="primary"
             size="lg"
             data-cy={cyKeys["delete-reservation-button"]}
-            disabled={!item || isLoading}
+            disabled={!item}
             onClick={() => flow.goTo("confirm")}>
             Slet reservering
           </Button>

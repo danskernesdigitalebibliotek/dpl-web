@@ -26,8 +26,7 @@ const USER_PROFILE_PATH = "/user/me"
 
 const formatDate = (date: string) => format(new Date(date), "d. MMMM yyyy", { locale: da })
 
-export const isReadyForPickup = (reservation: Reservation) =>
-  reservation.state === "readyForPickup"
+export const isReadyForPickup = (reservation: Reservation) => reservation.state === "readyForPickup"
 
 // The pickup window has passed — the reservation must be made again.
 const isPickupExpired = (reservation: Reservation) =>

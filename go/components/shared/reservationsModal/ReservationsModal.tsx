@@ -9,11 +9,11 @@ import DeleteReservationReceiptContent from "@/components/shared/deleteReservati
 import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
 import ModalMaterialList from "@/components/shared/modalMaterialList/ModalMaterialList"
 import ModalMaterialListItem from "@/components/shared/modalMaterialList/ModalMaterialListItem"
-import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import ReservationDetailsContent, {
   ReservationStatus,
   isReadyForPickup,
 } from "@/components/shared/reservationsModal/ReservationDetailsContent"
+import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { displayCreators } from "@/lib/helpers/helper.creators"
