@@ -1,8 +1,13 @@
 Two fixes to potx' @Translation annotation extractor.
 
-1. Extract annotations that carry an arguments parameter.
+Both are filed upstream as
+https://www.drupal.org/project/potx/issues/3615813. They are in the same
+patch because they are in the same function, a few lines apart, so applying
+one without the other means resolving a conflict. If the maintainers would
+rather have the second one on its own issue, this patch splits again along
+the numbered sections below.
 
-Filed upstream as https://www.drupal.org/project/potx/issues/3615813.
+1. Extract annotations that carry an arguments parameter.
 
 The annotation pattern only allowed an optional "context" parameter after the
 string, then required the closing parenthesis. Any other parameter made the
@@ -26,11 +31,10 @@ depends on: 1 is the message, 3 is the quoted context.
 
 2. Escape what the extractor found.
 
-Not filed upstream yet.
-
-Every potx extractor hands the save callback a string escaped with
-_potx_format_quoted_string(), which turns control characters into their escape
-sequences. This one is the exception: it saves the raw regex match.
+Potx normally escapes what it extracts before handing it on -
+_potx_format_quoted_string() is called in 22 places in potx.inc, and turns
+control characters into their escape sequences. The annotation extractor is
+the exception: it passes its raw regex match straight to the save callback.
 
 An annotation wrapped over two lines therefore arrives with a real newline and
 the doc comment's continuation in it:
