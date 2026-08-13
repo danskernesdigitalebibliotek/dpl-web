@@ -1,4 +1,6 @@
-Extract @Translation annotations that carry an arguments parameter.
+Two fixes to potx' @Translation annotation extractor.
+
+1. Extract annotations that carry an arguments parameter.
 
 Filed upstream as https://www.drupal.org/project/potx/issues/3615813.
 
@@ -22,10 +24,41 @@ The replacement allows any number of "key = value" parameters on either side of
 an optional context, and keeps the capture group numbering the code below
 depends on: 1 is the message, 3 is the quoted context.
 
+2. Escape what the extractor found.
+
+Not filed upstream yet.
+
+Every potx extractor hands the save callback a string escaped with
+_potx_format_quoted_string(), which turns control characters into their escape
+sequences. This one is the exception: it saves the raw regex match.
+
+An annotation wrapped over two lines therefore arrives with a real newline and
+the doc comment's continuation in it:
+
+  description = @Translation("Sends emails through an external
+  service")
+
+Written to a .po file as-is that is not a .po file at all - gettext reports
+"end-of-line within string" and throws away every term in the file, not just
+the one string. A single wrapped annotation anywhere in the scanned code takes
+the whole translation file with it.
+
+Escaping is also what keeps the msgid usable. Drupal's own annotation parser
+keeps the newline and the " * " continuation, so the escaped string is the one
+that gets looked up at runtime; an unwrapped, tidied-up msgid would read better
+and never match.
+
+_potx_format_quoted_string() is not the right tool here even though it is what
+the other extractors use. It runs stripcslashes() first, which is correct for
+PHP string literals but not for annotations - Doctrine does not read backslash
+escapes, so a literal "\n" in an annotation would become a real newline and the
+msgid would stop matching. The pattern above cannot capture a quote either, so
+addcslashes() on its own covers everything that can occur.
+
 diff --git a/potx.inc b/potx.inc
 --- a/potx.inc
 +++ b/potx.inc
-@@ -2307,7 +2307,18 @@
+@@ -2307,12 +2307,30 @@
        // Match for a possible empty string too, so we can signal that kind of
        // error in our standard way (from the save callback), instead of
        // signaling a generic error from here around syntax.
@@ -43,5 +76,17 @@ diff --git a/potx.inc b/potx.inc
 +        . '\s*\)~';
 +      preg_match_all($pattern, $string, $found);
        if (isset($found) && is_array($found) && count($found[1])) {
-
+ 
          foreach ($found[1] as $index => $match) {
+           $context = empty($found[3][$index]) ? POTX_CONTEXT_NONE : trim($found[3][$index], '"');
+ 
++          // Escape the raw match, the way every other extractor does through
++          // _potx_format_quoted_string(). That function itself is not usable
++          // here: it starts with stripcslashes(), which is right for a PHP
++          // string literal but not for an annotation, where Doctrine leaves
++          // backslash escapes alone.
++          $match = addcslashes($match, "\0..\37\\\"");
++
+           $save_callback(
+             $match,
+             $context,
