@@ -1,22 +1,15 @@
 "use client"
 
-import { type RenewalFailureReason } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import { type LoanDetails } from "@/components/shared/loanDetailsModal/LoanDetailsContent"
-import { getRenewalFailureMessage } from "@/components/shared/loanDetailsModal/helper"
+import {
+  getRenewalFailureMessage,
+  hasSpecificRenewalFailureMessage,
+} from "@/components/shared/loanDetailsModal/helper"
 import { cyKeys } from "@/cypress/support/constants"
 import { dueStatus } from "@/lib/helpers/helper.due-status"
-
-// Denials that no amount of waiting changes. They beat the renewal-window
-// countdown, which would otherwise falsely promise a coming renewal;
-// situational reasons (reserved, unknown) keep the countdown since waiting
-// can genuinely change them.
-const TERMINAL_DENIAL_REASONS: RenewalFailureReason[] = [
-  "deniedMaxRenewalsReached",
-  "deniedLoanerIsBlocked",
-]
 
 type RenewLoanActionProps = {
   loan: LoanDetails
@@ -25,8 +18,7 @@ type RenewLoanActionProps = {
   onRenew: () => void
 }
 
-// Disabled "Forlæng lån" with an explanation above it — same shape as the
-// availability note in the reservation modal.
+// Disabled "Forlæng lån" with an explanation above it.
 const DisabledRenewAction = ({ title, message }: { title: string; message: string }) => (
   <div className="flex w-full flex-col items-center gap-3">
     <p className="text-typo-caption text-foreground-muted text-center">{message}</p>
@@ -42,24 +34,23 @@ const DisabledRenewAction = ({ title, message }: { title: string; message: strin
 )
 
 // The footer action for a physical loan, shared by the loan modals.
-// Cicero only allows renewing a loan from `renewalWindow` days before the
-// due date, so before that the button is disabled with a countdown; inside
-// the window it renews, or explains FBS' denial reason when blocked.
+// FBS decides whether renewal is possible right now. A denial with a
+// specific reason shows that reason; the generic denial code usually just
+// means "outside the renewal window", so it shows a countdown (estimated
+// from the configured window) until the window opens, and its copy after.
 const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionProps) => {
   const { daysUntilRenewable } = dueStatus(loan.dueDate)
 
-  const isTerminallyDenied =
+  const hasExplainedDenial =
     loan.isRenewable === false &&
     loan.nonRenewableReason !== undefined &&
-    TERMINAL_DENIAL_REASONS.includes(loan.nonRenewableReason)
+    hasSpecificRenewalFailureMessage(loan.nonRenewableReason)
 
-  if (daysUntilRenewable > 0 && !isTerminallyDenied) {
+  if (hasExplainedDenial) {
     return (
       <DisabledRenewAction
         title={title}
-        message={`Lånet kan først forlænges om ${daysUntilRenewable} ${
-          daysUntilRenewable === 1 ? "dag" : "dage"
-        }`}
+        message={getRenewalFailureMessage(loan.nonRenewableReason ?? "deniedOtherReason")}
       />
     )
   }
@@ -75,6 +66,17 @@ const RenewLoanAction = ({ loan, title, isRenewing, onRenew }: RenewLoanActionPr
         onClick={onRenew}>
         Forlæng lån
       </Button>
+    )
+  }
+
+  if (daysUntilRenewable > 0) {
+    return (
+      <DisabledRenewAction
+        title={title}
+        message={`Lånet kan først forlænges om ${daysUntilRenewable} ${
+          daysUntilRenewable === 1 ? "dag" : "dage"
+        }`}
+      />
     )
   }
 
