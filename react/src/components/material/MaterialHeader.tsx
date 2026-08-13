@@ -161,6 +161,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
                       workId={wid}
                       dataCy="material-header-buttons"
                       materialTitleId={materialTitleId}
+                      fallback={<p>No buttons available</p>}
                     />
                   </div>
                   {/* MaterialAvailabilityText is only shown for:
