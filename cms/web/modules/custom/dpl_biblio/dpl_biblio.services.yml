@@ -1,0 +1,4 @@
+services:
+  dpl_biblio.settings:
+    class: Drupal\dpl_biblio\DplBiblioSettings
+    arguments: ['@config.manager']
