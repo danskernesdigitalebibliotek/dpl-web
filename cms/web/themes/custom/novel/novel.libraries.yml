@@ -51,6 +51,7 @@ flatpickr:
     gpl-compatible: true
   js:
     /libraries/flatpickr/dist/flatpickr.min.js: { minified: true }
+    /libraries/flatpickr/dist/l10n/da.js: {}
   css:
     theme:
       /libraries/flatpickr/dist/flatpickr.min.css: { minified: true }
