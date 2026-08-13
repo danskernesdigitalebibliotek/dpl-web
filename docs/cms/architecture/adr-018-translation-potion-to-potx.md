@@ -23,10 +23,10 @@ the potx API directly. It replaces both `potion:generate` and `potion:fill`:
 the codebase is scanned and the translations we already have are filled in, in
 a single pass.
 
-Potx ships a `drush potx` command of its own, but it scans one directory per
-invocation and writes the result to a hardcoded file name in the current
-directory. We scan a number of directories into one file, which is why we call
-the API rather than the command.
+Potx ships a `drush potx` command of its own. It writes template files of its
+own shape, in a place of its own choosing, and getting from those to the single
+file we hand to POEditor means doing the same work anyway. So we call the API
+rather than the command.
 
 ### What gets scanned
 
@@ -55,39 +55,19 @@ The POEditor integration is unchanged - same file, same path, same webhook.
 
 ### Patches
 
-We deliberately and selectively patch potx, so that strings Potion used to find
-keep being found. Both patches live in [`cms/patches/`](../../../cms/patches/),
-and in both cases potx skips the string silently rather than failing.
+Potx has a handful of bugs that cost us strings or produce a file gettext
+cannot read. Where the bug is potx', we patch potx rather than working around
+it in our own command, so that the fix disappears when it lands upstream.
 
-`potx-scan-translationinterface-translate.patch` - potx does not scan
-`translate()`, so strings passed to an injected `TranslationInterface` are
-invisible to it, and we use that call form in our own code, including in enums,
-which cannot use `StringTranslationTrait` at all. Deliberately not filed
-upstream: `ContentEntityInterface::translate()` takes a langcode, and potx
-matches on a flat token stream, so a general version would extract `'da'` as a
-translatable string on any site that translates entities.
+The patches live in [`cms/patches/`](../../../cms/patches/) and are listed in
+`composer.json`. Each one carries a header explaining what it changes, why we
+need it, and whether it is filed upstream - that is where to look, rather than
+here, so the two cannot drift apart.
 
-`potx-translation-annotation-arguments.patch` - potx's `@Translation` pattern
-accepts only an optional `context` parameter, so an annotation that also passes
-`arguments` fails to match and its string is skipped. That costs 13 metatag
-field descriptions, all of which have Danish translations. Both parameters are
-documented, so this one is a plain upstream bug, filed as
-[#3615813](https://www.drupal.org/project/potx/issues/3615813).
-
-Two further potx shortcomings are handled in the Drush command rather than by
-patching, because both are about the shape of the output file rather than about
-which strings get found:
-
-- The `@Translation` extractor saves its match raw, where every other extractor
-  in `potx.inc` escapes it first. An annotation wrapped over two lines
-  therefore carries a real newline and the doc comment's continuation into the
-  msgid, which makes the file unreadable to gettext - losing every term in it,
-  not just the one string. The command escapes what potx left raw and folds the
-  continuation back into a space.
-- Potx keys a plural string by both of its forms and a plain string by itself,
-  so the same text reached through `formatPlural()` and through `t()` is one
-  message defined twice as far as gettext is concerned. The command keeps the
-  plural, whose first form is the singular translation.
+Where the problem is instead about the shape of the file we produce, the
+command deals with it. It also runs its output past `msgcat` before writing
+anything, which is the same tool the next step in the workflow uses, so a file
+gettext cannot read fails during the scan rather than after it.
 
 ### Why the 2.x alpha and not the 1.x stable release
 
@@ -108,8 +88,8 @@ The 2.x branch contains every commit in `8.x-1.1` plus the fixes we depend on:
 
 ## Consequences
 
-- Seven patches and a git-commit pin become two patches on a tagged release
-  supporting Drupal 10, 11 and 12.
+- Seven patches and a git-commit pin become a handful of patches on a tagged
+  release supporting Drupal 10, 11 and 12.
 - Potx covers more than Potion did: `.theme` files, JavaScript,
   `*.permissions.yml` and config schema labels. Roughly a thousand strings
   became translatable that never were, including the Novel theme settings form.
