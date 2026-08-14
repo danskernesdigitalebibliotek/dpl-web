@@ -142,8 +142,14 @@ enum AppType {
 }
 
 type AppVideo {
+  orientation: AppVideoOrientation!
   thumbnail: String!
   url: String!
+}
+
+enum AppVideoOrientation {
+  HORIZONTAL
+  VERTICAL
 }
 
 input BetweenFloatInput {

@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-11 12:55+0200\n"
-"PO-Revision-Date: 2026-08-11 12:55+0200\n"
+"POT-Creation-Date: 2026-08-14 08:46+0200\n"
+"PO-Revision-Date: 2026-08-14 08:46+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-11 12:55+0200\n"
-"PO-Revision-Date: 2026-08-11 12:55+0200\n"
+"POT-Creation-Date: 2026-08-14 08:46+0200\n"
+"PO-Revision-Date: 2026-08-14 08:46+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5234,6 +5234,9 @@ msgctxt "views.view.content:display:default:display_options:filters:field_branch
 msgid "Branch"
 msgstr ""
 
+msgid "Branch filter."
+msgstr ""
+
 msgctxt "Branch List"
 msgid "Branches"
 msgstr "Biblioteker"
@@ -7055,6 +7058,9 @@ msgstr "Det er ikke muligt at eksportere noden til Delingstjenesten."
 msgid "Could not export node to BNF. @message"
 msgstr ""
 
+msgid "Could not fetch VideoTool metadata from {url}: {message}"
+msgstr ""
+
 msgid "Could not fetch work title from FBI: @message"
 msgstr ""
 
@@ -8488,6 +8494,9 @@ msgstr "Afdeling"
 msgctxt "dpl_fbi"
 msgid "Department"
 msgstr "Afdeling"
+
+msgid "Department filter."
+msgstr ""
 
 msgid "Department tag."
 msgstr "Afdelingstag."
@@ -11682,6 +11691,12 @@ msgstr ""
 msgid "First accession date filter: Value"
 msgstr ""
 
+msgid "First accession date operator."
+msgstr ""
+
+msgid "First accession date value."
+msgstr ""
+
 msgctxt "dpl_fbi"
 msgid "First accession date: Operator"
 msgstr "FirstAccessionDate: Operator"
@@ -14794,6 +14809,9 @@ msgstr "Lokation"
 msgid "Location filter"
 msgstr ""
 
+msgid "Location filter."
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_event_location:label"
 msgid "Location name"
 msgstr ""
@@ -16987,6 +17005,9 @@ msgid "On-shelf"
 msgstr "På hylden"
 
 msgid "On-shelf filter"
+msgstr ""
+
+msgid "On-shelf filter."
 msgstr ""
 
 msgctxt "Global"
@@ -20095,6 +20116,9 @@ msgstr "Forhandler vare-ID"
 msgid "Retrieve all events"
 msgstr "Hent alle arrangementer"
 
+msgid "Retrieve current events"
+msgstr ""
+
 msgctxt "Global"
 msgid "Returned too late"
 msgstr "Overskredne lån"
@@ -21187,9 +21211,6 @@ msgstr "Send e-mail når indhold publiceres af Scheduler"
 msgid "Send email when content is unpublished by Scheduler"
 msgstr "Send e-mail når indhold afpubliceres af Scheduler"
 
-msgid "Sends emails through the Azure Communication Service"
-msgstr ""
-
 msgid ""
 "Separate extensions with a space or comma and do not include the leading dot."
 msgstr "Adskil endelser med mellemrum eller komma og udelad punktummet."
@@ -22035,6 +22056,9 @@ msgstr ""
 msgid "Sort options"
 msgstr "Sorteringsmuligheder"
 
+msgid "Sort order."
+msgstr ""
+
 msgid "Sort settings"
 msgstr "Sortering"
 
@@ -22460,6 +22484,9 @@ msgstr "Emner"
 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:8:label"
 msgid "Subjects"
+msgstr ""
+
+msgid "Sublocation filter."
 msgstr ""
 
 msgid "Submit"
