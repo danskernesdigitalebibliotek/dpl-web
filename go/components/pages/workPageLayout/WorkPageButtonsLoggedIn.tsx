@@ -178,7 +178,7 @@ const PhysicalReservationButton = ({
           <div
             className="text-typo-caption text-foreground-muted flex w-full justify-center
               lg:ml-auto">
-            Du har lånt bogen
+            Du har lånt denne bog
           </div>
         </div>
         <ViewLoanButton recordId={existingLoan.recordId} />
