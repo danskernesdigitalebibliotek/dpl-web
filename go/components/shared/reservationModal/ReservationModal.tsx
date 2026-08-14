@@ -4,10 +4,8 @@ import {
   type CreateReservationResult,
   type CreateReservationSuccess,
   useCreateReservation,
-  useLoans,
   useMaterialAvailability,
   usePatron,
-  useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React, { useEffect, useState } from "react"
 
@@ -24,13 +22,10 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
-import usePatronShelf from "@/hooks/usePatronShelf"
+import { useExistingReservation } from "@/hooks/useExistingReservation"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { displayCreators } from "@/lib/helpers/helper.creators"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
-import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
-import { openModal } from "@/store/modal.store"
 
 type ReservationModalProps = {
   open: boolean
@@ -39,38 +34,13 @@ type ReservationModalProps = {
   pid: string
 }
 
-// Hands the modal over to the loan details once the shelf has paired the
-// loan with its FBI work. Only mounted when the patron already has the
-// material on loan.
-const RedirectToLoanDetails = ({ recordId }: { recordId: string }) => {
-  const { loanItems } = usePatronShelf()
-  const item = loanItems.find(({ loan }) => loan.recordId === recordId)
-
-  useEffect(() => {
-    if (!item) return
-    openModal("LoanDetailsModal", {
-      loan: item.loan,
-      manifestation: item.manifestation,
-      title: item.work.titles.full[0],
-      workId: item.work.workId,
-      creators: displayCreators(item.work.creators, 1),
-    })
-  }, [item])
-
-  return null
-}
-
 const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const work = data?.work
   const manifestation = findManifestationByPid(work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
-  // The modal can open via the one-shot URL handover after login, where the
-  // patron may turn out to already have the material on loan. Reserving is
-  // off the table then, so the loan details take over instead.
-  const { data: loans } = useLoans()
-  const existingLoan = loans?.find(loan => loan.recordId === pidToFaust(pid))
+  const existingReservation = useExistingReservation(pid)
 
   const physicalManifestations =
     work?.manifestations?.all.filter(m =>
@@ -83,7 +53,6 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const { data: availability } = useMaterialAvailability(wid, recordIds, blacklistedBranches, {
     enabled: recordIds.length > 0,
   })
-  const { data: reservations } = useReservations()
 
   const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
@@ -98,7 +67,6 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   // The receipt step is derivable: either we just succeeded (local state)
   // or the patron already has a reservation for this manifestation
   // (server state).
-  const existingReservation = findReservationByRecordId(reservations, recordId)
   const derivedResult: CreateReservationSuccess | null =
     successResult ??
     (existingReservation
@@ -137,28 +105,6 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   }
 
   const submitDisabled = isSubmitting || !recordId
-
-  if (existingLoan) {
-    return (
-      <>
-        <RedirectToLoanDetails recordId={existingLoan.recordId} />
-        {/* Placeholder shell under the loan details' title while the shelf
-            pairs the loan — avoids flashing the reservation form. */}
-        <ResponsiveDialog open={open} onClose={onClose} title="Dit lån">
-          <ModalFlowBody viewKey="loan-redirect">
-            <div className="space-y-4">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-background-skeleton rounded-base h-[76px] animate-pulse"
-                />
-              ))}
-            </div>
-          </ModalFlowBody>
-        </ResponsiveDialog>
-      </>
-    )
-  }
 
   return (
     <ResponsiveDialog

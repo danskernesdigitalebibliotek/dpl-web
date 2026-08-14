@@ -245,40 +245,6 @@ describe("Reservation flow", () => {
     cy.dataCy("loan-details-modal").should("contain", "Afleveres")
   })
 
-  it("Already loaned: login handover opens the loan details instead of the form", () => {
-    mockFbsPatron()
-    mockFbsLoans([
-      {
-        isRenewable: true,
-        renewalStatusList: [],
-        loanDetails: {
-          loanId: 555334,
-          recordId: RECORD_ID,
-          dueDate: "2026-12-01T12:00:00.000Z",
-          loanDate: "2026-11-01T12:00:00.000Z",
-          materialItemNumber: "5001112224",
-        },
-      },
-    ])
-    mockFbsReservations([])
-    mockManifestationsByFaust()
-    cy.interceptGraphql({
-      operationName: "getMaterial",
-      data: getMaterial.build(),
-    })
-
-    // "Reserver" clicked while logged out lands back here after login with
-    // the reservation modal in the URL — but the material is already loaned.
-    const modalProps = encodeURIComponent(
-      JSON.stringify({ wid: "work-of:870970-basis:136817027", pid: `870970-basis:${RECORD_ID}` })
-    )
-    cy.visit(`${WORK_URL}?type=BOOK&modal=ReservationModal&modalProps=${modalProps}`)
-
-    cy.dataCy("loan-details-modal").should("exist")
-    cy.dataCy("loan-details-modal").should("contain", "Afleveres")
-    cy.dataCy("reservation-modal").should("not.exist")
-  })
-
   it("Delete reservation: details → confirm → receipt", () => {
     mockFbsPatron()
     mockFbsLoans([])
