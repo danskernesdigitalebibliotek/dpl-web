@@ -150,7 +150,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "storybook": "^10.5.7",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.11",
+    "tsx": "^4.23.12",
     "typescript": "^5.9.3",
     "vite": "^6.0.0",
     "vite-tsconfig-paths": "^6.0.4",
