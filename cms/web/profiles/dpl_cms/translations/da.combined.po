@@ -13,8 +13,18 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-14 11:39+0200\n"
-"PO-Revision-Date: 2026-08-14 11:39+0200\n"
+"POT-Creation-Date: 2026-08-14 14:10+0200\n"
+"PO-Revision-Date: 2026-08-14 14:10+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Danish <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-08-14 14:10+0200\n"
+"PO-Revision-Date: 2026-08-14 14:10+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2977,10 +2987,6 @@ msgctxt "field.field.node.branch.field_address:label"
 msgid "Address (Deprecated - will be removed)"
 msgstr ""
 
-msgctxt "field.field.node.branch.field_address_dawa:label"
-msgid "Address (Deprecated - will be removed)"
-msgstr ""
-
 msgid "Address Field Diff"
 msgstr "Adressefelt Diff"
 
@@ -4916,7 +4922,7 @@ msgstr ""
 
 msgctxt "Dpl Biblio"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 msgctxt "Dpl Fbs"
 msgid "Basic settings"
@@ -5015,6 +5021,9 @@ msgstr ""
 
 msgid "Better, faster, stronger types"
 msgstr "Bedre, hurtigere, stærkere typer"
+
+msgid "Biblio adapter service url"
+msgstr ""
 
 msgid "Biblio adapter settings"
 msgstr ""
@@ -7545,6 +7554,9 @@ msgstr ""
 msgid "DPL Biblio"
 msgstr ""
 
+msgid "DPL Biblio settings"
+msgstr ""
+
 msgid "DPL Breadcrumb"
 msgstr "Brødkrummer"
 
@@ -8733,6 +8745,10 @@ msgstr ""
 
 msgid "Development"
 msgstr "Udvikling"
+
+msgctxt "system.menu.devel:label"
+msgid "Development"
+msgstr ""
 
 msgctxt "Dashboard"
 msgid "Digital"
@@ -12295,6 +12311,10 @@ msgstr ""
 msgid "Global replacement patterns (for description field only)"
 msgstr "Globale erstatningsmønstre (kun for beskrivelsesfeltet)"
 
+msgctxt "next.next_site.go:label"
+msgid "Go"
+msgstr ""
+
 msgid "Go Back - Keep Registration"
 msgstr "Gå tilbage - bevar registrering"
 
@@ -14565,6 +14585,10 @@ msgstr ""
 "Linker en artikel til en forfatters Facebook-profil, bør være enten URL'er "
 "til forfatterens profilsider eller deres Facebook-profil ID'er."
 
+msgctxt "system.menu.devel:description"
+msgid "Links related to Devel module."
+msgstr ""
+
 msgid "Links to the Facebook profiles for actor(s) that appear in the video."
 msgstr ""
 "Linker til Facebook-profiler for skuespiller(e), der optræder i videoen."
@@ -15527,7 +15551,7 @@ msgid "Media player width"
 msgstr "Medieafspiller bredde"
 
 msgid "Media type"
-msgstr "Media type"
+msgstr "Medie type"
 
 msgctxt "views.view.media_library:display:default:display_options:filters:bundle:expose:label"
 msgid "Media type"
@@ -22255,10 +22279,6 @@ msgstr ""
 msgid "Start typing to find content."
 msgstr "Begynd at skrive for at finde indhold."
 
-msgctxt "field.field.node.branch.field_address_dawa:description"
-msgid "Start typing to look up addresses in Denmark."
-msgstr ""
-
 msgctxt "Address label"
 msgid "State"
 msgstr "Status"
@@ -27773,6 +27793,9 @@ msgid ""
 msgstr ""
 "Brug <a href=\":config\">configuration settings</a> til at klassificere hver "
 "rolle."
+
+msgid "Use the Biblio adapter for digital materials"
+msgstr ""
 
 msgctxt "Dpl Biblio"
 msgid "Use the Biblio adapter for digital materials"
