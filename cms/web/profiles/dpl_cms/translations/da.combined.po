@@ -98,7 +98,7 @@ msgstr ""
 
 msgctxt "DPL event"
 msgid " DKK"
-msgstr ""
+msgstr " kr."
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_amount:settings:suffix"
 msgid " materials"
@@ -242,7 +242,7 @@ msgstr ""
 
 msgctxt "DPL admin UX"
 msgid "(Locked by @username)"
-msgstr ""
+msgstr "(Låst af @username)"
 
 msgid ""
 "(Optionally) Select the field on the destination entity to use during "
@@ -283,7 +283,7 @@ msgstr ", "
 
 msgctxt "Date range separator"
 msgid "-"
-msgstr ""
+msgstr "-"
 
 msgctxt "advanced search"
 msgid "-"
@@ -14498,7 +14498,7 @@ msgid "Link to break the content lock."
 msgstr "Link til at bryde indholdslåsen."
 
 msgid "Link to search"
-msgstr ""
+msgstr "Link til søgning"
 
 msgctxt "dpl_fbi"
 msgid "Link to search"
@@ -16645,7 +16645,7 @@ msgid "Number as link?"
 msgstr ""
 
 msgid "Number of add in between links"
-msgstr ""
+msgstr "Antal tilføjelser mellem links"
 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Number of add in between links"
@@ -18254,7 +18254,7 @@ msgstr "Sted"
 
 msgctxt "Novel settings"
 msgid "Place"
-msgstr ""
+msgstr "Sted"
 
 msgctxt "field.field.eventinstance.default.field_event_place:label"
 msgid "Place"
@@ -21577,7 +21577,7 @@ msgstr "Vis alle @title_plural"
 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Show all @title_plural"
-msgstr ""
+msgstr "Vis alle @title_plural"
 
 msgctxt "views.view.event_instance_list:display:default:display_options:filters:date__value:group_info:group_items:1:title"
 msgid "Show all events"
@@ -26479,7 +26479,7 @@ msgstr "Titel"
 
 msgctxt "Novel settings"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 msgctxt "advanced search"
 msgid "Title"
@@ -27415,7 +27415,7 @@ msgid "Unpublish taxonomy term"
 msgstr ""
 
 msgid "Unpublish the series when all instances have occurred"
-msgstr ""
+msgstr "Afpublicér serien når alle instanser er overstået"
 
 msgctxt "DPL event"
 msgid "Unpublish the series when all instances have occurred"
