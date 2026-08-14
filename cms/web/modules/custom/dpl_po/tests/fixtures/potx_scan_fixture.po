@@ -1,0 +1,59 @@
+# da translation of DPL CMS
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-01-01 11:00+1100\n"
+"PO-Revision-Date: 2026-01-01 11:00+1100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "1 item"
+msgid_plural "@count items"
+msgstr[0] "1 ting"
+msgstr[1] "@count ting"
+
+msgid "1 untranslated"
+msgid_plural "@count untranslated"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "404"
+msgstr ""
+
+msgid ""
+"An annotation wrapped\n"
+" *   over two lines"
+msgstr ""
+
+msgid "Annotated label"
+msgstr ""
+
+msgid "Has arguments."
+msgstr ""
+
+msgid "Injected translate call"
+msgstr ""
+
+msgid ""
+"It's a \"quoted\"\n"
+"string"
+msgstr ""
+
+msgid "Plain string"
+msgstr "Almindelig streng"
+
+msgid "Title"
+msgstr "Titel uden kontekst"
+
+msgid "Untranslated string"
+msgstr ""
+
+msgctxt "Fixture context"
+msgid "Title"
+msgstr "Titel med kontekst"
+

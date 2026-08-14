@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * A file with nothing to translate, for testing the empty-scan refusal.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Deliberately holds no translatable strings.
+ */
+function potx_scan_empty_fixture_noop(): void {
+}
