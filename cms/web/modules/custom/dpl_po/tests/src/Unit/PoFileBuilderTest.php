@@ -6,16 +6,16 @@ namespace Drupal\Tests\dpl_po\Unit;
 
 use Drupal\Tests\UnitTestCase;
 use Drupal\dpl_po\PoFileBuilder;
+use Psr\Log\NullLogger;
 
 /**
  * Test case for the work the source scan does on top of potx.
  *
  * The scan itself needs a Drupal installation with potx enabled and a database
  * of translations to fill in, so it is not what is covered here. What is
- * covered is the three things we do that potx does not: dropping the plain
- * strings a plural string already defines, turning potx' output into the .po
- * file we hand to POEditor, and refusing to pass on a file gettext cannot
- * read.
+ * covered is the two things we do that potx does not: dropping the plain
+ * strings a plural string already defines, and turning potx' output into the
+ * .po file we hand to POEditor.
  */
 class PoFileBuilderTest extends UnitTestCase {
 
@@ -30,7 +30,7 @@ class PoFileBuilderTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->builder = new PoFileBuilder();
+    $this->builder = new PoFileBuilder(new NullLogger());
   }
 
   /**
@@ -81,65 +81,6 @@ class PoFileBuilderTest extends UnitTestCase {
     $this->assertStringNotContainsString('#, fuzzy', $rendered);
     $this->assertStringNotContainsString('#: some/file.php', $rendered);
     $this->assertStringContainsString("msgid \"Hello\"\nmsgstr \"Hej\"", $rendered);
-  }
-
-  /**
-   * A file gettext can read is passed on.
-   */
-  public function testReadableFileIsAccepted(): void {
-    $this->expectNotToPerformAssertions();
-
-    $this->builder->assertGettextReads($this->po([
-      "msgid \"Hello\"\nmsgstr \"Hej\"\n",
-    ]));
-  }
-
-  /**
-   * A message defined twice is refused rather than passed on.
-   */
-  public function testDuplicateMessageIsRefused(): void {
-    $this->expectException(\RuntimeException::class);
-    $this->expectExceptionMessageMatches('/duplicate message definition/');
-
-    $this->builder->assertGettextReads($this->po([
-      "msgid \"1 month\"\nmsgid_plural \"@count months\"\nmsgstr[0] \"1 måned\"\nmsgstr[1] \"@count måneder\"\n",
-      "msgid \"1 month\"\nmsgstr \"1 måned\"\n",
-    ]));
-  }
-
-  /**
-   * A string left unterminated is refused rather than passed on.
-   *
-   * This is what an unescaped newline in a msgid looks like from gettext's
-   * side, and it costs the whole file rather than the one message.
-   */
-  public function testUnterminatedStringIsRefused(): void {
-    $this->expectException(\RuntimeException::class);
-    $this->expectExceptionMessageMatches('/end-of-line within string/');
-
-    $this->builder->assertGettextReads($this->po([
-      "msgid \"Sends emails through an external\nservice\"\nmsgstr \"\"\n",
-    ]));
-  }
-
-  /**
-   * Wrap message entries in the header a .po file needs to be read at all.
-   *
-   * @param string[] $entries
-   *   The entries to wrap, each ending on a newline.
-   */
-  protected function po(array $entries): string {
-    $header = <<<'HEADER'
-    msgid ""
-    msgstr ""
-    "MIME-Version: 1.0\n"
-    "Content-Type: text/plain; charset=utf-8\n"
-    "Content-Transfer-Encoding: 8bit\n"
-    "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-    HEADER;
-
-    return $header . "\n" . implode("\n", $entries);
   }
 
 }

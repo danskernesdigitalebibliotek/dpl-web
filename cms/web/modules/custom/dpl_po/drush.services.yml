@@ -18,5 +18,6 @@ services:
       - '%app.root%'
       - '@language_manager'
       - '@module_handler'
+      - '@dpl_po.po_file_builder'
     tags:
       - { name: drush.command }

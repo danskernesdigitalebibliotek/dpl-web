@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\dpl_po;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Process\Process;
 use function Safe\preg_replace;
 
 /**
@@ -21,11 +20,11 @@ class PoFileBuilder {
   /**
    * Class constructor.
    *
-   * @param \Psr\Log\LoggerInterface|null $logger
-   *   Where to report the corrections made along the way, if anywhere.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   Where to report the corrections made along the way.
    */
   public function __construct(
-    protected ?LoggerInterface $logger = NULL,
+    protected LoggerInterface $logger,
   ) {}
 
   /**
@@ -72,7 +71,7 @@ class PoFileBuilder {
     }
 
     if ($dropped > 0) {
-      $this->logger?->info(sprintf('Dropped %d plain strings that a plural string already defines.', $dropped));
+      $this->logger->info(sprintf('Dropped %d plain strings that a plural string already defines.', $dropped));
     }
 
     return $strings;
@@ -87,6 +86,9 @@ class PoFileBuilder {
    *
    * @param array{header: string, strings: string} $built
    *   One entry of the potx output store.
+   *
+   * @return string
+   *   The contents of the .po file. Writing it is left to the caller.
    */
   public function render(array $built): string {
     $header = $built['header'];
@@ -110,34 +112,6 @@ class PoFileBuilder {
     $strings = preg_replace('/^#:[^\n]*\n/m', '', $built['strings']);
 
     return $header . $strings;
-  }
-
-  /**
-   * Refuse to hand on a file that gettext will not read.
-   *
-   * The scan is one step of several: the result is merged with the
-   * configuration translations and sent on to POEditor. A file gettext rejects
-   * would otherwise surface at the merge, by which point nothing points back
-   * at the string that caused it. Msgcat is what the merge itself runs, so
-   * this is the same verdict one step earlier, where the line it names is
-   * still a line of the file we just built.
-   *
-   * Msgfmt is the more obvious tool for checking a .po file, but it also
-   * checks each translation against its source - whether the two start and end
-   * on the same newlines, and so on. Our translations come back from POEditor
-   * with a couple of dozen of those, which the scan neither causes nor can fix.
-   *
-   * @throws \RuntimeException
-   *   When msgcat does not accept the file.
-   */
-  public function assertGettextReads(string $po): void {
-    $msgcat = new Process(['msgcat', '--output-file=/dev/null', '-']);
-    $msgcat->setInput($po);
-    $msgcat->run();
-
-    if (!$msgcat->isSuccessful()) {
-      throw new \RuntimeException(sprintf("The scan produced a file gettext cannot read, so nothing was written:\n%s", trim($msgcat->getErrorOutput())));
-    }
   }
 
 }

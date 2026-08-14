@@ -39,9 +39,9 @@ class ScanSourceCommands extends DrushCommands {
   /**
    * The file listing the contrib projects we scan alongside our own code.
    *
-   * Relative to the project root, which is the directory above the Drupal root.
+   * Relative to the dpl_po module directory.
    */
-  protected const CONTRIB_PROJECTS_FILE = 'dev-scripts/translate-source/scanned_modules.txt';
+  protected const CONTRIB_PROJECTS_FILE = 'scanned_modules.txt';
 
   /**
    * The name potx files its strings under while we build the output.
@@ -58,6 +58,7 @@ class ScanSourceCommands extends DrushCommands {
     protected string $appRoot,
     protected LanguageManagerInterface $languageManager,
     protected ModuleHandlerInterface $moduleHandler,
+    protected PoFileBuilder $poFileBuilder,
   ) {
     parent::__construct();
   }
@@ -107,10 +108,11 @@ class ScanSourceCommands extends DrushCommands {
     }
 
     $strings = $this->extractStrings($files, $langcode);
+    $this->reportProblems();
+
     if (empty($strings)) {
       throw new \RuntimeException('The scan produced no strings. Refusing to write an empty file.');
     }
-    $this->poFile()->assertGettextReads($strings);
 
     file_put_contents($path, $strings);
 
@@ -156,7 +158,8 @@ class ScanSourceCommands extends DrushCommands {
    *   Directory names below modules/contrib.
    */
   protected function contribProjects(): array {
-    $path = dirname($this->appRoot) . '/' . self::CONTRIB_PROJECTS_FILE;
+    $module = $this->moduleHandler->getModule('dpl_po')->getPath();
+    $path = $this->appRoot . '/' . $module . '/' . self::CONTRIB_PROJECTS_FILE;
     if (!is_file($path)) {
       throw new \RuntimeException(sprintf('Cannot read the list of contrib projects to scan: %s', $path));
     }
@@ -198,6 +201,10 @@ class ScanSourceCommands extends DrushCommands {
    *   Absolute paths of the files to scan.
    * @param string $langcode
    *   The langcode to export translations for.
+   *
+   * @return string
+   *   The contents of the .po file. Writing it is left to the caller. Empty if
+   *   potx found nothing at all.
    */
   protected function extractStrings(array $files, string $langcode): string {
     // Potx collects the strings it has built into this global, keyed by output
@@ -226,7 +233,7 @@ class ScanSourceCommands extends DrushCommands {
     // Potx' collected runtime strings, which _potx_build_files() reads back
     // out of the global below.
     global $_potx_strings;
-    $_potx_strings = $this->poFile()->removeShadowedPlurals($_potx_strings);
+    $_potx_strings = $this->poFileBuilder->removeShadowedPlurals($_potx_strings);
 
     // Potx keeps runtime strings and installer strings apart. We want both, so
     // both are built under the same name and end up in the same file.
@@ -237,8 +244,6 @@ class ScanSourceCommands extends DrushCommands {
       _potx_build_files($string_mode, POTX_BUILD_SINGLE, self::POTX_FILE_NAME, '_potx_save_string', '_potx_save_version', '_potx_get_header', $langcode, $langcode, POTX_API_CURRENT);
     }
 
-    $this->reportProblems();
-
     // Potx fills the store through the callbacks above rather than by
     // returning anything, so what it holds now has to be stated here.
     /** @var array<string, array{header: string, strings: string}> $store */
@@ -248,17 +253,7 @@ class ScanSourceCommands extends DrushCommands {
       return '';
     }
 
-    return $this->poFile()->render($store[self::POTX_FILE_NAME]);
-  }
-
-  /**
-   * The .po file builder, reporting to the command's own logger.
-   *
-   * Built on demand rather than injected: Drush sets the logger after
-   * constructing the command, so there is nothing to hand on before then.
-   */
-  protected function poFile(): PoFileBuilder {
-    return new PoFileBuilder($this->logger());
+    return $this->poFileBuilder->render($store[self::POTX_FILE_NAME]);
   }
 
   /**

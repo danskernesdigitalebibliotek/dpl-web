@@ -37,7 +37,7 @@ strings need translating whether or not the site running the scan has them
 turned on.
 
 Contrib is covered by the list in
-[`scanned_modules.txt`](../../../cms/dev-scripts/translate-source/scanned_modules.txt),
+[`scanned_modules.txt`](../../../cms/web/modules/custom/dpl_po/scanned_modules.txt),
 which the command reads. Core is left out either way; its translations come
 from localize.drupal.org.
 
@@ -65,9 +65,9 @@ need it, and whether it is filed upstream - that is where to look, rather than
 here, so the two cannot drift apart.
 
 Where the problem is instead about the shape of the file we produce, the
-command deals with it. It also runs its output past `msgcat` before writing
-anything, which is the same tool the next step in the workflow uses, so a file
-gettext cannot read fails during the scan rather than after it.
+command deals with it. A file gettext cannot read still stops the workflow: the
+next step merges the scan output with the configuration translations using
+`msgcat`, which names the offending file and line and writes nothing.
 
 ### Why the 2.x alpha and not the 1.x stable release
 
