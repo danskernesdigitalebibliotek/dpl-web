@@ -1,21 +1,36 @@
 import { FC } from "react";
 
+export type MaterialUnavailableNoticeVariant = "compact" | "regular";
+
 export interface MaterialUnavailableNoticeProps {
-  title: string;
   description: string;
+  // The title and the link are only rendered by the regular variant.
+  title?: string;
   linkText?: string;
   linkUrl?: string;
+  variant?: MaterialUnavailableNoticeVariant;
 }
 
 export const MaterialUnavailableNotice: FC<MaterialUnavailableNoticeProps> = ({
-  title,
   description,
+  title,
   linkText,
   linkUrl,
+  variant = "regular",
 }) => {
+  if (variant === "compact") {
+    return (
+      <div className="material-unavailable-notice material-unavailable-notice--compact">
+        <p className="material-unavailable-notice__description">
+          {description}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="material-unavailable-notice">
-      <p className="material-unavailable-notice__title">{title}</p>
+      {title && <p className="material-unavailable-notice__title">{title}</p>}
       <p className="material-unavailable-notice__description">
         {description}
         {linkText && linkUrl && (

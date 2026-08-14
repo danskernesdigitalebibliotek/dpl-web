@@ -25,6 +25,11 @@ export default {
       name: "Link url",
       control: { type: "text" },
     },
+    variant: {
+      name: "Variant",
+      control: { type: "radio" },
+      options: ["regular", "compact"],
+    },
   },
   args: {
     title: "The material is not available through the website",
@@ -32,6 +37,7 @@ export default {
       "Visit the library and get help from a librarian or check whether the material is available at",
     linkText: "Bibliotek.dk",
     linkUrl: "https://bibliotek.dk",
+    variant: "regular",
   },
   parameters: {
     layout: "padded",
@@ -48,4 +54,12 @@ export const WithoutLink = Template.bind({});
 WithoutLink.args = {
   linkText: undefined,
   linkUrl: undefined,
+};
+
+// Used where the notice replaces a small button, e.g. in the manifestation
+// list. It drops the title and the link and only keeps a short description.
+export const Compact = Template.bind({});
+Compact.args = {
+  variant: "compact",
+  description: "Kontakt bibliotek for adgang",
 };

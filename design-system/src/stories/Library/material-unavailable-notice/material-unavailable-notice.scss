@@ -17,6 +17,22 @@
     margin-top: $s-sm;
   }
 
+  // Used where the notice takes the place of a small button - in the
+  // manifestation list, say - so it has to survive in a much tighter column.
+  &--compact {
+    padding: $s-sm $s-md;
+    // Keeps the text from being squeezed into a sliver when the notice sits in
+    // a narrow column that shrinks to fit its content.
+    min-width: 16ch;
+    text-align: center;
+
+    .material-unavailable-notice__description {
+      @include typography($typo__body-small);
+
+      margin-top: 0;
+    }
+  }
+
   // The link sits inside the description sentence, so it has to stay inline
   // in order to wrap along with the rest of the text.
   &__link {
