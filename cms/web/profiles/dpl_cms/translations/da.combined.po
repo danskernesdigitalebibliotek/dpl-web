@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-13 16:05+0200\n"
-"PO-Revision-Date: 2026-08-13 16:05+0200\n"
+"POT-Creation-Date: 2026-08-14 11:39+0200\n"
+"PO-Revision-Date: 2026-08-14 11:39+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4529,6 +4529,10 @@ msgctxt "filter.format.basic:name"
 msgid "Basic"
 msgstr ""
 
+msgctxt "Dpl Biblio"
+msgid "Basic settings"
+msgstr ""
+
 msgctxt "Dpl Fbs"
 msgid "Basic settings"
 msgstr "Grundlæggende indstillinger"
@@ -4629,6 +4633,9 @@ msgstr ""
 
 msgid "Better, faster, stronger types"
 msgstr "Bedre, hurtigere, stærkere typer"
+
+msgid "Biblio adapter settings"
+msgstr ""
 
 msgid "Bibliographic Citation"
 msgstr "Bibliografisk citation"
@@ -5408,6 +5415,9 @@ msgstr "Skift indstillinger for gebyrside"
 msgctxt "Work Page"
 msgid "Change SMS number"
 msgstr "Skift mobilnummer"
+
+msgid "Change basic Biblio adapter settings"
+msgstr ""
 
 msgid "Change basic FBS settings"
 msgstr "Skift FBS indstillinger"
@@ -6917,6 +6927,9 @@ msgid "DKK"
 msgstr "DKK"
 
 msgid "DPL App support"
+msgstr ""
+
+msgid "DPL Biblio"
 msgstr ""
 
 msgid "DPL Breadcrumb"
@@ -11303,6 +11316,9 @@ msgstr "Manuel vedligeholdt URL"
 
 msgid "Handheld-Friendly"
 msgstr "Handheld-Friendly"
+
+msgid "Handle Biblio adapter configuration"
+msgstr ""
 
 msgid "Handle FBS configuration"
 msgstr "Håndter indstillinger for FBS"
@@ -25578,6 +25594,10 @@ msgstr ""
 "Brug <a href=\":config\">configuration settings</a> til at klassificere hver "
 "rolle."
 
+msgctxt "Dpl Biblio"
+msgid "Use the Biblio adapter for digital materials"
+msgstr ""
+
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
 msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
@@ -26267,6 +26287,12 @@ msgid ""
 "When checked, this page is eligible to be a template when cloning content."
 msgstr ""
 "Når markeret, kan denne side bruges som skabelon ved kloning af indhold."
+
+msgctxt "Dpl Biblio"
+msgid ""
+"When enabled the web apps will use the Biblio adapter instead of Publizon. "
+"Leave disabled to keep using Publizon."
+msgstr ""
 
 msgid "When entering a time, only show hours and minutes in the input field."
 msgstr ""
