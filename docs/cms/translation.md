@@ -20,7 +20,12 @@ To make the "translation traffic" work following components are being used:
     The `*.po` and `*.config.po` files are generated from it and are not
     committed.
 * [GitHub Actions](../../.github/workflows/cms-translate-source.yml)
-  * Scans codebase for new translatable strings and commits them to GitHub
+  * Scans the codebase for new translatable strings and commits them to GitHub.
+    The scan is done by the `dpl_po:scan-source` Drush command, which uses the
+    [potx](https://www.drupal.org/project/potx) module and writes the strings
+    together with the translations we already have. It covers our own modules,
+    themes and profile, plus every contrib module Drupal has installed. Core is
+    left out, as its translations come from localize.drupal.org
   * Exports translatable configuration strings into a separate `*.config.po` file
   * Merges the two files: `*.po` and `*.config.po` into a `*.combined.po` file
   * Notifies POEditor that new translatable strings are available
@@ -49,8 +54,8 @@ sequenceDiagram
   Actor Developer
   Developer ->> Developer: Open pull request with new translatable string
   Developer ->> GitHubActions: Merge pull request into develop
-  GitHubActions ->> GitHubActions: Scan codebase and write strings to .po file
-  GitHubActions ->> GitHubActions: Fill .po file with existing translations
+%% <!-- markdownlint-disable-next-line MD013 -->
+  GitHubActions ->> GitHubActions: Scan codebase and write strings, with the translations we have, to a .po file
 %% <!-- markdownlint-disable-next-line MD013 -->
   Note over GitHubActions,GitHubActions: If config translations<br/>are available<br/>they are used<br/>otherwise empty strings
 %% <!-- markdownlint-disable-next-line MD013 -->

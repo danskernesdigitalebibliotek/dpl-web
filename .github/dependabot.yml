@@ -44,7 +44,6 @@ updates:
       # Never attempt automated updates to major Drupal releases.
       - dependency-name: "drupal/core*"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
       # drupal/next 2.1.0 adds draft_enabled to exported Next entity config.
@@ -63,9 +62,6 @@ updates:
       # Drupal 10.6.x breaks the CMS opening-hours Cypress flow.
       - dependency-name: "drupal/core*"
         versions: [">=10.6.0"]
-      # `potion` isn't compatible with newer versions of `annotations`.
-      - dependency-name: "doctrine/annotations"
-        versions: [">=2.0.0"]
     schedule:
       interval: weekly
       day: sunday
