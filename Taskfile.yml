@@ -30,6 +30,9 @@ tasks:
       - '.env'
     cmds:
       - op inject --account reloadas.1password.com --force --in-file .env.1pass --out-file .env
+      - |
+        PROJECT_NAME=$(basename "$PWD" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]//g')
+        sed "s/^COMPOSE_PROJECT_NAME=.*/COMPOSE_PROJECT_NAME=${PROJECT_NAME}/" .env > .env.tmp && mv .env.tmp .env
     preconditions:
       - sh: which op
         msg: '1Password CLI command required'
