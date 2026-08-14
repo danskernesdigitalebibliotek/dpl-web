@@ -1,8 +1,8 @@
 services:
-  dpl_biblio.settings:
-    class: Drupal\dpl_biblio\DplBiblioSettings
-    arguments: ['@config.manager']
+  _defaults:
+    autowire: true
+
+  Drupal\dpl_biblio\DplBiblioSettings: {}
 
   # Hook services can be removed in D11.
-  Drupal\dpl_biblio\Hook\ReactAppsHooks:
-    arguments: ['@dpl_biblio.settings']
+  Drupal\dpl_biblio\Hook\ReactAppsHooks: {}
