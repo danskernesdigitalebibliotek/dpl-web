@@ -1,0 +1,2613 @@
+# Biblio API Adapter (DBC) — REST contract.
+# Source: https://biblio-adapter.dbc.dk/docs — use the "Download OpenAPI
+# specification" button and convert the JSON to YAML (see schemas/README.md).
+# Consumed by react/ (src/core/biblio, generated via orval).
+# Last re-synced against live: 2026-08-13.
+openapi: 3.0.3
+info:
+  title: Biblio API Adapter
+  version: 1.0.0
+  description: "API contract for the Biblio API adapter service.\n\n## Adapter principles\n\nThis adapter\
+    \ exposes two controlled subsets of the `Biblio API`: a browser-safe subset for end-user clients and\
+    \ a restricted subset for authorized server-to-server clients. Some endpoints are available in both\
+    \ subsets.\n\n- **Bearer-only client auth**: clients send one opaque `bearerAuth` token to the adapter.\n\
+    \  `Biblio API` credentials (`x-api-key` and `Biblio API` bearer token) are handled internally in\
+    \ the adapter.\n- **User context derivation**: client-supplied `user_id` is not accepted on user-scoped\n\
+    \  operations. See **Authentication and user identity** below.\n- **Automatic user provisioning**:\
+    \ the adapter ensures that authenticated users exist\n  in `Biblio API` by internally calling `POST\
+    \ /v1/auth/create-sign-in-token` with\n  `create_if_not_exists: true`. The created user is associated\
+    \ with the resolved\n  `user_id` and `organization_third_party_id` (see **Authentication and user\
+    \ identity**).\n- **Response transparency**: responses include `x-response-source` (`adapter` or `wedobooks`)\n\
+    \  and `x-request-id` for correlation and debugging.\n\n## Authentication and user identity\n\n**Token**\n\
+    \nObtain an OAuth2 access token from [login.bib.dk](https://login.bib.dk) and send it as `Authorization:\
+    \ Bearer <token>`.\n\n**Endpoint access**\n\nEndpoints that read or change a user's loans, reservations,\
+    \ or user data require a token representing the end user, issued via the OAuth2 `authorization_code`\
+    \ grant.\n\nMetadata endpoints can be accessed with either an end-user token or a server-to-server\
+    \ token.\n\nServer-to-server access requires a token issued via the OAuth2 `client_credentials` grant.\
+    \ The OAuth client must be configured with access to the endpoint.\n\n**Identity resolution**\n\n\
+    User-scoped endpoints do not accept client-supplied `user_id` or organization ids. Resolve them from\
+    \ login.bib.dk userinfo `attributes` as follows:\n\n1. If both `uniqueId` and `municipalityAgencyId`\
+    \ are present:\n   - `user_id` = `uniqueId`\n   - `organization_third_party_id` = `municipalityAgencyId`\n\
+    2. Otherwise, use the Unilogin fallback:\n   - `user_id` = `uniloginUniIdHash`\n   - `organization_third_party_id`\
+    \ = `uniloginAgencyId`\n\n\nUnilogin fallback requires an active Unilogin license; otherwise the adapter\
+    \ returns 403 with `User is missing license`.\n\nIf identity cannot be resolved, the adapter returns\
+    \ 403 Forbidden.\n## Unsupported endpoints in adapter\n\nThese endpoints are available in the `Biblio\
+    \ API`, but not in this adapter.\n\n- `POST /v1/auth/sign-in` (used internally)\n- `POST /v1/auth/create-user`\n\
+    - `Webhooks` (Biblio API outbound webhook events)\n- `GET /v1/inventory`\n- `GET /v1/shelves`\n- `GET\
+    \ /v1/onix/{material_id}`\n- `GET /v1/onix/pull/alpha`\n- `GET /v1/onix/pull/delta/{from_utc_timestamp}`\n"
+servers:
+- url: http://localhost:3000
+  description: Local development
+paths:
+  /v1/auth/create-sign-in-token:
+    post:
+      operationId: createSignInTokenForAuthenticatedUser
+      summary: Create
+      description: 'Creates a custom sign-in token for the authenticated user.
+
+        The returned `token` is not itself the bearer token for the `Biblio API`. A client must exchange
+        it with authentication and then use the resulting ID token as bearer auth.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter derives `user_id`, `create_if_not_exists`, and `user_data` from >   login.bib.dk
+        userinfo (see **Authentication and user identity**), so callers must >   not send a request body.
+
+        '
+      tags:
+      - sign-in-token
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      responses:
+        '200':
+          description: Sign-in token created
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSignInTokenApiResponse'
+        '401':
+          description: Missing, invalid, or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/loans:
+    get:
+      operationId: getLoansForAuthenticatedUser
+      summary: Get loans
+      description: 'Returns a paginated list of loans.
+
+        By default only active loans are returned because `active` defaults to `true`. Set
+
+        `active=false` to retrieve ended or inactive loans instead.
+
+        Pagination uses the returned loan id as the next `cursor`.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - loans
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of items to return in a single page.
+        schema:
+          type: integer
+          format: int32
+          default: 25
+          minimum: 1
+          maximum: 1000
+      - name: cursor
+        in: query
+        required: false
+        description: 'Pagination cursor for fetching the next page. Pass the `cursor` value returned in
+          the previous response''s `pagination` object; omit it to fetch the first page. The final page
+          returns no cursor.
+
+          '
+        schema:
+          type: string
+      - name: active
+        in: query
+        required: false
+        description: Defaults to `true`. Set to `false` to retrieve inactive or ended loans.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Paginated loans for the authenticated user
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLoansApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+    post:
+      operationId: requestLoanForAuthenticatedUser
+      summary: Request loan for user
+      description: 'Attempts to create a loan for a user and material immediately.
+
+        This endpoint performs the same availability and quota checks as `GET /v1/loans/can-loan`.
+
+        When a loan is created, the response status is `201` and the `loan` object is populated.
+
+        When the material cannot be loaned, the response is still a successful API response with a decision
+
+        status and optional rejection details, but without a `loan`.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - loans
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                material_id:
+                  type: string
+                  description: ISBN-13 of the material the user wants to loan.
+              required:
+              - material_id
+              additionalProperties: false
+      responses:
+        '201':
+          description: Loan request processed
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/CreateLoanApiResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/loans/{loan_id}:
+    get:
+      operationId: getLoanForAuthenticatedUser
+      summary: Get loan
+      description: 'Returns a single loan by `loan_id`.
+
+        Use this endpoint to refresh the authoritative state of a known loan after creation,
+
+        or when synchronizing client state with Biblio API loan status.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter verifies that returned `loan.uid` matches the derived `user_id`.
+
+        > - If the loan belongs to another user, the adapter returns `404` so the resource appears non-existent.
+
+        '
+      tags:
+      - loans
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: loan_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Loan response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GetLoanApiResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: Loan not found or not accessible to the authenticated user
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/loans/can-loan:
+    get:
+      operationId: canLoanForAuthenticatedUser
+      summary: Material loan availability for user
+      description: 'Checks whether a user can currently loan a specific material without creating a loan.
+
+        Use this as a preflight check when you want to show availability, provider choice, or quota
+
+        rejection details before calling `POST /v1/loans`.
+
+        The result reflects the state at request time only and should not be treated as a reservation
+
+        or guarantee that a later loan request will still succeed.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - loans
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: material_id
+        in: query
+        required: true
+        description: ISBN-13 of the material the user wants to loan.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Loan availability response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/CanLoanApiResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/users/get_loan_quotas:
+    get:
+      operationId: getLoanQuotasForAuthenticatedUser
+      summary: Get user loan quotas
+      description: 'Returns borrowing quota information for a user across every organization the user
+        belongs to.
+
+        Use this endpoint when you need to show remaining loan capacity or organization-specific quota
+
+        rules before attempting a loan.
+
+
+        The response may contain multiple entries for the same user, one per organization. Each entry
+
+        contains the organization id and name, ancestor ids, whether quotas are split by format or
+
+        shared across formats, and only the relevant quota fields for that mode.
+
+
+        Treat this as informational state at request time. Loan creation endpoints remain authoritative
+
+        because availability and quota usage can change between calls.
+
+
+        When `split_on_format` is `true`, the response includes per-format loan limits and usage for
+
+        audiobooks and ebooks. When `split_on_format` is `false`, the response includes combined loan
+
+        limits and usage across formats.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - users
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      responses:
+        '200':
+          description: Loan quotas response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GetLoanQuotasApiResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: User or quotas not found
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/users/get_support_id:
+    get:
+      operationId: getSupportIdForAuthenticatedUser
+      summary: Get user support id
+      description: 'Returns the support id for a user.
+
+        If the user does not already have a support id, one is generated and persisted before the
+
+        response is returned.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - users
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      responses:
+        '200':
+          description: Support id response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GetSupportIdApiResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: User or support id not found
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/reservations:
+    get:
+      operationId: getReservationsForAuthenticatedUser
+      summary: Get reservations.
+      description: 'Returns a paginated list of reservations.
+
+        When `limit` is omitted, the default page size is `25`.
+
+        The returned pagination cursor is the reservation id to send back on the next request.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        > - The adapter does not support listing reservations across users.
+
+        '
+      tags:
+      - reservations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of items to return in a single page.
+        schema:
+          type: integer
+          format: int32
+          default: 25
+          minimum: 1
+          maximum: 1000
+      - name: cursor
+        in: query
+        required: false
+        description: 'Pagination cursor for fetching the next page. Pass the `cursor` value returned in
+          the previous response''s `pagination` object; omit it to fetch the first page. The final page
+          returns no cursor.
+
+          '
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Paginated reservations for the authenticated user
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReservationsApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+    post:
+      operationId: createReservationForAuthenticatedUser
+      summary: Create reservation
+      description: 'Requests a reservation for a user and material.
+
+
+        If the material can be loaned right away, the endpoint creates a loan instead of a waiting
+
+        reservation and responds with status `201`. Otherwise it returns status `200` with a
+
+        reservation-oriented decision payload.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - reservations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                material_id:
+                  type: string
+                  description: ISBN-13 of the requested material.
+              required:
+              - material_id
+              additionalProperties: false
+      responses:
+        '200':
+          description: Reservation request processed
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateReservationApiResponse'
+        '201':
+          description: Reservation request fulfilled immediately as loan
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateReservationApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/reservations/accept-offer:
+    post:
+      operationId: acceptReservationOfferForAuthenticatedUser
+      summary: Accept reservation offer
+      description: 'Accepts an active reservation offer and converts it into a loan.
+
+        Either `offer_id` or `reservation_id` can be used.
+
+
+        A reservation offer temporarily holds the relevant license for the title and price model.
+
+        On expiry/cancellation the license will be released.
+
+        On success, the response includes the created `loan_id` and uses status `201`.
+
+
+        The reservation and the offer are cleaned up shortly after acceptance, so external systems
+
+        should not expect those records to remain available indefinitely.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        '
+      tags:
+      - reservations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                offer_id:
+                  type: string
+                  description: Reservation offer id to accept.
+                reservation_id:
+                  type: string
+                  description: Reservation id whose active offer should be accepted.
+              additionalProperties: false
+      responses:
+        '200':
+          description: Offer accepted response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptReservationOfferApiResponse'
+        '201':
+          description: Offer accepted and converted into loan
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptReservationOfferApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/reservations/offers:
+    get:
+      operationId: getReservationOffersForAuthenticatedUser
+      summary: Get reservation offers
+      description: 'Returns a paginated list of reservation offers for the authenticated user.
+
+        Use this endpoint to discover offers before calling `POST /v1/reservations/accept-offer`,
+
+        or to inspect offer status and timestamps.
+
+        The returned pagination cursor is the reservation offer id to send back on the next request.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter forwards the derived `user_id` (see **Authentication and user identity**).
+
+        '
+      tags:
+      - reservations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of items to return in a single page.
+        schema:
+          type: integer
+          format: int32
+          default: 25
+          minimum: 1
+          maximum: 1000
+      - name: cursor
+        in: query
+        required: false
+        description: 'Pagination cursor for fetching the next page. Pass the `cursor` value returned in
+          the previous response''s `pagination` object; omit it to fetch the first page. The final page
+          returns no cursor.
+
+          '
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Paginated reservation offers for the authenticated user
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReservationOffersApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/reservations/{reservation_id}:
+    get:
+      operationId: getReservationForAuthenticatedUser
+      summary: Get reservation
+      description: 'Returns a single reservation by `reservation_id`.
+
+        Use this to refresh the authoritative state of a known reservation.
+
+        A previously accepted or deleted reservation may return `404` if it has already been removed.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter verifies that returned `reservation.uid` matches the derived `user_id`.
+
+        > - If the reservation belongs to another user, the adapter returns `404` so the resource appears
+        non-existent.
+
+        '
+      tags:
+      - reservations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: reservation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Reservation response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReservationApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: Reservation not found or not accessible to the authenticated user
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+    delete:
+      operationId: deleteReservationForAuthenticatedUser
+      summary: Delete reservation
+      description: 'Deletes an existing reservation.
+
+        Use this when the user no longer wants to wait for the material.
+
+        The response indicates whether the underlying reservation record was successfully removed.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > - Requires a valid bearer token with end-user access.
+
+        > - The adapter verifies reservation ownership via `reservation.uid` before deletion.
+
+        > - If the reservation belongs to another user, the adapter returns `404` so the resource appears
+        non-existent.
+
+        '
+      tags:
+      - reservations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: reservation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Reservation delete response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteReservationApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: Reservation not found or not accessible to the authenticated user
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/organizations:
+    get:
+      operationId: getOrganization
+      summary: Get organization
+      description: 'Returns organization details resolved by either the internal `organization_id` or
+        an external
+
+        `third_party_id`.
+
+        Use this endpoint to resolve an organization before making organization-scoped calls or when
+
+        you need display, hierarchy, contact, or branding data for the organization.
+
+        At least one identifier must be provided.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > Requires a valid bearer token with server-to-server access.
+
+        '
+      tags:
+      - organizations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: organization_id
+        in: query
+        required: false
+        description: WDB internal id. 20 characters. `id` on the organization model.
+        schema:
+          type: string
+      - name: third_party_id
+        in: query
+        required: false
+        description: External id if the WDB internal id is not available.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Organization response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: 'OAuth client not authorized, or no valid Biblio API credentials are associated
+            with the presented bearer token
+
+            '
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/organizations/configs:
+    get:
+      operationId: getOrganizationConfigs
+      summary: Get organization configs
+      description: 'Returns the organization configuration for an organization resolved by `organization_id`
+        or `third_party_id`.
+
+        Use this endpoint when your integration needs organization-level settings that influence client
+        behavior. Internal library system details and card credentials are intentionally excluded from
+        the response DTO.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > Requires a valid bearer token with server-to-server access.
+
+        '
+      tags:
+      - organizations
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: organization_id
+        in: query
+        required: false
+        description: WDB internal id. 20 characters. `id` on the organization model.
+        schema:
+          type: string
+      - name: third_party_id
+        in: query
+        required: false
+        description: 'External id if the WDB internal id is not available. For example a national municipality
+          or institution id.
+
+          '
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Organization configuration response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationConfigsApiResponse'
+        '401':
+          description: Missing, invalid, or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: 'OAuth client not authorized, or no valid Biblio API credentials are associated
+            with the presented bearer token
+
+            '
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: Organization configuration not found
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/metadata:
+    get:
+      operationId: getMetadataByMaterialIds
+      summary: Get metadata for materials
+      description: 'Returns metadata for up to 50 materials in a single request.
+
+        The input uses ISBN-13 values in `material_ids`. Materials that do not exist are silently omitted
+        from the response instead of failing the entire request.
+
+        Use this endpoint together with inventory or reservation/loan data when you need catalog fields
+        such as title, author, language, description, and publisher metadata.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > Requires a valid bearer token with end-user or server-to-server access.
+
+        '
+      tags:
+      - metadata
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: material_ids
+        in: query
+        required: true
+        description: Up to 50 ISBN-13 identifiers to resolve in a single request.
+        schema:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 50
+      responses:
+        '200':
+          description: Metadata responses from Biblio API for existing materials
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMetadataApiResponse'
+        '400':
+          description: Missing or invalid material_ids query parameter
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+  /v1/metadata/{material_id}:
+    get:
+      operationId: getMetadataByMaterialId
+      summary: Get metadata material
+      description: 'Returns metadata for a single material id.
+
+        Despite the singular path, the response shape is the same as the batch endpoint and still returns
+        a `materials` array containing zero or one item.
+
+        Use this when you already know the ISBN-13 and want the same metadata structure as the bulk endpoint.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > Requires a valid bearer token with end-user or server-to-server access.
+
+        '
+      tags:
+      - metadata
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: material_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Metadata response from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMetadataApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: User not authorized or credentials unavailable
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: Material not found
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+components:
+  schemas:
+    GetMetadataApiResponse:
+      type: object
+      properties:
+        materials:
+          type: array
+          description: Metadata records for the requested ids. Unknown ids are omitted.
+          items:
+            $ref: '#/components/schemas/MaterialInformationDto'
+      required:
+      - materials
+      additionalProperties: false
+    ImportMaterialType:
+      anyOf:
+      - $ref: '#/components/schemas/MaterialType.Ebook'
+      - $ref: '#/components/schemas/MaterialType.Audiobook'
+    MaterialInformationDto:
+      $ref: '#/components/schemas/Pick_MaterialInformation.author-or-category-or-description-or-collection_title-or-collection_volume_number-or-duration_seconds-or-editor-or-file_bytes-or-isbn-or-languages-or-material_type-or-narrator-or-publish_date-or-publisher-or-thema_codes-or-title-or-translator_'
+    MaterialType.Audiobook:
+      type: string
+      enum:
+      - audiobook
+    MaterialType.Ebook:
+      type: string
+      enum:
+      - ebook
+    ? Pick_MaterialInformation.author-or-category-or-description-or-collection_title-or-collection_volume_number-or-duration_seconds-or-editor-or-file_bytes-or-isbn-or-languages-or-material_type-or-narrator-or-publish_date-or-publisher-or-thema_codes-or-title-or-translator_
+    : type: object
+      description: From T, pick a set of properties whose keys are in the union K
+      properties:
+        author:
+          type: array
+          items:
+            type: string
+        material_type:
+          $ref: '#/components/schemas/ImportMaterialType'
+        publish_date:
+          type: string
+        publisher:
+          type: string
+        title:
+          type: string
+        category:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        collection_title:
+          type: string
+        collection_volume_number:
+          type: string
+        duration_seconds:
+          type: integer
+          format: int32
+        editor:
+          type: array
+          items:
+            type: string
+        file_bytes:
+          type: integer
+          format: int32
+        isbn:
+          type: string
+        languages:
+          type: array
+          items:
+            type: string
+        narrator:
+          type: array
+          items:
+            type: string
+        thema_codes:
+          type: array
+          items:
+            type: string
+        translator:
+          type: array
+          items:
+            type: string
+      required:
+      - material_type
+      - publish_date
+      - publisher
+      - title
+      - category
+      - description
+      - isbn
+      - languages
+      - thema_codes
+    ApiErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    CanLoanApiResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CanLoanResponseType'
+          description: Current loan decision returned by the loan manager.
+        loan_provider:
+          $ref: '#/components/schemas/LoanProvider'
+          description: Loan provider selected for the attempted loan, when available.
+        active_loan_provider:
+          type: boolean
+          description: Indicates whether the selected provider is currently active for the user/org context.
+        message:
+          type: string
+          description: Human-readable explanation of the loan decision.
+        org_id:
+          type: string
+          description: Organization that governed the decision, when relevant.
+        quota_reject:
+          $ref: '#/components/schemas/QuotaReject'
+          description: Structured quota rejection details when quota rules block the loan.
+        unavailable_reason:
+          $ref: '#/components/schemas/UnavailableReason'
+          description: 'Reason the loan provider returned {@link CanLoanResponseType.Unavailable}
+
+            for the material. Only set when `status` is `unavailable`.'
+        lending_block_reason:
+          $ref: '#/components/schemas/LendingBlockReason'
+          description: 'Why lending is blocked for the session/account. Only set when `status` is
+
+            {@link CanLoanResponseType.LendingBlocked}.'
+      required:
+      - status
+      additionalProperties: false
+    CanLoanRejectReasons:
+      anyOf:
+      - $ref: '#/components/schemas/CanLoanResponseType.ConcurrentLimitExceeded'
+      - $ref: '#/components/schemas/CanLoanResponseType.PeriodLimitExceeded'
+    CanLoanResponseType:
+      enum:
+      - unavailable
+      - monthly_limit_exceeded
+      - concurrent_limit_exceeded
+      - wishable
+      - reservable
+      - loanable
+      - no_valid_credentials
+      - lending_blocked
+      type: string
+    CanLoanResponseType.ConcurrentLimitExceeded:
+      enum:
+      - concurrent_limit_exceeded
+      type: string
+    CanLoanResponseType.PeriodLimitExceeded:
+      enum:
+      - monthly_limit_exceeded
+      type: string
+    UnavailableReason:
+      description: 'Reason a loan provider returned {@link CanLoanResponseType.Unavailable} for
+
+        a material. Per-material concurrent quotas are signalled separately via
+
+        {@link CanLoanResponse.quotaReject}.'
+      enum:
+      - insufficient_funds
+      - catalog_excluded
+      type: string
+    LendingBlockReason:
+      description: 'Why a session or account is blocked from lending entirely, independent of any material.
+        Surfaced as
+
+        {@link CanLoanResponse.lendingBlockReason} (with canLoan {@link CanLoanResponseType.LendingBlocked})
+
+        on every loan endpoint — both can-loan and the loan-mutating callables return it rather than
+
+        throwing. The string values are the client-facing contract, so they must stay stable.'
+      enum:
+      - library_card_lending_disabled
+      - reauthentication_required
+      - email_verification_required
+      - quarantined
+      - new_account
+      type: string
+    CreateLoanApiResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CanLoanResponseType'
+          description: Current loan decision returned by the loan manager.
+        loan_provider:
+          $ref: '#/components/schemas/LoanProvider'
+          description: Loan provider selected for the attempted loan, when available.
+        active_loan_provider:
+          type: boolean
+          description: Indicates whether the selected provider is currently active for the user/org context.
+        message:
+          type: string
+          description: Human-readable explanation of the loan decision.
+        org_id:
+          type: string
+          description: Organization that governed the decision, when relevant.
+        quota_reject:
+          $ref: '#/components/schemas/QuotaReject'
+          description: Structured quota rejection details when quota rules block the loan.
+        unavailable_reason:
+          $ref: '#/components/schemas/UnavailableReason'
+          description: 'Reason the loan provider returned {@link CanLoanResponseType.Unavailable}
+
+            for the material. Only set when `status` is `unavailable`.'
+        lending_block_reason:
+          $ref: '#/components/schemas/LendingBlockReason'
+          description: 'Why lending is blocked for the session/account. Only set when `status` is
+
+            {@link CanLoanResponseType.LendingBlocked}.'
+        loan:
+          $ref: '#/components/schemas/LoanDto'
+          description: Present only when a loan was actually created.
+      required:
+      - status
+      additionalProperties: false
+    GetLoanApiResponse:
+      type: object
+      properties:
+        loan:
+          $ref: '#/components/schemas/LoanDto'
+          description: Loan details for the requested id.
+      additionalProperties: false
+    GetLoansApiResponse:
+      type: object
+      properties:
+        loans:
+          type: array
+          description: Loans for the current page.
+          items:
+            $ref: '#/components/schemas/LoanDto'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - loans
+      - pagination
+      additionalProperties: false
+    LoanDto:
+      properties:
+        active:
+          type: boolean
+        author:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        id:
+          type: string
+        is_listen_and_read:
+          type: boolean
+        license:
+          $ref: '#/components/schemas/LoanLicenseInfo'
+        lix:
+          type: integer
+          format: int32
+          minimum: 0
+        loan_request_type:
+          $ref: '#/components/schemas/RequestLoanRequestType'
+        material_id:
+          type: string
+        material_type:
+          $ref: '#/components/schemas/MaterialType'
+        org_id:
+          type: string
+        org_type:
+          type: string
+        origin_org_id:
+          type: string
+          description: User org that qualified the loan (never an ancestor); absent on old loans.
+        origin_org_type:
+          type: string
+        publish_date:
+          type: string
+        publisher:
+          type: string
+        publisher_id:
+          type: string
+        title:
+          type: string
+        uid:
+          type: string
+        start:
+          type: string
+          description: Loan start timestamp in ISO 8601 format.
+        end:
+          type: string
+          description: Loan end or expiry timestamp in ISO 8601 format.
+        last_opened_at:
+          type: string
+          description: "Last time the loan was opened, in ISO 8601 format. \nOnly available if maintained\
+            \ by clients."
+      required:
+      - active
+      - author
+      - id
+      - license
+      - loan_request_type
+      - material_id
+      - material_type
+      - org_id
+      - publish_date
+      - publisher
+      - publisher_id
+      - title
+      - uid
+      - start
+      - end
+      type: object
+      additionalProperties: false
+    LoanLicenseInfo:
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/LoanProvider'
+      required:
+      - id
+      - type
+      type: object
+      additionalProperties: false
+    LoanProvider:
+      enum:
+      - free
+      - k-fond
+      - click
+      - package
+      - premium
+      - selection
+      type: string
+    MaterialType:
+      enum:
+      - audiobook
+      - ebook
+      - paper_book
+      type: string
+    Pagination:
+      properties:
+        limit:
+          type: integer
+          format: int32
+          description: Maximum number of items to return in a single page.
+          default: 25
+          minimum: 1
+          maximum: 1000
+        cursor:
+          type: string
+          description: 'Pagination cursor for fetching the next page. Pass the `cursor` value returned
+            in the
+
+            previous response''s `pagination` object; omit it to fetch the first page. The final
+
+            page returns no cursor.'
+      type: object
+      additionalProperties: false
+    QuotaReject:
+      properties:
+        reason:
+          $ref: '#/components/schemas/CanLoanRejectReasons'
+        quota:
+          type: integer
+          format: int32
+        nextLoanAvailableDate:
+          type: string
+      required:
+      - reason
+      - quota
+      type: object
+      additionalProperties: false
+    RequestLoanRequestType:
+      enum:
+      - loan
+      - loan_from_reservation
+      - external_loan
+      - reservation_offer
+      - reservation
+      - system_reservation
+      - wish
+      - renew
+      type: string
+    LoanPeriod:
+      properties:
+        days:
+          type: integer
+          format: int32
+          minimum: 0
+        months:
+          type: integer
+          format: int32
+          minimum: 0
+      required:
+      - days
+      - months
+      type: object
+      additionalProperties: false
+    SplitLoanConfigType:
+      $ref: '#/components/schemas/ByMaterialType_number_'
+    SplitLoanQuotaDto:
+      properties:
+        org_id:
+          type: string
+          description: Organization id
+        org_name:
+          type: string
+          description: Organization name
+        ancestors:
+          items:
+            type: string
+          type: array
+          description: Ancestor organization ids
+        split_on_format:
+          type: boolean
+          enum:
+          - true
+          nullable: false
+          description: Split quotas are enabled, so only per-format values are returned
+        max_user_loans:
+          $ref: '#/components/schemas/SplitLoanConfigType'
+          description: Maximum loans allowed per format
+        max_user_loans_period:
+          properties:
+            ebook:
+              $ref: '#/components/schemas/LoanPeriod'
+            audiobook:
+              $ref: '#/components/schemas/LoanPeriod'
+          required:
+          - ebook
+          - audiobook
+          type: object
+          description: 'Period used when evaluating `max_user_loans` per format.
+
+            The total duration can be at most 3 months.'
+        max_concurrent_user_loans:
+          $ref: '#/components/schemas/SplitLoanConfigType'
+          description: Maximum concurrent loans allowed per format
+        current_concurrent_loans:
+          $ref: '#/components/schemas/SplitLoanConfigType'
+          description: Current active loans per format
+        current_monthly_loans:
+          $ref: '#/components/schemas/SplitLoanConfigType'
+          description: Current loans counted within the configured loan period per format
+      required:
+      - org_id
+      - org_name
+      - ancestors
+      - split_on_format
+      - max_user_loans
+      - max_concurrent_user_loans
+      - current_concurrent_loans
+      - current_monthly_loans
+      type: object
+      additionalProperties: false
+    CombinedLoanQuotaDto:
+      properties:
+        org_id:
+          type: string
+          description: Organization id
+        org_name:
+          type: string
+          description: Organization name
+        ancestors:
+          items:
+            type: string
+          type: array
+          description: Ancestor organization ids
+        split_on_format:
+          type: boolean
+          enum:
+          - false
+          nullable: false
+          description: Split quotas are disabled, so only combined values are returned
+        combined_max_concurrent_user_loans:
+          type: integer
+          format: int32
+          description: Maximum concurrent loans allowed across formats
+        combined_current_concurrent_loans:
+          type: integer
+          format: int32
+          description: Current active loans across formats
+        combined_current_monthly_loans:
+          type: integer
+          format: int32
+          description: Current loans counted within the configured loan period across formats
+        combined_max_user_loans:
+          type: integer
+          format: int32
+          description: Maximum loans allowed across formats
+        combined_max_user_loans_period:
+          $ref: '#/components/schemas/LoanPeriod'
+          description: 'Period used when evaluating `combined_max_user_loans`.
+
+            The total duration can be at most 3 months.'
+      required:
+      - org_id
+      - org_name
+      - ancestors
+      - split_on_format
+      - combined_max_concurrent_user_loans
+      - combined_current_concurrent_loans
+      - combined_current_monthly_loans
+      - combined_max_user_loans
+      type: object
+      additionalProperties: false
+    GetLoanQuotasApiResponse:
+      properties:
+        loan_quotas:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SplitLoanQuotaDto'
+            - $ref: '#/components/schemas/CombinedLoanQuotaDto'
+          type: array
+      required:
+      - loan_quotas
+      type: object
+      additionalProperties: false
+    GetSupportIdApiResponse:
+      properties:
+        support_id:
+          type: string
+      required:
+      - support_id
+      type: object
+      additionalProperties: false
+    CreateSignInTokenApiResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Custom token. Exchange it for an ID token before calling bearer-auth endpoints.
+        expires_in_seconds:
+          type: number
+          format: double
+          description: Lifetime of the custom token in seconds.
+      required:
+      - token
+      - expires_in_seconds
+      additionalProperties: false
+    ByMaterialType_number_:
+      properties:
+        audiobook:
+          type: number
+          format: double
+        ebook:
+          type: number
+          format: double
+      required:
+      - audiobook
+      - ebook
+      type: object
+      additionalProperties: false
+    AllowEduLoans:
+      properties:
+        lower:
+          type: boolean
+          description: '`true` if library allows loan for lower educations.'
+        higher:
+          type: boolean
+          description: '`true` if library allows loan for higher educations.'
+      required:
+      - lower
+      - higher
+      type: object
+      additionalProperties: false
+    Pick_LibraryConfig.Exclude_keyofLibraryConfig.library_system-or-card_credentials__:
+      properties:
+        visible_to_users:
+          type: boolean
+        library_number:
+          type: string
+        allow_edu_loans:
+          $ref: '#/components/schemas/AllowEduLoans'
+        validate_patron_on_loan:
+          type: boolean
+      required:
+      - visible_to_users
+      - library_number
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    Omit_LibraryConfig.library_system-or-card_credentials_:
+      $ref: '#/components/schemas/Pick_LibraryConfig.Exclude_keyofLibraryConfig.library_system-or-card_credentials__'
+      description: Construct a type with the properties of T except for those in type K.
+    CombinedLoanConfig:
+      description: Loan configurations for all material types.
+      properties:
+        loan_duration_days:
+          type: number
+          format: double
+        reservation_offer_duration_days:
+          type: number
+          format: double
+          description: Only used for projects where user has to accept reservation offer
+        max_concurrent_package_loans:
+          type: number
+          format: double
+        max_concurrent_user_loans:
+          type: number
+          format: double
+        max_concurrent_user_reservations:
+          type: number
+          format: double
+        max_concurrent_user_wishes:
+          type: number
+          format: double
+        max_monthly_user_reservations:
+          type: number
+          format: double
+        max_monthly_user_wishes:
+          type: number
+          format: double
+        max_user_loans:
+          type: number
+          format: double
+        max_user_loans_period:
+          $ref: '#/components/schemas/LoanPeriod'
+      required:
+      - loan_duration_days
+      - max_concurrent_package_loans
+      - max_concurrent_user_loans
+      - max_user_loans
+      - max_user_loans_period
+      type: object
+      additionalProperties: false
+    ByMaterialType_LoanPeriod_:
+      properties:
+        audiobook:
+          $ref: '#/components/schemas/LoanPeriod'
+        ebook:
+          $ref: '#/components/schemas/LoanPeriod'
+      required:
+      - audiobook
+      - ebook
+      type: object
+      additionalProperties: false
+    SplitLoanConfig:
+      description: Loan configurations per material type.
+      properties:
+        loan_duration_days:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        reservation_offer_duration_days:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+          description: Only used for projects where user has to accept reservation offer
+        max_concurrent_package_loans:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_concurrent_user_loans:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_concurrent_user_reservations:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_concurrent_user_wishes:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_monthly_user_reservations:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_monthly_user_wishes:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_user_loans:
+          $ref: '#/components/schemas/ByMaterialType_number_'
+        max_user_loans_period:
+          $ref: '#/components/schemas/ByMaterialType_LoanPeriod_'
+      required:
+      - loan_duration_days
+      - max_concurrent_package_loans
+      - max_concurrent_user_loans
+      - max_user_loans
+      - max_user_loans_period
+      type: object
+      additionalProperties: false
+    LoanProviderConfig:
+      properties:
+        selected_order:
+          items:
+            $ref: '#/components/schemas/LoanProvider'
+          type: array
+          description: Prioritized order of active loan providers.
+      required:
+      - selected_order
+      type: object
+      additionalProperties: false
+    DrmConfig:
+      description: DRM content config.
+      properties:
+        adobe:
+          type: boolean
+          description: '`true` if Adobe DRM is enabled'
+      type: object
+      additionalProperties: false
+    OrganizationConfigsDto:
+      properties:
+        id:
+          type: string
+        combined_loan_config:
+          $ref: '#/components/schemas/CombinedLoanConfig'
+        loan_config:
+          $ref: '#/components/schemas/SplitLoanConfig'
+        loan_provider_config:
+          $ref: '#/components/schemas/LoanProviderConfig'
+        split_on_format:
+          type: boolean
+          description: If `true` organization uses {@link loan_config} else uses {@link combined_loan_config}.
+        drm_config:
+          $ref: '#/components/schemas/DrmConfig'
+        require_verified_email_on_loan:
+          type: boolean
+          description: 'When `true`, patrons must hold a verified email (`email_verified`) on their session
+            to acquire
+
+            content from this organization; sessions without one are blocked at the lending boundary.'
+        library_config:
+          $ref: '#/components/schemas/Omit_LibraryConfig.library_system-or-card_credentials_'
+      required:
+      - combined_loan_config
+      - loan_config
+      - loan_provider_config
+      - split_on_format
+      type: object
+      additionalProperties: false
+    GetOrganizationConfigsApiResponse:
+      properties:
+        organization_configurations:
+          $ref: '#/components/schemas/OrganizationConfigsDto'
+      required:
+      - organization_configurations
+      type: object
+      additionalProperties: false
+    GetOrganizationApiResponse:
+      properties:
+        organization:
+          $ref: '#/components/schemas/OrganizationDto'
+      type: object
+      additionalProperties: false
+    OrganizationDto:
+      properties:
+        name:
+          type: string
+        legal_name:
+          type: string
+        contacts:
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+          type: array
+        owners:
+          items:
+            type: string
+          type: array
+        type:
+          $ref: '#/components/schemas/OrganizationType'
+        ancestors:
+          items:
+            type: string
+          type: array
+        ancestor_types:
+          items:
+            $ref: '#/components/schemas/OrganizationType'
+          type: array
+        member_count:
+          type: number
+          format: double
+        population:
+          type: number
+          format: double
+          description: population of the organization's area (unrelated to user/loaner count) - used for
+            calculating selections prices
+        third_party_id:
+          type: string
+        third_party_ref:
+          type: string
+        disable_custom_names:
+          type: boolean
+          description: disable `display_name` for users
+        enable_demo_stats:
+          type: boolean
+        inherit_visual_appearance:
+          type: boolean
+        app_logo_url:
+          type: string
+        app_theme:
+          $ref: '#/components/schemas/AppThemeId'
+        address:
+          $ref: '#/components/schemas/OrganizationAddress'
+        business_registration_number:
+          type: string
+        contact_info:
+          $ref: '#/components/schemas/OrganizationContactInfo'
+        is_strict:
+          type: boolean
+          description: '- A strict organization will always be the primary
+
+            - A patron can only have one strict organization'
+        id:
+          type: string
+        app_message:
+          $ref: '#/components/schemas/AppMessage'
+      required:
+      - name
+      - contacts
+      - owners
+      - type
+      - ancestors
+      - ancestor_types
+      - member_count
+      - id
+      type: object
+      additionalProperties: false
+    AppMessage:
+      properties:
+        message:
+          type: string
+        created:
+          type: string
+      required:
+      - message
+      - created
+      type: object
+      additionalProperties: false
+    OrganizationContactInfo:
+      properties:
+        website:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      type: object
+      additionalProperties: false
+    OrganizationAddress:
+      properties:
+        street:
+          type: string
+        street_2:
+          type: string
+        postcode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - street
+      - postcode
+      - city
+      - country
+      type: object
+      additionalProperties: false
+    AppThemeId:
+      enum:
+      - biblio
+      - sunset
+      - flashlight
+      - classic_and_warm
+      - digital_twist
+      - bonfire
+      - holly
+      - classic_and_cool
+      - modern_twist
+      - black_and_white
+      type: string
+    OrganizationType:
+      enum:
+      - bookbites
+      - municipality
+      - library
+      - region
+      - custom
+      - high_school
+      - higher_education
+      - public_school
+      - private_school
+      type: string
+    ContactPerson:
+      properties:
+        uid:
+          type: string
+        role:
+          type: string
+      required:
+      - uid
+      type: object
+      additionalProperties: false
+    AcceptReservationOfferApiResponse:
+      properties:
+        success:
+          type: boolean
+          description: '`true` when the offer was accepted and converted into a loan.'
+        loan_id:
+          type: string
+          description: Loan id created from the accepted offer. Present only on success.
+      required:
+      - success
+      type: object
+      additionalProperties: false
+    GetReservationOffersApiResponse:
+      properties:
+        reservation_offers:
+          items:
+            $ref: '#/components/schemas/ReservationOfferDto'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - reservation_offers
+      - pagination
+      type: object
+      additionalProperties: false
+    ReservationOfferDto:
+      properties:
+        material_id:
+          type: string
+          description: Material made available by the offer.
+        material_type:
+          $ref: '#/components/schemas/MaterialType'
+          description: Material type of the offered title.
+        org_id:
+          type: string
+          description: Organization that provided the held availability.
+        origin_org_id:
+          type: string
+          description: User organization used when resolving the held provider allocation.
+        origin_org_type:
+          type: string
+          description: Type of {@link origin_org_id}.
+        uid:
+          type: string
+          description: User that owns and may accept the offer.
+        reservation_id:
+          type: string
+          description: Source reservation that produced this offer.
+        provider:
+          $ref: '#/components/schemas/LoanProvider'
+          description: Provider whose availability is being retained during the offer window.
+        license_id:
+          type: string
+          description: Provider-specific identifier for the retained license/budget allocation.
+        status:
+          $ref: '#/components/schemas/ReservationOfferStatus'
+          description: Current lifecycle state for the offer.
+        loan_id:
+          type: string
+          description: Final created loan id after acceptance.
+        created_at:
+          type: string
+          description: Reservation offer create time.
+        expires_at:
+          type: string
+          description: Reservation offer expiry time.
+        accepted_at:
+          type: string
+          description: Reservation offer accept time.
+        expired_at:
+          type: string
+          description: Reservation offer expire time.
+        cancelled_at:
+          type: string
+          description: Reservation offer cancel time.
+        id:
+          type: string
+          description: Reservation offer id.
+      required:
+      - material_id
+      - material_type
+      - org_id
+      - origin_org_id
+      - origin_org_type
+      - uid
+      - reservation_id
+      - provider
+      - license_id
+      - status
+      - created_at
+      - expires_at
+      - id
+      type: object
+      additionalProperties: false
+    ReservationOfferStatus:
+      enum:
+      - offered
+      - accepted
+      - expired
+      - cancelled
+      type: string
+    DeleteReservationApiResponse:
+      properties:
+        success:
+          type: boolean
+          description: '`true` when the reservation was removed.'
+      required:
+      - success
+      type: object
+      additionalProperties: false
+    GetReservationApiResponse:
+      properties:
+        reservation:
+          $ref: '#/components/schemas/ReservationDto'
+      required:
+      - reservation
+      type: object
+      additionalProperties: false
+    ReservationDto:
+      properties:
+        duration:
+          type: number
+          format: double
+          description: Audiobook duration or 0
+        material_id:
+          type: string
+          description: Reserved material identifier.
+        material_type:
+          $ref: '#/components/schemas/MaterialType'
+          description: Material type at reservation creation time.
+        org_id:
+          type: string
+          description: 'The organization that made the reservation possible.
+
+            Loan can be created on another organization if material will be available sooner'
+        uid:
+          type: string
+          description: User that owns the reservation.
+        type:
+          $ref: '#/components/schemas/RequestLoanReservationGroup'
+          description: 'Either `Reservation` or `Wish`. `SystemReservation`: wish was converted to reservation.'
+        offer_id:
+          type: string
+          description: Active reservation offer id when this reservation has been offered to the user.
+        org_ids:
+          items:
+            type: string
+          type: array
+          description: User organizations (including ancestors) at reservation create time
+        word_count:
+          type: number
+          format: double
+          description: Word count snapshot used for reservation prioritization and analytics.
+        timestamp:
+          type: string
+          description: Reservation create time.
+        loan_date:
+          type: string
+          description: 'Date where reservation is expected to be converted to loan at latest
+
+            based on material license and organization loan config.'
+        offer_expires_at:
+          type: string
+          description: Expiry time of the currently linked reservation offer.
+        id:
+          type: string
+          description: Reservation id.
+      required:
+      - duration
+      - material_id
+      - material_type
+      - org_id
+      - uid
+      - type
+      - org_ids
+      - word_count
+      - timestamp
+      - loan_date
+      - id
+      type: object
+      additionalProperties: false
+    RequestLoanReservationGroup:
+      anyOf:
+      - $ref: '#/components/schemas/RequestLoanRequestType.Reservation'
+      - $ref: '#/components/schemas/RequestLoanRequestType.SystemReservation'
+      - $ref: '#/components/schemas/RequestLoanRequestType.Wish'
+    RequestLoanRequestType.Wish:
+      enum:
+      - wish
+      type: string
+    RequestLoanRequestType.SystemReservation:
+      enum:
+      - system_reservation
+      type: string
+    RequestLoanRequestType.Reservation:
+      enum:
+      - reservation
+      type: string
+    CreateReservationApiResponse:
+      properties:
+        status:
+          $ref: '#/components/schemas/CanLoanResponseType'
+          description: Current loan decision returned by the loan manager.
+        loan_provider:
+          $ref: '#/components/schemas/LoanProvider'
+          description: Loan provider selected for the attempted loan, when available.
+        active_loan_provider:
+          type: boolean
+          description: Indicates whether the selected provider is currently active for the user/org context.
+        message:
+          type: string
+          description: Human-readable explanation of the loan decision.
+        org_id:
+          type: string
+          description: Organization that governed the decision, when relevant.
+        quota_reject:
+          $ref: '#/components/schemas/QuotaReject'
+          description: Structured quota rejection details when quota rules block the loan.
+        unavailable_reason:
+          $ref: '#/components/schemas/UnavailableReason'
+          description: 'Reason the loan provider returned {@link CanLoanResponseType.Unavailable}
+
+            for the material. Only set when `status` is `unavailable`.'
+        lending_block_reason:
+          $ref: '#/components/schemas/LendingBlockReason'
+          description: 'Why lending is blocked for the session/account. Only set when `status` is
+
+            {@link CanLoanResponseType.LendingBlocked}.'
+        loan:
+          $ref: '#/components/schemas/LoanDto'
+          description: Present only when the reservation request was fulfilled immediately as a loan.
+      required:
+      - status
+      type: object
+      additionalProperties: false
+    GetReservationsApiResponse:
+      properties:
+        reservations:
+          items:
+            $ref: '#/components/schemas/ReservationDto'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - reservations
+      - pagination
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth2 bearer token from `https://login.bib.dk`, sent as `Authorization: Bearer <token>`.
+        See **Authentication and user identity** in the API description.
+
+        '
+  parameters:
+    TraceparentHeader:
+      name: traceparent
+      in: header
+      required: false
+      description: 'Standard OpenTelemetry trace context header. When provided, the adapter treats the
+        value as an opaque string and forwards it to `Biblio API` for trace correlation.
+
+        '
+      schema:
+        type: string
+  headers:
+    ResponseSourceHeader:
+      description: Indicates which service generated the response body.
+      schema:
+        type: string
+        enum:
+        - adapter
+        - wedobooks
+    RequestIdHeader:
+      description: Correlation id for the request.
+      schema:
+        type: string
