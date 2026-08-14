@@ -143,3 +143,84 @@ export type RenewedLoanFailed = {
 }
 
 export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
+
+export type BiblioMaterial = {
+  isbn: string
+  materialType: "ebook" | "audiobook"
+}
+
+// The broad material type used by the loan and reservation DTOs. The metadata
+// endpoints use the narrower BiblioMaterial["materialType"].
+export type BiblioMaterialType = "ebook" | "audiobook" | "paper_book"
+
+export type BiblioLoan = {
+  loanId: string
+  materialId: string
+  materialType: BiblioMaterialType
+  startDate: string
+  endDate: string
+  active: boolean
+}
+
+export type BiblioReservation = {
+  reservationId: string
+  materialId: string
+  materialType: BiblioMaterialType
+  createdDate: string
+  // Date where the reservation is expected to be converted to a loan at the
+  // latest.
+  expectedLoanDate: string
+  // Set when the reservation has been offered to the user and can be
+  // accepted (redeemed) as a loan.
+  offerId?: string
+  offerExpiresAt?: string
+}
+
+export type BiblioCanLoanStatus =
+  | "loanable"
+  | "reservable"
+  | "wishable"
+  | "unavailable"
+  | "monthly_limit_exceeded"
+  | "concurrent_limit_exceeded"
+  | "no_valid_credentials"
+  | "lending_blocked"
+
+export type BiblioCanLoan = {
+  status: BiblioCanLoanStatus
+  unavailableReason?: string
+  lendingBlockReason?: string
+}
+
+// Result of creating a loan or a reservation. The loan is only set when the
+// operation resulted in an actual loan.
+export type BiblioLoanResult = BiblioCanLoan & {
+  loan: BiblioLoan | undefined
+}
+
+// Loan quotas for the user per organization. Organizations either count
+// e-books and audiobooks together (combined) or separately (split on format).
+export type BiblioLoanQuota =
+  | {
+      splitOnFormat: false
+      orgId: string
+      orgName: string
+      maxLoans: number
+      maxConcurrentLoans: number
+      currentConcurrentLoans: number
+      currentMonthlyLoans: number
+    }
+  | {
+      splitOnFormat: true
+      orgId: string
+      orgName: string
+      maxLoans: { ebook: number; audiobook: number }
+      maxConcurrentLoans: { ebook: number; audiobook: number }
+      currentConcurrentLoans: { ebook: number; audiobook: number }
+      currentMonthlyLoans: { ebook: number; audiobook: number }
+    }
+
+export type BiblioSignInToken = {
+  token: string
+  expiresInSeconds: number
+}

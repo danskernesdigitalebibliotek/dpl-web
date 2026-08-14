@@ -54,3 +54,18 @@ export { createReservation } from "./reservation"
 export { getReservations, deleteReservation } from "./reservations"
 export { getLoans, renewLoans } from "./loans"
 export { getFees } from "./fees"
+
+// Biblio adapter — the digital-materials provider behind the CMS feature flag.
+export { createBiblioClient } from "../biblio/src"
+export type { BiblioConfig } from "../biblio/src"
+export type {
+  BiblioMaterial,
+  BiblioMaterialType,
+  BiblioLoan,
+  BiblioReservation,
+  BiblioCanLoan,
+  BiblioCanLoanStatus,
+  BiblioLoanResult,
+  BiblioLoanQuota,
+  BiblioSignInToken,
+} from "./types"

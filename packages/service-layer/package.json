@@ -8,6 +8,7 @@
   },
   "scripts": {
     "codegen:fbs": "orval --config fbs/orval.config.ts",
+    "codegen:biblio": "orval --config biblio/orval.config.ts",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint .",
