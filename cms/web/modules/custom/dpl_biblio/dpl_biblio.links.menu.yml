@@ -1,0 +1,5 @@
+dpl_biblio.settings_form:
+  title: 'Biblio adapter settings'
+  route_name: dpl_biblio.settings
+  description: 'Change basic Biblio adapter settings'
+  parent: system.admin_config_services
