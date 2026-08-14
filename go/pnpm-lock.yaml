@@ -48,8 +48,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(@types/react@19.2.18)(react@19.2.8)(xstate@5.32.5)
       '@xstate/store':
-        specifier: ^4.2.2
-        version: 4.2.2
+        specifier: ^4.2.3
+        version: 4.2.3
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -4510,6 +4510,7 @@ packages:
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@xstate/react@6.1.0':
     resolution: {integrity: sha512-ep9F0jGTI63B/jE8GHdMpUqtuz7yRebNaKv8EMUaiSi29NOglywc2X2YSOV/ygbIK+LtmgZ0q9anoEA2iBSEOw==}
@@ -4520,8 +4521,8 @@ packages:
       xstate:
         optional: true
 
-  '@xstate/store@4.2.2':
-    resolution: {integrity: sha512-GdfKOba6q0VP7CGeFVqMbjy4aqAxnkxrM3VykoI+BZbRo3pKA+tDJBfLYaXJlyeGqE3RkHXcWU3GZ8fQW4tFfg==}
+  '@xstate/store@4.2.3':
+    resolution: {integrity: sha512-vV/s0kpk0i3Mmo2AsDMUB5h4xTu/b3fRvXeYhnnz8ODY5ueQXMOlGI8Fn1fY0RXOmCKCmaNOeM6d2hWCrfuMtA==}
 
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -14779,7 +14780,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@xstate/store@4.2.2': {}
+  '@xstate/store@4.2.3': {}
 
   '@xtuc/ieee754@1.2.0': {}
 
