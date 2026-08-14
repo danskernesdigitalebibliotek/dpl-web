@@ -293,6 +293,15 @@
                       "description": "The name of a branch."
                     }
                   },
+                  "branch_isil_ids": {
+                    "type": "array",
+                    "description": "External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.",
+                    "items": {
+                      "type": "string",
+                      "description": "External branch id (ISIL)",
+                      "example": "DK-710100"
+                    }
+                  },
                   "address": {
                     "type": "object",
                     "description": "Where the event occurs.",
@@ -1325,6 +1334,15 @@
                     "items": {
                       "type": "string",
                       "description": "The name of a branch."
+                    }
+                  },
+                  "branch_isil_ids": {
+                    "type": "array",
+                    "description": "External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.",
+                    "items": {
+                      "type": "string",
+                      "description": "External branch id (ISIL)",
+                      "example": "DK-710100"
                     }
                   },
                   "address": {
