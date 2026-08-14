@@ -85,6 +85,20 @@ describe("parseAndMapRenewedLoans", () => {
     })
   })
 
+  it("prefers a specific denial code over deniedOtherReason regardless of order", () => {
+    // FBS has been observed sending the generic code first.
+    const raw = [
+      {
+        renewalStatus: ["deniedOtherReason", "deniedMaxRenewalsReached"],
+        loanDetails: { loanId: 1, recordId: "1", dueDate: "2026-07-01" },
+      },
+    ]
+    expect(parseAndMapRenewedLoans(raw)[0]).toMatchObject({
+      renewed: false,
+      reason: "deniedMaxRenewalsReached",
+    })
+  })
+
   it("treats unrecognized denial codes as deniedOtherReason", () => {
     const raw = [
       {

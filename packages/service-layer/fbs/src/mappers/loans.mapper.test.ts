@@ -80,6 +80,24 @@ describe("parseAndMapLoans", () => {
     expect(parseAndMapLoans(raw)[0].nonRenewableReason).toBe("deniedReserved")
   })
 
+  it("prefers a specific denial reason over deniedOtherReason regardless of order", () => {
+    // FBS has been observed sending the generic code first.
+    const raw = [
+      {
+        isRenewable: false,
+        renewalStatusList: ["deniedOtherReason", "deniedMaxRenewalsReached"],
+        loanDetails: {
+          loanId: 1,
+          recordId: "1",
+          dueDate: "2026-07-01",
+          loanDate: "2026-06-01",
+          materialItemNumber: "5001234567",
+        },
+      },
+    ]
+    expect(parseAndMapLoans(raw)[0].nonRenewableReason).toBe("deniedMaxRenewalsReached")
+  })
+
   it("leaves nonRenewableReason undefined on renewable loans", () => {
     const raw = [
       {

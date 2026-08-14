@@ -22,19 +22,23 @@ const loan = (dueInDays: number, overrides: Record<string, unknown> = {}) => ({
 const renewButton = () => screen.getByRole("button", { name: /forlæng lån/i }) as HTMLButtonElement
 
 describe("RenewLoanAction", () => {
-  it("shows a disabled button with a countdown before the renewal window opens", () => {
-    // Due in 14 days, window is 7 → renewable in 7 days.
+  it("renews through an active button before the window opens when FBS allows it", () => {
+    // FBS decides; the configured window only estimates the countdown.
     render(
       <RenewLoanAction loan={loan(14.5)} title="Vildheks" isRenewing={false} onRenew={() => {}} />
     )
 
-    expect(renewButton().disabled).toBe(true)
-    expect(screen.getByText("Lånet kan først forlænges om 7 dage")).toBeTruthy()
+    expect(renewButton().disabled).toBe(false)
   })
 
   it("uses the singular day form one day before the window opens", () => {
     render(
-      <RenewLoanAction loan={loan(8.5)} title="Vildheks" isRenewing={false} onRenew={() => {}} />
+      <RenewLoanAction
+        loan={loan(8.5, { isRenewable: false, nonRenewableReason: "deniedOtherReason" })}
+        title="Vildheks"
+        isRenewing={false}
+        onRenew={() => {}}
+      />
     )
 
     expect(screen.getByText("Lånet kan først forlænges om 1 dag")).toBeTruthy()
@@ -87,9 +91,8 @@ describe("RenewLoanAction", () => {
     expect(screen.getByText(getRenewalFailureMessage("deniedMaxRenewalsReached"))).toBeTruthy()
   })
 
-  it("keeps the countdown for situational denials before the window opens", () => {
-    // A reservation can be cancelled before the window opens, so the
-    // countdown is still the useful message.
+  it("shows situational denial reasons instead of the countdown before the window opens", () => {
+    // Any denial FBS can explain beats the countdown.
     render(
       <RenewLoanAction
         loan={loan(14, { isRenewable: false, nonRenewableReason: "deniedReserved" })}
@@ -99,7 +102,37 @@ describe("RenewLoanAction", () => {
       />
     )
 
+    expect(renewButton().disabled).toBe(true)
+    expect(screen.getByText(getRenewalFailureMessage("deniedReserved"))).toBeTruthy()
+  })
+
+  it("keeps the countdown for a generic denial before the window opens", () => {
+    // FBS sends the generic code for loans merely outside the window.
+    render(
+      <RenewLoanAction
+        loan={loan(14, { isRenewable: false, nonRenewableReason: "deniedOtherReason" })}
+        title="Vildheks"
+        isRenewing={false}
+        onRenew={() => {}}
+      />
+    )
+
+    expect(renewButton().disabled).toBe(true)
     expect(screen.getByText("Lånet kan først forlænges om 7 dage")).toBeTruthy()
+  })
+
+  it("shows the generic denial copy inside the window", () => {
+    render(
+      <RenewLoanAction
+        loan={loan(5.5, { isRenewable: false, nonRenewableReason: "deniedOtherReason" })}
+        title="Vildheks"
+        isRenewing={false}
+        onRenew={() => {}}
+      />
+    )
+
+    expect(renewButton().disabled).toBe(true)
+    expect(screen.getByText(getRenewalFailureMessage("deniedOtherReason"))).toBeTruthy()
   })
 
   it("falls back to the generic denial copy without a documented reason", () => {
