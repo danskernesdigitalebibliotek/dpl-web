@@ -1,5 +1,7 @@
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
+import { eBookManifestationFactory } from "../factories/fbi/factory-parts/manifestations"
+import { EBookFactory } from "../factories/fbi/factory-parts/works"
 import getMaterial from "../factories/fbi/getMaterial"
 import { mockFrontpage } from "../support/mocks"
 
@@ -62,6 +64,40 @@ const mockFbsReservations = (reservations: unknown[]) => {
     method: "GET",
     path: "/external/v1/agencyid/patrons/patronid/reservations/v2",
     data: reservations,
+  })
+}
+
+const mockFbsLoans = (loans: unknown[]) => {
+  cy.mockServerRest({
+    method: "GET",
+    path: "/external/agencyid/patrons/patronid/loans/v2",
+    data: loans,
+  })
+}
+
+// The FBI record lookup the patron shelf uses to pair FBS records with
+// works, resolving the fixture work for the reserved BOOK manifestation.
+const mockManifestationsByFaust = () => {
+  const manifestation = eBookManifestationFactory.build({
+    pid: `870970-basis:${RECORD_ID}`,
+    materialTypes: [
+      {
+        materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+        materialTypeSpecific: { code: "BOOK", display: "bog" },
+      },
+    ],
+  })
+  const work = EBookFactory.build({
+    workId: `work-of:870970-basis:${RECORD_ID}`,
+    manifestations: { all: [manifestation], bestRepresentation: manifestation },
+  })
+  cy.interceptGraphql({
+    operationName: "getManifestationsByFaust",
+    data: {
+      manifestations: [
+        { pid: manifestation.pid, audience: { childrenOrAdults: [] }, ownerWork: work },
+      ],
+    },
   })
 }
 
@@ -177,8 +213,9 @@ describe("Reservation flow", () => {
       .and("match", /\/user\/me$/)
   })
 
-  it("Delete reservation: button swap → confirm → receipt", () => {
+  it("Delete reservation: details → confirm → receipt", () => {
     mockFbsPatron()
+    mockFbsLoans([])
     mockFbsReservations([
       {
         reservationId: 999222,
@@ -188,6 +225,7 @@ describe("Reservation flow", () => {
         state: "reserved",
       },
     ])
+    mockManifestationsByFaust()
 
     cy.mockServerRest({
       method: "DELETE",
@@ -197,20 +235,26 @@ describe("Reservation flow", () => {
 
     visitPhysicalWork()
 
-    cy.dataCy("delete-reservation-button").should("be.visible").click()
+    // The reserved state swaps the CTA to "Se reservering", which opens
+    // the details view with the delete action in the footer.
+    cy.dataCy("view-reservation-button").should("be.visible").click()
+    cy.dataCy("reservation-details").should("exist")
+
+    // The button stays disabled until the shelf has resolved the reservation;
+    // the retried assertion waits that window out. AnimateChangeInHeight
+    // remounts on transition; the button can detach between query and click.
+    // `{force: true}` skips the actionability retry that races with the
+    // remount.
+    cy.dataCy("delete-reservation-button").should("be.visible").and("be.enabled")
+    cy.dataCy("delete-reservation-button").click({ force: true })
     cy.dataCy("delete-reservation-modal").should("exist")
     cy.dataCy("delete-reservation-modal").should("contain", "Vil du slette din reservering?")
 
-    // Re-register reservations endpoint to return empty so the receipt step
-    // derives from absence after the delete.
+    // Re-register reservations endpoint to return empty so the refetch after
+    // deletion reflects the reservation being gone.
     mockFbsReservations([])
 
-    // AnimateChangeInHeight remounts on transition; the button can detach
-    // between query and click. `{force: true}` skips the actionability retry
-    // that races with the remount.
     cy.dataCy("approve-delete-reservation-button").click({ force: true })
-    // data-cy swaps from delete-reservation-modal to delete-reservation-receipt
-    // once the reservation is gone from cache.
     cy.dataCy("delete-reservation-receipt").should("contain", "Din reservering er nu slettet")
   })
 })

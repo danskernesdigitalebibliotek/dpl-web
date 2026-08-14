@@ -69,6 +69,7 @@ export const cyKeys = {
   "reservation-receipt-queue-position": "reservation-receipt-queue-position",
   "reservation-receipt-pickup-branch": "reservation-receipt-pickup-branch",
   "loan-already-loaned": "loan-already-loaned",
+  "view-reservation-button": "view-reservation-button",
   "delete-reservation-button": "delete-reservation-button",
   "delete-reservation-modal": "delete-reservation-modal",
   "delete-reservation-receipt": "delete-reservation-receipt",

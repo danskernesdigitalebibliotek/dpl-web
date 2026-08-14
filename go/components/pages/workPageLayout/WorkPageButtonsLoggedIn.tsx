@@ -145,8 +145,8 @@ const WorkPageButtonsLoggedIn = ({
 }
 
 // Reads the patron's reservations and renders either the "Reserver" CTA or,
-// when the manifestation is already reserved, the "Slet reservering"
-// branch together with a small status row.
+// when the manifestation is already reserved, a small status row with a
+// button opening the reservation details (with deletion inside).
 const PhysicalReservationButton = ({
   dataCy,
   label,
@@ -175,16 +175,11 @@ const PhysicalReservationButton = ({
           </div>
         </div>
         <WorkPageButton
-          ariaLabel="Slet reservering"
+          ariaLabel="Se reservering"
           theme="primary"
-          dataCy={cyKeys["delete-reservation-button"]}
-          onClick={() =>
-            openModal("DeleteReservationModal", {
-              cover: selectedManifestation.cover,
-              reservationId: existing.reservationId,
-            })
-          }>
-          Slet reservering
+          dataCy={cyKeys["view-reservation-button"]}
+          onClick={() => openModal("ReservationDetailsModal", { recordId: existing.recordId })}>
+          Se reservering
         </WorkPageButton>
       </>
     )

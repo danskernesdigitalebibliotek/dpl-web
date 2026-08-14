@@ -1,13 +1,13 @@
 import { createStore } from "@xstate/store"
 
 import type { CompensationModalProps } from "@/components/shared/compensationModal/CompensationModal"
-import type { DeleteReservationModalProps } from "@/components/shared/deleteReservationModal/DeleteReservationModal"
 import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import type { FeesModalProps } from "@/components/shared/feesModal/FeesModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import type { PlayerModalProps } from "@/components/shared/playerModal/playerModal"
 import type { PlayerPreviewModalProps } from "@/components/shared/playerPreviewModal/playerPreviewModal"
+import type { ReservationDetailsModalProps } from "@/components/shared/reservationDetailsModal/ReservationDetailsModal"
 import type { ReservationsModalProps } from "@/components/shared/reservationsModal/ReservationsModal"
 import type { TModalUrlParams } from "@/lib/helpers/modal-url"
 
@@ -18,13 +18,13 @@ import type { TModalUrlParams } from "@/lib/helpers/modal-url"
 export type TModalRegistry = {
   PlayerModal: PlayerModalProps
   PlayerPreviewModal: PlayerPreviewModalProps
-  DeleteReservationModal: DeleteReservationModalProps
   CompensationModal: CompensationModalProps
   DigitalLoansModal: DigitalLoansModalProps
   FeesModal: FeesModalProps
   LoanDetailsModal: LoanDetailsModalProps
   PhysicalLoansModal: PhysicalLoansModalProps
   ReservationsModal: ReservationsModalProps
+  ReservationDetailsModal: ReservationDetailsModalProps
 } & TModalUrlParams
 
 export type TModalStoreType = keyof TModalRegistry
