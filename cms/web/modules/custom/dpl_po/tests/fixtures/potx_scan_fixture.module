@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Strings for the source scan kernel test to extract.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Holds one specimen of every string shape the scan has to handle.
+ *
+ * Never executed: the kernel test feeds this file to potx and asserts on what
+ * comes out the other end.
+ *
+ * @return mixed[]
+ *   The specimen strings.
+ */
+function potx_scan_fixture_strings(int $count): array {
+  return [
+    t('Plain string'),
+    t('Untranslated string'),
+    // The same text with and without context is two different messages, each
+    // with its own translation.
+    t('Title'),
+    t('Title', [], ['context' => 'Fixture context']),
+    // The same text reached through both t() and formatPlural() - potx
+    // records these as two entries, the scan must fold them into one.
+    t('1 item'),
+    \Drupal::translation()->formatPlural($count, '1 item', '@count items'),
+    \Drupal::translation()->formatPlural($count, '1 untranslated', '@count untranslated'),
+    t("It's a \"quoted\"\nstring"),
+    // A purely numeric string is an integer array key to PHP, which careless
+    // array handling renumbers.
+    t('404'),
+    // Only extracted by the potx-scan-translationinterface-translate patch.
+    \Drupal::translation()->translate('Injected translate call'),
+  ];
+}
+
+/**
+ * Carries the annotation shapes the potx-translation-annotations patch fixes.
+ *
+ * Stock potx refuses the arguments parameter and passes the wrapped string on
+ * unescaped. The formatting is part of what is tested - do not reformat: the
+ * wrapped annotation's indentation is in the expected msgid, and a parameter
+ * has to share its string's line, since the doc comment's "*" continuation
+ * ends the patch's parameter match.
+ *
+ * @FixturePlugin(
+ *   label = @Translation("Annotated label"),
+ *   description = @Translation("Has arguments.", arguments = { ":n" = "1" }),
+ *   note = @Translation("An annotation wrapped
+ *   over two lines"),
+ * )
+ */
+function potx_scan_fixture_annotated(): void {
+}

@@ -18,6 +18,7 @@ services:
       - '%app.root%'
       - '@language_manager'
       - '@module_handler'
-      - '@dpl_po.po_file_builder'
+      - '@locale.storage'
+      - '@locale.plural.formula'
     tags:
       - { name: drush.command }

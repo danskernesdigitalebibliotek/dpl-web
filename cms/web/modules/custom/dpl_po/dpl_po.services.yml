@@ -1,11 +1,4 @@
 services:
-  logger.channel.dpl_po:
-    parent: logger.channel_base
-    arguments: ['dpl_po']
-  dpl_po.po_file_builder:
-    class: Drupal\dpl_po\PoFileBuilder
-    arguments:
-      - '@logger.channel.dpl_po'
   dpl_po.config_manager:
     class: Drupal\dpl_po\Services\CtpConfigManager
     arguments:
