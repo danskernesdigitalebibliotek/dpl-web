@@ -25,6 +25,16 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
 include __DIR__ . "/settings.lagoon.php";
 
 /**
+ * Special override to disable persistent database connections.
+ *
+ * Needs to override what's defined by Lagoon, hence it's placement here.
+ */
+if (empty(['default']['default']['pdo'])) {
+  $databases['default']['default']['pdo'] = [];
+}
+$databases['default']['default']['pdo'][\PDO::ATTR_PERSISTENT] = FALSE;
+
+/**
  * Skipping permissions hardening.
  *
  * Enabling this will make scaffolding work better

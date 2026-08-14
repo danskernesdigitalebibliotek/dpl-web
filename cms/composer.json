@@ -74,6 +74,7 @@
     "require": {
         "php": "8.4.*",
         "ext-dom": "*",
+        "ext-pdo": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
         "composer/installers": "2.3.0",
