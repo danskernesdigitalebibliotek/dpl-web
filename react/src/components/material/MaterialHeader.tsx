@@ -18,6 +18,7 @@ import { Cover } from "../cover/cover";
 import MaterialAvailabilityText from "./MaterialAvailabilityText/MaterialAvailabilityText";
 import MaterialHeaderText from "./MaterialHeaderText";
 import MaterialButtons from "./material-buttons/MaterialButtons";
+import MaterialUnavailableNotice from "./MaterialUnavailableNotice/MaterialUnavailableNotice";
 import MaterialPeriodical from "./periodical/MaterialPeriodical";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { PeriodicalEdition } from "./periodical/helper";
@@ -161,7 +162,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
                       workId={wid}
                       dataCy="material-header-buttons"
                       materialTitleId={materialTitleId}
-                      fallback={<p>No buttons available</p>}
+                      fallback={<MaterialUnavailableNotice />}
                     />
                   </div>
                   {/* MaterialAvailabilityText is only shown for:

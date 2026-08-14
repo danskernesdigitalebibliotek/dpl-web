@@ -1,0 +1,27 @@
+.material-unavailable-notice {
+  background-color: $color__global-secondary;
+  padding: $s-lg;
+
+  &__title {
+    @include typography($typo__body-medium);
+
+    color: $color__text-primary-black;
+    font-weight: $font__weight--semi-bold;
+  }
+
+  &__description {
+    @include typography($typo__body-medium);
+
+    font-weight: $font__weight--normal;
+    color: $color__text-primary-black;
+    margin-top: $s-sm;
+  }
+
+  // The link sits inside the description sentence, so it has to stay inline
+  // in order to wrap along with the rest of the text.
+  &__link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
