@@ -145,10 +145,10 @@
   },
   "dependencies": {
     "@danskernesdigitalebibliotek/dpl-design-system": "workspace:*",
-    "@fullcalendar/core": "^6.1.21",
+    "@fullcalendar/core": "^7.0.2",
     "@fullcalendar/daygrid": "^6.1.21",
     "@fullcalendar/interaction": "^6.1.21",
-    "@fullcalendar/react": "^6.1.21",
+    "@fullcalendar/react": "^7.0.2",
     "@fullcalendar/timegrid": "^6.1.21",
     "@hammzj/cypress-page-object": "^2.3.0",
     "@headlessui/react": "^2.2.10",
