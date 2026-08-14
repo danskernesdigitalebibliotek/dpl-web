@@ -6,6 +6,7 @@ import {
   useCreateReservation,
   useMaterialAvailability,
   usePatron,
+  useReservations,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React, { useEffect, useState } from "react"
 
@@ -22,9 +23,9 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
-import { useExistingReservation } from "@/hooks/useExistingReservation"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
+import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 type ReservationModalProps = {
@@ -40,8 +41,6 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const manifestation = findManifestationByPid(work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
-  const existingReservation = useExistingReservation(pid)
-
   const physicalManifestations =
     work?.manifestations?.all.filter(m =>
       isPhysicalMaterialType(m.materialTypes[0]?.materialTypeSpecific.code)
@@ -53,6 +52,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const { data: availability } = useMaterialAvailability(wid, recordIds, blacklistedBranches, {
     enabled: recordIds.length > 0,
   })
+  const { data: reservations } = useReservations()
 
   const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
   const [successResult, setSuccessResult] = useState<CreateReservationSuccess | null>(null)
@@ -67,6 +67,7 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   // The receipt step is derivable: either we just succeeded (local state)
   // or the patron already has a reservation for this manifestation
   // (server state).
+  const existingReservation = findReservationByRecordId(reservations, recordId)
   const derivedResult: CreateReservationSuccess | null =
     successResult ??
     (existingReservation

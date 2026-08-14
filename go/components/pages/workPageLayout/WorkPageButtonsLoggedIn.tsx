@@ -1,3 +1,4 @@
+import { useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import {
@@ -8,13 +9,12 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
-import { useExistingLoan } from "@/hooks/useExistingLoan"
-import { useExistingReservation } from "@/hooks/useExistingReservation"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
-import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
+import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
+import { getPublizonIdentifierFromManifestation, pidToFaust } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import { openModal } from "@/store/modal.store"
@@ -146,10 +146,12 @@ const WorkPageButtonsLoggedIn = ({
   return null
 }
 
-// Renders the patron's state for the material: already loaned → status row
-// with a button opening the loan details; already reserved → status row with
-// a button opening the reservation details (with deletion inside); otherwise
-// the "Reserver" CTA.
+// Reads the patron's loans and reservations and renders the matching state:
+// already loaned → status row with a button opening the loan details;
+// already reserved → status row with a button opening the reservation
+// details (with deletion inside); otherwise the "Reserver" CTA. Both
+// service-layer hooks are patron-gated, so nothing fires for Unilogin or
+// anonymous sessions.
 const PhysicalReservationButton = ({
   dataCy,
   label,
@@ -163,10 +165,12 @@ const PhysicalReservationButton = ({
   reservationModal: TModalType
   onOpen: (modal: TModalType) => void
 }) => {
-  const existingLoan = useExistingLoan(selectedManifestation.pid)
-  const existingReservation = useExistingReservation(selectedManifestation.pid)
+  const { data: reservations } = useReservations()
+  const { data: loans } = useLoans()
+  const recordId = pidToFaust(selectedManifestation.pid)
+  const existing = findReservationByRecordId(reservations, recordId)
+  const existingLoan = loans?.find(loan => loan.recordId === recordId)
 
-  // A loan trumps a reservation for the same record.
   if (existingLoan) {
     return (
       <>
@@ -182,7 +186,7 @@ const PhysicalReservationButton = ({
     )
   }
 
-  if (existingReservation) {
+  if (existing) {
     return (
       <>
         <div className="w-full lg:max-w-80 lg:min-w-72">
@@ -196,11 +200,7 @@ const PhysicalReservationButton = ({
           ariaLabel="Se reservering"
           theme="primary"
           dataCy={cyKeys["view-reservation-button"]}
-          onClick={() =>
-            openModal("ReservationDetailsModal", {
-              recordId: existingReservation.recordId,
-            })
-          }>
+          onClick={() => openModal("ReservationDetailsModal", { recordId: existing.recordId })}>
           Se reservering
         </WorkPageButton>
       </>
