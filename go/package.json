@@ -138,7 +138,7 @@
     "jsdom": "^30.0.1",
     "jwt-simple": "^0.5.6",
     "mockttp": "^4.6.0",
-    "next-test-api-route-handler": "^5.0.5",
+    "next-test-api-route-handler": "^5.0.6",
     "node-mocks-http": "^1.18.1",
     "orval": "^8.23.0",
     "playwright": "^1.62.1",
