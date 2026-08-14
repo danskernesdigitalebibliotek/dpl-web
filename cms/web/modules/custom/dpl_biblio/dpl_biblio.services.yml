@@ -2,3 +2,7 @@ services:
   dpl_biblio.settings:
     class: Drupal\dpl_biblio\DplBiblioSettings
     arguments: ['@config.manager']
+
+  # Hook services can be removed in D11.
+  Drupal\dpl_biblio\Hook\ReactAppsHooks:
+    arguments: ['@dpl_biblio.settings']

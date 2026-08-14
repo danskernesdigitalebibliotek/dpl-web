@@ -10,7 +10,10 @@
  * explicitly enables the Biblio adapter.
  */
 
-use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_biblio\Hook\ReactAppsHooks;
+
+/* Legacy hooks can be removed in D11. */
 
 /**
  * Implements hook_dpl_react_apps_api_urls().
@@ -18,40 +21,20 @@ use Drupal\Core\Cache\CacheableMetadata;
  * @return array<string, string>
  *   Service to URL mapping.
  */
+#[LegacyHook]
 function dpl_biblio_dpl_react_apps_api_urls(): array {
-  /** @var \Drupal\dpl_biblio\DplBiblioSettings $biblio_settings */
-  $biblio_settings = \Drupal::service('dpl_biblio.settings');
-
-  if (!$base_url = $biblio_settings->getBaseUrl()) {
-    return [];
-  }
-
-  return [
-    'biblio' => $base_url,
-  ];
+  return \Drupal::service(ReactAppsHooks::class)->reactApiUrls();
 }
 
 /**
  * Implements hook_dpl_react_apps_data().
- *
- * Expose the Biblio adapter feature flag to all React apps as
- * data-use-biblio-adapter-config.
  *
  * @param mixed[] $data
  *   The data to provide to the React apps.
  * @param mixed[] $variables
  *   The variables for the theme hook.
  */
+#[LegacyHook]
 function dpl_biblio_dpl_react_apps_data(array &$data, array &$variables): void {
-  /** @var \Drupal\dpl_biblio\DplBiblioSettings $biblio_settings */
-  $biblio_settings = \Drupal::service('dpl_biblio.settings');
-
-  // Make sure that changed settings are invalidating the cache.
-  $cache_metadata = CacheableMetadata::createFromRenderArray($variables);
-  $cache_metadata->addCacheableDependency($biblio_settings);
-  $cache_metadata->applyTo($variables);
-
-  $data['configs'] += [
-    'use-biblio-adapter' => $biblio_settings->isEnabled() ? '1' : '0',
-  ];
+  \Drupal::service(ReactAppsHooks::class)->reactAppsData($data, $variables);
 }
