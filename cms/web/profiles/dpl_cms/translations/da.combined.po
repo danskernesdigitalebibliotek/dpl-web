@@ -98,7 +98,7 @@ msgstr ""
 
 msgctxt "DPL event"
 msgid " DKK"
-msgstr ""
+msgstr " kr."
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_amount:settings:suffix"
 msgid " materials"
@@ -242,7 +242,7 @@ msgstr ""
 
 msgctxt "DPL admin UX"
 msgid "(Locked by @username)"
-msgstr ""
+msgstr "(Låst af @username)"
 
 msgid ""
 "(Optionally) Select the field on the destination entity to use during "
@@ -283,7 +283,7 @@ msgstr ", "
 
 msgctxt "Date range separator"
 msgid "-"
-msgstr ""
+msgstr "-"
 
 msgctxt "advanced search"
 msgid "-"
@@ -7179,7 +7179,7 @@ msgid "Create %name Event"
 msgstr "Opret %name arrangement"
 
 msgid "Create Content from a defined template"
-msgstr ""
+msgstr "Opret indhold ud fra en foruddefineret skabelon"
 
 msgctxt "views.view.entity_clone_template:display:page:display_options:menu:description"
 msgid "Create Content from a defined template"
@@ -7219,7 +7219,7 @@ msgid "Create content from templates"
 msgstr "Opret indhold fra skabelon"
 
 msgid "Create from template"
-msgstr ""
+msgstr "Opret fra skabelon"
 
 msgctxt "views.view.entity_clone_template:display:page:display_options:menu:title"
 msgid "Create from template"
@@ -7558,7 +7558,7 @@ msgid "DPL Breadcrumb"
 msgstr "Brødkrummer"
 
 msgid "DPL CMS"
-msgstr ""
+msgstr "DPL CMS"
 
 msgctxt "system.site:name"
 msgid "DPL CMS"
@@ -10681,7 +10681,7 @@ msgid "Event instance type config"
 msgstr ""
 
 msgid "Event instances"
-msgstr ""
+msgstr "Arrangementinstanser"
 
 msgctxt "views.view.event_series_admin:display:default:display_options:fields:eventseries_instance_count:label"
 msgid "Event instances"
@@ -14498,7 +14498,7 @@ msgid "Link to break the content lock."
 msgstr "Link til at bryde indholdslåsen."
 
 msgid "Link to search"
-msgstr ""
+msgstr "Link til søgning"
 
 msgctxt "dpl_fbi"
 msgid "Link to search"
@@ -16645,7 +16645,7 @@ msgid "Number as link?"
 msgstr ""
 
 msgid "Number of add in between links"
-msgstr ""
+msgstr "Antal tilføjelser mellem links"
 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Number of add in between links"
@@ -18254,7 +18254,7 @@ msgstr "Sted"
 
 msgctxt "Novel settings"
 msgid "Place"
-msgstr ""
+msgstr "Sted"
 
 msgctxt "field.field.eventinstance.default.field_event_place:label"
 msgid "Place"
@@ -21577,7 +21577,7 @@ msgstr "Vis alle @title_plural"
 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Show all @title_plural"
-msgstr ""
+msgstr "Vis alle @title_plural"
 
 msgctxt "views.view.event_instance_list:display:default:display_options:filters:date__value:group_info:group_items:1:title"
 msgid "Show all events"
@@ -26479,7 +26479,7 @@ msgstr "Titel"
 
 msgctxt "Novel settings"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 msgctxt "advanced search"
 msgid "Title"
@@ -27415,7 +27415,7 @@ msgid "Unpublish taxonomy term"
 msgstr ""
 
 msgid "Unpublish the series when all instances have occurred"
-msgstr ""
+msgstr "Afpublicér serien når alle instanser er overstået"
 
 msgctxt "DPL event"
 msgid "Unpublish the series when all instances have occurred"
@@ -29451,7 +29451,7 @@ msgid "[Splitting in progress... ⌛]"
 msgstr ""
 
 msgid "[current-page:title] | [site:name]"
-msgstr ""
+msgstr "[current-page:title] | [site:name]"
 
 msgctxt "metatag.metatag_defaults.global:tags:title"
 msgid "[current-page:title] | [site:name]"
@@ -29537,14 +29537,14 @@ msgid "[node:field_teaser_image:entity:field_media_image:open_graph]"
 msgstr ""
 
 msgid "[node:summary]"
-msgstr ""
+msgstr "[node:summary]"
 
 msgctxt "metatag.metatag_defaults.node:tags:description"
 msgid "[node:summary]"
 msgstr ""
 
 msgid "[node:title] | [site:name]"
-msgstr ""
+msgstr "[node:title] | [site:name]"
 
 msgctxt "metatag.metatag_defaults.node:tags:title"
 msgid "[node:title] | [site:name]"
@@ -29554,14 +29554,14 @@ msgid "[node:url]"
 msgstr "[node:field_canonical_url:uri]"
 
 msgid "[site:name]"
-msgstr ""
+msgstr "[site:name]"
 
 msgctxt "metatag.metatag_defaults.user:tags:description"
 msgid "[site:name]"
 msgstr ""
 
 msgid "[site:url]"
-msgstr ""
+msgstr "[site:url]"
 
 msgctxt "metatag.metatag_defaults.403:tags:canonical_url"
 msgid "[site:url]"
@@ -29584,14 +29584,14 @@ msgid "[site:url]"
 msgstr ""
 
 msgid "[term:description]"
-msgstr ""
+msgstr "[term:description]"
 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:description"
 msgid "[term:description]"
 msgstr ""
 
 msgid "[term:name] | [site:name]"
-msgstr ""
+msgstr "[term:name] | [site:name]"
 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:title"
 msgid "[term:name] | [site:name]"
@@ -29608,7 +29608,7 @@ msgid ""
 msgstr ""
 
 msgid "[user:display-name] | [site:name]"
-msgstr ""
+msgstr "[user:display-name] | [site:name]"
 
 msgctxt "metatag.metatag_defaults.user:tags:title"
 msgid "[user:display-name] | [site:name]"
@@ -29748,7 +29748,7 @@ msgid ""
 msgstr ""
 
 msgid "[user:url]"
-msgstr ""
+msgstr "[user:url]"
 
 msgctxt "metatag.metatag_defaults.user:tags:canonical_url"
 msgid "[user:url]"
