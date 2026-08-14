@@ -1,10 +1,16 @@
 import type { Preview } from "@storybook/nextjs"
+import MockDate from "mockdate"
 import localFont from "next/font/local"
 import { useEffect } from "react"
 
 import "@/styles/globals.css"
 
 import { useDarkMode, useLightMode } from "../lib/helpers/helper.theme"
+
+// Freeze "now" so date-derived UI (due dates, countdowns, pickup deadlines)
+// renders identically on every Chromatic build instead of drifting day by
+// day. Story fixtures compute dates relative to this frozen date.
+MockDate.set("2026-06-15T12:00:00")
 
 // When adding or changing fonts, remember to update the imports in the Layout file
 const GTFlexa = localFont({
