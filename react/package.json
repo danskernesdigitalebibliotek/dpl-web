@@ -117,8 +117,8 @@
     "markdownlint-cli2": "^0.23.2",
     "mutationobserver-shim": "^0.3.7",
     "nyc": "^18.0.0",
-    "postcss": "^8.5.26",
     "orval": "^8.23.0",
+    "postcss": "^8.5.26",
     "postcss-cli": "^11.0.1",
     "postcss-loader": "^8.2.1",
     "postcss-scss": "^4.0.9",
@@ -172,6 +172,7 @@
     "react-use": "^17.6.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
+    "temporal-polyfill": "^1.0.4",
     "unfetch": "^5.0.0"
   },
   "peerDependencies": {
