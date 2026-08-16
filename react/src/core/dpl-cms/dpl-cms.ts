@@ -174,9 +174,7 @@ export const useCampaignMatchPOST = <
   return useMutation(getCampaignMatchPOSTMutationOptions(options), queryClient);
 };
 
-export const getDplOpeningHoursCreatePOSTUrl = (
-  params: DplOpeningHoursCreatePOSTParams
-) => {
+export const getCurrentEventsGETUrl = (params: CurrentEventsGETParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -188,22 +186,20 @@ export const getDplOpeningHoursCreatePOSTUrl = (
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `/api/v1/opening_hours?${stringifiedParams}`
-    : `/api/v1/opening_hours`;
+    ? `/api/v1/events/current?${stringifiedParams}`
+    : `/api/v1/events/current`;
 };
 
 /**
  * @summary Retrieve current events
  */
-export const currentEventsGET = (
+export const currentEventsGET = async (
   params: CurrentEventsGETParams,
-  signal?: AbortSignal
-) => {
-  return fetcher<CurrentEventsGET200Item[]>({
-    url: `/api/v1/events/current`,
-    method: "GET",
-    params,
-    signal
+  options?: Parameters<typeof mutator>[1]
+): Promise<CurrentEventsGET200Item[]> => {
+  return mutator<CurrentEventsGET200Item[]>(getCurrentEventsGETUrl(params), {
+    ...options,
+    method: "GET"
   });
 };
 
@@ -226,16 +222,17 @@ export const getCurrentEventsGETQueryOptions = <
         TData
       >
     >;
+    request?: SecondParameter<typeof mutator>;
   }
 ) => {
-  const { query: queryOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getCurrentEventsGETQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof currentEventsGET>>
-  > = ({ signal }) => currentEventsGET(params, signal);
+  > = ({ signal }) => currentEventsGET(params, { signal, ...requestOptions });
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof currentEventsGET>>,
@@ -270,6 +267,7 @@ export function useCurrentEventsGET<
         >,
         "initialData"
       >;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & {
@@ -296,6 +294,7 @@ export function useCurrentEventsGET<
         >,
         "initialData"
       >;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -314,6 +313,7 @@ export function useCurrentEventsGET<
         TData
       >
     >;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -336,6 +336,7 @@ export function useCurrentEventsGET<
         TData
       >
     >;
+    request?: SecondParameter<typeof mutator>;
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & {
@@ -348,10 +349,26 @@ export function useCurrentEventsGET<
     TError
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
+  return withQueryKey(query, queryOptions.queryKey);
 }
+
+export const getDplOpeningHoursCreatePOSTUrl = (
+  params: DplOpeningHoursCreatePOSTParams
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/v1/opening_hours?${stringifiedParams}`
+    : `/api/v1/opening_hours`;
+};
 
 /**
  * @summary Create individual opening hours
